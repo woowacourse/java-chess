@@ -8,9 +8,9 @@ import chess.domain.state.GameState;
 
 public class GameResponseDto {
 
-	private static final String GAME_NAME = "GAME_NAME";
-	private static final String TURN = "TURN";
-	private static final String CHESS_SCORE = "CHESS_SCORE";
+	private static final String GAME_NAME = "name";
+	private static final String TURN = "turn";
+	private static final String CHESS_SCORE = "chessScore";
 
 	private final Map<String, Object> value;
 

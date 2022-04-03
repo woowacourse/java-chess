@@ -4,36 +4,42 @@
     <meta charset="UTF-8">
     <title>메인</title>
     <style>
-        h1{
-            border-bottom:1px solid black;
+        h1 {
+            border-bottom: 1px solid black;
             text-align: center;
-            position:relative; bottom: 10px;
+            position: relative;
+            bottom: 10px;
         }
-        .container{
+
+        .container {
             width: 500px;
-            border:1px solid black;
-            margin:0 auto;
+            border: 1px solid black;
+            margin: 0 auto;
             text-align: center;
-            position:relative;
+            position: relative;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>체스 게임</h1>
-    <form action="/new_game" method="post">
-        새 게임 만들기 <input type="text" name="GAME_NAME"/>
-        <input type="submit" value="생성">
-    </form>
 
-    <p>게임 목록</p>
     <div>
-        {{#GAMES}}
-        <form action="delete/{{name}}" method="post">
-            <a href="/{{name}}">{{name}}</a> <input type="submit" value="삭제" >
+        <form action="/new_game" method="post">
+            새 게임 만들기 <input type="text" name="name"/>
+            <input type="submit" value="생성">
         </form>
-        {{/GAMES}}
-        <a></a>
+    </div>
+
+    <br>
+
+    <div>
+        <strong>게임 목록</strong><br>
+        {{#names}}
+        <form action="delete/{{name}}" method="post">
+            <a href="/{{name}}">{{name}}</a> <input type="submit" value="삭제">
+        </form>
+        {{/names}}
     </div>
 </div>
 </body>

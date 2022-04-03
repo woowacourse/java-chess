@@ -48,7 +48,7 @@ public class WebController {
 			List<NameResponseDto> nameDtos = gameService.findAllGames().stream()
 				.map(NameResponseDto::new)
 				.collect(Collectors.toList());
-			model.put("GAMES", nameDtos);
+			model.put("names", nameDtos);
 			return render(model, MAIN_PAGE);
 		});
 	}
@@ -56,12 +56,12 @@ public class WebController {
 	private void enterNewGame(Map<String, Object> model) {
 		post("/new_game", (request, response) -> {
 			Map<String, String> name = RequestToMapConverter.ofSingle(request);
-			ChessGame game = new ChessGame(name.get("GAME_NAME"), new Ready(BoardInitializer.generate()));
+			ChessGame game = new ChessGame(name.get("name"), new Ready(BoardInitializer.generate()));
 
 			gameService.saveGame(game);
 
 			model.putAll(BoardResponseDto.empty().getValue());
-			model.put("GAME_NAME", game.getName());
+			model.put("name", game.getName());
 			return render(model, GAME_PAGE);
 		});
 	}
@@ -83,17 +83,17 @@ public class WebController {
 	}
 
 	private void startGame(Map<String, Object> model) {
-		get("/start/:GAME_NAME", (request, response) -> {
-			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(":GAME_NAME"));
+		get("/start/:name", (request, response) -> {
+			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(":name"));
 			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
 		});
 	}
 
 	private void move(Map<String, Object> model) {
-		post("/move/:GAME_NAME", (request, response) -> {
+		post("/move/:name", (request, response) -> {
 			Command command = RequestToCommandConverter.from(request);
-			ChessGame updatedGame = gameService.updateGame(command, request.params(":GAME_NAME"));
+			ChessGame updatedGame = gameService.updateGame(command, request.params(":name"));
 
 			if (updatedGame.isFinished()) {
 				response.redirect("/");

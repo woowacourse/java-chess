@@ -20,8 +20,8 @@
     </style>
 </head>
 <body>
-<h1>♟️ {{GAME_NAME}}</h1>
-<a href="/start/{{GAME_NAME}}">시작하기</a></p>
+<h1>♟️ {{name}}</h1>
+<a href="/start/{{name}}">시작하기</a></p>
 <a href="/">메인으로</a></p>
 <table>
     <tr>
@@ -105,11 +105,11 @@
         <td><img src="/image/{{h1}}.png" class="piece-img"/></td>
     </tr>
 </table>
-<form action="/move/{{GAME_NAME}}" method="post">
-    {{TURN}}차례<br>
-    {{#CHESS_SCORE}}
+<form action="/move/{{name}}" method="post">
+    {{turn}}차례<br>
+    {{#chessScore}}
     WHITE 점수 : {{whiteScore}}, BLACK 점수 : {{blackScore}} <br>
-    {{/CHESS_SCORE}}
+    {{/chessScore}}
     Source <input type="text" name="source"/> Target <input type="text" name="target"/>
     <input type="submit" value="이동"> <br>
     예시 : a1 b2
