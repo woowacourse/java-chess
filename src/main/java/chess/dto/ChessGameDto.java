@@ -8,14 +8,18 @@ import java.util.Map;
 
 public class ChessGameDto {
 
-    private final Map<String, String> board;
     private final String code;
     private final String message;
+    private final Map<String, String> board;
 
-    public ChessGameDto(final ChessGame chessGame, final String code, final String message) {
-        this.board = createBoard(chessGame.getBoard());
+    public ChessGameDto(final ChessGame chessGame) {
+        this("success", "", chessGame);
+    }
+
+    public ChessGameDto(final String code, final String message, final ChessGame chessGame) {
         this.code = code;
         this.message = message;
+        this.board = createBoard(chessGame.getBoard());
     }
 
     private Map<String, String> createBoard(final Map<Position, Piece> board) {
