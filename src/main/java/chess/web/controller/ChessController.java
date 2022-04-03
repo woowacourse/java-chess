@@ -40,11 +40,17 @@ public class ChessController {
         post("/move", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
 
+            List<String> chessBoard = chessService.getCurrentChessBoard();
+
             String moveCommand = request.queryParams("move");
 
-            List<String> chessBoard = chessService.move(moveCommand);
-
-            model.put("chessboard", chessBoard);
+            try {
+                chessBoard = chessService.move(moveCommand);
+                model.put("chessboard", chessBoard);
+            } catch(IllegalArgumentException e) {
+                model.put("error", e.getMessage());
+                model.put("chessboard", chessBoard);
+            }
 
             return render(model, "index.html");
         });

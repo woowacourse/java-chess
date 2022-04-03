@@ -18,6 +18,10 @@ public class ChessService {
         return chessGame.getChessBoard();
     }
 
+    public List<String> getCurrentChessBoard() {
+        return chessGame.getChessBoard();
+    }
+
     public List<String> move(String moveCommand) {
         Command command = Command.from(moveCommand);
 

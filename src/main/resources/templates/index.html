@@ -15,6 +15,11 @@
       <input type="text"  maxlength="10" name="move">
       <button>이동하기</button>
     </form>
+    <span>
+      {{#if error}}
+        {{error}}
+      {{/if}}
+    </span>
     <div id="chessboard">
       <div id="chessboard-container">
         <div id="a8" class="black square">
