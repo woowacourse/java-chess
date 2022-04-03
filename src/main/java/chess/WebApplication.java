@@ -1,17 +1,15 @@
 package chess;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.controller.ChessController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
 	public static void main(String[] args) {
-		new ChessController().run();
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			return render(model, "index.html");
