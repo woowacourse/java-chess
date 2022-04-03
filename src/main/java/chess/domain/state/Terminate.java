@@ -12,4 +12,9 @@ public final class Terminate extends End {
     public Winner findWinner() {
         return Winner.TERMINATE;
     }
+
+    @Override
+    public boolean isTerminated() {
+        return true;
+    }
 }

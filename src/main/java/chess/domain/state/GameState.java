@@ -23,4 +23,8 @@ public interface GameState {
     double calculateWhiteScore();
 
     Board getBoard();
+
+    boolean isBlackWin();
+
+    boolean isTerminated();
 }

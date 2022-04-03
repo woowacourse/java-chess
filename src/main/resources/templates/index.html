@@ -13,13 +13,13 @@
     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMemberModal">
         멤버 추가
     </button>
-    <a class="btn btn-dark" href="/history">기록 확인</a>
+    <a class="btn btn-dark" href="/member-management">기록 확인</a>
 
     {{#games}}
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">{{id}} 번째 게임</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{participant.white.name}} vs {{participant.black.name}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{participant.whiteName}} vs {{participant.blackName}}</h6>
                 <a href="/play/{{id}}" class="btn btn-dark">입장</a>
             </div>
         </div>

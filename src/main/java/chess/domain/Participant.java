@@ -11,12 +11,20 @@ public class Participant {
         this.black = black;
     }
 
-    public Member getWhite() {
-        return white;
+    public Long getWhiteId() {
+        return white.getId();
     }
 
-    public Member getBlack() {
-        return black;
+    public Long getBlackId() {
+        return black.getId();
+    }
+
+    public String getWhiteName() {
+        return white.getName();
+    }
+
+    public String getBlackName() {
+        return black.getName();
     }
 
     @Override

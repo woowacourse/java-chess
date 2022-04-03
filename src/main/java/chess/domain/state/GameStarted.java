@@ -30,4 +30,14 @@ public abstract class GameStarted implements GameState {
     public Board getBoard() {
         return board;
     }
+
+    @Override
+    public boolean isBlackWin() {
+        return false;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return false;
+    }
 }

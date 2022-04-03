@@ -11,6 +11,7 @@ import chess.domain.Participant;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
+import chess.dto.GameResultDTO;
 import chess.dto.RankDTO;
 import chess.repository.GameRepository;
 import chess.repository.MemberRepository;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -61,14 +63,6 @@ public class WebController {
             return render(model, "play.html");
         });
 
-        post("/command/:gameId", (req, res) -> {
-            Long gameId = Long.valueOf(req.params("gameId"));
-            ChessGame chessGame = gameRepository.findById(gameId).get();
-            String command = req.body();
-            executeCommand(chessGame, command);
-            return "";
-        });
-
         get("/result/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
@@ -77,6 +71,24 @@ public class WebController {
             model.put("whiteScore", chessGame.getWhiteScore());
             model.put("blackScore", chessGame.getBlackScore());
             return render(model, "result.html");
+        });
+
+        get("/history/:memberId", (req, res) -> {
+            Long memberId = Long.valueOf(req.params("memberId"));
+            List<ChessGame> games = gameRepository.findHistorysByMemberId(memberId);
+            List<GameResultDTO> history = games.stream()
+                    .map(game -> GameResultDTO.toResultDTO(game, memberId))
+                    .collect(Collectors.toList());
+            Map<String, Object> model = new HashMap<>();
+            model.put("history", history);
+            return render(model, "history.html");
+        });
+
+        get("/member-management", (req, res) -> {
+            List<Member> members = memberRepository.findAll();
+            Map<String, Object> model = new HashMap<>();
+            model.put("members", members);
+            return render(model, "member-management.html");
         });
 
         /**
@@ -102,6 +114,14 @@ public class WebController {
         post("/member", (req, res) -> {
             String name = req.queryParams("name");
             memberRepository.save(new Member(name));
+            return "";
+        });
+
+        post("/command/:gameId", (req, res) -> {
+            Long gameId = Long.valueOf(req.params("gameId"));
+            ChessGame chessGame = gameRepository.findById(gameId).get();
+            String command = req.body();
+            executeCommand(chessGame, command);
             return "";
         });
 

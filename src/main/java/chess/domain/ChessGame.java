@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.state.GameState;
 import chess.domain.piece.Position;
+import java.util.Optional;
 
 public class ChessGame {
     private Long id;
@@ -65,6 +66,20 @@ public class ChessGame {
 
     public double getBlackScore() {
         return state.calculateBlackScore();
+    }
+
+    public Long getWinnerId() {
+        if (isTerminated()) {
+            return null;
+        }
+        if (state.isBlackWin()) {
+            return participant.getBlackId();
+        }
+        return participant.getWhiteId();
+    }
+
+    public boolean isTerminated() {
+        return state.isTerminated();
     }
 
     public boolean isBlackTurn() {

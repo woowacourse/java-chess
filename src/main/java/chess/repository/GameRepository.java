@@ -11,4 +11,6 @@ public interface GameRepository {
     Optional<ChessGame> findById(Long id);
 
     List<ChessGame> findAll();
+
+    List<ChessGame> findHistorysByMemberId(Long memberId);
 }

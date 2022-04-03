@@ -4,8 +4,10 @@ import chess.domain.ChessGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class MemoryGameRepository implements GameRepository {
 
@@ -27,6 +29,16 @@ public class MemoryGameRepository implements GameRepository {
     @Override
     public List<ChessGame> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    @Override
+    public List<ChessGame> findHistorysByMemberId(Long memberId) {
+        return store.values()
+                .stream()
+                .filter(ChessGame::isEnd)
+                .filter(game -> Objects.equals(game.getParticipant().getBlackId(), memberId)
+                        || Objects.equals(game.getParticipant().getWhiteId(), memberId))
+                .collect(Collectors.toList());
     }
 
     void deleteAll() {
