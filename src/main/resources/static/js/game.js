@@ -13,6 +13,10 @@ window.onload = function () {
     makeRow(row, i);
     section.appendChild(row);
   }
+
+  fetch("/api/start")
+      .then(res => res.json())
+      .then(data => console.log(data));
 }
 
 function makeRow(rowDiv, rowIndex) {

@@ -42,6 +42,10 @@ public abstract class Piece {
         return pieceType;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (!(o instanceof Piece)) {

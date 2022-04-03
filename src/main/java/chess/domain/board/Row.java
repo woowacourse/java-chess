@@ -41,4 +41,8 @@ public enum Row {
     public Row move(final int rowDifference) {
         return from(value + rowDifference);
     }
+
+    public int getValue() {
+        return value;
+    }
 }
