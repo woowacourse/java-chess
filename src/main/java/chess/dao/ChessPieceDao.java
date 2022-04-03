@@ -18,34 +18,40 @@ import java.util.stream.IntStream;
 
 public class ChessPieceDao {
 
-    public List<ChessPieceDto> findAll() {
-        final String sql = "SELECT * FROM ChessBoard";
+    public List<ChessPieceDto> findAllByRoomName(final String roomName) {
+        final String sql = "SELECT * FROM ChessPiece WHERE Room_Name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql);
-             final ResultSet resultSet = statement.executeQuery()) {
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            final List<ChessPieceDto> dtos = new ArrayList<>();
-            while (resultSet.next()) {
-                dtos.add(ChessPieceDto.of(
-                        resultSet.getString("Position"),
-                        resultSet.getString("ChessPiece"),
-                        resultSet.getString("Color")
-                ));
+            statement.setString(1, roomName);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+
+                final List<ChessPieceDto> dtos = new ArrayList<>();
+                while (resultSet.next()) {
+                    dtos.add(ChessPieceDto.of(
+                            resultSet.getString("Position"),
+                            resultSet.getString("ChessPiece"),
+                            resultSet.getString("Color")
+                    ));
+                }
+                return dtos;
             }
-            return dtos;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    public int deleteByPosition(final Position position) {
-        final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
+    public int deleteByPosition(final String roomName, final Position position) {
+        final String sql = "DELETE FROM ChessPiece WHERE Room_Name = ? AND Position = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, position.getValue());
+
+            statement.setString(1, roomName);
+            statement.setString(2, position.getValue());
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,11 +59,13 @@ public class ChessPieceDao {
         return 0;
     }
 
-    public int deleteAll() {
-        final String sql = "DELETE FROM ChessBoard";
+    public int deleteAllByRoomName(final String roomName) {
+        final String sql = "DELETE FROM ChessPiece WHERE Room_Name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, roomName);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,10 +73,10 @@ public class ChessPieceDao {
         return 0;
     }
 
-    public int saveAll(final Map<Position, ChessPiece> pieceByPosition) {
-        String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES ";
+    public int saveAll(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
+        String sql = "INSERT INTO ChessPiece(Room_Name, Position, ChessPiece, Color) VALUES ";
         sql += IntStream.range(0, pieceByPosition.size())
-                .mapToObj(i -> "(?, ?, ?)")
+                .mapToObj(i -> "(?, ?, ?, ?)")
                 .collect(Collectors.joining(", "));
 
         try (final Connection connection = ConnectionGenerator.getConnection();
@@ -79,6 +87,7 @@ public class ChessPieceDao {
                 final Position position = entry.getKey();
                 final ChessPiece chessPiece = entry.getValue();
 
+                statement.setString(count++, roomName);
                 statement.setString(count++, position.getValue());
                 statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
                 statement.setString(count++, chessPiece.color().getValue());
@@ -91,14 +100,15 @@ public class ChessPieceDao {
         return 0;
     }
 
-    public int update(final Position from, final Position to) {
-        final String sql = "UPDATE ChessBoard SET Position = ? WHERE Position = ?";
+    public int update(final String roomName, final Position from, final Position to) {
+        final String sql = "UPDATE ChessPiece SET Position = ? WHERE Room_Name = ? AND Position = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, to.getValue());
-            statement.setString(2, from.getValue());
+            statement.setString(2, roomName);
+            statement.setString(3, from.getValue());
 
             return statement.executeUpdate();
         } catch (SQLException e) {

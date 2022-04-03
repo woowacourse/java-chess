@@ -10,14 +10,15 @@ import java.sql.SQLException;
 
 public class StatusDao {
 
-    public int save(final GameStatus gameStatus, final Color currentTurn) {
-        final String sql = "INSERT INTO Status(GameStatus, CurrentTurn) VALUES (?, ?)";
+    public int saveByRoomName(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
+        final String sql = "INSERT INTO Status(Room_Name, GameStatus, CurrentTurn) VALUES (?, ?, ?)";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, gameStatus.getValue());
-            statement.setString(2, currentTurn.getValue());
+            statement.setString(1, roomName);
+            statement.setString(2, gameStatus.getValue());
+            statement.setString(3, currentTurn.getValue());
 
             return statement.executeUpdate();
         } catch (SQLException e) {
@@ -26,11 +27,13 @@ public class StatusDao {
         return 0;
     }
 
-    public int delete() {
-        final String sql = "DELETE FROM Status";
+    public int deleteByRoomName(final String roomName) {
+        final String sql = "DELETE FROM Status WHERE Room_Name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, roomName);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,20 +41,24 @@ public class StatusDao {
         return 0;
     }
 
-    public StatusDto find() {
-        final String sql = "SELECT * FROM Status";
+    public StatusDto findByRoomName(final String roomName) {
+        final String sql = "SELECT * FROM Status WHERE Room_Name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql);
-             final ResultSet resultSet = statement.executeQuery()) {
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            if (!resultSet.next()) {
-                return null;
+            statement.setString(1, roomName);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+
+                if (!resultSet.next()) {
+                    return null;
+                }
+                return StatusDto.of(
+                        resultSet.getString("GameStatus"),
+                        resultSet.getString("CurrentTurn")
+                );
             }
-            return StatusDto.of(
-                    resultSet.getString("GameStatus"),
-                    resultSet.getString("CurrentTurn")
-            );
         } catch (SQLException e) {
             e.printStackTrace();
         }

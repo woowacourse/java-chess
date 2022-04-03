@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.dao.ChessPieceDao;
+import chess.dao.RoomDao;
 import chess.dao.StatusDao;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
@@ -8,6 +9,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
+import chess.dto.RoomDto;
 import chess.dto.StatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
@@ -21,9 +23,25 @@ public class ChessGame {
     private ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    public ChessGame() {
+    public ChessGame(final ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
+        this.gameStatus = GameStatus.READY;
+    }
+
+    private ChessGame(final ChessBoard chessBoard, final GameStatus gameStatus) {
+        this.chessBoard = chessBoard;
+        this.gameStatus = gameStatus;
+    }
+
+    public static ChessGame from(final String roomName) {
+        final RoomDao roomDao = new RoomDao();
+        final RoomDto roomDto = roomDao.findByName(roomName);
+        if (Objects.isNull(roomDto)) {
+            roomDao.save(roomName);
+        }
+
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
-        Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAll()
+        Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName)
                 .stream()
                 .collect(Collectors.toMap(
                         ChessPieceDto::getPosition,
@@ -35,7 +53,7 @@ public class ChessGame {
         }
 
         final StatusDao statusDao = new StatusDao();
-        final StatusDto statusDto = statusDao.find();
+        final StatusDto statusDto = statusDao.findByRoomName(roomName);
 
         Color currentTurn = null;
         GameStatus gameStatus = null;
@@ -47,28 +65,21 @@ public class ChessGame {
             currentTurn = statusDto.getCurrentTurn();
             gameStatus = statusDto.getGameStatus();
         }
-
-        this.chessBoard = new ChessBoard(pieceByPosition, currentTurn);
-        this.gameStatus = gameStatus;
+        return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
     }
 
-    public ChessGame(final ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-        this.gameStatus = GameStatus.READY;
-    }
-
-    public void updateDB() {
+    public void updateDB(final String roomName) {
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
-        chessPieceDao.deleteAll();
-        chessPieceDao.saveAll(chessBoard.findAllPiece());
+        chessPieceDao.deleteAllByRoomName(roomName);
+        chessPieceDao.saveAll(roomName, chessBoard.findAllPiece());
 
-        updateStatus();
+        updateStatus(roomName);
     }
 
-    public void updateStatus() {
+    public void updateStatus(final String roomName) {
         final StatusDao statusDao = new StatusDao();
-        statusDao.delete();
-        statusDao.save(gameStatus, chessBoard.currentTurn());
+        statusDao.deleteByRoomName(roomName);
+        statusDao.saveByRoomName(roomName, gameStatus, chessBoard.currentTurn());
     }
 
     public MoveResult move(final Position from, final Position to) {

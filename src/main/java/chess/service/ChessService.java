@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    public Map<String, Object> findAllPiece() {
+    public Map<String, Object> findAllPiece(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             model = toModel(chessGame.findAllPiece());
         } catch (IllegalArgumentException e) {
@@ -28,25 +28,25 @@ public class ChessService {
         return model;
     }
 
-    public Map<String, Object> startGame() {
+    public Map<String, Object> startGame(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final StartResult result = chessGame.start();
             model = toModel(result.getPieceByPosition());
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
-                model = findAllPiece();
+                model = findAllPiece(roomName);
             }
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
+        chessGame.updateDB(roomName);
         return model;
     }
 
-    public Map<String, Object> move(String fromPosition, String toPosition) {
+    public Map<String, Object> move(final String roomName, String fromPosition, String toPosition) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final Position from = Position.from(fromPosition);
             final Position to = Position.from(toPosition);
@@ -56,22 +56,22 @@ public class ChessService {
             model.put("isKingDie", result.isKingDie());
 
             final ChessPieceDao chessPieceDao = new ChessPieceDao();
-            chessPieceDao.deleteByPosition(to);
-            chessPieceDao.update(from, to);
+            chessPieceDao.deleteByPosition(roomName, to);
+            chessPieceDao.update(roomName, from, to);
 
-            chessGame.updateStatus();
+            chessGame.updateStatus(roomName);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
-                model = findAllPiece();
+                model = findAllPiece(roomName);
             }
             model.put("error", e.getMessage());
         }
         return model;
     }
 
-    public Map<String, Object> endGame() {
+    public Map<String, Object> endGame(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final EndResult result = chessGame.end();
             final Score score = result.getScore();
@@ -81,13 +81,13 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateStatus();
+        chessGame.updateStatus(roomName);
         return model;
     }
 
-    public Map<String, Object> findScore() {
+    public Map<String, Object> findScore(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final Score score = chessGame.calculateScore();
             for (final Color color : Color.values()) {
@@ -99,9 +99,9 @@ public class ChessService {
         return model;
     }
 
-    public Map<String, Object> findCurrentTurn() {
+    public Map<String, Object> findCurrentTurn(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final Color currentTurn = chessGame.findCurrentTurn();
             model.put("current_turn", currentTurn.getValue());
@@ -111,9 +111,9 @@ public class ChessService {
         return model;
     }
 
-    public Map<String, Object> result() {
+    public Map<String, Object> result(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.from(roomName);
         try {
             final Color winColor = chessGame.findWinColor();
             if (Objects.isNull(winColor)) {
