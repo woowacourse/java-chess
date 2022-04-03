@@ -6,10 +6,10 @@ public enum Color {
     WHITE("흰말"),
     ;
 
-    private final String name;
+    private final String value;
 
-    Color(String name) {
-        this.name = name;
+    Color(String value) {
+        this.value = value;
     }
 
     public static Color opposite(final Color color) {
@@ -20,7 +20,7 @@ public enum Color {
     }
 
     public String value() {
-        return name;
+        return value;
     }
 
     public boolean isBlack() {

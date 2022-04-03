@@ -1,6 +1,8 @@
 package chess.domain.game;
 
 import chess.machine.Command;
+import chess.view.ResponseDto;
+import chess.view.StatusDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +19,10 @@ public class ChessController {
             return getResponseDto(game, command);
         }
         return new ResponseDto(400, "잘못된 명령어 입니다.", game.isEnd());
+    }
+
+    public StatusDto status(final Game game) {
+        return StatusDto.of(game);
     }
 
     private ResponseDto getResponseDto(Game game, String command) {

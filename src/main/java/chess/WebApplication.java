@@ -3,8 +3,9 @@ package chess;
 import chess.domain.game.BoardInitializer;
 import chess.domain.game.ChessController;
 import chess.domain.game.Game;
-import chess.domain.game.ResponseDto;
+import chess.view.ResponseDto;
 import chess.view.BoardDto;
+import chess.view.StatusDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -33,6 +34,10 @@ public class WebApplication {
             game.restart(new BoardInitializer());
             res.redirect("/");
             return null;
+        });
+        get("/status", (req, res) -> {
+            final StatusDto statusDto = controller.status(game);
+            return statusDto.toString();
         });
     }
 

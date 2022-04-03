@@ -6,18 +6,45 @@
     <script>
         let first = '';
         let second = '';
+
         function clicked(id) {
-            if(first !== '') {
+            if (first !== '') {
                 second = id;
             } else {
                 first = id;
             }
 
-            if(first !== '' && second !== '') {
+            if (first !== '' && second !== '') {
                 sendToServer(first, second);
                 first = '';
                 second = '';
             }
+        }
+
+        function checkStatus() {
+            fetch('/status', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "text/plain",
+                }
+            }).then((response) => {
+                response.json().then(data => {
+                    document.getElementById("statusResult")
+                        .innerHTML = "검은말 : " + data.BLACK + "<br >"
+                        + "흰말 : " + data.WHITE + "<br >"
+                        + calculateWinner(data.BLACK, data.WHITE);
+                });
+            });
+        }
+
+        function calculateWinner(black, white) {
+            if (black === white) {
+                return "draw!"
+            }
+            if (black > white) {
+                return "black win!"
+            }
+            return "white win!";
         }
 
         function sendToServer(first, second) {
@@ -63,9 +90,9 @@
     {{/board}}
 </table>
 <br/>
-<label> 명령어
-    <input type="text" id="command" name="command"/>
-</label>
-<button id="btn" onclick="sendToServer()">제출</button>
+<button id="btn" onclick="checkStatus()">status</button>
+<p id="statusResult">
+
+</p>
 </body>
 </html>
