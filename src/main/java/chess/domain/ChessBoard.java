@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final int RUNNING_KING_COUNT = 2;
-    private static final String NOT_MOVABLE_EXCEPTION_MESSAGE = "해당 Position으로 이동할 수 없습니다.";
 
     private final Map<Position, Piece> pieces;
 
@@ -42,62 +41,30 @@ public class ChessBoard {
     public void move(GameCommand gameCommand) {
         Position fromPosition = gameCommand.getFromPosition();
         Position toPosition = gameCommand.getToPosition();
-        Piece fromPiece = selectPiece(fromPosition);
-
-        checkTargetEnemyOrEmpty(fromPiece, selectPiece(toPosition));
-        checkMovableDirection(fromPosition, toPosition, fromPiece);
-        checkBlockInDirection(fromPosition, toPosition, fromPiece);
-        movePiece(fromPosition, toPosition, fromPiece);
-    }
-
-    private void checkTargetEnemyOrEmpty(Piece fromPiece, Piece toPiece) {
-        if (!toPiece.isEmpty() && fromPiece.isSameColor(toPiece)) {
-            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void checkMovableDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
-        if (!fromPiece.canMove(fromPosition, toPosition)) {
-            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void checkBlockInDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
+        MoveChecker moveChecker = new MoveChecker();
         Direction direction = Direction.getDirectionByPositions(fromPosition, toPosition);
-        checkRouteNotBlock(fromPosition, toPosition, direction);
-        checkPawnMove(toPosition, fromPiece, direction);
+
+        checkMovable(fromPosition, toPosition, direction, moveChecker);
+        checkRouteNotBlock(fromPosition, toPosition, direction, moveChecker);
+        movePiece(fromPosition, toPosition, selectPiece(fromPosition));
     }
 
-    private void checkRouteNotBlock(Position fromPosition, Position toPosition, Direction direction) {
+    private void checkMovable(Position fromPosition, Position toPosition,
+                              Direction direction, MoveChecker moveChecker) {
+        Piece fromPiece = selectPiece(fromPosition);
+        Piece toPiece = selectPiece(toPosition);
+
+        moveChecker.checkTargetEnemyOrEmpty(fromPiece, toPiece);
+        moveChecker.checkMovableDirection(fromPosition, toPosition, fromPiece);
+        moveChecker.checkPawnMove(fromPiece, toPiece, direction);
+    }
+
+    private void checkRouteNotBlock(Position fromPosition, Position toPosition,
+                                    Direction direction, MoveChecker moveChecker) {
         for (Position nextPosition = fromPosition.toDirection(direction);
              nextPosition != toPosition;
              nextPosition = nextPosition.toDirection(direction)) {
-            checkEmpty(selectPiece(nextPosition));
-        }
-    }
-
-    private void checkPawnMove(Position toPosition, Piece fromPiece, Direction direction) {
-        if (fromPiece.isSamePieceType(PieceType.PAWN)) {
-            checkPawnStraightMove(toPosition, direction);
-            checkEnemyInDiagonal(fromPiece, selectPiece(toPosition));
-        }
-    }
-
-    private void checkPawnStraightMove(Position toPosition, Direction direction) {
-        if (direction.isPawnStraigtDirection()) {
-            checkEmpty(selectPiece(toPosition));
-        }
-    }
-
-    private void checkEmpty(Piece piece) {
-        if (!piece.isEmpty()) {
-            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void checkEnemyInDiagonal(Piece fromPiece, Piece toPiece) {
-        if (toPiece.isEmpty() || fromPiece.isSameColor(toPiece)) {
-            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
+            moveChecker.checkEmpty(selectPiece(nextPosition));
         }
     }
 
