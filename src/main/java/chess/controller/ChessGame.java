@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.state.ChessGameState;
 import chess.controller.state.Ready;
+import chess.controller.state.Turn;
 import chess.domain.board.Board;
 import chess.dto.MoveDto;
 
@@ -23,6 +24,10 @@ public class ChessGame {
 
     public void end() {
         chessGameState = chessGameState.end();
+    }
+
+    public Turn getTurn() {
+        return chessGameState.getTurn();
     }
 
     public Board getBoard() {

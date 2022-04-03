@@ -25,6 +25,11 @@ public class Finished implements ChessGameState {
     }
 
     @Override
+    public Turn getTurn() {
+        return Turn.END;
+    }
+
+    @Override
     public Board getBoard() {
         throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }

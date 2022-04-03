@@ -3,11 +3,9 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
+import chess.dto.TurnDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +34,18 @@ public class ChessWebController {
         });
 
         post("/move", (req, res) -> {
+            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            chessGame.move(moveDto);
+            BoardDto boardDto = BoardDto.from(chessGame.getBoard());
+            return gson.toJson(boardDto.getBoard());
+        });
+
+        get("/turn", (req, res) -> {
+            TurnDto boardDto = TurnDto.from(chessGame.getTurn());
+            return gson.toJson(boardDto.getColor());
+        });
+
+        post("/status", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             chessGame.move(moveDto);
             BoardDto boardDto = BoardDto.from(chessGame.getBoard());

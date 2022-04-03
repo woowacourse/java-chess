@@ -32,6 +32,11 @@ public class Ready implements ChessGameState {
     }
 
     @Override
+    public Turn getTurn() {
+        return Turn.START;
+    }
+
+    @Override
     public Board getBoard() {
         throw new IllegalStateException("게임 시작 전에는 start 또는 end만 가능합니다.");
     }

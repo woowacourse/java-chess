@@ -10,6 +10,11 @@ public class BlackPlaying extends Playing {
     }
 
     @Override
+    public Turn getTurn() {
+        return Turn.BLACK_TURN;
+    }
+
+    @Override
     public ChessGameState move(String from, String to) {
         MoveResult result = movePiece(from, to, Color.BLACK);
         return getMoveResult(result, MoveResult.FAIL);

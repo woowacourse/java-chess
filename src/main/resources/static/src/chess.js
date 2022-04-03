@@ -16,12 +16,29 @@ startButton.addEventListener("click", async function startOrEnd() {
 async function start() {
     const board = await initBoard();
     setBoard(board);
-    setInfo("시작");
+    await setTurn();
 }
 
 async function initBoard() {
     return await fetch("/start")
         .then(response => response.json());
+}
+
+async function setTurn() {
+    let message = await fetch("/turn")
+        .then(response => response.json());
+
+    let info = document.getElementById("info");
+
+    if (message === "WHITE_TURN") {
+        message = "흰색 팀의 순서입니다";
+    }
+
+    if (message === "BLACK_TURN") {
+        message = "검은색 팀의 순서입니다";
+    }
+
+    info.textContent = message;
 }
 
 function setBoard(board) {
@@ -33,11 +50,6 @@ function setBoard(board) {
     }
 }
 
-function setInfo(message) {
-    let info = document.getElementById("info");
-    info.textContent = message;
-}
-
 function putPiece(piece, div) {
     const pieceImage = document.createElement("img")
     pieceImage.src = "/images/" + piece.color.toLowerCase() + "-" + piece.pieceType.toLowerCase() + ".png";
@@ -46,7 +58,7 @@ function putPiece(piece, div) {
 
 async function end() {
     clearBoard();
-    setInfo("끝");
+    await setTurn();
 }
 
 function clearBoard() {
@@ -77,6 +89,7 @@ async function clickPosition(id) {
         to = id;
         const boardAfterMove = await movePiece(from, to);
         setBoard(boardAfterMove);
+        await setTurn();
 
         from = "";
         to = "";
