@@ -18,14 +18,16 @@ public class ChessGame {
         board = boardGenerator.create();
     }
 
-    public void move(List<String> inputs) {
+    public boolean move(List<String> inputs) {
         try {
             validCheck();
             board.move(Position.of(inputs.get(FROM_POSITION_INDEX))
                     , Position.of(inputs.get(TO_POSITION_INDEX)));
+            return true;
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
+        return false;
     }
 
     public Score status() {

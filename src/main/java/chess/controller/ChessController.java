@@ -29,15 +29,7 @@ public class ChessController {
 
         // 보드 출력
         get("/board", (request, response) -> {
-            Board board = chessGame.getBoard();
-
-            Map<String, Object> model = new HashMap<>();
-            for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
-                model.put(entry.getKey().getName()
-                        , new PieceDto(entry.getValue()));
-            }
-            model.put("turn", chessGame.getTurn());
-
+            Map<String, Object> model = generateBoardModel(chessGame);
             return render(model, "board.html");
         });
 
@@ -55,10 +47,13 @@ public class ChessController {
             inputs.add(request.queryParams("from"));
             inputs.add(request.queryParams("to"));
 
-            chessGame.move(inputs);
+            Map<String, Object> model = new HashMap<>();
+            if (!chessGame.move(inputs)) {
+                model.put("message", "잘못된 이동입니다.");
+            }
+            model.putAll(generateBoardModel(chessGame));
 
-            response.redirect("/board");
-            return null;
+            return render(model, "board.html");
         });
 
         // 게임 종료
@@ -67,6 +62,18 @@ public class ChessController {
             response.redirect("/");
             return null;
         });
+    }
+
+    private Map<String, Object> generateBoardModel(ChessGame chessGame) {
+        Board board = chessGame.getBoard();
+
+        Map<String, Object> model = new HashMap<>();
+        for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
+            model.put(entry.getKey().getName()
+                    , new PieceDto(entry.getValue()));
+        }
+        model.put("turn", chessGame.getTurn());
+        return model;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
