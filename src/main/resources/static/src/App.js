@@ -1,4 +1,5 @@
 const start = document.getElementById('start-button');
+const restart = document.getElementById('restart-button');
 const IMAGE_PATH = "./images/";
 const BOARD = document.querySelector("#board");
 const CURRENT_TEAM = document.querySelector("#current-team");
@@ -32,11 +33,12 @@ start.addEventListener('click', function () {
         start.textContent = "End";
         return
     }
+    initBoard();
     start.textContent = "Start";
 })
 
 function initBoard() {
-    fetch('/start')
+    fetch('/api/load')
         .then(res => res.json())
         .then(imageSetting)
 }
@@ -62,7 +64,7 @@ function turnSetting(response) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
     }
 
-    if (response["turn"] == 'WHITE') {
+    if (response["turn"] == 'white') {
         currentTurn = "하얀색"
     } else {
         currentTurn = "검정색"
@@ -120,9 +122,8 @@ function movePiece(from, to) {
         from: from,
         to: to
     }
-    console.log(from, to)
 
-    fetch('/move', {
+    fetch('/api/move', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

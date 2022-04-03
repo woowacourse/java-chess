@@ -45,8 +45,8 @@ public class ChessService {
 
     private Turn updatePieces(MoveDto moveDto, Turn turn, Piece piece) {
         Turn changedTurn = changeTurn(turn);
-        pieceDao.updatePosition(moveDto.getFrom(), "empty", "none");
-        pieceDao.updatePosition(moveDto.getTo(), piece.getType(), piece.getTeam().value());
+        pieceDao.updatePieceByPosition("empty", "none", moveDto.getFrom());
+        pieceDao.updatePieceByPosition(piece.getType(), piece.getTeam().value(), moveDto.getTo());
         return changedTurn;
     }
 
@@ -54,5 +54,15 @@ public class ChessService {
         Turn change = turn.change();
         boardDao.updateTurnById(1L, change.getTeam().value());
         return change;
+    }
+
+    public Board initBoard() {
+        Board board = Board.create(Pieces.createInit(), Turn.init());
+        List<Piece> pieces = board.getPieces().getPieces();
+        boardDao.updateTurnById(1L, "white");
+        for (Piece piece : pieces) {
+            pieceDao.updatePieceByPosition(piece.getType(), piece.getTeam().value(), piece.getPosition().name());
+        }
+        return board;
     }
 }

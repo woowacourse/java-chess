@@ -18,14 +18,6 @@ public class BoardDto {
         this.board = board;
     }
 
-    public static BoardDto of(String turn, List<Piece> pieces){
-        Map<String, String> board = pieces.stream()
-                .collect(Collectors.toMap(
-                        piece -> piece.getPosition().name(),
-                        Piece::getName
-                ));
-        return new BoardDto(turn, board);
-    }
     public Map<String, String> getBoard() {
         return board;
     }

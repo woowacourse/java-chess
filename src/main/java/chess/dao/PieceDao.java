@@ -5,9 +5,7 @@ import chess.piece.Piece;
 import java.util.List;
 
 public interface PieceDao {
-    void updatePosition(final String position, final String type, final String team);
+    void updatePieceByPosition(final String type, final String team, final String position);
 
     List<Piece> findAllByBoardId(Long boardId);
-
-    Long findIdByPositionAndBoardId(String position, Long boardId);
 }
