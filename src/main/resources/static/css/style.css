@@ -3,16 +3,6 @@
   display: block;
   position: absolute;
   margin: 0 auto;
-  width: 800px;
-  height: 800px;
-}
-
-#chess-board {
-  display: block;
-  position: absolute;
-  margin: 0 auto;
-  width: 800px;
-  height: 800px;
 }
 
 div {
@@ -20,12 +10,11 @@ div {
 }
 
 .row {
-  width: 800px;
-  height: 100px;
 }
 
 .square {
-  width: 100px;
-  height: 100px;
+  border: 1px solid;
+  width: 80px;
+  height: 80px;
   float: left;
 }
