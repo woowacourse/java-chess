@@ -24,6 +24,13 @@ public enum Row {
         this.value = value;
     }
 
+    static Row from(String name) {
+        return Arrays.stream(values())
+                .filter(row -> row.toString().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
+    }
+
     private static Row from(int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)

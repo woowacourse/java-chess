@@ -1,16 +1,19 @@
 package chess;
 
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
+
+import chess.command.Command;
+import chess.command.Move;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
-import static spark.Spark.staticFileLocation;
 
 public class WebApplication {
 
@@ -23,10 +26,28 @@ public class WebApplication {
         });
 
         get("/start", (req, res) -> {
-            Map<Position, Piece> squares = gameController.start();
-            Map<String, Object> model = squares.entrySet().stream()
+            gameController.start();
+            res.redirect("/play");
+            return null;
+        });
+
+        get("/play", (req, res) -> {
+            Map<Position, Piece> board = gameController.getBoard();
+            Map<String, Object> model = board.entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
             return render(model, "index.html");
+        });
+
+        post("/move", (req, res) -> {
+            Map<String, String> positions = Arrays.stream(req.body().split("&"))
+                    .collect(Collectors.toMap(
+                            data -> data.substring(0, data.indexOf("=")),
+                            data -> data.substring(data.indexOf("=") + 1)
+                    ));
+            System.out.println("소스 위치 : " + positions.get("source"));
+            gameController.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
+            res.redirect("/play");
+            return null;
         });
     }
 
