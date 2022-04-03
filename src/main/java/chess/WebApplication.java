@@ -22,7 +22,7 @@ public class WebApplication {
         port(8089);
         staticFileLocation("/static");
         var ref = new Object() {
-            State state = Ready.start(BasicChessBoardGenerator.generator());
+            State state = initializeState();
         };
 
         Gson gson = new Gson();
@@ -32,6 +32,12 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
+        get("/initialize", (req, res) -> {
+            ref.state = initializeState();
+            res.redirect("/");
+            return null;
+        });
+
         post("/move", (req, res) -> {
             final MoveCommand command = RequestToCommand.toMoveCommand(req.body());
             ref.state = ref.state.movePiece(Position.of(command.getSource()), Position.of(command.getDestination()));
@@ -39,6 +45,10 @@ public class WebApplication {
 
             return gson.toJson(new MoveResponseDto(command.getSource(), command.getDestination(), finished));
         });
+    }
+
+    private static State initializeState() {
+        return Ready.start(BasicChessBoardGenerator.generator());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

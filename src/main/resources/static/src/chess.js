@@ -2,6 +2,19 @@ var finished = false;
 var source = undefined;
 var destination = undefined;
 
+function gameStart() {
+    $.ajax({
+        type: 'GET',
+        url: '/initialize'
+    }).done(function() {
+        initializePosition();
+        finished = false;
+        location.reload();
+    }).fail(function(error) {
+        alert(JSON.stringify(error));
+    });
+}
+
 function clickPiece(e) {
     if (finished) {
         alert('게임이 종료되었습니다');
