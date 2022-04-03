@@ -1,15 +1,15 @@
 package chess.view.output;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceSymbol;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -51,7 +51,7 @@ public class OutputView {
     private static String getSymbolOfPosition(final Board board, final Position position) {
         if (board.hasPieceInPosition(position)) {
             final Piece piece = board.findPieceInPosition(position);
-            return PieceSymbol.findSymbol(piece);
+            return PieceSymbol.findConsoleSymbol(piece);
         }
         return EMPTY_SYMBOL;
     }

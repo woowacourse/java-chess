@@ -89,4 +89,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(teamColor, position);
     }
+
+    public String getColor() {
+        return teamColor.name();
+    }
 }
