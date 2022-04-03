@@ -231,6 +231,14 @@
         drawBoard(json);
         fetchScore();
         fetchTurn();
+        let element = document.getElementById("white_win");
+        element.style.visibility = "hidden";
+
+        element = document.getElementById("black_win");
+        element.style.visibility = "hidden";
+
+        element = document.getElementById("draw");
+        element.style.visibility = "hidden";
     }
 
     async function end() {
@@ -316,6 +324,7 @@
 
     fetchPiece();
     fetchScore();
+    fetchTurn();
 </script>
 
 </body>
