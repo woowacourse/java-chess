@@ -24,7 +24,7 @@ public class Board {
         return new EnumMap<>(board);
     }
 
-    public Piece movePiece(Position source, Position destination, Team team) {
+    public boolean movePiece(Position source, Position destination, Team team) {
         Piece srcPiece = getPiece(source);
         Piece dstPiece = getPiece(destination);
 
@@ -32,7 +32,7 @@ public class Board {
         srcPiece.move(destination);
         changePiece(source, destination, srcPiece);
 
-        return dstPiece;
+        return isKingDead(dstPiece);
     }
 
     public void validateMovingPiece(Position source, Position destination, Piece piece, Team team) {
@@ -85,7 +85,7 @@ public class Board {
         board.get(destination.getRow()).changePiece(destination.getCol(), piece);
     }
 
-    public boolean isKingDead(Piece piece) {
+    private boolean isKingDead(Piece piece) {
         return piece.isKing();
     }
 }

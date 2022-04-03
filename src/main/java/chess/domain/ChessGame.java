@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.Map;
@@ -28,9 +27,9 @@ public class ChessGame {
     }
 
     public boolean move(String source, String destination) {
-        Piece dstPiece = board.movePiece(Position.from(source), Position.from(destination), team);
+        boolean isKingDead = board.movePiece(Position.from(source), Position.from(destination), team);
         team = Team.switchTeam(team);
-        return board.isKingDead(dstPiece);
+        return isKingDead;
     }
 
     public Team getWinnerTeam() {
