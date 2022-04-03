@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
+import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void set() {
-        chessBoard = new ChessBoard(initBoard());
+        chessBoard = ChessBoardFactory.initBoard();
     }
 
     @Test

@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ChessBoardFactory {
 
-    public static Map<Position, ChessPiece> initBoard() {
+    public static ChessBoard initBoard() {
         Map<Position, ChessPiece> board = new HashMap<>();
         for (Color value : Color.values()) {
             List<ChessPiece> pieces = List.of(
@@ -22,7 +22,7 @@ public class ChessBoardFactory {
                     new Knight(value));
             addPiece(pieces, board);
         }
-        return board;
+        return new ChessBoard(board);
     }
 
     private static void addPiece(List<ChessPiece> pieces, Map<Position, ChessPiece> board) {

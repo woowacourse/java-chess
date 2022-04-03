@@ -1,18 +1,17 @@
 package chess.controller;
 
 import chess.domain.game.board.ChessBoard;
+import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import static chess.domain.game.board.ChessBoardFactory.initBoard;
-
 public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        playTurn(new ChessBoard(initBoard()));
+        playTurn(ChessBoardFactory.initBoard());
     }
 
     private void playTurn(ChessBoard chessBoard) {
