@@ -14,12 +14,21 @@
         체스 게임
     </h1>
 
-    <section class="chess-ui">
-        {{#pieces}}
-        <div class="box">
-            <img src="/images/{{notation}}-{{color}}.png"/>
+    <section>
+        <div class="chess-ui">
+            {{#pieces}}
+            <div class="box">
+                <img src="/images/{{notation}}-{{color}}.png"/>
+            </div>
+            {{/pieces}}
         </div>
-        {{/pieces}}
+
+        <form action="/move" method="post" enctype="text/plain">
+            <div>
+                <input class="text-input" type="text" name="command" id="command" placeholder="a1 a2"/>
+                <input class="submit-input" type="submit" value="제출"/>
+            </div>
+        </form>
     </section>
 </div>
 

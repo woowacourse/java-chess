@@ -7,11 +7,16 @@ body {
     text-align: center;
 }
 
+section {
+    width: 1000px;
+    margin: 0 auto;
+}
+
 .chess-ui {
     display: grid;
+    padding: 30px;
     width: 800px;
     margin: 50px auto;
-    padding: 30px;
     grid-template-columns: repeat(8, 100px);
     grid-template-rows: repeat(8, 100px);
     grid-auto-flow: row;
@@ -20,6 +25,21 @@ body {
 
 .box:hover {
     background-color: #c29e8a;
+}
+
+form {
+    padding: 30px;
+    margin: 50px auto;
+    width: 800px;
+    text-align: center;
+}
+
+.text-input {
+    padding: 20px;
+}
+
+.submit-input {
+    padding: 20px;
 }
 
 img {

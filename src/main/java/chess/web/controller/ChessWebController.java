@@ -19,14 +19,29 @@ public class ChessWebController {
     }
 
     public ModelAndView index(Request request, Response response) {
-        return new ModelAndView(new HashMap<>(), "index.html");
+        List<List<Piece>> board = chessGame.board();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("pieces", new BoardResponse(board).getValue());
+        return new ModelAndView(model, "index.html");
     }
 
     public ModelAndView create(Request request, Response response) {
         chessGame.start();
 
         List<List<Piece>> board = chessGame.board();
+        Map<String, Object> model = new HashMap<>();
+        model.put("pieces", new BoardResponse(board).getValue());
+        return new ModelAndView(model, "index.html");
+    }
 
+    public ModelAndView move(Request request, Response response) {
+        String command = request.body().split("=")[1];
+        String[] commands = command.split(" ");
+
+        chessGame.move(commands[0].trim(), commands[1].trim());
+
+        List<List<Piece>> board = chessGame.board();
         Map<String, Object> model = new HashMap<>();
         model.put("pieces", new BoardResponse(board).getValue());
         return new ModelAndView(model, "index.html");
