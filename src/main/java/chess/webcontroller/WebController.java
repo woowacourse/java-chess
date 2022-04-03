@@ -13,7 +13,7 @@ import chess.domain.command.Command;
 import chess.domain.command.Start;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
-import chess.service.GameService;
+import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -22,7 +22,7 @@ public class WebController {
 	private static final String MAIN_PAGE = "index.html";
 	private static final String GAME_PAGE = "game.html";
 
-	private final GameService gameService = new GameService();
+	private final ChessGameService gameService = new ChessGameService();
 
 	public void run() {
 		port(8081);

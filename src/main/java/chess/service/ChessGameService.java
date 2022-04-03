@@ -2,14 +2,14 @@ package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
+import chess.repository.ChessGameRepository;
 import chess.repository.GameRepository;
-import chess.repository.MemoryGameRepository;
 
-public class GameService {
+public class ChessGameService {
 
 	private static final String NOT_EXIST_GAME = "해당하는 이름의 게임이 존재하지 않습니다.";
 
-	private final GameRepository gameRepository = new MemoryGameRepository();
+	private final GameRepository gameRepository = new ChessGameRepository();
 
 	public void saveGame(ChessGame game) {
 		gameRepository.save(game);
@@ -24,5 +24,9 @@ public class GameService {
 		ChessGame updatedGame = findGame(name).execute(command);
 		gameRepository.update(updatedGame.getName(), updatedGame.getState());
 		return updatedGame;
+	}
+
+	public void deleteGame(String name) {
+		gameRepository.remove(name);
 	}
 }

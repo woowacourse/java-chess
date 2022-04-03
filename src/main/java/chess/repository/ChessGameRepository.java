@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import chess.converter.File;
 import chess.converter.Rank;
+import chess.converter.StringToPieceConverter;
+import chess.converter.StringToPositionConverter;
+import chess.converter.StringToStateConverter;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -44,12 +47,31 @@ public class ChessGameRepository implements GameRepository {
 
 	@Override
 	public Optional<ChessGame> findByName(String name) {
-		return Optional.empty();
+		Map<String, String> idAndState = chessGameDao.selectByName(name);
+		if (idAndState.isEmpty()) {
+			return Optional.empty();
+		}
+		Map<String, String> tiles = tileDao.selectByGame(Integer.parseInt(idAndState.get("game_id")));
+
+		Map<Position, Piece> board = convertToBoard(tiles);
+		GameState gameState = StringToStateConverter.of(idAndState.get("state"), board);
+
+		return Optional.of(new ChessGame(name, gameState));
+	}
+
+	private Map<Position, Piece> convertToBoard(Map<String, String> tiles) {
+		return tiles.entrySet().stream()
+			.collect(toMap(
+				entry -> StringToPositionConverter.from(entry.getKey()),
+				entry -> StringToPieceConverter.from(entry.getValue())
+			));
 	}
 
 	@Override
 	public void update(String name, GameState state) {
-
+		ChessGame updatedGame = new ChessGame(name, state);
+		remove(name);
+		save(updatedGame);
 	}
 
 	@Override

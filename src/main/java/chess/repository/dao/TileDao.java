@@ -2,7 +2,9 @@ package chess.repository.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TileDao {
@@ -29,14 +31,26 @@ public class TileDao {
 		}
 	}
 
-	public void deleteAll() {
+	public Map<String, String> selectByGame(int foreignKey) {
 		Connection connection = connectionManager.getConnection();
-		String sql = "delete from tile";
+		Map<String, String> tiles = new HashMap<>();
+		String sql = "select position, piece from tile where game_id = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.executeUpdate();
+			statement.setInt(1, foreignKey);
+
+			ResultSet result = statement.executeQuery();
+			makeResult(tiles, result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return tiles;
 	}
+
+	private void makeResult(Map<String, String> tiles, ResultSet result) throws SQLException {
+		while (result.next()) {
+			tiles.put(result.getString("position"), result.getString("piece"));
+		}
+	}
+
 }

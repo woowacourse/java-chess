@@ -1,6 +1,6 @@
 --create table game (
 --    game_id int primary key auto_increment,
---    name varchar(20) not null,
+--    name varchar(20) not null unique ,
 --    state varchar(20) not null
 --);
 --
