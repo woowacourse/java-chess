@@ -29,10 +29,9 @@ public class ChessWebController {
     public ModelAndView create(Request request, Response response) {
         chessGame.start();
 
-        List<List<Piece>> board = chessGame.board();
-        Map<String, Object> model = new HashMap<>();
-        model.put("pieces", new BoardResponse(board).getValue());
-        return new ModelAndView(model, "index.html");
+        response.redirect("/");
+
+        return generateEmptyModelAndView();
     }
 
     public ModelAndView move(Request request, Response response) {
@@ -41,9 +40,12 @@ public class ChessWebController {
 
         chessGame.move(commands[0].trim(), commands[1].trim());
 
-        List<List<Piece>> board = chessGame.board();
-        Map<String, Object> model = new HashMap<>();
-        model.put("pieces", new BoardResponse(board).getValue());
-        return new ModelAndView(model, "index.html");
+        response.redirect("/");
+
+        return generateEmptyModelAndView();
+    }
+
+    private ModelAndView generateEmptyModelAndView() {
+        return new ModelAndView(null, null);
     }
 }
