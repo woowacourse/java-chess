@@ -27,25 +27,40 @@ function sendMoveCommand() {
     }).done(function(res) {
         movePiece(res.source, res.destination);
         addMovingHistory(res.source, res.destination);
-        source = undefined;
-        destination = undefined;
+        initializePosition();
     }).fail(function(error) {
-        source = undefined;
-        destination = undefined;
+        initializePosition();
         alert(JSON.stringify(error));
     });
 }
 
-function movePiece(source, destination) {
-    var sourceDiv = document.getElementById(source);
-    var destinationDiv = document.getElementById(destination);
+function initializePosition() {
+    source = undefined;
+    destination = undefined;
+}
 
-    destinationDiv.innerHTML = sourceDiv.innerHTML;
-    sourceDiv.innerHTML = '';
+function movePiece(source, destination) {
+    replaceElement(destination, document.getElementById(source).innerHTML);
+    removeElement(source);
 }
 
 function addMovingHistory(source, destination) {
-    var historyDiv = document.getElementById('history');
-    var output = '시작점 : ' + source + ', 도착점 : ' + destination;
-    historyDiv.innerHTML += output + '<br>';
+    var elementId = 'history';
+    var output = '시작점 : ' + source + ', 도착점 : ' + destination + '<br>';
+    addSomethingInElement(elementId, output);
+}
+
+function addSomethingInElement(elementId, text) {
+    var element = document.getElementById(elementId);
+    element.innerHTML += text;
+}
+
+function replaceElement(elementId, replaceText) {
+    var element = document.getElementById(elementId);
+    element.innerHTML = replaceText;
+}
+
+function removeElement(elementId) {
+    var element = document.getElementById(elementId);
+    element.innerHTML = '';
 }
