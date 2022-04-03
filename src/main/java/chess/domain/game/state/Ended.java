@@ -7,22 +7,22 @@ public class Ended implements State {
 
     @Override
     public State start() {
-        return new Ended();
+        throw new IllegalStateException("[ERROR] 게임이 끝나 start 할 수 없습니다.");
     }
 
     @Override
     public State end() {
-        return new Ended();
+        throw new IllegalStateException("[ERROR] 게임이 끝나 end 할 수 없습니다.");
     }
 
     @Override
     public State move(final Position from, final Position to) {
-        return new Ended();
+        throw new IllegalStateException("[ERROR] 게임이 끝나 move 할 수 없습니다.");
     }
 
     @Override
     public State status() {
-        return new Ended();
+        throw new IllegalStateException("[ERROR] 게임이 끝나 status 할 수 없습니다.");
     }
 
     @Override

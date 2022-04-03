@@ -1,6 +1,6 @@
 package chess.domain.game.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,24 +17,32 @@ class EndedTest {
 
     @Test
     void start() {
-        assertThat(ended.start()).isInstanceOf(Ended.class);
+        assertThatThrownBy(() -> ended.start())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 끝나 start 할 수 없습니다.");
     }
 
     @Test
     void end() {
-        assertThat(ended.end()).isInstanceOf(Ended.class);
+        assertThatThrownBy(() -> ended.end())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 끝나 end 할 수 없습니다.");
     }
 
     @Test
     void move() {
         Position from = Position.create("b2");
         Position to = Position.create("b3");
-        assertThat(ended.move(from, to)).isInstanceOf(Ended.class);
+        assertThatThrownBy(() -> ended.move(from, to))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 끝나 move 할 수 없습니다.");
     }
 
     @Test
     void status() {
-        assertThat(ended.status()).isInstanceOf(Ended.class);
+        assertThatThrownBy(() -> ended.status())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 끝나 status 할 수 없습니다.");
     }
 
 }
