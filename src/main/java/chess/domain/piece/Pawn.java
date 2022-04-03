@@ -48,7 +48,7 @@ public class Pawn extends Piece {
                 .anyMatch(movingStrategy -> movingStrategy.canMove(board, source, target));
 
         if (!canMove) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
         }
     }
 }

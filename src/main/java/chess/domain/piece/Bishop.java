@@ -28,6 +28,6 @@ public class Bishop extends Piece {
             return;
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
     }
 }
