@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,34 +19,37 @@ import java.util.stream.IntStream;
 
 public class ChessPieceDao {
 
-    public ChessPieceDto findByPosition(final Position position) throws SQLException {
+    public ChessPieceDto findByPosition(final Position position) {
         final String sql = "SELECT * FROM ChessBoard WHERE Position = ?";
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getValue());
-        final ResultSet resultSet = statement.executeQuery();
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try (connection; statement; resultSet) {
-            if (!resultSet.next()) {
-                return null;
+            statement.setString(1, position.getValue());
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
+                return ChessPieceDto.of(
+                        resultSet.getString("Position"),
+                        resultSet.getString("ChessPiece"),
+                        resultSet.getString("Color")
+                );
             }
-            return ChessPieceDto.of(
-                    resultSet.getString("Position"),
-                    resultSet.getString("ChessPiece"),
-                    resultSet.getString("Color")
-            );
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    public List<ChessPieceDto> findAll() throws SQLException {
+    public List<ChessPieceDto> findAll() {
         final String sql = "SELECT * FROM ChessBoard";
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        final ResultSet resultSet = statement.executeQuery();
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
 
-        try (connection; statement; resultSet) {
             final List<ChessPieceDto> dtos = new ArrayList<>();
             while (resultSet.next()) {
                 dtos.add(ChessPieceDto.of(
@@ -55,67 +59,78 @@ public class ChessPieceDao {
                 ));
             }
             return dtos;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return Collections.emptyList();
     }
 
-    public int deleteByPosition(final Position position) throws SQLException {
+    public int deleteByPosition(final Position position) {
         final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getValue());
-        try (connection; statement) {
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, position.getValue());
             return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
-    public int deleteAll() throws SQLException {
+    public int deleteAll() {
         final String sql = "DELETE FROM ChessBoard";
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        try (connection; statement) {
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
             return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
-    public int save(final Position position, final ChessPiece chessPiece) throws SQLException {
+    public int save(final Position position, final ChessPiece chessPiece) {
         final String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES (?, ?, ?)";
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setString(1, position.getValue());
-        statement.setString(2, ChessPieceMapper.toPieceType(chessPiece));
-        statement.setString(3, chessPiece.color().getValue());
+            statement.setString(1, position.getValue());
+            statement.setString(2, ChessPieceMapper.toPieceType(chessPiece));
+            statement.setString(3, chessPiece.color().getValue());
 
-        try (connection; statement) {
             return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
-    public int saveAll(final Map<Position, ChessPiece> pieceByPosition) throws SQLException {
+    public int saveAll(final Map<Position, ChessPiece> pieceByPosition) {
         String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES ";
         sql += IntStream.range(0, pieceByPosition.size())
                 .mapToObj(i -> "(?, ?, ?)")
                 .collect(Collectors.joining(", "));
 
-        final Connection connection = getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final Connection connection = getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        int count = 1;
-        for (final Entry<Position, ChessPiece> entry : pieceByPosition.entrySet()) {
-            final Position position = entry.getKey();
-            final ChessPiece chessPiece = entry.getValue();
+            int count = 1;
+            for (final Entry<Position, ChessPiece> entry : pieceByPosition.entrySet()) {
+                final Position position = entry.getKey();
+                final ChessPiece chessPiece = entry.getValue();
 
-            statement.setString(count++, position.getValue());
-            statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
-            statement.setString(count++, chessPiece.color().getValue());
-        }
+                statement.setString(count++, position.getValue());
+                statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
+                statement.setString(count++, chessPiece.color().getValue());
+            }
 
-        try (connection; statement) {
             return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
     private Connection getConnection() {

@@ -11,7 +11,6 @@ import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,20 +22,20 @@ import org.junit.jupiter.api.Test;
 class ChessPieceDaoTest {
 
     @BeforeAll
-    static void clearBeforeTest() throws SQLException {
+    static void clearBeforeTest() {
         final ChessPieceDao dao = new ChessPieceDao();
         dao.deleteAll();
     }
 
     @AfterEach
-    void clear() throws SQLException {
+    void clear() {
         final ChessPieceDao dao = new ChessPieceDao();
         dao.deleteAll();
     }
 
     @Test
     @DisplayName("포지션으로 기물을 조회한다.")
-    void findByPosition() throws SQLException {
+    void findByPosition() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
         final Position position = Position.from("a1");
@@ -55,7 +54,7 @@ class ChessPieceDaoTest {
 
     @Test
     @DisplayName("모든 기물을 조회한다.")
-    void findAll() throws SQLException {
+    void findAll() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
         dao.save(Position.from("a1"), King.from(Color.WHITE));
@@ -71,7 +70,7 @@ class ChessPieceDaoTest {
 
     @Test
     @DisplayName("기물을 DB에 저장한다.")
-    void save() throws SQLException {
+    void save() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
         final Position position = Position.from("a4");
@@ -86,7 +85,7 @@ class ChessPieceDaoTest {
 
     @Test
     @DisplayName("모든 기물을 DB에 저장한다.")
-    void saveAll() throws SQLException {
+    void saveAll() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
 
@@ -105,7 +104,7 @@ class ChessPieceDaoTest {
 
     @Test
     @DisplayName("포지션에 해당하는 기물을 삭제한다.")
-    void deleteByPosition() throws SQLException {
+    void deleteByPosition() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
         final Position position = Position.from("a4");
@@ -121,7 +120,7 @@ class ChessPieceDaoTest {
 
     @Test
     @DisplayName("모든 기물을 삭제한다.")
-    void deleteAll() throws SQLException {
+    void deleteAll() {
         // given
         final ChessPieceDao dao = new ChessPieceDao();
 
