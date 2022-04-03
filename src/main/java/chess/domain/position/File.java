@@ -34,6 +34,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
     }
 
+    public String getNotation() {
+        return notation;
+    }
+
     public int getIndex() {
         return index;
     }
