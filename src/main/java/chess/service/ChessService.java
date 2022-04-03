@@ -1,8 +1,9 @@
 package chess.service;
 
+import chess.dao.ChessPieceDao;
+import chess.dao.StatusDao;
 import chess.domain.ChessGame;
 import chess.domain.Score;
-import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
@@ -17,24 +18,21 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    private final ChessGame chessGame;
-
-    public ChessService() {
-        this.chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
-    }
-
     public Map<String, Object> findAllPiece() {
         Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             model = toModel(chessGame.findAllPiece());
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> startGame() {
         Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final StartResult result = chessGame.start();
             model = toModel(result.getPieceByPosition());
@@ -44,11 +42,13 @@ public class ChessService {
             }
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> move(String fromPosition, String toPosition) {
         Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final MoveResult result = chessGame.move(
                     Position.from(fromPosition),
@@ -62,11 +62,13 @@ public class ChessService {
             }
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> endGame() {
         Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final EndResult result = chessGame.end();
             final Score score = result.getScore();
@@ -76,11 +78,13 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> findScore() {
         final Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final Score score = chessGame.calculateScore();
             for (final Color color : Color.values()) {
@@ -89,22 +93,26 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> findCurrentTurn() {
         final Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final Color currentTurn = chessGame.findCurrentTurn();
             model.put("current_turn", currentTurn.getValue());
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 
     public Map<String, Object> result() {
         final Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame();
         try {
             final Color winColor = chessGame.findWinColor();
             if (Objects.isNull(winColor)) {
@@ -115,6 +123,7 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        chessGame.updateDB();
         return model;
     }
 

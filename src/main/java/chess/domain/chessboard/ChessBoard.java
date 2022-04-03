@@ -18,6 +18,11 @@ public class ChessBoard {
         currentTurnColor = Color.WHITE;
     }
 
+    public ChessBoard(final Map<Position, ChessPiece> pieceByPosition, final Color currentTurnColor) {
+        this.pieceByPosition = pieceByPosition;
+        this.currentTurnColor = currentTurnColor;
+    }
+
     public ChessPiece findPiece(final Position position) {
         return pieceByPosition.get(position);
     }
