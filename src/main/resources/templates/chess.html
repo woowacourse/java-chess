@@ -17,21 +17,34 @@
     <section>
         <div class="chess-ui">
             {{#pieces}}
-            <div class="box" id="{{position}}">
+            <div class="box" id="{{position}}" onclick="fill(this.id)">
                 <img src="/images/{{notation}}-{{color}}.png"/>
             </div>
             {{/pieces}}
         </div>
 
-        <form action="/move" method="get" enctype="text/plain">
+        <form id="move-form" action="/move" method="get" enctype="text/plain">
             <div>
-                <input class="text-input" type="text" name="target" id="target" placeholder="a2"/>
-                <input class="text-input" type="text" name="source" id="source" placeholder="a4"/>
+                <input id="target-input" class="text-input" type="text" name="target" id="target"/>
+                <input id="source-input" class="text-input" type="text" name="source" id="source"/>
                 <input class="submit-input" type="submit" value="제출"/>
             </div>
         </form>
     </section>
 </div>
 
+<script>
+    function fill(id) {
+        let target = document.getElementById("target-input").value;
+
+        if (target === "") {
+            document.getElementById("target-input").value = id;
+            return;
+        }
+
+        document.getElementById("source-input").value = id;
+        document.getElementById("move-form").submit();
+    }
+</script>
 </body>
 </html>

@@ -24,7 +24,7 @@ section {
 }
 
 .box:hover {
-    background-color: #c29e8a;
+    background-color: #c29e8a !important;
 }
 
 form {
