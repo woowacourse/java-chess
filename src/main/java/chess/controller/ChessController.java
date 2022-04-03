@@ -25,10 +25,7 @@ public class ChessController {
         ChessGame chessGame = new ChessGame();
 
         // 초기 페이지
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/", (request, response) -> render(new HashMap<>(), "index.html"));
 
         // 보드 출력
         get("/board", (request, response) -> {
@@ -61,6 +58,13 @@ public class ChessController {
             chessGame.move(inputs);
 
             response.redirect("/board");
+            return null;
+        });
+
+        // 게임 종료
+        get("/end", (request, response) -> {
+            chessGame.end();
+            response.redirect("/");
             return null;
         });
     }

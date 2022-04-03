@@ -61,4 +61,8 @@ public class ChessGame {
     public String getTurn() {
         return board.getTurn().name();
     }
+
+    public void end() {
+        board = null;
+    }
 }
