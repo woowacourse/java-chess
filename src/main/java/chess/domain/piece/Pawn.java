@@ -38,16 +38,8 @@ public final class Pawn extends NotNullPiece {
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
-        int columnDistance = afterPosition.columnDistance(beforePosition);
-        if (columnDistance != NO_DISTANCE) {
-            return false;
-        }
-        if (isFirstMove(beforePosition)) {
-            return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
-        }
-        return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        return canMove(new Positions(beforePosition, afterPosition));
     }
 
     private boolean isFirstMove(final Position beforePosition) {
@@ -57,9 +49,15 @@ public final class Pawn extends NotNullPiece {
         return beforePosition.isSameRow(BLACK_PAWN_INITIAL_ROW);
     }
 
-    private boolean canMove(final Positions positions) {
+    @Override
+    public boolean canMove(final Positions positions) {
         int rowDirectedDistance = positions.calculateDirectedRowDistance();
         int columnDistance = positions.calculateColumnDistance();
+
+        if (columnDistance == Math.abs(rowDirectedDistance)) {
+            return canCapture(positions);
+        }
+
         if (columnDistance != NO_DISTANCE) {
             return false;
         }
@@ -67,28 +65,6 @@ public final class Pawn extends NotNullPiece {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
-    }
-
-    @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canCapture(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
-        }
-        moveFunction.accept(this);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        if (!canCapture(positions)) {
-            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
-        }
-        moveFunction.accept(this);
-    }
-
-    private boolean canCapture(Position beforePosition, Position afterPosition) {
-        int columnDistance = afterPosition.columnDistance(beforePosition);
-        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
     }
 
     private boolean canCapture(final Positions positions) {

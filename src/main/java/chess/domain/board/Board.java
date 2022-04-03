@@ -7,6 +7,7 @@ import chess.domain.piece.PieceProperty;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -34,49 +35,22 @@ public final class Board {
         return board.get(position).isNullPiece();
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        movePiece(beforePosition, afterPosition);
-    }
-
     public void move(final Positions positions) {
-        movePiece(positions);
-    }
-
-    private void movePiece(final Position beforePosition, final Position afterPosition) {
-        Piece beforePiece = board.get(beforePosition);
-        if (isMoveToBlank(afterPosition)) {
-            beforePiece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
-            return;
-        }
-        if (isMoveToOtherCampPiece(beforePosition, afterPosition)) {
-            beforePiece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+        if (board.get(positions.after()).isNullPiece() || !board.get(positions.before())
+            .isSameCampWith(board.get(positions.after()))) {
+            movePiece(positions);
             return;
         }
         throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
+    }
+
+    public void move(Position beforePosition, Position afterPosition) {
+        move(new Positions(beforePosition, afterPosition));
     }
 
     private void movePiece(final Positions positions) {
         Piece beforePiece = board.get(positions.before());
-        if (isMoveToBlank(positions.after())) {
-            beforePiece.move(positions, moveFunction(positions));
-            return;
-        }
-        if (isMoveToOtherCampPiece(positions)) {
-            beforePiece.capture(positions, moveFunction(positions));
-            return;
-        }
-        throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
-    }
-
-    private boolean isMoveToBlank(Position position) {
-        return board.get(position).isNullPiece();
-    }
-
-    private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
-        return (piece) -> {
-            board.put(afterPosition, piece);
-            board.put(beforePosition, new NullPiece(null));
-        };
+        beforePiece.move(positions, moveFunction(positions));
     }
 
     private Consumer<Piece> moveFunction(final Positions positions) {
@@ -86,18 +60,6 @@ public final class Board {
         };
     }
 
-    private boolean isMoveToOtherCampPiece(Position beforePosition, Position afterPosition) {
-        Piece beforePiece = board.get(beforePosition);
-        Piece afterPiece = board.get(afterPosition);
-        return !beforePiece.isSameCampWith(afterPiece);
-    }
-
-    private boolean isMoveToOtherCampPiece(final Positions positions) {
-        Piece beforePiece = board.get(positions.before());
-        Piece afterPiece = board.get(positions.after());
-        return !beforePiece.isSameCampWith(afterPiece);
-    }
-
     public boolean hasKingCaptured() {
         return TOTAL_KING_COUNT != collectKing().size();
     }
@@ -105,8 +67,12 @@ public final class Board {
     private List<Piece> collectKing() {
         return board.values()
             .stream()
-            .filter(piece -> piece.getPieceProperty() == PieceProperty.KING)
+            .filter(this::isKing)
             .collect(Collectors.toList());
+    }
+
+    private boolean isKing(final Piece piece) {
+        return piece.getPieceProperty() == PieceProperty.KING;
     }
 
     public boolean hasBlackKingCaptured() {
@@ -121,5 +87,30 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public boolean isKingChecked(final Camp camp) {
+        final Position currentKingPosition = findCurrentKingPosition(camp);
+
+        return board.entrySet()
+            .stream()
+            .filter(it -> it.getValue().isSameCampWith(camp.switchCamp()))
+            .anyMatch(it -> canMoveOppositePieceToKing(currentKingPosition, it));
+    }
+
+    public Position findCurrentKingPosition(final Camp camp) {
+        return board.entrySet()
+            .stream()
+            .filter(it -> it.getValue().isSameCampWith(camp))
+            .filter(it -> isKing(it.getValue()))
+            .map(Entry::getKey)
+            .findFirst()
+            .orElseThrow(IllegalStateException::new);
+    }
+
+    private boolean canMoveOppositePieceToKing(final Position currentKingPosition, final Entry<Position, Piece> it) {
+        final Piece oppositePiece = it.getValue();
+        final Position oppositePieceBeforePosition = it.getKey();
+        return oppositePiece.canMove(new Positions(oppositePieceBeforePosition, currentKingPosition));
     }
 }

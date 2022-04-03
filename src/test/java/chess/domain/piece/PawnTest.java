@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Camp;
 import chess.domain.board.Column;
@@ -100,39 +98,5 @@ class PawnTest {
         Position e3 = Position.of(Column.E, Row.THREE);
 
         assertThat(pawn.canMove(d3, e3)).isFalse();
-    }
-
-    @DisplayName("폰은 대각선으로 움직일 수 없다.")
-    @Test
-    void pawn_cant_move_d2_e3() {
-        Pawn pawn = new Pawn(Camp.WHITE);
-        Position d2 = Position.of(Column.D, Row.TWO);
-        Position e3 = Position.of(Column.E, Row.THREE);
-
-        assertThat(pawn.canMove(d2, e3)).isFalse();
-    }
-
-    @DisplayName("상대 진영의 기물을 잡는 경우에는 대각선 앞으로 1칸 이동할 수 있다.")
-    @Test
-    void pawn_can_capture_f6_g7() {
-        Pawn pawn = new Pawn(Camp.WHITE);
-        Position f6 = Position.of(Column.F, Row.SIX);
-        Position g7 = Position.of(Column.G, Row.SEVEN);
-
-        assertThatNoException().isThrownBy(() -> pawn.capture(f6, g7, (piece -> {
-        })));
-    }
-
-    @DisplayName("상대 진영의 기물을 잡는 경우에는 앞으로 1칸 이동할 수 없다.")
-    @Test
-    void pawn_can_capture_f6_f7() {
-        Pawn pawn = new Pawn(Camp.WHITE);
-        Position f6 = Position.of(Column.F, Row.SIX);
-        Position f7 = Position.of(Column.F, Row.SEVEN);
-
-        assertThatThrownBy(() -> pawn.capture(f6, f7, (piece -> {
-        })))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 위치입니다.");
     }
 }

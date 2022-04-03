@@ -35,25 +35,14 @@ public final class Bishop extends NotNullPiece {
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int columnDistance = beforePosition.columnDistance(afterPosition);
-        int rowDistance = beforePosition.rowDistance(afterPosition);
-        return columnDistance == rowDistance;
-    }
-
-    private boolean canMove(final Positions positions) {
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateRowDistance();
         return columnDistance == rowDistance;
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        move(positions, moveFunction);
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        return canMove(new Positions(beforePosition, afterPosition));
     }
 }

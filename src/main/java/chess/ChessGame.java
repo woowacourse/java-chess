@@ -22,11 +22,20 @@ public class ChessGame {
 
     public void start() {
         OutputView.printStartMessage();
-
         while (gameSwitch.isOn()) {
+            checkKingState();
             final String command = InputView.inputCommand();
             final GameCommand gameCommand = GameCommand.from(command);
             gameCommand.execute(command, this, printBoardInfoToState());
+        }
+    }
+
+    private void checkKingState() {
+        if (!isRunning()) {
+            return;
+        }
+        if (isKingChecked()) {
+            OutputView.printKingCheckedMessage();
         }
     }
 
@@ -102,5 +111,9 @@ public class ChessGame {
 
     public void ready() {
         state = state.ready();
+    }
+
+    public boolean isKingChecked() {
+        return this.state.isKingChecked();
     }
 }

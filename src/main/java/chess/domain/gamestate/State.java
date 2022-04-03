@@ -25,6 +25,8 @@ public interface State {
 
     State ready();
 
+    boolean isKingChecked();
+
     boolean isRunning();
 
     boolean isStatus();

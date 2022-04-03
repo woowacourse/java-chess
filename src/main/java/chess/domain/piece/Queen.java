@@ -33,7 +33,7 @@ public final class Queen extends NotNullPiece {
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
+    public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         if (columnDistance == NOT_MOVED_DISTANCE) {
@@ -45,7 +45,8 @@ public final class Queen extends NotNullPiece {
         return columnDistance == rowDistance;
     }
 
-    private boolean canMove(final Positions positions) {
+    @Override
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.before().columnDistance(positions.after());
         int rowDistance = positions.before().rowDistance(positions.after());
         if (columnDistance == NOT_MOVED_DISTANCE) {
@@ -55,15 +56,5 @@ public final class Queen extends NotNullPiece {
             return true;
         }
         return columnDistance == rowDistance;
-    }
-
-    @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        move(positions, moveFunction);
     }
 }

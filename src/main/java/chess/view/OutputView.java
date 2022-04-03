@@ -21,6 +21,7 @@ public class OutputView {
     private static final String CURRENT_GAME_END_MESSAGE = "해당 게임이 종료되었습니다.";
     private static final String RESULT_SCORE_FORMAT = "백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n";
     private static final String CHESS_GAME_END_MESSAGE = "체스 게임을 완전히 종료합니다.";
+    private static final String CHECK_KING_MESSAGE = "현재 킹이 check된 상황입니다.";
 
     public static void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -61,5 +62,9 @@ public class OutputView {
 
     public static void printEndMessage() {
         System.out.println(CHESS_GAME_END_MESSAGE);
+    }
+
+    public static void printKingCheckedMessage() {
+        System.out.println(CHECK_KING_MESSAGE);
     }
 }

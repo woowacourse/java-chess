@@ -26,14 +26,9 @@ public abstract class Piece {
     public abstract void move(final Positions positions,
                               final Consumer<Piece> movePiece);
 
-    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
+    public abstract boolean canMove(Position beforePosition, Position afterPosition);
 
-    public abstract void capture(Position beforePosition,
-                                 Position afterPosition,
-                                 Consumer<Piece> moveFunction);
-
-    public abstract void capture(final Positions positions,
-                                 final Consumer<Piece> moveFunction);
+    public abstract boolean canMove(Positions positions);
 
     public boolean isSameCampWith(final Camp otherCamp) {
         return camp == otherCamp;

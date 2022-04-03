@@ -10,6 +10,10 @@ public class Positions {
 
     private final List<Position> positions;
 
+    public Positions(final Position before, final Position after) {
+        this(List.of(before, after));
+    }
+
     public Positions(final List<Position> positions) {
         this.positions = positions;
     }

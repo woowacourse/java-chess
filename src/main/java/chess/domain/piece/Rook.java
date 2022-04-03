@@ -33,7 +33,7 @@ public final class Rook extends NotNullPiece {
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
+    public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         if (columnDistance == NOT_MOVED_DISTANCE) {
@@ -42,22 +42,13 @@ public final class Rook extends NotNullPiece {
         return rowDistance == NOT_MOVED_DISTANCE;
     }
 
-    private boolean canMove(final Positions positions) {
+    @Override
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateRowDistance();
         if (columnDistance == NOT_MOVED_DISTANCE) {
             return true;
         }
         return rowDistance == NOT_MOVED_DISTANCE;
-    }
-
-    @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        move(positions, moveFunction);
     }
 }

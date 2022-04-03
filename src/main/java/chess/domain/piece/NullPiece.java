@@ -26,19 +26,12 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    protected boolean canMove(final Position beforePosition, final Position afterPosition) {
+    public boolean canMove(final Position beforePosition, final Position afterPosition) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 
     @Override
-    public void capture(final Position beforePosition,
-                        final Position afterPosition,
-                        final Consumer<Piece> moveFunction) {
-        throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
+    public boolean canMove(final Positions positions) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 

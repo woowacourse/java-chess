@@ -80,6 +80,10 @@ public class Running implements State {
         }
     }
 
+    private boolean isNotKnight(final Position beforePosition) {
+        return board.checkNotKnight(beforePosition);
+    }
+
     private boolean containObstacleInPath(final Positions positions) {
         List<Position> path = positions.calculatePath();
         return !path.stream()
@@ -88,10 +92,6 @@ public class Running implements State {
 
     private boolean isBlankPosition(final Position position) {
         return board.isBlankPosition(position);
-    }
-
-    private boolean isNotKnight(final Position beforePosition) {
-        return board.checkNotKnight(beforePosition);
     }
 
     @Override
@@ -117,6 +117,11 @@ public class Running implements State {
     @Override
     public State ready() {
         throw new IllegalStateException(CANT_READY_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public boolean isKingChecked() {
+        return board.isKingChecked(camp);
     }
 
     @Override

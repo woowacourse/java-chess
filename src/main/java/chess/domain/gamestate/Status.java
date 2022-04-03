@@ -13,6 +13,7 @@ public final class Status implements State {
     private static final String CANT_MOVE_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
     private static final String CANT_END_WHEN_STATUS = "status 상태에서는 end 명령어를 입력할 수 없습니다.";
     private static final String CANT_READY_WHEN_NOT_RUNNING = "게임 종료가 아닐때는 시작상태로 돌아갈 수 없습니다.";
+    private static final String CANT_CHECK_KING_CHECKED_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 킹의 check여부를 확인할 수 없습니다.";
 
     private final Board board;
     private final Camp camp;
@@ -58,6 +59,16 @@ public final class Status implements State {
     }
 
     @Override
+    public State ready() {
+        throw new IllegalStateException(CANT_READY_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public boolean isKingChecked() {
+        throw new IllegalStateException(CANT_CHECK_KING_CHECKED_WHEN_NOT_RUNNING);
+    }
+
+    @Override
     public boolean isRunning() {
         return false;
     }
@@ -75,10 +86,5 @@ public final class Status implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
-    }
-
-    @Override
-    public State ready() {
-        throw new IllegalStateException(CANT_READY_WHEN_NOT_RUNNING);
     }
 }
