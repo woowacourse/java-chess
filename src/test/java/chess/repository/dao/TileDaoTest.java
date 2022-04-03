@@ -36,7 +36,7 @@ class TileDaoTest {
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
 		tileDao.insertAll(tiles, foreignKey);
 
-		Map<String, String> result = tileDao.selectByGame(foreignKey);
+		Map<String, String> result = tileDao.selectByGameId(foreignKey);
 
 		assertThat(result)
 			.containsEntry("a1", "WHITE_PAWN")

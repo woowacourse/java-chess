@@ -16,6 +16,10 @@ public class ChessGameDao {
 	private static final String DUPLICATE_GAME_NAME = "해당 이름의 게임이 이미 존재합니다.";
 	private static final String NOT_FOUND_PRIMARY_KEY = "기본키를 찾을 수 없습니다.";
 
+	private static final String GAME_ID = "game_id";
+	private static final String STATE = "state";
+	private static final String NAME = "name";
+
 	private final ConnectionManager connectionManager = new ConnectionManager();
 
 	public int insert(String name, String state) {
@@ -60,8 +64,8 @@ public class ChessGameDao {
 	private Map<String, String> makeResult(ResultSet result) throws SQLException {
 		Map<String, String> game = new HashMap<>();
 		if (result.next()) {
-			game.put("game_id", String.valueOf(result.getInt("game_id")));
-			game.put("state", result.getString("state"));
+			game.put(GAME_ID, String.valueOf(result.getInt(GAME_ID)));
+			game.put(STATE, result.getString(STATE));
 		}
 		return game;
 	}
@@ -92,7 +96,7 @@ public class ChessGameDao {
 	private List<String> makeNames(ResultSet result) throws SQLException {
 		List<String> names = new ArrayList<>();
 		while (result.next()) {
-			names.add(result.getString("name"));
+			names.add(result.getString(NAME));
 		}
 		return names;
 	}

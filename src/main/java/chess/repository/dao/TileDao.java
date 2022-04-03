@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class TileDao {
 
+	private static final String POSITION = "position";
+	private static final String PIECE = "piece";
+
 	private final ConnectionManager connectionManager = new ConnectionManager();
 
 	public void insertAll(Map<String, String> tiles, int foreignKey) {
@@ -31,7 +34,7 @@ public class TileDao {
 		}
 	}
 
-	public Map<String, String> selectByGame(int foreignKey) {
+	public Map<String, String> selectByGameId(int foreignKey) {
 		Connection connection = connectionManager.getConnection();
 		Map<String, String> tiles = new HashMap<>();
 		String sql = "select position, piece from tile where game_id = ?";
@@ -49,7 +52,7 @@ public class TileDao {
 
 	private void makeResult(Map<String, String> tiles, ResultSet result) throws SQLException {
 		while (result.next()) {
-			tiles.put(result.getString("position"), result.getString("piece"));
+			tiles.put(result.getString(POSITION), result.getString(PIECE));
 		}
 	}
 
