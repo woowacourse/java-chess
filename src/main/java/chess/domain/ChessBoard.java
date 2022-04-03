@@ -44,13 +44,13 @@ public class ChessBoard {
         Position toPosition = gameCommand.getToPosition();
         Piece fromPiece = selectPiece(fromPosition);
 
-        checkEnemyOrEmpty(fromPiece, selectPiece(toPosition));
+        checkTargetEnemyOrEmpty(fromPiece, selectPiece(toPosition));
         checkMovableDirection(fromPosition, toPosition, fromPiece);
         checkBlockInDirection(fromPosition, toPosition, fromPiece);
         movePiece(fromPosition, toPosition, fromPiece);
     }
 
-    private void checkEnemyOrEmpty(Piece fromPiece, Piece toPiece) {
+    private void checkTargetEnemyOrEmpty(Piece fromPiece, Piece toPiece) {
         if (!toPiece.isEmpty() && fromPiece.isSameColor(toPiece)) {
             throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
         }
@@ -65,7 +65,8 @@ public class ChessBoard {
     private void checkBlockInDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
         Direction direction = Direction.getDirectionByPositions(fromPosition, toPosition);
         checkRouteNotBlock(fromPosition, toPosition, direction);
-        if (isPawnAndDiagonalDirection(fromPiece, direction)) {
+        if (fromPiece.isSamePieceType(PieceType.PAWN)) {
+            checkPawnStraightMove(toPosition, direction);
             checkEnemyInDiagonal(fromPiece, selectPiece(toPosition));
         }
     }
@@ -74,18 +75,20 @@ public class ChessBoard {
         for (Position nextPosition = fromPosition.toDirection(direction);
              nextPosition != toPosition;
              nextPosition = nextPosition.toDirection(direction)) {
-            checkEmptyPiece(nextPosition);
+            checkEmpty(selectPiece(nextPosition));
         }
     }
 
-    private void checkEmptyPiece(Position nextPosition) {
-        if (!selectPiece(nextPosition).isEmpty()) {
+    private void checkPawnStraightMove(Position toPosition, Direction direction) {
+        if (direction.isPawnStraigtDirection()) {
+            checkEmpty(selectPiece(toPosition));
+        }
+    }
+
+    private void checkEmpty(Piece piece) {
+        if (!piece.isEmpty()) {
             throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
         }
-    }
-
-    private boolean isPawnAndDiagonalDirection(Piece fromPiece, Direction direction) {
-        return fromPiece.isSamePieceType(PieceType.PAWN) && !direction.isPawnStraigtDirection();
     }
 
     private void checkEnemyInDiagonal(Piece fromPiece, Piece toPiece) {
