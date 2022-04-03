@@ -9,6 +9,7 @@
 <div id="app">
     <h1>체스 게임</h1>
     <div class="menu">
+        <span class="state"></span>
         <button id="startBtn" onclick="sendStart()">Start</button>
         <button id="EndBtn" onclick="sendEnd()">End</button>
         <button id="statusBtn" onclick="sendStatus()">Status</button>
@@ -98,9 +99,22 @@
         await fetch("/load")
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 loadBoard(data.board);
+                setState(data.state, data.turn);
             });
+    }
+
+    async function setState(state, turn) {
+        document.getElementsByClassName('state')[0].textContent = state;
+        console.log(turn);
+
+        if (state === "Started") {
+            document.getElementsByClassName('chess-ui')[0].style.visibility = 'visible';
+            document.getElementsByClassName('state')[0].textContent += "(" + turn + ")";
+        }
+        if (state === "Ended") {
+            alert("게임이 종료되었습니다.");
+        }
     }
 
     async function sendStart() {
@@ -109,6 +123,7 @@
             .then(data => {
                 if (data.code === "success") {
                     loadBoard(data.board);
+                    setState(data.state, data.turn);
                 } else {
                     alert(data.message);
                 }
@@ -121,6 +136,7 @@
             .then(data => {
                 if (data.code === "success") {
                     loadBoard(data.board);
+                    setState(data.state, data.turn);
                 } else {
                     alert(data.message);
                 }
@@ -144,13 +160,11 @@
     async function move(id) {
         if (source === "") {
             source = id;
-            console.log("source" + id);
             document.getElementById(id).className += " selected";
             return;
         }
         if (source !== "" && target === "") {
             target = id;
-            console.log("target" + id);
             document.getElementById(id).className += " selected";
             await sendMove();
         }
@@ -173,6 +187,7 @@
             .then(data => {
                 if (data.code === "success") {
                     loadBoard(data.board);
+                    setState(data.state, data.turn);
                 } else {
                     alert(data.message);
                 }
