@@ -8,6 +8,21 @@
 <body>
     <h1>체스 게임</h1>
     <div>
+        <form action="/start" method="get">
+            <input type="submit" value="시작하기">
+        </form>
+    </div>
+    <div>
+        <form action="/end" method="get">
+            <input type="submit" value="종료하기">
+        </form>
+    </div>
+    <div>
+        <form action="/status" method="get">
+            <input type="submit" value="점수보기">
+        </form>
+    </div>
+    <div>
         <form action="/move" method="post">
             움직일 말과 목적지를 입력하세요 (예: a2 a3) <br>
             <input type="text" name="move"><br>
