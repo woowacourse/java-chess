@@ -18,6 +18,7 @@ dependencies {
     implementation "com.sparkjava:spark-template-handlebars:2.7.1"
     implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 }
 
 java {
