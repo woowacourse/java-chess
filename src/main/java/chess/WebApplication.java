@@ -3,12 +3,14 @@ package chess;
 import static spark.Spark.*;
 
 import chess.dto.CommandRequest;
+import chess.dto.request.MoveRequest;
 import chess.dto.response.BoardResult;
 import chess.dto.response.PieceResult;
 import chess.game.Command;
 import chess.game.Game;
 import chess.piece.Color;
 import chess.status.Ready;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.Map;
@@ -23,10 +25,11 @@ public class WebApplication {
 
         get("/", (req, res) -> render(new BoardResult(game.getBoard().getValue()).getValue(), "index.html"));
 
-        post("/move", (req, res) -> {
-            final String from = req.queryParams("from");
-            final String to = req.queryParams("to");
-            game.run(new CommandRequest("move", from, to));
+        post("/move", "application/json", (req, res) -> {
+            final String body = req.body();
+            final Gson gson = new Gson();
+            final MoveRequest moveRequest = gson.fromJson(body, MoveRequest.class);
+            game.run(new CommandRequest("move", moveRequest.getFrom(), moveRequest.getTo()));
             res.redirect("/");
             return null;
         });
