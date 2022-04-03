@@ -35,6 +35,14 @@ public class WebApplication {
             res.redirect("/");
             return null;
         });
+
+        post("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", controller.status(game));
+            game.restart(new BoardInitializer());
+            return render(model, "result.html");
+        });
+
         get("/status", (req, res) -> {
             final StatusDto statusDto = controller.status(game);
             return statusDto.toString();
@@ -44,4 +52,5 @@ public class WebApplication {
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
+
 }
