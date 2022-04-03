@@ -1,13 +1,15 @@
 package chess.web;
 
-public class MoveCommand {
+public class MoveResponseDto {
 
     private final String source;
     private final String destination;
+    private final boolean finished;
 
-    public MoveCommand(String source, String destination) {
+    public MoveResponseDto(String source, String destination, boolean finished) {
         this.source = source;
         this.destination = destination;
+        this.finished = finished;
     }
 
     public String getSource() {
@@ -16,5 +18,9 @@ public class MoveCommand {
 
     public String getDestination() {
         return destination;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }

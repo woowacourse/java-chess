@@ -1,6 +1,5 @@
 var source = undefined;
 var destination = undefined;
-var turn = 'WHITE';
 
 function clickPiece(e) {
     if (source == undefined) {
@@ -23,20 +22,30 @@ function sendMoveCommand() {
         type: 'POST',
         url: '/move',
         contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
         data: JSON.stringify(data)
-    }).done(function() {
-        location.reload(true);
+    }).done(function(res) {
+        movePiece(res.source, res.destination);
+        addMovingHistory(res.source, res.destination);
         source = undefined;
         destination = undefined;
-        if (turn == 'WHITE') {
-            turn = 'BLACK';
-            return;
-        }
-        turn = 'WHITE';
     }).fail(function(error) {
-        location.reload(true);
         source = undefined;
         destination = undefined;
         alert(JSON.stringify(error));
     });
+}
+
+function movePiece(source, destination) {
+    var sourceDiv = document.getElementById(source);
+    var destinationDiv = document.getElementById(destination);
+
+    destinationDiv.innerHTML = sourceDiv.innerHTML;
+    sourceDiv.innerHTML = '';
+}
+
+function addMovingHistory(source, destination) {
+    var historyDiv = document.getElementById('history');
+    var output = '시작점 : ' + source + ', 도착점 : ' + destination;
+    historyDiv.innerHTML += output + '<br>';
 }
