@@ -1,7 +1,10 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.post;
 
+import chess.dto.MoveDto;
 import chess.model.state.Ready;
 import chess.model.state.State;
 import com.google.gson.Gson;
@@ -27,6 +30,20 @@ public class WebChessController {
         get("/end", (req, res) -> {
             this.state = state.proceed(List.of("end"));
             return gson.toJson(state.getBoardForWeb());
+        });
+
+        post("/move", (req, res) -> {
+            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            System.out.println("-------------");
+            System.out.println(moveDto.getOptions().get(1));
+            System.out.println(moveDto.getOptions().get(2));
+            this.state = state.proceed(moveDto.getOptions());
+            return gson.toJson(state.getBoardForWeb());
+        });
+
+        exception(Exception.class, (exception, req, res) -> {
+            res.status(400);
+            res.body(exception.getMessage());
         });
     }
 }

@@ -3,7 +3,7 @@ package chess.model.state.finished;
 import chess.model.board.Board;
 import chess.model.board.GameResult;
 import chess.model.piece.Piece;
-import java.util.HashMap;
+import chess.model.state.State;
 import java.util.Map;
 
 public final class End extends Finished {
