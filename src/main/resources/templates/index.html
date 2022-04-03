@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <h1>♟체스</h1>
+    <section class="chess-ui">
+        {{#squares}}
+        <div id="{{position}}" class="square">
+            {{#if piece}}
+            <img alt="position" class="squareImage" src="/images/{{pieceImageName}}.png"/>
+            {{else}}
+            <img alt="empty" src="/images/blank.png"/>
+            {{/if}}
+        </div>
+        {{/squares}}
+    </section>
+</div>
 </body>
+
 </html>
