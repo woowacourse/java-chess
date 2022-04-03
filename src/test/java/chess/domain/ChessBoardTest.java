@@ -1,7 +1,10 @@
 package chess.domain;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -17,9 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ChessBoardTest {
+
+    public static final String NOT_MOVABLE_EXCEPTION_MESSAGE = "해당 Position으로 이동할 수 없습니다.";
 
     @Test
     @DisplayName("체스판을 생성한다.")
@@ -133,5 +142,106 @@ public class ChessBoardTest {
                         Map.entry(Position.of("a1"), new King(Color.WHITE)))));
         assertThat(chessBoard.getPositionColor(Position.of("a1")))
                 .isEqualTo(Color.WHITE);
+    }
+
+    @Nested
+    @DisplayName("move 메서드는")
+    class MoveTest {
+
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+        @ValueSource(strings = {"c3", "c4", "d3", "d5", "e5"})
+        @DisplayName("말을 움직인다.")
+        void move(String toPosition) {
+            King movingKing = new King(Color.WHITE);
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d4"), movingKing),
+                    Map.entry(Position.of("c4"), new Pawn(Color.BLACK)),
+                    Map.entry(Position.of("d5"), new Pawn(Color.BLACK)),
+                    Map.entry(Position.of("e3"), new Pawn(Color.WHITE)),
+                    Map.entry(Position.of("e4"), new Pawn(Color.WHITE))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            chessBoard.move(new GameCommand("move", "d4", toPosition));
+            assertThat(chessBoard.selectPiece(Position.of(toPosition))).isSameAs(movingKing);
+        }
+
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+        @CsvSource(value = {"e3", "e4"})
+        @DisplayName("말이 해당하는 곳에 같은 편이 있을 경우 움직이지 못한다.")
+        void moveExceptionBySameTeam(String toPosition) {
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d4"), new King(Color.WHITE)),
+                    Map.entry(Position.of("e3"), new Pawn(Color.WHITE)),
+                    Map.entry(Position.of("e4"), new Pawn(Color.WHITE))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            assertThatThrownBy(() -> chessBoard.move(new GameCommand("move", "d4", toPosition)))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
+
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+        @CsvSource(value = {"e4", "d5", "c4", "d3"})
+        @DisplayName("말이 움직이지 못하는 방향으로는 가지 못한다.")
+        void moveExceptionByMovableDirection(String toPosition) {
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d4"), new Bishop(Color.WHITE))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            assertThatThrownBy(() -> chessBoard.move(new GameCommand("move", "d4", toPosition)))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
+
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+        @CsvSource(value = {"g1", "h4"})
+        @DisplayName("말이 움직일 수 있는 방향에 장애물이 있는 경우 가지 못한다.")
+        void moveExceptionByBlock(String toPosition) {
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d4"), new Queen(Color.WHITE)),
+                    Map.entry(Position.of("g4"), new Pawn(Color.BLACK)),
+                    Map.entry(Position.of("f2"), new Pawn(Color.WHITE))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            assertThatThrownBy(() -> chessBoard.move(new GameCommand("move", "d4", toPosition)))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
+
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+        @CsvSource(value = {"e5", "c5"})
+        @DisplayName("폰은 대각선에 적이 있는 경우에만 공격 가능하다.")
+        void attackPawn(String toPosition) {
+            Pawn movingPawn = new Pawn(Color.WHITE);
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d4"), movingPawn),
+                    Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
+                    Map.entry(Position.of("e5"), new Pawn(Color.BLACK))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            chessBoard.move(new GameCommand("move", "d4", toPosition));
+            assertThat(chessBoard.selectPiece(Position.of(toPosition))).isSameAs(movingPawn);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {"d3", "d4"})
+        @DisplayName("폰은 정면으로 공격이 불가능하다.")
+        void movePawnExceptionWithBlock(String toPosition) {
+            Pawn movingPawn = new Pawn(Color.WHITE);
+            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+                    Map.entry(Position.of("d2"), movingPawn),
+                    Map.entry(Position.of(toPosition), new Pawn(Color.BLACK))
+            ));
+            ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
+            assertThatThrownBy(() ->chessBoard.move(new GameCommand("move", "d2", toPosition)))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
     }
 }

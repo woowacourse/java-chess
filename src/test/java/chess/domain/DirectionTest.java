@@ -30,4 +30,10 @@ public class DirectionTest {
         Position target = Position.of(targetPostion);
         assertThat(Direction.getDirectionByPositions(source, target)).isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+    @CsvSource(value = {"NORTH, true", "SOUTH, true", "EAST, false", "WEST, false"})
+    void isPawnStraigtDirection(Direction direction, boolean expected) {
+        assertThat(direction.isPawnStraigtDirection()).isEqualTo(expected);
+    }
 }

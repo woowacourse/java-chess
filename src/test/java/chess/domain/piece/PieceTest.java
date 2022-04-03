@@ -75,4 +75,11 @@ public class PieceTest {
         Piece piece = new Pawn(color);
         assertThat(piece.getSymbol()).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("색이 Empty 확인한다.")
+    void isEmpty() {
+        Piece piece = EmptyPiece.getInstance();
+        assertThat(piece.isEmpty()).isTrue();
+    }
 }
