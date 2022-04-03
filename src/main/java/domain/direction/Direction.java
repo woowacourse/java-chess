@@ -1,5 +1,7 @@
 package domain.direction;
 
+import java.util.Arrays;
+
 public enum Direction {
     EAST(1, 0),
     WEST(-1, 0),
@@ -26,6 +28,14 @@ public enum Direction {
     Direction(final int file, final int rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Direction valueOf(final int file, final int rank) {
+        return Arrays.stream(Direction.values())
+            .filter(direction -> direction.file  == file)
+            .filter(direction -> direction.rank == rank)
+            .findFirst()
+            .orElseThrow(()->new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다.")) ;
     }
 
     public int getFile() {

@@ -13,12 +13,13 @@ public abstract class SpecificLocationPiece extends Piece {
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
-        List<Position> positions = new ArrayList<>();
-        Position nextPosition = source.createNextPosition(direction);
-        if (nextPosition != null) {
-            positions.add(nextPosition);
+    protected Direction direction(Position source, Position target) {
+        int file = target.getFile() - source.getFile();
+        int rank = target.getRank() - source.getRank();
+        Direction direction = Direction.valueOf(file, rank);
+        if (!getDirections().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 해당 기물이 이동할 수 없는 위치입니다.");
         }
-        return positions;
+        return direction;
     }
 }

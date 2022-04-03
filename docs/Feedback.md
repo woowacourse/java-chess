@@ -78,8 +78,8 @@
 
 ## 3차 피드백
 
-- [ ] `Piece`
-    - [ ] `calculateAvailablePosition` 함수 리팩터링
+- [x] `Piece`
+    - [x] `calculateAvailablePosition` 함수 리팩터링
         - `move()`메서드가 해당 로직을 `Navigator`객체에게 위임.
     - [x] `createPositionByDirection` 함수 리팩터링
         - `Position` 객체에 메세지를 보내는 것은 어떨지.

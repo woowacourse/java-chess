@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.Navigation;
 import domain.Player;
 import domain.direction.Direction;
 import domain.position.Position;
@@ -18,16 +19,12 @@ public abstract class Piece {
     }
 
     public List<Position> move(Position source, Position target) {
-        List<Position> positions = getDirections().stream()
-            .map(direction -> calculateAvailablePosition(source, direction))
-            .filter(list -> list.contains(target))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
-        return positions.subList(SUBLIST_START_INDEX, positions.indexOf(target));
+        Direction direction = direction(source, target);
+        List<Position> positions = new Navigation(source, target).route(direction);
+        return positions.subList(0, positions.indexOf(target));
     }
 
-    protected abstract List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction);
+    protected abstract Direction direction(Position source, Position target);
 
     protected abstract List<Direction> getDirections();
 

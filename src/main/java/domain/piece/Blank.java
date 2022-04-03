@@ -22,9 +22,8 @@ public class Blank extends Piece {
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction) {
-        throw new IllegalArgumentException("[ERROR] 해당 위치는 비어있는 칸입니다.");
+    protected Direction direction(Position source, Position target) {
+        return null;
     }
 
     @Override

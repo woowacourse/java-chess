@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.Navigation;
 import domain.Player;
 import domain.direction.Direction;
 import domain.position.Position;
@@ -29,17 +30,30 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     @Override
-    public List<Position> move(final Position source, final Position target) {
-        Direction direction = getDirections().stream()
-            .filter(value -> calculateAvailablePosition(source, value).contains(target))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
-        List<Position> positions = calculateAvailablePosition(source, direction);
+    public List<Position> move(Position source, Position target) {
+        Direction direction = direction(source, target);
         if (isMoveDirection(direction)) {
             validateMoveTwoSpace(direction, source);
+            List<Position> positions = addOneSpaceMovePosition(source, target, direction);
+            positions.addAll(new Navigation(source, target).route(direction));
             return positions;
         }
-        return positions.subList(SUBLIST_START_INDEX, positions.indexOf(target));
+        return new ArrayList<>();
+    }
+
+    private Direction changeOneSpaceDirection(Direction direction) {
+        if (direction == Direction.NORTH_NORTH) {
+            return Direction.NORTH;
+        }
+        return Direction.SOUTH;
+    }
+
+    public List<Position> addOneSpaceMovePosition(Position source, Position target, Direction direction) {
+        if (isTwoSpaceMoveDirection(direction)) {
+            Direction addDirection = changeOneSpaceDirection(direction);
+            return new Navigation(source, target).route(addDirection);
+        }
+        return new ArrayList<>();
     }
 
     private boolean isMoveDirection(final Direction direction) {
@@ -66,39 +80,9 @@ public class Pawn extends SpecificLocationPiece {
         return WHITE_START_LINE;
     }
 
-    @Override
-    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
-        List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
-        Position nextPosition = source.createNextPosition(direction);
-        if (nextPosition != null) {
-            positions.add(nextPosition);
-        }
-        return positions;
-    }
-
-    private List<Position> generateTwoSpaceMoveRoute(final Position source, final Direction direction) {
-        List<Position> positions = new ArrayList<>();
-        if (isTwoSpaceMoveDirection(direction)) {
-            positions.add(calculatePawnWayPoint(source, direction));
-        }
-        return positions;
-    }
-
     private boolean isTwoSpaceMoveDirection(final Direction direction) {
         return direction == Direction.SOUTH_SOUTH
             || direction == Direction.NORTH_NORTH;
-    }
-
-    private Position calculatePawnWayPoint(final Position source, final Direction direction) {
-        Direction addDirection = generateAddDirection(direction);
-        return source.createNextPosition(addDirection);
-    }
-
-    private Direction generateAddDirection(final Direction direction) {
-        if (direction == Direction.NORTH_NORTH) {
-            return Direction.NORTH;
-        }
-        return Direction.SOUTH;
     }
 
     @Override

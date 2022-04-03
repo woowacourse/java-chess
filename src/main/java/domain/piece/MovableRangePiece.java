@@ -13,13 +13,36 @@ public abstract class MovableRangePiece extends Piece {
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
-        List<Position> positions = new ArrayList<>();
-        Position nextPosition = source.createNextPosition(direction);
-        while (nextPosition != null) {
-            positions.add(nextPosition);
-            nextPosition = nextPosition.createNextPosition(direction);
+    protected Direction direction(Position source, Position target) {
+        int file = target.getFile() - source.getFile();
+        int rank = target.getRank() - source.getRank();
+        Direction direction = calculateDirection(file, rank);
+        if (!getDirections().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 해당 기물이 이동할 수 없는 위치입니다.");
         }
-        return positions;
+        return direction;
+    }
+
+    private Direction calculateDirection(int file, int rank) {
+        if (Math.abs(file) == Math.abs(rank)) {
+            return createDiagonalDirection(file, rank);
+        }
+        return createStraightDirection(file, rank);
+    }
+
+    private Direction createDiagonalDirection(int file, int rank) {
+        file = file / Math.abs(file);
+        rank = rank / Math.abs(rank);
+        return Direction.valueOf(file, rank);
+    }
+
+    private Direction createStraightDirection(int file, int rank) {
+        if (file == 0) {
+            rank = rank / Math.abs(rank);
+        }
+        if (rank == 0) {
+            file = file / Math.abs(file);
+        }
+        return Direction.valueOf(file, rank);
     }
 }
