@@ -143,7 +143,7 @@ public class ChessBoard {
     }
 
     private boolean isPromotionPositionPawn(Position position, Piece piece, Color color) {
-        return position.isPromotionPosition() && piece.isPawn() && piece.isSameColor(color);
+        return position.isPromotionPosition(color) && piece.isPawn() && piece.isSameColor(color);
     }
 
     public Map<Position, Piece> getPieces() {

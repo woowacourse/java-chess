@@ -98,8 +98,11 @@ public class Position {
         return isColumnInRange((char) (column + columnAmount)) && isRowInRange((char) (row + rowAmount));
     }
 
-    public boolean isPromotionPosition() {
-        return row == MIN_ROW || row == MAX_ROW;
+    public boolean isPromotionPosition(Color color) {
+        if (color.isWhite()) {
+            return row == MAX_ROW;
+        }
+        return row == MIN_ROW;
     }
 
     public boolean isInitialPawnPosition(Color color) {
