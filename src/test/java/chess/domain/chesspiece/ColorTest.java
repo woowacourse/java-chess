@@ -3,7 +3,6 @@ package chess.domain.chesspiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ class ColorTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
-    
+
     @ParameterizedTest
     @DisplayName("문자열로 색깔을 찾는다.")
     @CsvSource(value = {"black:BLACK", "white:WHITE"}, delimiter = ':')
@@ -41,8 +40,8 @@ class ColorTest {
 
         // then
         assertThatThrownBy(() -> Color.from(value))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("색깔을 찾을 수 없습니다."
-                        );
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("색깔을 찾을 수 없습니다."
+                );
     }
 }

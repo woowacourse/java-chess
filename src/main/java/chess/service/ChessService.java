@@ -1,7 +1,5 @@
 package chess.service;
 
-import chess.dao.ChessPieceDao;
-import chess.dao.StatusDao;
 import chess.domain.ChessGame;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;

@@ -1,12 +1,10 @@
 package chess.dao;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.StatusDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

@@ -103,7 +103,8 @@ class PawnTest {
 
     @ParameterizedTest
     @DisplayName("대각선이 다른 색 기물이면 예외를 던지지 않는다.")
-    @CsvSource(value = {"BLACK:h5:g4", "WHITE:h4:g5", "BLACK:d5:e4", "BLACK:d5:c4", "WHITE:d5:c6", "WHITE:d5:e6"}, delimiter = ':')
+    @CsvSource(value = {"BLACK:h5:g4", "WHITE:h4:g5", "BLACK:d5:e4", "BLACK:d5:c4", "WHITE:d5:c6",
+            "WHITE:d5:e6"}, delimiter = ':')
     void checkMove_cross(final Color color, final String fromInput, final String target) {
         // given
         final Position from = Position.from(fromInput);

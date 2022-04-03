@@ -56,5 +56,6 @@ public abstract class ChessPiece {
 
     public Color color() {
         return color;
-    };
+    }
+
 }
