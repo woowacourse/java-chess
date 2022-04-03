@@ -1,7 +1,12 @@
+var finished = false;
 var source = undefined;
 var destination = undefined;
 
 function clickPiece(e) {
+    if (finished) {
+        alert('게임이 종료되었습니다');
+        return;
+    }
     if (source == undefined) {
         source = e;
         return;
@@ -28,6 +33,10 @@ function sendMoveCommand() {
         movePiece(res.source, res.destination);
         addMovingHistory(res.source, res.destination);
         initializePosition();
+        if (res.finished) {
+            finished = true;
+            addSomethingInElement('running-state', '왕이 잡혔습니다. 게임을 종료합니다.');
+        }
     }).fail(function(error) {
         initializePosition();
         alert(JSON.stringify(error));
