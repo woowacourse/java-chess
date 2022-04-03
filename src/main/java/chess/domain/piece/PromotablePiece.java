@@ -1,10 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.board.position.Rank.EIGHT;
-import static chess.domain.board.position.Rank.ONE;
-import static chess.domain.piece.TeamColor.BLACK;
-import static chess.domain.piece.TeamColor.WHITE;
-
 import chess.domain.board.position.Position;
 
 public abstract class PromotablePiece extends Piece {
@@ -15,8 +10,7 @@ public abstract class PromotablePiece extends Piece {
 
     @Override
     public boolean canPromote() {
-        return teamColor == WHITE && position.isInRank(EIGHT) ||
-                teamColor == BLACK && position.isInRank(ONE);
+        return teamColor.isPromotablePosition(position);
     }
 
     public Piece promote(final String promotionType) {

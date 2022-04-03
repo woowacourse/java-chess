@@ -1,11 +1,21 @@
 package chess.domain.piece;
 
+import static chess.domain.board.position.Rank.EIGHT;
+import static chess.domain.board.position.Rank.ONE;
+
+import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 
 public enum TeamColor {
-    WHITE,
-    BLACK,
+    WHITE(EIGHT),
+    BLACK(ONE),
     ;
+
+    private final Rank promotionRank;
+
+    TeamColor(final Rank promotionRank) {
+        this.promotionRank = promotionRank;
+    }
 
     public static TeamColor findByRank(final Rank rank) {
         if (isWhiteTeamRank(rank)) {
@@ -22,7 +32,7 @@ public enum TeamColor {
     }
 
     private static boolean isBlackTeam(final Rank rank) {
-        return rank == Rank.SEVEN || rank == Rank.EIGHT;
+        return rank == Rank.SEVEN || rank == EIGHT;
     }
 
     public boolean isBlack() {
@@ -35,4 +45,9 @@ public enum TeamColor {
         }
         return BLACK;
     }
+
+    public boolean isPromotablePosition(final Position position) {
+        return position.isInRank(promotionRank);
+    }
+
 }
