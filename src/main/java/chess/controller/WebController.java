@@ -66,8 +66,9 @@ public class WebController {
         Map<String, String> map = Arrays.stream(parameters)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(s -> s[0], s -> URLDecoder.decode(s[1], StandardCharsets.UTF_8)));
-        String[] rawPosition = map.get("position").split(" ");
-        chessController.processMove(rawPosition[0], rawPosition[1]);
+        String rawSource = map.get("source").trim();
+        String rawTarget = map.get("target").trim();
+        chessController.processMove(rawSource, rawTarget);
     }
 
     private String render(Map<String, Object> model, String templatePath) {

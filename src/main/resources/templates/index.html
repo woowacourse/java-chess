@@ -13,11 +13,13 @@
         {{#team}}
             <h2>현재는 {{team}} 팀의 차례입니다🤗</h2>
         {{/team}}
+
         <section class="chess-ui">
             {{#pieces}}
-                <img id="{{position}}" class="img" src="images/{{fileName}}">
+                <img id="{{position}}" class="img" onclick="" src="images/{{fileName}}">
             {{/pieces}}
         </section>
+
         <section>
             {{^start}}
                 <form method="post" action="/start">
@@ -26,12 +28,15 @@
             {{/start}}
 
             {{#start}}
-                <form method="post" action="/move">
-                    <input type="text" name="position" placeholder="좌표를 입력해 주세요.">
+                <form id="moveform" method="post" action="/move">
+                    <input type="text" id="source" name="source" placeholder="시작점을 클릭해 주세요.">
+                    <input type="text" id="target" name="target" placeholder="도착점을 클릭해 주세요.">
                     <button type="submit" value="제출">제출제출</button>
                 </form>
             {{/start}}
         </section>
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
