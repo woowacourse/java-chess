@@ -41,7 +41,7 @@ public class ChessGame {
     }
 
     private void playGameByCommand(GameCommand gameCommand) {
-        if (gameCommand.isSameCommandType(CommandType.END)) {
+        if (isEndCommand(gameCommand)) {
             return;
         }
         startGame(gameCommand);
@@ -49,6 +49,10 @@ public class ChessGame {
         validateEndChessBoard();
         showStatus(gameCommand);
         move(gameCommand);
+    }
+
+    private boolean isEndCommand(GameCommand gameCommand) {
+        return gameCommand.isSameCommandType(CommandType.END);
     }
 
     private void startGame(GameCommand gameCommand) {
@@ -104,11 +108,19 @@ public class ChessGame {
         validatePlayerTurn(gameCommand);
         chessBoard.move(gameCommand);
         ResultView.printChessBoard(chessBoard.getPieces());
+        doEnd();
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        turn = turn.getReverseColor();
+    }
+
+    private void doEnd() {
         if (chessBoard.isEnd()) {
             ResultView.printWinner(turn);
             turn = Color.EMPTY;
         }
-        turn = turn.getReverseColor();
     }
 
     private void validatePlayerTurn(GameCommand gameCommand) {

@@ -65,10 +65,7 @@ public class ChessBoard {
     private void checkBlockInDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
         Direction direction = Direction.getDirectionByPositions(fromPosition, toPosition);
         checkRouteNotBlock(fromPosition, toPosition, direction);
-        if (fromPiece.isSamePieceType(PieceType.PAWN)) {
-            checkPawnStraightMove(toPosition, direction);
-            checkEnemyInDiagonal(fromPiece, selectPiece(toPosition));
-        }
+        checkPawnMove(toPosition, fromPiece, direction);
     }
 
     private void checkRouteNotBlock(Position fromPosition, Position toPosition, Direction direction) {
@@ -76,6 +73,13 @@ public class ChessBoard {
              nextPosition != toPosition;
              nextPosition = nextPosition.toDirection(direction)) {
             checkEmpty(selectPiece(nextPosition));
+        }
+    }
+
+    private void checkPawnMove(Position toPosition, Piece fromPiece, Direction direction) {
+        if (fromPiece.isSamePieceType(PieceType.PAWN)) {
+            checkPawnStraightMove(toPosition, direction);
+            checkEnemyInDiagonal(fromPiece, selectPiece(toPosition));
         }
     }
 
