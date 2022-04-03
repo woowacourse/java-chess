@@ -14,6 +14,7 @@ public class Game {
 
     private static final int MAXIMUM_SPLIT_INPUT_SIZE = 3;
     private static final int MINIMUM_SPLIT_INPUT_SIZE = 1;
+
     private State state;
     private Color winColor;
 

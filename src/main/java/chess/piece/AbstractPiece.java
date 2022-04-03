@@ -60,4 +60,12 @@ public abstract class AbstractPiece implements Piece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "name=" + name +
+                ", color=" + color +
+                '}';
+    }
 }

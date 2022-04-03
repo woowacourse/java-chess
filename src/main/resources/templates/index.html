@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+보드판 <br><br>
+<table>
+{{#board}}
+<tr>
+    {{#this}}
+    <td>
+        {{this.name}}
+    </td>
+    {{/this}}
+</tr>
+{{/board}}
+</table>
+
+<form enctype = "text/plain" name = "moveform" action = "/move" method = "post"><br>
+    명령 : <input type = "text" name = "command" size = "12">
+    <input type = "submit" value = "제출">
+</form>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ import chess.piece.detail.Direction;
 import chess.position.Column;
 import chess.position.Position;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -160,5 +161,11 @@ public class Board {
         return "Board{" +
                 "value=" + value +
                 '}';
+    }
+
+    public Map<String, Piece> toMap() {
+        return value.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }
