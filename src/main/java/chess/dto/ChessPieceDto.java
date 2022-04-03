@@ -13,8 +13,8 @@ public class ChessPieceDto {
         this.chessPiece = chessPiece;
     }
 
-    public static ChessPieceDto of(Position from, String pieceType, String color) {
-        return new ChessPieceDto(from, ChessPieceMapper.findBy(pieceType, color));
+    public static ChessPieceDto of(String position, String pieceType, String color) {
+        return new ChessPieceDto(Position.from(position), ChessPieceMapper.findBy(pieceType, color));
     }
 
     public Position getPosition() {
