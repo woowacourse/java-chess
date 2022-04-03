@@ -1,6 +1,7 @@
 package domain.chessgame;
 
 import domain.Player;
+import domain.Score;
 import domain.Status;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -22,8 +23,9 @@ public class ChessGame {
     }
 
     public Status status() {
-        double whiteScore = chessBoard.calculateScoreByPlayer(Player.WHITE);
-        double blackScore = chessBoard.calculateScoreByPlayer(Player.BLACK);
+        Score score = new Score(chessBoard);
+        double whiteScore = score.white();
+        double blackScore = score.black();
         return new Status(whiteScore, blackScore);
     }
 
