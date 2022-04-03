@@ -29,10 +29,10 @@ public class Board {
 
     public Board() {
         this.board = new LinkedHashMap<>(INITIAL_CAPACITY);
-        initialPieces(board);
+        initialPieces();
     }
 
-    private void initialPieces(final Map<Position, Piece> board) {
+    public void initialPieces() {
         putPiecesWithoutPawn(board, Row.EIGHT, Color.BLACK);
         putPiecesOnRow(board, Row.SEVEN, new PawnPiece(Color.BLACK));
 

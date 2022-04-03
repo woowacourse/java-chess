@@ -21,7 +21,7 @@ public class Started implements State {
 
     @Override
     public State end() {
-        return new Ended();
+        return new Ended(board);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Started implements State {
 
         if (board.isCheckmate(to)) {
             board.move(from, to);
-            return new Ended();
+            return new Ended(board);
         }
 
         board.move(from, to);

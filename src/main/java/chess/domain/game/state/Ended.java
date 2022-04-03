@@ -1,13 +1,21 @@
 package chess.domain.game.state;
 
+import chess.domain.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 public class Ended implements State {
 
+    private final Board board;
+
+    public Ended(final Board board) {
+        this.board = board;
+    }
+
     @Override
     public State start() {
-        throw new IllegalStateException("[ERROR] 게임이 끝나 start 할 수 없습니다.");
+        board.initialPieces();
+        return new Started(Color.WHITE, board);
     }
 
     @Override

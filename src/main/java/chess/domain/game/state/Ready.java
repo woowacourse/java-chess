@@ -19,7 +19,7 @@ public class Ready implements State {
 
     @Override
     public State end() {
-        return new Ended();
+        return new Ended(board);
     }
 
     @Override

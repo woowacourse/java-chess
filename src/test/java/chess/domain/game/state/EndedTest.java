@@ -1,7 +1,9 @@
 package chess.domain.game.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,14 +14,12 @@ class EndedTest {
 
     @BeforeEach
     void setUp() {
-        ended = new Ended();
+        ended = new Ended(new Board());
     }
 
     @Test
     void start() {
-        assertThatThrownBy(() -> ended.start())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 게임이 끝나 start 할 수 없습니다.");
+        assertThat(ended.start()).isInstanceOf(Started.class);
     }
 
     @Test
