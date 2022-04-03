@@ -45,6 +45,11 @@ public class ChessWebController {
         return generateEmptyModelAndView();
     }
 
+    public void exceptionHandle(Exception exception, Request request, Response response) {
+        String errorMessage = exception.getMessage();
+        response.body("<h1>" + errorMessage + "</h1>" + "<a href=\"/\"> 돌아가기 </a>");
+    }
+
     private ModelAndView generateEmptyModelAndView() {
         return new ModelAndView(null, null);
     }
