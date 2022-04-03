@@ -12,6 +12,11 @@ public class Position {
     private static final int CACHE_SIZE = 64;
     private static final Map<String, Position> CACHE = new HashMap<>(CACHE_SIZE);
 
+    private static final int COLUMN_START_INDEX = 0;
+    private static final int COLUMN_END_INDEX = 1;
+    private static final int ROW_START_INDEX = 1;
+    private static final int ROW_END_INDEX = 2;
+
     static {
         for (Column column : Column.values()) {
             addCacheInColumn(column);
@@ -45,9 +50,17 @@ public class Position {
     public static Position of(String value) {
         validateBlank(value);
         validateLength(value);
-        Column column = Column.of(value.substring(0, 1));
-        Row row = Row.of(Integer.parseInt(value.substring(1, 2)));
+        Column column = Column.of(getColumnString(value));
+        Row row = Row.of(Integer.parseInt(getRowString(value)));
         return CACHE.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
+    }
+
+    private static String getColumnString(String value) {
+        return value.substring(COLUMN_START_INDEX, COLUMN_END_INDEX);
+    }
+
+    private static String getRowString(String value) {
+        return value.substring(ROW_START_INDEX, ROW_END_INDEX);
     }
 
     private static void validateBlank(String value) {
@@ -66,10 +79,18 @@ public class Position {
         try {
             Column movedColumn = column.move(direction.getColumnValue());
             Row movedRow = row.move(direction.getRowValue());
-            return new Position(movedColumn, movedRow);
+            return Position.of(movedColumn, movedRow);
         } catch (IndexOutOfBoundsException exception) {
             return this;
         }
+    }
+
+    public int getColumnDifferenceWithTarget(Position targetPosition) {
+        return Column.calculateDifference(targetPosition.column, this.column);
+    }
+
+    public int getRowDifferenceWithTarget(Position targetPosition) {
+        return Row.calculateDifference(targetPosition.row, this.row);
     }
 
     public boolean isInRow(Row row) {

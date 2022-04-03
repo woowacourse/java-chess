@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 
 public class Knight extends FixedMovablePiece {
 
@@ -17,7 +16,7 @@ public class Knight extends FixedMovablePiece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return super.getMovablePositionsByDirections(position, Direction.knightDirections());
+    protected List<Direction> getMovableDirections() {
+        return Direction.knightDirections();
     }
 }

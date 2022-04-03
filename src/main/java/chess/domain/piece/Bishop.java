@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 
 public class Bishop extends StraightMovablePiece {
 
@@ -17,8 +16,7 @@ public class Bishop extends StraightMovablePiece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return super.getMovablePositionsByDirections(position, Direction.bishopDirections());
+    protected List<Direction> getMovableDirections() {
+        return Direction.bishopDirections();
     }
-
 }

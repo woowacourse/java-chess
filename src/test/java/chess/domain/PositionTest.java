@@ -78,4 +78,22 @@ public class PositionTest {
         Position position = Position.of(expected);
         assertThat(position.toDirection(direction)).isEqualTo(position);
     }
+
+    @Test
+    @DisplayName("인자를 기준으로 Column의 차이를 구한다.")
+    void getColumnDifferenceWithTarget() {
+        Position a5 = Position.of("a5");
+        Position b6 = Position.of("b6");
+        int columnDifferenceWithTarget = a5.getColumnDifferenceWithTarget(b6);
+        assertThat(columnDifferenceWithTarget).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("인자를 기준으로 Row의 차이를 구한다.")
+    void getRowDifferenceWithTarget() {
+        Position a5 = Position.of("a5");
+        Position b6 = Position.of("b7");
+        int rowDifferenceWithTarget = a5.getRowDifferenceWithTarget(b6);
+        assertThat(rowDifferenceWithTarget).isEqualTo(2);
+    }
 }

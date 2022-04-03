@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 
 public class Rook extends StraightMovablePiece {
 
@@ -17,7 +16,7 @@ public class Rook extends StraightMovablePiece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return super.getMovablePositionsByDirections(position, Direction.rookDirections());
+    protected List<Direction> getMovableDirections() {
+        return Direction.rookDirections();
     }
 }

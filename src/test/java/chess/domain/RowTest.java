@@ -71,4 +71,12 @@ public class RowTest {
                 Row.FOUR, Row.THREE, Row.TWO, Row.ONE
         );
     }
+
+    @Test
+    @DisplayName("두 로우 사이의 value 차이를 구한다.")
+    void calculateDifference() {
+        Row source = Row.of(7);
+        Row target = Row.of(3);
+        assertThat(Row.calculateDifference(source, target)).isEqualTo(4);
+    }
 }

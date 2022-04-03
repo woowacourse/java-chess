@@ -37,6 +37,10 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("해당 인덱스의 열은 존재하지 않습니다."));
     }
 
+    public static int calculateDifference(Column source, Column target) {
+        return source.value - target.value;
+    }
+
     public Column move(int value) {
         int indexAfterMove = this.value + value;
         if (indexAfterMove > MAX_COLUMN || indexAfterMove < MIN_COLUMN) {

@@ -60,4 +60,12 @@ public class ColumnTest {
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("범위를 벗어났습니다.");
     }
+
+    @Test
+    @DisplayName("두 컬럼 사이의 value 차이를 구한다.")
+    void calculateDifference() {
+        Column source = Column.of(5);
+        Column target = Column.of(3);
+        assertThat(Column.calculateDifference(source, target)).isEqualTo(2);
+    }
 }

@@ -3,41 +3,54 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Pawn extends Piece {
 
     public static final Row BLACK_INIT_ROW = Row.SEVEN;
     public static final Row WHITE_INIT_ROW = Row.TWO;
 
+    private static final int STRAIGHT_DIRECTION_INDEX = 0;
+    private static final int DIAGONAL_DIRECTION_START_INDEX = 1;
+
     public Pawn(Color color) {
         super(color, PieceType.PAWN);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        Map<Direction, List<Position>> movable = new EnumMap<>(Direction.class);
-        movable.put(Direction.pawnDirection(color), new ArrayList<>());
-        putMovablePositions(movable, position);
-        return movable;
+    public boolean canMove(Position fromPosition, Position toPosition) {
+        Direction directionByPositions = Direction.getDirectionByPositions(fromPosition, toPosition);
+        List<Direction> movableDirections = getMovableDirections();
+
+        if (directionByPositions.isSameDirection(getStraightDirection(movableDirections))) {
+            return checkFirstMove(fromPosition, toPosition);
+        }
+        if (directionByPositions.isInDirections(getDiagonalDirections(movableDirections))) {
+            return directionByPositions.isSameWithDistanceAndDirection(fromPosition, toPosition);
+        }
+        return false;
     }
 
-    private void putMovablePositions(Map<Direction, List<Position>> movable, Position position) {
-        Position nextPosition = position.toDirection(Direction.pawnDirection(color));
-        if (!hasMovablePosition(position, nextPosition)) {
-            return;
-        }
-        movable.get(Direction.pawnDirection(color)).add(nextPosition);
-        if (isFirstMove(position)) {
-            putMovablePositions(movable, nextPosition);
-        }
+    @Override
+    protected List<Direction> getMovableDirections() {
+        return Direction.pawnDirection(color);
     }
 
-    private boolean hasMovablePosition(Position position, Position nextPosition) {
-        return nextPosition != position;
+    private Direction getStraightDirection(List<Direction> movableDirections) {
+        return movableDirections.get(STRAIGHT_DIRECTION_INDEX);
+    }
+
+    private boolean checkFirstMove(Position fromPosition, Position toPosition) {
+        int distance = fromPosition.getRowDifferenceWithTarget(toPosition);
+        if (isFirstMove(fromPosition)) {
+            return distance <= 2;
+        }
+        return distance == 1;
+    }
+
+    private List<Direction> getDiagonalDirections(List<Direction> movableDirections) {
+        return movableDirections.subList(DIAGONAL_DIRECTION_START_INDEX,
+                movableDirections.size());
     }
 
     private boolean isFirstMove(Position position) {

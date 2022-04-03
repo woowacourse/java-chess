@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 
 public class King extends FixedMovablePiece {
 
@@ -15,7 +14,7 @@ public class King extends FixedMovablePiece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return super.getMovablePositionsByDirections(position, Direction.kingDirections());
+    protected List<Direction> getMovableDirections() {
+        return Direction.kingAndQueenDirections();
     }
 }

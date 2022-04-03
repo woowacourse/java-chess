@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final int RUNNING_KING_COUNT = 2;
+    private static final String NOT_MOVABLE_EXCEPTION_MESSAGE = "해당 Position으로 이동할 수 없습니다.";
 
     private final Map<Position, Piece> pieces;
 
@@ -39,77 +40,56 @@ public class ChessBoard {
     }
 
     public void move(GameCommand gameCommand) {
-        Position from = gameCommand.getFromPosition();
-        Position to = gameCommand.getToPosition();
-        Piece piece = selectPiece(from);
-        Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
-        checkMovable(to, finalMovablePositions);
-        movePiece(from, to, piece);
+        Position fromPosition = gameCommand.getFromPosition();
+        Position toPosition = gameCommand.getToPosition();
+        Piece fromPiece = selectPiece(fromPosition);
+
+        checkMovableDirection(fromPosition, toPosition, fromPiece);
+        checkBlockInDirection(fromPosition, toPosition, fromPiece);
+        movePiece(fromPosition, toPosition, fromPiece);
     }
 
-    private void checkMovable(Position to, List<Position> finalMovablePositions) {
-        if (!finalMovablePositions.contains(to)) {
-            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
+    private void checkMovableDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
+        if (!fromPiece.canMove(fromPosition, toPosition)) {
+            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private void checkBlockInDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
+        Direction direction = Direction.getDirectionByPositions(fromPosition, toPosition);
+        checkRouteNotBlock(fromPosition, toPosition, direction);
+        if (isPawnAndDiagonalDirection(fromPiece, direction)) {
+            checkEnemyInDiagonal(fromPiece, selectPiece(toPosition));
+        }
+    }
+
+    private void checkRouteNotBlock(Position fromPosition, Position toPosition, Direction direction) {
+        for (Position nextPosition = fromPosition.toDirection(direction);
+             nextPosition != toPosition;
+             nextPosition = nextPosition.toDirection(direction)) {
+            validateEmptyPiece(nextPosition);
+        }
+    }
+
+    private void validateEmptyPiece(Position nextPosition) {
+        if (!selectPiece(nextPosition).isEmpty()) {
+            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean isPawnAndDiagonalDirection(Piece fromPiece, Direction direction) {
+        return fromPiece.isSamePieceType(PieceType.PAWN) && !direction.isPawnStraigtDirection();
+    }
+
+    private void checkEnemyInDiagonal(Piece fromPiece, Piece toPiece) {
+        if (toPiece.isEmpty() || fromPiece.isSameColor(toPiece)) {
+            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
         }
     }
 
     private void movePiece(Position from, Position to, Piece piece) {
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
-    }
-
-    public List<Position> generateMovablePositionsWithBlock(Position nowPosition, Piece piece,
-                                                            Map<Direction, List<Position>> movablePositions) {
-        List<Position> result = new ArrayList<>();
-        for (Map.Entry<Direction, List<Position>> entry : movablePositions.entrySet()) {
-            addMovablePositionsWithBlock(piece, result, entry.getValue());
-        }
-
-        if (piece.isSamePieceType(PieceType.PAWN)) {
-            addDiagonalMoveForPawn(nowPosition, piece, result);
-        }
-        return Collections.unmodifiableList(result);
-    }
-
-    private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
-        if (!positions.isEmpty()) {
-            int cutIndex = getCutIndex(piece, positions);
-            result.addAll(positions.subList(0, cutIndex));
-        }
-    }
-
-    private int getCutIndex(Piece nowPiece, List<Position> positions) {
-        int cutIndex = 0;
-        while (isInRangeAndEmptyPosition(positions, cutIndex)) {
-            cutIndex++;
-        }
-        Piece target = selectPiece(positions.get(cutIndex));
-        if (isBlockedByTargetPiece(nowPiece, target)) {
-            return cutIndex;
-        }
-        return cutIndex + 1;
-    }
-
-    private boolean isInRangeAndEmptyPosition(List<Position> positions, int cutIndex) {
-        return cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty();
-    }
-
-    private boolean isBlockedByTargetPiece(Piece nowPiece, Piece target) {
-        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceType(PieceType.PAWN) && !target.isEmpty());
-    }
-
-    private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
-        Direction direction = Direction.pawnDirection(piece.getColor());
-        List<Direction> diagonalDirections = direction.getDiagonal();
-
-        List<Position> targetPositions = diagonalDirections.stream()
-                .map(nowPosition::toDirection)
-                .filter(targetPosition -> !selectPiece(targetPosition).isSameColor(piece)
-                        && !selectPiece(targetPosition).isEmpty())
-                .collect(Collectors.toList());
-
-        result.addAll(targetPositions);
     }
 
     public List<Piece> getPiecesOnColumn(Column column, Color color) {

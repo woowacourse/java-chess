@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.domain.piece.Color;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,36 +33,16 @@ public enum Direction {
         this.rowValue = rowValue;
     }
 
-    public List<Direction> getDiagonal() {
-        List<Direction> directions = new ArrayList<>();
-        if (this == NORTH || this == SOUTH) {
-            directions.add(getDirectionByValues(-1, rowValue));
-            directions.add(getDirectionByValues(1, rowValue));
-            return directions;
-        }
-        if (this == EAST || this == WEST) {
-            directions.add(getDirectionByValues(columnValue, -1));
-            directions.add(getDirectionByValues(columnValue, 1));
-            return directions;
-        }
-
-        throw new IllegalStateException("해당 디렉션의 대각선을 구할 수 없습니다");
-    }
-
-    public static Direction getDirectionByValues(int columnValue, int rowValue) {
-        return Arrays.stream(Direction.values())
-                .filter(direction -> direction.columnValue == columnValue && direction.rowValue == rowValue)
+    public static Direction getDirectionByPositions(Position source, Position target) {
+        return Arrays.stream(values())
+                .filter(direction -> Math.atan2(direction.rowValue, direction.columnValue)
+                        == Math.atan2(source.getRowDifferenceWithTarget(target),
+                        source.getColumnDifferenceWithTarget(target)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 Direction이 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("해당 위치로 가는 방향이 존재하지 않습니다."));
     }
 
-    public static List<Direction> kingDirections() {
-        return List.of(
-                Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
-                Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
-    }
-
-    public static List<Direction> queenDirections() {
+    public static List<Direction> kingAndQueenDirections() {
         return List.of(
                 Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
                 Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
@@ -85,14 +64,31 @@ public enum Direction {
                 Direction.WEST_WEST_SOUTH, Direction.WEST_WEST_NORTH);
     }
 
-    public static Direction pawnDirection(Color color) {
-        if (color == Color.BLACK) {
-            return Direction.SOUTH;
+    public static List<Direction> pawnDirection(Color color) {
+        if (color.isBlack()) {
+            return List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
         }
-        if (color == Color.WHITE) {
-            return Direction.NORTH;
+        if (color.isWhite()) {
+            return List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
         }
         throw new IllegalStateException("해당 폰의 디렉션은 존재하지 않습니다.");
+    }
+
+    public boolean isSameDirection(Direction direction) {
+        return this == direction;
+    }
+
+    public boolean isInDirections(List<Direction> directions) {
+        return directions.contains(this);
+    }
+
+    public boolean isSameWithDistanceAndDirection(Position source, Position target) {
+        return source.getColumnDifferenceWithTarget(target) == this.columnValue
+                && source.getRowDifferenceWithTarget(target) == this.rowValue;
+    }
+
+    public boolean isPawnStraigtDirection() {
+        return this == NORTH || this == SOUTH;
     }
 
     public int getColumnValue() {
