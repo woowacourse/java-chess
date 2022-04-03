@@ -56,7 +56,7 @@ public class Status {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColorWithPawn(color))
-                .filter(entry -> entry.getKey().getCoordinateX().equals(position.getCoordinateX()))
+                .filter(entry -> entry.getKey().isEqualCoordinateX(position))
                 .count();
     }
 
