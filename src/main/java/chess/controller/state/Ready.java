@@ -3,6 +3,7 @@ package chess.controller.state;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
 import chess.view.OutputView;
 
 public class Ready implements ChessGameState {
@@ -22,8 +23,8 @@ public class Ready implements ChessGameState {
     }
 
     @Override
-    public ChessGameState status() {
-        return alertReady();
+    public ScoreDto status() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override

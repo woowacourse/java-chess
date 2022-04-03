@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 public enum ChessExecution {
     START("start", (state, input) -> state.start()),
     MOVE("move", (state, input) -> state.move(input[1], input[2])),
-    STATUS("status", (state, input) -> state.status()),
+//    STATUS("status", (state, input) -> state.status()),
     END("end", (state, input) -> state.end()),
     ;
 

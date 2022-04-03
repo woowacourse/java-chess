@@ -1,4 +1,4 @@
-const startButton = document.getElementById("start");
+const startButton = document.getElementById("startButton");
 let from = "";
 let to = "";
 
@@ -28,7 +28,7 @@ async function setTurn() {
     let message = await fetch("/turn")
         .then(response => response.json());
 
-    let info = document.getElementById("info");
+    let turn = document.getElementById("turn");
 
     if (message === "WHITE_TURN") {
         message = "흰색 팀의 순서입니다";
@@ -38,7 +38,7 @@ async function setTurn() {
         message = "검은색 팀의 순서입니다";
     }
 
-    info.textContent = message;
+    turn.textContent = message;
 }
 
 function setBoard(board) {
@@ -108,4 +108,20 @@ async function movePiece(from, to) {
         }),
     })
         .then(response => response.json());
+}
+
+async function getScore() {
+    const score = await fetch("/status")
+        .then(response => response.json());
+
+    const SCORE_MESSAGE = "현재 점수 =";
+    const WHITE_TEAM_MESSAGE = " 흰색 팀 : ";
+    const WHITE = "WHITE";
+    const BLACK_TEAM_MESSAGE = " 검은색 팀 : ";
+    const BLACK = "BLACK";
+
+    let message = SCORE_MESSAGE + WHITE_TEAM_MESSAGE + score[WHITE] + BLACK_TEAM_MESSAGE + score[BLACK];
+
+    const div = document.getElementById("score");
+    div.textContent = message;
 }

@@ -22,9 +22,8 @@ public abstract class Playing implements ChessGameState {
     }
 
     @Override
-    public ChessGameState status() {
-        outputView.printScore(ScoreDto.from(board.getScore()));
-        return this;
+    public ScoreDto status() {
+        return ScoreDto.from(board.getScore());
     }
 
     MoveResult movePiece(String from, String to, Color color) {

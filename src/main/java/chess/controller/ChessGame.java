@@ -5,6 +5,7 @@ import chess.controller.state.Ready;
 import chess.controller.state.Turn;
 import chess.domain.board.Board;
 import chess.dto.MoveDto;
+import chess.dto.ScoreDto;
 
 public class ChessGame {
     private ChessGameState chessGameState;
@@ -18,8 +19,8 @@ public class ChessGame {
         chessGameState = chessGameState.move(moveDto.getFrom(), moveDto.getTo());
     }
 
-    public void status() {
-        chessGameState.status();
+    public ScoreDto status() {
+        return chessGameState.status();
     }
 
     public void end() {

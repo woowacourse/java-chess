@@ -5,6 +5,7 @@ import static spark.Spark.post;
 
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
+import chess.dto.ScoreDto;
 import chess.dto.TurnDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -41,15 +42,13 @@ public class ChessWebController {
         });
 
         get("/turn", (req, res) -> {
-            TurnDto boardDto = TurnDto.from(chessGame.getTurn());
-            return gson.toJson(boardDto.getColor());
+            TurnDto turnDto = TurnDto.from(chessGame.getTurn());
+            return gson.toJson(turnDto.getColor());
         });
 
-        post("/status", (req, res) -> {
-            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            chessGame.move(moveDto);
-            BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-            return gson.toJson(boardDto.getBoard());
+        get("/status", (req, res) -> {
+            ScoreDto scoreDto = chessGame.status();
+            return gson.toJson(scoreDto.getScore());
         });
     }
 
