@@ -81,7 +81,6 @@ public abstract class Piece {
         return getTeam() == piece.getTeam();
     }
 
-
     @Override
     public String toString() {
         return "Piece{" +

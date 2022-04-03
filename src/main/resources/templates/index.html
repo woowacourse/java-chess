@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-Hello World!!
+<button onclick="chessStart()"></button>
 </body>
+<script>
+    function chessStart() {
+        $.ajax({
+            type: "post",
+            url: "/board",
+            dataType: "text",
+            success: function () {
+                location.href = 'contents/chessBoard.html';
+            },
+            error: function () {
+                console.log('error');
+            }
+        })
+    }
+</script>
 </html>

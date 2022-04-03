@@ -1,0 +1,18 @@
+.black_board {
+    background-color: #8C5829;
+    border-collapse : collapse;
+    width: 80px;
+    height: 80px;
+}
+.white_board {
+    background-color: rgb(188, 145, 62);
+    border-collapse : collapse;
+    width: 80px;
+    height: 80px;
+}
+.table_board {
+    border-collapse: collapse;
+}
+body {
+    background-image: url('../img/wood.svg');
+}
