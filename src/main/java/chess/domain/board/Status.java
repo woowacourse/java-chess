@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Form;
+import chess.domain.piece.PieceSymbol;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -47,9 +47,9 @@ public class Status {
     private double getPawnScore(final Position position, final Piece pawn, final Color color) {
         long pawnCountInXAxis = getPawnCountInXAxis(position, color);
         if (pawnCountInXAxis > MINIMUM_PAWN_COUNT) {
-            return Form.getScore(pawn) / DIVIDED;
+            return PieceSymbol.getScore(pawn) / DIVIDED;
         }
-        return Form.getScore(pawn);
+        return PieceSymbol.getScore(pawn);
     }
 
     private long getPawnCountInXAxis(final Position position, final Color color) {
@@ -64,7 +64,7 @@ public class Status {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.values().stream()
                 .filter(piece -> piece.isSameColorWithoutPawn(color))
-                .map(Form::getScore)
+                .map(PieceSymbol::getScore)
                 .reduce(0.0, Double::sum);
     }
 }

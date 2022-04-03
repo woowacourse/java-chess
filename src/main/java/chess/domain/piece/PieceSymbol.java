@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.Arrays;
 
-public enum Form {
+public enum PieceSymbol {
 
     BLACK_PAWN(new Pawn(Color.BLACK), "♟", 1),
     BLACK_ROOK(new Rook(Color.BLACK), "♜", 5),
@@ -26,24 +26,24 @@ public enum Form {
     private final String symbol;
     private final double score;
 
-    Form(final Piece piece, final String symbol, final double score) {
+    PieceSymbol(final Piece piece, final String symbol, final double score) {
         this.piece = piece;
         this.symbol = symbol;
         this.score = score;
     }
 
     public static String getSymbol(final Piece other) {
-        return Arrays.stream(Form.values())
-                .filter(form -> form.piece.equals(other))
-                .map(form -> form.symbol)
+        return Arrays.stream(PieceSymbol.values())
+                .filter(pieceSymbol -> pieceSymbol.piece.equals(other))
+                .map(pieceSymbol -> pieceSymbol.symbol)
                 .findFirst()
                 .orElse(NONE_PIECE_SYMBOL);
     }
 
     public static double getScore(final Piece other) {
-        return Arrays.stream(Form.values())
-                .filter(form -> form.piece.equals(other))
-                .map(form -> form.score)
+        return Arrays.stream(PieceSymbol.values())
+                .filter(pieceSymbol -> pieceSymbol.piece.equals(other))
+                .map(pieceSymbol -> pieceSymbol.score)
                 .findFirst()
                 .orElse(NONE_PIECE_SCORE);
     }
