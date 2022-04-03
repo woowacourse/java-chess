@@ -17,5 +17,6 @@ CREATE TABLE chess_game
 (
     id         bigint NOT NULL AUTO_INCREMENT,
     turn_state enum('WHITE_RUN', 'BLACK_RUN', 'PROMOTION') NOT NULL,
+    winner     enum('WHITE', 'BLACK'),
     primary key (id)
 );
