@@ -28,9 +28,16 @@ public class BoardDto {
     private static List<PieceDto> makeLine(Map<String, Piece> pieces, Integer row) {
         List<PieceDto> symbols = new ArrayList<>();
         for (Column column : Column.values()) {
-            symbols.add(new PieceDto(findByKey(pieces, row, column), column.name() + row));
+            symbols.add(PieceDto.of(findByKey(pieces, row, column), column.name() + row, background(row, column)));
         }
         return symbols;
+    }
+
+    private static String background(Integer row, Column column) {
+        if ((column.value() + row) % 2 == 0) {
+            return "black";
+        }
+        return "white";
     }
 
     private static String findByKey(Map<String, Piece> pieces, Integer row, Column column) {

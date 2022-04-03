@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
+    <style>
+        .chess-board .white {
+            background: #eee;
+        }
+
+        .chess-board .black {
+            background: #aaa;
+        }
+    </style>
     <script>
         let first = '';
         let second = '';
@@ -61,17 +70,19 @@
             );
         }
 
+
     </script>
 </head>
 <body>
 <div align="center">
-    <table border="1">
+    <h1>♟산체스♟</h1>
+    <table class="chess-board" border="1">
         {{#board}}
         {{#boardSymbols}}
         <tr>
             {{#this}}
             {{#this}}
-            <td id={{position}} onclick="clicked(this.id)">
+            <td id={{position}} class="{{background}}" onclick="clicked(this.id)">
                 <img src="images/{{symbol}}" style="width:7vw; height: 7vw;"/>
             </td>
             {{/this}}

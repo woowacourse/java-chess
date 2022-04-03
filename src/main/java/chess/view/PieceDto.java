@@ -1,19 +1,19 @@
 package chess.view;
 
-import chess.domain.pieces.Piece;
-
 public class PieceDto {
 
     private final String symbol;
     private final String position;
+    private final String background;
 
-    public PieceDto(String symbol, String position) {
+    public PieceDto(String symbol, String position, String background) {
         this.symbol = symbol;
         this.position = position;
+        this.background = background;
     }
 
-    public static PieceDto of(Piece piece, String position) {
-        return new PieceDto(piece.symbol(), position);
+    public static PieceDto of(String symbol, String position, String background) {
+        return new PieceDto(symbol, position, background);
     }
 
     public String getSymbol() {
@@ -22,5 +22,9 @@ public class PieceDto {
 
     public String getPosition() {
         return position;
+    }
+
+    public String getBackground() {
+        return background;
     }
 }
