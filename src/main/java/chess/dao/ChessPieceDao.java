@@ -11,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessPieceDao {
 
@@ -74,6 +78,30 @@ public class ChessPieceDao {
         statement.setString(1, position.getValue());
         statement.setString(2, ChessPieceMapper.toPieceType(chessPiece));
         statement.setString(3, chessPiece.color().getValue());
+
+        try (connection; statement) {
+            return statement.executeUpdate();
+        }
+    }
+
+    public int saveAll(final Map<Position, ChessPiece> pieceByPosition) throws SQLException {
+        String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES ";
+        sql += IntStream.range(0, pieceByPosition.size())
+                .mapToObj(i -> "(?, ?, ?)")
+                .collect(Collectors.joining(", "));
+
+        final Connection connection = getConnection();
+        final PreparedStatement statement = connection.prepareStatement(sql);
+
+        int count = 1;
+        for (final Entry<Position, ChessPiece> entry : pieceByPosition.entrySet()) {
+            final Position position = entry.getKey();
+            final ChessPiece chessPiece = entry.getValue();
+
+            statement.setString(count++, position.getValue());
+            statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
+            statement.setString(count++, chessPiece.color().getValue());
+        }
 
         try (connection; statement) {
             return statement.executeUpdate();
