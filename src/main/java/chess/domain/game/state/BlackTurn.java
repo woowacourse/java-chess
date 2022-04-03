@@ -18,4 +18,9 @@ public class BlackTurn extends InGame {
     protected GameState getNextTurnState() {
         return new WhiteTurn(getBoard());
     }
+
+    @Override
+    public boolean isWhiteTurn() {
+        return false;
+    }
 }

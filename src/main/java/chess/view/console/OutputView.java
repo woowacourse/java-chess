@@ -1,6 +1,7 @@
 package chess.view.console;
 
 import chess.dto.BoardDto;
+import chess.dto.CurrentTurnDto;
 import chess.dto.PieceDto;
 import chess.dto.ScoreResultDto;
 import java.util.List;
@@ -34,6 +35,10 @@ public class OutputView {
         }
 
         System.out.println();
+    }
+
+    public static void printCurrentTurn(CurrentTurnDto currentTurnDto) {
+        System.out.println(currentTurnDto.getDisplayName() + "의 차례입니다.");
     }
 
     public static void printScore(ScoreResultDto scoreResultDto) {

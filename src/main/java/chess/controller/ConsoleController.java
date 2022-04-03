@@ -4,6 +4,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.ConsoleCommandDto;
+import chess.dto.CurrentTurnDto;
 import chess.dto.ScoreResultDto;
 import chess.view.console.InputView;
 import chess.view.console.OutputView;
@@ -49,6 +50,7 @@ public class ConsoleController {
     private void executeStart(ChessGame chessGame) {
         chessGame.startGame();
 
+        printCurrentTurn(chessGame);
         OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
     }
 
@@ -57,7 +59,12 @@ public class ConsoleController {
         Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
         chessGame.movePiece(fromPosition, toPosition);
 
+        printCurrentTurn(chessGame);
         OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
+    }
+
+    private void printCurrentTurn(ChessGame chessGame) {
+        OutputView.printCurrentTurn(CurrentTurnDto.from(chessGame));
     }
 
     private void executeStatus(ChessGame chessGame) {

@@ -11,5 +11,7 @@ public interface GameState {
 
     ScoreResult status();
 
+    boolean isWhiteTurn();
+
     Board getBoard();
 }

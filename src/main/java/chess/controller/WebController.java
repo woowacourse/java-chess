@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.CurrentTurnDto;
 import chess.dto.ScoreResultDto;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class WebController {
             BoardDto boardDto = BoardDto.from(chessGame.getBoard());
             model.put("boards", boardDto.getPieceImages());
             model.put("score", ScoreResultDto.from(chessGame));
+            model.put("turn", CurrentTurnDto.from(chessGame));
 
             return render(model);
         });

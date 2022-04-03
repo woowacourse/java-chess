@@ -26,6 +26,10 @@ public class ChessGame {
         this.state = state.move(from, to);
     }
 
+    public boolean isWhiteTurn() {
+        return state.isWhiteTurn();
+    }
+
     public Board getBoard() {
         return state.getBoard();
     }

@@ -25,4 +25,9 @@ public class ReadyToStart implements GameState {
     public Board getBoard() {
         throw new IllegalStateException("게임중이 아니므로 체스판이 아직 생성되지 않았습니다.");
     }
+
+    @Override
+    public boolean isWhiteTurn() {
+        throw new IllegalStateException("게임중이 아니므로 백팀의 차례인지 가져올 수 없습니다.");
+    }
 }

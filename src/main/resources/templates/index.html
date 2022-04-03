@@ -74,6 +74,10 @@
     {{/each}}
 </div>
 
+<div>
+    현재차례: {{turn.displayName}}
+</div>
+
 <form action="/move" method="POST">
     <input name="from"/>
     <input name="to"/>
@@ -81,9 +85,9 @@
 </form>
 
 <div>
-    백팀: {{score.whiteScore}}
+    백: {{score.whiteScore}}
     <br/>
-    흑팀: {{score.blackScore}}
+    흑: {{score.blackScore}}
 </div>
 
 </body>
