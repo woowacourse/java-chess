@@ -32,6 +32,7 @@ public final class Game {
 
     public void restart(final Initializer initializer) {
         board = new Board(initializer);
+        turn = FIRST_TURN;
     }
 
     private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {

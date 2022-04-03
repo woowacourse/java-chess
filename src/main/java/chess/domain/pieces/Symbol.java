@@ -2,13 +2,13 @@ package chess.domain.pieces;
 
 public enum Symbol {
 
-    BISHOP("B", 3),
-    KING("K", 0),
-    KNIGHT("N", 2.5),
-    PAWN("P", 1),
-    QUEEN("Q", 9),
-    ROOK("R", 5),
-    BLANK(".", 0),
+    BISHOP("-bishop.png", 3),
+    KING("-king.png", 0),
+    KNIGHT("-knight.png", 2.5),
+    PAWN("-pawn.png", 1),
+    QUEEN("-queen.png", 9),
+    ROOK("-rook.png", 5),
+    BLANK("blank.png", 0),
     ;
 
     private final String value;

@@ -18,6 +18,8 @@ public class WebApplication {
 
     public static void main(String[] args) {
         port(8081);
+        staticFiles.location("/static");
+
         ChessController controller = new ChessController();
         Game game = new Game(new BoardInitializer());
         get("/", (req, res) -> {

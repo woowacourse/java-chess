@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public final class Piece {
 
+    private static final String WHITE_SYMBOL = "white";
+    private static final String BLACK_SYMBOL = "black";
+
     private final Color color;
     private final Type type;
 
@@ -16,9 +19,9 @@ public final class Piece {
 
     public String symbol() {
         if (color.isWhite()) {
-            return type.symbol().value().toLowerCase();
+            return WHITE_SYMBOL + type.symbol().value();
         }
-        return type.symbol().value();
+        return BLACK_SYMBOL + type.symbol().value();
     }
 
     public boolean isMovable(final Position source, final Position target) {

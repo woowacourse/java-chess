@@ -37,16 +37,6 @@
             });
         }
 
-        function calculateWinner(black, white) {
-            if (black === white) {
-                return "draw!"
-            }
-            if (black > white) {
-                return "black win!"
-            }
-            return "white win!";
-        }
-
         function sendToServer(first, second) {
             fetch('/move', {
                 method: "POST",
@@ -71,53 +61,34 @@
             );
         }
 
-        function finishGame() {
-            fetch('/end', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "text/plain",
-                }
-            }).then((response) => {
-                    response.json().then(data => {
-                        console.log(data.finished);
-                        if (data.status === 400) {
-                            alert(data.errorMessage);
-                        }
-                        if (data.finished === true) {
-                            alert("게임이 종료되었습니다.");
-                            document.location.href = '/start'
-                            return;
-                        }
-                        location.reload();
-                    });
-                }
-            );
-        }
-
     </script>
 </head>
 <body>
-<table>
-    {{#board}}
-    {{#boardSymbols}}
-    <tr>
-        {{#this}}
-        {{#this}}
-        <td id={{position}} onclick="clicked(this.id)">
-            {{symbol}}
-        </td>
-        {{/this}}
-        {{/this}}
-    </tr>
-    {{/boardSymbols}}
-    {{/board}}
-</table>
+<div align="center">
+    <table border="1">
+        {{#board}}
+        {{#boardSymbols}}
+        <tr>
+            {{#this}}
+            {{#this}}
+            <td id={{position}} onclick="clicked(this.id)">
+                <img src="images/{{symbol}}" style="width:7vw; height: 7vw;"/>
+            </td>
+            {{/this}}
+            {{/this}}
+        </tr>
+        {{/boardSymbols}}
+        {{/board}}
+    </table>
+</div>
 <br/>
-<button id="btn" onclick="checkStatus()">status</button>
-<p id="statusResult">
-</p>
-<form action="/end" method="POST">
-    <input type="submit" value="end" />
-</form>
+<div align="center">
+    <button id="btn" onclick="checkStatus()">status</button>
+    <p id="statusResult">
+    </p>
+    <form action="/end" method="POST">
+        <input type="submit" value="end"/>
+    </form>
+</div>
 </body>
 </html>
