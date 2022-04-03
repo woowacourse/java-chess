@@ -13,6 +13,7 @@
         <form action="/start">
             <input type="submit" value="게임 시작">
         </form>
+        {{#started}}
         <form action="./move" method="post">
             source : <input type="text" name="source">
             target : <input type="text" name="target">
@@ -24,6 +25,7 @@
                 <input type="submit" value="게임 종료">
             </form>
         </div>
+        {{/started}}
         <section class="chess-ui">
             <!--      Row8      -->
             <div class="white-square">

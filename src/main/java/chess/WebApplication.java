@@ -38,6 +38,7 @@ public class WebApplication {
             Map<Position, Piece> board = gameController.getBoard();
             Map<String, Object> model = board.entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
+            model.put("started", true);
             return render(model, "index.html");
         });
 
@@ -72,6 +73,7 @@ public class WebApplication {
             if (winner == Camp.NONE) {
                 model.put("tie", true);
             }
+            model.put("started", false);
             return render(model, "result.html");
         });
 
