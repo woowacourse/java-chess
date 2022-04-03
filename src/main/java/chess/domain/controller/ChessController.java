@@ -3,7 +3,9 @@ package chess.domain.controller;
 import static spark.Spark.get;
 
 import chess.domain.game.ChessGame;
+import chess.domain.result.Score;
 import chess.dto.ChessGameDto;
+import chess.dto.StatusDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,10 @@ public class ChessController {
         get("/end", (req, res) -> {
             return gson.toJson(end(chessGame));
         });
+
+        get("/status", (req, res) -> {
+            return gson.toJson(status(chessGame));
+        });
     }
 
     private static String render(final Map<String, Object> model, final String templatePath) {
@@ -52,6 +58,18 @@ public class ChessController {
             return new ChessGameDto(chessGame, "success", "");
         } catch (final Exception e) {
             return new ChessGameDto(chessGame, "error", e.getMessage());
+        }
+    }
+
+    private static StatusDto status(final ChessGame chessGame) {
+        try {
+            chessGame.status();
+            final Score myScore = chessGame.calculateMyScore();
+            final Score opponentScore = chessGame.calculateOpponentScore();
+            return new StatusDto(chessGame.getTurnName(), chessGame.getOppositeTurnName(), myScore.getValue(),
+                    opponentScore.getValue(), myScore.decideResult(opponentScore).getName());
+        } catch (final Exception e) {
+            return new StatusDto("error", e.getMessage());
         }
     }
 }
