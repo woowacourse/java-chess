@@ -40,6 +40,19 @@ public class ChessPieceDao {
         return Collections.emptyList();
     }
 
+    public int deleteByPosition(final Position position) {
+        final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, position.getValue());
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public int deleteAll() {
         final String sql = "DELETE FROM ChessBoard";
 
@@ -70,6 +83,22 @@ public class ChessPieceDao {
                 statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
                 statement.setString(count++, chessPiece.color().getValue());
             }
+
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int update(final Position from, final Position to) {
+        final String sql = "UPDATE ChessBoard SET Position = ? WHERE Position = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, to.getValue());
+            statement.setString(2, from.getValue());
 
             return statement.executeUpdate();
         } catch (SQLException e) {

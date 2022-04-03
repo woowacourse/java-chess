@@ -62,6 +62,10 @@ public class ChessGame {
         chessPieceDao.deleteAll();
         chessPieceDao.saveAll(chessBoard.findAllPiece());
 
+        updateStatus();
+    }
+
+    public void updateStatus() {
         final StatusDao statusDao = new StatusDao();
         statusDao.delete();
         statusDao.save(gameStatus, chessBoard.currentTurn());

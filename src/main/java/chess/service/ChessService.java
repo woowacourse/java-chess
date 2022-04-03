@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.dao.ChessPieceDao;
 import chess.domain.ChessGame;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
@@ -24,7 +25,6 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
         return model;
     }
 
@@ -48,19 +48,24 @@ public class ChessService {
         Map<String, Object> model = new HashMap<>();
         final ChessGame chessGame = new ChessGame();
         try {
-            final MoveResult result = chessGame.move(
-                    Position.from(fromPosition),
-                    Position.from(toPosition)
-            );
+            final Position from = Position.from(fromPosition);
+            final Position to = Position.from(toPosition);
+
+            final MoveResult result = chessGame.move(from, to);
             model = toModel(result.getPieceByPosition());
             model.put("isKingDie", result.isKingDie());
+
+            final ChessPieceDao chessPieceDao = new ChessPieceDao();
+            chessPieceDao.deleteByPosition(to);
+            chessPieceDao.update(from, to);
+
+            chessGame.updateStatus();
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece();
             }
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
         return model;
     }
 
@@ -76,7 +81,7 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
+        chessGame.updateStatus();
         return model;
     }
 
@@ -91,7 +96,6 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
         return model;
     }
 
@@ -104,7 +108,6 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
         return model;
     }
 
@@ -121,7 +124,6 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB();
         return model;
     }
 
