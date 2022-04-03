@@ -44,9 +44,16 @@ public class ChessBoard {
         Position toPosition = gameCommand.getToPosition();
         Piece fromPiece = selectPiece(fromPosition);
 
+        checkEnemyOrEmpty(fromPiece, selectPiece(toPosition));
         checkMovableDirection(fromPosition, toPosition, fromPiece);
         checkBlockInDirection(fromPosition, toPosition, fromPiece);
         movePiece(fromPosition, toPosition, fromPiece);
+    }
+
+    private void checkEnemyOrEmpty(Piece fromPiece, Piece toPiece) {
+        if (!toPiece.isEmpty() && fromPiece.isSameColor(toPiece)) {
+            throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
+        }
     }
 
     private void checkMovableDirection(Position fromPosition, Position toPosition, Piece fromPiece) {
@@ -67,11 +74,11 @@ public class ChessBoard {
         for (Position nextPosition = fromPosition.toDirection(direction);
              nextPosition != toPosition;
              nextPosition = nextPosition.toDirection(direction)) {
-            validateEmptyPiece(nextPosition);
+            checkEmptyPiece(nextPosition);
         }
     }
 
-    private void validateEmptyPiece(Position nextPosition) {
+    private void checkEmptyPiece(Position nextPosition) {
         if (!selectPiece(nextPosition).isEmpty()) {
             throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
         }
