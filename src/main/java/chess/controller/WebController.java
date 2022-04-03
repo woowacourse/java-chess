@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Team;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -21,7 +22,10 @@ public class WebController {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>(chessController.getCurrentImages());
+            Map<String, Object> model = new HashMap<>();
+            model.put("pieces", chessController.getCurrentImages());
+            addTeamInformation(model);
+            addPlayingInformation(model);
             return render(model, "index.html");
         });
 
@@ -41,6 +45,20 @@ public class WebController {
             response.status(400);
             response.body(exception.getMessage());
         });
+    }
+
+    private void addTeamInformation(Map<String, Object> model) {
+        if (!chessController.getCurrentTeam().isNeutrality(Team.NEUTRALITY)) {
+            model.put("team", chessController.getCurrentTeam());
+        }
+    }
+
+    private void addPlayingInformation(Map<String, Object> model) {
+        if (chessController.isPlaying()) {
+            model.put("start", true);
+            return;
+        }
+        model.put("start", false);
     }
 
     private void processMove(Request request) {

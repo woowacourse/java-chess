@@ -21,4 +21,9 @@ public class Playing implements State{
     public boolean isFinish() {
         return false;
     }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
 }

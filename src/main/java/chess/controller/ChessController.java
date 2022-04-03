@@ -5,14 +5,16 @@ import chess.domain.board.PieceBuilder;
 import chess.domain.board.PositionConvertor;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.dto.BoardDTO;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
 import chess.domain.state.command.State;
 import chess.domain.Team;
 import chess.domain.result.StatusResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessController {
 
@@ -36,21 +38,20 @@ public class ChessController {
     }
 
     public Map<Position, Piece> processMove(String rawSource, String rawTarget) {
+        state = state.execute(Command.MOVE);
         Position source = PositionConvertor.to(rawSource);
         Position target = PositionConvertor.to(rawTarget);
         board.move(source, target);
-        state = state.execute(Command.MOVE);
         return board.getBoard();
     }
 
     public StatusResult processStatus() {
+        state = state.execute(Command.STATUS);
         StatusResult result = new StatusResult(
                 board.calculateScore(Team.BLACK),
                 board.calculateScore(Team.WHITE),
                 board.getCurrentWinner()
         );
-
-        state = state.execute(Command.STATUS);
         return result;
     }
 
@@ -58,10 +59,23 @@ public class ChessController {
         return state.isFinish();
     }
 
-    public Map<String, String> getCurrentImages() {
-        return board.getBoard()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(), e->e.getValue().fileName()));
+    public List<BoardDTO> getCurrentImages() {
+        Map<Position, Piece> pieceMap = board.getBoard();
+        List<BoardDTO> boardDTOs = new ArrayList<>();
+        for (Position position : Position.getReversePositions()) {
+            boardDTOs.add(new BoardDTO(position.toString(), pieceMap.get(position).fileName()));
+        }
+        return boardDTOs;
+    }
+
+    public Team getCurrentTeam() {
+        if (state.isReady() || state.isFinish()) {
+            return Team.NEUTRALITY;
+        }
+        return board.getCurrentTurnTeam();
+    }
+
+    public boolean isPlaying() {
+        return !state.isReady() && !state.isFinish();
     }
 }

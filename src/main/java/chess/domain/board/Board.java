@@ -118,4 +118,8 @@ public class Board {
         ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
         return calculator.calculateWinner();
     }
+
+    public Team getCurrentTurnTeam() {
+        return state.getTeam();
+    }
 }
