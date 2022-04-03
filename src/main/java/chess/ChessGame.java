@@ -46,8 +46,11 @@ public class ChessGame {
         return state.calculateStatus();
     }
 
-    public boolean isNotRunning() {
-        return !state.isRunning();
+    public boolean isRunning() {
+        if (gameSwitch.isOff()) {
+            return false;
+        }
+        return state.isRunning();
     }
 
     public void gameSwitchOff() {
@@ -73,13 +76,6 @@ public class ChessGame {
                 OutputView.printEndMessage();
             }
         };
-    }
-
-    private boolean isRunning() {
-        if (gameSwitch.isOff()) {
-            return false;
-        }
-        return !isNotRunning();
     }
 
     private boolean isStatusInRunning() {

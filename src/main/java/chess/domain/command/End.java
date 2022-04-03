@@ -8,13 +8,14 @@ public final class End implements CommandGenerator {
                         final ChessGame chessGame,
                         final Runnable printBoardInfoToState) {
 
-        if (chessGame.isNotRunning()) {
+        if (!chessGame.isRunning()) {
             chessGame.gameSwitchOff();
             printBoardInfoToState.run();
             return;
         }
 
         chessGame.end();
+
         printBoardInfoToState.run();
     }
 }
