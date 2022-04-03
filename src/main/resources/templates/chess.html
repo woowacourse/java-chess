@@ -14,7 +14,12 @@
         체스 게임
     </h1>
 
+
     <section>
+        <div class="error-message">
+            {{error}}
+        </div>
+
         <div class="chess-ui">
             {{#pieces}}
             <div class="box" id="{{position}}" onclick="fill(this.id)">

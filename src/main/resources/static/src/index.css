@@ -12,6 +12,10 @@ section {
     margin: 0 auto;
 }
 
+.error-message {
+    color: white;
+}
+
 .chess-ui {
     display: grid;
     padding: 30px;

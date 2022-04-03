@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="/src/index.css">
+</head>
+
+<body>
+
+<div id="app">
+    <h1 class="title">
+        체스 게임
+    </h1>
+
+    <section>
+        {{#this}}
+            {{result}} 이/가 승리하였습니다!
+        {{/this}}
+
+        <a href="/start">다시하기</a>
+    </section>
+</div>
+
+</body>
+</html>
