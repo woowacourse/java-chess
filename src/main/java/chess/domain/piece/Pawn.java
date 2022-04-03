@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Pawn extends MultiStepPiece {
 
-    private static final int PAWN_SCORE = 1;
+    private static final double PAWN_SCORE = 1;
 
     public Pawn(Team team, Position position) {
         super(team, position);
