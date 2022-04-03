@@ -23,7 +23,7 @@ public class BasicBoardGenerator implements BoardGenerator {
     public Board create() {
         initBlackPieces();
         initWhitePieces();
-        return new Board(board);
+        return new Board(new HashMap<>(board));
     }
 
     private void initBlackPieces() {
