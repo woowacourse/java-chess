@@ -1,10 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="/style/index.css">
+  <title>chess</title>
 </head>
 <body>
-Hello World!!
+<main id="main">
+  <section id="main__game">
+    <table id="game__chess-table">
+      <tr>
+        <td class="chess-table__space wood-color-space" id="a8"></td>
+        <td class="chess-table__space black-color-space" id="b8"></td>
+        <td class="chess-table__space wood-color-space" id="c8"></td>
+        <td class="chess-table__space black-color-space" id="d8"></td>
+        <td class="chess-table__space wood-color-space" id="e8"></td>
+        <td class="chess-table__space black-color-space" id="f8"></td>
+        <td class="chess-table__space wood-color-space" id="g8"></td>
+        <td class="chess-table__space black-color-space" id="h8"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="a7"></td>
+        <td class="chess-table__space wood-color-space" id="b7"></td>
+        <td class="chess-table__space black-color-space" id="c7"></td>
+        <td class="chess-table__space wood-color-space" id="d7"></td>
+        <td class="chess-table__space black-color-space" id="e7"></td>
+        <td class="chess-table__space wood-color-space" id="f7"></td>
+        <td class="chess-table__space black-color-space" id="g7"></td>
+        <td class="chess-table__space wood-color-space" id="h7"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="a6"></td>
+        <td class="chess-table__space black-color-space" id="b6"></td>
+        <td class="chess-table__space wood-color-space" id="c6"></td>
+        <td class="chess-table__space black-color-space" id="d6"></td>
+        <td class="chess-table__space wood-color-space" id="e6"></td>
+        <td class="chess-table__space black-color-space" id="f6"></td>
+        <td class="chess-table__space wood-color-space" id="g6"></td>
+        <td class="chess-table__space black-color-space" id="h6"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="a5"></td>
+        <td class="chess-table__space wood-color-space" id="b5"></td>
+        <td class="chess-table__space black-color-space" id="c5"></td>
+        <td class="chess-table__space wood-color-space" id="d5"></td>
+        <td class="chess-table__space black-color-space" id="e5"></td>
+        <td class="chess-table__space wood-color-space" id="f5"></td>
+        <td class="chess-table__space black-color-space" id="g5"></td>
+        <td class="chess-table__space wood-color-space" id="h5"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="a4"></td>
+        <td class="chess-table__space black-color-space" id="b4"></td>
+        <td class="chess-table__space wood-color-space" id="c4"></td>
+        <td class="chess-table__space black-color-space" id="d4"></td>
+        <td class="chess-table__space wood-color-space" id="e4"></td>
+        <td class="chess-table__space black-color-space" id="f4"></td>
+        <td class="chess-table__space wood-color-space" id="g4"></td>
+        <td class="chess-table__space black-color-space" id="h4"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="a3"></td>
+        <td class="chess-table__space wood-color-space" id="b3"></td>
+        <td class="chess-table__space black-color-space" id="c3"></td>
+        <td class="chess-table__space wood-color-space" id="d3"></td>
+        <td class="chess-table__space black-color-space" id="e3"></td>
+        <td class="chess-table__space wood-color-space" id="f3"></td>
+        <td class="chess-table__space black-color-space" id="g3"></td>
+        <td class="chess-table__space wood-color-space" id="h3"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="a2">
+          <img
+              class="space__piece"
+              id="a"
+              src="/images/pieces/white/white-pawn.svg"
+              alt="white pawn"
+          >
+        </td>
+        <td class="chess-table__space black-color-space" id="b2"></td>
+        <td class="chess-table__space wood-color-space" id="c2"></td>
+        <td class="chess-table__space black-color-space" id="d2"></td>
+        <td class="chess-table__space wood-color-space" id="e2"></td>
+        <td class="chess-table__space black-color-space" id="f2"></td>
+        <td class="chess-table__space wood-color-space" id="g2"></td>
+        <td class="chess-table__space black-color-space" id="h2"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="a1"></td>
+        <td class="chess-table__space wood-color-space" id="b1"></td>
+        <td class="chess-table__space black-color-space" id="c1"></td>
+        <td class="chess-table__space wood-color-space" id="d1"></td>
+        <td class="chess-table__space black-color-space" id="e1"></td>
+        <td class="chess-table__space wood-color-space" id="f1"></td>
+        <td class="chess-table__space black-color-space" id="g1"></td>
+        <td class="chess-table__space wood-color-space" id="h1"></td>
+      </tr>
+    </table>
+  </section>
+  <section id="game-information">
+    <div class="team">
+      <img class="team__pawn" src="/images/pieces/black/black-pawn.svg" alt="black pawn">
+      <p class="team__user-name">YOU(2)</p>
+    </div>
+    <div id="command-button">
+      <button class="command" name="start">start</button>
+      <button class="command" name="status">status</button>
+      <button class="command" name="end">end</button>
+    </div>
+    <div class="team">
+      <img class="team__pawn" src="/images/pieces/white/white-pawn.svg" alt="white pawn">
+      <p class="team__user-name">YOU</p>
+    </div>
+  </section>
+  <script src="/script/index.js"></script>
+</main>
 </body>
 </html>
