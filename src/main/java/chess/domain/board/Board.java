@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public final class Board {
-    private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
+public final class Board{
+    private static final MoveValidator validator = new MoveValidator();
 
     private final Map<Position, Piece> squares;
 
@@ -31,40 +31,8 @@ public final class Board {
     }
 
     public void move(Position from, Position to) {
-        validateMove(from, to);
+        validator.validateMove(squares, from, to);
         replace(from, to, squares.get(from));
-    }
-
-    private void validateMove(Position from, Position to) {
-        checkNotSameTeam(from, to);
-        checkCanMove(from, to);
-        checkRoute(from, to);
-    }
-
-    private void checkNotSameTeam(Position from, Position to) {
-        if (squares.get(from).isSameTeam(squares.get(to))) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void checkCanMove(Position from, Position to) {
-        if (!squares.get(from).canMove(squares.get(to), from, to)
-                && squares.get(to).getName() != Name.NONE) {
-            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-        }
-    }
-
-    private void checkRoute(Position from, Position to) {
-        List<Position> route = findByPosition(from).calculateRoute(from, to);
-        for (Position position : route) {
-            checkIsPiece(position);
-        }
-    }
-
-    private void checkIsPiece(Position position) {
-        if (findByPosition(position).getName() != Name.NONE) {
-            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-        }
     }
 
     private void replace(Position from, Position to, Piece sourceAbstractPiece) {
