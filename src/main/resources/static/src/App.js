@@ -27,7 +27,7 @@ function showStatusButton() {
 }
 
 function initBoard() {
-    fetch('/api/end')
+    fetch('/api/restart')
         .then(res => res.json())
         .then(window.alert("game reset successfully!!!"))
         .then(status.style.visibility = 'hidden')

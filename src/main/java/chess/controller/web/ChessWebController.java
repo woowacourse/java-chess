@@ -5,9 +5,9 @@ import chess.Team;
 import chess.Turn;
 import chess.piece.Piece;
 import chess.service.ChessService;
-import chess.service.ScoreDto;
 import chess.service.dto.BoardDto;
 import chess.service.dto.MoveDto;
+import chess.service.dto.ScoreDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -43,7 +43,7 @@ public class ChessWebController {
             return gson.toJson(boardDto);
         });
 
-        get("/api/end", (req, res) -> {
+        get("/api/restart", (req, res) -> {
             Board board = chessService.initBoard();
             BoardDto boardDto = convertToDto(board);
             return gson.toJson(boardDto);

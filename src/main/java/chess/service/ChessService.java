@@ -10,11 +10,10 @@ import chess.dao.PieceDaoImpl;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import chess.piece.position.Position;
-import chess.service.dto.BoardDto;
 import chess.service.dto.MoveDto;
+import chess.service.dto.ScoreDto;
 
 import java.util.List;
-import java.util.Map;
 
 public class ChessService {
 
