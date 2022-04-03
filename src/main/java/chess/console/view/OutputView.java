@@ -1,15 +1,9 @@
 package chess.console.view;
 
+import chess.Controller.dto.PieceDto;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
-import chess.domain.board.Column;
-import chess.domain.board.Position;
-import chess.domain.board.Row;
-import chess.domain.piece.Color;
-import chess.domain.piece.EmptySpace;
-import chess.domain.piece.Piece;
-import java.util.Locale;
-import java.util.Map;
+import java.util.List;
 
 public class OutputView {
 
@@ -30,27 +24,27 @@ public class OutputView {
     }
 
     public static void printBoard(final PiecesDto piecesDto) {
-        final Map<Position, Piece> pieces = piecesDto.getPieces();
+        final List<PieceDto> pieces = piecesDto.getPieces();
         for (int i = BOARD_ROW_MAX_POSITION; i >= BOARD_ROW_MIN_POSITION; i--) {
             printRow(pieces, i);
             System.out.print(System.lineSeparator());
         }
     }
 
-    private static void printRow(final Map<Position, Piece> pieces, final int rawRow) {
+    private static void printRow(final List<PieceDto> pieces, final int rawRow) {
         for (int i = BOARD_ROW_MIN_POSITION; i <= BOARD_ROW_MAX_POSITION; i++) {
-            final Position position = new Position(Column.from(i), Row.from(rawRow));
-            final Piece piece = pieces.getOrDefault(position, EmptySpace.getInstance());
-            System.out.print(convertToSymbol(piece));
+            final String position = "" + (char) (97 + i - 1) + rawRow;
+            final String pieceSymbol = findPieceSymbol(pieces, position);
+            System.out.print(pieceSymbol);
         }
     }
 
-    private static String convertToSymbol(final Piece piece) {
-        final String symbol = piece.getPieceType().getSymbol();
-        if (piece.getColor() == Color.BLACK) {
-            return symbol.toUpperCase(Locale.ROOT);
-        }
-        return symbol;
+    private static String findPieceSymbol(final List<PieceDto> pieces, final String position) {
+        return pieces.stream()
+                .filter(piece -> piece.getPosition().equals(position))
+                .map(PieceDto::getSymbol)
+                .findFirst()
+                .orElse(".");
     }
 
     public static void printStatus(final ScoreDto score) {

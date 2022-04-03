@@ -21,6 +21,10 @@ public class ChessController {
                 .doCommandAction(parsedCommand, board);
     }
 
+    public PiecesDto getPieces() {
+        return PiecesDto.fromEntity(board);
+    }
+
     public ScoreDto doActionAboutScore(final ParsedCommand parsedCommand) {
         return ScoreCommandFactory.from(parsedCommand.getCommand())
                 .doCommandAction(parsedCommand, board);
