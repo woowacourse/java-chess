@@ -1,4 +1,4 @@
-package chess.status;
+package chess.state;
 
 import chess.game.Board;
 import chess.game.BoardInitializer;
