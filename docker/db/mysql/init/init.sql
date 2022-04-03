@@ -15,8 +15,8 @@ CREATE TABLE piece
 
 CREATE TABLE chess_game
 (
-    id         bigint NOT NULL AUTO_INCREMENT,
-    turn_state enum('WHITE_RUN', 'BLACK_RUN', 'PROMOTION') NOT NULL,
-    winner     enum('WHITE', 'BLACK'),
-    primary key (id)
+    turn enum('WHITE_TURN', 'BLACK_TURN', 'END') NOT NULL,
+    primary key (turn)
 );
+
+insert into chess_game (turn) values('END');
