@@ -1,6 +1,6 @@
 package chess;
 
-public class ChessApplication {
+public class ConsoleApplication {
 
     public static void main(final String[] args) {
         new ChessGameLauncher().run();
