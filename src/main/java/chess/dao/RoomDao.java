@@ -44,4 +44,19 @@ public class RoomDao {
         }
         return null;
     }
+
+    public int delete(final String roomName) {
+        final String sql = "DELETE FROM Room WHERE Name = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, roomName);
+
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

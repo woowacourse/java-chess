@@ -97,6 +97,11 @@ public class ChessWebController {
                 final Map<String, Object> model = chessService.endGame(req.queryParams("room"));
                 return gson.toJson(model);
             });
+
+            post("/exit", (req, res) -> {
+                roomService.deleteRoom(req.queryParams("room"));
+                return null;
+            });
         });
     }
 

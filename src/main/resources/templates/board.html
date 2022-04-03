@@ -196,7 +196,7 @@
         <div class="score" id="black"></div>
     </div>
     <div class="inner_score">
-        <button class="ui-button" id="start" onclick="redirectToHome()">홈</button>
+        <button class="ui-button" id="start" onclick="exitRoom()">나가기</button>
         <button class="ui-button" id="end" onclick="end()">종료</button>
     </div>
     <div class="inner_score">
@@ -216,7 +216,8 @@
         }
     })
 
-    function redirectToHome() {
+    async function exitRoom() {
+        await fetch(`/protected/exit?room=${roomName}`, {method: "POST"});
         window.location.href = "/";
     }
 
