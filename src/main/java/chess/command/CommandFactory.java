@@ -38,7 +38,7 @@ public class CommandFactory {
         return create(args.get(COMMAND_INDEX), args.subList(MOVE_ARGUMENT_START_INDEX, args.size()));
     }
 
-    private static Command create(final String command, final List<String> moveArgs) {
+    public static Command create(final String command, final List<String> moveArgs) {
         if (commands.containsKey(command)) {
             return commands.get(command);
         }

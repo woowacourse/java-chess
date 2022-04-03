@@ -1,12 +1,16 @@
 package chess.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import chess.JsonTransformer;
+import chess.command.Command;
+import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.response.BoardResponse;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -28,7 +32,17 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
-        get("/api/start", (req, res) -> new BoardResponse(chessGame.getBoard()), jsonTransformer);
+        get("/api/start", (req, res) -> {
+            chessGame.start();
+            return new BoardResponse(chessGame.getBoard());
+        }, jsonTransformer);
+
+        post("/api/move", (req, res) -> {
+            MoveRequest moveRequest = new Gson().fromJson(req.body(), MoveRequest.class);
+            Command move = moveRequest.toCommand();
+            move.execute(chessGame);
+            return new BoardResponse(chessGame.getBoard());
+        }, jsonTransformer);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

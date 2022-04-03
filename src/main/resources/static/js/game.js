@@ -6,19 +6,19 @@ const section = document.getElementById("chess-section");
 const lightCellColor = '#ddb180';
 const darkCellColor = '#7c330c';
 
-let clicked;
+let firstClicked;
+let secondClicked;
 
-window.onload = function () {
+window.onload = async function () {
   for (let i = 0; i < 8; i++) {
     const row = document.createElement("div");
     row.classList.add("row");
     makeRow(row, i);
     section.appendChild(row);
   }
-
-  fetch("/api/start")
+  const res = await fetch("/api/start")
       .then(res => res.json())
-      .then(data => data.pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType)));
+  rendBoard(res.pieces);
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -43,6 +43,22 @@ function decideCellColor(column, row) {
   return darkCellColor;
 }
 
+function rendBoard(pieces) {
+  clearBoard();
+  pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType));
+}
+
+function clearBoard() {
+  const cells = document.querySelectorAll("div.cell");
+  cells.forEach(cell => removePiece(cell));
+}
+
+function removePiece(cell) {
+  if (cell.hasChildNodes()) {
+    cell.removeChild(cell.firstChild);
+  }
+}
+
 function createPieceImage(position, pieceType) {
   const cell = document.getElementById(position);
   const piece = document.createElement("img");
@@ -51,22 +67,51 @@ function createPieceImage(position, pieceType) {
   cell.appendChild(piece);
 }
 
-function onclick(event) {
+async function onclick(event) {
   const cell = event.currentTarget;
-  if (clicked) {
-    clicked.childNodes[0].style.background = "none";
-  }
-  if (cell.hasChildNodes()) {
-    decideClicked(cell);
-    highlightClickedCell();
+  decideClicked(cell);
+  if (firstClicked && secondClicked) {
+    res = await move();
+    firstClicked.childNodes[0].style.background = "none";
+    firstClicked = null;
+    secondClicked = null;
+    rendBoard(res.pieces);
   }
 }
 
 function decideClicked(cell) {
-  clicked = cell;
+  if (!firstClicked && !cell.hasChildNodes()) {
+    return;
+  }
+  if (firstClicked === cell) {
+    const piece = firstClicked.childNodes[0];
+    piece.style.background = "none";
+    firstClicked = null;
+    return;
+  }
+  if (!firstClicked) {
+    firstClicked = cell;
+    highlightClickedCell();
+    return;
+  }
+  secondClicked = cell;
 }
 
 function highlightClickedCell() {
-  const piece = clicked.childNodes[0];
+  const piece = firstClicked.childNodes[0];
   piece.style.background = "yellow";
+}
+
+function move() {
+  return fetch("/api/move", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      start: firstClicked.getAttribute("id"),
+      target: secondClicked.getAttribute("id"),
+    }),
+  })
+      .then(res => res.json());
 }
