@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>체스</title>
+    <title>케이의 체스</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body onload="initChessBoard()">
@@ -85,9 +85,14 @@
             <div class="board-white-square" id="g1"></div>
             <div class="board-black-square" id="h1"></div>
         </div>
-        {{init}}
     </div>
-    <div id="chess-menu">
+    <div class="chess-menu" id="chess-menu">
+        <div class="message-info" id="message-info">
+            케이의 체스 게임에 오신 것을 환영합니다!
+        </div>
+        <button class="btn" id="start">새로하기</button>
+        <button class="btn" id="save">이어하기</button>
+        <button class="btn" id="status" onclick="showStatus()">현재 점수 보기</button>
     </div>
 </div>
 <script src="js/index.js"></script>

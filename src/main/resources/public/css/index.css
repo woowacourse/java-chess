@@ -1,4 +1,5 @@
 html, body {
+    background-color: darkslategrey;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -6,6 +7,7 @@ html, body {
 }
 
 .chess-board-margin {
+    float: left;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,4 +36,43 @@ html, body {
 
 .board-white-square {
     background-color: sandybrown;
+}
+
+.chess-menu {
+    margin-right: 120px;
+    margin-top: 120px;
+    float: right;
+    border: 1px solid white;
+    justify-content: right;
+    line-height: 50px;
+    width: 480px;
+    height: 480px;
+}
+
+.message-info {
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+    border: 1px solid darksalmon;
+    margin-left: 30px;
+    margin-top: 10px;
+    width: 410px;
+    height: 220px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1em;
+    border: 1px solid cornflowerblue;
+    margin-left: 30px;
+    width: 410px;
+    height: 80px;
+}
+
+button:focus {
+    background-color: cornflowerblue;
 }
