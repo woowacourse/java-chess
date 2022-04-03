@@ -20,5 +20,12 @@
     {{/boardSymbols}}
     {{/board}}
 </table>
+<br/>
+<form enctype="text/plain" action="/move" method="post">
+    <label> 명령어
+        <input type="text" name="command"/>
+    </label>
+    <input type="submit"/>
+</form>
 </body>
 </html>
