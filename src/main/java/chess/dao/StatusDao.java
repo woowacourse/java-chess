@@ -57,9 +57,4 @@ public class StatusDao {
         }
         return null;
     }
-
-    public int update(final GameStatus gameStatus, final Color currentTurn) {
-        delete();
-        return save(gameStatus, currentTurn);
-    }
 }

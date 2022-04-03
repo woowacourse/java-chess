@@ -71,23 +71,4 @@ class StatusDaoTest {
         assertThat(dto.getGameStatus()).isEqualTo(gameStatus);
         assertThat(dto.getCurrentTurn()).isEqualTo(currentTurn);
     }
-
-    @Test
-    @DisplayName("게임 정보를 업데이트한다.")
-    void update() {
-        // given
-        final StatusDao dao = new StatusDao();
-        dao.save(GameStatus.PLAYING, Color.BLACK);
-
-        // when
-        final GameStatus gameStatus = GameStatus.KING_DIE;
-        final Color currentTurn = Color.WHITE;
-
-        dao.update(gameStatus, currentTurn);
-        final StatusDto dto = dao.find();
-
-        // then
-        assertThat(dto.getGameStatus()).isEqualTo(gameStatus);
-        assertThat(dto.getCurrentTurn()).isEqualTo(currentTurn);
-    }
 }
