@@ -33,8 +33,8 @@ public class Position {
         }
     }
 
-    private static String getPositionToString(Position position) {
-        return position.getCol().getSymbol() + position.getRow().getSymbol();
+    public String getPositionToString() {
+        return col.getSymbol() + row.getSymbol();
     }
 
     public static Position of(Column col, Row row) throws RuntimeException {
