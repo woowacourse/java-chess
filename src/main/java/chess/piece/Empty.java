@@ -25,6 +25,11 @@ public final class Empty extends Piece {
     }
 
     @Override
+    public String getType() {
+        return "empty";
+    }
+
+    @Override
     public double getScore() {
         return SCORE;
     }

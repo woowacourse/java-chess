@@ -34,6 +34,11 @@ public final class Knight extends Piece {
     }
 
     @Override
+    public String getType() {
+        return "knight";
+    }
+
+    @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         return Collections.emptyList();
     }

@@ -21,6 +21,19 @@ public enum Team {
         }
         return Team.NONE;
     }
+
+    public String value(){
+        if (this.equals(Team.BLACK)) {
+            return "black";
+        }
+        if (this.equals(Team.WHITE)) {
+            return "white";
+        }
+        if (this.equals(Team.NONE)) {
+            return "none";
+        }
+        throw new IllegalStateException("[ERROR] 알맞은 값이 없습니다.");
+    }
     public int getForwardDirection() {
         return this.forwardDirection;
     }

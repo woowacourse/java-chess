@@ -39,6 +39,11 @@ public final class Bishop extends Piece implements DiagonalMovable {
     }
 
     @Override
+    public String getType() {
+        return "bishop";
+    }
+
+    @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list);

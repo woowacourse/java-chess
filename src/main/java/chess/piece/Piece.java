@@ -83,6 +83,8 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract String getName();
 
+    public abstract String getType();
+
     public Position getPosition() {
         return position;
     }
@@ -93,6 +95,10 @@ public abstract class Piece implements Comparable<Piece> {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override

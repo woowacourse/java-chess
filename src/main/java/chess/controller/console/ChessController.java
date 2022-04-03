@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ChessController {
     public void run() {
         Command command = startGame();
-        Board board = Board.create(Pieces.createInit());
+        Board board = Board.create(Pieces.createInit(), Turn.init());
         command = playGame(command, board);
         OutputView.printFinishMessage();
         finishGame(command, board);

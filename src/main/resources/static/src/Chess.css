@@ -5,7 +5,11 @@
 }
 
 .chess-board {
-    text-align: center;
+    display:inline-flex;
+    width: 1000px;
+    height: 1000px;
+    margin-top: 30px;
+    justify-content: center;
 }
 
 .white-square {
@@ -23,6 +27,7 @@
 }
 
 .board {
+    justify-content: center;
     display: grid;
     grid-template-columns: repeat(8, 70px);
     grid-template-rows: repeat(8, 70px);
@@ -35,4 +40,15 @@
     position: absolute;
     left: 100px;
     top: 100px;
+}
+
+.info-message {
+    min-width: 370px;
+    height: 590px;
+    padding-top: 225px;
+    margin-left: 50px;
+    display: inline-flex;
+    position: absolute;
+    width: 100%;
+
 }

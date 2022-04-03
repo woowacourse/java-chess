@@ -3,11 +3,11 @@ package chess.dao;
 import chess.piece.Piece;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PieceDao {
-    void updatePosition(String position, String type, String team);
+    void updatePosition(final String position, final String type, final String team);
 
     List<Piece> findAllByBoardId(Long boardId);
 
+    Long findIdByPositionAndBoardId(String position, Long boardId);
 }

@@ -17,8 +17,8 @@ public final class Board {
         this.turn = turn;
     }
 
-    public static Board create(Pieces pieces) {
-        return new Board(pieces, Turn.init());
+    public static Board create(Pieces pieces, Turn turn) {
+        return new Board(pieces, turn);
     }
 
     public Pieces getPieces() {

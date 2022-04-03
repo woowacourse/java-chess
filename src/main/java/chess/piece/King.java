@@ -44,6 +44,11 @@ public final class King extends Piece {
     }
 
     @Override
+    public String getType() {
+        return "king";
+    }
+
+    @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         return Collections.emptyList();
     }

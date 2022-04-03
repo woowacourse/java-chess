@@ -1,8 +1,7 @@
 const start = document.getElementById('start-button');
 const IMAGE_PATH = "./images/";
 const BOARD = document.querySelector("#board");
-const CURRENT_TEAM = document.querySelector("#current-player");
-
+const CURRENT_TEAM = document.querySelector("#current-team");
 const SYMBOL_TO_IMAGE_PATH = {
     "p": IMAGE_PATH + "whitePawn.png",
     "P": IMAGE_PATH + "blackPawn.png",
@@ -18,54 +17,127 @@ const SYMBOL_TO_IMAGE_PATH = {
     "K": IMAGE_PATH + "blackKing.png"
 };
 
-let boardInfo = {};
+let boardInfo = "";
+let isChoiced = false;
+let currentTurn = "";
+
+// response["turn"]
+//response[board]
+
 
 start.addEventListener('click', function () {
     if (start.textContent == "Start") {
-        startGame();
-        //initializeBoard(board);
+        initBoard();
+        move();
         start.textContent = "End";
         return
     }
-    //initializeBoard(board);
     start.textContent = "Start";
 })
 
-function startGame() {
+function initBoard() {
     fetch('/start')
         .then(res => res.json())
-        .then(res => imageSetting(res))
+        .then(imageSetting)
 }
 
-function imageSetting(responseData) {
-    boardInfo = responseData;
+function imageSetting(response) {
     const divs = BOARD.querySelectorAll("div");
-    pieces = responseData["board"];
-
+    boardInfo = response;
+    pieces = response["board"];
     for (const div of divs) {
         const key = div.getAttribute("id");
-        console.log("piececes ===> " , pieces[key])
-        console.log("key >>>> ", key)
+
         if (SYMBOL_TO_IMAGE_PATH[pieces[key]] !== undefined) {
             div.style.backgroundImage = "url(" + SYMBOL_TO_IMAGE_PATH[pieces[key]] + ")";
         } else {
             div.style.backgroundImage = null;
         }
     }
-    dataSetting(responseData)
+    turnSetting(response)
 }
 
-function dataSetting(data) {
-    if (boardInfo["isFinish"] === true) {
+function turnSetting(response) {
+    if (response["isFinish"] === true) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
     }
-    //const isWhite = boardInfo["turn"];
-    // let playerType = ""
-    // if (isWhite === true) {
-    //     playerType = "whitePlayer";
-    // } else {
-    //     playerType = "blackPlayer"
-    // }
 
-    CURRENT_TEAM.textContent = data["turn"];
+    if (response["turn"] == 'WHITE') {
+        currentTurn = "하얀색"
+    } else {
+        currentTurn = "검정색"
+    }
+
+    CURRENT_TEAM.textContent = currentTurn
+}
+
+let toTarget = "";
+let fromTarget = "";
+
+function initPosition() {
+    fromTarget = "";
+    toTarget = "";
+}
+
+function eventMove(event) {
+    const turn = boardInfo["turn"];
+
+    if (isChoiced === false) {
+        fromTarget = event.target;
+        const position = fromTarget.id
+
+        if (pieces[position] == ".") {
+            window.alert("기물을 선택하세요!");
+            return
+        }
+        if (turn == "white" && pieces[position] != pieces[position].toLowerCase() ||
+            turn == "black" && pieces[position] != pieces[position].toUpperCase()) {
+            window.alert("자신의 기물을 선택하세요!");
+            return;
+        }
+        event.target.style.backgroundColor = "skyblue";
+        isChoiced = true;
+        return;
+    }
+    if (isChoiced === true) {
+        toTarget = event.target
+        isChoiced = false;
+    }
+    if (toTarget.id != "") {
+        fromTarget.style.backgroundColor = "";
+        if (fromTarget.id == toTarget.id) {
+            initPosition();
+            return;
+        }
+        movePiece(fromTarget.id, toTarget.id)
+    }
+
+}
+
+function movePiece(from, to) {
+
+    const request = {
+        from: from,
+        to: to
+    }
+    console.log(from, to)
+
+    fetch('/move', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    }).then(res => res.json())
+        .then(res => imageSetting(res));
+
+}
+
+function move() {
+
+    const divs = BOARD.querySelectorAll("div");
+
+    for (const div of divs) {
+        div.addEventListener("click", eventMove);
+    }
 }

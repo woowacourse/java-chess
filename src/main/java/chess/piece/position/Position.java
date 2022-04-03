@@ -7,6 +7,8 @@ import java.util.Objects;
 public final class Position {
     private static final int ASCII_TO_INT = 96;
     private static final int CHESS_POSITION_SIZE = 64;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final Map<String, Position> CACHE = new HashMap<>(CHESS_POSITION_SIZE);
 
     private final Rank rank;
@@ -18,8 +20,14 @@ public final class Position {
     }
 
     public static Position of(char... position) {
-        File file = File.valueOf(position[0] - ASCII_TO_INT);
-        Rank rank = Rank.valueOf(Character.getNumericValue(position[1]));
+        File file = File.valueOf(position[FILE_INDEX] - ASCII_TO_INT);
+        Rank rank = Rank.valueOf(Character.getNumericValue(position[RANK_INDEX]));
+        return CACHE.computeIfAbsent(createKey(file, rank), absent -> new Position(file, rank));
+    }
+
+    public static Position from(String position) {
+        File file = File.valueOf(position.charAt(FILE_INDEX) - ASCII_TO_INT);
+        Rank rank = Rank.valueOf(Character.getNumericValue(position.charAt(RANK_INDEX)));
         return CACHE.computeIfAbsent(createKey(file, rank), absent -> new Position(file, rank));
     }
 

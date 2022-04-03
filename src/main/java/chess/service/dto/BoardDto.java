@@ -11,6 +11,7 @@ public class BoardDto {
 
     private final String turn;
     private final Map<String, String> board;
+    //private final boolean isFinished;
 
     public BoardDto(String turn, Map<String, String> board) {
         this.turn = turn;

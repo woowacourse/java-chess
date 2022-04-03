@@ -35,6 +35,11 @@ public final class Queen extends Piece implements HorizontalAndVerticalMovable, 
     }
 
     @Override
+    public String getType() {
+        return "queen";
+    }
+
+    @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list);

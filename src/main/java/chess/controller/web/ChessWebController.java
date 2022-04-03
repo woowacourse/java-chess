@@ -10,6 +10,7 @@ import chess.controller.console.dto.PieceDto;
 import chess.piece.Pieces;
 import chess.service.ChessService;
 import chess.service.dto.BoardDto;
+import chess.service.dto.MoveDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -52,10 +53,13 @@ public class ChessWebController {
 //        get("/status", (req, res) -> {
 //            return gson.toJson(chessService.createStatus());
 //        });
-//
-//        post("/move", (req, res) -> {
-//            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-//            return gson.toJson(chessService.move(moveDto));
-//        });
+
+        post("/move", (req, res) -> {
+            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            Board board = chessService.move(moveDto);
+            Turn turn = board.getTurn();
+            Team currentTeam = turn.getTeam();
+            return gson.toJson(BoardDto.of(currentTeam.name(), board.getPieces().getPieces()));
+        });
     }
 }
