@@ -31,4 +31,18 @@ public class TurnDaoImpl implements TurnDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public void updateTurn(Turn currentTurn, Turn turn) {
+        final String query = "update chess_game set turn = ? where turn = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, turn.name());
+            pstmt.setString(2, currentTurn.name());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
