@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.chessgame.ChessGame;
-import chess.chessgame.MovingPosition;
 import chess.dto.ScoreDto;
+import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -13,73 +12,94 @@ import static spark.Spark.*;
 
 public class WebChessController {
 
+    ChessGameService service = new ChessGameService();
+
     public void run() {
         staticFileLocation("/templates");
-        final ChessGame chessGame = new ChessGame();
 
-        get("/", (req, res) -> {
-            try {
-                return render(new HashMap<>());
-            } catch (IllegalArgumentException e) {
-                return render(generateResponse(chessGame, e.getMessage()));
-            }
+        get("/", (req, res) ->
+                new HandlebarsTemplateEngine().render(new ModelAndView(Map.of(), "start.html"))
+        );
+
+        get("/game", (req, res) -> {
+            service.init();
+            return render(generateResponse());
         });
 
         get("/start", (req, res) -> {
             try {
-                chessGame.start();
-                return render(generateResponse(chessGame));
+                service.start();
+                return render(generateResponse());
             } catch (RuntimeException e) {
-                return render(generateResponse(chessGame, e.getMessage()));
-            }
-        });
-
-        post("/move", (req, res) -> {
-            try {
-                chessGame.move(new MovingPosition(req.queryParams("from"), req.queryParams("to")));
-                return render(generateResponse(chessGame));
-            } catch (RuntimeException e) {
-                return render(generateResponse(chessGame, e.getMessage()));
-            }
-        });
-
-        get("/status", (req, res) -> {
-            try {
-                chessGame.computeScore();
-                return render(generateResponse(chessGame, chessGame.computeScore()));
-            } catch (RuntimeException e) {
-                return render(generateResponse(chessGame, e.getMessage()));
+                return render(generateResponse(e.getMessage()));
             }
         });
 
         get("/end", (req, res) -> {
             try {
-                chessGame.end();
-                return render(generateResponse(chessGame));
+                service.end();
+                return render(generateResponse());
             } catch (RuntimeException e) {
-                return render(generateResponse(chessGame, e.getMessage()));
+                return render(generateResponse(e.getMessage()));
             }
         });
+
+        get("/restart", (req, res) -> {
+            try {
+                service.restart();
+                return render(generateResponse());
+            } catch (RuntimeException e) {
+                return render(generateResponse(e.getMessage()));
+            }
+        });
+
+        get("/save", (req, res) -> {
+            try {
+                service.save();
+                return render(generateResponse());
+            } catch (RuntimeException e) {
+                return render(generateResponse(e.getMessage()));
+            }
+        });
+
+        get("/status", (req, res) -> {
+            try {
+                ScoreDto score = service.status();
+                return render(generateResponse(score));
+            } catch (RuntimeException e) {
+                return render(generateResponse(e.getMessage()));
+            }
+        });
+
+        post("/move", (req, res) -> {
+            try {
+                service.move(req.queryParams("from"), req.queryParams("to"));
+                return render(generateResponse());
+            } catch (RuntimeException e) {
+                return render(generateResponse(e.getMessage()));
+            }
+        });
+
     }
 
     private String render(Map<String, Object> response) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(response, "chessGame.html"));
     }
 
-    private Map<String, Object> generateResponse(ChessGame chessGame) {
+    private Map<String, Object> generateResponse() {
         Map<String, Object> response = new HashMap<>();
-        response.put("pieces", chessGame.getPiecesByUnicode());
+        response.put("pieces", service.getPiecesByUnicode());
         return response;
     }
 
-    private Map<String, Object> generateResponse(ChessGame chessGame, String errorMessage) {
-        Map<String, Object> response = generateResponse(chessGame);
+    private Map<String, Object> generateResponse(String errorMessage) {
+        Map<String, Object> response = generateResponse();
         response.put("error", errorMessage);
         return response;
     }
 
-    private Map<String, Object> generateResponse(ChessGame chessGame, ScoreDto score) {
-        Map<String, Object> response = generateResponse(chessGame);
+    private Map<String, Object> generateResponse(ScoreDto score) {
+        Map<String, Object> response = generateResponse();
         response.put("score", score);
         return response;
     }

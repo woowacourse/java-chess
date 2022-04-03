@@ -131,7 +131,7 @@ public class Chessboard {
                 .stream()
                 .filter(position -> position.isSameY(y))
                 .map(board::get)
-                .filter(piece -> piece.isSameColor(color))
+                .filter(piece -> piece.isSameColor(color) && piece.isSameType(Type.PAWN))
                 .count();
     }
 

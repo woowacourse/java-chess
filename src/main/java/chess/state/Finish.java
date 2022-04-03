@@ -34,6 +34,11 @@ public class Finish implements State {
     }
 
     @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }
