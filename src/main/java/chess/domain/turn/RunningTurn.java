@@ -23,4 +23,9 @@ public class RunningTurn implements GameTurn {
         }
         return new RunningTurn(chessBoard, color.reverseColor());
     }
+
+    @Override
+    public Color color() {
+        return color;
+    }
 }

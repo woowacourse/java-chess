@@ -1,5 +1,6 @@
 package chess.domain.turn;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,5 +39,14 @@ class RunningTurnTest {
         GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
 
         assertThat(gameTurn.nextTurn()).isInstanceOf(EndTurn.class);
+    }
+
+    @Test
+    @DisplayName("현재턴 종료 시 다음 턴 반환")
+    void nextTurnReverseColor() {
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a', '1'), new Piece(WHITE, new Pawn(WHITE))));
+        GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
+
+        assertThat(gameTurn.nextTurn().color()).isEqualTo(BLACK);
     }
 }
