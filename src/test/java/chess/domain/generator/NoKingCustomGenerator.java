@@ -19,18 +19,18 @@ public class NoKingCustomGenerator implements Generator {
     }
 
     private List<Piece> createRook() {
-        return List.of(new Rook(new Position(1, 'a')), new Rook(new Position(1, 'h')));
+        return List.of(new Rook(Position.of(1, 'a')), new Rook(Position.of(1, 'h')));
     }
 
     private List<Piece> createKnight() {
-        return List.of(new Knight(new Position(1, 'b')), new Knight(new Position(1, 'g')));
+        return List.of(new Knight(Position.of(1, 'b')), new Knight(Position.of(1, 'g')));
     }
 
     private List<Piece> createBishop() {
-        return List.of(new Bishop(new Position(1, 'c')), new Bishop(new Position(1, 'f')));
+        return List.of(new Bishop(Position.of(1, 'c')), new Bishop(Position.of(1, 'f')));
     }
 
     private Piece createQueen() {
-        return new Queen(new Position(1, 'd'));
+        return new Queen(Position.of(1, 'd'));
     }
 }

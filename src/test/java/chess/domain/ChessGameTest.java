@@ -1,8 +1,5 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.generator.BlackGenerator;
 import chess.domain.generator.CustomGenerator;
 import chess.domain.generator.NoKingCustomGenerator;
@@ -10,10 +7,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessGameTest {
 
@@ -26,8 +26,8 @@ class ChessGameTest {
     void emptyCurrentPosition() {
         initializeChessGame();
 
-        final Position currentPosition = new Position(7, 'a');
-        final Position destinationPosition = new Position(6, 'a');
+        final Position currentPosition = Position.of(7, 'a');
+        final Position destinationPosition = Position.of(6, 'a');
 
         assertThatThrownBy(() -> chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,8 +39,8 @@ class ChessGameTest {
     void destinationHasCurrentPlayerPiece() {
         initializeChessGame();
 
-        final Position currentPosition = new Position(1, 'a');
-        final Position destinationPosition = new Position(1, 'b');
+        final Position currentPosition = Position.of(1, 'a');
+        final Position destinationPosition = Position.of(1, 'b');
 
         assertThatThrownBy(() -> chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -52,8 +52,8 @@ class ChessGameTest {
     void hasPieceBetweenPosition() {
         initializeChessGame();
 
-        final Position currentPosition = new Position(1, 'a');
-        final Position destinationPosition = new Position(8, 'a');
+        final Position currentPosition = Position.of(1, 'a');
+        final Position destinationPosition = Position.of(8, 'a');
 
         assertThatThrownBy(() -> chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -65,8 +65,8 @@ class ChessGameTest {
     void destinationHasOpponentPlayerPiece() {
         initializeChessGame();
 
-        final Position currentPosition = new Position(1, 'a');
-        final Position destinationPosition = new Position(7, 'a');
+        final Position currentPosition = Position.of(1, 'a');
+        final Position destinationPosition = Position.of(7, 'a');
 
         final List<Piece> actual = chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
 
@@ -78,8 +78,8 @@ class ChessGameTest {
     void emptyDestinationPosition() {
         initializeChessGame();
 
-        final Position currentPosition = new Position(1, 'a');
-        final Position destinationPosition = new Position(5, 'a');
+        final Position currentPosition = Position.of(1, 'a');
+        final Position destinationPosition = Position.of(5, 'a');
 
         final List<Piece> actual = chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
 

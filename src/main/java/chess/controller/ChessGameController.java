@@ -69,8 +69,8 @@ public class ChessGameController {
     private void moveTurn(final ChessGame chessGame, final String command,
                           final Player currentPlayer, final Player opponentPlayer) {
         final String[] moveCommand = command.split(MOVE_COMMAND_DELIMITER);
-        final Position currentPosition = new Position(moveCommand[CURRENT_POSITION_INDEX]);
-        final Position destinationPosition = new Position(moveCommand[DESTINATION_POSITION_INDEX]);
+        final Position currentPosition = Position.of(moveCommand[CURRENT_POSITION_INDEX]);
+        final Position destinationPosition = Position.of(moveCommand[DESTINATION_POSITION_INDEX]);
         chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
     }
 

@@ -1,19 +1,14 @@
 package chess.domain.generator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.Position;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class WhiteGeneratorTest {
 
@@ -22,14 +17,14 @@ class WhiteGeneratorTest {
     void generatePieces() {
         final List<Piece> expected = new ArrayList<>(createPawn());
         expected.addAll(List.of(
-                new Rook(new Position(1, 'a')),
-                new Rook(new Position(1, 'h')),
-                new Knight(new Position(1, 'b')),
-                new Knight(new Position(1, 'g')),
-                new Bishop(new Position(1, 'c')),
-                new Bishop(new Position(1, 'f')),
-                new Queen(new Position(1, 'd')),
-                new King(new Position(1, 'e'))
+                new Rook(Position.of(1, 'a')),
+                new Rook(Position.of(1, 'h')),
+                new Knight(Position.of(1, 'b')),
+                new Knight(Position.of(1, 'g')),
+                new Bishop(Position.of(1, 'c')),
+                new Bishop(Position.of(1, 'f')),
+                new Queen(Position.of(1, 'd')),
+                new King(Position.of(1, 'e'))
         ));
         final WhiteGenerator generator = new WhiteGenerator();
 
@@ -41,7 +36,7 @@ class WhiteGeneratorTest {
     private List<Piece> createPawn() {
         final List<Piece> pawns = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            pawns.add(new Pawn(new Position(2, (char) ('a' + i))));
+            pawns.add(new Pawn(Position.of(2, (char) ('a' + i))));
         }
         return pawns;
     }
