@@ -3,7 +3,7 @@ package chess;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
-import chess.domain.controller.ChessController;
+import chess.controller.ChessController;
 
 public class WebApplication {
 

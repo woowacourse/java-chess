@@ -1,6 +1,8 @@
 package chess.dto;
 
-public class StatusDto {
+import chess.domain.game.ChessGame;
+
+public class StatusResponseDto {
 
     private final String code;
     private final String message;
@@ -10,21 +12,21 @@ public class StatusDto {
     private final double opponentScore;
     private final String result;
 
-    public StatusDto(String myTurn, String opponentTurn, double myScore, double opponentScore, String result) {
-        this("success", "", myTurn, opponentTurn, myScore, opponentScore, result);
+    public StatusResponseDto(final ChessGame chessGame, final double myScore, final double opponentScore, final String result) {
+        this("success", "", chessGame, myScore, opponentScore, result);
     }
 
-    public StatusDto(String code, String message) {
-        this(code, message, "", "", 0, 0, "");
+    public StatusResponseDto(final String code, final String message, final ChessGame chessGame) {
+        this(code, message, chessGame, 0, 0, "");
     }
 
-    public StatusDto(String code, String message, String myTurn, String opponentTurn, double myScore,
-                     double opponentScore,
-                     String result) {
+    public StatusResponseDto(final String code, final String message, final ChessGame chessGame, final double myScore,
+                             final double opponentScore,
+                             final String result) {
         this.code = code;
         this.message = message;
-        this.myTurn = myTurn;
-        this.opponentTurn = opponentTurn;
+        this.myTurn = chessGame.getTurnName();
+        this.opponentTurn = chessGame.getOppositeTurnName();
         this.myScore = myScore;
         this.opponentScore = opponentScore;
         this.result = result;

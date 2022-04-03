@@ -9,24 +9,24 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessGameDto {
+public class ChessResponseDto {
 
     private final String code;
     private final String message;
-    private final Map<String, String> board;
     private final String state;
     private final String turn;
+    private final Map<String, String> board;
 
-    public ChessGameDto(final ChessGame chessGame) {
+    public ChessResponseDto(final ChessGame chessGame) {
         this("success", "", chessGame);
     }
 
-    public ChessGameDto(final String code, final String message, final ChessGame chessGame) {
+    public ChessResponseDto(final String code, final String message, final ChessGame chessGame) {
         this.code = code;
         this.message = message;
-        this.board = createBoard(chessGame.getBoard());
         this.state = createState(chessGame.getState());
         this.turn = chessGame.getTurnName();
+        this.board = createBoard(chessGame.getBoard());
     }
 
     private String createState(final State state) {
@@ -47,10 +47,6 @@ public class ChessGameDto {
         return strings;
     }
 
-    public Map<String, String> getBoard() {
-        return board;
-    }
-
     public String getCode() {
         return code;
     }
@@ -65,5 +61,9 @@ public class ChessGameDto {
 
     public String getTurn() {
         return turn;
+    }
+
+    public Map<String, String> getBoard() {
+        return board;
     }
 }

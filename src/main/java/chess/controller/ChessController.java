@@ -1,4 +1,4 @@
-package chess.domain.controller;
+package chess.controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -6,9 +6,9 @@ import static spark.Spark.post;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
-import chess.dto.ChessGameDto;
-import chess.dto.MoveDto;
-import chess.dto.StatusDto;
+import chess.dto.ChessResponseDto;
+import chess.dto.MoveRequestDto;
+import chess.dto.StatusResponseDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ChessController {
         });
 
         get("/load", (req, res) -> {
-            return gson.toJson(new ChessGameDto(chessGame));
+            return gson.toJson(new ChessResponseDto(chessGame));
         });
 
         get("/start", (req, res) -> {
@@ -42,7 +42,7 @@ public class ChessController {
         });
 
         post("/move", (req, res) -> {
-            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            MoveRequestDto moveDto = gson.fromJson(req.body(), MoveRequestDto.class);
             return gson.toJson(move(chessGame, moveDto));
         });
     }
@@ -51,42 +51,42 @@ public class ChessController {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private static ChessGameDto start(final ChessGame chessGame) {
+    private static ChessResponseDto start(final ChessGame chessGame) {
         try {
             chessGame.start();
-            return new ChessGameDto(chessGame);
+            return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
-            return new ChessGameDto("error", e.getMessage(), chessGame);
+            return new ChessResponseDto("error", e.getMessage(), chessGame);
         }
     }
 
-    private static ChessGameDto end(final ChessGame chessGame) {
+    private static ChessResponseDto end(final ChessGame chessGame) {
         try {
             chessGame.end();
-            return new ChessGameDto(chessGame);
+            return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
-            return new ChessGameDto("error", e.getMessage(), chessGame);
+            return new ChessResponseDto("error", e.getMessage(), chessGame);
         }
     }
 
-    private static StatusDto status(final ChessGame chessGame) {
+    private static StatusResponseDto status(final ChessGame chessGame) {
         try {
             chessGame.status();
             final Score myScore = chessGame.calculateMyScore();
             final Score opponentScore = chessGame.calculateOpponentScore();
-            return new StatusDto(chessGame.getTurnName(), chessGame.getOppositeTurnName(), myScore.getValue(),
-                    opponentScore.getValue(), myScore.decideResult(opponentScore).getName());
+            return new StatusResponseDto(chessGame, myScore.getValue(), opponentScore.getValue(),
+                    myScore.decideResult(opponentScore).getName());
         } catch (final Exception e) {
-            return new StatusDto("error", e.getMessage());
+            return new StatusResponseDto("error", e.getMessage(), chessGame);
         }
     }
 
-    private static ChessGameDto move(final ChessGame chessGame, final MoveDto moveDto) {
+    private static ChessResponseDto move(final ChessGame chessGame, final MoveRequestDto moveDto) {
         try {
             chessGame.move(Position.create(moveDto.getSource()), Position.create(moveDto.getTarget()));
-            return new ChessGameDto(chessGame);
+            return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
-            return new ChessGameDto("error", e.getMessage(), chessGame);
+            return new ChessResponseDto("error", e.getMessage(), chessGame);
         }
     }
 }
