@@ -30,3 +30,5 @@ out/
 
 ### VS Code ###
 .vscode/
+/docker/
+/src/test/java/chess/dao/

@@ -1,0 +1,22 @@
+package chess.domain.piece;
+
+import chess.domain.board.position.Position;
+import chess.domain.piece.attribute.Name;
+import chess.domain.piece.attribute.Team;
+import java.util.List;
+
+public interface Piece {
+    boolean canMove(Piece targetPiece, Position from, Position to);
+
+    boolean isSameTeam(Piece targetPiece);
+
+    boolean isSameTeamOrEmpty(Team team);
+
+    Name getName();
+
+    Team getTeam();
+
+    List<Position> calculateRoute(Position from, Position to);
+
+    double getScore();
+}
