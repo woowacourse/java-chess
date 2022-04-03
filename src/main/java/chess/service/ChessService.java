@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.Board;
+import chess.Team;
 import chess.Turn;
 import chess.dao.BoardDao;
 import chess.dao.BoardDaoImpl;
@@ -9,9 +10,11 @@ import chess.dao.PieceDaoImpl;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import chess.piece.position.Position;
+import chess.service.dto.BoardDto;
 import chess.service.dto.MoveDto;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessService {
 
@@ -31,9 +34,8 @@ public class ChessService {
 
     public Board move(MoveDto moveDto) {
         Turn turn = boardDao.findTurnById(1L).orElseThrow(() -> new IllegalArgumentException("없는 정보입니다."));
-        Pieces p = Pieces.from(pieceDao.findAllByBoardId(1L));
 
-        Board board = Board.create(p, turn);
+        Board board = Board.create(Pieces.from(pieceDao.findAllByBoardId(1L)), turn);
         Pieces pieces = board.getPieces();
 
         Piece piece = pieces.findByPosition(Position.from(moveDto.getFrom()));
@@ -64,5 +66,14 @@ public class ChessService {
             pieceDao.updatePieceByPosition(piece.getType(), piece.getTeam().value(), piece.getPosition().name());
         }
         return board;
+    }
+
+    public ScoreDto getStatus() {
+        List<Piece> pieces = pieceDao.findAllByBoardId(1L);
+        Pieces board = Pieces.from(pieces);
+
+        double blackScore = board.getTotalScore(Team.BLACK);
+        double whiteScore = board.getTotalScore(Team.WHITE);
+        return new ScoreDto(blackScore, whiteScore);
     }
 }

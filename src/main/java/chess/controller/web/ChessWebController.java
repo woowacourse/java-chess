@@ -5,6 +5,7 @@ import chess.Team;
 import chess.Turn;
 import chess.piece.Piece;
 import chess.service.ChessService;
+import chess.service.ScoreDto;
 import chess.service.dto.BoardDto;
 import chess.service.dto.MoveDto;
 import com.google.gson.Gson;
@@ -47,10 +48,11 @@ public class ChessWebController {
             BoardDto boardDto = convertToDto(board);
             return gson.toJson(boardDto);
         });
-//
-//        get("/status", (req, res) -> {
-//            return gson.toJson(chessService.createStatus());
-//        });
+
+        get("/api/status", (req, res) -> {
+            ScoreDto status = chessService.getStatus();
+            return gson.toJson(status);
+        });
 
         post("/api/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);

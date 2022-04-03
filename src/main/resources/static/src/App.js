@@ -22,10 +22,6 @@ let boardInfo = "";
 let isChoiced = false;
 let currentTurn = "";
 
-// response["turn"]
-//response[board]
-//response["isFinish"]
-
 function showStatusButton() {
     status.style.visibility = 'visible';
 }
@@ -34,6 +30,7 @@ function initBoard() {
     fetch('/api/end')
         .then(res => res.json())
         .then(window.alert("game reset successfully!!!"))
+        .then(status.style.visibility = 'hidden')
         .then(imageSetting)
 }
 
@@ -41,11 +38,24 @@ start.addEventListener('click', function () {
     if (start.textContent == "START") {
         loadBoard();
         move();
-        start.textContent = "END";
+        start.textContent = "RESTART";
         return
     }
     initBoard();
     start.textContent = "START";
+})
+
+function getStatus(scoreResponse) {
+    const blackScore = scoreResponse["blackTeam"];
+    const whiteScore = scoreResponse["whiteTeam"];
+
+    window.alert("블랙팀 점수 :" + blackScore + ", 하얀팀 점수 : "+ whiteScore);
+}
+
+status.addEventListener('click', function (){
+    fetch('/api/status')
+        .then(res => res.json())
+        .then(getStatus)
 })
 
 function loadBoard() {
@@ -74,6 +84,8 @@ function turnSetting(response) {
     if (response["isFinish"] === true) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
         return;
+    }else{
+        document.querySelector("#view-type").textContent = "현재 턴 :ㅤ"
     }
 
     if (response["turn"] == 'white') {
@@ -95,7 +107,10 @@ function initPosition() {
 
 function eventMove(event) {
     const turn = boardInfo["turn"];
-
+    if (boardInfo["isFinish"] === true) {
+        window.alert("게임이 종료되었습니다. END 또는 STATUS만 눌러주세요.");
+        return;
+    }
     if (isChoiced === false) {
         fromTarget = event.target;
         const position = fromTarget.id
@@ -125,11 +140,9 @@ function eventMove(event) {
         }
         movePiece(fromTarget.id, toTarget.id)
     }
-
 }
 
 function movePiece(from, to) {
-
     const request = {
         from: from,
         to: to
@@ -143,7 +156,6 @@ function movePiece(from, to) {
         body: JSON.stringify(request),
     }).then(res => res.json())
         .then(res => imageSetting(res));
-
 }
 
 function move() {
