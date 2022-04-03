@@ -1,6 +1,11 @@
 package chess.piece;
 
-import chess.*;
+import chess.chessBoard.Board;
+import chess.chessBoard.position.File;
+import chess.chessBoard.position.Rank;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,13 +17,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
 
+    private Board board;
+
+    @BeforeEach
+    void init() {
+        board = new Board();
+        board.initBoard();
+        board.createBlackPieces();
+        board.createWhitePieces();
+    }
+
     @DisplayName("한 칸 움직일 수 있으면 true를 반환한다.")
     @ParameterizedTest()
     @EnumSource(File.class)
     void canMove_one_true(File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece pawn = board.get(Position.of(Rank.SEVEN, file));
-        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.SIX, file), board);
+        Map<Position, Piece> chessBoard = board.getBoard();
+        Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
+        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.SIX, file), chessBoard);
 
         assertThat(actual).isTrue();
     }
@@ -26,50 +41,50 @@ class PawnTest {
     @DisplayName("한 칸 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_one_false() {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> chessBoard = board.getBoard();
         Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), board);
+        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), chessBoard);
 
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("두 칸 움직일 수 있으면 true를 반환한다.")
+    @DisplayName("폰의 초기 위치에서 두 칸 움직일 수 있으면 true를 반환한다.")
     @ParameterizedTest()
     @EnumSource(File.class)
     void canMove_two_true(File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece pawn = board.get(Position.of(Rank.SEVEN, file));
-        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.FIVE, file), board);
+        Map<Position, Piece> chessBoard = board.getBoard();
+        Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
+        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.FIVE, file), chessBoard);
 
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("두 칸 움직일 수 없으면 false를 반환한다.")
+    @DisplayName("폰의 초기 위치에서 두 칸 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_two_false() {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> chessBoard = board.getBoard();
         Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), board);
+        boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), chessBoard);
 
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("대각선 앞쪽으로 움직일 수 있으면 true를 반환한다.")
+    @DisplayName("대각선 앞쪽에 상대편 기물이 있을 때 움직일 수 있으면 true를 반환한다.")
     @Test
     void canMove_side_true() {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> chessBoard = board.getBoard();
         Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), board);
+        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), chessBoard);
 
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("대각선 앞쪽으로 움직일 수 없으면 false를 반환한다.")
+    @DisplayName("대각선 앞쪽에 상대편 기물이 있을 때 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_side_false() {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> chessBoard = board.getBoard();
         Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), board);
+        boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), chessBoard);
 
         assertThat(actual).isFalse();
     }

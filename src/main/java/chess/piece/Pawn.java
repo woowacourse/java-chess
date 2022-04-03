@@ -1,17 +1,15 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.Player;
-import chess.Position;
+import chess.chessBoard.Direction;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static chess.Direction.*;
-import static chess.Player.BLACK;
-import static chess.Player.NONE;
+import static chess.chessBoard.Direction.*;
+import static chess.game.Player.BLACK;
+import static chess.game.Player.NONE;
 
 public class Pawn extends Piece {
 
@@ -22,11 +20,10 @@ public class Pawn extends Piece {
     }
 
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Direction> directions = getDirection();
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(findCatchPositions(source, board, directions.subList(0, 2)));
-        positions.addAll(findMovedOnePosition(source, board, directions.get(2)));
-        positions.addAll(findMovedTwoPosition(source, board, directions.subList(2, 4)));
+        Set<Position> positions = new HashSet<>();
+        positions.addAll(findCatchPositions(source, board, getCatchingDirections()));
+        positions.addAll(findMovedOnePosition(source, board, getForwardDirection()));
+        positions.addAll(findMovedTwoPosition(source, board, getForwardDirection(), getForwardTwoDirection()));
         return positions.contains(target);
     }
 
@@ -47,24 +44,41 @@ public class Pawn extends Piece {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> findMovedTwoPosition(Position source, Map<Position, Piece> board, List<Direction> directions) {
-        if (!source.isInBoardAfterMoved(directions.get(1))) {
-            return new ArrayList<>();
+    private List<Position> findMovedTwoPosition(Position source, Map<Position, Piece> board, Direction forwardDirection, Direction forwardTwoDirection) {
+        if (!source.isInBoardAfterMoved(forwardTwoDirection)) {
+            return List.of();
         }
-        Position position = source.createMovablePosition(directions.get(0));
-        Position position2 = source.createMovablePosition(directions.get(1));
-        if (source.isStart() && board.get(position).isSame(NONE) && board.get(position2).isSame(NONE)) {
-            return List.of(position2);
+        Position oneForwardPosition = source.createMovablePosition(forwardDirection);
+        Position twoForwardPosition = source.createMovablePosition(forwardTwoDirection);
+        if (source.isStartingPositionOfPawn() && isMovedTwoPosition(board.get(oneForwardPosition), board.get(twoForwardPosition))) {
+            return List.of(twoForwardPosition);
         }
-        return new ArrayList<>();
+        return List.of();
     }
 
-    @Override
-    protected List<Direction> getDirection() {
+    private boolean isMovedTwoPosition(Piece pieceInOneForwardPosition, Piece pieceInTwoForwardPosition) {
+        return pieceInOneForwardPosition.isSame(NONE) && !pieceInTwoForwardPosition.isSame(player);
+    }
+
+    private List<Direction> getCatchingDirections() {
         if (player.equals(BLACK)) {
-            return List.of(SOUTHEAST, SOUTHWEST, SOUTH, SS);
+            return List.of(SOUTHEAST, SOUTHWEST);
         }
-        return List.of(NORTHEAST, NORTHWEST, NORTH, NN);
+        return List.of(NORTHEAST, NORTHWEST);
+    }
+
+    private Direction getForwardDirection() {
+        if (player.equals(BLACK)) {
+            return SOUTH;
+        }
+        return NORTH;
+    }
+
+    private Direction getForwardTwoDirection() {
+        if (player.equals(BLACK)) {
+            return BLACK_PAWN_FORWARD_TWO;
+        }
+        return WHITE_PAWN_FORWARD_TWO;
     }
 
     @Override

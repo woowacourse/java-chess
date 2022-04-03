@@ -1,9 +1,8 @@
 package chess.state;
 
-import chess.Board;
-import chess.Player;
+import chess.chessBoard.Board;
 
-import java.util.Map;
+import static chess.state.Command.*;
 
 public class End extends Finished {
 
@@ -13,19 +12,14 @@ public class End extends Finished {
 
     @Override
     public State proceed(String command) {
-        if (command.equals("status")) {
+        if (STATUS.isUserInput(command)) {
             return new Status(board);
         }
-        throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
+        return this;
     }
 
     @Override
     public boolean isStatus() {
         return false;
-    }
-
-    @Override
-    public Map<Player, Double> calculateScore() {
-        throw new RuntimeException("[ERROR] 점수를 계산 할 수 없습니다.");
     }
 }

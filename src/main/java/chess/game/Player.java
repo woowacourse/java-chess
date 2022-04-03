@@ -1,4 +1,4 @@
-package chess;
+package chess.game;
 
 public enum Player {
 

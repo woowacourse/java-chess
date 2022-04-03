@@ -1,11 +1,13 @@
 package chess.state;
 
-import chess.Board;
+import chess.chessBoard.Board;
+import chess.game.Player;
 
 public class Start extends Running {
 
     public Start(Board board) {
         super(board);
+        initBoard();
     }
 
     public static State initState(String command) {
@@ -21,8 +23,14 @@ public class Start extends Running {
             return new End(board);
         }
         if (command.startsWith("move")) {
-            return new WhiteTurn(command, board);
+            return new Turn(command, board, Player.WHITE);
         }
         throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
+    }
+
+    private void initBoard() {
+        board.initBoard();
+        board.createBlackPieces();
+        board.createWhitePieces();
     }
 }

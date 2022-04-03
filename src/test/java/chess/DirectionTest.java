@@ -1,9 +1,12 @@
 package chess;
 
+import chess.chessBoard.position.File;
+import chess.chessBoard.position.Rank;
+import chess.chessBoard.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.Direction.*;
+import static chess.chessBoard.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {

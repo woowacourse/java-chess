@@ -1,8 +1,8 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.Player;
-import chess.Position;
+import chess.chessBoard.Direction;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
 
 import java.util.List;
 import java.util.Map;
@@ -26,11 +26,9 @@ public abstract class Piece {
         return player.equals(this.player);
     }
 
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        return true;
-    }
+    public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
 
-    protected List<Direction> getDirection() {
+    protected List<Direction> getDirections() {
         return null;
     }
 

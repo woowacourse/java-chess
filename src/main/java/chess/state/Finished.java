@@ -1,6 +1,6 @@
 package chess.state;
 
-import chess.Board;
+import chess.chessBoard.Board;
 
 public abstract class Finished extends Started {
 

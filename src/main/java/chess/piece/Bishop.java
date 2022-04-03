@@ -1,14 +1,14 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.Player;
-import chess.Position;
+import chess.chessBoard.Direction;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static chess.Direction.*;
+import static chess.chessBoard.Direction.*;
 
 public class Bishop extends Piece {
 
@@ -20,7 +20,7 @@ public class Bishop extends Piece {
     @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         List<Position> positions = new ArrayList<>();
-        for (Direction direction : getDirection()) {
+        for (Direction direction : getDirections()) {
             positions.addAll(createMovablePositions(direction, source, board));
         }
         return positions.contains(target);
@@ -43,7 +43,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected List<Direction> getDirection() {
+    protected List<Direction> getDirections() {
         return List.of(SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST);
     }
 

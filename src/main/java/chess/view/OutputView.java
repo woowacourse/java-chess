@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.File;
-import chess.Player;
-import chess.Position;
-import chess.Rank;
+import chess.chessBoard.position.File;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
+import chess.chessBoard.position.Rank;
 import chess.piece.Piece;
 
 import java.util.Map;
@@ -27,20 +27,24 @@ public class OutputView {
         }
     }
 
+    public void printStatusInstruction() {
+        System.out.println("결과 출력을 원하면 status 명령을 입력하세요. 종료하려면 아무키나 입력하세요.");
+    }
+
     public void printScores(Map<Player, Double> calculateScore) {
         for (Player player : calculateScore.keySet()) {
             if (player == Player.BLACK) {
-                System.out.printf("검은색: %f", calculateScore.get(player));
+                System.out.printf("검은색: %.1f\n", calculateScore.get(player));
             }
             if (player == Player.WHITE) {
-                System.out.printf("흰색: %f", calculateScore.get(player));
+                System.out.printf("흰색: %.1f\n", calculateScore.get(player));
             }
         }
         printWinner(calculateScore);
     }
 
     private void printWinner(Map<Player, Double> calculateScore) {
-        if (calculateScore.get(Player.BLACK) > calculateScore.get(Player.WHITE)) {
+        if (calculateScore.get(Player.BLACK) >= calculateScore.get(Player.WHITE)) {
             System.out.println("블랙 승");
             return;
         }

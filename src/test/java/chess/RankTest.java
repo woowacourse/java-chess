@@ -3,7 +3,7 @@ package chess;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.Rank.*;
+import static chess.chessBoard.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RankTest {

@@ -1,14 +1,14 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.Player;
-import chess.Position;
+import chess.chessBoard.Direction;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static chess.Direction.*;
+import static chess.chessBoard.Direction.*;
 
 public class King extends Piece {
 
@@ -20,7 +20,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Direction> directions = getDirection();
+        List<Direction> directions = getDirections();
         List<Position> positions = directions.stream()
                 .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
@@ -30,7 +30,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected List<Direction> getDirection() {
+    protected List<Direction> getDirections() {
         return List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHWEST, SOUTHEAST);
     }
 

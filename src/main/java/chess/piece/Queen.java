@@ -1,15 +1,13 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.Player;
-import chess.Position;
+import chess.chessBoard.Direction;
+import chess.game.Player;
+import chess.chessBoard.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static chess.Direction.*;
-import static chess.Direction.NORTH;
+import static chess.chessBoard.Direction.*;
+import static chess.chessBoard.Direction.NORTH;
 
 public class Queen extends Piece {
 
@@ -21,8 +19,8 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
-        for (Direction direction : getDirection()) {
+        Set<Position> positions = new HashSet<>();
+        for (Direction direction : getDirections()) {
             positions.addAll(createMovablePositions(direction, source, board));
         }
         return positions.contains(target);
@@ -45,7 +43,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected List<Direction> getDirection() {
+    protected List<Direction> getDirections() {
         return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST);
     }
 

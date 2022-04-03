@@ -1,6 +1,10 @@
 package chess.piece;
 
-import chess.*;
+import chess.chessBoard.Board;
+import chess.chessBoard.position.File;
+import chess.chessBoard.position.Rank;
+import chess.chessBoard.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,12 +16,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
 
+    private Board board;
+
+    @BeforeEach
+    void init() {
+        board = new Board();
+        board.initBoard();
+        board.createBlackPieces();
+        board.createWhitePieces();
+    }
+
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_false() {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece knight = board.get(Position.of(Rank.EIGHT, File.B));
-        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(Rank.SIX, File.B), board);
+        Map<Position, Piece> chessBoard = board.getBoard();
+        Piece knight = chessBoard.get(Position.of(Rank.EIGHT, File.B));
+        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(Rank.SIX, File.B), chessBoard);
 
         assertThat(actual).isFalse();
     }
@@ -26,9 +40,9 @@ class KnightTest {
     @ParameterizedTest()
     @CsvSource(value = {"SIX,C", "SIX,A"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece knight = board.get(Position.of(Rank.EIGHT, File.B));
-        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(rank, file), board);
+        Map<Position, Piece> chessBoard = board.getBoard();
+        Piece knight = chessBoard.get(Position.of(Rank.EIGHT, File.B));
+        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();
     }

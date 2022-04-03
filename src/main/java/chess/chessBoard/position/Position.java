@@ -1,9 +1,13 @@
-package chess;
+package chess.chessBoard.position;
+
+import chess.chessBoard.Direction;
 
 import java.util.Objects;
 
 public class Position {
 
+    public static final int RANK_NAME_INDEX = 1;
+    public static final int FILE_NAME_INDEX = 0;
     private final Rank rank;
     private final File file;
 
@@ -17,7 +21,7 @@ public class Position {
     }
 
     public static Position from(String position) {
-        return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
+        return new Position(Rank.of(position.charAt(RANK_NAME_INDEX)), File.of(position.charAt(FILE_NAME_INDEX)));
     }
 
     public boolean isInBoardAfterMoved(Direction direction) {
@@ -41,7 +45,7 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isStart() {
+    public boolean isStartingPositionOfPawn() {
         return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
     }
 }

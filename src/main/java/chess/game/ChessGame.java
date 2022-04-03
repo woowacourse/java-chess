@@ -1,4 +1,4 @@
-package chess;
+package chess.game;
 
 import chess.state.Start;
 import chess.state.State;
@@ -6,34 +6,45 @@ import chess.state.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ChessGame {
 
     private final OutputView outputView;
     private final InputView inputView;
 
-    public ChessController(OutputView outputView, InputView inputView) {
+    public ChessGame(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
 
     public void run() {
         outputView.printGameRule();
-
         State state = initState();
+        state = playGame(state);
+        managesResults(state);
+    }
+
+    private void managesResults(State state) {
+        outputView.printStatusInstruction();
+        state = proceed(state);
+        if (state.isStatus()) {
+            Status status = (Status) state;
+            outputView.printScores(status.calculateScore());
+        }
+    }
+
+    private State playGame(State state) {
         while (state.isRunning()) {
             outputView.printBoard(state.getBoard());
             state = proceed(state);
         }
-        if (state.isStatus()) {
-            outputView.printScores(state.calculateScore());
-        }
+        return state;
     }
 
     private State proceed(State state) {
         try {
             return state.proceed(inputView.inputPlayerCommand());
-        } catch (IllegalArgumentException error) {
-            System.out.println(error.getMessage());
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
             return proceed(state);
         }
     }
@@ -41,8 +52,8 @@ public class ChessController {
     private State initState() {
         try {
             return Start.initState(inputView.inputPlayerCommand());
-        } catch (IllegalArgumentException error) {
-            System.out.println(error.getMessage());
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
             return initState();
         }
     }

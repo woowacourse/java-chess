@@ -1,4 +1,8 @@
-package chess;
+package chess.chessBoard;
+
+import chess.chessBoard.position.File;
+import chess.chessBoard.position.Position;
+import chess.chessBoard.position.Rank;
 
 public enum Direction {
 
@@ -11,17 +15,17 @@ public enum Direction {
     SOUTHWEST(-1, -1),
     SOUTHEAST(-1, 1),
 
-    EEN(1, 2),
-    EES(-1, 2),
-    WWN(1, -2),
-    WWS(-1, -2),
-    SSE(-2, 1),
-    SSW(-2, -1),
-    NNE(2, 1),
-    NNW(2, -1),
+    KNIGHT_EAST_RIGHT(-1, 2),
+    KNIGHT_EAST_LEFT(1, 2),
+    KNIGHT_WEST_RIGHT(1, -2),
+    KNIGHT_WEST_LEFT(-1, -2),
+    KNIGHT_SOUTH_RIGHT(-2, -1),
+    KNIGHT_SOUTH_LEFT(-2, 1),
+    KNIGHT_NORTH_RIGHT(2, 1),
+    KNIGHT_NORTH_LEFT(2, -1),
 
-    SS(-2, 0),
-    NN(2, 0),
+    BLACK_PAWN_FORWARD_TWO(-2, 0),
+    WHITE_PAWN_FORWARD_TWO(2, 0),
     ;
 
     private final int row;

@@ -1,12 +1,16 @@
-package chess;
+package chess.chessBoard;
 
+import chess.chessBoard.position.File;
+import chess.chessBoard.position.Position;
+import chess.chessBoard.position.Rank;
+import chess.game.Player;
 import chess.piece.*;
 
 import java.util.*;
 
-import static chess.File.*;
-import static chess.Player.*;
-import static chess.Rank.*;
+import static chess.chessBoard.position.File.*;
+import static chess.game.Player.*;
+import static chess.chessBoard.position.Rank.*;
 
 public class Board {
 
@@ -14,12 +18,9 @@ public class Board {
 
     public Board() {
         board = new HashMap<>();
-        initBoard();
-        createBlackPieces();
-        createWhitePieces();
     }
 
-    private void initBoard() {
+    public void initBoard() {
         for (Rank rank : Rank.values()) {
             createBlankIn(rank);
         }
@@ -31,7 +32,7 @@ public class Board {
         }
     }
 
-    private void createBlackPieces() {
+    public void createBlackPieces() {
         board.put(Position.of(EIGHT, A), new Rook(BLACK, "R"));
         board.put(Position.of(EIGHT, B), new Knight(BLACK, "N"));
         board.put(Position.of(EIGHT, C), new Bishop(BLACK, "B"));
@@ -45,7 +46,7 @@ public class Board {
         }
     }
 
-    private void createWhitePieces() {
+    public void createWhitePieces() {
         board.put(Position.of(ONE, A), new Rook(WHITE, "r"));
         board.put(Position.of(ONE, B), new Knight(WHITE, "n"));
         board.put(Position.of(ONE, C), new Bishop(WHITE, "b"));
@@ -64,43 +65,49 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        if (board.get(source).isSame(NONE)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
-        }
-        if (!board.get(source).canMove(source, target, board)) {
-            throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
-        }
+        Piece piece = board.get(source);
+        checkNoneInSource(piece);
+        checkMovable(source, target, piece);
         board.put(target, board.get(source));
         board.put(source, new Blank(NONE, "."));
     }
 
-    public boolean isKilledKing() {
+    private void checkMovable(Position source, Position target, Piece piece) {
+        if (!piece.canMove(source, target, board)) {
+            throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
+        }
+    }
+
+    private void checkNoneInSource(Piece piece) {
+        if (piece.isSame(NONE)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
+        }
+    }
+
+    public boolean isEndSituation() {
+        return isKilledKing();
+    }
+
+    private boolean isKilledKing() {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count() < 2;
+                .count() == 1;
     }
 
     public boolean checkRightTurn(Player player, Position source) {
         return board.get(source).isSame(player);
     }
 
-    public double calculateScore(Player player) {
-        double score = 0;
-        for (Rank rank : Rank.values()) {
-            int PawnCountInFile = 0;
-            for (File file : File.values()) {
-                if (board.get(Position.of(rank, file)).isSame(player)) {
-                    score = board.get(Position.of(rank, file)).addTo(score);
-                    if (board.get(Position.of(rank, file)).isPawn()) {
-                        PawnCountInFile += 1;
-                    }
-                }
-            }
-            if (PawnCountInFile >= 2) {
-                score -= 0.5 * PawnCountInFile;
-            }
-        }
-        return score;
+    public boolean isSamePlayerIn(Position position, Player player) {
+        return board.get(position).isSame(player);
+    }
+
+    public double addPieceScore(Position position, double score) {
+        return board.get(position).addTo(score);
+    }
+
+    public boolean isPawn(Position position) {
+        return board.get(position).isPawn();
     }
 }

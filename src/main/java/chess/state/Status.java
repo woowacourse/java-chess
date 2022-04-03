@@ -1,27 +1,15 @@
 package chess.state;
 
-import chess.Board;
-import chess.Player;
+import chess.chessBoard.Board;
+import chess.game.Player;
+import chess.game.Score;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-
-import static chess.Player.BLACK;
-import static chess.Player.WHITE;
 
 public class Status extends Finished {
 
     public Status(Board board) {
         super(board);
-    }
-
-    @Override
-    public Map<Player, Double> calculateScore() {
-        Map<Player, Double> scores = new HashMap<>();
-        scores.put(WHITE, board.calculateScore(WHITE));
-        scores.put(BLACK, board.calculateScore(BLACK));
-        return scores;
     }
 
     @Override
@@ -33,4 +21,11 @@ public class Status extends Finished {
     public boolean isStatus() {
         return true;
     }
+
+    public HashMap<Player, Double> calculateScore() {
+        Score score = new Score();
+        score.calculateScore(board);
+        return score.getScores();
+    }
+
 }
