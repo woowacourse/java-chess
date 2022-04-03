@@ -28,10 +28,9 @@ public class ChessWebController {
 
     public void run() {
 
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "board.html");
+            return render(model, "index.html");
         });
 
         get("/room/:roomName", (req, res) -> {
@@ -54,7 +53,8 @@ public class ChessWebController {
         });
 
         before("/protected/*", (req, res) -> {
-            if (!roomService.isRoomExist(req.params(":roomName")) && !roomService.isRoomExist(req.queryParams("room"))) {
+            if (!roomService.isRoomExist(req.params(":roomName")) && !roomService.isRoomExist(
+                    req.queryParams("room"))) {
                 Map<String, Object> model = new HashMap<>();
                 model.put("roomExist", false);
                 halt(401, gson.toJson(model));
@@ -85,7 +85,11 @@ public class ChessWebController {
 
             post("/move", (req, res) -> {
                 final String[] splitBody = req.body().split(" ");
-                final Map<String, Object> model = chessService.move(req.queryParams("room"), splitBody[0], splitBody[1]);
+                final Map<String, Object> model = chessService.move(
+                        req.queryParams("room"),
+                        splitBody[0],
+                        splitBody[1]
+                );
                 return gson.toJson(model);
             });
 

@@ -29,7 +29,7 @@ public class RoomDao {
         final String sql = "SELECT * FROM Room WHERE Name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
-        final PreparedStatement statement = connection.prepareStatement(sql)) {
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, roomName);
 

@@ -196,11 +196,8 @@
         <div class="score" id="black"></div>
     </div>
     <div class="inner_score">
-        <div>
-            <input type="text" id="roomNameInput" placeholder="방 이름" autofocus maxlength="10"/>
-        </div>
-        <button class="ui-button" id="start" onclick="start()">start</button>
-        <button class="ui-button" id="end" onclick="end()">end</button>
+        <button class="ui-button" id="start" onclick="redirectToHome()">홈</button>
+        <button class="ui-button" id="end" onclick="end()">종료</button>
     </div>
     <div class="inner_score">
         <div class="error" id="error"></div>
@@ -219,6 +216,10 @@
         }
     })
 
+    function redirectToHome() {
+        window.location.href = "/";
+    }
+
     async function move() {
         const response = await fetch(`/protected/move?room=${roomName}`, {method: "POST", body: fromTo});
         const json = response.json();
@@ -226,32 +227,6 @@
         drawBoard(json);
         fetchScore();
         fetchTurn();
-    }
-
-    async function start() {
-        roomName = document.getElementById("roomNameInput").value;
-        if (/^\s*$/.test(roomName)) {
-            const error = document.getElementById("error");
-            error.innerText = "방 이름을 입력하세요!";
-
-            document.getElementById("roomNameInput").value = "";
-            return;
-        }
-        const response = await fetch(`/start?room=${roomName}`, {method: "POST"});
-        window.location.href = `/room/${roomName}`;
-        const json = response.json();
-        await removeElement();
-        drawBoard(json);
-        fetchScore();
-        fetchTurn();
-        let element = document.getElementById("white_win");
-        element.style.visibility = "hidden";
-
-        element = document.getElementById("black_win");
-        element.style.visibility = "hidden";
-
-        element = document.getElementById("draw");
-        element.style.visibility = "hidden";
     }
 
     async function end() {

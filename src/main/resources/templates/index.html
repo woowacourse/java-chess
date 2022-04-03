@@ -6,14 +6,58 @@
 </head>
 <body style="background: dimgray">
 
-<div style="margin: 50px auto; text-align: center">
-    <form id="start" method="post" action="/command/start">
-        <button name="start" type="submit" style="width: 200px; height: 50px; background: black; color: white;">
-            Start!
-        </button>
-    </form>
+<style>
+    .mainContainer {
+        margin: 100px auto;
+        float: top;
+        text-align: center;
+    }
+
+    .input {
+        width: 300px;
+        height: 40px;
+        font-size: xx-large;
+        margin: 0 auto 30px;
+    }
+
+    .ui-button {
+        width: 100px;
+        height: 40px;
+        font-size: xx-large;
+        margin: 0 auto;
+    }
+
+    .error {
+        font-size: x-large;
+        font-weight: bold;
+        text-align: center;
+        color: darkred;
+    }
+</style>
+
+<div class="mainContainer">
+    <div>
+        <input type="text" class="input" id="roomNameInput" placeholder="방 이름" autofocus maxlength="10"/>
+    </div>
+    <button class="ui-button" id="start" onclick="start()">입장</button>
 </div>
-<div>{{error}}</div>
+<div class="error" id="error"></div>
 
 </body>
+
+<script>
+    async function start() {
+        roomName = document.getElementById("roomNameInput").value;
+        if (/^\s*$/.test(roomName)) {
+            const error = document.getElementById("error");
+            error.innerText = "방 이름을 입력하세요!";
+
+            document.getElementById("roomNameInput").value = "";
+            return;
+        }
+        await fetch(`/start?room=${roomName}`, {method: "POST"});
+        window.location.href = `/room/${roomName}`;
+    }
+</script>
+
 </html>
