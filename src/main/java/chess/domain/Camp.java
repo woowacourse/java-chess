@@ -33,6 +33,9 @@ public enum Camp {
 
     @Override
     public String toString() {
+        if (this == NONE) {
+            return "";
+        }
         return name().toLowerCase();
     }
 }

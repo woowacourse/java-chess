@@ -21,6 +21,8 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
         GameController gameController = new GameController();
+        JsonTransformer jsonTransformer = new JsonTransformer();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -47,6 +49,10 @@ public class WebApplication {
                     ));
             System.out.println("소스 위치 : " + positions.get("source"));
             gameController.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
+            if (gameController.isGameFinished()) {
+                res.redirect("/end");
+                return null;
+            }
             res.redirect("/play");
             return null;
         });
@@ -55,7 +61,18 @@ public class WebApplication {
             Map<Camp, Score> board = gameController.status();
             Map<String, Object> model = board.entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
-            return new JsonTransformer().render(model);
+            return jsonTransformer.render(model);
+        });
+
+        get("/end", (req, res) -> {
+            gameController.end();
+            Map<String, Object> model = new HashMap<>();
+            Camp winner = gameController.getWinner();
+            model.put("winner", winner);
+            if (winner == Camp.NONE) {
+                model.put("tie", true);
+            }
+            return render(model, "result.html");
         });
 
         exception(Exception.class, (exception, request, response) -> {

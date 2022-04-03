@@ -20,6 +20,9 @@
         </form>
         <div>
             <button id="status">점수 보기</button>
+            <form action="./end">
+                <input type="submit" value="게임 종료">
+            </form>
         </div>
         <section class="chess-ui">
             <!--      Row8      -->
@@ -512,11 +515,11 @@
     function statusOnClickHandler() {
         fetch('./status')
             .then((response) => response.json())
-            .then((data) => addScoreToDocument(data));
+            .then((scores) => addScoreToDocument(scores));
     }
-    function addScoreToDocument(data) {
-        document.getElementById('player-score-black').innerText = data.black.value;
-        document.getElementById('player-score-white').innerText = data.white.value;
+    function addScoreToDocument(scores) {
+        document.getElementById('player-score-black').innerText = scores.black.value;
+        document.getElementById('player-score-white').innerText = scores.white.value;
     }
 </script>
 </html>
