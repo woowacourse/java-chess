@@ -14,7 +14,7 @@ public class ChessPieceDto {
     }
 
     public static ChessPieceDto of(String position, String pieceType, String color) {
-        return new ChessPieceDto(Position.from(position), ChessPieceMapper.findBy(pieceType, color));
+        return new ChessPieceDto(Position.from(position), ChessPieceMapper.toChessPiece(pieceType, color));
     }
 
     public Position getPosition() {

@@ -1,7 +1,9 @@
 package chess.dao;
 
+import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
+import chess.dto.ChessPieceMapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -49,6 +51,32 @@ public class ChessPieceDao {
                 ));
             }
             return dtos;
+        }
+    }
+
+    public int deleteByPosition(final Position position) throws SQLException {
+        final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
+
+        final Connection connection = getConnection();
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, position.getValue());
+        try (connection; statement) {
+            return statement.executeUpdate();
+        }
+    }
+
+    public int save(final Position position, final ChessPiece chessPiece) throws SQLException {
+        final String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES (?, ?, ?)";
+
+        final Connection connection = getConnection();
+        final PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, position.getValue());
+        statement.setString(2, ChessPieceMapper.toPieceType(chessPiece));
+        statement.setString(3, chessPiece.color().getValue());
+
+        try (connection; statement) {
+            return statement.executeUpdate();
         }
     }
 

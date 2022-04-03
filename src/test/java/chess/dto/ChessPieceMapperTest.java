@@ -18,7 +18,7 @@ class ChessPieceMapperTest {
         final String color = "white";
 
         // when
-        final ChessPiece actual = ChessPieceMapper.findBy(pieceType, color);
+        final ChessPiece actual = ChessPieceMapper.toChessPiece(pieceType, color);
 
         // then
         assertThat(actual).isEqualTo(King.from(Color.WHITE));

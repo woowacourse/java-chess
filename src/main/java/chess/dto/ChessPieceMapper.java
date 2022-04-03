@@ -29,11 +29,19 @@ public enum ChessPieceMapper {
         this.toChessPiece = toChessPiece;
     }
 
-    public static ChessPiece findBy(final String pieceType, final String color) {
+    public static ChessPiece toChessPiece(final String pieceType, final String color) {
         return Arrays.stream(values())
                 .filter(it -> it.pieceType.equals(pieceType))
                 .map(it -> it.toChessPiece.apply(Color.from(color)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("기물을 찾을 수 없습니다."));
+    }
+
+    public static String toPieceType(final ChessPiece chessPiece) {
+        return Arrays.stream(values())
+                .filter(it -> it.toChessPiece.apply(chessPiece.color()).equals(chessPiece))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 기물입니다."))
+                .pieceType;
     }
 }
