@@ -339,6 +339,15 @@
     {{/this}}
 </section>
 
+<section>
+    <h2>Move</h2>
+
+    <form class="form" action="/move" method="post">
+        <input class="from-input" name="from" type="text" placeholder="현재 위치" maxlength="2">
+        <input class="to-input" name="to" type="text" placeholder="움직일 위치" maxlength="2">
+        <input type="submit" value="이동">
+    </form>
+</section>
 
 </body>
 </html>

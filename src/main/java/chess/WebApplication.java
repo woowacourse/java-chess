@@ -2,25 +2,35 @@ package chess;
 
 import static spark.Spark.*;
 
+import chess.dto.CommandRequest;
 import chess.dto.response.BoardResult;
 import chess.dto.response.PieceResult;
-import chess.game.Board;
-import chess.game.BoardInitializer;
-import chess.game.Position;
-import chess.piece.Piece;
+import chess.game.Command;
+import chess.game.Game;
+import chess.status.Ready;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.Map;
 
 public class WebApplication {
     public static void main(String[] args) {
-        port(8081);
+        port(8082);
         staticFileLocation("/static");
 
-        final Map<Position, Piece> board = new Board(BoardInitializer.getBoard()).getValue();
+        final Game game = new Game(Ready.start(Command.START));
 
-        get("/", (req, res) -> render(new BoardResult(board).getValue(), "index.html"));
+        get("/", (req, res) -> render(new BoardResult(game.getBoard().getValue()).getValue(), "index.html"));
 
+        post("/move", (req, res) -> {
+            final String body = req.body();
+            final String[] split = body.split("&");
+            final String s = split[0];
+            final String s1 = split[1];
+
+            game.run(new CommandRequest("move", s.split("=")[1], s1.split("=")[1]));
+            res.redirect("/");
+            return null;
+        });
     }
 
     private static String render(final Map<String, PieceResult> model, final String templatePath) {
