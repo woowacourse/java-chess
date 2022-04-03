@@ -13,7 +13,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판을 생성하는 테스트")
     void createBoard() {
-        Board board = Board.create(Pieces.createInit());
+        Board board = Board.create(Pieces.createInit(), Turn.init());
         assertThat(board).isExactlyInstanceOf(Board.class);
     }
 }

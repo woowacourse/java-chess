@@ -1,4 +1,4 @@
-package chess.service;
+package chess.service.dto;
 
 public class ScoreDto {
     private final double blackTeam;
@@ -7,14 +7,6 @@ public class ScoreDto {
     public ScoreDto(double blackTeam, double whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
-    }
-
-    public double getBlackTeam() {
-        return blackTeam;
-    }
-
-    public double getWhiteTeam() {
-        return whiteTeam;
     }
 
 }

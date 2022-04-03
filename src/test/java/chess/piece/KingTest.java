@@ -44,7 +44,7 @@ class KingTest {
                 new King(Position.of('a', '8'), Team.BLACK),
                 new Pawn(Position.of('a', '7'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
@@ -59,7 +59,7 @@ class KingTest {
                 new King(Position.of('a', '8'), Team.BLACK),
                 new Empty(Position.of('b', '7'))
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
@@ -74,7 +74,7 @@ class KingTest {
                 new King(Position.of('a', '8'), Team.WHITE),
                 new Pawn(Position.of('a', '7'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "a7");
 
         assertThatThrownBy(

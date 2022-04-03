@@ -37,7 +37,7 @@ class RookTest {
     @Test
     @DisplayName("룩의 진행방향에 말이 있으면 예외 처리")
     void moveFailureWhenExistPieceTest() {
-        Board board = Board.create(Pieces.createInit());
+        Board board = Board.create(Pieces.createInit(), Turn.init());
         List<String> command = List.of("a8", "a5");
         assertThatThrownBy(
                 () -> board.move(command, new Turn(Team.BLACK))
@@ -47,7 +47,7 @@ class RookTest {
     @Test
     @DisplayName("룩의 target위치에 아군 말이 있으면 예외 처리")
     void moveFailureTest() {
-        Board board = Board.create(Pieces.createInit());
+        Board board = Board.create(Pieces.createInit(), Turn.init());
         List<String> command = List.of("a8", "a7");
         assertThatThrownBy(
                 () -> board.move(command, new Turn(Team.BLACK))
@@ -63,7 +63,7 @@ class RookTest {
                 new Empty(Position.of('a', '6')),
                 new Pawn(Position.of('a', '5'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "a5");
 
 

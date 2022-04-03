@@ -30,7 +30,7 @@ class BishopTest {
                 new Bishop(Position.of('a', '8'), Team.BLACK),
                 new Pawn(Position.of('b', '7'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
@@ -46,7 +46,7 @@ class BishopTest {
                 new Empty(Position.of('b', '7')),
                 new Empty(Position.of('c', '6'))
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("a8", "c6");
 
         assertDoesNotThrow(
@@ -62,7 +62,7 @@ class BishopTest {
                 new Empty(Position.of('d', '7')),
                 new Pawn(Position.of('e', '8'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.from(pieces));
+        Board board = Board.create(Pieces.from(pieces), Turn.init());
         List<String> command = List.of("c6", "e8");
 
         assertThatThrownBy(
