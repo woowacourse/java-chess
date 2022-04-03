@@ -7,4 +7,6 @@ public interface GameTurn {
     GameTurn nextTurn();
 
     Color color();
+
+    boolean isEnd();
 }
