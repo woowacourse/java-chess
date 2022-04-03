@@ -107,3 +107,42 @@
   
     - End
     - [x] [ERROR] run을 실행하면 예외가 발생한다.
+
+>POST /chessgame
+- 게임을 새로 만든다.
+- game_turn은 white유저 turn으로 생성된다.
+- board_pieces에 chess_game에 해당하는 초기화된 피스들을 각각 저장한다.
+
+- (ERROR) 이미 게임이 존재하는 경우 예외가 발생한다.
+
+> GET /chessgame
+- chessgame에 해당하는 체스말들을 반환한다.
+- 현재 턴의 상태를 반환한다.
+  - 턴의 상태는 white turn, black turn, promotion이 존재한다.
+
+>POST /chessgame/move
+- 특정 말을 이동한다.
+- ex) move a1 a2
+- Request
+```json
+
+{
+	"command" : "move",
+	"from" : "a1",
+	"to" : "a2"
+}
+```
+
+- (ERROR) 현재 턴에 맞지 않는 색의 기물을 이동하는 경우 예외가 발생한다.
+- (ERROR) 현재 턴이 promotion인 경우 예외가 발생한다.
+
+> POST /chessgame/promotion
+- pawn을 promotion한다.
+- Request
+```json
+{
+	"promotion_piece" : "q"
+}
+```
+
+- (ERROR) 현재 턴이 프로모션이 아닌데 요청할 경우 예외가 발생한다.
