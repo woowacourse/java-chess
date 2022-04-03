@@ -2,7 +2,9 @@ package chess.web.service;
 
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.piece.Team;
 import java.util.List;
+import java.util.Map;
 
 public class ChessService {
 
@@ -28,5 +30,15 @@ public class ChessService {
         chessGame.progress(command);
 
         return chessGame.getChessBoard();
+    }
+
+    public Map<Team, Double> getScore() {
+        return chessGame.calculateResult();
+    }
+
+    public String finish(Command command) {
+        chessGame.progress(command);
+
+        return chessGame.getWinTeamName();
     }
 }

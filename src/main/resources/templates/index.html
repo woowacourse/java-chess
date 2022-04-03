@@ -16,6 +16,25 @@
         {{error}}
       {{/if}}
     </span>
+    <form action="/status" method="get">
+      <button>점수</button>
+    </form>
+    <form action="/end" method="get">
+      <button>게임 종료</button>
+    </form>
+    <span>
+      {{#if whiteScore}}
+        {{whiteScore}}
+      {{/if}}
+
+      {{#if blackScore}}
+        {{blackScore}}
+      {{/if}}
+
+      {{#if winTeam}}
+        {{winTeam}}
+      {{/if}}
+    </span>
     <div id="chessboard">
       <div id="chessboard-container">
         <div id="a8" class="black square">

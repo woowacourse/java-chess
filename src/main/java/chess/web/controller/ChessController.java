@@ -1,9 +1,13 @@
 package chess.web.controller;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.domain.Command;
+import chess.domain.piece.Team;
 import chess.web.service.ChessService;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +41,6 @@ public class ChessController {
             return render(model, "index.html");
         });
 
-
         post("/move", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
 
@@ -52,6 +55,33 @@ public class ChessController {
                 model.put("error", e.getMessage());
                 model.put("chessboard", chessBoard);
             }
+
+            return render(model, "index.html");
+        });
+
+        get("/status", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            Map<Team, Double> score = chessService.getScore();
+
+            List<String> chessBoard = chessService.getCurrentChessBoard();
+
+            model.put("blackScore", score.get(BLACK));
+            model.put("whiteScore", score.get(WHITE));
+            model.put("chessboard", chessBoard);
+
+            return render(model, "index.html");
+        });
+
+        get("/end", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            String winTeamName = chessService.finish(Command.from("end"));
+
+            List<String> chessBoard = chessService.getCurrentChessBoard();
+
+            model.put("winTeam", winTeamName);
+            model.put("chessboard", chessBoard);
 
             return render(model, "index.html");
         });
