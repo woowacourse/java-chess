@@ -9,10 +9,12 @@
             border: 4px solid slategrey;
             display: grid;
         }
+
         td {
             border: 1px solid slategrey;
             border-collapse: collapse;
         }
+
         img {
             width: 80px;
             height: 80px;
@@ -20,9 +22,10 @@
     </style>
 </head>
 <body>
-<h1>♟️ {{name}}</h1>
-<a href="/start/{{name}}">시작하기</a></p>
-<a href="/">메인으로</a></p>
+<h1>♟️ 체스 게임</h1>
+<h2>{{name}}</h2>
+<h3><a href="/start/{{name}}">시작하기</a></h3>
+<h3><a href="/">메인으로</a></h3>
 <table>
     <tr>
         <td><img src="/image/{{a8}}.png" class="piece-img"/></td>
@@ -106,10 +109,13 @@
     </tr>
 </table>
 <form action="/move/{{name}}" method="post">
-    {{turn}}차례<br>
+
     {{#chessScore}}
-    WHITE 점수 : {{whiteScore}}, BLACK 점수 : {{blackScore}} <br>
+    <strong>WHITE 점수</strong> : {{whiteScore}} <br>
+    <strong>BLACK 점수</strong> : {{blackScore}} <br>
     {{/chessScore}}
+    <br>
+    <strong>{{turn}} 차례</strong><br>
     Source <input type="text" name="source"/> Target <input type="text" name="target"/>
     <input type="submit" value="이동"> <br>
     예시 : a1 b2
