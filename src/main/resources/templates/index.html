@@ -29,8 +29,14 @@
                 body: "command=move " + first + " " + second
             }).then((response) => {
                     response.json().then(data => {
+                        console.log(data.finished);
                         if (data.status === 400) {
                             alert(data.errorMessage);
+                        }
+                        if (data.finished === true) {
+                            alert("게임이 종료되었습니다.");
+                            document.location.href = '/start'
+                            return;
                         }
                         location.reload();
                     });

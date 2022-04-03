@@ -29,6 +29,11 @@ public class WebApplication {
             ResponseDto response = controller.move(game, split[1]);
             return response.toString();
         });
+        get("/start", (req, res) -> {
+            game.restart(new BoardInitializer());
+            res.redirect("/");
+            return null;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

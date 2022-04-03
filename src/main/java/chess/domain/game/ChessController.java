@@ -16,16 +16,16 @@ public class ChessController {
         if (Command.isMove(command)) {
             return getResponseDto(game, command);
         }
-        return new ResponseDto(400, "잘못된 명령어 입니다.");
+        return new ResponseDto(400, "잘못된 명령어 입니다.", game.isEnd());
     }
 
     private ResponseDto getResponseDto(Game game, String command) {
         try {
             movePiece(game, Arrays.asList(command.split(MOVE_DELIMITER)));
         } catch (IllegalArgumentException e) {
-            return new ResponseDto(400, e.getMessage());
+            return new ResponseDto(400, e.getMessage(), game.isEnd());
         }
-        return new ResponseDto(200, "");
+        return new ResponseDto(200, "", game.isEnd());
     }
 
     private void movePiece(Game game, final List<String> commands) {

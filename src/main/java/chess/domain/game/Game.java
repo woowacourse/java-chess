@@ -11,7 +11,7 @@ public final class Game {
 
     private static final Color FIRST_TURN = Color.WHITE;
 
-    private final Board board;
+    private Board board;
     private Color turn = FIRST_TURN;
 
     public Game(final Initializer initializer) {
@@ -28,6 +28,10 @@ public final class Game {
         validateNotEquals(sourcePosition, targetPosition);
         validateCorrectTurn(sourcePosition);
         changeTurn(board.move(sourcePosition, targetPosition));
+    }
+
+    public void restart(final Initializer initializer) {
+        board = new Board(initializer);
     }
 
     private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
