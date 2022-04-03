@@ -6,6 +6,8 @@ const section = document.getElementById("chess-section");
 const lightCellColor = '#ddb180';
 const darkCellColor = '#7c330c';
 
+let clicked;
+
 window.onload = function () {
   for (let i = 0; i < 8; i++) {
     const row = document.createElement("div");
@@ -25,6 +27,7 @@ function makeRow(rowDiv, rowIndex) {
     cell.classList.add("cell");
     cell.id = createSquareId(colIndex, rowIndex);
     cell.style.background = decideCellColor(colIndex, rowIndex);
+    cell.addEventListener("click", onclick);
     rowDiv.appendChild(cell);
   }
 }
@@ -46,4 +49,24 @@ function createPieceImage(position, pieceType) {
   piece.classList.add("piece-image");
   piece.src = `/images/${pieceType}.png`
   cell.appendChild(piece);
+}
+
+function onclick(event) {
+  const cell = event.currentTarget;
+  if (clicked) {
+    clicked.childNodes[0].style.background = "none";
+  }
+  if (cell.hasChildNodes()) {
+    decideClicked(cell);
+    highlightClickedCell();
+  }
+}
+
+function decideClicked(cell) {
+  clicked = cell;
+}
+
+function highlightClickedCell() {
+  const piece = clicked.childNodes[0];
+  piece.style.background = "yellow";
 }
