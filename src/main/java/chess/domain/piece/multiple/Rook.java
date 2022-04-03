@@ -12,7 +12,8 @@ import java.util.List;
 
 public final class Rook extends MultipleMovePiece {
 
-    private static final String ROOK_NAME = "R";
+    private static final String ROOK_INITIAL_NAME = "R";
+    private static final String ROOK_NAME = "rook";
     private static final double ROOK_SCORE = 5;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP, DOWN, RIGHT, LEFT);
 
@@ -22,7 +23,7 @@ public final class Rook extends MultipleMovePiece {
 
     @Override
     public String convertedName(Color color) {
-        return color.convertToCase(ROOK_NAME);
+        return color.convertToCase(ROOK_INITIAL_NAME);
     }
 
     @Override
@@ -38,5 +39,10 @@ public final class Rook extends MultipleMovePiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return ROOK_NAME;
     }
 }

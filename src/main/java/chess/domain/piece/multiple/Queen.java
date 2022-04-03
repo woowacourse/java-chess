@@ -16,7 +16,8 @@ import java.util.List;
 
 public final class Queen extends MultipleMovePiece {
 
-    private static final String QUEEN_NAME = "Q";
+    private static final String QUEEN_INITIAL_NAME = "Q";
+    private static final String QUEEN_NAME = "queen";
     private static final double QUEEN_SCORE = 9;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(
             UP, DOWN, RIGHT, LEFT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
@@ -27,7 +28,7 @@ public final class Queen extends MultipleMovePiece {
 
     @Override
     public String convertedName(Color color) {
-        return color.convertToCase(QUEEN_NAME);
+        return color.convertToCase(QUEEN_INITIAL_NAME);
     }
 
     @Override
@@ -43,5 +44,10 @@ public final class Queen extends MultipleMovePiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return QUEEN_NAME;
     }
 }

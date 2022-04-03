@@ -56,4 +56,8 @@ public final class Piece {
     public Color color() {
         return color;
     }
+
+    public String name() {
+        return pieceRule.name();
+    }
 }

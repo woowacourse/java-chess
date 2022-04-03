@@ -3,13 +3,12 @@ package chess.domain.piece.pawn;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.direction.Direction;
 import chess.domain.piece.PieceRule;
-import java.util.List;
 
 public final class Pawn implements PieceRule {
 
-    private static final String PAWN_NAME = "P";
+    private static final String PAWN_INITIAL_NAME = "P";
+    private static final String PAWN_NAME = "pawn";
     private static final double PAWN_SCORE = 1;
 
     private final PawnMoveRule pawnMoveRule;
@@ -32,7 +31,7 @@ public final class Pawn implements PieceRule {
 
     @Override
     public String convertedName(Color color) {
-        return color.convertToCase(PAWN_NAME);
+        return color.convertToCase(PAWN_INITIAL_NAME);
     }
 
     @Override
@@ -48,5 +47,10 @@ public final class Pawn implements PieceRule {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return PAWN_NAME;
     }
 }

@@ -16,7 +16,8 @@ import java.util.List;
 
 public final class Knight extends SingleMovePiece {
 
-    private static final String KNIGHT_NAME = "N";
+    private static final String KNIGHT_INITIAL_NAME = "N";
+    private static final String KNIGHT_NAME = "knight";
     private static final double KNIGHT_SCORE = 2.5;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(
             UP_UP_RIGHT, UP_RIGHT_RIGHT, DOWN_DOWN_RIGHT, DOWN_RIGHT_RIGHT,
@@ -28,7 +29,7 @@ public final class Knight extends SingleMovePiece {
 
     @Override
     public String convertedName(Color color) {
-        return color.convertToCase(KNIGHT_NAME);
+        return color.convertToCase(KNIGHT_INITIAL_NAME);
     }
 
     @Override
@@ -44,5 +45,10 @@ public final class Knight extends SingleMovePiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return KNIGHT_NAME;
     }
 }
