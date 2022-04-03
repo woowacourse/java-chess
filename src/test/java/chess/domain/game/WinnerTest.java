@@ -15,7 +15,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-class WinnerCalculatorTest {
+class WinnerTest {
 
     @Test
     @DisplayName("블랙 킹이 없을 경우 화이트가 우승한다.")
@@ -23,9 +23,9 @@ class WinnerCalculatorTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.WHITE));
 
-        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
+        Winner winner = new Winner(initialPieces);
 
-        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.WHITE);
+        assertThat(winner.getColor()).isEqualTo(Color.WHITE);
     }
 
     @Test
@@ -34,9 +34,9 @@ class WinnerCalculatorTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
 
-        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
+        Winner winner = new Winner(initialPieces);
 
-        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.BLACK);
+        assertThat(winner.getColor()).isEqualTo(Color.BLACK);
     }
 
     @Test
@@ -46,8 +46,8 @@ class WinnerCalculatorTest {
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new King(Color.WHITE));
 
-        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
+        Winner winner = new Winner(initialPieces);
 
-        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.NONE);
+        assertThat(winner.getColor()).isEqualTo(Color.NONE);
     }
 }

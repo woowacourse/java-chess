@@ -12,18 +12,18 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 
-public class ScoreCalculator {
+public class Score {
 
     private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
     private static final double PAWN_PENALTY_RATE = 0.5;
 
     private final Map<Position, Piece> boardPieces;
 
-    public ScoreCalculator(final Map<Position, Piece> boardPieces) {
+    public Score(final Map<Position, Piece> boardPieces) {
         this.boardPieces = new HashMap<>(boardPieces);
     }
 
-    public Map<Color, Double> calculateAllTeamScore() {
+    public Map<Color, Double> getAllTeamScore() {
         final Map<Color, Double> score = new HashMap<>();
         score.put(Color.BLACK, calculateScore(Color.BLACK));
         score.put(Color.WHITE, calculateScore(Color.WHITE));
@@ -31,10 +31,14 @@ public class ScoreCalculator {
     }
 
     private double calculateScore(final Color color) {
+        return calculateTeamTotalScore(color) - calculateSameLinePawnSubtraction(color);
+    }
+
+    private double calculateTeamTotalScore(final Color color) {
         return boardPieces.values().stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)
-            .sum() - calculateSameLinePawnSubtraction(color);
+            .sum();
     }
 
     private double calculateSameLinePawnSubtraction(final Color color) {
