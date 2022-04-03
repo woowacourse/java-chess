@@ -1,22 +1,51 @@
 package chess.domain.board;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
+import static chess.domain.board.File.G;
+import static chess.domain.board.File.H;
 import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
 import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
+import static chess.domain.piece.vo.TeamColor.BLACK;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.vo.TeamColor;
 import chess.game.TotalScore;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class Board {
 
-    private static final List<Rank> INITIAL_PIECES_RANKS = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
+    private static final Map<TeamColor, Rank> RANK_BY_TEAM_COLOR = Map.of(
+            WHITE, ONE,
+            BLACK, EIGHT
+    );
+
+    private static final Map<TeamColor, Rank> RANK_BY_TEAM_COLOR_PAWN = Map.of(
+            WHITE, TWO,
+            BLACK, SEVEN
+    );
+
+    private static final Map<File, BiFunction<TeamColor, Position, Piece>> PIECE_BY_FILE = Map.of(
+            A, Rook::new, B, Knight::new, C, Bishop::new, D, Queen::new,
+            E, King::new, F, Bishop::new, G, Knight::new, H, Rook::new
+    );
 
     private final List<Piece> pieces;
     private TeamColor currentTurnTeamColor;
@@ -27,29 +56,35 @@ public class Board {
     }
 
     public Board() {
-        this.pieces = INITIAL_PIECES_RANKS.stream()
-                .map(this::generateOf)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+        List<Piece> pieces = new ArrayList<>();
+        pieces.addAll(initTeamPieces(BLACK));
+        pieces.addAll(initTeamPieces(WHITE));
+        this.pieces = pieces;
         currentTurnTeamColor = WHITE;
     }
 
-    private List<Piece> generateOf(final Rank rank) {
-        return Arrays.stream(File.values())
-                .map(file -> Piece.create(file, rank))
-                .collect(Collectors.toList());
+    private List<Piece> initTeamPieces(TeamColor teamColor) {
+        List<Piece> pieces = initPiecesExceptPawn(teamColor);
+        pieces.addAll(initPawns(teamColor));
+        return pieces;
     }
 
-    public boolean hasPieceInPosition(final Position position) {
-        return pieces.stream()
-                .anyMatch(piece -> piece.hasPosition(position));
+    private List<Piece> initPiecesExceptPawn(TeamColor teamColor) {
+        List<Piece> pieces = new ArrayList<>();
+        Rank rank = RANK_BY_TEAM_COLOR.get(teamColor);
+        for (File file : File.values()) {
+            pieces.add(PIECE_BY_FILE.get(file).apply(teamColor, Position.of(file, rank)));
+        }
+        return pieces;
     }
 
-    public Piece findPieceInPosition(final Position position) {
-        return pieces.stream()
-                .filter(piece -> piece.hasPosition(position))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+    private List<Piece> initPawns(TeamColor teamColor) {
+        List<Piece> pieces = new ArrayList<>();
+        Rank rank = RANK_BY_TEAM_COLOR_PAWN.get(teamColor);
+        for(File file : File.values()) {
+            pieces.add(new Pawn(teamColor, Position.of(file, rank)));
+        }
+        return pieces;
     }
 
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
@@ -64,6 +99,18 @@ public class Board {
         pieces.set(pieces.indexOf(sourcePiece), movedPiece);
         currentTurnTeamColor = currentTurnTeamColor.nextTurn();
         return new Board(pieces, currentTurnTeamColor);
+    }
+
+    public Piece findPieceInPosition(final Position position) {
+        return pieces.stream()
+                .filter(piece -> piece.hasPosition(position))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+    }
+
+    public boolean hasPieceInPosition(final Position position) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.hasPosition(position));
     }
 
     private void validateTurn(final Piece sourcePiece) {
