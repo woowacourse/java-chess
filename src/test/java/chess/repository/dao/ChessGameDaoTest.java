@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameDaoTest {
 
-	private static final String TEST_NAME = "does";
+	private static final String TEST_NAME = "test";
 	private final ChessGameDao chessGameDao = new ChessGameDao();
 
 	@AfterEach

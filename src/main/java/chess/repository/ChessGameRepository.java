@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import chess.converter.File;
 import chess.converter.Rank;
+import chess.repository.converter.BoardToStringConverter;
 import chess.repository.converter.StringToPieceConverter;
 import chess.converter.StringToPositionConverter;
 import chess.repository.converter.StringToStateConverter;
@@ -28,22 +29,8 @@ public class ChessGameRepository implements GameRepository {
 		GameState state = game.getState();
 		int gamePrimaryKey = chessGameDao.insert(game.getName(), state.toString());
 
-		Map<String, String> tiles = convertToString(state.getBoard());
+		Map<String, String> tiles = BoardToStringConverter.from(state.getBoard());
 		tileDao.insertAll(tiles, gamePrimaryKey);
-	}
-
-	private Map<String, String> convertToString(Map<Position, Piece> board) {
-		return board.entrySet().stream()
-			.collect(toMap(
-				entry -> convertPosition(entry.getKey()),
-				entry -> entry.getValue().toString())
-			);
-	}
-
-	private String convertPosition(Position position) {
-		Rank rank = Rank.from(position.getRow());
-		File file = File.from(position.getColumn());
-		return file.getName() + rank.getName();
 	}
 
 	@Override

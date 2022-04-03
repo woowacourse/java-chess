@@ -16,7 +16,7 @@ import chess.domain.state.RunningBlackTurn;
 
 class ChessGameRepositoryTest {
 
-	private static final String TEST_NAME = "does";
+	private static final String TEST_NAME = "test";
 
 	private final GameRepository gameRepository = new ChessGameRepository();
 
