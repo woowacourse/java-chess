@@ -3,20 +3,22 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Rank {
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
+    ONE("1", 0),
+    TWO("2", 1),
+    THREE("3", 2),
+    FOUR("4", 3),
+    FIVE("5", 4),
+    SIX("6", 5),
+    SEVEN("7", 6),
+    EIGHT("8", 7),
     ;
 
     private final String value;
+    private final int index;
 
-    Rank(final String value) {
+    Rank(final String value, int index) {
         this.value = value;
+        this.index = index;
     }
 
     public static Rank from(final String value) {
@@ -31,7 +33,7 @@ public enum Rank {
     }
 
     public int calculateDifference(final Rank anotherRank, final boolean absoluteFlag) {
-        final int difference = this.ordinal() - anotherRank.ordinal();
+        final int difference = this.index - anotherRank.index;
         if (absoluteFlag) {
             return Math.abs(difference);
         }
@@ -39,11 +41,11 @@ public enum Rank {
     }
 
     public Rank next(final Rank targetRank) {
-        if (this.ordinal() < targetRank.ordinal()) {
-            return values()[this.ordinal() + 1];
+        if (this.index < targetRank.index) {
+            return values()[this.index + 1];
         }
-        if (this.ordinal() > targetRank.ordinal()) {
-            return values()[this.ordinal() - 1];
+        if (this.index > targetRank.index) {
+            return values()[this.index - 1];
         }
         return this;
     }

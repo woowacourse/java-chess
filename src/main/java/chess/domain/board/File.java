@@ -3,20 +3,22 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h"),
+    A("a", 0),
+    B("b", 1),
+    C("c", 2),
+    D("d", 3),
+    E("e", 4),
+    F("f", 5),
+    G("g", 6),
+    H("h", 7),
     ;
 
     private final String value;
+    private final int index;
 
-    File(final String value) {
+    File(final String value, int index) {
         this.value = value;
+        this.index = index;
     }
 
     public static File from(final String value) {
@@ -27,7 +29,7 @@ public enum File {
     }
 
     public int calculateDifference(final File anotherFile, final boolean absoluteFlag) {
-        final int difference = this.ordinal() - anotherFile.ordinal();
+        final int difference = this.index - anotherFile.index;
         if (absoluteFlag) {
             return Math.abs(difference);
         }
@@ -35,11 +37,11 @@ public enum File {
     }
 
     public File next(final File targetFile) {
-        if (this.ordinal() < targetFile.ordinal()) {
-            return values()[this.ordinal() + 1];
+        if (this.index < targetFile.index) {
+            return values()[this.index + 1];
         }
-        if (this.ordinal() > targetFile.ordinal()) {
-            return values()[this.ordinal() - 1];
+        if (this.index > targetFile.index) {
+            return values()[this.index - 1];
         }
         return this;
     }
