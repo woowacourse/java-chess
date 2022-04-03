@@ -1,10 +1,10 @@
-package chess;
+package chess.chessboard.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.chessBoard.position.File.A;
-import static chess.chessBoard.position.File.B;
+import static chess.chessboard.position.File.A;
+import static chess.chessboard.position.File.B;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FileTest {

@@ -1,9 +1,9 @@
 package chess.game;
 
-import chess.chessBoard.Board;
-import chess.chessBoard.position.File;
-import chess.chessBoard.position.Position;
-import chess.chessBoard.position.Rank;
+import chess.chessboard.Board;
+import chess.chessboard.position.File;
+import chess.chessboard.position.Position;
+import chess.chessboard.position.Rank;
 
 import java.util.HashMap;
 

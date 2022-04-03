@@ -1,14 +1,14 @@
 package chess.piece;
 
-import chess.chessBoard.Direction;
+import chess.chessboard.position.Direction;
 import chess.game.Player;
-import chess.chessBoard.position.Position;
+import chess.chessboard.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static chess.chessBoard.Direction.*;
+import static chess.chessboard.position.Direction.*;
 
 public final class Rook extends Piece {
 

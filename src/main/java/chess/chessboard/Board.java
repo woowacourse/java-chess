@@ -1,16 +1,16 @@
-package chess.chessBoard;
+package chess.chessboard;
 
-import chess.chessBoard.position.File;
-import chess.chessBoard.position.Position;
-import chess.chessBoard.position.Rank;
+import chess.chessboard.position.File;
+import chess.chessboard.position.Position;
+import chess.chessboard.position.Rank;
 import chess.game.Player;
 import chess.piece.*;
 
 import java.util.*;
 
-import static chess.chessBoard.position.File.*;
+import static chess.chessboard.position.File.*;
 import static chess.game.Player.*;
-import static chess.chessBoard.position.Rank.*;
+import static chess.chessboard.position.Rank.*;
 
 public final class Board {
 

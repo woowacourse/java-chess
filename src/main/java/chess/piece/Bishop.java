@@ -1,12 +1,12 @@
 package chess.piece;
 
-import chess.chessBoard.Direction;
+import chess.chessboard.position.Direction;
 import chess.game.Player;
-import chess.chessBoard.position.Position;
+import chess.chessboard.position.Position;
 
 import java.util.*;
 
-import static chess.chessBoard.Direction.*;
+import static chess.chessboard.position.Direction.*;
 
 public final class Bishop extends Piece {
 

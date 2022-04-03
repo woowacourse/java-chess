@@ -1,9 +1,9 @@
-package chess;
+package chess.chessboard.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.chessBoard.position.Rank.*;
+import static chess.chessboard.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RankTest {

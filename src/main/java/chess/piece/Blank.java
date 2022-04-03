@@ -1,7 +1,7 @@
 package chess.piece;
 
 import chess.game.Player;
-import chess.chessBoard.position.Position;
+import chess.chessboard.position.Position;
 
 import java.util.Map;
 
