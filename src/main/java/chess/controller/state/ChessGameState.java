@@ -1,5 +1,7 @@
 package chess.controller.state;
 
+import chess.domain.board.Board;
+
 public interface ChessGameState {
     ChessGameState start();
 
@@ -8,6 +10,8 @@ public interface ChessGameState {
     ChessGameState status();
 
     ChessGameState end();
+
+    Board getBoard();
 
     boolean isEnded();
 }

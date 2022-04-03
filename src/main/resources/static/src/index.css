@@ -27,6 +27,7 @@ body {
     height: 70px;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .board-square.white-box {

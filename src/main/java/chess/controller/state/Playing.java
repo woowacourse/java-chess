@@ -46,6 +46,11 @@ public abstract class Playing implements ChessGameState {
     }
 
     @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
     public ChessGameState end() {
         return new Finished();
     }

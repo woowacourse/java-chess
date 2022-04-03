@@ -1,5 +1,7 @@
 package chess.controller.state;
 
+import chess.domain.board.Board;
+
 public class Finished implements ChessGameState {
 
     @Override
@@ -20,6 +22,11 @@ public class Finished implements ChessGameState {
     @Override
     public ChessGameState end() {
         return alertFinished();
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override
