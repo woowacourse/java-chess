@@ -19,7 +19,7 @@ public class RunningTurn implements GameTurn {
             return this;
         }
         if (chessBoard.isFinished()) {
-            return new EndTurn(color);
+            return new EndTurn(chessBoard);
         }
         return new RunningTurn(chessBoard, color.reverseColor());
     }

@@ -1,13 +1,14 @@
 package chess.domain.turn;
 
+import chess.domain.ChessBoard;
 import chess.domain.Color;
 
 public class EndTurn implements GameTurn {
 
-    private final Color color;
+    private final ChessBoard chessBoard;
 
-    public EndTurn(Color color) {
-        this.color = color;
+    public EndTurn(final ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class EndTurn implements GameTurn {
 
     @Override
     public Color color() {
-        return color;
+        return chessBoard.winner();
     }
 
     @Override
