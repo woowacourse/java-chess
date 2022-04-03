@@ -13,9 +13,23 @@ public class Chessboard {
         board = chessboardGenerator.generate();
     }
 
-    public void move(MovingPosition movingPosition, Turn turn) {
-        validate(movingPosition, turn);
-        movePiece(movingPosition);
+    public void validate(MovingPosition movingPosition, Turn turn){
+        Piece from = board.get(movingPosition.getFrom());
+        Piece to = board.get(movingPosition.getTo());
+
+        validateBlank(from);
+        validateTurn(from, turn);
+        validateColor(from, to);
+        validateMovable(movingPosition, from, to);
+        validateMiddlePosition(movingPosition, from);
+    }
+
+    public void move(MovingPosition movingPosition){
+        Position from = movingPosition.getFrom();
+        Position to = movingPosition.getTo();
+
+        board.put(to, board.get(from));
+        board.put(from, new Blank());
     }
 
     public boolean isOver() {
@@ -33,17 +47,6 @@ public class Chessboard {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
-    }
-
-    private void validate(MovingPosition movingPosition, Turn turn) {
-        Piece from = board.get(movingPosition.getFrom());
-        Piece to = board.get(movingPosition.getTo());
-
-        validateBlank(from);
-        validateTurn(from, turn);
-        validateColor(from, to);
-        validateMovable(movingPosition, from, to);
-        validateMiddlePosition(movingPosition, from);
     }
 
     private void validateBlank(Piece piece) {
@@ -91,14 +94,6 @@ public class Chessboard {
         if (!board.get(position).isSameType(Type.BLANK)) {
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");
         }
-    }
-
-    private void movePiece(MovingPosition movingPosition) {
-        Position from = movingPosition.getFrom();
-        Position to = movingPosition.getTo();
-
-        board.put(to, board.get(from));
-        board.put(from, new Blank());
     }
 
     private double computeTotalScore(Color color) {

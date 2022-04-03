@@ -26,7 +26,8 @@ public class Play implements State {
 
     @Override
     public State move(MovingPosition movingPosition, Turn turn) {
-        chessboard.move(movingPosition, turn);
+        chessboard.validate(movingPosition, turn);
+        chessboard.move(movingPosition);
 
         if (chessboard.isOver()) {
             return new Finish(chessboard);
