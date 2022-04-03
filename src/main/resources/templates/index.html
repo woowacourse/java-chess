@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <title>Chess Game</title>
     <link rel="stylesheet" href="/src/index.css">
-
-    <script type="text/javascript">
-    </script>
 </head>
 
 <body>
@@ -21,6 +18,9 @@
             target : <input type="text" name="target">
             <input type="submit" value="이동">
         </form>
+        <div>
+            <button id="status">점수 보기</button>
+        </div>
         <section class="chess-ui">
             <!--      Row8      -->
             <div class="white-square">
@@ -492,23 +492,31 @@
                 <div class="player-name">
                     <img src="images/piece-pawn-black.png"> player2
                 </div>
-                <div>
-                    {{#black}}
-                    점수: <span>{{value}}</span>
-                    {{/black}}
+                <div class="player-score">
+                    점수: <span id="player-score-black"></span>
                 </div>
             </div>
             <div class="player-square white">
                 <div class="player-name">
                     <img src="images/piece-pawn-white.png"> player1
                 </div>
-                <div>
-                    {{#white}}
-                    점수: <span>{{value}}</span>
-                    {{/white}}
+                <div class="player-score">
+                    점수: <span id="player-score-white"></span>
                 </div>
             </div>
         </section>
     </div>
 </body>
+<script type="text/javascript">
+    document.getElementById('status').addEventListener('click', statusOnClickHandler);
+    function statusOnClickHandler() {
+        fetch('./status')
+            .then((response) => response.json())
+            .then((data) => addScoreToDocument(data));
+    }
+    function addScoreToDocument(data) {
+        document.getElementById('player-score-black').innerText = data.black.value;
+        document.getElementById('player-score-white').innerText = data.white.value;
+    }
+</script>
 </html>

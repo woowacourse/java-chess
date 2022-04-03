@@ -4,9 +4,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.command.Command;
-import chess.command.Move;
+import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.gamestate.Score;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,6 +48,13 @@ public class WebApplication {
             gameController.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
             res.redirect("/play");
             return null;
+        });
+
+        get("/status", (req, res) -> {
+            Map<Camp, Score> board = gameController.status();
+            Map<String, Object> model = board.entrySet().stream()
+                    .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
+            return new JsonTransformer().render(model);
         });
     }
 
