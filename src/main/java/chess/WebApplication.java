@@ -8,7 +8,9 @@ import chess.dto.response.BoardResult;
 import chess.dto.response.PieceResult;
 import chess.game.Command;
 import chess.game.Game;
+import chess.game.Position;
 import chess.piece.Color;
+import chess.piece.Piece;
 import chess.status.Ready;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -23,7 +25,10 @@ public class WebApplication {
 
         final Game game = new Game(Ready.start(Command.START));
 
-        get("/", (req, res) -> render(new BoardResult(game.getBoard().getValue()).getValue(), "index.html"));
+        get("/", (req, res) -> {
+            final Map<Position, Piece> board = game.getBoard().getValue();
+            return render(new BoardResult(board).getValue(), "index.html");
+        });
 
         post("/move", "application/json", (req, res) -> {
             final String body = req.body();
@@ -41,6 +46,11 @@ public class WebApplication {
                     .collect(Collectors.toMap(Enum::name, score::get));
             return new ModelAndView(scoreResult, "index.html");
         }, new JsonTransformer());
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
+        });
     }
 
     private static String render(final Map<String, PieceResult> model, final String templatePath) {
