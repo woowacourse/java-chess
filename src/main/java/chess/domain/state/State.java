@@ -22,4 +22,8 @@ public interface State {
     static State start(Board board) {
         return new WhiteTurn(board);
     }
+
+    static State stop() {
+        return new Stopped(Board.getInitializedInstance());
+    }
 }

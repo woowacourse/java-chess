@@ -39,6 +39,17 @@ public final class GameManager {
     }
 
     private void checkInitiated() {
-        throw new IllegalStateException("start가 호출되지 않았습니다.");
+        if (currentState == null) {
+            throw new IllegalStateException("start가 호출되지 않았습니다.");
+        }
+    }
+
+    public StatusResult stop() {
+        if (currentState == null) {
+            currentState = State.stop();
+        }
+        StatusResult status = getStatus();
+        currentState = State.stop();
+        return status;
     }
 }

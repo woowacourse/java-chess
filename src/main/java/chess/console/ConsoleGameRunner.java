@@ -10,12 +10,14 @@ public final class ConsoleGameRunner {
 
     public void run() {
         OutputView.printStartMessage();
-
         GameManager gameManager = new GameManager();
         Command currentCommand = initializeCommand();
         currentCommand.execute(gameManager);
 
-        while (!(currentCommand.isEnd() && gameManager.isFinished())) {
+        while (!currentCommand.isEnd()) {
+            if (gameManager.isFinished()) {
+                break;
+            }
             currentCommand = inputCommandAndExecute(gameManager);
         }
     }

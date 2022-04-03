@@ -2,8 +2,10 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 
-final class BlackWin extends Finished {
-    BlackWin(Board board) {
+public class Stopped extends Finished {
+
+    Stopped(Board board) {
         super(board);
     }
 }
+
