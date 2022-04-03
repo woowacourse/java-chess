@@ -49,6 +49,10 @@ public abstract class Piece {
         return color.getName();
     }
 
+    public String getType() {
+        return type.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

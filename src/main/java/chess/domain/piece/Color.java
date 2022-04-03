@@ -4,7 +4,7 @@ public enum Color {
 
     BLACK("black"),
     WHITE("white"),
-    NONE(""),
+    NONE("none"),
     ;
 
     private final String name;

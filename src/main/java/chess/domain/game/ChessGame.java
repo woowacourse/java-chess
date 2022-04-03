@@ -57,6 +57,10 @@ public class ChessGame {
         return state.getTurn().getOpposite().getName();
     }
 
+    public Board board() {
+        return board;
+    }
+
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
