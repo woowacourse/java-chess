@@ -5,12 +5,13 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.web.dto.ApiResult;
 import chess.web.dto.MoveCommand;
-import chess.web.dto.MoveResponseDto;
 import chess.web.service.ChessWebService;
 import chess.web.utils.RequestToCommand;
 import com.google.gson.Gson;
 import java.util.Map;
+import org.eclipse.jetty.server.Response;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -35,9 +36,9 @@ public class WebApplication {
 
         post("/move", (req, res) -> {
             final MoveCommand command = RequestToCommand.toMoveCommand(req.body());
-            MoveResponseDto moveResponseDto = service.movePiece(command);
+            ApiResult apiResult = service.movePiece(command);
 
-            return gson.toJson(moveResponseDto);
+            return gson.toJson(apiResult);
         });
     }
 

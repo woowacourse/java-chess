@@ -17,7 +17,7 @@ function gameStart() {
 
 function clickPiece(e) {
     if (finished) {
-        alert('게임이 종료되었습니다');
+        alert('게임이 종료되었습니다! 게임을 다시 시작해주세요.');
         return;
     }
     if (source == undefined) {
@@ -43,13 +43,12 @@ function sendMoveCommand() {
         dataType: 'json',
         data: JSON.stringify(data)
     }).done(function(res) {
-        movePiece(res.source, res.destination);
-        addMovingHistory(res.source, res.destination);
         initializePosition();
-        if (res.finished) {
-            finished = true;
-            addSomethingInElement('running-state', '왕이 잡혔습니다. 게임을 종료합니다.');
+        if (res.success) {
+            move(res);
+            return;
         }
+        printError(res.error);
     }).fail(function(error) {
         initializePosition();
         alert(JSON.stringify(error));
@@ -59,6 +58,21 @@ function sendMoveCommand() {
 function initializePosition() {
     source = undefined;
     destination = undefined;
+}
+
+function move(res) {
+    movePiece(res.response.source, res.response.destination);
+    addMovingHistory(res.response.source, res.response.destination);
+    if (res.response.finished) {
+        finished = true;
+        var message = '왕이 잡혔습니다. 게임을 종료합니다.';
+        alert(message);
+        addSomethingInElement('running-state', message);
+    }
+}
+
+function printError(error) {
+    alert(error);
 }
 
 function movePiece(source, destination) {
