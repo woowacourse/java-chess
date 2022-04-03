@@ -49,4 +49,9 @@ public enum File {
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

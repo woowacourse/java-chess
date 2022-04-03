@@ -53,4 +53,9 @@ public enum Rank {
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

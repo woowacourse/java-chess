@@ -1,10 +1,9 @@
 package chess.domain.board.position;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Position {
 
@@ -12,13 +11,7 @@ public class Position {
     private static final int RANK_INDEX = 1;
     private static final String RANK_FILE_DELIMITER = "";
 
-    private static final List<Position> ALL_POSITIONS;
-
-    static {
-        ALL_POSITIONS = Arrays.stream(File.values())
-                .flatMap(Position::generatePositionOf)
-                .collect(Collectors.toUnmodifiableList());
-    }
+    private static final Map<String, Position> CACHE = new HashMap<>(64);
 
     private final File file;
     private final Rank rank;
@@ -28,17 +21,8 @@ public class Position {
         this.rank = rank;
     }
 
-    private static Stream<Position> generatePositionOf(final File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> new Position(file, rank));
-    }
-
     public static Position of(final File file, final Rank rank) {
-        return ALL_POSITIONS.stream()
-                .filter(position -> position.file == file)
-                .filter(position -> position.rank == rank)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("위치 정보가 유효하지 않습니다."));
+        return CACHE.computeIfAbsent(file.toString() + rank.toString(), ignored -> new Position(file, rank));
     }
 
     public static Position from(final String positionValue) {
