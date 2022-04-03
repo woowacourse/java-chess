@@ -1,6 +1,5 @@
 package chess.dto;
 
-import chess.domain.piece.PieceSymbol;
 import chess.domain.piece.Piece;
 
 public class PieceDto {

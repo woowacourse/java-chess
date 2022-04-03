@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceSymbol;
+import chess.dto.PieceSymbol;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
