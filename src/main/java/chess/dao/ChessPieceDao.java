@@ -69,6 +69,16 @@ public class ChessPieceDao {
         }
     }
 
+    public int deleteAll() throws SQLException {
+        final String sql = "DELETE FROM ChessBoard";
+
+        final Connection connection = getConnection();
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        try (connection; statement) {
+            return statement.executeUpdate();
+        }
+    }
+
     public int save(final Position position, final ChessPiece chessPiece) throws SQLException {
         final String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES (?, ?, ?)";
 

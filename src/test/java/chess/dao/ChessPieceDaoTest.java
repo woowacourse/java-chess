@@ -1,6 +1,5 @@
 package chess.dao;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.chesspiece.Bishop;
@@ -16,11 +15,24 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessPieceDaoTest {
+
+    @BeforeAll
+    static void clearBeforeTest() throws SQLException {
+        final ChessPieceDao dao = new ChessPieceDao();
+        dao.deleteAll();
+    }
+
+    @AfterEach
+    void clear() throws SQLException {
+        final ChessPieceDao dao = new ChessPieceDao();
+        dao.deleteAll();
+    }
 
     @Test
     @DisplayName("포지션으로 기물을 조회한다.")
@@ -35,8 +47,6 @@ class ChessPieceDaoTest {
         final ChessPieceDto dto = dao.findByPosition(position);
         final Position actualPosition = dto.getPosition();
         final ChessPiece actualChessPiece = dto.getChessPiece();
-
-        dao.deleteByPosition(position);
 
         // then
         assertThat(actualPosition).isEqualTo(position);
@@ -55,9 +65,6 @@ class ChessPieceDaoTest {
         final List<ChessPieceDto> dtos = dao.findAll();
         final int actual = dtos.size();
 
-        dao.deleteByPosition(Position.from("a1"));
-        dao.deleteByPosition(Position.from("a2"));
-
         // then
         assertThat(actual).isEqualTo(2);
     }
@@ -73,12 +80,10 @@ class ChessPieceDaoTest {
         // when
         final int actual = dao.save(position, chessPiece);
 
-        dao.deleteByPosition(position);
-
         // then
         assertThat(actual).isEqualTo(1);
     }
-    
+
     @Test
     @DisplayName("모든 기물을 DB에 저장한다.")
     void saveAll() throws SQLException {
@@ -112,5 +117,26 @@ class ChessPieceDaoTest {
 
         // then
         assertThat(actual).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("모든 기물을 삭제한다.")
+    void deleteAll() throws SQLException {
+        // given
+        final ChessPieceDao dao = new ChessPieceDao();
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(Position.from("a1"), Rook.from(Color.WHITE));
+        pieceByPosition.put(Position.from("a2"), Knight.from(Color.WHITE));
+        pieceByPosition.put(Position.from("a3"), Bishop.from(Color.WHITE));
+        pieceByPosition.put(Position.from("a4"), Queen.from(Color.WHITE));
+
+        dao.saveAll(pieceByPosition);
+
+        // when
+        final int actual = dao.deleteAll();
+
+        // then
+        assertThat(actual).isEqualTo(4);
     }
 }
