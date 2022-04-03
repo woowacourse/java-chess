@@ -5,12 +5,9 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.console.domain.board.BasicChessBoardGenerator;
-import chess.console.domain.board.Position;
-import chess.console.domain.state.Ready;
-import chess.console.domain.state.State;
 import chess.web.dto.MoveCommand;
 import chess.web.dto.MoveResponseDto;
+import chess.web.service.ChessWebService;
 import chess.web.utils.RequestToCommand;
 import com.google.gson.Gson;
 import java.util.Map;
@@ -21,34 +18,27 @@ public class WebApplication {
     public static void main(String[] args) {
         port(8089);
         staticFileLocation("/static");
-        var ref = new Object() {
-            State state = initializeState();
-        };
 
+        ChessWebService service = new ChessWebService();
         Gson gson = new Gson();
 
         get("/", (req, res) -> {
-            Map<String, Object> model = ref.state.getBoard().toMap();
+            Map<String, Object> model = service.getBoard().toMap();
             return render(model, "index.html");
         });
 
         get("/initialize", (req, res) -> {
-            ref.state = initializeState();
+            service.initializeState();
             res.redirect("/");
             return null;
         });
 
         post("/move", (req, res) -> {
             final MoveCommand command = RequestToCommand.toMoveCommand(req.body());
-            ref.state = ref.state.movePiece(Position.of(command.getSource()), Position.of(command.getDestination()));
-            boolean finished = ref.state.isFinished();
+            MoveResponseDto moveResponseDto = service.movePiece(command);
 
-            return gson.toJson(new MoveResponseDto(command.getSource(), command.getDestination(), finished));
+            return gson.toJson(moveResponseDto);
         });
-    }
-
-    private static State initializeState() {
-        return Ready.start(BasicChessBoardGenerator.generator());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
