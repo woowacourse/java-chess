@@ -15,7 +15,7 @@ startButton.addEventListener("click", async function startOrEnd() {
 
 async function start() {
     const board = await initBoard();
-    setBoard(board);
+    await setBoard(board);
     await setTurn();
 }
 
@@ -25,24 +25,16 @@ async function initBoard() {
 }
 
 async function setTurn() {
+    const turnMessages = {"WHITE_TURN": "흰색 팀의 순서입니다", "BLACK_TURN": "검은색 팀의 순서입니다", "END": "게임이 종료되었습니다."}
     let message = await fetch("/turn")
         .then(response => response.json());
 
     let turn = document.getElementById("turn");
-
-    if (message === "WHITE_TURN") {
-        message = "흰색 팀의 순서입니다";
-    }
-
-    if (message === "BLACK_TURN") {
-        message = "검은색 팀의 순서입니다";
-    }
-
-    turn.textContent = message;
+    turn.textContent = turnMessages[message];
 }
 
-function setBoard(board) {
-    clearBoard();
+async function setBoard(board) {
+    await clearBoard();
     for (let position in board) {
         const piece = board[position];
         let div = document.getElementById(position)
@@ -57,11 +49,13 @@ function putPiece(piece, div) {
 }
 
 async function end() {
-    clearBoard();
+    await fetch("/end");
+    await clearBoard();
     await setTurn();
+    document.getElementById("score").textContent = "";
 }
 
-function clearBoard() {
+async function clearBoard() {
     const boardSquares = document.getElementsByClassName("board-square");
     for (let i = 0; i < boardSquares.length; i++) {
         deletePiece(boardSquares[i]);
@@ -88,7 +82,7 @@ async function clickPosition(id) {
 
         to = id;
         const boardAfterMove = await movePiece(from, to);
-        setBoard(boardAfterMove);
+        await setBoard(boardAfterMove);
         await setTurn();
 
         from = "";
@@ -113,15 +107,10 @@ async function movePiece(from, to) {
 async function getScore() {
     const score = await fetch("/status")
         .then(response => response.json());
+    const scoreMessages = {"WHITE": " 흰색 팀 : ", "BLACK": " 검은색 팀 : "}
 
-    const SCORE_MESSAGE = "현재 점수 =";
-    const WHITE_TEAM_MESSAGE = " 흰색 팀 : ";
-    const WHITE = "WHITE";
-    const BLACK_TEAM_MESSAGE = " 검은색 팀 : ";
-    const BLACK = "BLACK";
+    let message = "현재 점수 =" + scoreMessages["WHITE"] + score["WHITE"] + scoreMessages["BLACK"] + score["BLACK"];
 
-    let message = SCORE_MESSAGE + WHITE_TEAM_MESSAGE + score[WHITE] + BLACK_TEAM_MESSAGE + score[BLACK];
-
-    const div = document.getElementById("score");
-    div.textContent = message;
+    const scoreDiv = document.getElementById("score");
+    scoreDiv.textContent = message;
 }

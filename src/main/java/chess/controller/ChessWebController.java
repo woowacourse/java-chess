@@ -43,12 +43,18 @@ public class ChessWebController {
 
         get("/turn", (req, res) -> {
             TurnDto turnDto = TurnDto.from(chessGame.getTurn());
-            return gson.toJson(turnDto.getColor());
+            return gson.toJson(turnDto.getTurn());
         });
 
         get("/status", (req, res) -> {
             ScoreDto scoreDto = chessGame.status();
             return gson.toJson(scoreDto.getScore());
+        });
+
+        get("/end", (req, res) -> {
+            chessGame.end();
+            TurnDto turnDto = TurnDto.from(chessGame.getTurn());
+            return gson.toJson(turnDto.getTurn());
         });
     }
 

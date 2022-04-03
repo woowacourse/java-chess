@@ -13,7 +13,7 @@ public class TurnDto {
         return new TurnDto(turn);
     }
 
-    public Turn getColor() {
+    public Turn getTurn() {
         return turn;
     }
 }
