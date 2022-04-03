@@ -1,12 +1,27 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum GameStatus {
 
-    READY,
-    PLAYING,
-    END,
-    KING_DIE,
+    READY("ready"),
+    PLAYING("playing"),
+    END("end"),
+    KING_DIE("king_die"),
     ;
+
+    private final String value;
+
+    GameStatus(final String value) {
+        this.value = value;
+    }
+
+    public static GameStatus from(String value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("게임 상태를 찾을 수 없습니다."));
+    }
 
     public void checkReady() {
         if (this.equals(PLAYING)) {
@@ -31,5 +46,9 @@ public enum GameStatus {
 
     public boolean isEnd() {
         return this.equals(END) || this.equals(KING_DIE);
+    }
+
+    public String getValue() {
+        return value;
     }
 }

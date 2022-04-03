@@ -5,7 +5,6 @@ import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
 import chess.dto.ChessPieceMapper;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +21,7 @@ public class ChessPieceDao {
     public ChessPieceDto findByPosition(final Position position) {
         final String sql = "SELECT * FROM ChessBoard WHERE Position = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, position.getValue());
@@ -46,7 +45,7 @@ public class ChessPieceDao {
     public List<ChessPieceDto> findAll() {
         final String sql = "SELECT * FROM ChessBoard";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql);
              final ResultSet resultSet = statement.executeQuery()) {
 
@@ -68,7 +67,7 @@ public class ChessPieceDao {
     public int deleteByPosition(final Position position) {
         final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.getValue());
             return statement.executeUpdate();
@@ -81,7 +80,7 @@ public class ChessPieceDao {
     public int deleteAll() {
         final String sql = "DELETE FROM ChessBoard";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             return statement.executeUpdate();
         } catch (SQLException e) {
@@ -93,7 +92,7 @@ public class ChessPieceDao {
     public int save(final Position position, final ChessPiece chessPiece) {
         final String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES (?, ?, ?)";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, position.getValue());
@@ -113,7 +112,7 @@ public class ChessPieceDao {
                 .mapToObj(i -> "(?, ?, ?)")
                 .collect(Collectors.joining(", "));
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
             int count = 1;
@@ -131,20 +130,5 @@ public class ChessPieceDao {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    private Connection getConnection() {
-        final String url = "jdbc:mysql://localhost:3306/chess";
-        final String userName = "root";
-        final String password = "root";
-
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, userName, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 }
