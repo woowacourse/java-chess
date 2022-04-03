@@ -15,21 +15,7 @@
     </h1>
 
     <section>
-        <div class="chess-ui">
-            {{#pieces}}
-            <div class="box">
-                <img src="/images/{{notation}}-{{color}}.png"/>
-            </div>
-            {{/pieces}}
-        </div>
-
-        <form action="/move" method="get" enctype="text/plain">
-            <div>
-                <input class="text-input" type="text" name="target" id="target" placeholder="a2"/>
-                <input class="text-input" type="text" name="source" id="source" placeholder="a4"/>
-                <input class="submit-input" type="submit" value="제출"/>
-            </div>
-        </form>
+        <a href="/start">게임 시작하기</a>
     </section>
 </div>
 

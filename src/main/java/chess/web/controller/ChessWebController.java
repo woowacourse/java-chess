@@ -19,11 +19,15 @@ public class ChessWebController {
     }
 
     public ModelAndView index(Request request, Response response) {
+        if (!chessGame.isStarted()) {
+            return new ModelAndView(new HashMap<>(), "index.html");
+        }
+
         List<List<Piece>> board = chessGame.board();
 
         Map<String, Object> model = new HashMap<>();
         model.put("pieces", new BoardResponse(board).getValue());
-        return new ModelAndView(model, "index.html");
+        return new ModelAndView(model, "chess.html");
     }
 
     public ModelAndView create(Request request, Response response) {
