@@ -132,6 +132,7 @@ const movePiece = async () => {
 const checkEndGame = (isRunning) => {
     if (!isRunning) {
         alert('게임 종료');
+        return showResult();
     }
 }
 
@@ -139,4 +140,10 @@ const showStatus = async () => {
     let status = await fetch('/status');
     status = await status.json();
     alert(status.scoreStatus);
+}
+
+const showResult = async () => {
+    let result = await fetch('/end');
+    result = await result.json();
+    alert(result.result);
 }

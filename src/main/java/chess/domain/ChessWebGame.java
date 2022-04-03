@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.player.Player;
 import chess.domain.player.Team;
+import chess.dto.ResultDto;
 import chess.dto.ScoreDto;
 import chess.view.ChessMap;
 
@@ -21,10 +22,6 @@ public class ChessWebGame {
 
     public ChessMap createMap() {
         return ChessMap.of(whitePlayer.findAll(), blackPlayer.findAll());
-    }
-
-    public boolean isRunning() {
-        return whitePlayer.hasKing() && blackPlayer.hasKing();
     }
 
     public void move(final Position currentPosition, final Position destinationPosition) {
@@ -85,31 +82,39 @@ public class ChessWebGame {
         return whitePlayer;
     }
 
-    public boolean isWin(final Player currentPlayer, final Player opponentPlayer) {
-        if (hasNoKing(currentPlayer)) {
-            return false;
+    public ResultDto getResult() {
+        if (!whitePlayer.hasKing()) {
+            return new ResultDto("블랙이 화이트의 킹을 캡처하여 승리하였습니다!");
         }
-        return hasNoKing(opponentPlayer) || isHigherScore(currentPlayer, opponentPlayer);
+        if (!blackPlayer.hasKing()) {
+            return new ResultDto("화이트가 블랙의 킹을 캡처하여 승리하였습니다!");
+        }
+        return getResultByScore();
     }
 
-    public boolean hasNoKing(final Player currentPlayer) {
-        return !currentPlayer.hasKing();
+    private ResultDto getResultByScore() {
+        final double whiteScore = whitePlayer.calculateScore();
+        final double blackScore = blackPlayer.calculateScore();
+        final String status = String.format("%s: %.1f\n%s: %.1f\n",
+                whitePlayer.getTeamName(), whiteScore, blackPlayer.getTeamName(), blackScore);
+        return findWinner(whiteScore, blackScore, status);
     }
 
-    public boolean isHigherScore(final Player currentPlayer, final Player opponentPlayer) {
-        return getPlayerScore(currentPlayer) > getPlayerScore(opponentPlayer);
+    private ResultDto findWinner(final double whiteScore, final double blackScore, final String status) {
+        if (whiteScore > blackScore) {
+            return new ResultDto(status.concat("화이트 승!"));
+        }
+        if (whiteScore == blackScore) {
+            return new ResultDto(status.concat("블랙 승!"));
+        }
+        return new ResultDto(status.concat("무승부!"));
     }
 
     public ScoreDto getScoreStatus() {
-        final double whiteScore = getPlayerScore(whitePlayer);
-        final double blackScore = getPlayerScore(blackPlayer);
-        final String status =
-                String.format("%s: %.1f\n%s: %.1f",
-                        whitePlayer.getTeamName(), whiteScore, blackPlayer.getTeamName(), blackScore);
+        final double whiteScore = whitePlayer.calculateScore();
+        final double blackScore = blackPlayer.calculateScore();
+        final String status = String.format("%s: %.1f\n%s: %.1f",
+                whitePlayer.getTeamName(), whiteScore, blackPlayer.getTeamName(), blackScore);
         return new ScoreDto(status);
-    }
-
-    public double getPlayerScore(final Player currentPlayer) {
-        return currentPlayer.calculateScore();
     }
 }

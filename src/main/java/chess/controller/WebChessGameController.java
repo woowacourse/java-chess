@@ -6,6 +6,7 @@ import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
 import chess.dto.MoveDto;
+import chess.dto.ResultDto;
 import chess.dto.ScoreDto;
 import chess.service.ChessService;
 import chess.view.ChessMap;
@@ -41,7 +42,8 @@ public class WebChessGameController {
         });
 
         get("/end", (req, res) -> {
-            return null;
+            final ResultDto resultDto = chessWebGame.getResult();
+            return gson.toJson(resultDto);
         });
 
         post("/move", (req, res) -> {
