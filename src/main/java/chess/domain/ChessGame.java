@@ -12,6 +12,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -49,12 +50,6 @@ public class ChessGame {
         state = state.execute(command, chessBoard);
     }
 
-    public Set<Position> getPiecePositions() {
-        Map<Position, Piece> cells = chessBoard.getCells();
-
-        return Collections.unmodifiableSet(cells.keySet());
-    }
-
     public boolean isEnd() {
         return state.isEnd();
     }
@@ -85,6 +80,12 @@ public class ChessGame {
         return makeSymbols(piecePositions);
     }
 
+    private Set<Position> getPiecePositions() {
+        Map<Position, Piece> cells = chessBoard.getCells();
+
+        return Collections.unmodifiableSet(cells.keySet());
+    }
+
     private List<String> makeSymbols(Set<Position> piecePositions) {
         return positions.stream()
                 .map(position -> discriminate(piecePositions, position))
@@ -97,5 +98,34 @@ public class ChessGame {
         }
 
         return ".";
+    }
+
+    public List<String> getChessBoard() {
+        List<String> chessBoard = new ArrayList<>();
+
+        Set<Position> piecePositions = getPiecePositions();
+
+        return positions.stream()
+                .map(position -> makeChessBoard(piecePositions, position))
+                .collect(toList());
+    }
+
+    private String makeChessBoard(Set<Position> piecePositions, Position position) {
+        if (piecePositions.contains(position)) {
+            return getSymbolAndTeam(position);
+        }
+
+        return "";
+    }
+
+    private String getSymbolAndTeam(Position position) {
+        Piece piece = chessBoard.getPieceByPosition(position);
+
+        Team team = piece.getTeam();
+        String teamName = team.getTeam();
+
+        String symbol = piece.getSymbolByTeam().toLowerCase();
+
+        return teamName + "-" + symbol;
     }
 }
