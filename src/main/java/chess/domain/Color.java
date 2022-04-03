@@ -18,6 +18,13 @@ public enum Color {
         return caseConverter.apply(value);
     }
 
+    public Color reverseColor() {
+        if (isWhite()) {
+            return BLACK;
+        }
+        return WHITE;
+    }
+
     public boolean isWhite() {
         return this == WHITE;
     }

@@ -18,6 +18,9 @@ public class RunningTurn implements GameTurn {
         if (chessBoard.isPromotionStatus(color)) {
             return this;
         }
-        return null;
+        if (chessBoard.isFinished()) {
+            return new EndTurn();
+        }
+        return new RunningTurn(chessBoard, color.reverseColor());
     }
 }
