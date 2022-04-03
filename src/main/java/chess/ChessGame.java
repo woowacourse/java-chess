@@ -79,30 +79,21 @@ public class ChessGame {
         if (gameSwitch.isOff()) {
             return false;
         }
-        if (isNotRunning()) {
-            return false;
-        }
-        return true;
+        return !isNotRunning();
     }
 
     private boolean isStatusInRunning() {
         if (gameSwitch.isOff()) {
             return false;
         }
-        if (!state.isStatus()) {
-            return false;
-        }
-        return true;
+        return state.isStatus();
     }
 
     private boolean isEndInRunning() {
         if (gameSwitch.isOff()) {
             return false;
         }
-        if (!state.isFinished()) {
-            return false;
-        }
-        return true;
+        return state.isFinished();
     }
 
     private boolean isEndInGameOff() {
