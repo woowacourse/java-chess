@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 
 public class JsonParser {
 
-    public static JSONArray makePiecesToJsonArray(final PiecesDto piecesDto) {
+    public static JSONObject makePiecesToJsonArray(final PiecesDto piecesDto) {
         final List<PieceDto> currentPieces = piecesDto.getPieces();
         JSONArray jsonArray = new JSONArray();
         for (PieceDto piece : currentPieces) {
@@ -18,7 +18,10 @@ public class JsonParser {
             jsonObject.put("symbol", piece.getSymbol());
             jsonArray.add(jsonObject);
         }
-        return jsonArray;
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("game_status", piecesDto.getGameStatus());
+        responseJson.put("pieces", jsonArray);
+        return responseJson;
     }
 
 }
