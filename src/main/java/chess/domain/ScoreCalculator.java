@@ -48,7 +48,7 @@ public class ScoreCalculator {
         return IntStream.range(0, FILES_TOTAL_SIZE)
             .map(fileIdx -> extractSameFilePositionCount(pawnPositions, fileIdx))
             .filter(count -> count >= PAWN_PENALTY_MINIMUM_COUNT)
-            .reduce(SUM_BASE_INT, Integer::sum);
+            .sum();
     }
 
     private List<Position> extractPawnPositions(List<Piece> sameColorPieces) {
