@@ -29,7 +29,7 @@ public enum TeamColor {
         return this == BLACK;
     }
 
-    public TeamColor nextTurn() {
+    public TeamColor turnToNext() {
         if (this == BLACK) {
             return WHITE;
         }

@@ -45,7 +45,7 @@ public class Board {
         }
 
         pieces.set(pieces.indexOf(sourcePiece), movedPiece);
-        return new Board(pieces, currentTurnTeamColor.nextTurn());
+        return new Board(pieces, currentTurnTeamColor.turnToNext());
     }
 
     private void validateTurn(final Piece sourcePiece) {
