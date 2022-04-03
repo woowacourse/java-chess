@@ -5,9 +5,11 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.domain.board.Board;
+import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
 import java.util.ArrayList;
@@ -56,6 +58,16 @@ public class ChessController {
             return render(model, "board.html");
         });
 
+        // 점수 보기
+        get("/status", (request, response) -> {
+            Score score = chessGame.status();
+
+            Map<String, Object> model = generateBoardModel(chessGame);
+            model.put("message", drawScoreSentence(score));
+
+            return render(model, "board.html");
+        });
+
         // 게임 종료
         get("/end", (request, response) -> {
             chessGame.end();
@@ -76,7 +88,27 @@ public class ChessController {
         return model;
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private String drawScoreSentence(Score score) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Entry<Team, Double> entry : score.getValue().entrySet()) {
+            stringBuilder.append(entry.getKey().name())
+                    .append(": ")
+                    .append(entry.getValue())
+                    .append(" / ");
+        }
+        stringBuilder.append(drawWinner(score.findWinTeam()));
+
+        return stringBuilder.toString();
+    }
+
+    private String drawWinner(Team team) {
+        if (team == null) {
+            return "무승부";
+        }
+        return String.format("승리 팀: %s", team);
     }
 }
