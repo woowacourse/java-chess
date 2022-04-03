@@ -1,5 +1,6 @@
 package chess.util;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class DBConnection {
             return DriverManager.getConnection(URL, USER_ID, USER_PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("connection 에러");
         }
-        return null;
     }
 }
