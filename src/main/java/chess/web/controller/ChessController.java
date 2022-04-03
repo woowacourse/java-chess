@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
@@ -42,7 +43,7 @@ public class ChessController {
 
             List<String> chessBoard = chessService.getCurrentChessBoard();
 
-            String moveCommand = request.queryParams("move");
+            String moveCommand = makeCommand(request);
 
             try {
                 chessBoard = chessService.move(moveCommand);
@@ -54,6 +55,13 @@ public class ChessController {
 
             return render(model, "index.html");
         });
+    }
+
+    private String makeCommand(Request request) {
+        String from = request.queryParams("from");
+        String to = request.queryParams("to");
+
+        return "move " + from + " " + to;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
