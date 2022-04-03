@@ -107,9 +107,9 @@
 </table>
 <form action="/move/{{GAME_NAME}}" method="post">
     {{TURN}}차례<br>
-    {{#ChessScore}}
+    {{#CHESS_SCORE}}
     WHITE 점수 : {{whiteScore}}, BLACK 점수 : {{blackScore}} <br>
-    {{/ChessScore}}
+    {{/CHESS_SCORE}}
     Source <input type="text" name="source"/> Target <input type="text" name="target"/>
     <input type="submit" value="이동"> <br>
     예시 : a1 b2

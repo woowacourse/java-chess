@@ -1,5 +1,6 @@
 package chess.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import chess.domain.ChessGame;
@@ -13,4 +14,6 @@ public interface GameRepository {
 	void update(String name, GameState state);
 
 	void remove(String name);
+
+	List<String> findAllNames();
 }

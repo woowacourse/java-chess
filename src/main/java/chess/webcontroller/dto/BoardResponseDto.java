@@ -1,4 +1,4 @@
-package chess.webcontroller;
+package chess.webcontroller.dto;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,5 +1,7 @@
 package chess.service;
 
+import java.util.List;
+
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.repository.ChessGameRepository;
@@ -28,5 +30,9 @@ public class ChessGameService {
 
 	public void deleteGame(String name) {
 		gameRepository.remove(name);
+	}
+
+	public List<String> findAllGames() {
+		return gameRepository.findAllNames();
 	}
 }

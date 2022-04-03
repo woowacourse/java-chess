@@ -3,17 +3,21 @@ package chess.webcontroller;
 import static spark.Spark.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import chess.webcontroller.converter.RequestToCommandConverter;
-import chess.webcontroller.converter.RequestToMapConverter;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.command.Start;
-import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.service.ChessGameService;
+import chess.webcontroller.converter.RequestToCommandConverter;
+import chess.webcontroller.converter.RequestToMapConverter;
+import chess.webcontroller.dto.BoardResponseDto;
+import chess.webcontroller.dto.GameResponseDto;
+import chess.webcontroller.dto.NameResponseDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -32,6 +36,7 @@ public class WebController {
 		enterNewGame(new HashMap<>());
 		startGame(new HashMap<>());
 		continueGame(new HashMap<>());
+		deleteGame();
 		move(new HashMap<>());
 
 		exception(Exception.class, (exception, request, response) ->
@@ -39,7 +44,13 @@ public class WebController {
 	}
 
 	private void showMain(Map<String, Object> model) {
-		get("/", (req, res) -> render(model, MAIN_PAGE));
+		get("/", (req, res) -> {
+			List<NameResponseDto> nameDtos = gameService.findAllGames().stream()
+				.map(NameResponseDto::new)
+				.collect(Collectors.toList());
+			model.put("GAMES", nameDtos);
+			return render(model, MAIN_PAGE);
+		});
 	}
 
 	private void enterNewGame(Map<String, Object> model) {
@@ -56,19 +67,25 @@ public class WebController {
 	}
 
 	private void continueGame(Map<String, Object> model) {
-		post("/continue_game", (request, response) -> {
-			Map<String, String> name = RequestToMapConverter.ofSingle(request);
-
-			ChessGame findGame = gameService.findGame(name.get("GAME_NAME"));
-			fillModel(model, findGame);
+		get("/:name", (request, response) -> {
+			ChessGame findGame = gameService.findGame(request.params(":name"));
+			model.putAll(new GameResponseDto(findGame).getValue());
 			return render(model, GAME_PAGE);
+		});
+	}
+
+	private void deleteGame() {
+		post("/delete/:name", (request, response) -> {
+			gameService.deleteGame(request.params(":name"));
+			response.redirect("/");
+			return null;
 		});
 	}
 
 	private void startGame(Map<String, Object> model) {
 		get("/start/:GAME_NAME", (request, response) -> {
 			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(":GAME_NAME"));
-			fillModel(model, updatedGame);
+			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
 		});
 	}
@@ -76,7 +93,6 @@ public class WebController {
 	private void move(Map<String, Object> model) {
 		post("/move/:GAME_NAME", (request, response) -> {
 			Command command = RequestToCommandConverter.from(request);
-
 			ChessGame updatedGame = gameService.updateGame(command, request.params(":GAME_NAME"));
 
 			if (updatedGame.isFinished()) {
@@ -84,20 +100,9 @@ public class WebController {
 				return null;
 			}
 
-			fillModel(model, updatedGame);
+			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
 		});
-	}
-
-	private void fillModel(Map<String, Object> model, ChessGame game) {
-		GameState state = game.getState();
-
-		BoardResponseDto dto = BoardResponseDto.from(state.getBoard());
-		model.putAll(dto.getValue());
-
-		model.put("GAME_NAME", game.getName());
-		model.put("TURN", state.getColor());
-		model.put("ChessScore", state.generateScore());
 	}
 
 	private String render(Map<String, Object> model, String templatePath) {

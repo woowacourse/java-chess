@@ -2,6 +2,7 @@ package chess.repository;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -77,5 +78,10 @@ public class ChessGameRepository implements GameRepository {
 	@Override
 	public void remove(String name) {
 		chessGameDao.delete(name);
+	}
+
+	@Override
+	public List<String> findAllNames() {
+		return chessGameDao.findAllNames();
 	}
 }

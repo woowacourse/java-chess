@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGameDao {
@@ -74,5 +76,24 @@ public class ChessGameDao {
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e);
 		}
+	}
+
+	public List<String> findAllNames() {
+		Connection connection = connectionManager.getConnection();
+		String sql = "select name from game";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			return makeNames(statement.executeQuery());
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	private List<String> makeNames(ResultSet result) throws SQLException {
+		List<String> names = new ArrayList<>();
+		while (result.next()) {
+			names.add(result.getString("name"));
+		}
+		return names;
 	}
 }

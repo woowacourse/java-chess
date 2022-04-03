@@ -16,26 +16,25 @@
             text-align: center;
             position:relative;
         }
-        .btn{
-            font-size: 2em;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>체스 게임</h1>
-    <p>새 게임 만들기</p>
     <form action="/new_game" method="post">
-        이름을 입력하세요. <input type="text" name="GAME_NAME"/>
+        새 게임 만들기 <input type="text" name="GAME_NAME"/>
         <input type="submit" value="생성">
     </form>
 
-    <p>이어하기</p>
-    <form action="/continue_game" method="post">
-        이름을 입력하세요. <input type="text" name="GAME_NAME"/>
-        <input type="submit" value="입장">
-    </form>
+    <p>게임 목록</p>
+    <div>
+        {{#GAMES}}
+        <form action="delete/{{name}}" method="post">
+            <a href="/{{name}}">{{name}}</a> <input type="submit" value="삭제" >
+        </form>
+        {{/GAMES}}
+        <a></a>
+    </div>
 </div>
 </body>
 </html>
