@@ -1,10 +1,16 @@
 const button = document.getElementById("button");
 const squares = document.getElementsByClassName("piece");
 
-async function initBoard() {
+async function startChess() {
     let board = await fetch("/start");
     board = await board.json();
     putPieceInSquare(board);
+}
+
+async function endChess() {
+    let board = await fetch("/end");
+    board = await board.json();
+    removePieceInSquare(board);
 }
 
 function putPieceInSquare(board) {
@@ -17,12 +23,20 @@ function putPieceInSquare(board) {
    }
 }
 
+function removePieceInSquare(board) {
+   for (key in board)  {
+      let position = document.getElementById(key);
+      position.removeChild(position.firstChild);
+   }
+}
+
 button.addEventListener("click", function () {
     const form = document.getElementById("form");
     if(button.innerText == "Start") {
-        initBoard();
+        startChess();
         button.innerText = "End";
         return;
     }
+    endChess();
     button.innerText = "Start";
 })

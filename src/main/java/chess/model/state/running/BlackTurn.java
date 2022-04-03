@@ -3,14 +3,12 @@ package chess.model.state.running;
 import static chess.model.Team.BLACK;
 
 import chess.model.board.Board;
-import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.Command;
 import chess.model.state.State;
 import chess.model.state.finished.End;
 import chess.model.state.finished.Status;
 import java.util.List;
-import java.util.Map;
 
 public final class BlackTurn extends Running {
 
@@ -25,7 +23,7 @@ public final class BlackTurn extends Running {
             return new Status(board);
         }
         if (command.isEnd()) {
-            return new End();
+            return new End(board);
         }
         if (command.isMove()) {
             movePieceFrom(inputs);
@@ -41,7 +39,7 @@ public final class BlackTurn extends Running {
 
     private State createStateByBoard() {
         if (board.isKingDead()) {
-            return new End();
+            return new End(board);
         }
         return new WhiteTurn(board);
     }

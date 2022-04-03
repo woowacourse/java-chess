@@ -23,7 +23,7 @@ public final class WhiteTurn extends Running {
             return new Status(board);
         }
         if (command.isEnd()) {
-            return new End();
+            return new End(board);
         }
         if (command.isMove()) {
             movePieceFrom(inputs);
@@ -39,7 +39,7 @@ public final class WhiteTurn extends Running {
 
     private State createStateByBoard() {
         if (board.isKingDead()) {
-            return new End();
+            return new End(board);
         }
         return new BlackTurn(board);
     }

@@ -1,5 +1,6 @@
 package chess.model.state.finished;
 
+import chess.model.board.Board;
 import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import java.util.HashMap;
@@ -7,8 +8,8 @@ import java.util.Map;
 
 public final class End extends Finished {
 
-    public End() {
-        super();
+    public End(Board board) {
+        super(board);
     }
 
     @Override
@@ -18,7 +19,7 @@ public final class End extends Finished {
 
     @Override
     public Map<String, Piece> getBoardForWeb() {
-        return new HashMap<>();
+        return board.getBoardForWeb();
     }
 
     @Override

@@ -1,13 +1,21 @@
 package chess.model.state.finished;
 
+import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
+import chess.model.state.running.WhiteTurn;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Finished implements State {
+
+    protected final Board board;
+
+    protected Finished(Board board) {
+        this.board = board;
+    }
 
     @Override
     public boolean isFinished() {
@@ -16,7 +24,7 @@ public abstract class Finished implements State {
 
     @Override
     public State proceed(List<String> inputs) {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되어 더 이상 진행 할 수 없습니다.");
+        return new WhiteTurn(new Board());
     }
 
     @Override

@@ -16,9 +16,8 @@ public class WebChessController {
 
     public void run() {
 
-        get("/", (req, res) -> {
-            return new ModelAndView(state.getBoardForWeb(), "board.html");
-        }, new HandlebarsTemplateEngine());
+        get("/", (req, res) -> new ModelAndView(state.getBoardForWeb(), "board.html")
+                , new HandlebarsTemplateEngine());
 
         get("/start", (req, res) -> {
             this.state = state.proceed(List.of("start"));
@@ -26,9 +25,8 @@ public class WebChessController {
         });
 
         get("/end", (req, res) -> {
-            List<String> command = List.of(req.queryParams("command").split(" "));
-            this.state = state.proceed(command);
-            return new ModelAndView(state.getBoardForWeb(), "board.html");
-        }, new HandlebarsTemplateEngine());
+            this.state = state.proceed(List.of("end"));
+            return gson.toJson(state.getBoardForWeb());
+        });
     }
 }

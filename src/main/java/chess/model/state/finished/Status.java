@@ -7,10 +7,8 @@ import java.util.Map;
 
 public final class Status extends Finished {
 
-    private final Board board;
-
     public Status(Board board) {
-        this.board = board;
+        super(board);
     }
 
     @Override
