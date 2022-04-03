@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoardDaoImpl implements ChessBoardDao {
+public class PieceDaoImpl implements PieceDao {
 
     private final Connection connection;
 
-    public ChessBoardDaoImpl(Connection connection) {
+    public PieceDaoImpl(Connection connection) {
         this.connection = connection;
     }
 

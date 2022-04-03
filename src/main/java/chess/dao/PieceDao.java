@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
-public interface ChessBoardDao {
+public interface PieceDao {
 
     Map<Position, Piece> findAllPieces();
 
