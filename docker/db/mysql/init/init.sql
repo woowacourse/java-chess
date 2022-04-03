@@ -11,8 +11,7 @@ CREATE TABLE piece
     position varchar(2) not null,
     type     ENUM('PAWN', 'KNIGHT', 'BISHOP', 'ROOK', 'QUEEN', 'KING') not null,
     color    ENUM('WHITE', 'BLACK') not null,
-    primary key (game_id, position),
-    foreign key (game_id) references game (id)
+    primary key (game_id, position)
 );
 
 CREATE TABLE result
@@ -21,8 +20,7 @@ CREATE TABLE result
     winner      ENUM('WHITE', 'BLACK') not null,
     white_score float  not null,
     black_score float  not null,
-    primary key (game_id),
-    foreign key (game_id) references game (id)
+    primary key (game_id)
 );
 
 -- TEST DB
@@ -39,8 +37,7 @@ CREATE TABLE piece_test
     position varchar(2) not null,
     type     ENUM('PAWN', 'KNIGHT', 'BISHOP', 'ROOK', 'QUEEN', 'KING') not null,
     color    ENUM('WHITE', 'BLACK') not null,
-    primary key (game_id, position),
-    foreign key (game_id) references game (id)
+    primary key (game_id, position)
 );
 
 CREATE TABLE result_test
@@ -49,6 +46,5 @@ CREATE TABLE result_test
     winner      ENUM('WHITE', 'BLACK') not null,
     white_score float  not null,
     black_score float  not null,
-    primary key (game_id),
-    foreign key (game_id) references game (id)
+    primary key (game_id)
 );

@@ -119,7 +119,7 @@ class GameDaoTest {
     }
 
     @Test
-    void countByState_메서드로_특정_state에_해당되는_데이터의_개수_조회가능(){
+    void countByState_메서드로_특정_state에_해당되는_데이터의_개수_조회가능() {
         int actual = dao.countByState(GameState.OVER);
 
         assertThat(actual).isEqualTo(1);

@@ -17,6 +17,12 @@ public class PieceEntity {
         this.color = color;
     }
 
+    public PieceEntity(String positionKey, String typeValue, String colorValue) {
+        this.position = Position.of(positionKey);
+        this.type = PieceType.valueOf(typeValue);
+        this.color = Color.valueOf(colorValue);
+    }
+
     public String getPositionKey() {
         return position.toKey();
     }
