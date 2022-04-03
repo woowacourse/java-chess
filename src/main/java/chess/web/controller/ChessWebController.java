@@ -36,6 +36,7 @@ public class ChessWebController {
     }
 
     public ModelAndView create(Request request, Response response) {
+        chessGame.reset();
         chessGame.start();
 
         response.redirect("/");

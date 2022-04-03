@@ -23,6 +23,10 @@ public class ChessGame {
         state = state.move(source, target);
     }
 
+    public void reset() {
+        state = new Ready();
+    }
+
     public boolean isStarted() {
         return state.isStarted();
     }
