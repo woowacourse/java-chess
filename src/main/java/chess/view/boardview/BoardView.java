@@ -1,7 +1,7 @@
 package chess.view.boardview;
 
-import static chess.domain.position.PositionConverter.FILES_TOTAL_SIZE;
-import static chess.domain.position.PositionConverter.RANKS_TOTAL_SIZE;
+import static chess.domain.position.File.FILES_TOTAL_SIZE;
+import static chess.domain.position.Rank.RANKS_TOTAL_SIZE;
 
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;

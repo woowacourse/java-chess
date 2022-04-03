@@ -107,5 +107,7 @@ public class Position {
 
             return rawFile + rawRank;
         }
+
     }
+
 }

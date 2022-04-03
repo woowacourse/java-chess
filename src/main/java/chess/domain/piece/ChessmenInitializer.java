@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.PositionConverter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,15 +35,15 @@ public class ChessmenInitializer {
     }
 
     private List<Piece> initBlackPawns() {
-        return PositionConverter.VALID_FILES.chars()
-            .mapToObj(rank -> (char) rank + "" + Pawn.BLACK_INIT_RANK)
+        return Arrays.stream(File.values())
+            .map(file -> file.getRawFile() + Pawn.BLACK_INIT_RANK)
             .map(positionKey -> new Pawn(Color.BLACK, Position.of(positionKey)))
             .collect(Collectors.toList());
     }
 
     private List<Piece> initWhitePawns() {
-        return PositionConverter.VALID_FILES.chars()
-            .mapToObj(rank -> (char) rank + "" + Pawn.WHITE_INIT_RANK)
+        return Arrays.stream(File.values())
+            .map(file -> file.getRawFile() + Pawn.WHITE_INIT_RANK)
             .map(positionKey -> new Pawn(Color.WHITE, Position.of(positionKey)))
             .collect(Collectors.toList());
     }

@@ -13,6 +13,8 @@ public enum File {
     G("g", 6),
     H("h", 7);
 
+    public static final int FILES_TOTAL_SIZE = 8;
+
     private final String rawFile;
     private final int fileIdx;
 
@@ -59,4 +61,5 @@ public enum File {
             ", fileIdx=" + fileIdx +
             '}';
     }
+
 }

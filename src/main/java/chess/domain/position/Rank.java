@@ -13,6 +13,8 @@ public enum Rank {
     SEVEN("7", 6),
     EIGHT("8", 7);
 
+    public static final int RANKS_TOTAL_SIZE = 8;
+
     private final String rawRank;
     private final int rankIdx;
 
@@ -40,6 +42,10 @@ public enum Rank {
         return targetRank.rankIdx - this.rankIdx;
     }
 
+    public static boolean isMappedRankIdx(String rank, int idx) {
+        return from(rank).getRankIdx() == idx;
+    }
+
     public String getRawRank() {
         return rawRank;
     }
@@ -55,6 +61,5 @@ public enum Rank {
             ", rankIdx=" + rankIdx +
             '}';
     }
-
 
 }
