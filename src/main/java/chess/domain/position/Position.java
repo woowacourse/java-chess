@@ -62,6 +62,10 @@ public class Position {
         return col;
     }
 
+    public boolean matchPosition(Column col, Row row) {
+        return this.col == col && this.row == row;
+    }
+
     public Row getRow() {
         return row;
     }

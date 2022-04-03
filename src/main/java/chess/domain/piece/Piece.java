@@ -49,7 +49,7 @@ public abstract class Piece {
 
     protected List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
+        while (!destination.matchPosition(col, row)) {
             positions.add(Position.of(col, row));
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());
@@ -80,6 +80,7 @@ public abstract class Piece {
     public boolean isSameTeam(Piece piece) {
         return getTeam() == piece.getTeam();
     }
+
 
     @Override
     public String toString() {
