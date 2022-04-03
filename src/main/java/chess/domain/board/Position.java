@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
+    private static final int INDEX_NAME_COLUMN = 0;
+    private static final int INDEX_NAME_ROW = 1;
     private static final int DISTANCE_NOT_MOVED = 0;
     private static final int DISTANCE_NEXT_TO = 1;
     private static final Map<String, Position> CASH = new HashMap<>();
@@ -20,6 +22,12 @@ public class Position implements Comparable<Position> {
         this.column = column;
         this.row = row;
         CASH.put(this.toString(), this);
+    }
+
+    public static Position of(String rawPosition) {
+        String columnName = String.valueOf(rawPosition.charAt(INDEX_NAME_COLUMN));
+        String rowName = String.valueOf(rawPosition.charAt(INDEX_NAME_ROW));
+        return Position.of(Column.from(columnName), Row.from(rowName));
     }
 
     public static Position of(Column column, Row row) {

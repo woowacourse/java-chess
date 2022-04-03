@@ -5,23 +5,30 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Row {
-    ONE(0),
-    TWO(1),
-    THREE(2),
-    FOUR(3),
-    FIVE(4),
-    SIX(5),
-    SEVEN(6),
-    EIGHT(7),
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
     ;
 
-    private static final int MAX_VALUE = 7;
+    private static final int MAX_VALUE = 9;
     private static final String ERROR_NO_SUCH_ROW = "존재하지 않는 열입니다.";
 
     private final int value;
 
     Row(int value) {
         this.value = value;
+    }
+
+    static Row from(String name) {
+        return Arrays.stream(values())
+                .filter(row -> row.toString().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
     }
 
     private static Row from(int value) {
@@ -68,5 +75,10 @@ public enum Row {
             path.add(Row.from(i));
         }
         return path;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.value);
     }
 }

@@ -56,4 +56,12 @@ public enum Type {
     public double getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        if (this == NONE) {
+            return "";
+        }
+        return name().toLowerCase();
+    }
 }

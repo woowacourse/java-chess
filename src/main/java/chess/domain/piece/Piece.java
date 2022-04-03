@@ -37,9 +37,25 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
+    public final String getCamp() {
+        return this.camp.toString();
+    }
+
+    public final String getType() {
+        return this.type.toString();
+    }
+
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
     protected abstract boolean canNotMove(Position sourcePosition, Position targetPosition);
 
     public abstract void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "camp=" + camp +
+                ", type=" + type +
+                '}';
+    }
 }

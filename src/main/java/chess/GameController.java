@@ -39,4 +39,8 @@ public class GameController {
     public Camp getWinner() {
         return chessGame.getWinner();
     }
+
+    public Map<Position, Piece> getBoard() {
+        return chessGame.getBoard().getSquares();
+    }
 }
