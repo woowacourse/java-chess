@@ -23,6 +23,8 @@ public interface State {
 
     State end();
 
+    State ready();
+
     boolean isRunning();
 
     boolean isStatus();

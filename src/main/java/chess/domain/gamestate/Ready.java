@@ -14,6 +14,7 @@ public class Ready implements State {
     private static final String CANT_SWITCH_CAMP_IF_NOT_RUNNING = "진행 중이 아닐 때는 턴(진영)을 바꿀 수 없습니다.";
     private static final String CANT_STATUS_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.";
     private static final String NOT_INIT_CHESS_BOARD = "체스판이 아직 준비되지 않았습니다.";
+    private static final String CANT_READY_WHEN_NOT_RUNNING = "게임 종료가 아닐때는 시작상태로 돌아갈 수 없습니다.";
 
     private final Board board;
     private final Camp camp;
@@ -56,6 +57,11 @@ public class Ready implements State {
     @Override
     public State end() {
         return new Finished(board);
+    }
+
+    @Override
+    public State ready() {
+        throw new IllegalStateException(CANT_READY_WHEN_NOT_RUNNING);
     }
 
     @Override

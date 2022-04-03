@@ -17,5 +17,7 @@ public final class End implements CommandGenerator {
         chessGame.end();
 
         printBoardInfoToState.run();
+
+        chessGame.ready();
     }
 }

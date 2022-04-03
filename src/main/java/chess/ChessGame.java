@@ -99,4 +99,8 @@ public class ChessGame {
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
     }
+
+    public void ready() {
+        state = state.ready();
+    }
 }

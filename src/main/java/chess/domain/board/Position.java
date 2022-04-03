@@ -85,16 +85,16 @@ public class Position implements Comparable<Position> {
             .collect(Collectors.toList());
     }
 
+    public boolean isSameRow(final Row row) {
+        return this.row == row;
+    }
+
     public Column getColumn() {
         return column;
     }
 
     public Row getRow() {
         return row;
-    }
-
-    public boolean isSameRow(final Row row) {
-        return this.row == row;
     }
 
     @Override

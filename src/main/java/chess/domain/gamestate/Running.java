@@ -8,7 +8,6 @@ import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Running implements State {
 
@@ -16,6 +15,7 @@ public class Running implements State {
     private static final String NO_PIECE_TO_MOVE = "이동할 수 있는 기물이 없습니다.";
     private static final String TURN_OPPOSITE_CAMP = "상대 진영의 차례입니다.";
     private static final String CANT_MOVE_WHEN_OBSTACLE_IN_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
+    private static final String CANT_READY_WHEN_NOT_RUNNING = "게임 종료가 아닐때는 시작상태로 돌아갈 수 없습니다.";
 
     private final Board board;
     private final Camp camp;
@@ -115,6 +115,11 @@ public class Running implements State {
     }
 
     @Override
+    public State ready() {
+        throw new IllegalStateException(CANT_READY_WHEN_NOT_RUNNING);
+    }
+
+    @Override
     public boolean isRunning() {
         return true;
     }
@@ -131,6 +136,6 @@ public class Running implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        return new TreeMap<>(board.getBoard());
+        return board.getBoard();
     }
 }
