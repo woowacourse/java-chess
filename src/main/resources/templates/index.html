@@ -3,6 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
+    <script>
+        function sendToServer() {
+            fetch('/move', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain",
+                },
+                body: "command=" + document.getElementById("command").value
+            }).then((response) => {
+                    response.json().then(data => {
+                        if (data.status === 400) {
+                            alert(data.errorMessage);
+                        }
+                        location.reload();
+                    });
+                }
+            );
+        }
+
+    </script>
 </head>
 <body>
 <table>
@@ -21,11 +41,9 @@
     {{/board}}
 </table>
 <br/>
-<form enctype="text/plain" action="/move" method="post">
     <label> 명령어
-        <input type="text" name="command"/>
+        <input type="text" id="command" name="command"/>
     </label>
-    <input type="submit"/>
-</form>
+<button id="btn" onclick="sendToServer()">제출</button>
 </body>
 </html>

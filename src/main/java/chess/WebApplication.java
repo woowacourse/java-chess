@@ -3,6 +3,7 @@ package chess;
 import chess.domain.game.BoardInitializer;
 import chess.domain.game.ChessController;
 import chess.domain.game.Game;
+import chess.domain.game.ResponseDto;
 import chess.view.BoardDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,10 +25,9 @@ public class WebApplication {
             return render(model, "index.html");
         });
         post("/move", (req, res) -> {
-            final var request = Request.of(req.body());
-            controller.move(game, request.command());
-            res.redirect("/");
-            return null;
+            final String[] split = req.body().strip().split("=");
+            ResponseDto response = controller.move(game, split[1]);
+            return response.toString();
         });
     }
 
