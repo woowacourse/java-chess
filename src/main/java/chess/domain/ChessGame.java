@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.dao.ChessPieceDao;
-import chess.dao.RoomDao;
 import chess.dao.StatusDao;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
@@ -9,7 +8,6 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
-import chess.dto.RoomDto;
 import chess.dto.StatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
@@ -34,12 +32,6 @@ public class ChessGame {
     }
 
     public static ChessGame from(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
-        final RoomDto roomDto = roomDao.findByName(roomName);
-        if (Objects.isNull(roomDto)) {
-            roomDao.save(roomName);
-        }
-
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
         Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName)
                 .stream()
