@@ -11,7 +11,7 @@
     <div class="menu">
         <button id="startBtn" onclick="sendStart()">Start</button>
         <button id="EndBtn" onclick="sendEnd()">End</button>
-        <button id="statusBtn">Status</button>
+        <button id="statusBtn" onclick="sendStatus()">Status</button>
     </div>
     <br/>
     <section class="chess-ui">
@@ -115,7 +115,30 @@
 
     async function sendEnd() {
         await fetch("/end")
-            .then(response => console.log(response.json()));
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === "success") {
+                    loadBoard(data.board);
+                }
+                else {
+                    alert(data.message);
+                }
+            });
+    }
+
+    async function sendStatus() {
+        await fetch("/status")
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === "success") {
+                    alert(data.myTurn + " : " + data.myScore + "점\n"
+                    + data.opponentTurn + " : " + data.opponentScore + "점\n"
+                    + "당신(" + data.myTurn + ")은 " + data.result + "입니다.");
+                }
+                else {
+                    alert(data.message);
+                }
+            });
     }
 
     async function loadBoard(board) {
