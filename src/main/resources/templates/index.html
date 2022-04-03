@@ -7,90 +7,99 @@
 </head>
 <body>
 <h1 class="centered">체스 게임</h1>
+
 <div class="button-group">
-    <button class="start-button" id="start-button" type="button">Start</button>
-    <button class="restart-button" id="restart-button" type="button">Restart</button>
+    <button class="start-button" id="start-button" onclick="showStatusButton()" type="button">START</button>
+    <button class="status-button" id="status-button" type="button">STATUS</button>
     <br>
-    <div class="info-message" >
+</div>
+<div class="info">
+    <div class="info-message" style="border: 15px solid yellow;">
+        <p>📢START를 누르면 시작하고 END를 누르면 게임이 초기화가 됩니다.<br>
+            🎮 나갔다가 다시 START를 누르면 이전 게임을 이어서 진핼할 수 있습니다.<br>
+        게임이 종료된 후, STATUS를 누르면 결과가 나오고 그냥 END를 누르면 종료됩니다.
+        </p>
+    </div>
+    <div class="info-game" style="border: 15px solid deepskyblue">
         <h1 id="view-type">현재 턴 :ㅤ</h1>
         <h1 id="current-team"></h1>
     </div>
 </div>
-    <div class = "chess-board">
-        <div id = "board" class ="board">
-            <div class="white-square" id="a8"></div>
-            <div class="black-square" id="b8"></div>
-            <div class="white-square" id="c8"></div>
-            <div class="black-square" id="d8"></div>
-            <div class="white-square" id="e8"></div>
-            <div class="black-square" id="f8"></div>
-            <div class="white-square" id="g8"></div>
-            <div class="black-square" id="h8"></div>
-            <!-- 2nd -->
-            <div class="black-square" id="a7"></div>
-            <div class="white-square" id="b7"></div>
-            <div class="black-square" id="c7"></div>
-            <div class="white-square" id="d7"></div>
-            <div class="black-square" id="e7"></div>
-            <div class="white-square" id="f7"></div>
-            <div class="black-square" id="g7"></div>
-            <div class="white-square" id="h7"></div>
-            <!-- 3th -->
-            <div class="white-square" id="a6"></div>
-            <div class="black-square" id="b6"></div>
-            <div class="white-square" id="c6"></div>
-            <div class="black-square" id="d6"></div>
-            <div class="white-square" id="e6"></div>
-            <div class="black-square" id="f6"></div>
-            <div class="white-square" id="g6"></div>
-            <div class="black-square" id="h6"></div>
-            <!-- 4st -->
-            <div class="black-square" id="a5"></div>
-            <div class="white-square" id="b5"></div>
-            <div class="black-square" id="c5"></div>
-            <div class="white-square" id="d5"></div>
-            <div class="black-square" id="e5"></div>
-            <div class="white-square" id="f5"></div>
-            <div class="black-square" id="g5"></div>
-            <div class="white-square" id="h5"></div>
-            <!-- 5th -->
-            <div class="white-square" id="a4"></div>
-            <div class="black-square" id="b4"></div>
-            <div class="white-square" id="c4"></div>
-            <div class="black-square" id="d4"></div>
-            <div class="white-square" id="e4"></div>
-            <div class="black-square" id="f4"></div>
-            <div class="white-square" id="g4"></div>
-            <div class="black-square" id="h4"></div>
-            <!-- 6th -->
-            <div class="black-square" id="a3"></div>
-            <div class="white-square" id="b3"></div>
-            <div class="black-square" id="c3"></div>
-            <div class="white-square" id="d3"></div>
-            <div class="black-square" id="e3"></div>
-            <div class="white-square" id="f3"></div>
-            <div class="black-square" id="g3"></div>
-            <div class="white-square" id="h3"></div>
-            <!-- 7th -->
-            <div class="white-square" id="a2"></div>
-            <div class="black-square" id="b2"></div>
-            <div class="white-square" id="c2"></div>
-            <div class="black-square" id="d2"></div>
-            <div class="white-square" id="e2"></div>
-            <div class="black-square" id="f2"></div>
-            <div class="white-square" id="g2"></div>
-            <div class="black-square" id="h2"></div>
-            <!-- 8th -->
-            <div class="black-square" id="a1"></div>
-            <div class="white-square" id="b1"></div>
-            <div class="black-square" id="c1"></div>
-            <div class="white-square" id="d1"></div>
-            <div class="black-square" id="e1"></div>
-            <div class="white-square" id="f1"></div>
-            <div class="black-square" id="g1"></div>
-            <div class="white-square" id="h1"></div>
-        </div>
+<div class="chess-board">
+    <div id="board" class="board">
+        <div class="white-square" id="a8"></div>
+        <div class="black-square" id="b8"></div>
+        <div class="white-square" id="c8"></div>
+        <div class="black-square" id="d8"></div>
+        <div class="white-square" id="e8"></div>
+        <div class="black-square" id="f8"></div>
+        <div class="white-square" id="g8"></div>
+        <div class="black-square" id="h8"></div>
+        <!-- 2nd -->
+        <div class="black-square" id="a7"></div>
+        <div class="white-square" id="b7"></div>
+        <div class="black-square" id="c7"></div>
+        <div class="white-square" id="d7"></div>
+        <div class="black-square" id="e7"></div>
+        <div class="white-square" id="f7"></div>
+        <div class="black-square" id="g7"></div>
+        <div class="white-square" id="h7"></div>
+        <!-- 3th -->
+        <div class="white-square" id="a6"></div>
+        <div class="black-square" id="b6"></div>
+        <div class="white-square" id="c6"></div>
+        <div class="black-square" id="d6"></div>
+        <div class="white-square" id="e6"></div>
+        <div class="black-square" id="f6"></div>
+        <div class="white-square" id="g6"></div>
+        <div class="black-square" id="h6"></div>
+        <!-- 4st -->
+        <div class="black-square" id="a5"></div>
+        <div class="white-square" id="b5"></div>
+        <div class="black-square" id="c5"></div>
+        <div class="white-square" id="d5"></div>
+        <div class="black-square" id="e5"></div>
+        <div class="white-square" id="f5"></div>
+        <div class="black-square" id="g5"></div>
+        <div class="white-square" id="h5"></div>
+        <!-- 5th -->
+        <div class="white-square" id="a4"></div>
+        <div class="black-square" id="b4"></div>
+        <div class="white-square" id="c4"></div>
+        <div class="black-square" id="d4"></div>
+        <div class="white-square" id="e4"></div>
+        <div class="black-square" id="f4"></div>
+        <div class="white-square" id="g4"></div>
+        <div class="black-square" id="h4"></div>
+        <!-- 6th -->
+        <div class="black-square" id="a3"></div>
+        <div class="white-square" id="b3"></div>
+        <div class="black-square" id="c3"></div>
+        <div class="white-square" id="d3"></div>
+        <div class="black-square" id="e3"></div>
+        <div class="white-square" id="f3"></div>
+        <div class="black-square" id="g3"></div>
+        <div class="white-square" id="h3"></div>
+        <!-- 7th -->
+        <div class="white-square" id="a2"></div>
+        <div class="black-square" id="b2"></div>
+        <div class="white-square" id="c2"></div>
+        <div class="black-square" id="d2"></div>
+        <div class="white-square" id="e2"></div>
+        <div class="black-square" id="f2"></div>
+        <div class="white-square" id="g2"></div>
+        <div class="black-square" id="h2"></div>
+        <!-- 8th -->
+        <div class="black-square" id="a1"></div>
+        <div class="white-square" id="b1"></div>
+        <div class="black-square" id="c1"></div>
+        <div class="white-square" id="d1"></div>
+        <div class="black-square" id="e1"></div>
+        <div class="white-square" id="f1"></div>
+        <div class="black-square" id="g1"></div>
+        <div class="white-square" id="h1"></div>
     </div>
+</div>
 <script src="/src/App.js"></script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.Board;
 import chess.Team;
 import chess.Turn;
 import chess.utils.JdbcConnector;

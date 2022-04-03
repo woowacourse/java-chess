@@ -1,5 +1,5 @@
 const start = document.getElementById('start-button');
-const restart = document.getElementById('restart-button');
+const status = document.getElementById('status-button');
 const IMAGE_PATH = "./images/";
 const BOARD = document.querySelector("#board");
 const CURRENT_TEAM = document.querySelector("#current-team");
@@ -24,20 +24,31 @@ let currentTurn = "";
 
 // response["turn"]
 //response[board]
+//response["isFinish"]
 
+function showStatusButton() {
+    status.style.visibility = 'visible';
+}
+
+function initBoard() {
+    fetch('/api/end')
+        .then(res => res.json())
+        .then(window.alert("game reset successfully!!!"))
+        .then(imageSetting)
+}
 
 start.addEventListener('click', function () {
-    if (start.textContent == "Start") {
-        initBoard();
+    if (start.textContent == "START") {
+        loadBoard();
         move();
-        start.textContent = "End";
+        start.textContent = "END";
         return
     }
     initBoard();
-    start.textContent = "Start";
+    start.textContent = "START";
 })
 
-function initBoard() {
+function loadBoard() {
     fetch('/api/load')
         .then(res => res.json())
         .then(imageSetting)
@@ -62,6 +73,7 @@ function imageSetting(response) {
 function turnSetting(response) {
     if (response["isFinish"] === true) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
+        return;
     }
 
     if (response["turn"] == 'white') {

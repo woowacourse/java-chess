@@ -31,7 +31,7 @@ public final class Position {
         return CACHE.computeIfAbsent(createKey(file, rank), absent -> new Position(file, rank));
     }
 
-    public String name(){
+    public String name() {
         return file.name().toLowerCase() + rank.getIndex();
     }
 

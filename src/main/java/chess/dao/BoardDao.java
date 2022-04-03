@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.Board;
 import chess.Turn;
 
 import java.util.Optional;

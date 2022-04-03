@@ -2,8 +2,6 @@ package chess.dao;
 
 import chess.piece.Piece;
 import chess.piece.PieceFactory;
-import chess.piece.Pieces;
-import chess.piece.position.Position;
 import chess.utils.JdbcConnector;
 
 import java.sql.Connection;
@@ -34,10 +32,10 @@ public class PieceDaoImpl implements PieceDao {
     public List<Piece> findAllByBoardId(final Long boardId) {
         String query = "select position, team, type from piece WHERE board_id = ?";
 
-        try (Connection connection = JdbcConnector.getConnection()){
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             preparedStatement.setLong(1, boardId);
-             ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = JdbcConnector.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, boardId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Piece> pieces = new ArrayList<>();
             while (resultSet.next()) {
                 String position = resultSet.getString(1);

@@ -11,9 +11,10 @@ public abstract class Piece implements Comparable<Piece> {
     protected Position position;
     protected final Team team;
 
-    protected Piece(Team team){
+    protected Piece(Team team) {
         this.team = team;
     }
+
     protected Piece(Position position, Team team) {
         this.position = position;
         this.team = team;

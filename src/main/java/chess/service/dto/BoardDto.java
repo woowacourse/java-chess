@@ -1,21 +1,17 @@
 package chess.service.dto;
 
-import chess.controller.console.dto.PieceDto;
-import chess.piece.Piece;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BoardDto {
 
     private final String turn;
     private final Map<String, String> board;
-    //private final boolean isFinished;
+    private final boolean isFinish;
 
-    public BoardDto(String turn, Map<String, String> board) {
+    public BoardDto(String turn, Map<String, String> board, boolean isFinish) {
         this.turn = turn;
         this.board = board;
+        this.isFinish = isFinish;
     }
 
     public Map<String, String> getBoard() {
@@ -24,6 +20,10 @@ public class BoardDto {
 
     public String getTurn() {
         return turn;
+    }
+
+    public boolean isFinish() {
+        return isFinish;
     }
 
 }

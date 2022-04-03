@@ -25,7 +25,7 @@ public final class OutputView {
     }
 
     private static void printNewLine(PieceDto pieceDto) {
-        if(pieceDto.isLastFile()){
+        if (pieceDto.isLastFile()) {
             System.out.println();
         }
     }

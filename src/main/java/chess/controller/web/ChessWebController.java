@@ -66,7 +66,8 @@ public class ChessWebController {
                         piece -> piece.getPosition().name(),
                         Piece::getName
                 ));
-        return new BoardDto(getCurrentTurn(board), collect);
+
+        return new BoardDto(getCurrentTurn(board), collect, board.isDeadKing());
     }
 
     private String getCurrentTurn(Board board) {

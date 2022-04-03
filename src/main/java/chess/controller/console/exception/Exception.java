@@ -1,7 +1,7 @@
 package chess.controller.console.exception;
 
 public class Exception {
-    public static void printCommandException(IllegalArgumentException e){
+    public static void printCommandException(IllegalArgumentException e) {
         System.err.println(e.getMessage());
     }
 
