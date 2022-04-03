@@ -2,6 +2,8 @@ CREATE TABLE users
 (
     user_index int         NOT NULL AUTO_INCREMENT,
     user_name  varchar(20) NOT NULL,
+    turn       ENUM('black','white'),
+    state      ENUM('ready','play','finish'),
     PRIMARY KEY (user_index)
 );
 
