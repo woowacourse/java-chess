@@ -28,7 +28,7 @@ public class BoardDto {
     private static List<PieceDto> makeLine(Map<String, Piece> pieces, Integer row) {
         List<PieceDto> symbols = new ArrayList<>();
         for (Column column : Column.values()) {
-            symbols.add(new PieceDto(findByKey(pieces, row, column), row + column.name()));
+            symbols.add(new PieceDto(findByKey(pieces, row, column), column.name() + row));
         }
         return symbols;
     }
