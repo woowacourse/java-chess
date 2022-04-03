@@ -42,4 +42,32 @@ class TileDaoTest {
 			.containsEntry("a1", "WHITE_PAWN")
 			.containsEntry("b2", "BLACK_KING");
 	}
+
+	@Test
+	@DisplayName("게임 이름으로 tile 조회")
+	void selectByGameName() {
+		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
+		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
+		tileDao.insertAll(tiles, foreignKey);
+
+		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+
+		assertThat(result)
+			.containsEntry("a1", "WHITE_PAWN")
+			.containsEntry("b2", "BLACK_KING");
+	}
+
+	@Test
+	@DisplayName("위치와 게임 이름으로 피스 삭제")
+	void deleteByPosition() {
+		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
+		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
+		tileDao.insertAll(tiles, foreignKey);
+
+		tileDao.deleteByPosition("a1", TEST_NAME);
+
+		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+		assertThat(result)
+			.containsExactlyEntriesOf(Map.of("b2", "BLACK_KING"));
+	}
 }

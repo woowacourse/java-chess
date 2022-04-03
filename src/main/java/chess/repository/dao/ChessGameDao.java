@@ -7,18 +7,16 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGameDao {
 
 	private static final String DUPLICATE_GAME_NAME = "해당 이름의 게임이 이미 존재합니다.";
 	private static final String NOT_FOUND_PRIMARY_KEY = "기본키를 찾을 수 없습니다.";
 
-	private static final String GAME_ID = "game_id";
 	private static final String STATE = "state";
 	private static final String NAME = "name";
+	private static final String NOT_EXIST_GAME = "해당 이름의 게임이 존재하지 않습니다.";
 
 	private final ConnectionManager connectionManager = new ConnectionManager();
 
@@ -47,9 +45,9 @@ public class ChessGameDao {
 		throw new IllegalArgumentException(NOT_FOUND_PRIMARY_KEY);
 	}
 
-	public Map<String, String> selectByName(String name) {
+	public String selectStateByName(String name) {
 		Connection connection = connectionManager.getConnection();
-		String sql = "select game_id, state from game where name = ?";
+		String sql = "select state from game where name = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, name);
@@ -61,13 +59,11 @@ public class ChessGameDao {
 		}
 	}
 
-	private Map<String, String> makeResult(ResultSet result) throws SQLException {
-		Map<String, String> game = new HashMap<>();
+	private String makeResult(ResultSet result) throws SQLException {
 		if (result.next()) {
-			game.put(GAME_ID, String.valueOf(result.getInt(GAME_ID)));
-			game.put(STATE, result.getString(STATE));
+			return result.getString(STATE);
 		}
-		return game;
+		throw new IllegalArgumentException(NOT_EXIST_GAME);
 	}
 
 	public void delete(String name) {
@@ -82,7 +78,7 @@ public class ChessGameDao {
 		}
 	}
 
-	public List<String> findAllNames() {
+	public List<String> selectAllNames() {
 		Connection connection = connectionManager.getConnection();
 		String sql = "select name from game";
 		try {

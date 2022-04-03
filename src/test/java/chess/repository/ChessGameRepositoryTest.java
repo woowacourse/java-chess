@@ -68,7 +68,8 @@ class ChessGameRepositoryTest {
 		ChessGame newGame = new ChessGame(TEST_NAME, new Ready(new HashMap<>()));
 		gameRepository.save(newGame);
 
-		gameRepository.update(newGame.getName(), new RunningBlackTurn(new HashMap<>()));
+		ChessGame updatedGame = new ChessGame(newGame.getName(), new RunningBlackTurn(new HashMap<>()));
+		gameRepository.update(updatedGame);
 
 		gameRepository.findByName(TEST_NAME)
 			.ifPresent(game -> assertThat(game.getState())

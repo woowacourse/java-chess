@@ -2,8 +2,6 @@ package chess.repository.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,12 +24,11 @@ class ChessGameDaoTest {
 	}
 
 	@Test
-	@DisplayName("이름으로 기본키와 상태 찾기")
+	@DisplayName("이름으로 상태 찾기")
 	void selectWhereName() {
 		int key = chessGameDao.insert(TEST_NAME, "READY");
 
-		Map<String, String> result = chessGameDao.selectByName(TEST_NAME);
-		assertThat(result.get("game_id")).isEqualTo(String.valueOf(key));
-		assertThat(result.get("state")).isEqualTo("READY");
+		String result = chessGameDao.selectStateByName(TEST_NAME);
+		assertThat(result).isEqualTo("READY");
 	}
 }

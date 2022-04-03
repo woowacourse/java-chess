@@ -15,7 +15,7 @@ import chess.domain.state.RunningWhiteTurn;
 
 class ChessGameServiceTest {
 
-	private static final String TEST_NAME = "does";
+	private static final String TEST_NAME = "test";
 
 	private final ChessGameService gameService = new ChessGameService();
 

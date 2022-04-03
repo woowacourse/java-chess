@@ -19,9 +19,6 @@ import chess.repository.dao.TileDao;
 
 public class ChessGameRepository implements GameRepository {
 
-	private static final String GAME_ID = "game_id";
-	private static final String STATE = "state";
-
 	private final ChessGameDao chessGameDao = new ChessGameDao();
 	private final TileDao tileDao = new TileDao();
 
@@ -36,14 +33,14 @@ public class ChessGameRepository implements GameRepository {
 
 	@Override
 	public Optional<ChessGame> findByName(String name) {
-		Map<String, String> idAndState = chessGameDao.selectByName(name);
-		if (idAndState.isEmpty()) {
+		String state;
+		try {
+			state = chessGameDao.selectStateByName(name);
+		} catch (IllegalArgumentException exception) {
 			return Optional.empty();
 		}
-
-		int gameId = Integer.parseInt(idAndState.get(GAME_ID));
-		Map<String, String> tiles = tileDao.selectByGameId(gameId);
-		GameState gameState = StringToStateConverter.of(idAndState.get(STATE), convertToBoard(tiles));
+		Map<String, String> tiles = tileDao.selectByGameName(name);
+		GameState gameState = StringToStateConverter.of(state, convertToBoard(tiles));
 
 		return Optional.of(new ChessGame(name, gameState));
 	}
@@ -57,10 +54,9 @@ public class ChessGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void update(String name, GameState state) {
-		ChessGame updatedGame = new ChessGame(name, state);
-		remove(name);
-		save(updatedGame);
+	public void update(ChessGame game) {
+		remove(game.getName());
+		save(game);
 	}
 
 	@Override
@@ -70,6 +66,6 @@ public class ChessGameRepository implements GameRepository {
 
 	@Override
 	public List<String> findAllNames() {
-		return chessGameDao.findAllNames();
+		return chessGameDao.selectAllNames();
 	}
 }

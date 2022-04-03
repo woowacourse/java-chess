@@ -6,7 +6,7 @@ import chess.domain.state.GameState;
 public class ChessGame {
 
 	private final String name;
-	private GameState state;
+	private final GameState state;
 
 	public ChessGame(String name, GameState state) {
 		this.name = name;
@@ -28,9 +28,5 @@ public class ChessGame {
 
 	public boolean isFinished() {
 		return state.isFinished();
-	}
-
-	public void updateState(GameState state) {
-		this.state = state;
 	}
 }

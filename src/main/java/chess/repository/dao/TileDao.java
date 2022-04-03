@@ -36,24 +36,51 @@ public class TileDao {
 
 	public Map<String, String> selectByGameId(int foreignKey) {
 		Connection connection = connectionManager.getConnection();
-		Map<String, String> tiles = new HashMap<>();
 		String sql = "select position, piece from tile where game_id = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, foreignKey);
 
 			ResultSet result = statement.executeQuery();
-			makeResult(tiles, result);
+			return makeResult(result);
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e);
+		}
+	}
+
+	public Map<String, String> selectByGameName(String gameName) {
+		Connection connection = connectionManager.getConnection();
+		String sql = "select t.position, t.piece from tile t natural join game g where g.name = ?";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, gameName);
+
+			return makeResult(statement.executeQuery());
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	private Map<String, String> makeResult(ResultSet result) throws SQLException {
+		Map<String, String> tiles = new HashMap<>();
+		while (result.next()) {
+			tiles.put(result.getString(POSITION), result.getString(PIECE));
 		}
 		return tiles;
 	}
 
-	private void makeResult(Map<String, String> tiles, ResultSet result) throws SQLException {
-		while (result.next()) {
-			tiles.put(result.getString(POSITION), result.getString(PIECE));
+	public void deleteByPosition(String position, String gameName) {
+		Connection connection = connectionManager.getConnection();
+		String sql = "delete from tile where position = ? and "
+			+ "game_id = (select game_id from game where name = ?)";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, position);
+			statement.setString(2, gameName);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
-
 }
+
