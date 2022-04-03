@@ -11,6 +11,7 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameResult {
 
@@ -19,6 +20,11 @@ public class GameResult {
 
     private final Color winner;
     private final GameScore scoreResult;
+
+    public GameResult(String winner, double whiteScore, double blackScore) {
+        this.winner = Color.valueOf(winner);
+        this.scoreResult = new GameScore(whiteScore, blackScore);
+    }
 
     public GameResult(Map<Position, Piece> board) {
         this.winner = chooseWinner(board);
@@ -57,7 +63,7 @@ public class GameResult {
     }
 
     private int countAllSameFilePawns(Map<Position, Piece> board, Color color) {
-        return  File.allFilesAscending()
+        return File.allFilesAscending()
                 .stream()
                 .mapToInt(file -> countPawnsOfSameFile(board, file, color))
                 .filter(sameFilePawnCount -> sameFilePawnCount >= SAME_FILE_PAWN_MIN_COUNT)
@@ -85,5 +91,27 @@ public class GameResult {
 
     public double getBlackScore() {
         return scoreResult.blackScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GameResult that = (GameResult) o;
+        return winner == that.winner && Objects.equals(scoreResult, that.scoreResult);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(winner, scoreResult);
+    }
+
+    @Override
+    public String toString() {
+        return "GameResult{" + "winner=" + winner + ", scoreResult=" + scoreResult + '}';
     }
 }
