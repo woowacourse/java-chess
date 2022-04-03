@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.dto.BoardDto;
 import chess.view.Output;
 
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public enum Command {
 
     private static void printBoard(final ChessGame chessGame) {
         if (!chessGame.isEnded()) {
-            Output.printBoard(chessGame.getBoard());
+            Output.printBoard(BoardDto.from(chessGame.getBoard()));
         }
     }
 

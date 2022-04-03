@@ -28,7 +28,7 @@ public enum PieceSymbol {
     WHITE_KING(new King(Color.WHITE), "♔", 0),
     ;
 
-    private static final String NONE_PIECE_SYMBOL = ".";
+    public static final String NONE_PIECE_SYMBOL = ".";
     private static final double NONE_PIECE_SCORE = 0.0;
 
     private final Piece piece;

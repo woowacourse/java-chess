@@ -1,12 +1,9 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
 import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
 import chess.domain.position.CoordinateY;
-import chess.dto.PieceDto;
-
-import java.util.Map;
+import chess.dto.BoardDto;
 
 public class Output {
 
@@ -26,7 +23,7 @@ public class Output {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(final Map<Position, Piece> board) {
+    public static void printBoard(final BoardDto board) {
         for (final CoordinateY coordinateY : CoordinateY.reversed()) {
             printBoard(coordinateY, board);
         }
@@ -37,16 +34,10 @@ public class Output {
         System.out.println();
     }
 
-    private static void printBoard(final CoordinateY coordinateY, final Map<Position, Piece> board) {
+    private static void printBoard(final CoordinateY coordinateY, final BoardDto board) {
         for (final CoordinateX coordinateX : CoordinateX.sorted()) {
-            printBoard(coordinateX, coordinateY, board);
+            System.out.print(board.getSymbol(Position.of(coordinateX, coordinateY)));
         }
         System.out.println();
-    }
-
-    private static void printBoard(final CoordinateX coordinateX, final CoordinateY coordinateY, final Map<Position, Piece> board) {
-        Piece piece = board.get(Position.of(coordinateX, coordinateY));
-        String pieceName = PieceDto.getName(piece);
-        System.out.print(pieceName);
     }
 }
