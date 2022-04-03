@@ -30,4 +30,9 @@ public enum Camp {
     public int giveVerticalDirectionTo(int distance) {
         return distance * this.verticalDirection;
     }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase();
+    }
 }

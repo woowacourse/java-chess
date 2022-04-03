@@ -5,17 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0),
-    B(1),
-    C(2),
-    D(3),
-    E(4),
-    F(5),
-    G(6),
-    H(7),
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8),
     ;
 
-    private static final int MAX_VALUE = 7;
+    private static final int MAX_VALUE = 9;
     private static final String ERROR_NO_SUCH_COLUMN = "존재하지 않는 열입니다.";
 
     private final int value;
@@ -32,10 +32,7 @@ public enum Column {
     }
 
     Column flip() {
-        return Arrays.stream(Column.values())
-                .filter(it -> it.value == (MAX_VALUE - this.value))
-                .findFirst()
-                .orElseThrow();
+        return from(MAX_VALUE - this.value);
     }
 
     int distance(Column otherColumn) {
@@ -63,5 +60,10 @@ public enum Column {
             path.add(Column.from(i));
         }
         return path;
+    }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase();
     }
 }

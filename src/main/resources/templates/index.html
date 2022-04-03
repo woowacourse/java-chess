@@ -5,188 +5,482 @@
     <meta charset="UTF-8">
     <title>Chess Game</title>
     <link rel="stylesheet" href="/src/index.css">
+
+    <script type="text/javascript">
+    </script>
 </head>
 
 <body>
     <div id="app">
         <h1>♟️ 체스</h1>
+        <form action="/start">
+            <input type="submit" value="게임 시작">
+        </form>
         <section class="chess-ui">
-            <!--      홀수 줄      -->
+            <!--      Row8      -->
             <div class="white-square">
-                <img src="images/piece-rook-black.png" class="pawn-img" />
+                {{#a8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a8}}
             </div>
             <div class="black-square">
-                <img src="images/piece-knight-black.png" class="pawn-img" />
+                {{#b8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b8}}
             </div>
             <div class="white-square">
-                <img src="images/piece-bishop-black.png" class="pawn-img" />
+                {{#c8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c8}}
             </div>
             <div class="black-square">
-                <img src="images/piece-queen-black.png" class="pawn-img" />
+                {{#d8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d8}}
             </div>
             <div class="white-square">
-                <img src="images/piece-king-black.png" class="pawn-img" />
+                {{#e8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e8}}
             </div>
             <div class="black-square">
-                <img src="images/piece-bishop-black.png" class="pawn-img" />
+                {{#f8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f8}}
             </div>
             <div class="white-square">
-                <img src="images/piece-knight-black.png" class="pawn-img" />
+                {{#g8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g8}}
             </div>
             <div class="black-square">
-                <img src="images/piece-rook-black.png" class="pawn-img" />
+                {{#h8}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h8}}
             </div>
-            <!--      //홀수 줄      -->
-            <!--      짝수 줄      -->
+            <!--      //Row8      -->
+            <!--      Row7      -->
             <div class="black-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#a7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a7}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#b7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b7}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#c7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c7}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#d7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d7}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#e7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e7}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#f7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f7}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#g7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g7}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-black.png" class="pawn-img" />
+                {{#h7}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h7}}
             </div>
-            <!--      //짝수 줄      -->
-            <!--      홀수 줄      -->
+            <!--      //Row7      -->
+            <!--      Row6      -->
             <div class="white-square">
+                {{#a6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a6}}
             </div>
             <div class="black-square">
+                {{#b6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b6}}
             </div>
             <div class="white-square">
+                {{#c6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c6}}
             </div>
             <div class="black-square">
+                {{#d6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d6}}
             </div>
             <div class="white-square">
+                {{#e6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e6}}
             </div>
             <div class="black-square">
+                {{#f6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f6}}
             </div>
             <div class="white-square">
+                {{#g6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g6}}
             </div>
             <div class="black-square">
+                {{#h6}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h6}}
             </div>
-            <!--      //홀수 줄      -->
-            <!--      짝수 줄      -->
+            <!--      //Row6      -->
+            <!--      Row5      -->
             <div class="black-square">
+                {{#a5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a5}}
             </div>
             <div class="white-square">
+                {{#b5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b5}}
             </div>
             <div class="black-square">
+                {{#c5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c5}}
             </div>
             <div class="white-square">
+                {{#d5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d5}}
             </div>
             <div class="black-square">
+                {{#e5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e5}}
             </div>
             <div class="white-square">
+                {{#f5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f5}}
             </div>
             <div class="black-square">
+                {{#g5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g5}}
             </div>
             <div class="white-square">
+                {{#h5}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h5}}
             </div>
-            <!--      //짝수 줄      -->
-            <!--      홀수 줄      -->
+            <!--      //Row5      -->
+            <!--      Row4      -->
             <div class="white-square">
+                {{#a4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a4}}
             </div>
             <div class="black-square">
+                {{#b4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b4}}
             </div>
             <div class="white-square">
+                {{#c4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c4}}
             </div>
             <div class="black-square">
+                {{#d4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d4}}
             </div>
             <div class="white-square">
+                {{#e4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e4}}
             </div>
             <div class="black-square">
+                {{#f4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f4}}
             </div>
             <div class="white-square">
+                {{#g4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g4}}
             </div>
             <div class="black-square">
+                {{#h4}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h4}}
             </div>
-            <!--      //홀수 줄      -->
-            <!--      짝수 줄      -->
+            <!--      //Row4      -->
+            <!--      Row3      -->
             <div class="black-square">
+                {{#a3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a3}}
             </div>
             <div class="white-square">
+                {{#b3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b3}}
             </div>
             <div class="black-square">
+                {{#c3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c3}}
             </div>
             <div class="white-square">
+                {{#d3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d3}}
             </div>
             <div class="black-square">
+                {{#e3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e3}}
             </div>
             <div class="white-square">
+                {{#f3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f3}}
             </div>
             <div class="black-square">
+                {{#g3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g3}}
             </div>
             <div class="white-square">
+                {{#h3}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h3}}
             </div>
-            <!--      //짝수 줄      -->
-            <!--      홀수 줄      -->
+            <!--      //Row3      -->
+            <!--      Row2      -->
             <div class="white-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#a2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a2}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#b2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b2}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#c2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c2}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#d2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d2}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#e2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e2}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#f2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f2}}
             </div>
             <div class="white-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#g2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g2}}
             </div>
             <div class="black-square">
-                <img src="images/piece-pawn-white.png" class="pawn-img" />
+                {{#h2}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h2}}
             </div>
-            <!--      //홀수 줄      -->
-            <!--      짝수 줄      -->
+            <!--      //Row2      -->
+            <!--      Row1      -->
             <div class="black-square">
-                <img src="images/piece-rook-white.png" class="pawn-img" />
+                {{#a1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/a1}}
             </div>
             <div class="white-square">
-                <img src="images/piece-knight-white.png" class="pawn-img" />
+                {{#b1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/b1}}
             </div>
             <div class="black-square">
-                <img src="images/piece-bishop-white.png" class="pawn-img" />
+                {{#c1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/c1}}
             </div>
             <div class="white-square">
-                <img src="images/piece-queen-white.png" class="pawn-img" />
+                {{#d1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/d1}}
             </div>
             <div class="black-square">
-                <img src="images/piece-king-white.png" class="pawn-img" />
+                {{#e1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/e1}}
             </div>
             <div class="white-square">
-                <img src="images/piece-bishop-white.png" class="pawn-img" />
+                {{#f1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/f1}}
             </div>
             <div class="black-square">
-                <img src="images/piece-knight-white.png" class="pawn-img" />
+                {{#g1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/g1}}
             </div>
             <div class="white-square">
-                <img src="images/piece-rook-white.png" class="pawn-img" />
+                {{#h1}}
+                {{#type}}
+                <img src="images/piece-{{type}}-{{camp}}.png" class="piece-img" />
+                {{/type}}
+                {{/h1}}
             </div>
-            <!--      //짝수 줄      -->
+            <!--      //Row1      -->
         </section>
         <section class="player-ui">
             <div class="player-square black">
@@ -194,7 +488,9 @@
                     <img src="images/piece-pawn-black.png"> player2
                 </div>
                 <div>
-                    점수: 0
+                    {{#black}}
+                    점수: <span>{{value}}</span>
+                    {{/black}}
                 </div>
             </div>
             <div class="player-square white">
@@ -202,7 +498,9 @@
                     <img src="images/piece-pawn-white.png"> player1
                 </div>
                 <div>
-                    점수: 0
+                    {{#white}}
+                    점수: <span>{{value}}</span>
+                    {{/white}}
                 </div>
             </div>
         </section>
