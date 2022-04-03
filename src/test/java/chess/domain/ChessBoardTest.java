@@ -82,4 +82,26 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(board);
         assertTrue(chessBoard.existChessPieceOf(position, Team.WHITE));
     }
+
+    @Test
+    @DisplayName("우승자를 반환한다.")
+    void judgeWinner() {
+        ChessBoard chessBoard = ChessBoard.create();
+
+        chessBoard.move(ChessBoardPosition.of('a', 2), ChessBoardPosition.of('a', 4));
+        chessBoard.move(ChessBoardPosition.of('f', 7), ChessBoardPosition.of('f', 6));
+
+        chessBoard.move(ChessBoardPosition.of('a', 4), ChessBoardPosition.of('a', 5));
+        chessBoard.move(ChessBoardPosition.of('f', 6), ChessBoardPosition.of('f', 5));
+
+        chessBoard.move(ChessBoardPosition.of('a', 5), ChessBoardPosition.of('a', 6));
+        chessBoard.move(ChessBoardPosition.of('f', 5), ChessBoardPosition.of('f', 4));
+
+        chessBoard.move(ChessBoardPosition.of('a', 6), ChessBoardPosition.of('b', 7));
+        chessBoard.move(ChessBoardPosition.of('f', 4), ChessBoardPosition.of('f', 3));
+
+        chessBoard.move(ChessBoardPosition.of('b', 7), ChessBoardPosition.of('c', 8));
+        chessBoard.move(ChessBoardPosition.of('h', 7), ChessBoardPosition.of('h', 6));
+        assertThat(chessBoard.judgeWinner()).isEqualTo(Team.WHITE);
+    }
 }

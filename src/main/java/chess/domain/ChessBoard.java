@@ -134,6 +134,18 @@ public class ChessBoard implements Iterable<ChessBoardPosition>{
                 .count() < NUMBER_OF_KING_PIECES;
     }
 
+    public Team judgeWinner() {
+        double blackTeamScore = calculateScore(Team.BLACK);
+        double whiteTeamScore = calculateScore(Team.WHITE);
+        if (blackTeamScore == whiteTeamScore) {
+            return Team.NONE;
+        }
+        if (blackTeamScore > whiteTeamScore) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
     public boolean existChessPieceOf(ChessBoardPosition targetPosition, Team team) {
         return Optional.ofNullable(board.get(targetPosition))
                 .stream().anyMatch(it -> it.isSameTeam(team));
@@ -150,7 +162,7 @@ public class ChessBoard implements Iterable<ChessBoardPosition>{
     }
 
     public Map<ChessBoardPosition, ChessPiece> getBoard() {
-        return board;
+        return Map.copyOf(board);
     }
 
     @Override
