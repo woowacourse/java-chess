@@ -1,6 +1,5 @@
 package chess.view.output;
 
-import chess.domain.board.Board;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
@@ -8,6 +7,7 @@ import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class OutputView {
@@ -25,12 +25,13 @@ public abstract class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
     }
 
-    public static void printCurrentBoard(final Board board) {
+    public static void printCurrentBoard(final Map<Position, Piece> pieces) {
         final List<Rank> reverseOrderRanks = getReverseOrderRanks();
         for (Rank rank : reverseOrderRanks) {
-            printCurrentBoard(board, rank);
+            printCurrentBoard(pieces, rank);
             System.out.println();
         }
+        System.out.println();
     }
 
     private static List<Rank> getReverseOrderRanks() {
@@ -39,18 +40,18 @@ public abstract class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static void printCurrentBoard(final Board board, final Rank rank) {
+    private static void printCurrentBoard(final Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
-            System.out.print(getSymbolOfPosition(board, Position.of(file, rank)));
+            final Piece piece = board.get(Position.of(file, rank));
+            System.out.print(getSymbol(piece));
         }
     }
 
-    private static String getSymbolOfPosition(final Board board, final Position position) {
-        if (board.hasPieceInPosition(position)) {
-            final Piece piece = board.findPieceInPosition(position);
-            return piece.getSymbol();
+    private static String getSymbol(final Piece piece) {
+        if (piece == null) {
+            return EMPTY_SYMBOL;
         }
-        return EMPTY_SYMBOL;
+        return piece.getSymbol();
     }
 
     public static void printScore(double whiteTeamScore, double blackTeamScore) {

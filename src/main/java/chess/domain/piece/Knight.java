@@ -13,19 +13,20 @@ public class Knight extends UnpromotablePiece {
             (Math.abs(fileMove) == 2 && Math.abs(rankMove) == 1) ||
                     (Math.abs(fileMove) == 1 && Math.abs(rankMove) == 2);
 
-    public Knight(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    public Knight(final Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        return new Knight(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, movingCondition);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;

@@ -9,28 +9,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
-import chess.domain.piece.TeamColor;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardTest {
-
-    @Test
-    @DisplayName("기물이 없는 위치에서 기물을 찾으려하면 예외를 발생 시킨다.")
-    void findPieceInPositionException() {
-        //given
-        final Board board = new Board();
-        final Position invalidPosition = Position.of(A, Rank.FOUR);
-        //when, then
-        assertThatThrownBy(() -> board.findPieceInPosition(invalidPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 기물이 없습니다.");
-    }
 
     @Test
     @DisplayName("같은 팀 기물이 있는 위치로 이동하려고 하면 예외를 발생시킨다.")
@@ -61,7 +46,7 @@ class BoardTest {
     @ParameterizedTest
     @DisplayName("팀의 점수를 반환한다.")
     @CsvSource({"WHITE, 37", "BLACK, 37"})
-    void getTotalScore(final TeamColor teamColor, final double expected) {
+    void getTotalScore(final Team team, final double expected) {
         //given
         Board board = new Board();
         board = board.movePiece(Position.from("a2"), Position.from("a4"));
@@ -69,7 +54,7 @@ class BoardTest {
         board = board.movePiece(Position.from("a4"), Position.from("b5"));
 
         //when
-        double actual = board.getTotalPoint(teamColor);
+        double actual = board.getTotalPoint(team);
         //then
         assertThat(actual).isEqualTo(expected);
     }
@@ -89,10 +74,10 @@ class BoardTest {
         board = board.movePiece(Position.from("b3"), Position.from("c2"));
         board = board.movePiece(Position.from("g7"), Position.from("h8"));
         board = board.promotePawn(Position.from("h8"), "r");
-        //when
-        final Piece piece = board.findPieceInPosition(Position.from("h8"));
-        //then
-        assertThat(piece).isInstanceOf(Rook.class);
+        board = board.movePiece(Position.from("a7"), Position.from("a6"));
+        board = board.movePiece(Position.from("h8"), Position.from("h7"));
+        board = board.movePiece(Position.from("a6"), Position.from("a5"));
+        board.movePiece(Position.from("h7"), Position.from("h3"));
     }
 
     @Test

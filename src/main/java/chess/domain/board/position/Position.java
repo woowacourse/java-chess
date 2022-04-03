@@ -1,5 +1,6 @@
 package chess.domain.board.position;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class Position {
     }
 
     public static Position from(final String positionValue) {
-        validatePositionValue(positionValue);
+        validatePosition2Value(positionValue);
 
         final String[] rankAndFile = positionValue.split(RANK_FILE_DELIMITER);
         final String rank = rankAndFile[RANK_INDEX];
@@ -35,45 +36,38 @@ public class Position {
         return of(File.from(file), Rank.from(rank));
     }
 
-    private static void validatePositionValue(final String positionValue) {
+    private static void validatePosition2Value(final String positionValue) {
         if (positionValue.length() != 2) {
             throw new IllegalArgumentException("위치 정보가 유효하지 않습니다.");
         }
     }
 
-    public void validateTargetPosition(final Position targetPosition,
-                                       final BiPredicate<Integer, Integer> movingCondition) {
+    public boolean canMove(final Position targetPosition,
+                           final BiPredicate<Integer, Integer> movingCondition) {
         final int differenceOfFile = this.file.calculateDifference(targetPosition.file);
         final int differenceOfRank = this.rank.calculateDifference(targetPosition.rank);
-
-        if (!movingCondition.test(differenceOfFile, differenceOfRank)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
+        return movingCondition.test(differenceOfFile, differenceOfRank);
     }
 
-    public void checkOtherPiecesInTarget(final Position targetPosition, final List<Position> otherPositions) {
-        if (otherPositions.stream()
-                .anyMatch(other -> other == targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-    }
-
-    public void checkOtherPiecesInPathToTarget(final Position targetPosition, final List<Position> positions) {
+    public boolean isOtherPieceInPathToTarget(final Position targetPosition, final List<Position> otherPositions) {
         Position currentPosition = this;
+        List<Position> passingPath = new ArrayList<>();
+
         while (currentPosition != targetPosition) {
-            currentPosition.checkOtherPiecesInCurrentPosition(positions);
-            currentPosition = currentPosition.nextPosition(targetPosition);
+            passingPath.add(currentPosition);
+            currentPosition = currentPosition.nextPosition2(targetPosition);
         }
+
+        return passingPath.stream()
+                .anyMatch(path -> path.hasSame(otherPositions));
     }
 
-    private void checkOtherPiecesInCurrentPosition(final List<Position> positions) {
-        if (positions.stream()
-                .anyMatch(another -> this == another)) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
-        }
+    private boolean hasSame(final List<Position> others) {
+        return others.stream()
+                .anyMatch(other -> this == other);
     }
 
-    private Position nextPosition(final Position targetPosition) {
+    private Position nextPosition2(final Position targetPosition) {
         File nextFile = file.next(targetPosition.file);
         Rank nextRank = rank.next(targetPosition.rank);
         return Position.of(nextFile, nextRank);
@@ -85,5 +79,10 @@ public class Position {
 
     public boolean isInRank(final Rank rank) {
         return this.rank == rank;
+    }
+
+    @Override
+    public String toString() {
+        return file.toString() + rank.toString();
     }
 }

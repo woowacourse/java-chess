@@ -6,18 +6,17 @@ import static chess.domain.board.position.Rank.ONE;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 
-public enum TeamColor {
+public enum Team {
     WHITE(EIGHT),
-    BLACK(ONE),
-    ;
+    BLACK(ONE);
 
     private final Rank promotionRank;
 
-    TeamColor(final Rank promotionRank) {
+    Team(final Rank promotionRank) {
         this.promotionRank = promotionRank;
     }
 
-    public static TeamColor findByRank(final Rank rank) {
+    public static Team findByRank(final Rank rank) {
         if (isWhiteTeamRank(rank)) {
             return WHITE;
         }
@@ -39,7 +38,7 @@ public enum TeamColor {
         return this == BLACK;
     }
 
-    public TeamColor turnToNext() {
+    public Team turnToNext() {
         if (this == BLACK) {
             return WHITE;
         }

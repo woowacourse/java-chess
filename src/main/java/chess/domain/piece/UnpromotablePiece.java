@@ -4,8 +4,8 @@ import chess.domain.board.position.Position;
 
 public abstract class UnpromotablePiece extends Piece {
 
-    UnpromotablePiece(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    UnpromotablePiece(final Team team) {
+        super(team);
     }
 
     @Override
@@ -14,7 +14,7 @@ public abstract class UnpromotablePiece extends Piece {
     }
 
     @Override
-    public boolean canPromote() {
+    public boolean canPromote(final Position sourcePosition) {
         return false;
     }
 

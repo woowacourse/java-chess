@@ -7,6 +7,10 @@ import static chess.domain.board.position.File.D;
 import static chess.domain.board.position.File.F;
 import static chess.domain.board.position.File.G;
 import static chess.domain.board.position.File.H;
+import static chess.domain.board.position.Rank.EIGHT;
+import static chess.domain.board.position.Rank.ONE;
+import static chess.domain.board.position.Rank.SEVEN;
+import static chess.domain.board.position.Rank.TWO;
 
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
@@ -18,52 +22,52 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.TeamColor;
-import java.util.ArrayList;
+import chess.domain.piece.Team;
+import chess.domain.piece.UnpromotablePiece;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class BoardFactory {
 
-    public List<Piece> generateInitialPieces() {
-        final List<Piece> initialPieces = new ArrayList<>();
-        initialPieces.addAll(createNotPawn(Rank.ONE));
-        initialPieces.addAll(createNotPawn(Rank.EIGHT));
-        initialPieces.addAll(createPawn(Rank.TWO));
-        initialPieces.addAll(createPawn(Rank.SEVEN));
+    public Map<Position, Piece> generateInitialPieces2() {
+        final HashMap<Position, Piece> initialPieces = new HashMap<>(64);
+        final List<Rank> initialPieceRanks = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
+        for (File file : File.values()) {
+            create(initialPieces, initialPieceRanks, file);
+        }
         return initialPieces;
     }
 
-    private List<Piece> createNotPawn(final Rank rank) {
-        return Arrays.stream(File.values())
-                .map(file -> createInitial(file, rank))
-                .collect(Collectors.toList());
+    private void create(final HashMap<Position, Piece> initialPieces, final List<Rank> initialPieceRanks,
+                        final File file) {
+        for (Rank rank : initialPieceRanks) {
+            initialPieces.put(Position.of(file, rank), generate(file, rank));
+        }
     }
 
-    private List<Piece> createPawn(final Rank rank) {
-        return Arrays.stream(File.values())
-                .map(file -> Position.of(file, rank))
-                .map(position -> new Pawn(TeamColor.findByRank(rank), position))
-                .collect(Collectors.toList());
+    private Piece generate(final File file, final Rank rank) {
+        final Team team = Team.findByRank(rank);
+        if (rank.isPawnRank()) {
+            return new Pawn(team);
+        }
+        return generateNotPawn(file, team);
     }
 
-    private Piece createInitial(final File file, final Rank rank) {
-        final TeamColor teamColor = TeamColor.findByRank(rank);
-        final Position position = Position.of(file, rank);
-
+    private UnpromotablePiece generateNotPawn(final File file, final Team team) {
         if (file == A || file == H) {
-            return new Rook(teamColor, position);
+            return new Rook(team);
         }
         if (file == B || file == G) {
-            return new Knight(teamColor, position);
+            return new Knight(team);
         }
         if (file == C || file == F) {
-            return new Bishop(teamColor, position);
+            return new Bishop(team);
         }
         if (file == D) {
-            return new Queen(teamColor, position);
+            return new Queen(team);
         }
-        return new King(teamColor, position);
+        return new King(team);
     }
 }

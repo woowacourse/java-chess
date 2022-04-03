@@ -46,7 +46,7 @@ public class ChessGameRunner {
     private void play(Board board) {
         CommandType commandType;
         do {
-            printCurrentBoard(board);
+            printCurrentBoard(board.getPieces());
             String command = InputView.inputCommand();
             commandType = CommandType.from(command);
             board = execute(commandType, board, command);
@@ -56,7 +56,7 @@ public class ChessGameRunner {
 
     private Board execute(CommandType commandType, Board board, String command) {
         if (commandType == STATUS) {
-            OutputView.printCurrentBoard(board);
+            OutputView.printCurrentBoard(board.getPieces());
             return board;
         }
         if (commandType == END) {

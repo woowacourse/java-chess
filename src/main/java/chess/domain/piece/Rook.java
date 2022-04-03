@@ -12,21 +12,21 @@ public class Rook extends UnpromotablePiece {
     static final BiPredicate<Integer, Integer> movingCondition =
             (rankMove, fileMove) -> fileMove == 0 || rankMove == 0;
 
-    public Rook(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    public Rook(final Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
-
-        return new Rook(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, movingCondition) &&
+                !sourcePosition.isOtherPieceInPathToTarget(targetPosition, otherPositions);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;

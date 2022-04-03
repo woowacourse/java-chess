@@ -12,19 +12,20 @@ public class King extends UnpromotablePiece {
     private static final BiPredicate<Integer, Integer> movingCondition =
             (rankMove, fileMove) -> Math.abs(rankMove) <= 1 && Math.abs(fileMove) <= 1;
 
-    public King(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    public King(final Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        return new King(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, movingCondition);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;

@@ -12,21 +12,21 @@ public class Bishop extends UnpromotablePiece {
     static final BiPredicate<Integer, Integer> movingCondition =
             (rankMove, fileMove) -> Math.abs(rankMove) == Math.abs(fileMove);
 
-    public Bishop(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    public Bishop(final Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
-
-        return new Bishop(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, movingCondition) &&
+                !sourcePosition.isOtherPieceInPathToTarget(targetPosition, otherPositions);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;

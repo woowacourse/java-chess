@@ -1,99 +1,103 @@
 package chess.domain.board;
 
-import static chess.domain.piece.TeamColor.WHITE;
+import static chess.domain.piece.Team.WHITE;
 
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.TeamColor;
+import chess.domain.piece.Team;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Board {
 
-    private final List<Piece> pieces;
-    private final TeamColor currentTurnTeamColor;
+    private final Map<Position, Piece> pieces;
+    private final Team currentTurnTeam;
 
-    private Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
+    private Board(final Map<Position, Piece> pieces, final Team currentTurnTeam) {
         this.pieces = pieces;
-        this.currentTurnTeamColor = currentTurnTeamColor;
+        this.currentTurnTeam = currentTurnTeam;
     }
 
     public Board() {
         this(new BoardFactory()
-                .generateInitialPieces(), WHITE);
-    }
-
-    public boolean hasPieceInPosition(final Position position) {
-        return pieces.stream()
-                .anyMatch(piece -> piece.matchesPosition(position));
-    }
-
-    public Piece findPieceInPosition(final Position position) {
-        return pieces.stream()
-                .filter(piece -> piece.matchesPosition(position))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+                .generateInitialPieces2(), WHITE);
     }
 
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
-        final Piece sourcePiece = findPieceInPosition(sourcePosition);
+        final Piece sourcePiece = pieces.get(sourcePosition);
+
         validateTurn(sourcePiece);
-        final Piece movedPiece = sourcePiece.move(getOtherPieces(sourcePiece), targetPosition);
+        validateSameTeamTargetPositionPiece(sourcePiece, targetPosition);
+        validateMovement(sourcePosition, targetPosition);
 
-        if (hasPieceInPosition(targetPosition)) {
-            removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
+        pieces.remove(sourcePosition);
+        pieces.put(targetPosition, sourcePiece);
+        return new Board(pieces, currentTurnTeam.turnToNext());
+    }
+
+    private void validateMovement(final Position sourcePosition, final Position targetPosition) {
+        final Piece sourcePiece = pieces.get(sourcePosition);
+        if (!sourcePiece.canMove(sourcePosition, targetPosition, getOtherPositions(sourcePosition))) {
+            throw new IllegalArgumentException("기물을 이동시킬 수 없습니다.");
         }
-
-        pieces.set(pieces.indexOf(sourcePiece), movedPiece);
-        return new Board(pieces, currentTurnTeamColor.turnToNext());
     }
 
-    private void validateTurn(final Piece sourcePiece) {
-        if (!sourcePiece.isTeamOf(currentTurnTeamColor)) {
-            throw new IllegalArgumentException("다른 팀 기물은 이동시킬 수 없습니다.");
+    private void validateSameTeamTargetPositionPiece(final Piece sourcePiece, final Position targetPosition) {
+        final Piece pieceInTargetPosition = pieces.get(targetPosition);
+        if (pieceInTargetPosition == null) {
+            return;
         }
-    }
-
-    private List<Piece> getOtherPieces(final Piece sourcePiece) {
-        return pieces.stream()
-                .filter(piece -> !sourcePiece.equals(piece))
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private void removeTargetPositionPiece(final Piece targetPositionPiece, final Piece movedPiece) {
-        validateSameTeamTargetPositionPiece(movedPiece, targetPositionPiece);
-        pieces.remove(targetPositionPiece);
-    }
-
-    private void validateSameTeamTargetPositionPiece(final Piece movedPiece, final Piece targetPositionPiece) {
-        if (movedPiece.isSameTeam(targetPositionPiece)) {
+        if (sourcePiece.isSameTeam(pieceInTargetPosition)) {
             throw new IllegalArgumentException("이동하려는 위치에 같은 팀 기물이 있습니다.");
         }
     }
 
+    private void validateTurn(final Piece sourcePiece) {
+        if (!sourcePiece.isTeamOf(currentTurnTeam)) {
+            throw new IllegalArgumentException("다른 팀 기물은 이동시킬 수 없습니다.");
+        }
+    }
+
+    private List<Position> getOtherPositions(final Position sourcePosition) {
+        return pieces.keySet()
+                .stream()
+                .filter(position -> position != sourcePosition)
+                .collect(Collectors.toList());
+    }
+
     public boolean hasOneKing() {
-        return pieces.stream()
+        return pieces.values()
+                .stream()
                 .filter(Piece::isKing)
                 .count() == 1;
     }
 
-    public double getTotalPoint(TeamColor teamColor) {
-        final List<Piece> teamPieces = pieces.stream()
-                .filter(piece -> piece.isTeamOf(teamColor))
-                .collect(Collectors.toUnmodifiableList());
+    public double getTotalPoint(Team team) {
+        final Map<Position, Piece> teamPieces = pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue()
+                        .isTeamOf(team))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
         return TotalScore.getTotalPoint(teamPieces);
     }
 
     public Board promotePawn(final Position position, final String promotionType) {
-        final Piece piece = findPieceInPosition(position);
-        validatePromoteCondition(piece);
-        pieces.set(pieces.indexOf(piece), piece.promote(promotionType));
-        return new Board(pieces, currentTurnTeamColor);
+        final Piece piece = pieces.get(position);
+        validatePromoteCondition(position, piece);
+        pieces.put(position, piece.promote(promotionType));
+        return new Board(pieces, currentTurnTeam);
     }
 
-    private void validatePromoteCondition(final Piece piece) {
-        if (!piece.canPromote()) {
+    private void validatePromoteCondition(final Position position, final Piece piece) {
+        if (!piece.canPromote(position)) {
             throw new IllegalArgumentException("해당 기물은 프로모션 할 수 없습니다.");
         }
     }
+
+    public Map<Position, Piece> getPieces() {
+        return pieces;
+    }
 }
+

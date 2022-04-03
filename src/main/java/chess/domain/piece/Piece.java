@@ -1,71 +1,37 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public abstract class Piece {
 
-    final TeamColor teamColor;
-    final Position position;
+    final Team team;
 
-    Piece(final TeamColor teamColor, final Position position) {
-        this.teamColor = teamColor;
-        this.position = position;
+    Piece(final Team team) {
+        this.team = team;
     }
 
-    public abstract Piece move(final List<Piece> otherPieces, final Position targetPosition);
-
-    public final boolean matchesPosition(final Position position) {
-        return this.position == position;
-    }
-
-    final List<Position> convertToPositions(final List<Piece> pieces) {
-        return pieces.stream()
-                .map(piece -> piece.position)
-                .collect(Collectors.toList());
-    }
+    public abstract boolean canMove(final Position sourcePosition,
+                                    final Position targetPosition,
+                                    final List<Position> otherPositions);
 
     public final boolean isSameTeam(final Piece anotherPiece) {
-        return this.teamColor == anotherPiece.teamColor;
+        return this.team == anotherPiece.team;
     }
 
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
 
-    public final boolean isInFile(final File file) {
-        return position.isInFile(file);
-    }
-
-    public final boolean isTeamOf(final TeamColor teamColor) {
-        return this.teamColor == teamColor;
+    public final boolean isTeamOf(final Team team) {
+        return this.team == team;
     }
 
     public abstract double getScore();
 
     public abstract String getSymbol();
 
-    public abstract boolean canPromote();
+    public abstract boolean canPromote(final Position sourcePosition);
 
     public abstract Piece promote(final String promotionType);
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Piece piece = (Piece) o;
-        return teamColor == piece.teamColor && Objects.equals(position, piece.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(teamColor, position);
-    }
 }
