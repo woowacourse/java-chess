@@ -25,11 +25,11 @@ public final class Board {
         return Optional.empty();
     }
 
-    public boolean move(final Position sourcePosition, final Position targetPosition) {
+    public void move(final Position sourcePosition, final Position targetPosition) {
         final Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
 
-        return movePiece(sourcePosition, targetPosition, piece);
+        movePiece(sourcePosition, targetPosition, piece);
     }
 
     private Piece findPiece(final Position sourcePosition) {
@@ -46,15 +46,14 @@ public final class Board {
         }
     }
 
-    private boolean movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        final boolean movable = piece.isMovable(sourcePosition, targetPosition);
-        if (movable) {
-            checkPawnMovement(sourcePosition, targetPosition, piece);
-            validatePathEmpty(sourcePosition, targetPosition);
-            pieces.remove(sourcePosition);
-            pieces.put(targetPosition, piece);
+    private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+        if (!piece.isMovable(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
         }
-        return movable;
+        checkPawnMovement(sourcePosition, targetPosition, piece);
+        validatePathEmpty(sourcePosition, targetPosition);
+        pieces.remove(sourcePosition);
+        pieces.put(targetPosition, piece);
     }
 
     private void validatePathEmpty(final Position source, final Position target) {

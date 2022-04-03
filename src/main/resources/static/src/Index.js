@@ -2,12 +2,25 @@ let first = '';
 let second = '';
 
 function clicked(id) {
+    setVariable(id);
+    changeClickedBackground(id);
+    checkSendToServer();
+}
+
+function setVariable(id) {
     if (first !== '') {
         second = id;
     } else {
         first = id;
     }
+}
 
+function changeClickedBackground(id) {
+    let elementById = document.getElementById(id);
+    elementById.style.backgroundColor = "#ff0";
+}
+
+function checkSendToServer() {
     if (first !== '' && second !== '') {
         sendToServer(first, second);
         first = '';
