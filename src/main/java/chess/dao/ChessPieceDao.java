@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessPieceDao {
 
@@ -27,6 +29,26 @@ public class ChessPieceDao {
                     resultSet.getString("ChessPiece"),
                     resultSet.getString("Color")
             );
+        }
+    }
+
+    public List<ChessPieceDto> findAll() throws SQLException {
+        final String sql = "SELECT * FROM ChessBoard";
+
+        final Connection connection = getConnection();
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        final ResultSet resultSet = statement.executeQuery();
+
+        try (connection; statement; resultSet) {
+            final List<ChessPieceDto> dtos = new ArrayList<>();
+            while (resultSet.next()) {
+                dtos.add(ChessPieceDto.of(
+                        resultSet.getString("Position"),
+                        resultSet.getString("ChessPiece"),
+                        resultSet.getString("Color")
+                ));
+            }
+            return dtos;
         }
     }
 
