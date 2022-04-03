@@ -55,21 +55,6 @@ public class Position {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 범위입니다."));
     }
 
-    public boolean isFirstTurnOfPawn() {
-        return rank == WHITE_PAWN_FIRST_RANK || rank == BLACK_PAWN_FIRST_RANK;
-    }
-
-    public List<Position> findAllBetweenPosition(final Position destination) {
-        final List<Position> positions = new ArrayList<>();
-        final Direction direction = Direction.of(this, destination);
-        Position position = proceed(direction);
-        while (position != destination) {
-            positions.add(position);
-            position = position.proceed(direction);
-        }
-        return positions;
-    }
-
     public boolean isMoveLinear(final Position destination) {
         return Direction.of(this, destination).isMoveLinear();
     }
@@ -90,6 +75,10 @@ public class Position {
         return Direction.of(this, destination).isMoveDiagonalForward(team);
     }
 
+    public boolean isFirstTurnOfPawn() {
+        return rank == WHITE_PAWN_FIRST_RANK || rank == BLACK_PAWN_FIRST_RANK;
+    }
+
     public int calculateDistance(final Position destination) {
         final int fileDistance = Math.abs(destination.file - file);
         final int rankDistance = Math.abs(destination.rank - rank);
@@ -100,16 +89,19 @@ public class Position {
         return this.file == file;
     }
 
-    public Position proceed(final Direction direction) {
-        return Position.of(rank + direction.getRank(), (char) (file + direction.getFile()));
+    public List<Position> findAllBetweenPosition(final Position destination) {
+        final List<Position> positions = new ArrayList<>();
+        final Direction direction = Direction.of(this, destination);
+        Position position = proceed(direction);
+        while (position != destination) {
+            positions.add(position);
+            position = position.proceed(direction);
+        }
+        return positions;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+    private Position proceed(final Direction direction) {
+        return Position.of(rank + direction.getRank(), (char) (file + direction.getFile()));
     }
 
     public int findRankDistance(final Position destinationPosition) {
@@ -118,6 +110,14 @@ public class Position {
 
     public int findFileDistance(final Position destinationPosition) {
         return destinationPosition.file - file;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return rank == position.rank && file == position.file;
     }
 
     @Override
