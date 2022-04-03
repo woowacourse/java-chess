@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
 
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
     private GameStatus gameStatus;
 
     public ChessGame() {
@@ -84,6 +84,9 @@ public class ChessGame {
 
     public StartResult start() {
         gameStatus.checkReady();
+        if (gameStatus.isEnd()) {
+            chessBoard = ChessBoardFactory.createChessBoard();
+        }
         gameStatus = GameStatus.PLAYING;
         return new StartResult(chessBoard.findAllPiece());
     }
