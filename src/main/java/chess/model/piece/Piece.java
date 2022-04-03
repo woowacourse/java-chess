@@ -23,6 +23,10 @@ public abstract class Piece {
         return team != this.team && this.team != NONE;
     }
 
+    public String getTeam() {
+        return team.getName();
+    }
+
     public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
 
     public abstract boolean isKing();

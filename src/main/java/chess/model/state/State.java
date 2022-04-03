@@ -16,5 +16,7 @@ public interface State {
 
     Map<Position, Piece> getBoard();
 
+    Map<String, Piece> getBoardForWeb();
+
     GameResult getScore();
 }

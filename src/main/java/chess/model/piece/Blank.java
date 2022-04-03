@@ -6,8 +6,14 @@ import java.util.Map;
 
 public class Blank extends Piece {
 
+    private final String symbol = "none";
+
     public Blank(final Team team) {
         super(team);
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

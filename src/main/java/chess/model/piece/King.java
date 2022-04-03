@@ -12,11 +12,16 @@ public class King extends Piece {
 
     private static final double SCORE = 0;
 
+    private final String symbol = "king";
     private final MoveStrategy moveStrategy;
 
     public King(final Team team) {
         super(team);
         this.moveStrategy = new SingleMove(team, Direction.ordinalDirection());
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

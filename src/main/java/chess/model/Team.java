@@ -2,9 +2,9 @@ package chess.model;
 
 public enum Team {
 
-    BLACK("블랙"),
-    WHITE("화이트"),
-    NONE("없음"),
+    BLACK("black"),
+    WHITE("white"),
+    NONE("none"),
     ;
 
     private final String name;

@@ -35,6 +35,11 @@ public abstract class Running implements State {
     }
 
     @Override
+    public Map<String, Piece> getBoardForWeb() {
+        return board.getBoardForWeb();
+    }
+
+    @Override
     public GameResult getScore() {
         throw new IllegalArgumentException("[ERROR] 아직 게임이 종료되지 않아 점수를 계산 할 수 없습니다.");
     }

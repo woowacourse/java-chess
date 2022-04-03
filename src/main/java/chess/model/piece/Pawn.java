@@ -10,11 +10,16 @@ public class Pawn extends Piece {
 
     private static final double SCORE = 1;
 
+    private final String symbol = "pawn";
     private final PawnMove pawnMove;
 
     public Pawn(final Team team) {
         super(team);
         this.pawnMove = new PawnMove(team);
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

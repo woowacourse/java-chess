@@ -12,11 +12,16 @@ public class Rook extends Piece {
 
     private static final double SCORE = 5;
 
+    private final String symbol = "rook";
     private final MoveStrategy moveStrategy;
 
     public Rook(Team team) {
         super(team);
         this.moveStrategy = new MultipleMove(team, Direction.cardinalDirection());
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

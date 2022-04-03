@@ -5,6 +5,7 @@ import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.running.WhiteTurn;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,12 @@ public final class Ready implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 데이터를 가져 올 수 없습니다.");
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, Piece> getBoardForWeb() {
+        return new HashMap<>();
     }
 
     @Override

@@ -8,6 +8,7 @@ import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -59,5 +60,11 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Map<String, Piece> getBoardForWeb() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(value -> value.getKey().toString(), Map.Entry::getValue));
     }
 }

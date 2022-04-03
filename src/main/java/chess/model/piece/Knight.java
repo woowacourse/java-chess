@@ -12,11 +12,16 @@ public class Knight extends Piece {
 
     private static final double SCORE = 2.5;
 
+    private final String symbol = "knight";
     private final MoveStrategy moveStrategy;
 
     public Knight(final Team team) {
         super(team);
         this.moveStrategy = new SingleMove(team, Direction.knightDirection());
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

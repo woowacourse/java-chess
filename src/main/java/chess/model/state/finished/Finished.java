@@ -3,6 +3,7 @@ package chess.model.state.finished;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,6 @@ public abstract class Finished implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        return null;
+        return new HashMap<>();
     }
 }

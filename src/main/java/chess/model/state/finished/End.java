@@ -1,6 +1,9 @@
 package chess.model.state.finished;
 
 import chess.model.board.GameResult;
+import chess.model.piece.Piece;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class End extends Finished {
 
@@ -11,6 +14,11 @@ public final class End extends Finished {
     @Override
     public boolean isStatus() {
         return false;
+    }
+
+    @Override
+    public Map<String, Piece> getBoardForWeb() {
+        return new HashMap<>();
     }
 
     @Override
