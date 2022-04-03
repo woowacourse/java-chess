@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
