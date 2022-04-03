@@ -109,6 +109,14 @@ public class Position {
         return row == BLACK_PAWN_INiTIAL_ROW;
     }
 
+    public char column() {
+        return column;
+    }
+
+    public char row() {
+        return row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
