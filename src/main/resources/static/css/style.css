@@ -12,9 +12,14 @@ div {
 .row {
 }
 
-.square {
+.cell {
   border: 1px solid;
   width: 80px;
   height: 80px;
   float: left;
+}
+
+.piece-image {
+  width: 80px;
+  height: 80px;
 }
