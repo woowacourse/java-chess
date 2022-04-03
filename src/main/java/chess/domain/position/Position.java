@@ -1,9 +1,5 @@
 package chess.domain.position;
 
-import static chess.domain.position.PositionConverter.charToMatchingInt;
-import static chess.domain.position.PositionConverter.fileToIdx;
-import static chess.domain.position.PositionConverter.rankToIdx;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,21 +7,25 @@ public class Position {
 
     private static final int DEGREE_CORRECTION_VALUE = 180;
 
-    private final int fileIdx;
-    private final int rankIdx;
+    private final File file;
+    private final Rank rank;
 
     private Position(String value) {
-        char[] positionInfo = value.toCharArray();
-        this.fileIdx = charToMatchingInt(positionInfo[0]);
-        this.rankIdx = charToMatchingInt(positionInfo[1]);
+        String[] positionInfo = value.split("");
+        this.file = File.from(positionInfo[0]);
+        this.rank = Rank.from(positionInfo[1]);
     }
 
     public static Position of(String value) {
         return PositionCache.getCache(value);
     }
 
-    public boolean hasSameFileIdx(int fileIdx) {
-        return this.fileIdx == fileIdx;
+    public boolean hasSameFileIdx(int targetFileIdx) {
+        return file.getFileIdx() == targetFileIdx;
+    }
+
+    public boolean isSameFile(File targetFile) {
+        return file.hasSameFileIdx(file);
     }
 
     public int fileDifference(Position targetPosition) {
@@ -33,7 +33,11 @@ public class Position {
     }
 
     public int fileRawDifference(Position targetPosition) {
-        return targetPosition.fileIdx - fileIdx;
+        return file.rawDifference(getTargetFile(targetPosition));
+    }
+
+    private File getTargetFile(Position targetPosition) {
+        return targetPosition.getFile();
     }
 
     public int rankDifference(Position targetPosition) {
@@ -41,7 +45,11 @@ public class Position {
     }
 
     public int rankRawDifference(Position targetPosition) {
-        return targetPosition.rankIdx - rankIdx;
+        return rank.rawDifference(getTargetRank(targetPosition));
+    }
+
+    private Rank getTargetRank(Position targetPosition) {
+        return targetPosition.rank;
     }
 
     public boolean isSamePosition(Position position) {
@@ -57,19 +65,23 @@ public class Position {
             * (DEGREE_CORRECTION_VALUE / Math.PI));
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public int getFileIdx() {
-        return fileIdx;
+        return file.getFileIdx();
     }
 
     public int getRankIdx() {
-        return rankIdx;
+        return rank.getRankIdx();
     }
 
     @Override
     public String toString() {
         return "Position{" +
-            "fileIdx=" + fileIdx +
-            ", rankIdx=" + rankIdx +
+            "file=" + file +
+            ", rank=" + rank +
             '}';
     }
 
@@ -78,20 +90,22 @@ public class Position {
         static Map<String, Position> cache = new HashMap<>(64);
 
         static Position getCache(int fileIdx, int rankIdx) {
-            String key = fileIdx + "" + rankIdx;
+            String key = toKey(fileIdx, rankIdx);
             return cache.computeIfAbsent(key, (val) -> new Position(key));
         }
 
-        static Position getCache(String value) {
-            String key = toKey(value);
+        static Position getCache(String key) {
             return cache.computeIfAbsent(key, (val) -> new Position(key));
         }
 
-        static String toKey(String value) {
-            char[] positionInfo = value.toCharArray();
-            int fileIdx = fileToIdx(positionInfo[0]);
-            int rankIdx = rankToIdx(positionInfo[1]);
-            return fileIdx + "" + rankIdx;
+        static String toKey(int fileIdx, int rankIdx) {
+            File file = File.of(fileIdx);
+            Rank rank = Rank.of(rankIdx);
+
+            String rawFile = file.getRawFile();
+            String rawRank = rank.getRawRank();
+
+            return rawFile + rawRank;
         }
     }
 }
