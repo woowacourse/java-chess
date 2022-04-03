@@ -12,12 +12,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BoardFactory {
     private static final Position WHITE_ROOK_INITIAL_POSITION = Position.of(Column.A, Row.ONE);
@@ -25,9 +22,8 @@ public class BoardFactory {
     private static final Position WHITE_BISHOP_INITIAL_POSITION = Position.of(Column.C, Row.ONE);
     private static final Position WHITE_QUEEN_INITIAL_POSITION = Position.of(Column.D, Row.ONE);
     private static final Position WHITE_KING_INITIAL_POSITION = Position.of(Column.E, Row.ONE);
-    private static final Row WHITE_PAWN_INITIAL_ROW = Row.TWO;
-    public static final List<Position> WHITE_PAWN_INITIAL_POSITIONS = getWhitePawnInitialPositions();
-    public static final List<Position> BLACK_PAWN_INITIAL_POSITIONS = getBlackPawnInitialPositions();
+    public static final Row WHITE_PAWN_INITIAL_ROW = Row.TWO;
+    public static final Row BLACK_PAWN_INITIAL_ROW = Row.SEVEN;
     private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
@@ -72,21 +68,10 @@ public class BoardFactory {
     }
 
     private static void initializePawn(final TreeMap<Position, Piece> value) {
-        for (final Position whitePawnPosition : WHITE_PAWN_INITIAL_POSITIONS) {
-            initializeTwoPiecesOf(value, whitePawnPosition, Pawn::new);
+        for (final Column column : Column.values()) {
+            initializeTwoPiecesOf(value, Position.of(column, WHITE_PAWN_INITIAL_ROW), Pawn::new);
+
         }
-    }
-
-    private static List<Position> getWhitePawnInitialPositions() {
-        return Arrays.stream(Column.values())
-            .map(column -> Position.of(column, WHITE_PAWN_INITIAL_ROW))
-            .collect(Collectors.toList());
-    }
-
-    private static List<Position> getBlackPawnInitialPositions() {
-        return WHITE_PAWN_INITIAL_POSITIONS.stream()
-            .map(Position::flipVertically)
-            .collect(Collectors.toList());
     }
 
     private static void initializeBlanks(final TreeMap<Position, Piece> value) {

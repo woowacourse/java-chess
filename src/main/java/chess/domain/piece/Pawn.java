@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.board.BoardFactory.BLACK_PAWN_INITIAL_POSITIONS;
-import static chess.domain.board.BoardFactory.WHITE_PAWN_INITIAL_POSITIONS;
+import static chess.domain.board.BoardFactory.BLACK_PAWN_INITIAL_ROW;
+import static chess.domain.board.BoardFactory.WHITE_PAWN_INITIAL_ROW;
 import static chess.domain.piece.PieceProperty.PAWN;
 
 import chess.domain.Camp;
@@ -52,9 +52,9 @@ public final class Pawn extends NotNullPiece {
 
     private boolean isFirstMove(final Position beforePosition) {
         if (isSameCampWith(Camp.WHITE)) {
-            return WHITE_PAWN_INITIAL_POSITIONS.contains(beforePosition);
+            return beforePosition.isSameRow(WHITE_PAWN_INITIAL_ROW);
         }
-        return BLACK_PAWN_INITIAL_POSITIONS.contains(beforePosition);
+        return beforePosition.isSameRow(BLACK_PAWN_INITIAL_ROW);
     }
 
     private boolean canMove(final Positions positions) {

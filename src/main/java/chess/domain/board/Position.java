@@ -93,6 +93,10 @@ public class Position implements Comparable<Position> {
         return row;
     }
 
+    public boolean isSameRow(final Row row) {
+        return this.row == row;
+    }
+
     @Override
     public int compareTo(Position o) {
         return Comparator.comparing(Position::getRow, Comparator.reverseOrder())

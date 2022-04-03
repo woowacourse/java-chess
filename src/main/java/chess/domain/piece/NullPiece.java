@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 public final class NullPiece extends Piece {
 
     private static final String CANT_MOVE_EMPTY_PIECE = "빈 기물을 움직일 수 없습니다.";
-    private static final int SCORE = 0;
 
     public NullPiece(final Camp camp) {
         super(camp, NULL_PIECE);
