@@ -11,8 +11,7 @@ public class ChessGame {
     private ChessGameState chessGameState;
 
     public void start() {
-        chessGameState = new Ready();
-        chessGameState = chessGameState.start();
+        chessGameState = new Ready().start();
     }
 
     public void move(MoveDto moveDto) {
@@ -25,6 +24,10 @@ public class ChessGame {
 
     public void end() {
         chessGameState = chessGameState.end();
+    }
+
+    public boolean isEnded(){
+        return chessGameState.isEnded();
     }
 
     public Turn getTurn() {

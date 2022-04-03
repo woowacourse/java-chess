@@ -1,29 +1,36 @@
 package chess.controller;
 
-import chess.controller.state.Ready;
-import chess.controller.state.ChessGameState;
+import chess.dto.BoardDto;
+import chess.dto.MoveDto;
 import chess.view.InputView;
+import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
 
     private static final String REGEX = " ";
-    private ChessGameState chessGameState;
+    private final OutputView outputView = OutputView.getInstance();
+    private final ChessGame chessGame;
+
 
     public ChessController() {
-        this.chessGameState = new Ready();
+        chessGame = new ChessGame();
     }
 
     public void start() {
-        chessGameState = chessGameState.start();
+        System.out.println("hi");
+        chessGame.start();
+        outputView.printBoard(BoardDto.from(chessGame.getBoard()));
 
-        while (!chessGameState.isEnded()) {
-            String[] command = getCommand();
-            chessGameState = ChessExecution.from(command[0]).run(chessGameState, command);
+        while (!chessGame.isEnded()) {
+            List<String> commands = getCommand();
+            ChessExecution chessExecution = ChessExecution.from(commands.get(0));
+            chessExecution.run(chessGame, commands);
         }
     }
 
-    private String[] getCommand() {
+    private List<String> getCommand() {
         InputView inputView = InputView.getInstance();
-        return inputView.scanCommand().split(REGEX);
+        return List.of(inputView.scanCommand().split(REGEX));
     }
 }

@@ -1,25 +1,48 @@
 package chess.controller;
 
-import chess.controller.state.ChessGameState;
+import chess.dto.BoardDto;
+import chess.dto.MoveDto;
+import chess.view.OutputView;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
 
 public enum ChessExecution {
-    START("start", (state, input) -> state.start()),
-    MOVE("move", (state, input) -> state.move(input[1], input[2])),
-//    STATUS("status", (state, input) -> state.status()),
-    END("end", (state, input) -> state.end()),
+    START("start", ChessExecution::start),
+    MOVE("move", ChessExecution::move),
+    STATUS("status", ChessExecution::status),
+    END("end", ChessExecution::end),
     ;
 
     private static final String NO_COMMAND_FIND = "게임 실행중 명령어는 end만 입력할 수 있습니다.";
+    private static final OutputView outputView = OutputView.getInstance();
 
     private final String value;
-    private final BiFunction<ChessGameState, String[], ChessGameState> runnable;
+    private final BiConsumer<ChessGame, List<String>> consumer;
 
-    ChessExecution(String value, BiFunction<ChessGameState, String[], ChessGameState> runnable) {
+    ChessExecution(String value, BiConsumer<ChessGame, List<String>> consumer) {
         this.value = value;
-        this.runnable = runnable;
+        this.consumer = consumer;
+    }
+
+    private static void start(ChessGame chessGame, List<String> commands) {
+        chessGame.start();
+        outputView.printBoard(BoardDto.from(chessGame.getBoard()));
+    }
+
+    private static void move(ChessGame chessGame, List<String> commands) {
+        chessGame.move(new MoveDto(commands.get(1), commands.get(2)));
+        outputView.printBoard(BoardDto.from(chessGame.getBoard()));
+    }
+
+    private static void status(ChessGame chessGame, List<String> commands) {
+        outputView.printScore(chessGame.status());
+    }
+
+    private static void end(ChessGame chessGame, List<String> commands) {
+        outputView.printGameEnded(chessGame.status());
+        chessGame.end();
     }
 
     public static ChessExecution from(String value) {
@@ -29,7 +52,7 @@ public enum ChessExecution {
                 .orElseThrow(() -> new NoSuchElementException(NO_COMMAND_FIND));
     }
 
-    public ChessGameState run(ChessGameState chessGameState, String[] input) {
-        return runnable.apply(chessGameState, input);
+    public void run(ChessGame chessGame, List<String> commands) {
+        consumer.accept(chessGame, commands);
     }
 }

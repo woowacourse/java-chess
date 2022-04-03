@@ -9,7 +9,6 @@ public class WhitePlaying extends Playing {
         super(board);
     }
 
-
     @Override
     public Turn getTurn() {
         return Turn.WHITE_TURN;

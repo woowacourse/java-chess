@@ -3,12 +3,9 @@ package chess.controller.state;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.MoveResult;
-import chess.dto.BoardDto;
 import chess.dto.ScoreDto;
-import chess.view.OutputView;
 
 public abstract class Playing implements ChessGameState {
-    private final OutputView outputView = OutputView.getInstance();
     private final Board board;
 
     Playing(Board board) {
@@ -27,14 +24,11 @@ public abstract class Playing implements ChessGameState {
     }
 
     MoveResult movePiece(String from, String to, Color color) {
-        MoveResult move = board.move(from, to, color);
-        outputView.printBoard(BoardDto.from(board));
-        return move;
+        return board.move(from, to, color);
     }
 
     ChessGameState getMoveResult(MoveResult result, MoveResult blackResult) {
         if (result == MoveResult.ENDED) {
-            outputView.printGameEnded(ScoreDto.from(board.getScore()));
             return new Finished();
         }
 
