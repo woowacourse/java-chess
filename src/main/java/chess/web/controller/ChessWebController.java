@@ -35,10 +35,10 @@ public class ChessWebController {
     }
 
     public ModelAndView move(Request request, Response response) {
-        String command = request.body().split("=")[1];
-        String[] commands = command.split(" ");
+        String target = request.queryParams("target");
+        String source = request.queryParams("source");
 
-        chessGame.move(commands[0].trim(), commands[1].trim());
+        chessGame.move(target, source);
 
         response.redirect("/");
 

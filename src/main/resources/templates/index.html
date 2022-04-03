@@ -23,9 +23,10 @@
             {{/pieces}}
         </div>
 
-        <form action="/move" method="post" enctype="text/plain">
+        <form action="/move" method="get" enctype="text/plain">
             <div>
-                <input class="text-input" type="text" name="command" id="command" placeholder="a1 a2"/>
+                <input class="text-input" type="text" name="target" id="target" placeholder="a2"/>
+                <input class="text-input" type="text" name="source" id="source" placeholder="a4"/>
                 <input class="submit-input" type="submit" value="제출"/>
             </div>
         </form>

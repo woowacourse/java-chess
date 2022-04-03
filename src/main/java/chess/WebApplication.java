@@ -3,7 +3,6 @@ package chess;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
-import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.web.controller.ChessWebController;
@@ -21,7 +20,7 @@ public class WebApplication {
 
         get("/", chessWebController::index, HANDLEBARS_TEMPLATE_ENGINE);
         get("/start", chessWebController::create, HANDLEBARS_TEMPLATE_ENGINE);
-        post("/move", chessWebController::move, HANDLEBARS_TEMPLATE_ENGINE);
+        get("/move", chessWebController::move, HANDLEBARS_TEMPLATE_ENGINE);
 
         exception(Exception.class, chessWebController::exceptionHandle);
     }
