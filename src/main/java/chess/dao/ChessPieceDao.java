@@ -18,30 +18,6 @@ import java.util.stream.IntStream;
 
 public class ChessPieceDao {
 
-    public ChessPieceDto findByPosition(final Position position) {
-        final String sql = "SELECT * FROM ChessBoard WHERE Position = ?";
-
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, position.getValue());
-
-            try (final ResultSet resultSet = statement.executeQuery()) {
-                if (!resultSet.next()) {
-                    return null;
-                }
-                return ChessPieceDto.of(
-                        resultSet.getString("Position"),
-                        resultSet.getString("ChessPiece"),
-                        resultSet.getString("Color")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public List<ChessPieceDto> findAll() {
         final String sql = "SELECT * FROM ChessBoard";
 
@@ -64,41 +40,11 @@ public class ChessPieceDao {
         return Collections.emptyList();
     }
 
-    public int deleteByPosition(final Position position) {
-        final String sql = "DELETE FROM ChessBoard WHERE Position = ?";
-
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, position.getValue());
-            return statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
     public int deleteAll() {
         final String sql = "DELETE FROM ChessBoard";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            return statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public int save(final Position position, final ChessPiece chessPiece) {
-        final String sql = "INSERT INTO ChessBoard(Position, ChessPiece, Color) VALUES (?, ?, ?)";
-
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, position.getValue());
-            statement.setString(2, ChessPieceMapper.toPieceType(chessPiece));
-            statement.setString(3, chessPiece.color().getValue());
-
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
