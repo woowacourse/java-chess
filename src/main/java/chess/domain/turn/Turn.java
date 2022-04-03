@@ -6,7 +6,7 @@ import static chess.domain.Color.WHITE;
 import chess.domain.ChessBoard;
 import java.util.function.Function;
 
-public enum GameTurnFactory {
+public enum Turn {
 
     WHITE_TURN(chessBoard -> new RunningTurn(chessBoard, WHITE)),
     BLACK_TURN(chessBoard -> new RunningTurn(chessBoard, BLACK)),
@@ -15,7 +15,7 @@ public enum GameTurnFactory {
 
     private final Function<ChessBoard, GameTurn> gameTurnCreator;
 
-    GameTurnFactory(final Function<ChessBoard, GameTurn> gameTurnCreator) {
+    Turn(final Function<ChessBoard, GameTurn> gameTurnCreator) {
         this.gameTurnCreator = gameTurnCreator;
     }
 }
