@@ -308,7 +308,7 @@
         data.then(res => Object.keys(res).forEach(function (value) {
             if (value === "isKingDie") {
                 if (res[value] === true)
-                    console.log("King Die");
+                    fetchResult();
                 return;
             }
             const element = document.getElementById(value);
