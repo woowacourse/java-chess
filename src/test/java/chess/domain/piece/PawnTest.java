@@ -11,7 +11,7 @@ public class PawnTest {
     @Test
     public void isPawn() {
         //given
-        Pawn pawn = new Pawn(Team.WHITE, "p");
+        Pawn pawn = new Pawn(Team.WHITE);
 
         //when & then
         assertThat(pawn.isPawn()).isTrue();
