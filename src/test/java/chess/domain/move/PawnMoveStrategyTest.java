@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.CatchPieces;
+import chess.domain.game.DeadPieces;
 import chess.domain.board.Position;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
@@ -62,7 +62,7 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 이 시작지점에 위치 하지 않아서 2칸 전진 할 수 없다.")
     void isStartMovable_NotStartPosition() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a3"), new CatchPieces());
+        board.movePiece(Position.valueOf("a2"), Position.valueOf("a3"), new DeadPieces());
 
         Position source = Position.valueOf("a3");
 
@@ -72,7 +72,7 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 의 한칸 앞에 다른 기물이 존재해서 2칸 전진 할 수 없다.")
     void isStartMovable_ExistOtherPiece() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("a3"), new CatchPieces());
+        board.movePiece(Position.valueOf("a7"), Position.valueOf("a3"), new DeadPieces());
 
         Position source = Position.valueOf("a2");
 

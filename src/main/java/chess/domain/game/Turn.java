@@ -20,4 +20,8 @@ public class Turn {
     public boolean isRightTurn(final Team team) {
         return this.nowTurn == team;
     }
+
+    public Team getNowTurn() {
+        return nowTurn;
+    }
 }

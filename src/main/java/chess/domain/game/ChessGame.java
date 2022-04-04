@@ -11,21 +11,34 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
-    private final CatchPieces catchPieces;
+    private final DeadPieces deadPieces;
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
     public ChessGame(final Board board) {
         this.board = board;
-        this.catchPieces = new CatchPieces();
+        this.deadPieces = new DeadPieces();
         this.gameSwitch = new GameSwitch(true);
         this.turn = new Turn(Team.WHITE);
     }
 
     public void move(final String rawSource, final String rawTarget) {
+        validateGameSwitch();
         movePiece(Position.valueOf(rawSource), Position.valueOf(rawTarget));
         turnOffWhenKingDie();
         turn.passTurn();
+    }
+
+    private void validateGameSwitch() {
+        if (!isOn()) {
+            throw new  IllegalStateException("[ERROR] 게임이 종료되어 기물을 이동시킬 수 없습니다.");
+        }
+    }
+
+    private void turnOffWhenKingDie() {
+        if (deadPieces.isKingDead()) {
+            gameSwitch.turnOff();
+        }
     }
 
     private void movePiece(final Position source, final Position target) {
@@ -33,7 +46,7 @@ public class ChessGame {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         validateMove(source, target, sourcePiece.getMoveStrategy());
-        board.movePiece(source, target, catchPieces);
+        board.movePiece(source, target, deadPieces);
     }
 
     private void validateSourcePiece(Position source) {
@@ -54,18 +67,8 @@ public class ChessGame {
         }
     }
 
-    private void turnOffWhenKingDie() {
-        if (catchPieces.isKingCatch()) {
-            gameSwitch.turnOff();
-        }
-    }
-
     public Score calculateScore() {
-        return new Score(getCurrentBoard());
-    }
-
-    public boolean isOn() {
-        return gameSwitch.isOn();
+        return new Score(getCurrentBoard(), deadPieces);
     }
 
     public void turnOff() {
@@ -78,5 +81,13 @@ public class ChessGame {
 
     public Map<String, Piece> getCurrentBoardForSpark() {
         return board.getBoardForSpark();
+    }
+
+    public boolean isOn() {
+        return gameSwitch.isOn();
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

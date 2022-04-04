@@ -337,13 +337,21 @@
         <!-- TWO LINE -->
         {{/this}}
     </section>
-    <section>
-        <h2>🎯 체스 기물 이동</h2>
-        <form method="post" action="/move">
+    <section class="user-ui">
+        <form class="move" method="post" action="/move">
+            <h2>🎯 체스 기물 이동 🎯</h2>
             <input type="text" name="source" placeholder="Source Position">
             <input type="text" name="target" placeholder="Target Position">
             <input type="submit">
         </form>
+        <div class="status">
+            <p>{{turn.nowTurn.value}} 턴</p>
+            {{#score}}
+            <p>BLACK 팀 점수 : {{blackScore}}</p>
+            <p>WHITE 팀 점수 : {{whiteScore}}</p>
+            <p>승리 팀 : {{winTeam.value}} ({{winTeam.winType}})</p>
+            {{/score}}
+        </div>
     </section>
 </div>
 </body>

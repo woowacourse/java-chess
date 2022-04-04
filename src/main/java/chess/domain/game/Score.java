@@ -15,16 +15,12 @@ public class Score {
 
     private final double blackScore;
     private final double whiteScore;
-    private final Team winTeam;
+    private final WinTeam winTeam;
 
-    public Score(final Map<Position, Piece> board) {
+    public Score(final Map<Position, Piece> board, final DeadPieces deadPieces) {
         this.blackScore = calculateScore(board, Team.BLACK);
         this.whiteScore = calculateScore(board, Team.WHITE);
-        if (whiteScore > blackScore) {
-            this.winTeam = Team.WHITE;
-            return;
-        }
-        this.winTeam = Team.BLACK;
+        this.winTeam = new WinTeam(blackScore, whiteScore, deadPieces);
     }
 
     public double calculateScore(final Map<Position, Piece> board, final Team team) {
@@ -66,15 +62,15 @@ public class Score {
         return count;
     }
 
-    public double getWhiteScore() {
-        return whiteScore;
-    }
-
     public double getBlackScore() {
         return blackScore;
     }
 
-    public Team getWinColor() {
+    public double getWhiteScore() {
+        return whiteScore;
+    }
+
+    public WinTeam getWinTeam() {
         return winTeam;
     }
 }

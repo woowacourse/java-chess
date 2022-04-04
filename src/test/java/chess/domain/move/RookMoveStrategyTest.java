@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.CatchPieces;
+import chess.domain.game.DeadPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,19 +14,19 @@ public class RookMoveStrategyTest {
 
     private Board board;
     private RookMoveStrategy rookMoveStrategy;
-    private CatchPieces catchPieces;
+    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.createChessBoard();
         rookMoveStrategy = new RookMoveStrategy();
-        catchPieces = new CatchPieces();
+        deadPieces = new DeadPieces();
     }
 
     @Test
     @DisplayName("룩이 수직 이동할 수 있다.")
     void isMovable_Vertical() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
+        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), deadPieces);
 
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("a4");
@@ -37,7 +37,7 @@ public class RookMoveStrategyTest {
     @Test
     @DisplayName("룩이 수평 이동할 수 있다.")
     void isMovableHorizon() {
-        board.movePiece(Position.valueOf("b8"), Position.valueOf("b6"), catchPieces);
+        board.movePiece(Position.valueOf("b8"), Position.valueOf("b6"), deadPieces);
 
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("b8");

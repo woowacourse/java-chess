@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.game.CatchPieces;
+import chess.domain.game.DeadPieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
@@ -14,18 +14,18 @@ import org.junit.jupiter.api.Test;
 public class BoardTest {
 
     private Board board;
-    private CatchPieces catchPieces;
+    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.createChessBoard();
-        catchPieces = new CatchPieces();
+        deadPieces = new DeadPieces();
     }
 
     @Test
     @DisplayName("source 위치의 Piece 를 target 위치로 이동시킨다.")
     void movePiece() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a4"), catchPieces);
+        board.movePiece(Position.valueOf("a2"), Position.valueOf("a4"), deadPieces);
 
         assertThat(board.getPiece(Position.valueOf("a2"))).isInstanceOf(Blank.class);
         assertThat(board.getPiece(Position.valueOf("a4"))).isInstanceOf(Pawn.class);

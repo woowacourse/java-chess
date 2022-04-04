@@ -13,44 +13,44 @@ import org.junit.jupiter.api.Test;
 public class ScoreTest {
 
     private Board board;
-    private CatchPieces catchPieces;
+    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.createChessBoard();
-        catchPieces = new CatchPieces();
+        deadPieces = new DeadPieces();
     }
 
     @Test
     @DisplayName("폰이 수직으로 존재할 경우의 총점을 계산한다.")
     void getWhiteScore_WhenPawnVertical() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("b3"), catchPieces);
-        board.movePiece(Position.valueOf("c2"), Position.valueOf("b4"), catchPieces);
+        board.movePiece(Position.valueOf("a2"), Position.valueOf("b3"), deadPieces);
+        board.movePiece(Position.valueOf("c2"), Position.valueOf("b4"), deadPieces);
 
-        assertThat(new Score(board.getBoard()).getWhiteScore()).isEqualTo(36.5);
+        assertThat(new Score(board.getBoard(), deadPieces).getWhiteScore()).isEqualTo(36.5);
     }
 
     @Test
     @DisplayName("Queen 이 없고 폰이 수직으로 존재하는 경우의 총점을 계산한다.")
     void getWhiteScore_WhenNoQueenAndPawnExistVertically() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), catchPieces);
+        board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), deadPieces);
 
-        assertThat(new Score(board.getBoard()).getWhiteScore()).isEqualTo(28);
+        assertThat(new Score(board.getBoard(), deadPieces).getWhiteScore()).isEqualTo(28);
     }
 
     @Test
     @DisplayName("Black 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenBlackWin() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), catchPieces);
+        board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), deadPieces);
 
-        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Team.BLACK);
+        assertThat(new Score(board.getBoard(), deadPieces).getWinTeam().getValue()).isEqualTo(Team.BLACK.getValue());
     }
 
     @Test
     @DisplayName("White 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenWhiteWin() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
+        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), deadPieces);
 
-        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Team.WHITE);
+        assertThat(new Score(board.getBoard(), deadPieces).getWinTeam().getValue()).isEqualTo(Team.WHITE.getValue());
     }
 }

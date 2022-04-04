@@ -7,6 +7,8 @@ import static spark.Spark.staticFileLocation;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import java.util.HashMap;
+import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -18,7 +20,11 @@ public class WebApplication {
         ChessGame chessGame = new ChessGame(BoardFactory.createChessBoard());
 
         get("/", (req, res) -> {
-            return new ModelAndView(chessGame.getCurrentBoardForSpark(), "index.html");
+            Map<String, Object> model = new HashMap<>();
+            model.putAll(chessGame.getCurrentBoardForSpark());
+            model.put("turn", chessGame.getTurn());
+            model.put("score", chessGame.calculateScore());
+            return new ModelAndView(model, "index.html");
         }, new HandlebarsTemplateEngine());
 
         post("/move", (req, res) -> {

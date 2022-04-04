@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.game.CatchPieces;
+import chess.domain.game.DeadPieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
@@ -17,11 +17,11 @@ public class Board {
         this.board = new TreeMap<>(board);
     }
 
-    public void movePiece(final Position source, final Position target, final CatchPieces catchPieces) {
+    public void movePiece(final Position source, final Position target, final DeadPieces deadPieces) {
         Piece targetPiece = board.getOrDefault(target, new Blank());
         board.put(target, getPiece(source));
         board.put(source, new Blank());
-        catchPieces.addPiece(targetPiece);
+        deadPieces.add(targetPiece);
     }
 
     public Team getTeamOfPiece(final Position position) {
