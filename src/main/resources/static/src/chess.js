@@ -7,13 +7,22 @@ startButton.addEventListener("click", async function() {
 
 async function startGame() {
     alert("start");
-    let savedBoard = await fetch("/start")
+    let boardAndTurnInfo = await fetch("/start")
         .then(handleErrors)
         .catch(function (error) {
             alert(error.message);
         });
-    savedBoard = await savedBoard.json();
-    return savedBoard.board;
+    boardAndTurnInfo = await boardAndTurnInfo.json();
+    document.getElementById("turnInfo").innerHTML = "현재 턴: "+ boardAndTurnInfo.turnColor;
+    return boardAndTurnInfo.board;
+}
+
+async function handleErrors(response) {
+    if (!response.ok) {
+        let message = await response.json();
+        throw Error(message.errorMessage);
+    }
+    return response;
 }
 
 async function initializeBoard(board) {
@@ -38,10 +47,3 @@ function putPiece(pointId, board, value) {
     }
 }
 
-async function handleErrors(response) {
-    if (!response.ok) {
-        let message = await response.json();
-        throw Error(message.errorMessage);
-    }
-    return response;
-}

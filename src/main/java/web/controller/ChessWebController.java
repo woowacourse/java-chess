@@ -34,16 +34,6 @@ public class ChessWebController {
             return render(new HashMap<>(), "index.html");
         });
 
-//        get("/start1", (req, res) -> {
-//            res.type("application/json; charset=utf-8");
-//            BoardAndTurnInfo response = service.start();
-//            Map<Point, Piece> boardInfo = response.getBoard();
-//
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("board", boardInfo);
-//            return render(model, "index.html");
-//        });
-
         get("/start", (req, res) -> {
             return gson.toJson(service.start());
         });
