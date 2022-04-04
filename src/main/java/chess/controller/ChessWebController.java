@@ -68,7 +68,7 @@ public class ChessWebController {
                     chessService.findScore(req.queryParams("room")).toJson());
 
             get("/turn", (req, res) ->
-                    chessService.findCurrentTurn(req.queryParams("room")).toJson());
+                    roomService.findCurrentTurn(req.queryParams("room")).toJson());
 
             get("/result", (req, res) ->
                     chessService.result(req.queryParams("room")).toJson());

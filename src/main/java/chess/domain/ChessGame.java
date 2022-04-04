@@ -60,16 +60,6 @@ public class ChessGame {
         return !gameStatus.isEnd();
     }
 
-    public Map<Position, ChessPiece> findAllPiece() {
-        gameStatus.checkPlaying();
-        return chessBoard.findAllPiece();
-    }
-
-    public Color findCurrentTurn() {
-        gameStatus.checkPlaying();
-        return chessBoard.currentTurn();
-    }
-
     public Color findWinColor() {
         gameStatus.checkEnd();
         return chessBoard.findWinColor();

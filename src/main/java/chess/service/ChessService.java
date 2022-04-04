@@ -26,9 +26,14 @@ public class ChessService {
 
     public JsonGenerator findAllPiece(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
-            result.addAllPiece(chessGame.findAllPiece());
+            final ChessPieceDao dao = new ChessPieceDao();
+            final Map<Position, ChessPiece> pieceByPosition = dao.findAllByRoomName(roomName).stream()
+                    .collect(Collectors.toMap(
+                            ChessPieceDto::getPosition,
+                            ChessPieceDto::getChessPiece
+                    ));
+            result.addAllPiece(pieceByPosition);
         } catch (IllegalArgumentException e) {
             result.addError(e.getMessage());
         }
@@ -100,18 +105,6 @@ public class ChessService {
         try {
             final Score score = chessGame.calculateScore();
             result.addScore(score);
-        } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
-        }
-        return result;
-    }
-
-    public JsonGenerator findCurrentTurn(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
-        try {
-            final Color currentTurn = chessGame.findCurrentTurn();
-            result.addCurrentTurn(currentTurn);
         } catch (IllegalArgumentException e) {
             result.addError(e.getMessage());
         }
