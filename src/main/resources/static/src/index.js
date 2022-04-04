@@ -45,3 +45,18 @@ async function promotion(promotionPiece) {
         body: JSON.stringify(promotion)
     });
 }
+
+async function move(source, target) {
+    const move = {
+        source : source,
+        target : target
+    }
+
+    await fetch("/move", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(promotion)
+    });
+}
