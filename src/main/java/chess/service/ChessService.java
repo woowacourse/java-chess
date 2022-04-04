@@ -10,23 +10,27 @@ import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.domain.result.Score;
 import chess.dto.BoardDto;
+import chess.dto.ChessResponseDto;
 import chess.dto.GameDto;
-import chess.dto.MoveRequestDto;
 import chess.dto.PieceDto;
+import chess.dto.StatusResponseDto;
 import java.util.Objects;
 
 public class ChessService {
 
     private final GameDao gameDao;
     private final BoardDao boardDao;
+    private final ChessGame chessGame;
 
     public ChessService() {
         this.gameDao = new GameDao();
         this.boardDao = new BoardDao();
+        this.chessGame = new ChessGame();
     }
 
-    public void load(final ChessGame chessGame) {
+    public void load() {
         final GameDto gameDto = gameDao.findByMaxId();
         final BoardDto boardDto = boardDao.findByGameId(gameDto.getId());
 
@@ -46,8 +50,8 @@ public class ChessService {
         return new Ended(board);
     }
 
-    public void start(final ChessGame chessGame) {
-        initializeChessGame(chessGame);
+    public void start() {
+        initializeChessGame();
         chessGame.start();
 
         gameDao.save(GameDto.of(chessGame));
@@ -55,28 +59,50 @@ public class ChessService {
         boardDao.save(BoardDto.of(id, chessGame.getBoard()));
     }
 
-    private void initializeChessGame(final ChessGame chessGame) {
+    private void initializeChessGame() {
         if (!chessGame.isNotEnded()) {
             chessGame.initialize();
         }
     }
 
-    public void move(final ChessGame chessGame, final MoveRequestDto moveDto) {
-        final Position from = Position.create(moveDto.getSource());
-        final Position to = Position.create(moveDto.getTarget());
+    public void end() {
+        chessGame.end();
+
+        final Integer id = gameDao.findMaxId();
+        gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
+    }
+
+    public void move(final String source, final String target) {
+        final Position from = Position.create(source);
+        final Position to = Position.create(target);
         chessGame.move(from, to);
 
         final Integer id = gameDao.findMaxId();
         boardDao.updateOnePosition(id, from.getName(), new PieceDto(chessGame.getBoard().get(from)));
         boardDao.updateOnePosition(id, to.getName(), new PieceDto(chessGame.getBoard().get(to)));
-
         gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
     }
 
-    public void end(final ChessGame chessGame) {
-        chessGame.end();
+    public void status() {
+        chessGame.status();
+    }
 
-        final Integer id = gameDao.findMaxId();
-        gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
+    public ChessResponseDto createChessResponseDto() {
+        return new ChessResponseDto(chessGame);
+    }
+
+    public ChessResponseDto createErrorChessResponseDto(final String message) {
+        return new ChessResponseDto("Error", message, chessGame);
+    }
+
+    public StatusResponseDto createStatusResponseDto() {
+        final Score myScore = chessGame.calculateMyScore();
+        final Score opponentScore = chessGame.calculateOpponentScore();
+        return new StatusResponseDto(chessGame, myScore.getValue(), opponentScore.getValue(),
+                myScore.decideResult(opponentScore).getName());
+    }
+
+    public StatusResponseDto creatErrorStatusResponseDto(final String message) {
+        return new StatusResponseDto("error", message, chessGame);
     }
 }
