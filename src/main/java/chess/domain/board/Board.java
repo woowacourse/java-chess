@@ -1,10 +1,13 @@
 package chess.domain.board;
 
+import chess.db.entity.PieceEntity;
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.piece.PieceType;
 import chess.domain.board.position.Position;
 import chess.util.PositionUtil;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,6 +23,16 @@ public class Board {
 
     public Board(Map<Position, Piece> boardMap) {
         this.boardMap = boardMap;
+    }
+
+    public static Board of(List<PieceEntity> pieces) {
+        final Map<Position, Piece> boardMap = new HashMap<>();
+        for (PieceEntity pieceEntity : pieces) {
+            Position position = pieceEntity.getPosition();
+            Piece piece = Piece.of(pieceEntity.getColor(), pieceEntity.getType());
+            boardMap.put(position, piece);
+        }
+        return new Board(boardMap);
     }
 
     public void movePiece(Position from, Position to, Color color) {

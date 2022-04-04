@@ -24,6 +24,13 @@ abstract class Running extends Started {
         return moveResult();
     }
 
+    static Game of(GameState state, Board board) {
+        if (state == GameState.BLACK_TURN) {
+            return new BlackTurn(board);
+        }
+        return new WhiteTurn(board);
+    }
+
     private Game moveResult() {
         if (board.countByType(KING) < ONGOING_GAME_KING_COUNT) {
             return new GameOver(board);

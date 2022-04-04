@@ -23,6 +23,10 @@ public class PieceEntity {
         this.color = Color.valueOf(colorValue);
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     public String getPositionKey() {
         return position.toKey();
     }

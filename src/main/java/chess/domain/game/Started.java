@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-abstract class Started implements Game {
+public abstract class Started implements Game {
 
     protected final Board board;
     private final GameState state;
@@ -20,6 +20,14 @@ abstract class Started implements Game {
     protected Started(Board board, GameState state) {
         this.board = board;
         this.state = state;
+    }
+
+    public static Game ofEntity(GameState state, List<PieceEntity> pieces) {
+        Board board = Board.of(pieces);
+        if (state == GameState.OVER) {
+            return new GameOver(board);
+        }
+        return Running.of(state, board);
     }
 
     @Override

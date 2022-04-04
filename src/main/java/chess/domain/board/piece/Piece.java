@@ -15,6 +15,13 @@ public abstract class Piece {
         this.type = type;
     }
 
+    public static Piece of(Color color, PieceType type){
+        if(type == PieceType.PAWN){
+            return new Pawn(color);
+        }
+        return new NonPawn(color, type);
+    }
+
     public abstract boolean canMove(Position from, Position to);
 
     public final boolean canAttack(Position from, Position to, Piece targetPiece) {
