@@ -3,14 +3,12 @@ var source = undefined;
 var destination = undefined;
 
 function gameStart() {
-    $.ajax({
-        type: 'GET',
-        url: '/initialize'
-    }).done(function() {
+    fetch('/initialize'
+    ).then((response) => {
         initializePosition();
         finished = false;
         location.reload();
-    }).fail(function(error) {
+    }).catch((error) => {
         alert(JSON.stringify(error));
     });
 }
@@ -36,35 +34,36 @@ function sendMoveCommand() {
         destination: destination
     };
 
-    $.ajax({
-        type: 'POST',
-        url: '/move',
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data)
-    }).done(function(res) {
+    fetch('/move', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)}
+    ).then(response => response.json()
+    ).then((data) => {
         initializePosition();
-        if (res.success) {
-            move(res);
+        if (data.success) {
+            move(data);
             return;
         }
-        printError(res.error);
-    }).fail(function(error) {
+        printError(data.error);
+    }).catch((error) => {
         initializePosition();
         alert(JSON.stringify(error));
     });
 }
 
 function printStatus() {
-    $.ajax({
-        type: 'GET',
-        url: '/status',
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json'
-    }).done(function(res) {
-        var output = '블랙팀의 점수 : ' + res.response.blackScore + '\n' + '화이트팀의 점수 : ' + res.response.whiteScore;
+    fetch('/status', {
+        headers: {
+            "Content-Type": "application/json",
+        }}
+    ).then(response => response.json()
+    ).then((data) => {
+        var output = '블랙팀의 점수 : ' + data.response.blackScore + '\n' + '화이트팀의 점수 : ' + data.response.whiteScore;
         alert(output);
-    }).fail(function(error) {
+    }).catch((error) => {
         alert(JSON.stringify(error));
     });
 }
@@ -74,10 +73,10 @@ function initializePosition() {
     destination = undefined;
 }
 
-function move(res) {
-    movePiece(res.response.source, res.response.destination);
-    addMovingHistory(res.response.source, res.response.destination);
-    if (res.response.finished) {
+function move(data) {
+    movePiece(data.response.source, data.response.destination);
+    addMovingHistory(data.response.source, data.response.destination);
+    if (data.response.finished) {
         finished = true;
         var message = '왕이 잡혔습니다. 게임을 종료합니다.';
         alert(message);
