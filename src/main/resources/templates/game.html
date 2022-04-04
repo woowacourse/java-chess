@@ -4,82 +4,89 @@
 <head>
     <meta charset="UTF-8">
     <title>ChessGame!</title>
-    <link rel="stylesheet" href="game.css"/>
+    <link rel="stylesheet" href="/game.css"/>
 </head>
 
 <body>
+    <div class="button">
+        <form id="start" method="post" action="/start">
+            <button name="start" type="submit">
+                Game Start!
+            </button>
+        </form>
+    </div>
     <div class="chess_board">
-        <div class="block white" id="a8"></div>
-        <div class="block black" id="b8"></div>
-        <div class="block white" id="c8"></div>
-        <div class="block black" id="d8"></div>
-        <div class="block white" id="e8"></div>
-        <div class="block black" id="f8"></div>
-        <div class="block white" id="g8"></div>
-        <div class="block black" id="h8"></div>
+        <div class="block white" id="a8">{{board.a8}}</div>
+        <div class="block black" id="b8">{{board.b8}}</div>
+        <div class="block white" id="c8">{{board.c8}}</div>
+        <div class="block black" id="d8">{{board.d8}}</div>
+        <div class="block white" id="e8">{{board.e8}}</div>
+        <div class="block black" id="f8">{{board.f8}}</div>
+        <div class="block white" id="g8">{{board.g8}}</div>
+        <div class="block black" id="h8">{{board.h8}}</div>
 
-        <div class="block black" id="a7"></div>
-        <div class="block white" id="b7"></div>
-        <div class="block black" id="c7"></div>
-        <div class="block white" id="d7"></div>
-        <div class="block black" id="e7"></div>
-        <div class="block white" id="f7"></div>
-        <div class="block black" id="g7"></div>
-        <div class="block white" id="h7"></div>
+        <div class="block black" id="a7">{{board.a7}}</div>
+        <div class="block white" id="b7">{{board.b7}}</div>
+        <div class="block black" id="c7">{{board.c7}}</div>
+        <div class="block white" id="d7">{{board.d7}}</div>
+        <div class="block black" id="e7">{{board.e7}}</div>
+        <div class="block white" id="f7">{{board.f7}}</div>
+        <div class="block black" id="g7">{{board.g7}}</div>
+        <div class="block white" id="h7">{{board.h7}}</div>
 
-        <div class="block white" id="a6"></div>
-        <div class="block black" id="b6"></div>
-        <div class="block white" id="c6"></div>
-        <div class="block black" id="d6"></div>
-        <div class="block white" id="e6"></div>
-        <div class="block black" id="f6"></div>
-        <div class="block white" id="g6"></div>
-        <div class="block black" id="h6"></div>
+        <div class="block white" id="a6">{{board.a6}}</div>
+        <div class="block black" id="b6">{{board.b6}}</div>
+        <div class="block white" id="c6">{{board.c6}}</div>
+        <div class="block black" id="d6">{{board.d6}}</div>
+        <div class="block white" id="e6">{{board.e6}}</div>
+        <div class="block black" id="f6">{{board.f6}}</div>
+        <div class="block white" id="g6">{{board.g6}}</div>
+        <div class="block black" id="h6">{{board.h6}}</div>
 
-        <div class="block black" id="a5"></div>
-        <div class="block white" id="b5"></div>
-        <div class="block black" id="c5"></div>
-        <div class="block white" id="d5"></div>
-        <div class="block black" id="e5"></div>
-        <div class="block white" id="f5"></div>
-        <div class="block black" id="g5"></div>
-        <div class="block white" id="h5"></div>
+        <div class="block black" id="a5">{{board.a5}}</div>
+        <div class="block white" id="b5">{{board.b5}}</div>
+        <div class="block black" id="c5">{{board.c5}}</div>
+        <div class="block white" id="d5">{{board.d5}}</div>
+        <div class="block black" id="e5">{{board.e5}}</div>
+        <div class="block white" id="f5">{{board.f5}}</div>
+        <div class="block black" id="g5">{{board.g5}}</div>
+        <div class="block white" id="h5">{{board.h5}}</div>
 
-        <div class="block white" id="a4"></div>
-        <div class="block black" id="b4"></div>
-        <div class="block white" id="c4"></div>
-        <div class="block black" id="d4"></div>
-        <div class="block white" id="e4"></div>
-        <div class="block black" id="f4"></div>
-        <div class="block white" id="g4"></div>
-        <div class="block black" id="h4"></div>
+        <div class="block white" id="a4">{{board.a4}}</div>
+        <div class="block black" id="b4">{{board.b4}}</div>
+        <div class="block white" id="c4">{{board.c4}}</div>
+        <div class="block black" id="d4">{{board.d4}}</div>
+        <div class="block white" id="e4">{{board.e4}}</div>
+        <div class="block black" id="f4">{{board.f4}}</div>
+        <div class="block white" id="g4">{{board.g4}}</div>
+        <div class="block black" id="h4">{{board.h4}}</div>
 
-        <div class="block black" id="a3"></div>
-        <div class="block white" id="b3"></div>
-        <div class="block black" id="c3"></div>
-        <div class="block white" id="d3"></div>
-        <div class="block black" id="e3"></div>
-        <div class="block white" id="f3"></div>
-        <div class="block black" id="g3"></div>
-        <div class="block white" id="h3"></div>
+        <div class="block black" id="a3">{{board.a3}}</div>
+        <div class="block white" id="b3">{{board.b3}}</div>
+        <div class="block black" id="c3">{{board.c3}}</div>
+        <div class="block white" id="d3">{{board.d3}}</div>
+        <div class="block black" id="e3">{{board.e3}}</div>
+        <div class="block white" id="f3">{{board.f3}}</div>
+        <div class="block black" id="g3">{{board.g3}}</div>
+        <div class="block white" id="h3">{{board.h3}}</div>
 
-        <div class="block white" id="a2"></div>
-        <div class="block black" id="b2"></div>
-        <div class="block white" id="c2"></div>
-        <div class="block black" id="d2"></div>
-        <div class="block white" id="e2"></div>
-        <div class="block black" id="f2"></div>
-        <div class="block white" id="g2"></div>
-        <div class="block black" id="h2"></div>
+        <div class="block white" id="a2">{{board.a2}}</div>
+        <div class="block black" id="b2">{{board.b2}}</div>
+        <div class="block white" id="c2">{{board.c2}}</div>
+        <div class="block black" id="d2">{{board.d2}}</div>
+        <div class="block white" id="e2">{{board.e2}}</div>
+        <div class="block black" id="f2">{{board.f2}}</div>
+        <div class="block white" id="g2">{{board.g2}}</div>
+        <div class="block black" id="h2">{{board.h2}}</div>
 
-        <div class="block black" id="a1"></div>
-        <div class="block white" id="b1"></div>
-        <div class="block black" id="c1"></div>
-        <div class="block white" id="d1"></div>
-        <div class="block black" id="e1"></div>
-        <div class="block white" id="f1"></div>
-        <div class="block black" id="g1"></div>
-        <div class="block white" id="h1"></div>
+        <div class="block black" id="a1">{{board.a1}}</div>
+        <div class="block white" id="b1">{{board.b1}}</div>
+        <div class="block black" id="c1">{{board.c1}}</div>
+        <div class="block white" id="d1">{{board.d1}}</div>
+        <div class="block black" id="e1">{{board.e1}}</div>
+        <div class="block white" id="f1">{{board.f1}}</div>
+        <div class="block black" id="g1">{{board.g1}}</div>
+        <div class="block white" id="h1">{{board.h1}}</div>
 
     </div>
 </body>

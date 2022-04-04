@@ -11,6 +11,7 @@ import chess.domain.position.Position;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -167,6 +168,12 @@ public class ChessBoard {
         return score.calculateScore();
     }
 
+    public Map<String, ChessPiece> convertToMap(){
+        return chessBoard.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue() ));
+    }
+
     public Color decideWinner() {
         return currentTurn.toOpposite();
     }
@@ -186,4 +193,5 @@ public class ChessBoard {
     public void start() {
         gameStatus = GameStatus.PLAYING;
     }
+
 }

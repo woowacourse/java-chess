@@ -19,3 +19,17 @@
 .block.black {
     background: #000000;
 }
+
+.button{
+    text-align: center;
+    margin: 10px;
+}
+
+button{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    background: black;
+    color: red;
+}
