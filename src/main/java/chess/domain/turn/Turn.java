@@ -18,4 +18,8 @@ public enum Turn {
     Turn(final Function<ChessBoard, GameTurn> gameTurnCreator) {
         this.gameTurnCreator = gameTurnCreator;
     }
+
+    public GameTurn createGameTurn(ChessBoard chessBoard) {
+        return gameTurnCreator.apply(chessBoard);
+    }
 }
