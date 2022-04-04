@@ -8,16 +8,16 @@ import java.util.stream.Collectors;
 
 public class ChessGameResponse {
 
-    private final String turn;
+    private final boolean isEnd;
     private final Map<String, PieceResponse> pieceResponses;
 
-    public ChessGameResponse(String turn, Map<String, PieceResponse> pieceResponses) {
-        this.turn = turn;
+    public ChessGameResponse(boolean isEnd, Map<String, PieceResponse> pieceResponses) {
+        this.isEnd = isEnd;
         this.pieceResponses = pieceResponses;
     }
 
     public static ChessGameResponse from(GameTurn gameTurn) {
-        return new ChessGameResponse(gameTurn.currentTurn(), createPieceResponses(gameTurn));
+        return new ChessGameResponse(gameTurn.isEnd(), createPieceResponses(gameTurn));
     }
 
     private static Map<String, PieceResponse> createPieceResponses(final GameTurn gameTurn) {
@@ -34,7 +34,7 @@ public class ChessGameResponse {
 
     public Map<String, Object> toMap() {
         Map<String, Object> result = new HashMap<>();
-        result.put("turn", turn);
+        result.put("isEnd", isEnd);
         result.putAll(pieceResponses);
         return result;
     }

@@ -4,9 +4,7 @@ import static spark.Spark.get;
 
 import chess.controller.dto.ChessGameResponse;
 import chess.service.ChessGameService;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import com.google.gson.Gson;
 
 public class ChessGameController {
 
@@ -17,17 +15,10 @@ public class ChessGameController {
     }
 
     public void run() {
-        getChessGame();
-    }
-
-    private void getChessGame() {
-        get("/", (req, res) -> {
-            ChessGameResponse chessGameResponse =  ChessGameResponse.from(chessGameService.findGameTurn());
-            return render(chessGameResponse.toMap(), "index.html");
+        Gson gson = new Gson();
+        get("/", "application/json", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(ChessGameResponse.from(chessGameService.findGameTurn()));
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

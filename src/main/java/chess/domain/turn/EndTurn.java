@@ -45,9 +45,4 @@ public class EndTurn implements GameTurn {
     public Map<Position, Piece> pieces() {
         return chessBoard.getPieces();
     }
-
-    @Override
-    public String currentTurn() {
-        return Turn.END.name();
-    }
 }

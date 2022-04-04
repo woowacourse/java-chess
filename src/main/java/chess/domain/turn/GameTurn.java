@@ -20,6 +20,4 @@ public interface GameTurn {
     boolean isEnd();
 
     Map<Position, Piece> pieces();
-
-    String currentTurn();
 }
