@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.staticFileLocation;
 
+import chess.domain.BoardFactory;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -15,6 +16,11 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "chess.html");
         });
+
+        get("/start", ((request, response) -> {
+            Map<String, Object> model = BoardFactory.getInitialPieces().toMap();
+            return render(model, "chess.html");
+        }));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

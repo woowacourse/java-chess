@@ -75,4 +75,8 @@ public final class Position {
     public File getFile() {
         return file;
     }
+
+    public String toString() {
+        return file.toString().toLowerCase() + rank.getValue();
+    }
 }

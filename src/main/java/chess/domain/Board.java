@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public final class Board {
@@ -121,5 +122,10 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public Map<String, Object> toMap() {
+        return board.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
     }
 }
