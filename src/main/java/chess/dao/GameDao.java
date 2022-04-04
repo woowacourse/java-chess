@@ -27,7 +27,7 @@ public class GameDao {
         }
     }
 
-    public boolean isGameExist() throws SQLException {
+    private boolean isGameExist() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select no from game";
         boolean gameExist;
@@ -43,5 +43,23 @@ public class GameDao {
             e.printStackTrace();
         }
         return gameExist;
+    }
+
+    public boolean isWhiteTurn() throws SQLException {
+        Connection connection = DatabaseConnector.getConnection();
+        final String sql = "select white_turn from game";
+        boolean whiteTurn;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        whiteTurn = resultSet.getBoolean("white_turn");
+        try {
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return whiteTurn;
     }
 }

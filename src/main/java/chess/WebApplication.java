@@ -25,6 +25,9 @@ public class WebApplication {
         GameController gameController = new GameController();
         JsonTransformer jsonTransformer = new JsonTransformer();
 
+        GameDao gameDao = new GameDao();
+        BoardDao boardDao = new BoardDao();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("ready", true);
@@ -33,6 +36,12 @@ public class WebApplication {
 
         get("/start", (req, res) -> {
             gameController.start();
+            res.redirect("/play");
+            return null;
+        });
+
+        get("/load", (req, res) -> {
+            gameController.load(boardDao.load(), gameDao.isWhiteTurn());
             res.redirect("/play");
             return null;
         });
@@ -71,9 +80,7 @@ public class WebApplication {
 
         get("/save", (req, res) -> {
             try {
-                GameDao gameDao = new GameDao();
                 gameDao.save();
-                BoardDao boardDao = new BoardDao();
                 boardDao.save(gameController.getBoard());
             } catch (Exception e) {
                 res.status(500);

@@ -1,13 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.Camp;
 import chess.domain.board.Position;
+import java.util.Arrays;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 public enum Type {
-    BISHOP(Position::inDiagonalWith, 3),
-    KING(Position::isNextTo, 0),
-    KNIGHT(Type::canKnightApproach, 2.5),
-    PAWN(Position::isNextTo, 1),
+    BISHOP(Position::inDiagonalWith, 3, Bishop::new),
+    KING(Position::isNextTo, 0, King::new),
+    KNIGHT(Type::canKnightApproach, 2.5, Knight::new),
+    PAWN(Position::isNextTo, 1, Pawn::new),
     QUEEN((sourcePosition, targetPosition) -> {
         if (sourcePosition.inSameColumnWith(targetPosition)) {
             return true;
@@ -16,24 +19,28 @@ public enum Type {
             return true;
         }
         return sourcePosition.inDiagonalWith(targetPosition);
-    }, 9),
+    }, 9, Queen::new),
     ROOK((sourcePosition, targetPosition) -> {
         if (sourcePosition.inSameColumnWith(targetPosition)) {
             return true;
         }
         return sourcePosition.inSameRowWith(targetPosition);
-    }, 5),
-    NONE((sourcePosition, targetPosition) -> false, 0);
+    }, 5, Rook::new),
+    NONE((sourcePosition, targetPosition) -> false, 0, (camp) -> new None());
 
     private static final int DISTANCE_KNIGHT_FIRST_STEP = 2;
     private static final int DISTANCE_KNIGHT_SECOND_STEP = 1;
 
     private final BiPredicate<Position, Position> distanceChecker;
     private final double score;
+    private final Function<Camp, Piece> pieceSupplier;
 
-    Type(BiPredicate<Position, Position> distanceChecker, double score) {
+    private static final String ERROR_NO_SUCH_TYPE = "존재하지 않는 기물 타입입니다.";
+
+    Type(BiPredicate<Position, Position> distanceChecker, double score, Function<Camp, Piece> pieceSupplier) {
         this.distanceChecker = distanceChecker;
         this.score = score;
+        this.pieceSupplier = pieceSupplier;
     }
 
     private static boolean canKnightApproach(Position sourcePosition, Position targetPosition) {
@@ -43,6 +50,17 @@ public enum Type {
             return true;
         }
         return columnDistance == DISTANCE_KNIGHT_FIRST_STEP && rowDistance == DISTANCE_KNIGHT_SECOND_STEP;
+    }
+
+    public static Type from(String name) {
+        return Arrays.stream(values())
+                .filter(type -> type.toString().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_TYPE));
+    }
+
+    public Piece generatePiece(Camp camp) {
+        return this.pieceSupplier.apply(camp);
     }
 
     public boolean canNotApproach(Position sourcePosition, Position targetPosition) {

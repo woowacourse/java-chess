@@ -19,6 +19,10 @@ public class GameController {
         return chessGame.getBoard().getSquares();
     }
 
+    public void load(Map<Position, Piece> board, boolean whiteTurn) {
+        chessGame.load(board, whiteTurn);
+    }
+
     public Map<Position, Piece> move(Position sourcePosition, Position targetPosition) {
         chessGame.move(sourcePosition, targetPosition);
         return chessGame.getBoard().getSquares();

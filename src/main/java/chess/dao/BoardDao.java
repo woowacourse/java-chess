@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 public class BoardDao {
 
@@ -36,7 +38,7 @@ public class BoardDao {
         }
     }
 
-    public boolean isBoardExist() throws SQLException {
+    private boolean isBoardExist() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select no from piece";
         boolean boardExist;
@@ -52,5 +54,31 @@ public class BoardDao {
             e.printStackTrace();
         }
         return boardExist;
+    }
+
+    public Map<Position, Piece> load() throws SQLException {
+        Connection connection = DatabaseConnector.getConnection();
+        final String sql = "select type, white, position from piece";
+
+        Map<Position, Piece> board = new TreeMap<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        while(resultSet.next()) {
+            Type type = Type.from(resultSet.getString("type"));
+            Camp camp = Camp.BLACK;
+            if (resultSet.getBoolean("white")) {
+                camp = Camp.WHITE;
+            }
+            Piece piece = type.generatePiece(camp);
+            board.put(Position.of(resultSet.getString("position")), piece);
+        }
+        try {
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return board;
     }
 }
