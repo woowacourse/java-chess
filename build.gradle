@@ -13,6 +13,7 @@ dependencies {
     implementation 'com.sparkjava:spark-core:2.9.3'
     implementation 'com.sparkjava:spark-template-handlebars:2.7.1'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
+    implementation 'com.sparkjava:spark-template-handlebars:2.7.1'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     testImplementation 'com.h2database:h2:1.4.199'
 
