@@ -47,6 +47,17 @@ class ChessGameServiceTest {
     }
 
     @Test
+    @DisplayName("start 시 체스 보드 생성")
+    void start() {
+        // when
+        chessGameService.start();
+        Map<Position, Piece> results = pieceDao.findAllPieces();
+
+        // then
+        assertThat(results).hasSize(32);
+    }
+
+    @Test
     @DisplayName("Position을 받아 상대 기물이 있는 곳에 move")
     void moveTargetPosition() {
         // given

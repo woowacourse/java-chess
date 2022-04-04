@@ -6,6 +6,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.turn.GameTurn;
 import chess.domain.turn.Turn;
 import java.util.Map.Entry;
@@ -25,6 +26,7 @@ public class ChessGameService {
         if (!gameTurn.isEnd()) {
             throw new IllegalStateException("아직 진행 중인 게임이 있습니다.");
         }
+        pieceDao.savePieces(PieceFactory.createNewChessBoard());
     }
 
     public void move(Position source, Position target) {
