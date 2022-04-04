@@ -49,4 +49,9 @@ public class Location {
     public Location copyOf() {
         return Location.of(file, rank);
     }
+
+    @Override
+    public String toString() {
+        return file.toString() + rank.toString();
+    }
 }

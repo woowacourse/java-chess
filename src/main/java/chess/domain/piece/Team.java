@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 public enum Team {
-    BLACK("Black"), WHITE("White"), NONE("None");
+    BLACK("Black"),
+    WHITE("White"),
+    NONE("None");
 
     private final String name;
 

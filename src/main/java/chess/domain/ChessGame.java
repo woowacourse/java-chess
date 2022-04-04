@@ -8,6 +8,7 @@ import chess.domain.piece.Team;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
+import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -49,5 +50,10 @@ public class ChessGame {
             throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
         }
         this.state = state.end();
+    }
+
+    public Map<String, Piece> toMap() {
+        Board board = state.getBoard();
+        return board.toMap();
     }
 }

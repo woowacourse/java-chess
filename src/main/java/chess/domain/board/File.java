@@ -35,4 +35,9 @@ public enum File {
         String string = String.valueOf((char) ascii);
         return File.of(string);
     }
+
+    @Override
+    public String toString() {
+        return file;
+    }
 }

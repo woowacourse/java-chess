@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <h1>♟️ 초간단 체스</h1>
+    <section class="chess-ui">
+        {{#this}}
+        <div class="black-square"><img src="images/{{a8.team}}{{a8.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{b8.team}}{{b8.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{c8.team}}{{c8.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{d8.team}}{{d8.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{e8.team}}{{e8.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{f8.team}}{{f8.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{g8.team}}{{g8.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{h8.team}}{{h8.name}}.png"/></div>
+
+        <div class="white-square"><img src="images/{{a7.team}}{{a7.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{b7.team}}{{b7.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{c7.team}}{{c7.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{d7.team}}{{d7.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{e7.team}}{{e7.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{f7.team}}{{f7.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{g7.team}}{{g7.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{h7.team}}{{h7.name}}.png"/></div>
+
+        <div class="black-square"><img src="images/{{a6.team}}{{a6.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{b6.team}}{{b6.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{c6.team}}{{c6.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{d6.team}}{{d6.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{e6.team}}{{e6.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{f6.team}}{{f6.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{g6.team}}{{g6.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{h6.team}}{{h6.name}}.png"/></div>
+
+        <div class="white-square"><img src="images/{{a5.team}}{{a5.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{b5.team}}{{b5.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{c5.team}}{{c5.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{d5.team}}{{d5.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{e5.team}}{{e5.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{f5.team}}{{f5.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{g5.team}}{{g5.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{h5.team}}{{h5.name}}.png"/></div>
+
+        <div class="black-square"><img src="images/{{a4.team}}{{a4.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{b4.team}}{{b4.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{c4.team}}{{c4.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{d4.team}}{{d4.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{e4.team}}{{e4.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{f4.team}}{{f4.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{g4.team}}{{g4.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{h4.team}}{{h4.name}}.png"/></div>
+
+        <div class="white-square"><img src="images/{{a3.team}}{{a3.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{b3.team}}{{b3.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{c3.team}}{{c3.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{d3.team}}{{d3.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{e3.team}}{{e3.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{f3.team}}{{f3.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{g3.team}}{{g3.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{h3.team}}{{h3.name}}.png"/></div>
+
+        <div class="black-square"><img src="images/{{a2.team}}{{a2.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{b2.team}}{{b2.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{c2.team}}{{c2.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{d2.team}}{{d2.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{e2.team}}{{e2.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{f2.team}}{{f2.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{g2.team}}{{g2.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{h2.team}}{{h2.name}}.png"/></div>
+
+        <div class="white-square"><img src="images/{{a1.team}}{{a1.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{b1.team}}{{b1.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{c1.team}}{{c1.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{d1.team}}{{d1.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{e1.team}}{{e1.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{f1.team}}{{f1.name}}.png"/></div>
+        <div class="white-square"><img src="images/{{g1.team}}{{g1.name}}.png"/></div>
+        <div class="black-square"><img src="images/{{h1.team}}{{h1.name}}.png"/></div>
+        {{/this}}
+    </section>
+    <section>
+        <form method="post" action="/start">
+            <input type="submit" value="게임 시작">
+        </form>
+    </section>
+    <section>
+        <h2>체스말 이동</h2>
+        <form method="post" action="/move">
+            시작 위치: <input type="text" name="source">
+            목표 위치: <input type="text" name="target">
+            <input type="submit" value="이동">
+        </form>
+    </section>
+</div>
 </body>
+
 </html>

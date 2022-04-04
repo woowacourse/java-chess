@@ -125,4 +125,10 @@ public class Board {
                 .map(chessBoard::get)
                 .collect(Collectors.toList());
     }
+
+    public Map<String, Piece> toMap() {
+        return chessBoard.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
+    }
 }

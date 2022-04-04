@@ -39,7 +39,11 @@ public abstract class Piece {
     }
 
     public String getName() {
-        return name.getName(team);
+        return name.name();
+    }
+
+    public String getTeam() {
+        return team.name();
     }
 
     public abstract boolean isPawn();
