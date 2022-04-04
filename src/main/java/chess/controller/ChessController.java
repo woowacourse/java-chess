@@ -8,6 +8,7 @@ import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -45,6 +46,7 @@ public class ChessController {
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            moveDto.validateMoveDto();
             return gson.toJson(chessService.move(moveDto));
         });
     }
