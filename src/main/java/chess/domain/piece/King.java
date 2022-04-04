@@ -36,7 +36,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Direction matchDirection(Position from, Position to) {
+    protected Direction matchDirection(Position from, Position to) {
         Direction direction = DirectionDecider.generateUnitPosition(DIRECTIONS, from, to);
         if (from.canReachUnderThreshold(to, KING_MAX_DISTANCE)) {
             return direction;
@@ -47,5 +47,13 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_king.png";
+        }
+        return "black_king.png";
     }
 }

@@ -36,4 +36,12 @@ public class Bishop extends Piece {
     public boolean isBishop() {
         return true;
     }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_bishop.png";
+        }
+        return "black_bishop.png";
+    }
 }

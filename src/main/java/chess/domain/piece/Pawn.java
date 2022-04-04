@@ -7,10 +7,13 @@ import java.util.List;
 
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
+import java.util.Map;
 
 public class Pawn extends Piece {
 
     private static final String INVALID_DISTANCE_PAWN = "Pawn이 갈 수 없는 거리입니다.";
+    private static final String PAWN_ONLY_DIAGONAL_CATCH = "폰은 본인 진행 방향 대각선에 있는 적만 잡을 수 있습니다.";
+    private static final String CANNOT_MOVE_DIAGONAL_NOT_ENEMY = "폰은 적이 없으면 대각선으로 갈 수 없습니다.";
 
     private static final int BLACK_PAWN_INITIAL_ROW = 7;
     private static final int WHITE_PAWN_INITIAL_ROW = 2;
@@ -38,7 +41,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Direction matchDirection(Position from, Position to) {
+    protected Direction matchDirection(Position from, Position to) {
         Direction findDirection = matchDirectionByColor(from, to);
         if (checkFirstMove(from, to, findDirection) || checkMove(from, to)) {
             return findDirection;
@@ -67,7 +70,44 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public void validateMove(Position from, Position to, Map<Position, Piece> pieces) {
+        Direction direction = matchDirection(from, to);
+        List<Position> path = from.backtrackPath(to);
+        isNotBlocked(pieces, path);
+        doesSatisfyPawnMoveCondition(to, pieces, direction);
+    }
+
+    private void doesSatisfyPawnMoveCondition(Position to, Map<Position, Piece> pieces, Direction direction) {
+        if (pieces.containsKey(to)) {
+            validateSameColor(pieces.get(to));
+            validateNotDiagonal(direction);
+            return;
+        }
+        validateDiagonal(direction);
+    }
+
+    private void validateDiagonal(Direction direction) {
+        if (direction.isDiagonal()) {
+            throw new IllegalArgumentException(PAWN_ONLY_DIAGONAL_CATCH);
+        }
+    }
+
+    private void validateNotDiagonal(Direction direction) {
+        if (!direction.isDiagonal()) {
+            throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL_NOT_ENEMY);
+        }
+    }
+
+    @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_pawn.png";
+        }
+        return "black_pawn.png";
     }
 }

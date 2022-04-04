@@ -43,7 +43,6 @@ public abstract class State {
         throw new IllegalStateException(CANNOT_GET_COLOR);
     }
 
-
     public Board getBoard() {
         return board;
     }

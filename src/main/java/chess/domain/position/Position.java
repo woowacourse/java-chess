@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -101,5 +102,11 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    public String getPosition() {
+        Map<Integer, String> columnCache = Map.of(1, "a", 2,"b", 3, "c", 4, "d",
+                5, "e", 6 , "f", 7, "g", 8, "h");
+        return columnCache.get(this.column) + this.row;
     }
 }
