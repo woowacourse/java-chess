@@ -61,9 +61,8 @@ public enum MoveDirection {
         }
         if (abs(base) > abs(divider)) {
             return base / divider;
-        } else {
-            return unitSign(base);
         }
+        return unitSign(base);
     }
 
     private static double unitSign(double base) {
