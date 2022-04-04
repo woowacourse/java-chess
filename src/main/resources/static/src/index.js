@@ -24,15 +24,19 @@ function checkSendToServer() {
 }
 
 function sendToServer() {
-    let xhr = new XMLHttpRequest();
-    let url = "/move";
-    xhr.open("POST", url, true);
-
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-
-    var data = source + " " + target;
-    xhr.send(data);
-
-    location.reload();
+  fetch('/move', {
+          method: "POST",
+          headers: {
+              "Content-Type": "text/plain",
+          },
+          body: source + " " + target
+      }).then((response) => {
+              response.json().then(data => {
+                  if (data.status === 400) {
+                      alert(data.errorMessage);
+                  }
+                  location.reload();
+              });
+          }
+      );
 }

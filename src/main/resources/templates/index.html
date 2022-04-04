@@ -21,6 +21,21 @@
             {{/cells}}
             {{/board}}
         </table>
+        <br />
+        <form action="/status" method="get">
+            <button>점수</button>
+        </form>
+
+        <div class="score">
+            {{#each score}}
+            <h1> {{@key}} : {{this}} </h1>
+            {{/each}}
+        </div>
+
+        <form action="/end" method="get">
+            <button>게임종료</button>
+        </form>
+        </form>
     </div>
     </body>
 </html>

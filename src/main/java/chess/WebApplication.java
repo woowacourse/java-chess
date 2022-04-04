@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.state.Ready;
+import chess.dto.ResponseDto;
 import chess.dto.board.BoardDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -36,11 +37,17 @@ public class WebApplication {
         post("/move", (req, res) -> {
             final String commandString = "move " + req.body();
             final Command command = Command.from(commandString);
-            chessController.progress(command);
+            final ResponseDto responseDto = chessController.progress(command);
+            return responseDto.toString();
+        });
 
+        get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            final BoardDto boardDto = BoardDto.of(chessController.state());
-            model.put("board", boardDto);
+            final Command command = Command.from("status");
+            chessController.progress(command);
+            var score = chessController.state().status();
+
+            model.put("score", score);
             return render(model, "index.html");
         });
     }

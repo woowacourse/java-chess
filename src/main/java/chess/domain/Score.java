@@ -94,4 +94,14 @@ public final class Score {
     public double blackScore() {
         return result.get(Team.BLACK);
     }
+
+    public Map<Team, Double> getResult() {
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Score" +
+                "result=" + result;
+    }
 }

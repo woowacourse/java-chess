@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.command.Command;
 import chess.domain.state.State;
+import chess.dto.ResponseDto;
 
 public class ChessController {
     private State state;
@@ -14,8 +15,14 @@ public class ChessController {
         state = state.start();
     }
 
-    public void progress(Command command) {
-        state = command.changeChessState(state);
+    public ResponseDto progress(Command command) {
+        try {
+            state = command.changeChessState(state);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseDto(400, ex.getMessage());
+        }
+
+        return new ResponseDto(200, "");
     }
 
     public State state() {
