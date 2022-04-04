@@ -1,17 +1,19 @@
 package chess.controller;
 
-import chess.dao.PieceDao;
 import chess.dao.BoardDao;
-import chess.dto.CommandRequest;
+import chess.dao.PieceDao;
 import chess.dto.request.MoveRequest;
 import chess.dto.response.BoardResult;
 import chess.dto.response.PieceResult;
 import chess.dto.response.Turn;
-import chess.game.*;
+import chess.game.Board;
+import chess.game.BoardInitializer;
+import chess.game.MoveCommand;
+import chess.game.Position;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.state.Move;
-import chess.state.Ready;
+import chess.state.Status;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
@@ -23,13 +25,11 @@ import java.util.stream.Collectors;
 
 public class ChessController {
 
-    private final Game game;
     private final Gson gson;
     private final BoardDao boardDao;
     private final PieceDao pieceDao;
 
     public ChessController() {
-        game = new Game(Ready.start(Command.START));
         gson = new Gson();
         boardDao = new BoardDao();
         pieceDao = new PieceDao();
@@ -65,21 +65,18 @@ public class ChessController {
     }
 
     public ModelAndView game(final Request request, final Response response) {
-        final String boardId = request.params("boardId");
-        final Map<Position, Piece> board = pieceDao.findAllByBoardId(Long.valueOf(boardId));
+        final Long boardId = Long.valueOf(request.params("boardId"));
+        final Map<Position, Piece> board = pieceDao.findAllByBoardId(boardId);
         return new ModelAndView(new BoardResult(board, boardId).getValue(), "game.html");
     }
 
-    public Route score() {
-        final Map<Color, Double> score = game.run(new CommandRequest("status"));
+    public ModelAndView score(final Request request, final Response response) {
+        final Long boardId = Long.valueOf(request.params("boardId"));
+        final Map<Color, Double> score = new Status(new Board(pieceDao.findAllByBoardId(boardId)), Color.NONE).score().getScore();
         final Map<String, Double> scoreResult = score.keySet()
                 .stream()
                 .collect(Collectors.toMap(Enum::name, score::get));
-        return (req, res) -> new ModelAndView(scoreResult, "game.html");
-    }
-
-    private static String render(final Map<String, PieceResult> model, final String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return new ModelAndView(scoreResult, "game.html");
     }
 }
 

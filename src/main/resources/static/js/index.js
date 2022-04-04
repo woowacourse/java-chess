@@ -32,7 +32,11 @@ function start() {
 }
 
 async function scoreButton() {
-    let response = await fetch("/score");
+    const url = window.location.href
+    const split = url.split("/");
+    const boardId = split[split.length -1];
+
+    const response = await fetch("/score/" + boardId);
     const score = await response.json();
     alert("블랙 : " + score.model.BLACK + ", 화이트 : " + score.model.WHITE);
 }

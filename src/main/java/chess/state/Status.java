@@ -6,7 +6,7 @@ import chess.piece.Color;
 
 public class Status extends Running {
 
-    Status(final Board board, final Color color) {
+    public Status(final Board board, final Color color) {
         super(board, color);
     }
 

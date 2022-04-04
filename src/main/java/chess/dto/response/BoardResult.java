@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 public class BoardResult {
 
     private final Map<String, PieceResult> value;
-    private final String boardId;
+    private final Long boardId;
 
-    public BoardResult(final Map<Position, Piece> board, final String boardId) {
+    public BoardResult(final Map<Position, Piece> board, final Long boardId) {
         this.value = board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(m -> position(m.getKey()), m -> piece(m.getValue())));
@@ -31,7 +31,7 @@ public class BoardResult {
         return value;
     }
 
-    public String getBoardId() {
+    public Long getBoardId() {
         return boardId;
     }
 }
