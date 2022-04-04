@@ -35,6 +35,10 @@ public class PieceDto {
         return position;
     }
 
+    public Piece createPiece() {
+        return type.createPiece(color);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

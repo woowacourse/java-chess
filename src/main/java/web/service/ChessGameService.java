@@ -36,7 +36,6 @@ import web.dao.PieceDao;
 import web.dao.ScoreDao;
 import web.dto.GameStatus;
 import web.dto.PieceDto;
-import web.dto.PieceType;
 
 public class ChessGameService {
 
@@ -64,29 +63,7 @@ public class ChessGameService {
 
     private Map<Position, Piece> createBoard(List<PieceDto> pieces) {
         return pieces.stream()
-                .collect(toMap(PieceDto::getPosition, this::createPiece));
-    }
-
-    private Piece createPiece(PieceDto pieceDto) {
-        if (pieceDto.getType() == PieceType.PAWN) {
-            return new Pawn(pieceDto.getColor());
-        }
-        if (pieceDto.getType() == PieceType.KING) {
-            return new King(pieceDto.getColor());
-        }
-        if (pieceDto.getType() == PieceType.QUEEN) {
-            return new Queen(pieceDto.getColor());
-        }
-        if (pieceDto.getType() == PieceType.ROOK) {
-            return new Rook(pieceDto.getColor());
-        }
-        if (pieceDto.getType() == PieceType.KNIGHT) {
-            return new Knight(pieceDto.getColor());
-        }
-        if (pieceDto.getType() == PieceType.BISHOP) {
-            return new Bishop(pieceDto.getColor());
-        }
-        throw new IllegalArgumentException("잘못된 piece type 입니다.");
+                .collect(toMap(PieceDto::getPosition, PieceDto::createPiece));
     }
 
     private void updateChessGame(ChessBoard chessBoard, Movement movement) {

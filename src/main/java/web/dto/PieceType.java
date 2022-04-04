@@ -1,6 +1,7 @@
 package web.dto;
 
 import chess.piece.Bishop;
+import chess.piece.Color;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
@@ -19,6 +20,25 @@ public enum PieceType {
             Rook.class, ROOK,
             Bishop.class, BISHOP,
             Knight.class, KNIGHT);
+
+    public Piece createPiece(Color color) {
+        if (this == PAWN) {
+            return new Pawn(color);
+        }
+        if (this == KING) {
+            return new King(color);
+        }
+        if (this == QUEEN) {
+            return new Queen(color);
+        }
+        if (this == ROOK) {
+            return new Rook(color);
+        }
+        if (this == BISHOP) {
+            return new Bishop(color);
+        }
+        return new Knight(color);
+    }
 
     public static PieceType valueOf(Piece piece) {
         return map.get(piece.getClass());
