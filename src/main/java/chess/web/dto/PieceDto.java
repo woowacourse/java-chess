@@ -1,6 +1,7 @@
 package chess.web.dto;
 
 import chess.domain.piece.Piece;
+import chess.web.utils.Converter;
 
 public class PieceDto {
     private final String position;
@@ -12,9 +13,7 @@ public class PieceDto {
     }
 
     public static PieceDto of(String position, Piece piece) {
-        String name = piece.getName().toLowerCase();
-        String color = piece.getColor().toLowerCase();
-        return new PieceDto(position, "images/" + name + "_" + color + ".png");
+        return new PieceDto(position, Converter.imagePathFrom(piece));
     }
 
     public static PieceDto of(String position, String imageName) {

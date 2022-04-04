@@ -5,6 +5,7 @@ import java.util.Arrays;
 import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
 import chess.domain.game.state.position.Rank;
+import chess.domain.piece.Piece;
 
 public class Converter {
     public static Position positionFrom(String position) {
@@ -23,5 +24,11 @@ public class Converter {
             .orElseThrow(() -> new IllegalArgumentException("position 정보가 잘못되었습니다."));
 
         return Position.of(file, rank);
+    }
+
+    public static String imagePathFrom(Piece piece) {
+        String name = piece.getName().toLowerCase();
+        String color = piece.getColor().toLowerCase();
+        return "images/" + name + "_" + color + ".png";
     }
 }
