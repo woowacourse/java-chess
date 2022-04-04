@@ -29,14 +29,14 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
-        get("/api/start", (req, res) ->
-                chessService.startGame(), jsonTransformer
-        );
+        get("/api/start", (req, res) -> chessService.startGame(), jsonTransformer);
 
         post("/api/move", (req, res) -> {
             MoveRequest moveRequest = new Gson().fromJson(req.body(), MoveRequest.class);
             return chessService.move(moveRequest);
         }, jsonTransformer);
+
+        get("/api/status", (req, res) -> chessService.status(), jsonTransformer);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

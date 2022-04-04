@@ -2,6 +2,15 @@ const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
 const section = document.getElementById("chess-section");
+const startButton = document.getElementById("start-button");
+const turn = document.getElementById("turn");
+const statusButton = document.getElementById("status-button");
+const score = document.getElementById("score");
+
+const Turn = {
+  WHITE_RUNNING: "백",
+  BLACK_RUNNING: "흑",
+};
 
 const lightCellColor = "#ffffff";
 const darkCellColor = "#8977ad";
@@ -16,8 +25,8 @@ window.onload = async function () {
     makeRow(row, i);
     section.appendChild(row);
   }
-  const res = await start();
-  rendBoard(res.board.pieces);
+  startButton.addEventListener("click", start);
+  statusButton.addEventListener("click", getStatus);
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -42,9 +51,15 @@ function decideCellColor(column, row) {
   return darkCellColor;
 }
 
+function printTurn(res) {
+  turn.innerText = `${Turn[res.gameState]}의 턴입니다.`;
+}
+
 async function start() {
-  const res = await fetch("/api/start");
-  return await res.json();
+  let res = await fetch("/api/start");
+  res = await res.json();
+  rendBoard(res.board.pieces);
+  printTurn(res);
 }
 
 function rendBoard(pieces) {
@@ -77,6 +92,7 @@ async function onclick(event) {
   if (firstSelected && secondSelected) {
     const res = await move();
     rendBoard(res.board.pieces);
+    printTurn(res);
   }
 }
 
@@ -127,4 +143,11 @@ function clearSelection() {
   firstSelected.childNodes[0].classList.remove("selected");
   firstSelected = null;
   secondSelected = null;
+}
+
+async function getStatus() {
+  let res = await fetch("/api/status");
+  res = await res.json();
+  score.innerText = `백: ${res.whiteScore}점
+  흑: ${res.blackScore}점`;
 }

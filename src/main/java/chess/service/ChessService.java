@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.response.ChessGameResponse;
+import chess.controller.dto.response.StatusResponse;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Column;
@@ -27,6 +28,10 @@ public class ChessService {
         Position target = parseStringToPosition(moveRequest.getTarget());
         chessGame.move(start, target);
         return new ChessGameResponse(chessGame);
+    }
+
+    public StatusResponse status() {
+        return new StatusResponse(chessGame.createStatus());
     }
 
     private Position parseStringToPosition(final String rawPosition) {

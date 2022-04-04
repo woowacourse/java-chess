@@ -69,3 +69,7 @@ div {
 .selected {
   background-color: yellow;
 }
+
+.status {
+  font-size: x-large;
+}
