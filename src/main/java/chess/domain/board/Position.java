@@ -101,6 +101,10 @@ public class Position implements Comparable<Position> {
 		return row;
 	}
 
+	public String stringName() {
+		return column.getName() + row.getValue();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

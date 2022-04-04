@@ -77,4 +77,8 @@ public enum Row {
         }
         return path;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

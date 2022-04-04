@@ -73,4 +73,8 @@ public enum Column {
         }
         return path;
     }
+
+    public String getName() {
+        return name;
+    }
 }

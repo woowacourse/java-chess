@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로또</title>
+</head>
+<body>
+<div align="center">
+    {{#boardDto}}
+        {{#board}}
+            <table>
+                <tr>
+                    <th class="board-white"><img src="images/{{board.a8.symbol}}-{{board.a8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.b8.symbol}}-{{board.b8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.c8.symbol}}-{{board.c8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.d8.symbol}}-{{board.d8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.e8.symbol}}-{{board.e8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.f8.symbol}}-{{board.f8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.g8.symbol}}-{{board.g8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.h8.symbol}}-{{board.h8.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-black"><img src="images/{{board.a7.symbol}}-{{board.a7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.b7.symbol}}-{{board.b7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.c7.symbol}}-{{board.c7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.d7.symbol}}-{{board.d7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.e7.symbol}}-{{board.e7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.f7.symbol}}-{{board.f7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.g7.symbol}}-{{board.g7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.h7.symbol}}-{{board.h7.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-white"><img src="images/{{board.a6.symbol}}-{{board.a6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.b6.symbol}}-{{board.b6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.c6.symbol}}-{{board.c6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.d6.symbol}}-{{board.d6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.e6.symbol}}-{{board.e6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.f6.symbol}}-{{board.f6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.g6.symbol}}-{{board.g6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.h6.symbol}}-{{board.h6.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-black"><img src="images/{{board.a5.symbol}}-{{board.a5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.b5.symbol}}-{{board.b5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.c5.symbol}}-{{board.c5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.d5.symbol}}-{{board.d5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.e5.symbol}}-{{board.e5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.f5.symbol}}-{{board.f5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.g5.symbol}}-{{board.g5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.h5.symbol}}-{{board.h5.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-white"><img src="images/{{board.a4.symbol}}-{{board.a4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.b4.symbol}}-{{board.b4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.c4.symbol}}-{{board.c4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.d4.symbol}}-{{board.d4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.e4.symbol}}-{{board.e4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.f4.symbol}}-{{board.f4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.g4.symbol}}-{{board.g4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.h4.symbol}}-{{board.h4.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-black"><img src="images/{{board.a3.symbol}}-{{board.a3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.b3.symbol}}-{{board.b3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.c3.symbol}}-{{board.c3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.d3.symbol}}-{{board.d3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.e3.symbol}}-{{board.e3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.f3.symbol}}-{{board.f3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.g3.symbol}}-{{board.g3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.h3.symbol}}-{{board.h3.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-white"><img src="images/{{board.a2.symbol}}-{{board.a2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.b2.symbol}}-{{board.b2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.c2.symbol}}-{{board.c2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.d2.symbol}}-{{board.d2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.e2.symbol}}-{{board.e2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.f2.symbol}}-{{board.f2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.g2.symbol}}-{{board.g2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.h2.symbol}}-{{board.h2.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+                <tr>
+                    <th class="board-black"><img src="images/{{board.a1.symbol}}-{{board.a1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.b1.symbol}}-{{board.b1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.c1.symbol}}-{{board.c1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.d1.symbol}}-{{board.d1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.e1.symbol}}-{{board.e1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.f1.symbol}}-{{board.f1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-black"><img src="images/{{board.g1.symbol}}-{{board.g1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                    <th class="board-white"><img src="images/{{board.h1.symbol}}-{{board.h1.color}}.png" style="width:7vw; height: 7vw;"></th>
+                </tr>
+            </table>
+        {{/board}}
+    {{/boardDto}}
+</div>
+</body>
+<style>
+    .board-black{
+        background-color: gray;
+    }
+    .board-white{
+        background-color: wheat;
+    }
+</style>
+</html>

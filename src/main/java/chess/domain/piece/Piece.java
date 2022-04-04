@@ -38,6 +38,10 @@ public abstract class Piece {
         return false;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public abstract void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
 
     public abstract void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
