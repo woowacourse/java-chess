@@ -2,8 +2,8 @@ package chess;
 
 import java.util.List;
 
-import chess.command.Command;
-import chess.command.CommandType;
+import chess.domain.command.Command;
+import chess.domain.command.CommandType;
 import chess.domain.ChessGame;
 import chess.domain.board.InitialBoardGenerator;
 import chess.view.InputView;

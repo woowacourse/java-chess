@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import chess.command.CommandType;
+import chess.domain.command.CommandType;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
