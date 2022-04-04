@@ -19,6 +19,11 @@ public class ChessGame {
         this.state = new Ready(board);
     }
 
+    public void load(final State state, final Board board) {
+        this.state = state;
+        this.board = board;
+    }
+
     public void start() {
         state = state.start();
     }

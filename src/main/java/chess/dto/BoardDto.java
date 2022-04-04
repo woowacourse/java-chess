@@ -1,5 +1,7 @@
 package chess.dto;
 
+import chess.domain.board.Board;
+import chess.domain.board.CustomBoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -32,6 +34,15 @@ public class BoardDto {
         if (!board.get(position).isEmpty()) {
             strings.put(position.getName(), new PieceDto(board.get(position)));
         }
+    }
+
+    public Board toBoard() {
+        final Map<Position, Piece> pieces = new HashMap<>();
+        for (String position : board.keySet()) {
+            pieces.put(Position.create(position), board.get(position).toPiece());
+        }
+
+        return new Board(new CustomBoardFactory(pieces));
     }
 
     public Integer getGameId() {

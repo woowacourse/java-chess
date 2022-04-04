@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.db.MySqlConnector;
 import chess.dto.BoardDto;
 import chess.dto.PieceDto;
 import java.sql.Connection;
