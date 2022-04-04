@@ -37,13 +37,6 @@ class EndTest {
     }
 
     @Test
-    @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
-    void isStatus() {
-        assertThat(state.getType() == StateType.STATUS)
-                .isFalse();
-    }
-
-    @Test
     @DisplayName("isPlay() 실행 시 false 를 리턴한다")
     void isPlay() {
         assertThat(state.getType() == StateType.PLAY)

@@ -28,7 +28,9 @@ public class Controller {
         staticFiles.location("/static");
         get("/", (req, res) -> getStartObject());
         post("/command", (req, res) -> {
-            go(req.queryParams("command"));
+            if (!req.queryParams("command").equals("시작하기")) {
+                go(req.queryParams("command"));
+            }
             return getObject();
         });
         post("/end", (req, res) -> getEndObject());
@@ -37,14 +39,22 @@ public class Controller {
     private void go(String input) {
         try {
             state = state.execute(new CommandDto(input));
-            model.put("error", "");
-            model.put("result", "");
+            initError();
+            initResult();
             if (state.getType() != StateType.PLAY) {
                 model.put("result", "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.");
             }
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+    }
+
+    private void initResult() {
+        model.put("result", "");
+    }
+
+    private void initError() {
+        model.put("error", "");
     }
 
     private Object getStartObject() {

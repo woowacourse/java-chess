@@ -1,10 +1,10 @@
 body {
     align-self: center;
+    align-items: center;
+    align-content: center;
 }
 
 table, th {
-    border: 2px solid;
-    background: black;
     text-align: center;
     font-size: 50px;
 }
@@ -14,11 +14,19 @@ td {
     height: 60px;
 }
 
+th {
+    font-size: 20px;
+}
+
 .black {
-    background: blueviolet;
+    background: #b12eff;
 }
 
 .white {
-    background: coral;
+    background: #ffbc54;
+}
+
+.file {
+    font-size: 20px;
 }
 

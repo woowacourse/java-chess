@@ -93,7 +93,6 @@ class BoardTest {
                 new Position(Column.A, Rank.TWO),
                 new Position(Column.A, Rank.FOUR)
         );
-
         board.move(
                 new Position(Column.B, Rank.SEVEN),
                 new Position(Column.B, Rank.FIVE)
@@ -109,6 +108,5 @@ class BoardTest {
                 () -> assertThat(colorsTotalScore.get(Team.BLACK)).isEqualTo(37),
                 () -> assertThat(colorsTotalScore.get(Team.WHITE)).isEqualTo(37)
         );
-
     }
 }
