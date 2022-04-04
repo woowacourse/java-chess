@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chess</title>
+    <script type="text/javascript" src="/src/index.js"></script>
 </head>
-<body>
-Hello World!!
-</body>
+    <body>
+    <div align="center">
+        <h1>Play Chess!</h1>
+        <table>
+            {{#board}}
+            {{#cells}}
+         <tr>
+                {{#this}}
+             <td id="{{position}}" onclick="clicked(this.id)">
+                {{symbol}}
+             </td>
+                {{/this}}
+         </tr>
+            {{/cells}}
+            {{/board}}
+        </table>
+    </div>
+    </body>
 </html>

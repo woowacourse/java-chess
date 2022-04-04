@@ -1,5 +1,10 @@
 package chess;
 
+import chess.domain.Board;
+import chess.domain.BoardInitializer;
+import chess.domain.command.Command;
+import chess.domain.state.Ready;
+import chess.dto.board.BoardDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -7,11 +12,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 public class WebApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
+        port(8081);
+        staticFiles.location("/static");
+
+        final Board initBoard = new BoardInitializer().init();
+        final ChessController chessController = new ChessController(new Ready(initBoard));
+        chessController.start();
+
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+
+            final BoardDto boardDto = BoardDto.of(chessController.state());
+            model.put("board", boardDto);
+            return render(model, "index.html");
+        });
+
+        post("/move", (req, res) -> {
+            final String commandString = "move " + req.body();
+            final Command command = Command.from(commandString);
+            chessController.progress(command);
+
+            Map<String, Object> model = new HashMap<>();
+            final BoardDto boardDto = BoardDto.of(chessController.state());
+            model.put("board", boardDto);
             return render(model, "index.html");
         });
     }
