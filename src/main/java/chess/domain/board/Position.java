@@ -86,6 +86,10 @@ public class Position {
 		return this.rank.equals(Rank.TWO);
 	}
 
+	public String convertPositionToString() {
+		return file.getSymbol() + rank.getSymbol();
+	}
+
 	public static List<Position> getPositions() {
 		return Arrays.stream(Rank.values())
 				.flatMap(Position::createRankPositions)

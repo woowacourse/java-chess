@@ -5,9 +5,10 @@ import chess.domain.board.Position;
 public final class Rook extends Piece {
 
 	private static final int ROOK_SCORE = 5;
+	private static final String symbol = "rook";
 
 	public Rook(final Team team) {
-		super(team);
+		super(team, symbol);
 	}
 
 	@Override

@@ -5,11 +5,12 @@ import chess.domain.board.Position;
 public final class Queen extends Piece {
 
 	private static final int QUEEN_SCORE = 9;
+	private static final String symbol = "queen";
 
 	public Queen(final Team team) {
-		super(team);
+		super(team, symbol);
 	}
-	
+
 	@Override
 	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		if (!target.isDiagonalMove(source) && !target.isLinerMove(source)) {

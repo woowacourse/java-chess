@@ -1,0 +1,29 @@
+.background {
+    background-image: url("/image/wood.svg");
+}
+
+.rank {
+    height: 76px;
+    display: flex;
+}
+
+.light-board {
+    background-color: antiquewhite;
+}
+
+.dark-board {
+    background-color: brown;
+}
+
+.piece-container {
+    width: 76px;
+    height: 76px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.piece {
+    width: 62px;
+    height: 62px;
+}

@@ -9,9 +9,10 @@ public final class Pawn extends Piece {
 
 	private static final int PAWN_SCORE = 1;
 	private static final int MOVE_TWICE = 2;
+	private static final String symbol = "pawn";
 
 	public Pawn(final Team team) {
-		super(team);
+		super(team, symbol);
 	}
 
 	@Override
