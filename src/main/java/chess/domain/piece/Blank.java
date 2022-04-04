@@ -7,7 +7,7 @@ public final class Blank extends Piece {
     private static final double POINT = 0;
 
     public Blank() {
-        super(Team.NONE, POINT);
+        super("BLANK", Team.NONE, POINT);
     }
 
     @Override

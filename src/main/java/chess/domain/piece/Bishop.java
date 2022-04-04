@@ -8,7 +8,7 @@ public final class Bishop extends ValidPiece {
     private static final double POINT = 3;
 
     public Bishop(final Team team) {
-        super(team, POINT);
+        super("BISHOP", team, POINT);
     }
 
     @Override

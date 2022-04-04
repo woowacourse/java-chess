@@ -1,19 +1,24 @@
 package chess;
 
+import static spark.Spark.get;
+import static spark.Spark.staticFileLocation;
+
+import chess.domain.board.BoardFactory;
+import chess.domain.game.ChessGame;
+import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
-
 public class WebApplication {
+
     public static void main(String[] args) {
+        staticFileLocation("/static");
+
+        ChessGame chessGame = new ChessGame(BoardFactory.createChessBoard());
+
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+            return new ModelAndView(chessGame.getCurrentBoardForSpark(), "index.html");
+        }, new HandlebarsTemplateEngine());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -8,7 +8,7 @@ public final class Rook extends ValidPiece {
     private static final double POINT = 5;
 
     public Rook(final Team team) {
-        super(team, POINT);
+        super("ROOK",team, POINT);
     }
 
     @Override

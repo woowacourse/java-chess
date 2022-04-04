@@ -8,7 +8,7 @@ public final class King extends ValidPiece {
     private static final double POINT = 0;
 
     public King(final Team team) {
-        super(team, POINT);
+        super("KING",team, POINT);
     }
 
     @Override

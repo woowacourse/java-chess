@@ -11,7 +11,7 @@ public final class Pawn extends ValidPiece {
     private static final double POINT = 1;
 
     public Pawn(final Team team) {
-        super(team, POINT);
+        super("PAWN",team, POINT);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Position implements Comparable<Position> {
         return CACHE.get(rawPosition);
     }
 
-    private String generateRawPosition() {
+    public String generateRawPosition() {
         return column.getName() + row.getValue();
     }
 

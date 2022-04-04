@@ -67,4 +67,8 @@ public class ChessGame {
     public Map<Position, Piece> getCurrentBoard() {
         return board.getBoard();
     }
+
+    public Map<String, Piece> getCurrentBoardForSpark() {
+        return board.getBoardForSpark();
+    }
 }

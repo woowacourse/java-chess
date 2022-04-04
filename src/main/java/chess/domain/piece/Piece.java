@@ -5,10 +5,12 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    private final String name;
     private final Team team;
     private final double point;
 
-    protected Piece(final Team team, final double point) {
+    protected Piece(final String name, final Team team, final double point) {
+        this.name = name;
         this.team = team;
         this.point = point;
     }
@@ -20,6 +22,10 @@ public abstract class Piece {
     public abstract boolean isPawn();
 
     public abstract MoveStrategy getMoveStrategy();
+
+    public String getName() {
+        return name;
+    }
 
     public final Team getTeam() {
         return team;

@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -33,5 +34,10 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Map<String, Piece> getBoardForSpark() {
+        return board.keySet().stream()
+                .collect(Collectors.toMap(Position::generateRawPosition, key -> getPiece(key)));
     }
 }
