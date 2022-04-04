@@ -26,6 +26,7 @@ public class OutputView {
     private static final String FILE_FORMAT = "abcdefgh";
     private static final String RANK_INFO = " (rank %d)";
     private static final String RANK_FORMAT = "  %d";
+    private static final String WINNER_FORMAT = "승자는 %s 입니다.%n";
 
     private OutputView() {
     }
@@ -80,7 +81,7 @@ public class OutputView {
     }
 
     private static void printWinner(Color winnerColor) {
-        System.out.println(String.format("승자는 %s 입니다.", winnerColor.name()));
+        System.out.printf(WINNER_FORMAT, winnerColor.name());
     }
 
     private static void printTotalScore(Map<Color, Double> scoreByColor) {
