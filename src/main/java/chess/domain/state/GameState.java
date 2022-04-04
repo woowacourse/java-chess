@@ -26,4 +26,8 @@ public abstract class GameState {
 	public Map<Position, Piece> getBoard() {
 		return board.getPieces();
 	}
+
+	public Piece getByPosition(Position position) {
+		return board.getPieceByPosition(position);
+	}
 }

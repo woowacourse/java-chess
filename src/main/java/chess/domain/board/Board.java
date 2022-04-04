@@ -51,7 +51,7 @@ public class Board {
 		move(from, to, fromPiece);
 	}
 
-	private Piece getPieceByPosition(Position from) {
+	public Piece getPieceByPosition(Position from) {
 		return findPieceByPosition(from)
 			.orElseThrow(() -> new NoSuchElementException(NO_PIECE));
 	}

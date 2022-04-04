@@ -71,12 +71,28 @@ public class TileDao {
 
 	public void deleteByPosition(String position, String gameName) {
 		Connection connection = connectionManager.getConnection();
-		String sql = "delete from tile where position = ? and "
-			+ "game_id = (select game_id from game where name = ?)";
+		String sql = "delete t from tile t natural join game g "
+			+ "where t.position = ? and g.name = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, position);
 			statement.setString(2, gameName);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	public void updatePositionOfPiece(String pieceName, String from, String to, String gameName) {
+		Connection connection = connectionManager.getConnection();
+		String sql = "update tile t natural join game g set t.position = ? "
+			+ "where t.piece = ? and t.position = ? and g.name = ?";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, to);
+			statement.setString(2, pieceName);
+			statement.setString(3, from);
+			statement.setString(4, gameName);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e);

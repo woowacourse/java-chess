@@ -96,4 +96,17 @@ public class ChessGameDao {
 		}
 		return names;
 	}
+
+	public void updateState(String name, String state) {
+		Connection connection = connectionManager.getConnection();
+		String sql = "update game set state = ? where name = ?";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, state);
+			statement.setString(2, name);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 }

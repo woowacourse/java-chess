@@ -26,9 +26,19 @@ class ChessGameDaoTest {
 	@Test
 	@DisplayName("이름으로 상태 찾기")
 	void selectWhereName() {
-		int key = chessGameDao.insert(TEST_NAME, "READY");
+		chessGameDao.insert(TEST_NAME, "READY");
 
 		String result = chessGameDao.selectStateByName(TEST_NAME);
 		assertThat(result).isEqualTo("READY");
+	}
+
+	@Test
+	@DisplayName("상태 업데이트")
+	void updateState() {
+		chessGameDao.insert(TEST_NAME, "READY");
+
+		chessGameDao.updateState(TEST_NAME, "FINISHED");
+		String result = chessGameDao.selectStateByName(TEST_NAME);
+		assertThat(result).isEqualTo("FINISHED");
 	}
 }

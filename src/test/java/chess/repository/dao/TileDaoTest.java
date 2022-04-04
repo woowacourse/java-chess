@@ -70,4 +70,18 @@ class TileDaoTest {
 		assertThat(result)
 			.containsExactlyEntriesOf(Map.of("b2", "BLACK_KING"));
 	}
+
+	@Test
+	@DisplayName("피스 위치를 수정한다.")
+	void update() {
+		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
+		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN");
+		tileDao.insertAll(tiles, foreignKey);
+
+		tileDao.updatePositionOfPiece("WHITE_PAWN", "a1", "a2", TEST_NAME);
+
+		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+		assertThat(result)
+			.containsEntry("a2", "WHITE_PAWN");
+	}
 }

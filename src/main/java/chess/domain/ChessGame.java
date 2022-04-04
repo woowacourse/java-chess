@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.command.Command;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.state.GameState;
 
 public class ChessGame {
@@ -28,5 +30,9 @@ public class ChessGame {
 
 	public boolean isFinished() {
 		return state.isFinished();
+	}
+
+	public Piece getPieceByPosition(Position position) {
+		return state.getByPosition(position);
 	}
 }

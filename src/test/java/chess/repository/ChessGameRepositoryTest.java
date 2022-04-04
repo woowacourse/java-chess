@@ -3,6 +3,7 @@ package chess.repository;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
+import chess.domain.command.Move;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.RunningBlackTurn;
 
@@ -63,13 +68,20 @@ class ChessGameRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("상태 업데이트")
+	@DisplayName("게임 보드 정보 업데이트")
 	void update() {
-		ChessGame newGame = new ChessGame(TEST_NAME, new Ready(new HashMap<>()));
+		Map<Position, Piece> board = Map.of(
+			new Position(1, 1), King.createBlack(),
+			new Position(2, 2), King.createWhite()
+		);
+
+		ChessGame newGame = new ChessGame(TEST_NAME, new RunningBlackTurn(board));
 		gameRepository.save(newGame);
 
-		ChessGame updatedGame = new ChessGame(newGame.getName(), new RunningBlackTurn(new HashMap<>()));
-		gameRepository.update(updatedGame);
+		ChessGame updatedGame = newGame.execute(
+			new Move(new Position(1, 1), new Position(2, 2)));
+
+		gameRepository.updatePositionOfPiece(updatedGame, new Position(1, 1), new Position(2, 2));
 
 		gameRepository.findByName(TEST_NAME)
 			.ifPresent(game -> assertThat(game.getState())

@@ -54,9 +54,17 @@ public class ChessGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void update(ChessGame game) {
-		remove(game.getName());
-		save(game);
+	public void updateStateOfGame(ChessGame game) {
+		chessGameDao.updateState(game.getName(), game.getState().toString());
+	}
+
+	@Override
+	public void updatePositionOfPiece(ChessGame game, Position from, Position to) {
+		String gameName = game.getName();
+		tileDao.deleteByPosition(to.toString(), gameName);
+		Piece piece = game.getPieceByPosition(to);
+
+		tileDao.updatePositionOfPiece(piece.toString(), from.toString(), to.toString(), gameName);
 	}
 
 	@Override
