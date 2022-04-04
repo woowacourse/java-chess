@@ -92,13 +92,13 @@ public class Pawn extends ChessPiece {
     }
 
     public void validateStraight(Position source, Position target) {
-        if(target.findDirection(source) != Direction.N && target.findDirection(source) != Direction.S){
+        if(target.findDirection(source) != Direction.NORTH && target.findDirection(source) != Direction.SOUTH){
             throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
         }
     }
 
     public void validateCross(Position source, Position target){
-        if(target.findDirection(source) == Direction.N || target.findDirection(source) == Direction.S){
+        if(target.findDirection(source) == Direction.NORTH || target.findDirection(source) == Direction.SOUTH){
             throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
         }
     }
