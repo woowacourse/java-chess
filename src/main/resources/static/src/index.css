@@ -1,9 +1,9 @@
 .chess-ui {
-    width: 160px;
+    width: 640px;
     border: 4px solid slategrey;
     display: grid;
-    grid-template-columns: repeat(2, 80px);
-    grid-template-rows: repeat(2, 80px);
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
 }
 
 .white-square {
