@@ -40,13 +40,14 @@ public class ChessService {
         try {
             final StartResult result = chessGame.start();
             model = toModel(result.getPieceByPosition());
+            updateChessPiece(roomName, result.getPieceByPosition());
+            updateRoomStatusTo(roomName, GameStatus.PLAYING);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece(roomName);
             }
             model.put("error", e.getMessage());
         }
-         updateChessPiece(roomName);
         return model;
     }
 
@@ -65,7 +66,7 @@ public class ChessService {
             chessPieceDao.deleteByPosition(roomName, to);
             chessPieceDao.update(roomName, from, to);
 
-            updateRoom(roomName);
+            updateRoom(roomName, result.getGameStatus(), result.getCurrentTurn());
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece(roomName);
@@ -84,10 +85,10 @@ public class ChessService {
             for (final Color color : Color.values()) {
                 model.put(color.getValue(), score.findScore(color));
             }
+            updateRoomStatusTo(roomName, GameStatus.END);
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        updateRoom(roomName);
         return model;
     }
 
@@ -170,16 +171,19 @@ public class ChessService {
         return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
     }
 
-    private void updateChessPiece(final String roomName) {
+    private void updateChessPiece(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
         chessPieceDao.deleteAllByRoomName(roomName);
-        chessPieceDao.saveAll(roomName, chessBoard.findAllPiece());
-
-        updateRoom(roomName);
+        chessPieceDao.saveAll(roomName, pieceByPosition);
     }
 
-    private void updateRoom(final String roomName) {
+    private void updateRoom(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
         final RoomDao roomDao = new RoomDao();
-        roomDao.update(roomName, gameStatus, chessBoard.currentTurn());
+        roomDao.update(roomName, gameStatus, currentTurn);
+    }
+
+    private void updateRoomStatusTo(final String roomName, final GameStatus gameStatus) {
+        final RoomDao roomDao = new RoomDao();
+        roomDao.updateStatusTo(roomName, gameStatus);
     }
 }
