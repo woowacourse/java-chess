@@ -1,8 +1,10 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dto.ErrorResponseDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -48,6 +50,11 @@ public class ChessController {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             moveDto.validateMoveDto();
             return gson.toJson(chessService.move(moveDto));
+        });
+
+        exception(RuntimeException.class, (e, req, res) -> {
+            res.status(400);
+            res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
         });
     }
 }
