@@ -3,13 +3,13 @@ package chess.web.service;
 import chess.board.Board;
 import chess.board.Team;
 import chess.board.Turn;
+import chess.board.piece.Piece;
+import chess.board.piece.Pieces;
+import chess.board.piece.position.Position;
 import chess.web.dao.BoardDao;
 import chess.web.dao.BoardDaoImpl;
 import chess.web.dao.PieceDao;
 import chess.web.dao.PieceDaoImpl;
-import chess.board.piece.Piece;
-import chess.board.piece.Pieces;
-import chess.board.piece.position.Position;
 import chess.web.service.dto.MoveDto;
 import chess.web.service.dto.ScoreDto;
 
@@ -25,9 +25,9 @@ public class ChessService {
         pieceDao = new PieceDaoImpl();
     }
 
-    public Board loadGame() {
-        Turn turn = boardDao.findTurnById(1L).orElseThrow(() -> new IllegalArgumentException("없는 차례입니다."));
-        List<Piece> pieces = pieceDao.findAllByBoardId(1L);
+    public Board loadGame(Long boardId) {
+        Turn turn = boardDao.findTurnById(boardId).orElseThrow(() -> new IllegalArgumentException("없는 차례입니다."));
+        List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
         return Board.create(Pieces.from(pieces), turn);
     }
 
@@ -39,7 +39,7 @@ public class ChessService {
 
         Piece piece = pieces.findByPosition(Position.from(moveDto.getFrom()));
         board.move(List.of(moveDto.getFrom(), moveDto.getTo()), turn);
-        Turn changedTurn = updatePieces(moveDto, turn, piece,boardId);
+        Turn changedTurn = updatePieces(moveDto, turn, piece, boardId);
 
         return Board.create(pieces, changedTurn);
     }
@@ -64,8 +64,8 @@ public class ChessService {
         return board;
     }
 
-    public ScoreDto getStatus() {
-        List<Piece> pieces = pieceDao.findAllByBoardId(1L);
+    public ScoreDto getStatus(Long boardId) {
+        List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
         Pieces board = Pieces.from(pieces);
 
         double blackScore = board.getTotalScore(Team.BLACK);

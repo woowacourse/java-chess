@@ -1,14 +1,10 @@
-package chess;
+package chess.board;
 
-import chess.board.Board;
-import chess.board.Turn;
 import chess.board.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
 

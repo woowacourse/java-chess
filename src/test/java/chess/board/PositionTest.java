@@ -1,4 +1,4 @@
-package chess;
+package chess.board;
 
 import chess.board.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;

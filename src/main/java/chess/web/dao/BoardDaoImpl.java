@@ -59,7 +59,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setString(1, "white");
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getLong(1);
             }
         } catch (SQLException e) {
@@ -70,9 +70,9 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public Optional<Board> findById(Long id) {
-        final String query = "SELECT (b.turn, p.position, p.type, p.team) " +
-                "FROM board b " +
-                "JOIN piece p ON b.id = p.id " +
+        final String query = "SELECT *" +
+                "FROM board as b " +
+                "JOIN piece as p ON b.id = p.board_id " +
                 "WHERE b.id = ?";
         try (
                 Connection connection = JdbcConnector.getConnection();
@@ -81,14 +81,16 @@ public class BoardDaoImpl implements BoardDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             List<Piece> pieces = new ArrayList<>();
-            String turn ="";
-            while(resultSet.next()){
-                turn = resultSet.getString(1);
-                String position = resultSet.getString(2);
-                String type = resultSet.getString(3);
-                String team = resultSet.getString(4);
+            String turn = "";
+
+            while (resultSet.next()) {
+                turn = resultSet.getString("turn");
+                String position = resultSet.getString("position");
+                String type = resultSet.getString("type");
+                String team = resultSet.getString("team");
                 pieces.add(PieceFactory.create(position, team, type));
             }
+
             return Optional.of(Board.create(Pieces.from(pieces), new Turn(Team.from(turn))));
         } catch (SQLException e) {
             e.printStackTrace();

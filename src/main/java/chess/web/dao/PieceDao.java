@@ -9,5 +9,5 @@ public interface PieceDao {
 
     List<Piece> findAllByBoardId(final Long boardId);
 
-    void save(final List<Piece> pieces,final Long boardId);
+    void save(final List<Piece> pieces, final Long boardId);
 }

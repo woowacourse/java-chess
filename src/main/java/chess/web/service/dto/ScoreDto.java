@@ -9,4 +9,12 @@ public class ScoreDto {
         this.whiteTeam = whiteTeam;
     }
 
+    public double getWhiteTeam() {
+        return whiteTeam;
+    }
+
+    public double getBlackTeam() {
+        return blackTeam;
+    }
+
 }

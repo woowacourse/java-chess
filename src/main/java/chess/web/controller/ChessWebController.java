@@ -38,7 +38,7 @@ public class ChessWebController {
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
         get("/api/load", (req, res) -> {
-            Board board = chessService.loadGame();
+            Board board = chessService.loadGame(1L);
             BoardDto boardDto = convertToDto(board);
             return gson.toJson(boardDto);
         });
@@ -50,7 +50,7 @@ public class ChessWebController {
         });
 
         get("/api/status", (req, res) -> {
-            ScoreDto status = chessService.getStatus();
+            ScoreDto status = chessService.getStatus(1L);
             return gson.toJson(status);
         });
 

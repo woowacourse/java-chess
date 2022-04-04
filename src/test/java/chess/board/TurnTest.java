@@ -1,7 +1,5 @@
-package chess;
+package chess.board;
 
-import chess.board.Team;
-import chess.board.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

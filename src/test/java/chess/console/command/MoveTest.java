@@ -1,9 +1,5 @@
-package chess.command;
+package chess.console.command;
 
-import chess.console.command.Command;
-import chess.console.command.End;
-import chess.console.command.Move;
-import chess.console.command.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

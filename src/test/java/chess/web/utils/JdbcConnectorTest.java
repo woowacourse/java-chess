@@ -1,6 +1,5 @@
-package chess.utils;
+package chess.web.utils;
 
-import chess.web.utils.JdbcConnector;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

@@ -1,8 +1,7 @@
-package chess.piece;
+package chess.board.piece;
 
-import chess.board.piece.*;
-import chess.board.piece.position.Position;
 import chess.board.Team;
+import chess.board.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,14 +25,14 @@ class PiecesTest {
     @DisplayName("체스판에 남은 말들의 점수를 계산한다. - 폰이 전부 가로로 있을 때")
     void getTotalScoreWhenPawnIsWithHorizontalTest() {
         Pieces pieces = Pieces.from(List.of(
-                new Pawn(Position.of('a','7'), Team.BLACK),
-                new Pawn(Position.of('b','7'), Team.BLACK),
-                new Pawn(Position.of('c','7'), Team.BLACK),
-                new Pawn(Position.of('d','7'), Team.BLACK),
-                new Pawn(Position.of('e','7'), Team.BLACK),
-                new Pawn(Position.of('f','7'), Team.BLACK),
-                new Pawn(Position.of('g','7'), Team.BLACK),
-                new Pawn(Position.of('h','7'), Team.BLACK)
+                new Pawn(Position.of('a', '7'), Team.BLACK),
+                new Pawn(Position.of('b', '7'), Team.BLACK),
+                new Pawn(Position.of('c', '7'), Team.BLACK),
+                new Pawn(Position.of('d', '7'), Team.BLACK),
+                new Pawn(Position.of('e', '7'), Team.BLACK),
+                new Pawn(Position.of('f', '7'), Team.BLACK),
+                new Pawn(Position.of('g', '7'), Team.BLACK),
+                new Pawn(Position.of('h', '7'), Team.BLACK)
         ));
         double totalScore = pieces.getTotalScore(Team.BLACK);
         assertThat(totalScore).isEqualTo(8D);
@@ -71,8 +70,8 @@ class PiecesTest {
     void countOfKing_1_Test() {
         Pieces pieces = Pieces.from(
                 List.of(
-                        new King(Position.of('a','2'), Team.WHITE),
-                        new Pawn(Position.of('b','4'), Team.WHITE)
+                        new King(Position.of('a', '2'), Team.WHITE),
+                        new Pawn(Position.of('b', '4'), Team.WHITE)
                 )
         );
         assertThat(pieces.countOfKing()).isEqualTo(1);

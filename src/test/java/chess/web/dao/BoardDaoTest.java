@@ -1,9 +1,7 @@
-package chess.dao;
+package chess.web.dao;
 
 import chess.board.Team;
 import chess.board.Turn;
-import chess.web.dao.BoardDao;
-import chess.web.dao.BoardDaoImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
