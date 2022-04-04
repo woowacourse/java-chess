@@ -76,9 +76,17 @@ public class Controller {
 
     private Object getEndObject() {
         updateScore();
-        Team winner = chessGame.getWinner();
-        model.put("winner", winner);
+        updateWinner();
         return render(model, "end.html");
+    }
+
+    private void updateWinner() {
+        Team winner = chessGame.getWinner();
+        if (winner == Team.NONE) {
+            model.put("winner", "무승부");
+            return;
+        }
+        model.put("winner", winner);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

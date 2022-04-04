@@ -29,7 +29,7 @@ public final class Play implements State {
 
     private State playOrResult(ChessGame chessGame) {
         if (chessGame.isFinished()) {
-            return new Result(chessGame);
+            return new End();
         }
         return new Play(chessGame);
     }

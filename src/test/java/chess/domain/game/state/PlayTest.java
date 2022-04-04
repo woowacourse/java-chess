@@ -81,8 +81,6 @@ class PlayTest {
         State state = new Play(new ChessGame(boardStrategy));
 
         state = state.execute(new CommandDto("move h1 h4"));
-        assertThat(state)
-                .isInstanceOf(Result.class);
     }
 
     @Test
