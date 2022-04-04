@@ -45,4 +45,8 @@ public abstract class Piece extends Named{
     public void killed() {
         state = state.die();
     }
+
+    public String getColor() {
+        return property.getColor();
+    }
 }

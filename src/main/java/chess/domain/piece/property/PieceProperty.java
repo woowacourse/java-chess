@@ -30,4 +30,8 @@ public class PieceProperty {
     public boolean isSameColor(PieceProperty property) {
         return isSameColor(property.color);
     }
+
+    public String getColor() {
+        return color.name();
+    }
 }

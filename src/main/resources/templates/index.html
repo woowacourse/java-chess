@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-Hello World!!
+    <h1>체스</h1>
+    <form action="/start" method="get">
+        <input type="submit" value="start">
+    </form>
+    <section>
+        <table id="chess-board">
+            <tr>
+                {{#pieces8}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces8}}
+            </tr>
+            <tr>
+                {{#pieces7}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces7}}
+            </tr>
+            <tr>
+                {{#pieces6}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces6}}
+            </tr>
+            <tr>
+                {{#pieces5}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces5}}
+            </tr>
+            <tr>
+                {{#pieces4}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces4}}
+            </tr>
+            <tr>
+                {{#pieces3}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces3}}
+            </tr>
+            <tr>
+                {{#pieces2}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces2}}
+            </tr>
+            <tr>
+                {{#pieces1}}
+                <td id="{{position}}" onclick="clicked(this.id)">
+                    <img src="{{imageName}}">
+                </td>
+                {{/pieces1}}
+            </tr>
+        </table>
+    </section>
 </body>
 </html>
+
+<script>
+    function fetchMove() {
+        fetch("/move", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                start: movePositions.start,
+                end: movePositions.end
+            })
+        });
+    }
+
+    function makeForm() {
+        let form = document.createElement('form');
+        form.action = '/move';
+        form.method = 'POST';
+        document.body.append(form);
+        form.appendChild(makeInputInForm());
+        return form;
+    }
+
+    function makeInputInForm() {
+        let input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "command";
+        input.value = movePositions.start + "," + movePositions.end;
+        return input;
+    }
+
+    function clicked(id) {
+        if (movePositions.start === '') {
+            movePositions.start = id;
+        } else {
+            movePositions.end = id;
+            let form = makeForm();
+            form.submit();
+
+            movePositions.start = '';
+            movePositions.end = '';
+        }
+    }
+
+    const movePositions = {
+        start : '',
+        end : ''
+    }
+</script>
