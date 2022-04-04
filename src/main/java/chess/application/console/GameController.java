@@ -1,9 +1,9 @@
-package chess;
+package chess.application.console;
 
 import chess.domain.Camp;
 import chess.domain.ChessGame;
-import chess.domain.gamestate.Score;
 import chess.domain.board.Position;
+import chess.domain.gamestate.Score;
 import chess.domain.piece.Piece;
 import java.util.Map;
 

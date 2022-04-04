@@ -1,4 +1,4 @@
-package chess;
+package chess.application.web;
 
 import com.google.gson.Gson;
 import spark.ResponseTransformer;

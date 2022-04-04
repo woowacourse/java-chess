@@ -1,4 +1,4 @@
-package chess;
+package chess.application.web;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;

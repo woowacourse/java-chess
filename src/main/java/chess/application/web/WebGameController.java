@@ -1,4 +1,4 @@
-package chess;
+package chess.application.web;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;

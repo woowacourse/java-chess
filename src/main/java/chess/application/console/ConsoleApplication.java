@@ -1,4 +1,4 @@
-package chess;
+package chess.application.console;
 
 import chess.command.Command;
 import chess.command.Move;
