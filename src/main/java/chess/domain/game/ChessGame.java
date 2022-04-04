@@ -55,16 +55,20 @@ public class ChessGame {
 
     private void turnOffWhenKingDie() {
         if (deadPieces.isKingDead()) {
-            gameSwitch.turnOff();
+            turnOff();
         }
-    }
-
-    public Result generateResult() {
-        return new Result(getCurrentBoard(), deadPieces);
     }
 
     public void turnOff() {
         gameSwitch.turnOff();
+    }
+
+    public boolean isOn() {
+        return gameSwitch.isOn();
+    }
+
+    public Result generateResult() {
+        return new Result(getCurrentBoard(), deadPieces);
     }
 
     public Map<Position, Piece> getCurrentBoard() {
@@ -73,10 +77,6 @@ public class ChessGame {
 
     public Map<String, Piece> getCurrentBoardForSpark() {
         return board.getBoardForSpark();
-    }
-
-    public boolean isOn() {
-        return gameSwitch.isOn();
     }
 
     public Turn getTurn() {
