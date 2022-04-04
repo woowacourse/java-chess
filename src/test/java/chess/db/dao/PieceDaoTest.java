@@ -2,8 +2,10 @@ package chess.db.dao;
 
 import static chess.util.DatabaseUtil.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.db.entity.PieceEntity;
+import chess.domain.board.position.Position;
 import chess.util.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -85,14 +87,20 @@ public class PieceDaoTest {
     }
 
     @Test
-    void deleteAll_메서드로_복수의_체스말_데이터_삭제가능() {
-        dao.deleteAll(10, List.of(
-                new PieceEntity("a1", "PAWN", "WHITE"),
-                new PieceEntity("c3", "QUEEN", "BLACK")));
+    void deleteAllByGameIdAndPositions_메서드로_복수의_체스말_데이터_삭제가능() {
+        dao.deleteAllByGameIdAndPositions(10,
+                List.of(Position.of("a1"), Position.of("c3")));
 
         int dataLeftCount = DatabaseUtil.getCountResult(
                 "SELECT COUNT(*) FROM " + TEST_TABLE_NAME + " WHERE game_id = 10");
 
         assertThat(dataLeftCount).isEqualTo(3 - 2);
+    }
+
+    @Test
+    void deleteAllByGameIdAndPositions_메서드로_존재하지_않는_체스말_데이터_삭제시도시_예외_미발생() {
+        assertThatNoException().isThrownBy(() -> dao.deleteAllByGameIdAndPositions(
+                1, List.of(Position.of("f3"), Position.of("f8")))
+        );
     }
 }

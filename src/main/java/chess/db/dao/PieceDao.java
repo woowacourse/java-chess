@@ -1,6 +1,7 @@
 package chess.db.dao;
 
 import chess.db.entity.PieceEntity;
+import chess.domain.board.position.Position;
 import chess.util.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,10 +62,10 @@ public class PieceDao {
         statement.executeUpdate();
     }
 
-    public void deleteAll(int gameId, List<PieceEntity> pieces) {
+    public void deleteAllByGameIdAndPositions(int gameId, List<Position> positions) {
         try (final Connection connection = DatabaseUtil.getConnection()) {
-            for (PieceEntity piece : pieces) {
-                delete(gameId, piece, connection);
+            for (Position position : positions) {
+                deleteByGameIdAndPosition(gameId, position, connection);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,12 +73,12 @@ public class PieceDao {
         }
     }
 
-    private void delete(int gameId, PieceEntity oldPiece, Connection connection) throws SQLException {
+    private void deleteByGameIdAndPosition(int gameId, Position position, Connection connection) throws SQLException {
         final String sql = "DELETE FROM " + table
                 + " WHERE game_id = (?) AND position = (?)";
         final PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, gameId);
-        statement.setString(2, oldPiece.getPositionKey());
+        statement.setString(2, position.toKey());
         statement.executeUpdate();
     }
 }
