@@ -40,5 +40,9 @@ public class ChessWebController {
             MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
             return gson.toJson(service.move(moveInfo.getFrom(), moveInfo.getTo()));
         });
+
+        get("/status", (req, res) -> {
+            return gson.toJson(service.status());
+        });
     }
 }

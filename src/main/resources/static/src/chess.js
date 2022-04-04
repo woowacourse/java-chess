@@ -1,4 +1,6 @@
 const startButton = document.getElementById("startButton");
+const stopButton = document.getElementById("stopButton");
+const statusButton = document.getElementById("statusButton")
 let from = "";
 let to = "";
 
@@ -7,6 +9,10 @@ startButton.addEventListener("click", async function () {
     let board = startGame();
     await initializeBoard(board);
 })
+
+statusButton.addEventListener("click", async function () {
+    await getStatus();
+});
 
 async function startGame() {
     alert("start");
@@ -18,6 +24,26 @@ async function startGame() {
     boardAndTurnInfo = await boardAndTurnInfo.json();
     document.getElementById("turnInfo").innerHTML = "현재 턴: " + boardAndTurnInfo.turnColor;
     return boardAndTurnInfo.board;
+}
+
+async function getStatus() {
+    let status = await fetch("/status")
+        .then(handleErrors)
+        .catch(function (error) {
+            alert(error.message);
+        });
+    status = await status.json();
+    let result = "현재점수<br>WHITE 점수: " + status.whiteScore +
+        "<br>BLACK 점수: " + status.blackScore;
+    if (result.winner === "WHITE") {
+        result += "<br>흰 진영이 이기고 있습니다.";
+    } else if (result.winner === "BLACK"){
+        result += "<br>검정 진영이 이기고 있습니다.";
+    } else {
+        result += "<br>두 유저의 점수가 같습니다.";
+    }
+
+    document.getElementById("score").innerHTML = result;
 }
 
 async function initializeBoard(board) {
@@ -76,6 +102,7 @@ async function requestMovePiece(from, to) {
         });
     boardAndTurnInfo = await boardAndTurnInfo.json();
     document.getElementById("turnInfo").innerHTML = "현재 턴: " + boardAndTurnInfo.turnColor;
+    document.getElementById("score").innerHTML = "";
     return boardAndTurnInfo.board;
 }
 
