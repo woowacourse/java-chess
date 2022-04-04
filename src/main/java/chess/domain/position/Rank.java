@@ -31,7 +31,6 @@ public enum Rank {
     }
 
     public static Rank of(int valueIdx) {
-        System.out.println(valueIdx);
         return Arrays.stream(values())
             .filter(rank -> rank.rankIdx == valueIdx)
             .findFirst()

@@ -81,6 +81,11 @@ public class Position {
         return rank.getRankIdx();
     }
 
+    public String getPosition() {
+        System.out.println(file.getFileIdx()+rank.getRawRank());
+        return file.getRawFile() + rank.getRawRank();
+    }
+
     @Override
     public String toString() {
         return "Position{" +

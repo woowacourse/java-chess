@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    private static final String NAME = "Pawn";
+    private static final String NAME = "pawn";
 
     public static final Rank BLACK_INIT_RANK = Rank.SEVEN;
     public static final Rank WHITE_INIT_RANK = Rank.TWO;

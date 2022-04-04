@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Queen extends Piece {
 
-    private static final String NAME = "Queen";
+    private static final String NAME = "queen";
 
     private static final double SCORE = 9;
 
