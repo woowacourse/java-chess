@@ -3,14 +3,13 @@ package chess.dto;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public class BoardDto {
+public class ChessmenDto {
 
     private final Position position;
     private final String name;
     private final Color color;
 
-
-    public BoardDto(Position position, String name, Color color) {
+    public ChessmenDto(Position position, String name, Color color) {
         this.position = position;
         this.name = name;
         this.color = color;

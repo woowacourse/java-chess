@@ -4,9 +4,13 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
+import chess.dto.ChessmenDto;
+import chess.dto.BoardMapDto;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -90,6 +94,16 @@ public class ChessGame {
         double blackScore = scoreCalculator.calculate(chessmen.extractPiecesOf(Color.BLACK));
 
         return new GameResultDto(winner, whiteScore, blackScore);
+    }
+
+    public BoardMapDto toBoard() {
+        Map<String, Object> model = new HashMap<>();
+
+        for (Piece piece: chessmen.getPieces()) {
+            ChessmenDto chessmenDto = new ChessmenDto(piece.getPosition(), piece.getName(), piece.getColor());
+            model.put(chessmenDto.getPosition(), chessmenDto);
+        }
+        return new BoardMapDto(model);
     }
 
     private Color findWinner() {
