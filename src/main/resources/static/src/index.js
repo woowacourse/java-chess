@@ -60,3 +60,8 @@ async function move(source, target) {
         body: JSON.stringify(move)
     });
 }
+
+async function score() {
+    return await fetch("/score")
+        .then((response) => response.json());
+}
