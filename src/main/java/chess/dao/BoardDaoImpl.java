@@ -31,7 +31,7 @@ public class BoardDaoImpl implements BoardDao {
 
             Map<String, String> board = new HashMap<>();
             while (resultSet.next()) {
-                board.put(resultSet.getString(1), resultSet.getString(2));
+                board.put(resultSet.getString("position"), resultSet.getString("piece"));
             }
             return board;
         } catch (SQLException e) {
