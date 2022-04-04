@@ -471,29 +471,32 @@
         </div>
     </div>
     <div class="buttons-container">
-        <div class="buttons">
-            <form action="/status" method="get" style="display: inline-block">
-                <button type="submit" class="btn btn-secondary">점수</button>
+        <div class="btn-group">
+            <form action="/start" method="get" >
+                <button type="submit" class="btn btn-primary">재시작</button>
             </form>
-            <form action="/end" method="get" style="display: inline-block">
-                <button type="submit" class="btn btn-secondary">게임 종료</button>
+            <form action="/status" method="get" >
+                <button type="submit" class="btn btn-success">점수</button>
+            </form>
+            <form action="/end" method="get">
+                <button type="submit" class="btn btn-danger">게임 종료</button>
             </form>
         </div>
         <div class="info">
             <div>
                 {{#if error}}
-                에러 메시지: {{error}}
+                <h3>에러 메시지: {{error}}</h3>
                 {{/if}}
                 {{#if whiteScore}}
-                흰팀 점수: {{whiteScore}}
+                <h3>흰팀 점수: {{whiteScore}}</h3>
                 {{/if}}
 
                 {{#if blackScore}}
-                검은팀 점수: {{blackScore}}
+                <h3>검은팀 점수: {{blackScore}}</h3>
                 {{/if}}
 
                 {{#if winTeam}}
-                승자: {{winTeam}}
+                <h3>승자: {{winTeam}}</h3>
                 {{/if}}
             </div>
         </div>
