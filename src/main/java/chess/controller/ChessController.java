@@ -18,7 +18,6 @@ public class ChessController {
     }
 
     public void start() {
-        System.out.println("hi");
         chessGame.start();
         outputView.printBoard(BoardDto.from(chessGame.getBoard()));
 
