@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="board.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<table class="table_board">
+    <tr>
+        <td class="dark_board" id="a8" onclick="move(this.id)"></td>
+        <td class="light_board" id="b8" onclick="move(this.id)"></td>
+        <td class="dark_board" id="c8" onclick="move(this.id)"></td>
+        <td class="light_board" id="d8" onclick="move(this.id)"></td>
+        <td class="dark_board" id="e8" onclick="move(this.id)"></td>
+        <td class="light_board" id="f8" onclick="move(this.id)"></td>
+        <td class="dark_board" id="g8" onclick="move(this.id)"></td>
+        <td class="light_board" id="h8" onclick="move(this.id)"></td>
+    </tr>
+    <tr class="row_board">
+        <td class="light_board" id="a7" onclick="move(this.id)"></td>
+        <td class="dark_board" id="b7" onclick="move(this.id)"></td>
+        <td class="light_board" id="c7" onclick="move(this.id)"></td>
+        <td class="dark_board" id="d7" onclick="move(this.id)"></td>
+        <td class="light_board" id="e7" onclick="move(this.id)"></td>
+        <td class="dark_board" id="f7" onclick="move(this.id)"></td>
+        <td class="light_board" id="g7" onclick="move(this.id)"></td>
+        <td class="dark_board" id="h7" onclick="move(this.id)"></td>
+    </tr>
+
+    <tr>
+        <td class="dark_board" id="a6" onclick="move(this.id)"></td>
+        <td class="light_board" id="b6" onclick="move(this.id)"></td>
+        <td class="dark_board" id="c6" onclick="move(this.id)"></td>
+        <td class="light_board" id="d6" onclick="move(this.id)"></td>
+        <td class="dark_board" id="e6" onclick="move(this.id)"></td>
+        <td class="light_board" id="f6" onclick="move(this.id)"></td>
+        <td class="dark_board" id="g6" onclick="move(this.id)"></td>
+        <td class="light_board" id="h6" onclick="move(this.id)"></td>
+    </tr>
+    <tr class="row_board">
+        <td class="light_board" id="a5" onclick="move(this.id)"></td>
+        <td class="dark_board" id="b5" onclick="move(this.id)"></td>
+        <td class="light_board" id="c5" onclick="move(this.id)"></td>
+        <td class="dark_board" id="d5" onclick="move(this.id)"></td>
+        <td class="light_board" id="e5" onclick="move(this.id)"></td>
+        <td class="dark_board" id="f5" onclick="move(this.id)"></td>
+        <td class="light_board" id="g5" onclick="move(this.id)"></td>
+        <td class="dark_board" id="h5" onclick="move(this.id)"></td>
+    </tr>
+
+    <tr>
+        <td class="dark_board" id="a4" onclick="move(this.id)"></td>
+        <td class="light_board" id="b4" onclick="move(this.id)"></td>
+        <td class="dark_board" id="c4" onclick="move(this.id)"></td>
+        <td class="light_board" id="d4" onclick="move(this.id)"></td>
+        <td class="dark_board" id="e4" onclick="move(this.id)"></td>
+        <td class="light_board" id="f4" onclick="move(this.id)"></td>
+        <td class="dark_board" id="g4" onclick="move(this.id)"></td>
+        <td class="light_board" id="h4" onclick="move(this.id)"></td>
+    </tr>
+    <tr class="row_board">
+        <td class="light_board" id="a3" onclick="move(this.id)"></td>
+        <td class="dark_board" id="b3" onclick="move(this.id)"></td>
+        <td class="light_board" id="c3" onclick="move(this.id)"></td>
+        <td class="dark_board" id="d3" onclick="move(this.id)"></td>
+        <td class="light_board" id="e3" onclick="move(this.id)"></td>
+        <td class="dark_board" id="f3" onclick="move(this.id)"></td>
+        <td class="light_board" id="g3" onclick="move(this.id)"></td>
+        <td class="dark_board" id="h3" onclick="move(this.id)"></td>
+    </tr>
+
+    <tr>
+        <td class="dark_board" id="a2" onclick="move(this.id)"></td>
+        <td class="light_board" id="b2" onclick="move(this.id)"></td>
+        <td class="dark_board" id="c2" onclick="move(this.id)"></td>
+        <td class="light_board" id="d2" onclick="move(this.id)"></td>
+        <td class="dark_board" id="e2" onclick="move(this.id)"></td>
+        <td class="light_board" id="f2" onclick="move(this.id)"></td>
+        <td class="dark_board" id="g2" onclick="move(this.id)"></td>
+        <td class="light_board" id="h2" onclick="move(this.id)"></td>
+    </tr>
+    <tr class="row_board">
+        <td class="light_board" id="a1" onclick="move(this.id)"></td>
+        <td class="dark_board" id="b1" onclick="move(this.id)"></td>
+        <td class="light_board" id="c1" onclick="move(this.id)"></td>
+        <td class="dark_board" id="d1" onclick="move(this.id)"></td>
+        <td class="light_board" id="e1" onclick="move(this.id)"></td>
+        <td class="dark_board" id="f1" onclick="move(this.id)"></td>
+        <td class="light_board" id="g1" onclick="move(this.id)"></td>
+        <td class="dark_board" id="h1" onclick="move(this.id)"></td>
+    </tr>
+</table>
+</body>
+<script src="piece.js"></script>
+<script>
+    window.onload = function () {
+        {{#pieces}}
+        findPiece("{{position}}", "{{symbol}}");
+        {{/pieces}}
+        }
+</script>
+</html>
