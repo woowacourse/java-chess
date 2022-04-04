@@ -2,13 +2,11 @@ package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
-import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
-import java.util.Map;
 
 public class ChessGame {
 

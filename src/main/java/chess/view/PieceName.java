@@ -30,12 +30,12 @@ public enum PieceName {
 
     private final ChessPiece chessPiece;
     private final String consoleName;
-    private final String WebImagePath;
+    private final String webImagePath;
 
     PieceName(final ChessPiece chessPiece, final String consoleName, final String webImagePath) {
         this.chessPiece = chessPiece;
         this.consoleName = consoleName;
-        WebImagePath = webImagePath;
+        this.webImagePath = webImagePath;
     }
 
     public static String findWebImagePath(ChessPiece chessPiece) {
@@ -43,7 +43,7 @@ public enum PieceName {
                 .filter(it -> it.chessPiece.equals(chessPiece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 기물이 없습니다."))
-                .WebImagePath;
+                .webImagePath;
     }
 
     public static String findConsoleName(final ChessPiece chessPiece) {
