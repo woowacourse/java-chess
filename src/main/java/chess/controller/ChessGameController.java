@@ -14,9 +14,12 @@ import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessGameController {
 
@@ -28,7 +31,11 @@ public class ChessGameController {
 
     public void run() {
         Gson gson = new Gson();
-        get("/", "application/json", (req, res) -> {
+        get("/", (req, res) -> {
+            return render(new HashMap<>(), "index.html");
+        });
+
+        get("/board", "application/json", (req, res) -> {
             res.type("application/json");
 
             Map<Position, Piece> pieces = chessGameService.currentChessBoard();
@@ -79,5 +86,9 @@ public class ChessGameController {
             res.type("application/json");
             return gson.toJson(TurnResponse.from(chessGameService.findCurrentTurn()));
         });
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
