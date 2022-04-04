@@ -15,20 +15,24 @@ import static chess.web.dto.PieceType.ROOK_WHITE;
 import static chess.web.dto.PieceType.parsePiece;
 
 import chess.dao.PieceDao;
+import chess.dao.TurnDao;
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.generator.EmptyBoardGenerator;
 import chess.domain.state.State;
 import chess.domain.state.StateGenerator;
 import chess.web.dto.PieceDto;
+import chess.web.dto.TurnDto;
 import java.util.List;
 
 public class ChessService {
 
     private final PieceDao pieceDao;
+    private final TurnDao turnDao;
 
-    public ChessService(PieceDao pieceDao) {
+    public ChessService(PieceDao pieceDao, TurnDao turnDao) {
         this.pieceDao = pieceDao;
+        this.turnDao = turnDao;
     }
 
     public void create() {
@@ -37,7 +41,7 @@ public class ChessService {
             pieceDao.save(pieceDto);
         }
 
-        // TODO: state 저장 예정
+        turnDao.save(new TurnDto("white turn"));
     }
 
     public ChessGame getChessGame() {
@@ -48,8 +52,14 @@ public class ChessService {
             chessBoard.fill(pieceDto.getId(), parsePiece(pieceDto.getPieceType()));
         }
 
-        // TODO: DB 조회로 변경 예정
-        State state = StateGenerator.WHITE_TURN.parseState(chessBoard);
+        if (turnDao.isFirstTurn()) {
+            State state = StateGenerator.READY.parseState(chessBoard);
+            return new ChessGame(state);
+        }
+
+        TurnDto lastTurn = turnDao.findLastTurn();
+        StateGenerator stateGenerator = StateGenerator.of(lastTurn.getTurn());
+        State state = stateGenerator.parseState(chessBoard);
 
         return new ChessGame(state);
     }

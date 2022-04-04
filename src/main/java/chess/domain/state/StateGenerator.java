@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 public enum StateGenerator {
 
-    START("start", chessBoard -> new Ready().start()),
+    READY("ready", chessBoard -> new Ready()),
     WHITE_TURN("white turn", chessBoard -> new WhiteTurn(chessBoard)),
     BLACK_TURN("black turn", chessBoard -> new BlackTurn(chessBoard)),
     WHITE_WIN("white win", chessBoard -> new WhiteWin(chessBoard)),
