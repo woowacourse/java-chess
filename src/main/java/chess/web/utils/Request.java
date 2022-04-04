@@ -13,6 +13,6 @@ public class Request {
     }
 
     private static Position getPositionFrom(String position) {
-        return RequestConverter.positionFrom(position);
+        return Converter.positionFrom(position);
     }
 }

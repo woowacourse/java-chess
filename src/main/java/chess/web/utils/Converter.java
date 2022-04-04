@@ -6,7 +6,7 @@ import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
 import chess.domain.game.state.position.Rank;
 
-public class RequestConverter {
+public class Converter {
     public static Position positionFrom(String position) {
         if (position.length() != 2) {
             throw new IllegalArgumentException("position 정보가 잘못되었습니다.");
