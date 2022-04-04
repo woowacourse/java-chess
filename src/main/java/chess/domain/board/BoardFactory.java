@@ -30,14 +30,6 @@ public class BoardFactory {
         return board;
     }
 
-    public static Board createBoard(final Map<String, String> board) {
-        Map<Position, Piece> boards = board.keySet()
-                .stream()
-                .collect(Collectors.toMap(key -> Position.valueOf(key),
-                        key -> PieceFactory.createPiece(board.get(key))));
-        return new Board(boards);
-    }
-
     private static Map<Position, Piece> initEmptyBoard() {
         Map<Position, Piece> emptyBoard = new TreeMap<>();
         for (Row row : Row.values()) {
