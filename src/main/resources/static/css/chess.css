@@ -1,11 +1,22 @@
-td.black-box {
-    background-color: slategray;
-    width: 4rem;
-    height: 4rem;
+.chess-ui {
+    width: 640px;
+    border: 4px solid slategrey;
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
 }
 
-td.white-box {
+
+img {
+    width: 100%;
+}
+
+.black-square {
+    background-color: slategray;
+    color: slategrey;
+}
+
+.white-square {
     background-color: white;
-    width: 4rem;
-    height: 4rem;
+    color: white;
 }
