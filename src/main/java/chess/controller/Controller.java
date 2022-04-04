@@ -37,7 +37,7 @@ public class Controller {
     private void go(String input) {
         try {
             state = state.execute(new CommandDto(input));
-            model.put("error", "현재 에러 없음");
+            model.put("error", "");
             model.put("result", "");
             if (state.getType() != StateType.PLAY) {
                 model.put("result", "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.");
