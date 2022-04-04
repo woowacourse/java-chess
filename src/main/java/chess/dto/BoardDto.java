@@ -16,35 +16,18 @@ public class BoardDto {
         this.board = board;
     }
 
-    public String getBoardString() {
-        StringBuilder result = new StringBuilder();
-        Map<Position, Piece> squares = board.getSquares();
-        List<Rank> ranks = Rank.reverseRanks();
-        for (Rank rank : ranks) {
-            result.append(ChessBoardOfRankToString(squares, rank));
-        }
-        return result.toString();
-    }
-
     public List<PieceDto> getBoardWeb() {
         List<PieceDto> result = new ArrayList<>();
-        Map<Position, Piece> squares = board.getSquares();
-        List<Rank> ranks = Rank.reverseRanks();
-        for (Rank rank : ranks) {
-            for (Column column : Column.values()) {
-                Piece piece = squares.get(new Position(column, rank));
-                result.add(new PieceDto(piece));
-            }
+        for (Rank rank : Rank.reverseRanks()) {
+            addPiecesDtoRank(result, board.getSquares(), rank);
         }
         return result;
     }
 
-    private String ChessBoardOfRankToString(Map<Position, Piece> squares, Rank rank) {
-        StringBuilder result = new StringBuilder();
+    private void addPiecesDtoRank(List<PieceDto> result, Map<Position, Piece> squares, Rank rank) {
         for (Column column : Column.values()) {
             Piece piece = squares.get(new Position(column, rank));
-            result.append(piece.getName().getValue(piece.getTeam()));
+            result.add(new PieceDto(piece));
         }
-        return result + System.lineSeparator();
     }
 }

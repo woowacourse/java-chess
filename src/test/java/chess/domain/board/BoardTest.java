@@ -18,7 +18,6 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Team;
 import chess.dto.BoardDto;
-import chess.view.OutputView;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -103,7 +102,6 @@ class BoardTest {
                 new Position(Column.A, Rank.FOUR),
                 new Position(Column.B, Rank.FIVE)
         );
-        OutputView.printChessBoard(new BoardDto(board));
 
         Map<Team, Double> colorsTotalScore = board.getScoreOfTeams();
 
