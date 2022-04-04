@@ -73,21 +73,37 @@ public class ChessConsole {
     }
 
     private void start(BoardGenerator boardGenerator) {
-        chessGame.start(boardGenerator);
-        printBoard(chessGame.getBoard());
+        try {
+            chessGame.start(boardGenerator);
+            printBoard(chessGame.getBoard());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private void move(Command command, List<String> inputs) {
-        if (command.isMove()) {
+        if (!command.isMove()) {
+            return;
+        }
+
+        try {
             chessGame.move(inputs);
             printBoard(chessGame.getBoard());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 
     private void status(Command command) {
-        if (command.isStatus()) {
+        if (!command.isStatus()) {
+            return;
+        }
+
+        try {
             Score score = chessGame.status();
             OutputView.printStatus(score.getValue(), score.findWinTeam());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 

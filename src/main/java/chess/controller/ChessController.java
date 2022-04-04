@@ -51,8 +51,11 @@ public class ChessController {
         inputs.add(request.queryParams("to"));
 
         Map<String, Object> model = new HashMap<>();
-        if (!chessGame.move(inputs)) {
-            model.put("message", "잘못된 이동입니다.");
+
+        try {
+            chessGame.move(inputs);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            model.put("message", e.getMessage());
         }
         model.putAll(generateBoardModel(chessGame));
 
@@ -60,10 +63,16 @@ public class ChessController {
     }
 
     private String renderStatus(ChessGame chessGame) {
-        Score score = chessGame.status();
+        Map<String, Object> model = new HashMap<>();
 
-        Map<String, Object> model = generateBoardModel(chessGame);
-        model.put("message", drawScoreSentence(score));
+        try {
+            Score score = chessGame.status();
+            model = generateBoardModel(chessGame);
+            model.put("message", drawScoreSentence(score));
+
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            model.put("message", e.getMessage());
+        }
 
         return render(model, "board.html");
     }

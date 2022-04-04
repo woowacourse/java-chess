@@ -3,7 +3,6 @@ package chess.domain.game;
 import static chess.console.view.InputView.FROM_POSITION_INDEX;
 import static chess.console.view.InputView.TO_POSITION_INDEX;
 
-import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
@@ -18,28 +17,15 @@ public class ChessGame {
         board = boardGenerator.create();
     }
 
-    public boolean move(List<String> inputs) {
-        try {
-            validCheck();
-            board.move(Position.of(inputs.get(FROM_POSITION_INDEX))
-                    , Position.of(inputs.get(TO_POSITION_INDEX)));
-            return true;
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
-        return false;
+    public void move(List<String> inputs) {
+        validCheck();
+        board.move(Position.of(inputs.get(FROM_POSITION_INDEX))
+                , Position.of(inputs.get(TO_POSITION_INDEX)));
     }
 
     public Score status() {
-        Score score = null;
-        try {
-            validCheck();
-            score = board.createResult();
-
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
-        return score;
+        validCheck();
+        return board.createResult();
     }
 
     private void validCheck() {
