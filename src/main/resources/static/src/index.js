@@ -1,12 +1,11 @@
 let source = "";
 let target = "";
 
-document.addEventListener("DOMContentLoaded", sendLoad);
-
-async function sendLoad() {
-    await fetch("/load")
+window.onload = function () {
+    fetch("/load")
         .then(response => response.json())
         .then(data => {
+            initializePosition(data.board);
             loadStateAndBoard(data);
         });
 }
@@ -49,15 +48,17 @@ async function sendStatus() {
         });
 }
 
-async function move(id) {
+async function move(event) {
+    const id = event.currentTarget.id;
+    const divClassName = document.getElementById(id).classList;
     if (source === "") {
         source = id;
-        document.getElementById(id).className += " selected";
+        divClassName.add('selected');
         return;
     }
     if (source !== "" && target === "") {
         target = id;
-        document.getElementById(id).className += " selected";
+        divClassName.add('selected');
         await sendMove();
     }
 }
@@ -87,12 +88,27 @@ async function sendMove() {
     target = "";
 }
 
-async function loadStateAndBoard(data) {
-    await loadBoard(data.board);
-    await loadState(data.state, data.turn);
+function initializePosition(board) {
+    const section = document.getElementsByClassName('chess-ui')[0];
+    for (key in board) {
+        addPosition(section, key);
+    }
 }
 
-async function loadState(state, turn) {
+function addPosition(section, key) {
+    const div = document.createElement('div');
+    div.id = key;
+    div.className = 'square';
+    div.addEventListener('click', move);
+    section.appendChild(div);
+}
+
+function loadStateAndBoard(data) {
+    loadBoard(data.board);
+    loadState(data.state, data.turn);
+}
+
+function loadState(state, turn) {
     document.getElementsByClassName('state')[0].textContent = state;
 
     if (state === "Started") {
@@ -104,21 +120,21 @@ async function loadState(state, turn) {
     }
 }
 
-async function loadBoard(board) {
+function loadBoard(board) {
     for (key in board) {
         const div = document.getElementById(key);
-        await resetPiece(div);
-        await setPiece(div, board[key]);
+        resetPiece(div);
+        setPiece(div, board[key]);
     }
 }
 
-async function resetPiece(div) {
+function resetPiece(div) {
     if (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }
 }
 
-async function setPiece(div, piece) {
+function setPiece(div, piece) {
     if (piece !== "empty_none") {
         const img = document.createElement("img");
         img.src = "/images/" + piece + ".png";

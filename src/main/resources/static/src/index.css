@@ -3,13 +3,18 @@
   src: url("/fonts/BMHANNA_11yrs.ttf");
 }
 
+:root {
+  --theme-color: #f1b6e7;
+  --selected-color: #ea5fa8;
+}
+
 body, button {
   font-family: "Hanna", sans-serif;
 }
 
 .chess-ui {
   width: 480px;
-  border: 4px solid slategrey;
+  border: 4px solid var(--theme-color);
   display: grid;
   grid-template-columns: repeat(8, 60px);
   grid-template-rows: repeat(8, 60px);
@@ -20,22 +25,25 @@ body, button {
   font-weight: bold;
 }
 
-.white-square {
-  background-color: slategrey;
+.square {
+  background-color: var(--theme-color);
   color: white;
 }
 
-.white-square.selected {
-  background-color: rosybrown;
-}
-
-.black-square {
+.square:nth-child(-2n+7),
+.square:nth-child(8) ~ .square:nth-child(-2n+16),
+.square:nth-child(16) ~ .square:nth-child(-2n+23),
+.square:nth-child(25) ~ .square:nth-child(-2n+32),
+.square:nth-child(32) ~ .square:nth-child(-2n+39),
+.square:nth-child(41) ~ .square:nth-child(-2n+48),
+.square:nth-child(47) ~ .square:nth-child(-2n+55),
+.square:nth-child(57) ~ .square:nth-child(-2n+64) {
   background-color: white;
-  color: slategrey;
+  color: var(--theme-color);
 }
 
-.black-square.selected {
-  background-color: rosybrown;
+.square.selected {
+  background-color: var(--selected-color) !important;
 }
 
 img {

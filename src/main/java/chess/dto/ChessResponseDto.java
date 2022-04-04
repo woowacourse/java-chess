@@ -6,7 +6,7 @@ import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessResponseDto {
@@ -40,7 +40,7 @@ public class ChessResponseDto {
     }
 
     private Map<String, String> createBoard(final Map<Position, Piece> board) {
-        final Map<String, String> strings = new HashMap<>();
+        final Map<String, String> strings = new LinkedHashMap<>();
         board.forEach((key, value) -> {
             strings.put(key.getName(), value.getType() + "_" + value.getColor());
         });
