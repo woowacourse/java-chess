@@ -10,6 +10,7 @@ import chess.dao.PieceDaoImpl;
 import chess.dao.TurnDao;
 import chess.dao.TurnDaoImpl;
 import chess.domain.Position;
+import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.single.Knight;
@@ -57,7 +58,6 @@ class ChessGameServiceTest {
         );
     }
 
-
     @Test
     @DisplayName("Position을 받아 빈 곳에 move")
     void moveEmptyPosition() {
@@ -76,6 +76,27 @@ class ChessGameServiceTest {
         // then
         assertAll(
                 () ->assertThat(result.name()).isEqualTo("pawn"),
+                () -> assertThat(result.color()).isEqualTo(WHITE)
+        );
+    }
+
+    @Test
+    @DisplayName("pawn 프로모션")
+    void promotion() {
+        // given
+        turnDao.updateTurn(Turn.END, Turn.WHITE_TURN);
+        Position source = Position.of('a', '8');
+        pieceDao.savePieces(Map.of(
+                source, new Piece(WHITE, new Pawn(WHITE))
+        ));
+
+        // when
+        chessGameService.promotion(PromotionPiece.BISHOP);
+        Piece result = pieceDao.findAllPieces().get(source);
+
+        // then
+        assertAll(
+                () ->assertThat(result.name()).isEqualTo("bishop"),
                 () -> assertThat(result.color()).isEqualTo(WHITE)
         );
     }

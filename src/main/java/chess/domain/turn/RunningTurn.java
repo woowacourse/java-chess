@@ -4,6 +4,8 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
+import chess.domain.piece.Piece;
+import java.util.Map.Entry;
 
 public class RunningTurn implements GameTurn {
 
@@ -32,8 +34,8 @@ public class RunningTurn implements GameTurn {
     }
 
     @Override
-    public void promotion(PromotionPiece promotionPiece) {
-        chessBoard.promotion(promotionPiece, color);
+    public Entry<Position, Piece> promotion(PromotionPiece promotionPiece) {
+        return chessBoard.promotion(promotionPiece, color);
     }
 
     @Override

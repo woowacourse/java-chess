@@ -3,6 +3,8 @@ package chess.domain.turn;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
+import chess.domain.piece.Piece;
+import java.util.Map.Entry;
 
 public interface GameTurn {
 
@@ -10,7 +12,7 @@ public interface GameTurn {
 
     void movePiece(Position source, Position target);
 
-    void promotion(PromotionPiece promotionPiece);
+    Entry<Position, Piece> promotion(PromotionPiece promotionPiece);
 
     Color color();
 

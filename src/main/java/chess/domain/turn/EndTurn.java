@@ -4,6 +4,8 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
+import chess.domain.piece.Piece;
+import java.util.Map.Entry;
 
 public class EndTurn implements GameTurn {
 
@@ -24,7 +26,7 @@ public class EndTurn implements GameTurn {
     }
 
     @Override
-    public void promotion(PromotionPiece promotionPiece) {
+    public Entry<Position, Piece> promotion(PromotionPiece promotionPiece) {
         throw new IllegalStateException("종료된 게임은 promotion할 수 없습니다.");
     }
 
