@@ -3,6 +3,7 @@ package chess.domain.turn;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.PromotionPiece;
 
 public class RunningTurn implements GameTurn {
 
@@ -28,6 +29,11 @@ public class RunningTurn implements GameTurn {
     @Override
     public void movePiece(Position source, Position target) {
         chessBoard.movePiece(source, target, color);
+    }
+
+    @Override
+    public void promotion(PromotionPiece promotionPiece) {
+        chessBoard.promotion(promotionPiece, color);
     }
 
     @Override

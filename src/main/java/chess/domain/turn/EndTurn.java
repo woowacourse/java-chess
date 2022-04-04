@@ -3,12 +3,13 @@ package chess.domain.turn;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.PromotionPiece;
 
 public class EndTurn implements GameTurn {
 
     private final ChessBoard chessBoard;
 
-    public EndTurn(final ChessBoard chessBoard) {
+    public EndTurn(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
@@ -20,6 +21,11 @@ public class EndTurn implements GameTurn {
     @Override
     public void movePiece(Position source, Position target) {
         throw new IllegalStateException("종료된 게임은 기물을 움직일 수 없습니다.");
+    }
+
+    @Override
+    public void promotion(PromotionPiece promotionPiece) {
+        throw new IllegalStateException("종료된 게임은 promotion할 수 없습니다.");
     }
 
     @Override
