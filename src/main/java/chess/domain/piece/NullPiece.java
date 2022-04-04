@@ -29,12 +29,12 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position beforePosition, final Position afterPosition) {
+    public boolean checkCanMoveByDistance(final Position beforePosition, final Position afterPosition) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 
     @Override
-    public boolean canMove(final Positions positions) {
+    public boolean checkCanMoveByDistance(final Positions positions) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 

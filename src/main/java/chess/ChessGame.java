@@ -9,6 +9,7 @@ import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -23,8 +24,8 @@ public class ChessGame {
     public void start() {
         OutputView.printStartMessage();
         while (gameSwitch.isOn()) {
-            checkKingState();
             playGame();
+            checkKingState();
         }
     }
 
@@ -34,11 +35,35 @@ public class ChessGame {
         }
         if (isKingChecked()) {
             OutputView.printKingCheckedMessage();
+            return;
+        }
+
+        // 이동가능한 곳 중 checkmated가 등장했다면, 그곳으로 갈 수 없게 끔, 해야한다.
+        final List<Position> kingCheckmatedPositions = state.getKingCheckmatedPositions();
+        if (isAnyKingCheckmated(kingCheckmatedPositions)) {
+            checkAllKingCheckMated(kingCheckmatedPositions);
         }
     }
 
+    private boolean isAnyKingCheckmated(final List<Position> positions) {
+        return positions.size() > 0;
+    }
+
+    private void checkAllKingCheckMated(final List<Position> positions) {
+        if (isAllKingCheckmated(positions)) {
+            OutputView.printALLKingCheckmatedMessage();
+            gameSwitchOff();
+            return;
+        }
+        OutputView.printKingCheckmatedMessage(positions);
+    }
+
+    private boolean isAllKingCheckmated(final List<Position> positions) {
+        return state.isAllKingCheckmated(positions);
+    }
+
     public boolean isKingChecked() {
-        return this.state.isKingChecked();
+        return state.isKingChecked();
     }
 
     private void playGame() {

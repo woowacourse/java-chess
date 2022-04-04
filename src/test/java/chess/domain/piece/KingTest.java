@@ -18,7 +18,7 @@ class KingTest {
         Position f1 = Position.of(Column.F, Row.ONE);
         Position f2 = Position.of(Column.F, Row.TWO);
 
-        assertThat(king.canMove(f1, f2)).isTrue();
+        assertThat(king.checkCanMoveByDistance(f1, f2)).isTrue();
     }
 
     @DisplayName("킹은 한 칸 앞으로 움직일 수 있다.")
@@ -28,7 +28,7 @@ class KingTest {
         Position f1 = Position.of(Column.F, Row.ONE);
         Position g2 = Position.of(Column.G, Row.TWO);
 
-        assertThat(king.canMove(f1, g2)).isTrue();
+        assertThat(king.checkCanMoveByDistance(f1, g2)).isTrue();
     }
 
     @DisplayName("킹은 두 칸 앞으로 움직일 수 없다.")
@@ -38,6 +38,6 @@ class KingTest {
         Position f1 = Position.of(Column.F, Row.ONE);
         Position f3 = Position.of(Column.F, Row.THREE);
 
-        assertThat(king.canMove(f1, f3)).isFalse();
+        assertThat(king.checkCanMoveByDistance(f1, f3)).isFalse();
     }
 }

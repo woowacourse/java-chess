@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 
 public class Ready implements State {
@@ -88,5 +89,15 @@ public class Ready implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         throw new IllegalStateException(NOT_INIT_CHESS_BOARD);
+    }
+
+    @Override
+    public List<Position> getKingCheckmatedPositions() {
+        throw new UnsupportedOperationException("Ready#isKingCheckmated not implemented.");
+    }
+
+    @Override
+    public boolean isAllKingCheckmated(final List<Position> positions) {
+        throw new UnsupportedOperationException("Ready#isAllKingCheckmated not implemented.");
     }
 }

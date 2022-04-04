@@ -18,7 +18,7 @@ class PawnTest {
         Position a2 = Position.of(Column.A, Row.TWO);
         Position a4 = Position.of(Column.A, Row.FOUR);
 
-        assertThat(pawn.canMove(a2, a4)).isTrue();
+        assertThat(pawn.checkCanMoveByDistance(a2, a4)).isTrue();
     }
 
     @DisplayName("흑색 진영의 폰은 최초 이동시 아래로 2칸 움직일 수 있다.")
@@ -28,7 +28,7 @@ class PawnTest {
         Position a7 = Position.of(Column.A, Row.SEVEN);
         Position a5 = Position.of(Column.A, Row.FIVE);
 
-        assertThat(pawn.canMove(a7, a5)).isTrue();
+        assertThat(pawn.checkCanMoveByDistance(a7, a5)).isTrue();
     }
 
     @DisplayName("흰색 진영의 폰은 2번째 이동부터 위로 2칸 움직일 수 없다.")
@@ -41,7 +41,7 @@ class PawnTest {
         pawn.move(a2, a4, (piece -> {
         }));
 
-        assertThat(pawn.canMove(a4, a6)).isFalse();
+        assertThat(pawn.checkCanMoveByDistance(a4, a6)).isFalse();
     }
 
     @DisplayName("흰색 진영의 폰은 아래로 1칸 움직일 수 없다.")
@@ -51,7 +51,7 @@ class PawnTest {
         Position a5 = Position.of(Column.A, Row.FIVE);
         Position a4 = Position.of(Column.A, Row.FOUR);
 
-        assertThat(pawn.canMove(a5, a4)).isFalse();
+        assertThat(pawn.checkCanMoveByDistance(a5, a4)).isFalse();
     }
 
     @DisplayName("흑색 진영의 폰은 위로 1칸 움직일 수 없다.")
@@ -61,7 +61,7 @@ class PawnTest {
         Position a5 = Position.of(Column.A, Row.FIVE);
         Position a6 = Position.of(Column.A, Row.SIX);
 
-        assertThat(pawn.canMove(a5, a6)).isFalse();
+        assertThat(pawn.checkCanMoveByDistance(a5, a6)).isFalse();
     }
 
     @DisplayName("흰색 진영의 폰은 2번째 이동부터 위로 1칸 움직일 수 있다.")
@@ -74,7 +74,7 @@ class PawnTest {
         pawn.move(a2, a4, (piece -> {
         }));
 
-        assertThat(pawn.canMove(a4, a5)).isTrue();
+        assertThat(pawn.checkCanMoveByDistance(a4, a5)).isTrue();
     }
 
     @DisplayName("흑색 진영의 폰은 2번째 이동부터 아래로 1칸 움직일 수 있다.")
@@ -87,7 +87,7 @@ class PawnTest {
         pawn.move(a7, a5, (piece -> {
         }));
 
-        assertThat(pawn.canMove(a5, a4)).isTrue();
+        assertThat(pawn.checkCanMoveByDistance(a5, a4)).isTrue();
     }
 
     @DisplayName("폰은 가로로 움직일 수 없다.")
@@ -97,6 +97,6 @@ class PawnTest {
         Position d3 = Position.of(Column.D, Row.THREE);
         Position e3 = Position.of(Column.E, Row.THREE);
 
-        assertThat(pawn.canMove(d3, e3)).isFalse();
+        assertThat(pawn.checkCanMoveByDistance(d3, e3)).isFalse();
     }
 }

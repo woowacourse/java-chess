@@ -19,7 +19,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position b6 = Position.of(Column.B, Row.SIX);
 
-        assertThat(knight.canMove(c4, b6)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, b6)).isTrue();
     }
 
     @DisplayName("나이트는 앞으로 2칸 오른쪽으로 1칸 움직일 수 있다.")
@@ -30,7 +30,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position b6 = Position.of(Column.B, Row.SIX);
 
-        assertThat(knight.canMove(c4, b6)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, b6)).isTrue();
     }
 
 
@@ -42,7 +42,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position b2 = Position.of(Column.B, Row.TWO);
 
-        assertThat(knight.canMove(c4, b2)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, b2)).isTrue();
     }
 
 
@@ -54,7 +54,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position d2 = Position.of(Column.D, Row.TWO);
 
-        assertThat(knight.canMove(c4, d2)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, d2)).isTrue();
     }
 
     @DisplayName("나이트는 왼쪽으로 2칸 위로 1칸 움직일 수 있다.")
@@ -65,7 +65,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position a5 = Position.of(Column.A, Row.FIVE);
 
-        assertThat(knight.canMove(c4, a5)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, a5)).isTrue();
     }
 
     @DisplayName("나이트는 왼쪽으로 2칸 아래로 1칸 움직일 수 있다.")
@@ -76,7 +76,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position a3 = Position.of(Column.A, Row.THREE);
 
-        assertThat(knight.canMove(c4, a3)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, a3)).isTrue();
     }
 
 
@@ -88,7 +88,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position e5 = Position.of(Column.E, Row.FIVE);
 
-        assertThat(knight.canMove(c4, e5)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, e5)).isTrue();
     }
 
 
@@ -100,7 +100,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position e3 = Position.of(Column.E, Row.THREE);
 
-        assertThat(knight.canMove(c4, e3)).isTrue();
+        assertThat(knight.checkCanMoveByDistance(c4, e3)).isTrue();
     }
 
     @DisplayName("나이트는 왼쪽으로 2칸만 움직일 수 없다.")
@@ -111,7 +111,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position a4 = Position.of(Column.A, Row.FOUR);
 
-        assertThat(knight.canMove(c4, a4)).isFalse();
+        assertThat(knight.checkCanMoveByDistance(c4, a4)).isFalse();
     }
 
     @DisplayName("나이트는 오른쪽으로 2칸만 움직일 수 없다.")
@@ -122,7 +122,7 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position e4 = Position.of(Column.E, Row.FOUR);
 
-        assertThat(knight.canMove(c4, e4)).isFalse();
+        assertThat(knight.checkCanMoveByDistance(c4, e4)).isFalse();
     }
 
     @DisplayName("나이트는 위로 3칸 왼쪽으로 1칸 움직일 수 없다.")
@@ -133,6 +133,6 @@ public class KnightTest {
         Position c4 = Position.of(Column.C, Row.FOUR);
         Position b7 = Position.of(Column.B, Row.SEVEN);
 
-        assertThat(knight.canMove(c4, b7)).isFalse();
+        assertThat(knight.checkCanMoveByDistance(c4, b7)).isFalse();
     }
 }

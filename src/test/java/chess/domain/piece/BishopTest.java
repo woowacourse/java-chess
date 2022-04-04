@@ -19,7 +19,7 @@ public class BishopTest {
         Position d1 = Position.of(Column.D, Row.ONE);
         Position g4 = Position.of(Column.G, Row.FOUR);
 
-        assertThat(bishop.canMove(d1, g4)).isTrue();
+        assertThat(bishop.checkCanMoveByDistance(d1, g4)).isTrue();
     }
 
     @DisplayName("비숍은 앞으로 움직일 수 있다.")
@@ -30,7 +30,7 @@ public class BishopTest {
         Position d1 = Position.of(Column.D, Row.ONE);
         Position d6 = Position.of(Column.D, Row.SIX);
 
-        assertThat(bishop.canMove(d1, d6)).isFalse();
+        assertThat(bishop.checkCanMoveByDistance(d1, d6)).isFalse();
     }
 
     @DisplayName("비숍은 뒤로 움직일 수 있다.")
@@ -41,7 +41,7 @@ public class BishopTest {
         Position d6 = Position.of(Column.D, Row.SEVEN);
         Position d1 = Position.of(Column.D, Row.ONE);
 
-        assertThat(bishop.canMove(d6, d1)).isFalse();
+        assertThat(bishop.checkCanMoveByDistance(d6, d1)).isFalse();
     }
 
     @DisplayName("비숍은 우로 움직일 수 있다.")
@@ -52,7 +52,7 @@ public class BishopTest {
         Position d1 = Position.of(Column.D, Row.ONE);
         Position e1 = Position.of(Column.E, Row.ONE);
 
-        assertThat(bishop.canMove(d1, e1)).isFalse();
+        assertThat(bishop.checkCanMoveByDistance(d1, e1)).isFalse();
     }
 
     @DisplayName("비숍은 좌로 움직일 수 있다.")
@@ -63,7 +63,7 @@ public class BishopTest {
         Position e1 = Position.of(Column.E, Row.ONE);
         Position d1 = Position.of(Column.D, Row.ONE);
 
-        assertThat(bishop.canMove(e1, d1)).isFalse();
+        assertThat(bishop.checkCanMoveByDistance(e1, d1)).isFalse();
     }
 
     @DisplayName("비숍은 직선이 아닌 방향으로는 움직일 수 없다.")
@@ -74,6 +74,6 @@ public class BishopTest {
         Position d1 = Position.of(Column.D, Row.ONE);
         Position f2 = Position.of(Column.F, Row.TWO);
 
-        assertThat(bishop.canMove(d1, f2)).isFalse();
+        assertThat(bishop.checkCanMoveByDistance(d1, f2)).isFalse();
     }
 }

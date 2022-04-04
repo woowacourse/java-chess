@@ -5,6 +5,7 @@ import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 
 public interface State {
@@ -27,6 +28,8 @@ public interface State {
 
     boolean isKingChecked();
 
+    List<Position> getKingCheckmatedPositions();
+
     boolean isRunning();
 
     boolean isStatus();
@@ -34,4 +37,6 @@ public interface State {
     boolean isFinished();
 
     Map<Position, Piece> getBoard();
+
+    boolean isAllKingCheckmated(List<Position> positions);
 }

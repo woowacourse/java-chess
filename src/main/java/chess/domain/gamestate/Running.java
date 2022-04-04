@@ -5,11 +5,9 @@ import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
-import chess.domain.board.UnitDirectVector;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 public class Running implements State {
 
@@ -39,19 +37,19 @@ public class Running implements State {
     @Override
     public State move(final Positions positions) {
 
-        // 5. 사각형안에만 들어있는 것으로 유효한 & 모든이동방향에 대한 & 갈수 있는 포지션들
-        final SortedMap<UnitDirectVector, List<Position>> movablePositions = board.findMovablePositions(positions);
-
-        // 6. 갈 수 있는 포지션들 중 중간에  [기존 checkValidPosition 속 3개 검증]을 활용할 수 있으려나
-        movablePositions.entrySet()
-            .stream()
-            .forEach(it -> {
-                final UnitDirectVector direction = it.getKey();
-                final List<Position> possiblePositions = it.getValue();
-                for (final Position possiblePosition : possiblePositions) {
-                    System.out.println(direction + "방향으로 " + possiblePosition + "이 움직일 수 있다.");
-                }
-            });
+//        // 5. 사각형안에만 들어있는 것으로 유효한 & 모든이동방향에 대한 & 갈수 있는 포지션들
+//        final SortedMap<UnitDirectVector, List<Position>> movablePositions = board.findMovablePositions(positions.before());
+//
+//        // 6. 갈 수 있는 포지션들 중 중간에  [기존 checkValidPosition 속 3개 검증]을 활용할 수 있으려나
+//        movablePositions.entrySet()
+//            .stream()
+//            .forEach(it -> {
+//                final UnitDirectVector direction = it.getKey();
+//                final List<Position> possiblePositions = it.getValue();
+//                for (final Position possiblePosition : possiblePositions) {
+//                    System.out.println(direction + "방향으로 " + possiblePosition + "이 움직일 수 있다.");
+//                }
+//            });
 
         // 7. 방향별 받아온 포지션들에서 obstacle걸리는 것 제거 + 자기 canMove 거리내여야함..
         // -> (1)board정보를 가지고 isNull인지 확인하는 기능을 넘겨서 while로 모을때 끊어야한다.
@@ -145,6 +143,16 @@ public class Running implements State {
     @Override
     public boolean isKingChecked() {
         return board.isKingChecked(camp);
+    }
+
+    @Override
+    public List<Position> getKingCheckmatedPositions() {
+        return board.getKingCheckmatedPositions(camp);
+    }
+
+    @Override
+    public boolean isAllKingCheckmated(final List<Position> positions) {
+        return board.isAllKingCheckmated(camp, positions);
     }
 
     @Override

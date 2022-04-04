@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -22,6 +23,7 @@ public class OutputView {
     private static final String RESULT_SCORE_FORMAT = "백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n";
     private static final String CHESS_GAME_END_MESSAGE = "체스 게임을 완전히 종료합니다.";
     private static final String CHECK_KING_MESSAGE = "현재 킹이 check된 상황입니다.";
+    private static final String CHECKMATE_KING_MESSAGE = "현재 킹이 어느 한 곳에서 checkmated된 상황입니다.";
 
     public static void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -66,5 +68,17 @@ public class OutputView {
 
     public static void printKingCheckedMessage() {
         System.out.println(CHECK_KING_MESSAGE);
+    }
+
+    public static void printKingCheckmatedMessage(
+        final List<Position> kingCheckmatedPositions) {
+        System.out.println(CHECKMATE_KING_MESSAGE);
+        for (Position kingCheckmatedPosition : kingCheckmatedPositions) {
+            System.out.println(kingCheckmatedPosition + "에 갈 수 없습니다.");
+        }
+    }
+
+    public static void printALLKingCheckmatedMessage() {
+        System.out.println("킹의 모든 포지션이 check된 상황인 checkmate입니다. 게임을 종료합니다.");
     }
 }

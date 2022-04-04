@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 
 public class Finished implements State {
@@ -15,6 +16,7 @@ public class Finished implements State {
     private static final String CANT_STATUS_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.";
     private static final String CANT_END_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 종료할 수 없습니다.";
     private static final String CANT_CHECK_KING_CHECKED_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 킹의 check여부를 확인할 수 없습니다.";
+    private static final String CANT_CHECK_KING_CHECKMATED_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 킹의 checkmated여부를 확인할 수 없습니다.";
 
     private final Board board;
 
@@ -65,6 +67,16 @@ public class Finished implements State {
     @Override
     public boolean isKingChecked() {
         throw new IllegalStateException(CANT_CHECK_KING_CHECKED_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public List<Position> getKingCheckmatedPositions() {
+        throw new IllegalStateException(CANT_CHECK_KING_CHECKMATED_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public boolean isAllKingCheckmated(final List<Position> positions) {
+        throw new IllegalStateException(CANT_CHECK_KING_CHECKMATED_WHEN_NOT_RUNNING);
     }
 
     @Override

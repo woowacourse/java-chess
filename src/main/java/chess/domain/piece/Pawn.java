@@ -31,7 +31,7 @@ public final class Pawn extends NotNullPiece {
 
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> movePiece) {
-        if (!canMove(beforePosition, afterPosition)) {
+        if (!checkCanMoveByDistance(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
@@ -39,15 +39,15 @@ public final class Pawn extends NotNullPiece {
 
     @Override
     public void move(final Positions positions, final Consumer<Piece> movePiece) {
-        if (!canMove(positions)) {
+        if (!checkCanMoveByDistance(positions)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
     }
 
     @Override
-    public boolean canMove(Position beforePosition, Position afterPosition) {
-        return canMove(new Positions(beforePosition, afterPosition));
+    public boolean checkCanMoveByDistance(Position beforePosition, Position afterPosition) {
+        return checkCanMoveByDistance(new Positions(beforePosition, afterPosition));
     }
 
     private boolean isFirstMove(final Position beforePosition) {
@@ -58,7 +58,7 @@ public final class Pawn extends NotNullPiece {
     }
 
     @Override
-    public boolean canMove(final Positions positions) {
+    public boolean checkCanMoveByDistance(final Positions positions) {
         int rowDirectedDistance = positions.calculateDirectedRowDistance();
         int columnDistance = positions.calculateColumnDistance();
 
