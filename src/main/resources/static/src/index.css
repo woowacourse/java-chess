@@ -6,21 +6,21 @@
     grid-template-rows: repeat(8, 80px);
 }
 
-.white-square {
+.black-square {
     background-color: slategrey;
     color: white;
 }
 
-.white-square.selected {
+.black-square.selected {
     background-color: rosybrown;
 }
 
-.black-square {
+.white-square {
     background-color: white;
     color: slategrey;
 }
 
-.black-square.selected {
+.white-square.selected {
     background-color: rosybrown;
 }
 
