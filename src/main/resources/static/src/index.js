@@ -30,3 +30,9 @@ function move(id) {
         location.reload();
     }
 }
+
+function start() {
+    fetch("/start").then((res) => {
+        console.log(res);
+    });
+}

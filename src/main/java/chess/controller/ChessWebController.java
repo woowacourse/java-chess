@@ -7,6 +7,7 @@ import static spark.Spark.post;
 import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.dto.ChessBoardDto;
+import chess.dto.StatusDto;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ChessWebController {
 
         get("/", (req, res) -> {
             chessGame = new ChessGame();
-            return render(new HashMap<>(), "index.hbs");
+            return render(new HashMap<>(), "home.hbs");
         });
 
         get("/start", (req, res) -> {
@@ -45,6 +46,13 @@ public class ChessWebController {
             res.redirect("/chess");
             return res.toString();
         });
+
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("status", StatusDto.of(chessGame.statusOfWhite(), chessGame.statusOfBlack()));
+            return render(model, "status.hbs");
+        });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
