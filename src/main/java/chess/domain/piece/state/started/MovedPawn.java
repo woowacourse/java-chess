@@ -22,7 +22,7 @@ public class MovedPawn extends StartedPawn {
         List<Position> positions = new ArrayList<>();
         Position next = source.findNext(forward);
 
-        if (canMoveOrKillByOneStep(board, source, forward)) {
+        if (canOnlyMoveByOneStep(board, source, forward)) {
             positions.add(next);
         }
 
