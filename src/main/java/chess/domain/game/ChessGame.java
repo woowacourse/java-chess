@@ -1,20 +1,21 @@
 package chess.domain.game;
 
-import chess.domain.Board;
-import chess.domain.result.Score;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.board.BasicBoardFactory;
+import chess.domain.board.Board;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.State;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.result.Score;
 import java.util.Map;
 
 public class ChessGame {
 
     private State state;
-    private final Board board;
+    private Board board;
 
     public ChessGame() {
-        this.board = new Board();
+        this.board = new Board(new BasicBoardFactory());
         this.state = new Ready(board);
     }
 
@@ -22,9 +23,15 @@ public class ChessGame {
         state = state.start();
     }
 
+    public void initialize() {
+        board = new Board(new BasicBoardFactory());
+        state = new Ready(board);
+    }
+
     public void move(final Position from, final Position to) {
         state = state.move(from, to);
     }
+
     public void status() {
         state = state.status();
     }

@@ -47,12 +47,13 @@ public class ChessController {
         });
     }
 
-    private static String render(final Map<String, Object> model, final String templatePath) {
+    private String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private static ChessResponseDto start(final ChessGame chessGame) {
+    private ChessResponseDto start(final ChessGame chessGame) {
         try {
+            initializeChessGame(chessGame);
             chessGame.start();
             return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
@@ -60,7 +61,13 @@ public class ChessController {
         }
     }
 
-    private static ChessResponseDto end(final ChessGame chessGame) {
+    private void initializeChessGame(final ChessGame chessGame) {
+        if (!chessGame.isNotEnded()) {
+            chessGame.initialize();
+        }
+    }
+
+    private ChessResponseDto end(final ChessGame chessGame) {
         try {
             chessGame.end();
             return new ChessResponseDto(chessGame);
@@ -69,7 +76,7 @@ public class ChessController {
         }
     }
 
-    private static StatusResponseDto status(final ChessGame chessGame) {
+    private StatusResponseDto status(final ChessGame chessGame) {
         try {
             chessGame.status();
             final Score myScore = chessGame.calculateMyScore();
@@ -81,7 +88,7 @@ public class ChessController {
         }
     }
 
-    private static ChessResponseDto move(final ChessGame chessGame, final MoveRequestDto moveDto) {
+    private ChessResponseDto move(final ChessGame chessGame, final MoveRequestDto moveDto) {
         try {
             chessGame.move(Position.create(moveDto.getSource()), Position.create(moveDto.getTarget()));
             return new ChessResponseDto(chessGame);
