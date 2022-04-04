@@ -4,9 +4,8 @@ import chess.db.entity.FullGameEntity;
 import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.dto.request.MoveCommandDto;
-import chess.dto.response.ConsoleBoardViewDto;
-import chess.dto.response.WebBoardViewDto;
-import chess.model.GameResult;
+import chess.dto.response.board.ConsoleBoardViewDto;
+import chess.dto.response.board.WebBoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {

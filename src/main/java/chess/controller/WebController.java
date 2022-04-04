@@ -9,9 +9,9 @@ import chess.dto.request.MoveCommandDto;
 import chess.dto.request.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.SearchResultDto;
-import chess.model.FullGameModel;
-import chess.model.FullResultModel;
-import chess.model.GameCountModel;
+import chess.dto.response.FullGameModel;
+import chess.dto.response.FullResultModel;
+import chess.dto.response.GameCountModel;
 
 public class WebController {
 

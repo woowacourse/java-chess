@@ -1,4 +1,4 @@
-package chess.model;
+package chess.dto.response;
 
 public class GameCountModel {
 

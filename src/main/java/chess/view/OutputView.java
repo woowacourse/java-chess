@@ -4,8 +4,8 @@ import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
 
 import chess.domain.board.piece.Color;
-import chess.model.GameResult;
-import chess.dto.response.ConsoleBoardViewDto;
+import chess.domain.game.GameResult;
+import chess.dto.response.board.ConsoleBoardViewDto;
 
 public class OutputView {
 

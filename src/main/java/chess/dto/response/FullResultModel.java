@@ -1,6 +1,7 @@
-package chess.model;
+package chess.dto.response;
 
 import chess.domain.game.Game;
+import chess.domain.game.GameResult;
 
 public class FullResultModel {
 

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.domain.game;
 
 import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;

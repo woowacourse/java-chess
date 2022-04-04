@@ -1,8 +1,8 @@
-package chess.model;
+package chess.dto.response;
 
 import chess.domain.game.Game;
-import chess.dto.response.RowDto;
-import chess.dto.response.WebBoardViewDto;
+import chess.dto.response.board.RowDto;
+import chess.dto.response.board.WebBoardViewDto;
 import java.util.List;
 
 public class FullGameModel {

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.dto.response;
 
 import chess.domain.game.GameState;
 

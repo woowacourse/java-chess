@@ -3,7 +3,6 @@ package chess.domain.game;
 import chess.domain.board.piece.Color;
 import chess.dto.request.MoveCommandDto;
 import chess.domain.board.Board;
-import chess.model.GameResult;
 
 final class GameOver extends Started {
 
