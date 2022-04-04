@@ -128,6 +128,19 @@ end
   - [x] 대각선 앞 한 칸에 상대 기물이 있을 경우, 해당 칸으로 가 상대 기물을 잡을 수 있다.
   - [x] 바로 앞에 상대 기물이 있을 경우, 잡을 수 없다.
   
+### 4단계 웹 UI 적용
+#### API 명세
+- [ ] GET /
+  - 체스 게임 home
+- [ ] GET /start
+  - 체스 게임 시작
+- [ ] POST /move
+  - source, target position 을 기준으로 이동 명령 수행
+- [ ] GET /end
+  - 해당 게임 종료
+- [ ] GET /status
+  - 점수 확인
+
 ---
 ### Reference
 [체스판을 준비하는 방법](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)
