@@ -1,8 +1,6 @@
 package web.controller;
 
-import chess.domain.board.Point;
-import chess.domain.piece.Piece;
-import chess.dto.BoardAndTurnInfo;
+import chess.dto.MoveInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
@@ -12,8 +10,8 @@ import web.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessWebController {
 
@@ -36,6 +34,11 @@ public class ChessWebController {
 
         get("/start", (req, res) -> {
             return gson.toJson(service.start());
+        });
+
+        post("/move", (req, res) -> {
+            MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
+            return gson.toJson(service.move(moveInfo.getFrom(), moveInfo.getTo()));
         });
     }
 }

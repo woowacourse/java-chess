@@ -22,7 +22,7 @@ public class ChessService {
     }
 
     public WebBoardDto move(String from, String to) {
-        gameState.move(List.of(Point.of(from), Point.of(to)));
+        gameState = gameState.move(List.of(Point.of(from), Point.of(to)));
         return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse());
     }
 
