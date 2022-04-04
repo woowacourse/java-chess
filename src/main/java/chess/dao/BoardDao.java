@@ -36,14 +36,16 @@ public class BoardDao {
     }
 
     public void updateOnePosition(final Integer gameId, final String position, final PieceDto piece) {
-        final String sql = "UPDATE board SET type = ?, color = ? WHERE game_id =? AND position = ?";
+        final String sql = "INSERT INTO board (game_id, position, type, color) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE type = ?, color = ?";
 
         try (final Connection connection = MySqlConnector.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, piece.getType());
-            statement.setString(2, piece.getColor());
-            statement.setInt(3, gameId);
-            statement.setString(4, position);
+            statement.setInt(1, gameId);
+            statement.setString(2, position);
+            statement.setString(3, piece.getType());
+            statement.setString(4, piece.getColor());
+            statement.setString(5, piece.getType());
+            statement.setString(6, piece.getColor());
             statement.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
