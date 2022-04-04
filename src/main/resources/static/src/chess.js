@@ -3,28 +3,40 @@ var source = undefined;
 var destination = undefined;
 
 function gameStart() {
-    fetch('/initialize'
+    fetch('/initialize', {
+        headers: {
+            "Content-Type": "application/json",
+        }}
     ).then((response) => {
+        console.log('1');
         initializePosition();
         finished = false;
         location.reload();
     }).catch((error) => {
+        console.log('2');
         alert(JSON.stringify(error));
     });
 }
 
-function clickPiece(e) {
+function clickPiece(id) {
     if (finished) {
         alert('게임이 종료되었습니다! 게임을 다시 시작해주세요.');
         return;
     }
+    if (source == id) {
+        source = undefined;
+        unselectTile(id);
+        return;
+    }
     if (source == undefined) {
-        source = e;
+        source = id;
+        selectTile(id);
         return;
     }
     if (source != undefined) {
-        destination = e;
+        destination = id;
         sendMoveCommand();
+        unselectTile(source);
     }
 }
 
@@ -66,6 +78,14 @@ function printStatus() {
     }).catch((error) => {
         alert(JSON.stringify(error));
     });
+}
+
+function selectTile(id) {
+    document.getElementById(id).style.backgroundColor = '#ff4500';
+}
+
+function unselectTile(id) {
+    document.getElementById(id).style.removeProperty('background-color');
 }
 
 function initializePosition() {
