@@ -29,7 +29,21 @@ public class ChessGame {
             throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
         }
         board.move(start, target, gameState.color());
+        if (board.isKingCaught(gameState.color().getOpposite())) {
+            gameState = changeStateWhenKingCaught(gameState);
+            return;
+        }
         gameState = gameState.changeTurn();
+    }
+
+    private GameState changeStateWhenKingCaught(GameState gameState) {
+        if (gameState == GameState.WHITE_RUNNING) {
+            return GameState.WHITE_WIN;
+        }
+        if (gameState == GameState.BLACK_RUNNING) {
+            return GameState.BLACK_WIN;
+        }
+        return gameState;
     }
 
     public void end() {

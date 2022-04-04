@@ -3,13 +3,15 @@ const rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
 const section = document.getElementById("chess-section");
 const startButton = document.getElementById("start-button");
-const turn = document.getElementById("turn");
+const turnInfo = document.getElementById("turn-info");
 const statusButton = document.getElementById("status-button");
 const score = document.getElementById("score");
 
-const Turn = {
+const turn = {
   WHITE_RUNNING: "백",
   BLACK_RUNNING: "흑",
+  WHITE_WIN: "백",
+  BLACK_WIN: "흑",
 };
 
 const lightCellColor = "#ffffff";
@@ -52,7 +54,7 @@ function decideCellColor(column, row) {
 }
 
 function printTurn(res) {
-  turn.innerText = `${Turn[res.gameState]}의 턴입니다.`;
+  turnInfo.innerText = `${turn[res.gameState]}의 턴입니다.`;
 }
 
 async function start() {
@@ -92,6 +94,11 @@ async function onclick(event) {
   if (firstSelected && secondSelected) {
     const res = await move();
     rendBoard(res.board.pieces);
+    if (res.gameState === "WHITE_WIN" || res.gameState === "BLACK_WIN") {
+      turnInfo.innerText = `${turn[res.gameState]}의 승리입니다.`;
+      score.innerText = null;
+      return;
+    }
     printTurn(res);
   }
 }

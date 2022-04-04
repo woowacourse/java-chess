@@ -27,6 +27,7 @@ public class ChessService {
         Position start = parseStringToPosition(moveRequest.getStart());
         Position target = parseStringToPosition(moveRequest.getTarget());
         chessGame.move(start, target);
+        System.out.println(chessGame.getGameState());
         return new ChessGameResponse(chessGame);
     }
 

@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 
 public enum GameState {
 
-    READY, WHITE_RUNNING, BLACK_RUNNING, FINISHED;
+    READY, WHITE_RUNNING, BLACK_RUNNING, WHITE_WIN, BLACK_WIN, FINISHED;
 
     public boolean isRunning() {
         return this == WHITE_RUNNING || this == BLACK_RUNNING;
