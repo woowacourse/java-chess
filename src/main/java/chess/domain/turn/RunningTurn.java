@@ -30,6 +30,11 @@ public class RunningTurn implements GameTurn {
     }
 
     @Override
+    public Turn currentTurn() {
+        return color.currentTurn();
+    }
+
+    @Override
     public void movePiece(Position source, Position target) {
         chessBoard.movePiece(source, target, color);
     }

@@ -11,6 +11,8 @@ public interface GameTurn {
 
     Turn nextTurn();
 
+    Turn currentTurn();
+
     void movePiece(Position source, Position target);
 
     Entry<Position, Piece> promotion(PromotionPiece promotionPiece);

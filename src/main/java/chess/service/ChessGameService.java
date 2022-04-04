@@ -43,12 +43,14 @@ public class ChessGameService {
 
         pieceDao.deletePiece(target);
         pieceDao.updatePiecePosition(source, target);
+        turnDao.updateTurn(gameTurn.currentTurn(), gameTurn.nextTurn());
     }
 
     public void promotion(PromotionPiece promotionPiece) {
         GameTurn gameTurn = findGameTurn();
         Entry<Position, Piece> changedPiece = gameTurn.promotion(promotionPiece);
         pieceDao.updatePiece(changedPiece.getKey(), changedPiece.getValue());
+        turnDao.updateTurn(gameTurn.currentTurn(), gameTurn.nextTurn());
     }
 
     public Map<Color, Double> currentScore() {

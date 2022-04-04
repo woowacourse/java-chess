@@ -2,6 +2,7 @@ package chess.service;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
+import static chess.domain.turn.Turn.BLACK_TURN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -71,12 +72,14 @@ class ChessGameServiceTest {
 
         // when
         chessGameService.move(source, target);
-        Piece result = pieceDao.findAllPieces().get(target);
+        Piece piece = pieceDao.findAllPieces().get(target);
+        Turn turn = turnDao.findCurrentTurn().orElse(null);
 
         // then
         assertAll(
-                () ->assertThat(result.name()).isEqualTo("pawn"),
-                () -> assertThat(result.color()).isEqualTo(WHITE)
+                () -> assertThat(piece.name()).isEqualTo("pawn"),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(turn).isEqualTo(BLACK_TURN)
         );
     }
 
@@ -93,12 +96,15 @@ class ChessGameServiceTest {
 
         // when
         chessGameService.move(source, target);
-        Piece result = pieceDao.findAllPieces().get(target);
+        Piece piece = pieceDao.findAllPieces().get(target);
+        Turn turn = turnDao.findCurrentTurn().orElse(null);
+
 
         // then
         assertAll(
-                () ->assertThat(result.name()).isEqualTo("pawn"),
-                () -> assertThat(result.color()).isEqualTo(WHITE)
+                () -> assertThat(piece.name()).isEqualTo("pawn"),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(turn).isEqualTo(BLACK_TURN)
         );
     }
 
@@ -114,12 +120,14 @@ class ChessGameServiceTest {
 
         // when
         chessGameService.promotion(PromotionPiece.BISHOP);
-        Piece result = pieceDao.findAllPieces().get(source);
+        Piece piece = pieceDao.findAllPieces().get(source);
+        Turn turn = turnDao.findCurrentTurn().orElse(null);
 
         // then
         assertAll(
-                () ->assertThat(result.name()).isEqualTo("bishop"),
-                () -> assertThat(result.color()).isEqualTo(WHITE)
+                () -> assertThat(piece.name()).isEqualTo("bishop"),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(turn).isEqualTo(BLACK_TURN)
         );
     }
 }
