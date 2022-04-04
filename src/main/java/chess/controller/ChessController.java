@@ -4,7 +4,6 @@ import chess.dao.BoardDao;
 import chess.dao.PieceDao;
 import chess.dto.request.MoveRequest;
 import chess.dto.response.BoardResult;
-import chess.dto.response.PieceResult;
 import chess.dto.response.Turn;
 import chess.game.Board;
 import chess.game.BoardInitializer;
@@ -18,8 +17,6 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Route;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.Map;
 import java.util.stream.Collectors;
 

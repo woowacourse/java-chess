@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.Member;
 import chess.dto.response.Turn;
 import chess.piece.Color;
 import org.slf4j.Logger;

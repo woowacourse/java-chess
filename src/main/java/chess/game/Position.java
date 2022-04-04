@@ -10,7 +10,7 @@ public class Position {
     private static final List<Position> cachedPositions;
 
     private static final int NOT_MOVE = 0;
-    private static final int TWO_DISTANCE= 2;
+    private static final int TWO_DISTANCE = 2;
 
     static {
         cachedPositions = Arrays.stream(Column.values())

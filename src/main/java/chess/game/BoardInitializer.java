@@ -24,7 +24,7 @@ public class BoardInitializer {
 
     private BoardInitializer() {
     }
-    
+
     public static Map<Position, Piece> getBoard() {
         return new HashMap<>(board);
     }

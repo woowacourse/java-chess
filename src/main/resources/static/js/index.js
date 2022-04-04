@@ -4,7 +4,7 @@ function move() {
 
     const url = window.location.href
     const split = url.split("/");
-    const boardId = split[split.length -1];
+    const boardId = split[split.length - 1];
 
     fetch("/move/" + boardId, {
         method: "POST",
@@ -34,7 +34,7 @@ function start() {
 async function scoreButton() {
     const url = window.location.href
     const split = url.split("/");
-    const boardId = split[split.length -1];
+    const boardId = split[split.length - 1];
 
     const response = await fetch("/score/" + boardId);
     const score = await response.json();

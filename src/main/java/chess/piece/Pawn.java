@@ -49,7 +49,7 @@ public class Pawn extends AbstractPiece {
         if (canPawnMove(from, to) && direction.isN()) {
             return direction.isEqualTo(columnDistance, rowDistance - 1);
         }
-        if (canPawnMove(from, to) && direction.isS() ) {
+        if (canPawnMove(from, to) && direction.isS()) {
             return direction.isEqualTo(columnDistance, rowDistance + 1);
         }
         return direction.isEqualTo(columnDistance, rowDistance);
