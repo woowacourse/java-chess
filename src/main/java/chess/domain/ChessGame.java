@@ -89,4 +89,17 @@ public class ChessGame {
     public Participant getParticipant() {
         return participant;
     }
+
+    public String getStateString() {
+        return state.getType()
+                .getName();
+    }
+
+    public Long getWhiteId() {
+        return participant.getWhiteId();
+    }
+
+    public Long getBlackId() {
+        return participant.getBlackId();
+    }
 }

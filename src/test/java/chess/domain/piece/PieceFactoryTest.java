@@ -29,7 +29,7 @@ class PieceFactoryTest {
             ", blank, ·"
     })
     void createPiece(String team, String pieceType, String signature) {
-        Piece piece = PieceFactory.createPiece(team, pieceType, new Position(0, 0));
+        Piece piece = PieceFactory.createPiece(team, pieceType, new Position(0, 0), false);
         assertThat(piece.getSignature()).isEqualTo(signature);
     }
 }

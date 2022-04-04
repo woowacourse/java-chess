@@ -12,4 +12,9 @@ public final class BlackTurn extends Playing {
     public boolean isBlackTurn() {
         return true;
     }
+
+    @Override
+    public StateType getType() {
+        return StateType.BLACK_TURN;
+    }
 }

@@ -49,4 +49,9 @@ public class King extends Piece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KING;
+    }
 }

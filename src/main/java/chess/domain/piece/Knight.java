@@ -49,4 +49,9 @@ public class Knight extends Piece {
     public boolean isKnight() {
         return true;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KNIGHT;
+    }
 }

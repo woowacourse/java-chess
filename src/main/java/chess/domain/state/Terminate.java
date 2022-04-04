@@ -17,4 +17,9 @@ public final class Terminate extends End {
     public boolean isTerminated() {
         return true;
     }
+
+    @Override
+    public StateType getType() {
+        return StateType.TERMINATE;
+    }
 }

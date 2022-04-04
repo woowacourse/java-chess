@@ -121,7 +121,8 @@ public class WebController {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
             String command = req.body();
-            executeCommand(chessGame, command);
+            List<String> input = List.of(command.split(" "));
+            executeCommand(chessGame, input);
             return "";
         });
 
@@ -137,17 +138,17 @@ public class WebController {
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private static void executeCommand(ChessGame chessGame, String command) {
-        List<String> input = List.of(command.split(" "));
+    private void executeCommand(ChessGame chessGame, List<String> input) {
         if (Command.inGameCommand(input.get(0)) == Command.END) {
             chessGame.terminate();
         }
         if (Command.inGameCommand(input.get(0)) == Command.MOVE && input.size() == 3) {
             chessGame.move(input.get(1), input.get(2));
         }
+        gameRepository.update(chessGame);
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

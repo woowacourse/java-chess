@@ -26,11 +26,11 @@
         }
 
         table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n) {
-            background: maroon;
+            background-color: #aaa;
         }
 
         table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n-1) {
-            background: maroon;
+            background-color: #aaa;
         }
 
         img.chess-piece-img {
@@ -81,7 +81,7 @@
         </table>
 
         <button class="btn btn-info" id="scoreBtn" onclick="getScoreData()">점수 보기</button>
-        <button class="btn btn-danger" id="terminateBtn">강제 종료</button>
+        <button class="btn btn-danger" id="terminateBtn" onclick="terminate()">강제 종료</button>
         <a class="btn btn-danger" href="/">로비로 이동</a>
 </body>
 
@@ -108,13 +108,22 @@
             method: "POST",
             body: moveCommand
         }).then(response => {
-            if(response.ok) {
-                location.reload();
-            }
-            if (!response.ok) {
+            if(!response.ok) {
                 alert("이동 실패");
             }
-            clickCount = 0;
+            location.reload();
+        })
+    }
+
+    const terminate = () => {
+        fetch("/command/{{gameId}}", {
+            method: "POST",
+            body: "end"
+        }).then(response => {
+            if(!response.ok) {
+                alert("명령 실패");
+            }
+            location.reload();
         })
     }
 

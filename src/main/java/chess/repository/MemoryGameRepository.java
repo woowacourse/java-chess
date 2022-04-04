@@ -41,7 +41,8 @@ public class MemoryGameRepository implements GameRepository {
                 .collect(Collectors.toList());
     }
 
-    void deleteAll() {
-        store.clear();
+    @Override
+    public void update(ChessGame game) {
+        store.put(game.getId(), game);
     }
 }

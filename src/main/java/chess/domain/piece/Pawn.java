@@ -17,12 +17,17 @@ public class Pawn extends Piece {
         this.isFirstTurn = true;
     }
 
-    public static Pawn createWhite(Position position) {
-        return new Pawn(position, WHITE_SIGNATURE);
+    private Pawn(Position position, String signature, boolean isFirstTurn) {
+        super(position, signature);
+        this.isFirstTurn = isFirstTurn;
     }
 
-    public static Pawn createBlack(Position position) {
-        return new Pawn(position, BLACK_SIGNATURE);
+    public static Pawn createWhite(Position position, boolean isFirstTurn) {
+        return new Pawn(position, WHITE_SIGNATURE, isFirstTurn);
+    }
+
+    public static Pawn createBlack(Position position, boolean isFirstTurn) {
+        return new Pawn(position, BLACK_SIGNATURE, isFirstTurn);
     }
 
     @Override
@@ -83,5 +88,15 @@ public class Pawn extends Piece {
     public void updatePosition(Position position) {
         super.updatePosition(position);
         this.isFirstTurn = false;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.PAWN;
+    }
+
+    @Override
+    public boolean isFirstTurn() {
+        return isFirstTurn;
     }
 }

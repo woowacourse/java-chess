@@ -29,4 +29,9 @@ public class Rook extends SlidingPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.ROOK;
+    }
 }

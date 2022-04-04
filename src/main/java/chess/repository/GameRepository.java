@@ -13,4 +13,6 @@ public interface GameRepository {
     List<ChessGame> findAll();
 
     List<ChessGame> findHistorysByMemberId(Long memberId);
+
+    void update(ChessGame game);
 }

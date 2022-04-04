@@ -41,14 +41,14 @@ public class BoardInitializer {
 
     private static void initRank2(Map<Integer, Rank> ranks) {
         ranks.put(1, new Rank(List.of(
-                Pawn.createWhite(new Position("a2")),
-                Pawn.createWhite(new Position("b2")),
-                Pawn.createWhite(new Position("c2")),
-                Pawn.createWhite(new Position("d2")),
-                Pawn.createWhite(new Position("e2")),
-                Pawn.createWhite(new Position("f2")),
-                Pawn.createWhite(new Position("g2")),
-                Pawn.createWhite(new Position("h2"))
+                Pawn.createWhite(new Position("a2"), true),
+                Pawn.createWhite(new Position("b2"), true),
+                Pawn.createWhite(new Position("c2"), true),
+                Pawn.createWhite(new Position("d2"), true),
+                Pawn.createWhite(new Position("e2"), true),
+                Pawn.createWhite(new Position("f2"), true),
+                Pawn.createWhite(new Position("g2"), true),
+                Pawn.createWhite(new Position("h2"), true)
         )));
     }
 
@@ -69,14 +69,14 @@ public class BoardInitializer {
 
     private static void initRank7(Map<Integer, Rank> ranks) {
         ranks.put(6, new Rank(List.of(
-                Pawn.createBlack(new Position("a7")),
-                Pawn.createBlack(new Position("b7")),
-                Pawn.createBlack(new Position("c7")),
-                Pawn.createBlack(new Position("d7")),
-                Pawn.createBlack(new Position("e7")),
-                Pawn.createBlack(new Position("f7")),
-                Pawn.createBlack(new Position("g7")),
-                Pawn.createBlack(new Position("h7"))
+                Pawn.createBlack(new Position("a7"), true),
+                Pawn.createBlack(new Position("b7"), true),
+                Pawn.createBlack(new Position("c7"), true),
+                Pawn.createBlack(new Position("d7"), true),
+                Pawn.createBlack(new Position("e7"), true),
+                Pawn.createBlack(new Position("f7"), true),
+                Pawn.createBlack(new Position("g7"), true),
+                Pawn.createBlack(new Position("h7"), true)
         )));
     }
 

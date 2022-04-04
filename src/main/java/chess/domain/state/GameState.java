@@ -14,8 +14,6 @@ public interface GameState {
 
     GameState move(Position start, Position target);
 
-    Rank getRank(int rankLine);
-
     GameState terminate();
 
     double calculateBlackScore();
@@ -27,4 +25,6 @@ public interface GameState {
     boolean isBlackWin();
 
     boolean isTerminated();
+
+    StateType getType();
 }

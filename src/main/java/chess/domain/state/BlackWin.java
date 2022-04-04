@@ -17,4 +17,9 @@ public final class BlackWin extends End {
     public boolean isBlackWin() {
         return true;
     }
+
+    @Override
+    public StateType getType() {
+        return StateType.BLACK_WIN;
+    }
 }
