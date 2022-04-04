@@ -55,9 +55,7 @@ public class WebApplication {
             return res;
         });
 
-        get("/end", (req, res) -> {
-            return render(webGameController.end(), "result.html");
-        });
+        get("/end", (req, res) -> render(webGameController.end(), "result.html"));
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);

@@ -61,7 +61,7 @@ public class BoardDao {
         Map<Position, Piece> board = new TreeMap<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             putPiece(board, resultSet);
         }
         DatabaseConnector.close(connection, statement, resultSet);
