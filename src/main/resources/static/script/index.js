@@ -1,10 +1,21 @@
 const gameStatusLocalStorage = 'gameStatus';
+
+const moveCommand = {
+    start: '',
+    end: '',
+};
 const spaces = document.querySelectorAll(".chess-table__space");
 Array.from(spaces).map(space => {
     space.addEventListener('click', ({currentTarget: {id}}) => {
-        console.log(id);
+        // console.log(id);
+        if (moveCommand.start === '') {
+            moveCommand.start = id;
+            return;
+        }
+        moveCommand.end = id;
     });
 });
+
 
 localStorage.clear();
 
@@ -42,6 +53,7 @@ startButton.addEventListener('click', () => {
     }
     startNewGame();
 });
+
 
 
 

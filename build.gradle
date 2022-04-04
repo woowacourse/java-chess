@@ -13,6 +13,7 @@ dependencies {
     implementation 'com.sparkjava:spark-template-handlebars:2.7.1'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.7'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
