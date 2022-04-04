@@ -132,7 +132,7 @@ end
 #### API 명세
 - [ ] GET /
   - 체스 게임 home
-- [ ] GET /start
+- [x] GET /start
   - 체스 게임 시작
 - [ ] POST /move
   - source, target position 을 기준으로 이동 명령 수행
@@ -140,6 +140,9 @@ end
   - 해당 게임 종료
 - [ ] GET /status
   - 점수 확인
+  
+#### UI 기능
+- [ ] 체스 보드의 칸을 클릭해 source, target position 선택 가능
 
 ---
 ### Reference
