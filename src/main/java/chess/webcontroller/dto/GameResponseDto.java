@@ -21,8 +21,16 @@ public class GameResponseDto {
 		value.putAll(dto.getValue());
 
 		value.put(GAME_NAME, game.getName());
-		value.put(TURN, state.getColor());
-		value.put(CHESS_SCORE, state.generateScore());
+		try {
+			value.put(TURN, state.getColor());
+		} catch (UnsupportedOperationException e) {
+			value.put(TURN, "");
+		}
+		try {
+			value.put(CHESS_SCORE, state.generateScore());
+		} catch (UnsupportedOperationException e) {
+			value.put(CHESS_SCORE, "");
+		}
 	}
 
 	public Map<String, Object> getValue() {

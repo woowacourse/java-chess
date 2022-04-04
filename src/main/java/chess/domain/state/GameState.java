@@ -30,4 +30,6 @@ public abstract class GameState {
 	public Piece getByPosition(Position position) {
 		return board.getPieceByPosition(position);
 	}
+
+	public abstract boolean isReady();
 }

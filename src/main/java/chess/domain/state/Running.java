@@ -64,6 +64,11 @@ public abstract class Running extends GameState {
 	}
 
 	@Override
+	public boolean isReady() {
+		return false;
+	}
+
+	@Override
 	public ChessScore generateScore() {
 		return this.board.calculateScore();
 	}

@@ -40,6 +40,11 @@ public class Finished extends GameState {
 	}
 
 	@Override
+	public boolean isReady() {
+		return false;
+	}
+
+	@Override
 	public Color getColor() {
 		throw new UnsupportedOperationException(CANNOT_GET_COLOR);
 	}

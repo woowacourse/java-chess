@@ -32,6 +32,10 @@ public class ChessGame {
 		return state.isFinished();
 	}
 
+	public boolean isReady() {
+		return state.isReady();
+	}
+
 	public Piece getPieceByPosition(Position position) {
 		return state.getByPosition(position);
 	}

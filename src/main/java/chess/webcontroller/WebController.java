@@ -60,25 +60,8 @@ public class WebController {
 
 			gameService.saveGame(game);
 
-			model.putAll(BoardResponseDto.empty().getValue());
-			model.put("name", game.getName());
+			fillModelEmptyBoard(model, game);
 			return render(model, GAME_PAGE);
-		});
-	}
-
-	private void continueGame(Map<String, Object> model) {
-		get("/:name", (request, response) -> {
-			ChessGame findGame = gameService.findGame(request.params(":name"));
-			model.putAll(new GameResponseDto(findGame).getValue());
-			return render(model, GAME_PAGE);
-		});
-	}
-
-	private void deleteGame() {
-		post("/delete/:name", (request, response) -> {
-			gameService.deleteGame(request.params(":name"));
-			response.redirect("/");
-			return null;
 		});
 	}
 
@@ -88,6 +71,23 @@ public class WebController {
 			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
 		});
+	}
+
+	private void continueGame(Map<String, Object> model) {
+		get("/:name", (request, response) -> {
+			ChessGame findGame = gameService.findGame(request.params(":name"));
+			if (findGame.isReady()) {
+				fillModelEmptyBoard(model, findGame);
+				return render(model, GAME_PAGE);
+			}
+			model.putAll(new GameResponseDto(findGame).getValue());
+			return render(model, GAME_PAGE);
+		});
+	}
+
+	private void fillModelEmptyBoard(Map<String, Object> model, ChessGame game) {
+		model.putAll(BoardResponseDto.empty().getValue());
+		model.put("name", game.getName());
 	}
 
 	private void move(Map<String, Object> model) {
@@ -102,6 +102,14 @@ public class WebController {
 
 			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
+		});
+	}
+
+	private void deleteGame() {
+		post("/delete/:name", (request, response) -> {
+			gameService.deleteGame(request.params(":name"));
+			response.redirect("/");
+			return null;
 		});
 	}
 
