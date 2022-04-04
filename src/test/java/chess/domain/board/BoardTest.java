@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -18,7 +18,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(new BasicBoardFactory());
     }
 
     @Test

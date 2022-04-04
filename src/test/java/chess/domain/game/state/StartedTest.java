@@ -3,7 +3,8 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
+import chess.domain.board.BasicBoardFactory;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ class StartedTest {
 
     @BeforeEach
     void setUp() {
-        Board board = new Board();
+        Board board = new Board(new BasicBoardFactory());
         started = new Started(Color.WHITE, board);
     }
 

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,8 +13,7 @@ import chess.domain.piece.RookPiece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -23,28 +22,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BoardInitializerTest {
-
-    @Test
-    @DisplayName("Position값이 순서대로 들어가 있는지 확인한다.")
-    void create() {
-        List<Position> positions = new ArrayList<>();
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                positions.add(new Position(column, row));
-            }
-        }
-
-        Map<Position, Piece> board = new Board().getBoard();
-
-        assertThat(board.keySet().containsAll(positions)).isTrue();
-    }
+class BoardFactoryTest {
 
     @ParameterizedTest
     @MethodSource("initialPieces")
-    @DisplayName("Piece들이 규칙에 맞게 잘 들어갔는지 확인한다.")
+    @DisplayName("규칙에 맞는 체스판이 생성된다.")
     void initialPieces(Position position, Piece piece) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = new BasicBoardFactory().create();
 
         assertThat(board.get(position)).isEqualTo(piece);
     }
@@ -87,5 +71,16 @@ class BoardInitializerTest {
                 Arguments.of(new Position(Column.G, Row.TWO), new PawnPiece(Color.WHITE)),
                 Arguments.of(new Position(Column.H, Row.TWO), new PawnPiece(Color.WHITE))
         );
+    }
+
+    @Test
+    @DisplayName("원하는 상태의 체스판을 생성한다.")
+    void createCustomBoard() {
+        Map<Position, Piece> board = new HashMap<>();
+        board.put(Position.create("a1"), new BishopPiece(Color.BLACK));
+
+        Map<Position, Piece> actual = new CustomBoardFactory(board).create();
+
+        assertThat(actual.get(Position.create("a1"))).isEqualTo(new BishopPiece(Color.BLACK));
     }
 }

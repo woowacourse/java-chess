@@ -1,6 +1,6 @@
 package chess.domain.game.state;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -14,8 +14,7 @@ public class Ended implements State {
 
     @Override
     public State start() {
-        board.initialPieces();
-        return new Started(Color.WHITE, board);
+        return new Started(Color.WHITE, board); // 수정 필요
     }
 
     @Override

@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -40,6 +42,16 @@ public class Position {
 
     public int calculateRowDistance(final Position from) {
         return this.row.calculateDistance(from.row);
+    }
+
+    public static List<Position> toPieces() {
+        final List<Position> positions = new ArrayList<>();
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
+                positions.add(new Position(column, row));
+            }
+        }
+        return positions;
     }
 
     public String getName() {
