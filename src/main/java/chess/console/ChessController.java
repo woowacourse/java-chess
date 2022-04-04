@@ -26,17 +26,20 @@ public class ChessController {
         try {
             String input = InputView.requestCommand();
             GameResult gameResult = Command.act(input, chessGame);
-
-            if (gameResult.isBoard()) {
-                OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
-            }
-            if (gameResult.isScore()) {
-                OutputView.printScore(gameResult.getScore());
-            }
+            printOutputView(gameResult);
         } catch (NoSuchElementException
             | IllegalArgumentException
             | UnsupportedOperationException exception) {
             OutputView.printErrorMessage(exception.getMessage());
+        }
+    }
+
+    private void printOutputView(GameResult gameResult) {
+        if (gameResult.isBoard()) {
+            OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
+        }
+        if (gameResult.isScore()) {
+            OutputView.printScore(gameResult.getScore());
         }
     }
 }

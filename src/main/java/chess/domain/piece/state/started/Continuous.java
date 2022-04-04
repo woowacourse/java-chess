@@ -21,7 +21,20 @@ public abstract class Continuous extends Started {
 
     private List<Position> findContinuousPositions(Direction direction, Position source, Map<Position, Piece> board) {
         List<Position> list = new ArrayList<>();
+        Position next = addPositions(direction, source, board, list);
+        addKillablePosition(source, board, list, next);
 
+        return list;
+    }
+
+    private void addKillablePosition(Position source, Map<Position, Piece> board, List<Position> list, Position next) {
+        if (canKill(board, source, next)) {
+            list.add(next);
+        }
+    }
+
+    private Position addPositions(Direction direction, Position source, Map<Position, Piece> board,
+        List<Position> list) {
         Position current = source;
         Position next = current.findNext(direction);
 
@@ -30,12 +43,7 @@ public abstract class Continuous extends Started {
             current = next;
             next = current.findNext(direction);
         }
-
-        if (canKill(board, source, next)) {
-            list.add(next);
-        }
-
-        return list;
+        return next;
     }
 
 }
