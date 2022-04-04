@@ -43,6 +43,12 @@ public class ChessGame {
         Collections.sort(positions);
     }
 
+    public ChessGame(String turn, String gameName, Map<Position, Piece> cells) {
+        this.gameName = gameName;
+        this.state = State.getState(turn);
+        this.chessBoard = new ChessBoard(cells);
+    }
+
     public boolean isExistKing() {
         return chessBoard.isExistKing();
     }

@@ -1,8 +1,12 @@
 package chess.web.dao;
 
+import chess.domain.ChessGame;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.web.converter.PieceConverter;
 import chess.web.dto.ChessGameDto;
-import chess.web.dto.PieceDto;
-import chess.web.dto.PositionDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -102,7 +106,7 @@ public class ChessGameDao {
         return id;
     }
 
-    public ChessGameDto findAllByName(String gameName) {
+    public ChessGame findAllByName(String gameName) {
         Connection connection = getConnection();
 
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, CHESSBOARD, PIECE\n"
@@ -118,7 +122,7 @@ public class ChessGameDao {
 
             String turn = "";
 
-            Map<PositionDto, PieceDto> cells = new HashMap<>();
+            Map<Position, Piece> cells = new HashMap<>();
 
             while(resultSet.next()) {
                 turn = resultSet.getString("turn");
@@ -126,18 +130,17 @@ public class ChessGameDao {
                 int rank = resultSet.getInt("rank");
                 String file = resultSet.getString("file");
 
-                PositionDto positionDto = new PositionDto(rank, file);
+                Position position = Position.of(File.toFile(file.charAt(0)), Rank.toRank(rank));
 
                 String type = resultSet.getString("type");
                 String team = resultSet.getString("team");
 
-                PieceDto pieceDto = new PieceDto(type, team);
+                Piece piece = PieceConverter.from(type, team);
 
-                cells.put(positionDto, pieceDto);
+                cells.put(position, piece);
             }
 
-            new ChessGameDto(turn, gameName, cells);
-
+            return new ChessGame(turn, gameName, cells);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -54,7 +54,7 @@ function restart() {
         const form = document.createElement("form");
 
         form.setAttribute("method", "get");
-        form.setAttribute("action", "/start");
+        form.setAttribute("action", "/restart");
         form.appendChild(createInput("game_name", game_name));
         document.body.appendChild(form);
         form.submit();

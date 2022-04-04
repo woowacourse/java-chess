@@ -22,12 +22,16 @@ public class ChessBoard {
 
     private static final int TOTAL_KING_COUNT = 2;
 
-    private final Map<Position, Piece> cells = new LinkedHashMap<>();
+    private final Map<Position, Piece> cells;
 
     public ChessBoard() {
         Map<Position, Piece> pieces = PieceFactory.createPieces();
-
+        cells = new LinkedHashMap<>();
         cells.putAll(pieces);
+    }
+
+    public ChessBoard(Map<Position, Piece> cells) {
+        this.cells = cells;
     }
 
     public Map<Position, Piece> getCells() {

@@ -50,6 +50,20 @@ public class ChessService {
         return chessGame.getWinTeamName();
     }
 
+    public List<String> findAllByName(String gameName) {
+        ChessGame chessGame = chessGameDao.findAllByName(gameName);
+
+        if (chessGame == null) {
+            this.chessGame = new ChessGame(gameName);
+
+            return this.chessGame.getChessBoardSymbol();
+        }
+
+        this.chessGame = chessGame;
+
+        return this.chessGame.getChessBoardSymbol();
+    }
+
     public void save() {
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
 
