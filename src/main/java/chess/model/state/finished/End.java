@@ -1,9 +1,9 @@
 package chess.model.state.finished;
 
+import chess.model.Team;
 import chess.model.board.Board;
-import chess.model.board.GameResult;
+import chess.model.board.result.GameResult;
 import chess.model.piece.Piece;
-import chess.model.state.State;
 import java.util.Map;
 
 public final class End extends Finished {
@@ -23,7 +23,12 @@ public final class End extends Finished {
     }
 
     @Override
-    public GameResult getScore() {
-        throw new IllegalArgumentException("[ERROR] 게임이 종료되어 점수를 계산 할 수 없습니다.");
+    public Map<Team, Double> getScore() {
+        throw new IllegalArgumentException("[ERROR] 게임이 종료되어 점수를 확인 할 수 없습니다.");
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new IllegalArgumentException("[ERROR] 게임이 종료되어 승자를 확인 할 수 없습니다.");
     }
 }

@@ -34,9 +34,6 @@ public class WebChessController {
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            System.out.println("-------------");
-            System.out.println(moveDto.getOptions().get(1));
-            System.out.println(moveDto.getOptions().get(2));
             this.state = state.proceed(moveDto.getOptions());
             return gson.toJson(state.getBoardForWeb());
         });

@@ -60,38 +60,4 @@ public class BoardTest {
 
         assertThat(board.isKingDead()).isFalse();
     }
-
-    @DisplayName("화이트가 폰으로 블랙팀의 폰을 잡으면 각각 37점, 37점을 반환한다.")
-    @Test
-    void calculateScore() {
-        Board board = new Board();
-        board.move(Position.from("b2"), Position.from("b4"));
-        board.move(Position.from("c7"), Position.from("c5"));
-        board.move(Position.from("b4"), Position.from("c5"));
-
-        GameResult gameResult = board.calculateScore();
-        double blackScore = gameResult.getScores().get(BLACK);
-        double whiteScore = gameResult.getScores().get(WHITE);
-        assertThat(blackScore * 100 / 100.0).isEqualTo(37.0);
-        assertThat(whiteScore * 100 / 100.0).isEqualTo(37.0);
-    }
-
-    @DisplayName("화이트가 나이트로 블랙팀의 룩을 잡으면 각각 38점, 33점을 반환한다.")
-    @Test
-    void calculateScore_2() {
-        Board board = new Board();
-        board.move(Position.from("b1"), Position.from("c3"));
-        board.move(Position.from("h7"), Position.from("h6"));
-        board.move(Position.from("c3"), Position.from("d5"));
-        board.move(Position.from("h6"), Position.from("h5"));
-        board.move(Position.from("d5"), Position.from("b6"));
-        board.move(Position.from("h5"), Position.from("h4"));
-        board.move(Position.from("b6"), Position.from("a8"));
-
-        GameResult gameResult = board.calculateScore();
-        double blackScore = gameResult.getScores().get(BLACK);
-        double whiteScore = gameResult.getScores().get(WHITE);
-        assertThat(blackScore * 100 / 100.0).isEqualTo(33.0);
-        assertThat(whiteScore * 100 / 100.0).isEqualTo(38.0);
-    }
 }

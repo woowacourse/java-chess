@@ -1,6 +1,6 @@
 package chess.model.state;
 
-import chess.model.board.GameResult;
+import chess.model.Team;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.List;
@@ -18,5 +18,7 @@ public interface State {
 
     Map<String, Piece> getBoardForWeb();
 
-    GameResult getScore();
+    Map<Team, Double> getScore();
+
+    Team getWinner();
 }

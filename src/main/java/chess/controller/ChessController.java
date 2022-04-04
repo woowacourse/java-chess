@@ -42,7 +42,7 @@ public class ChessController {
 
     private void printScoreIn(final State state) {
         if (state.isStatus()) {
-            outputView.printScores(state.getScore());
+            outputView.printGameResult(state.getScore(), state.getWinner());
         }
     }
 }

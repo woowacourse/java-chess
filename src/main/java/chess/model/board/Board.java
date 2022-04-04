@@ -3,6 +3,7 @@ package chess.model.board;
 import static chess.model.Team.NONE;
 
 import chess.model.Team;
+import chess.model.board.result.GameResult;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -50,12 +51,6 @@ public class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .count() < KING_COUNT_IN_BOARD;
-    }
-
-    public GameResult calculateScore() {
-        GameResult gameResult = new GameResult();
-        gameResult.createScoreResult(board);
-        return gameResult;
     }
 
     public Map<Position, Piece> getBoard() {

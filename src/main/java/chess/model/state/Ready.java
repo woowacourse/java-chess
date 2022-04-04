@@ -1,7 +1,7 @@
 package chess.model.state;
 
+import chess.model.Team;
 import chess.model.board.Board;
-import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.running.WhiteTurn;
@@ -48,7 +48,12 @@ public final class Ready implements State {
     }
 
     @Override
-    public GameResult getScore() {
-        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 점수를 계산 할 수 없습니다.");
+    public Map<Team, Double> getScore() {
+        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 점수를 확인 할 수 없습니다.");
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 승자를 확인 할 수 없습니다.");
     }
 }

@@ -1,7 +1,6 @@
-package chess.model.board;
+package chess.model.board.result;
 
 import static chess.model.Team.BLACK;
-import static chess.model.Team.NONE;
 import static chess.model.Team.WHITE;
 
 import chess.model.Team;
@@ -14,15 +13,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-public class GameResult {
+public class Score {
 
-    public static final double PAWN_PENALTY_SCORE = -0.5;
-    public static final int DUPLICATE_CHECK_PAWN_COUNT = 2;
-    private final Map<Team, Double> scores = new HashMap<>();
+    private static final double PAWN_PENALTY_SCORE = -0.5;
+    private static final int DUPLICATE_CHECK_PAWN_COUNT = 2;
 
-    public void createScoreResult(final Map<Position, Piece> board) {
+    private final Map<Position, Piece> board;
+
+    public Score(final Map<Position, Piece> board) {
+        this.board = board;
+    }
+
+    public Map<Team, Double> createScore() {
+        Map<Team, Double> scores = new HashMap<>();
         scores.put(BLACK, calculateScore(BLACK, board) + calculatePawnPenalty(BLACK, board));
         scores.put(WHITE, calculateScore(WHITE, board) + calculatePawnPenalty(WHITE, board));
+        return scores;
     }
 
     private Double calculateScore(Team team, Map<Position, Piece> board) {
@@ -55,19 +61,5 @@ public class GameResult {
     private LongStream calculateSameRankCount(Position position, List<Position> positionOfPawns) {
         return LongStream.of(positionOfPawns.stream()
                 .filter(otherPosition -> otherPosition.isSameFile(position)).count());
-    }
-
-    public Map<Team, Double> getScores() {
-        return Collections.unmodifiableMap(scores);
-    }
-
-    public Team pickWinner() {
-        if (scores.get(BLACK) > scores.get(WHITE)) {
-            return BLACK;
-        }
-        if (scores.get(BLACK) < scores.get(WHITE)) {
-            return WHITE;
-        }
-        return NONE;
     }
 }

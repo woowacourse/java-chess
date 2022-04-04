@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.model.Team;
-import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -34,11 +33,10 @@ public class OutputView {
         }
     }
 
-    public void printScores(GameResult scores) {
-        Map<Team, Double> result = scores.getScores();
-        for (Team team : result.keySet()) {
-            System.out.printf(SCORE_MESSAGE_FORMAT, team.getName(), result.get(team));
+    public void printGameResult(final Map<Team, Double> scores, final Team winner) {
+        for (Team team : scores.keySet()) {
+            System.out.printf(SCORE_MESSAGE_FORMAT, team.getName(), scores.get(team));
         }
-        System.out.printf(WINNER_MESSAGE_FORMAT, scores.pickWinner().getName());
+        System.out.printf(WINNER_MESSAGE_FORMAT, winner.getName());
     }
 }
