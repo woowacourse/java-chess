@@ -5,6 +5,7 @@ import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,19 @@ public class BoardDto {
             result.append(ChessBoardOfRankToString(squares, rank));
         }
         return result.toString();
+    }
+
+    public List<PieceDto> getBoardWeb() {
+        List<PieceDto> result = new ArrayList<>();
+        Map<Position, Piece> squares = board.getSquares();
+        List<Rank> ranks = Rank.reverseRanks();
+        for (Rank rank : ranks) {
+            for (Column column : Column.values()) {
+                Piece piece = squares.get(new Position(column, rank));
+                result.add(new PieceDto(piece));
+            }
+        }
+        return result;
     }
 
     private String ChessBoardOfRankToString(Map<Position, Piece> squares, Rank rank) {

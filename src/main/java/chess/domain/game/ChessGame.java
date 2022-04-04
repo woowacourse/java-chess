@@ -3,13 +3,14 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
+import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.piece.attribute.Team;
 import java.util.Map;
 
 public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
 
-    private final Board board;
+    private Board board;
     private boolean isFinished = false;
     private Team turn = Team.WHITE;
 
@@ -19,6 +20,12 @@ public final class ChessGame {
 
     public ChessGame(BoardStrategy boardStrategy) {
         this.board = new Board(boardStrategy.create());
+    }
+
+    public void reset() {
+        turn = Team.WHITE;
+        isFinished = false;
+        board = new Board(new InitBoardStrategy().create());
     }
 
     public void play(Position from, Position to) {

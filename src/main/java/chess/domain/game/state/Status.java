@@ -13,7 +13,7 @@ public final class Status implements State {
     @Override
     public State execute(CommandDto commandDto) {
         if (chessGame.isFinished()) {
-            return new End(chessGame);
+            return new End();
         }
         return new Play(chessGame).execute(commandDto);
     }

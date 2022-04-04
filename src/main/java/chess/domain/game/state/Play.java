@@ -17,7 +17,7 @@ public final class Play implements State {
     @Override
     public State execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.END) {
-            return new End(chessGame);
+            return new End();
         }
         if (commandDto.getCommand() == Command.STATUS) {
             return new Status(chessGame);

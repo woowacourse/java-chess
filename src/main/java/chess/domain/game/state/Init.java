@@ -17,7 +17,7 @@ public final class Init implements State {
     @Override
     public State execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.END) {
-            return new End(chessGame);
+            return new End();
         }
         if (commandDto.getCommand() == Command.START) {
             return new Play(chessGame);

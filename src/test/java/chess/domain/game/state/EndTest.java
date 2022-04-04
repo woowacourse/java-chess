@@ -17,7 +17,7 @@ class EndTest {
 
     @BeforeEach
     void setup() {
-        state = new End(chessGame);
+        state = new End();
     }
 
 

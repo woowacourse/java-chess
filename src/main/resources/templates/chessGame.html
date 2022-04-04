@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/styles.css">
+    <meta charset="UTF-8">
+    <title>체스</title>
+</head>
+<body>
+
+<h1>체스왕 헌치</h1>
+<p>점수</p>
+<p>White 팀 : {{whiteScore}}점</p>
+<p>Black 팀 : {{blackScore}}점</p>
+
+<p>턴 : {{turn}}</p>
+
+<table>
+    <tbody>
+    <tr>
+        <td id="a8" class="white">{{pieces.0.emoji}}</td>
+        <td id="b8" class="black">{{pieces.1.emoji}}</td>
+        <td id="c8" class="white">{{pieces.2.emoji}}</td>
+        <td id="d8" class="black">{{pieces.3.emoji}}</td>
+        <td id="e8" class="white">{{pieces.4.emoji}}</td>
+        <td id="f8" class="black">{{pieces.5.emoji}}</td>
+        <td id="g8" class="white">{{pieces.6.emoji}}</td>
+        <td id="h8" class="black">{{pieces.7.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a7" class="black">{{pieces.8.emoji}}</td>
+        <td id="b7" class="white">{{pieces.9.emoji}}</td>
+        <td id="c7" class="black">{{pieces.10.emoji}}</td>
+        <td id="d7" class="white">{{pieces.11.emoji}}</td>
+        <td id="e7" class="black">{{pieces.12.emoji}}</td>
+        <td id="f7" class="white">{{pieces.13.emoji}}</td>
+        <td id="g7" class="black">{{pieces.14.emoji}}</td>
+        <td id="h7" class="white">{{pieces.15.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a6" class="white">{{pieces.16.emoji}}</td>
+        <td id="b6" class="black">{{pieces.17.emoji}}</td>
+        <td id="c6" class="white">{{pieces.18.emoji}}</td>
+        <td id="d6" class="black">{{pieces.19.emoji}}</td>
+        <td id="e6" class="white">{{pieces.20.emoji}}</td>
+        <td id="f6" class="black">{{pieces.21.emoji}}</td>
+        <td id="g6" class="white">{{pieces.22.emoji}}</td>
+        <td id="h6" class="black">{{pieces.23.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a5" class="black">{{pieces.24.emoji}}</td>
+        <td id="b5" class="white">{{pieces.25.emoji}}</td>
+        <td id="c5" class="black">{{pieces.26.emoji}}</td>
+        <td id="d5" class="white">{{pieces.27.emoji}}</td>
+        <td id="e5" class="black">{{pieces.28.emoji}}</td>
+        <td id="f5" class="white">{{pieces.29.emoji}}</td>
+        <td id="g5" class="black">{{pieces.30.emoji}}</td>
+        <td id="h5" class="white">{{pieces.31.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a4" class="white">{{pieces.32.emoji}}</td>
+        <td id="b4" class="black">{{pieces.33.emoji}}</td>
+        <td id="c4" class="white">{{pieces.34.emoji}}</td>
+        <td id="d4" class="black">{{pieces.35.emoji}}</td>
+        <td id="e4" class="white">{{pieces.36.emoji}}</td>
+        <td id="f4" class="black">{{pieces.37.emoji}}</td>
+        <td id="g4" class="white">{{pieces.38.emoji}}</td>
+        <td id="h4" class="black">{{pieces.39.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a3" class="black">{{pieces.40.emoji}}</td>
+        <td id="b3" class="white">{{pieces.41.emoji}}</td>
+        <td id="c3" class="black">{{pieces.42.emoji}}</td>
+        <td id="d3" class="white">{{pieces.43.emoji}}</td>
+        <td id="e3" class="black">{{pieces.44.emoji}}</td>
+        <td id="f3" class="white">{{pieces.45.emoji}}</td>
+        <td id="g3" class="black">{{pieces.46.emoji}}</td>
+        <td id="h3" class="white">{{pieces.47.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a2" class="white">{{pieces.48.emoji}}</td>
+        <td id="b2" class="black">{{pieces.49.emoji}}</td>
+        <td id="c2" class="white">{{pieces.50.emoji}}</td>
+        <td id="d2" class="black">{{pieces.51.emoji}}</td>
+        <td id="e2" class="white">{{pieces.52.emoji}}</td>
+        <td id="f2" class="black">{{pieces.53.emoji}}</td>
+        <td id="g2" class="white">{{pieces.54.emoji}}</td>
+        <td id="h2" class="black">{{pieces.55.emoji}}</td>
+    </tr>
+    <tr>
+        <td id="a1" class="black">{{pieces.56.emoji}}</td>
+        <td id="b1" class="white">{{pieces.57.emoji}}</td>
+        <td id="c1" class="black">{{pieces.58.emoji}}</td>
+        <td id="d1" class="white">{{pieces.59.emoji}}</td>
+        <td id="e1" class="black">{{pieces.60.emoji}}</td>
+        <td id="f1" class="white">{{pieces.61.emoji}}</td>
+        <td id="g1" class="black">{{pieces.62.emoji}}</td>
+        <td id="h1" class="white">{{pieces.63.emoji}}</td>
+    </tr>
+
+    </tbody>
+</table>
+
+<p>{{error}}</p>
+
+<br>
+<br>
+커멘드
+<br>
+
+<form action="/command" method="post">
+    <input type="text" name="command">
+    <input type="submit" value="커멘드 입력"/>
+</form>
+<form action="/end"  method="post">
+    <input type="submit" name="end" value="end">
+</form>
+</body>
+</html>
