@@ -77,6 +77,14 @@ public final class Position {
         return calculateByDirection(target, direction);
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
     private List<Position> calculateByDirection(final Position target, final Direction direction) {
         if (direction.isVertical()) {
             return verticalPaths(target);

@@ -59,6 +59,14 @@ public final class Piece {
         return type.score();
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

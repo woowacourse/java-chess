@@ -1,5 +1,7 @@
 package chess.domain.pieces;
 
+import java.util.Arrays;
+
 public enum Color {
 
     BLACK("검은말"),
@@ -17,6 +19,13 @@ public enum Color {
             return Color.BLACK;
         }
         return Color.WHITE;
+    }
+
+    public static Color findColor(String colorName) {
+        return Arrays.stream(values())
+                .filter(color -> color.name().equals(colorName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public String value() {
