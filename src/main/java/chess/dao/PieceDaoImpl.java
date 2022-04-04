@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.PieceConverter;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,10 @@ public class PieceDaoImpl implements PieceDao {
 
     public PieceDaoImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    public PieceDaoImpl() {
+        this(DBConnection.getConnection());
     }
 
     @Override

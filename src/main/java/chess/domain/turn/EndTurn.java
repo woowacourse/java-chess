@@ -5,6 +5,7 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class EndTurn implements GameTurn {
@@ -38,5 +39,15 @@ public class EndTurn implements GameTurn {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public Map<Position, Piece> pieces() {
+        return chessBoard.getPieces();
+    }
+
+    @Override
+    public String currentTurn() {
+        return Turn.END.name();
     }
 }

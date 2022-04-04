@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.turn.Turn;
+import chess.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +12,12 @@ public class TurnDaoImpl implements TurnDao {
 
     private final Connection connection;
 
-    public TurnDaoImpl(final Connection connection) {
+    public TurnDaoImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    public TurnDaoImpl() {
+        this(DBConnection.getConnection());
     }
 
     @Override

@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public interface GameTurn {
@@ -17,4 +18,8 @@ public interface GameTurn {
     Color color();
 
     boolean isEnd();
+
+    Map<Position, Piece> pieces();
+
+    String currentTurn();
 }
