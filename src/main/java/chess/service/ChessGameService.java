@@ -23,11 +23,9 @@ public class ChessGameService {
         this.turnDao = turnDao;
     }
 
-    public GameTurn findGameTurn() {
-        Turn currentTurn = turnDao.findCurrentTurn()
-                .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
-        ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
-        return currentTurn.createGameTurn(chessBoard);
+    public Map<Position, Piece> currentChessBoard() {
+        GameTurn gameTurn = findGameTurn();
+        return gameTurn.pieces();
     }
 
     public void start() {
@@ -36,6 +34,7 @@ public class ChessGameService {
             throw new IllegalStateException("아직 진행 중인 게임이 있습니다.");
         }
         pieceDao.savePieces(PieceFactory.createNewChessBoard());
+        turnDao.updateTurn(findCurrentTurn(), Turn.WHITE_TURN);
     }
 
     public void move(Position source, Position target) {
@@ -55,5 +54,16 @@ public class ChessGameService {
     public Map<Color, Double> currentScore() {
         GameTurn gameTurn = findGameTurn();
         return gameTurn.currentScore();
+    }
+
+    private GameTurn findGameTurn() {
+        Turn currentTurn = findCurrentTurn();
+        ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
+        return currentTurn.createGameTurn(chessBoard);
+    }
+
+    private Turn findCurrentTurn() {
+        return turnDao.findCurrentTurn()
+                .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
     }
 }
