@@ -3,7 +3,19 @@ async function start() {
     await fetch("/start")
         .then(res => res.json())
         .then(data => pieces = data)
-    printPieces(pieces);
+    printPieces(pieces.board);
+}
+
+function end() {
+    let whiteSquares = document.getElementsByClassName("white-square");
+    let blackSquares = document.getElementsByClassName("black-square");
+    for (let square of whiteSquares) {
+        removeChildren(square);
+    }
+
+    for (let square of blackSquares) {
+        removeChildren(square);
+    }
 }
 
 function printPieces(pieces) {
@@ -15,12 +27,6 @@ function printPieces(pieces) {
         attachPieceInSquare(piece, img, square);
     }
 
-    function removeChildren(node) {
-        while (node.hasChildNodes()) {
-            node.removeChild(node.firstChild);
-        }
-    }
-
     function attachPieceInSquare(piece, img, square) {
         let pieceColor = piece.color.toLowerCase();
         let pieceType = piece.type.toLowerCase();
@@ -29,5 +35,11 @@ function printPieces(pieces) {
             img.setAttribute("class", "piece");
             square.appendChild(img);
         }
+    }
+}
+
+function removeChildren(node) {
+    while (node.hasChildNodes()) {
+        node.removeChild(node.firstChild);
     }
 }

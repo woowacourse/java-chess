@@ -116,6 +116,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return column.name()+row.getValue();
+        return column.name() + row.getValue();
     }
 }

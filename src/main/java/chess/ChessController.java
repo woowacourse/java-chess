@@ -2,8 +2,7 @@ package chess;
 
 import static spark.Spark.get;
 
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,19 +11,21 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
+    private final ChessService chessService;
+
+    public ChessController(ChessService chessService) {
+        this.chessService = chessService;
+    }
+
     public void run() {
-        ChessGame chessGame = new ChessGame();
         Gson gson = new Gson();
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(new HashMap<>(), "index.html");
         });
 
         get("/start", (req, res) -> {
-            chessGame.initChessBoard();
-            Map<Position, Piece> chessBoard = chessGame.getChessBoard();
-            return gson.toJson(chessBoard);
+            return gson.toJson(chessService.start());
         });
     }
 
