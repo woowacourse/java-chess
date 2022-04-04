@@ -1,0 +1,21 @@
+.chess_board {
+    width: 640px;
+    height: 640px;
+    border: solid black 1px;
+    margin: 0 auto;
+}
+
+.block {
+    width: 80px;
+    height: 80px;
+    float: left;
+    display: flex;
+}
+
+.block.white {
+    background: #ffffff;
+}
+
+.block.black {
+    background: #000000;
+}
