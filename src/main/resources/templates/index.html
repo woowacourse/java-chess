@@ -10,7 +10,6 @@
 <div id="app">
     <h1>♟️ 체스</h1>
     <section class="chess-board">
-        {{#this}}
         <div class="black-square">
             {{#a8}}
             <img src="images/{{name}}_{{team.value}}.png" class="img"/>
@@ -335,7 +334,6 @@
             {{/h1}}
         </div>
         <!-- TWO LINE -->
-        {{/this}}
     </section>
     <section class="user-ui">
         <form class="move" method="post" action="/move">
