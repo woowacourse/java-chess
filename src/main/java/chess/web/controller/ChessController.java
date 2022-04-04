@@ -35,7 +35,9 @@ public class ChessController {
         get("/start", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
 
-            List<String> chessBoard = chessService.createChessBoard();
+            String gameName = request.queryParams("gameName");
+
+            List<String> chessBoard = chessService.createChessBoard(gameName);
             model.put("chessboard", chessBoard);
 
             return render(model, "chess.html");
@@ -81,6 +83,18 @@ public class ChessController {
             List<String> chessBoard = chessService.getCurrentChessBoard();
 
             model.put("winTeam", winTeamName);
+            model.put("chessboard", chessBoard);
+
+            return render(model, "chess.html");
+        });
+
+        get("/save", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            chessService.save();
+
+            List<String> chessBoard = chessService.getCurrentChessBoard();
+
             model.put("chessboard", chessBoard);
 
             return render(model, "chess.html");

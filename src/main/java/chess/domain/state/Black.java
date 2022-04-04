@@ -30,6 +30,11 @@ public class Black implements State {
         return this;
     }
 
+    @Override
+    public String getTurn() {
+        return "black";
+    }
+
     private void checkTeam(Command command, ChessBoard chessBoard) {
         Positions positions = command.makePositions();
 

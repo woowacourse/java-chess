@@ -12,7 +12,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -27,9 +26,18 @@ public class ChessGame {
             .collect(toList());
 
     private final ChessBoard chessBoard;
+    private final String gameName;
     private State state;
 
     public ChessGame() {
+        gameName = "";
+        state = new Ready();
+        chessBoard = new ChessBoard();
+        Collections.sort(positions);
+    }
+
+    public ChessGame(String gameName) {
+        this.gameName = gameName;
         state = new Ready();
         chessBoard = new ChessBoard();
         Collections.sort(positions);
@@ -100,9 +108,7 @@ public class ChessGame {
         return ".";
     }
 
-    public List<String> getChessBoard() {
-        List<String> chessBoard = new ArrayList<>();
-
+    public List<String> getChessBoardSymbol() {
         Set<Position> piecePositions = getPiecePositions();
 
         return positions.stream()
@@ -127,5 +133,17 @@ public class ChessGame {
         String symbol = piece.getSymbolByTeam().toLowerCase();
 
         return teamName + "-" + symbol;
+    }
+
+    public ChessBoard getChessBoard() {
+        return this.chessBoard;
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    public String getGameName() {
+        return this.gameName;
     }
 }

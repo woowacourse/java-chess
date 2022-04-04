@@ -9,7 +9,7 @@ public class ChessBoardDto {
 
     private final Map<PositionDto, PieceDto> cells;
 
-    private ChessBoardDto(Map<PositionDto, PieceDto> cells) {
+    public ChessBoardDto(Map<PositionDto, PieceDto> cells) {
         this.cells = cells;
     }
 

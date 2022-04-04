@@ -30,6 +30,11 @@ public class White implements State {
         return this;
     }
 
+    @Override
+    public String getTurn() {
+        return "white";
+    }
+
     private void checkTeam(Command command, ChessBoard chessBoard) {
         Positions positions = command.makePositions();
 

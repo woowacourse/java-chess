@@ -23,4 +23,9 @@ public final class Ready implements State {
         }
         return new Ready();
     }
+
+    @Override
+    public String getTurn() {
+        return "ready";
+    }
 }
