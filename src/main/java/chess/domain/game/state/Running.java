@@ -6,12 +6,12 @@ import chess.domain.game.state.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
-public class RunningGame extends StartedGame {
+public class Running extends Waiting {
 
     private final ChessBoard board;
     private Player player;
 
-    public RunningGame(ChessBoard board, Player player) {
+    public Running(ChessBoard board, Player player) {
         this.board = board;
         this.player = player;
     }
@@ -29,10 +29,10 @@ public class RunningGame extends StartedGame {
         player = player.change();
 
         if (board.isKing(targetPiece)) {
-            return new EndGame();
+            return new End();
         }
 
-        return new RunningGame(board, player);
+        return new Running(board, player);
     }
 
     private void validatePosition(Position position) {

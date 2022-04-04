@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.game.state.GameState;
-import chess.domain.game.state.StartedGame;
+import chess.domain.game.state.Waiting;
 import chess.domain.piece.Piece;
 import chess.domain.game.state.position.Position;
 import chess.domain.piece.property.Color;
 
 public class ChessGame {
-    private GameState state = new StartedGame();
+    private GameState state = new Waiting();
 
     public Map<Position, Piece> start() {
         state = state.start();

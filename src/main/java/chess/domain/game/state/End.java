@@ -7,7 +7,7 @@ import chess.domain.game.state.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
-public class EndGame extends StartedGame {
+public class End extends Waiting {
 
     @Override
     public GameState move(Position source, Position target) {
