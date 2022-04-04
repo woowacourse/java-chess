@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <h1>♟️ 체스</h1>
+    <section class="chess-ui">
+        {{#this}}
+        <div class="black-square pawn">
+            {{#a2}}
+            <img src="images/PAWN_{{color}}.png" class="pawn-img" />
+            {{/a2}}
+        </div>
+        <div class="white-square pawn">
+            {{#b2}}
+            <img src="images/PAWN_{{color}}.png" class="pawn-img" />
+            {{/b2}}
+        </div>
+        <div class="white-square pawn">
+            {{#a1}}
+            <img src="images/PAWN_{{color}}.png" class="pawn-img" />
+            {{/a1}}
+        </div>
+        <div class="black-square pawn">
+            {{#b1}}
+            <img src="images/PAWN_{{color}}.png" class="pawn-img" />
+            {{/b1}}
+        </div>
+        {{/this}}
+    </section>
+    <section>
+        <h2>체스 form</h2>
+        <form enctype="text/plain"></form>
+    </section>
+</div>
 </body>
+
 </html>
