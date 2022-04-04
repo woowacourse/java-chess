@@ -15,4 +15,9 @@ class RoomFactoryTest {
     void delete() {
         RoomFactory.delete();
     }
+
+    @Test
+    void updateStatus() {
+        RoomFactory.updateStatus("Black", "1");
+    }
 }

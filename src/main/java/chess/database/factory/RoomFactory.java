@@ -49,4 +49,17 @@ public class RoomFactory {
             e.printStackTrace();
         }
     }
+
+    public static void updateStatus(String team, String roomId) {
+        final Connection connection = DBConnection.getConnection();
+        final String sql1 = "update room set status = ? where id = ?";
+        try {
+            PreparedStatement statement1 = connection.prepareStatement(sql1);
+            statement1.setString(1, team);
+            statement1.setString(2, roomId);
+            statement1.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

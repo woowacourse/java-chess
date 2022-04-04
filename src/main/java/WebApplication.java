@@ -20,5 +20,7 @@ public class WebApplication {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(req.body());
             return chessController.move(jsonObject.get("source").toString(), jsonObject.get("destination").toString());
         });
+
+        get("/status", (req, res) -> new JSONObject(chessController.getStatus()));
     }
 }

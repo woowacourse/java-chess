@@ -69,6 +69,9 @@ public class Score {
         for (Row row : Row.values()) {
             String position = col.getSymbol() + row.getSymbol();
             Piece piece = board.get(Position.from(position));
+            if (piece == null) {
+                System.out.println(position);
+            }
             totalScore = plusPieceScore(team, totalScore, piece);
         }
         return totalScore;

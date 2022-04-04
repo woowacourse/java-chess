@@ -9,7 +9,7 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class Blank extends Piece {
-    private static final String SYMBOL = ".";
+    public static final String SYMBOL = ".";
     private static final float SCORE = 0;
 
     public Blank(Team team, Position position) {

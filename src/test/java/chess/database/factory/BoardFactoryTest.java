@@ -46,8 +46,10 @@ public class BoardFactoryTest {
 
     @Test
     void update() {
+        BoardDao piece1 = BoardFactory.findByPosition("b2");
         BoardFactory.updatePosition("b2", "b4");
-        BoardDao piece = BoardFactory.findByPosition("b4");
-        assertThat(piece.getPosition()).isEqualTo("b4");
+        BoardDao piece2 = BoardFactory.findByPosition("b4");
+        System.out.println(piece2.getSymbol());
+        assertThat(piece2.getSymbol()).isEqualTo(piece1.getSymbol());
     }
 }

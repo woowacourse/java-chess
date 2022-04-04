@@ -96,22 +96,14 @@ public class BoardFactory {
         }
     }
 
-    public static void updatePosition(String sourcePosition, String destinationPosition) {
+    public static void updatePosition(String position, String symbol) {
         final Connection connection = DBConnection.getConnection();
-        final String sql1 = "update board set position = ? where position = ?";
-        final String sql2 = "update board set position = ? where position = ?";
+        final String sql1 = "update board set symbol = ? where position = ?";
         try {
             PreparedStatement statement1 = connection.prepareStatement(sql1);
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
-
-            statement1.setString(1, sourcePosition);
-            statement1.setString(2, destinationPosition);
-
-            statement2.setString(1, destinationPosition);
-            statement2.setString(2, sourcePosition);
+            statement1.setString(1, symbol);
+            statement1.setString(2, position);
             statement1.executeUpdate();
-            statement2.executeUpdate();
-            return;
         } catch (SQLException e) {
             e.printStackTrace();
         }

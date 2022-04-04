@@ -4,23 +4,14 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="css/index.css" rel="stylesheet"/>
 </head>
 <body>
-<button onclick="chessStart()"></button>
+<button onclick="chessStart()">게임 시작하기</button>
 </body>
 <script>
     function chessStart() {
-        $.ajax({
-            type: "post",
-            url: "/board",
-            dataType: "text",
-            success: function () {
-                location.href = 'contents/chessBoard.html';
-            },
-            error: function () {
-                console.log('error');
-            }
-        })
+        window.location.href = '/board';
     }
 </script>
 </html>

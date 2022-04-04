@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Blank;
+
 import java.util.Locale;
 
 public enum Team {
@@ -17,7 +19,14 @@ public enum Team {
         if (this == BLACK) {
             return symbol.toUpperCase(Locale.ROOT);
         }
-        return symbol.toLowerCase(Locale.ROOT);
+        if (this == WHITE) {
+            return symbol.toLowerCase(Locale.ROOT);
+        }
+        return Blank.SYMBOL;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public boolean matchTeam(Team team) {

@@ -92,10 +92,14 @@
         <td class="black_board" id="h1" onclick="move(this.id)"></td>
     </tr>
 </table>
+
+<button onclick="getScore()">점수 조회</button>
+<p id="whiteScore"></p>
+<p id="blackScore"></p>
 </body>
 <script src="../js/setBoard.js"></script>
 <script src="../js/move.js"></script>
-
+<script src="../js/score.js"></script>
 <script>
     window.onload = function () {
         {{#chessPiece}}
