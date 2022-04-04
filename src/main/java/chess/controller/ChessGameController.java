@@ -6,12 +6,15 @@ import static spark.Spark.post;
 import chess.controller.dto.StatusResponse;
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.request.PromotionRequest;
-import chess.controller.dto.response.ChessGameResponse;
+import chess.controller.dto.response.PieceResponse;
 import chess.controller.dto.response.ScoreResponse;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
+import chess.domain.piece.Piece;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessGameController {
@@ -26,7 +29,11 @@ public class ChessGameController {
         Gson gson = new Gson();
         get("/", "application/json", (req, res) -> {
             res.type("application/json");
-            return gson.toJson(ChessGameResponse.from(chessGameService.findGameTurn()));
+            Map<Position, Piece> pieces = chessGameService.currentChessBoard();
+            return gson.toJson(pieces.entrySet()
+                    .stream()
+                    .map(PieceResponse::from)
+                    .collect(Collectors.toList()));
         });
 
         post("/start", "application/json", (req, res) -> {
@@ -51,11 +58,12 @@ public class ChessGameController {
 
         get("/status", "application/json", (req, res) -> {
             res.type("application/json");
-            return gson.toJson(chessGameService.currentScore()
+            List<ScoreResponse> collect = chessGameService.currentScore()
                     .entrySet()
                     .stream()
                     .map(ScoreResponse::from)
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList());
+            return gson.toJson(collect);
         });
     }
 }
