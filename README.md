@@ -53,6 +53,15 @@
     - [x]  어느 진영이 이겼는지 구한다.
 - [x]  킹이 죽으면 게임을 종료한다.
 
+### 4단계 - ui
+- [ ] start, end 명령을 받을 수 있는 페이지를 만든다.
+  - [ ] start를 받으면 초기화된 체스판을 보여준다.
+  - [ ] end를 받으면 어플리케이션을 종료한다.
+- [ ] 현재 체스판 상태를 보여주고 move, status 명령을 받을 수 있는 페이지를 만든다.
+  - [ ] move 명령에 맞게 말을 움직여야 함
+  - [ ] 킹이 죽으면 start, end 명령 받는 페이지로 돌아간다
+- [ ] status를 보여주는 페이지를 만든다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
