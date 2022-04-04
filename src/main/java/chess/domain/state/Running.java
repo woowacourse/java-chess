@@ -6,9 +6,9 @@ import chess.domain.position.Position;
 
 import java.util.function.ObjDoubleConsumer;
 
-public abstract class Turn extends State {
+public abstract class Running extends State {
 
-    Turn(final Board board) {
+    Running(final Board board) {
         this.board = board;
     }
 

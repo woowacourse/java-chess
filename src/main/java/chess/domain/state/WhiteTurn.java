@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public class WhiteTurn extends Turn {
+public class WhiteTurn extends Running {
 
     private static final Color color = Color.WHITE;
 

@@ -11,14 +11,14 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> board;
 
     public Board(final Initializable initializable) {
-        value = initializable.init();
+        board = initializable.init();
     }
 
     public boolean isInitialized(final Initializable initializable) {
-        return value.equals(initializable.init());
+        return board.equals(initializable.init());
     }
 
     public boolean isMatchedColor(final Position target, final Color color) {
@@ -33,17 +33,17 @@ public class Board {
         if (!piece.isKnight() && hasPieceInPath(from, to)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
-        value.put(to, value.remove(from));
+        board.put(to, board.remove(from));
     }
 
     public boolean hasKing(final Color color) {
-        return value.values().stream()
+        return board.values().stream()
                 .filter(piece -> piece.isSameColor(color))
                 .anyMatch(Piece::isKing);
     }
 
     public boolean hasPiece(final Position position) {
-        return value.get(position) != null;
+        return board.get(position) != null;
     }
 
     private boolean hasPieceInPath(final Position from, final Position to) {
@@ -69,7 +69,7 @@ public class Board {
     }
 
     public Piece getPiece(final Position position) {
-        final Piece piece = value.get(position);
+        final Piece piece = board.get(position);
         if (piece != null) {
             return piece;
         }
@@ -77,6 +77,6 @@ public class Board {
     }
 
     public Map<Position, Piece> toMap() {
-        return Collections.unmodifiableMap(value);
+        return Collections.unmodifiableMap(board);
     }
 }
