@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.game.Color;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -88,6 +89,18 @@ public class Pawn extends ChessPiece {
 
     private boolean isPawnMovableDistanceRange(Position from, Position to) {
         return Math.abs(from.rankDistance(to)) == PAWN_MOVE_RANGE;
+    }
+
+    public void validateStraight(Position source, Position target) {
+        if(target.findDirection(source) != Direction.N && target.findDirection(source) != Direction.S){
+            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
+        }
+    }
+
+    public void validateCross(Position source, Position target){
+        if(target.findDirection(source) == Direction.N || target.findDirection(source) == Direction.S){
+            throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
+        }
     }
 
     @Override

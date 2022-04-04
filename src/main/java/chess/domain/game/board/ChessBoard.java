@@ -4,6 +4,7 @@ import chess.domain.game.Color;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Score;
 import chess.domain.piece.ChessPiece;
+import chess.domain.piece.Pawn;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -69,33 +70,27 @@ public class ChessBoard {
     }
 
     private void moveEmptyPosition(Position source, Position target, ChessPiece piece) {
-        checkPawnStraightMove(source, target, piece);
+        if(piece.isPawn()){
+            checkPawnStraightMove(source, target, piece);
+        }
         movePiece(source, target, piece);
     }
 
     private void catchAndMove(Position source, Position target, ChessPiece piece) {
-        checkPawnCrossMove(source, target, piece);
+        if(piece.isPawn()){
+            checkPawnCrossMove(source, target, piece);
+        }
         movePiece(source, target, piece);
     }
 
     private void checkPawnStraightMove(Position source, Position target, ChessPiece piece) {
-        if (piece.isPawn() && isCross(source, target)) {
-            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
-        }
-    }
-
-    private boolean isCross(Position source, Position target) {
-        return target.findDirection(source) != Direction.N && target.findDirection(source) != Direction.S;
+        Pawn pawn = (Pawn) piece;
+        pawn.validateStraight(source,target);
     }
 
     private void checkPawnCrossMove(Position source, Position target, ChessPiece piece) {
-        if (piece.isPawn() && isStraight(source, target)) {
-            throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
-        }
-    }
-
-    private boolean isStraight(Position source, Position target) {
-        return target.findDirection(source) == Direction.N || target.findDirection(source) == Direction.S;
+        Pawn pawn = (Pawn) piece;
+        pawn.validateCross(source,target);
     }
 
     private void movePiece(Position source, Position target, ChessPiece piece) {
