@@ -1,5 +1,6 @@
 package chess.dto;
 
+import chess.domain.game.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
@@ -23,6 +24,10 @@ public class GameDto {
 
     public static GameDto of(final Integer id, final State state, final Color turn) {
         return new GameDto(id, createState(state), turn.getName());
+    }
+
+    public static GameDto of(final ChessGame chessGame) {
+        return new GameDto(null, createState(chessGame.getState()), chessGame.getTurnName());
     }
 
     private static String createState(final State state) {

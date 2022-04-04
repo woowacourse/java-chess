@@ -69,23 +69,16 @@ public class ChessController {
 
     private ChessResponseDto start(final ChessGame chessGame) {
         try {
-            initializeChessGame(chessGame);
-            chessGame.start();
+            chessService.start(chessGame);
             return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
             return new ChessResponseDto("error", e.getMessage(), chessGame);
         }
     }
 
-    private void initializeChessGame(final ChessGame chessGame) {
-        if (!chessGame.isNotEnded()) {
-            chessGame.initialize();
-        }
-    }
-
     private ChessResponseDto end(final ChessGame chessGame) {
         try {
-            chessGame.end();
+            chessService.end(chessGame);
             return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
             return new ChessResponseDto("error", e.getMessage(), chessGame);
