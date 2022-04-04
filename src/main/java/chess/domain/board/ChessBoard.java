@@ -123,6 +123,10 @@ public class ChessBoard {
                 ).count();
     }
 
+    public String currentStateName() {
+        return gameFlow.currentStateName();
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }

@@ -26,4 +26,9 @@ public class AlternatingGameFlow implements GameFlow {
     public boolean isRunning() {
         return currentState.isRunning();
     }
+
+    @Override
+    public String currentStateName() {
+        return currentState.getName();
+    }
 }

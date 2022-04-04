@@ -40,7 +40,7 @@ public class ChessController {
             }
 
             if (request.getCommand().isStatus()) {
-                OutputView.printCurrentTeamScore(chessBoard.calculateScore());
+                OutputView.printCurrentTeamScore(chessBoard.currentStateName(), chessBoard.calculateScore());
                 continue;
             }
 

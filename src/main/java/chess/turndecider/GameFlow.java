@@ -9,4 +9,6 @@ public interface GameFlow {
     void nextState(boolean isGameFinished);
 
     boolean isRunning();
+
+    String currentStateName();
 }

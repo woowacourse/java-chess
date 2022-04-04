@@ -3,6 +3,7 @@ package chess.turndecider.state;
 import chess.domain.piece.Piece;
 
 public class Finish implements State{
+
     @Override
     public boolean isSameColor(Piece sourcePiece) {
         return false;
@@ -16,5 +17,10 @@ public class Finish implements State{
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }
