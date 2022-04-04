@@ -16,6 +16,11 @@ public class MovePositionCommandDto {
         this.target = commandInput[TARGET_POSITION];
     }
 
+    public MovePositionCommandDto(String source, String target) {
+        this.source = source;
+        this.target = target;
+    }
+
     public String getSource() {
         return source;
     }

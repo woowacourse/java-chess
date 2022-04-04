@@ -74,6 +74,7 @@
 
 img {
   display : block;
+  -webkit-user-drag: none;
   margin: 8%;
   width: 85%;
 }

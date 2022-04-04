@@ -1,5 +1,6 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
@@ -10,6 +11,7 @@ import chess.domain.piece.ChessmenInitializer;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.Map;
+import org.json.JSONObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -38,6 +40,22 @@ public class WebApplication {
 
             res.redirect("/");
             return null;
+        });
+
+        post("/ui/move", (req, res) -> {
+            JSONObject jObject = new JSONObject(req.body());
+
+            String from = jObject.getString("from");
+            String to = jObject.getString("to");
+
+            game.moveChessmen(new MovePositionCommandDto(from, to));
+
+            return null;
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
         });
     }
 
