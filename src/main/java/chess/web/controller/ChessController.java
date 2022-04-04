@@ -35,7 +35,7 @@ public class ChessController {
         get("/start", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
 
-            String gameName = request.queryParams("gameName");
+            String gameName = request.queryParams("game_name");
 
             List<String> chessBoard = chessService.createChessBoard(gameName);
             model.put("chessboard", chessBoard);
