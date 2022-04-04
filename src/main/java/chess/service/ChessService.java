@@ -87,9 +87,7 @@ public class ChessService {
         try {
             final EndResult result = chessGame.end();
             final Score score = result.getScore();
-            for (final Color color : Color.values()) {
-                model.put(color.getValue(), score.findScore(color));
-            }
+            model = toModel(score, model);
             updateRoomStatusTo(roomName, GameStatus.END);
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
@@ -98,13 +96,11 @@ public class ChessService {
     }
 
     public Map<String, Object> findScore(final String roomName) {
-        final Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Score score = chessGame.calculateScore();
-            for (final Color color : Color.values()) {
-                model.put(color.getValue(), score.findScore(color));
-            }
+            model = toModel(score, model);
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
@@ -145,6 +141,14 @@ public class ChessService {
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getValue(),
                         entry -> PieceName.findWebImagePath(entry.getValue())));
+    }
+
+    private Map<String, Object> toModel(final Score score, final Map<String, Object> model) {
+        final Map<String, Object> newModel = new HashMap<>(model);
+        for (final Color color : Color.values()) {
+            newModel.put(color.getValue(), score.findScore(color));
+        }
+        return newModel;
     }
 
     private ChessGame findGameByRoomName(final String roomName) {
