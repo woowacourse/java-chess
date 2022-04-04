@@ -2,6 +2,7 @@ package chess.domain.turn;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
+import chess.domain.Position;
 
 public class RunningTurn implements GameTurn {
 
@@ -22,6 +23,11 @@ public class RunningTurn implements GameTurn {
             return new EndTurn(chessBoard);
         }
         return new RunningTurn(chessBoard, color.reverseColor());
+    }
+
+    @Override
+    public void movePiece(Position source, Position target) {
+        chessBoard.movePiece(source, target, color);
     }
 
     @Override

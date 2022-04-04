@@ -2,6 +2,7 @@ package chess.domain.turn;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
+import chess.domain.Position;
 
 public class EndTurn implements GameTurn {
 
@@ -14,6 +15,11 @@ public class EndTurn implements GameTurn {
     @Override
     public GameTurn nextTurn() {
         throw new IllegalStateException("종료된 게임은 다음 턴이 없습니다.");
+    }
+
+    @Override
+    public void movePiece(Position source, Position target) {
+        throw new IllegalStateException("종료된 게임은 기물을 움직일 수 없습니다.");
     }
 
     @Override
