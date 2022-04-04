@@ -14,10 +14,18 @@ import chess.domain.player.Players;
 
 public class ChessGame {
 
+    private static final Long TEMPORARY_PLAYER_ID = 0L;
+
+    private final Long id;
     private GameState gameState;
 
-    public ChessGame() {
-        gameState = new FinishedState(new Players());
+    public ChessGame(final Long id, final GameState gameState) {
+        this.id = id;
+        this.gameState = gameState;
+    }
+
+    public static ChessGame initializeChessGame() {
+        return new ChessGame(TEMPORARY_PLAYER_ID, new FinishedState(new Players()));
     }
 
     public void start() {
@@ -61,10 +69,6 @@ public class ChessGame {
         return runningState.isPromotable();
     }
 
-    public Players getPlayers() {
-        return gameState.getPlayers();
-    }
-
     private RunningState convertToRunningState(final GameState gameState) {
         validateGameIsRunning();
         return (RunningState) gameState;
@@ -74,5 +78,13 @@ public class ChessGame {
         if (!gameState.isRunning()) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
+    }
+
+    public Players getPlayers() {
+        return gameState.getPlayers();
+    }
+
+    public Long getId() {
+        return id;
     }
 }

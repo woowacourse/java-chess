@@ -18,7 +18,7 @@ public class ChessApplication {
     }
 
     public void run() {
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = ChessGame.initializeChessGame();
         chessView.printGameCommandGuide();
 
         do {
