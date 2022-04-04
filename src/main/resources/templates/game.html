@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title> 체스 게임 </title>
@@ -7,10 +7,16 @@
     <script src="/src/index.js"></script>
 </head>
 <body>
-<div ip="app">
+<div id="app">
     <h1> 체스 게임 </h1>
     <section id="chess-ui">
         <table id="chess-board">
+            <script>
+                loadBoardBackground();
+                {{#each board}}
+                drawPiece({{@key.horizontal}}, {{@key.vertical}}, '{{this.type}}', '{{this.color}}');
+                {{/each}}
+            </script>
 
         </table>
     </section>

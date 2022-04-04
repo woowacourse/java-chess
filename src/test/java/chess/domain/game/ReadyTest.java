@@ -44,15 +44,6 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("준비상태에서는 점수를 확인할 수 없다.")
-    void throwsExceptionWithTryingToStatus() {
-        GameState state = new Ready();
-
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-            .isThrownBy(state::status);
-    }
-
-    @Test
     @DisplayName("준비상태는 실행가능한 상태이다.")
     void readyIsRunnable() {
         GameState state = new Ready();
@@ -60,14 +51,5 @@ class ReadyTest {
         boolean isRunnable = state.isRunnable();
 
         assertThat(isRunnable).isTrue();
-    }
-
-    @Test
-    @DisplayName("준비상태에서는 응답을 얻을 수 없다.")
-    void throwsExceptionWithGettingResponse() {
-        GameState state = new Ready();
-
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-            .isThrownBy(state::getResponse);
     }
 }

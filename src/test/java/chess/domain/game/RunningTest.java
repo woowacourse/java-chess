@@ -12,9 +12,8 @@ import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.dto.BoardGameResponse;
-import chess.dto.GameResponse;
 
 class RunningTest {
 
@@ -62,16 +61,6 @@ class RunningTest {
     }
 
     @Test
-    @DisplayName("status 상태로 변한다.")
-    void turnIntoStatusState() {
-        GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
-
-        GameState changed = state.status();
-
-        assertThat(changed).isInstanceOf(Status.class);
-    }
-
-    @Test
     @DisplayName("진행상태는 실행가능한 상태이다.")
     void runningIsRunnable() {
         GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
@@ -82,12 +71,13 @@ class RunningTest {
     }
 
     @Test
-    @DisplayName("진행상태에서는 응답을 얻을 수 있다.")
+    @DisplayName("진행상태에서는 보드의 정보를 얻을 수 있다.")
     void gettingResponse() {
         GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
 
-        GameResponse gameResponse = state.getResponse();
+        Map<Point, Piece> pointPieces = state.getPointPieces();
 
-        assertThat(gameResponse).isInstanceOf(BoardGameResponse.class);
+        assertThat(pointPieces).hasSize(64);
+
     }
 }

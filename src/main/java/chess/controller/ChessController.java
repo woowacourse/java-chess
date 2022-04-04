@@ -1,46 +1,89 @@
 package chess.controller;
 
-import chess.domain.game.Game;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import chess.domain.game.GameState;
+import chess.domain.game.Ready;
 import chess.dto.GameRequest;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private static final InputView INPUT_VIEW = new InputView();
+    private static final OutputView OUTPUT_VIEW = new OutputView();
 
-    public ChessController(InputView inputView, OutputView outputVIew) {
-        this.inputView = inputView;
-        this.outputView = outputVIew;
+    public ChessController() {
     }
 
     public void run() {
-        outputView.printIntroduction();
+        OUTPUT_VIEW.printIntroduction();
         playGame();
     }
 
     private void playGame() {
-        Game game = new Game();
-        while (game.isRunnable()) {
-            tryExecute(game);
+        GameState state = new Ready();
+        while (state.isRunnable()) {
+            state = tryExecute(state);
         }
     }
 
-    private void tryExecute(Game game) {
+    private GameState tryExecute(GameState state) {
         try {
-            execute(game);
+            return execute(state);
         } catch (RuntimeException e) {
-            outputView.printException(e);
-            tryExecute(game);
+            OUTPUT_VIEW.printException(e);
+            return tryExecute(state);
         }
     }
 
-    private void execute(Game game) {
-        String input = inputView.inputCommand();
+    private GameState execute(GameState state) {
+        String input = INPUT_VIEW.inputCommand();
         GameRequest gameRequest = GameRequest.of(input);
+        return Mapper.findAndExecute(state, gameRequest);
+    }
 
-        game.run(gameRequest);
-        outputView.printResponse(gameRequest.getCommand(), game.getResponse());
+    private static class Mapper {
+        private static final Map<Command, BiFunction<GameState, List<String>, GameState>> MAPPER =
+            Map.of(Command.START, Mapper::start,
+                Command.FINISH, Mapper::end,
+                Command.MOVE, Mapper::move,
+                Command.STATUS, Mapper::status);
+
+        public static GameState findAndExecute(GameState state, GameRequest gameRequest) {
+            BiFunction<GameState, List<String>, GameState> executor = findExecutor(gameRequest.getCommand());
+            return executor.apply(state, gameRequest.getArguments());
+        }
+
+        private static BiFunction<GameState, List<String>, GameState> findExecutor(Command command) {
+            if (!MAPPER.containsKey(command)) {
+                throw new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다.");
+            }
+            return MAPPER.get(command);
+        }
+
+        private static GameState start(GameState state, List<String> ignored) {
+            state = state.start();
+            OUTPUT_VIEW.printBoard(state.getPointPieces(), state.getColor());
+            return state;
+        }
+
+        private static GameState end(GameState state, List<String> ignored) {
+            state = state.finish();
+            return state;
+        }
+
+        private static GameState move(GameState state, List<String> arguments) {
+            state = state.move(arguments);
+            OUTPUT_VIEW.printBoard(state.getPointPieces(), state.getColor());
+            return state;
+        }
+
+        private static GameState status(GameState state, List<String> ignored) {
+            OUTPUT_VIEW.printScore(state.getColorScore());
+            return state;
+        }
     }
 }

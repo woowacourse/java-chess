@@ -5,7 +5,6 @@ import java.util.List;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.dto.GameResponse;
 
 public class Ready extends GameState {
 
@@ -29,17 +28,7 @@ public class Ready extends GameState {
     }
 
     @Override
-    public GameState status() {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
-    }
-
-    @Override
     public boolean isRunnable() {
         return true;
-    }
-
-    @Override
-    public GameResponse getResponse() {
-        throw new UnsupportedOperationException("[ERROR] 준비상태에서는 점수를 얻을 수 없습니다.");
     }
 }

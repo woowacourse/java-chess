@@ -1,21 +1,13 @@
 package chess.view;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
 
-import chess.controller.Command;
+import chess.domain.Color;
 import chess.domain.board.LineNumber;
-import chess.dto.BoardGameResponse;
-import chess.dto.GameResponse;
+import chess.domain.board.Point;
+import chess.domain.piece.Piece;
 
 public class OutputView {
-
-    private static final Map<Command, BiConsumer<OutputView, GameResponse>> RESPONSE_PRINTER = Map.of(
-        Command.START, (outputView, response) -> outputView.printBoard(response),
-        Command.FINISH, (outputView, ignored) -> outputView.printEnd(),
-        Command.MOVE, (outputView, response) -> outputView.printBoard(response),
-        Command.STATUS, (outputView, response) -> outputView.printScore(response)
-    );
 
     public void printIntroduction() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -25,57 +17,46 @@ public class OutputView {
             + "> 점수 확인 : status");
     }
 
-    public void printResponse(Command inputCommand, GameResponse gameResponse) {
-        BiConsumer<OutputView, GameResponse> printer = findPrinter(inputCommand);
-        printer.accept(this, gameResponse);
+    public void printBoard(Map<Point, Piece> pointPieces, Color turnColor) {
+        System.out.println(toBoardString(pointPieces));
+        System.out.println(turnColor + "의 차례입니다.");
     }
 
-    private BiConsumer<OutputView, GameResponse> findPrinter(Command inputCommand) {
-        if (!RESPONSE_PRINTER.containsKey(inputCommand)) {
-            throw new IllegalArgumentException("");
-        }
-        return RESPONSE_PRINTER.get(inputCommand);
-    }
-
-    private void printBoard(GameResponse gameResponse) {
-        Map<String, String> information = gameResponse.getInformation();
-
-        String board = toBoard(information);
-        System.out.println(board);
-        System.out.println(gameResponse.getMetaInformation() + "의 차례입니다.");
-    }
-
-    private String toBoard(Map<String, String> information) {
+    private String toBoardString(Map<Point, Piece> pointPieces) {
         StringBuilder builder = new StringBuilder();
         for (int verticalIndex = LineNumber.MAX; verticalIndex >= LineNumber.MIN; verticalIndex--) {
-            builder.append(toLine(information, verticalIndex)).append("\n");
+            builder.append(toLine(pointPieces, verticalIndex)).append("\n");
         }
         return builder.toString();
     }
 
-    private String toLine(Map<String, String> information, int verticalIndex) {
+    private String toLine(Map<Point, Piece> pointPieces, int verticalIndex) {
         StringBuilder builder = new StringBuilder();
         for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
-            builder.append(information.get(toKey(verticalIndex, horizontalIndex)));
+            builder.append(
+                PieceRepresentation.convertType(pointPieces.get(Point.of(horizontalIndex, verticalIndex))));
         }
         return builder.toString();
     }
 
-    private static String toKey(int verticalIndex, int horizontalIndex) {
-        return String.valueOf(verticalIndex * BoardGameResponse.DECIMAL + horizontalIndex);
-    }
-
-    private void printScore(GameResponse gameResponse) {
-        Map<String, String> information = gameResponse.getInformation();
-        information.entrySet()
+    public void printScore(Map<Color, Double> colorScores) {
+        colorScores.entrySet()
             .forEach(this::printScorePerColor);
-        System.out.println("현재 승부 결과는 " + gameResponse.getMetaInformation() + " 입니다.");
+        System.out.println("현재 승부 결과는 " + findWinner(colorScores) + " 입니다.");
     }
 
-    private void printScorePerColor(Map.Entry<String, String> entry) {
-        String color = entry.getKey();
-        String score = entry.getValue();
-        System.out.println(color + "점수는 " + score + " 입니다.");
+    private String findWinner(Map<Color, Double> colorScores) {
+        if (colorScores.get(Color.WHITE) > colorScores.get(Color.BLACK)) {
+            return "WHITE WIN";
+        }
+        if (colorScores.get(Color.WHITE) < colorScores.get(Color.BLACK)) {
+            return "BLACK WIN";
+        }
+        return "TIE";
+    }
+
+    private void printScorePerColor(Map.Entry<Color, Double> colorScore) {
+        System.out.println(colorScore.getKey() + "점수는 " + colorScore.getValue() + " 입니다.");
     }
 
     public void printException(RuntimeException e) {

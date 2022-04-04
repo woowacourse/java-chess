@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
-import chess.dto.EmptyGameResponse;
-import chess.dto.GameResponse;
 
 class FinishedTest {
 
@@ -45,15 +43,6 @@ class FinishedTest {
     }
 
     @Test
-    @DisplayName("종료상태에서는 점수를 확인할 수 없다.")
-    void throwsExceptionWithTryingToStatus() {
-        GameState state = new Finished(BoardFixtures.INITIAL, Color.WHITE);
-
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-            .isThrownBy(state::status);
-    }
-
-    @Test
     @DisplayName("종료상태는 진행 불가능한 상태이다.")
     void isRunnableIsFalse() {
         GameState state = new Finished(BoardFixtures.INITIAL, Color.WHITE);
@@ -61,15 +50,5 @@ class FinishedTest {
         boolean isRunnable = state.isRunnable();
 
         assertThat(isRunnable).isFalse();
-    }
-
-    @Test
-    @DisplayName("종료 상태에서 비어있는 응답을 반환한다.")
-    void getEmptyResponse() {
-        GameState state = new Finished(BoardFixtures.INITIAL, Color.WHITE);
-
-        GameResponse gameResponse = state.getResponse();
-
-        assertThat(gameResponse).isInstanceOf(EmptyGameResponse.class);
     }
 }

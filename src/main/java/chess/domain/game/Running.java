@@ -5,8 +5,6 @@ import java.util.List;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Route;
-import chess.dto.BoardGameResponse;
-import chess.dto.GameResponse;
 
 public class Running extends GameState {
 
@@ -34,17 +32,7 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState status() {
-        return new Status(board, turnColor);
-    }
-
-    @Override
     public boolean isRunnable() {
         return true;
-    }
-
-    @Override
-    public GameResponse getResponse() {
-        return BoardGameResponse.of(board.getPointPieces(), turnColor);
     }
 }

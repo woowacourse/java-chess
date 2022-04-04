@@ -4,8 +4,6 @@ import java.util.List;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
-import chess.dto.EmptyGameResponse;
-import chess.dto.GameResponse;
 
 public class Finished extends GameState {
 
@@ -29,17 +27,7 @@ public class Finished extends GameState {
     }
 
     @Override
-    public GameState status() {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
-    }
-
-    @Override
     public boolean isRunnable() {
         return false;
-    }
-
-    @Override
-    public GameResponse getResponse() {
-        return new EmptyGameResponse();
     }
 }
