@@ -55,7 +55,7 @@ public class Position {
 
         while (currentPosition != targetPosition) {
             passingPath.add(currentPosition);
-            currentPosition = currentPosition.nextPosition2(targetPosition);
+            currentPosition = currentPosition.nextPosition(targetPosition);
         }
 
         return passingPath.stream()
@@ -67,7 +67,7 @@ public class Position {
                 .anyMatch(other -> this == other);
     }
 
-    private Position nextPosition2(final Position targetPosition) {
+    private Position nextPosition(final Position targetPosition) {
         File nextFile = file.next(targetPosition.file);
         Rank nextRank = rank.next(targetPosition.rank);
         return Position.of(nextFile, nextRank);
