@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.*;
 
 import chess.controller.ChessController;
+import chess.controller.JsonTransformer;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {

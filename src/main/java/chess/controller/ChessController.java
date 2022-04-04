@@ -11,6 +11,7 @@ import chess.game.MoveCommand;
 import chess.game.Position;
 import chess.piece.Color;
 import chess.piece.Piece;
+import chess.state.Finished;
 import chess.state.Move;
 import chess.state.Status;
 import com.google.gson.Gson;
