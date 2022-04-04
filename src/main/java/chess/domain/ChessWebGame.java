@@ -117,7 +117,7 @@ public class ChessWebGame {
         if (whiteScore > blackScore) {
             return new ResultDto(status.concat("화이트 승!"));
         }
-        if (whiteScore == blackScore) {
+        if (whiteScore < blackScore) {
             return new ResultDto(status.concat("블랙 승!"));
         }
         return new ResultDto(status.concat("무승부!"));
