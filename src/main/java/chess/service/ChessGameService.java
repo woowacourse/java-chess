@@ -21,6 +21,13 @@ public class ChessGameService {
         this.turnDao = turnDao;
     }
 
+    public GameTurn findGameTurn() {
+        Turn currentTurn = turnDao.findCurrentTurn()
+                .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
+        ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
+        return currentTurn.createGameTurn(chessBoard);
+    }
+
     public void start() {
         GameTurn gameTurn = findGameTurn();
         if (!gameTurn.isEnd()) {
@@ -35,13 +42,6 @@ public class ChessGameService {
 
         pieceDao.deletePiece(target);
         pieceDao.updatePiecePosition(source, target);
-    }
-
-    private GameTurn findGameTurn() {
-        Turn currentTurn = turnDao.findCurrentTurn()
-                .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
-        ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
-        return currentTurn.createGameTurn(chessBoard);
     }
 
     public void promotion(PromotionPiece promotionPiece) {
