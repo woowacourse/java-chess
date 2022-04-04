@@ -3,6 +3,7 @@ package chess.service;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.PieceDao;
@@ -33,6 +34,16 @@ class ChessGameServiceTest {
         pieceDao = new PieceDaoImpl(H2Connection.getConnection());
         turnDao = new TurnDaoImpl(H2Connection.getConnection());
         chessGameService = new ChessGameService(pieceDao, turnDao);
+    }
+
+    @Test
+    @DisplayName("이미 진행중인 게임이 있는데 start한 경우 예외발생")
+    void startException() {
+        turnDao.updateTurn(Turn.END, Turn.WHITE_TURN);
+
+        assertThatThrownBy(() -> chessGameService.start())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("아직 진행 중인 게임이 있습니다.");
     }
 
     @Test

@@ -20,6 +20,13 @@ public class ChessGameService {
         this.turnDao = turnDao;
     }
 
+    public void start() {
+        GameTurn gameTurn = findGameTurn();
+        if (!gameTurn.isEnd()) {
+            throw new IllegalStateException("아직 진행 중인 게임이 있습니다.");
+        }
+    }
+
     public void move(Position source, Position target) {
         GameTurn gameTurn = findGameTurn();
         gameTurn.movePiece(source, target);
