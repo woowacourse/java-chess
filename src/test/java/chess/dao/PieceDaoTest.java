@@ -21,7 +21,7 @@ class PieceDaoTest {
     @Test
     @DisplayName("저장 확인")
     void save() {
-        dao.save(BoardFactory.createBoard().getBoard());
+        dao.save(BoardFactory.createBoard().getValue());
     }
 
     @Test

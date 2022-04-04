@@ -14,7 +14,7 @@ public class BoardDto {
     }
 
     public static BoardDto from(Board board) {
-        return new BoardDto(board.getBoard());
+        return new BoardDto(board.getValue());
     }
 
     public Map<Position, Piece> getBoard() {
