@@ -65,3 +65,8 @@ async function score() {
     return await fetch("/score")
         .then((response) => response.json());
 }
+
+async function status() {
+    return await fetch("/status")
+        .then((response) => response.json());
+}
