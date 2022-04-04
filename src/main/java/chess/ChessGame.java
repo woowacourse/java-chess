@@ -24,9 +24,7 @@ public class ChessGame {
         OutputView.printStartMessage();
         while (gameSwitch.isOn()) {
             checkKingState();
-            final String command = InputView.inputCommand();
-            final GameCommand gameCommand = GameCommand.from(command);
-            gameCommand.execute(command, this, printBoardInfoToState());
+            playGame();
         }
     }
 
@@ -37,6 +35,12 @@ public class ChessGame {
         if (isKingChecked()) {
             OutputView.printKingCheckedMessage();
         }
+    }
+
+    private void playGame() {
+        final String command = InputView.inputCommand();
+        final GameCommand gameCommand = GameCommand.from(command);
+        gameCommand.execute(command, this, printBoardInfoToState());
     }
 
     public void run() {

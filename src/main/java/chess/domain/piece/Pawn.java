@@ -2,11 +2,19 @@ package chess.domain.piece;
 
 import static chess.domain.board.BoardFactory.BLACK_PAWN_INITIAL_ROW;
 import static chess.domain.board.BoardFactory.WHITE_PAWN_INITIAL_ROW;
+import static chess.domain.board.UnitDirectVector.BOTTOM;
+import static chess.domain.board.UnitDirectVector.BOTTOM_LEFT;
+import static chess.domain.board.UnitDirectVector.BOTTOM_RIGHT;
+import static chess.domain.board.UnitDirectVector.TOP;
+import static chess.domain.board.UnitDirectVector.TOP_LEFT;
+import static chess.domain.board.UnitDirectVector.TOP_RIGHT;
 import static chess.domain.piece.PieceProperty.PAWN;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class Pawn extends NotNullPiece {
@@ -65,6 +73,14 @@ public final class Pawn extends NotNullPiece {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        if (getCamp() == Camp.BLACK) {
+            return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
+        }
+        return List.of(TOP, TOP_LEFT, TOP_RIGHT);
     }
 
     private boolean canCapture(final Positions positions) {

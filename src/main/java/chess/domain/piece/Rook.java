@@ -1,10 +1,16 @@
 package chess.domain.piece;
 
+import static chess.domain.board.UnitDirectVector.BOTTOM_LEFT;
+import static chess.domain.board.UnitDirectVector.BOTTOM_RIGHT;
+import static chess.domain.board.UnitDirectVector.TOP_LEFT;
+import static chess.domain.board.UnitDirectVector.TOP_RIGHT;
 import static chess.domain.piece.PieceProperty.ROOK;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class Rook extends NotNullPiece {
@@ -50,5 +56,10 @@ public final class Rook extends NotNullPiece {
             return true;
         }
         return rowDistance == NOT_MOVED_DISTANCE;
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        return List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
     }
 }

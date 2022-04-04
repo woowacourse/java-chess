@@ -5,6 +5,9 @@ import static chess.domain.piece.PieceProperty.NULL_PIECE;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class NullPiece extends Piece {
@@ -38,5 +41,10 @@ public final class NullPiece extends Piece {
     @Override
     public boolean isNullPiece() {
         return true;
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        return Collections.emptyList();
     }
 }

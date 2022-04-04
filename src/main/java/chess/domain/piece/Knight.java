@@ -1,10 +1,20 @@
 package chess.domain.piece;
 
+import static chess.domain.board.UnitDirectVector.BOTTOM_BOTTOM_LEFT;
+import static chess.domain.board.UnitDirectVector.BOTTOM_BOTTOM_RIGHT;
+import static chess.domain.board.UnitDirectVector.LEFT_LEFT_DOWN;
+import static chess.domain.board.UnitDirectVector.LEFT_LEFT_TOP;
+import static chess.domain.board.UnitDirectVector.RIGHT_RIGHT_DOWN;
+import static chess.domain.board.UnitDirectVector.RIGHT_RIGHT_TOP;
+import static chess.domain.board.UnitDirectVector.TOP_TOP_LEFT;
+import static chess.domain.board.UnitDirectVector.TOP_TOP_RIGHT;
 import static chess.domain.piece.PieceProperty.KNIGHT;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class Knight extends NotNullPiece {
@@ -52,5 +62,15 @@ public final class Knight extends NotNullPiece {
             return true;
         }
         return columnDistance == FIRST_MOVABLE_DISTANCE && rowDistance == SECOND_MOVABLE_DISTANCE;
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        return List.of(
+            TOP_TOP_LEFT, TOP_TOP_RIGHT,
+            BOTTOM_BOTTOM_LEFT, BOTTOM_BOTTOM_RIGHT,
+            LEFT_LEFT_TOP, LEFT_LEFT_DOWN,
+            RIGHT_RIGHT_TOP, RIGHT_RIGHT_DOWN
+        );
     }
 }

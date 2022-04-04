@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class Piece {
@@ -30,6 +32,10 @@ public abstract class Piece {
 
     public abstract boolean canMove(Positions positions);
 
+    public abstract boolean isNullPiece();
+
+    public abstract List<UnitDirectVector> getPossibleDirections();
+
     public boolean isSameCampWith(final Camp otherCamp) {
         return camp == otherCamp;
     }
@@ -37,8 +43,6 @@ public abstract class Piece {
     public boolean isSameCampWith(final Piece targetPiece) {
         return isSameCampWith(targetPiece.camp);
     }
-
-    public abstract boolean isNullPiece();
 
     public final PieceProperty getPieceProperty() {
         return pieceProperty;
@@ -50,5 +54,9 @@ public abstract class Piece {
 
     public final String getCharacter() {
         return pieceProperty.getCharacter();
+    }
+
+    Camp getCamp() {
+        return camp;
     }
 }

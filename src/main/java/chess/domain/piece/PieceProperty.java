@@ -4,10 +4,10 @@ public enum PieceProperty {
     BISHOP("b", 3),
     KING("k", 0),
     KNIGHT("n", 2.5),
+    NULL_PIECE(".", 0),
     PAWN("p", 1),
     QUEEN("q", 9),
     ROOK("r", 5),
-    NULL_PIECE(".", 0),
     ;
 
     private final String character;

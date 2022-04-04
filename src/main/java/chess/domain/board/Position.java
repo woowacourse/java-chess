@@ -89,6 +89,12 @@ public class Position implements Comparable<Position> {
         return this.row == row;
     }
 
+    public double computeUnitDirectionVector(final Position after) {
+        final int yVector = this.rowDirectedDistance(after);
+        final int xVector = this.columnDistance(after);
+        return Math.atan2(yVector, xVector);
+    }
+
     public Column getColumn() {
         return column;
     }
