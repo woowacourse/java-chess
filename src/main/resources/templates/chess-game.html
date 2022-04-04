@@ -44,6 +44,45 @@
             );
         }
 
+        function checkStatus() {
+            fetch('/status', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "text/plain",
+                }
+            }).then((response) => {
+                response.json().then(data => {
+                    document.getElementById("statusResult")
+                        .innerHTML = "검은말 : " + data.BLACK + "<br >"
+                        + "흰말 : " + data.WHITE + "<br >"
+                        + data.winner;
+                });
+            });
+        }
+
+        function finishGame() {
+            fetch('/end', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain",
+                }
+            }).then((response) => {
+                    response.json().then(data => {
+                        console.log(data.finished);
+                        if (data.status === 400) {
+                            alert(data.errorMessage);
+                        }
+                        if (data.finished === true) {
+                            alert("게임이 종료되었습니다.");
+                            document.location.href = '/start'
+                            return;
+                        }
+                        location.reload();
+                    });
+                }
+            );
+        }
+
     </script>
 </head>
 <body>
@@ -63,9 +102,12 @@
     {{/board}}
 </table>
 <br/>
-<label> 명령어
-    <input type="text" id="command" name="command"/>
-</label>
-<button id="btn" onclick="sendToServer(first, second)">제출</button>
+<button id="btn" onclick="checkStatus()">status</button>
+<p id="statusResult">
+
+</p>
+<form action="/end" method="POST">
+    <input type="submit" value="end" />
+</form>
 </body>
 </html>

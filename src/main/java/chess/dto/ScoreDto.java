@@ -31,4 +31,16 @@ public class ScoreDto {
     public Map<String, Double> getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (String color : score.keySet()) {
+            sb.append("\"").append(color).append("\" : ").append(score.get(color)).append(",");
+        }
+        sb.append("\"").append("winner").append("\" : ").append("\"").append(winner).append("\"");
+        sb.append("}");
+        return sb.toString();
+    }
 }

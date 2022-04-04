@@ -5,6 +5,7 @@ import static spark.Spark.post;
 
 import chess.controller.ChessController;
 import chess.dto.ResponseDto;
+import chess.dto.ScoreDto;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -28,10 +29,22 @@ public class ChessApplication {
             return null;
         });
 
+        get("/status", (req, res) -> {
+            final ScoreDto scoreDto = chessController.score();
+            return scoreDto.toString();
+        });
+
         post("/move", (req, res) -> {
             final String[] split = req.body().strip().split("=")[1].split(" ");
             ResponseDto response = chessController.move(split[1], split[2]);
             return response.toString();
+        });
+
+        post("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", chessController.score());
+            chessController.reStartGame();
+            return render(model, "result.html");
         });
     }
 

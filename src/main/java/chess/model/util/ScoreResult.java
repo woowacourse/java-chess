@@ -25,11 +25,9 @@ public class ScoreResult {
     }
 
     public static ScoreResult of(Map<Square, Piece> board) {
-        Map<Color, Double> scoreResult = Arrays.stream(Color.values())
+        Map<Color, Double> scoreResult = Color.getPlayerColors().stream()
                 .collect(Collectors.toMap(color -> color, color -> sumMajorPiecesPoint(board, color)));
-        for (Color color : Color.values()) {
-            scoreResult.put(color, scoreResult.get(color) + pawnScore(collectPawns(board, color)));
-        }
+        scoreResult.replaceAll((color, v) -> scoreResult.get(color) + pawnScore(collectPawns(board, color)));
         return new ScoreResult(scoreResult);
     }
 
