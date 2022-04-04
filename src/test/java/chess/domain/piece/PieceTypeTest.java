@@ -36,4 +36,12 @@ class PieceTypeTest {
         assertThat(PieceType.calculateScore(pointPieces, Color.BLACK))
                 .isEqualTo(blackScore);
     }
+
+    @Test
+    @DisplayName("말의 색상과 종류를 올바른 문자열로 반환한다.")
+    void changePieceInfo() {
+        Piece piece = new Pawn(Color.BLACK);
+
+        assertThat(piece.convertPieceInfoToString()).isEqualTo("black-pawn");
+    }
 }

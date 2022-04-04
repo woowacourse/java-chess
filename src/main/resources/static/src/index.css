@@ -26,7 +26,6 @@
 .white-square {
   width: 80px;
   height: 80px;
-  display: flex;
   background-color: #efe7cf;
 }
 
@@ -37,8 +36,7 @@
 .black-square {
   width: 80px;
   height: 80px;
-  display: flex;
-  background-color: #332f2f;
+  background-color: #3b3535;
 }
 
 .black-square.selected {

@@ -43,6 +43,14 @@ public class LineNumber {
         return number + degree;
     }
 
+    public String changeHorizontalId() {
+        return String.valueOf((char) (number - 1 + 'a'));
+    }
+
+    public String changeVerticalId() {
+        return String.valueOf(number);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

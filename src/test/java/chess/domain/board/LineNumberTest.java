@@ -34,4 +34,20 @@ class LineNumberTest {
 
         assertThat(aNumber).isEqualTo(bNumber);
     }
+
+    @Test
+    @DisplayName("가로의 id를 문자열로 반환한다.")
+    void changeHorizontalId() {
+        LineNumber number = LineNumber.of(1);
+
+        assertThat(number.changeHorizontalId()).isEqualTo("a");
+    }
+
+    @Test
+    @DisplayName("세로의 id를 문자열로 반환한다.")
+    void changeVerticalId() {
+        LineNumber number = LineNumber.of(1);
+
+        assertThat(number.changeVerticalId()).isEqualTo("1");
+    }
 }
