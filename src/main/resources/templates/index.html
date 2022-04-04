@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <title>체스 게임</title>
@@ -339,14 +338,13 @@
         {{/this}}
     </section>
     <section>
-        <h2>체스 기물 이동 ex) a1,a2</h2>
-        <form method="post" action="/move" enctype="text/plain">
-            <span>move : </span>
-            <input type="text" name="command">
+        <h2>🎯 체스 기물 이동</h2>
+        <form method="post" action="/move">
+            <input type="text" name="source" placeholder="Source Position">
+            <input type="text" name="target" placeholder="Target Position">
             <input type="submit">
         </form>
     </section>
 </div>
 </body>
-
 </html>

@@ -1,8 +1,6 @@
-package chess;
+package chess.controller.console;
 
-import chess.controller.ConsoleController;
-
-public class Application {
+public class ConsoleApplication {
 
     public static void main(String[] args) {
         new ConsoleController().run();

@@ -38,6 +38,6 @@ public class Board {
 
     public Map<String, Piece> getBoardForSpark() {
         return board.keySet().stream()
-                .collect(Collectors.toMap(Position::generateRawPosition, key -> getPiece(key)));
+                .collect(Collectors.toMap(Position::generateRawPosition, this::getPiece));
     }
 }

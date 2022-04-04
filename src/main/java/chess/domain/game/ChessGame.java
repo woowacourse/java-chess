@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import java.util.Map;
@@ -28,10 +29,17 @@ public class ChessGame {
     }
 
     private void movePiece(final Position source, final Position target) {
+        validateSourcePiece(source);
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         validateMove(source, target, sourcePiece.getMoveStrategy());
         board.movePiece(source, target, catchPieces);
+    }
+
+    private void validateSourcePiece(Position source) {
+        if (board.getPiece(source) instanceof Blank) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 움직이고자 하는 기물이 존재하지 않습니다.");
+        }
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {

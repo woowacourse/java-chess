@@ -1,11 +1,12 @@
-package chess;
+package chess.controller.web;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
-import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -19,9 +20,16 @@ public class WebApplication {
         get("/", (req, res) -> {
             return new ModelAndView(chessGame.getCurrentBoardForSpark(), "index.html");
         }, new HandlebarsTemplateEngine());
-    }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        post("/move", (req, res) -> {
+            chessGame.move(req.queryParams("source"), req.queryParams("target"));
+            res.redirect("/");
+            return null;
+        });
+
+        exception(Exception.class, (exception, req, res) -> {
+            res.status(400);
+            res.body("<a href=\"/\">HOME</a><br/>" + exception.getMessage());
+        });
     }
 }
