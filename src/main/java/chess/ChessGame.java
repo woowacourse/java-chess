@@ -1,16 +1,18 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.ScoreCalculator;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
+import chess.domain.ScoreCalculator;
 import chess.domain.piece.Color;
-import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.generator.PiecesGenerator;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.ResultView;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -61,7 +63,7 @@ public class ChessGame {
         }
     }
 
-    private void initChessBoard() {
+    public void initChessBoard() {
         PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         chessBoard = new ChessBoard(piecesGenerator);
         turn = Color.WHITE;
@@ -127,5 +129,9 @@ public class ChessGame {
         if (chessBoard.getPositionColor(gameCommand.getFromPosition()) != turn) {
             throw new IllegalArgumentException("당신의 차례가 아닙니다.");
         }
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard.getPieces();
     }
 }
