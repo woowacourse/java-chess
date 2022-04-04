@@ -1,10 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <section>
+        <form method="post" action="/start">
+            <input type="submit" value="시작"/>
+        </form>
+        <form method="post" action="/end">
+            <input type="submit" value="끝"/>
+        </form>
+    </section>
+    <h1>♟️ 초간단 체스</h1>
+    <section class="chess-ui">
+        {{#this}}
+        <div class="black-square"><img src="images/{{a8.team}}_{{a8.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{b8.team}}_{{b8.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{c8.team}}_{{c8.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{d8.team}}_{{d8.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{e8.team}}_{{e8.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{f8.team}}_{{f8.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{g8.team}}_{{g8.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{h8.team}}_{{h8.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="white-square"><img src="images/{{a7.team}}_{{a7.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{b7.team}}_{{b7.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{c7.team}}_{{c7.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{d7.team}}_{{d7.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{e7.team}}_{{e7.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{f7.team}}_{{f7.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{g7.team}}_{{g7.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{h7.team}}_{{h7.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="black-square"><img src="images/{{a6.team}}_{{a6.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{b6.team}}_{{b6.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{c6.team}}_{{c6.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{d6.team}}_{{d6.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{e6.team}}_{{e6.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{f6.team}}_{{f6.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{g6.team}}_{{g6.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{h6.team}}_{{h6.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="white-square"><img src="images/{{a5.team}}_{{a5.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{b5.team}}_{{b5.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{c5.team}}_{{c5.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{d5.team}}_{{d5.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{e5.team}}_{{e5.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{f5.team}}_{{f5.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{g5.team}}_{{g5.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{h5.team}}_{{h5.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="black-square"><img src="images/{{a4.team}}_{{a4.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{b4.team}}_{{b4.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{c4.team}}_{{c4.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{d4.team}}_{{d4.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{e4.team}}_{{e4.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{f4.team}}_{{f4.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{g4.team}}_{{g4.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{h4.team}}_{{h4.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="white-square"><img src="images/{{a3.team}}_{{a3.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{b3.team}}_{{b3.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{c3.team}}_{{c3.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{d3.team}}_{{d3.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{e3.team}}_{{e3.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{f3.team}}_{{f3.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{g3.team}}_{{g3.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{h3.team}}_{{h3.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="black-square"><img src="images/{{a2.team}}_{{a2.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{b2.team}}_{{b2.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{c2.team}}_{{c2.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{d2.team}}_{{d2.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{e2.team}}_{{e2.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{f2.team}}_{{f2.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{g2.team}}_{{g2.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{h2.team}}_{{h2.symbol}}.png" class="pawn-img"/></div>
+
+        <div class="white-square"><img src="images/{{a1.team}}_{{a1.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{b1.team}}_{{b1.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{c1.team}}_{{c1.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{d1.team}}_{{d1.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{e1.team}}_{{e1.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{f1.team}}_{{f1.symbol}}.png" class="pawn-img"/></div>
+        <div class="white-square"><img src="images/{{g1.team}}_{{g1.symbol}}.png" class="pawn-img"/></div>
+        <div class="black-square"><img src="images/{{h1.team}}_{{h1.symbol}}.png" class="pawn-img"/></div>
+        {{/this}}
+    </section>
+    <section>
+        <h2>체스 form</h2>
+        <form method="post" action="/move">
+            <input type="text" name="from" placeholder="시작 위치"/>
+            <input type="text" name="to" placeholder="도착 위치"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </section>
+</div>
 </body>
+
 </html>

@@ -28,7 +28,7 @@ public class OutputView {
 
     private static void printBoardInSameRow(Map<Coordinate, Piece> value, Row row) {
         for (Column column : Column.values()) {
-            System.out.print(value.get(Coordinate.of(column, row)).getSymbol());
+            System.out.print(value.get(Coordinate.of(column, row)).getSymbolByTeam());
         }
     }
 

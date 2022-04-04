@@ -56,15 +56,19 @@ public abstract class Piece {
         return team.isWhite();
     }
 
-    public String getSymbol() {
+    public String getSymbolByTeam() {
         if (team.isBlack()) {
             return symbol.getBlack();
         }
         return symbol.getWhite();
     }
 
-    public Team getTeam() {
-        return team;
+    public String getTeam() {
+        return team.name();
+    }
+
+    public String getSymbol() {
+        return symbol.name();
     }
 
     public double getScore() {

@@ -38,4 +38,9 @@ public enum Column {
     public int gap(Column column) {
         return column.value - value;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

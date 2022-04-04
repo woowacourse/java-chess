@@ -36,4 +36,9 @@ public enum Row {
     public boolean isSame(int row) {
         return this.value == row;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 }

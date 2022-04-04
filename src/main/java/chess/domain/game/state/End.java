@@ -2,8 +2,6 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class End implements State {
 
@@ -34,7 +32,7 @@ public class End implements State {
     }
 
     @Override
-    public Map<Coordinate, Piece> getValue() {
-        return board.getValue();
+    public Board getBoard() {
+        return board;
     }
 }

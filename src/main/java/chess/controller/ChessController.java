@@ -33,7 +33,7 @@ public class ChessController {
     private void execute(ChessGame chessGame, Function function, List<String> commands) {
         if (!function.isStatus()) {
             function.doFunction(chessGame, commands);
-            OutputView.printBoard(chessGame.getValue());
+            OutputView.printBoard(chessGame.getBoard().getValue());
             return;
         }
         StatusCalculator statusCalculator = chessGame.status();

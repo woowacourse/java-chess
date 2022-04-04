@@ -1,10 +1,9 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.game.state.Start;
 import chess.domain.game.state.State;
-import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class ChessGame {
 
@@ -31,10 +30,10 @@ public class ChessGame {
     }
 
     public StatusCalculator status() {
-        return new StatusCalculator(getValue());
+        return new StatusCalculator(getBoard().getValue());
     }
 
-    public Map<Coordinate, Piece> getValue() {
-        return state.getValue();
+    public Board getBoard() {
+        return state.getBoard();
     }
 }

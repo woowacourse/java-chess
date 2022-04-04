@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.Team;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int BOTH_KING_ALIVE = 2;
@@ -56,5 +57,11 @@ public class Board {
 
     public Map<Coordinate, Piece> getValue() {
         return value;
+    }
+
+    public Map<String, Piece> toMap() {
+        return value.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }
