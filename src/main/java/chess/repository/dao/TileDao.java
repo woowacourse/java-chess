@@ -1,10 +1,5 @@
 package chess.repository.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TileDao {
@@ -12,91 +7,54 @@ public class TileDao {
 	private static final String POSITION = "position";
 	private static final String PIECE = "piece";
 
-	private final ConnectionManager connectionManager = new ConnectionManager();
-
 	public void insertAll(Map<String, String> tiles, int foreignKey) {
-		Connection connection = connectionManager.getConnection();
 		for (String position : tiles.keySet()) {
-			insert(connection, position, tiles.get(position), foreignKey);
+			insert(position, tiles.get(position), foreignKey);
 		}
 	}
 
-	private void insert(Connection connection, String position, String piece, int foreignKey) {
-		String sql = "insert into tile (position, piece, game_id) values (? ,?, ?)";
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, position);
-			statement.setString(2, piece);
-			statement.setInt(3, foreignKey);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
-		}
+	private void insert(String position, String piece, int foreignKey) {
+		ConnectionManager.createQuery("insert into tile (position, piece, game_id) values (? ,?, ?)")
+			.setParameter(1, position)
+			.setParameter(2, piece)
+			.setParameter(3, foreignKey)
+			.executeUpdate();
 	}
 
 	public Map<String, String> selectByGameId(int foreignKey) {
-		Connection connection = connectionManager.getConnection();
-		String sql = "select position, piece from tile where game_id = ?";
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, foreignKey);
-
-			ResultSet result = statement.executeQuery();
-			return makeResult(result);
-		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
-		}
+		return ConnectionManager
+			.createQuery("select position, piece from tile where game_id = ?")
+			.setParameter(1, foreignKey)
+			.executeQuery()
+			.getResultMap(POSITION, PIECE);
 	}
 
 	public Map<String, String> selectByGameName(String gameName) {
-		Connection connection = connectionManager.getConnection();
-		String sql = "select t.position, t.piece from tile t natural join game g where g.name = ?";
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, gameName);
-
-			return makeResult(statement.executeQuery());
-		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
-
-	private Map<String, String> makeResult(ResultSet result) throws SQLException {
-		Map<String, String> tiles = new HashMap<>();
-		while (result.next()) {
-			tiles.put(result.getString(POSITION), result.getString(PIECE));
-		}
-		return tiles;
+		return ConnectionManager
+			.createQuery("select t.position, t.piece from tile t natural join game g where g.name = ?")
+			.setParameter(1, gameName)
+			.executeQuery()
+			.getResultMap(POSITION, PIECE);
 	}
 
 	public void deleteByPosition(String position, String gameName) {
-		Connection connection = connectionManager.getConnection();
-		String sql = "delete t from tile t natural join game g "
-			+ "where t.position = ? and g.name = ?";
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, position);
-			statement.setString(2, gameName);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
-		}
+		ConnectionManager.createQuery(
+				"delete t from tile t natural join game g "
+					+ "where t.position = ? and g.name = ?")
+			.setParameter(1, position)
+			.setParameter(2, gameName)
+			.executeUpdate();
 	}
 
 	public void updatePositionOfPiece(String pieceName, String from, String to, String gameName) {
-		Connection connection = connectionManager.getConnection();
-		String sql = "update tile t natural join game g set t.position = ? "
-			+ "where t.piece = ? and t.position = ? and g.name = ?";
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, to);
-			statement.setString(2, pieceName);
-			statement.setString(3, from);
-			statement.setString(4, gameName);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
-		}
+		ConnectionManager.createQuery(
+				"update tile t natural join game g set t.position = ? "
+					+ "where t.piece = ? and t.position = ? and g.name = ?")
+			.setParameter(1, to)
+			.setParameter(2, pieceName)
+			.setParameter(3, from)
+			.setParameter(4, gameName)
+			.executeUpdate();
 	}
 }
 
