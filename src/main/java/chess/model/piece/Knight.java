@@ -10,8 +10,6 @@ import java.util.Map;
 
 public class Knight extends Piece {
 
-    private static final double SCORE = 2.5;
-
     private final String symbol = "knight";
     private final MoveStrategy moveStrategy;
 
@@ -42,6 +40,6 @@ public class Knight extends Piece {
 
     @Override
     public double score() {
-        return SCORE;
+        return 2.5;
     }
 }

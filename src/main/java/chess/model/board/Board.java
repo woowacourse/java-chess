@@ -30,7 +30,7 @@ public class Board {
         checkPieceIn(source);
         checkPieceCanMove(source, target);
         board.put(target, board.get(source));
-        board.put(source, new Blank(NONE));
+        board.put(source, new Blank());
     }
 
     private void checkPieceIn(final Position source) {

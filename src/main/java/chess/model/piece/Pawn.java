@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    private static final double SCORE = 1;
-
     private final String symbol = "pawn";
     private final PawnMove pawnMove;
 
@@ -40,6 +38,6 @@ public class Pawn extends Piece {
 
     @Override
     public double score() {
-        return SCORE;
+        return 1;
     }
 }

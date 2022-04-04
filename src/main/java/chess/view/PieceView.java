@@ -28,7 +28,7 @@ public enum PieceView {
     WHITE_BISHOP(new Bishop(WHITE), "♗"),
     WHITE_KNIGHT(new Knight(WHITE), "♘"),
     WHITE_PAWN(new Pawn(WHITE), "♙"),
-    BLANK(new Blank(NONE), "\uD83D\uDE7E"),
+    BLANK(new Blank(), "\uD83D\uDE7E"),
     ;
 
     private final Piece piece;
