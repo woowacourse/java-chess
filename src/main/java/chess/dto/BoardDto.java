@@ -13,14 +13,14 @@ import java.util.Locale;
 
 public class BoardDto {
 
-    private final List<List<String>> dto;
+    private final List<List<PieceDto>> dto;
 
-    private BoardDto(List<List<String>> dto) {
+    private BoardDto(List<List<PieceDto>> dto) {
         this.dto = dto;
     }
 
     public static BoardDto of(Board board) {
-        List<List<String>> boardDto = new ArrayList<>();
+        List<List<PieceDto>> boardDto = new ArrayList<>();
         List<Rank> ranks = Arrays.asList(Rank.values());
         Collections.reverse(ranks);
         for (Rank rank : ranks) {
@@ -29,23 +29,23 @@ public class BoardDto {
         return new BoardDto(boardDto);
     }
 
-    public List<List<String>> getDto() {
+    public List<List<PieceDto>> getDto() {
         return dto;
     }
 
-    private static List<String> makeLineByFile(Board board, Rank rank) {
-        List<String> tempLine = new ArrayList<>();
+    private static List<PieceDto> makeLineByFile(Board board, Rank rank) {
+        List<PieceDto> tempLine = new ArrayList<>();
         for (File file : File.values()) {
             Piece piece = board.get(Square.of(file, rank));
-            tempLine.add(toPieceDto(piece));
+            tempLine.add(toPieceDto(piece, rank, file));
         }
         return tempLine;
     }
 
-    private static String toPieceDto(Piece piece) {
+    private static PieceDto toPieceDto(Piece piece, Rank rank, File file) {
         if (piece.isBlack()) {
-            return piece.name().toUpperCase(Locale.ROOT);
+            return PieceDto.of(piece.name().toUpperCase(Locale.ROOT), rank, file);
         }
-        return piece.name();
+        return PieceDto.of(piece.name(), rank, file);
     }
 }

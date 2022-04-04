@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <script>
+        function sendToServer() {
+            fetch('/move', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain",
+                },
+                body: "command=" + document.getElementById("command").value
+            }).then((response) => {
+                    response.json().then(data => {
+                        if (data.status === 400) {
+                            alert(data.errorMessage);
+                        }
+                        location.reload();
+                    });
+                }
+            );
+        }
+
+    </script>
+</head>
+<body>
+<table>
+    {{#board}}
+    {{#dto}}
+    <tr>
+        {{#this}}
+        {{#this}}
+        <td id={{position}}>
+            {{name}}
+        </td>
+        {{/this}}
+        {{/this}}
+    </tr>
+    {{/dto}}
+    {{/board}}
+</table>
+<br/>
+<label> 명령어
+    <input type="text" id="command" name="command"/>
+</label>
+<button id="btn" onclick="sendToServer()">제출</button>
+</body>
+</html>

@@ -1,17 +1,9 @@
 package chess.controller;
 
 import chess.dto.BoardDto;
+import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
 import chess.model.Board;
-import chess.model.piece.Piece;
-import chess.model.square.File;
-import chess.model.square.Rank;
-import chess.model.square.Square;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 public class ChessController {
 
@@ -26,9 +18,17 @@ public class ChessController {
         return BoardDto.of(board);
     }
 
-    public BoardDto move(String source, String target) {
-        board.move(source, target);
+    public BoardDto getBoard() {
         return BoardDto.of(board);
+    }
+
+    public ResponseDto move(String source, String target) {
+        try {
+            board.move(source, target);
+        } catch (IllegalArgumentException e) {
+            return ResponseDto.of(400, e.getMessage());
+        }
+        return ResponseDto.of(200, null);
     }
 
     public ScoreDto score() {
