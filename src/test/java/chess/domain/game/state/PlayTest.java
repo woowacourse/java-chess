@@ -43,14 +43,6 @@ class PlayTest {
     }
 
     @Test
-    @DisplayName("플레이 중 end 커맨드 실행 시 강제종료 된다.")
-    void executeExit() {
-        state = state.execute(new CommandDto("end"));
-        assertThat(state)
-                .isInstanceOf(End.class);
-    }
-
-    @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
         assertThatThrownBy(() -> state.execute(new CommandDto("start")))
@@ -65,7 +57,7 @@ class PlayTest {
     }
 
     @Test
-    @DisplayName("킹이 잡혔을 시 Result 상태로 이동한다.")
+    @DisplayName("킹이 잡혔을 시 End 상태로 이동한다.")
     void goEnd() {
         String boardString = ""
                 + "........ "
@@ -81,6 +73,7 @@ class PlayTest {
         State state = new Play(new ChessGame(boardStrategy));
 
         state = state.execute(new CommandDto("move h1 h4"));
+        assertThat(state).isInstanceOf(End.class);
     }
 
     @Test
@@ -88,12 +81,5 @@ class PlayTest {
     void isRun() {
         assertThat(state.getType() != StateType.END)
                 .isTrue();
-    }
-
-    @Test
-    @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
-    void isStatus() {
-        assertThat(state.getType() == StateType.STATUS)
-                .isFalse();
     }
 }
