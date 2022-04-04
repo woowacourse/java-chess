@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class RoomDao {
 
     public int save(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
-        final String sql = "INSERT INTO Room (Name, GameStatus, CurrentTurn) VALUE (?, ?, ?)";
+        final String sql = "INSERT INTO room (name, game_status, current_turn) VALUE (?, ?, ?)";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -27,7 +27,7 @@ public class RoomDao {
     }
 
     public RoomDto findByName(final String roomName) {
-        final String sql = "SELECT * FROM Room WHERE Name = ?";
+        final String sql = "SELECT * FROM room WHERE name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -39,9 +39,9 @@ public class RoomDao {
                     return null;
                 }
                 return RoomDto.from(
-                        resultSet.getString("Name"),
-                        resultSet.getString("GameStatus"),
-                        resultSet.getString("CurrentTurn")
+                        resultSet.getString("name"),
+                        resultSet.getString("game_status"),
+                        resultSet.getString("current_turn")
                 );
             }
         } catch (SQLException e) {
@@ -51,7 +51,7 @@ public class RoomDao {
     }
 
     public int delete(final String roomName) {
-        final String sql = "DELETE FROM Room WHERE Name = ?";
+        final String sql = "DELETE FROM room WHERE name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -66,7 +66,7 @@ public class RoomDao {
     }
 
     public int update(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
-        final String sql = "UPDATE Room SET GameStatus = ?, CurrentTurn = ? WHERE Name = ?";
+        final String sql = "UPDATE room SET game_status = ?, current_turn = ? WHERE name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -83,7 +83,7 @@ public class RoomDao {
     }
 
     public int updateStatusTo(final String roomName, final GameStatus gameStatus) {
-        final String sql = "UPDATE Room SET GameStatus = ? WHERE Name = ?";
+        final String sql = "UPDATE room SET game_status = ? WHERE name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {

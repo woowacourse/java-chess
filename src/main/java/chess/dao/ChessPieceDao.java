@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 public class ChessPieceDao {
 
     public List<ChessPieceDto> findAllByRoomName(final String roomName) {
-        final String sql = "SELECT * FROM ChessPiece WHERE Room_Name = ?";
+        final String sql = "SELECT * FROM chess_piece WHERE room_name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -31,9 +31,9 @@ public class ChessPieceDao {
                 final List<ChessPieceDto> dtos = new ArrayList<>();
                 while (resultSet.next()) {
                     dtos.add(ChessPieceDto.of(
-                            resultSet.getString("Position"),
-                            resultSet.getString("ChessPiece"),
-                            resultSet.getString("Color")
+                            resultSet.getString("position"),
+                            resultSet.getString("chess_piece"),
+                            resultSet.getString("color")
                     ));
                 }
                 return dtos;
@@ -45,7 +45,7 @@ public class ChessPieceDao {
     }
 
     public int deleteByPosition(final String roomName, final Position position) {
-        final String sql = "DELETE FROM ChessPiece WHERE Room_Name = ? AND Position = ?";
+        final String sql = "DELETE FROM chess_piece WHERE room_name = ? AND position = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class ChessPieceDao {
     }
 
     public int deleteAllByRoomName(final String roomName) {
-        final String sql = "DELETE FROM ChessPiece WHERE Room_Name = ?";
+        final String sql = "DELETE FROM chess_piece WHERE room_name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -74,7 +74,7 @@ public class ChessPieceDao {
     }
 
     public int saveAll(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
-        String sql = "INSERT INTO ChessPiece(Room_Name, Position, ChessPiece, Color) VALUES ";
+        String sql = "INSERT INTO chess_piece (room_name, position, chess_piece, color) VALUES ";
         sql += IntStream.range(0, pieceByPosition.size())
                 .mapToObj(i -> "(?, ?, ?, ?)")
                 .collect(Collectors.joining(", "));
@@ -101,7 +101,7 @@ public class ChessPieceDao {
     }
 
     public int update(final String roomName, final Position from, final Position to) {
-        final String sql = "UPDATE ChessPiece SET Position = ? WHERE Room_Name = ? AND Position = ?";
+        final String sql = "UPDATE chess_piece SET position = ? WHERE room_name = ? AND position = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
