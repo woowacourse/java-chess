@@ -2,14 +2,18 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>체스</title>
+    <title>체스게임</title>
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <h1>체스</h1>
+    <h1>체스게임 가보자고</h1>
     <form action="/start" method="get">
-        <input type="submit" value="start">
+        <input type="submit" value="게임 시작" class="btn">
     </form>
+
+    <h2> Black팀 점수 : {{blackScore}}</h2>
+    <h2> White팀 점수 : {{WhiteScore}}</h2>
+
     <section>
         <table id="chess-board">
             <tr>
@@ -73,52 +77,4 @@
 </body>
 </html>
 
-<script>
-    function fetchMove() {
-        fetch("/move", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                start: movePositions.start,
-                end: movePositions.end
-            })
-        });
-    }
-
-    function makeForm() {
-        let form = document.createElement('form');
-        form.action = '/move';
-        form.method = 'POST';
-        document.body.append(form);
-        form.appendChild(makeInputInForm());
-        return form;
-    }
-
-    function makeInputInForm() {
-        let input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "command";
-        input.value = movePositions.start + "," + movePositions.end;
-        return input;
-    }
-
-    function clicked(id) {
-        if (movePositions.start === '') {
-            movePositions.start = id;
-        } else {
-            movePositions.end = id;
-            let form = makeForm();
-            form.submit();
-
-            movePositions.start = '';
-            movePositions.end = '';
-        }
-    }
-
-    const movePositions = {
-        start : '',
-        end : ''
-    }
-</script>
+<script src="/js/main.js"></script>

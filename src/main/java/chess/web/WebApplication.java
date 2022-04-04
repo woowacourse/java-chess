@@ -9,6 +9,7 @@ import java.util.Map;
 
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.position.Position;
+import chess.domain.piece.property.Color;
 import chess.web.dto.BoardDto;
 import chess.web.dto.PieceDto;
 import chess.web.utils.Request;
@@ -26,6 +27,11 @@ public class WebApplication {
             Map<String, PieceDto> pieces = getStringPieceDtoMap(boardDto);
             Map<String, Object> model = new HashMap<>();
             initializeRowPieces(pieces, model);
+            if (!pieces.isEmpty()) {
+                Map<Color, Double> status = chessGame.status();
+                model.put("blackScore", status.get(Color.Black));
+                model.put("WhiteScore", status.get(Color.White));
+            }
             return render(model, "/index.html");
         });
 
