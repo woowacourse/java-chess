@@ -33,6 +33,11 @@
                         if (data.status === 400) {
                             alert(data.errorMessage);
                         }
+                        if (data.finished === true) {
+                            alert("게임이 종료되었습니다.");
+                            document.location.href = '/restart'
+                            return;
+                        }
                         location.reload();
                     });
                 }

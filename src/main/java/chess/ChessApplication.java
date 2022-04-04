@@ -22,6 +22,12 @@ public class ChessApplication {
             return render(model, "chess-game.html");
         });
 
+        get("/restart", (req, res) -> {
+            chessController.reStartGame();
+            res.redirect("/");
+            return null;
+        });
+
         post("/move", (req, res) -> {
             final String[] split = req.body().strip().split("=")[1].split(" ");
             ResponseDto response = chessController.move(split[1], split[2]);

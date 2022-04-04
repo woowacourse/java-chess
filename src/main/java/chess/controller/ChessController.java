@@ -7,15 +7,14 @@ import chess.model.Board;
 
 public class ChessController {
 
-    private final Board board;
+    private Board board;
 
     public ChessController() {
         this.board = new Board();
     }
 
-    public BoardDto startGame() {
-        board.startGame();
-        return BoardDto.of(board);
+    public void reStartGame() {
+        board = new Board();
     }
 
     public BoardDto getBoard() {
@@ -26,9 +25,9 @@ public class ChessController {
         try {
             board.move(source, target);
         } catch (IllegalArgumentException e) {
-            return ResponseDto.of(400, e.getMessage());
+            return ResponseDto.of(400, e.getMessage(), board.isEnd());
         }
-        return ResponseDto.of(200, null);
+        return ResponseDto.of(200, null, board.isEnd());
     }
 
     public ScoreDto score() {
