@@ -9,7 +9,6 @@ import java.util.Stack;
 public class Knight extends ChessPiece {
 
     private static final String NAME = "N";
-    private static final Double SCORE = 2.5;
     private static final int SUM_OF_MOVABLE_DISTANCE = 3;
 
     public Knight(Color color) {
@@ -47,6 +46,6 @@ public class Knight extends ChessPiece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return 2.5;
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 public class Rook extends ChessPiece {
 
     private static final String NAME = "R";
-    private static final Double SCORE = 5.0;
 
     public Rook(Color color) {
         super(color, NAME);
@@ -36,6 +35,6 @@ public class Rook extends ChessPiece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return 5.0;
     }
 }

@@ -62,10 +62,17 @@ public class OutputView {
             String position = (char) i + String.valueOf(j);
 
             Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
-            possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.printf(piece.getName()),
-                    () -> System.out.print(EMPTY));
+            possiblePiece.ifPresentOrElse(OutputView::printPieceByColor, () -> System.out.print(EMPTY));
         }
+    }
+
+    private static void printPieceByColor(ChessPiece piece){
+        if(piece.isBlack()){
+            System.out.printf(Color.BLACK.convertByColor(piece.getName()));
+            return;
+        }
+        System.out.printf(Color.WHITE.convertByColor(piece.getName()));
+
     }
 
 

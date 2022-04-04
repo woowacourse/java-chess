@@ -10,7 +10,6 @@ import java.util.List;
 public class Pawn extends ChessPiece {
 
     private static final String NAME = "P";
-    private static final Double SCORE = 1.0;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
     private static final int BLACK_MOVABLE_DISTANCE = 1;
@@ -110,6 +109,6 @@ public class Pawn extends ChessPiece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return 1.0;
     }
 }

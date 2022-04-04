@@ -14,7 +14,7 @@ public abstract class ChessPiece {
 
     protected ChessPiece(Color color, String name) {
         this.color = color;
-        this.name = color.convertByColor(name);
+        this.name = name;
     }
 
     public abstract List<Position> getInitWhitePosition();
