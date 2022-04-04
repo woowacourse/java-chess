@@ -20,7 +20,7 @@ public class WebApplication {
         ScoreDao scoreDao = new ScoreDao(jdbcTemplate);
         ChessGameDao chessGameDao = new ChessGameDao(jdbcTemplate);
         ChessGameService service = new ChessGameService(pieceDao, scoreDao, chessGameDao);
-        ChessGameController controller = new ChessGameController(service);
+        ChessGameController controller = new ChessGameController(service, chessGameDao, pieceDao, scoreDao);
 
         port(8080);
         staticFileLocation("/static");

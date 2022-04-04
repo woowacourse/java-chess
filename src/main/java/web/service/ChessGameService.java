@@ -120,14 +120,6 @@ public class ChessGameService {
         chessGameDao.updateWinner(chessBoard.getWinner());
     }
 
-    public List<PieceDto> queryPieces() {
-        return pieceDao.findPieces();
-    }
-
-    public Score queryScoreByColor(Color color) {
-        return scoreDao.findScoreByColor(color);
-    }
-
     public void prepareNewChessGame() {
         deletePreviousChessGame();
         saveNewChessGame();
@@ -189,21 +181,5 @@ public class ChessGameService {
                 new PieceDto(new Position(F, SEVEN), new Pawn(Color.BLACK)),
                 new PieceDto(new Position(G, SEVEN), new Pawn(Color.BLACK)),
                 new PieceDto(new Position(H, SEVEN), new Pawn(Color.BLACK)));
-    }
-
-    public boolean existChessGame() {
-        return chessGameDao.existChessGame();
-    }
-
-    public boolean isGameFinished() {
-        return chessGameDao.findGameStatus() == GameStatus.FINISHED;
-    }
-
-    public Color findWinner() {
-        return chessGameDao.findWinner();
-    }
-
-    public Color queryCurrentColor() {
-        return chessGameDao.findCurrentColor();
     }
 }
