@@ -20,10 +20,10 @@ public class Board {
 
     public Board() {
         this.chessBoard = new LinkedHashMap<>();
-        initializeBoard();
+        initializeEmptyBoard();
     }
 
-    private void initializeBoard() {
+    public void initializeBoard() {
         initializeEmptyBoard();
 
         initializePiece(Rank.ONE, Team.WHITE);

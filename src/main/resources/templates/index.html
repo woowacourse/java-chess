@@ -85,8 +85,9 @@
         <div class="black-square"><img src="images/{{h1.team}}{{h1.name}}.png"/></div>
         {{/this}}
     </section>
+    <br/>
     <section>
-        <form method="post" action="/start">
+        <form method="get" action="/start">
             <input type="submit" value="게임 시작">
         </form>
     </section>
@@ -98,7 +99,18 @@
             <input type="submit" value="이동">
         </form>
     </section>
+    <section>
+        <h2>점수 확인</h2>
+        <button onclick="javascript:btn()">버튼</button>
+    </section>
 </div>
 </body>
-
 </html>
+<script>
+    function btn() {
+        console.log('test')
+        fetch('localhost:4567/status')
+            .then((res) => res.json())
+            .then((data) => alert(data));
+    }
+</script>

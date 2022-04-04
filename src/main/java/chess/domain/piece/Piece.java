@@ -38,6 +38,10 @@ public abstract class Piece {
         isFirst = false;
     }
 
+    public String getNameIndex() {
+        return name.getName(team);
+    }
+
     public String getName() {
         return name.name();
     }

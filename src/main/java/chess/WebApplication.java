@@ -6,6 +6,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Location;
+import chess.domain.board.TeamScore;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -14,11 +15,16 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
         ChessGame chessGame = new ChessGame();
-        chessGame.start();
 
         get("/", (req, res) -> {
             return new ModelAndView(chessGame.toMap(), "index.html");
         }, new HandlebarsTemplateEngine());
+
+        get("/start", (req, res) ->{
+            chessGame.start();
+            res.redirect("/");
+            return null;
+        });
 
         post("/move", (req, res) -> {
             String source = req.queryParams("source");
@@ -28,6 +34,10 @@ public class WebApplication {
             return null;
         });
 
+        get("/status" ,(req,res) ->{
+            TeamScore score = chessGame.status();
+            return score;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

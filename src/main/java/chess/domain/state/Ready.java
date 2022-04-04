@@ -8,15 +8,16 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class Ready implements State {
+    private final Board board = new Board();
 
     @Override
     public State start() {
-        return new White(new Board());
+        board.initializeBoard();
+        return new White(board);
     }
 
     @Override
     public State end() {
-
         throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
@@ -27,7 +28,7 @@ public class Ready implements State {
 
     @Override
     public Board getBoard() {
-        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
+        return board;
     }
 
     @Override

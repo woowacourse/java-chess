@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.Location;
 
+import chess.domain.board.TeamScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.state.Ready;
@@ -38,11 +39,11 @@ public class ChessGame {
         OutputView.printChessBoard(state.getBoard());
     }
 
-    public void status() {
+    public TeamScore status() {
         if (!isRunning()) {
             throw new IllegalStateException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
-        OutputView.printScore(state.getScore());
+        return state.getScore();
     }
 
     public void end() {

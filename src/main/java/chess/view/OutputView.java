@@ -28,7 +28,7 @@ public class OutputView {
 
     private static void printEachRank(List<Piece> rankPieces) {
         for (Piece rankPiece : rankPieces) {
-            System.out.print(rankPiece.getName());
+            System.out.print(rankPiece.getNameIndex());
         }
         System.out.println();
     }
