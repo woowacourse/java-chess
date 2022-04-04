@@ -9,9 +9,9 @@ import chess.dto.request.MoveCommandDto;
 import chess.dto.request.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.SearchResultDto;
-import chess.dto.response.FullGameModel;
-import chess.dto.response.FullResultModel;
-import chess.dto.response.GameCountModel;
+import chess.dto.response.GameDto;
+import chess.dto.response.GameResultDto;
+import chess.dto.response.GameCountDto;
 
 public class WebController {
 
@@ -19,12 +19,12 @@ public class WebController {
 
     private final GameRepository gameRepository = new GameRepository();
 
-    public GameCountModel countGames() {
+    public GameCountDto countGames() {
         int totalCount = gameRepository.countAll();
         int overCount = gameRepository.countByState(GameState.OVER);
         int runningCount = totalCount - overCount;
 
-        return new GameCountModel(totalCount, runningCount);
+        return new GameCountDto(totalCount, runningCount);
     }
 
     public CreateGameDto initGame() {
@@ -36,12 +36,12 @@ public class WebController {
         return new SearchResultDto(gameId, gameRepository.checkById(gameId));
     }
 
-    public FullGameModel findGame(int gameId) {
+    public GameDto findGame(int gameId) {
         Game game = gameRepository.findById(gameId);
-        return new FullGameModel(gameId, game);
+        return new GameDto(gameId, game);
     }
 
-    public FullGameModel playGame(PlayGameRequestDto request) {
+    public GameDto playGame(PlayGameRequestDto request) {
         int gameId = request.getGameId();
         MoveCommandDto moveCommand = request.getMoveCommand();
         Game game =  gameRepository.findById(gameId);
@@ -53,10 +53,10 @@ public class WebController {
         return findGame(gameId);
     }
 
-    public FullResultModel findGameResult(int gameId) {
+    public GameResultDto findGameResult(int gameId) {
         Game game = gameRepository.findById(gameId);
         validateGameOver(game);
-        return new FullResultModel(gameId, game);
+        return new GameResultDto(gameId, game);
     }
 
     private void validateGameOver(Game game) {

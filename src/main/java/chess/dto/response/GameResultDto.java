@@ -3,17 +3,17 @@ package chess.dto.response;
 import chess.domain.game.Game;
 import chess.domain.game.GameResult;
 
-public class FullResultModel {
+public class GameResultDto {
 
-    private final FullGameModel gameInfo;
+    private final GameDto gameInfo;
     private final GameResult result;
 
-    public FullResultModel(int gameId, Game game){
-        this.gameInfo = new FullGameModel(gameId, game);
+    public GameResultDto(int gameId, Game game){
+        this.gameInfo = new GameDto(gameId, game);
         this.result =game.getResult();
     }
 
-    public FullGameModel getGameInfo() {
+    public GameDto getGameInfo() {
         return gameInfo;
     }
 

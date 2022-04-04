@@ -5,7 +5,6 @@ import chess.db.dao.PieceDao;
 import chess.db.entity.FullGameEntity;
 import chess.db.entity.GameEntity;
 import chess.db.entity.PieceEntity;
-import chess.domain.board.position.Position;
 import chess.domain.game.Game;
 import chess.domain.game.GameState;
 import chess.domain.game.Started;
@@ -51,11 +50,9 @@ public class GameRepository {
         GameEntity game = gameEntity.getGame();
         int gameId = game.getId();
 
-        List<Position> effectedPositions = moveCommand.getPositions();
-        pieceDao.deleteAllByGameIdAndPositions(gameId, effectedPositions);
+        pieceDao.deleteAllByGameIdAndPositions(gameId, moveCommand.getPositions());
 
-        Position target = moveCommand.target();
-        PieceEntity movedPiece = gameEntity.getPieceAt(target);
+        PieceEntity movedPiece = gameEntity.getPieceAt(moveCommand.getTarget());
         pieceDao.saveAll(gameId, List.of(movedPiece));
 
         gameDao.updateState(game);

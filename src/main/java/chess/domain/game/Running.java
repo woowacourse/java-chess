@@ -3,6 +3,7 @@ package chess.domain.game;
 import static chess.domain.board.piece.PieceType.KING;
 
 import chess.domain.board.Board;
+import chess.domain.board.piece.Color;
 import chess.domain.board.position.Position;
 import chess.dto.request.MoveCommandDto;
 
@@ -16,8 +17,8 @@ abstract class Running extends Started {
 
     @Override
     public final Game moveChessmen(MoveCommandDto moveCommand) {
-        Position from = moveCommand.source();
-        Position to = moveCommand.target();
+        Position from = moveCommand.getSource();
+        Position to = moveCommand.getTarget();
 
         board.movePiece(from, to, getCurrentTurnColor());
         return moveResult();
@@ -36,6 +37,8 @@ abstract class Running extends Started {
         }
         return continueGame();
     }
+
+    protected abstract Color getCurrentTurnColor();
 
     protected abstract Game continueGame();
 

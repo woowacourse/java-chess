@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-
 import static chess.domain.board.piece.Color.WHITE;
 
 import chess.domain.board.piece.Color;

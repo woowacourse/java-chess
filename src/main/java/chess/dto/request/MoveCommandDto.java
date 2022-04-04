@@ -13,11 +13,11 @@ public class MoveCommandDto {
         this.target = Position.of(target);
     }
 
-    public Position source() {
+    public Position getSource() {
         return source;
     }
 
-    public Position target() {
+    public Position getTarget() {
         return target;
     }
 

@@ -1,8 +1,7 @@
 package chess.domain.game;
 
-import chess.domain.board.piece.Color;
-import chess.dto.request.MoveCommandDto;
 import chess.domain.board.Board;
+import chess.dto.request.MoveCommandDto;
 
 final class GameOver extends Started {
 
@@ -10,11 +9,6 @@ final class GameOver extends Started {
 
     GameOver(Board board) {
         super(board, GameState.OVER);
-    }
-
-    @Override
-    public Color getCurrentTurnColor() {
-        throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
     }
 
     @Override

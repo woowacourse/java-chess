@@ -1,11 +1,11 @@
 package chess.dto.response;
 
-public class GameCountModel {
+public class GameCountDto {
 
     private final int totalCount;
     private final int runningCount;
 
-    public GameCountModel(int totalCount, int runningCount) {
+    public GameCountDto(int totalCount, int runningCount) {
         this.totalCount = totalCount;
         this.runningCount = runningCount;
     }
