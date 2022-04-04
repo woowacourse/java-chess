@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.pawn.Pawn;
 import chess.testutil.H2Connection;
 import java.util.Map;
@@ -69,6 +70,24 @@ class PieceDaoImplTest {
         assertAll(
                 () -> assertThat(result.color()).isEqualTo(WHITE),
                 () -> assertThat(result.name()).isEqualTo("pawn")
+        );
+    }
+
+    @Test
+    @DisplayName("저장한 piece 정보를 업데이트")
+    void saveAndUpdatePiece() {
+        // given
+        pieceDao.savePieces(Map.of(position, pawn));
+        Piece changePiece = new Piece(WHITE, new Queen());
+
+        // when
+        pieceDao.updatePiece(position, changePiece);
+        Piece result = pieceDao.findAllPieces().get(position);
+
+        // then
+        assertAll(
+                () -> assertThat(result.color()).isEqualTo(WHITE),
+                () -> assertThat(result.name()).isEqualTo("queen")
         );
     }
 }

@@ -80,6 +80,22 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
+    public void updatePiece(Position position, Piece changePiece) {
+        final String query = "update piece set type = ? "
+                + "where position_col = ? and position_row = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, changePiece.name());
+            pstmt.setString(2, String.valueOf(position.column()));
+            pstmt.setString(3, String.valueOf(position.row()));
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void deletePiece(final Position position) {
         final String query = "delete from piece where position_col = ? and position_row = ?";
 

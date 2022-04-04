@@ -12,5 +12,7 @@ public interface PieceDao {
 
     void updatePiecePosition(Position position, Position movePosition);
 
+    void updatePiece(Position position, Piece changedPiece);
+
     void deletePiece(Position position);
 }
