@@ -95,12 +95,9 @@
 
 <script>
     const url = '/board';
-    fetch(url).then(res => res.json())
-        .then(json => {
-            json.forEach(e => {
-                document.getElementById(e.position).style.backgroundImage = `url(/img/${e.piece}.png)`;
-            })
-        });
+    fetch(url)
+        .then(res => res.json())
+        .then(json => json.forEach(e => document.getElementById(e.position).style.backgroundImage = `url(/img/${e.piece}.png)`));
 </script>
 </body>
 </html>

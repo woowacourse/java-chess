@@ -18,16 +18,14 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
 
-        get("/", (req, res) -> {
+        get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("board", WebViewMapper.parse(BoardFactory.newInstance().getBoard()));
             return render(model, "index.html");
         });
 
-        get("/board", (request, response) -> {
-            response.type("application/json");
-            return WebViewMapper.parse(BoardFactory.newInstance().getBoard());
-        }, new JsonTransformer());
+        get("/board", (request, response) -> WebViewMapper.parse(BoardFactory.newInstance().getBoard())
+                , new JsonTransformer());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
