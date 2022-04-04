@@ -5,33 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Chess Game</title>
 </head>
 <body>
-<span>
-      {{#if error}}
-        {{error}}
-      {{/if}}
-    </span>
-<form action="/status" method="get">
-    <button>점수</button>
-</form>
-<form action="/end" method="get">
-    <button>게임 종료</button>
-</form>
-<span>
-      {{#if whiteScore}}
-        {{whiteScore}}
-      {{/if}}
+<h1 style="text-align: center; margin-bottom: 50px;">디우의 체스게임에 오신것을 환영합니다</h1>
+<div class="buttons">
+    <form action="/status" method="get" style="display: inline-block">
+        <button type="submit" class="btn btn-secondary">점수</button>
+    </form>
+    <form action="/end" method="get" style="display: inline-block">
+        <button type="submit" class="btn btn-secondary">게임 종료</button>
+    </form>
+    <div class="info">
+        {{#if error}}
+            에러 메시지: {{error}}
+        {{/if}}
+        {{#if whiteScore}}
+            흰팀 점수: {{whiteScore}}
+        {{/if}}
 
-      {{#if blackScore}}
-        {{blackScore}}
-      {{/if}}
+        {{#if blackScore}}
+            검은팀 점수: {{blackScore}}
+        {{/if}}
 
-      {{#if winTeam}}
-        {{winTeam}}
-      {{/if}}
-    </span>
+        {{#if winTeam}}
+            승자: {{winTeam}}
+        {{/if}}
+    </div>
+</div>
 <div id="chessboard">
     <div id="chessboard-container">
         <div id="a8" class="black square">

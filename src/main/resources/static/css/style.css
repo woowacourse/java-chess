@@ -1,4 +1,5 @@
 #chessboard-container {
+  margin-left: 50px;
   width: 800px;
   height: 800px;
   position: relative;
@@ -32,14 +33,17 @@
   height: 100%;
 }
 
-.start {
-  display: flex;
-  width: 50%;
-  max-width: 100px;
-  max-width: 100px;
-  padding: 10px;
-}
-
 .announce {
   text-align: center;
+}
+
+.buttons {
+  justify-content: space-between;
+  float: right;
+  margin-right: 300px;
+}
+
+.info {
+  display: block;
+  margin-top: 50px;
 }

@@ -33,7 +33,6 @@ public class ChessController {
         });
 
         get("/start", (request,response) -> {
-            System.out.println("실행 되나?");
             Map<String, Object> model = new HashMap<>();
 
             List<String> chessBoard = chessService.createChessBoard();
