@@ -14,15 +14,6 @@ CREATE TABLE piece
     primary key (game_id, position)
 );
 
-CREATE TABLE result
-(
-    game_id     bigint not null,
-    winner      ENUM('WHITE', 'BLACK') not null,
-    white_score float  not null,
-    black_score float  not null,
-    primary key (game_id)
-);
-
 -- TEST DB
 CREATE TABLE game_test
 (
@@ -38,13 +29,4 @@ CREATE TABLE piece_test
     type     ENUM('PAWN', 'KNIGHT', 'BISHOP', 'ROOK', 'QUEEN', 'KING') not null,
     color    ENUM('WHITE', 'BLACK') not null,
     primary key (game_id, position)
-);
-
-CREATE TABLE result_test
-(
-    game_id     bigint not null,
-    winner      ENUM('WHITE', 'BLACK') not null,
-    white_score float  not null,
-    black_score float  not null,
-    primary key (game_id)
 );
