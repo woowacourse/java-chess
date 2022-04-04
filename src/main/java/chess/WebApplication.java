@@ -1,5 +1,7 @@
 package chess;
 
+import chess.controller.Command;
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Piece;
@@ -20,25 +22,23 @@ public class WebApplication {
         port(8081);
         staticFileLocation("/static");
 
-        Board board = new Board(new BoardInitializer());
+        ChessGame chessGame = new ChessGame();
+        Command.execute("start", chessGame);
 
         get("/", (req, res) -> {
-            return boardRender(board, "index.html");
+            return boardRender(chessGame.getBoard(), "index.html");
         });
 
         post("/move", (req, res) -> {
-            String positions = req.body().split("=")[1];
-            String[] commands = positions.split("\\+");
-            String from = commands[1];
-            String to = commands[2];
-            board.move(Position.from(from), Position.from(to));
+            String commands = req.body().split("=")[1].replace("+", " ");
+            Command.execute(commands, chessGame);
             res.redirect("/");
             return null;
         });
     }
 
-    private static String boardRender(final Board board, final String templatePath) {
-        BoardDto boardDto = BoardDto.from(board.toMap());
+    private static String boardRender(final Map<Position, Piece> board, final String templatePath) {
+        BoardDto boardDto = BoardDto.from(board);
         return new HandlebarsTemplateEngine()
                 .render(new ModelAndView(boardDto, templatePath));
     }
