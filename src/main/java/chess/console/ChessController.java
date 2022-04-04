@@ -1,12 +1,12 @@
-package chess;
+package chess.console;
 
 import java.util.NoSuchElementException;
 
+import chess.console.dto.ChessBoardDto;
+import chess.console.dto.GameResult;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import chess.domain.game.ChessGame;
-import chess.dto.ChessBoardDto;
-import chess.dto.GameResult;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ChessController {
 

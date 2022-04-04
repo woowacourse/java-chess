@@ -1,4 +1,4 @@
-package chess;
+package chess.console;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,11 +8,11 @@ import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 import java.util.regex.Pattern;
 
+import chess.console.dto.GameResult;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
 import chess.domain.game.state.position.Rank;
-import chess.dto.GameResult;
 
 public class Command {
     private static final Map<Pattern, BiFunction<ChessGame, List<String>, GameResult>> commands = new HashMap<>();
