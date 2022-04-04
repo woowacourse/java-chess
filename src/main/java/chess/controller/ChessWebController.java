@@ -13,13 +13,13 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class ChessController {
+public class ChessWebController {
 
     private static final Gson GSON = new Gson();
 
     final ChessService chessService;
 
-    public ChessController() {
+    public ChessWebController() {
         chessService = new ChessService();
     }
 

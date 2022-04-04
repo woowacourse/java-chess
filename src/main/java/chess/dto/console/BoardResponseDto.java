@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.console;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -13,11 +13,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConsoleBoardDto {
+public class BoardResponseDto {
 
     private final List<List<String>> names;
 
-    public ConsoleBoardDto(final Map<Position, Piece> board) {
+    public BoardResponseDto(final Map<Position, Piece> board) {
         final List<List<String>> names = new ArrayList<>();
         for (Row row : Row.values()) {
             names.add(createNamesOnSameRow(board, row));

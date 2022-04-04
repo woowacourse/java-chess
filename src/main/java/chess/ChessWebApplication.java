@@ -3,14 +3,14 @@ package chess;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
-import chess.controller.ChessController;
+import chess.controller.ChessWebController;
 
-public class WebApplication {
+public class ChessWebApplication {
 
     public static void main(final String[] args) {
         port(8081);
         staticFileLocation("/static");
 
-        new ChessController().run();
+        new ChessWebController().run();
     }
 }

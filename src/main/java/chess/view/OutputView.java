@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.dto.ConsoleBoardDto;
+import chess.dto.console.BoardResponseDto;
 import java.util.List;
 
 public class OutputView {
@@ -14,7 +14,7 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(final ConsoleBoardDto consoleBoardDto) {
+    public static void printBoard(final BoardResponseDto consoleBoardDto) {
         final List<List<String>> names = consoleBoardDto.getNames();
         int rowIndex = 8;
         for (List<String> namesOnSameRow : names) {
