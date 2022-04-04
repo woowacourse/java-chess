@@ -1,18 +1,31 @@
 package chess;
 
+import chess.controller.Command;
+import chess.domain.ChessGame;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+        port(8082);
+        staticFiles.location("/public");
+        ChessGame chessGame = ChessGame.create();
+
+        get("/welcome", (req, res) -> {
+            Command command = Command.of(req.queryParams("command"));
+            if (Command.START.equals(command)) {
+                chessGame.initialze();
+                res.redirect("/board");
+            }
+            if (Command.END.equals(command)) {
+                stop();
+            }
+            return null;
         });
     }
 

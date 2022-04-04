@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
 
     private ChessGame() {
         this.chessBoard = ChessBoard.initialize();
@@ -30,5 +30,9 @@ public class ChessGame {
 
     public ChessStatusDto getStatusInformation() {
         return ChessStatusDto.of(chessBoard);
+    }
+
+    public void initialze() {
+        this.chessBoard = ChessBoard.initialize();
     }
 }
