@@ -29,7 +29,7 @@ public class ChessGameController {
             return gson.toJson(ChessGameResponse.from(chessGameService.findGameTurn()));
         });
 
-        post("/promotion", "application/json", (req, res) -> {
+        post("/start", "application/json", (req, res) -> {
             chessGameService.start();
             return StatusResponse.SUCCESS;
         });
