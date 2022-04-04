@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.controller.Arguments;
+import chess.dto.Arguments;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;

@@ -26,5 +26,13 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
+    public String getColor() {
+        return color.name();
+    }
+
+    public String getType() {
+        return type.name();
+    }
+
     public abstract boolean move(Route route, EmptyPoints emptyPoints);
 }

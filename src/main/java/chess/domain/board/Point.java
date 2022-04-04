@@ -65,6 +65,14 @@ public class Point {
         return horizontal.isInRangeNext(dx) && vertical.isInRangeNext(dy);
     }
 
+    public int getHorizontal() {
+        return horizontal.getNumber();
+    }
+
+    public int getVertical() {
+        return vertical.getNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

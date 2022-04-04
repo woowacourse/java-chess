@@ -2,12 +2,10 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.controller.Arguments;
+import chess.dto.Arguments;
 
 class ReadyTest {
 

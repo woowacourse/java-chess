@@ -2,13 +2,12 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.controller.Arguments;
+import chess.dto.Arguments;
 import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;

@@ -1,11 +1,11 @@
 package chess.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
+import chess.dto.Arguments;
 import chess.dto.GameRequest;
 import chess.view.InputView;
 import chess.view.OutputView;

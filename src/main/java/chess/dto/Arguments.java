@@ -1,12 +1,10 @@
-package chess.controller;
+package chess.dto;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import spark.Request;
 
 public class Arguments {
 
@@ -22,17 +20,24 @@ public class Arguments {
             .collect(Collectors.toList()));
     }
 
-    public static Arguments ofRequestBody(String requestBody, List<String> parameters) {
-        if (requestBody == null || requestBody.isEmpty()) {
+    public static Arguments ofRequest(Request request, List<String> parameters) {
+        if (parameters.isEmpty()) {
             return new Arguments(parameters);
         }
-        JsonObject jsonObject = JsonParser.parseString(requestBody).getAsJsonObject();
         return new Arguments(parameters.stream()
-            .map(parameter -> jsonObject.get(parameter).getAsString())
-            .collect(Collectors.toList()));
+            .map(request::queryParams)
+            .collect(Collectors.toList())
+        );
     }
 
     public List<String> getArguments() {
         return List.copyOf(arguments);
+    }
+
+    @Override
+    public String toString() {
+        return "Arguments{" +
+            "arguments=" + arguments +
+            '}';
     }
 }

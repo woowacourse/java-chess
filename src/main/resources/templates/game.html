@@ -27,18 +27,24 @@
         <form action="/end" method="get" enctype="text/plain">
             <input type="submit" value="end">
         </form>
-        <form action="/move" method="post" enctype="text/plain">
+        <form id="move_form" action="/move" method="get">
             <label for="move_src"> 출발 </label>
             <input type="text" name="source" id="move_src">
             <label for="move_dest"> 출발 </label>
-            <input type="text" name="source" id="move_dest">
+            <input type="text" name="destination" id="move_dest">
             <input type="submit" value="move">
         </form>
         <form action="/status" method="get" enctype="text/plain">
             <input type="submit" value="status">
         </form>
     </section>
+    <section>
+        {{#each score}}
+        {{@key}}
+        {{this}}
+        {{/each}}
+    </section>
 </div>
-
+<!--<script>setUp();</script>-->
 </body>
 </html>

@@ -1,10 +1,6 @@
 package chess.dto;
 
-import java.util.List;
-
-import chess.controller.Arguments;
 import chess.controller.Command;
-import spark.Request;
 
 public class GameRequest {
 
@@ -31,13 +27,6 @@ public class GameRequest {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 입력이 잘못되었습니다.");
         }
-    }
-
-    public static GameRequest of(Request request) {
-        String path = request.pathInfo().substring(1);
-        Command command = Command.find(path);
-        Arguments arguments = Arguments.ofRequestBody(request.body(), command.getParameters());
-        return new GameRequest(command, arguments);
     }
 
     public Command getCommand() {
