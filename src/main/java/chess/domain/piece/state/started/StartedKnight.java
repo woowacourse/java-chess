@@ -1,5 +1,6 @@
 package chess.domain.piece.state.started;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +13,24 @@ public class StartedKnight extends NonContinuous {
 
     @Override
     public List<Position> findMovablePositions(Position source, Map<Position, Piece> board) {
-        return findMovablePositions(Direction.knight(), source, board);
+        return findMovablePositions(directions(), source, board);
     }
 
     @Override
     public PieceState updateState() {
         return new StartedKnight();
+    }
+
+    private static List<Direction> directions() {
+        List<Direction> directions = new ArrayList<>();
+        directions.add(Direction.UpUpRight);
+        directions.add(Direction.UpRightRight);
+        directions.add(Direction.DownRightRight);
+        directions.add(Direction.DownDownRight);
+        directions.add(Direction.DownDownLeft);
+        directions.add(Direction.DownLeftLeft);
+        directions.add(Direction.UpLeftLeft);
+        directions.add(Direction.UpUpLeft);
+        return directions;
     }
 }
