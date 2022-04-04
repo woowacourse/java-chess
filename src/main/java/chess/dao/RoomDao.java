@@ -81,4 +81,20 @@ public class RoomDao {
         }
         return 0;
     }
+
+    public int updateStatusTo(final String roomName, final GameStatus gameStatus) {
+        final String sql = "UPDATE Room SET GameStatus = ? WHERE Name = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, gameStatus.getValue());
+            statement.setString(2, roomName);
+
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
