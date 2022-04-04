@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -10,54 +11,39 @@ import java.util.stream.Stream;
 
 public class ChessmenInitializer {
 
+    private static final Rank BLACK_STRONGMEN_INIT_RANK = Rank.EIGHT;
+    private static final Rank WHITE_STRONGMEN_INIT_RANK = Rank.ONE;
+
     public Pieces init() {
         List<Piece> chessmen = Stream.of(
-                initBlackStrongMen(),
-                initBlackPawns(),
-                initWhitePawns(),
-                initWhiteStrongMen())
+                initStrongMen(Color.BLACK, BLACK_STRONGMEN_INIT_RANK),
+                initPawns(Color.BLACK, Pawn.BLACK_INIT_RANK),
+                initPawns(Color.WHITE, Pawn.WHITE_INIT_RANK),
+                initStrongMen(Color.WHITE, WHITE_STRONGMEN_INIT_RANK))
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
 
         return new Pieces(chessmen);
     }
 
-    private List<Piece> initBlackStrongMen() {
+
+    private List<Piece> initStrongMen(Color color, Rank rank) {
         return List.of(
-            new Rook(Color.BLACK, Position.of("a8")),
-            new Knight(Color.BLACK, Position.of("b8")),
-            new Bishop(Color.BLACK, Position.of("c8")),
-            new Queen(Color.BLACK, Position.of("d8")),
-            new King(Color.BLACK, Position.of("e8")),
-            new Bishop(Color.BLACK, Position.of("f8")),
-            new Knight(Color.BLACK, Position.of("g8")),
-            new Rook(Color.BLACK, Position.of("h8")));
+            new Rook(color, Position.from(File.A, rank)),
+            new Knight(color, Position.from(File.B, rank)),
+            new Bishop(color, Position.from(File.C, rank)),
+            new Queen(color, Position.from(File.D, rank)),
+            new King(color, Position.from(File.E, rank)),
+            new Bishop(color, Position.from(File.F, rank)),
+            new Knight(color, Position.from(File.G, rank)),
+            new Rook(color, Position.from(File.H, rank)));
     }
 
-    private List<Piece> initBlackPawns() {
+    private List<Piece> initPawns(Color color, Rank rank) {
         return Arrays.stream(File.values())
-            .map(file -> file.getRawFile() + Pawn.BLACK_INIT_RANK)
-            .map(positionKey -> new Pawn(Color.BLACK, Position.of(positionKey)))
+            .map(file -> file.getRawFile() + rank.getRawRank())
+            .map(positionKey -> new Pawn(color, Position.of(positionKey)))
             .collect(Collectors.toList());
-    }
-
-    private List<Piece> initWhitePawns() {
-        return Arrays.stream(File.values())
-            .map(file -> file.getRawFile() + Pawn.WHITE_INIT_RANK)
-            .map(positionKey -> new Pawn(Color.WHITE, Position.of(positionKey)))
-            .collect(Collectors.toList());
-    }
-
-    private List<Piece> initWhiteStrongMen() {
-        return List.of(
-            new Rook(Color.WHITE, Position.of("a1")),
-            new Knight(Color.WHITE, Position.of("b1")),
-            new Bishop(Color.WHITE, Position.of("c1")),
-            new Queen(Color.WHITE, Position.of("d1")),
-            new King(Color.WHITE, Position.of("e1")),
-            new Bishop(Color.WHITE, Position.of("f1")),
-            new Knight(Color.WHITE, Position.of("g1")),
-            new Rook(Color.WHITE, Position.of("h1")));
     }
 
 }

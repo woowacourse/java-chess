@@ -12,8 +12,8 @@ public final class Pawn extends Piece {
 
     private static final double DEFAULT_SCORE = 1;
 
-    public static final String BLACK_INIT_RANK = "7";
-    public static final String WHITE_INIT_RANK = "2";
+    public static final Rank BLACK_INIT_RANK = Rank.SEVEN;
+    public static final Rank WHITE_INIT_RANK = Rank.TWO;
 
     private static final int MOVABLE_RANK_DIFFERENCE = 1;
     private static final int JUMPABLE_RANK_DIFFERENCE = 2;
@@ -74,7 +74,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteInJumpablePosition(int curRankIdx) {
-        return Rank.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return Rank.isMappedRankIdx(WHITE_INIT_RANK.getRawRank(), curRankIdx);
     }
 
     private boolean validateBlackMovable(Position toPosition) {
@@ -94,8 +94,7 @@ public final class Pawn extends Piece {
 
 
     private boolean isBlackInJumpablePosition(int curRankIdx) {
-        return Rank.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
-//        return PositionConverter.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return Rank.isMappedRankIdx(BLACK_INIT_RANK.getRawRank(), curRankIdx);
     }
 
     @Override

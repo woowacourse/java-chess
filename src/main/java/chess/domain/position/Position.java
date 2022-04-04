@@ -20,6 +20,10 @@ public class Position {
         return PositionCache.getCache(value);
     }
 
+    public static Position from(File file, Rank rank) {
+        return PositionCache.getCache(file.getFileIdx(), rank.getRankIdx());
+    }
+
     public boolean hasSameFileIdx(int targetFileIdx) {
         return file.getFileIdx() == targetFileIdx;
     }
