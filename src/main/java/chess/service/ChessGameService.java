@@ -3,12 +3,14 @@ package chess.service;
 import chess.dao.PieceDao;
 import chess.dao.TurnDao;
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.turn.GameTurn;
 import chess.domain.turn.Turn;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class ChessGameService {
@@ -48,5 +50,10 @@ public class ChessGameService {
         GameTurn gameTurn = findGameTurn();
         Entry<Position, Piece> changedPiece = gameTurn.promotion(promotionPiece);
         pieceDao.updatePiece(changedPiece.getKey(), changedPiece.getValue());
+    }
+
+    public Map<Color, Double> currentScore() {
+        GameTurn gameTurn = findGameTurn();
+        return gameTurn.currentScore();
     }
 }

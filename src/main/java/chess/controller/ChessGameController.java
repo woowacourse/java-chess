@@ -7,10 +7,12 @@ import chess.controller.dto.StatusResponse;
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.request.PromotionRequest;
 import chess.controller.dto.response.ChessGameResponse;
+import chess.controller.dto.response.ScoreResponse;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
+import java.util.stream.Collectors;
 
 public class ChessGameController {
 
@@ -40,6 +42,15 @@ public class ChessGameController {
             Position target = moveRequest.toTargetPosition();
             chessGameService.move(source, target);
             return StatusResponse.SUCCESS;
+        });
+
+        get("/status", "application/json", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(chessGameService.currentScore()
+                    .entrySet()
+                    .stream()
+                    .map(ScoreResponse::from)
+                    .collect(Collectors.toList()));
         });
     }
 }
