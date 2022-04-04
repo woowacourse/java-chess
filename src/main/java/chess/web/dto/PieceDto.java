@@ -1,6 +1,5 @@
 package chess.web.dto;
 
-import chess.domain.game.state.position.Position;
 import chess.domain.piece.Piece;
 
 public class PieceDto {
@@ -12,8 +11,7 @@ public class PieceDto {
         this.imageName = imageName;
     }
 
-    public static PieceDto of(Position rawPosition, Piece piece) {
-        String position = rawPosition.getFile().name() + rawPosition.getRank().getValue();
+    public static PieceDto of(String position, Piece piece) {
         String name = piece.getName().toLowerCase();
         String color = piece.getColor().toLowerCase();
         return new PieceDto(position, "images/" + name + "_" + color + ".png");

@@ -17,7 +17,7 @@ public class WebApplication {
         port(8081);
         staticFileLocation("/static");
         ChessGame chessGame = new ChessGame();
-        BoardDto boardDto = BoardDto.of(new HashMap<>());
+        BoardDto boardDto = new BoardDto(new HashMap<>());
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

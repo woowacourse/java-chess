@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.game.ChessGame;
-import chess.domain.game.state.position.Position;
 import chess.domain.piece.property.Color;
 import chess.web.dto.BoardDto;
 import chess.web.dto.PieceDto;
@@ -21,9 +20,8 @@ public class Response {
     public static void putChessGame(Map<String, Object> model, BoardDto boardDto, ChessGame chessGame) {
         Map<String, PieceDto> pieces = new HashMap<>();
 
-        for (Position position : boardDto.getBoard().keySet()) {
-            String positionStr = position.getFile().name() + position.getRank().getValue();
-            pieces.put(positionStr, PieceDto.of(position, boardDto.get(position)));
+        for (String position : boardDto.getBoard().keySet()) {
+            pieces.put(position, boardDto.get(position));
         }
 
         initializeRowPieces(model, pieces);
