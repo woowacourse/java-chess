@@ -57,13 +57,10 @@ public class ChessService {
         return change;
     }
 
-    public Board initBoard() {
-        Board board = Board.create(Pieces.createInit(), Turn.init());
-        List<Piece> pieces = board.getPieces().getPieces();
-        boardDao.updateTurnById(1L, "white");
-        for (Piece piece : pieces) {
-            pieceDao.updatePieceByPosition(piece.getType(), piece.getTeam().value(), piece.getPosition().name());
-        }
+    public Board initBoard(Long boardId) {
+        Pieces pieces = Pieces.createInit();
+        Board board = Board.create(pieces, Turn.init());
+        pieceDao.save(pieces.getPieces(), boardId);
         return board;
     }
 

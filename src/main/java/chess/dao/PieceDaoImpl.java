@@ -51,4 +51,25 @@ public class PieceDaoImpl implements PieceDao {
         return null;
     }
 
+    @Override
+    public void save(List<Piece> pieces, Long boardId) {
+        final String query = "INSERT INTO piece (position, board_id, type, team) VALUES ( ?, ?, ?, ?)";
+        try (
+                Connection connection = JdbcConnector.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
+            for (Piece piece : pieces) {
+                preparedStatement.setString(1, piece.getPosition().name());
+                preparedStatement.setLong(2, boardId);
+                preparedStatement.setString(3, piece.getType());
+                preparedStatement.setString(4, piece.getTeam().value());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }

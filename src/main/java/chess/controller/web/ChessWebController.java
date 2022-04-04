@@ -44,7 +44,7 @@ public class ChessWebController {
         });
 
         get("/api/restart", (req, res) -> {
-            Board board = chessService.initBoard();
+            Board board = chessService.initBoard(1L);
             BoardDto boardDto = convertToDto(board);
             return gson.toJson(boardDto);
         });
