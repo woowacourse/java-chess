@@ -30,6 +30,11 @@ public class ChessGameController {
         });
 
         post("/promotion", "application/json", (req, res) -> {
+            chessGameService.start();
+            return StatusResponse.SUCCESS;
+        });
+
+        post("/promotion", "application/json", (req, res) -> {
             PromotionRequest promotionRequest = gson.fromJson(req.body(), PromotionRequest.class);
             PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece(promotionRequest.getPromotionValue());
             chessGameService.promotion(promotionPiece);
