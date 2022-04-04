@@ -16,6 +16,7 @@ public class BoardFactoryTest {
 
     @Test
     void saveAll() {
+        BoardFactory.delete();
         BoardFactory.saveAll(BoardInitialize.create());
         List<BoardDao> pieces = BoardFactory.findAll("1");
         assertThat(pieces.size()).isEqualTo(64);
@@ -23,6 +24,7 @@ public class BoardFactoryTest {
 
     @Test
     void findAll() {
+        BoardFactory.delete();
         BoardFactory.saveAll(BoardInitialize.create());
         List<BoardDao> pieces = BoardFactory.findAll("1");
         assertThat(pieces.size()).isEqualTo(64);
@@ -30,8 +32,9 @@ public class BoardFactoryTest {
 
     @Test
     void findByPosition() {
+        BoardFactory.saveAll(BoardInitialize.create());
         BoardDao piece = BoardFactory.findByPosition("a1");
-        assertThat(piece.getSymbol()).isEqualTo("P");
+        assertThat(piece.getSymbol()).isEqualTo("p");
     }
 
     @Test
@@ -39,5 +42,12 @@ public class BoardFactoryTest {
         BoardFactory.delete();
         List<BoardDao> pieces = BoardFactory.findAll("1");
         assertThat(pieces.size()).isEqualTo(0);
+    }
+
+    @Test
+    void update() {
+        BoardFactory.updatePosition("b2", "b4");
+        BoardDao piece = BoardFactory.findByPosition("b4");
+        assertThat(piece.getPosition()).isEqualTo("b4");
     }
 }
