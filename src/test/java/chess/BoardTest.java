@@ -1,6 +1,8 @@
 package chess;
 
-import chess.piece.*;
+import chess.board.Board;
+import chess.board.Turn;
+import chess.board.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

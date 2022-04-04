@@ -1,7 +1,7 @@
 package chess;
 
-import chess.controller.web.ChessWebController;
-import chess.service.ChessService;
+import chess.web.controller.ChessWebController;
+import chess.web.service.ChessService;
 
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;

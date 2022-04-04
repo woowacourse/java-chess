@@ -1,7 +1,8 @@
 package chess.piece;
 
-import chess.piece.position.Position;
-import chess.Team;
+import chess.board.piece.*;
+import chess.board.piece.position.Position;
+import chess.board.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

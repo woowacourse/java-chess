@@ -1,10 +1,11 @@
 package chess;
 
+import chess.board.Team;
+import chess.board.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class TurnTest {
 

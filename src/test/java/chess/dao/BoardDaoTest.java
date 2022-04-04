@@ -1,8 +1,10 @@
 package chess.dao;
 
-import chess.Team;
-import chess.Turn;
-import org.junit.jupiter.api.BeforeAll;
+import chess.board.Team;
+import chess.board.Turn;
+import chess.web.dao.BoardDao;
+import chess.web.dao.BoardDaoImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardDaoTest {
 
-    private static final BoardDao boardDao = new BoardDaoImpl();
-    private static Long boardId;
+    private final BoardDao boardDao = new BoardDaoImpl();
+    private Long boardId;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         boardId = boardDao.save();
     }
 
