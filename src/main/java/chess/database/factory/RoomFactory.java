@@ -1,5 +1,6 @@
 package chess.database.factory;
 
+import chess.dao.RoomDao;
 import chess.database.DBConnection;
 
 import java.sql.Connection;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RoomFactory {
-    public static boolean existRoom(String roomId) {
+    public static RoomDao findById(String roomId) {
         final Connection connection = DBConnection.getConnection();
         final String sql = "select * from room  where id = ?";
         try {
@@ -16,12 +17,36 @@ public class RoomFactory {
             statement.setString(1, roomId);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return false;
+                return null;
             }
-            return !resultSet.getString("id").isEmpty();
+            return new RoomDao(resultSet.getString("id"), resultSet.getString("status"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
+    }
+
+    public static void delete() {
+        final Connection connection = DBConnection.getConnection();
+        final String sql = "delete from room where id = 1";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void save(String roomId, String team) {
+        final Connection connection = DBConnection.getConnection();
+        final String sql = "insert into room (id, status) values(?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, roomId);
+            statement.setString(2, team);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

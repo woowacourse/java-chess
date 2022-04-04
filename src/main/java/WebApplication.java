@@ -12,7 +12,7 @@ public class WebApplication {
         port(8080);
         staticFileLocation("templates");
         BasicConfigurator.configure();
-        ChessController chessController = new ChessController(BoardInitialize.create());
+        ChessController chessController = new ChessController();
         get("/board", (req, res) -> ViewUtil.render(chessController.getInitialBoard(), "/contents/chessBoard.html"));
 
         post("/move", (req, res) -> {

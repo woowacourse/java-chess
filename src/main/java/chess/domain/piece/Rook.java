@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final String SYMBOL = "P";
+    private static final String SYMBOL = "R";
     private static final float SCORE = 5.0f;
 
     public Rook(Team team, Position position) {

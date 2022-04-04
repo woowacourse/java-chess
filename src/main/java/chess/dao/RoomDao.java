@@ -1,19 +1,19 @@
 package chess.dao;
 
 public class RoomDao {
-    private int id;
-    private boolean status;
+    private String id;
+    private String status;
 
-    public RoomDao(int id, boolean status) {
+    public RoomDao(String id, String status) {
         this.id = id;
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isWhiteTurn() {
+        return status.equals("White");
     }
 }

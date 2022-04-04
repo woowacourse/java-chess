@@ -14,5 +14,7 @@ let piece = {
 }
 
 function findById(position, symbol) {
-    document.getElementById(position).innerHTML = piece[symbol];
+    if (piece[symbol] !== undefined) {
+        document.getElementById(position).innerHTML = piece[symbol];
+    }
 }
