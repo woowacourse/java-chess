@@ -27,14 +27,17 @@ public class WebChessGameController {
 
     public void run() {
         final Gson gson = new Gson();
-        final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
-        final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
-        final ChessWebGame chessWebGame = new ChessWebGame(whitePlayer, blackPlayer);
+        final ChessWebGame chessWebGame = new ChessWebGame();
         final ChessService chessService = new ChessService();
 
         get("/", (req, res) ->
                 render(new HashMap<>(), "index.html")
         );
+
+        get("/start", (req, res)->{
+            final ChessMap chessMap = chessService.initializeGame(chessWebGame);
+            return gson.toJson(chessMap);
+        });
 
         get("/status", (req, res) -> {
             final ScoreDto scoreDto = chessWebGame.getScoreStatus();

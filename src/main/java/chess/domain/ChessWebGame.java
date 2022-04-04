@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.generator.BlackGenerator;
+import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
 import chess.dto.ResultDto;
@@ -10,14 +12,25 @@ import java.util.List;
 
 public class ChessWebGame {
 
-    private final Player whitePlayer;
-    private final Player blackPlayer;
+    private Player whitePlayer;
+    private Player blackPlayer;
     private Team turn;
 
     public ChessWebGame(Player whitePlayer, Player blackPlayer) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.turn = Team.WHITE;
+    }
+
+    public ChessWebGame() {
+        this(new Player(new WhiteGenerator(), Team.WHITE), new Player(new BlackGenerator(), Team.BLACK));
+    }
+
+    public ChessMap initializeChessGame() {
+        whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
+        blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
+        turn = Team.WHITE;
+        return createMap();
     }
 
     public ChessMap createMap() {

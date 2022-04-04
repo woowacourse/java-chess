@@ -16,7 +16,7 @@ public class ChessService {
         return chessWebGame.createMap();
     }
 
-    public ChessMap getMap(final ChessWebGame chessWebGame) {
-        return chessWebGame.createMap();
+    public ChessMap initializeGame(final ChessWebGame chessWebGame) {
+        return chessWebGame.initializeChessGame();
     }
 }
