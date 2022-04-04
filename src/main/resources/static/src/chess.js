@@ -142,7 +142,7 @@ async function getScore() {
 
 async function handleErrors(response) {
     if (!response.ok) {
-        let message = await response.json()
+        let message = await response.json();
         throw Error(message.errorMessage);
     }
     return response;

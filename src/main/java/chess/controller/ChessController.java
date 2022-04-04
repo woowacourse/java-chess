@@ -10,7 +10,6 @@ import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
