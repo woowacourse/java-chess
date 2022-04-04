@@ -37,6 +37,10 @@ public class ChessGame {
         }
     }
 
+    public boolean isKingChecked() {
+        return this.state.isKingChecked();
+    }
+
     private void playGame() {
         final String command = InputView.inputCommand();
         final GameCommand gameCommand = GameCommand.from(command);
@@ -115,9 +119,5 @@ public class ChessGame {
 
     public void ready() {
         state = state.ready();
-    }
-
-    public boolean isKingChecked() {
-        return this.state.isKingChecked();
     }
 }

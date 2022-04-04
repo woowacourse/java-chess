@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.board.UnitDirectVector.BOTTOM_LEFT;
-import static chess.domain.board.UnitDirectVector.BOTTOM_RIGHT;
-import static chess.domain.board.UnitDirectVector.TOP_LEFT;
-import static chess.domain.board.UnitDirectVector.TOP_RIGHT;
+import static chess.domain.board.UnitDirectVector.BOTTOM;
+import static chess.domain.board.UnitDirectVector.LEFT;
+import static chess.domain.board.UnitDirectVector.RIGHT;
+import static chess.domain.board.UnitDirectVector.TOP;
 import static chess.domain.piece.PieceProperty.ROOK;
 
 import chess.domain.Camp;
@@ -60,6 +60,11 @@ public final class Rook extends NotNullPiece {
 
     @Override
     public List<UnitDirectVector> getPossibleDirections() {
-        return List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
+        return List.of(
+            TOP,
+            BOTTOM,
+            RIGHT,
+            LEFT
+        );
     }
 }

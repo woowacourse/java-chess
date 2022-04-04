@@ -5,9 +5,11 @@ import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 public class Running implements State {
 
@@ -36,9 +38,30 @@ public class Running implements State {
 
     @Override
     public State move(final Positions positions) {
-        checkValidPosition(positions);
 
-        board.move(positions);
+        // 5. 사각형안에만 들어있는 것으로 유효한 & 모든이동방향에 대한 & 갈수 있는 포지션들
+        final SortedMap<UnitDirectVector, List<Position>> movablePositions = board.findMovablePositions(positions);
+
+        // 6. 갈 수 있는 포지션들 중 중간에  [기존 checkValidPosition 속 3개 검증]을 활용할 수 있으려나
+        movablePositions.entrySet()
+            .stream()
+            .forEach(it -> {
+                final UnitDirectVector direction = it.getKey();
+                final List<Position> possiblePositions = it.getValue();
+                for (final Position possiblePosition : possiblePositions) {
+                    System.out.println(direction + "방향으로 " + possiblePosition + "이 움직일 수 있다.");
+                }
+            });
+
+        // 7. 방향별 받아온 포지션들에서 obstacle걸리는 것 제거 + 자기 canMove 거리내여야함..
+        // -> (1)board정보를 가지고 isNull인지 확인하는 기능을 넘겨서 while로 모을때 끊어야한다.
+        // -> (2) piece
+        // -
+
+        //https://stackoverflow.com/questions/33459961/how-to-filter-a-map-by-its-values-in-java-8
+
+        checkValidPosition(positions); //before(notBlank,Camp) both( path obstacle)
+        board.moveIfValidPiece(positions);
 
         if (board.hasKingCaptured()) {
             return new Finished(board);
@@ -53,18 +76,18 @@ public class Running implements State {
     }
 
     private void checkValidPosition(final Positions positions) {
-        checkValidPiece(positions.before());
-        checkValidTurn(positions.before());
-        checkObstacles(positions);
+        checkValidBeforePiece(positions.before());
+        checkValidBeforePieceTurn(positions.before());
+        checkObstaclesFromBeforeToAfterPosition(positions);
     }
 
-    private void checkValidPiece(final Position position) {
+    private void checkValidBeforePiece(final Position position) {
         if (board.isBlankPosition(position)) {
             throw new IllegalArgumentException(NO_PIECE_TO_MOVE);
         }
     }
 
-    private void checkValidTurn(final Position position) {
+    private void checkValidBeforePieceTurn(final Position position) {
         if (isNotValidCamp(position)) {
             throw new IllegalArgumentException(TURN_OPPOSITE_CAMP);
         }
@@ -74,7 +97,7 @@ public class Running implements State {
         return board.isNotValidCamp(position, camp);
     }
 
-    private void checkObstacles(final Positions positions) {
+    private void checkObstaclesFromBeforeToAfterPosition(final Positions positions) {
         if (isNotKnight(positions.before()) && containObstacleInPath(positions)) {
             throw new IllegalArgumentException(CANT_MOVE_WHEN_OBSTACLE_IN_PATH);
         }

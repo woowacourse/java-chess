@@ -48,4 +48,18 @@ public class Positions {
     public int calculateDirectedRowDistance() {
         return before().rowDirectedDistance(after());
     }
+
+    public int calculateDirectedColumnDistance() {
+        return before().columnDirectedDistance(after());
+    }
+
+    public Position calculatePossibleAfterPositions(final UnitDirectVector direction) {
+        return before().calculatePossibleAfterPosition(direction);
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        //4-5. 현재 before에 대해서 next1칸씩이 중요하다.
+        return before().isValidNextPosition(direction);
+
+    }
 }

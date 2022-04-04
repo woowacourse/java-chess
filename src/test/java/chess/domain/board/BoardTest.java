@@ -135,7 +135,7 @@ public class BoardTest {
         Position h1 = Position.of(Column.H, Row.ONE);
         Position h2 = Position.of(Column.H, Row.TWO);
 
-        assertThatThrownBy(() -> board.move(h1, h2))
+        assertThatThrownBy(() -> board.moveIfValidPiece(h1, h2))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
     }
@@ -148,7 +148,7 @@ public class BoardTest {
         Position a2 = Position.of(Column.A, Row.TWO);
         Position a4 = Position.of(Column.A, Row.FOUR);
 
-        assertThatNoException().isThrownBy(() -> board.move(a2, a4));
+        assertThatNoException().isThrownBy(() -> board.moveIfValidPiece(a2, a4));
     }
 
     @DisplayName("빈칸의 위치를 출발지로 둘 수 없다.")
@@ -157,7 +157,7 @@ public class BoardTest {
         Board board = new Board();
         Position a3 = Position.of(Column.A, Row.THREE);
         Position a4 = Position.of(Column.A, Row.FOUR);
-        assertThatThrownBy(() -> board.move(a3, a4))
+        assertThatThrownBy(() -> board.moveIfValidPiece(a3, a4))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("빈 기물을 움직일 수 없습니다.");
     }
@@ -181,10 +181,10 @@ public class BoardTest {
         Position d2 = Position.of(Column.D, Row.TWO);
         Position d4 = Position.of(Column.D, Row.FOUR);
 
-        board.move(b2, b4);
-        board.move(c7, c5);
-        board.move(d2, d4);
-        board.move(c5, b4);
+        board.moveIfValidPiece(b2, b4);
+        board.moveIfValidPiece(c7, c5);
+        board.moveIfValidPiece(d2, d4);
+        board.moveIfValidPiece(c5, b4);
         assertThat(new BoardStatusCalculator(board).calculate(Piece::isBlack)).isEqualTo(37);
     }
 
@@ -204,9 +204,9 @@ public class BoardTest {
         Position b4 = Position.of(Column.B, Row.FOUR);
         Position c7 = Position.of(Column.C, Row.SEVEN);
         Position c5 = Position.of(Column.C, Row.FIVE);
-        board.move(b2, b4);
-        board.move(c7, c5);
-        board.move(b4, c5);
+        board.moveIfValidPiece(b2, b4);
+        board.moveIfValidPiece(c7, c5);
+        board.moveIfValidPiece(b4, c5);
         assertThat(new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack())).isEqualTo(37);
     }
 

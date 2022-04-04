@@ -72,4 +72,13 @@ public enum Row {
         }
         return path;
     }
+
+    public Row nextWith(final UnitDirectVector direction) {
+        return Row.from(direction.nextRowNumber(number));
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        final int nextRowNumber = direction.nextRowNumber(number);
+        return ONE.number <= nextRowNumber && nextRowNumber <= EIGHT.number;
+    }
 }

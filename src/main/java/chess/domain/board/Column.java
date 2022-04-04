@@ -28,7 +28,7 @@ public enum Column {
     }
 
     private static Column from(int number) {
-        return from(Character.forDigit(number, DECIMAL_RADIX));
+        return from((char) (number + 96));
     }
 
     public static Column from(char name) {
@@ -74,5 +74,14 @@ public enum Column {
             path.add(Column.from(i));
         }
         return path;
+    }
+
+    public Column nextWith(final UnitDirectVector direction) {
+        return Column.from(direction.nextColumnNumber(number));
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        final int nextColumnNumber = direction.nextColumnNumber(number);
+        return A.number <= nextColumnNumber && nextColumnNumber <= H.number;
     }
 }
