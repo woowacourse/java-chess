@@ -17,7 +17,7 @@ public class BoardDao {
 
     public void save(Map<Position, Piece> board) throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
-        String sql = chooseSaveSql();
+        final String sql = chooseSaveSql();
 
         PreparedStatement statement = connection.prepareStatement(sql);
         for (Entry<Position, Piece> entry : board.entrySet()) {
@@ -45,11 +45,10 @@ public class BoardDao {
     private boolean isBoardExist() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select no from piece";
-        boolean boardExist;
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        boardExist = resultSet.next();
+        boolean boardExist = resultSet.next();
         DatabaseConnector.close(connection, statement, resultSet);
         return boardExist;
     }

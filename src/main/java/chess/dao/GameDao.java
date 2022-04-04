@@ -11,7 +11,7 @@ public class GameDao {
 
     public void save() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
-        String sql = chooseSaveSql();
+        final String sql = chooseSaveSql();
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setBoolean(1, Camp.BLACK.isNotTurn());
@@ -30,11 +30,10 @@ public class GameDao {
     private boolean isGameExist() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select no from game";
-        boolean gameExist;
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        gameExist = resultSet.next();
+        boolean gameExist = resultSet.next();
         DatabaseConnector.close(connection, statement, resultSet);
         return gameExist;
     }
@@ -42,11 +41,10 @@ public class GameDao {
     public boolean isWhiteTurn() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select white_turn from game";
-        boolean whiteTurn;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
-        whiteTurn = resultSet.getBoolean("white_turn");
+        boolean whiteTurn = resultSet.getBoolean("white_turn");
         DatabaseConnector.close(connection, statement, resultSet);
         return whiteTurn;
     }
