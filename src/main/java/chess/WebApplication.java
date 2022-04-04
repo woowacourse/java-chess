@@ -13,6 +13,7 @@ import chess.webview.TeamName;
 import java.util.List;
 import java.util.Map.Entry;
 import spark.ModelAndView;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
@@ -45,16 +46,9 @@ public class WebApplication {
         staticFiles.location("/public");
         ChessGame chessGame = ChessGame.create();
 
-        get("/initCommand", (req, res) -> {
+        get("/applicationCommand", (req, res) -> {
             Command command = Command.of(req.queryParams("command"));
-            if (Command.START.equals(command)) {
-                chessGame.initialze();
-                res.redirect("/board");
-                return null;
-            }
-            if (Command.END.equals(command)) {
-                stop();
-            }
+            doApplicationCommand(res, chessGame, command);
             return null;
         });
 
@@ -64,21 +58,7 @@ public class WebApplication {
 
         post("/inGameCommand", (req, res) -> {
             List<String> inputs = divideInGameCommandInput(req.queryParams("command"));
-            Command command = Command.of(inputs.get(COMMAND_INDEX));
-            if (Command.MOVE.equals(command)) {
-                ChessBoardPosition source = coordinateToChessBoardPosition(inputs.get(SOURCE_INDEX));
-                ChessBoardPosition target = coordinateToChessBoardPosition(inputs.get(TARGET_INDEX));
-                chessGame.move(source, target);
-                if (chessGame.isGameEnd()) {
-                    return render(null, "../public/index.html");
-                }
-                res.redirect("/board");
-                return null;
-            }
-            if (Command.STATUS.equals(command)) {
-                res.redirect("/status");
-            }
-            return null;
+            return doInGameCommand(res, chessGame, inputs);
         });
 
         get("/status", (req, res) -> {
@@ -92,6 +72,37 @@ public class WebApplication {
             response.body(exception.getMessage());
         });
     }
+
+    private static String doInGameCommand(Response res, ChessGame chessGame, List<String> inputs) {
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
+        if (Command.MOVE.equals(command)) {
+            ChessBoardPosition source = coordinateToChessBoardPosition(inputs.get(SOURCE_INDEX));
+            ChessBoardPosition target = coordinateToChessBoardPosition(inputs.get(TARGET_INDEX));
+            return doMoveCommand(res, chessGame, source, target);
+        }
+        res.redirect("/status");
+        return null;
+    }
+
+
+    private static String doMoveCommand(Response res, ChessGame chessGame, ChessBoardPosition source, ChessBoardPosition target) {
+        chessGame.move(source, target);
+        if (chessGame.isGameEnd()) {
+            return render(null, "../public/index.html");
+        }
+        res.redirect("/board");
+        return null;
+    }
+
+    private static void doApplicationCommand(Response res, ChessGame chessGame, Command command) {
+        if (Command.START.equals(command)) {
+            chessGame.initialze();
+            res.redirect("/board");
+            return;
+        }
+        stop();
+    }
+
 
     private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
         Map<String, Object> model = new HashMap<>();
