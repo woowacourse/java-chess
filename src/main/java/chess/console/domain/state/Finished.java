@@ -2,6 +2,7 @@ package chess.console.domain.state;
 
 import chess.console.domain.board.Board;
 import chess.console.domain.board.Position;
+import chess.console.domain.piece.Color;
 
 abstract class Finished extends Ready {
 

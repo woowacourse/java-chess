@@ -6,7 +6,7 @@ import chess.console.domain.piece.Color;
 
 final class WhiteTurn extends Running {
 
-    WhiteTurn(Board board) {
+    public WhiteTurn(Board board) {
         super(board);
     }
 
@@ -17,5 +17,10 @@ final class WhiteTurn extends Running {
             return new WhiteWin(board);
         }
         return new BlackTurn(board);
+    }
+
+    @Override
+    public Color getTurn() {
+        return Color.WHITE;
     }
 }

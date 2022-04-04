@@ -18,6 +18,16 @@ public abstract class Ready implements State {
         return new WhiteTurn(board);
     }
 
+    public static State continueOf(Color color, Board board) {
+        if (color == Color.BLACK) {
+            return new BlackTurn(board);
+        }
+        if (color == Color.WHITE) {
+            return new WhiteTurn(board);
+        }
+        return new WhiteTurn(board);
+    }
+
     @Override
     public final Board getBoard() {
         return new Board(board.getValue());
