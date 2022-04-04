@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
+import chess.dto.WebChessStatusDto;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,10 @@ public class ChessGame {
 
     public ChessStatusDto getStatusInformation() {
         return ChessStatusDto.of(chessBoard);
+    }
+
+    public WebChessStatusDto getStatusInformationForWeb() {
+        return WebChessStatusDto.of(chessBoard);
     }
 
     public void initialze() {

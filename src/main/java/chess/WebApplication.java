@@ -3,8 +3,15 @@ package chess;
 import chess.controller.Command;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.webview.WebOutputView;
+import chess.domain.piece.ChessPiece;
+import chess.dto.ChessBoardDto;
+import chess.dto.WebChessStatusDto;
+import chess.webview.ChessPieceImagePath;
+import chess.webview.ColumnName;
+import chess.webview.RowName;
+import chess.webview.TeamName;
 import java.util.List;
+import java.util.Map.Entry;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -52,7 +59,7 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
-            return render(WebOutputView.makeBoardModel(chessGame.getChessBoardInformation()), "board.html");
+            return render(makeBoardModel(chessGame.getChessBoardInformation()), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
@@ -70,6 +77,20 @@ public class WebApplication {
             }
             return null;
         });
+
+        get("/status", (req, res) -> {
+            WebChessStatusDto webChessStatusDto = chessGame.getStatusInformationForWeb();
+            Map<String, Object> model = makeStatusModel(webChessStatusDto);
+            return render(model, "status.html");
+        });
+    }
+
+    private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("blackScore", webChessStatusDto.getBlackScore());
+        model.put("whiteScore", webChessStatusDto.getWhiteScore());
+        model.put("winner", TeamName.of(webChessStatusDto.getWinner()));
+        return model;
     }
 
     private static List<String> divideInGameCommandInput(String command) {
@@ -91,5 +112,18 @@ public class WebApplication {
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    public static Map<String, Object> makeBoardModel(ChessBoardDto chessBoardDto) {
+        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoardDto.getMapInformation();
+        Map<String, Object> boardModel = new HashMap<>();
+        for (Entry<ChessBoardPosition, ChessPiece> entry : mapInfo.entrySet()) {
+            boardModel.put(chessBoardToString(entry.getKey()), ChessPieceImagePath.of(entry.getValue()));
+        }
+        return boardModel;
+    }
+
+    private static String chessBoardToString(ChessBoardPosition chessBoardPosition) {
+        return ColumnName.of(chessBoardPosition.getColumn()) + RowName.of(chessBoardPosition.getRow());
     }
 }
