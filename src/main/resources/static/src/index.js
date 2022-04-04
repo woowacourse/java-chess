@@ -31,3 +31,17 @@ async function startChessGame() {
         }
     });
 }
+
+async function promotion(promotionPiece) {
+    const promotion = {
+        promotionValue: promotionPiece
+    }
+
+    await fetch("/promotion", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(promotion)
+    });
+}
