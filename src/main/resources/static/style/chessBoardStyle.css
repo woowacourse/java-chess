@@ -1,0 +1,15 @@
+body {
+    background-image: url("../image/wood.svg");
+}
+.cell {
+    height: 80px;
+    width : 80px;
+}
+
+.black-cell {
+    background-color: #e1885c;
+}
+
+.white-cell {
+    background-color: bisque;
+}
