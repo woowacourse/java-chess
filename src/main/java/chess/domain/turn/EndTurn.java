@@ -42,6 +42,11 @@ public class EndTurn implements GameTurn {
     }
 
     @Override
+    public Map<Color, Double> currentScore() {
+        throw new IllegalStateException("종료된 게임은 score를 계산할 수 없습니다.");
+    }
+
+    @Override
     public Map<Position, Piece> pieces() {
         return chessBoard.getPieces();
     }

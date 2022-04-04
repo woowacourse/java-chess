@@ -19,5 +19,7 @@ public interface GameTurn {
 
     boolean isEnd();
 
+    Map<Color, Double> currentScore();
+
     Map<Position, Piece> pieces();
 }

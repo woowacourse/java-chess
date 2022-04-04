@@ -50,6 +50,11 @@ public class RunningTurn implements GameTurn {
     }
 
     @Override
+    public Map<Color, Double> currentScore() {
+        return chessBoard.calcualteScoreStatus();
+    }
+
+    @Override
     public Map<Position, Piece> pieces() {
         return chessBoard.getPieces();
     }

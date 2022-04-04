@@ -37,4 +37,13 @@ class EndTurnTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료된 게임은 promotion할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("EndTurn에서 currentScore 호출 시 예외발생")
+    void currentScoreException() {
+        GameTurn endTurn = new EndTurn(new ChessBoard(new HashMap<>()));
+        assertThatThrownBy(() -> endTurn.currentScore())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("종료된 게임은 score를 계산할 수 없습니다.");
+    }
 }
