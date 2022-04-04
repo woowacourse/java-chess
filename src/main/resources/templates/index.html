@@ -34,9 +34,7 @@
             <button id="status">점수 보기</button>
         </div>
         <div class="form save">
-            <form action="./save">
-                <input type="submit" value="진행 상황 저장">
-            </form>
+            <button id="save">진행 상황 저장</button>
         </div>
         <div class="form end">
             <form action="./end">
@@ -532,14 +530,33 @@
 </body>
 <script type="text/javascript">
     document.getElementById('status').addEventListener('click', statusOnClickHandler);
+    document.getElementById('save').addEventListener('click', saveOnClickHandler);
+
     function statusOnClickHandler() {
         fetch('./status')
             .then((response) => response.json())
             .then((scores) => addScoreToDocument(scores));
     }
+
     function addScoreToDocument(scores) {
         document.getElementById('player-score-black').innerText = scores.black.value;
         document.getElementById('player-score-white').innerText = scores.white.value;
     }
+
+    function saveOnClickHandler() {
+        fetch('./save')
+            .then((response) => response.status)
+            .then((status) => alertSaveResult(status));
+    }
+
+    function alertSaveResult(status) {
+        console.log(status);
+        if (status !== 201) {
+            window.alert("저장하지 못했습니다.");
+            return;
+        }
+        window.alert("저장에 성공하였습니다.");
+    }
+
 </script>
 </html>

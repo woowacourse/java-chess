@@ -5,6 +5,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Score;
@@ -61,10 +63,26 @@ public class WebApplication {
         });
 
         get("/status", (req, res) -> {
-            Map<Camp, Score> board = gameController.status();
-            Map<String, Object> model = board.entrySet().stream()
+            Map<Camp, Score> scores = gameController.status();
+            Map<String, Object> model = scores.entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
             return jsonTransformer.render(model);
+        });
+
+        get("/save", (req, res) -> {
+            boolean whiteTurn = Camp.BLACK.isNotTurn();
+            try {
+                GameDao gameDao = new GameDao();
+                gameDao.save(whiteTurn);
+                Map<Position, Piece> board = gameController.getBoard();
+                BoardDao boardDao = new BoardDao();
+                boardDao.save(board);
+            } catch (Exception e) {
+                res.status(500);
+                return res;
+            }
+            res.status(201);
+            return res;
         });
 
         get("/end", (req, res) -> {
@@ -82,7 +100,7 @@ public class WebApplication {
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
-            response.body(exception.getMessage());
+            response.body("[ERROR] " + exception.getMessage());
         });
     }
 
