@@ -122,16 +122,24 @@ public class ChessBoard {
 
     public boolean enemyExist(ChessPiece piece, Position target) {
         Optional<ChessPiece> possiblePiece = findPiece(target);
+
+        validatePawnCrossMove(possiblePiece);
+        validateOtherColor(piece, possiblePiece);
+
+        return true;
+    }
+
+    private void validatePawnCrossMove(Optional<ChessPiece> possiblePiece) {
         if (possiblePiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
         }
+    }
 
+    private void validateOtherColor(ChessPiece piece, Optional<ChessPiece> possiblePiece) {
         ChessPiece targetPiece = possiblePiece.get();
         if (targetPiece.isSameColorPiece(piece)) {
             throw new IllegalArgumentException("같은색 기물입니다.");
         }
-
-        return true;
     }
 
     public Map<Color, Double> calculateScore() {

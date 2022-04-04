@@ -42,18 +42,23 @@ public class Pawn extends ChessPiece {
     @Override
     public void checkMovable(Position from, Position to) {
         if (from.isSameRank(to)) {
-            if (isBlack() && checkMove(from, to, BLACK_MOVABLE_DISTANCE, BLACK_INIT_FILE)) {
-                return;
-            }
-
-            if (!isBlack() && checkMove(from, to, WHITE_MOVABLE_DISTANCE, WHITE_INIT_FILE)) {
-                return;
-            }
-
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+            checkMoveOfColor(from, to);
+            return;
         }
 
         checkCrossMove(from, to);
+    }
+
+    private void checkMoveOfColor(Position from, Position to) {
+        if (isBlack() && checkMove(from, to, BLACK_MOVABLE_DISTANCE, BLACK_INIT_FILE)) {
+            return;
+        }
+
+        if (!isBlack() && checkMove(from, to, WHITE_MOVABLE_DISTANCE, WHITE_INIT_FILE)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
 
     private boolean checkMove(Position from, Position to, int movableDistance, String initFile) {
