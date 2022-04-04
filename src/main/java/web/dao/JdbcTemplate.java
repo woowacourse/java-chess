@@ -10,16 +10,6 @@ import java.util.List;
 
 public class JdbcTemplate {
 
-    @FunctionalInterface
-    interface RowMapper<T> {
-        T map(ResultSet rs) throws SQLException;
-    }
-
-    @FunctionalInterface
-    interface ResultSetExtractor<T> {
-        T extractData(ResultSet rs) throws SQLException;
-    }
-
     public <T> T queryForObject(String sql, ResultSetExtractor<T> extractor, Object... args) {
         try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
             prepareStatement(pstmt, args);
@@ -49,7 +39,7 @@ public class JdbcTemplate {
             return extract(mapper, pstmt);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return List.of();
         }
     }
 
@@ -82,8 +72,8 @@ public class JdbcTemplate {
             return hasNext(pstmt);
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     private boolean hasNext(PreparedStatement pstmt) throws SQLException {
@@ -100,7 +90,7 @@ public class JdbcTemplate {
         }
 
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC",
+                "jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true",
                 "user", "password");
     }
 }
