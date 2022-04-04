@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.Command;
 import chess.domain.ChessGame;
+import chess.webview.WebOutputView;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,12 +21,19 @@ public class WebApplication {
             Command command = Command.of(req.queryParams("command"));
             if (Command.START.equals(command)) {
                 chessGame.initialze();
+                System.out.println("@@@@@@@@@@@@startstart@@@@@@@@@@@@@@@@@");
                 res.redirect("/board");
+                return null;
             }
             if (Command.END.equals(command)) {
                 stop();
             }
             return null;
+        });
+
+        get("/board", (req, res) -> {
+            System.out.println("@@@@@@@@@@@@@@boardboardboard@@@@@@@@@@@@@@@@@@@@@@");
+            return render(WebOutputView.makeBoardModel(chessGame.getChessBoardInformation()), "board.html");
         });
     }
 

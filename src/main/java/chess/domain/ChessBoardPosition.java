@@ -67,4 +67,8 @@ public class ChessBoardPosition {
     public int getColumn() {
         return column;
     }
+
+    public int getRow() {
+        return row;
+    }
 }

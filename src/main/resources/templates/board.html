@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="/css/board.css">
+</head>
+
+<body>
+<div id="app">
+    <h1>♟️ 초간단 체스</h1>
+
+    <section class="chess-ui">
+        <div class="black-square">
+            <img src={{a8}} />
+        </div>
+        <div class="white-square">
+            <img src={{b8}} />
+        </div>
+
+        <div class="black-square">
+            <img src={{c8}} />
+        </div>
+
+        <div class="white-square">
+            <img src={{d8}} />
+        </div>
+
+        <div class="black-square">
+            <img src={{e8}} />
+        </div>
+
+        <div class="white-square">
+            <img src={{f8}} />
+        </div>
+
+        <div class="black-square">
+            <img src={{g8}} />
+        </div>
+
+        <div class="white-square">
+            <img src={{h8}} />
+        </div>
+
+
+
+        <div class="white-square">
+            <img src={{a7}} />
+        </div>
+        <div class="black-square">
+            <img src={{b7}} />
+        </div>
+        <div class="white-square">
+            <img src={{c7}} />
+        </div>
+        <div class="black-square">
+            <img src={{d7}} />
+        </div>
+        <div class="white-square">
+            <img src={{e7}} />
+        </div>
+        <div class="black-square">
+            <img src={{f7}} />
+        </div>
+        <div class="white-square">
+            <img src={{g7}} />
+        </div>
+        <div class="black-square">
+            <img src={{h7}} />
+        </div>
+
+
+        <div class="black-square">
+            <img src={{a6}} />
+        </div>
+        <div class="white-square">
+            <img src={{b6}} />
+        </div>
+        <div class="black-square">
+            <img src={{c6}} />
+        </div>
+        <div class="white-square">
+            <img src={{d6}} />
+        </div>
+        <div class="black-square">
+            <img src={{e6}} />
+        </div>
+        <div class="white-square">
+            <img src={{f6}} />
+        </div>
+        <div class="black-square">
+            <img src={{g6}} />
+        </div>
+        <div class="white-square">
+            <img src={{h6}} />
+        </div>
+
+
+
+        <div class="white-square">
+            <img src={{a5}} />
+        </div>
+        <div class="black-square">
+            <img src={{b5}} />
+        </div>
+        <div class="white-square">
+            <img src={{c5}} />
+        </div>
+        <div class="black-square">
+            <img src={{d5}} />
+        </div>
+        <div class="white-square">
+            <img src={{e5}} />
+        </div>
+        <div class="black-square">
+            <img src={{f5}} />
+        </div>
+        <div class="white-square">
+            <img src={{g5}} />
+        </div>
+        <div class="black-square">
+            <img src={{h5}} />
+        </div>
+
+
+        <div class="black-square">
+            <img src={{a4}} />
+        </div>
+        <div class="white-square">
+            <img src={{b4}} />
+        </div>
+        <div class="black-square">
+            <img src={{c4}} />
+        </div>
+        <div class="white-square">
+            <img src={{d4}} />
+        </div>
+        <div class="black-square">
+            <img src={{e4}} />
+        </div>
+        <div class="white-square">
+            <img src={{f4}} />
+        </div>
+        <div class="black-square">
+            <img src={{g4}} />
+        </div>
+        <div class="white-square">
+            <img src={{h4}} />
+        </div>
+
+
+
+        <div class="white-square">
+            <img src={{a3}} />
+        </div>
+        <div class="black-square">
+            <img src={{b3}} />
+        </div>
+        <div class="white-square">
+            <img src={{c3}} />
+        </div>
+        <div class="black-square">
+            <img src={{d3}} />
+        </div>
+        <div class="white-square">
+            <img src={{e3}} />
+        </div>
+        <div class="black-square">
+            <img src={{f3}} />
+        </div>
+        <div class="white-square">
+            <img src={{g3}} />
+        </div>
+        <div class="black-square">
+            <img src={{h3}} />
+        </div>
+
+
+        <div class="black-square">
+            <img src={{a2}} />
+        </div>
+        <div class="white-square">
+            <img src={{b2}} />
+        </div>
+        <div class="black-square">
+            <img src={{c2}} />
+        </div>
+        <div class="white-square">
+            <img src={{d2}} />
+        </div>
+        <div class="black-square">
+            <img src={{e2}} />
+        </div>
+        <div class="white-square">
+            <img src={{f2}} />
+        </div>
+        <div class="black-square">
+            <img src={{g2}} />
+        </div>
+        <div class="white-square">
+            <img src={{h2}} />
+        </div>
+
+
+
+        <div class="white-square">
+            <img src={{a1}} />
+        </div>
+        <div class="black-square">
+            <img src={{b1}} />
+        </div>
+        <div class="white-square">
+            <img src={{c1}} />
+        </div>
+        <div class="black-square">
+            <img src={{d1}} />
+        </div>
+        <div class="white-square">
+            <img src={{e1}} />
+        </div>
+        <div class="black-square">
+            <img src={{f1}} />
+        </div>
+        <div class="white-square">
+            <img src={{g1}} />
+        </div>
+        <div class="black-square">
+            <img src={{h1}} />
+        </div>
+    </section>
+
+
+    <section>
+        <h2>체스 form@@@@</h2>
+        <form action="/move" method="post">
+            <input type="text" name="command">
+            <input type="submit" value="enter">
+        </form>
+    </section>
+</div>
+</body>
+
+</html>

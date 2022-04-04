@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
+import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +17,8 @@ public class ChessGame {
         return new ChessGame();
     }
 
-    public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation() {
-        return new HashMap<>(chessBoard.getMapInformation());
+    public ChessBoardDto getChessBoardInformation() {
+        return ChessBoardDto.of(chessBoard.getMapInformation());
     }
 
     public boolean isGameEnd() {

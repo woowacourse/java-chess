@@ -60,7 +60,7 @@ public class ChessController {
     }
 
     private void sendDataForPrintCurrentChessBoard(ChessGame chessGame) {
-        OutputView.printCurrentChessBoard(ChessBoardDto.of(chessGame.getChessBoardInformation()));
+        OutputView.printCurrentChessBoard(chessGame.getChessBoardInformation());
     }
 
     private void doTurn(ChessGame chessGame) {
