@@ -1,24 +1,24 @@
-DROP TABLE IF EXISTS Piece;
-DROP TABLE IF EXISTS Score;
-DROP TABLE IF EXISTS ChessGame;
+DROP TABLE IF EXISTS piece;
+DROP TABLE IF EXISTS score;
+DROP TABLE IF EXISTS chess_game;
 
-CREATE TABLE Piece
+CREATE TABLE piece
 (
     position CHAR(2)     NOT NULL PRIMARY KEY,
     color    CHAR(5)     NOT NULL,
     type     VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE Score
+CREATE TABLE score
 (
     color CHAR(5)     NOT NULL PRIMARY KEY,
     score VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE ChessGame
+CREATE TABLE chess_game
 (
     id           INT         NOT NULL PRIMARY KEY,
     status       VARCHAR(10) NOT NULL,
-    currentColor CHAR(5)     NOT NULL,
+    current_color CHAR(5)     NOT NULL,
     winner       VARCHAR(10)
 );

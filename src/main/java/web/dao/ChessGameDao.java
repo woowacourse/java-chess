@@ -13,42 +13,42 @@ public class ChessGameDao {
     }
 
     public boolean existChessGame() {
-        return jdbcTemplate.exist("SELECT * FROM ChessGame WHERE id = ?", CHESS_GAME_ID);
+        return jdbcTemplate.exist("SELECT * FROM chess_game WHERE id = ?", CHESS_GAME_ID);
     }
 
     public GameStatus findGameStatus() {
-        return jdbcTemplate.queryForObject("SELECT status FROM ChessGame WHERE id = ?",
+        return jdbcTemplate.queryForObject("SELECT status FROM chess_game WHERE id = ?",
                 rs -> GameStatus.valueOf(rs.getString("status")), CHESS_GAME_ID);
     }
 
     public void saveGameStatus(GameStatus status, Color color) {
-        jdbcTemplate.update("INSERT INTO ChessGame(id, status, currentColor, winner) VALUES(?, ?, ?, NULL)",
+        jdbcTemplate.update("INSERT INTO chess_game(id, status, current_color, winner) VALUES(?, ?, ?, NULL)",
                 CHESS_GAME_ID, status.name(), color.name());
     }
 
     public void updateGameStatus(GameStatus status) {
-        jdbcTemplate.update("UPDATE ChessGame SET status = ? WHERE id = ?", status.name(), CHESS_GAME_ID);
+        jdbcTemplate.update("UPDATE chess_game SET status = ? WHERE id = ?", status.name(), CHESS_GAME_ID);
     }
 
     public Color findWinner() {
-        return jdbcTemplate.queryForObject("SELECT winner FROM ChessGame WHERE id = ?",
+        return jdbcTemplate.queryForObject("SELECT winner FROM chess_game WHERE id = ?",
                 rs -> Color.valueOf(rs.getString("winner")), CHESS_GAME_ID);
     }
 
     public void updateWinner(Color color) {
-        jdbcTemplate.update("UPDATE ChessGame SET winner = ? WHERE id = ?", color.name(), CHESS_GAME_ID);
+        jdbcTemplate.update("UPDATE chess_game SET winner = ? WHERE id = ?", color.name(), CHESS_GAME_ID);
     }
 
     public Color findCurrentColor() {
-        return jdbcTemplate.queryForObject("SELECT currentColor FROM ChessGame WHERE id = ?",
-                rs -> Color.valueOf(rs.getString("currentColor")), CHESS_GAME_ID);
+        return jdbcTemplate.queryForObject("SELECT current_color FROM chess_game WHERE id = ?",
+                rs -> Color.valueOf(rs.getString("current_color")), CHESS_GAME_ID);
     }
 
     public void updateCurrentColor(Color color) {
-        jdbcTemplate.update("UPDATE ChessGame SET currentColor = ?", color.name());
+        jdbcTemplate.update("UPDATE chess_game SET current_color = ?", color.name());
     }
 
     public void deleteAll() {
-        jdbcTemplate.update("DELETE FROM ChessGame WHERE id = ?", CHESS_GAME_ID);
+        jdbcTemplate.update("DELETE FROM chess_game WHERE id = ?", CHESS_GAME_ID);
     }
 }

@@ -61,11 +61,11 @@ public class PieceDao {
     }
 
     public void deletePieceByPosition(Position position) {
-        jdbcTemplate.update("DELETE FROM Piece WHERE position = ?", position.toString());
+        jdbcTemplate.update("DELETE FROM piece WHERE position = ?", position.toString());
     }
 
     public void savePiece(PieceDto pieceDTO) {
-        jdbcTemplate.update("INSERT INTO Piece(position, type, color) VALUES(?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO piece(position, type, color) VALUES(?, ?, ?)",
                 pieceDTO.getPosition(), pieceDTO.getType().name(), pieceDTO.getColor().name());
     }
 
@@ -76,6 +76,6 @@ public class PieceDao {
     }
 
     public void deleteAll() {
-        jdbcTemplate.update("DELETE FROM Piece");
+        jdbcTemplate.update("DELETE FROM piece");
     }
 }
