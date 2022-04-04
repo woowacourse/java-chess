@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.domain.game.ChessGame;
-import chess.domain.position.Position;
 import chess.domain.result.Score;
 import chess.dto.ChessResponseDto;
 import chess.dto.MoveRequestDto;
@@ -18,9 +17,15 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
+    final ChessService chessService;
+    final Gson gson;
+
+    public ChessController() {
+        chessService = new ChessService();
+        gson = new Gson();
+    }
+
     public void run() {
-        final ChessService chessService = new ChessService();
-        final Gson gson = new Gson();
         ChessGame chessGame = new ChessGame();
 
         get("/", (req, res) -> {
@@ -28,8 +33,7 @@ public class ChessController {
         });
 
         get("/load", (req, res) -> {
-            chessService.load(chessGame);
-            return gson.toJson(new ChessResponseDto(chessGame));
+            return gson.toJson(load(chessGame));
         });
 
         get("/start", (req, res) -> {
@@ -52,6 +56,15 @@ public class ChessController {
 
     private String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private ChessResponseDto load(final ChessGame chessGame) {
+        try {
+            chessService.load(chessGame);
+            return new ChessResponseDto(chessGame);
+        } catch (final Exception e) {
+            return new ChessResponseDto("error", e.getMessage(), chessGame);
+        }
     }
 
     private ChessResponseDto start(final ChessGame chessGame) {
@@ -93,7 +106,7 @@ public class ChessController {
 
     private ChessResponseDto move(final ChessGame chessGame, final MoveRequestDto moveDto) {
         try {
-            chessGame.move(Position.create(moveDto.getSource()), Position.create(moveDto.getTarget()));
+            chessService.move(chessGame, moveDto);
             return new ChessResponseDto(chessGame);
         } catch (final Exception e) {
             return new ChessResponseDto("error", e.getMessage(), chessGame);

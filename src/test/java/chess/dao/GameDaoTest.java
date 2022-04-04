@@ -34,10 +34,17 @@ public class GameDaoTest {
 
     @Test
     @DisplayName("데이터베이스에서 가장 최근에 저장 된 게임 정보를 불러온다.")
-    void findByLatestDate() {
+    void findByMaxId() {
         GameDao gameDao = new GameDao();
         GameDto game = gameDao.findByMaxId();
 
         assertThat(game.getTurn()).isEqualTo("black");
+    }
+
+    @Test
+    @DisplayName("데이터베이스에서 가장 최근에 저장 된 게임 ID를 불러온다.")
+    void findMaxId() {
+        GameDao gameDao = new GameDao();
+        assertThat(gameDao.findMaxId()).isEqualTo(2);
     }
 }

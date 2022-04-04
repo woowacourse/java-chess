@@ -71,4 +71,21 @@ public class GameDao {
         }
         return null;
     }
+
+    public Integer findMaxId() {
+        final String sql = "SELECT MAX(id) AS id FROM game";
+
+        try (final Connection connection = MySqlConnector.getConnection()) {
+            final Statement statement = connection.createStatement();
+            final ResultSet resultSet = statement.executeQuery(sql);
+
+            if (!resultSet.next()) {
+                return null;
+            }
+            return resultSet.getInt("id");
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
