@@ -20,6 +20,10 @@ public class Board {
         this.value = new ArrayList<>(value);
     }
 
+    public void fill(Position position, Piece piece) {
+        value.get(position.getRankIndex()).set(position.getFileIndex(), piece);
+    }
+
     public void shift(Position source, Position target) {
         Piece sourcePiece = findPiece(source);
         value.get(source.getRankIndex()).set(source.getFileIndex(), new EmptyPiece());

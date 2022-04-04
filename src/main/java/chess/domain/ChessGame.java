@@ -1,30 +1,17 @@
 package chess.domain;
 
-import chess.domain.state.Ready;
 import chess.domain.state.State;
 
 public class ChessGame {
 
     private State state;
 
-    public ChessGame() {
-        this.state = new Ready();
-    }
-
-    public void start() {
-        state = state.start();
-    }
-
-    public void end() {
-        state = state.end();
+    public ChessGame(State state) {
+        this.state = state;
     }
 
     public void move(String source, String target) {
         state = state.move(source, target);
-    }
-
-    public void reset() {
-        state = new Ready();
     }
 
     public boolean isStarted() {
