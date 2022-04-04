@@ -101,16 +101,19 @@
     </section>
     <section>
         <h2>점수 확인</h2>
-        <button onclick="javascript:btn()">버튼</button>
+        <form method="get" action="/status">
+            <input type="button"
+                   onclick= score()
+                   value="점수 계산">
+        </form>
+        <script>
+            function score() {
+                fetch('/status')
+                    .then(res => res.json())
+                    .then(data => alert(`${data.team} : ${data.score}점`))
+            }
+        </script>
     </section>
 </div>
 </body>
 </html>
-<script>
-    function btn() {
-        console.log('test')
-        fetch('localhost:4567/status')
-            .then((res) => res.json())
-            .then((data) => alert(data));
-    }
-</script>

@@ -19,4 +19,12 @@ public class TeamScore {
     public double getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "TeamScore{" +
+                "team=" + team +
+                ", score=" + score +
+                '}';
+    }
 }
