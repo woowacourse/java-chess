@@ -8,13 +8,14 @@ import java.util.Map;
 
 public class ChessService {
 
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
 
     public ChessService() {
-        this.chessGame = new ChessGame();
     }
 
     public List<String> createChessBoard() {
+        this.chessGame = new ChessGame();
+
         chessGame.progress(Command.from("start"));
 
         return chessGame.getChessBoard();
