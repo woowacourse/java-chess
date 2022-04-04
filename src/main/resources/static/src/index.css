@@ -6,6 +6,18 @@
     grid-template-rows: repeat(8, 80px);
 }
 
+.form {
+    padding: 5px;
+}
+
+.form.start, .form.status, .form.save {
+    float: left;
+}
+
+.form.move {
+    display: block;
+}
+
 .black-square {
     background-color: slategrey;
     color: white;

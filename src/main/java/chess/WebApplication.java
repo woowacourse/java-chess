@@ -25,6 +25,7 @@ public class WebApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("ready", true);
             return render(model, "index.html");
         });
 
@@ -39,6 +40,7 @@ public class WebApplication {
             Map<String, Object> model = board.entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
             model.put("started", true);
+            model.put("ready", false);
             return render(model, "index.html");
         });
 
@@ -74,6 +76,7 @@ public class WebApplication {
                 model.put("tie", true);
             }
             model.put("started", false);
+            model.put("ready", true);
             return render(model, "result.html");
         });
 

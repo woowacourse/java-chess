@@ -10,17 +10,35 @@
 <body>
     <div id="app">
         <h1>♟️ 체스</h1>
-        <form action="/start">
-            <input type="submit" value="게임 시작">
-        </form>
+        {{#ready}}
+        <div class="form start">
+            <form action="/start">
+                <input type="submit" value="게임 시작">
+            </form>
+        </div>
+        <div class="form load">
+            <form action="/load">
+                <input type="submit" value="불러오기">
+            </form>
+        </div>
+        {{/ready}}
         {{#started}}
-        <form action="./move" method="post">
-            source : <input type="text" name="source">
-            target : <input type="text" name="target">
-            <input type="submit" value="이동">
-        </form>
-        <div>
+        <div class="form move">
+            <form action="./move" method="post">
+                source : <input type="text" name="source">
+                target : <input type="text" name="target">
+                <input type="submit" value="이동">
+            </form>
+        </div>
+        <div class="form status">
             <button id="status">점수 보기</button>
+        </div>
+        <div class="form save">
+            <form action="./save">
+                <input type="submit" value="진행 상황 저장">
+            </form>
+        </div>
+        <div class="form end">
             <form action="./end">
                 <input type="submit" value="게임 종료">
             </form>
