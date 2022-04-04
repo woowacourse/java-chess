@@ -37,33 +37,4 @@ class QueenTest {
                 .doesNotThrowAnyException();
 
     }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute_S() {
-        // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("d1"));
-        List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
-        // then
-        assertThat(actual).containsAll(expected);
-    }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute_NW() {
-        // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("a8"));
-        List<Position> expected = List.of(new Position("c6"), new Position("b7"));
-        // then
-        assertThat(actual).containsAll(expected);
-    }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute_SE() {
-        // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("e4"));
-        // then
-        assertThat(actual).isEmpty();
-    }
 }

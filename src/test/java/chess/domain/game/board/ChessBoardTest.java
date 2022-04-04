@@ -1,8 +1,6 @@
-package chess.domain;
+package chess.domain.game.board;
 
 import chess.domain.game.Color;
-import chess.domain.game.board.ChessBoard;
-import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-import static chess.domain.game.board.ChessBoardFactory.initBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -114,7 +109,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("자신의 순서가 아니면 예외를 발생시킵니다..")
+    @DisplayName("자신의 순서가 아니면 예외를 발생시킵니다.")
     void chessBoard_turn() {
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))

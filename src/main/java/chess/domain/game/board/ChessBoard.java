@@ -46,12 +46,37 @@ public class ChessBoard {
     private void checkMove(Position source, Position target, ChessPiece piece) {
         validateTurn(piece);
         piece.checkMovable(source, target);
-        Stack<Position> routes = piece.findRoute(source, target);
+
+        Stack<Position> routes = findPieceRoute(source, target, piece);
 
         while (!routes.isEmpty()) {
             checkHurdle(routes.pop());
         }
     }
+
+    private Stack<Position> findPieceRoute(Position source, Position target, ChessPiece piece) {
+        if(piece.isKnight()){
+            return new Stack<>();
+        }
+        return makeRoute(source, target);
+    }
+
+    private Stack<Position> makeRoute(final Position from, Position to) {
+           Stack<Position> routes = new Stack<>();
+           Direction direction = to.findDirection(from);
+
+           Position newFrom = new Position(from.getValue());
+
+           while (!newFrom.equals(to)) {
+               Position nextPosition = newFrom.toNextPosition(direction);
+               routes.add(new Position(nextPosition.getValue()));
+               newFrom = nextPosition;
+           }
+
+           routes.pop();
+
+           return routes;
+       }
 
     private void validateTurn(ChessPiece piece) {
         if (currentTurn != piece.getColor()) {

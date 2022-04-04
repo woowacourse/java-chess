@@ -41,8 +41,8 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public Stack<Position> findRoute(final Position from, Position to) {
-        return new Stack<>();
+    public boolean isKnight(){
+        return true;
     }
 
     @Override

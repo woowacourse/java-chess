@@ -25,23 +25,6 @@ public abstract class ChessPiece {
 
     public abstract double getScore();
 
-    public Stack<Position> findRoute(final Position from, Position to) {
-        Stack<Position> routes = new Stack<>();
-        Direction direction = to.findDirection(from);
-
-        Position newFrom = new Position(from.getValue());
-
-        while (!newFrom.equals(to)) {
-            Position nextPosition = newFrom.toNextPosition(direction);
-            routes.add(new Position(nextPosition.getValue()));
-            newFrom = nextPosition;
-        }
-
-        routes.pop();
-
-        return routes;
-    }
-
     public boolean isSameColorPiece(ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }
@@ -57,6 +40,8 @@ public abstract class ChessPiece {
     public String getName() {
         return name;
     }
+
+    public boolean isKnight(){return false;}
 
     public boolean isKing() {
         return false;

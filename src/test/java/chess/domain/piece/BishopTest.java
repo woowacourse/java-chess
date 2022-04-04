@@ -40,16 +40,4 @@ class BishopTest {
                 .doesNotThrowAnyException();
 
     }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute() {
-        // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
-        // when
-        Stack<Position> actual = bishop.findRoute(initialPosition, new Position("h1"));
-        List<Position> expected = List.of(new Position("e4"), new Position("f3"), new Position("g2"));
-        // then
-        assertThat(actual).containsAll(expected);
-    }
 }

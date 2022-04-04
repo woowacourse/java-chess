@@ -37,16 +37,4 @@ class RookTest {
                 .doesNotThrowAnyException();
 
     }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute() {
-        // given
-        ChessPiece rook = new Rook(Color.BLACK);
-        // when
-        Stack<Position> actual = rook.findRoute(initialPosition, new Position("d1"));
-        List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
-        // then
-        assertThat(actual).containsAll(expected);
-    }
 }
