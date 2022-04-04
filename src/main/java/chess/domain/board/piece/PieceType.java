@@ -1,7 +1,6 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.position.Position;
-import chess.strategy.RouteChecker;
 import chess.util.PositionUtil;
 
 public enum PieceType {
@@ -58,5 +57,11 @@ public enum PieceType {
 
     public double getScore() {
         return score;
+    }
+
+    @FunctionalInterface
+    private interface RouteChecker {
+
+        boolean checkMovable(Position from, Position to);
     }
 }
