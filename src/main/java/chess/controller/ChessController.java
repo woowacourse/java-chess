@@ -51,12 +51,12 @@ public class ChessController {
             return gson.toJson(chessService.move(moveDto));
         });
 
-        exception(IllegalArgumentException.class, (e, req, res) -> {
-            res.status(400);
-            res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
-        });
+        handleException(gson, IllegalArgumentException.class);
+        handleException(gson, IllegalStateException.class);
+    }
 
-        exception(IllegalStateException.class, (e, req, res) -> {
+    private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
+        exception(exceptionClass, (e, req, res) -> {
             res.status(400);
             res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
         });
