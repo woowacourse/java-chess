@@ -17,6 +17,7 @@ import chess.result.MoveResult;
 import chess.result.StartResult;
 import chess.view.PieceName;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -62,10 +63,7 @@ public class ChessService {
             model = toModel(result.getPieceByPosition());
             model.put("isKingDie", result.isKingDie());
 
-            final ChessPieceDao chessPieceDao = new ChessPieceDao();
-            chessPieceDao.deleteByPosition(roomName, to);
-            chessPieceDao.update(roomName, from, to);
-
+            updatePosition(roomName, from, to);
             updateRoom(roomName, result.getGameStatus(), result.getCurrentTurn());
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
@@ -74,6 +72,12 @@ public class ChessService {
             model.put("error", e.getMessage());
         }
         return model;
+    }
+
+    private void updatePosition(final String roomName, final Position from, final Position to) {
+        final ChessPieceDao chessPieceDao = new ChessPieceDao();
+        chessPieceDao.deleteByPosition(roomName, to);
+        chessPieceDao.update(roomName, from, to);
     }
 
     public Map<String, Object> endGame(final String roomName) {
@@ -143,32 +147,41 @@ public class ChessService {
     }
 
     private ChessGame findGameByRoomName(final String roomName) {
+        Map<Position, ChessPiece> pieceByPosition = initAllPiece(roomName);
+        Color currentTurn = initCurrentTur(roomName);
+        GameStatus gameStatus = initGameStatus(roomName);
+
+        return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
+    }
+
+    private Map<Position, ChessPiece> initAllPiece(final String roomName) {
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
-        Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName)
-                .stream()
+        final List<ChessPieceDto> dtos = chessPieceDao.findAllByRoomName(roomName);
+        if (dtos.isEmpty()) {
+            return ChessBoardFactory.createInitPieceByPosition();
+        }
+        return dtos.stream()
                 .collect(Collectors.toMap(
                         ChessPieceDto::getPosition,
-                        ChessPieceDto::getChessPiece
-                ));
+                        ChessPieceDto::getChessPiece));
+    }
 
-        if (pieceByPosition.isEmpty()) {
-            pieceByPosition = ChessBoardFactory.createInitPieceByPosition();
-        }
-
+    private Color initCurrentTur(final String roomName) {
         final RoomDao roomDao = new RoomDao();
-        final RoomDto roomDto = roomDao.findByName(roomName);
+        final RoomDto dto = roomDao.findByName(roomName);
+        if (Objects.isNull(dto)) {
+            return Color.WHITE;
+        }
+        return dto.getCurrentTurn();
+    }
 
-        Color currentTurn = null;
-        GameStatus gameStatus = null;
-        if (Objects.isNull(roomDto)) {
-            currentTurn = Color.WHITE;
-            gameStatus = GameStatus.READY;
+    private GameStatus initGameStatus(final String roomName) {
+        final RoomDao roomDao = new RoomDao();
+        final RoomDto dto = roomDao.findByName(roomName);
+        if (Objects.isNull(dto)) {
+            return GameStatus.READY;
         }
-        if (Objects.nonNull(roomDto)) {
-            currentTurn = roomDto.getCurrentTurn();
-            gameStatus = roomDto.getGameStatus();
-        }
-        return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
+        return dto.getGameStatus();
     }
 
     private void updateChessPiece(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
