@@ -148,4 +148,11 @@ public final class Board {
         turn = Color.opposite(turn);
     }
 
+    public Map<Position, Piece> getPieces() {
+        return pieces.getPieces();
+    }
+
+    public Color getTurn() {
+        return turn;
+    }
 }
