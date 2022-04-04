@@ -108,10 +108,8 @@ public enum Direction {
     }
 
     public boolean isDiagonalDirection() {
-        return this == LEFT_DOWN_DIAGONAL
-            || this == RIGHT_DOWN_DIAGONAL
-            || this == LEFT_UP_DIAGONAL
-            || this == RIGHT_UP_DIAGONAL;
+        return isDownwardDiagonalDirection()
+            || isUpwardDiagonalDirection();
     }
 
     public boolean isCrossDirection() {
