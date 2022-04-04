@@ -35,6 +35,11 @@ public class ChessService {
         return new StatusResponse(chessGame.createStatus());
     }
 
+    public ChessGameResponse end() {
+        chessGame.end();
+        return new ChessGameResponse(chessGame);
+    }
+
     private Position parseStringToPosition(final String rawPosition) {
         final String[] separatedPosition = rawPosition.split("");
         final Column column = Column.from(separatedPosition[ROW_INDEX]);

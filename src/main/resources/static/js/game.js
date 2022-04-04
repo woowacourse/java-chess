@@ -6,6 +6,7 @@ const startButton = document.getElementById("start-button");
 const turnInfo = document.getElementById("turn-info");
 const statusButton = document.getElementById("status-button");
 const score = document.getElementById("score");
+const endButton = document.getElementById("end-button");
 
 const turn = {
   WHITE_RUNNING: "백",
@@ -29,6 +30,7 @@ window.onload = async function () {
   }
   startButton.addEventListener("click", start);
   statusButton.addEventListener("click", getStatus);
+  endButton.addEventListener("click", end);
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -157,4 +159,11 @@ async function getStatus() {
   res = await res.json();
   score.innerText = `백: ${res.whiteScore}점
   흑: ${res.blackScore}점`;
+}
+
+async function end() {
+  const res = await fetch("/api/end");
+  if (res.ok) {
+    alert("게임을 종료합니다.");
+  }
 }

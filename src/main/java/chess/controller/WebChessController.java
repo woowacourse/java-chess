@@ -37,6 +37,8 @@ public class WebChessController {
         }, jsonTransformer);
 
         get("/api/status", (req, res) -> chessService.status(), jsonTransformer);
+
+        get("/api/end", (req, res) -> chessService.end());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
