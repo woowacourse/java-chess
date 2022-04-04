@@ -39,4 +39,8 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public String getPiece() {
+        return color.toString() + "_" + this.getClass().getSimpleName();
+    }
 }
