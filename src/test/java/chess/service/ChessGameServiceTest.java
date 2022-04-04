@@ -56,4 +56,27 @@ class ChessGameServiceTest {
                 () -> assertThat(result.color()).isEqualTo(WHITE)
         );
     }
+
+
+    @Test
+    @DisplayName("Position을 받아 빈 곳에 move")
+    void moveEmptyPosition() {
+        // given
+        turnDao.updateTurn(Turn.END, Turn.WHITE_TURN);
+        Position source = Position.of('a', '1');
+        Position target = Position.of('a', '2');
+        pieceDao.savePieces(Map.of(
+                source, new Piece(WHITE, new Pawn(WHITE))
+        ));
+
+        // when
+        chessGameService.move(source, target);
+        Piece result = pieceDao.findAllPieces().get(target);
+
+        // then
+        assertAll(
+                () ->assertThat(result.name()).isEqualTo("pawn"),
+                () -> assertThat(result.color()).isEqualTo(WHITE)
+        );
+    }
 }
