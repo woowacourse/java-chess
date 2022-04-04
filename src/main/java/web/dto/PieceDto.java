@@ -43,8 +43,8 @@ public class PieceDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PieceDto pieceDTO = (PieceDto) o;
-        return Objects.equals(position, pieceDTO.position) && color == pieceDTO.color && type == pieceDTO.type;
+        PieceDto pieceDto = (PieceDto) o;
+        return Objects.equals(position, pieceDto.position) && color == pieceDto.color && type == pieceDto.type;
     }
 
     @Override

@@ -67,24 +67,24 @@ public class ChessGameService {
                 .collect(toMap(PieceDto::getPosition, this::createPiece));
     }
 
-    private Piece createPiece(PieceDto pieceDTO) {
-        if (pieceDTO.getType() == PieceType.PAWN) {
-            return new Pawn(pieceDTO.getColor());
+    private Piece createPiece(PieceDto pieceDto) {
+        if (pieceDto.getType() == PieceType.PAWN) {
+            return new Pawn(pieceDto.getColor());
         }
-        if (pieceDTO.getType() == PieceType.KING) {
-            return new King(pieceDTO.getColor());
+        if (pieceDto.getType() == PieceType.KING) {
+            return new King(pieceDto.getColor());
         }
-        if (pieceDTO.getType() == PieceType.QUEEN) {
-            return new Queen(pieceDTO.getColor());
+        if (pieceDto.getType() == PieceType.QUEEN) {
+            return new Queen(pieceDto.getColor());
         }
-        if (pieceDTO.getType() == PieceType.ROOK) {
-            return new Rook(pieceDTO.getColor());
+        if (pieceDto.getType() == PieceType.ROOK) {
+            return new Rook(pieceDto.getColor());
         }
-        if (pieceDTO.getType() == PieceType.KNIGHT) {
-            return new Knight(pieceDTO.getColor());
+        if (pieceDto.getType() == PieceType.KNIGHT) {
+            return new Knight(pieceDto.getColor());
         }
-        if (pieceDTO.getType() == PieceType.BISHOP) {
-            return new Bishop(pieceDTO.getColor());
+        if (pieceDto.getType() == PieceType.BISHOP) {
+            return new Bishop(pieceDto.getColor());
         }
         throw new IllegalArgumentException("잘못된 piece type 입니다.");
     }
@@ -93,10 +93,7 @@ public class ChessGameService {
         updatePieces(chessBoard, movement);
         updateCurrentColor(chessBoard);
         updateScores(chessBoard);
-
-        if (chessBoard.isFinished()) {
-            updateGameStatus(chessBoard);
-        }
+        updateGameStatus(chessBoard);
     }
 
     private void updatePieces(ChessBoard chessBoard, Movement movement) {
@@ -116,8 +113,10 @@ public class ChessGameService {
     }
 
     private void updateGameStatus(ChessBoard chessBoard) {
-        chessGameDao.updateGameStatus(GameStatus.FINISHED);
-        chessGameDao.updateWinner(chessBoard.getWinner());
+        if (chessBoard.isFinished()) {
+            chessGameDao.updateGameStatus(GameStatus.FINISHED);
+            chessGameDao.updateWinner(chessBoard.getWinner());
+        }
     }
 
     public void prepareNewChessGame() {
