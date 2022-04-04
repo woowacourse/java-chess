@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>체스</title>
     <link rel="stylesheet" href="/src/board.css">
+    <link rel="stylesheet" href="/src/command.css">
 <!--    <script type="text/javascript" src="/js/board.js"></script>-->
 </head>
 <body>
@@ -96,6 +97,12 @@
                 </tr>
             </table>
             {{/board}}
+        </div>
+        <div id="command-wrap">
+            <form id="command-form" action="/move" method="post">
+                <input type="text" id="command" name="command" autocomplete="off" required />
+                <input type="submit" value="실행" />
+            </form>
         </div>
     </div>
 </body>
