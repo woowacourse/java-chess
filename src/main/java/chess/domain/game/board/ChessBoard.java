@@ -112,7 +112,6 @@ public class ChessBoard {
         }
     }
 
-
     public int countPiece() {
         return chessBoard.size();
     }

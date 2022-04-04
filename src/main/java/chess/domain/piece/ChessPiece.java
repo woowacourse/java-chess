@@ -23,6 +23,8 @@ public abstract class ChessPiece {
 
     public abstract void checkMovable(Position from, Position to);
 
+    public abstract double getScore();
+
     public Stack<Position> findRoute(final Position from, Position to) {
         Stack<Position> routes = new Stack<>();
         Direction direction = to.findDirection(from);
@@ -51,8 +53,6 @@ public abstract class ChessPiece {
     public boolean isBlack() {
         return color.isBlack();
     }
-
-    public abstract double getScore();
 
     public String getName() {
         return name;
