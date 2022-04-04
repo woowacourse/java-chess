@@ -46,6 +46,6 @@ public class Positions {
     }
 
     public int calculateDirectedRowDistance() {
-        return after().rowDirectedDistance(before());
+        return before().rowDirectedDistance(after());
     }
 }

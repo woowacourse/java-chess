@@ -43,7 +43,7 @@ public enum Row {
     }
 
     public int directedDistance(Row otherRow) {
-        return number - otherRow.number;
+        return otherRow.number - number;
     }
 
     public int distance(Row otherRow) {

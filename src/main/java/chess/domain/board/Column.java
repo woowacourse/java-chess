@@ -45,8 +45,12 @@ public enum Column {
             .orElseThrow();
     }
 
+    public int directedDistance(Column otherColumn) {
+        return otherColumn.number - number;
+    }
+
     public int distance(Column otherColumn) {
-        return Math.abs(number - otherColumn.number);
+        return Math.abs(directedDistance(otherColumn));
     }
 
     public List<Column> pathTo(Column otherColumn) {
