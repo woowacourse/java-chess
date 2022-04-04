@@ -48,4 +48,9 @@ public class Knight extends ChessPiece {
     public double getScore() {
         return 2.5;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-knight").toLowerCase();
+    }
 }

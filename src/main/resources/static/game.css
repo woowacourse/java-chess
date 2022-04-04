@@ -10,6 +10,7 @@
     height: 80px;
     float: left;
     display: flex;
+    justify-content: center;
 }
 
 .block.white {
@@ -32,4 +33,9 @@ button{
     text-align: center;
     background: black;
     color: red;
+}
+
+img{
+    margin-top: 10%;
+    max-height: 70%;
 }

@@ -42,4 +42,9 @@ public class King extends ChessPiece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-king").toLowerCase();
+    }
 }

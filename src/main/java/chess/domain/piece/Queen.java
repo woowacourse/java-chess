@@ -40,4 +40,9 @@ public class Queen extends ChessPiece {
     public double getScore() {
         return 9.0;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-queen").toLowerCase();
+    }
 }

@@ -37,4 +37,9 @@ public class Rook extends ChessPiece {
     public double getScore() {
         return 5.0;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-rook").toLowerCase();
+    }
 }

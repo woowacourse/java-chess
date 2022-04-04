@@ -37,4 +37,9 @@ public class Bishop extends ChessPiece {
     public double getScore() {
         return 3.0;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-bishop").toLowerCase();
+    }
 }

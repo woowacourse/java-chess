@@ -111,4 +111,9 @@ public class Pawn extends ChessPiece {
     public double getScore() {
         return 1.0;
     }
+
+    @Override
+    public String toString() {
+        return (getColor().name() + "-pawn").toLowerCase();
+    }
 }

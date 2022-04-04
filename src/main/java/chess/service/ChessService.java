@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class ChessService {
 
-    private ChessBoard chessBoard;
+    private ChessBoard chessBoard = null;
 
     public Map<String, ChessPiece> start(){
-        chessBoard.start();
         chessBoard = ChessBoardFactory.initBoard();
+        chessBoard.start();
         return chessBoard.convertToMap();
     }
 }
