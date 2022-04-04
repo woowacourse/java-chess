@@ -1,0 +1,11 @@
+td.black-box {
+    background-color: slategray;
+    width: 4rem;
+    height: 4rem;
+}
+
+td.white-box {
+    background-color: white;
+    width: 4rem;
+    height: 4rem;
+}
