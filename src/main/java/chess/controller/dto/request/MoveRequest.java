@@ -1,9 +1,5 @@
 package chess.controller.dto.request;
 
-import chess.command.Command;
-import chess.command.CommandFactory;
-import java.util.List;
-
 public class MoveRequest {
 
     private final String start;
@@ -20,9 +16,5 @@ public class MoveRequest {
 
     public String getTarget() {
         return target;
-    }
-
-    public Command toCommand() {
-        return CommandFactory.create("move", List.of(start, target));
     }
 }
