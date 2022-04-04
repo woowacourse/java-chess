@@ -1,11 +1,17 @@
 package chess.service;
 
 import chess.dao.ChessPieceDao;
+import chess.dao.RoomDao;
 import chess.domain.ChessGame;
+import chess.domain.GameStatus;
 import chess.domain.Score;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
+import chess.dto.ChessPieceDto;
+import chess.dto.RoomDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
@@ -19,7 +25,7 @@ public class ChessService {
 
     public Map<String, Object> findAllPiece(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             model = toModel(chessGame.findAllPiece());
         } catch (IllegalArgumentException e) {
@@ -30,7 +36,7 @@ public class ChessService {
 
     public Map<String, Object> startGame(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final StartResult result = chessGame.start();
             model = toModel(result.getPieceByPosition());
@@ -40,13 +46,13 @@ public class ChessService {
             }
             model.put("error", e.getMessage());
         }
-        chessGame.updateChessPiece(roomName);
+         updateChessPiece(roomName);
         return model;
     }
 
     public Map<String, Object> move(final String roomName, String fromPosition, String toPosition) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Position from = Position.from(fromPosition);
             final Position to = Position.from(toPosition);
@@ -59,7 +65,7 @@ public class ChessService {
             chessPieceDao.deleteByPosition(roomName, to);
             chessPieceDao.update(roomName, from, to);
 
-            chessGame.updateRoom(roomName);
+            updateRoom(roomName);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece(roomName);
@@ -71,7 +77,7 @@ public class ChessService {
 
     public Map<String, Object> endGame(final String roomName) {
         Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final EndResult result = chessGame.end();
             final Score score = result.getScore();
@@ -81,13 +87,13 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateRoom(roomName);
+        updateRoom(roomName);
         return model;
     }
 
     public Map<String, Object> findScore(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Score score = chessGame.calculateScore();
             for (final Color color : Color.values()) {
@@ -101,7 +107,7 @@ public class ChessService {
 
     public Map<String, Object> findCurrentTurn(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Color currentTurn = chessGame.findCurrentTurn();
             model.put("current_turn", currentTurn.getValue());
@@ -113,7 +119,7 @@ public class ChessService {
 
     public Map<String, Object> result(final String roomName) {
         final Map<String, Object> model = new HashMap<>();
-        final ChessGame chessGame = ChessGame.from(roomName);
+        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Color winColor = chessGame.findWinColor();
             if (Objects.isNull(winColor)) {
@@ -133,5 +139,47 @@ public class ChessService {
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getValue(),
                         entry -> PieceName.findWebImagePath(entry.getValue())));
+    }
+
+    private ChessGame findGameByRoomName(final String roomName) {
+        final ChessPieceDao chessPieceDao = new ChessPieceDao();
+        Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName)
+                .stream()
+                .collect(Collectors.toMap(
+                        ChessPieceDto::getPosition,
+                        ChessPieceDto::getChessPiece
+                ));
+
+        if (pieceByPosition.isEmpty()) {
+            pieceByPosition = ChessBoardFactory.createInitPieceByPosition();
+        }
+
+        final RoomDao roomDao = new RoomDao();
+        final RoomDto roomDto = roomDao.findByName(roomName);
+
+        Color currentTurn = null;
+        GameStatus gameStatus = null;
+        if (Objects.isNull(roomDto)) {
+            currentTurn = Color.WHITE;
+            gameStatus = GameStatus.READY;
+        }
+        if (Objects.nonNull(roomDto)) {
+            currentTurn = roomDto.getCurrentTurn();
+            gameStatus = roomDto.getGameStatus();
+        }
+        return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
+    }
+
+    private void updateChessPiece(final String roomName) {
+        final ChessPieceDao chessPieceDao = new ChessPieceDao();
+        chessPieceDao.deleteAllByRoomName(roomName);
+        chessPieceDao.saveAll(roomName, chessBoard.findAllPiece());
+
+        updateRoom(roomName);
+    }
+
+    private void updateRoom(final String roomName) {
+        final RoomDao roomDao = new RoomDao();
+        roomDao.update(roomName, gameStatus, chessBoard.currentTurn());
     }
 }
