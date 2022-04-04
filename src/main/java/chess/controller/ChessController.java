@@ -9,6 +9,7 @@ import chess.domain.result.Score;
 import chess.dto.ChessResponseDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.StatusResponseDto;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,14 +19,16 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class ChessController {
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        final ChessService chessService = new ChessService();
         final Gson gson = new Gson();
+        ChessGame chessGame = new ChessGame();
 
         get("/", (req, res) -> {
             return render(new HashMap<>(), "index.html");
         });
 
         get("/load", (req, res) -> {
+            chessService.load(chessGame);
             return gson.toJson(new ChessResponseDto(chessGame));
         });
 
