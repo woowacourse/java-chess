@@ -5,9 +5,9 @@ import chess.game.MoveCommand;
 import chess.game.Position;
 import chess.piece.Color;
 
-public class Move extends Running {
+public class Moving extends Running {
 
-    public Move(final Board board, final Color color) {
+    public Moving(final Board board, final Color color) {
         super(board, color);
     }
 

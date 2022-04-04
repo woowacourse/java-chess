@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class MoveCommandTest {
+public class MovingCommandTest {
 
     @ParameterizedTest(name = "from : {0}, to : {1}")
     @CsvSource(value = {"a1,a2", "h7,h8", "d4,e5", "a6,a7", "g1,h2"})

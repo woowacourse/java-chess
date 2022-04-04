@@ -20,7 +20,7 @@ class ReadyTest {
     @Test
     @DisplayName("준비 상태에서 게임을 시작하면 Start 상태가 된다.")
     void startFromReady() {
-        assertThat(Ready.start(Command.START)).isInstanceOf(Move.class);
+        assertThat(Ready.start(Command.START)).isInstanceOf(Moving.class);
     }
 
     @Test

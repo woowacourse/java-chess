@@ -12,12 +12,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 
-class MoveTest {
+class MovingTest {
 
     @Test
     @DisplayName("게임 진행중에는 Start를 할 수 없다.")
     void gameCannotRestart() {
-        final State state = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State state = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
         assertThatThrownBy(() -> state.turn(Command.START))
                 .isInstanceOf(IllegalStateException.class)
@@ -27,7 +27,7 @@ class MoveTest {
     @Test
     @DisplayName("게임 진행 상태에서 게임을 끝내면 Finished 상태가 된다.")
     void finishFromRunning() {
-        final State state = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State state = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
         assertThat(state.turn(Command.END)).isInstanceOf(Finished.class);
     }
@@ -35,15 +35,15 @@ class MoveTest {
     @Test
     @DisplayName("게임 진행 상태에서 말을 움직이면 Running 상태가 된다.")
     void continueRunning() {
-        final State state = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State state = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
-        assertThat(state.turn(Command.MOVE)).isInstanceOf(Move.class);
+        assertThat(state.turn(Command.MOVE)).isInstanceOf(Moving.class);
     }
 
     @Test
     @DisplayName("Running 상태에서 게임이 진행 중인지 확인할 수 있다.")
     void isRunning() {
-        final State state = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State state = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
         assertThat(state.isRunning()).isTrue();
     }
@@ -51,7 +51,7 @@ class MoveTest {
     @Test
     @DisplayName("Running 상태에서 말을 움직일 수 있다.")
     void canMove() {
-        final State running = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State running = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
         assertThat(running.canMove()).isTrue();
     }
@@ -59,7 +59,7 @@ class MoveTest {
     @Test
     @DisplayName("한 번 움직이고 나면 화이트 턴에서 블랙 턴으로 변경된다.")
     void blackColor() {
-        final State running = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State running = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
         running.move(MoveCommand.of("b1", "a3"));
 
         assertThat(running.getColor()).isEqualTo(Color.BLACK);
@@ -68,7 +68,7 @@ class MoveTest {
     @Test
     @DisplayName("Black 차례에 White가 움직일 경우 예외를 발생한다.")
     void blackTurn() {
-        final State running = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State running = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
         running.move(MoveCommand.of("a2", "a4"));
 
         assertThatThrownBy(() -> running.move(MoveCommand.of("a4", "a6")))
@@ -79,7 +79,7 @@ class MoveTest {
     @Test
     @DisplayName("White 차례에 Black이 움직일 경우 예외를 발생한다.")
     void whiteTurn() {
-        final State running = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State running = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
 
         assertThatThrownBy(() -> running.move(MoveCommand.of("a7", "a5")))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -89,7 +89,7 @@ class MoveTest {
     @Test
     @DisplayName("게임 진행중에 점수를 계산할 수 있다.")
     void score() {
-        final State running = new Move(new Board(BoardInitializer.getBoard()), Color.WHITE);
+        final State running = new Moving(new Board(BoardInitializer.getBoard()), Color.WHITE);
         final Map<Color, Double> score = running.score().getScore();
 
         assertThat(score).containsValues(38.0, 38.0);
