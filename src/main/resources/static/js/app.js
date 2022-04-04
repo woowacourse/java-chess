@@ -44,3 +44,19 @@ function createInput(name, value) {
 
     return input
 }
+
+function restart() {
+    let game_name = prompt("새로 시작할 게임 이름을 입력해주세요.");
+
+    if (game_name == null || game_name == "") {
+        alert("게임 이름을 다시 입력해주세요.");
+    } else {
+        const form = document.createElement("form");
+
+        form.setAttribute("method", "get");
+        form.setAttribute("action", "/start");
+        form.appendChild(createInput("game_name", game_name));
+        document.body.appendChild(form);
+        form.submit();
+    }
+}

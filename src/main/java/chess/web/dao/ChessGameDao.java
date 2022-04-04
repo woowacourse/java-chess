@@ -58,7 +58,51 @@ public class ChessGameDao {
         }
     }
 
-    public ChessGameDto findByName(String gameName) {
+    public void update(ChessGameDto chessGameDto, int chessboardId) {
+        Connection connection = getConnection();
+
+        String sql = "update chessgame set turn = ?, chess_board_id = ? where game_name = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, chessGameDto.getTurn());
+            statement.setInt(2, chessboardId);
+            statement.setString(3, chessGameDto.getGameName());
+
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int findIdByName(String gameName) {
+        Connection connection = getConnection();
+
+        String sql = "select chess_board_id from CHESSGAME where game_name = ?";
+
+        int id = 0;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, gameName);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            resultSet.next();
+
+            id = resultSet.getInt("chess_board_id");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    public ChessGameDto findAllByName(String gameName) {
         Connection connection = getConnection();
 
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, CHESSBOARD, PIECE\n"

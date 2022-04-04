@@ -472,11 +472,12 @@
     </div>
     <div class="buttons-container">
         <div class="btn-group">
-            <form action="/start" method="get" >
-                <button type="submit" class="btn btn-primary">재시작</button>
-            </form>
+            <button onclick="restart()" type="submit" class="btn btn-primary">재시작</button>
             <form action="/status" method="get" >
                 <button type="submit" class="btn btn-success">점수</button>
+            </form>
+            <form action="/save" method="get" >
+                <button type="submit" class="btn btn-info">저장</button>
             </form>
             <form action="/end" method="get">
                 <button type="submit" class="btn btn-danger">게임 종료</button>

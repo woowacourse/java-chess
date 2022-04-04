@@ -53,8 +53,18 @@ public class ChessService {
     public void save() {
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
 
-        int chessboardId = chessBoardDao.save(chessGameDto);
+        String gameName = chessGameDto.getGameName();
 
-        chessGameDao.save(chessGameDto, chessboardId);
+        int chessboardId = chessGameDao.findIdByName(gameName);
+
+        if (chessboardId > 0) {
+            chessGameDao.update(chessGameDto, chessboardId);
+
+            return;
+        }
+
+        int savedId = chessBoardDao.save(chessGameDto);
+
+        chessGameDao.save(chessGameDto, savedId);
     }
 }

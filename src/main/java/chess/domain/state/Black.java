@@ -17,15 +17,15 @@ public class Black implements State {
 
     @Override
     public State execute(Command command, ChessBoard chessBoard) {
+        if (command.isEnd() || !chessBoard.isExistKing()) {
+            return new End();
+        }
         if (command.isMoveCommand()) {
             checkTeam(command, chessBoard);
 
             chessBoard.move(command);
 
             return new White();
-        }
-        if (command.isEnd()) {
-            return new End();
         }
         return this;
     }
