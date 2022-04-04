@@ -86,6 +86,11 @@ public class WebApplication {
             Map<String, Object> model = makeStatusModel(webChessStatusDto);
             return render(model, "status.html");
         });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
+        });
     }
 
     private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
