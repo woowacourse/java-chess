@@ -1,15 +1,15 @@
 package chess.web;
 
 import chess.controller.dto.PieceDTO;
+import chess.dao.BoardDao;
+import chess.database.factory.BoardFactory;
+import chess.database.factory.RoomFactory;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessController {
     private GameState gameState;
@@ -23,8 +23,13 @@ public class ChessController {
         Map<Position, Piece> board = gameState.getBoard();
         List<PieceDTO> pieces = new ArrayList<>();
 
-        if (gameState.isRunning()) {
-
+        if (Objects.requireNonNull(RoomFactory.findByPosition("1")).length() == 0) {
+            List<BoardDao> boards = BoardFactory.findAll("1");
+            for (BoardDao boardDao : boards) {
+                pieces.add(new PieceDTO(boardDao.getPosition(), boardDao.getSymbol()));
+            }
+            model.put("chessPiece", pieces);
+            return model;
         }
 
         for (Position position : board.keySet()) {
