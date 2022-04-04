@@ -113,5 +113,11 @@ function move() {
       target: secondClicked.getAttribute("id"),
     }),
   })
-      .then(res => res.json());
+      .then(res => res.json())
+      .catch(res => {
+        alert(res);
+        firstClicked.childNodes[0].classList.remove("selected");
+        firstClicked = null;
+        secondClicked = null;
+      })
 }
