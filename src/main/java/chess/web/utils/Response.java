@@ -17,7 +17,7 @@ public class Response {
     private static final char MIN_FILE = 'a';
     private static final char MAX_FILE = 'h';
 
-    public static void putChessGame(Map<String, Object> model, BoardDto boardDto, ChessGame chessGame) {
+    public static void putChessGameData(Map<String, Object> model, BoardDto boardDto, ChessGame chessGame) {
         Map<String, PieceDto> pieces = new HashMap<>();
 
         for (String position : boardDto.getBoard().keySet()) {

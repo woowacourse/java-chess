@@ -21,7 +21,7 @@ public class WebApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Response.putChessGame(model, boardDto, chessGame);
+            Response.putChessGameData(model, boardDto, chessGame);
             return render(model, "/index.html");
         });
 
