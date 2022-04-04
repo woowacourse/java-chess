@@ -44,8 +44,8 @@ public class BoardDto {
 
     private static PieceDto toPieceDto(Piece piece, Rank rank, File file) {
         if (piece.isBlack()) {
-            return PieceDto.of(piece.name().toUpperCase(Locale.ROOT), rank, file);
+            return PieceDto.of(piece.name().toUpperCase(Locale.ROOT), file, rank);
         }
-        return PieceDto.of(piece.name(), rank, file);
+        return PieceDto.of(piece.name(), file, rank);
     }
 }

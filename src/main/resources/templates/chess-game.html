@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <title>체스</title>
     <script>
-        function sendToServer() {
+        let first = '';
+        let second = '';
+
+        function clicked(id) {
+            if (first !== '') {
+                second = id;
+            } else {
+                first = id;
+            }
+
+            if (first !== '' && second !== '') {
+                sendToServer(first, second);
+                first = '';
+                second = '';
+            }
+        }
+
+        function sendToServer(first, second) {
             fetch('/move', {
                 method: "POST",
                 headers: {
                     "Content-Type": "text/plain",
                 },
-                body: "command=" + document.getElementById("command").value
+                body: "command=move " + first + " " + second
             }).then((response) => {
                     response.json().then(data => {
                         if (data.status === 400) {
@@ -31,7 +48,7 @@
     <tr>
         {{#this}}
         {{#this}}
-        <td id={{position}}>
+        <td id={{position}} onclick="clicked(this.id)">
             {{name}}
         </td>
         {{/this}}
@@ -44,6 +61,6 @@
 <label> 명령어
     <input type="text" id="command" name="command"/>
 </label>
-<button id="btn" onclick="sendToServer()">제출</button>
+<button id="btn" onclick="sendToServer(first, second)">제출</button>
 </body>
 </html>

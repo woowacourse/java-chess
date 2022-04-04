@@ -14,8 +14,8 @@ public class PieceDto {
         this.position = position;
     }
 
-    public static PieceDto of(String name, Rank rank, File file) {
-        String position = rank.name() + file.name().toLowerCase(Locale.ROOT);
+    public static PieceDto of(String name, File file, Rank rank) {
+        String position = file.name().toLowerCase(Locale.ROOT) + rank.value();
         return new PieceDto(name, position);
     }
 

@@ -38,4 +38,8 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public int value() {
+        return value;
+    }
 }
