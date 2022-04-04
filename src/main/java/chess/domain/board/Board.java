@@ -113,51 +113,14 @@ public final class Board {
 
         return flattedMovableKingPositions.stream()
             .filter(position -> oppositeEntry.stream()
-                .anyMatch(opposite -> {
-                    if (canMoveOppositePieceToKing(position, opposite)) {
-//                        System.out.println(""
-//                            + camp.switchCamp() + "진영" +
-//                            opposite.getValue().getCharacter() + "에 의해 " + position
-//                            + "가 KingCheckmatedPositions로 등록될 예정");  ////
-                        return true;
-                    }
-                    return false;
-                }))
+                .anyMatch(opposite -> canMoveOppositePieceToKing(position, opposite)))
             .collect(Collectors.toList());
-
-//        return movableKingPositions.values()
-//            .stream()
-//            .map(positions -> positions.stream()
-//                .filter(kingPosition -> oppositeEntry.stream()
-//                    .anyMatch(opposite -> canMoveOppositePieceToKing(kingPosition, opposite)))
-//                .collect(Collectors.toList()))
-//            .flatMap(List::stream)
-//            .collect(Collectors.toList());
     }
 
     private SortedMap<UnitDirectVector, List<Position>> findMovableKingPositionsBy(final Camp camp) {
         final Position currentKingPosition = findCurrentKingPosition(camp);
 
         return findMovablePositionsFrom(currentKingPosition);
-    }
-
-
-    private boolean isAnyPositionCheckmatedIn(final Camp camp, final List<Position> flattedKingPositions) {
-        return board.entrySet()
-            .stream()
-            .filter(it -> it.getValue().isSameCampWith(camp.switchCamp()))
-            .anyMatch(oppositePieceEntry -> isAnyPositionCheckmated(flattedKingPositions, oppositePieceEntry));
-    }
-
-    private boolean isAnyPositionCheckmated(final List<Position> flattedKingPositions,
-                                            final Entry<Position, Piece> oppositePieceEntry) {
-        for (final Position kingPosition : flattedKingPositions) {
-            if (canMoveOppositePieceToKing(kingPosition, oppositePieceEntry)) {
-//                System.out.println(camp.name() + "킹이 갈 예정인 곳" + kingPosition + "이 모두 체크된 체크메이트입니다.");
-                return true;
-            }
-        }
-        return false;
     }
 
     public Position findCurrentKingPosition(final Camp camp) {
@@ -172,17 +135,12 @@ public final class Board {
 
     private boolean canMoveOppositePieceToKing(final Position kingPosition,
                                                final Entry<Position, Piece> oppositeEntry) {
-//            && isNullPieceInitToNextPosition(isNullPiece, initPosition, nextPosition) &&
-//            //11. 중간경로뿐만 아니라 마지막 그 위치next도 확인해야한다 ( pathTo는 사이경로)
-//            isNullPiece.apply(nextPosition) &&
-
         final Piece oppositePiece = oppositeEntry.getValue();
         final Position oppositePosition = oppositeEntry.getKey();
         final Positions fromOppositeTokingPositions = new Positions(oppositePosition, kingPosition);
 
         return oppositePiece.checkCanMoveByDistance(fromOppositeTokingPositions)
             && isNullPieceFromOppositeToKing(fromOppositeTokingPositions);
-        // 여기서는 마지막 king이 있는 위치 검사는 안해도됨. 안쪽에서는 king의 예상경로라서 비었는지 체크함.
     }
 
     private boolean isNullPieceFromOppositeToKing(final Positions positions) {
@@ -192,17 +150,9 @@ public final class Board {
     }
 
     public SortedMap<UnitDirectVector, List<Position>> findMovablePositionsFrom(final Position position) {
-// 4-1 beforePiece를 받아 움직이기 전, 가능한 움직임을 검사해본다.
-        // -> piece마다 get가능한방향()을 써야하므로 piece에 메세지를 보낸다.
-        // -> 가려는 벡터의 방향 vs get 가능한방향을 비교해야하므로 -> positions도 같이 넘겨준다.
         Piece beforePiece = board.get(position);
 
-        //7-1. piece를 타객체(this)로 board.isBlankPosition(position)기능을 넘기자
-        // -> board.get(position).isNullPiece();
-//        isNullPiece()
-
         return beforePiece.findMovablePositionsByDirection(position, isNullPiece());
-        //4-4 afterPosition을 만들다보니 -> 유효한 position인지 검사는 state(Running)에서 해야한다?    }
     }
 
     private Predicate<Position> isNullPiece() {
@@ -213,11 +163,7 @@ public final class Board {
         final SortedMap<UnitDirectVector, List<Position>> movableKingPositions = findMovableKingPositionsBy(camp);
 
         final List<Position> flattedMovableKingPositions = movableKingPositions.values().stream().flatMap(List::stream)
-            .collect(
-                Collectors.toList());
-//        for (Position flattedMovableKingPosition : flattedMovableKingPositions) {
-////            System.out.println("checkmate된 킹이 현재 갈 수 있는 곳 : " + flattedMovableKingPosition);
-//        }
+            .collect(Collectors.toList());
         return positions.containsAll(flattedMovableKingPositions);
     }
 }

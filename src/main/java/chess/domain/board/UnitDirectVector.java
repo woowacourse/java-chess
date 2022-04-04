@@ -30,14 +30,6 @@ public enum UnitDirectVector {
         this.y = y;
     }
 
-    public boolean isSameUnitDirectVector(final Positions positions) {
-        final int yVector = positions.calculateDirectedRowDistance();
-        final int xVector = positions.calculateDirectedColumnDistance();
-        System.out.println("b->a의 단위방향벡터계산값 : Math.atan2(yVector, xVector) = " + Math.atan2(yVector, xVector));
-        System.out.println("가능한방향(" + this.name() + ")의 단위방향벡터값 계산: Math.atan2(y, x) = " + Math.atan2(y, x));
-        return Math.atan2(y, x) == Math.atan2(yVector, xVector);
-    }
-
     public int nextColumnNumber(final int number) {
         return x + number;
     }

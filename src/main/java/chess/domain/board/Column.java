@@ -16,7 +16,6 @@ public enum Column {
     ;
 
     private static final int COLUMN_FLIP_CRITERIA = 9;
-    private static final int DECIMAL_RADIX = 10;
     private static final String INVALID_COLUMN_MESSAGE = "존재하지 않는 열입니다.";
 
     private final int number;

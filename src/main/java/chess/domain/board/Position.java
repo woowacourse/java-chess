@@ -138,28 +138,13 @@ public class Position implements Comparable<Position> {
     }
 
     public Position calculatePossibleAfterPosition(final UnitDirectVector direction) {
-        // 4-4
-        // (4-4-1)값을 꺼내오기 직전에, 값이 유효한지 물어보는 메서드들 바로 위에 일단 만들자
-        // (4-4-2) 전체 계산식으로 가서 계산직전에 물어보도록 그쪽으로 옮겨서 만들자.
-//        column.isNextValid(direction);
-//        column.nextWith(direction);
         final Column nextColumn = column.nextWith(direction);
-        // (1)
-        // (2)
         final Row nextRow = row.nextWith(direction);
-//        row.isNextValid(direction);
-        // (4-4-3) 2개 조건을 밖에서 묵자. -> 어차피 밖에서 시작해서 이 level에 해당 조건들을 검증하도록 된다.
-//        final Row nextRow = row.nextWith(direction);
-        // 둘다 valid할 때 해당 position을 찾아서 넘기자.
         return Position.of(nextColumn, nextRow);
 
     }
 
     public boolean isValidNextPosition(final UnitDirectVector direction) {
-        //4-4-5 계산 -> 바로위에 검증 -> 2개가 같은 레벨에서 결국 만들어지더라 -> 같은 레벨에서 다른 메서드에서 검증된다.
-//        if (column.isNextValid(direction) && row.isNextValid(direction)) {
-//            return true;
-//        }
         if (!column.isNextValid(direction)) {
             return false;
         }

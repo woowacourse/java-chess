@@ -29,6 +29,12 @@ public class ChessGame {
         }
     }
 
+    private void playGame() {
+        final String command = InputView.inputCommand();
+        final GameCommand gameCommand = GameCommand.from(command);
+        gameCommand.execute(command, this, printBoardInfoToState());
+    }
+
     private void checkKingState() {
         if (!isRunning()) {
             return;
@@ -38,7 +44,6 @@ public class ChessGame {
             return;
         }
 
-        // 이동가능한 곳 중 checkmated가 등장했다면, 그곳으로 갈 수 없게 끔, 해야한다.
         final List<Position> kingCheckmatedPositions = state.getKingCheckmatedPositions();
         if (isAnyKingCheckmated(kingCheckmatedPositions)) {
             checkAllKingCheckMated(kingCheckmatedPositions);
@@ -64,12 +69,6 @@ public class ChessGame {
 
     public boolean isKingChecked() {
         return state.isKingChecked();
-    }
-
-    private void playGame() {
-        final String command = InputView.inputCommand();
-        final GameCommand gameCommand = GameCommand.from(command);
-        gameCommand.execute(command, this, printBoardInfoToState());
     }
 
     public void run() {
