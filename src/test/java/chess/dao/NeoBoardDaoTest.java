@@ -15,7 +15,8 @@ class NeoBoardDaoTest {
 
     @Test
     void saveTest() {
-        dao.save(new NeoBoard("네오방"));
+        final NeoBoard neoBoard = dao.save(new NeoBoard("개초보만"));
+        assertThat(neoBoard.getRoomTitle()).isEqualTo("개초보만");
     }
 
     @Test

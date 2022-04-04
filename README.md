@@ -57,5 +57,13 @@
     - [x] response 에 게임 종료 여부 추가
     - [x] 게임 종료 시 게임이 종료됐다는 alert 띄우기
 - [x] status 버튼 만들기
-- [ ] 체스판, 말 이미지 적용
+- [x] 체스판, 말 이미지 적용
 - [x] 종료버튼 만들기
+
+### 5단계
+
+- [x] 모든 Position 은 DB에 저장되어야 한다. (64개)
+- [ ] if movable, update query and delete origin record
+- [ ] if status, get all positions and pieces
+- [ ] if end, destroy the room
+- [ ] create a room and create members

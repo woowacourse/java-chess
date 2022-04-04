@@ -20,11 +20,11 @@ class NeoPositionDaoTest {
 
     @Test
     void findByColumnAndRowAndBoardId() {
-        NeoPosition neoPosition = dao.findByColumnAndRowAndBoardId(Column.A, Row.TWO, 1);
+        NeoPosition neoPosition = dao.findByColumnAndRowAndBoardId(Column.A, Row.TWO, 15);
         assertAll(
                 () -> assertThat(neoPosition.getColumn().value()).isEqualTo(1),
                 () -> assertThat(neoPosition.getRow().value()).isEqualTo(2),
-                () -> assertThat(neoPosition.getId()).isEqualTo(1)
+                () -> assertThat(neoPosition.getId()).isEqualTo(71)
         );
     }
 }

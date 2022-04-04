@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.pieces.Bishop;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.NeoPiece;
 import chess.domain.pieces.Pawn;
@@ -13,16 +14,16 @@ class NeoPieceDaoTest {
     private final NeoPieceDao dao = new NeoPieceDao(new RollbackConnectionManager());
     @Test
     void saveTest() {
-        dao.save(new NeoPiece(new Pawn(), Color.WHITE, 1));
+        dao.save(new NeoPiece(new Pawn(), Color.WHITE, 117));
     }
 
     @Test
     void findByPositionId() {
-        NeoPiece neoPiece = dao.findByPositionId(1);
+        NeoPiece neoPiece = dao.findByPositionId(117);
         assertAll(
-                () -> assertThat(neoPiece.getId()).isEqualTo(1),
-                () -> assertThat(neoPiece.getType()).isInstanceOf(Pawn.class),
-                () -> assertThat(neoPiece.getColor()).isEqualTo(Color.WHITE)
+                () -> assertThat(neoPiece.getId()).isEqualTo(67),
+                () -> assertThat(neoPiece.getType()).isInstanceOf(Bishop.class),
+                () -> assertThat(neoPiece.getColor()).isEqualTo(Color.BLACK)
         );
     }
 }

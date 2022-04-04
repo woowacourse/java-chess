@@ -4,13 +4,9 @@ import chess.domain.game.NeoBoard;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.NeoPiece;
 import chess.domain.pieces.Piece;
-import chess.domain.position.NeoPosition;
 import chess.domain.position.Position;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Map;
 
 public class NeoBoardDao {
@@ -21,18 +17,38 @@ public class NeoBoardDao {
         this.connectionManager = connectionManager;
     }
 
-    public void save(NeoBoard board) {
+    public NeoBoard save(NeoBoard board) {
         final Connection connection = connectionManager.getConnection();
-        final String sql = "insert into neo_board (room_title, turn) values (?, ?)";
         try {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, board.getRoomTitle());
-            preparedStatement.setString(2, board.getTurn().name());
-            preparedStatement.executeUpdate();
+            final ResultSet generatedKeys = saveBoard(connection, board);
+            final NeoBoard neoBoard = new NeoBoard(generatedKeys.getInt(1), board.getRoomTitle());
             connectionManager.close(connection);
+            return neoBoard;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public NeoBoard save(Connection connection, NeoBoard board) {
+        try {
+            final ResultSet generatedKeys = saveBoard(connection, board);
+            return new NeoBoard(generatedKeys.getInt(1), board.getRoomTitle());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private ResultSet saveBoard(Connection connection, NeoBoard board) throws SQLException {
+        final String sql = "insert into neo_board (room_title, turn) values (?, ?)";
+        final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, board.getRoomTitle());
+        preparedStatement.setString(2, board.getTurn().name());
+        preparedStatement.executeUpdate();
+        final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+        if (!generatedKeys.next()) {
+            throw new IllegalArgumentException("did not save");
+        }
+        return generatedKeys;
     }
 
     public NeoBoard findById(int id) {
@@ -58,34 +74,16 @@ public class NeoBoardDao {
     }
 
     public void init(NeoBoard board, Map<Position, Piece> initialize) {
-        save(board);
         Connection connection = connectionManager.getConnection();
+        final NeoBoard savedBoard = save(connection, board);
         final NeoPositionDao neoPositionDao = new NeoPositionDao(connectionManager);
         final NeoPieceDao neoPieceDao = new NeoPieceDao(connectionManager);
-        int lastNeoBoardId = findLastNeoBoardId();
+        neoPositionDao.saveAllPosition(connection, savedBoard.getId());
         for (Position position : initialize.keySet()) {
-            neoPositionDao.save(connection, new NeoPosition(position.getColumn(), position.getRow(), lastNeoBoardId));
-            int lastPositionId = neoPositionDao.findLastPositionId(connection);
+            int lastPositionId = neoPositionDao.findPositionIdByColumnAndRowAndBoardId(connection, position.getColumn(), position.getRow(), savedBoard.getId());
             final Piece piece = initialize.get(position);
             neoPieceDao.save(connection, new NeoPiece(piece.getType(), piece.getColor(), lastPositionId));
         }
         connectionManager.close(connection);
-    }
-
-    private int findLastNeoBoardId() {
-        final Connection connection = connectionManager.getConnection();
-        final String sql = "select id from neo_board order by id desc limit 1";
-        try {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                throw new SQLException();
-            }
-            final int id = resultSet.getInt("id");
-            connectionManager.close(connection);
-            return id;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
