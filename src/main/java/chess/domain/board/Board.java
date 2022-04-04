@@ -83,10 +83,10 @@ public class Board {
         return TotalScore.getTotalPoint(teamPieces);
     }
 
-    public Board promotePawn(final Position position, final String promotionType) {
-        final Piece piece = pieces.get(position);
-        validatePromoteCondition(position, piece);
-        pieces.put(position, piece.promote(promotionType));
+    public Board promotePawn(final Position sourcePosition, final String promotionType) {
+        final Piece piece = pieces.get(sourcePosition);
+        validatePromoteCondition(sourcePosition, piece);
+        pieces.put(sourcePosition, piece.promote(promotionType));
         return new Board(pieces, currentTurnTeam);
     }
 
@@ -99,5 +99,10 @@ public class Board {
     public Map<Position, Piece> getPieces() {
         return pieces;
     }
-}
 
+    public boolean hasPromotionPawnIn(final Position sourcePosition) {
+        return pieces.values()
+                .stream()
+                .anyMatch(piece -> piece.canPromote(sourcePosition));
+    }
+}

@@ -1,29 +1,26 @@
 package chess;
 
-import static chess.domain.gamecommand.CommandType.END;
-import static chess.domain.gamecommand.CommandType.MOVE;
-import static chess.domain.gamecommand.CommandType.PROMOTE;
-import static chess.domain.gamecommand.CommandType.START;
-import static chess.domain.gamecommand.CommandType.STATUS;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+import static chess.view.input.CommandType.END;
+import static chess.view.input.CommandType.MOVE;
+import static chess.view.input.CommandType.START;
+import static chess.view.input.CommandType.STATUS;
+import static chess.view.input.InputView.inputCommand;
+import static chess.view.input.InputView.inputPromotionType;
 import static chess.view.output.OutputView.printCurrentBoard;
 import static chess.view.output.OutputView.printStartMessage;
 
 import chess.domain.board.Board;
-import chess.domain.gamecommand.CommandStrategy;
-import chess.domain.gamecommand.CommandType;
-import chess.domain.gamecommand.Movement;
-import chess.domain.gamecommand.Promotion;
-import chess.domain.gamecommand.Start;
-import chess.view.input.InputView;
+import chess.domain.board.position.Position;
+import chess.view.input.CommandType;
 import chess.view.output.OutputView;
-import java.util.Map;
 
 public class ChessGameRunner {
 
-    private static final Map<CommandType, CommandStrategy> COMMAND_STRATEGY = Map.of(
-            START, new Start(),
-            MOVE, new Movement(),
-            PROMOTE, new Promotion());
+    private static final String COMMAND_DELIMITER = " ";
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
 
     public void run() {
         Board board = initializeBoard();
@@ -32,7 +29,7 @@ public class ChessGameRunner {
 
     private Board initializeBoard() {
         printStartMessage();
-        final String command = InputView.inputCommand();
+        final String command = inputCommand();
         validateFirstCommand(command);
         return new Board();
     }
@@ -47,22 +44,41 @@ public class ChessGameRunner {
         CommandType commandType;
         do {
             printCurrentBoard(board.getPieces());
-            String command = InputView.inputCommand();
+            String command = inputCommand();
             commandType = CommandType.from(command);
             board = execute(commandType, board, command);
         }
         while (commandType != END && !board.hasOneKing());
     }
 
-    private Board execute(CommandType commandType, Board board, String command) {
+    private Board execute(final CommandType commandType,
+                          final Board board,
+                          final String command) {
+        if (commandType == START) {
+            throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
+        }
         if (commandType == STATUS) {
-            OutputView.printCurrentBoard(board.getPieces());
-            return board;
+            OutputView.printScore(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
         }
         if (commandType == END) {
-            return board;
+            OutputView.printCurrentBoard(board.getPieces());
         }
-        return COMMAND_STRATEGY.get(commandType)
-                .play(board, command);
+        if (commandType == MOVE) {
+            return movePiece(board, command);
+        }
+        return board;
+    }
+
+    private Board movePiece(Board board, final String command) {
+        final Position sourcePosition = Position.from(
+                command.split(COMMAND_DELIMITER)[SOURCE_POSITION_INDEX]);
+        final Position targetPosition = Position.from(
+                command.split(COMMAND_DELIMITER)[TARGET_POSITION_INDEX]);
+        board = board.movePiece(sourcePosition, targetPosition);
+
+        if (board.hasPromotionPawnIn(targetPosition)) {
+            board = board.promotePawn(targetPosition, inputPromotionType());
+        }
+        return board;
     }
 }

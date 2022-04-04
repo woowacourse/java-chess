@@ -1,4 +1,4 @@
-package chess.domain.gamecommand;
+package chess.view.input;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -8,8 +8,7 @@ public enum CommandType {
     START(Pattern.compile("start")),
     END(Pattern.compile("end")),
     MOVE(Pattern.compile("move [a-h][1-8] [a-h][1-8]")),
-    STATUS(Pattern.compile("status")),
-    PROMOTE(Pattern.compile("promote [a-h][1-8] [rbnq]")),
+    STATUS(Pattern.compile("status"))
     ;
 
     private final Pattern commandPattern;
