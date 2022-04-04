@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Klay's Chess Game</title>
-    <script async src="/script/chessBoardInit.js"></script>
     <link rel="stylesheet" href="/style/style.css">
 </head>
+<script src="/script/chessBoardInit.js"></script>
 <body>
     <h1>즐겁게 즐기세요</h1>
     <div>
@@ -13,6 +13,15 @@
             게임 중단하고 결과보기
         </button>
     </div>
+    </br>
+    <div id="board-div"></div>
+    <script>initBoard()</script>
+    {{#each this.pieces}}
+    <script>
+        fillSquare("{{@key}}", "{{this.type}}", "{{this.color}}")
+    </script>
+    {{/each}}
+
 </body>
 <script src="/script/chess.js"></script>
 </html>

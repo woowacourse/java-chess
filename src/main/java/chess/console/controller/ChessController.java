@@ -1,10 +1,10 @@
-package chess.controller;
+package chess.console.controller;
 
-import chess.controller.state.GameState;
-import chess.controller.state.Ready;
-import chess.service.ChessService;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.controller.state.GameState;
+import chess.console.controller.state.Ready;
+import chess.console.service.ChessService;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import java.util.List;
 
 public final class ChessController {

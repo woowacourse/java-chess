@@ -102,4 +102,8 @@ public final class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public String getName() {
+        return file.getName() + rank.getName();
+    }
 }

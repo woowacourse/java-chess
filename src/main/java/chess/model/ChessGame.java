@@ -16,6 +16,11 @@ public class ChessGame {
         this.turn = Color.WHITE;
     }
 
+    public ChessGame(Board board, Color turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void move(Square from, Square to) {
         if (board.findPieceBySquare(from).isSameColor(turn)) {
             board.move(from, to);
@@ -36,5 +41,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Color getTurn() {
+        return this.turn;
     }
 }

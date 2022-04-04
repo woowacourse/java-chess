@@ -1,6 +1,6 @@
-package chess.controller.state;
+package chess.console.controller.state;
 
-import chess.controller.GameCommand;
+import chess.console.controller.GameCommand;
 
 public class End implements GameState {
     @Override

@@ -35,3 +35,8 @@ body {
 .white-cell {
     background-color: bisque;
 }
+
+.piece-image {
+    height: 80px;
+    width : 80px;
+}

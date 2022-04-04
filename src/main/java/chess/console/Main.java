@@ -1,7 +1,7 @@
-package chess;
+package chess.console;
 
-import chess.controller.ChessController;
-import chess.service.ChessService;
+import chess.console.controller.ChessController;
+import chess.console.service.ChessService;
 
 public class Main {
 

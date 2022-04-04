@@ -1,4 +1,4 @@
-package chess.service;
+package chess.console.service;
 
 import chess.model.ChessGame;
 import chess.model.File;
@@ -28,7 +28,7 @@ public class ChessService {
     private List<String> getPieceLetterInRank(Board board, Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> board.findPieceBySquare(Square.of(file, rank)))
-                .map(PieceLetter::getLetter)
+                .map(PieceLetter::getLetterByColor)
                 .collect(Collectors.toList());
     }
 

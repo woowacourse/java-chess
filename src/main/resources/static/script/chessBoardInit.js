@@ -1,7 +1,5 @@
-document.body.onload = initBoard;
-
 function initBoard() {
-    const boardDiv = document.createElement("div");
+    const boardDiv = document.getElementById("board-div");
 
     const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     const ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
@@ -9,7 +7,6 @@ function initBoard() {
     const boardTable = document.createElement('table')
     ranks.reverse().forEach(initRank)
     boardDiv.appendChild(boardTable)
-    document.body.appendChild(boardDiv)
 
     function initRank(rank) {
         let tr = document.createElement('tr')
@@ -18,8 +15,7 @@ function initBoard() {
         files.forEach(function (file) {
             let td = document.createElement('td')
             setColorAttribute(file, rank, td)
-            td.innerText = file + rank
-            td.setAttribute('id', rank + file)
+            td.id = file + rank
             tr.append(td)
         })
         boardTable.appendChild(tr)
@@ -34,5 +30,16 @@ function initBoard() {
         if (((fileIndex + rankIndex) % 2 === 1)) {
             td.setAttribute('class', 'cell black-cell')
         }
+    }
+}
+
+function fillSquare(squareName, pieceType, pieceColor) {
+    pieceColor = pieceColor.toLowerCase()
+    pieceType = pieceType.toLowerCase()
+    console.log(squareName + pieceType + pieceColor)
+    if (pieceColor !== "nothing") {
+        console.log(document.getElementById(squareName))
+        document.getElementById(squareName).innerHTML = "<img class=piece-image src='/image/pieces/" + pieceColor + "/"
+            + pieceColor + "-" + pieceType + ".svg" +"'/>"
     }
 }

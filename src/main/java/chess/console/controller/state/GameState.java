@@ -1,7 +1,7 @@
-package chess.controller.state;
+package chess.console.controller.state;
 
-import chess.controller.GameCommand;
-import chess.service.ChessService;
+import chess.console.controller.GameCommand;
+import chess.console.service.ChessService;
 
 public interface GameState {
     GameState changeStateBy(GameCommand gameCommand);

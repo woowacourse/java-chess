@@ -54,6 +54,10 @@ public abstract class Piece {
         return color.isEnemy(targetPiece.color);
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
