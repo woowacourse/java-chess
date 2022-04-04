@@ -109,7 +109,7 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
         for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
             model.put(entry.getKey().getName()
-                    , new PieceDto(entry.getValue()));
+                    , new PieceDto(entry.getValue(), entry.getKey()));
         }
         model.put("turn", chessGame.getTurn());
         return model;

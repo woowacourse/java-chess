@@ -3,6 +3,7 @@ package chess.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class DatabaseUtil {
@@ -38,7 +39,16 @@ public class DatabaseUtil {
     }
 
     public static void validExecute(int execute) throws SQLException {
-        if(execute == 0) {
+        if (execute == 0) {
+            throw new SQLException("SQL문을 무사히 실행했으나 반영된 것이 없습니다.");
+        }
+    }
+
+    public static void validExecute(int[] executes) throws SQLException {
+        boolean match = Arrays.stream(executes)
+                .anyMatch(it -> it == 0);
+
+        if (match) {
             throw new SQLException("SQL문을 무사히 실행했으나 반영된 것이 없습니다.");
         }
     }
