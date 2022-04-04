@@ -1,7 +1,8 @@
 CREATE TABLE game (
     `id` INT NOT NULL AUTO_INCREMENT,
     `state` VARCHAR(10) NOT NULL,
-    `latestDate` DATETIME NOT NULL,
+    `turn` VARCHAR(5),
+    `latest_date` DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
 
