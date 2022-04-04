@@ -18,12 +18,10 @@ public class ChessWebController {
 
     private final ChessService chessService;
     private final RoomService roomService;
-    private final Gson gson;
 
     public ChessWebController() {
         chessService = new ChessService();
         roomService = new RoomService();
-        gson = new Gson();
     }
 
     public void run() {
@@ -48,8 +46,7 @@ public class ChessWebController {
             if (!roomService.isRoomExist(req.queryParams("room"))) {
                 roomService.createRoom(req.queryParams("room"));
             }
-            final Map<String, Object> model = chessService.startGame(req.queryParams("room"));
-            return gson.toJson(model);
+            return chessService.startGame(req.queryParams("room")).toJson();
         });
 
         before("/protected/*", (req, res) -> {
@@ -57,46 +54,36 @@ public class ChessWebController {
                     req.queryParams("room"))) {
                 Map<String, Object> model = new HashMap<>();
                 model.put("roomExist", false);
+                final Gson gson = new Gson();
                 halt(401, gson.toJson(model));
             }
         });
 
         path("/protected", () -> {
 
-            get("/piece", (req, res) -> {
-                final Map<String, Object> model = chessService.findAllPiece(req.queryParams("room"));
-                return gson.toJson(model);
-            });
+            get("/piece", (req, res) ->
+                    chessService.findAllPiece(req.queryParams("room")).toJson());
 
-            get("/score", (req, res) -> {
-                final Map<String, Object> model = chessService.findScore(req.queryParams("room"));
-                return gson.toJson(model);
-            });
+            get("/score", (req, res) ->
+                    chessService.findScore(req.queryParams("room")).toJson());
 
-            get("/turn", (req, res) -> {
-                final Map<String, Object> model = chessService.findCurrentTurn(req.queryParams("room"));
-                return gson.toJson(model);
-            });
+            get("/turn", (req, res) ->
+                    chessService.findCurrentTurn(req.queryParams("room")).toJson());
 
-            get("/result", (req, res) -> {
-                final Map<String, Object> model = chessService.result(req.queryParams("room"));
-                return gson.toJson(model);
-            });
+            get("/result", (req, res) ->
+                    chessService.result(req.queryParams("room")).toJson());
 
             post("/move", (req, res) -> {
                 final String[] splitBody = req.body().split(" ");
-                final Map<String, Object> model = chessService.move(
+                return chessService.move(
                         req.queryParams("room"),
                         splitBody[0],
                         splitBody[1]
-                );
-                return gson.toJson(model);
+                ).toJson();
             });
 
-            post("/end", (req, res) -> {
-                final Map<String, Object> model = chessService.endGame(req.queryParams("room"));
-                return gson.toJson(model);
-            });
+            post("/end", (req, res) ->
+                    chessService.endGame(req.queryParams("room")).toJson());
 
             post("/exit", (req, res) -> {
                 roomService.deleteRoom(req.queryParams("room"));

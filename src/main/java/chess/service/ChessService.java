@@ -16,8 +16,7 @@ import chess.dto.RoomStatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
-import chess.view.PieceName;
-import java.util.HashMap;
+import chess.view.JsonGenerator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,54 +24,54 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    public Map<String, Object> findAllPiece(final String roomName) {
-        Map<String, Object> model = new HashMap<>();
+    public JsonGenerator findAllPiece(final String roomName) {
+        final JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
-            model = toModel(chessGame.findAllPiece());
+            result.addAllPiece(chessGame.findAllPiece());
         } catch (IllegalArgumentException e) {
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
-    public Map<String, Object> startGame(final String roomName) {
-        Map<String, Object> model = new HashMap<>();
+    public JsonGenerator startGame(final String roomName) {
+        JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
-            final StartResult result = chessGame.start();
-            model = toModel(result.getPieceByPosition());
-            updateChessPiece(roomName, result.getPieceByPosition());
+            final StartResult startResult = chessGame.start();
+            result.addAllPiece(startResult.getPieceByPosition());
+            updateChessPiece(roomName, startResult.getPieceByPosition());
             updateRoomStatusTo(roomName, GameStatus.PLAYING);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
-                model = findAllPiece(roomName);
+                result = findAllPiece(roomName);
             }
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
-    public Map<String, Object> move(final String roomName, String fromPosition, String toPosition) {
-        Map<String, Object> model = new HashMap<>();
+    public JsonGenerator move(final String roomName, String fromPosition, String toPosition) {
+        JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Position from = Position.from(fromPosition);
             final Position to = Position.from(toPosition);
 
-            final MoveResult result = chessGame.move(from, to);
-            model = toModel(result.getPieceByPosition());
-            model.put("isKingDie", result.isKingDie());
+            final MoveResult moveResult = chessGame.move(from, to);
+            result.addAllPiece(moveResult.getPieceByPosition());
+            result.addKingDieResult(moveResult.isKingDie());
 
             updatePosition(roomName, from, to);
-            updateRoom(roomName, result.getGameStatus(), result.getCurrentTurn());
+            updateRoom(roomName, moveResult.getGameStatus(), moveResult.getCurrentTurn());
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
-                model = findAllPiece(roomName);
+                result = findAllPiece(roomName);
             }
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
     private void updatePosition(final String roomName, final Position from, final Position to) {
@@ -81,74 +80,54 @@ public class ChessService {
         chessPieceDao.update(roomName, from, to);
     }
 
-    public Map<String, Object> endGame(final String roomName) {
-        Map<String, Object> model = new HashMap<>();
+    public JsonGenerator endGame(final String roomName) {
+        final JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
-            final EndResult result = chessGame.end();
-            final Score score = result.getScore();
-            model = toModel(score, model);
+            final EndResult endResult = chessGame.end();
+            final Score score = endResult.getScore();
+            result.addScore(score);
             updateRoomStatusTo(roomName, GameStatus.END);
         } catch (IllegalArgumentException e) {
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
-    public Map<String, Object> findScore(final String roomName) {
-        Map<String, Object> model = new HashMap<>();
+    public JsonGenerator findScore(final String roomName) {
+        final JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Score score = chessGame.calculateScore();
-            model = toModel(score, model);
+            result.addScore(score);
         } catch (IllegalArgumentException e) {
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
-    public Map<String, Object> findCurrentTurn(final String roomName) {
-        final Map<String, Object> model = new HashMap<>();
+    public JsonGenerator findCurrentTurn(final String roomName) {
+        final JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Color currentTurn = chessGame.findCurrentTurn();
-            model.put("current_turn", currentTurn.getValue());
+            result.addCurrentTurn(currentTurn);
         } catch (IllegalArgumentException e) {
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
+        return result;
     }
 
-    public Map<String, Object> result(final String roomName) {
-        final Map<String, Object> model = new HashMap<>();
+    public JsonGenerator result(final String roomName) {
+        final JsonGenerator result = JsonGenerator.create();
         final ChessGame chessGame = findGameByRoomName(roomName);
         try {
             final Color winColor = chessGame.findWinColor();
-            if (Objects.isNull(winColor)) {
-                model.put("win_color", "draw");
-                return model;
-            }
-            model.put("win_color", winColor.getValue());
+            result.addWinColor(winColor);
         } catch (IllegalArgumentException e) {
-            model.put("error", e.getMessage());
+            result.addError(e.getMessage());
         }
-        return model;
-    }
-
-    private Map<String, Object> toModel(final Map<Position, ChessPiece> pieceByPosition) {
-        return pieceByPosition.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getValue(),
-                        entry -> PieceName.findWebImagePath(entry.getValue())));
-    }
-
-    private Map<String, Object> toModel(final Score score, final Map<String, Object> model) {
-        final Map<String, Object> newModel = new HashMap<>(model);
-        for (final Color color : Color.values()) {
-            newModel.put(color.getValue(), score.findScore(color));
-        }
-        return newModel;
+        return result;
     }
 
     private ChessGame findGameByRoomName(final String roomName) {
