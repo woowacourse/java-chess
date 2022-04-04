@@ -37,10 +37,19 @@
   text-align: center;
 }
 
+#container {
+  display: flex;
+  align-items: center;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .buttons {
-  justify-content: space-between;
-  float: right;
-  margin-right: 300px;
+  display: flex;
 }
 
 .info {
