@@ -2,6 +2,7 @@ package chess.domain;
 
 import static chess.domain.position.File.FILES_TOTAL_SIZE;
 
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
@@ -12,11 +13,7 @@ public class ScoreCalculator {
 
     private static final int PAWN_PENALTY_MINIMUM_COUNT = 2;
 
-    private static final int SUM_BASE_INT = 0;
     private static final double SUM_BASE_DOUBLE = 0;
-    private static final double NO_PAWN_PENALTY_SCORE = 0;
-
-    private static final double PAWN_PENALTY_RATE = 0.5;
 
     public double calculate(List<Piece> sameColorPieces) {
         double defaultScore = calculateDefaultScore(sameColorPieces);
@@ -27,15 +24,9 @@ public class ScoreCalculator {
 
     private double calculatePawnPenalty(List<Piece> sameColorPieces) {
         List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
-
         double penaltyPawnCount = calculateSameFilePawnCount(pawnPositions);
-        double pawnScore = sameColorPieces.stream()
-            .filter(Piece::isPawn)
-            .map(Piece::getScore)
-            .findAny()
-            .orElse(NO_PAWN_PENALTY_SCORE);
 
-        return pawnScore * penaltyPawnCount * PAWN_PENALTY_RATE;
+        return penaltyPawnCount * Pawn.DEFAULT_SCORE * Pawn.PENALTY_RATE;
     }
 
     private double calculateDefaultScore(List<Piece> sameColorPieces) {

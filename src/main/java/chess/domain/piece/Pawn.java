@@ -10,8 +10,6 @@ public final class Pawn extends Piece {
 
     private static final String NAME = "Pawn";
 
-    private static final double DEFAULT_SCORE = 1;
-
     public static final Rank BLACK_INIT_RANK = Rank.SEVEN;
     public static final Rank WHITE_INIT_RANK = Rank.TWO;
 
@@ -19,6 +17,10 @@ public final class Pawn extends Piece {
     private static final int JUMPABLE_RANK_DIFFERENCE = 2;
 
     private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
+
+    public static final double DEFAULT_SCORE = 1;
+    public static final double PENALTY_RATE = 0.5;
+
 
     public Pawn(Color color, Position position) {
         super(color, position);
