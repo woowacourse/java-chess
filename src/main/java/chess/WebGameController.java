@@ -16,6 +16,15 @@ import java.util.stream.Collectors;
 import spark.Request;
 
 public class WebGameController {
+    private static final String KEY_READY = "ready";
+    private static final String KEY_STARTED = "started";
+    private static final String KEY_SOURCE = "source";
+    private static final String KEY_TARGET = "target";
+    private static final String KEY_WINNER = "winner";
+    private static final String KEY_TIE = "tie";
+    private static final String REGEX_VALUE = "=";
+    private static final String REGEX_DATA = "&";
+
     private final ChessGame chessGame;
     private final GameDao gameDao;
     private final BoardDao boardDao;
@@ -28,7 +37,7 @@ public class WebGameController {
 
     public Map<String, Object> modelReady() {
         Map<String, Object> model = new HashMap<>();
-        model.put("ready", true);
+        model.put(KEY_READY, true);
         return model;
     }
 
@@ -40,8 +49,8 @@ public class WebGameController {
         Map<Position, Piece> board = chessGame.getBoard().getSquares();
         Map<String, Object> model = board.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
-        model.put("started", true);
-        model.put("ready", false);
+        model.put(KEY_STARTED, true);
+        model.put(KEY_READY, false);
         return model;
     }
 
@@ -50,12 +59,12 @@ public class WebGameController {
     }
 
     public void move(Request req) {
-        Map<String, String> positions = Arrays.stream(req.body().split("&"))
+        Map<String, String> positions = Arrays.stream(req.body().split(REGEX_DATA))
                 .collect(Collectors.toMap(
-                        data -> data.substring(0, data.indexOf("=")),
-                        data -> data.substring(data.indexOf("=") + 1)
+                        data -> data.substring(0, data.indexOf(REGEX_VALUE)),
+                        data -> data.substring(data.indexOf(REGEX_VALUE) + 1)
                 ));
-        chessGame.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
+        chessGame.move(Position.of(positions.get(KEY_SOURCE)), Position.of(positions.get(KEY_TARGET)));
     }
 
     public Map<String, Object> modelStatus() {
@@ -81,12 +90,12 @@ public class WebGameController {
     private Map<String, Object> modelResult() {
         Map<String, Object> model = new HashMap<>();
         Camp winner = chessGame.getWinner();
-        model.put("winner", winner);
+        model.put(KEY_WINNER, winner);
         if (winner == Camp.NONE) {
-            model.put("tie", true);
+            model.put(KEY_TIE, true);
         }
-        model.put("started", false);
-        model.put("ready", true);
+        model.put(KEY_STARTED, false);
+        model.put(KEY_READY, true);
         return model;
     }
 
