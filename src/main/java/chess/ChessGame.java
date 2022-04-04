@@ -25,30 +25,28 @@ public class ChessGame {
 
     public void playGame() {
         ResultView.printStartMessage();
-        GameCommand gameCommand;
         do {
-            gameCommand = requestCommand();
-        } while (!gameCommand.isSameCommandType(CommandType.END));
+            requestCommand();
+        } while (!turn.isEmpty());
     }
 
-    private GameCommand requestCommand() {
+    private void requestCommand() {
         try {
             GameCommand gameCommand = new GameCommand(InputView.inputCommand());
             playGameByCommand(gameCommand);
-            return gameCommand;
         } catch (RuntimeException exception) {
             ResultView.printReplay(exception.getMessage());
-            return requestCommand();
+            requestCommand();
         }
     }
 
-    private void playGameByCommand(GameCommand gameCommand) {
+    public void playGameByCommand(GameCommand gameCommand) {
         if (isEndCommand(gameCommand)) {
+            turn = Color.EMPTY;
             return;
         }
         startGame(gameCommand);
-        validateInitBoard();
-        validateEndChessBoard();
+        validateForStatusAndMove();
         showStatus(gameCommand);
         move(gameCommand);
     }
@@ -63,11 +61,16 @@ public class ChessGame {
         }
     }
 
-    public void initChessBoard() {
+    private void initChessBoard() {
         PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         chessBoard = new ChessBoard(piecesGenerator);
         turn = Color.WHITE;
         ResultView.printChessBoard(chessBoard.getPieces());
+    }
+
+    private void validateForStatusAndMove() {
+        validateInitBoard();
+        validateEndChessBoard();
     }
 
     private void validateInitBoard() {
