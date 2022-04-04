@@ -65,6 +65,6 @@ public class ConsoleController {
 
     private void printStatus(final ChessGame chessGame) {
         Score score = chessGame.calculateScore();
-        OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinTeam().getValue());
+        OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinningTeam().getValue());
     }
 }

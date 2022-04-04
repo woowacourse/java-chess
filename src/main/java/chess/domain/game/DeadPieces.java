@@ -1,8 +1,7 @@
 package chess.domain.game;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,12 +34,16 @@ public class DeadPieces {
         }
     }
 
+    public boolean isKingDead() {
+        return blackPieces.stream().anyMatch(Piece::isKing) || whitePieces.stream().anyMatch(Piece::isKing);
+    }
+
     public Team getTeamOfDeadKing() {
         validateKingNotDead();
-        if (blackPieces.contains(King.class)) {
-            return Team.BLACK;
+        if (blackPieces.stream().anyMatch(Piece::isKing)) {
+            return Team.WHITE;
         }
-        if (whitePieces.contains(King.class)) {
+        if (whitePieces.stream().anyMatch(Piece::isKing)) {
             return Team.BLACK;
         }
         return Team.NONE;
@@ -50,10 +53,6 @@ public class DeadPieces {
         if (!isKingDead()) {
             throw new IllegalStateException("[ERROR] 왕이 아직 사망하지 않았습니다.");
         }
-    }
-
-    public boolean isKingDead() {
-        return blackPieces.stream().anyMatch(Piece::isKing) || whitePieces.stream().anyMatch(Piece::isKing);
     }
 
     public List<Piece> getBlackPieces() {

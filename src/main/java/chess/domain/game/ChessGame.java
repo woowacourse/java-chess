@@ -35,12 +35,6 @@ public class ChessGame {
         }
     }
 
-    private void turnOffWhenKingDie() {
-        if (deadPieces.isKingDead()) {
-            gameSwitch.turnOff();
-        }
-    }
-
     private void movePiece(final Position source, final Position target) {
         validateSourcePiece(source);
         Piece sourcePiece = board.getPiece(source);
@@ -64,6 +58,12 @@ public class ChessGame {
     private void validateMove(final Position source, final Position target, final MoveStrategy moveStrategy) {
         if (!moveStrategy.isMovable(board, source, target)) {
             throw new IllegalStateException("[ERROR] 기물을 이동할 수 없습니다.");
+        }
+    }
+
+    private void turnOffWhenKingDie() {
+        if (deadPieces.isKingDead()) {
+            gameSwitch.turnOff();
         }
     }
 

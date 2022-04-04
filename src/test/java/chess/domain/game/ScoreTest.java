@@ -43,7 +43,7 @@ public class ScoreTest {
     void getWinColor_WhenBlackWin() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), deadPieces);
 
-        assertThat(new Score(board.getBoard(), deadPieces).getWinTeam().getValue()).isEqualTo(Team.BLACK.getValue());
+        assertThat(new Score(board.getBoard(), deadPieces).getWinningTeam().getValue()).isEqualTo(Team.BLACK.getValue());
     }
 
     @Test
@@ -51,6 +51,6 @@ public class ScoreTest {
     void getWinColor_WhenWhiteWin() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), deadPieces);
 
-        assertThat(new Score(board.getBoard(), deadPieces).getWinTeam().getValue()).isEqualTo(Team.WHITE.getValue());
+        assertThat(new Score(board.getBoard(), deadPieces).getWinningTeam().getValue()).isEqualTo(Team.WHITE.getValue());
     }
 }

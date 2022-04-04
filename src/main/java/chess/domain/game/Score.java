@@ -15,12 +15,12 @@ public class Score {
 
     private final double blackScore;
     private final double whiteScore;
-    private final WinTeam winTeam;
+    private final WinningTeam winningTeam;
 
     public Score(final Map<Position, Piece> board, final DeadPieces deadPieces) {
         this.blackScore = calculateScore(board, Team.BLACK);
         this.whiteScore = calculateScore(board, Team.WHITE);
-        this.winTeam = new WinTeam(blackScore, whiteScore, deadPieces);
+        this.winningTeam = new WinningTeam(blackScore, whiteScore, deadPieces);
     }
 
     public double calculateScore(final Map<Position, Piece> board, final Team team) {
@@ -70,7 +70,7 @@ public class Score {
         return whiteScore;
     }
 
-    public WinTeam getWinTeam() {
-        return winTeam;
+    public WinningTeam getWinningTeam() {
+        return winningTeam;
     }
 }
