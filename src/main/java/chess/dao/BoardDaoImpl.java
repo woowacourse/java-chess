@@ -11,6 +11,9 @@ import java.util.Map.Entry;
 
 public class BoardDaoImpl implements BoardDao {
 
+    private static final int PIECE_COLUMN = 1;
+    private static final int POSITION_COLUMN = 2;
+
     private final Connection connection;
 
     public BoardDaoImpl() {
@@ -41,8 +44,8 @@ public class BoardDaoImpl implements BoardDao {
     public void updatePosition(final String position, final String piece) {
         String sql = "update board set piece = ? where position = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, piece);
-            preparedStatement.setString(2, position);
+            preparedStatement.setString(PIECE_COLUMN, piece);
+            preparedStatement.setString(POSITION_COLUMN, position);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,8 +58,8 @@ public class BoardDaoImpl implements BoardDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             for (Entry<String, String> boardEntry : board.entrySet()) {
-                preparedStatement.setString(1, boardEntry.getValue());
-                preparedStatement.setString(2, boardEntry.getKey());
+                preparedStatement.setString(PIECE_COLUMN, boardEntry.getValue());
+                preparedStatement.setString(POSITION_COLUMN, boardEntry.getKey());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
