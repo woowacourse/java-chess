@@ -69,6 +69,10 @@ public class Position {
         return coordinateY.getOrder();
     }
 
+    public String getPosition() {
+        return coordinateX.getName() + getCoordinateY();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;

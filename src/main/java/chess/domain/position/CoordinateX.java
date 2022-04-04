@@ -62,6 +62,10 @@ public enum CoordinateX {
         return -ONE_STEP;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getOrder() {
         return order;
     }

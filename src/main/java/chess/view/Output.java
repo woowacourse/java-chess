@@ -36,7 +36,7 @@ public class Output {
 
     private static void printBoard(final CoordinateY coordinateY, final BoardDto board) {
         for (final CoordinateX coordinateX : CoordinateX.sorted()) {
-            System.out.print(board.getSymbol(Position.of(coordinateX, coordinateY)));
+            System.out.print(board.getSymbol(Position.of(coordinateX, coordinateY).getPosition()));
         }
         System.out.println();
     }
