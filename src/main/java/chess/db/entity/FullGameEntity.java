@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class FullGameEntity {
 
+    private static final String PIECE_NOT_FOUND_EXCEPTION_MESSAGE = "해당 위치에 존재하는 체스말은 없습니다.";
+
     private final GameEntity game;
     private final List<PieceEntity> pieces;
 
@@ -26,7 +28,7 @@ public class FullGameEntity {
         return pieces.stream()
                 .filter(piece -> piece.getPosition() == position)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 체스말은 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     @Override

@@ -12,11 +12,11 @@ public class GameScore {
         this.blackScore = blackScore;
     }
 
-    public double whiteScore() {
+    public double getWhiteScore() {
         return whiteScore;
     }
 
-    public double blackScore() {
+    public double getBlackScore() {
         return blackScore;
     }
 

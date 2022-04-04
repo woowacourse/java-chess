@@ -15,6 +15,8 @@ import chess.model.GameCountModel;
 
 public class WebController {
 
+    private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 게임 결과가 산출되지 않았습니다.";
+
     private final GameRepository gameRepository = new GameRepository();
 
     public GameCountModel countGames() {
@@ -53,9 +55,13 @@ public class WebController {
 
     public FullResultModel findGameResult(int gameId) {
         Game game = gameRepository.findById(gameId);
-        if (!game.isEnd()) {
-            throw new IllegalArgumentException("아직 게임 결과가 산출되지 않았습니다.");
-        }
+        validateGameOver(game);
         return new FullResultModel(gameId, game);
+    }
+
+    private void validateGameOver(Game game) {
+        if (!game.isEnd()) {
+            throw new IllegalArgumentException(GAME_NOT_OVER_EXCEPTION_MESSAGE);
+        }
     }
 }

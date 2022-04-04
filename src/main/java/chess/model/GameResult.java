@@ -21,11 +21,6 @@ public class GameResult {
     private final Color winner;
     private final GameScore scoreResult;
 
-    public GameResult(String winner, double whiteScore, double blackScore) {
-        this.winner = Color.valueOf(winner);
-        this.scoreResult = new GameScore(whiteScore, blackScore);
-    }
-
     public GameResult(Map<Position, Piece> board) {
         this.winner = chooseWinner(board);
         this.scoreResult = new GameScore(calculateScore(board, WHITE), calculateScore(board, BLACK));
@@ -86,11 +81,11 @@ public class GameResult {
     }
 
     public double getWhiteScore() {
-        return scoreResult.whiteScore();
+        return scoreResult.getWhiteScore();
     }
 
     public double getBlackScore() {
-        return scoreResult.blackScore();
+        return scoreResult.getBlackScore();
     }
 
     @Override
