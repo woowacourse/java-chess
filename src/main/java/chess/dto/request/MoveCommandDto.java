@@ -1,6 +1,7 @@
 package chess.dto.request;
 
 import chess.domain.board.position.Position;
+import java.util.List;
 
 public class MoveCommandDto {
 
@@ -18,5 +19,9 @@ public class MoveCommandDto {
 
     public Position target() {
         return target;
+    }
+
+    public List<Position> getPositions() {
+        return List.of(source, target);
     }
 }

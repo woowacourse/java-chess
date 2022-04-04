@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.db.GameRepository;
+import chess.db.entity.FullGameEntity;
 import chess.domain.game.Game;
 import chess.domain.game.GameState;
 import chess.domain.game.NewGame;
@@ -41,11 +42,12 @@ public class WebController {
     public FullGameModel playGame(PlayGameRequestDto request) {
         int gameId = request.getGameId();
         MoveCommandDto moveCommand = request.getMoveCommand();
+        Game game =  gameRepository.findById(gameId);
 
-        Game game = gameRepository.findById(gameId);
         game = game.moveChessmen(moveCommand);
-        gameRepository.update(gameId, game);
 
+        FullGameEntity gameEntity = game.toEntityOf(gameId);
+        gameRepository.update(gameEntity, moveCommand);
         return findGame(gameId);
     }
 

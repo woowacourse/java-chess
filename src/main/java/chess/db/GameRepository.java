@@ -1,49 +1,71 @@
 package chess.db;
 
+import chess.db.dao.GameDao;
+import chess.db.dao.PieceDao;
+import chess.db.entity.FullGameEntity;
+import chess.db.entity.GameEntity;
+import chess.db.entity.PieceEntity;
+import chess.domain.board.position.Position;
 import chess.domain.game.Game;
 import chess.domain.game.GameState;
-import java.util.HashMap;
-import java.util.Map;
+import chess.domain.game.Started;
+import chess.dto.request.MoveCommandDto;
+import java.util.List;
 
 public class GameRepository {
 
-    private static final String GAME_NOT_FOUND_EXCEPTION_MESSAGE = "존재하지 않는 게임입니다.";
+    private static final String GAME_TABLE_NAME = "game";
+    private static final String PIECE_TABLE_NAME = "piece";
 
-    private final Map<Integer, Game> database = new HashMap<>();
-    private int id = 0;
+    private final GameDao gameDao = new GameDao(GAME_TABLE_NAME);
+    private final PieceDao pieceDao = new PieceDao(PIECE_TABLE_NAME);
 
     public int add(Game game) {
-        database.put(++id, game);
-        return id;
+        int gameId = getNewGameId();
+
+        FullGameEntity fullGameEntity = game.toEntityOf(gameId);
+        GameEntity gameEntity = fullGameEntity.getGame();
+        List<PieceEntity> pieces = fullGameEntity.getPieces();
+
+        gameDao.save(gameEntity);
+        pieceDao.saveAll(gameId, pieces);
+        return gameId;
+    }
+
+    private int getNewGameId() {
+        return gameDao.countAll() + 1;
     }
 
     public boolean checkById(int id) {
-        return database.containsKey(id);
+        return gameDao.checkById(id);
     }
 
     public Game findById(int id) {
-        if (!database.containsKey(id)) {
-            throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION_MESSAGE);
-        }
-        return database.get(id);
+        GameEntity gameEntity = gameDao.findById(id);
+        GameState state = gameEntity.getState();
+        List<PieceEntity> pieces = pieceDao.findAllByGameId(id);
+        return Started.ofEntity(state, pieces);
     }
 
-    public void update(int id, Game newGame) {
-        if (!database.containsKey(id)) {
-            throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION_MESSAGE);
-        }
-        database.put(id, newGame);
+    public void update(FullGameEntity gameEntity, MoveCommandDto moveCommand) {
+        GameEntity game = gameEntity.getGame();
+        int gameId = game.getId();
+
+        List<Position> effectedPositions = moveCommand.getPositions();
+        pieceDao.deleteAllByGameIdAndPositions(gameId, effectedPositions);
+
+        Position target = moveCommand.target();
+        PieceEntity movedPiece = gameEntity.getPieceAt(target);
+        pieceDao.saveAll(gameId, List.of(movedPiece));
+
+        gameDao.updateState(game);
     }
 
     public int countAll() {
-        return database.values()
-                .size();
+        return gameDao.countAll();
     }
 
     public int countByState(GameState state) {
-        return (int) database.values()
-                .stream()
-                .filter(game -> game.getState() == state)
-                .count();
+        return gameDao.countByState(state);
     }
 }

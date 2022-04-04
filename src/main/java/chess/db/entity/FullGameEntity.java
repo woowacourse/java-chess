@@ -1,5 +1,6 @@
 package chess.db.entity;
 
+import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +20,13 @@ public class FullGameEntity {
 
     public List<PieceEntity> getPieces() {
         return pieces;
+    }
+
+    public PieceEntity getPieceAt(Position position) {
+        return pieces.stream()
+                .filter(piece -> piece.getPosition() == position)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 체스말은 없습니다."));
     }
 
     @Override
