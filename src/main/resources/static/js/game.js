@@ -18,7 +18,7 @@ window.onload = async function () {
   }
   const res = await fetch("/api/start")
       .then(res => res.json())
-  rendBoard(res.pieces);
+  rendBoard(res.board.pieces);
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -75,7 +75,7 @@ async function onclick(event) {
     firstClicked.childNodes[0].classList.remove("selected");
     firstClicked = null;
     secondClicked = null;
-    rendBoard(res.pieces);
+    rendBoard(res.board.pieces);
   }
 }
 

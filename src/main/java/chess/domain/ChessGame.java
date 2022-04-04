@@ -47,4 +47,8 @@ public class ChessGame {
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
+
+    public GameState getGameState() {
+        return gameState;
+    }
 }

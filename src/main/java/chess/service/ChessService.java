@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.controller.dto.request.MoveRequest;
-import chess.controller.dto.response.BoardResponse;
+import chess.controller.dto.response.ChessGameResponse;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Column;
@@ -16,17 +16,17 @@ public class ChessService {
 
     private ChessGame chessGame;
 
-    public BoardResponse startGame() {
+    public ChessGameResponse startGame() {
         chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
         chessGame.start();
-        return new BoardResponse(chessGame.getBoard());
+        return new ChessGameResponse(chessGame);
     }
 
-    public BoardResponse move(final MoveRequest moveRequest) {
+    public ChessGameResponse move(final MoveRequest moveRequest) {
         Position start = parseStringToPosition(moveRequest.getStart());
         Position target = parseStringToPosition(moveRequest.getTarget());
         chessGame.move(start, target);
-        return new BoardResponse(chessGame.getBoard());
+        return new ChessGameResponse(chessGame);
     }
 
     private Position parseStringToPosition(final String rawPosition) {
