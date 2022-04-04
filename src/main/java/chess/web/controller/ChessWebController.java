@@ -2,6 +2,7 @@ package chess.web.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Result;
+import chess.service.ChessService;
 import chess.web.dto.BoardResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +13,14 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
 
-    private final ChessGame chessGame;
+    private final ChessService chessService;
 
-    public ChessWebController() {
-        this.chessGame = new ChessGame();
+    public ChessWebController(ChessService chessService) {
+        this.chessService = chessService;
     }
 
     public ModelAndView index(Request request, Response response) {
+        ChessGame chessGame = chessService.getChessGame();
         if (!chessGame.isStarted()) {
             return new ModelAndView(new HashMap<>(), "index.html");
         }
@@ -36,9 +38,7 @@ public class ChessWebController {
     }
 
     public ModelAndView create(Request request, Response response) {
-        chessGame.reset();
-        chessGame.start();
-
+        chessService.create();
         response.redirect("/");
 
         return generateEmptyModelAndView();
@@ -48,7 +48,7 @@ public class ChessWebController {
         String target = request.queryParams("target");
         String source = request.queryParams("source");
 
-        chessGame.move(target, source);
+//        chessGame.move(target, source);
 
         response.redirect("/");
 
@@ -56,6 +56,7 @@ public class ChessWebController {
     }
 
     public void exceptionHandle(Exception exception, Request request, Response response) {
+        ChessGame chessGame = chessService.getChessGame();
         String errorMessage = exception.getMessage();
 
         Map<String, Object> model = new HashMap<>();
