@@ -11,11 +11,13 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Score;
 import chess.domain.piece.Piece;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
@@ -28,11 +30,7 @@ public class WebApplication {
         GameDao gameDao = new GameDao();
         BoardDao boardDao = new BoardDao();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("ready", true);
-            return render(model, "index.html");
-        });
+        get("/", (req, res) -> initializeIndex());
 
         get("/start", (req, res) -> {
             gameController.start();
@@ -46,23 +44,10 @@ public class WebApplication {
             return null;
         });
 
-        get("/play", (req, res) -> {
-            Map<Position, Piece> board = gameController.getBoard();
-            Map<String, Object> model = board.entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
-            model.put("started", true);
-            model.put("ready", false);
-            return render(model, "index.html");
-        });
+        get("/play", (req, res) -> render(modelPlayingBoard(gameController), "index.html"));
 
         post("/move", (req, res) -> {
-            Map<String, String> positions = Arrays.stream(req.body().split("&"))
-                    .collect(Collectors.toMap(
-                            data -> data.substring(0, data.indexOf("=")),
-                            data -> data.substring(data.indexOf("=") + 1)
-                    ));
-            System.out.println("소스 위치 : " + positions.get("source"));
-            gameController.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
+            executeMove(gameController, req);
             if (gameController.isGameFinished()) {
                 res.redirect("/end");
                 return null;
@@ -71,17 +56,11 @@ public class WebApplication {
             return null;
         });
 
-        get("/status", (req, res) -> {
-            Map<Camp, Score> scores = gameController.status();
-            Map<String, Object> model = scores.entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
-            return jsonTransformer.render(model);
-        });
+        get("/status", (req, res) -> jsonTransformer.render(modelStatus(gameController)));
 
         get("/save", (req, res) -> {
             try {
-                gameDao.save();
-                boardDao.save(gameController.getBoard());
+                executeSave(gameController, gameDao, boardDao);
             } catch (Exception e) {
                 res.status(500);
                 return res;
@@ -92,21 +71,61 @@ public class WebApplication {
 
         get("/end", (req, res) -> {
             gameController.end();
-            Map<String, Object> model = new HashMap<>();
-            Camp winner = gameController.getWinner();
-            model.put("winner", winner);
-            if (winner == Camp.NONE) {
-                model.put("tie", true);
-            }
-            model.put("started", false);
-            model.put("ready", true);
-            return render(model, "result.html");
+            return render(modelResult(gameController), "result.html");
         });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             response.body("[ERROR] " + exception.getMessage());
         });
+    }
+
+    private static String initializeIndex() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("ready", true);
+        return render(model, "index.html");
+    }
+
+    private static Map<String, Object> modelPlayingBoard(GameController gameController) {
+        Map<Position, Piece> board = gameController.getBoard();
+        Map<String, Object> model = board.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
+        model.put("started", true);
+        model.put("ready", false);
+        return model;
+    }
+
+    private static void executeMove(GameController gameController, Request req) {
+        Map<String, String> positions = Arrays.stream(req.body().split("&"))
+                .collect(Collectors.toMap(
+                        data -> data.substring(0, data.indexOf("=")),
+                        data -> data.substring(data.indexOf("=") + 1)
+                ));
+        gameController.move(Position.of(positions.get("source")), Position.of(positions.get("target")));
+    }
+
+    private static Map<String, Object> modelStatus(GameController gameController) {
+        Map<Camp, Score> scores = gameController.status();
+        return scores.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(), Map.Entry::getValue));
+    }
+
+    private static void executeSave(GameController gameController, GameDao gameDao, BoardDao boardDao)
+            throws SQLException {
+        gameDao.save();
+        boardDao.save(gameController.getBoard());
+    }
+
+    private static Map<String, Object> modelResult(GameController gameController) {
+        Map<String, Object> model = new HashMap<>();
+        Camp winner = gameController.getWinner();
+        model.put("winner", winner);
+        if (winner == Camp.NONE) {
+            model.put("tie", true);
+        }
+        model.put("started", false);
+        model.put("ready", true);
+        return model;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
