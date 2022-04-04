@@ -7,12 +7,7 @@ import chess.domain.game.state.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
-public class EndGame implements GameState {
-
-    @Override
-    public GameState start() {
-        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
-    }
+public class EndGame extends StartedGame {
 
     @Override
     public GameState move(Position source, Position target) {
