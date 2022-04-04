@@ -70,13 +70,11 @@ public class WebApplication {
         });
 
         get("/save", (req, res) -> {
-            boolean whiteTurn = Camp.BLACK.isNotTurn();
             try {
                 GameDao gameDao = new GameDao();
-                gameDao.save(whiteTurn);
-                Map<Position, Piece> board = gameController.getBoard();
+                gameDao.save();
                 BoardDao boardDao = new BoardDao();
-                boardDao.save(board);
+                boardDao.save(gameController.getBoard());
             } catch (Exception e) {
                 res.status(500);
                 return res;
