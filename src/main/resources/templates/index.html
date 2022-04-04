@@ -2,9 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/img/favicon.png"/>
+    <title>체스</title>
 </head>
+
 <body>
-Hello World!!
+<h1> 우아한테크코스 Level1, Chess!</h1>
+
+<div id="board">
+    <div class="rank">
+        <div class="square a eight" id="AEIGHT"></div>
+        <div class="square b eight" id="BEIGHT"></div>
+        <div class="square c eight" id="CEIGHT"></div>
+        <div class="square d eight" id="DEIGHT"></div>
+        <div class="square e eight" id="EEIGHT"></div>
+        <div class="square f eight" id="FEIGHT"></div>
+        <div class="square g eight" id="GEIGHT"></div>
+        <div class="square h eight" id="HEIGHT"></div>
+    </div>
+    <div class="rank">
+        <div class="square ç seven" id="ASEVEN"></div>
+        <div class="square ç seven" id="BSEVEN"></div>
+        <div class="square ç seven" id="CSEVEN"></div>
+        <div class="square ç seven" id="DSEVEN"></div>
+        <div class="square ç seven" id="ESEVEN"></div>
+        <div class="square ç seven" id="FSEVEN"></div>
+        <div class="square ç seven" id="GSEVEN"></div>
+        <div class="square ç seven" id="HSEVEN"></div>
+    </div>
+    <div class="rank">
+        <div class="square a six" id="ASIX"></div>
+        <div class="square b six" id="BSIX"></div>
+        <div class="square c six" id="CSIX"></div>
+        <div class="square d six" id="DSIX"></div>
+        <div class="square e six" id="ESIX"></div>
+        <div class="square f six" id="FSIX"></div>
+        <div class="square g six" id="GSIX"></div>
+        <div class="square h six" id="HSIX"></div>
+    </div>
+    <div class="rank">
+        <div class="square a five" id="AFIVE"></div>
+        <div class="square b five" id="BFIVE"></div>
+        <div class="square c five" id="CFIVE"></div>
+        <div class="square d five" id="DFIVE"></div>
+        <div class="square e five" id="EFIVE"></div>
+        <div class="square f five" id="FFIVE"></div>
+        <div class="square g five" id="GFIVE"></div>
+        <div class="square h five" id="HFIVE"></div>
+    </div>
+    <div class="rank">
+        <div class="square a four" id="AFOUR"></div>
+        <div class="square b four" id="BFOUR"></div>
+        <div class="square c four" id="CFOUR"></div>
+        <div class="square d four" id="DFOUR"></div>
+        <div class="square e four" id="EFOUR"></div>
+        <div class="square f four" id="FFOUR"></div>
+        <div class="square g four" id="GFOUR"></div>
+        <div class="square h four" id="HFOUR"></div>
+    </div>
+    <div class="rank">
+        <div class="square a three" id="ATHREE"></div>
+        <div class="square b three" id="BTHREE"></div>
+        <div class="square c three" id="CTHREE"></div>
+        <div class="square d three" id="DTHREE"></div>
+        <div class="square e three" id="ETHREE"></div>
+        <div class="square f three" id="FTHREE"></div>
+        <div class="square g three" id="GTHREE"></div>
+        <div class="square h three" id="HTHREE"></div>
+    </div>
+    <div class="rank">
+        <div class="square a two" id="ATWO"></div>
+        <div class="square b two" id="BTWO"></div>
+        <div class="square c two" id="CTWO"></div>
+        <div class="square d two" id="DTWO"></div>
+        <div class="square e two" id="ETWO"></div>
+        <div class="square f two" id="FTWO"></div>
+        <div class="square g two" id="GTWO"></div>
+        <div class="square h two" id="HTWO"></div>
+    </div>
+    <div class="rank">
+        <div class="square a one" id="AONE"></div>
+        <div class="square b one" id="BONE"></div>
+        <div class="square c one" id="CONE"></div>
+        <div class="square d one" id="DONE"></div>
+        <div class="square e one" id="EONE"></div>
+        <div class="square f one" id="FONE"></div>
+        <div class="square g one" id="GONE"></div>
+        <div class="square h one" id="HONE"></div>
+    </div>
+</div>
+
+<script>
+    const url = '/board';
+    fetch(url).then(res => res.json())
+        .then(json => {
+            json.forEach(e => {
+                document.getElementById(e.position).style.backgroundImage = `url(/img/${e.piece}.png)`;
+            })
+        });
+</script>
 </body>
 </html>
