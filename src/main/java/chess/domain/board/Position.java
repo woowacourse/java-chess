@@ -26,14 +26,15 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position valueOf(final String rawPosition) {
-        if (!CACHE.containsKey(rawPosition)) {
+        String refinedRawPosition = rawPosition.trim().toLowerCase();
+        if (!CACHE.containsKey(refinedRawPosition)) {
             throw new IllegalArgumentException("[ERROR] 체스판에 존재하지 않는 위치 좌표 입니다.");
         }
-        return CACHE.get(rawPosition);
+        return CACHE.get(refinedRawPosition);
     }
 
     public String generateRawPosition() {
-        return column.getName() + row.getValue();
+        return column.getValueToString() + row.getValue();
     }
 
     private static List<Position> createAll() {
@@ -55,7 +56,7 @@ public class Position implements Comparable<Position> {
     }
 
     public Position move(int horizon, int vertical) {
-        String column = this.column.move(horizon).getName();
+        String column = this.column.move(horizon).getValueToString();
         int row = this.row.move(vertical).getValue();
         return Position.valueOf(column + row);
     }

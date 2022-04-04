@@ -33,7 +33,7 @@ public class BoardFactory {
         Map<Position, Piece> emptyBoard = new TreeMap<>();
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
-                emptyBoard.put(Position.valueOf(column.getName() + row.getValue()), new Blank());
+                emptyBoard.put(Position.valueOf(column.getValueToString() + row.getValue()), new Blank());
             }
         }
         return emptyBoard;
@@ -51,13 +51,13 @@ public class BoardFactory {
                 new Rook(team)
         ).iterator();
         for (Column column : Column.values()) {
-            board.replace(Position.valueOf(column.getName() + row.getValue()), piecesIterator.next());
+            board.replace(Position.valueOf(column.getValueToString() + row.getValue()), piecesIterator.next());
         }
     }
 
     private static void initPawn(final Team team, final Row row, final Map<Position, Piece> board) {
         for (Column column : Column.values()) {
-            board.replace(Position.valueOf(column.getName() + row.getValue()), new Pawn(team));
+            board.replace(Position.valueOf(column.getValueToString() + row.getValue()), new Pawn(team));
         }
     }
 }

@@ -4,20 +4,18 @@ import java.util.Arrays;
 
 public enum Column {
 
-    A("a", 1),
-    B("b", 2),
-    C("c", 3),
-    D("d", 4),
-    E("e", 5),
-    F("f", 6),
-    G("g", 7),
-    H("h", 8);
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    private final String name;
-    private final int value;
+    private final char value;
 
-    Column(final String name, final int value) {
-        this.name = name;
+    Column(final char value) {
         this.value = value;
     }
 
@@ -36,11 +34,11 @@ public enum Column {
         return column.value - this.value;
     }
 
-    public String getName() {
-        return name;
+    public char getValue() {
+        return value;
     }
 
-    public int getValue() {
-        return value;
+    public String getValueToString() {
+        return String.valueOf(value);
     }
 }

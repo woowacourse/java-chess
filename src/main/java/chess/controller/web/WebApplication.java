@@ -28,10 +28,7 @@ public class WebApplication {
         }, new HandlebarsTemplateEngine());
 
         post("/move", (req, res) -> {
-            chessGame.move(
-                    req.queryParams("source").trim().toLowerCase(),
-                    req.queryParams("target").trim().toLowerCase()
-            );
+            chessGame.move(req.queryParams("source"), req.queryParams("target"));
             res.redirect("/");
             return null;
         });
