@@ -23,3 +23,7 @@ div {
   width: 80px;
   height: 80px;
 }
+
+.selected {
+  background-color: yellow;
+}

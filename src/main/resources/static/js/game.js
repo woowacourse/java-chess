@@ -3,8 +3,8 @@ const rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
 const section = document.getElementById("chess-section");
 
-const lightCellColor = '#ddb180';
-const darkCellColor = '#7c330c';
+const lightCellColor = "#ffffff";
+const darkCellColor = "#8977ad";
 
 let firstClicked;
 let secondClicked;
@@ -72,7 +72,7 @@ async function onclick(event) {
   decideClicked(cell);
   if (firstClicked && secondClicked) {
     res = await move();
-    firstClicked.childNodes[0].style.background = "none";
+    firstClicked.childNodes[0].classList.remove("selected");
     firstClicked = null;
     secondClicked = null;
     rendBoard(res.pieces);
@@ -85,7 +85,7 @@ function decideClicked(cell) {
   }
   if (firstClicked === cell) {
     const piece = firstClicked.childNodes[0];
-    piece.style.background = "none";
+    piece.classList.remove("selected");
     firstClicked = null;
     return;
   }
@@ -99,7 +99,7 @@ function decideClicked(cell) {
 
 function highlightClickedCell() {
   const piece = firstClicked.childNodes[0];
-  piece.style.background = "yellow";
+  piece.classList.add("selected");
 }
 
 function move() {
