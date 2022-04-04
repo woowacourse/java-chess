@@ -30,6 +30,7 @@ public class ChessGameController {
         Gson gson = new Gson();
         get("/", "application/json", (req, res) -> {
             res.type("application/json");
+
             Map<Position, Piece> pieces = chessGameService.currentChessBoard();
             return gson.toJson(pieces.entrySet()
                     .stream()
@@ -38,11 +39,15 @@ public class ChessGameController {
         });
 
         post("/start", "application/json", (req, res) -> {
+            res.type("application/json");
+
             chessGameService.start();
             return StatusResponse.SUCCESS;
         });
 
         post("/promotion", "application/json", (req, res) -> {
+            res.type("application/json");
+
             PromotionRequest promotionRequest = gson.fromJson(req.body(), PromotionRequest.class);
             PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece(promotionRequest.getPromotionValue());
             chessGameService.promotion(promotionPiece);
@@ -50,6 +55,8 @@ public class ChessGameController {
         });
 
         post("/move", "application/json", (req, res) -> {
+            res.type("application/json");
+
             MoveRequest moveRequest = gson.fromJson(req.body(), MoveRequest.class);
             Position source = moveRequest.toSourcePosition();
             Position target = moveRequest.toTargetPosition();
@@ -59,6 +66,7 @@ public class ChessGameController {
 
         get("/score", "application/json", (req, res) -> {
             res.type("application/json");
+
             List<ScoreResponse> collect = chessGameService.currentScore()
                     .entrySet()
                     .stream()
