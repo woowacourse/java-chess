@@ -1,9 +1,11 @@
 package chess.controller;
 
-import chess.domain.game.board.ChessBoard;
-import chess.domain.game.board.ChessBoardFactory;
 import chess.service.ChessService;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
@@ -27,6 +29,18 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
+        post("/move", (req, res) -> {
+            JSONObject request = (JSONObject) jsonParser(req);
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("board", chessService.move(request.get("source").toString(), request.get("target").toString()));
+            return render(model, "game.html");
+        });
+    }
+
+    private Object jsonParser(Request req) throws ParseException {
+        JSONParser jsonParser = new JSONParser();
+        return jsonParser.parse(req.body());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
