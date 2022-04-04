@@ -18,7 +18,7 @@ public class JdbcTemplate {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            throw new SqlConnectionException();
         }
         return conn;
     }
@@ -30,7 +30,7 @@ public class JdbcTemplate {
             conn = DriverManager.getConnection(url, USER, PASSWORD);
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            throw new SqlConnectionException();
         }
         return conn;
     }
