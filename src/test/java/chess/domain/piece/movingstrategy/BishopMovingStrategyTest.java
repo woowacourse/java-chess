@@ -17,11 +17,11 @@ class BishopMovingStrategyTest {
     void isNotMovable_withSamePosition() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.C, YAxis.ONE));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.C, YAxis.ONE));
 
         // then
         assertThat(actual).isFalse();
@@ -32,11 +32,11 @@ class BishopMovingStrategyTest {
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.D, YAxis.TWO));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.D, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -47,11 +47,11 @@ class BishopMovingStrategyTest {
     void isNotMovable_withSameXAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.D, YAxis.ONE));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.D, YAxis.ONE));
 
         // then
         assertThat(actual).isFalse();
@@ -62,11 +62,11 @@ class BishopMovingStrategyTest {
     void isNotMovable_withSameYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.C, YAxis.TWO));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.C, YAxis.TWO));
 
         // then
         assertThat(actual).isFalse();
@@ -77,11 +77,11 @@ class BishopMovingStrategyTest {
     void isNotMovable_notOnDiagonal() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.D, YAxis.THREE));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.D, YAxis.THREE));
 
         // then
         assertThat(actual).isFalse();

@@ -31,7 +31,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
+        Optional<Piece> actual = board.find(Position.of(XAxis.A, YAxis.TWO));
 
         // when & then
         assertThat(actual.get().getPieceType()).isEqualTo(PieceType.PAWN);
@@ -44,7 +44,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
+        Optional<Piece> actual = board.find(Position.of(XAxis.A, YAxis.THREE));
 
         // when & then
         assertThat(actual.isEmpty()).isEqualTo(true);
@@ -58,7 +58,7 @@ class BoardTest {
 
         // when & then
         assertThat(
-                board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE),
+                board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.THREE),
                         PieceColor.WHITE).isMoveSuccess()).isTrue();
     }
 
@@ -69,11 +69,11 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when & then
-        board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.B, YAxis.ONE), Position.of(XAxis.C, YAxis.THREE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.C, YAxis.THREE), Position.of(XAxis.D, YAxis.FIVE), PieceColor.WHITE);
 
         assertThat(
-                board.executeCommand(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN),
+                board.executeCommand(Position.of(XAxis.D, YAxis.FIVE), Position.of(XAxis.E, YAxis.SEVEN),
                         PieceColor.WHITE).isMoveSuccess()).isTrue();
     }
 
@@ -84,11 +84,11 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when & then
-        board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.B, YAxis.ONE), Position.of(XAxis.C, YAxis.THREE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.C, YAxis.THREE), Position.of(XAxis.D, YAxis.FIVE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.D, YAxis.FIVE), Position.of(XAxis.E, YAxis.SEVEN), PieceColor.WHITE);
 
-        assertThat(board.find(Position.from(XAxis.E, YAxis.SEVEN)).get().getPieceType()).isEqualTo(PieceType.KNIGHT);
+        assertThat(board.find(Position.of(XAxis.E, YAxis.SEVEN)).get().getPieceType()).isEqualTo(PieceType.KNIGHT);
     }
 
     @DisplayName("이동할 위치에 아군이 있는 경우 이동이 불가능하다.")
@@ -98,7 +98,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.TWO),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -112,10 +112,10 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.B, YAxis.SEVEN),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FOUR), Position.of(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FIVE), Position.of(XAxis.A, YAxis.SIX), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.SIX), Position.of(XAxis.B, YAxis.SEVEN),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -129,9 +129,9 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.B, YAxis.SIX),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FOUR), Position.of(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.FIVE), Position.of(XAxis.B, YAxis.SIX),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -145,10 +145,10 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE), PieceColor.BLACK);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.FOUR), PieceColor.BLACK);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.THREE), PieceColor.BLACK);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.B, YAxis.TWO),
+        board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.FIVE), PieceColor.BLACK);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FIVE), Position.of(XAxis.A, YAxis.FOUR), PieceColor.BLACK);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FOUR), Position.of(XAxis.A, YAxis.THREE), PieceColor.BLACK);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.B, YAxis.TWO),
                 PieceColor.BLACK).isMoveSuccess();
 
         // then
@@ -162,9 +162,9 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.B, YAxis.THREE),
+        board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.FIVE), Position.of(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.FOUR), Position.of(XAxis.B, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -178,7 +178,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -192,7 +192,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -206,10 +206,10 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.C, YAxis.THREE),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.B, YAxis.TWO), Position.of(XAxis.B, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.C, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -223,9 +223,9 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
-        board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.C, YAxis.THREE),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.C, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -239,7 +239,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE),
+        boolean actual = board.executeCommand(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.E, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -253,8 +253,8 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.D, YAxis.TWO), Position.from(XAxis.D, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE),
+        board.executeCommand(Position.of(XAxis.D, YAxis.TWO), Position.of(XAxis.D, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.E, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -268,7 +268,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE),
+        boolean actual = board.executeCommand(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.A, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -282,8 +282,8 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE),
+        board.executeCommand(Position.of(XAxis.B, YAxis.TWO), Position.of(XAxis.B, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.A, YAxis.THREE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then

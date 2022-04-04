@@ -19,7 +19,7 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.TWO),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -33,7 +33,7 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.FOUR),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -47,8 +47,8 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FOUR),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.A, YAxis.FOUR),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -62,8 +62,8 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FIVE),
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.A, YAxis.FIVE),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -77,9 +77,9 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.A, YAxis.THREE), PieceColor.WHITE);
         boolean actual = board.executeCommand(
-                        Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.TWO), PieceColor.WHITE)
+                        Position.of(XAxis.A, YAxis.THREE), Position.of(XAxis.A, YAxis.TWO), PieceColor.WHITE)
                 .isMoveSuccess();
 
         // then
@@ -93,7 +93,7 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE),
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.FIVE),
                 PieceColor.BLACK).isMoveSuccess();
 
         // then
@@ -107,8 +107,8 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.BLACK);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FIVE),
+        board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.SIX), PieceColor.BLACK);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.SIX), Position.of(XAxis.A, YAxis.FIVE),
                 PieceColor.BLACK).isMoveSuccess();
 
         // then
@@ -122,8 +122,8 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FOUR),
+        board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.SIX), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.SIX), Position.of(XAxis.A, YAxis.FOUR),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
@@ -137,8 +137,8 @@ class PawnMovingStrategyTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);
-        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.SEVEN),
+        board.executeCommand(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.SIX), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.of(XAxis.A, YAxis.SIX), Position.of(XAxis.A, YAxis.SEVEN),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then

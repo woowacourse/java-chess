@@ -34,7 +34,7 @@ public class BoardDto {
         List<Optional<PieceDto>> row = new ArrayList<>();
 
         for (XAxis xAxis : XAxis.values()) {
-            Position position = Position.from(xAxis, yAxis);
+            Position position = Position.of(xAxis, yAxis);
             Optional<PieceDto> piece = board.find(position)
                     .map(PieceDto::from);
 

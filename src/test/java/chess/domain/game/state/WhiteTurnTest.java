@@ -59,7 +59,7 @@ class WhiteTurnTest {
         GameState whiteTurn = new WhiteTurn();
 
         // when & then
-        assertThatThrownBy(() -> whiteTurn.move(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.ONE)))
+        assertThatThrownBy(() -> whiteTurn.move(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.ONE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("말을 이동하는 것에 실패했습니다.");
     }
@@ -71,10 +71,10 @@ class WhiteTurnTest {
         GameState whiteTurn = new WhiteTurn();
 
         // when
-        whiteTurn.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
-        whiteTurn.move(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.B, YAxis.FIVE));
-        whiteTurn.move(Position.from(XAxis.B, YAxis.FIVE), Position.from(XAxis.C, YAxis.SEVEN));
-        GameState actual = whiteTurn.move(Position.from(XAxis.C, YAxis.SEVEN), Position.from(XAxis.E, YAxis.EIGHT));
+        whiteTurn.move(Position.of(XAxis.B, YAxis.ONE), Position.of(XAxis.C, YAxis.THREE));
+        whiteTurn.move(Position.of(XAxis.C, YAxis.THREE), Position.of(XAxis.B, YAxis.FIVE));
+        whiteTurn.move(Position.of(XAxis.B, YAxis.FIVE), Position.of(XAxis.C, YAxis.SEVEN));
+        GameState actual = whiteTurn.move(Position.of(XAxis.C, YAxis.SEVEN), Position.of(XAxis.E, YAxis.EIGHT));
 
         // then
         assertThat(actual).isInstanceOf(ReadyToStart.class);
@@ -87,7 +87,7 @@ class WhiteTurnTest {
         GameState whiteTurn = new WhiteTurn();
 
         // when
-        GameState actual = whiteTurn.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
+        GameState actual = whiteTurn.move(Position.of(XAxis.B, YAxis.ONE), Position.of(XAxis.C, YAxis.THREE));
 
         // then
         assertThat(actual).isInstanceOf(BlackTurn.class);

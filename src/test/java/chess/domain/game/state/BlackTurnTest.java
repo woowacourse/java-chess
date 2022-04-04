@@ -56,7 +56,7 @@ class BlackTurnTest {
     void move_throwsExceptionOnFailed() {
         // when & then
         assertThatThrownBy(
-                () -> blackTurn.move(Position.from(XAxis.A, YAxis.EIGHT), Position.from(XAxis.A, YAxis.SEVEN)))
+                () -> blackTurn.move(Position.of(XAxis.A, YAxis.EIGHT), Position.of(XAxis.A, YAxis.SEVEN)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("말을 이동하는 것에 실패했습니다.");
     }
@@ -65,10 +65,10 @@ class BlackTurnTest {
     @Test
     void move_returnsNewReadyToStartOnKilledKing() {
         // when
-        blackTurn.move(Position.from(XAxis.B, YAxis.EIGHT), Position.from(XAxis.C, YAxis.SIX));
-        blackTurn.move(Position.from(XAxis.C, YAxis.SIX), Position.from(XAxis.B, YAxis.FOUR));
-        blackTurn.move(Position.from(XAxis.B, YAxis.FOUR), Position.from(XAxis.C, YAxis.TWO));
-        GameState actual = blackTurn.move(Position.from(XAxis.C, YAxis.TWO), Position.from(XAxis.E, YAxis.ONE));
+        blackTurn.move(Position.of(XAxis.B, YAxis.EIGHT), Position.of(XAxis.C, YAxis.SIX));
+        blackTurn.move(Position.of(XAxis.C, YAxis.SIX), Position.of(XAxis.B, YAxis.FOUR));
+        blackTurn.move(Position.of(XAxis.B, YAxis.FOUR), Position.of(XAxis.C, YAxis.TWO));
+        GameState actual = blackTurn.move(Position.of(XAxis.C, YAxis.TWO), Position.of(XAxis.E, YAxis.ONE));
 
         // then
         assertThat(actual).isInstanceOf(ReadyToStart.class);
@@ -78,7 +78,7 @@ class BlackTurnTest {
     @Test
     void move_returnsNewWhiteTurn() {
         // when
-        GameState actual = blackTurn.move(Position.from(XAxis.B, YAxis.EIGHT), Position.from(XAxis.C, YAxis.SIX));
+        GameState actual = blackTurn.move(Position.of(XAxis.B, YAxis.EIGHT), Position.of(XAxis.C, YAxis.SIX));
 
         // then
         assertThat(actual).isInstanceOf(WhiteTurn.class);

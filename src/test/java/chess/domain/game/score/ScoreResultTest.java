@@ -53,10 +53,10 @@ class ScoreResultTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.executeCommand(Position.from(XAxis.B, YAxis.SEVEN), Position.from(XAxis.B, YAxis.FIVE), PieceColor.BLACK);
-        board.executeCommand(Position.from(XAxis.B, YAxis.FIVE), Position.from(XAxis.B, YAxis.FOUR), PieceColor.BLACK);
-        board.executeCommand(Position.from(XAxis.B, YAxis.FOUR), Position.from(XAxis.B, YAxis.THREE), PieceColor.BLACK);
-        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE), PieceColor.WHITE);
+        board.executeCommand(Position.of(XAxis.B, YAxis.SEVEN), Position.of(XAxis.B, YAxis.FIVE), PieceColor.BLACK);
+        board.executeCommand(Position.of(XAxis.B, YAxis.FIVE), Position.of(XAxis.B, YAxis.FOUR), PieceColor.BLACK);
+        board.executeCommand(Position.of(XAxis.B, YAxis.FOUR), Position.of(XAxis.B, YAxis.THREE), PieceColor.BLACK);
+        board.executeCommand(Position.of(XAxis.A, YAxis.TWO), Position.of(XAxis.B, YAxis.THREE), PieceColor.WHITE);
 
         ScoreResult scoreResult = new ScoreResult(board);
         Score actual = scoreResult.getScoreByPieceColor(PieceColor.WHITE);

@@ -30,8 +30,8 @@ class DirectionTest {
     void of_returnsDirectionWithTwoPositions(String fromXAxis, String fromYAxis, String toXAxis, String toYAxis,
                                              String expectedDirection) {
         // given
-        Position from = Position.from(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
-        Position to = Position.from(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
+        Position from = Position.of(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
+        Position to = Position.of(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
 
         // when
         Direction expected = Direction.of(from, to);
@@ -45,8 +45,8 @@ class DirectionTest {
     @CsvSource(value = {"A,ONE,D,TWO", "D,ONE,A,TWO"})
     void of_returnsDirectionWithTwoPositions(String fromXAxis, String fromYAxis, String toXAxis, String toYAxis) {
         // given
-        Position from = Position.from(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
-        Position to = Position.from(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
+        Position from = Position.of(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
+        Position to = Position.of(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
 
         // when
         Direction direction = Direction.of(from, to);

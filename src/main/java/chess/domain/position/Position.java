@@ -17,8 +17,15 @@ public class Position {
         this.yAxis = yAxis;
     }
 
-    public static Position from(XAxis xAxis, YAxis yAxis) {
+    public static Position of(XAxis xAxis, YAxis yAxis) {
         return Cache.findByXAxisAndYAxis(xAxis, yAxis);
+    }
+
+    public static Position of(String xAxisValue, String yAxisValue) {
+        XAxis xAxis = XAxis.getByValue(xAxisValue);
+        YAxis yAxis = YAxis.getByValue(yAxisValue);
+
+        return of(xAxis, yAxis);
     }
 
     // TODO: 리팩토링
@@ -26,12 +33,12 @@ public class Position {
         XAxis xAxis = XAxis.valueOf(coordinate.substring(0, 1).toUpperCase(Locale.ROOT));
         YAxis yAxis = YAxis.getByValue(Integer.parseInt(coordinate.substring(1, 2)));
 
-        return from(xAxis, yAxis);
+        return of(xAxis, yAxis);
     }
 
     public static List<Position> getPositionsByXAxis(XAxis xAxis) {
         return Arrays.stream(YAxis.values())
-                .map(yAxis -> Position.from(xAxis, yAxis))
+                .map(yAxis -> Position.of(xAxis, yAxis))
                 .collect(Collectors.toList());
     }
 
@@ -75,13 +82,13 @@ public class Position {
 
     public List<Position> getPositionsSameYAxisBetween(Position other) {
         return YAxis.getBetween(this.yAxis, other.yAxis).stream()
-                .map(yAxis -> Position.from(this.xAxis, yAxis))
+                .map(yAxis -> Position.of(this.xAxis, yAxis))
                 .collect(Collectors.toList());
     }
 
     public List<Position> getPositionsSameXAxisBetween(Position other) {
         return XAxis.getBetween(this.xAxis, other.xAxis).stream()
-                .map(xAxis -> Position.from(xAxis, this.yAxis))
+                .map(xAxis -> Position.of(xAxis, this.yAxis))
                 .collect(Collectors.toList());
     }
 
@@ -103,7 +110,7 @@ public class Position {
         XAxis xAxis1 = XAxis.getByValue(this.xAxis.getValue() + xDirection * idx);
         YAxis yAxis1 = YAxis.getByValue(this.yAxis.getValue() + yDirection * idx);
 
-        return Position.from(xAxis1, yAxis1);
+        return Position.of(xAxis1, yAxis1);
     }
 
     @Override
