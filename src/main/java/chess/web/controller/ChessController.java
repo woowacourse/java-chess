@@ -33,12 +33,13 @@ public class ChessController {
         });
 
         get("/start", (request,response) -> {
+            System.out.println("실행 되나?");
             Map<String, Object> model = new HashMap<>();
 
             List<String> chessBoard = chessService.createChessBoard();
             model.put("chessboard", chessBoard);
 
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         post("/move", (request,response) -> {
@@ -56,7 +57,7 @@ public class ChessController {
                 model.put("chessboard", chessBoard);
             }
 
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         get("/status", (request, response) -> {
@@ -70,7 +71,7 @@ public class ChessController {
             model.put("whiteScore", score.get(WHITE));
             model.put("chessboard", chessBoard);
 
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         get("/end", (request, response) -> {
@@ -83,7 +84,7 @@ public class ChessController {
             model.put("winTeam", winTeamName);
             model.put("chessboard", chessBoard);
 
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
     }
 
