@@ -56,7 +56,7 @@ public class ChessGameController {
             return StatusResponse.SUCCESS;
         });
 
-        get("/status", "application/json", (req, res) -> {
+        get("/score", "application/json", (req, res) -> {
             res.type("application/json");
             List<ScoreResponse> collect = chessGameService.currentScore()
                     .entrySet()
