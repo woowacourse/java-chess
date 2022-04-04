@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.controller.dto.response;
 
 import chess.domain.Position;
 import chess.domain.turn.GameTurn;
