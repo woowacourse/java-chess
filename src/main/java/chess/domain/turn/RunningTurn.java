@@ -19,14 +19,14 @@ public class RunningTurn implements GameTurn {
     }
 
     @Override
-    public GameTurn nextTurn() {
+    public Turn nextTurn() {
         if (chessBoard.isPromotionStatus(color)) {
-            return this;
+            return color.currentTurn();
         }
         if (chessBoard.isFinished()) {
-            return new EndTurn(chessBoard);
+            return Turn.END;
         }
-        return new RunningTurn(chessBoard, color.reverseColor());
+        return color.reverseTurn();
     }
 
     @Override
@@ -37,11 +37,6 @@ public class RunningTurn implements GameTurn {
     @Override
     public Entry<Position, Piece> promotion(PromotionPiece promotionPiece) {
         return chessBoard.promotion(promotionPiece, color);
-    }
-
-    @Override
-    public Color color() {
-        return color;
     }
 
     @Override

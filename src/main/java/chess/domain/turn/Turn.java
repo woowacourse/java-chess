@@ -22,4 +22,14 @@ public enum Turn {
     public GameTurn createGameTurn(ChessBoard chessBoard) {
         return gameTurnCreator.apply(chessBoard);
     }
+
+    public Turn reverseTurn() {
+        if (this == WHITE_TURN) {
+            return BLACK_TURN;
+        }
+        if (this == BLACK_TURN) {
+            return WHITE_TURN;
+        }
+        throw new IllegalStateException("END상태는 반대 턴이 없습니다.");
+    }
 }

@@ -1,7 +1,9 @@
 package chess.domain.turn;
 
-import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
+import static chess.domain.turn.Turn.BLACK_TURN;
+import static chess.domain.turn.Turn.END;
+import static chess.domain.turn.Turn.WHITE_TURN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
@@ -24,12 +26,12 @@ class RunningTurnTest {
     }
 
     @Test
-    @DisplayName("chess board가 promotion 상태라면 현재 참조값을 반환")
+    @DisplayName("chess board가 promotion 상태라면 턴을 반환")
     void nextTurnPromotion() {
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new Piece(WHITE, new Pawn(WHITE))));
         GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
 
-        assertThat(gameTurn).isSameAs(gameTurn.nextTurn());
+        assertThat(gameTurn.nextTurn()).isEqualTo(WHITE_TURN);
     }
 
     @Test
@@ -38,7 +40,7 @@ class RunningTurnTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new Piece(WHITE, new King())));
         GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
 
-        assertThat(gameTurn.nextTurn()).isInstanceOf(EndTurn.class);
+        assertThat(gameTurn.nextTurn()).isEqualTo(END);
     }
 
     @Test
@@ -47,6 +49,6 @@ class RunningTurnTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a', '1'), new Piece(WHITE, new Pawn(WHITE))));
         GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
 
-        assertThat(gameTurn.nextTurn().color()).isEqualTo(BLACK);
+        assertThat(gameTurn.nextTurn()).isEqualTo(BLACK_TURN);
     }
 }

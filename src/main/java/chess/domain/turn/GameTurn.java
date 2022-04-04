@@ -9,13 +9,11 @@ import java.util.Map.Entry;
 
 public interface GameTurn {
 
-    GameTurn nextTurn();
+    Turn nextTurn();
 
     void movePiece(Position source, Position target);
 
     Entry<Position, Piece> promotion(PromotionPiece promotionPiece);
-
-    Color color();
 
     boolean isEnd();
 

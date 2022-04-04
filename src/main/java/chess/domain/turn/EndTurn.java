@@ -17,7 +17,7 @@ public class EndTurn implements GameTurn {
     }
 
     @Override
-    public GameTurn nextTurn() {
+    public Turn nextTurn() {
         throw new IllegalStateException("종료된 게임은 다음 턴이 없습니다.");
     }
 
@@ -29,11 +29,6 @@ public class EndTurn implements GameTurn {
     @Override
     public Entry<Position, Piece> promotion(PromotionPiece promotionPiece) {
         throw new IllegalStateException("종료된 게임은 promotion할 수 없습니다.");
-    }
-
-    @Override
-    public Color color() {
-        return chessBoard.winner();
     }
 
     @Override
