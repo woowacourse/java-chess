@@ -41,9 +41,10 @@ public class ChessResponseDto {
 
     private Map<String, String> createBoard(final Map<Position, Piece> board) {
         final Map<String, String> strings = new LinkedHashMap<>();
-        board.forEach((key, value) -> {
-            strings.put(key.getName(), value.getType() + "_" + value.getColor());
-        });
+        for (Position position : Position.toPieces()) {
+            final Piece piece = board.get(position);
+            strings.put(position.getName(), piece.getType() + "_" + piece.getColor());
+        }
         return strings;
     }
 
