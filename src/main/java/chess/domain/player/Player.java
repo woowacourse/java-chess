@@ -12,12 +12,20 @@ import chess.domain.piece.constant.PromotablePiece;
 
 public class Player {
 
+    private static final Long TEMPORARY_PLAYER_ID = 0L;
+
+    private final Long id;
     private final Color color;
     private final Map<Position, Piece> pieces;
 
-    public Player(final Color color, final Map<Position, Piece> pieces) {
+    private Player(final Long id, final Color color, final Map<Position, Piece> pieces) {
+        this.id = id;
         this.color = color;
         this.pieces = pieces;
+    }
+
+    public static Player of(final Color color, final Map<Position, Piece> pieces) {
+        return new Player(TEMPORARY_PLAYER_ID, color, pieces);
     }
 
     public List<Position> calculateRouteToMove(final Position source, final Position target) {
@@ -106,6 +114,10 @@ public class Player {
 
     public boolean isColorSame(final Color color) {
         return color.equals(this.color);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Color getColor() {

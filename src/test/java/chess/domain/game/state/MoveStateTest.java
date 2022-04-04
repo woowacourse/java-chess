@@ -31,10 +31,10 @@ class MoveStateTest {
     @Test
     void runToFinishedState() {
         final Players players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(
+                Player.of(Color.WHITE, new HashMap<>(Map.of(
                         Position.from("c7"), Pawn.getWhitePawn(),
                         Position.from("d1"), King.getInstance()))),
-                new Player(Color.BLACK, new HashMap<>(Map.of(
+                Player.of(Color.BLACK, new HashMap<>(Map.of(
                         Position.from("d8"), King.getInstance())))
         );
 
@@ -48,10 +48,10 @@ class MoveStateTest {
     @Test
     void runToPromotableState() {
         final Players players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(
+                Player.of(Color.WHITE, new HashMap<>(Map.of(
                         Position.from("a7"), Pawn.getWhitePawn(),
                         Position.from("d1"), King.getInstance()))),
-                new Player(Color.BLACK, new HashMap<>(Map.of(
+                Player.of(Color.BLACK, new HashMap<>(Map.of(
                         Position.from("d8"), King.getInstance())))
         );
 
@@ -65,9 +65,9 @@ class MoveStateTest {
     @Test
     void runToMoveState() {
         final Players players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(
+                Player.of(Color.WHITE, new HashMap<>(Map.of(
                         Position.from("d1"), King.getInstance()))),
-                new Player(Color.BLACK, new HashMap<>(Map.of(
+                Player.of(Color.BLACK, new HashMap<>(Map.of(
                         Position.from("d8"), King.getInstance())))
         );
 

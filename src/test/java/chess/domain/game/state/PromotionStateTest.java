@@ -21,7 +21,7 @@ class PromotionStateTest {
 
     @BeforeEach
     void setUp() {
-        final Players players = new Players(new Player(
+        final Players players = new Players(Player.of(
                 Color.WHITE, new HashMap<>(Map.of(Position.from("a8"), Pawn.getWhitePawn()))));
         gameState = new PromotionState(players, Color.WHITE);
     }

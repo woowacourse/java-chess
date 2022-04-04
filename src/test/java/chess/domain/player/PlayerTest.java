@@ -31,7 +31,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(Color.WHITE, new HashMap<>(Map.of(
+        player = Player.of(Color.WHITE, new HashMap<>(Map.of(
                 Position.from("a1"), Rook.getInstance(),
                 Position.from("a2"), Pawn.getWhitePawn(),
                 Position.from("d1"), Queen.getInstance()
@@ -125,7 +125,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"a7,false", "a8,true"})
     void isPromotablePawnExist(final String position, final boolean expected) {
-        final Player player = new Player(Color.WHITE, Map.of(Position.from(position), Pawn.getWhitePawn()));
+        final Player player = Player.of(Color.WHITE, Map.of(Position.from(position), Pawn.getWhitePawn()));
         final boolean actual = player.isPromotablePawnExist();
         assertThat(actual).isEqualTo(expected);
     }
@@ -142,7 +142,7 @@ class PlayerTest {
     @Test
     void promotePawn() {
         final Position position = Position.from("a8");
-        final Player player = new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn())));
+        final Player player = Player.of(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn())));
         player.promotePawn("Queen");
 
         final Map<Position, Piece> playerPieces = player.getPieces();
@@ -153,7 +153,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("provideForIsKingAlive")
     void isKingAlive(final Piece piece, final boolean expected) {
-        final Player player = new Player(Color.WHITE, new HashMap<>(Map.of(Position.from("a1"), piece)));
+        final Player player = Player.of(Color.WHITE, new HashMap<>(Map.of(Position.from("a1"), piece)));
         final boolean actual = player.isKingAlive();
         assertThat(actual).isEqualTo(expected);
     }
