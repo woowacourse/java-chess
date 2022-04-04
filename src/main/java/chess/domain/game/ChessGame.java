@@ -58,9 +58,13 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
-        if (isFinished) {
+        if (!isFinished) {
             return getWinnerByScore();
         }
+        return getTurn();
+    }
+
+    public Team getTurn() {
         return turn;
     }
 

@@ -6,7 +6,7 @@ import chess.dto.CommandDto;
 import chess.view.Command;
 
 public final class Play implements State {
-    private static final String INVALID_COMMEND_MESSAGE = "end, status, move 만 입력할 수 있습니다.";
+    private static final String INVALID_COMMEND_MESSAGE = "move 만 입력할 수 있습니다.";
 
     private final ChessGame chessGame;
 
@@ -16,12 +16,6 @@ public final class Play implements State {
 
     @Override
     public State execute(CommandDto commandDto) {
-        if (commandDto.getCommand() == Command.END) {
-            return new End();
-        }
-        if (commandDto.getCommand() == Command.STATUS) {
-            return new Status(chessGame);
-        }
         if (commandDto.getCommand() == Command.MOVE) {
             chessGame.play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
             return playOrResult(chessGame);

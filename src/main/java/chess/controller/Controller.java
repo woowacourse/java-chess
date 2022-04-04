@@ -8,6 +8,7 @@ import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Play;
 import chess.domain.game.state.State;
+import chess.domain.game.state.attribute.StateType;
 import chess.domain.piece.attribute.Team;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
@@ -37,6 +38,10 @@ public class Controller {
         try {
             state = state.execute(new CommandDto(input));
             model.put("error", "현재 에러 없음");
+            model.put("result", "");
+            if (state.getType() != StateType.PLAY) {
+                model.put("result", "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.");
+            }
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
@@ -55,7 +60,7 @@ public class Controller {
     }
 
     private void updateTurn() {
-        model.put("turn", chessGame.getWinner());
+        model.put("turn", chessGame.getTurn());
     }
 
     private void updatePieces() {
