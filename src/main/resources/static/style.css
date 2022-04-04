@@ -1,0 +1,53 @@
+.chess-board {
+    display: grid;
+    grid-template-columns: 20px repeat(8, 80px) 20px;
+    grid-template-rows: 30px repeat(8, 80px) 30px;
+    border: 10px solid black;
+    width: 680px;
+    background-color: #836936;
+    background-image: url("/images/board_back.jpeg");
+    box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
+}
+
+.white-square {
+    background-image: url("/images/white_square.jpg");
+    color: black;
+}
+
+.black-square {
+    background-image: url("/images/black_square.jpg");
+    color: white;
+}
+
+.column-header {
+    font-family: "Avenir Next Condensed", serif;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.row-header {
+    font-family: "Avenir Next Condensed", serif;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    line-height: 80px;
+}
+
+.chess-button-container {
+    height: 50px;
+}
+
+:root {
+    --button-color: #ffffff;
+    --button-bg-color: #0d6efd;
+    --button-hover-bg-color: #025ce2;
+}
+
+.piece {
+    width: 70px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
+}
