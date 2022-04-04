@@ -37,15 +37,8 @@ public class BoardDto {
         List<PieceDto> tempLine = new ArrayList<>();
         for (File file : File.values()) {
             Piece piece = board.get(Square.of(file, rank));
-            tempLine.add(toPieceDto(piece, rank, file));
+            tempLine.add(PieceDto.of(piece, file, rank));
         }
         return tempLine;
-    }
-
-    private static PieceDto toPieceDto(Piece piece, Rank rank, File file) {
-        if (piece.isBlack()) {
-            return PieceDto.of(piece.name().toUpperCase(Locale.ROOT), file, rank);
-        }
-        return PieceDto.of(piece.name(), file, rank);
     }
 }

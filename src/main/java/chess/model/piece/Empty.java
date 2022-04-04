@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Empty extends AbstractPiece {
 
-    private static final String NAME = ".";
+    private static final String NAME = "empty";
     private static final double POINT = 0;
 
     public Empty() {

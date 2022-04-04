@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
+    <style>
+        .chess-board .white {
+            background: #eee;
+        }
+
+        .chess-board .black {
+            background: #aaa;
+        }
+    </style>
     <script>
         let first = '';
         let second = '';
@@ -60,54 +69,36 @@
             });
         }
 
-        function finishGame() {
-            fetch('/end', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "text/plain",
-                }
-            }).then((response) => {
-                    response.json().then(data => {
-                        console.log(data.finished);
-                        if (data.status === 400) {
-                            alert(data.errorMessage);
-                        }
-                        if (data.finished === true) {
-                            alert("게임이 종료되었습니다.");
-                            document.location.href = '/start'
-                            return;
-                        }
-                        location.reload();
-                    });
-                }
-            );
-        }
-
     </script>
 </head>
 <body>
-<table>
-    {{#board}}
-    {{#dto}}
-    <tr>
-        {{#this}}
-        {{#this}}
-        <td id={{position}} onclick="clicked(this.id)">
-            {{name}}
-        </td>
-        {{/this}}
-        {{/this}}
-    </tr>
-    {{/dto}}
-    {{/board}}
-</table>
+<div align="center">
+    <h1>산체스</h1>
+    <table class="chess-board" border="1">
+        {{#board}}
+        {{#dto}}
+        <tr>
+            {{#this}}
+            {{#this}}
+            <td id={{position}} class="{{background}}" onclick="clicked(this.id)">
+                <img src="images/{{imagePath}}" style="width:7vw; height: 7vw;"/>
+            </td>
+            {{/this}}
+            {{/this}}
+        </tr>
+        {{/dto}}
+        {{/board}}
+    </table>
+</div>
 <br/>
-<button id="btn" onclick="checkStatus()">status</button>
-<p id="statusResult">
+<div align="center">
+    <button id="btn" onclick="checkStatus()">status</button>
+    <p id="statusResult">
 
-</p>
-<form action="/end" method="POST">
-    <input type="submit" value="end" />
-</form>
+    </p>
+    <form action="/end" method="POST">
+        <input type="submit" value="end"/>
+    </form>
+</div>
 </body>
 </html>

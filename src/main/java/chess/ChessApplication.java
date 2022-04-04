@@ -2,6 +2,7 @@ package chess;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 import chess.controller.ChessController;
 import chess.dto.ResponseDto;
@@ -17,6 +18,8 @@ public class ChessApplication {
 
     public static void main(String[] args) {
 
+        staticFiles.location("/static");
+        
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("board", chessController.getBoard());

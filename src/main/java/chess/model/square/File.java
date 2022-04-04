@@ -46,4 +46,8 @@ public enum File {
                 .filter(square -> square.sameFile(this))
                 .count();
     }
+
+    public int value() {
+        return value;
+    }
 }
