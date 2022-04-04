@@ -1,14 +1,14 @@
 package chess.domain;
 
 import chess.dao.ChessPieceDao;
-import chess.dao.StatusDao;
+import chess.dao.RoomDao;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
-import chess.dto.StatusDto;
+import chess.dto.RoomDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
@@ -44,34 +44,33 @@ public class ChessGame {
             pieceByPosition = ChessBoardFactory.createInitPieceByPosition();
         }
 
-        final StatusDao statusDao = new StatusDao();
-        final StatusDto statusDto = statusDao.findByRoomName(roomName);
+        final RoomDao roomDao = new RoomDao();
+        final RoomDto roomDto = roomDao.findByName(roomName);
 
         Color currentTurn = null;
         GameStatus gameStatus = null;
-        if (Objects.isNull(statusDto)) {
+        if (Objects.isNull(roomDto)) {
             currentTurn = Color.WHITE;
             gameStatus = GameStatus.READY;
         }
-        if (Objects.nonNull(statusDto)) {
-            currentTurn = statusDto.getCurrentTurn();
-            gameStatus = statusDto.getGameStatus();
+        if (Objects.nonNull(roomDto)) {
+            currentTurn = roomDto.getCurrentTurn();
+            gameStatus = roomDto.getGameStatus();
         }
         return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
     }
 
-    public void updateDB(final String roomName) {
+    public void updateChessPiece(final String roomName) {
         final ChessPieceDao chessPieceDao = new ChessPieceDao();
         chessPieceDao.deleteAllByRoomName(roomName);
         chessPieceDao.saveAll(roomName, chessBoard.findAllPiece());
 
-        updateStatus(roomName);
+        updateRoom(roomName);
     }
 
-    public void updateStatus(final String roomName) {
-        final StatusDao statusDao = new StatusDao();
-        statusDao.deleteByRoomName(roomName);
-        statusDao.saveByRoomName(roomName, gameStatus, chessBoard.currentTurn());
+    public void updateRoom(final String roomName) {
+        final RoomDao roomDao = new RoomDao();
+        roomDao.update(roomName, gameStatus, chessBoard.currentTurn());
     }
 
     public MoveResult move(final Position from, final Position to) {

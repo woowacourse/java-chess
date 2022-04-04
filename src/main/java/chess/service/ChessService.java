@@ -40,7 +40,7 @@ public class ChessService {
             }
             model.put("error", e.getMessage());
         }
-        chessGame.updateDB(roomName);
+        chessGame.updateChessPiece(roomName);
         return model;
     }
 
@@ -59,7 +59,7 @@ public class ChessService {
             chessPieceDao.deleteByPosition(roomName, to);
             chessPieceDao.update(roomName, from, to);
 
-            chessGame.updateStatus(roomName);
+            chessGame.updateRoom(roomName);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece(roomName);
@@ -81,7 +81,7 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
-        chessGame.updateStatus(roomName);
+        chessGame.updateRoom(roomName);
         return model;
     }
 

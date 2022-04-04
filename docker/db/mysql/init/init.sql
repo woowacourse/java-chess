@@ -2,7 +2,9 @@ USE chess;
 
 CREATE TABLE Room
 (
-    Name VARCHAR(10) NOT NULL UNIQUE,
+    Name        VARCHAR(10) NOT NULL UNIQUE,
+    GameStatus  VARCHAR(10) NOT NULL,
+    CurrentTurn VARCHAR(10) NOT NULL,
     PRIMARY KEY (Name)
 );
 
@@ -14,12 +16,3 @@ CREATE TABLE ChessPiece
     Color      VARCHAR(10) NOT NULL,
     FOREIGN KEY (Room_Name) REFERENCES Room (Name) ON DELETE CASCADE
 );
-
-CREATE TABLE Status
-(
-    Room_Name   VARCHAR(10) NOT NULL,
-    GameStatus  VARCHAR(10) NOT NULL,
-    CurrentTurn VARCHAR(10) NOT NULL,
-    FOREIGN KEY (Room_Name) REFERENCES Room (Name) ON DELETE CASCADE
-);
-
