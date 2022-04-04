@@ -26,6 +26,8 @@ h1 {
 .square {
     flex: 1;
     /*border: 1px solid black;*/
+    font-size: 0.3rem;
+    color: gray;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
