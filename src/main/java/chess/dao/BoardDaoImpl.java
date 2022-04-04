@@ -1,6 +1,8 @@
 package chess.dao;
 
 import chess.util.JdbcTemplate;
+import chess.util.SqlSelectException;
+import chess.util.SqlUpdateException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,9 +37,8 @@ public class BoardDaoImpl implements BoardDao {
             }
             return board;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SqlSelectException();
         }
-        return null;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class BoardDaoImpl implements BoardDao {
             preparedStatement.setString(POSITION_COLUMN, position);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE);
         }
     }
 
@@ -64,7 +65,7 @@ public class BoardDaoImpl implements BoardDao {
             }
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SqlUpdateException(SqlUpdateException.MULTIPLE_UPDATE_FAILURE_MESSAGE);
         }
     }
 }

@@ -1,6 +1,8 @@
 package chess.dao;
 
 import chess.util.JdbcTemplate;
+import chess.util.SqlSelectException;
+import chess.util.SqlUpdateException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,9 +32,8 @@ public class TurnDaoImpl implements TurnDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SqlSelectException();
         }
-        return null;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class TurnDaoImpl implements TurnDao {
             preparedStatement.setString(PREVIOUS_TURN_COLUMN, previousTurn);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE);
         }
     }
 }
