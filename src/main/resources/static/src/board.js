@@ -1,10 +1,15 @@
 const button = document.getElementById("button");
+const status_button = document.getElementById("status-button");
 const squares = document.getElementsByClassName("piece");
 
 source = ""
 target = ""
 
 async function startChess() {
+    let session = document.getElementById("result-session");
+    while (session.hasChildNodes()) {
+        session.removeChild(session.firstChild);
+    }
     let board = await fetch("/start");
     board = await board.json();
     putPieceInSquare(board);
@@ -68,6 +73,24 @@ async function movePiece(source, target) {
     putPieceInSquare(board);
 }
 
+async function printResult() {
+    let board = await fetch("/status");
+    board = await board.json();
+    let session = document.getElementById("result-session");
+    const whiteScore = document.createElement("div");
+    const blackScore = document.createElement("div");
+    const winner = document.createElement("div");
+    const newStart = document.createElement("div");
+    whiteScore.innerHTML = "화이트 점수 : " + board.score.WHITE;
+    blackScore.innerHTML = "블랙 점수 : " + board.score.WHITE;
+    winner.innerHTML = "승자 : " + board.winner;
+    newStart.innerHTML = "게임이 종료 되었습니다. 재시작 하려면 Start 버튼을 눌러주세요.";
+    session.appendChild(whiteScore);
+    session.appendChild(blackScore);
+    session.appendChild(winner);
+    session.appendChild(newStart);
+}
+
 button.addEventListener("click", function () {
     const form = document.getElementById("form");
     if(button.innerText == "Start") {
@@ -77,4 +100,9 @@ button.addEventListener("click", function () {
     }
     endChess();
     button.innerText = "Start";
-})
+});
+
+status_button.addEventListener("click", function () {
+    button.innerText = "Start";
+    printResult();
+});
