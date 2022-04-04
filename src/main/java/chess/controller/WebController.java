@@ -22,10 +22,7 @@ public class WebController {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("pieces", chessController.getCurrentImages());
-            addTeamInformation(model);
-            addPlayingInformation(model);
+            Map<String, Object> model = setModel();
             return render(model, "index.html");
         });
 
@@ -42,12 +39,25 @@ public class WebController {
         });
 
         exception(Exception.class, (exception, request, response) -> {
-            response.status(400);
-            response.body(exception.getMessage());
+            Map<String, Object> model = setModel();
+            model.put("error", exception.getMessage());
+            response.body(render(model, "index.html"));
         });
     }
 
-    private void addTeamInformation(Map<String, Object> model) {
+    private Map<String, Object> setModel() {
+        Map<String, Object> model = new HashMap<>();
+        addBoardInformation(model);
+        addTurnInformation(model);
+        addPlayingInformation(model);
+        return model;
+    }
+
+    private void addBoardInformation(Map<String, Object> model) {
+        model.put("pieces", chessController.getCurrentImages());
+    }
+
+    private void addTurnInformation(Map<String, Object> model) {
         if (!chessController.getCurrentTeam().isNeutrality(Team.NEUTRALITY)) {
             model.put("team", chessController.getCurrentTeam());
         }

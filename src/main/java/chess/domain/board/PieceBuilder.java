@@ -23,7 +23,6 @@ public class PieceBuilder implements Builder {
             board.put(Position.of(1, i + 1), whiteSpecials.get(i));
             board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
         }
-
         return board;
     }
 

@@ -2,10 +2,9 @@ package chess.controller;
 
 import chess.domain.Command;
 import chess.domain.board.PieceBuilder;
-import chess.domain.board.PositionConvertor;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.dto.BoardDTO;
+import chess.dto.PieceDTO;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
 import chess.domain.state.command.State;
@@ -39,8 +38,8 @@ public class ChessController {
 
     public Map<Position, Piece> processMove(String rawSource, String rawTarget) {
         state = state.execute(Command.MOVE);
-        Position source = PositionConvertor.to(rawSource);
-        Position target = PositionConvertor.to(rawTarget);
+        Position source = Position.of(rawSource);
+        Position target = Position.of(rawTarget);
         board.move(source, target);
         return board.getBoard();
     }
@@ -59,11 +58,11 @@ public class ChessController {
         return state.isFinish();
     }
 
-    public List<BoardDTO> getCurrentImages() {
+    public List<PieceDTO> getCurrentImages() {
         Map<Position, Piece> pieceMap = board.getBoard();
-        List<BoardDTO> boardDTOs = new ArrayList<>();
+        List<PieceDTO> boardDTOs = new ArrayList<>();
         for (Position position : Position.getReversePositions()) {
-            boardDTOs.add(new BoardDTO(position.toString(), pieceMap.get(position).fileName()));
+            boardDTOs.add(new PieceDTO(position.toString(), pieceMap.get(position).getName()));
         }
         return boardDTOs;
     }

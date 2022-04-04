@@ -1,10 +1,12 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Team {
 
-    WHITE("백팀"),
-    BLACK("흑팀"),
-    NEUTRALITY("중립");
+    WHITE("white"),
+    BLACK("black"),
+    NEUTRALITY("neutrality");
 
     public boolean isBlack() {
         return this == Team.BLACK;
@@ -23,4 +25,12 @@ public enum Team {
     public boolean isNeutrality(Team neutrality) {
         return this == NEUTRALITY;
     }
+
+    public static Team find(String name) {
+        return Arrays.stream(values())
+                .filter(team -> team.name.equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 팀 이름입니다."));
+    }
+
 }

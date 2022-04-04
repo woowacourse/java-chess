@@ -10,6 +10,7 @@ public class Rook extends Piece {
     private static final String BLACK_SYMBOL = "R";
     private static final String WHITE_SYMBOL = "r";
     private static final double ROOK_SCORE = 5;
+    private static final String NAME = "rook";
 
     public Rook(final Team team) {
         super(team);
@@ -51,7 +52,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public String fileName() {
-        return team.name().toLowerCase(Locale.ROOT) + "_" + "rook.png";
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }

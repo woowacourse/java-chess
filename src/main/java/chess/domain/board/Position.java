@@ -13,6 +13,7 @@ public class Position {
     private static final int MAX_COLUMN = 8;
     private static final int BLACK_PAWN_DEFAULT_ROW = 7;
     private static final int WHITE_PAWN_DEFAULT_ROW = 2;
+    private static final String INVALID_POSITION_INPUT_ERROR = "올바르지 않은 좌표 입력입니다.";
 
     private final int row;
     private final int column;
@@ -38,6 +39,15 @@ public class Position {
         cachedPositions.putIfAbsent(row, new HashMap<>());
         cachedPositions.get(row).putIfAbsent(column, new Position(row, column));
         return cachedPositions.get(row).get(column);
+    }
+
+    public static Position of(final String rawPosition) {
+        if (Character.isDigit(rawPosition.charAt(1)) && Character.isAlphabetic(rawPosition.charAt(0))) {
+            int row = rawPosition.charAt(1) - '0';
+            int col = rawPosition.charAt(0) - 'a' + 1;
+            return Position.of(row, col);
+        }
+        throw new IllegalArgumentException(INVALID_POSITION_INPUT_ERROR);
     }
 
     private static void validateRange(final int row, final int column) {

@@ -10,13 +10,18 @@
 <body>
     <div id="app">
         <h1>😎 라쿤의 재미있는 체스 게임 😎</h1>
+
+        {{#error}}
+            <h3> 에러가 있어요!! -> {{error}} </h3>
+        {{/error}}
+
         {{#team}}
             <h2>현재는 {{team}} 팀의 차례입니다🤗</h2>
         {{/team}}
 
         <section class="chess-ui">
             {{#pieces}}
-                <img id="{{position}}" class="img" onclick="" src="images/{{fileName}}">
+                <img id="{{position}}" class="img" onclick="" src="images/{{name}}.png">
             {{/pieces}}
         </section>
 

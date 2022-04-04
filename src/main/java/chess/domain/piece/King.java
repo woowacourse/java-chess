@@ -13,6 +13,7 @@ public class King extends Piece {
     private static final String BLACK_SYMBOL = "K";
     private static final String WHITE_SYMBOL = "k";
     private static final int KING_SCORE = 0;
+    private static final String NAME = "king";
 
     public King(final Team team) {
         super(team);
@@ -64,7 +65,7 @@ public class King extends Piece {
     }
 
     @Override
-    public String fileName() {
-        return team.name().toLowerCase(Locale.ROOT) + "_" + "king.png";
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }

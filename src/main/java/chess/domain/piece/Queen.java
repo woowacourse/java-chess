@@ -10,6 +10,7 @@ public class Queen extends Piece {
     private static final String BLACK_SYMBOL = "Q";
     private static final String WHITE_SYMBOL = "q";
     private static final double QUEEN_SCORE = 9.0;
+    private static final String NAME = "queen";
 
     public Queen(final Team team) {
         super(team);
@@ -51,7 +52,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public String fileName() {
-        return team.name().toLowerCase(Locale.ROOT) + "_" + "queen.png";
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }

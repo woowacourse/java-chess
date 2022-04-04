@@ -2,7 +2,8 @@ package chess.domain.board;
 
 import chess.domain.Team;
 import chess.domain.Winner;
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Piece;
 import chess.domain.state.turn.State;
 import chess.domain.state.turn.WhiteTurn;
 
