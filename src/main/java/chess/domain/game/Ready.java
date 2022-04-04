@@ -1,7 +1,6 @@
 package chess.domain.game;
 
-import java.util.List;
-
+import chess.controller.Arguments;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
@@ -23,7 +22,7 @@ public class Ready extends GameState {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
+    public GameState move(Arguments arguments) {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 

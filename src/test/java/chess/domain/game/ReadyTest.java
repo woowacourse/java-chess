@@ -7,6 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.controller.Arguments;
+
 class ReadyTest {
 
     @Test
@@ -36,7 +38,7 @@ class ReadyTest {
     @Test
     @DisplayName("준비상태에서는 이동할 수 없다.")
     void throwsExceptionWithTryingToMove() {
-        List<String> ignored = List.of("a1", "a2");
+        Arguments ignored = Arguments.ofArray(new String[] {"a1", "a2"}, 0);
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)

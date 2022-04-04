@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import java.util.List;
 
+import chess.controller.Arguments;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Route;
@@ -23,7 +24,7 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
+    public GameState move(Arguments arguments) {
         board = board.move(Route.of(arguments), turnColor);
         if (board.isKingDead()) {
             return new Finished(board, turnColor);

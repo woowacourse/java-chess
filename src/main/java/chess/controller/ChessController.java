@@ -46,42 +46,42 @@ public class ChessController {
     }
 
     private static class Mapper {
-        private static final Map<Command, BiFunction<GameState, List<String>, GameState>> MAPPER =
+        private static final Map<Command, BiFunction<GameState, Arguments, GameState>> MAPPER =
             Map.of(Command.START, Mapper::start,
                 Command.FINISH, Mapper::end,
                 Command.MOVE, Mapper::move,
                 Command.STATUS, Mapper::status);
 
         public static GameState findAndExecute(GameState state, GameRequest gameRequest) {
-            BiFunction<GameState, List<String>, GameState> executor = findExecutor(gameRequest.getCommand());
+            BiFunction<GameState, Arguments, GameState> executor = findExecutor(gameRequest.getCommand());
             return executor.apply(state, gameRequest.getArguments());
         }
 
-        private static BiFunction<GameState, List<String>, GameState> findExecutor(Command command) {
+        private static BiFunction<GameState, Arguments, GameState> findExecutor(Command command) {
             if (!MAPPER.containsKey(command)) {
                 throw new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다.");
             }
             return MAPPER.get(command);
         }
 
-        private static GameState start(GameState state, List<String> ignored) {
+        private static GameState start(GameState state, Arguments ignored) {
             state = state.start();
             OUTPUT_VIEW.printBoard(state.getPointPieces(), state.getColor());
             return state;
         }
 
-        private static GameState end(GameState state, List<String> ignored) {
+        private static GameState end(GameState state, Arguments ignored) {
             state = state.finish();
             return state;
         }
 
-        private static GameState move(GameState state, List<String> arguments) {
+        private static GameState move(GameState state, Arguments arguments) {
             state = state.move(arguments);
             OUTPUT_VIEW.printBoard(state.getPointPieces(), state.getColor());
             return state;
         }
 
-        private static GameState status(GameState state, List<String> ignored) {
+        private static GameState status(GameState state, Arguments ignored) {
             OUTPUT_VIEW.printScore(state.getColorScore());
             return state;
         }

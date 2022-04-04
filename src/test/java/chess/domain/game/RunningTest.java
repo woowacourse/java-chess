@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.controller.Arguments;
 import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
@@ -38,7 +39,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 running 상태로 변한다.")
     void moveToRunningTest() {
-        List<String> arguments = List.of("a2", "a3");
+        Arguments arguments = Arguments.ofArray(new String[] {"a2", "a3"}, 0);
         GameState gameState = new Running(BoardFixtures.INITIAL, Color.WHITE);
 
         GameState movedState = gameState.move(arguments);
@@ -49,7 +50,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 king이 죽으면 종료 상태로 변한다.")
     void moveToFinishTest() {
-        List<String> arguments = List.of("e1", "e8");
+        Arguments arguments = Arguments.ofArray(new String[] {"e1", "e8"}, 0);
         GameState gameState = new Running(BoardFixtures.create(Map.of(
             Point.of("e8"), new King(Color.BLACK),
             Point.of("e1"), new Queen(Color.WHITE)

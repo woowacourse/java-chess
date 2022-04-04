@@ -3,6 +3,7 @@ package chess.domain.game;
 import java.util.List;
 import java.util.Map;
 
+import chess.controller.Arguments;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
@@ -24,7 +25,7 @@ public abstract class GameState {
 
     public abstract boolean isRunnable();
 
-    public abstract GameState move(List<String> arguments);
+    public abstract GameState move(Arguments arguments);
 
     public Map<Point, Piece> getPointPieces() {
         return board.getPointPieces();

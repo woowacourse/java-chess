@@ -1,29 +1,29 @@
 package chess.dto;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import chess.controller.Arguments;
 import chess.controller.Command;
+import spark.Request;
 
 public class GameRequest {
 
-    private static final String DELIMITER = " ";
+    private static final String CONSOLE_DELIMITER = " ";
 
     private final Command command;
-    private final List<String> arguments;
+    private final Arguments arguments;
 
-    public GameRequest(Command command, List<String> arguments) {
+    public GameRequest(Command command, Arguments arguments) {
         this.command = command;
         this.arguments = arguments;
     }
 
     public static GameRequest of(String input) {
         validateNull(input);
-        String[] split = input.split(DELIMITER);
+        String[] split = input.split(CONSOLE_DELIMITER);
 
         Command command = Command.find(split[0]);
-        List<String> arguments = toArguments(split);
+        Arguments arguments = Arguments.ofArray(split, 1);
         return new GameRequest(command, arguments);
     }
 
@@ -33,17 +33,18 @@ public class GameRequest {
         }
     }
 
-    private static List<String> toArguments(String[] split) {
-        return Arrays.stream(split)
-            .skip(1)
-            .collect(Collectors.toList());
+    public static GameRequest of(Request request) {
+        String path = request.pathInfo().substring(1);
+        Command command = Command.find(path);
+        Arguments arguments = Arguments.ofRequestBody(request.body(), command.getParameters());
+        return new GameRequest(command, arguments);
     }
 
     public Command getCommand() {
         return command;
     }
 
-    public List<String> getArguments() {
-        return List.copyOf(arguments);
+    public Arguments getArguments() {
+        return arguments;
     }
 }
