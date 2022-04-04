@@ -2,7 +2,8 @@ package chess.dao;
 
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
-import chess.dto.RoomDto;
+import chess.dto.CurrentTurnDto;
+import chess.dto.RoomStatusDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +27,25 @@ public class RoomDao {
         return 0;
     }
 
-    public RoomDto findByName(final String roomName) {
-        final String sql = "SELECT * FROM room WHERE name = ?";
+    public boolean isExistName(final String roomName) {
+        final String sql = "SELECT name FROM room WHERE name = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, roomName);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public CurrentTurnDto findCurrentTurnByName(final String roomName) {
+        final String sql = "SELECT name, current_turn FROM room WHERE name = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -38,10 +56,32 @@ public class RoomDao {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return RoomDto.from(
+                return CurrentTurnDto.from(
                         resultSet.getString("name"),
-                        resultSet.getString("game_status"),
                         resultSet.getString("current_turn")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public RoomStatusDto findStatusByName(final String roomName) {
+        final String sql = "SELECT name, game_status FROM room WHERE name = ?";
+
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, roomName);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
+                return RoomStatusDto.from(
+                        resultSet.getString("name"),
+                        resultSet.getString("game_status")
                 );
             }
         } catch (SQLException e) {

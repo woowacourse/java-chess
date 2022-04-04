@@ -10,10 +10,11 @@ import java.util.Map;
 public class MoveResult {
 
     private final Map<Position, ChessPiece> pieceByPosition;
-    private GameStatus gameStatus;
     private final Color currentTurn;
+    private GameStatus gameStatus;
 
-    public MoveResult(final Map<Position, ChessPiece> pieceByPosition, final GameStatus gameStatus,
+    public MoveResult(final Map<Position, ChessPiece> pieceByPosition,
+                      final GameStatus gameStatus,
                       final Color currentTurn) {
         this.pieceByPosition = pieceByPosition;
         this.gameStatus = gameStatus;

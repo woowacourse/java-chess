@@ -11,7 +11,8 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
-import chess.dto.RoomDto;
+import chess.dto.CurrentTurnDto;
+import chess.dto.RoomStatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
@@ -148,7 +149,7 @@ public class ChessService {
 
     private ChessGame findGameByRoomName(final String roomName) {
         Map<Position, ChessPiece> pieceByPosition = initAllPiece(roomName);
-        Color currentTurn = initCurrentTur(roomName);
+        Color currentTurn = initCurrentTurn(roomName);
         GameStatus gameStatus = initGameStatus(roomName);
 
         return new ChessGame(new ChessBoard(pieceByPosition, currentTurn), gameStatus);
@@ -166,9 +167,9 @@ public class ChessService {
                         ChessPieceDto::getChessPiece));
     }
 
-    private Color initCurrentTur(final String roomName) {
+    private Color initCurrentTurn(final String roomName) {
         final RoomDao roomDao = new RoomDao();
-        final RoomDto dto = roomDao.findByName(roomName);
+        final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
         if (Objects.isNull(dto)) {
             return Color.WHITE;
         }
@@ -177,7 +178,7 @@ public class ChessService {
 
     private GameStatus initGameStatus(final String roomName) {
         final RoomDao roomDao = new RoomDao();
-        final RoomDto dto = roomDao.findByName(roomName);
+        final RoomStatusDto dto = roomDao.findStatusByName(roomName);
         if (Objects.isNull(dto)) {
             return GameStatus.READY;
         }

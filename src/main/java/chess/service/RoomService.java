@@ -3,15 +3,13 @@ package chess.service;
 import chess.dao.RoomDao;
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
-import chess.dto.RoomDto;
-import java.util.Objects;
+import chess.dto.RoomStatusDto;
 
 public class RoomService {
 
     public boolean isRoomExist(final String roomName) {
         final RoomDao roomDao = new RoomDao();
-        final RoomDto dto = roomDao.findByName(roomName);
-        return Objects.nonNull(dto);
+        return roomDao.isExistName(roomName);
     }
 
     public void createRoom(final String roomName) {
@@ -21,7 +19,7 @@ public class RoomService {
 
     public void deleteRoom(final String roomName) {
         final RoomDao roomDao = new RoomDao();
-        final RoomDto dto = roomDao.findByName(roomName);
+        final RoomStatusDto dto = roomDao.findStatusByName(roomName);
         if (dto.getGameStatus().isEnd()) {
             roomDao.delete(roomName);
         }
