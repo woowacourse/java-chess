@@ -31,6 +31,7 @@ public class ChessGame {
         final MoveResult result = chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
+            result.changeStatusToKingDie();
         }
         return result;
     }

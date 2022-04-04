@@ -1,5 +1,6 @@
 package chess.domain.chessboard;
 
+import chess.domain.GameStatus;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
@@ -38,7 +39,7 @@ public class ChessBoard {
 
         checkCanMove(from, to, movablePiece);
         movePiece(from, to);
-        return new MoveResult(isKingDie(), pieceByPosition);
+        return new MoveResult(pieceByPosition, GameStatus.PLAYING, currentTurnColor);
     }
 
     private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
