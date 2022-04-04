@@ -31,8 +31,8 @@ public class Finished implements GameState {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public boolean isRunning() {
+        return false;
     }
 
     @Override

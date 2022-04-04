@@ -8,8 +8,6 @@ import org.json.simple.parser.JSONParser;
 import static spark.Spark.*;
 
 public class WebApplication {
-    public static String STATUS = "dev";
-
     public static void main(String[] args) {
         port(8080);
         staticFileLocation("templates");

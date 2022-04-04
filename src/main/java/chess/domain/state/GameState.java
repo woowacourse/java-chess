@@ -13,7 +13,7 @@ public interface GameState {
 
     Map<Position, Piece> getBoard();
 
-    boolean isFinished();
+    boolean isRunning();
 
     Team getTeam();
 }

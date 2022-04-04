@@ -17,10 +17,16 @@ public class ChessController {
     public ChessController(Map<Position, Piece> board) {
         this.gameState = new WhiteTurn(board);
     }
+
     public Map<String, Object> getInitialBoard() {
         Map<String, Object> model = new HashMap<>();
         Map<Position, Piece> board = gameState.getBoard();
         List<PieceDTO> pieces = new ArrayList<>();
+
+        if (gameState.isRunning()) {
+
+        }
+
         for (Position position : board.keySet()) {
             Piece piece = board.get(position);
             if (!piece.isBlank()) {
@@ -33,11 +39,11 @@ public class ChessController {
 
     public Map<String, Object> move(String source, String destination) {
         Map<String, Object> model = new HashMap<>();
-        try{
+        try {
             gameState.move(source, destination);
             model.put("status", "무브 성공");
             return model;
-        }catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException exception) {
             model.put("status", exception.getMessage());
             return model;
         }

@@ -91,8 +91,8 @@ public abstract class Playing implements GameState {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public boolean isRunning() {
+        return true;
     }
 
     abstract void validateTeam(Piece piece);
