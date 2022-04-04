@@ -21,7 +21,14 @@
         </div>
         {{/squares}}
     </section>
+    <section>
+        <form action="/move" method="post">
+            출발 위치: <input type="text" name="source">
+            도착 위치: <input type="text" name="target">
+            <input type="submit" value="submit">
+        </form>
+    </section>
 </div>
 </body>
-
+<script type="text/javascript" src="/src/chess.js"></script>
 </html>
