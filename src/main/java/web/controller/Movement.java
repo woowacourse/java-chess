@@ -23,6 +23,7 @@ import chess.position.Rank;
 import java.util.Map;
 
 public class Movement {
+
     private final Position from;
     private final Position to;
 
@@ -33,19 +34,17 @@ public class Movement {
             "A", A, "B", B, "C", C, "D", D, "E", E, "F", F, "G", G, "H", H
     );
 
-    public Movement(String body) {
-        if (!body.matches("from=[A-H][1-8]&to=[A-H][1-8]")) {
-            throw new IllegalArgumentException("잘못된 요청입니다.");
-        }
-        String[] positions = splitBody(body);
-        from = new Position(file(positions[0]), rank(positions[0]));
-        to = new Position(file(positions[1]), rank(positions[1]));
+    public Movement(String from, String to) {
+        checkPosition(from);
+        checkPosition(to);
+        this.from = new Position(file(from), rank(from));
+        this.to = new Position(file(to), rank(to));
     }
 
-    private String[] splitBody(String body) {
-        body = body.replace("from=", "");
-        body = body.replace("to=", "");
-        return body.split("&");
+    private void checkPosition(String position) {
+        if (!position.matches("[A-H][1-8]")) {
+            throw new IllegalArgumentException("잘못된 요청입니다.");
+        }
     }
 
     private File file(String position) {

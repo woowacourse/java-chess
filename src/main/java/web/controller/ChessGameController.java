@@ -6,10 +6,8 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 import web.dao.ChessGameDao;
 import web.dao.PieceDao;
-import web.dao.ScoreDao;
 import web.dto.GameStatus;
 import web.service.ChessGameService;
 
@@ -21,33 +19,34 @@ public class ChessGameController {
     private final ChessGameService service;
     private final ChessGameDao chessGameDao;
     private final PieceDao pieceDao;
-    private final ScoreDao scoreDao;
 
-    public ChessGameController(ChessGameService service, ChessGameDao chessGameDao, PieceDao pieceDao,
-                               ScoreDao scoreDao) {
+    public ChessGameController(ChessGameService service, ChessGameDao chessGameDao, PieceDao pieceDao) {
         this.service = service;
         this.chessGameDao = chessGameDao;
         this.pieceDao = pieceDao;
-        this.scoreDao = scoreDao;
     }
 
-    public Object handleIndex(Request req, Response res) throws Exception {
-        if (isGameFinished() || !chessGameDao.existChessGame()) {
-            service.prepareNewChessGame();
+    public ModelAndView chessGame(Request req, Response res) throws Exception {
+        int chessGameId = Integer.parseInt(req.queryParams("chess-game-id"));
+
+        if (!isGameRunning(chessGameId)) {
+            service.prepareNewChessGame(chessGameId);
         }
-        return render(createModel(req), "index.html");
+
+        return new ModelAndView(createModel(req, chessGameId), "chess-game.html");
     }
 
-    private boolean isGameFinished() {
-        return chessGameDao.findGameStatus() == GameStatus.FINISHED;
+    private boolean isGameRunning(int chessGameId) {
+        return chessGameDao.findGameStatus(chessGameId) == GameStatus.RUNNING;
     }
 
-    private Map<String, Object> createModel(Request req) {
+    private Map<String, Object> createModel(Request req, int chessGameId) {
         Map<String, Object> model = new HashMap<>();
-        model.put("currentColor", chessGameDao.findCurrentColor());
-        model.put("pieces", pieceDao.findPieces());
-        model.put("whiteScore", scoreDao.findScoreByColor(Color.WHITE));
-        model.put("blackScore", scoreDao.findScoreByColor(Color.BLACK));
+        model.put("currentColor", chessGameDao.findCurrentColor(chessGameId));
+        model.put("pieces", pieceDao.findPieces(chessGameId));
+        model.put("whiteScore", chessGameDao.findScoreByColor(chessGameId, Color.WHITE));
+        model.put("blackScore", chessGameDao.findScoreByColor(chessGameId, Color.BLACK));
+        model.put("chess-game-id", chessGameId);
 
         addFlashAttribute(req, model, ERROR_FLASH);
         addFlashAttribute(req, model, WINNER_FLASH);
@@ -61,31 +60,34 @@ public class ChessGameController {
         }
     }
 
-    private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    public Object handleMove(Request req, Response res) {
+    public ModelAndView move(Request req, Response res) {
+        int chessGameId = Integer.parseInt(req.queryParams("chess-game-id"));
+        String from = req.queryParams("from");
+        String to = req.queryParams("to");
         try {
-            move(req, new Movement(req.body()));
+            move(req, new Movement(from, to), chessGameId);
         } catch (IllegalArgumentException | IllegalStateException e) {
             Map<String, Object> error = new HashMap<>();
             error.put("hasError", true);
             error.put("errorMessage", e.getMessage());
             req.session().attribute(ERROR_FLASH, error);
         }
-        res.redirect("/");
+        res.redirect("/chess-game?chess-game-id=" + chessGameId);
         return null;
     }
 
-    private void move(Request req, Movement movement) {
-        service.move(movement);
+    private void move(Request req, Movement movement, int chessGameId) {
+        service.move(chessGameId, movement);
 
-        if (isGameFinished()) {
+        if (isGameFinished(chessGameId)) {
             Map<String, Object> result = new HashMap<>();
             result.put("isFinished", true);
-            result.put("winner", chessGameDao.findWinner());
+            result.put("winner", chessGameDao.findWinner(chessGameId));
             req.session().attribute(WINNER_FLASH, result);
         }
+    }
+
+    private boolean isGameFinished(int chessGameId) {
+        return chessGameDao.findGameStatus(chessGameId) == GameStatus.FINISHED;
     }
 }

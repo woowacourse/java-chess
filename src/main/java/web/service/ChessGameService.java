@@ -33,31 +33,28 @@ import java.util.stream.Stream;
 import web.controller.Movement;
 import web.dao.ChessGameDao;
 import web.dao.PieceDao;
-import web.dao.ScoreDao;
 import web.dto.GameStatus;
 import web.dto.PieceDto;
 
 public class ChessGameService {
 
     private final PieceDao pieceDao;
-    private final ScoreDao scoreDao;
     private final ChessGameDao chessGameDao;
 
-    public ChessGameService(PieceDao pieceDao, ScoreDao scoreDao, ChessGameDao chessGameDao) {
+    public ChessGameService(PieceDao pieceDao, ChessGameDao chessGameDao) {
         this.pieceDao = pieceDao;
-        this.scoreDao = scoreDao;
         this.chessGameDao = chessGameDao;
     }
 
-    public void move(Movement movement) {
-        ChessBoard chessBoard = createChessBoard();
+    public void move(int chessGameId, Movement movement) {
+        ChessBoard chessBoard = createChessBoard(chessGameId);
         chessBoard.move(movement.getFrom(), movement.getTo());
-        updateChessGame(chessBoard, movement);
+        updateChessGame(chessGameId, chessBoard, movement);
     }
 
-    private ChessBoard createChessBoard() {
-        List<PieceDto> pieces = pieceDao.findPieces();
-        Color currentColor = chessGameDao.findCurrentColor();
+    private ChessBoard createChessBoard(int chessGameId) {
+        List<PieceDto> pieces = pieceDao.findPieces(chessGameId);
+        Color currentColor = chessGameDao.findCurrentColor(chessGameId);
         return new ChessBoard(createBoard(pieces), currentColor);
     }
 
@@ -66,52 +63,41 @@ public class ChessGameService {
                 .collect(toMap(PieceDto::getPosition, PieceDto::createPiece));
     }
 
-    private void updateChessGame(ChessBoard chessBoard, Movement movement) {
-        updatePieces(chessBoard, movement);
-        updateCurrentColor(chessBoard);
-        updateScores(chessBoard);
-        updateGameStatus(chessBoard);
+    private void updateChessGame(int chessGameId, ChessBoard chessBoard, Movement movement) {
+        updatePieces(chessGameId, chessBoard, movement);
+        updateCurrentColor(chessGameId, chessBoard);
+        updateScores(chessGameId, chessBoard);
+        updateGameStatus(chessGameId, chessBoard);
     }
 
-    private void updatePieces(ChessBoard chessBoard, Movement movement) {
+    private void updatePieces(int chessGameId, ChessBoard chessBoard, Movement movement) {
         Map<Position, Piece> board = chessBoard.getBoard();
-        pieceDao.deletePieceByPosition(movement.getFrom());
-        pieceDao.deletePieceByPosition(movement.getTo());
-        pieceDao.savePiece(new PieceDto(movement.getTo(), board.get(movement.getTo())));
+        pieceDao.deletePieceByPosition(chessGameId, movement.getFrom());
+        pieceDao.deletePieceByPosition(chessGameId, movement.getTo());
+        pieceDao.savePiece(chessGameId, new PieceDto(movement.getTo(), board.get(movement.getTo())));
     }
 
-    private void updateCurrentColor(ChessBoard chessBoard) {
-        chessGameDao.updateCurrentColor(chessBoard.getCurrentColor());
+    private void updateCurrentColor(int chessGameId, ChessBoard chessBoard) {
+        chessGameDao.updateCurrentColor(chessGameId, chessBoard.getCurrentColor());
     }
 
-    private void updateScores(ChessBoard chessBoard) {
-        scoreDao.updateScoreByColor(chessBoard.getScore(Color.BLACK), Color.BLACK);
-        scoreDao.updateScoreByColor(chessBoard.getScore(Color.WHITE), Color.WHITE);
+    private void updateScores(int chessGameId, ChessBoard chessBoard) {
+        chessGameDao.updateScoreByColor(chessGameId, chessBoard.getScore(Color.BLACK), Color.BLACK);
+        chessGameDao.updateScoreByColor(chessGameId, chessBoard.getScore(Color.WHITE), Color.WHITE);
     }
 
-    private void updateGameStatus(ChessBoard chessBoard) {
+    private void updateGameStatus(int chessGameId, ChessBoard chessBoard) {
         if (chessBoard.isFinished()) {
-            chessGameDao.updateGameStatus(GameStatus.FINISHED);
-            chessGameDao.updateWinner(chessBoard.getWinner());
+            chessGameDao.updateGameStatus(chessGameId, GameStatus.FINISHED);
+            chessGameDao.updateWinner(chessGameId, chessBoard.getWinner());
         }
     }
 
-    public void prepareNewChessGame() {
-        deletePreviousChessGame();
-        saveNewChessGame();
-    }
-
-    private void deletePreviousChessGame() {
-        chessGameDao.deleteAll();
-        pieceDao.deleteAll();
-        scoreDao.deleteAll();
-    }
-
-    private void saveNewChessGame() {
-        pieceDao.savePieces(createPieces());
-        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.BLACK);
-        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.WHITE);
-        chessGameDao.saveGameStatus(GameStatus.RUNNING, Color.WHITE);
+    public void prepareNewChessGame(int chessGameId) {
+        pieceDao.deleteAll(chessGameId);
+        pieceDao.savePieces(chessGameId, createPieces());
+        Score initialScore = new Score(new BigDecimal("38.0"));
+        chessGameDao.updateChessGame(chessGameId, GameStatus.RUNNING, Color.WHITE, initialScore, initialScore);
     }
 
     private List<PieceDto> createPieces() {

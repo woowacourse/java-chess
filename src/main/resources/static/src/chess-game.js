@@ -1,13 +1,13 @@
-function onloadBody() {
+function onloadBody(id) {
     const board = document.getElementById("chessBoard");
     for (let row = 0; row < board.rows.length; row++) {
-        addEventListenerEachCol(board.rows[row]);
+        addEventListenerEachCol(id, board.rows[row]);
     }
 }
 
-function addEventListenerEachCol(rows) {
+function addEventListenerEachCol(id, rows) {
     for (let col = 0; col < rows.cells.length; col++) {
-        rows.cells[col].addEventListener("click", clickEvent);
+        rows.cells[col].addEventListener("click", e => clickEvent(e, id));
     }
 }
 
@@ -42,9 +42,9 @@ function addPiece(pos, type, color) {
 
 let pickedPiece = null;
 
-function clickEvent(event) {
+function clickEvent(event, id) {
     if (pickedPiece != null) {
-        const form = createMoveForm(event);
+        const form = createMoveForm(event, id);
         document.body.appendChild(form);
         form.submit();
     }
@@ -55,12 +55,13 @@ function clickEvent(event) {
     }
 }
 
-function createMoveForm(event) {
+function createMoveForm(event, id) {
     const form = document.createElement("form");
     form.setAttribute("method", "post");
-    form.setAttribute("action", "/move");
+    form.setAttribute("action", "/chess-game/move");
     form.appendChild(createInputElement("from", pickedPiece));
     form.appendChild(createInputElement("to", findPosition(event.currentTarget)));
+    form.appendChild(createInputElement("chess-game-id", id));
     return form;
 }
 
