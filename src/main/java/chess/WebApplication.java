@@ -45,7 +45,7 @@ public class WebApplication {
         staticFiles.location("/public");
         ChessGame chessGame = ChessGame.create();
 
-        get("/welcome", (req, res) -> {
+        get("/initCommand", (req, res) -> {
             Command command = Command.of(req.queryParams("command"));
             if (Command.START.equals(command)) {
                 chessGame.initialze();
@@ -69,6 +69,9 @@ public class WebApplication {
                 ChessBoardPosition source = coordinateToChessBoardPosition(inputs.get(SOURCE_INDEX));
                 ChessBoardPosition target = coordinateToChessBoardPosition(inputs.get(TARGET_INDEX));
                 chessGame.move(source, target);
+                if (chessGame.isGameEnd()) {
+                    return render(null, "../public/index.html");
+                }
                 res.redirect("/board");
                 return null;
             }
