@@ -4,10 +4,11 @@ import chess.domain.piece.Team;
 
 public class WinningTeam {
 
-    public static final String WIN_BY_SCORE = "Win By Score";
-    public static final String WIN_BY_KING_DEAD = "Win By King Dead";
+    private static final String WIN_BY_SCORE = "Win By Score";
+    private static final String WIN_BY_KING_DEAD = "Win By Slaying King";
+
     private final String value;
-    private final String winType;
+    private final String winningType;
 
     public WinningTeam(final double blackScore, final double whiteScore, final DeadPieces deadPieces) {
         Team winTeam = Team.NONE;
@@ -19,18 +20,18 @@ public class WinningTeam {
             winTeam = Team.BLACK;
         }
         if (deadPieces.isKingDead()) {
-            winTeam = deadPieces.getTeamOfDeadKing();
+            winTeam = deadPieces.searchTeamOfDeadKing();
             winType = WIN_BY_KING_DEAD;
         }
         this.value = winTeam.getValue();
-        this.winType = winType;
+        this.winningType = winType;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getWinType() {
-        return winType;
+    public String getWinningType() {
+        return winningType;
     }
 }

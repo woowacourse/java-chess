@@ -17,13 +17,13 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
 
-        ChessGame chessGame = new ChessGame(BoardFactory.createChessBoard());
+        ChessGame chessGame = new ChessGame(BoardFactory.generateChessBoard());
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.putAll(chessGame.getCurrentBoardForSpark());
             model.put("turn", chessGame.getTurn());
-            model.put("score", chessGame.calculateScore());
+            model.put("result", chessGame.generateResult());
             return new ModelAndView(model, "index.html");
         }, new HandlebarsTemplateEngine());
 

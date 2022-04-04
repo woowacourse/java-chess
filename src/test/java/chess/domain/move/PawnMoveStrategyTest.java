@@ -47,7 +47,7 @@ public class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         pawnMoveStrategyForTest = new PawnMoveStrategyForTest();
     }
 

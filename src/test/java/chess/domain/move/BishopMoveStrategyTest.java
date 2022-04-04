@@ -18,7 +18,7 @@ public class BishopMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         bishopMoveStrategy = new BishopMoveStrategy();
         deadPieces = new DeadPieces();
     }

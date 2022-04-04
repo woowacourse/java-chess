@@ -18,7 +18,7 @@ public class RookMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         rookMoveStrategy = new RookMoveStrategy();
         deadPieces = new DeadPieces();
     }

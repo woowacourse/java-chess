@@ -18,7 +18,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         deadPieces = new DeadPieces();
     }
 
@@ -40,7 +40,7 @@ public class BoardTest {
     @Test
     @DisplayName("Position 을 입력하면 piece 를 반환한다.")
     void getPiece() {
-        Board board = BoardFactory.createChessBoard();
+        Board board = BoardFactory.generateChessBoard();
         assertThat(board.getPiece(Position.valueOf("a8"))).isEqualTo(new Rook(Team.BLACK));
     }
 }

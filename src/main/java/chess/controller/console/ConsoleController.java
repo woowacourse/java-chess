@@ -2,7 +2,7 @@ package chess.controller.console;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
-import chess.domain.game.Score;
+import chess.domain.game.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ConsoleController {
     public void run() {
         OutputView.printStartGame();
         if (InputView.inputCommandForStart() == START_COMMAND_STRING) {
-            ChessGame chessGame = new ChessGame(BoardFactory.createChessBoard());
+            ChessGame chessGame = new ChessGame(BoardFactory.generateChessBoard());
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }
@@ -64,7 +64,7 @@ public class ConsoleController {
     }
 
     private void printStatus(final ChessGame chessGame) {
-        Score score = chessGame.calculateScore();
-        OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinningTeam().getValue());
+        Result result = chessGame.generateResult();
+        OutputView.printScore(result.getWhiteScore(), result.getBlackScore(), result.getWinningTeam().getValue());
     }
 }

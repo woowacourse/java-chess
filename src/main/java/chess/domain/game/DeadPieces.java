@@ -38,7 +38,7 @@ public class DeadPieces {
         return blackPieces.stream().anyMatch(Piece::isKing) || whitePieces.stream().anyMatch(Piece::isKing);
     }
 
-    public Team getTeamOfDeadKing() {
+    public Team searchTeamOfDeadKing() {
         validateKingNotDead();
         if (blackPieces.stream().anyMatch(Piece::isKing)) {
             return Team.WHITE;

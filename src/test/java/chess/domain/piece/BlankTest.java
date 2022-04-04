@@ -29,10 +29,10 @@ public class BlankTest {
     }
 
     @Test
-    @DisplayName("Black 는 이동전략이 없다.")
+    @DisplayName("Blank 는 이동전략이 없다.")
     void getMoveStrategy() {
         assertThatThrownBy(() -> blank.getMoveStrategy())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 이동전략을 가져올 수 없는 기물입니다.");
+                .hasMessage("[ERROR] 움직이고자 하는 기물이 존재하지 않습니다.");
     }
 }

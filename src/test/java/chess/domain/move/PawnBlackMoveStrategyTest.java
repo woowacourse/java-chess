@@ -18,7 +18,7 @@ public class PawnBlackMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         pawnBlackMoveStrategy = new PawnBlackMoveStrategy();
         deadPieces = new DeadPieces();
     }

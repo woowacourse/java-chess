@@ -9,7 +9,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Score {
+public class Result {
 
     private static final int PAWN_COUNT = 1;
 
@@ -17,7 +17,7 @@ public class Score {
     private final double whiteScore;
     private final WinningTeam winningTeam;
 
-    public Score(final Map<Position, Piece> board, final DeadPieces deadPieces) {
+    public Result(final Map<Position, Piece> board, final DeadPieces deadPieces) {
         this.blackScore = calculateScore(board, Team.BLACK);
         this.whiteScore = calculateScore(board, Team.WHITE);
         this.winningTeam = new WinningTeam(blackScore, whiteScore, deadPieces);

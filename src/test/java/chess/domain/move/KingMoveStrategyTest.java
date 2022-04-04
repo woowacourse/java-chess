@@ -18,7 +18,7 @@ public class KingMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createChessBoard();
+        board = BoardFactory.generateChessBoard();
         kingMoveStrategy = new KingMoveStrategy();
         deadPieces = new DeadPieces();
     }

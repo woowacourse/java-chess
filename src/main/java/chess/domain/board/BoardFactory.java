@@ -20,7 +20,7 @@ public class BoardFactory {
     private BoardFactory() {
     }
 
-    public static Board createChessBoard() {
+    public static Board generateChessBoard() {
         Map<Position, Piece> chessBoard = initEmptyBoard();
         initFirstRow(Team.BLACK, Row.EIGHT, chessBoard);
         initPawn(Team.BLACK, Row.SEVEN, chessBoard);
