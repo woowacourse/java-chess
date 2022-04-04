@@ -1,17 +1,21 @@
 package chess.controller;
 
+import chess.dao.PieceDao;
+import chess.dao.BoardDao;
 import chess.dto.CommandRequest;
 import chess.dto.request.MoveRequest;
 import chess.dto.response.BoardResult;
 import chess.dto.response.PieceResult;
-import chess.game.Command;
-import chess.game.Game;
-import chess.game.Position;
+import chess.dto.response.Turn;
+import chess.game.*;
 import chess.piece.Color;
 import chess.piece.Piece;
+import chess.state.Move;
 import chess.state.Ready;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.Map;
@@ -21,28 +25,49 @@ public class ChessController {
 
     private final Game game;
     private final Gson gson;
+    private final BoardDao boardDao;
+    private final PieceDao pieceDao;
 
     public ChessController() {
         game = new Game(Ready.start(Command.START));
         gson = new Gson();
+        boardDao = new BoardDao();
+        pieceDao = new PieceDao();
     }
 
-    public Route home() {
-        return (req, res) -> new HandlebarsTemplateEngine().render(new ModelAndView(null, "index.html"));
+    public ModelAndView home() {
+        return new ModelAndView(null, "index.html");
     }
 
-    public Route move() {
-        return (req, res) -> {
-            final MoveRequest moveRequest = gson.fromJson(req.body(), MoveRequest.class);
-            game.run(new CommandRequest("move", moveRequest.getFrom(), moveRequest.getTo()));
-            res.redirect("/game");
-            return null;
-        };
+    public ModelAndView start(final Request request, final Response response) {
+        final Long boardId = boardDao.save(Color.WHITE);
+        pieceDao.saveAll(boardId, BoardInitializer.getBoard());
+        response.redirect("/game/" + boardId);
+        return null;
     }
 
-    public Route game() {
-        final Map<Position, Piece> board = game.getBoard().getValue();
-        return (req, res) -> render(new BoardResult(board).getValue(), "game.html");
+    public ModelAndView move(final Request request, final Response response) {
+        final Long boardId = Long.valueOf(request.params("boardId"));
+        final MoveRequest moveRequest = gson.fromJson(request.body(), MoveRequest.class);
+        final String from = moveRequest.getFrom();
+        final String to = moveRequest.getTo();
+
+        final Turn turn = boardDao.findById(boardId);
+        final Color color = Color.valueOf(turn.getColor());
+        final Move move = new Move(new Board(pieceDao.findAllByBoardId(boardId)), color);
+        move.move(new MoveCommand(Position.of(from), Position.of(to)));
+        final Board board = move.getBoard();
+        pieceDao.deleteByPositionAndBoardId(from, boardId);
+        pieceDao.save(boardId, to, board.findPiece(Position.of(to)));
+        boardDao.update(boardId, color.reverse());
+        response.redirect("/game/" + boardId);
+        return null;
+    }
+
+    public ModelAndView game(final Request request, final Response response) {
+        final String boardId = request.params("boardId");
+        final Map<Position, Piece> board = pieceDao.findAllByBoardId(Long.valueOf(boardId));
+        return new ModelAndView(new BoardResult(board, boardId).getValue(), "game.html");
     }
 
     public Route score() {

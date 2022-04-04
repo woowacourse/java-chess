@@ -2,7 +2,11 @@ function move() {
     const from = document.getElementById('from').value;
     const to = document.getElementById('to').value;
 
-    fetch("/move", {
+    const url = window.location.href
+    const split = url.split("/");
+    const boardId = split[split.length -1];
+
+    fetch("/move/" + boardId, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -15,6 +19,15 @@ function move() {
         if (response.redirected) {
             window.location.href = response.url;
         }
+    })
+}
+
+function start() {
+    fetch("/start", {
+        method: "POST",
+    }).then(response => {
+        console.log(response.url);
+        window.location.href = response.url;
     })
 }
 

@@ -32,7 +32,7 @@ public class Board {
         return countKingPiece() == DEAD_KING_COUNT;
     }
 
-    private Piece findPiece(final Position position) {
+    public Piece findPiece(final Position position) {
         if (!value.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }

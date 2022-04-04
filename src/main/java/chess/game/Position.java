@@ -36,7 +36,7 @@ public class Position {
 
     public static Position of(final String position) {
         return cachedPositions.stream()
-                .filter(cachedPositions -> isExist(position, cachedPositions))
+                .filter(cachedPositions -> isExist(position.toLowerCase(), cachedPositions))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
     }

@@ -7,7 +7,7 @@ import chess.piece.Color;
 
 public class Move extends Running {
 
-    Move(final Board board, final Color color) {
+    public Move(final Board board, final Color color) {
         super(board, color);
     }
 
@@ -16,7 +16,6 @@ public class Move extends Running {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
         getBoard().movePiece(from, to, getColor());
-        reversColor();
     }
 
     @Override

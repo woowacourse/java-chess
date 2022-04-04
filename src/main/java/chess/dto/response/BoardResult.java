@@ -8,11 +8,13 @@ import java.util.stream.Collectors;
 public class BoardResult {
 
     private final Map<String, PieceResult> value;
+    private final String boardId;
 
-    public BoardResult(final Map<Position, Piece> board) {
+    public BoardResult(final Map<Position, Piece> board, final String boardId) {
         this.value = board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(m -> position(m.getKey()), m -> piece(m.getValue())));
+        this.boardId = boardId;
     }
 
     private String position(final Position position) {
@@ -27,5 +29,9 @@ public class BoardResult {
 
     public Map<String, PieceResult> getValue() {
         return value;
+    }
+
+    public String getBoardId() {
+        return boardId;
     }
 }
