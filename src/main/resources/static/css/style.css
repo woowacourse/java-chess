@@ -1,8 +1,50 @@
+body {
+  background: lavender;
+  font-family: 'BMHANNAPro', monospace;
+}
+
+@font-face {
+  font-family: 'BMHANNAPro';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#contents {
+  background: white;
+  width: 50vw;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 30px;
+}
+
+#title-bar {
+  margin: 2vmin;
+  font-size: xxx-large;
+}
+
+#buttons {
+  padding: 0 1vmin;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  cursor: pointer;
+  background: lavender;
+  padding: 1vmin 2vmin;
+  font-size: large;
+  border-radius: 30px;
+  margin: 0 1vmin;
+}
+
 #chess-section {
   border: 1px solid;
   display: block;
-  position: absolute;
-  margin: 0 auto;
+  margin: 1vmin auto;
 }
 
 div {
@@ -14,14 +56,14 @@ div {
 
 .cell {
   border: 1px solid;
-  width: 80px;
-  height: 80px;
+  width: 8vmin;
+  height: 8vmin;
   float: left;
 }
 
 .piece-image {
-  width: 80px;
-  height: 80px;
+  width: 8vmin;
+  height: 8vmin;
 }
 
 .selected {
