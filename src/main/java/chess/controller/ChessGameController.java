@@ -8,6 +8,7 @@ import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.request.PromotionRequest;
 import chess.controller.dto.response.PieceResponse;
 import chess.controller.dto.response.ScoreResponse;
+import chess.controller.dto.response.TurnResponse;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
@@ -64,6 +65,11 @@ public class ChessGameController {
                     .map(ScoreResponse::from)
                     .collect(Collectors.toList());
             return gson.toJson(collect);
+        });
+
+        get("/status", "application/json", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(TurnResponse.from(chessGameService.findCurrentTurn()));
         });
     }
 }

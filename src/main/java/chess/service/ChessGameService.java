@@ -62,7 +62,7 @@ public class ChessGameService {
         return currentTurn.createGameTurn(chessBoard);
     }
 
-    private Turn findCurrentTurn() {
+    public Turn findCurrentTurn() {
         return turnDao.findCurrentTurn()
                 .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
     }
