@@ -16,8 +16,7 @@ window.onload = async function () {
     makeRow(row, i);
     section.appendChild(row);
   }
-  const res = await fetch("/api/start")
-      .then(res => res.json())
+  const res = await start();
   rendBoard(res.board.pieces);
 }
 
@@ -41,6 +40,11 @@ function decideCellColor(column, row) {
     return lightCellColor;
   }
   return darkCellColor;
+}
+
+async function start() {
+  const res = await fetch("/api/start");
+  return await res.json();
 }
 
 function rendBoard(pieces) {
@@ -71,10 +75,7 @@ async function onclick(event) {
   const cell = event.currentTarget;
   decideClicked(cell);
   if (firstClicked && secondClicked) {
-    res = await move();
-    firstClicked.childNodes[0].classList.remove("selected");
-    firstClicked = null;
-    secondClicked = null;
+    const res = await move();
     rendBoard(res.board.pieces);
   }
 }
@@ -102,22 +103,24 @@ function highlightClickedCell() {
   piece.classList.add("selected");
 }
 
-function move() {
-  return fetch("/api/move", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      start: firstClicked.getAttribute("id"),
-      target: secondClicked.getAttribute("id"),
-    }),
-  })
-      .then(res => res.json())
-      .catch(res => {
-        alert(res);
-        firstClicked.childNodes[0].classList.remove("selected");
-        firstClicked = null;
-        secondClicked = null;
-      })
+async function move() {
+  try {
+    const res = await fetch("/api/move", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        start: firstClicked.getAttribute("id"),
+        target: secondClicked.getAttribute("id"),
+      }),
+    });
+    return await res.json();
+  } catch (err) {
+    alert(err);
+  } finally {
+    firstClicked.childNodes[0].classList.remove("selected");
+    firstClicked = null;
+    secondClicked = null;
+  }
 }
