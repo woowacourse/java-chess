@@ -6,8 +6,8 @@ const section = document.getElementById("chess-section");
 const lightCellColor = "#ffffff";
 const darkCellColor = "#8977ad";
 
-let firstClicked;
-let secondClicked;
+let firstSelected;
+let secondSelected;
 
 window.onload = async function () {
   for (let i = 0; i < 8; i++) {
@@ -73,33 +73,33 @@ function createPieceImage(position, pieceType) {
 
 async function onclick(event) {
   const cell = event.currentTarget;
-  decideClicked(cell);
-  if (firstClicked && secondClicked) {
+  decideSelection(cell);
+  if (firstSelected && secondSelected) {
     const res = await move();
     rendBoard(res.board.pieces);
   }
 }
 
-function decideClicked(cell) {
-  if (!firstClicked && !cell.hasChildNodes()) {
+function decideSelection(cell) {
+  if (!firstSelected && !cell.hasChildNodes()) {
     return;
   }
-  if (firstClicked === cell) {
-    const piece = firstClicked.childNodes[0];
+  if (firstSelected === cell) {
+    const piece = firstSelected.childNodes[0];
     piece.classList.remove("selected");
-    firstClicked = null;
+    firstSelected = null;
     return;
   }
-  if (!firstClicked) {
-    firstClicked = cell;
-    highlightClickedCell();
+  if (!firstSelected) {
+    firstSelected = cell;
+    highlightSelectedCell(cell);
     return;
   }
-  secondClicked = cell;
+  secondSelected = cell;
 }
 
-function highlightClickedCell() {
-  const piece = firstClicked.childNodes[0];
+function highlightSelectedCell(cell) {
+  const piece = cell.childNodes[0];
   piece.classList.add("selected");
 }
 
@@ -111,16 +111,20 @@ async function move() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        start: firstClicked.getAttribute("id"),
-        target: secondClicked.getAttribute("id"),
+        start: firstSelected.getAttribute("id"),
+        target: secondSelected.getAttribute("id"),
       }),
     });
     return await res.json();
   } catch (err) {
     alert(err);
   } finally {
-    firstClicked.childNodes[0].classList.remove("selected");
-    firstClicked = null;
-    secondClicked = null;
+    clearSelection();
   }
+}
+
+function clearSelection() {
+  firstSelected.childNodes[0].classList.remove("selected");
+  firstSelected = null;
+  secondSelected = null;
 }
