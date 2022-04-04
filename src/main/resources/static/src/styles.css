@@ -1,0 +1,24 @@
+body {
+    align-self: center;
+}
+
+table, th {
+    border: 2px solid;
+    background: black;
+    text-align: center;
+    font-size: 50px;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+}
+
+.black {
+    background: blueviolet;
+}
+
+.white {
+    background: coral;
+}
+
