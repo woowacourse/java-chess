@@ -79,7 +79,6 @@ public class ChessGameDao {
 
             statement.executeUpdate();
             deletePieces(connection, chessboardId);
-
             updatePieces(connection, chessGameDto, chessboardId);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +86,7 @@ public class ChessGameDao {
     }
 
     private void deletePieces(Connection connection, int chessboardId) {
-        String sql = "delete from piece where chess_board_id = ?";
+        String sql = "delete from piece where chessboard_id = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -138,10 +137,9 @@ public class ChessGameDao {
 
             ResultSet resultSet = statement.executeQuery();
 
-            resultSet.next();
-
-            id = resultSet.getInt("chess_board_id");
-
+            if(resultSet.next()) {
+                id = resultSet.getInt("chess_board_id");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

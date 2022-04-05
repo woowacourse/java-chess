@@ -53,7 +53,7 @@ public class ChessService {
     public List<String> findAllByName(String gameName) {
         ChessGame selectedChessGame = chessGameDao.findAllByName(gameName);
 
-        if (chessGame == null) {
+        if (selectedChessGame == null) {
             chessGame = new ChessGame(gameName);
             chessGame.progress(Command.from("start"));
 
@@ -72,7 +72,10 @@ public class ChessService {
 
         int chessboardId = chessGameDao.findIdByName(gameName);
 
+        System.out.println("chessboardId = " + chessboardId);
+
         if (chessboardId > 0) {
+            System.out.println("있으니까 여기 실행");
             chessGameDao.update(chessGameDto, chessboardId);
             return;
         }
@@ -80,6 +83,8 @@ public class ChessService {
         int savedId = chessBoardDao.save(chessGameDto);
 
         chessGameDao.save(chessGameDto, savedId);
+
+        System.out.println("없으면 여기 실행");
     }
 
     public boolean isEnd() {
