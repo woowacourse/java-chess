@@ -99,7 +99,6 @@ class ChessGameServiceTest {
         Piece piece = pieceDao.findAllPieces().get(target);
         Turn turn = turnDao.findCurrentTurn().orElse(null);
 
-
         // then
         assertAll(
                 () -> assertThat(piece.name()).isEqualTo("pawn"),
