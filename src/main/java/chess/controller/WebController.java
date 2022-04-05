@@ -24,7 +24,7 @@ public class WebController {
     }
 
     public void start(final ChessGame chessGame) {
-        get("/start", ((request, response) -> {
+        get("/start", ((req, res) -> {
             if (chessGame.isPlaying()) {
                 throw new IllegalStateException("이미 게임이 시작중입니다.");
             }
