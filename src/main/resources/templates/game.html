@@ -7,6 +7,19 @@
 </head>
 <body>
 <h1>WEB CHESS GAME!</h1>
+
+<div class="right">
+    <form action="/move" method="post">
+        <p><label>Source : &nbsp;&nbsp;<input type="text" name="source"></label></p>
+        <p><label>Target : <input type="text" name="target"></label></p>
+        <input type="submit" value="이동">
+    </form>
+
+    <div class="status">
+        {{error}}
+    </div>
+</div>
+
 <div class="left">
     {{#pieces}}
     <div style="position: relative;">
