@@ -111,7 +111,7 @@ public class Board {
     }
 
     public double calculateScore() {
-        return new ScoreCalculator(values, turnDecider).currentPlayerScore();
+        return new Score(values, turnDecider).calculate();
     }
 
     public Map<Position, Piece> getValues() {

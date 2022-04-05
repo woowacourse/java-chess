@@ -17,18 +17,18 @@ import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
-class ScoreCalculatorTest {
+class ScoreTest {
 
     @Test
     @DisplayName("초기 말들의 점수는 38.0 점이다.")
     void apply() {
         //given
-        ScoreCalculator scoreCalculator = new ScoreCalculator(
+        Score score = new Score(
             new Board(new TurnDecider(), new defaultInitializer()).getValues(),
             new TurnDecider());
 
         //when
-        double actual = scoreCalculator.currentPlayerScore();
+        double actual = score.calculate();
 
         Assertions.assertThat(actual).isEqualTo(38.0);
     }
@@ -36,12 +36,12 @@ class ScoreCalculatorTest {
     @Test
     @DisplayName("폰이 같은 File에 두 개, 일반적 폰 1개, 다른 팀 폰 1개 있을 경우 2점으로 계산한다.")
     void when_pawns_in_same_file() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(
+        Score score = new Score(
             new Board(new TurnDecider(), new testInitializer()).getValues(),
             new TurnDecider());
 
         //then
-        double actual = scoreCalculator.currentPlayerScore();
+        double actual = score.calculate();
         assertThat(actual).isEqualTo(2.0);
     }
 

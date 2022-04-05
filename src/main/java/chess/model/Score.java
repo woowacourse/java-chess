@@ -7,17 +7,19 @@ import java.util.Map;
 
 import chess.model.piece.Piece;
 
-public class ScoreCalculator {
+public class Score {
+
+    public static final double PAWN_SCORE_FACTOR = 0.5;
 
     private final Map<Position, Piece> piecesByPositions;
     private final TurnDecider turnDecider;
 
-    ScoreCalculator(Map<Position, Piece> piecesByPositions, TurnDecider turnDecider) {
+    Score(Map<Position, Piece> piecesByPositions, TurnDecider turnDecider) {
         this.piecesByPositions = piecesByPositions;
         this.turnDecider = turnDecider;
     }
 
-    double currentPlayerScore() {
+    double calculate() {
         return piecesByPositions.values()
             .stream()
             .filter(turnDecider::isTurnOf)
@@ -28,10 +30,14 @@ public class ScoreCalculator {
     private double adjustPawnScore() {
         return Arrays.stream(File.values())
             .map(this::getPawnCountInOneFile)
-            .filter(count -> count > 1)
-            .mapToDouble(count -> count * 0.5)
+            .filter(this::isPawnInLine)
+            .mapToDouble(count -> count * PAWN_SCORE_FACTOR)
             .sum();
 
+    }
+
+    private boolean isPawnInLine(Long count) {
+        return count > 1;
     }
 
     private long getPawnCountInOneFile(File file) {
