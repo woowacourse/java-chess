@@ -11,6 +11,7 @@ import chess.domain.piece.ChessmenInitializer;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,10 +25,10 @@ public class WebApplication {
         staticFiles.location("/static");
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
-        ChessGame game = ChessGame.of(chessmenInitializer.init());
+        AtomicReference<ChessGame> game = new AtomicReference<>(ChessGame.of(chessmenInitializer.init()));
 
         get("/", (req, res) -> {
-            Map<String, Object> model = game.toBoard().getBoardMap();
+            Map<String, Object> model = game.get().toBoard().getBoardMap();
 
             return render(model, "index.html");
         });
@@ -36,7 +37,7 @@ public class WebApplication {
             String[] request = req.body().split("=");
             CommandDto commandDto = new CommandDto(request[1]);
 
-            game.moveChessmen(new MovePositionCommandDto(commandDto.getFullCommand()));
+            game.get().moveChessmen(new MovePositionCommandDto(commandDto.getFullCommand()));
 
             res.redirect("/");
             return null;
@@ -48,12 +49,21 @@ public class WebApplication {
             String from = jObject.getString("from");
             String to = jObject.getString("to");
 
-            game.moveChessmen(new MovePositionCommandDto(from, to));
+            game.get().moveChessmen(new MovePositionCommandDto(from, to));
+
+            res.redirect("/");
+            return null;
+        });
+
+        get("/ui/start", (req, res) -> {
+
+            game.set(ChessGame.of(chessmenInitializer.init()));
 
             res.redirect("/");
 
             return null;
         });
+
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
