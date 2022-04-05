@@ -18,12 +18,12 @@ public class BoardDaoImpl implements BoardDao {
 
     private final Connection connection;
 
-    public BoardDaoImpl() {
-        connection = JdbcTemplate.getConnection();
-    }
-
     public BoardDaoImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    public BoardDaoImpl() {
+        this(JdbcTemplate.getConnection());
     }
 
     @Override
@@ -62,6 +62,7 @@ public class BoardDaoImpl implements BoardDao {
                 preparedStatement.setString(PIECE_COLUMN, boardEntry.getValue());
                 preparedStatement.setString(POSITION_COLUMN, boardEntry.getKey());
                 preparedStatement.addBatch();
+                preparedStatement.clearParameters();
             }
             preparedStatement.executeBatch();
         } catch (SQLException e) {

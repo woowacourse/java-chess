@@ -24,14 +24,13 @@ public class ChessService {
     private final BoardDao boardDao;
     private final TurnDao turnDao;
 
-    public ChessService() {
-        boardDao = new BoardDaoImpl();
-        turnDao = new TurnDaoImpl();
-    }
-
     public ChessService(final BoardDao boardDao, final TurnDao turnDao) {
         this.boardDao = boardDao;
         this.turnDao = turnDao;
+    }
+
+    public ChessService() {
+        this(new BoardDaoImpl(), new TurnDaoImpl());
     }
 
     public ChessDto initializeGame() {

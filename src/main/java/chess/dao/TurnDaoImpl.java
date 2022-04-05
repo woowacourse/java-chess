@@ -16,7 +16,7 @@ public class TurnDaoImpl implements TurnDao {
     private final Connection connection;
 
     public TurnDaoImpl() {
-        connection = JdbcTemplate.getConnection();
+        this(JdbcTemplate.getConnection());
     }
 
     public TurnDaoImpl(Connection connection) {
