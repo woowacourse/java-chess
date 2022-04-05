@@ -29,7 +29,7 @@ public class WebController {
     private void start(final ChessGame chessGame) {
         get("/start", ((req, res) -> {
             chessGame.start();
-            return render(chessGame.toMap(), "index.html");
+            return render(chessGame.getAllPiecesByPosition(), "index.html");
         }));
     }
 
@@ -37,7 +37,7 @@ public class WebController {
         post("/move", ((req, res) -> {
             chessGame.move(
                     req.queryParams("source"), req.queryParams("target"));
-            return render(chessGame.toMap(), "index.html");
+            return render(chessGame.getAllPiecesByPosition(), "index.html");
         }));
     }
 
@@ -50,7 +50,7 @@ public class WebController {
 
     private void end(final ChessGame chessGame) {
         get("/end", ((req, res) -> {
-            final Map<String, Object> model = chessGame.toMap();
+            final Map<String, Object> model = chessGame.getAllPiecesByPosition();
             chessGame.end();
             if (!chessGame.isPlaying()) {
                 throw new IllegalStateException();

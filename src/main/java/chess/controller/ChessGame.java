@@ -3,6 +3,7 @@ package chess.controller;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
+import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import java.util.Map;
@@ -11,12 +12,14 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
     private Board board;
+    private final PieceDao pieceDao = new PieceDao();
 
     public void start() {
         if (board != null) {
-            throw new IllegalStateException("게임이 이미 시작중입니다.");
+            throw new IllegalStateException("이미 진행중인 게임이 있습니다.");
         }
         board = new Board();
+        pieceDao.saveAll(board.getPieces());
     }
 
     public boolean isPlaying() {
@@ -28,11 +31,11 @@ public class ChessGame {
         board = board.movePiece(Position.from(sourcePosition), Position.from(targetPosition));
     }
 
-    public Map<String, Object> toMap() {
-        return board.getPieces()
+    public Map<String, Object> getAllPiecesByPosition() {
+        return pieceDao.findAll()
                 .entrySet()
                 .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
     public Score getScore() {
