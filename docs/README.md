@@ -6,6 +6,14 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+## 4, 5단계 웹 적용하기
+
+### 적용 예정 사항
+
+- try-with-resource
+- fk 제약조건 걸어주기
+- custom error
+
 ## 목표
 
 - 서로 의견 충돌이 있을 때 잠깐 멈추고 다른 방향으로 생각해보기

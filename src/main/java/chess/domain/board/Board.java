@@ -17,6 +17,7 @@ public final class Board {
 
     private static final int TOTAL_KING_COUNT = 2;
     private static final String CANT_MOVE_TO_SAME_CAMP = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
+    private static final String CANT_MOVE_EMPTY_PIECE = "빈 기물을 움직일 수 없습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -38,6 +39,9 @@ public final class Board {
     }
 
     public void moveIfValidPiece(final Positions positions) {
+        if (isBlankPosition(positions.before())) {
+            throw new IllegalArgumentException(CANT_MOVE_EMPTY_PIECE);
+        }
         if (isAfterPieceSameCamp(positions)) {
             throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
         }
