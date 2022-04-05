@@ -2,16 +2,16 @@ package web.service;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
+import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.*;
 import chess.dto.*;
 import web.dao.BoardDao;
 import web.dao.GameDao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +43,36 @@ public class ChessService {
         if (!responseBoard.get(point).isSameType(PieceType.EMPTY)) {
             boardDao.save(new PieceDto(gameDto.getRoomName(), point.convertPointToId(),
                     responseBoard.get(point).getPieceType(), responseBoard.get(point).getPieceColor()));
+        }
+    }
+
+    public WebBoardDto resumeGame(GameDto gameDto) {
+        GameDto findGame = gameDao.findByRoomName(gameDto.getRoomName());
+        if (findGame == null) {
+            throw new IllegalArgumentException("[ERROR] 존재하는 게임이 없습니다.");
+        }
+        List<PieceDto> allPieces = boardDao.findAllPiecesByRoomName(gameDto.getRoomName());
+        Map<Point, Piece> pointPieces = new HashMap<>();
+        createBoard(pointPieces, allPieces);
+        gameState = gameState.start(new Board(pointPieces), Color.convertColorByString(findGame.getTurnColor()));
+        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), gameState.isRunnable());
+    }
+
+    public void createBoard(Map<Point, Piece> pointPieces, List<PieceDto> allPieces) {
+        for (PieceDto piece : allPieces) {
+            pointPieces.put(Point.of(piece.getPosition()), PieceConverter.convert(piece.getPieceType(), piece.getPieceColor()));
+        }
+        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
+            addEmptyPiecesEachLine(pointPieces, i);
+        }
+    }
+
+    private void addEmptyPiecesEachLine(Map<Point, Piece> pointPieces, int i) {
+        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
+            Point point = Point.of(i, j);
+            if (!pointPieces.containsKey(point)) {
+                pointPieces.put(point, Empty.getInstance());
+            }
         }
     }
 

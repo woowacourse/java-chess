@@ -8,10 +8,14 @@ let to = "";
 let currentRoomName = "";
 
 newGameButton.addEventListener("click", async function () {
-    alert("123");
     let board = newGame();
     await initializeBoard(board);
 });
+
+resumeGameButton.addEventListener("click", async function () {
+    let board = resumeGame();
+    await initializeBoard(board);
+})
 
 startButton.addEventListener("click", async function () {
     let board = startGame();
@@ -48,6 +52,26 @@ async function newGame() {
         body: JSON.stringify({
             roomName: currentRoomName,
             turnColor: "white",
+        }),
+    }).then(handleErrors)
+        .catch(function (error) {
+            alert(error.message);
+        })
+    boardAndTurnInfo = await boardAndTurnInfo.json();
+    document.getElementById("turnInfo").innerHTML = "현재 턴: " + boardAndTurnInfo.turnColor;
+    return boardAndTurnInfo.board;
+}
+
+async function resumeGame() {
+    currentRoomName = document.getElementById('existRoomName').value;
+
+    let boardAndTurnInfo = await fetch("/start/resumeGame", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            roomName: currentRoomName,
         }),
     }).then(handleErrors)
         .catch(function (error) {

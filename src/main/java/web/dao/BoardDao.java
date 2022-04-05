@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static web.dao.DBConnector.getConnection;
 
@@ -43,6 +45,28 @@ public class BoardDao {
             }
             return new PieceDto(result.getString("room_name"), result.getString("position"),
                     result.getString("piece_type"), result.getString("piece_color"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<PieceDto> findAllPiecesByRoomName(String roomName) {
+        final Connection connection = getConnection();
+        final String sql = "select room_name, position, piece_type, piece_color " +
+                "from board " +
+                "where room_name=?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, roomName);
+            final ResultSet result = statement.executeQuery();
+            List<PieceDto> pieces = new ArrayList<>();
+            while (result.next()) {
+                pieces.add(new PieceDto(result.getString("room_name"), result.getString("position"),
+                        result.getString("piece_type"), result.getString("piece_color")));
+            }
+            return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
         }

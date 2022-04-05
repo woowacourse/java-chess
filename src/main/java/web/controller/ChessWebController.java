@@ -36,19 +36,20 @@ public class ChessWebController {
             return render(new HashMap<>(), "index.html");
         });
 
-//        get("/start", (req, res) -> {
-//            try {
-//                return gson.toJson(service.start());
-//            } catch (RuntimeException e) {
-//                res.status(503);
-//                return gson.toJson(new ErrorMessageDto(e.getMessage()));
-//            }
-//        });
-
         post("/start/newGame", (req, res) -> {
             try {
                 GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
                 return gson.toJson(service.startNewGame(gameDto));
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
+        });
+
+        post("/start/resumeGame", (req, res) -> {
+            try {
+                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                return gson.toJson(service.resumeGame(gameDto));
             } catch (RuntimeException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));

@@ -15,6 +15,7 @@ class BoardDaoTest {
     private static final String ROOM_NAME = "Room1";
     private static final String POSITION = "a1";
     private final PieceDto pieceDto = new PieceDto(ROOM_NAME, POSITION, "pawn", "WHITE");
+    private final PieceDto pieceDto2 = new PieceDto(ROOM_NAME, "a2", "pawn", "WHITE");
     private GameDao gameDao;
     private BoardDao boardDao;
 
@@ -38,6 +39,14 @@ class BoardDaoTest {
         boardDao.save(pieceDto);
         PieceDto result = boardDao.findByRoomNameAndPosition(ROOM_NAME, POSITION);
         assertThat(result.getPieceType()).isEqualTo("pawn");
+    }
+
+    @Test
+    @DisplayName("게임 룸에 존재하는 모든 말들을 불러온다.")
+    void findAllPiecesByRoomName() {
+        boardDao.save(pieceDto);
+        boardDao.save(pieceDto);
+        assertThat(boardDao.findAllPiecesByRoomName(ROOM_NAME).size()).isEqualTo(2);
     }
 
     @Test
