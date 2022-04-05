@@ -146,6 +146,8 @@ end
 - [x] status 버튼을 클릭하면 점수를 볼 수 있음
 - [x] 끝내기 버튼을 클릭하면 게임을 끝내고 결과를 볼 수 있음
 
+### 5단계 DB 적용
+- [ ] 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있다.
 ---
 ### Reference
 [체스판을 준비하는 방법](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)
