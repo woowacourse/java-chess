@@ -89,7 +89,7 @@ public class Board {
         return Direction.of(fileDistance, rowDistance);
     }
 
-    public boolean isCheckmate(final Position to) {
+    public boolean isGameOver(final Position to) {
         return board.get(to).isSame(Type.KING);
     }
 
