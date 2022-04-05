@@ -53,7 +53,7 @@ public abstract class Piece {
     }
 
     public String getName() {
-        return name;
+        return color.getName() + name;
     }
 
 }
