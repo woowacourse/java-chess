@@ -25,12 +25,12 @@ public class WebApplication {
         staticFiles.location("/static");
 
         final Board initBoard = new BoardInitializer().init();
-        final ChessController chessController = new ChessController(new Ready(initBoard));
-        chessController.start();
+        final WebChessGame webChessGame = new WebChessGame(new Ready(initBoard));
+        webChessGame.start();
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            final BoardDto boardDto = BoardDto.of(chessController.state());
+            final BoardDto boardDto = BoardDto.of(webChessGame.state());
             model.put("board", boardDto);
 
             return render(model, "index.html");
@@ -39,7 +39,7 @@ public class WebApplication {
         post("/move", (req, res) -> {
             final String commandString = "move " + req.body();
             final Command command = Command.from(commandString);
-            final ResponseDto responseDto = chessController.progress(command);
+            final ResponseDto responseDto = webChessGame.progress(command);
 
             return responseDto.toString();
         });
@@ -47,8 +47,8 @@ public class WebApplication {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             final Command command = Command.from("status");
-            chessController.progress(command);
-            var score = chessController.state().status();
+            webChessGame.progress(command);
+            var score = webChessGame.state().status();
             model.put("score", score);
 
             return render(model, "index.html");
@@ -56,22 +56,22 @@ public class WebApplication {
 
         get("/end", (req, res) -> {
             final Command command = Command.from("end");
-            chessController.progress(command);
-            chessController.restart();
+            webChessGame.progress(command);
+            webChessGame.restart();
 
             return "게임종료되었습니다.";
         });
 
         get("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            final ResultDto result = ResultDto.of(chessController.state());
+            final ResultDto result = ResultDto.of(webChessGame.state());
             model.put("result", result);
 
             return render(model, "result.html");
         });
 
         get("/restart", (req, res) -> {
-            chessController.restart();
+            webChessGame.restart();
             res.redirect("/start");
             return null;
         });

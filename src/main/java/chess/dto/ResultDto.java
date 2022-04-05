@@ -24,7 +24,7 @@ public class ResultDto {
         if (state instanceof Black) {
             winner = "백팀";
         }
-        return new ResultDto(winner , state.status().getResult());
+        return new ResultDto(winner, state.status().getResult());
     }
 
     public String getWinner() {

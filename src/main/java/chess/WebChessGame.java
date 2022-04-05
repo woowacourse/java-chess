@@ -6,10 +6,10 @@ import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.ResponseDto;
 
-public class ChessController {
+public class WebChessGame {
     private State state;
 
-    public ChessController(final State state) {
+    public WebChessGame(final State state) {
         this.state = state;
     }
 
@@ -28,7 +28,7 @@ public class ChessController {
     }
 
     public void restart() {
-        state = new Ready( new BoardInitializer().init());
+        state = new Ready(new BoardInitializer().init());
         start();
     }
 
