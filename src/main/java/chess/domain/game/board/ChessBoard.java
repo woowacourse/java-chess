@@ -207,7 +207,4 @@ public class ChessBoard {
         return currentTurn;
     }
 
-    public GameStatus getGameStatus() {
-        return gameStatus;
-    }
 }
