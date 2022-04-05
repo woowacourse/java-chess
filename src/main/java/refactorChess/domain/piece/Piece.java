@@ -16,6 +16,29 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public MovePath findByMovePath(Piece piece) {
+        validateColor(piece);
+        final Direction direction = findByDirection(this.position, piece.position);
+        validateDirection(direction, findByMovableDirection(piece, direction));
+        return new MovePath(this.position, piece.position, direction);
+    }
+
+    private void validateColor(Piece piece) {
+        if (!piece.isSameColor(piece)) {
+            throw new IllegalArgumentException("목표 지점에 같은 팀의 기물이 존재합니다.");
+        }
+    }
+
+    private boolean isSameColor(Piece piece) {
+        return this.pieceColor == piece.pieceColor;
+    }
+
+    private void validateDirection(Direction direction, List<Direction> directions) {
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException("해당 방향으로 기물이 움직일 수 없습니다.");
+        }
+    }
+
     public boolean isBlank() {
         return this.pieceType == PieceType.NO_PIECE;
     }

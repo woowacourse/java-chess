@@ -1,6 +1,16 @@
 package refactorChess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static refactorChess.domain.board.Direction.NORTH_EAST_EAST;
+import static refactorChess.domain.board.Direction.NORTH_NORTH_EAST;
+import static refactorChess.domain.board.Direction.NORTH_NORTH_WEST;
+import static refactorChess.domain.board.Direction.NORTH_WEST_WEST;
+import static refactorChess.domain.board.Direction.SOUTH_EAST_EAST;
+import static refactorChess.domain.board.Direction.SOUTH_SOUTH_EAST;
+import static refactorChess.domain.board.Direction.SOUTH_SOUTH_WEST;
+import static refactorChess.domain.board.Direction.SOUTH_WEST_WEST;
+import static refactorChess.domain.piece.PieceColor.NONE;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -29,14 +39,79 @@ class KnightTest {
 
     static Stream<Arguments> validKnightMovableTestSet() {
         return Stream.of(
-                Arguments.of(Position.valueOf("b1"), Position.valueOf("c3"), Direction.NORTH_NORTH_EAST),
-                Arguments.of(Position.valueOf("b1"), Position.valueOf("a3"), Direction.NORTH_NORTH_WEST),
-                Arguments.of(Position.valueOf("c2"), Position.valueOf("e3"), Direction.NORTH_EAST_EAST),
-                Arguments.of(Position.valueOf("c2"), Position.valueOf("a3"), Direction.NORTH_WEST_WEST),
-                Arguments.of(Position.valueOf("b3"), Position.valueOf("c1"), Direction.SOUTH_SOUTH_EAST),
-                Arguments.of(Position.valueOf("b3"), Position.valueOf("a1"), Direction.SOUTH_SOUTH_WEST),
-                Arguments.of(Position.valueOf("c2"), Position.valueOf("e1"), Direction.SOUTH_EAST_EAST),
-                Arguments.of(Position.valueOf("c2"), Position.valueOf("a1"), Direction.SOUTH_WEST_WEST)
+                Arguments.of(Position.valueOf("b1"), Position.valueOf("c3"), NORTH_NORTH_EAST),
+                Arguments.of(Position.valueOf("b1"), Position.valueOf("a3"), NORTH_NORTH_WEST),
+                Arguments.of(Position.valueOf("c2"), Position.valueOf("e3"), NORTH_EAST_EAST),
+                Arguments.of(Position.valueOf("c2"), Position.valueOf("a3"), NORTH_WEST_WEST),
+                Arguments.of(Position.valueOf("b3"), Position.valueOf("c1"), SOUTH_SOUTH_EAST),
+                Arguments.of(Position.valueOf("b3"), Position.valueOf("a1"), SOUTH_SOUTH_WEST),
+                Arguments.of(Position.valueOf("c2"), Position.valueOf("e1"), SOUTH_EAST_EAST),
+                Arguments.of(Position.valueOf("c2"), Position.valueOf("a1"), SOUTH_WEST_WEST)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("validFindMovePathToTargetPieceFromTheSourcePieceOfKnight")
+    @DisplayName("출발점 기물인 나이트는 도착점 기물을 통해서 이동방향을 구할 수 있다.")
+    void validFindMovePathToTargetPieceFromTheSourcePieceOfKnight(
+            Position from, Position to, Piece targetPiece, Direction direction) {
+
+        final Knight knight = new Knight(PieceColor.WHITE, from);
+
+        assertThat(knight.findByMovePath(targetPiece)).isEqualTo(new MovePath(from, to, direction));
+    }
+
+    static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfKnight() {
+        return Stream.of(
+                Arguments.of(
+                        Position.valueOf("b1"), Position.valueOf("c3"),
+                        new Blank(NONE, Position.valueOf("c3")), NORTH_NORTH_EAST),
+                Arguments.of(
+                        Position.valueOf("b1"), Position.valueOf("a3"),
+                        new Blank(NONE, Position.valueOf("a3")), NORTH_NORTH_WEST),
+                Arguments.of(
+                        Position.valueOf("c2"), Position.valueOf("e3"),
+                        new Blank(NONE, Position.valueOf("e3")), NORTH_EAST_EAST),
+                Arguments.of(
+                        Position.valueOf("c2"), Position.valueOf("a3"),
+                        new Blank(NONE, Position.valueOf("a3")), NORTH_WEST_WEST),
+                Arguments.of(
+                        Position.valueOf("b3"), Position.valueOf("c1"),
+                        new Blank(NONE, Position.valueOf("c1")), SOUTH_SOUTH_EAST),
+                Arguments.of(
+                        Position.valueOf("b3"), Position.valueOf("a1"),
+                        new Blank(NONE, Position.valueOf("a1")), SOUTH_SOUTH_WEST),
+                Arguments.of(
+                        Position.valueOf("c2"), Position.valueOf("e1"),
+                        new Blank(NONE, Position.valueOf("e1")), SOUTH_EAST_EAST),
+                Arguments.of(
+                        Position.valueOf("c2"), Position.valueOf("a1"),
+                        new Blank(NONE, Position.valueOf("a1")), SOUTH_WEST_WEST)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidFindMovePathToTargetPieceFromTheSourcePieceOfKnight")
+    @DisplayName("출발점 기물인 나이트는 도착점 기물을 통해서 이동방향을 구할 수 있다.")
+    void invalidFindMovePathToTargetPieceFromTheSourcePieceOfKnight(Position from, Piece targetPiece) {
+
+        final Knight knight = new Knight(PieceColor.WHITE, from);
+
+        assertThatThrownBy(() -> knight.findByMovePath(targetPiece))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유효하지 않은 방향입니다.");
+    }
+
+    static Stream<Arguments> invalidFindMovePathToTargetPieceFromTheSourcePieceOfKnight() {
+        return Stream.of(
+                Arguments.of(Position.valueOf("a1"), new Blank(NONE, Position.valueOf("a3"))),
+                Arguments.of(Position.valueOf("a3"), new Blank(NONE, Position.valueOf("a1"))),
+                Arguments.of(Position.valueOf("a1"), new Blank(NONE, Position.valueOf("c1"))),
+                Arguments.of(Position.valueOf("c1"), new Blank(NONE, Position.valueOf("a1"))),
+                Arguments.of(Position.valueOf("c1"), new Blank(NONE, Position.valueOf("e3"))),
+                Arguments.of(Position.valueOf("c1"), new Blank(NONE, Position.valueOf("a3"))),
+                Arguments.of(Position.valueOf("c3"), new Blank(NONE, Position.valueOf("a1"))),
+                Arguments.of(Position.valueOf("c3"), new Blank(NONE, Position.valueOf("e1")))
         );
     }
 }

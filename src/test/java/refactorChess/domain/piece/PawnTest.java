@@ -101,4 +101,60 @@ class PawnTest {
                 Arguments.of(Position.valueOf("b7"), new Blank(NONE, Position.valueOf("b5")), SOUTH)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("validFindMovePathToTargetPieceFromTheSourcePieceOfWhitePawn")
+    @DisplayName("출발점 기물인 하얀색 폰은 도착점 기물을 통해서 이동방향을 구할 수 있다.")
+    void validFindMovePathToTargetPieceFromTheSourcePieceOfWhitePawn(
+            Position from, Position to, Piece targetPiece, Direction direction) {
+
+        final Pawn pawn = new Pawn(PieceColor.WHITE, from);
+
+        assertThat(pawn.findByMovePath(targetPiece)).isEqualTo(new MovePath(from, to, direction));
+    }
+
+    static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfWhitePawn() {
+        return Stream.of(
+                Arguments.of(
+                        Position.valueOf("b2"), Position.valueOf("b3"),
+                        new Blank(BLACK, Position.valueOf("b3")), NORTH),
+                Arguments.of(
+                        Position.valueOf("b2"), Position.valueOf("b4"),
+                        new Blank(BLACK, Position.valueOf("b4")), NORTH),
+                Arguments.of(
+                        Position.valueOf("b2"), Position.valueOf("c3"),
+                        new Rook(NONE, Position.valueOf("c3")), NORTH_EAST),
+                Arguments.of(
+                        Position.valueOf("b2"), Position.valueOf("a3"),
+                        new Rook(NONE, Position.valueOf("a3")), NORTH_WEST)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("validFindMovePathToTargetPieceFromTheSourcePieceOfBlackPawn")
+    @DisplayName("출발점 기물인 검은색 폰은 도착점 기물을 통해서 이동방향을 구할 수 있다.")
+    void validFindMovePathToTargetPieceFromTheSourcePieceOfBlackPawn(
+            Position from, Position to, Piece targetPiece, Direction direction) {
+
+        final Pawn pawn = new Pawn(PieceColor.BLACK, from);
+
+        assertThat(pawn.findByMovePath(targetPiece)).isEqualTo(new MovePath(from, to, direction));
+    }
+
+    static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfBlackPawn() {
+        return Stream.of(
+                Arguments.of(
+                        Position.valueOf("b7"), Position.valueOf("b6"),
+                        new Blank(NONE, Position.valueOf("b6")), SOUTH),
+                Arguments.of(
+                        Position.valueOf("b7"), Position.valueOf("b5"),
+                        new Blank(NONE, Position.valueOf("b5")), SOUTH),
+                Arguments.of(
+                        Position.valueOf("b7"), Position.valueOf("c6"),
+                        new Rook(WHITE, Position.valueOf("c6")), SOUTH_EAST),
+                Arguments.of(
+                        Position.valueOf("b7"), Position.valueOf("a6"),
+                        new Rook(WHITE, Position.valueOf("a6")), SOUTH_WEST)
+        );
+    }
 }
