@@ -8,10 +8,6 @@ public enum Team {
     BLACK("black"),
     NEUTRALITY("neutrality");
 
-    public boolean isBlack() {
-        return this == Team.BLACK;
-    }
-
     private final String name;
 
     Team(String name) {
@@ -23,6 +19,10 @@ public enum Team {
                 .filter(team -> team.name.equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 팀 이름입니다."));
+    }
+
+    public boolean isBlack() {
+        return this == Team.BLACK;
     }
 
     public String getName() {

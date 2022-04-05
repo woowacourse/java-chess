@@ -23,8 +23,8 @@ public class ChessController {
 
     private State state;
     private Board board;
-    private BoardDao boardDao;
-    private PieceDao pieceDao;
+    private final BoardDao boardDao;
+    private final PieceDao pieceDao;
 
     public ChessController() {
         state = new Ready();

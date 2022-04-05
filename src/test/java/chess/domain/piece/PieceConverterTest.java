@@ -8,37 +8,37 @@ public class PieceConverterTest {
 
     @Test
     void queenGenerateTest() {
-        Piece piece = PieceConverter.convert("black_queen");
+        Piece piece = PieceMapper.convert("black_queen");
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
     @Test
     void kingGenerateTest() {
-        Piece piece = PieceConverter.convert("black_king");
+        Piece piece = PieceMapper.convert("black_king");
         assertThat(piece).isInstanceOf(King.class);
     }
 
     @Test
     void bishopGenerateTest() {
-        Piece piece = PieceConverter.convert("black_bishop");
+        Piece piece = PieceMapper.convert("black_bishop");
         assertThat(piece).isInstanceOf(Bishop.class);
     }
 
     @Test
     void knightGenerateTest() {
-        Piece piece = PieceConverter.convert("black_knight");
+        Piece piece = PieceMapper.convert("black_knight");
         assertThat(piece).isInstanceOf(Knight.class);
     }
 
     @Test
     void pawnGenerateTest() {
-        Piece piece = PieceConverter.convert("black_pawn");
+        Piece piece = PieceMapper.convert("black_pawn");
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
     @Test
     void rookGenerateTest() {
-        Piece piece = PieceConverter.convert("black_rook");
+        Piece piece = PieceMapper.convert("black_rook");
         assertThat(piece).isInstanceOf(Rook.class);
     }
 }

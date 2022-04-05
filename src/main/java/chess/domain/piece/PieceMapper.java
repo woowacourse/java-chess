@@ -5,7 +5,7 @@ import chess.domain.Team;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum PieceConverter{
+public enum PieceMapper {
     BISHOP("bishop", Bishop::new),
     BLANK("blank", Blank::new),
     KING("king", King::new),
@@ -17,7 +17,7 @@ public enum PieceConverter{
     private String name;
     private Function<Team, Piece> convertFunction;
 
-    PieceConverter(String name, Function<Team, Piece> convertFunction) {
+    PieceMapper(String name, Function<Team, Piece> convertFunction) {
         this.name = name;
         this.convertFunction = convertFunction;
     }
@@ -28,14 +28,14 @@ public enum PieceConverter{
             return new Blank();
         }
 
-        PieceConverter pieceConverter = getPieceConverter(splitPiece);
+        PieceMapper pieceConverter = getPieceConverter(splitPiece);
 
         return pieceConverter.convertFunction
                 .apply(Team.find(splitPiece[0]));
     }
 
-    private static PieceConverter getPieceConverter(String[] splitPiece) {
-        PieceConverter pieceConverter = Arrays.stream(values())
+    private static PieceMapper getPieceConverter(String[] splitPiece) {
+        PieceMapper pieceConverter = Arrays.stream(values())
                 .filter(piece -> piece.name.equals(splitPiece[1]))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 말 이름입니다."));

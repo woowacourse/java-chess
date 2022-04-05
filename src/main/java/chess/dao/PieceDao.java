@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceConverter;
+import chess.domain.piece.PieceMapper;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class PieceDao {
             String rawPiece = resultSet.getString(2);
 
             pieceByPosition.put(Position.of(position),
-                    PieceConverter.convert(rawPiece));
+                    PieceMapper.convert(rawPiece));
         }
     }
 

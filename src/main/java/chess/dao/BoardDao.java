@@ -12,14 +12,19 @@ public class BoardDao {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery();){
-            if (!resultSet.next()) {
-                throw new IllegalStateException("[ERROR] 저장된 정보가 없습니다.");
-            }
-            String state = resultSet.getString(1);
+            String state = getRawState(resultSet);
             return TurnMapper.getStateByName(state);
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
+    }
+
+    private String getRawState(ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            throw new IllegalStateException("[ERROR] 저장된 정보가 없습니다.");
+        }
+        String state = resultSet.getString(1);
+        return state;
     }
 
     public void saveState(State state) {
