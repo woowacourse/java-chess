@@ -1,11 +1,14 @@
 package chess.domain;
 
 import chess.domain.generator.BlackGenerator;
+import chess.domain.generator.LoadGeneratorImpl;
 import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
+import chess.dto.PieceDto;
 import chess.dto.ResultDto;
 import chess.dto.ScoreDto;
+import chess.dto.TurnDto;
 import chess.view.ChessMap;
 
 import java.util.List;
@@ -24,6 +27,11 @@ public class ChessWebGame {
 
     public ChessWebGame() {
         this(new Player(new WhiteGenerator(), Team.WHITE), new Player(new BlackGenerator(), Team.BLACK));
+    }
+
+    public void loadPlayers(List<PieceDto> whitePieces, List<PieceDto> blackPieces) {
+        this.whitePlayer = Player.of(whitePieces, Team.WHITE);
+        this.blackPlayer = Player.of(blackPieces, Team.BLACK);
     }
 
     public ChessMap initializeChessGame() {
@@ -81,6 +89,12 @@ public class ChessWebGame {
         turn = Team.WHITE;
     }
 
+    public void changeTurn(TurnDto turnDto) {
+        if (!turn.isMyTeam(turnDto.getTurn())) {
+            changeTurn();
+        }
+    }
+
     public Player getCurrentPlayer() {
         if (turn == Team.WHITE) {
             return whitePlayer;
@@ -97,10 +111,10 @@ public class ChessWebGame {
 
     public ResultDto getResult() {
         if (!whitePlayer.hasKing()) {
-            return new ResultDto("블랙이 화이트의 킹을 캡처하여 승리하였습니다!");
+            return new ResultDto("BLACK이 WHITE의 킹을 캡처하여 승리하였습니다!");
         }
         if (!blackPlayer.hasKing()) {
-            return new ResultDto("화이트가 블랙의 킹을 캡처하여 승리하였습니다!");
+            return new ResultDto("WHITE가 BLACK의 킹을 캡처하여 승리하였습니다!");
         }
         return getResultByScore();
     }
@@ -115,10 +129,10 @@ public class ChessWebGame {
 
     private ResultDto findWinner(final double whiteScore, final double blackScore, final String status) {
         if (whiteScore > blackScore) {
-            return new ResultDto(status.concat("화이트 승!"));
+            return new ResultDto(status.concat("WHITE 승!"));
         }
         if (whiteScore < blackScore) {
-            return new ResultDto(status.concat("블랙 승!"));
+            return new ResultDto(status.concat("BLACK 승!"));
         }
         return new ResultDto(status.concat("무승부!"));
     }
