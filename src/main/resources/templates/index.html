@@ -6,22 +6,32 @@
 </head>
 <body>
 보드판 <br><br>
-<table>
-{{#board}}
-<tr>
-    {{#this}}
-    <td>
-        {{this.name}}
-    </td>
-    {{/this}}
-</tr>
-{{/board}}
+<table id="table" border=5>
+    {{#board}}
+    <tr>
+        {{#this}}
+        <td id="td_hover" class="click">
+            {{this.name}}
+        </td>
+        {{/this}}
+    </tr>
+    {{/board}}
 </table>
 
-<form enctype = "text/plain" name = "moveform" action = "/move" method = "post"><br>
-    명령 : <input type = "text" name = "command" size = "12">
-    <input type = "submit" value = "제출">
+<form enctype="text/plain" name="moveform" action="/move" method="post"><br>
+    명령 : <input type="text" name="command" size="12">
+    <input type="submit" value="제출">
 </form>
 
 </body>
 </html>
+
+<script>
+
+</script>
+
+<style>
+    #td_hover:hover {
+        background-color: #CCCCCC;
+    }
+</style>
