@@ -1,4 +1,4 @@
-package chess.controller;
+package console.controller;
 
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
