@@ -34,6 +34,13 @@ public class ChessController {
     }
 
     public Map<Position, Piece> start() {
+        if (board.isFinish()) {
+            state = state.execute(Command.END);
+        }
+        if (state.isFinish()) {
+            board = new Board(new BoardBuilder());
+            state = new Ready();
+        }
         state = state.execute(Command.START);
         return board.getBoard();
     }
@@ -62,13 +69,6 @@ public class ChessController {
         return result;
     }
 
-    public Team getWinner() {
-        if (board.isFinish()) {
-            return board.getFinalWinner();
-        }
-        return null;
-    }
-
     public List<PieceDto> getCurrentImages() {
         Map<Position, Piece> pieceMap = board.getBoard();
         List<PieceDto> boardDtos = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ChessController {
     }
 
     public boolean isPlaying() {
-        return !state.isReady() && !state.isFinish();
+        return !state.isReady() && !isFinish();
     }
 
     public boolean isFinish() { return board.isFinish(); }
