@@ -11,7 +11,7 @@ public final class Pawn extends Piece {
     private final AbstractPawnMovePattern pattern;
 
     public Pawn(Color color) {
-        super(color);
+        super(color, "_pawn");
         this.pattern = AbstractPawnMovePattern.of(color);
     }
 

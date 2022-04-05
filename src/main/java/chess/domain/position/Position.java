@@ -28,7 +28,7 @@ public class Position {
         }
 
         String[] values = input.split("");
-        Position position = new Position(Column.of(values[COLUMN_INDEX]), Row.of(values[ROW_INDEX]));
+        Position position = new Position(Column.of(values[COLUMN_INDEX].toLowerCase()), Row.of(values[ROW_INDEX]));
         CACHE.put(input, position);
         return position;
     }
@@ -113,5 +113,13 @@ public class Position {
                 column +
                 ", " + row +
                 '}';
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 }

@@ -17,7 +17,7 @@ public final class Knight extends Piece {
     };
 
     public Knight(Color color) {
-        super(color);
+        super(color, "_knight");
     }
 
     @Override
@@ -34,4 +34,5 @@ public final class Knight extends Piece {
     public double getPoint() {
         return POINT;
     }
+
 }
