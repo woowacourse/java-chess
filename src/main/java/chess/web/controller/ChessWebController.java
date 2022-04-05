@@ -48,7 +48,7 @@ public class ChessWebController {
         String target = request.queryParams("target");
         String source = request.queryParams("source");
 
-//        chessGame.move(target, source);
+        chessService.move(target, source);
 
         response.redirect("/");
 

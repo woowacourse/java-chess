@@ -20,7 +20,7 @@ import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.generator.EmptyBoardGenerator;
 import chess.domain.state.State;
-import chess.domain.state.StateGenerator;
+import chess.domain.state.StateType;
 import chess.web.dto.PieceDto;
 import chess.web.dto.TurnDto;
 import java.util.List;
@@ -36,6 +36,7 @@ public class ChessService {
     }
 
     public void create() {
+        pieceDao.removeAll();
         List<PieceDto> initPieces = initPieces();
         for (PieceDto pieceDto : initPieces) {
             pieceDao.save(pieceDto);
@@ -45,6 +46,47 @@ public class ChessService {
     }
 
     public ChessGame getChessGame() {
+        ChessBoard chessBoard = generateChessBoard();
+        TurnDto lastTurn = turnDao.findLastTurn();
+
+        State state = generateState(lastTurn, chessBoard);
+
+        return new ChessGame(state);
+    }
+
+    public void move(String source, String target) {
+        State state = generateState(turnDao.findLastTurn(), generateChessBoard());
+
+        ChessGame chessGame = new ChessGame(state);
+        chessGame.move(source, target);
+
+        shift(source, target);
+
+        StateType stateType = chessGame.getStateType();
+        turnDao.save(new TurnDto(stateType.getValue()));
+    }
+
+    private void shift(String source, String target) {
+        pieceDao.remove(source);
+
+        if (!pieceDao.findById(target).isEmpty()) {
+            pieceDao.remove(target);
+        }
+
+        pieceDao.save(new PieceDto(target, findPiece(source).getPieceType()));
+    }
+
+    private PieceDto findPiece(String source) {
+        return pieceDao.findById(source)
+                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다."));
+    }
+
+    private State generateState(TurnDto lastTurn, ChessBoard chessBoard) {
+        StateType stateType = StateType.of(lastTurn.getTurn());
+        return stateType.parseState(chessBoard);
+    }
+
+    private ChessBoard generateChessBoard() {
         List<PieceDto> pieces = pieceDao.findAll();
         ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
 
@@ -52,19 +94,7 @@ public class ChessService {
             chessBoard.fill(pieceDto.getId(), parsePiece(pieceDto.getPieceType()));
         }
 
-        if (turnDao.isFirstTurn()) {
-            State state = StateGenerator.READY.parseState(chessBoard);
-            return new ChessGame(state);
-        }
-
-        TurnDto lastTurn = turnDao.findLastTurn();
-        StateGenerator stateGenerator = StateGenerator.of(lastTurn.getTurn());
-        State state = stateGenerator.parseState(chessBoard);
-
-        return new ChessGame(state);
-    }
-
-    public void move(ChessGame chessGame, String source, String target) {
+        return chessBoard;
     }
 
     private List<PieceDto> initPieces() {
