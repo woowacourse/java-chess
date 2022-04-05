@@ -27,9 +27,9 @@ public abstract class Playing implements ChessGameState {
         return board.move(from, to, color);
     }
 
-    ChessGameState getMoveResult(MoveResult result, MoveResult blackResult) {
+    ChessGameState getMoveResult(MoveResult result, MoveResult blackResult, Color color) {
         if (result == MoveResult.ENDED) {
-            return new Finished();
+            return new Finished(color);
         }
 
         if (result == blackResult) {
@@ -43,9 +43,10 @@ public abstract class Playing implements ChessGameState {
         return board;
     }
 
+
     @Override
-    public ChessGameState end() {
-        return new Finished();
+    public Color getWinner() {
+        throw new IllegalStateException("게임 실행 중에는 승자를 가져올 수 없습니다.");
     }
 
     @Override

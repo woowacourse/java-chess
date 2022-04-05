@@ -18,6 +18,11 @@ public class WhitePlaying extends Playing {
     public ChessGameState move(String from, String to) {
         MoveResult result = movePiece(from, to, Color.WHITE);
 
-        return getMoveResult(result, MoveResult.SUCCESS);
+        return getMoveResult(result, MoveResult.SUCCESS, Color.WHITE);
+    }
+
+    @Override
+    public ChessGameState end() {
+        return new Finished(Color.EMPTY);
     }
 }
