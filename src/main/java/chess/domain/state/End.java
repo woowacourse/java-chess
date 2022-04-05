@@ -1,7 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.Board;
-import chess.domain.BoardInitializer;
 import chess.domain.Score;
 import chess.domain.postion.Position;
 
@@ -14,7 +13,7 @@ public final class End implements State {
 
     @Override
     public State start() {
-        return new Ready(new BoardInitializer().init());
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
@@ -24,7 +23,7 @@ public final class End implements State {
 
     @Override
     public boolean isGameOver() {
-        throw new IllegalArgumentException("게임이 종료되었습니다.");
+        return true;
     }
 
     @Override
