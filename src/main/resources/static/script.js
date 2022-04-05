@@ -1,14 +1,16 @@
 let from = "";
 let turn = "";
+let isStart = false;
 
 async function start() {
     let pieces;
     await fetch("/start")
         .then(res => res.json())
         .then(data => pieces = data)
-    console.log(pieces);
     turn = pieces.turn;
+    isStart = true;
     printPieces(pieces.board);
+    printStatus();
 }
 
 function end() {
@@ -21,6 +23,22 @@ function end() {
     for (let square of blackSquares) {
         removeChildren(square);
     }
+    isStart = false;
+}
+
+async function printStatus() {
+    let stat;
+    await fetch("/status")
+        .then(res => res.json())
+        .then(data => stat = data)
+    let element = document.getElementById("chess-status");
+    let text = "백팀 :" + stat.whiteScore + "\n흑팀 :" + stat.blackScore;
+    if (stat.whiteScore > stat.blackScore) {
+        text += "\n백팀 우세!";
+    } else if (stat.blackScore > stat.whiteScore) {
+        text += "\n흑팀 우세!";
+    }
+    element.innerText = text;
 }
 
 function printPieces(pieces) {
@@ -49,6 +67,9 @@ function removeChildren(node) {
 
 async function selectPiece(pieceDiv) {
     let pieceClasses = pieceDiv.classList;
+    if (isStart === false) {
+        return;
+    }
 
     if (from === "") {
         from = pieceDiv.id;
@@ -77,10 +98,14 @@ async function move(fromPosition, toPosition) {
             to: toPosition
         })
     }).then(res => res.json())
-        .then(data => pieces = data)
-        .catch((error) => {
-            alert("이동 불가!");
-        })
+        .then(data => pieces = data);
+
     printPieces(pieces.board);
+    before = turn;
     turn = pieces.turn;
+    printStatus();
+    if (turn === "empty") {
+        isStart = false;
+        alert(before + " 팀 승리!");
+    }
 }

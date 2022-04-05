@@ -13,6 +13,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
+    public static final int STATUS_BAD_REQUEST = 400;
     private final ChessService chessService;
 
     public ChessController(ChessService chessService) {
@@ -33,6 +34,10 @@ public class ChessController {
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             return gson.toJson(chessService.move(1, moveDto));
+        });
+
+        get("/status", (req, res) -> {
+            return gson.toJson(chessService.status(1));
         });
     }
 

@@ -3,6 +3,7 @@ package chess.service;
 import chess.dao.RoomDao;
 import chess.dao.SquareDao;
 import chess.domain.ChessBoard;
+import chess.domain.Status;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
@@ -65,7 +66,6 @@ public class ChessService {
 
     private ChessBoard loadChessBoard(long roomId) {
         List<Square> squares = squareDao.findByRoomId(roomId);
-
         Map<Position, Piece> board = new HashMap<>();
 
         for (Square square : squares) {
@@ -73,7 +73,14 @@ public class ChessService {
             Piece piece = PieceFactory.convertToPiece(square.getPiece());
             board.put(position, piece);
         }
-
         return new ChessBoard(() -> board);
+    }
+
+    public Status status(long roomId) {
+        Room room = roomDao.findById(roomId);
+        ChessBoard chessBoard = loadChessBoard(roomId);
+        WebChessGame webChessGame = WebChessGame.of(chessBoard, room.getTurn());
+
+        return webChessGame.status();
     }
 }
