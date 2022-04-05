@@ -14,8 +14,11 @@ statusButton.addEventListener("click", async function () {
     await getStatus();
 });
 
+stopButton.addEventListener("click", async function () {
+    await finish();
+})
+
 async function startGame() {
-    alert("start");
     let boardAndTurnInfo = await fetch("/start")
         .then(handleErrors)
         .catch(function (error) {
@@ -37,13 +40,18 @@ async function getStatus() {
         "<br>BLACK 점수: " + status.blackScore;
     if (result.winner === "WHITE") {
         result += "<br>흰 진영이 이기고 있습니다.";
-    } else if (result.winner === "BLACK"){
+    } else if (result.winner === "BLACK") {
         result += "<br>검정 진영이 이기고 있습니다.";
     } else {
         result += "<br>두 유저의 점수가 같습니다.";
     }
 
     document.getElementById("score").innerHTML = result;
+}
+
+async function finish() {
+    await fetch("/finish");
+    alert("게임이 종료되었습니다.");
 }
 
 async function initializeBoard(board) {

@@ -16,7 +16,7 @@ public class Finished extends Started {
 
     @Override
     public GameState start() {
-        throw new UnsupportedOperationException("[ERROR] 이미 게임이 시작되었습니다.");
+        return new Ready().start();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Finished extends Started {
 
     @Override
     public GameState move(List<Point> arguments) {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+        throw new UnsupportedOperationException("[ERROR] 게임이 종료된 상태입니다.");
     }
 
     @Override

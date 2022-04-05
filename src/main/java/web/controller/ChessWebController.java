@@ -60,5 +60,15 @@ public class ChessWebController {
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
+
+        get("/finish", (req, res) -> {
+            try {
+                service.finish();
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
+            return null;
+        });
     }
 }

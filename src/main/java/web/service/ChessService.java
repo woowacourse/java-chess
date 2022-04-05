@@ -6,6 +6,7 @@ import chess.domain.game.Ready;
 import chess.domain.piece.Color;
 import chess.dto.BoardAndTurnInfo;
 import chess.dto.ScoreResponse;
+import chess.dto.WebBoardDto;
 
 import java.util.List;
 
@@ -19,12 +20,12 @@ public class ChessService {
 
     public WebBoardDto start() {
         gameState = this.gameState.start();
-        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse());
+        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), true);
     }
 
     public WebBoardDto move(String from, String to) {
         gameState = gameState.move(List.of(Point.of(from), Point.of(to)));
-        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse());
+        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), gameState.isRunnable());
     }
 
     public WebStatusDto status() {
