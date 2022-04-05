@@ -38,7 +38,6 @@ public class WebChessController {
     private void result() {
         get("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessService.end();
             model.put("now", chessService.status());
             model.put("board", chessService.getCurrentBoard());
             model.put("winner", chessService.findWinner());
@@ -78,7 +77,7 @@ public class WebChessController {
             JsonObject request = gson.fromJson(req.body(), JsonObject.class);
             String move = chessService.move(request.get("source").getAsString(), request.get("target").getAsString());
             if (chessService.isEnd()) {
-                res.status(303);
+                chessService.end();
             }
             return gson.fromJson(move, JsonObject.class);
         });

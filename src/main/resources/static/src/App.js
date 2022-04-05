@@ -30,9 +30,6 @@ function move(source, target) {
             if (response.status !== 200) {
                 alert(response.message);
             }
-            if(response.status === 303){
-                location.replace("/end")
-            }
             location.replace("/play")
         });
 
