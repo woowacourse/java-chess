@@ -109,6 +109,9 @@ async function requestMovePiece(from, to) {
             alert(error.message);
         });
     boardAndTurnInfo = await boardAndTurnInfo.json();
+    if (boardAndTurnInfo.isRunnable !== true) {
+        alert("킹이 죽어 게임이 종료됩니다.");
+    }
     document.getElementById("turnInfo").innerHTML = "현재 턴: " + boardAndTurnInfo.turnColor;
     document.getElementById("score").innerHTML = "";
     return boardAndTurnInfo.board;
