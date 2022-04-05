@@ -49,4 +49,8 @@ public enum Rank {
     public Rank add(int value) {
         return Rank.of(String.valueOf(this.value + value));
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -1,29 +1,28 @@
 package chess.view;
 
 import chess.domain.Board;
-import chess.domain.location.Rank;
+import chess.domain.location.Location;
 import chess.domain.piece.Piece;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BoardDto {
 
-    private final List<List<String>> boardData;
+    private final Map<String, PieceDto> boardData;
 
-    private BoardDto(List<List<String>> boardData) {
+    private BoardDto(Map<String, PieceDto> boardData) {
         this.boardData = boardData;
     }
 
     public static BoardDto of(Board board) {
-        List<List<String>> data = Rank.reverseValues().stream()
-                .map(board::collectRankPiece)
-                .map(rankPiece -> rankPiece.stream()
-                        .map(Piece::getName)
-                        .collect(Collectors.toList())).collect(Collectors.toList());
-        return new BoardDto(data);
+        Map<String, PieceDto> boardDto = new LinkedHashMap<>();
+        Map<Location, Piece> boardData = board.getBoard();
+        boardData.keySet()
+                .forEach(key -> boardDto.put(key.toString(), PieceDto.of(boardData.get(key))));
+        return new BoardDto(boardDto);
     }
 
-    public List<List<String>> getBoardData() {
+    public Map<String, PieceDto> getBoardData() {
         return boardData;
     }
 }

@@ -1,0 +1,25 @@
+.chess {
+    width: 640px;
+    height: 640px;
+    display: grid;
+    border: 3px solid brown;
+    grid-template-rows: repeat(8, 80px);
+}
+
+.rank {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+}
+
+.white-square {
+    background-color: white;
+}
+
+.brown-square {
+    background-color: cadetblue;
+}
+
+img {
+    height: 80px;
+    width: 80px;
+}
