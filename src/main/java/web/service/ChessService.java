@@ -43,6 +43,6 @@ public class ChessService {
     }
 
     public void finish() {
-        gameState.finish();
+        gameState = gameState.finish();
     }
 }

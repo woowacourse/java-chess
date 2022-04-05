@@ -1,5 +1,6 @@
 package web.controller;
 
+import chess.dto.ErrorMessageDto;
 import chess.dto.MoveInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,16 +34,31 @@ public class ChessWebController {
         });
 
         get("/start", (req, res) -> {
-            return gson.toJson(service.start());
+            try {
+                return gson.toJson(service.start());
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
         });
 
         post("/move", (req, res) -> {
-            MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
-            return gson.toJson(service.move(moveInfo.getFrom(), moveInfo.getTo()));
+            try {
+                MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
+                return gson.toJson(service.move(moveInfo.getFrom(), moveInfo.getTo()));
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
         });
 
         get("/status", (req, res) -> {
-            return gson.toJson(service.status());
+            try {
+                return gson.toJson(service.status());
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
         });
     }
 }

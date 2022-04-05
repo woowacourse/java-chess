@@ -108,8 +108,8 @@ async function requestMovePiece(from, to) {
 
 async function handleErrors(response) {
     if (!response.ok) {
-        let message = await response.json();
-        throw Error(message.errorMessage);
+        let errorMessage = await response.json();
+        throw Error(errorMessage.message);
     }
     return response;
 }
