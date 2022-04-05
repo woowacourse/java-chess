@@ -16,6 +16,7 @@ public class WebController {
         start(chessGame);
         move(chessGame);
         status(chessGame);
+        end(chessGame);
     }
 
     private void ready() {
@@ -25,7 +26,7 @@ public class WebController {
         });
     }
 
-    public void start(final ChessGame chessGame) {
+    private void start(final ChessGame chessGame) {
         get("/start", ((req, res) -> {
             checkGameIsPlaying(chessGame);
             chessGame.start();
@@ -56,9 +57,16 @@ public class WebController {
 
     private void status(final ChessGame chessGame) {
         get("/status", ((req, res) -> {
-            checkGameIsNotPlaying(chessGame);
             final JsonTransformer jsonTransformer = new JsonTransformer();
             return jsonTransformer.render(chessGame.getScore());
+        }));
+    }
+
+    private void end(final ChessGame chessGame) {
+        get("/end", ((req, res) -> {
+            final Map<String, Object> model = chessGame.toMap();
+            chessGame.end();
+            return render(model, "index.html");
         }));
     }
 

@@ -38,6 +38,13 @@ public class ChessGame {
         return new Score(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
     }
 
+    public void end() {
+        if (board == null) {
+            throw new IllegalStateException("진행중인 게임이 없습니다.");
+        }
+        board = null;
+    }
+
     class Score {
         private final double whiteScore;
         private final double blackScore;

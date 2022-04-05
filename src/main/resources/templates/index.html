@@ -345,7 +345,7 @@
 
     <section>
         <form action="/start" method="get">
-            <button>start</button>
+            <button>게임 시작</button>
         </form>
         <form action="/move" accept-charset="utf-8" method="post">
             움직일 말의 위치<input name="source" type="text">
@@ -358,6 +358,14 @@
                 fetch('/status')
                     .then(res => res.json())
                     .then(data => alert(`white:${data.whiteScore} : black:${data.blackScore}점`))
+            }
+        </script>
+
+        <input type="button" onclick=end() value="게임 종료">
+        <script>
+            function end() {
+                fetch('/end')
+                    .then(alert('게임이 종료되었습니다.'))
             }
         </script>
     </section>
