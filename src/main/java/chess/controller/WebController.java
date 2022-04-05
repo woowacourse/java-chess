@@ -36,12 +36,11 @@ public class WebController {
         });
 
         post("/ingame", (request, response) -> {
-            String input = request.queryParams("squares");
-            List<Square> squares = Arrays.stream(input.split(", "))
-                    .map(Square::new)
-                    .collect(Collectors.toList());
+            String source = request.queryParams("source");
+            String target = request.queryParams("target");
+
             try {
-                chessGame.move(squares.get(0), squares.get(1));
+                chessGame.move(new Square(source), new Square(target));
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 List<String> emojis = boardDto.getEmojis();
                 model.put("pieces", emojis);

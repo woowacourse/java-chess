@@ -6,7 +6,10 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<h2>{{error}}</h2>
+<form action="/" method="get" class="endBox">
+    <span class="message">{{error}}</span>
+    <input type="submit" value="END" class="btn" id="end"/>
+</form>
 <table class="chess-board">
     <tbody>
     <tr>
@@ -110,9 +113,11 @@
     </tr>
     </tbody>
 </table>
-<form action="/ingame" method="post">
-    <input type="text" name="squares" />
-    <input type="submit" value="move" class="btn" />
+<form action="/ingame" method="post" class="textBoxWrapper">
+    FROM : <input type="text" name="source" class="textBox"/>
+    TO : <input type="text" name="target" class="textBox"/>
+    <input type="submit" value="MOVE" class="btn" id="move"/>
 </form>
+<br>
 </body>
 </html>

@@ -12,14 +12,30 @@ body {
     font-style: normal;
 }
 
+#start {
+    float: inherit;
+}
+
+.endBox {
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 50px;
+}
+
+#end {
+    float: right;
+}
+
 input {
     font-size: 50px;
     padding: 0 20px;
 }
 
 .chess-board { border-spacing: 0; border-collapse: collapse; text-align: center; }
-.chess-board th { padding: .5em; font-size: 25px; }
-.chess-board td { border: 0 solid; width: 60px; height: 60px; font-size: 50px; }
+.chess-board th { padding: .5em; font-size: 35px; }
+.chess-board td { border: 0 solid; width: 80px; height: 80px; font-size: 70px; }
 .chess-board .light { background: #ffffe1; }
 .chess-board .dark { background: #e0e0ff; }
 
@@ -34,4 +50,16 @@ input {
     margin-top: 15px;
     margin-bottom: 5px;
     box-shadow: 0 0 0 0 #cec5fb;
+}
+
+.textBoxWrapper {
+    font-size: 50px;
+}
+
+.textBox {
+    width: 50px;
+}
+
+#move {
+    float: right;
 }
