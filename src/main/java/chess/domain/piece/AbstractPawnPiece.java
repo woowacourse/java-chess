@@ -17,6 +17,11 @@ public abstract class AbstractPawnPiece extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public final boolean canMove(Position source, Position destination) {
         return findDirection(source, destination) != NOTHING;
     }

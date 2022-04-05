@@ -18,6 +18,7 @@ public final class Pawn extends AbstractPawnPiece {
     private static final List<Direction> WHITE_PAWN_DIRECTIONS = List.of(NORTH, NORTH_EAST, NORTH_WEST);
     private static final Rank BLACK_START_RANK = Rank.RANK_7;
     private static final Rank WHITE_START_RANK = Rank.RANK_2;
+    private static final String output = "P";
 
     private final Rank startRank;
 
@@ -39,6 +40,14 @@ public final class Pawn extends AbstractPawnPiece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 
     @Override

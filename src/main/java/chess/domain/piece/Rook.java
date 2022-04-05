@@ -12,6 +12,7 @@ public final class Rook extends AbstractStraightPiece {
 
     private static final List<Direction> DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);
     private static final double POINT = 5.0;
+    private static final String output = "R";
 
     public Rook(Color color) {
         super(color, DIRECTIONS);
@@ -20,5 +21,13 @@ public final class Rook extends AbstractStraightPiece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 }

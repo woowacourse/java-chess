@@ -9,6 +9,8 @@ import chess.domain.piece.Piece;
 
 public class OutputView {
 
+    private static final String EMPTY_TEXT = ".";
+
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -20,11 +22,18 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Piece piece = board.findPieceBy(Position.withFileAndRank(file, rank)).orElse(null);
-                System.out.print(PieceOutputText.of(piece));
+                System.out.print(getPieceOutput(piece));
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static String getPieceOutput(Piece piece) {
+        if (piece == null) {
+            return EMPTY_TEXT;
+        }
+        return piece.getOutput();
     }
 
     public static void printStatus(StatusResult status) {

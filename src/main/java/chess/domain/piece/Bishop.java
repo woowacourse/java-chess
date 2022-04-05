@@ -12,6 +12,7 @@ public final class Bishop extends AbstractStraightPiece {
 
     private static final List<Direction> DIRECTIONS = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 3.0;
+    private static final String output = "B";
 
     public Bishop(Color color) {
         super(color, DIRECTIONS);
@@ -20,5 +21,13 @@ public final class Bishop extends AbstractStraightPiece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 }

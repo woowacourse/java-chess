@@ -13,6 +13,11 @@ public abstract class AbstractStraightPiece extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public boolean canMove(Position source, Position destination) {
         return findDirection(source, destination) != NOTHING;
     }

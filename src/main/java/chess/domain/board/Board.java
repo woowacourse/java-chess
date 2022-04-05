@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Collections;
@@ -77,20 +76,16 @@ public class Board {
 
     private void validatePawnCatchFront(Piece piece, Position source, Position destination) {
         boolean destinationHasPiece = findPieceBy(destination).isPresent();
-        if (isPawn(piece) && destinationHasPiece && source.isSameFile(destination)) {
+        if (piece.isPawn() && destinationHasPiece && source.isSameFile(destination)) {
             throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
         }
     }
 
     private void validatePawnCannotCatchDiagonal(Piece piece, Position source, Position destination) {
         boolean destinationHasPiece = findPieceBy(destination).isPresent();
-        if (isPawn(piece) && !destinationHasPiece && !source.isSameFile(destination)) {
+        if (piece.isPawn() && !destinationHasPiece && !source.isSameFile(destination)) {
             throw new IllegalArgumentException("폰은 기물을 잡을 수 있을때만 대각선으로 이동할 수 있습니다");
         }
-    }
-
-    private boolean isPawn(Piece piece) {
-        return piece.isSameType(Pawn.class);
     }
 
     private void checkObstacle(Position source, Position destination, Direction direction) {
@@ -143,7 +138,7 @@ public class Board {
                 .map(value::get)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> isPawn(piece))
+                .filter(Piece::isPawn)
                 .count();
     }
 

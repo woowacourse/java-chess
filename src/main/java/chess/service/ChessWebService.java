@@ -1,5 +1,7 @@
 package chess.service;
 
+import chess.dao.BoardDao;
+import chess.dao.TurnDao;
 import chess.domain.board.BasicChessBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -9,8 +11,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.dao.BoardDao;
-import chess.dao.TurnDao;
 import chess.dto.ApiResult;
 import chess.dto.MoveCommand;
 import chess.dto.MoveResponseDto;

@@ -15,10 +15,6 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public final boolean isSameType(Class<? extends Piece> type) {
-        return this.getClass() == type;
-    }
-
     public final boolean isSameColor(Color color) {
         return this.color == color;
     }
@@ -35,11 +31,15 @@ public abstract class Piece {
         return this.getClass().getSimpleName().toUpperCase();
     }
 
+    public abstract boolean isPawn();
+
     public abstract boolean canMove(Position source, Position destination);
 
     public abstract Direction findDirection(Position source, Position destination);
 
     public abstract double getPoint();
+
+    public abstract String getOutput();
 
     @Override
     public boolean equals(Object o) {

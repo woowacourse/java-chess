@@ -17,6 +17,7 @@ public final class Queen extends AbstractStraightPiece {
     private static final List<Direction> DIRECTIONS = List
             .of(NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 9.0;
+    private static final String output = "Q";
 
     public Queen(Color color) {
         super(color, DIRECTIONS);
@@ -25,5 +26,13 @@ public final class Queen extends AbstractStraightPiece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 }

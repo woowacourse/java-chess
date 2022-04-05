@@ -29,7 +29,7 @@ class BlackTurnTest {
         blackTurn.movePiece(source, destination);
 
         assertThat(board.findPieceBy(destination).get().isSameColor(Color.BLACK)).isTrue();
-        assertThat(board.findPieceBy(destination).get().isSameType(Pawn.class)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isPawn()).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")

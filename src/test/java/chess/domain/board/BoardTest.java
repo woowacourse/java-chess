@@ -25,50 +25,50 @@ class BoardTest {
     @DisplayName("기물을 각자의 자리에 생성한다.")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("boardInitTestSet")
-    void test(Position position, Class<? extends Piece> type, Color color) {
+    void test(Position position, Piece piece, Color color) {
         Board board = BasicChessBoardGenerator.generator();
 
         assertThat(board.findPieceBy(position).get().isSameColor(color)).isTrue();
-        assertThat(board.findPieceBy(position).get().isSameType(type)).isTrue();
+        assertThat(board.findPieceBy(position).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> boardInitTestSet() {
         return Stream.of(
-                Arguments.of(Position.valueOf("a8"), Rook.class, Color.BLACK),
-                Arguments.of(Position.valueOf("b8"), Knight.class, Color.BLACK),
-                Arguments.of(Position.valueOf("c8"), Bishop.class, Color.BLACK),
-                Arguments.of(Position.valueOf("d8"), Queen.class, Color.BLACK),
-                Arguments.of(Position.valueOf("e8"), King.class, Color.BLACK),
-                Arguments.of(Position.valueOf("f8"), Bishop.class, Color.BLACK),
-                Arguments.of(Position.valueOf("g8"), Knight.class, Color.BLACK),
-                Arguments.of(Position.valueOf("h8"), Rook.class, Color.BLACK),
+                Arguments.of(Position.valueOf("a8"), new Rook(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("b8"), new Knight(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("c8"), new Bishop(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("d8"), new Queen(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("e8"), new King(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("f8"), new Bishop(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("g8"), new Knight(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("h8"), new Rook(Color.BLACK), Color.BLACK),
 
-                Arguments.of(Position.valueOf("a7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("b7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("c7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("d7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("e7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("f7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("g7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.valueOf("h7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("a7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("b7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("c7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("d7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("e7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("f7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("g7"), Pawn.of(Color.BLACK), Color.BLACK),
+                Arguments.of(Position.valueOf("h7"), Pawn.of(Color.BLACK), Color.BLACK),
 
-                Arguments.of(Position.valueOf("a1"), Rook.class, Color.WHITE),
-                Arguments.of(Position.valueOf("b1"), Knight.class, Color.WHITE),
-                Arguments.of(Position.valueOf("c1"), Bishop.class, Color.WHITE),
-                Arguments.of(Position.valueOf("d1"), Queen.class, Color.WHITE),
-                Arguments.of(Position.valueOf("e1"), King.class, Color.WHITE),
-                Arguments.of(Position.valueOf("f1"), Bishop.class, Color.WHITE),
-                Arguments.of(Position.valueOf("g1"), Knight.class, Color.WHITE),
-                Arguments.of(Position.valueOf("h1"), Rook.class, Color.WHITE),
+                Arguments.of(Position.valueOf("a1"), new Rook(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("b1"), new Knight(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("c1"), new Bishop(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("d1"), new Queen(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("e1"), new King(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("f1"), new Bishop(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("g1"), new Knight(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("h1"), new Rook(Color.WHITE), Color.WHITE),
 
-                Arguments.of(Position.valueOf("a2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("b2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("c2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("d2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("e2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("f2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("g2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.valueOf("h2"), Pawn.class, Color.WHITE)
+                Arguments.of(Position.valueOf("a2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("b2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("c2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("d2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("e2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("f2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("g2"), Pawn.of(Color.WHITE), Color.WHITE),
+                Arguments.of(Position.valueOf("h2"), Pawn.of(Color.WHITE), Color.WHITE)
         );
     }
 
