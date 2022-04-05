@@ -104,45 +104,109 @@
         - move [source] [target] (기물 이동)
       - [x] end명령이 들어오면 End 상태를 반환한다.
       - [x] status명령이 들어오면 현재 체스판의 점수를 출력한다.
-  
+
     - End
     - [x] [ERROR] run을 실행하면 예외가 발생한다.
 
->POST /chessgame
-- 게임을 새로 만든다.
-- game_turn은 white유저 turn으로 생성된다.
-- board_pieces에 chess_game에 해당하는 초기화된 피스들을 각각 저장한다.
+- 기물 정보를 저장할 수 있다.
+  - Position, Color, Type을 가질 수 있다.
+- 게임 상태를 저장할 수 있다.
+  - 현재 Turn 정보를 가질 수 있다.
 
-- (ERROR) 이미 게임이 존재하는 경우 예외가 발생한다.
+> GET /
 
-> GET /chessgame
-- chessgame에 해당하는 체스말들을 반환한다.
-- 현재 턴의 상태를 반환한다.
-  - 턴의 상태는 white turn, black turn, promotion이 존재한다.
+- index.html 화면 출력
 
->POST /chessgame/move
-- 특정 말을 이동한다.
-- ex) move a1 a2
-- Request
+>GET /board
+
+- 현재 chess board에 존재하는 체스말을 반환한다.
+- response
 ```json
+[
+    {
+        "position": "a7",
+        "name": "pawn",
+        "color": "black"
+    },
+    {
+        "position": "b7",
+        "name": "pawn",
+        "color": "black"
+    },
+...
+]
+```
 
+>POST /start
+
+- 게임을 시작한다.
+- 내부에 있는 체스말들을 전부 제거하고 32개의 체스말을 새로 생성한다.
+- [ERROR] 게임이 이미 진행되고 있으면 예외가 발생한다.
+
+>POST /promotion
+
+- 상대 진영끝에 도착한 pawn을 이동한다.
+- [ERROR] 프로모션 상태가 아니면 예외가 발생한다.
+- request
+```json
 {
-	"command" : "move",
-	"from" : "a1",
-	"to" : "a2"
+	"promotionValue" : "Q"
 }
 ```
 
-- (ERROR) 현재 턴에 맞지 않는 색의 기물을 이동하는 경우 예외가 발생한다.
-- (ERROR) 현재 턴이 promotion인 경우 예외가 발생한다.
+>POST /move
 
-> POST /chessgame/promotion
-- pawn을 promotion한다.
-- Request
+- 체스말을 해당 목적지까지 이동시킨다.
+- 이동 시킨 말은 해당 position으로 업데이트된다.
+- 말이 다른 말을 먹었으면 먹힌 말은 제거된다.
+- [ERROR] 현재 턴에 맞지 않는 색의 기물을 이동할 경우 예외가 발생한다.
+- [ERROR] 없는 기물의 좌표를 이동하려할 경우 예외가 발생한다.
+- [ERROR] 기물이 이동할 수 없는 위치로 이동하려할 경우 예외가 발생한다.
+- request
 ```json
 {
-	"promotion_piece" : "q"
+	"source" : "a1",
+	"target" : "a2"
 }
 ```
 
-- (ERROR) 현재 턴이 프로모션이 아닌데 요청할 경우 예외가 발생한다.
+>GET /score
+
+- 현재 체스게임의 스코어정보를 반환한다.
+- [ERROR] 종료된 게임은 스코어를 반환하려할 경우 예외가 발생한다.
+- response
+
+```json
+[
+    {
+        "color": "WHITE",
+        "score": 38.0
+    },
+    {
+        "color": "BLACK",
+        "score": 38.0
+    }
+]
+```
+
+>GET /status
+
+- 현재 게임이 종료되었는지 여부를 반환한다.
+- response
+```json
+{
+    "isEnd": true
+}
+```
+
+> GET /winner
+
+- 현재 게임의 우승자를 반환한다.
+- [ERROR] 게임이 종료되지 않았다면 예외가 발생한다.
+- response
+
+```json
+{
+	"winner" : "WHITE"
+}
+```
