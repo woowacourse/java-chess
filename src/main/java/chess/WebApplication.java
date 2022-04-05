@@ -8,7 +8,6 @@ import static spark.Spark.staticFileLocation;
 import chess.domain.ChessGame;
 import chess.domain.TeamScore;
 import chess.domain.command.Command;
-import chess.domain.command.GameCommand;
 import chess.view.BoardDto;
 import chess.view.PieceDto;
 import java.util.HashMap;
@@ -56,9 +55,13 @@ public class WebApplication {
     private static void move(ChessGame chessGame) {
         post("/move", (req, res) -> {
             Command command = new Command(List.of(req.queryParams("command").split(" ")));
-            execute(chessGame, command);
-            Map<String, PieceDto> model = BoardDto.of(chessGame.getBoard()).getBoardData();
-            return render(model, "board.html");
+            try {
+                chessGame.move(command.getSourceLocation(), command.getTargetLocation());
+            } catch (IllegalArgumentException exception) {
+                return exception.getMessage();
+            }
+            res.redirect("/board");
+            return null;
         });
     }
 
@@ -68,30 +71,6 @@ public class WebApplication {
             return score.getTeam() + "팀 점수는" + score.getScore();
         });
         return " ";
-    }
-
-    public static void execute(ChessGame chessGame, Command command) {
-        executeMove(chessGame, command);
-        executeStatus(chessGame, command);
-        executeEnd(chessGame, command);
-    }
-
-    private static void executeMove(ChessGame chessGame, Command command) {
-        if (GameCommand.isMove(command.getGameCommand())) {
-            chessGame.move(command.getSourceLocation(), command.getTargetLocation());
-        }
-    }
-
-    private static void executeStatus(ChessGame chessGame, Command command) {
-        if (GameCommand.isStatus(command.getGameCommand())) {
-            chessGame.status();
-        }
-    }
-
-    private static void executeEnd(ChessGame chessGame, Command command) {
-        if (GameCommand.isEnd(command.getGameCommand())) {
-            chessGame.end();
-        }
     }
 
     private static String render(Map<String, PieceDto> model, String templatePath) {
