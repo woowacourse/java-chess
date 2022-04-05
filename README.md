@@ -43,8 +43,19 @@
 
 ## 웹 UI 적용하기
 - HTML 구현하기
-  - GET 방식의 start (보드판 초기화하기)
-  - POST 방식의 move (웹에서 input에 입력한 값으로 말 움직이기)
-  - GET 방식의 status (현재 점수 상황 조회하기)
-  - GET 방식의 END (게임 종료하기)
+- css 구현하기
 
+### 웹 컨트롤러
+- GET 방식의 start (보드판 초기화하기)
+- POST 방식의 move (웹에서 input에 입력한 값으로 말 움직이기)
+- GET 방식의 status (현재 점수 상황 조회하기)
+- GET 방식의 END (게임 종료하기)
+- 예외 처리 및 에외 메시지 렌더링하기
+
+## 웹 DB 적용하기
+- 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- Board 테이블 추가
+- Primary Key는 Position, column은 Piece
+- 게임이 시작될 때, db도 초기화
+- piece가 움직일 때마다, db에 업데이트
+- 종료될 때, db에서 삭제
