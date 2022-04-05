@@ -31,6 +31,6 @@ class BlackTurnTest {
 		State state = new WhiteTurn();
 		state = state.play(new Pawn(Team.BLACK));
 
-		assertThat(state.play(new King(Team.WHITE))).isInstanceOf(KingDeath.class);
+		assertThat(state.play(new King(Team.WHITE))).isInstanceOf(BlackWin.class);
 	}
 }

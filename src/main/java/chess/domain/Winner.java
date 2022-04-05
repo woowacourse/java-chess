@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 public enum Winner {
     BLACKWIN(Team.BLACK, (blackScore, whiteScore) -> blackScore > whiteScore),
     WHITEWIN(Team.WHITE, (blackScore, whiteScore) -> blackScore < whiteScore),
-    DRAW(Team.NEUTRALITY, (blackScore, whiteScore) -> blackScore == whiteScore);
+    DRAW(Team.NEUTRALITY, Double::equals);
 
     private final Team team;
     private final BiPredicate<Double, Double> predicate;

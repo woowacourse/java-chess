@@ -26,6 +26,11 @@ public class Board {
         this.state = new WhiteTurn();
     }
 
+    public Board(Map<Position, Piece> pieces, State state) {
+        this.board = new HashMap<>(pieces);
+        this.state = state;
+    }
+
     public void move(Position source, Position target) {
         Piece piece = board.get(source);
         validateMove(source, target);
@@ -122,5 +127,13 @@ public class Board {
 
     public Team getCurrentTurnTeam() {
         return state.getTeam();
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    public boolean isFinish() {
+        return this.state.isFinished();
     }
 }

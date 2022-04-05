@@ -1,9 +1,13 @@
 package chess.controller;
 
+import chess.dao.BoardDao;
+import chess.dao.PieceDao;
 import chess.domain.Command;
-import chess.domain.board.PieceBuilder;
+import chess.domain.board.BoardBuilder;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.state.command.Finish;
+import chess.domain.state.command.Playing;
 import chess.dto.PieceDTO;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
@@ -19,10 +23,14 @@ public class ChessController {
 
     private State state;
     private Board board;
+    private BoardDao boardDao;
+    private PieceDao pieceDao;
 
     public ChessController() {
         state = new Ready();
-        board = new Board(new PieceBuilder());
+        board = new Board(new BoardBuilder());
+        boardDao = new BoardDao();
+        pieceDao = new PieceDao();
     }
 
     public Map<Position, Piece> start() {
@@ -76,5 +84,18 @@ public class ChessController {
 
     public boolean isPlaying() {
         return !state.isReady() && !state.isFinish();
+    }
+
+    public void load() {
+        board = new Board(pieceDao.load(), boardDao.loadState());
+        if (board.isFinish()) {
+            state = new Finish();
+        }
+        state = new Playing();
+    }
+
+    public void save() {
+        boardDao.saveState(board.getState());
+        pieceDao.save(board.getBoard());
     }
 }

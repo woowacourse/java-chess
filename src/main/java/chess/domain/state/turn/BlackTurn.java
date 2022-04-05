@@ -12,4 +12,9 @@ public final class BlackTurn extends Running {
     protected State next() {
         return new WhiteTurn();
     }
+
+    @Override
+    public String toString() {
+        return "BlackTurn";
+    }
 }

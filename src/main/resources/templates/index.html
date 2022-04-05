@@ -9,15 +9,18 @@
 
 <body>
     <div id="app">
-        <h1>😎 라쿤의 재미있는 체스 게임 😎</h1>
+        <h1>🦝 라쿤의 재미있는 체스 게임 🦝</h1>
 
         {{#error}}
             <h3> 에러가 있어요!! -> {{error}} </h3>
         {{/error}}
 
         {{#team}}
-            <h2>현재는 {{team}} 팀의 차례입니다🤗</h2>
+            <h2>현재는 {{team}} 팀의 차례입니다🦝</h2>
         {{/team}}
+
+        <h2>🐼검은 팀 : {{blackscore}}</h2>
+        <h2>🦝하얀 팀 : {{whitescore}}</h2>
 
         <section class="chess-ui">
             {{#pieces}}

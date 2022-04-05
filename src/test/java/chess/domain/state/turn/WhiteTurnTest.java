@@ -26,6 +26,6 @@ class WhiteTurnTest {
 	@Test
 	void playWhiteCatchKing() {
 		State state = new WhiteTurn();
-		assertThat(state.play(new King(Team.BLACK))).isInstanceOf(KingDeath.class);
+		assertThat(state.play(new King(Team.BLACK))).isInstanceOf(WhiteWin.class);
 	}
 }

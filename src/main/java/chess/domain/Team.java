@@ -18,6 +18,13 @@ public enum Team {
         this.name = name;
     }
 
+    public static Team find(String name) {
+        return Arrays.stream(values())
+                .filter(team -> team.name.equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 팀 이름입니다."));
+    }
+
     public String getName() {
         return name;
     }
@@ -26,11 +33,7 @@ public enum Team {
         return this == NEUTRALITY;
     }
 
-    public static Team find(String name) {
-        return Arrays.stream(values())
-                .filter(team -> team.name.equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 팀 이름입니다."));
+    public boolean isWhite() {
+        return this == WHITE;
     }
-
 }
