@@ -1,6 +1,6 @@
 package chess;
 
-import chess.console.controller.ConsoleController;
+import chess.controller.ConsoleController;
 
 public class ConsoleApplication {
 

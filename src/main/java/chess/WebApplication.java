@@ -5,10 +5,10 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.web.dto.ApiResult;
-import chess.web.dto.MoveCommand;
-import chess.web.service.ChessWebService;
-import chess.web.utils.RequestToCommand;
+import chess.dto.ApiResult;
+import chess.dto.MoveCommand;
+import chess.service.ChessWebService;
+import chess.utils.RequestToCommand;
 import com.google.gson.Gson;
 import java.util.Map;
 import spark.ModelAndView;
