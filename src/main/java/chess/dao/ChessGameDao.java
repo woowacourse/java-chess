@@ -59,4 +59,18 @@ public class ChessGameDao {
         }
         return 0;
     }
+
+    public void update(int id, ChessGame chessGame) {
+        Connection connection = getConnection();
+        final String sql = "update game set state = ? where id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+
+    }
 }

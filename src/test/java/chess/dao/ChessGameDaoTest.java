@@ -29,4 +29,11 @@ public class ChessGameDaoTest {
         int readyGame = chessGameDao.findReadyGame();
         assertThat(readyGame).isEqualTo(1);
     }
+
+    @Test
+    void update() {
+        final ChessGameDao chessGameDao = new ChessGameDao();
+        ChessGame chessGame = new Ready().initBoard();
+        chessGameDao.update(1, chessGame);
+    }
 }
