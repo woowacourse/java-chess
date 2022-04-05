@@ -33,7 +33,8 @@ function move(event) {
         if (event.target.id === "") {
             source = event.target.parentElement.id;
         } else {
-            source = event.target.id;
+            alert("빈 칸을 옮길 수 없습니다.");
+            return;
         }
         document.getElementById(source).style.backgroundColor = 'blue';
         return;
