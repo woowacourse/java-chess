@@ -22,14 +22,20 @@ public class ConsoleApplication {
         final String userName = InputView.inputName();
         final ChessController chess = new ChessController();
         userId = chess.initGame(userName);
-        OutputView.printBoard(chess.getCurrentBoardState(userId));
-        OutputView.printStartMessage();
         StateDto state = chess.getCurrentStatus(userId);
+        if (!isReady(state)) {
+            OutputView.printBoard(chess.getCurrentBoardState(userId));
+        }
+        OutputView.printStartMessage();
         while (!isEnd(state)) {
             repeatTurn(chess);
             state = chess.getCurrentStatus(userId);
         }
         chess.finishGame(userId);
+    }
+
+    private boolean isReady(final StateDto stateDto) {
+        return stateDto.getState().equals("READY");
     }
 
     private boolean isEnd(final StateDto stateDto) {
