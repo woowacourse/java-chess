@@ -20,6 +20,12 @@ public final class Position {
         return Position.of(XPosition.of(x), YPosition.of(y));
     }
 
+    public static Position of(final String input) {
+        return Position.of(
+                XPosition.of(input.substring(0, 1)), YPosition.of(input.substring(1, 2))
+        );
+    }
+
     public int getXPosition() {
         return xPosition.getXPosition();
     }
@@ -47,6 +53,6 @@ public final class Position {
 
     @Override
     public String toString() {
-        return String.valueOf(xPosition.getXPosition()) + String.valueOf(yPosition.getYPosition());
+        return String.valueOf(xPosition.getSymbol()) + String.valueOf(yPosition.getYPosition());
     }
 }

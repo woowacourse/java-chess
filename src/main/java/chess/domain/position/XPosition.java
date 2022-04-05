@@ -30,7 +30,7 @@ public enum XPosition {
 
     public static XPosition of(final String symbol) {
         return Arrays.stream(values())
-                .filter(value -> value.symbol.equals(symbol))
+                .filter(value -> value.symbol.equals(symbol.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 가로축이 잘못 입력되었습니다."));
     }
@@ -42,6 +42,10 @@ public enum XPosition {
 
     public int getXPosition() {
         return xPosition;
+    }
+
+    public String getSymbol() {
+        return symbol.toUpperCase();
     }
 
     @Override
