@@ -1,10 +1,11 @@
 package refactorChess.domain.piece;
 
+import java.util.Iterator;
 import java.util.Objects;
 import refactorChess.domain.board.Direction;
 import refactorChess.domain.board.Position;
 
-public class MovePath {
+public class MovePath implements Iterator<Position> {
 
     private final Position to;
     private final Direction direction;
@@ -26,6 +27,16 @@ public class MovePath {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return from.change(direction.getColumn(), direction.getRow()) != to;
+    }
+
+    @Override
+    public Position next() {
+        return from = from.change(direction.getColumn(), direction.getRow());
     }
 
     @Override
