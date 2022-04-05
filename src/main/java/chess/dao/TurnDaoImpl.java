@@ -30,7 +30,7 @@ public class TurnDaoImpl implements TurnDao {
             if (resultSet.next()) {
                 return resultSet.getString(CURRENT_TURN_COLUMN);
             }
-            return null;
+            throw new SqlSelectException();
         } catch (SQLException e) {
             throw new SqlSelectException();
         }
