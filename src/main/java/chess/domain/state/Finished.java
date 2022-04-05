@@ -22,7 +22,7 @@ public class Finished implements GameState {
 
     @Override
     public Playing move(String source, String destination) {
-        return null;
+        throw new IllegalArgumentException("게임이 끝났습니다.");
     }
 
     @Override

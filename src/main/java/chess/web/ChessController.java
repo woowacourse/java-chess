@@ -6,6 +6,7 @@ import chess.dao.RoomDao;
 import chess.database.factory.BoardFactory;
 import chess.database.factory.RoomFactory;
 import chess.domain.Score;
+import chess.domain.Team;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -20,9 +21,9 @@ import java.util.Map;
 public class ChessController {
     private GameState gameState;
 
-    public Map<String, Object> getInitialBoard() {
+    public Map<String, Object> getInitialBoard(String roomId) {
         Map<String, Object> model = new HashMap<>();
-        gameState = getInitialBoard("1");
+        gameState = getGameState(roomId);
         return getBoardPieces(model);
     }
 
@@ -31,7 +32,7 @@ public class ChessController {
         return getBoardPieces(model);
     }
 
-    private GameState getInitialBoard(String roomId) {
+    private GameState getGameState(String roomId) {
         RoomDao roomDao = RoomFactory.findById(roomId);
         if (roomDao == null) {
             return createGameState(roomId);
@@ -59,15 +60,22 @@ public class ChessController {
         return new BlackTurn(board);
     }
 
-    public String move(String source, String destination) {
+    public String move(String source, String destination, String roomId) {
         Map<Position, Piece> board = gameState.getBoard();
         Piece sourcePiece = board.get(Position.from(source));
         gameState = gameState.move(source, destination);
+
         BoardFactory.updatePosition(source, Blank.SYMBOL);
         BoardFactory.updatePosition(destination, sourcePiece.getSymbol());
-        RoomFactory.updateStatus(gameState.getTeam().getValue(), "1");
+        RoomFactory.updateStatus(gameState.getTeam().getValue(), roomId);
+
+        return getGameStateResult(roomId);
+    }
+
+    private String getGameStateResult(String roomId) {
         if (gameState.isFinished()) {
-            return "게임 종료" + gameState.getTeam() +"팀 승";
+            RoomFactory.updateStatus(Team.WHITE.getValue(), roomId);
+            return "게임 종료" + gameState.getTeam() + "팀 승";
         }
         return "";
     }
@@ -80,9 +88,9 @@ public class ChessController {
         return model;
     }
 
-    public Map<String, Object> resetBoard() {
+    public Map<String, Object> resetBoard(String roomId) {
         Map<String, Object> model = new HashMap<>();
-        gameState = createGameState("1");
+        gameState = createGameState(roomId);
         return getBoardPieces(model);
     }
 

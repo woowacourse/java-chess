@@ -6,7 +6,8 @@ async function move(position) {
     const source = document.getElementsByClassName('sourcePosition')[0].id;
     const object = {
         "source": source,
-        "destination": position
+        "destination": position,
+        "roomId": "1"
     }
     $.ajax({
         url: "/move",
@@ -19,9 +20,9 @@ async function move(position) {
             }
             movePiece(position)
         },
-        error(request, status, error) {
+        error(response, status, error) {
             document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
-            alert(request.responseText);
+            alert(response.responseText);
         }
     })
 }

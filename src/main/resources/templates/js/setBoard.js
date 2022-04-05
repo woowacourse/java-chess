@@ -20,9 +20,14 @@ function findById(position, symbol) {
 }
 
 function reset() {
+    const object = {
+        "roomId": "1"
+    }
+
     $.ajax({
         url: "/reset",
         type: "POST",
+        data: JSON.stringify(object),
         success: function () {
             location.reload()
         },
