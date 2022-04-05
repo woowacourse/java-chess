@@ -6,7 +6,6 @@ import static refactorChess.domain.board.Direction.EAST;
 import static refactorChess.domain.board.Direction.NORTH;
 import static refactorChess.domain.board.Direction.SOUTH;
 import static refactorChess.domain.board.Direction.WEST;
-import static refactorChess.domain.piece.PieceColor.NONE;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +36,7 @@ class RookTest {
     static Stream<Arguments> validRookMovableTestSet() {
         return Stream.of(
                 Arguments.of(Position.valueOf("a1"), Position.valueOf("a3"), NORTH),
-                Arguments.of(Position.valueOf("a3"), Position.valueOf("a1"), Direction.SOUTH),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("a1"), SOUTH),
                 Arguments.of(Position.valueOf("a1"), Position.valueOf("c1"), EAST),
                 Arguments.of(Position.valueOf("c1"), Position.valueOf("a1"), WEST)
         );
@@ -57,7 +56,7 @@ class RookTest {
     static Stream<Arguments> invalidRookMovableTestSet() {
         return Stream.of(
                 Arguments.of(Position.valueOf("a1"), Position.valueOf("b3"), NORTH),
-                Arguments.of(Position.valueOf("a3"), Position.valueOf("b1"), Direction.SOUTH),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("b1"), SOUTH),
                 Arguments.of(Position.valueOf("a1"), Position.valueOf("c3"), EAST),
                 Arguments.of(Position.valueOf("c1"), Position.valueOf("a3"), WEST)
         );
@@ -76,14 +75,10 @@ class RookTest {
 
     static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfRook() {
         return Stream.of(
-                Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("a3"), new Blank(NONE, Position.valueOf("a3")), NORTH),
-                Arguments.of(
-                        Position.valueOf("a3"), Position.valueOf("a1"), new Blank(NONE, Position.valueOf("a1")), SOUTH),
-                Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("c1"), new Blank(NONE, Position.valueOf("c1")), EAST),
-                Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("a1"), new Blank(NONE, Position.valueOf("a1")), WEST)
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a3"), new Blank(Position.valueOf("a3")), NORTH),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), SOUTH),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("c1"), new Blank(Position.valueOf("c1")), EAST),
+                Arguments.of(Position.valueOf("c1"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), WEST)
         );
     }
 
@@ -101,10 +96,10 @@ class RookTest {
 
     static Stream<Arguments> invalidFindMovePathToTargetPieceFromTheSourcePieceOfRook() {
         return Stream.of(
-                Arguments.of(Position.valueOf("a1"), new Blank(NONE, Position.valueOf("c3"))),
-                Arguments.of(Position.valueOf("a3"), new Blank(NONE, Position.valueOf("c1"))),
-                Arguments.of(Position.valueOf("a1"), new Blank(NONE, Position.valueOf("b2"))),
-                Arguments.of(Position.valueOf("c1"), new Blank(NONE, Position.valueOf("b2")))
+                Arguments.of(Position.valueOf("a1"), new Blank(Position.valueOf("c3"))),
+                Arguments.of(Position.valueOf("a3"), new Blank(Position.valueOf("c1"))),
+                Arguments.of(Position.valueOf("a1"), new Blank(Position.valueOf("b2"))),
+                Arguments.of(Position.valueOf("c1"), new Blank(Position.valueOf("b2")))
         );
     }
 }

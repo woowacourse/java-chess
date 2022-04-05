@@ -10,7 +10,6 @@ import static refactorChess.domain.board.Direction.SOUTH;
 import static refactorChess.domain.board.Direction.SOUTH_EAST;
 import static refactorChess.domain.board.Direction.SOUTH_WEST;
 import static refactorChess.domain.board.Direction.WEST;
-import static refactorChess.domain.piece.PieceColor.NONE;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -65,29 +64,21 @@ class QueenTest {
     static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfQueen() {
         return Stream.of(
                 Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("a3"),
-                        new Blank(NONE, Position.valueOf("a3")), NORTH),
+                        Position.valueOf("a1"), Position.valueOf("a3"), new Blank(Position.valueOf("a3")), NORTH),
                 Arguments.of(
-                        Position.valueOf("a3"), Position.valueOf("a1"),
-                        new Blank(NONE, Position.valueOf("a1")), SOUTH),
+                        Position.valueOf("a3"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), SOUTH),
                 Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("c1"),
-                        new Blank(NONE, Position.valueOf("c1")), EAST),
+                        Position.valueOf("a1"), Position.valueOf("c1"), new Blank(Position.valueOf("c1")), EAST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("a1"),
-                        new Blank(NONE, Position.valueOf("a1")), WEST),
+                        Position.valueOf("c1"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), WEST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("e3"),
-                        new Blank(NONE, Position.valueOf("e3")), NORTH_EAST),
+                        Position.valueOf("c1"), Position.valueOf("e3"), new Blank(Position.valueOf("e3")), NORTH_EAST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("a3"),
-                        new Blank(NONE, Position.valueOf("a3")), NORTH_WEST),
+                        Position.valueOf("c1"), Position.valueOf("a3"), new Blank(Position.valueOf("a3")), NORTH_WEST),
                 Arguments.of(
-                        Position.valueOf("c3"), Position.valueOf("a1"),
-                        new Blank(NONE, Position.valueOf("a1")), SOUTH_WEST),
+                        Position.valueOf("c3"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), SOUTH_WEST),
                 Arguments.of(
-                        Position.valueOf("c3"), Position.valueOf("e1"),
-                        new Blank(NONE, Position.valueOf("e1")), SOUTH_EAST)
+                        Position.valueOf("c3"), Position.valueOf("e1"), new Blank(Position.valueOf("e1")), SOUTH_EAST)
         );
     }
 
@@ -104,14 +95,14 @@ class QueenTest {
 
     static Stream<Arguments> invalidFindMovePathToTargetPieceFromTheSourcePieceOfQueen() {
         return Stream.of(
-                Arguments.of(Position.valueOf("b1"), new Blank(NONE, Position.valueOf("c3"))),
-                Arguments.of(Position.valueOf("b1"), new Blank(NONE, Position.valueOf("a3"))),
-                Arguments.of(Position.valueOf("c2"), new Blank(NONE, Position.valueOf("e3"))),
-                Arguments.of(Position.valueOf("c2"), new Blank(NONE, Position.valueOf("a3"))),
-                Arguments.of(Position.valueOf("b3"), new Blank(NONE, Position.valueOf("c1"))),
-                Arguments.of(Position.valueOf("b3"), new Blank(NONE, Position.valueOf("a1"))),
-                Arguments.of(Position.valueOf("c2"), new Blank(NONE, Position.valueOf("e1"))),
-                Arguments.of(Position.valueOf("c2"), new Blank(NONE, Position.valueOf("a1")))
+                Arguments.of(Position.valueOf("b1"), new Blank(Position.valueOf("c3"))),
+                Arguments.of(Position.valueOf("b1"), new Blank(Position.valueOf("a3"))),
+                Arguments.of(Position.valueOf("c2"), new Blank(Position.valueOf("e3"))),
+                Arguments.of(Position.valueOf("c2"), new Blank(Position.valueOf("a3"))),
+                Arguments.of(Position.valueOf("b3"), new Blank(Position.valueOf("c1"))),
+                Arguments.of(Position.valueOf("b3"), new Blank(Position.valueOf("a1"))),
+                Arguments.of(Position.valueOf("c2"), new Blank(Position.valueOf("e1"))),
+                Arguments.of(Position.valueOf("c2"), new Blank(Position.valueOf("a1")))
         );
     }
 }

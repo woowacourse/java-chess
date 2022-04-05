@@ -60,8 +60,8 @@ class PawnTest {
         return Stream.of(
                 Arguments.of(Position.valueOf("b2"), new Pawn(BLACK, Position.valueOf("c3")), NORTH_EAST),
                 Arguments.of(Position.valueOf("b2"), new Pawn(BLACK, Position.valueOf("a3")), NORTH_WEST),
-                Arguments.of(Position.valueOf("b2"), new Blank(NONE, Position.valueOf("b3")), NORTH),
-                Arguments.of(Position.valueOf("b2"), new Blank(NONE, Position.valueOf("b4")), NORTH)
+                Arguments.of(Position.valueOf("b2"), new Blank(Position.valueOf("b3")), NORTH),
+                Arguments.of(Position.valueOf("b2"), new Blank(Position.valueOf("b4")), NORTH)
         );
     }
 
@@ -97,8 +97,8 @@ class PawnTest {
         return Stream.of(
                 Arguments.of(Position.valueOf("b7"), new Pawn(WHITE, Position.valueOf("c6")), SOUTH_EAST),
                 Arguments.of(Position.valueOf("b7"), new Pawn(WHITE, Position.valueOf("a6")), SOUTH_WEST),
-                Arguments.of(Position.valueOf("b7"), new Blank(NONE, Position.valueOf("b6")), SOUTH),
-                Arguments.of(Position.valueOf("b7"), new Blank(NONE, Position.valueOf("b5")), SOUTH)
+                Arguments.of(Position.valueOf("b7"), new Blank(Position.valueOf("b6")), SOUTH),
+                Arguments.of(Position.valueOf("b7"), new Blank(Position.valueOf("b5")), SOUTH)
         );
     }
 
@@ -117,10 +117,10 @@ class PawnTest {
         return Stream.of(
                 Arguments.of(
                         Position.valueOf("b2"), Position.valueOf("b3"),
-                        new Blank(BLACK, Position.valueOf("b3")), NORTH),
+                        new Blank(Position.valueOf("b3")), NORTH),
                 Arguments.of(
                         Position.valueOf("b2"), Position.valueOf("b4"),
-                        new Blank(BLACK, Position.valueOf("b4")), NORTH),
+                        new Blank(Position.valueOf("b4")), NORTH),
                 Arguments.of(
                         Position.valueOf("b2"), Position.valueOf("c3"),
                         new Rook(NONE, Position.valueOf("c3")), NORTH_EAST),
@@ -145,10 +145,10 @@ class PawnTest {
         return Stream.of(
                 Arguments.of(
                         Position.valueOf("b7"), Position.valueOf("b6"),
-                        new Blank(NONE, Position.valueOf("b6")), SOUTH),
+                        new Blank(Position.valueOf("b6")), SOUTH),
                 Arguments.of(
                         Position.valueOf("b7"), Position.valueOf("b5"),
-                        new Blank(NONE, Position.valueOf("b5")), SOUTH),
+                        new Blank(Position.valueOf("b5")), SOUTH),
                 Arguments.of(
                         Position.valueOf("b7"), Position.valueOf("c6"),
                         new Rook(WHITE, Position.valueOf("c6")), SOUTH_EAST),
