@@ -5,7 +5,7 @@ import chess.domain.position.Movement;
 import chess.domain.position.Row;
 
 public abstract class Piece {
-    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
+    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "사격 중지!! 아군이다!! ><";
 
     final Color color;
     final double score;

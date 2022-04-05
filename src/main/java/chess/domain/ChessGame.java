@@ -5,7 +5,7 @@ import chess.domain.board.BoardGenerator;
 import chess.domain.position.Square;
 
 public final class ChessGame {
-    private static final String ERROR_MESSAGE_TURN = "[ERROR] 순서 지키시지?!";
+    private static final String ERROR_MESSAGE_TURN = "순서 지키시지?!";
 
     private Board board;
     private GameTurn turn;
