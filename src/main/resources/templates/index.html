@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>수달이 만든 체스게임</title>
     <link rel="stylesheet" href="/src/index.css"/>
+    <script type="text/javascript" src="/src/index.js" defer></script>
 </head>
 <body>
 <div class="title">
@@ -11,93 +12,100 @@
 
 <div class="chess-table">
     <div class="chess-row">
-        <div id="a8" class="piece-box white-box"></div>
-        <div id="b8" class="piece-box black-box"></div>
-        <div id="c8" class="piece-box white-box"></div>
-        <div id="d8" class="piece-box black-box"></div>
-        <div id="e8" class="piece-box white-box"></div>
-        <div id="f8" class="piece-box black-box"></div>
-        <div id="g8" class="piece-box white-box"></div>
-        <div id="h8" class="piece-box black-box"></div>
+        <div id="a8" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="b8" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="c8" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="d8" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="e8" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="f8" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="g8" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="h8" onclick="tryMove(id)" class="piece-box black-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a7" class="piece-box black-box"></div>
-        <div id="b7" class="piece-box white-box"></div>
-        <div id="c7" class="piece-box black-box"></div>
-        <div id="d7" class="piece-box white-box"></div>
-        <div id="e7" class="piece-box black-box"></div>
-        <div id="f7" class="piece-box white-box"></div>
-        <div id="g7" class="piece-box black-box"></div>
-        <div id="h7" class="piece-box white-box"></div>
+        <div id="a7" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="b7" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="c7" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="d7" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="e7" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="f7" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="g7" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="h7" onclick="tryMove(id)" class="piece-box white-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a6" class="piece-box white-box"></div>
-        <div id="b6" class="piece-box black-box"></div>
-        <div id="c6" class="piece-box white-box"></div>
-        <div id="d6" class="piece-box black-box"></div>
-        <div id="e6" class="piece-box white-box"></div>
-        <div id="f6" class="piece-box black-box"></div>
-        <div id="g6" class="piece-box white-box"></div>
-        <div id="h6" class="piece-box black-box"></div>
+        <div id="a6" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="b6" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="c6" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="d6" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="e6" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="f6" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="g6" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="h6" onclick="tryMove(id)" class="piece-box black-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a5" class="piece-box black-box"></div>
-        <div id="b5" class="piece-box white-box"></div>
-        <div id="c5" class="piece-box black-box"></div>
-        <div id="d5" class="piece-box white-box"></div>
-        <div id="e5" class="piece-box black-box"></div>
-        <div id="f5" class="piece-box white-box"></div>
-        <div id="g5" class="piece-box black-box"></div>
-        <div id="h5" class="piece-box white-box"></div>
+        <div id="a5" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="b5" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="c5" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="d5" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="e5" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="f5" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="g5" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="h5" onclick="tryMove(id)" class="piece-box white-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a4" class="piece-box white-box"></div>
-        <div id="b4" class="piece-box black-box"></div>
-        <div id="c4" class="piece-box white-box"></div>
-        <div id="d4" class="piece-box black-box"></div>
-        <div id="e4" class="piece-box white-box"></div>
-        <div id="f4" class="piece-box black-box"></div>
-        <div id="g4" class="piece-box white-box"></div>
-        <div id="h4" class="piece-box black-box"></div>
+        <div id="a4" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="b4" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="c4" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="d4" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="e4" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="f4" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="g4" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="h4" onclick="tryMove(id)" class="piece-box black-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a3" class="piece-box black-box"></div>
-        <div id="b3" class="piece-box white-box"></div>
-        <div id="c3" class="piece-box black-box"></div>
-        <div id="d3" class="piece-box white-box"></div>
-        <div id="e3" class="piece-box black-box"></div>
-        <div id="f3" class="piece-box white-box"></div>
-        <div id="g3" class="piece-box black-box"></div>
-        <div id="h3" class="piece-box white-box"></div>
+        <div id="a3" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="b3" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="c3" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="d3" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="e3" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="f3" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="g3" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="h3" onclick="tryMove(id)" class="piece-box white-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a2" class="piece-box white-box"></div>
-        <div id="b2" class="piece-box black-box"></div>
-        <div id="c2" class="piece-box white-box"></div>
-        <div id="d2" class="piece-box black-box"></div>
-        <div id="e2" class="piece-box white-box"></div>
-        <div id="f2" class="piece-box black-box"></div>
-        <div id="g2" class="piece-box white-box"></div>
-        <div id="h2" class="piece-box black-box"></div>
+        <div id="a2" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="b2" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="c2" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="d2" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="e2" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="f2" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="g2" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="h2" onclick="tryMove(id)" class="piece-box black-box"></div>
     </div>
 
     <div class="chess-row">
-        <div id="a1" class="piece-box black-box"></div>
-        <div id="b1" class="piece-box white-box"></div>
-        <div id="c1" class="piece-box black-box"></div>
-        <div id="d1" class="piece-box white-box"></div>
-        <div id="e1" class="piece-box black-box"></div>
-        <div id="f1" class="piece-box white-box"></div>
-        <div id="g1" class="piece-box black-box"></div>
-        <div id="h1" class="piece-box white-box"></div>
+        <div id="a1" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="b1" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="c1" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="d1" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="e1" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="f1" onclick="tryMove(id)" class="piece-box white-box"></div>
+        <div id="g1" onclick="tryMove(id)" class="piece-box black-box"></div>
+        <div id="h1" onclick="tryMove(id)" class="piece-box white-box"></div>
     </div>
 </div>
-<script src="/src/index.js"></script>
+</div>
+
+<div class="menu">
+    <button id="guide"><img src="/images/game_guide_button.png" class="img"></button>
+    <button id="start"><img src="/images/start_button.png" class="img"></button>
+    <button id="status"><img src="/images/score_button.png" class="img"></button>
+    <button id="end"><img src="/images/end_button.png" class="img"></button>
+</div>
 </body>
 </html>

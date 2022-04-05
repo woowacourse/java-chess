@@ -2,8 +2,18 @@
     position: fixed;
     width: 600px;
     height: 300px;
-    top: 160px;
+    top: 10%;
     left: 35%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.menu {
+    position: fixed;
+    width: 200px;
+    height: 300px;
+    top: 50%;
+    left: 70%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
@@ -41,4 +51,11 @@
 
 img {
     width: 100%;
+}
+
+.img-style {
+    width: 30px;
+    height: 40px;
+    display: block;
+    margin: auto;
 }
