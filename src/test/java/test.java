@@ -39,7 +39,10 @@ public class test {
     void 체스게임방_추가(){
         ChessGameDAO chessGameDAO = new ChessGameDAO();
         try{
-            chessGameDAO.addGame(new ChessGame("f", false));
+            ChessGame chessGame = ChessGame.initChessGame();
+            chessGame.setName("false");
+            chessGame.setEnd(false);
+            chessGameDAO.addGame(chessGame);
         }catch (Exception e){
         }
     }
