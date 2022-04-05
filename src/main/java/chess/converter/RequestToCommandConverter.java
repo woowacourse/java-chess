@@ -1,8 +1,7 @@
-package chess.webcontroller.converter;
+package chess.converter;
 
 import java.util.Map;
 
-import chess.converter.StringToPositionConverter;
 import chess.domain.command.Command;
 import chess.domain.command.Move;
 import spark.Request;

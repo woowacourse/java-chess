@@ -1,4 +1,4 @@
-package chess.repository.converter;
+package chess.converter;
 
 import java.util.Arrays;
 

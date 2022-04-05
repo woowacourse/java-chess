@@ -1,4 +1,6 @@
-package chess.repository.converter;
+package chess.converter;
+
+import static java.util.stream.Collectors.*;
 
 import java.util.Map;
 
@@ -19,19 +21,28 @@ public class StringToStateConverter {
 	private static final String RUNNING_BLACK = "RUNNING_BLACK";
 	private static final String FINISHED = "FINISHED";
 
-	public static GameState of(String name, Map<Position, Piece> board) {
-		if (name.equals(READY)) {
+	public static GameState of(String state, Map<String, String> inputBoard) {
+		Map<Position, Piece> board = convertToBoard(inputBoard);
+		if (state.equals(READY)) {
 			return new Ready(board);
 		}
-		if (name.equals(RUNNING_WHITE)) {
+		if (state.equals(RUNNING_WHITE)) {
 			return new RunningWhiteTurn(board);
 		}
-		if (name.equals(RUNNING_BLACK)) {
+		if (state.equals(RUNNING_BLACK)) {
 			return new RunningBlackTurn(board);
 		}
-		if (name.equals(FINISHED)) {
+		if (state.equals(FINISHED)) {
 			return new Finished(board);
 		}
 		throw new IllegalArgumentException(NOT_EXIST_STATE_NAME);
+	}
+
+	private static Map<Position, Piece> convertToBoard(Map<String, String> tiles) {
+		return tiles.entrySet().stream()
+			.collect(toMap(
+				entry -> StringToPositionConverter.from(entry.getKey()),
+				entry -> StringToPieceConverter.from(entry.getValue())
+			));
 	}
 }

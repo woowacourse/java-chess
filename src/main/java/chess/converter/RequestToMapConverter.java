@@ -1,4 +1,4 @@
-package chess.webcontroller.converter;
+package chess.converter;
 
 import static java.util.stream.Collectors.*;
 
@@ -25,6 +25,5 @@ public class RequestToMapConverter {
 		return Arrays.stream(request.body().strip().split(REQUEST_DELIMITER))
 			.map(command -> command.split(COMMAND_DELIMITER))
 			.collect(toMap(command -> command[KEY], command -> command[VALUE]));
-
 	}
 }
