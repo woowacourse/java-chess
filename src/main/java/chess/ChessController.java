@@ -25,6 +25,11 @@ public class ChessController {
         return new ResponseDto(200, "");
     }
 
+    public void restart() {
+        state = state.start();
+        start();
+    }
+
     public State state() {
         return state;
     }
