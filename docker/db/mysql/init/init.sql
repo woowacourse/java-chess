@@ -1,7 +1,5 @@
 drop table if exists piece cascade;
-drop table if exists position cascade;
 drop table if exists chess_game cascade;
-drop table if exists chess_board cascade;
 
 CREATE TABLE piece
 (
