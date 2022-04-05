@@ -20,6 +20,13 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private static final String MESSAGE_KEY = "message";
+    private static final String TURN_KEY = "turn";
+    private static final String DRAW = "무승부";
+    private static final String WINNER_TEAM = "승리 팀: %s";
+    private static final String SEPARATOR_COLON = ": ";
+    private static final String SEPARATOR_SLASH = " / ";
+
     public Map<String, Object> findBoardModel(ChessGame chessGame, PieceDao pieceDao, BoardDao boardDao, int boardId) {
         List<PieceDto> pieces = pieceDao.findByBoardId(boardId);
         Team turn = boardDao.findTurn(boardId);
@@ -36,18 +43,18 @@ public class ChessService {
             model.put(entry.getKey().getName()
                     , new PieceDto(entry.getValue(), entry.getKey()));
         }
-        model.put("turn", chessGame.getTurn().name());
+        model.put(TURN_KEY, chessGame.getTurn().name());
         return model;
     }
 
     public int createNewBoard(BoardDao boardDao, PieceDao pieceDao, ChessGame chessGame) {
         chessGame.start(new BasicBoardGenerator());
         int boardId = boardDao.createBoard(chessGame.getTurn());
-        pieceDao.create(convertPieceDtos(chessGame.getBoard()), boardId);
+        pieceDao.create(convertPieceDtoList(chessGame.getBoard()), boardId);
         return boardId;
     }
 
-    private List<PieceDto> convertPieceDtos(Board board) {
+    private List<PieceDto> convertPieceDtoList(Board board) {
         return board.getValue()
                 .entrySet()
                 .stream()
@@ -65,7 +72,7 @@ public class ChessService {
             pieceDao.delete(moveRequestDto.getFrom());
             boardDao.updateTurn(chessGame.getTurn(), boardId);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            model.put("message", e.getMessage());
+            model.put(MESSAGE_KEY, e.getMessage());
         }
         model.putAll(generateBoardModel(chessGame));
 
@@ -78,10 +85,10 @@ public class ChessService {
         try {
             Score score = chessGame.status();
             model = generateBoardModel(chessGame);
-            model.put("message", drawScoreSentence(score));
+            model.put(MESSAGE_KEY, drawScoreSentence(score));
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            model.put("message", e.getMessage());
+            model.put(MESSAGE_KEY, e.getMessage());
         }
 
         return model;
@@ -91,9 +98,9 @@ public class ChessService {
         StringBuilder stringBuilder = new StringBuilder();
         for (Entry<Team, Double> entry : score.getValue().entrySet()) {
             stringBuilder.append(entry.getKey().name())
-                    .append(": ")
+                    .append(SEPARATOR_COLON)
                     .append(entry.getValue())
-                    .append(" / ");
+                    .append(SEPARATOR_SLASH);
         }
         stringBuilder.append(drawWinner(score.findWinTeam()));
 
@@ -102,9 +109,9 @@ public class ChessService {
 
     private String drawWinner(Team team) {
         if (team == null) {
-            return "무승부";
+            return DRAW;
         }
-        return String.format("승리 팀: %s", team);
+        return String.format(WINNER_TEAM, team);
     }
 
     public void end(ChessGame chessGame) {

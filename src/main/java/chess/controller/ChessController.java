@@ -23,6 +23,7 @@ public class ChessController {
     private static final String BOARD_PAGE = "board.html";
     private static final String INDEX_URL = "/";
     private static final String BOARD_URL = "/board";
+    private static final String ID_PARAM = "?id=";
 
     private final ChessService chessService = new ChessService();
     private final PieceDao pieceDao;
@@ -46,7 +47,7 @@ public class ChessController {
 
         post("/new", (request, response) -> {
             boardId.set(chessService.createNewBoard(boardDao, pieceDao, chessGame));
-            response.redirect(BOARD_URL + "?id=" + boardId.intValue());
+            response.redirect(BOARD_URL + ID_PARAM + boardId.intValue());
             return null;
         });
 

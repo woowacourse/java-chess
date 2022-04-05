@@ -1,7 +1,5 @@
 package chess.console;
 
-import static chess.console.view.InputView.COMMAND_INDEX;
-
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
@@ -13,6 +11,10 @@ import chess.dto.MoveRequestDto;
 import java.util.List;
 
 public class ChessConsole {
+
+    private static final int COMMAND_INDEX = 0;
+    private static final int FROM_POSITION_INDEX = 1;
+    private static final int TO_POSITION_INDEX = 2;
 
     private final ChessGame chessGame = new ChessGame();
 
@@ -88,7 +90,9 @@ public class ChessConsole {
         }
 
         try {
-            MoveRequestDto moveRequestDto = new MoveRequestDto(inputs.get(1), inputs.get(2));
+            MoveRequestDto moveRequestDto = new MoveRequestDto(inputs.get(FROM_POSITION_INDEX),
+                    inputs.get(TO_POSITION_INDEX));
+
             chessGame.move(moveRequestDto);
             printBoard(chessGame.getBoard());
         } catch (IllegalArgumentException | IllegalStateException e) {

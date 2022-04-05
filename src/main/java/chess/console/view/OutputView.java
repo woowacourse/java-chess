@@ -56,20 +56,12 @@ public class OutputView {
 
     public static void printStatus(Map<Team, Double> status, Team result) {
         for (Entry<Team, Double> value : status.entrySet()) {
-            System.out.printf("%s는 %f점 입니다.%n", value.getKey(), value.getValue());
+            System.out.printf("%s: %f점 / ", value.getKey(), value.getValue());
         }
         if (result == null) {
-            System.out.println("무승부 입니다.");
+            System.out.println("무승부");
             return;
         }
-        System.out.printf("승리 팀은 %s 입니다.", result);
-    }
-
-    public static void printCheck() {
-        System.out.println("현재 check 상황입니다.");
-    }
-
-    public static void printStartWarning() {
-        System.out.println("체스 게임을 시작해야 합니다.");
+        System.out.printf("승리 팀: %s%n", result);
     }
 }
