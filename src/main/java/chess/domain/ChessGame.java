@@ -1,6 +1,9 @@
 package chess.domain;
 
-import static chess.domain.GameStatus.*;
+import static chess.domain.GameStatus.CHECK_MATE;
+import static chess.domain.GameStatus.END;
+import static chess.domain.GameStatus.PLAYING;
+import static chess.domain.GameStatus.READY;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerationStrategy;
@@ -10,8 +13,8 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ChessGame {
@@ -68,7 +71,7 @@ public class ChessGame {
 
     private void validateNowTurn(Piece piece) {
         if (!piece.isSameTeam(turn)) {
-            throw new IllegalArgumentException("현재 차례는 " + turn + "입니다.");
+            throw new IllegalArgumentException("현재 차례는 " + turn.toString().toUpperCase(Locale.ROOT) + "입니다.");
         }
     }
 
@@ -131,11 +134,26 @@ public class ChessGame {
     }
 
     public Result stepGame() {
+        turn = Team.WHITE;
         gameStatus = END;
-        return new Result(getBoard());
+        Result result = new Result(getBoard());
+        board.removeBoard();
+        return result;
+    }
+
+    public Map<String, String> toMap() {
+        return board.toMap();
     }
 
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    public Team getTurn() {
+        return turn;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 }

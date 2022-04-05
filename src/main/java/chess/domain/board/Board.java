@@ -18,6 +18,10 @@ public class Board {
         board.putAll(boardGenerator.create());
     }
 
+    public void removeBoard() {
+        board.clear();
+    }
+
     public void validatePath(Position from, Position to, Direction direction) {
         Position current = from.move(direction);
 
@@ -65,4 +69,12 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }
+
+
+    public Map<String, String> toMap() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), m -> m.getValue().toString()));
+    }
 }
+

@@ -78,10 +78,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "name='" + name + '\'' +
-                ", score=" + getScore() +
-                ", team=" + team +
-                '}';
+        return name + "_" + team.toString();
     }
 }
