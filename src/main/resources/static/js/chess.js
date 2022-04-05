@@ -4,6 +4,11 @@ const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 let source = '';
 let target = '';
 
+function resetSourceAndTarget() {
+    source = '';
+    target = '';
+}
+
 async function selectPiece(position) {
     let piece = await document.getElementById('piece-' + position);
     if (piece.className === 'piece active') {
@@ -40,6 +45,13 @@ function lockSquare() {
     let squares = document.getElementsByClassName('square');
     for (const square of squares) {
         square.className = square.className.split(' ')[0];
+    }
+}
+
+function unlockPiece() {
+    let pieces = document.getElementsByClassName('piece');
+    for (const piece of pieces) {
+        piece.className = piece.className + ' active';
     }
 }
 
@@ -90,8 +102,7 @@ async function initPieces(pieces) {
     let oldPieces = await document.getElementsByClassName('piece');
     await removeOldPieces(oldPieces);
     await setNewPieces(pieces);
-    target = '';
-    source = '';
+    resetSourceAndTarget();
 }
 
 window.onload = async function () {
@@ -122,5 +133,16 @@ function fetchMove(source, target) {
         },
     })
         .then(res => res.json())
-        .then(res => initPieces(res.pieces))
+        .then(res => {
+            if (res.message) {
+                throw new Error(res.message);
+            }
+            initPieces(res.pieces)
+        })
+        .catch(err => {
+            alert(err.message);
+            resetSourceAndTarget();
+            lockSquare();
+            unlockPiece();
+        })
 }

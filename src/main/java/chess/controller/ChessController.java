@@ -40,7 +40,13 @@ public class ChessController {
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             CommendDto commendDto = new Gson().fromJson(req.body(), CommendDto.class);
-            gameService.move(commendDto);
+            try {
+                gameService.move(commendDto);
+            } catch (Exception e) {
+                res.status(400);
+                model.put("message", e.getMessage());
+                return new Gson().toJson(model);
+            }
             model.put("state", gameService.getGameStateDto());
             model.put("pieces", gameService.getPieceDtos());
             return new Gson().toJson(model);
