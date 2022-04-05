@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
+import chess.dto.BoardAndTurnInfo;
 import chess.dto.Response;
 
 import java.util.List;
@@ -40,6 +41,6 @@ public class Finished extends Started {
 
     @Override
     public Response getResponse() {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+        return new BoardAndTurnInfo(board.getPointPieces(), turnColor);
     }
 }
