@@ -3,6 +3,7 @@ const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 let source = '';
 let target = '';
+let turn = '';
 
 function resetSourceAndTarget() {
     source = '';
@@ -105,6 +106,28 @@ async function initPieces(pieces) {
     resetSourceAndTarget();
 }
 
+function toggleTurn(state) {
+    turn = state.turn;
+    document.getElementById('white-message').innerHTML = '';
+    document.getElementById('black-message').innerHTML = '';
+}
+
+function showErrorMessage(message) {
+    if (turn === 'white') {
+        document.getElementById('white-message').innerHTML = message;
+        return;
+    }
+    document.getElementById('black-message').innerHTML = message;
+}
+
+function updateResult(result) {
+    document.getElementById('white-score').innerHTML = result.whiteScore + '점';
+    document.getElementById('black-score').innerHTML = result.blackScore + '점';
+    if (result.winner !== 'none') {
+        document.getElementById(result.winner + '-score').innerHTML += ' 승리 중';
+    }
+}
+
 window.onload = async function () {
     let piecesContainer = document.getElementById('pieces-container');
     await initBlocks(piecesContainer);
@@ -118,7 +141,10 @@ function fetchNewChess() {
         },
     })
         .then(res => res.json())
-        .then(res => initPieces(res.pieces))
+        .then(res => {
+            toggleTurn(res.state);
+            initPieces(res.pieces);
+        })
 }
 
 function fetchMove(source, target) {
@@ -137,12 +163,24 @@ function fetchMove(source, target) {
             if (res.message) {
                 throw new Error(res.message);
             }
-            initPieces(res.pieces)
+            toggleTurn(res.state);
+            initPieces(res.pieces);
         })
         .catch(err => {
-            alert(err.message);
+            showErrorMessage(err.message);
             resetSourceAndTarget();
             lockSquare();
             unlockPiece();
         })
+}
+
+function fetchResult() {
+    fetch('http://localhost:8080/result', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(res => res.json())
+        .then(res => updateResult(res.result));
 }

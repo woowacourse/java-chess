@@ -45,10 +45,15 @@ public class ChessController {
             } catch (Exception e) {
                 res.status(400);
                 model.put("message", e.getMessage());
-                return new Gson().toJson(model);
             }
             model.put("state", gameService.getGameStateDto());
             model.put("pieces", gameService.getPieceDtos());
+            return new Gson().toJson(model);
+        });
+
+        get("/result", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", gameService.getResultDto());
             return new Gson().toJson(model);
         });
     }

@@ -2,6 +2,47 @@ body {
     background: linear-gradient(to bottom right, #263542, #483343);
 }
 
+.player-container {
+    width: 280px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 80px 16px 80px 16px;
+    margin: 80px 24px 24px 24px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.player-icon-wrap {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.player-icon {
+    object-fit: none;
+}
+
+.player-panel {
+    width: 100%;
+    height: 160px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 56px;
+}
+
+.score-panel {
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
 .menu-bar {
     width: 100%;
     height: 40px;
