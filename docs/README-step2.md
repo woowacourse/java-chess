@@ -21,7 +21,6 @@
 
 - [x] 체스 게임을 시작한다
 - [x] 체스 게임에서 말의 이동을 수행한다.
-    - [x] 위치가 변경될 때 마다 체스판을 출력한다
 - [x] 체스 게임을 끝낸다.
 
 ### 체스 판 초기 세팅
@@ -79,6 +78,6 @@
 ### TODO
 
 - [ ] Controller 줄수 줄이기
-- [ ] InjectStrategy 안의 stringPieceMap 위치 고민하기 
+- [ ] InjectStrategy 안의 stringPieceMap 위치 고민하기 -> getter 대신 piece 가져오게 변경하기
 - [ ] Json 변환용 메서드 위치를 도메인 바깥으로 이동하기
 
