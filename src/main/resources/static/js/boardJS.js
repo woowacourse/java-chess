@@ -5,7 +5,4 @@ function printStatus() {
             let text = await response.text();
             status.innerText = text;
         })
-        .catch((error) => {
-            alert(error);
-        })
 }

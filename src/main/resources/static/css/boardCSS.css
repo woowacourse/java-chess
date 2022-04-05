@@ -23,3 +23,16 @@ img {
     height: 80px;
     width: 80px;
 }
+
+.button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: mintcream;
+}
+
+#status {
+    display: block;
+    text-align: center;
+    font-size: 10px;
+}

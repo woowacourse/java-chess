@@ -58,12 +58,19 @@ public class WebApplication {
             Command command = new Command(List.of(req.queryParams("command").split(" ")));
             try {
                 chessGame.move(command.getSourceLocation(), command.getTargetLocation());
+                checkGameEnd(chessGame);
             } catch (IllegalArgumentException exception) {
-                return exception.getMessage();
+                return printException(exception.getMessage(), "exception.html");
             }
             res.redirect("/board");
             return null;
         });
+    }
+
+    private static void checkGameEnd(ChessGame chessGame) {
+        if (!chessGame.isRunning()) {
+            throw new IllegalArgumentException("게임 끝!");
+        }
     }
 
     private static String getStatus(ChessGame chessGame) {
@@ -86,6 +93,10 @@ public class WebApplication {
     }
 
     private static String render(Map<String, PieceDto> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private static String printException(String model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

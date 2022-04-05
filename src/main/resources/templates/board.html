@@ -360,15 +360,15 @@
     </div>
 </div>
 
-<form action="/move" method="post">
+<form id="command" action="/move" method="post">
     이동 명령어 <input type="text" name="command">
 </form>
 
 
-<button type="text" onclick="printStatus()"> 점수 확인</button>
-<form action="/restart" method="post">
-    <button type="text">게임 재시작</button>
-</form>
+<button class="button" type="text" onclick="printStatus()"> 점수 확인</button>
 <p id="status"></p>
+<form action="/restart" method="post">
+    <button class="button" type="text">게임 재시작</button>
+</form>
 </body>
 </html>

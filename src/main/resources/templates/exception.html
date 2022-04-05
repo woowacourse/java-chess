@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>예외~</title>
+    <style>
+        .button {
+            width: 100px;
+            height: 60px;
+            border: 5px solid wheat;
+        }
+
+        .main {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .exception {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .button {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: mintcream;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <p class="exception">예외 : {{this}} !!</p>
+    <form action="/board" method="get">
+        <button class="button" type="text">게임으로 돌아가기</button>
+    </form>
+    <form action="/restart" method="post">
+        <button class="button" type="text">게임 재시작</button>
+    </form>
+</div>
+</body>
+</html>
