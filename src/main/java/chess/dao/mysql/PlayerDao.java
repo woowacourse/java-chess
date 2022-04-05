@@ -70,4 +70,18 @@ public class PlayerDao {
         }
         return playerDto;
     }
+
+    public void update(final PlayerDto playerDto) {
+        final Connection connection = mysqlConnector.getConnection();
+        try {
+            final String sql = "UPDATE Player SET pieces=? WHERE id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, playerDto.getPieces());
+            preparedStatement.setLong(2, playerDto.getId());
+            preparedStatement.executeUpdate();
+            mysqlConnector.closeConnection(connection, preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

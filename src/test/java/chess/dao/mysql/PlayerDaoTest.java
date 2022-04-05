@@ -12,11 +12,11 @@ import chess.dao.dto.PlayerDto;
 
 class PlayerDaoTest {
 
-    private MysqlConnector mysqlConnector;
+    private PlayerDao playerDao;
 
     @BeforeEach
     void setUp() {
-        mysqlConnector = new MysqlConnector();
+        playerDao = new PlayerDao(new MysqlConnector());
     }
 
     @DisplayName("데이터 저장 및 조회가 가능해야 한다.")
@@ -24,8 +24,6 @@ class PlayerDaoTest {
     void saveAndFind() {
         final String colorName = WHITE.getName();
         final String pieces = "a1:Rook,a2:Pawn";
-
-        final PlayerDao playerDao = new PlayerDao(mysqlConnector);
         final Long id = playerDao.save(new PlayerDto(0L, colorName, pieces));
 
         final PlayerDto playerDto = playerDao.findById(id);
@@ -33,5 +31,18 @@ class PlayerDaoTest {
                     assertThat(playerDto.getColorName()).isEqualTo(colorName);
                     assertThat(playerDto.getPieces()).isEqualTo(pieces);
                 });
+    }
+
+    @DisplayName("데이터를 수정할 수 있어야 한다.")
+    @Test
+    void update() {
+        final Long id = playerDao.save(new PlayerDto(0L, WHITE.getName(), "a1:Rook,a2:Pawn"));
+        final String expectedPieces = "a3:Rook,a4:Pawn";
+        final PlayerDto playerDto = new PlayerDto(id, WHITE.getName(), expectedPieces);
+        playerDao.update(playerDto);
+
+        final PlayerDto updatedPlayerDto = playerDao.findById(id);
+        assertThat(updatedPlayerDto.getPieces()).isEqualTo(expectedPieces);
+        System.out.println(updatedPlayerDto.getPieces());
     }
 }
