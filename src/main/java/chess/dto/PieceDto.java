@@ -31,32 +31,4 @@ public class PieceDto {
     public String getPosition() {
         return position;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PieceDto)) {
-            return false;
-        }
-
-        PieceDto pieceDto = (PieceDto) o;
-
-        if (team != null ? !team.equals(pieceDto.team) : pieceDto.team != null) {
-            return false;
-        }
-        if (type != null ? !type.equals(pieceDto.type) : pieceDto.type != null) {
-            return false;
-        }
-        return position != null ? position.equals(pieceDto.position) : pieceDto.position == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = team != null ? team.hashCode() : 0;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        return result;
-    }
 }
