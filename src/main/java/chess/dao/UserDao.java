@@ -1,8 +1,10 @@
 package chess.dao;
 
+import chess.Controller.dto.UserDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDao {
@@ -22,7 +24,7 @@ public class UserDao {
 
     public void createUser(final String name, final int boardId) {
         final Connection connection = getConnection();
-        final String sql = "INSERT user(name, board_id) VALUES (?, ?)";
+        final String sql = "INSERT IGNORE INTO user(name, board_id) VALUES (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
@@ -31,5 +33,22 @@ public class UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public UserDto getUser(final String name) {
+        final Connection connection = getConnection();
+        final String sql = "SELECT id, board_id FROM user WHERE name=?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return UserDto.fromEntity(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
