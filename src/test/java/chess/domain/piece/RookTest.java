@@ -14,7 +14,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
-
     @ParameterizedTest
     @ValueSource(strings = {"e5", "c8", "h2", "a3"})
     @DisplayName("출발 지점과 도착 지점을 입력 후, 이동할 수 없으면 예외가 발생한다.")
