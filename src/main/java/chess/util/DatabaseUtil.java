@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class DatabaseUtil {
 
@@ -47,5 +49,21 @@ public class DatabaseUtil {
             e.printStackTrace();
             throw new IllegalStateException("데이터 계산 작업에 실패하였습니다.");
         }
+    }
+
+    public static <T> String parameterGroupsOf(List<T> group, int size) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (int i = 0; i < group.size(); i++) {
+            joiner.add(parameterGroupOf(size));
+        }
+        return joiner.toString();
+    }
+
+    public static String parameterGroupOf(int size) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (int i = 0; i < size; i++) {
+            joiner.add("?");
+        }
+        return "(" + joiner + ")";
     }
 }

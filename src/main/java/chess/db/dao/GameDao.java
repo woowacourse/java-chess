@@ -35,23 +35,27 @@ public class GameDao {
     }
 
     public void save(GameEntity gameEntity) {
+        final String sql = String.format("INSERT INTO %s (id, state) VALUES (?, ?)", table);
+
         int gameId = gameEntity.getId();
         if (checkById(gameId)) {
             throw new IllegalArgumentException(GAME_ALREADY_EXISTS_EXCEPTION);
         }
-        final String sql = "INSERT INTO " + table + " (id, state) VALUES "
-                + "(" + gameId + ", '" + gameEntity.getState() + "')";
-        DatabaseUtil.executeCommand(sql);
+        new CommandBuilder(sql).setInt(gameId)
+                .setString(gameEntity.getState())
+                .execute();
     }
 
     public void updateState(GameEntity gameEntity) {
+        final String sql = String.format("UPDATE %s SET state = ? WHERE id = ?", table);
         int gameId = gameEntity.getId();
+
         if (!checkById(gameId)) {
             throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION);
         }
-        final String sql = "UPDATE " + table +
-                " SET state = '" + gameEntity.getState() + "' WHERE id = " + gameId;
-        DatabaseUtil.executeCommand(sql);
+        new CommandBuilder(sql).setString(gameEntity.getState())
+                .setInt(gameId)
+                .execute();
     }
 
     public boolean checkById(int gameId) {

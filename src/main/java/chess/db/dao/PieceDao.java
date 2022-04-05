@@ -1,10 +1,12 @@
 package chess.db.dao;
 
+import static chess.util.DatabaseUtil.parameterGroupOf;
+import static chess.util.DatabaseUtil.parameterGroupsOf;
+
 import chess.db.entity.PieceEntity;
 import chess.domain.board.position.Position;
 import chess.util.DatabaseUtil;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,43 +44,27 @@ public class PieceDao {
     }
 
     public void saveAll(int gameId, List<PieceEntity> pieces) {
-        try (final Connection connection = DatabaseUtil.getConnection()) {
-            for (PieceEntity piece : pieces) {
-                save(gameId, piece, connection);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 저장 작업에 실패하였습니다.");
-        }
-    }
+        final String sql = String.format("INSERT INTO %s (game_id, position, type, color) VALUES %s",
+                table, parameterGroupsOf(pieces, 4));
 
-    private void save(int gameId, PieceEntity piece, Connection connection) throws SQLException {
-        final String sql = "INSERT INTO " + table +
-                " (game_id, position, type, color) VALUES (" + gameId + ", ?, ?, ?)";
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, piece.getPositionKey());
-        statement.setString(2, piece.getType() + "");
-        statement.setString(3, piece.getColor() + "");
-        statement.executeUpdate();
+        CommandBuilder command = new CommandBuilder(sql);
+        for (PieceEntity piece : pieces) {
+            command.setInt(gameId)
+                    .setString(piece.getPositionKey())
+                    .setString(piece.getType())
+                    .setString(piece.getColor());
+        }
+        command.execute();
     }
 
     public void deleteAllByGameIdAndPositions(int gameId, List<Position> positions) {
-        try (final Connection connection = DatabaseUtil.getConnection()) {
-            for (Position position : positions) {
-                deleteByGameIdAndPosition(gameId, position, connection);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 저장 작업에 실패하였습니다.");
-        }
-    }
+        final String sql = String.format("DELETE FROM %s WHERE game_id = ? AND position IN %s",
+                table, parameterGroupOf(positions.size()));
 
-    private void deleteByGameIdAndPosition(int gameId, Position position, Connection connection) throws SQLException {
-        final String sql = "DELETE FROM " + table
-                + " WHERE game_id = (?) AND position = (?)";
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, gameId);
-        statement.setString(2, position.toKey());
-        statement.executeUpdate();
+        CommandBuilder command = new CommandBuilder(sql).setInt(gameId);
+        for (Position position : positions) {
+            command.setString(position.toKey());
+        }
+        command.execute();
     }
 }
