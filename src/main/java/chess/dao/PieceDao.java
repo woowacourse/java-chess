@@ -58,36 +58,22 @@ public class PieceDao {
         return board;
     }
 
-    public void movePiece(String from, String to, String fromPiece, String toPiece) {
-        deletePieceAtTo(to, toPiece);
-        updatePieceAtFrom(from, to, fromPiece, toPiece);
+    public void movePiece(Map<Position, Piece> board, String gameName) {
+        deleteByGameName(gameName);
+        save(board);
     }
 
-    private void updatePieceAtFrom(String from, String to, String fromPiece, String toPiece) {
-        final String sql = "UPDATE piece SET position = ? WHERE piece_type = ? AND  position = ?";
+    private void deleteByGameName(String gameName) {
+        final String sql = "DELETE FROM piece WHERE game_name = ?";
 
         try (final Connection connection = DatabaseConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, to);
-            statement.setString(2, fromPiece);
-            statement.setString(3, from);
+            statement.setString(1, gameName);
             statement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void deletePieceAtTo(String to, String toPiece) {
-        final String sql = "DELETE FROM piece WHERE position = ? AND piece_type = ?";
-
-        try (final Connection connection = DatabaseConnector.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, to);
-            statement.setString(2, toPiece);
-            statement.execute();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
 }

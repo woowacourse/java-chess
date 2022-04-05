@@ -5,10 +5,6 @@ import static spark.Spark.post;
 
 import chess.dao.ChessGameDao;
 import chess.dao.PieceDao;
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.InvalidPiece;
-import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.dto.ScoreDto;
@@ -48,14 +44,8 @@ public class ChessWebController {
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            Board boardInstance = chessGame.getBoard();
-            Map<Position, Piece> board = boardInstance.getValue();
-
-            Piece fromPiece = board.getOrDefault(Position.of(moveDto.getFrom()), InvalidPiece.getInstance());
-            Piece toPiece = board.getOrDefault(Position.of(moveDto.getTo()), InvalidPiece.getInstance());
-
             chessGame.move(moveDto);
-            pieceDao.movePiece(moveDto.getFrom(),moveDto.getTo(), fromPiece.toString(), toPiece.toString());
+            pieceDao.movePiece(chessGame.getBoard().getValue(), "chess");
             BoardDto boardDto = BoardDto.from(chessGame.getBoard());
             return gson.toJson(boardDto.getBoard());
         });

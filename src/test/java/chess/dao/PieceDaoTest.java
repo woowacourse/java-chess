@@ -37,13 +37,13 @@ class PieceDaoTest {
     @Test
     @DisplayName("이름으로 탐색 확인")
     void movePiece() {
-        dao.movePiece("a2", "a4", "white-pawn", "invalid");
-
-        Map<Position, Piece> chess = dao.findAllByGameName("chess");
-
-        for (Entry<Position, Piece> positionPieceEntry : chess.entrySet()) {
-            System.out.println(positionPieceEntry.getKey().toString() + positionPieceEntry.getValue().toString());
-        }
+//        dao.movePiece();
+//
+//        Map<Position, Piece> chess = dao.findAllByGameName("chess");
+//
+//        for (Entry<Position, Piece> positionPieceEntry : chess.entrySet()) {
+//            System.out.println(positionPieceEntry.getKey().toString() + positionPieceEntry.getValue().toString());
+//        }
     }
 
 }
