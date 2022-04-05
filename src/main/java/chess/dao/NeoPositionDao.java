@@ -1,10 +1,15 @@
 package chess.dao;
 
+import chess.domain.pieces.Color;
+import chess.domain.pieces.NeoPiece;
+import chess.domain.pieces.Symbol;
 import chess.domain.position.Column;
 import chess.domain.position.NeoPosition;
 import chess.domain.position.Row;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NeoPositionDao {
 
@@ -102,6 +107,38 @@ public class NeoPositionDao {
             preparedStatement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public Map<NeoPosition, NeoPiece> findAllPositionsAndPieces(int boardId) {
+        final Connection connection = connectionManager.getConnection();
+        final String sql = "select po.id as po_id, po.position_column, po.position_row, po.board_id, " +
+                "pi.id as pi_id, pi.type, pi.color, pi.position_id " +
+                "from neo_position po " +
+                "inner join neo_piece pi on po.id = pi.position_id " +
+                "where board_id=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, boardId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            Map<NeoPosition, NeoPiece> all = new HashMap<>();
+            while (resultSet.next()) {
+                all.put(new NeoPosition(
+                                resultSet.getInt("po_id"),
+                                Column.findColumn(resultSet.getInt("position_column")),
+                                Row.findRow(resultSet.getInt("position_row")),
+                                resultSet.getInt("board_id")),
+                        new NeoPiece(
+                                resultSet.getInt("pi_id"),
+                                Symbol.findSymbol(resultSet.getString("type")).type(),
+                                Color.findColor(resultSet.getString("color")),
+                                resultSet.getInt("position_id")
+                        ));
+            }
+            connectionManager.close(connection);
+            return all;
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

@@ -64,6 +64,6 @@
 
 - [x] 모든 Position 은 DB에 저장되어야 한다. (64개)
 - [x] if movable, update query and delete origin record
-- [ ] if status, get all positions and pieces
+- [x] if status, get all positions and pieces
 - [ ] if end, destroy the room
 - [ ] create a room and create members

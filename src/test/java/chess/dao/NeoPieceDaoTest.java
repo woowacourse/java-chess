@@ -42,4 +42,6 @@ class NeoPieceDaoTest {
         int affectedRows = dao.deletePieceByPositionId(positionId);
         assertThat(affectedRows).isEqualTo(1);
     }
+
+
 }
