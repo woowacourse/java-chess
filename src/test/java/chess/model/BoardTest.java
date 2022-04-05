@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.model.boardinitializer.defaultInitializer;
+import chess.model.boardinitializer.DefaultArrangement;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
@@ -27,7 +27,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new defaultInitializer());
+        board = new Board(new DefaultArrangement());
     }
 
     @Test

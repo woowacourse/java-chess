@@ -1,33 +1,34 @@
 package chess.controller;
 
-import static chess.vo.Command.*;
+import static chess.view.InputView.*;
+import static chess.view.OutputView.*;
 
 import chess.dto.Request;
 import chess.model.ChessGame;
-import chess.model.TurnDecider;
-import chess.model.boardinitializer.defaultInitializer;
-import chess.view.InputView;
+import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.Position;
+import chess.model.Turn;
 import chess.view.OutputView;
 
 public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        ChessGame game = new ChessGame(new TurnDecider(), new defaultInitializer());
+        ChessGame game = new ChessGame(new Turn(), new DefaultArrangement());
+        Request request = Request.toStart(inputCommandInStart());
 
-        if (InputView.inputCommandInStart() == END) {
+        if (request.isEnd()) {
             return;
         }
 
-        OutputView.printChessGameBoard(game.getBoardValue());
+        printChessGameBoard(game.getBoardValue());
         playChess(game);
     }
 
     private void playChess(ChessGame game) {
         while (!game.isFinished()) {
-            Request request = InputView.inputCommandInGaming();
-
-            if (request.getCommand().isEnd()) {
+            Request request = Request.toPlay(inputCommandInGaming());
+            if (request.isEnd()) {
                 break;
             }
 
@@ -37,12 +38,12 @@ public class ChessController {
     }
 
     private void doMoveOrStatus(ChessGame game, Request request) {
-        if (request.getCommand().isStatus()) {
+        if (request.isStatus()) {
             OutputView.printScore(game.getScore());
             return;
         }
 
-        game.move(request.getSource(), request.getTarget());
-        OutputView.printChessGameBoard(game.getBoardValue());
+        game.move(Position.of(request.getSource()), Position.of(request.getTarget()));
+        printChessGameBoard(game.getBoardValue());
     }
 }

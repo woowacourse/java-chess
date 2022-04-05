@@ -12,17 +12,17 @@ public class Score {
     public static final double PAWN_SCORE_FACTOR = 0.5;
 
     private final Map<Position, Piece> piecesByPositions;
-    private final TurnDecider turnDecider;
+    private final Turn turn;
 
-    Score(Map<Position, Piece> piecesByPositions, TurnDecider turnDecider) {
+    Score(Map<Position, Piece> piecesByPositions, Turn turn) {
         this.piecesByPositions = piecesByPositions;
-        this.turnDecider = turnDecider;
+        this.turn = turn;
     }
 
     double calculate() {
         return piecesByPositions.values()
             .stream()
-            .filter(turnDecider::isTurnOf)
+            .filter(turn::isTurnOf)
             .mapToDouble(Piece::getScore)
             .sum() - adjustPawnScore();
     }
@@ -44,7 +44,7 @@ public class Score {
         return reverseValues().stream()
             .filter(rank -> piecesByPositions.containsKey(Position.of(file, rank)))
             .filter(rank -> pieceAt(Position.of(file, rank)).isPawn() &&
-                turnDecider.isTurnOf(pieceAt(Position.of(file, rank))))
+                turn.isTurnOf(pieceAt(Position.of(file, rank))))
             .count();
     }
 

@@ -1,4 +1,4 @@
-package chess.model.boardinitializer;
+package chess.model.PieceArrangement;
 
 import static chess.model.PieceColor.*;
 import static chess.model.Rank.*;
@@ -21,7 +21,7 @@ import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 
-public class defaultInitializer implements BoardInitializer {
+public class DefaultArrangement implements PieceArrangement {
 
     public static final Rank PAWN_WHITE_INIT_RANK = TWO;
     public static final Rank PAWN_BLACK_INIT_RANK = SEVEN;
