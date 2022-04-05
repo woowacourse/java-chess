@@ -43,13 +43,13 @@ public class Pawn extends Piece {
 
     @Override
     public Direction findByDirection(Position from, Position to) {
-        final int colum = to.getColumn() - from.getColumn();
+        final int column = to.getColumn() - from.getColumn();
         final int row = to.getRow() - from.getRow();
 
         if (isPawnPositionOfDefault()) {
-            return Direction.ofPawnOfDefault(colum, row);
+            return Direction.ofPawnOfDefault(column, row);
         }
-        return Direction.of(colum, row);
+        return Direction.of(column, row);
     }
 
     private boolean isPawnPositionOfDefault() {
