@@ -9,6 +9,7 @@ import chess.model.strategy.MoveStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -64,6 +65,10 @@ public abstract class Piece {
     public abstract double getScore();
 
     public abstract String getName();
+
+    public String getPieceName() {
+        return (team.name() + "-" + getName()).toLowerCase();
+    }
 
     @Override
     public boolean equals(Object o) {

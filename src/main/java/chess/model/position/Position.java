@@ -62,6 +62,10 @@ public class Position implements Comparable<Position> {
                 || (direction == Direction.S && rank == Rank.SEVEN);
     }
 
+    public String getPosition() {
+        return file.getValue() + rank.getValue();
+    }
+
     public int getFileGapDividedByGcd(Position other) {
         return file.minus(other.file) / getGcd(other);
     }
@@ -124,6 +128,14 @@ public class Position implements Comparable<Position> {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
     }
 
     public Rank getRank() {

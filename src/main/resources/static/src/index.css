@@ -9,3 +9,23 @@
     height: 80px;
     background-color: dimgrey;
 }
+
+.button {
+    width: 240px;
+    height: 80px;
+    background-color: antiquewhite;
+    color: dimgrey;
+    border-color: dimgrey;
+    font-weight: bold;
+    font-size: 50px;
+    border-radius: 10px;
+}
+
+#piece-image {
+    width: 80px;
+    height: 80px;
+}
+
+#page {
+    display: flex;
+}
