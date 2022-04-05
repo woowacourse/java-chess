@@ -16,10 +16,24 @@
 
 #### API
 
-- 로컬 서버 : `localhost:4567/`
+- 로컬 서버 : `localhost:8080/`
 - 체스판 출력 : get : `/chess`
 - 기물 위치 이동 : post : `/chess/move` - body : from = 움직일 기물 위치, to = 목표 위치
 - 보드판 초기화 : `/chess/reset`
+
+#### 실행 방법
+
+> docekr-compose.yml 파일이 있는 경로에서, docker 명령어로 Server를 실행
+- `docker-compose -p chess up -d`
+> docker 서버 접속
+- `docker exec -it chess_db_1 bash`
+> MySQL 접속
+- `mysql -u root -proot`
+> table 생성
+- `docker/db/init/init.sql` 에 있는 쿼리 실행
+> WebApplication 실행
+- `localhost:8080/chess` 웹 접속 
+
 
 ### 콘솔 UI 기능 요구 사항(Application)
 ```text
