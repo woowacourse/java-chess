@@ -11,7 +11,7 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    private Position(int fileIndex, int rankIndex) {
+    public Position(int fileIndex, int rankIndex) {
         this.file = File.of(fileIndex);
         this.rank = Rank.of(rankIndex);
     }
@@ -34,11 +34,8 @@ public class Position {
         return new Position(fileIndex, rankIndex);
     }
 
-    public boolean isDiagonal(Position position) {
-        int absRankIndex = Math.abs(this.getRankIndex() - position.getRankIndex());
-        int absFileIndex = Math.abs(this.getFileIndex() - position.getFileIndex());
-
-        return absRankIndex == absFileIndex;
+    public String getNotation() {
+        return file.getNotation() + rank.getNotation();
     }
 
     public int getFileIndex() {

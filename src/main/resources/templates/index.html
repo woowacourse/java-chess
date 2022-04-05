@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>망해벌인 체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+    <div>
+        <h1>체스 게임</h1>
+        <section class="chess-board">
+            {{#pieces}}
+            <div class="{{position}}">
+                <img src="images/{{color}}_{{pieceType}}.png" class="img" />
+            </div>
+            {{/pieces}}
+        </section>
+    </div>
 </body>
+
 </html>

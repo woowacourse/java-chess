@@ -43,4 +43,8 @@ public abstract class Piece {
     public final boolean isSamePieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }
