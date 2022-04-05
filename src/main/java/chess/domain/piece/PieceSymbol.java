@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class PieceSymbol {
 
@@ -20,6 +23,19 @@ public class PieceSymbol {
             Rook.class, List.of("r", "rook"),
             Pawn.class, List.of("p", "pawn")
     );
+
+    private static final Map<String, BiFunction<TeamColor, Position, Piece>> symbolByConstructor = Map.of(
+            "king", King::new,
+            "queen", Queen::new,
+            "bishop", Bishop::new,
+            "rook", Rook::new,
+            "knight", Knight::new,
+            "pawn", Pawn::new
+    );
+
+    public static BiFunction<TeamColor, Position, Piece> getConstructor(String symbol) {
+        return symbolByConstructor.get(symbol);
+    }
 
     public static String findWebSymbol(final Piece piece) {
         return symbolsByPiece.get(piece.getClass())

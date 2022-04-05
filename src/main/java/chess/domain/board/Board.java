@@ -152,4 +152,8 @@ public class Board {
     public TeamColor getCurrentTurnTeamColor() {
         return currentTurnTeamColor;
     }
+
+    public List<Piece> getPieces() {
+        return new ArrayList<>(pieces);
+    }
 }
