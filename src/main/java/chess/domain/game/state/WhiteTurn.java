@@ -14,7 +14,7 @@ public final class WhiteTurn extends Running {
 
     @Override
     public ChessGame movePiece(Position fromPosition, Position toPosition) {
-        if (board.getBoard().get(fromPosition).isSameColor(Color.BLACK)) {
+        if (board.isSameColor(fromPosition, Color.BLACK)) {
             throw new IllegalStateException(NOT_WHITE_TURN);
         }
         board.movePiece(fromPosition, toPosition);

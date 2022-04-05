@@ -120,16 +120,21 @@ public final class Board {
                 .getColor();
     }
 
-    public void clear() {
-        board.clear();
+    public boolean isSameColor(Position fromPosition, Color color) {
+        validateExistPiecePosition(fromPosition);
+        return board.get(fromPosition).isSameColor(color);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Map.copyOf(board);
+    public void clear() {
+        board.clear();
     }
 
     public Map<String, Object> toMap() {
         return board.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }

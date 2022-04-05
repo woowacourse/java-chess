@@ -14,7 +14,7 @@ public final class BlackTurn extends Running {
 
     @Override
     public ChessGame movePiece(Position fromPosition, Position toPosition) {
-        if (board.getBoard().get(fromPosition).isSameColor(Color.WHITE)) {
+        if (board.isSameColor(fromPosition, Color.WHITE)) {
             throw new IllegalStateException(NOT_BLACK_TURN);
         }
         board.movePiece(fromPosition, toPosition);
