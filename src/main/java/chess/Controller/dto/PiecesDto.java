@@ -14,16 +14,23 @@ public class PiecesDto {
     private final String gameStatus;
 
     private PiecesDto(final Board board) {
-        final Map<Position, Piece> piecesStatus = board.getPieces();
+        this(board.getPieces(), board.getGameState().toString().toLowerCase(Locale.ROOT));
+    }
+
+    private PiecesDto(final Map<Position, Piece> piecesStatus, final String gameStatus) {
         this.pieces = piecesStatus.entrySet()
                 .stream()
                 .map(entry -> PieceDto.fromEntity(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
-        this.gameStatus = board.getGameState().toString().toLowerCase(Locale.ROOT);
+        this.gameStatus = gameStatus;
     }
 
     public static PiecesDto fromEntity(final Board board) {
         return new PiecesDto(board);
+    }
+
+    public static PiecesDto fromEntity(final Map<Position, Piece> pieces) {
+        return new PiecesDto(pieces, "");
     }
 
     public List<PieceDto> getPieces() {

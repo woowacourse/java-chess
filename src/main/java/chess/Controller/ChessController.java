@@ -31,6 +31,12 @@ public class ChessController {
         return userDao.getUser(userName);
     }
 
+    public PiecesDto getCurrentBoardState(final int userId) {
+        final int boardId = (new UserDao()).getBoard(userId);
+        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
+        return PiecesDto.fromEntity(pieces);
+    }
+
     public PiecesDto doActionAboutPieces(final ParsedCommand parsedCommand, final int userId) {
         final int boardId = (new UserDao()).getBoard(userId);
         final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);

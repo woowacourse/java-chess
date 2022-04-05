@@ -22,6 +22,7 @@ public class ConsoleApplication {
         final String userName = InputView.inputName();
         final ChessController chess = new ChessController();
         userId = chess.initGame(userName);
+        OutputView.printBoard(chess.getCurrentBoardState(userId));
         OutputView.printStartMessage();
         StateDto state = chess.getCurrentStatus(userId);
         while (!isEnd(state)) {
