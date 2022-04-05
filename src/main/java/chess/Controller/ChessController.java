@@ -22,7 +22,6 @@ public class ChessController {
 
     public int initGame(final String userName) {
         final UserDao userDao = new UserDao();
-        System.err.println(userName);
         final int exUserId = userDao.getUser(userName);
         int boardId = userDao.getBoard(exUserId);
         if (exUserId == -1) {
@@ -33,28 +32,25 @@ public class ChessController {
     }
 
     public PiecesDto getCurrentBoardState(final int userId) {
-        final int boardId = (new UserDao()).getBoard(userId);
-        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
-        final GameState gameState = (new BoardDao()).getGameStatus(userId);
-        return PiecesDto.fromEntity(new Board(pieces, gameState));
+        return PiecesDto.fromEntity(createBoard(userId));
     }
 
     public PiecesDto doActionAboutPieces(final ParsedCommand parsedCommand, final int userId) {
-        final int boardId = (new UserDao()).getBoard(userId);
-        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
-        final GameState gameState = (new BoardDao()).getGameStatus(userId);
-        final Board board = new Board(pieces, gameState);
         return PieceCommandFactory.from(parsedCommand.getCommand())
-                .doCommandAction(parsedCommand, board, userId);
+                .doCommandAction(parsedCommand, createBoard(userId), userId);
     }
 
+
     public ScoreDto doActionAboutScore(final ParsedCommand parsedCommand, final int userId) {
+        return ScoreCommandFactory.from(parsedCommand.getCommand())
+                .doCommandAction(parsedCommand, createBoard(userId), userId);
+    }
+
+    private Board createBoard(final int userId) {
         final int boardId = (new UserDao()).getBoard(userId);
         final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
         final GameState gameState = (new BoardDao()).getGameStatus(userId);
-        final Board board = new Board(pieces, gameState);
-        return ScoreCommandFactory.from(parsedCommand.getCommand())
-                .doCommandAction(parsedCommand, board, userId);
+        return new Board(pieces, gameState);
     }
 
     public StateDto getCurrentStatus(final int userId) {
