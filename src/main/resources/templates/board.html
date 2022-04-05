@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>배카라의 체스</title>
     <link rel="stylesheet" href="css/boardCSS.css">
+    <script type="text/javascript" src="/js/boardJS.js"></script>
 </head>
 <body>
 <div id="app">
@@ -359,8 +360,12 @@
     </div>
 </div>
 
-<form action="/board" method="post">
-    명령어 <input type="text=" name="command">
+<form action="/move" method="post">
+    이동 명령어 <input type="text" name="command">
 </form>
+
+
+<button type="text" onclick="printStatus()"> 점수 확인</button>
+<p id="status"></p>
 </body>
 </html>

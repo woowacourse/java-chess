@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.domain.ChessGame;
+import chess.domain.TeamScore;
 import chess.domain.command.Command;
 import chess.domain.command.GameCommand;
 import chess.view.BoardDto;
@@ -24,8 +25,10 @@ public class WebApplication {
         ChessGame chessGame = new ChessGame();
 
         initialGame();
-        printBoard(chessGame);
-
+        getBoard(chessGame);
+        startGame(chessGame);
+        move(chessGame);
+        getStatus(chessGame);
     }
 
     private static void initialGame() {
@@ -35,27 +38,42 @@ public class WebApplication {
         });
     }
 
-    private static void printBoard(ChessGame chessGame) {
-        post("/board", (req, res) -> {
-            Map<String, PieceDto> model;
-            Command command = new Command(List.of(req.queryParams("command").split(" ")));
-            execute(chessGame, command);
-            model = BoardDto.of(chessGame.getBoard()).getBoardData();
+    private static void startGame(ChessGame chessGame) {
+        get("/start", (req, res) -> {
+            chessGame.start();
+            res.redirect("/board");
+            return null;
+        });
+    }
+
+    private static void getBoard(ChessGame chessGame) {
+        get("/board", (req, res) -> {
+            Map<String, PieceDto> model = BoardDto.of(chessGame.getBoard()).getBoardData();
             return render(model, "board.html");
         });
     }
 
+    private static void move(ChessGame chessGame) {
+        post("/move", (req, res) -> {
+            Command command = new Command(List.of(req.queryParams("command").split(" ")));
+            execute(chessGame, command);
+            Map<String, PieceDto> model = BoardDto.of(chessGame.getBoard()).getBoardData();
+            return render(model, "board.html");
+        });
+    }
+
+    private static String getStatus(ChessGame chessGame) {
+        get("/status", (req, res) -> {
+            TeamScore score = chessGame.getScore();
+            return score.getTeam() + "팀 점수는" + score.getScore();
+        });
+        return " ";
+    }
+
     public static void execute(ChessGame chessGame, Command command) {
-        executeStart(chessGame, command);
         executeMove(chessGame, command);
         executeStatus(chessGame, command);
         executeEnd(chessGame, command);
-    }
-
-    private static void executeStart(ChessGame chessGame, Command command) {
-        if (GameCommand.isStart(command.getGameCommand())) {
-            chessGame.start();
-        }
     }
 
     private static void executeMove(ChessGame chessGame, Command command) {
