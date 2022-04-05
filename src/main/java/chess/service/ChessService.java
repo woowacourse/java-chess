@@ -16,6 +16,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.CommandDto;
 import chess.dto.GameDto;
 import chess.dto.TurnDto;
 import java.util.HashMap;
@@ -54,8 +55,6 @@ public class ChessService {
             List<String> strings = rawBoard.get(key);
             String piece = strings.get(0);
             String color = strings.get(1);
-            System.out.println(piece);
-            System.out.println(color);
             if ("PAWN".equals(piece)) {
                 board.put(position, new Pawn(PieceColor.getPieceColor(color)));
             }
@@ -76,5 +75,13 @@ public class ChessService {
             }
         }
         return new Board(board);
+    }
+
+
+    public void movePiece(CommandDto commandDto) {
+        Position from = Position.from(commandDto.getFrom());
+        Position to = Position.from(commandDto.getTo());
+        chessGame.movePiece(from, to);
+        chessDao.movePiece(commandDto);
     }
 }

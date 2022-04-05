@@ -1,6 +1,9 @@
 package chess.dao;
 
+import chess.domain.board.Board;
+import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.CommandDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,6 +38,41 @@ public class BoardDao {
             e.printStackTrace();
         }
         return new BoardDto(board);
+    }
+
+    public void movePiece(CommandDto commandDto) {
+        String selectSql = "SELECT board.piece, board.color"
+                + " FROM board INNER JOIN game ON board.game_id = game.id WHERE game_id = '1' AND board.position = ?";
+
+        String overwriteSql = "INSERT board SET game_id = ?, position = ? , piece = ?, color = ?";
+
+        String deleteSql = "DELETE FROM board WHERE position = ? AND game_id = ?";
+
+        try (   Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(selectSql)) {
+            statement.setString(1, commandDto.getFrom());
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                throw new IllegalStateException();
+            }
+            String piece = resultSet.getString("piece");
+            String color = resultSet.getString("color");
+
+            PreparedStatement moveStatement = connection.prepareStatement(overwriteSql);
+            moveStatement.setString(1, "1");
+            moveStatement.setString(2, commandDto.getTo());
+            moveStatement.setString(3, piece);
+            moveStatement.setString(4, color);
+
+            moveStatement.executeUpdate();
+
+            PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
+            deleteStatement.setString(1, commandDto.getFrom());
+            deleteStatement.setString(2, "1");
+            deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Connection getConnection() {
