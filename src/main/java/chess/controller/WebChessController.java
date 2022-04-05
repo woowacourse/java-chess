@@ -22,22 +22,46 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
+        play();
+
+        start();
+
+        move();
+
+        status();
+    }
+
+    private void play() {
         get("/play", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("board", chessService.getCurrentBoard());
             return render(model, "game.html");
         });
+    }
 
+    private void start() {
         post("/start", (req, res) -> {
             chessService.start();
             res.redirect("/play");
             return null;
         });
+    }
 
+    private void move() {
         post("/move", (req, res) -> {
             Gson gson = new GsonBuilder().create();
             JsonObject request = gson.fromJson(req.body(), JsonObject.class);
             return gson.fromJson(chessService.move(request.get("source").getAsString(), request.get("target").getAsString()), JsonObject.class);
+        });
+    }
+
+    private void status() {
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            model.put("now", chessService.status());
+            model.put("board", chessService.getCurrentBoard());
+            return render(model, "game.html");
         });
     }
 

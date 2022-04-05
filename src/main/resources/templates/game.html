@@ -12,7 +12,23 @@
     <div class="button">
         <form id="start" method="post" action="/start">
             <button name="start" type="submit">
-                Game Start!
+                Start
+            </button>
+        </form>
+    </div>
+
+    <div class="button">
+        <form id="status" method="get" action="/status">
+            <button name="status" type="submit">
+                Status
+            </button>
+        </form>
+    </div>
+
+    <div class="button">
+        <form id="send" method="post" action="/end">
+            <button name="end" type="submit">
+                End
             </button>
         </form>
     </div>
@@ -88,6 +104,16 @@
         <div class="block white" id="f1" onclick = selectBlock(this)><img src="/images/{{board.f1}}.png" onerror="this.style.display = 'none'"/></div>
         <div class="block black" id="g1" onclick = selectBlock(this)><img src="/images/{{board.g1}}.png" onerror="this.style.display = 'none'"/></div>
         <div class="block white" id="h1" onclick = selectBlock(this)><img src="/images/{{board.h1}}.png" onerror="this.style.display = 'none'"/></div>
+    </div>
+    <div class="status">
+        <table>
+            <th>백팀</th>
+            <th>흑팀</th>
+            <tr>
+                <td>{{now.WHITE}}</td>
+                <td>{{now.BLACK}}</td>
+            </tr>
+        </table>
     </div>
 </body>
 

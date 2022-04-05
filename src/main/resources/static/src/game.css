@@ -39,3 +39,21 @@ img{
     margin-top: 20%;
     max-height: 70%;
 }
+
+.status{
+    width: 70%;
+    margin-left:15%;
+    margin-right:15%;
+}
+
+table {
+    width:70%;
+    margin-top: 15%;
+    margin-left:15%;
+    margin-right:15%;
+}
+
+table, td, th {
+    border-collapse : collapse;
+    border : 1px solid black;
+}
