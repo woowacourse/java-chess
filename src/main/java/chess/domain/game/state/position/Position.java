@@ -18,6 +18,10 @@ public class Position {
         return POOL.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 
+    public static Position of(String position) {
+        return POOL.get(position);
+    }
+
     public boolean isBlocked(Direction direction) {
         Position next = findNext(direction);
         return next.file == File.Out || next.rank == Rank.Out;

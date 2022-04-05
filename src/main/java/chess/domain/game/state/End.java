@@ -33,4 +33,9 @@ public class End extends Waiting {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public Player getPlayer() {
+        return Player.White;
+    }
 }

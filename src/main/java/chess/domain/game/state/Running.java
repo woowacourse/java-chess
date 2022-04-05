@@ -11,6 +11,10 @@ public class Running extends Waiting {
     private final ChessBoard board;
     private Player player;
 
+    public Running() {
+        board = new ChessBoard();
+    }
+
     public Running(ChessBoard board, Player player) {
         this.board = board;
         this.player = player;
@@ -49,5 +53,10 @@ public class Running extends Waiting {
     @Override
     public Map<Color, Double> status() {
         return board.computeScore();
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 }
