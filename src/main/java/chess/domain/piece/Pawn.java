@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Rank;
 import chess.view.OutputView;
 import java.util.List;
 
@@ -13,8 +14,6 @@ public final class Pawn extends Piece {
     private static final String ILLEGAL_MOVE_FOR_PAWN = "폰이 이동할 수 있는 지점이 아닙니다";
     private static final double SCORE = 1.0;
 
-    private boolean isFirstMove = true;
-
     public Pawn(Color color) {
         super(color);
     }
@@ -23,11 +22,9 @@ public final class Pawn extends Piece {
     public boolean movable(Position from, Position to, Board board) {
         try {
             if (isCaptureMove(from, to, board)) {
-                isFirstMove = false;
                 return true;
             }
             validateDistance(from, to, board);
-            isFirstMove = false;
             return true;
         } catch (IllegalStateException exception) {
             OutputView.printError(exception);
@@ -52,7 +49,7 @@ public final class Pawn extends Piece {
     }
 
     private void validateDistance(Position from, Position to, Board board) {
-        if (isFirstMove) {
+        if (isFirstMove(from)) {
             validateFirstMove(from, to, board);
             return;
         }
@@ -81,6 +78,13 @@ public final class Pawn extends Piece {
         if (!PAWN_BASIC_MOVE.contains(List.of(dx, dy)) || board.exists(to)) {
             throw new IllegalStateException(FAILED_TO_MOVE_PAWN);
         }
+    }
+
+    private boolean isFirstMove(Position from) {
+        if (this.isBlack()) {
+            return from.isSameRank(Rank.SEVEN);
+        }
+        return from.isSameRank(Rank.TWO);
     }
 
     @Override
