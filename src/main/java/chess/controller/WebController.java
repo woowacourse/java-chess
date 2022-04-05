@@ -55,7 +55,7 @@ public class WebController {
             return render(model, "/ingame.html");
         });
 
-        post("/status", (request, response) -> {
+        get("/status", (request, response) -> {
             GameResult gameResult = new GameResult(chessGame.getBoard());
             model.put("whiteScore", gameResult.calculateScore(Color.WHITE));
             model.put("blackScore", gameResult.calculateScore(Color.BLACK));
