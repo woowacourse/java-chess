@@ -21,10 +21,10 @@ public enum Direction {
     NORTH_EAST_EAST(2, 1),
     NORTH_WEST_WEST(-2, 1),
 
-    SOUTH_SOUTH_RIGHT(1, -2),
+    SOUTH_SOUTH_EAST(1, -2),
     SOUTH_SOUTH_WEST(-1, -2),
 
-    SOUTH_SOUTH_EAST(2, -1),
+    SOUTH_EAST_EAST(2, -1),
     SOUTH_WEST_WEST(-2, -1),
     ;
 
@@ -35,7 +35,7 @@ public enum Direction {
     public static final List<Direction> EVERY_DIRECTION = Arrays.asList(
             NORTH, EAST, SOUTH, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     public static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(
-            NORTH_NORTH_EAST, NORTH_WEST_WEST, SOUTH_SOUTH_RIGHT, SOUTH_SOUTH_WEST, SOUTH_SOUTH_EAST, SOUTH_WEST_WEST);
+            NORTH_NORTH_EAST, NORTH_WEST_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, SOUTH_SOUTH_EAST, SOUTH_WEST_WEST);
     public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(
             NORTH, NORTH_EAST, NORTH_WEST);
     public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(
