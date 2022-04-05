@@ -11,6 +11,10 @@ public class ChessService {
         chessGame = new Ready();
     }
 
+    public void start() {
+        chessGame = chessGame.initBoard();
+    }
+
     public Board getBoard() {
         return chessGame.getBoard();
     }

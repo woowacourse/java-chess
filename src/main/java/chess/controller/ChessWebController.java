@@ -19,11 +19,20 @@ public class ChessWebController {
 
     public void run() {
         ChessGame chessGame = new Ready();
-        renderReady(chessGame);
+        renderReady();
+        renderStart();
     }
 
-    private void renderReady(ChessGame chessGame) {
+    private void renderReady() {
         get("/", (req, res) -> {
+            Map<String, Object> model = chessService.getBoard().toMap();
+            return render(model, "chess.html");
+        });
+    }
+
+    private void renderStart() {
+        get("/start", (req, res) -> {
+            chessService.start();
             Map<String, Object> model = chessService.getBoard().toMap();
             return render(model, "chess.html");
         });
