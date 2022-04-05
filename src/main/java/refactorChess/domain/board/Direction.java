@@ -60,7 +60,8 @@ public enum Direction {
         if (Math.abs(column - row) != Math.abs(column + row)) {
             throw new IllegalArgumentException("직선 방향이 아닙니다.");
         }
-        return of(column, row);
+
+        return distinctCompareToConvert(column, row);
     }
 
     public static Direction ofDiagonal(int column, int row) {
@@ -68,6 +69,10 @@ public enum Direction {
             throw new IllegalArgumentException("대각선 방향이 아닙니다.");
         }
         return of(column, row);
+    }
+
+    private static Direction distinctCompareToConvert(int column, int row) {
+        return of(Integer.compare(column, 0), Integer.compare(row, 0));
     }
 
     public int getColumn() {
