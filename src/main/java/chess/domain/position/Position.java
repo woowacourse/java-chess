@@ -85,6 +85,10 @@ public class Position {
         }
     }
 
+    public String convertToString() {
+        return column.name().toLowerCase() + row.getValue();
+    }
+
     public int getColumnDifferenceWithTarget(Position targetPosition) {
         return Column.calculateDifference(targetPosition.column, this.column);
     }
@@ -116,6 +120,9 @@ public class Position {
 
     @Override
     public String toString() {
-        return column.name() + row.getValue();
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }

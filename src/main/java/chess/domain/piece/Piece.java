@@ -47,6 +47,13 @@ public abstract class Piece {
         return color;
     }
 
+    public String convertToString() {
+        if (isEmpty()) {
+            return "empty";
+        }
+        return String.format("%s_%s", color.name().toLowerCase(), type.name().toLowerCase());
+    }
+
     public double getPoint() {
         return type.getPoint();
     }
