@@ -25,7 +25,7 @@ public class ChessController {
         });
 
         get("/start", (req, res) -> {
-            return gson.toJson(chessService.start());
+            return gson.toJson(chessService.start(1));
         });
     }
 

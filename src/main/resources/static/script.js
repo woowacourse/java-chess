@@ -3,6 +3,7 @@ async function start() {
     await fetch("/start")
         .then(res => res.json())
         .then(data => pieces = data)
+    console.log(pieces);
     printPieces(pieces.board);
 }
 
@@ -21,17 +22,15 @@ function end() {
 function printPieces(pieces) {
     for (const key in pieces) {
         const piece = pieces[key];
-        const square = document.getElementById(key.toLowerCase());
+        const square = document.getElementById(key);
         const img = document.createElement("img");
         removeChildren(square);
         attachPieceInSquare(piece, img, square);
     }
 
     function attachPieceInSquare(piece, img, square) {
-        let pieceColor = piece.color.toLowerCase();
-        let pieceType = piece.type.toLowerCase();
-        if (pieceType !== "empty") {
-            img.setAttribute("src", "/images/" + pieceColor + "_" + pieceType + ".png");
+        if (piece !== "empty") {
+            img.setAttribute("src", "/images/" + piece + ".png");
             img.setAttribute("class", "piece");
             square.appendChild(img);
         }
