@@ -34,7 +34,7 @@ public class StateDao {
         }
     }
 
-    public String findState() {
+    public String find() {
         final Connection connection = getConnection();
         final String sql = "select name from state";
         try {

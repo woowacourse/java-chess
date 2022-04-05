@@ -21,9 +21,9 @@ class StateDaoTest {
     }
 
     @Test
-    void findState() {
+    void find() {
         final StateDao stateDao = new StateDao();
-        final String command = stateDao.findState();
+        final String command = stateDao.find();
         assertThat(command).isEqualTo("ready");
     }
 }
