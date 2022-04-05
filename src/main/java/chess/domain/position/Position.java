@@ -96,9 +96,14 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "column=" + column +
-                ", row=" + row +
-                '}';
+        return column.getValue() + row.getValue();
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 }
