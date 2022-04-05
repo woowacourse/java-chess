@@ -32,9 +32,17 @@ function sendToServer() {
           body: source + " " + target
       }).then((response) => {
               response.json().then(data => {
+                  console.log(data);
                   if (data.status === 400) {
                       alert(data.errorMessage);
                   }
+
+                  if (data.isGameOver == true) {
+                      alert("게임이 종료되었습니다.");
+                      document.location.href = '/result'
+                      return;
+                  }
+
                   location.reload();
               });
           }

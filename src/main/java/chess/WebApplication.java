@@ -5,6 +5,7 @@ import chess.domain.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.state.Ready;
 import chess.dto.ResponseDto;
+import chess.dto.ResultDto;
 import chess.dto.board.BoardDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -59,6 +60,20 @@ public class WebApplication {
             chessController.restart();
 
             return "게임종료되었습니다.";
+        });
+
+        get("/result", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            final ResultDto result = ResultDto.of(chessController.state());
+            model.put("result", result);
+
+            return render(model, "result.html");
+        });
+
+        get("/restart", (req, res) -> {
+            chessController.restart();
+            res.redirect("/start");
+            return null;
         });
     }
 

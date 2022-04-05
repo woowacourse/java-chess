@@ -1,6 +1,8 @@
 package chess;
 
+import chess.domain.BoardInitializer;
 import chess.domain.command.Command;
+import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.ResponseDto;
 
@@ -19,14 +21,14 @@ public class ChessController {
         try {
             state = command.changeChessState(state);
         } catch (IllegalArgumentException ex) {
-            return new ResponseDto(400, ex.getMessage());
+            return new ResponseDto(400, ex.getMessage(), state.isGameOver());
         }
 
-        return new ResponseDto(200, "");
+        return new ResponseDto(200, "", state.isGameOver());
     }
 
     public void restart() {
-        state = state.start();
+        state = new Ready( new BoardInitializer().init());
         start();
     }
 

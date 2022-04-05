@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+
+<body>
+{{#result}}
+<div align="center">
+
+    <h1>Result of Game</h1>
+    <h2> Winner: {{winner}} </h2>
+
+    <div class="score">
+        {{#each score}}
+        <h3> {{@key}} : {{this}} </h3>
+        {{/each}}
+    </div>
+
+    <form action="/restart" method="get">
+        <button> 재시작 </button>
+    </form>
+
+</div>
+{{/result}}
+</body>
+
+
+
+
+</body>
+</html>
