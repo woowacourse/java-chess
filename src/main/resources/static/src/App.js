@@ -16,10 +16,9 @@ function move(source, target) {
         target: target.id
     }
 
-    console.log(request);
     reinitialize();
 
-    let res = fetch('/move', {
+    fetch('/move', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -31,15 +30,9 @@ function move(source, target) {
             if (response.status !== 200) {
                 alert(response.message);
             }
+            location.replace("/play")
         });
-    sleep();
-    location.replace("/play")
-}
 
-function sleep() {
-    const wakeUpTime = Date.now() + 100;
-    while (Date.now() < wakeUpTime) {
-    }
 }
 
 function reinitialize() {
