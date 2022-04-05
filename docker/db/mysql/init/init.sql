@@ -2,6 +2,7 @@ create table game
 (
     id   varchar(10) not null,
     turn varchar(10) not null,
+    status varchar(20) not null,
     primary key (id)
 );
 
@@ -13,7 +14,7 @@ create table status
     primary key (game_id, position)
 );
 
-insert into game (id, turn) values ('1', 'WHITE');
+insert into game (id, turn) values ('1', 'WHITE', 'READY');
 
 insert into status(game_id, position, piece) values ('1', 'a1', 'WHITE_ROOK');
 insert into status(game_id, position, piece) values ('1', 'b1', 'WHITE_BISHOP');
