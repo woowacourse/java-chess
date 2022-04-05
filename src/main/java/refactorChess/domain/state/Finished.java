@@ -21,7 +21,7 @@ public class Finished implements State {
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException("이미 종료되었습니다.");
+        return new Finished(chessBoard);
     }
 
     @Override
