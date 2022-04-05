@@ -10,7 +10,7 @@ public final class King extends Piece {
 	private static final double SCORE = 0;
 
 	public King(Color color) {
-		super(color);
+		super(color, Type.KING);
 	}
 
 	@Override

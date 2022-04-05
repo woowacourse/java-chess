@@ -10,7 +10,7 @@ public final class Queen extends Piece {
 	private static final double SCORE = 9;
 
 	public Queen(Color color) {
-		super(color);
+		super(color, Type.QUEEN);
 	}
 
 	@Override

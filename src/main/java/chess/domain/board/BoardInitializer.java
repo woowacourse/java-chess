@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.Color.*;
 
+import chess.domain.piece.NullPiece;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -68,7 +69,7 @@ public class BoardInitializer {
 
     private static void initializeBlankColumn(Map<Position, Piece> board, Column column) {
         for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
-            board.put(Position.of(column, Row.values()[i]), null);
+            board.put(Position.of(column, Row.values()[i]), new NullPiece());
         }
     }
 }

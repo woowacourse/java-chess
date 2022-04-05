@@ -10,7 +10,7 @@ public final class Rook extends Piece {
 	private static final double SCORE = 5;
 
 	public Rook(Color color) {
-		super(color);
+		super(color, Type.ROOK);
 	}
 
 	@Override

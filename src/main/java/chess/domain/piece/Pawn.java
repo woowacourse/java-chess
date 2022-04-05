@@ -13,7 +13,7 @@ public final class Pawn extends Piece {
 	private boolean firstMove;
 
 	public Pawn(Color color) {
-		super(color);
+		super(color, Type.PAWN);
 		this.firstMove = true;
 	}
 

@@ -9,9 +9,11 @@ public abstract class Piece {
     protected static final String INVALID_TARGET_POSITION_EXCEPTION = "이동할 수 없는 위치입니다.";
 
     private final Color color;
+    private final Type type;
 
-    protected Piece(Color color) {
+    protected Piece(Color color, Type type) {
         this.color = color;
+        this.type = type;
     }
 
     public final boolean isBlack() {
@@ -24,6 +26,10 @@ public abstract class Piece {
 
     public final boolean isSameColor(Color color) {
         return this.color == color;
+    }
+
+    public boolean isBlank() {
+        return false;
     }
 
     public boolean isKing() {

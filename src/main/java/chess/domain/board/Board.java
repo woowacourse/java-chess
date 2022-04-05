@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Color;
+import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +25,11 @@ public final class Board {
     public Board() {
         this.piecesByPosition = BoardInitializer.createBoard();
         this.currentTurnColor = Color.WHITE;
+    }
+
+    public Board(Map<Position,Piece> pieces, Color turn) {
+        this.piecesByPosition = pieces;
+        this.currentTurnColor = turn;
     }
 
     public void move(Position beforePosition, Position afterPosition) {
@@ -60,7 +66,7 @@ public final class Board {
     }
 
     private boolean isBlank(Position afterPosition) {
-        return piecesByPosition.get(afterPosition) == null;
+        return piecesByPosition.get(afterPosition).isBlank();
     }
 
     private boolean isInvalidTurn(final Piece piece) {
@@ -74,7 +80,7 @@ public final class Board {
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
             this.piecesByPosition.put(afterPosition, piece);
-            this.piecesByPosition.put(beforePosition, null);
+            this.piecesByPosition.put(beforePosition, new NullPiece());
         };
     }
 
