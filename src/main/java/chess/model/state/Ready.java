@@ -43,7 +43,7 @@ public final class Ready implements State {
     }
 
     @Override
-    public Map<String, Piece> getBoardForWeb() {
+    public Map<String, String> getSquares() {
         return new HashMap<>();
     }
 

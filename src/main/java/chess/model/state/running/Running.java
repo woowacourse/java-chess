@@ -2,7 +2,6 @@ package chess.model.state.running;
 
 import chess.model.Team;
 import chess.model.board.Board;
-import chess.model.board.result.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
@@ -36,8 +35,8 @@ public abstract class Running implements State {
     }
 
     @Override
-    public Map<String, Piece> getBoardForWeb() {
-        return board.getBoardForWeb();
+    public Map<String, String> getSquares() {
+        return board.getSquares();
     }
 
     @Override

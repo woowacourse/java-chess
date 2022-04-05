@@ -1,7 +1,6 @@
 package chess.model.board;
 
 import static chess.model.Team.BLACK;
-import static chess.model.Team.WHITE;
 import static chess.model.position.File.A;
 import static chess.model.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;

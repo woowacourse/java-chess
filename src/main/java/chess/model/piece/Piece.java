@@ -35,6 +35,8 @@ public abstract class Piece {
 
     public abstract double score();
 
+    public abstract String getSymbol();
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

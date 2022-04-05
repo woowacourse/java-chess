@@ -3,13 +3,12 @@ package chess.model.board;
 import static chess.model.Team.NONE;
 
 import chess.model.Team;
-import chess.model.board.result.GameResult;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -57,9 +56,11 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public Map<String, Piece> getBoardForWeb() {
-        return board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(value -> value.getKey().toString(), Map.Entry::getValue));
+    public Map<String, String> getSquares() {
+        Map<String, String> squares = new HashMap<>();
+        for (Position position : this.board.keySet()) {
+            squares.put(position.toString(), this.board.get(position).getSymbol());
+        }
+        return squares;
     }
 }

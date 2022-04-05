@@ -38,4 +38,9 @@ public abstract class Finished implements State {
     public Map<Position, Piece> getBoard() {
         return new HashMap<>();
     }
+
+    @Override
+    public Map<String, String> getSquares() {
+        return board.getSquares();
+    }
 }

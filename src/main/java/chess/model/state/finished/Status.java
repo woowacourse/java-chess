@@ -21,11 +21,6 @@ public final class Status extends Finished {
     }
 
     @Override
-    public Map<String, Piece> getBoardForWeb() {
-        return board.getBoardForWeb();
-    }
-
-    @Override
     public Map<Team, Double> getScore() {
         return gameResult.calculateScore();
     }
