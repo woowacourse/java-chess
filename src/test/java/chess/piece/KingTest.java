@@ -26,7 +26,7 @@ class KingTest {
         Piece king = King.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = king.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
+        boolean actual = king.isMovable(new Path(Position.of(File.C, Rank.THREE), Position.of(file, rank)),
             MoveType.EMPTY);
 
         //then
@@ -41,7 +41,7 @@ class KingTest {
         Piece king = King.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = king.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
+        boolean actual = king.isMovable(new Path(Position.of(File.C, Rank.THREE), Position.of(file, rank)),
             MoveType.EMPTY);
 
         //then

@@ -49,4 +49,8 @@ public enum File {
     public int displacement(File other) {
         return other.value.compareTo(this.value);
     }
+
+    public String getValue() {
+        return value;
+    }
 }

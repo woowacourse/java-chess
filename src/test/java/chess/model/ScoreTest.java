@@ -50,10 +50,10 @@ class ScoreTest {
         @Override
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
-            result.put(Position.of(FOUR, A), Pawn.colorOf(WHITE));
-            result.put(Position.of(THREE, A), Pawn.colorOf(WHITE));
-            result.put(Position.of(THREE, B), Pawn.colorOf(WHITE));
-            result.put(Position.of(FIVE, A), Pawn.colorOf(BLACK));
+            result.put(Position.of(A, FOUR), Pawn.colorOf(WHITE));
+            result.put(Position.of(A, THREE), Pawn.colorOf(WHITE));
+            result.put(Position.of(B, THREE), Pawn.colorOf(WHITE));
+            result.put(Position.of(A, FIVE), Pawn.colorOf(BLACK));
             return result;
         }
     }

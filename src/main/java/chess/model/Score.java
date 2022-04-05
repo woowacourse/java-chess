@@ -42,9 +42,9 @@ public class Score {
 
     private long getPawnCountInOneFile(File file) {
         return reverseValues().stream()
-            .filter(rank -> piecesByPositions.containsKey(Position.of(rank, file)))
-            .filter(rank -> pieceAt(Position.of(rank, file)).isPawn() &&
-                turnDecider.isTurnOf(pieceAt(Position.of(rank, file))))
+            .filter(rank -> piecesByPositions.containsKey(Position.of(file, rank)))
+            .filter(rank -> pieceAt(Position.of(file, rank)).isPawn() &&
+                turnDecider.isTurnOf(pieceAt(Position.of(file, rank))))
             .count();
     }
 

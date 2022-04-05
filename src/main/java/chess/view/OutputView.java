@@ -40,7 +40,7 @@ public class OutputView {
     private static void printPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
         StringBuilder builder = new StringBuilder();
         for (File file : File.values()) {
-            builder.append(eachPieceEmblem(piecesByPositions, Position.of(rank, file)));
+            builder.append(eachPieceEmblem(piecesByPositions, Position.of(file, rank)));
         }
         out.println(builder);
     }

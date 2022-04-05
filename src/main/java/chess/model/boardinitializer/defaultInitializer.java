@@ -52,7 +52,7 @@ public class defaultInitializer implements BoardInitializer {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(Position.of(rank, file), Pawn.colorOf(color));
+            result.put(Position.of(file, rank), Pawn.colorOf(color));
         }
     }
 
@@ -60,7 +60,7 @@ public class defaultInitializer implements BoardInitializer {
         ListIterator<Piece> piecesIterator = INIT_PIECE_FUNCTION.apply(color).listIterator();
 
         for (File file : File.values()) {
-            result.put(Position.of(rank, file), piecesIterator.next());
+            result.put(Position.of(file, rank), piecesIterator.next());
         }
     }
 }
