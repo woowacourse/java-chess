@@ -20,7 +20,7 @@
 
         <div class="white-square">
             {{#b8}}
-            <img src="images/{{a7.team}}_{{a7.name}}.png"/>
+            <img src="images/{{b8.team}}_{{b8.name}}.png"/>
             {{/b8}}
         </div>
         <div class="gray-square">
@@ -346,6 +346,11 @@
     <section>
         <form action="/start" method="get">
             <button>start</button>
+        </form>
+        <form action="/move" accept-charset="utf-8" method="post">
+            움직일 말의 위치<input name="source" type="text">
+            이동시킬 위치<input name="target" type="text">
+            <input type="submit">
         </form>
     </section>
 </div>
