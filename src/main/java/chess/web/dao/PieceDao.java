@@ -24,17 +24,21 @@ public class PieceDao {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            for (PositionDto positionDto : cells.keySet()) {
-                statement.setString(1, cells.get(positionDto).getSymbol());
-                statement.setString(2, cells.get(positionDto).getTeam());
-                statement.setInt(3, positionDto.getRank());
-                statement.setString(4, positionDto.getFile());
-                statement.setInt(5, chessBoardId);
-
-                statement.executeUpdate();
-            }
+            updateCells(chessBoardId, cells, statement);
         } catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateCells(int chessBoardId, Map<PositionDto, PieceDto> cells, PreparedStatement statement) throws SQLException {
+        for (PositionDto positionDto : cells.keySet()) {
+            statement.setString(1, cells.get(positionDto).getSymbol());
+            statement.setString(2, cells.get(positionDto).getTeam());
+            statement.setInt(3, positionDto.getRank());
+            statement.setString(4, positionDto.getFile());
+            statement.setInt(5, chessBoardId);
+
+            statement.executeUpdate();
         }
     }
 

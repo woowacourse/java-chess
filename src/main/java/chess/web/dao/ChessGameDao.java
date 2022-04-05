@@ -19,104 +19,76 @@ import java.util.Map;
 public class ChessGameDao {
 
     public void save(ChessGameDto chessGameDto, int chessBoardId) {
-        Connection connection = getConnection();
-
-        String sql = "insert into chessgame (game_name, turn, chess_board_id) values (?, ?, ?)";
-
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, chessGameDto.getGameName());
-            statement.setString(2, chessGameDto.getTurn());
-            statement.setInt(3, chessBoardId);
-
-            statement.executeUpdate();
+            saveChessGame(chessGameDto, chessBoardId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveChessGame(ChessGameDto chessGameDto, int chessBoardId) throws SQLException {
+        Connection connection = getConnection();
+        String sql = "insert into chessgame (game_name, turn, chess_board_id) values (?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, chessGameDto.getGameName());
+        statement.setString(2, chessGameDto.getTurn());
+        statement.setInt(3, chessBoardId);
+
+        statement.executeUpdate();
     }
 
     public void update(ChessGameDto chessGameDto, int chessboardId) {
-        Connection connection = getConnection();
-
-        String sql = "update chessgame set turn = ?, chess_board_id = ? where game_name = ?";
-
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, chessGameDto.getTurn());
-            statement.setInt(2, chessboardId);
-            statement.setString(3, chessGameDto.getGameName());
-
-            statement.executeUpdate();
+            updateChessGame(chessGameDto, chessboardId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateChessGame(ChessGameDto chessGameDto, int chessboardId) throws SQLException {
+        Connection connection = getConnection();
+        String sql = "update chessgame set turn = ?, chess_board_id = ? where game_name = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, chessGameDto.getTurn());
+        statement.setInt(2, chessboardId);
+        statement.setString(3, chessGameDto.getGameName());
+
+        statement.executeUpdate();
     }
 
     public int findIdByName(String gameName) {
-        Connection connection = getConnection();
-
-        String sql = "select chess_board_id from CHESSGAME where game_name = ?";
-
-        int id = 0;
-
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, gameName);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()) {
-                id = resultSet.getInt("chess_board_id");
-            }
+            return findIdFromChessGame(gameName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return id;
+        return 0;
+    }
+
+    private int findIdFromChessGame(String gameName) throws SQLException {
+        Connection connection = getConnection();
+        String sql = "select chess_board_id from CHESSGAME where game_name = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, gameName);
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()) {
+            return resultSet.getInt("chess_board_id");
+        }
+        return 0;
     }
 
     public ChessGame findByName(String gameName) {
-        Connection connection = getConnection();
-
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, CHESSBOARD, PIECE\n"
                 + "where CHESSGAME.chess_board_id = CHESSBOARD.id AND (CHESSBOARD.id IN (SELECT chessboard_id FROM PIECE))\n"
                 + "AND game_name = ?;";
 
         try {
-            String turn = "";
-
-            Map<Position, Piece> cells = new HashMap<>();
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setString(1, gameName);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (!resultSet.isBeforeFirst()) {
-                return null;
-            }
-
-            while(resultSet.next()) {
-                turn = resultSet.getString("turn");
-
-                int rank = resultSet.getInt("rank");
-                String file = resultSet.getString("file");
-
-                Position position = Position.of(File.toFile(file.charAt(0)), Rank.toRank(rank));
-
-                String type = resultSet.getString("type");
-                String team = resultSet.getString("team");
-
-                Piece piece = PieceConverter.from(type, team);
-
-                cells.put(position, piece);
-            }
-
-            return new ChessGame(turn, gameName, cells);
+            return findChessGame(gameName, sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,34 +96,77 @@ public class ChessGameDao {
         return null;
     }
 
-    public void remove(String gameName) {
+    private ChessGame findChessGame(String gameName, String sql) throws SQLException {
         Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, gameName);
 
-        String selectSQL = "select chess_board_id from chessgame where game_name = ?";
-        String chessGameDeleteSQL = "delete from chessgame where game_name = ?";
-        String chessBoardDeleteSQL = "delete from chessboard where id = ?";
+        ResultSet resultSet = statement.executeQuery();
 
+        if (!resultSet.isBeforeFirst()) {
+            return null;
+        }
+
+        Map<Position, Piece> cells = makeCells(resultSet);
+        String turn = getTurn(resultSet);
+
+        return new ChessGame(turn, gameName, cells);
+    }
+
+    private String getTurn(ResultSet resultSet) throws SQLException {
+        resultSet.first();
+
+        resultSet.next();
+
+        return resultSet.getString("turn");
+    }
+
+    private Map<Position, Piece> makeCells(ResultSet resultSet) throws SQLException {
+        Map<Position, Piece> cells = new HashMap<>();
+
+        while(resultSet.next()) {
+            int rank = resultSet.getInt("rank");
+            String file = resultSet.getString("file");
+            Position position = Position.of(File.toFile(file.charAt(0)), Rank.toRank(rank));
+
+            String type = resultSet.getString("type");
+            String team = resultSet.getString("team");
+            Piece piece = PieceConverter.from(type, team);
+
+            cells.put(position, piece);
+        }
+
+        return cells;
+    }
+
+    public void remove(String gameName) {
         try {
-            PreparedStatement statement = connection.prepareStatement(selectSQL);
-            statement.setString(1, gameName);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            resultSet.next();
-
-            int chessBoardId = resultSet.getInt("chess_board_id");
-
-            statement = connection.prepareStatement(chessGameDeleteSQL);
-            statement.setString(1, gameName);
-
-            statement.executeUpdate();
-
-            statement = connection.prepareStatement(chessBoardDeleteSQL);
-            statement.setInt(1, chessBoardId);
-
-            statement.executeUpdate();
+            removeByGameName(gameName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void removeByGameName(String gameName) throws SQLException {
+        Connection connection = getConnection();
+
+        String selectSQL = "select chess_board_id from chessgame where game_name = ?";
+        PreparedStatement statement = connection.prepareStatement(selectSQL);
+        statement.setString(1, gameName);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+
+        int chessBoardId = resultSet.getInt("chess_board_id");
+
+        removeChessBoard(connection, chessBoardId);
+    }
+
+    private void removeChessBoard(Connection connection, int chessBoardId) throws SQLException {
+        String chessBoardDeleteSQL = "delete from chessboard where id = ?";
+        PreparedStatement statement = connection.prepareStatement(chessBoardDeleteSQL);
+        statement.setInt(1, chessBoardId);
+
+        statement.executeUpdate();
     }
 }
