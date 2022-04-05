@@ -5,6 +5,11 @@ import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
+import chess.Controller.ChessController;
+import chess.Controller.command.ParsedCommand;
+import chess.Controller.dto.PiecesDto;
+import chess.Controller.dto.ScoreDto;
+import chess.util.JsonParser;
 import chess.util.ViewUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,24 +33,31 @@ public class WebApplication {
             return ViewUtil.render(model, "/index.html");
         });
 
-//        get("/game/board-status", (req, res) -> {
-//            final Map<Position, Piece> pieces = (new CreateCompleteBoardStrategy()).createPieces();
-//            final ChessController chess = new ChessController(new Board(pieces));
-//            final PiecesDto piecesDto = chess.getPieces();
-//            return JsonParser.makePiecesToJsonArray(piecesDto);
-//        });
+        get("/user/name/:userName", (req, res) -> {
+            final String userName = req.params(":userName");
+            final ChessController chess = new ChessController();
+            final int userId = chess.initGame(userName);
+            final PiecesDto pieces = chess.getCurrentBoardState(userId);
+            req.session().attribute("user-id", userId);
+            return JsonParser.makePiecesToJsonArray(pieces);
+        });
 
-//        get("/game/command/:command", (req, res) -> {
-//            final Map<Position, Piece> pieces = (new CreateCompleteBoardStrategy()).createPieces();
-//            final ChessController chess = new ChessController(new Board(pieces));
-//            final String command = req.params(":command");
-//            if (command.equals("start") || command.equals("move")) {
-//                final PiecesDto piecesDto = chess.doActionAboutPieces(new ParsedCommand(command));
-//                return JsonParser.makePiecesToJsonArray(piecesDto);
-//            }
-//            final ScoreDto scoreDto = chess.doActionAboutScore(new ParsedCommand(command));
-//            return scoreDto;
-//        });
+        get("/game/command/:command", (req, res) -> {
+            final int userId = req.session().attribute("user-id");
+            final String command = req.params(":command");
+            final String startPosition = req.queryParams("start");
+            final String endPosition = req.queryParams("end");
+            final String rawCommand = command + " " + startPosition + " " + endPosition;
+            final ParsedCommand parsedCommand = new ParsedCommand(rawCommand);
+            final ChessController chess = new ChessController();
+            if (command.equals("start") || command.equals("move")) {
+                final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
+                return JsonParser.makePiecesToJsonArray(piecesDto);
+            }
+            final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
+            return JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+        });
+
     }
 
 

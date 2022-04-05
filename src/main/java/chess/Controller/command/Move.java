@@ -35,7 +35,7 @@ public class Move extends PieceCommand {
         final PiecesDao piecesDao = new PiecesDao();
         piecesDao.deletePiece(targetPosition);
         piecesDao.changePosition(startPosition, targetPosition, boardId);
-        final GameState nextTurnGameState = board.getGameState();
+        final GameState nextTurnGameState = board.changeTurn();
         boardDao.changeGameStatus(nextTurnGameState.toString(), boardId);
         return board;
     }

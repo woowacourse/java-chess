@@ -15,7 +15,7 @@ public class ParsedCommand {
     private final Optional<Position> destination;
 
     public ParsedCommand(final String rawCommand) {
-        final String[] splitCommand = rawCommand.split(COMMAND_DISTRIBUTOR, -1);
+        final String[] splitCommand = rawCommand.split(COMMAND_DISTRIBUTOR);
         command = Command.from(splitCommand[0]);
         start = getPositionFromCommand(splitCommand, STARTING_POINT);
         destination = getPositionFromCommand(splitCommand, DESTINATION);

@@ -1,37 +1,87 @@
 const gameStatusLocalStorage = 'gameStatus';
 
+localStorage.clear();
+
+const startButton = document.querySelector('#command-button__start');
+startButton.addEventListener('click', () => {
+    if (localStorage.getItem(gameStatusLocalStorage) !== null) {
+        alert("기존 게임을 끝내고 시작해 주세요.");
+        return;
+    }
+    commandRequest('start');
+});
+
+
+// move
 const moveCommand = {
     start: '',
     end: '',
 };
+
 const spaces = document.querySelectorAll(".chess-table__space");
 Array.from(spaces).map(space => {
     space.addEventListener('click', ({currentTarget: {id}}) => {
-        // console.log(id);
         if (moveCommand.start === '') {
             moveCommand.start = id;
             return;
         }
         moveCommand.end = id;
+        moveRequest('move', moveCommand);
+        initMoveCommand();
     });
 });
 
+function initMoveCommand() {
+    moveCommand.start = '';
+    moveCommand.end = '';
+}
 
-localStorage.clear();
+function moveRequest(command, {start, end} = {start: '', end: ''}) {
 
-function startNewGame() {
-    fetch('http://localhost:8080/game/command/start', {
+    fetch(`http://localhost:8080/game/command/${command}?start=${start}&end=${end}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
     })
         .then(response => response.json())
         .then(({game_status: gameStatus, pieces}) => {
             saveGameStatus(gameStatus);
-            arrangePieces(pieces);
+            movePieces(start, end);
         })
         .catch(error => console.log(error));
+}
+
+function movePieces(startPosition, endPosition) {
+    const targetSpace = document.getElementById(endPosition);
+    const piece = document.getElementById(startPosition).firstChild;
+    document.getElementById(startPosition).firstChild.remove();
+    document.getElementById(endPosition).firstChild?.remove();
+    targetSpace.appendChild(piece);
+}
+
+
+function saveGameStatus(gameStatus) {
+    localStorage.setItem('gameStatus', gameStatus);
+}
+
+function startGame() {
+    const name = prompt("게임 진행을 위해 닉네임을 입력해 주세요.");
+    fetch(`http://localhost:8080/user/name/${name}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    }).then(response => response.json())
+        .then(({game_status: gameStatus, pieces}) => {
+            console.log(gameStatus);
+            if (gameStatus !== 'ready') {
+                arrangePieces(pieces);
+            }
+        })
+        .catch(err => console.log(err));
 }
 
 function arrangePieces(pieces) {
@@ -41,19 +91,7 @@ function arrangePieces(pieces) {
     });
 }
 
-function saveGameStatus(gameStatus) {
-    localStorage.setItem('gameStatus', gameStatus);
-}
-
-const startButton = document.querySelector('#command-button__start');
-startButton.addEventListener('click', () => {
-    if (localStorage.getItem(gameStatusLocalStorage) !== null) {
-        alert("기존 게임을 끝내고 시작해 주세요.");
-        return;
-    }
-    startNewGame();
-});
-
+startGame();
 
 
 

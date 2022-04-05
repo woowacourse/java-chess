@@ -34,7 +34,8 @@ public class ChessController {
     public PiecesDto getCurrentBoardState(final int userId) {
         final int boardId = (new UserDao()).getBoard(userId);
         final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
-        return PiecesDto.fromEntity(pieces);
+        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        return PiecesDto.fromEntity(new Board(pieces, gameState));
     }
 
     public PiecesDto doActionAboutPieces(final ParsedCommand parsedCommand, final int userId) {

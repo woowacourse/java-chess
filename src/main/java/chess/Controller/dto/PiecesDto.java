@@ -30,7 +30,7 @@ public class PiecesDto {
     }
 
     public static PiecesDto fromEntity(final Map<Position, Piece> pieces) {
-        return new PiecesDto(pieces, "");
+        return new PiecesDto(pieces, "READY");
     }
 
     public List<PieceDto> getPieces() {

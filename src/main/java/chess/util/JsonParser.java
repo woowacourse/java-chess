@@ -2,6 +2,8 @@ package chess.util;
 
 import chess.Controller.dto.PieceDto;
 import chess.Controller.dto.PiecesDto;
+import chess.Controller.dto.ScoreDto;
+import chess.Controller.dto.StateDto;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,6 +24,14 @@ public class JsonParser {
         responseJson.put("game_status", piecesDto.getGameStatus());
         responseJson.put("pieces", jsonArray);
         return responseJson;
+    }
+
+    public static JSONObject scoreToJson(final ScoreDto scoreDto, final StateDto stateDto) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("black_score", scoreDto.getBlackScore());
+        jsonObject.put("white_score", scoreDto.getWhiteScore());
+        jsonObject.put("game_status", stateDto.getState());
+        return jsonObject;
     }
 
 }

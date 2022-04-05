@@ -191,7 +191,7 @@ public class Board {
     }
 
     public GameState getGameState() {
-        return gameState.getOpposite();
+        return gameState;
     }
 
     public Map<Position, Piece> getPieces() {
