@@ -1,4 +1,22 @@
 # java-chess
+# 테이블을 만들 떄 사용한 DDL
+```sql
+create table game (
+    room_name varchar(10) not null,
+    turn_color varchar(10) not null,
+    primary key (room_name)
+);
+
+create table board (
+    room_name varchar(255) not null,
+    position varchar(2) not null,
+    piece_type varchar(20) not null,
+    piece_color varchar(20) not null,
+    foreign key(room_name) references game (room_name)
+    on delete cascade
+);
+```
+
 
 ## 기능 구현 목록
 ### 1단계
@@ -55,7 +73,7 @@
 - [x] 모든 응답/요청은 json으로 정보를 전달한다.
 
 ### 5단계
-- [ ] 웹 서버를 재시작하더라도 이전 게임을 다시 시작할 수 있어야 한다.
+- [x] 웹 서버를 재시작하더라도 이전 게임을 다시 시작할 수 있어야 한다.
 
 ## 프로그래밍 요구사항
 - [x] 자바 코드 컨벤션을 지키면서 프로그래밍했는가?
@@ -69,7 +87,7 @@
 - [x] 코드 한 줄에 점(.)을 하나만 허용했는가? (디미터의 법칙)
 - [x] 메소드가 한가지 일만 담당하도록 구현했는가?
 - [x] 클래스를 작게 유지하기 위해 노력했는가?
-- [ ] 4,5 단계 구현을 할 때 도메인의 변경을 최소화해야 한다.
+- [x] 4,5 단계 구현을 할 때 도메인의 변경을 최소화해야 한다.
 
 
 ## 우아한테크코스 코드리뷰
