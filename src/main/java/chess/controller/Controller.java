@@ -4,19 +4,21 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dao.BoardDao;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Play;
 import chess.domain.game.state.State;
 import chess.domain.game.state.attribute.StateType;
 import chess.domain.piece.attribute.Team;
-import chess.dto.BoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
 import chess.dto.PieceDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Controller {
@@ -24,21 +26,29 @@ public class Controller {
     private ChessGame chessGame = new ChessGame(new InitBoardStrategy());
     private State state = new Play(chessGame);
 
+    private final BoardDao boardDao = new BoardDao();
+
     public void run() {
         staticFiles.location("/static");
         get("/", (req, res) -> getStartObject());
         post("/start", (req, res) -> {
-            model.put("name", req.queryParams("name"));
-            System.out.println(model.get("name"));
+            saveName(req);
+            initError();
+            boardDao.create(new ChessGameDto((String) model.get("name"), new ChessGame(new InitBoardStrategy())));
+            chessGame = boardDao.findByName((String) model.get("name")).getChessGame();
+            state = new Play(chessGame);
             return getObject();
         });
         post("/command", (req, res) -> {
-            if (!req.queryParams("command").equals("시작하기")) {
-                go(req.queryParams("command"));
-            }
+            go(req.queryParams("command"));
+            boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
             return getObject();
         });
         post("/end", (req, res) -> getEndObject());
+    }
+
+    private void saveName(Request req) {
+        model.put("name", req.queryParams("name"));
     }
 
     private void go(String input) {
@@ -79,7 +89,7 @@ public class Controller {
     }
 
     private void updatePieces() {
-        List<PieceDto> pieces = new BoardDto(chessGame.getBoard()).getBoardWeb();
+        List<PieceDto> pieces = new ChessGameDto(chessGame).getBoardWeb();
         model.put("pieces", pieces);
     }
 
@@ -92,6 +102,7 @@ public class Controller {
     private Object getEndObject() {
         updateScore();
         updateWinner();
+        boardDao.delete((String) model.get("name"));
         return render(model, "end.html");
     }
 

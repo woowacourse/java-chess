@@ -43,7 +43,7 @@ public class BoardDao {
 
     public void create(final ChessGameDto chessGameDto){
         final Connection connection = getConnection();
-        if (checkNotInDB(chessGameDto)) {
+        if (checkInDB(chessGameDto)) {
             return;
         }
         final String sql = "INSERT into board (name, board) values (?, ?);";
@@ -58,7 +58,7 @@ public class BoardDao {
         }
     }
 
-    private boolean checkNotInDB(ChessGameDto chessGameDto) {
+    private boolean checkInDB(ChessGameDto chessGameDto) {
         if (findByName(chessGameDto.getName()) != null) {
             System.out.println("이미 해당 이름의 정보가 있습니다.");
             return true;
