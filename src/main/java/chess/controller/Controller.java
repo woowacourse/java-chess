@@ -54,25 +54,25 @@ public class Controller {
         state = new Play(chessGame);
     }
 
-    private void saveToDB() {
-        boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
-    }
-
     private void go(String input) {
         try {
             state = state.execute(new CommandDto(input));
             initError();
-            initResult();
-            if (state.getType() != StateType.PLAY) {
-                model.put("result", "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.");
-            }
+            setResult();
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
     }
 
-    private void initResult() {
+    private void setResult() {
         model.put("result", "");
+        if (state.getType() != StateType.PLAY) {
+            model.put("result", "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.");
+        }
+    }
+
+    private void saveToDB() {
+        boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
     }
 
     private void initError() {
@@ -91,6 +91,13 @@ public class Controller {
         return render(model, "chessGame.html");
     }
 
+    private Object getEndObject() {
+        updateScore();
+        updateWinner();
+        boardDao.delete((String) model.get("name"));
+        return render(model, "end.html");
+    }
+
     private void updateTurn() {
         model.put("turn", chessGame.getTurn());
     }
@@ -104,13 +111,6 @@ public class Controller {
         Map<Team, Double> scores = chessGame.getScoreOfTeams();
         model.put("whiteScore", scores.get(Team.WHITE));
         model.put("blackScore", scores.get(Team.BLACK));
-    }
-
-    private Object getEndObject() {
-        updateScore();
-        updateWinner();
-        boardDao.delete((String) model.get("name"));
-        return render(model, "end.html");
     }
 
     private void updateWinner() {
