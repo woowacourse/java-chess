@@ -12,34 +12,39 @@ import java.util.Arrays;
 
 public enum PieceType {
 
-    KING_WHITE(new King(Color.WHITE)),
-    QUEEN_WHITE(new Queen(Color.WHITE)),
-    ROOK_WHITE(new Rook(Color.WHITE)),
-    KNIGHT_WHITE(new Knight(Color.WHITE)),
-    BISHOP_WHITE(new Bishop(Color.WHITE)),
-    PAWN_WHITE(new Pawn(Color.WHITE)),
-    KING_BLACK(new King(Color.BLACK)),
-    QUEEN_BLACK(new Queen(Color.BLACK)),
-    ROOK_BLACK(new Rook(Color.BLACK)),
-    KNIGHT_BLACK(new Knight(Color.BLACK)),
-    BISHOP_BLACK(new Bishop(Color.BLACK)),
-    PAWN_BLACK(new Pawn(Color.BLACK));
+    KING_WHITE("king white", new King(Color.WHITE)),
+    QUEEN_WHITE("queen white", new Queen(Color.WHITE)),
+    ROOK_WHITE("rook white", new Rook(Color.WHITE)),
+    KNIGHT_WHITE("knight white", new Knight(Color.WHITE)),
+    BISHOP_WHITE("bishop white", new Bishop(Color.WHITE)),
+    PAWN_WHITE("pawn white", new Pawn(Color.WHITE)),
+    KING_BLACK("king black", new King(Color.BLACK)),
+    QUEEN_BLACK("queen black", new Queen(Color.BLACK)),
+    ROOK_BLACK("rook black", new Rook(Color.BLACK)),
+    KNIGHT_BLACK("knight black", new Knight(Color.BLACK)),
+    BISHOP_BLACK("bishop black", new Bishop(Color.BLACK)),
+    PAWN_BLACK("pawn black", new Pawn(Color.BLACK));
 
+    private final String type;
     private final Piece piece;
 
-    PieceType(Piece piece) {
+    PieceType(String value, Piece piece) {
+        this.type = value;
         this.piece = piece;
     }
 
-    public static Piece parsePiece(PieceType pieceType) {
+    public static PieceType of(String pieceType) {
         return Arrays.stream(values())
-                .filter(value -> value == pieceType)
-                .map(PieceType::getPiece)
+                .filter(value -> value.type.equals(pieceType))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물 유형입니다."));
     }
 
     public Piece getPiece() {
         return piece;
+    }
+
+    public String getType() {
+        return type;
     }
 }

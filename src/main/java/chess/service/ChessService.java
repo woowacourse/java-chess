@@ -12,7 +12,6 @@ import static chess.web.dto.PieceType.QUEEN_BLACK;
 import static chess.web.dto.PieceType.QUEEN_WHITE;
 import static chess.web.dto.PieceType.ROOK_BLACK;
 import static chess.web.dto.PieceType.ROOK_WHITE;
-import static chess.web.dto.PieceType.parsePiece;
 
 import chess.dao.PieceDao;
 import chess.dao.TurnDao;
@@ -22,6 +21,7 @@ import chess.domain.generator.EmptyBoardGenerator;
 import chess.domain.state.State;
 import chess.domain.state.StateType;
 import chess.web.dto.PieceDto;
+import chess.web.dto.PieceType;
 import chess.web.dto.TurnDto;
 import java.util.List;
 
@@ -90,7 +90,8 @@ public class ChessService {
         ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
 
         for (PieceDto pieceDto : pieces) {
-            chessBoard.fill(pieceDto.getId(), parsePiece(pieceDto.getPieceType()));
+            PieceType pieceType = pieceDto.getPieceType();
+            chessBoard.fill(pieceDto.getId(), pieceType.getPiece());
         }
 
         return chessBoard;

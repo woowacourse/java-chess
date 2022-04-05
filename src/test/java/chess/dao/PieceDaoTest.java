@@ -1,10 +1,23 @@
 package chess.dao;
 
+import static chess.web.dto.PieceType.BISHOP_BLACK;
+import static chess.web.dto.PieceType.BISHOP_WHITE;
+import static chess.web.dto.PieceType.KING_BLACK;
+import static chess.web.dto.PieceType.KING_WHITE;
+import static chess.web.dto.PieceType.KNIGHT_BLACK;
+import static chess.web.dto.PieceType.KNIGHT_WHITE;
+import static chess.web.dto.PieceType.PAWN_BLACK;
+import static chess.web.dto.PieceType.PAWN_WHITE;
+import static chess.web.dto.PieceType.QUEEN_BLACK;
+import static chess.web.dto.PieceType.QUEEN_WHITE;
+import static chess.web.dto.PieceType.ROOK_BLACK;
+import static chess.web.dto.PieceType.ROOK_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.web.dto.PieceDto;
 import chess.web.dto.PieceType;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +30,7 @@ class PieceDaoTest {
 
     @BeforeEach
     void setUp() {
-        pieceDao = new MemoryPieceDao();
+        pieceDao = new PieceDaoImpl();
     }
 
     @DisplayName("기물을 저장한다.")
@@ -74,27 +87,56 @@ class PieceDaoTest {
         assertThat(pieceDao.findAll().size()).isEqualTo(0);
     }
 
-    @DisplayName("해당 위치의 기물이 존재하지 않으면 삭제한다.")
-    @Test
-    void 기물이_존재하지_읺으면_예외를_던진다() {
-        assertThatThrownBy(() -> pieceDao.remove("a2"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("모든 기물을 조회한다.")
     @Test
     void 기물을_전체_조회한다() {
-        PieceDto pieceDto1 = new PieceDto("a2", PieceType.PAWN_BLACK);
-        PieceDto pieceDto2 = new PieceDto("b2", PieceType.PAWN_BLACK);
+        List<PieceDto> pieces = initPieces();
+        for (PieceDto piece : pieces) {
+            pieceDao.save(piece);
+        }
 
-        pieceDao.save(pieceDto1);
-        pieceDao.save(pieceDto2);
-
-        assertThat(pieceDao.findAll().size()).isEqualTo(2);
+        assertThat(pieceDao.findAll().size()).isEqualTo(32);
     }
 
     @AfterEach
     void cleanUp() {
         pieceDao.removeAll();
+    }
+
+    private List<PieceDto> initPieces() {
+        return List.of(
+                new PieceDto("a1", ROOK_WHITE),
+                new PieceDto("b1", KNIGHT_WHITE),
+                new PieceDto("c1", BISHOP_WHITE),
+                new PieceDto("d1", QUEEN_WHITE),
+                new PieceDto("e1", KING_WHITE),
+                new PieceDto("f1", BISHOP_WHITE),
+                new PieceDto("g1", KNIGHT_WHITE),
+                new PieceDto("h1", ROOK_WHITE),
+                new PieceDto("a2", PAWN_WHITE),
+                new PieceDto("b2", PAWN_WHITE),
+                new PieceDto("c2", PAWN_WHITE),
+                new PieceDto("d2", PAWN_WHITE),
+                new PieceDto("e2", PAWN_WHITE),
+                new PieceDto("f2", PAWN_WHITE),
+                new PieceDto("g2", PAWN_WHITE),
+                new PieceDto("h2", PAWN_WHITE),
+                new PieceDto("a8", ROOK_BLACK),
+                new PieceDto("b8", KNIGHT_BLACK),
+                new PieceDto("c8", BISHOP_BLACK),
+                new PieceDto("d8", QUEEN_BLACK),
+                new PieceDto("e8", KING_BLACK),
+                new PieceDto("f8", BISHOP_BLACK),
+                new PieceDto("g8", KNIGHT_BLACK),
+                new PieceDto("h8", ROOK_BLACK),
+                new PieceDto("a7", PAWN_BLACK),
+                new PieceDto("b7", PAWN_BLACK),
+                new PieceDto("c7", PAWN_BLACK),
+                new PieceDto("d7", PAWN_BLACK),
+                new PieceDto("e7", PAWN_BLACK),
+                new PieceDto("f7", PAWN_BLACK),
+                new PieceDto("g7", PAWN_BLACK),
+                new PieceDto("h7", PAWN_BLACK)
+        );
     }
 }

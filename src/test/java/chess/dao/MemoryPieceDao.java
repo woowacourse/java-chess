@@ -16,7 +16,7 @@ public class MemoryPieceDao implements PieceDao {
     @Override
     public void save(PieceDto pieceDto) {
         if (store.containsKey(pieceDto.getId())) {
-            throw new IllegalArgumentException("기물의 좌표를 중복될 수 없습니다.");
+            throw new IllegalArgumentException("기물의 위치는 중복될 수 없습니다.");
         }
 
         store.put(pieceDto.getId(), pieceDto);

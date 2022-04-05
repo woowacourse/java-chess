@@ -1,5 +1,7 @@
 package chess.web.dto;
 
+import java.util.Objects;
+
 public class PieceDto {
 
     private final String id;
@@ -16,5 +18,22 @@ public class PieceDto {
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PieceDto pieceDto = (PieceDto) o;
+        return Objects.equals(id, pieceDto.id) && pieceType == pieceDto.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, pieceType);
     }
 }
