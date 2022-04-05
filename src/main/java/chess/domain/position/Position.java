@@ -17,7 +17,7 @@ public class Position {
     }
 
     public static Position create(final String position) {
-        final File file = File.from(position.charAt(FILE_INDEX));
+        final File file = File.from(position.substring(FILE_INDEX, RANK_INDEX));
         final Rank rank = Rank.from(position.substring(RANK_INDEX));
         return new Position(file, rank);
     }
@@ -57,5 +57,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public String getPosition() {
+        return file.getValue() + rank.getValue();
     }
 }

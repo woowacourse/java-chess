@@ -13,15 +13,14 @@ public enum File {
     G(6),
     H(7);
 
-    public static final char FIRST_FILE_VALUE = 'a';
     private final int value;
 
     File(final int value) {
         this.value = value;
     }
 
-    public static File from(final char value) {
-        return from(value - FIRST_FILE_VALUE);
+    public static File from(final String value) {
+        return File.from(Integer.parseInt(value));
     }
 
     public static File from(final int value) {
@@ -37,5 +36,9 @@ public enum File {
 
     public File move(final int distance) {
         return from(value + distance);
+    }
+
+    public String getValue() {
+        return Integer.toString(value);
     }
 }
