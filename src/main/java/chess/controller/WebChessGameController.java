@@ -1,10 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessWebGame;
-import chess.domain.generator.BlackGenerator;
-import chess.domain.generator.WhiteGenerator;
-import chess.domain.player.Player;
-import chess.domain.player.Team;
 import chess.dto.MoveDto;
 import chess.dto.ResultDto;
 import chess.dto.ScoreDto;
@@ -34,8 +30,13 @@ public class WebChessGameController {
                 render(new HashMap<>(), "index.html")
         );
 
-        get("/start", (req, res)->{
+        get("/start", (req, res) -> {
             final ChessMap chessMap = chessService.initializeGame(chessWebGame);
+            return gson.toJson(chessMap);
+        });
+
+        get("/load", (req, res) -> {
+            ChessMap chessMap = chessService.load(chessWebGame);
             return gson.toJson(chessMap);
         });
 
@@ -46,6 +47,7 @@ public class WebChessGameController {
 
         get("/end", (req, res) -> {
             final ResultDto resultDto = chessWebGame.getResult();
+            chessService.initializeGame(chessWebGame);
             return gson.toJson(resultDto);
         });
 
@@ -53,10 +55,6 @@ public class WebChessGameController {
             final MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             final ChessMap chessMap = chessService.move(chessWebGame, moveDto);
             return gson.toJson(chessMap);
-        });
-
-        exception(Exception.class, (exception, req, res) -> {
-            res.body(exception.getMessage());
         });
     }
 }
