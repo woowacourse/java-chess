@@ -4,24 +4,24 @@ import chess.domain.piece.Team;
 
 public class Turn {
 
-    private Team nowTurn;
+    private Team now;
 
-    public Turn(final Team nowTurn) {
-        if (nowTurn == Team.NONE) {
+    public Turn(final Team now) {
+        if (now == Team.NONE) {
             throw new IllegalArgumentException("[ERROR] 입력된 Team 은 게임을 할 수 없습니다.");
         }
-        this.nowTurn = nowTurn;
+        this.now = now;
     }
 
     public void passTurn() {
-        nowTurn = nowTurn.oppositeTeam();
+        now = now.oppositeTeam();
     }
 
     public boolean isRightTurn(final Team team) {
-        return this.nowTurn == team;
+        return this.now == team;
     }
 
-    public Team getNowTurn() {
-        return nowTurn;
+    public Team getNow() {
+        return now;
     }
 }

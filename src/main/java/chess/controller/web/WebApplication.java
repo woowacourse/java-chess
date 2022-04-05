@@ -20,8 +20,7 @@ public class WebApplication {
         ChessGame chessGame = new ChessGame(BoardFactory.generateChessBoard());
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.putAll(chessGame.getCurrentBoardForSpark());
+            Map<String, Object> model = new HashMap<>(chessGame.getCurrentBoardForSpark());
             model.put("turn", chessGame.getTurn());
             model.put("result", chessGame.generateResult());
             return new ModelAndView(model, "index.html");
