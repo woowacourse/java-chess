@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.piece.PieceColor;
 import chess.dto.TurnDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
@@ -39,5 +40,23 @@ public class GameDao {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public void changeTurn() {
+        String changeTurnSql = "UPDATE game SET turn = ? WHERE id = ?";
+
+        try (   Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(changeTurnSql)) {
+            for(int i = 0; i< 30; i++) {
+                System.out.println("#####################");
+            }
+            TurnDto currentTurn = getTurn();
+            System.out.println(currentTurn.getTurn());
+            statement.setString(1, PieceColor.getOpposite(currentTurn.getTurn()));
+            statement.setString(2, "1");
+            int resultSet = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

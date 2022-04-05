@@ -83,5 +83,6 @@ public class ChessService {
         Position to = Position.from(commandDto.getTo());
         chessGame.movePiece(from, to);
         chessDao.movePiece(commandDto);
+        gameDao.changeTurn();
     }
 }

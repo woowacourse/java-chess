@@ -22,4 +22,11 @@ public enum PieceColor {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색상입니다."));
     }
+
+    public static String getOpposite(String value) {
+        if (value.equals(BLACK.value)) {
+            return WHITE.getValue();
+        }
+        return BLACK.getValue();
+    }
 }
