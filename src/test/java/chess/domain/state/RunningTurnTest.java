@@ -1,9 +1,9 @@
-package chess.domain.turn;
+package chess.domain.state;
 
 import static chess.domain.Color.WHITE;
-import static chess.domain.turn.Turn.BLACK_TURN;
-import static chess.domain.turn.Turn.END;
-import static chess.domain.turn.Turn.WHITE_TURN;
+import static chess.domain.state.Turn.BLACK_TURN;
+import static chess.domain.state.Turn.END;
+import static chess.domain.state.Turn.WHITE_TURN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
@@ -29,26 +29,26 @@ class RunningTurnTest {
     @DisplayName("chess board가 promotion 상태라면 턴을 반환")
     void nextTurnPromotion() {
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new Piece(WHITE, new Pawn(WHITE))));
-        GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
+        ChessGameState chessGameState = new RunningState(chessBoard, WHITE);
 
-        assertThat(gameTurn.nextTurn()).isEqualTo(WHITE_TURN);
+        assertThat(chessGameState.nextTurn()).isEqualTo(WHITE_TURN);
     }
 
     @Test
     @DisplayName("게임이 종료되었으면 종료 상태를 반환")
     void nextTurnEnd() {
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new Piece(WHITE, new King())));
-        GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
+        ChessGameState chessGameState = new RunningState(chessBoard, WHITE);
 
-        assertThat(gameTurn.nextTurn()).isEqualTo(END);
+        assertThat(chessGameState.nextTurn()).isEqualTo(END);
     }
 
     @Test
     @DisplayName("현재턴 종료 시 다음 턴 반환")
     void nextTurnReverseColor() {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a', '1'), new Piece(WHITE, new Pawn(WHITE))));
-        GameTurn gameTurn = new RunningTurn(chessBoard, WHITE);
+        ChessGameState chessGameState = new RunningState(chessBoard, WHITE);
 
-        assertThat(gameTurn.nextTurn()).isEqualTo(BLACK_TURN);
+        assertThat(chessGameState.nextTurn()).isEqualTo(BLACK_TURN);
     }
 }

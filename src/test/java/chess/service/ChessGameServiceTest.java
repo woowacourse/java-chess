@@ -2,7 +2,7 @@ package chess.service;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
-import static chess.domain.turn.Turn.BLACK_TURN;
+import static chess.domain.state.Turn.BLACK_TURN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -16,7 +16,7 @@ import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.single.Knight;
-import chess.domain.turn.Turn;
+import chess.domain.state.Turn;
 import chess.testutil.H2Connection;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

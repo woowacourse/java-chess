@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.turn.Turn;
+import chess.domain.state.Turn;
 import chess.util.DBConnection;
 import chess.util.JdbcTemplate;
 import java.sql.Connection;

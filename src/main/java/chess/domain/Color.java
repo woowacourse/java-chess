@@ -1,9 +1,9 @@
 package chess.domain;
 
-import static chess.domain.turn.Turn.BLACK_TURN;
-import static chess.domain.turn.Turn.WHITE_TURN;
+import static chess.domain.state.Turn.BLACK_TURN;
+import static chess.domain.state.Turn.WHITE_TURN;
 
-import chess.domain.turn.Turn;
+import chess.domain.state.Turn;
 import java.util.function.Function;
 
 public enum Color {

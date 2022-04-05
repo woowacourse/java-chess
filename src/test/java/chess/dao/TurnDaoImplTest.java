@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.turn.Turn;
+import chess.domain.state.Turn;
 import chess.testutil.H2Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

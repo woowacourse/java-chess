@@ -8,8 +8,8 @@ import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
-import chess.domain.turn.GameTurn;
-import chess.domain.turn.Turn;
+import chess.domain.state.ChessGameState;
+import chess.domain.state.Turn;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -24,13 +24,13 @@ public class ChessGameService {
     }
 
     public Map<Position, Piece> currentChessBoard() {
-        GameTurn gameTurn = findGameTurn();
-        return gameTurn.pieces();
+        ChessGameState chessGameState = findGameTurn();
+        return chessGameState.pieces();
     }
 
     public void start() {
-        GameTurn gameTurn = findGameTurn();
-        if (!gameTurn.isEnd()) {
+        ChessGameState chessGameState = findGameTurn();
+        if (!chessGameState.isEnd()) {
             throw new IllegalStateException("아직 진행 중인 게임이 있습니다.");
         }
         pieceDao.deleteAllPiece();
@@ -39,24 +39,24 @@ public class ChessGameService {
     }
 
     public void move(Position source, Position target) {
-        GameTurn gameTurn = findGameTurn();
-        gameTurn.movePiece(source, target);
+        ChessGameState chessGameState = findGameTurn();
+        chessGameState.movePiece(source, target);
 
         pieceDao.deletePiece(target);
         pieceDao.updatePiecePosition(source, target);
-        turnDao.updateTurn(gameTurn.currentTurn(), gameTurn.nextTurn());
+        turnDao.updateTurn(chessGameState.currentTurn(), chessGameState.nextTurn());
     }
 
     public void promotion(PromotionPiece promotionPiece) {
-        GameTurn gameTurn = findGameTurn();
-        Entry<Position, Piece> changedPiece = gameTurn.promotion(promotionPiece);
+        ChessGameState chessGameState = findGameTurn();
+        Entry<Position, Piece> changedPiece = chessGameState.promotion(promotionPiece);
         pieceDao.updatePiece(changedPiece.getKey(), changedPiece.getValue());
-        turnDao.updateTurn(gameTurn.currentTurn(), gameTurn.nextTurn());
+        turnDao.updateTurn(chessGameState.currentTurn(), chessGameState.nextTurn());
     }
 
     public Map<Color, Double> currentScore() {
-        GameTurn gameTurn = findGameTurn();
-        return gameTurn.currentScore();
+        ChessGameState chessGameState = findGameTurn();
+        return chessGameState.currentScore();
     }
 
     public boolean isEndGame() {
@@ -68,7 +68,7 @@ public class ChessGameService {
         return chessBoard.winner();
     }
 
-    private GameTurn findGameTurn() {
+    private ChessGameState findGameTurn() {
         Turn currentTurn = findCurrentTurn();
         ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
         return currentTurn.createGameTurn(chessBoard);

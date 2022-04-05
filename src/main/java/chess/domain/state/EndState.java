@@ -1,6 +1,6 @@
-package chess.domain.turn;
+package chess.domain.state;
 
-import static chess.domain.turn.Turn.END;
+import static chess.domain.state.Turn.END;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
@@ -10,11 +10,11 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class EndTurn implements GameTurn {
+public class EndState implements ChessGameState {
 
     private final ChessBoard chessBoard;
 
-    public EndTurn(ChessBoard chessBoard) {
+    public EndState(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 

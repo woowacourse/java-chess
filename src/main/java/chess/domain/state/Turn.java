@@ -1,4 +1,4 @@
-package chess.domain.turn;
+package chess.domain.state;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
@@ -8,18 +8,18 @@ import java.util.function.Function;
 
 public enum Turn {
 
-    WHITE_TURN(chessBoard -> new RunningTurn(chessBoard, WHITE)),
-    BLACK_TURN(chessBoard -> new RunningTurn(chessBoard, BLACK)),
-    END(EndTurn::new),
+    WHITE_TURN(chessBoard -> new RunningState(chessBoard, WHITE)),
+    BLACK_TURN(chessBoard -> new RunningState(chessBoard, BLACK)),
+    END(EndState::new),
     ;
 
-    private final Function<ChessBoard, GameTurn> gameTurnCreator;
+    private final Function<ChessBoard, ChessGameState> gameTurnCreator;
 
-    Turn(Function<ChessBoard, GameTurn> gameTurnCreator) {
+    Turn(Function<ChessBoard, ChessGameState> gameTurnCreator) {
         this.gameTurnCreator = gameTurnCreator;
     }
 
-    public GameTurn createGameTurn(ChessBoard chessBoard) {
+    public ChessGameState createGameTurn(ChessBoard chessBoard) {
         return gameTurnCreator.apply(chessBoard);
     }
 

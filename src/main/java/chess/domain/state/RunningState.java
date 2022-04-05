@@ -1,4 +1,4 @@
-package chess.domain.turn;
+package chess.domain.state;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
@@ -8,12 +8,12 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class RunningTurn implements GameTurn {
+public class RunningState implements ChessGameState {
 
     private final ChessBoard chessBoard;
     private final Color color;
 
-    public RunningTurn(ChessBoard chessBoard, Color color) {
+    public RunningState(ChessBoard chessBoard, Color color) {
         this.chessBoard = chessBoard;
         this.color = color;
     }
