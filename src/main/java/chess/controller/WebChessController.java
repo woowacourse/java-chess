@@ -25,6 +25,15 @@ public class WebChessController {
         status();
         end();
         result();
+        save();
+    }
+
+    private void save(){
+        post("/save", (req, res) -> {
+            chessService.save();
+            res.redirect("/play");
+            return null;
+        });
     }
 
     private void end() {
@@ -91,7 +100,8 @@ public class WebChessController {
                 model.put("board", chessService.getCurrentBoard());
                 return render(model, "game.html");
             }
-            return render(model, "game.html");
+            res.redirect("/end");
+            return null;
         });
     }
 

@@ -18,7 +18,6 @@ public class ChessService {
     public void start(){
         chessBoard = ChessBoardFactory.initBoard();
         chessBoard.start();
-        gameDao.save(chessBoard);
     }
 
     public void end(){
@@ -55,5 +54,9 @@ public class ChessService {
 
     public boolean isPlaying() {
         return chessBoard.isPlaying();
+    }
+
+    public void save() {
+        gameDao.save(chessBoard);
     }
 }
