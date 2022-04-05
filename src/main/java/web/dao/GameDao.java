@@ -64,7 +64,6 @@ public class GameDao {
     public void delete(String roomName) {
         final Connection connection = getConnection();
         final String sql = "delete from game where room_name=?";
-        // board 의 말들도 연쇄적으로 삭제하도록 변경필요
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(sql);
