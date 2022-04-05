@@ -20,6 +20,17 @@ public class WebChessController {
         staticFiles.location("/static");
 
         displayHome();
+
+        post("/move", (req, res) -> {
+            String[] positions = req.body().split("//"); // a1//b2
+            String srcPosition = positions[0];
+            String dstPosition = positions[1];
+
+            chessService.move(srcPosition, dstPosition);
+
+            return "success";
+        });
+
     }
 
     private void displayHome() {

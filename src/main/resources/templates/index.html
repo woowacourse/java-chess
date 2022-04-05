@@ -39,7 +39,7 @@
     <tr>
         {{#rank}}
         <td>
-            <img src="/images/{{team}}_{{name}}.png" id="{{column}}{{row}}" onclick="pieceClickHandler(this)">
+            <img src="/images/{{team}}_{{name}}.png" id="{{column}}{{row}}" class="chess-piece-img" onclick="pieceClickHandler(this)">
         </td>
         {{/rank}}
     </tr>
@@ -48,4 +48,38 @@
 <button onclick="statusHandler()">점수 확인</button>
 <button onclick="endGameHandler()">게임종료</button>
 </body>
+
+<script>
+    let isClicked = false;
+    let srcPosition;
+
+    function pieceClickHandler(piece) {
+        if (isClicked === false) {
+          isClicked = true;
+          srcPosition = piece.id;
+          return;
+        }
+
+        fetch("/move", {
+            method : "post",
+            body : `${srcPosition}//${piece.id}`
+        }).then(response => {
+            if (!response.ok) {
+                alert("잘못 누름");
+            }
+            location.reload();
+        });
+
+        isClicked = false;
+    }
+
+    function statusHandler() {
+
+    }
+
+    function endGameHandler() {
+
+    }
+</script>
+
 </html>
