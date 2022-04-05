@@ -8,26 +8,26 @@ import chess.domain.piece.Color;
 
 public class GameDto {
 
-    private final Integer id;
+    private final int id;
     private final String state;
     private final String turn;
 
     public GameDto(final String state, final String turn) {
-        this(null, state, turn);
+        this(0, state, turn);
     }
 
-    public GameDto(final Integer id, final String state, final String turn) {
+    public GameDto(final int id, final String state, final String turn) {
         this.id = id;
         this.state = state;
         this.turn = turn;
     }
 
-    public static GameDto of(final Integer id, final State state, final Color turn) {
+    public static GameDto of(final int id, final State state, final Color turn) {
         return new GameDto(id, createState(state), turn.getName());
     }
 
     public static GameDto of(final ChessGame chessGame) {
-        return new GameDto(null, createState(chessGame.getState()), chessGame.getTurnName());
+        return new GameDto(0, createState(chessGame.getState()), chessGame.getTurn().getName());
     }
 
     private static String createState(final State state) {

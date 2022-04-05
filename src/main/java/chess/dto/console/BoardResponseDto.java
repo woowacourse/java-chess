@@ -1,5 +1,6 @@
 package chess.dto.console;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Type;
@@ -17,10 +18,10 @@ public class BoardResponseDto {
 
     private final List<List<String>> names;
 
-    public BoardResponseDto(final Map<Position, Piece> board) {
+    public BoardResponseDto(final Board board) {
         final List<List<String>> names = new ArrayList<>();
         for (Row row : Row.values()) {
-            names.add(createNamesOnSameRow(board, row));
+            names.add(createNamesOnSameRow(board.getBoard(), row));
         }
         this.names = names;
     }

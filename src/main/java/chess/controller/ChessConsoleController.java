@@ -34,7 +34,7 @@ public class ChessConsoleController {
 
     private void printTurnMessage(final ChessGame chessGame) {
         if (chessGame.isStarted()) {
-            OutputView.printTurnMessage(chessGame.getTurnName());
+            OutputView.printTurnMessage(chessGame.getTurn().getName());
         }
     }
 
@@ -86,8 +86,8 @@ public class ChessConsoleController {
         final Score opponentScore = chessGame.calculateOpponentScore();
 
         OutputView.printNewLine();
-        OutputView.printScore(chessGame.getTurnName(), myScore.getValue());
-        OutputView.printScore(chessGame.getOppositeTurnName(), opponentScore.getValue());
-        OutputView.printResult(chessGame.getTurnName(), myScore.decideResult(opponentScore).getName());
+        OutputView.printScore(chessGame.getTurn().getName(), myScore.getValue());
+        OutputView.printScore(chessGame.getTurn().getOpposite().getName(), opponentScore.getValue());
+        OutputView.printResult(chessGame.getTurn().getName(), myScore.decideResult(opponentScore).getName());
     }
 }

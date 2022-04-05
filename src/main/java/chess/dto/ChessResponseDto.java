@@ -25,8 +25,8 @@ public class ChessResponseDto {
         this.code = code;
         this.message = message;
         this.state = createState(chessGame.getState());
-        this.turn = chessGame.getTurnName();
-        this.board = createBoard(chessGame.getBoard());
+        this.turn = chessGame.getTurn().getName();
+        this.board = createBoard(chessGame.getBoard().getBoard());
     }
 
     private String createState(final State state) {
@@ -43,7 +43,7 @@ public class ChessResponseDto {
         final Map<String, String> strings = new LinkedHashMap<>();
         for (Position position : Position.toPositions()) {
             final Piece piece = board.get(position);
-            strings.put(position.getName(), piece.getTypeName() + "_" + piece.getColorName());
+            strings.put(position.getName(), piece.getType().getName() + "_" + piece.getColor().getName());
         }
         return strings;
     }

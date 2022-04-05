@@ -3,13 +3,11 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.BasicBoardFactory;
+import chess.domain.board.Board;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.PieceDto;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +16,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("데이터베이스에 체스판 정보를 저장한다.")
     void save() {
-        Map<Position, Piece> board = new BasicBoardFactory().create();
+        Board board = new Board(new BasicBoardFactory());
 
         BoardDao boardDao = new BoardDao();
         boardDao.save(BoardDto.of(1, board));

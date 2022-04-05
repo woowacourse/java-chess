@@ -78,8 +78,8 @@ public class ChessService {
         chessGame.move(from, to);
 
         final Integer id = gameDao.findMaxId();
-        boardDao.updateOnePosition(id, from.getName(), new PieceDto(chessGame.getBoard().get(from)));
-        boardDao.updateOnePosition(id, to.getName(), new PieceDto(chessGame.getBoard().get(to)));
+        boardDao.updateOnePosition(id, from.getName(), new PieceDto(chessGame.getBoard().getBoard().get(from)));
+        boardDao.updateOnePosition(id, to.getName(), new PieceDto(chessGame.getBoard().getBoard().get(to)));
         gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
     }
 

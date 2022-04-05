@@ -26,8 +26,8 @@ public class StatusResponseDto {
                              final String result) {
         this.code = code;
         this.message = message;
-        this.myTurn = chessGame.getTurnName();
-        this.opponentTurn = chessGame.getOppositeTurnName();
+        this.myTurn = chessGame.getTurn().getName();
+        this.opponentTurn = chessGame.getTurn().getOpposite().getName();
         this.myScore = myScore;
         this.opponentScore = opponentScore;
         this.result = result;

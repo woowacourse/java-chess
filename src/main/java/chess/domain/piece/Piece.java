@@ -37,14 +37,6 @@ public abstract class Piece {
         return type;
     }
 
-    public String getColorName() {
-        return color.getName();
-    }
-
-    public String getTypeName() {
-        return type.getName();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

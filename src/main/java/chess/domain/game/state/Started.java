@@ -28,7 +28,7 @@ public class Started implements State {
     public State move(final Position from, final Position to) {
         board.isMovable(from, to, turn);
 
-        if (board.isCheckmate(to)) {
+        if (board.isGameOver(to)) {
             board.move(from, to);
             return new Ended(board);
         }

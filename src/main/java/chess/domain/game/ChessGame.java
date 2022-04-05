@@ -4,10 +4,9 @@ import chess.domain.board.BasicBoardFactory;
 import chess.domain.board.Board;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.State;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
-import java.util.Map;
 
 public class ChessGame {
 
@@ -61,23 +60,15 @@ public class ChessGame {
         return state.isStarted();
     }
 
-    public String getTurnName() {
-        return state.getTurn().getName();
+    public State getState() {
+        return state;
     }
 
-    public String getOppositeTurnName() {
-        return state.getTurn().getOpposite().getName();
-    }
-
-    public Board board() {
+    public Board getBoard() {
         return board;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
-    }
-
-    public State getState() {
-        return state;
+    public Color getTurn() {
+        return state.getTurn();
     }
 }

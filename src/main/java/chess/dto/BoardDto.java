@@ -18,8 +18,8 @@ public class BoardDto {
         this.board = board;
     }
 
-    public static BoardDto of(final Integer gameId, final Map<Position, Piece> board) {
-        return new BoardDto(gameId, createBoard(board));
+    public static BoardDto of(final Integer gameId, final Board board) {
+        return new BoardDto(gameId, createBoard(board.getBoard()));
     }
 
     private static Map<String, PieceDto> createBoard(final Map<Position, Piece> board) {
