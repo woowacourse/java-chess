@@ -31,7 +31,7 @@ class PieceDaoImplTest {
 
     @Test
     @DisplayName("piece를 저장하고 저장 확인")
-    void test() {
+    void saveAndFindPiece() {
         // when
         pieceDao.savePieces(Map.of(position, pawn));
         Piece result = pieceDao.findAllPieces().get(position);
