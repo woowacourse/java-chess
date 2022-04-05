@@ -22,11 +22,9 @@
         <form action="/status" method="get">
             <button id="status">Status</button>
         </form>
-        <div class="score hidden">
             {{#this}}
             <span>White 점수 : {{WHITE}} Black 점수 : {{BLACK}}</span>
             {{/this}}
-        </div>
         <form action="/terminate" method="get">
             <button>End</button>
             {{#this}}
