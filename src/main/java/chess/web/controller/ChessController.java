@@ -64,6 +64,9 @@ public class ChessController {
 
             try {
                 chessBoard = chessService.move(moveCommand);
+                if (chessService.isEnd()) {
+                    response.redirect("/end");
+                }
                 model.put("chessboard", chessBoard);
             } catch(IllegalArgumentException e) {
                 model.put("error", e.getMessage());

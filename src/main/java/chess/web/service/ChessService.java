@@ -51,17 +51,18 @@ public class ChessService {
     }
 
     public List<String> findAllByName(String gameName) {
-        ChessGame chessGame = chessGameDao.findAllByName(gameName);
+        ChessGame selectedChessGame = chessGameDao.findAllByName(gameName);
 
         if (chessGame == null) {
-            this.chessGame = new ChessGame(gameName);
+            chessGame = new ChessGame(gameName);
+            chessGame.progress(Command.from("start"));
 
-            return this.chessGame.getChessBoardSymbol();
+            return chessGame.getChessBoardSymbol();
         }
 
-        this.chessGame = chessGame;
+        chessGame = selectedChessGame;
 
-        return this.chessGame.getChessBoardSymbol();
+        return chessGame.getChessBoardSymbol();
     }
 
     public void save() {
@@ -73,12 +74,15 @@ public class ChessService {
 
         if (chessboardId > 0) {
             chessGameDao.update(chessGameDto, chessboardId);
-
             return;
         }
 
         int savedId = chessBoardDao.save(chessGameDto);
 
         chessGameDao.save(chessGameDto, savedId);
+    }
+
+    public boolean isEnd() {
+        return chessGame.isEnd();
     }
 }

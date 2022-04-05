@@ -60,7 +60,7 @@ public class ChessBoardDao {
             int chessBoardId = resultSet.getInt(1);
 
             for (PositionDto positionDto : cells.keySet()) {
-                addBoard(chessBoardId, positionDto, cells.get(positionDto));
+                addBoard(connection, chessBoardId, positionDto, cells.get(positionDto));
             }
             return chessBoardId;
         } catch(SQLException e) {
@@ -69,8 +69,7 @@ public class ChessBoardDao {
         return 0;
     }
 
-    private void addBoard(int chessBoardId, PositionDto position, PieceDto piece) {
-        Connection connection = getConnection();
+    private void addBoard(Connection connection, int chessBoardId, PositionDto position, PieceDto piece) {
 
         final String sql = "insert into piece (type, team, `rank`, file, chessboard_id) values (?, ?, ?, ?, ?)";
 
