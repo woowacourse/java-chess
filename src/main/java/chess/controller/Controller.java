@@ -16,7 +16,7 @@ public class Controller {
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
 
-    private ChessGame game;
+    protected ChessGame game;
 
     public void run() {
         OutputView.announceStart();
@@ -34,7 +34,7 @@ public class Controller {
         }
     }
 
-    private void executeCommand(Map.Entry<Command, List<Square>> commands) {
+    protected void executeCommand(Map.Entry<Command, List<Square>> commands) {
         Command command = commands.getKey();
         if (command == Command.START) {
             start();
@@ -54,7 +54,7 @@ public class Controller {
         }
     }
 
-    private void start() {
+    protected void start() {
         if (game != null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
@@ -62,8 +62,8 @@ public class Controller {
         OutputView.showBoard(game.getBoard());
     }
 
-    private void move(Map.Entry<Command, List<Square>> commands) {
-        checkGameStarted(game);
+    protected void move(Map.Entry<Command, List<Square>> commands) {
+        checkGameStarted();
         if (game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
@@ -75,14 +75,14 @@ public class Controller {
         checkKingDieAfterMove();
     }
 
-    private void checkKingDieAfterMove() {
+    protected void checkKingDieAfterMove() {
         if (game.isKingDie()) {
             OutputView.printKingDieMessage();
         }
     }
 
-    private void status() {
-        checkGameStarted(game);
+    protected void status() {
+        checkGameStarted();
         if (!game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
@@ -91,7 +91,7 @@ public class Controller {
         OutputView.showScore(status, Color.BLACK);
     }
 
-    private void checkGameStarted(ChessGame game) {
+    protected void checkGameStarted() {
         if (game == null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }

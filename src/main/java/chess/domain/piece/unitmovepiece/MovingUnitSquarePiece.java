@@ -9,16 +9,16 @@ import chess.domain.position.UnitDirection;
 
 public abstract class MovingUnitSquarePiece extends Piece {
 
-	private final List<UnitDirection> directions;
+    private final List<UnitDirection> directions;
 
-	MovingUnitSquarePiece(Color color, double score, List<UnitDirection> directions) {
-		super(color, score);
-		this.directions = directions;
-	}
+    MovingUnitSquarePiece(Color color, double score, String type, List<UnitDirection> directions) {
+        super(color, score, type);
+        this.directions = directions;
+    }
 
-	@Override
-	public final boolean canMove(Direction direction, Piece target) {
-		checkSameTeam(target);
-		return direction.hasSame(directions);
-	}
+    @Override
+    public final boolean canMove(Direction direction, Piece target) {
+        checkSameTeam(target);
+        return direction.hasSame(directions);
+    }
 }
