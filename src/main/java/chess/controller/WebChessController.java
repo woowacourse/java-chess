@@ -10,6 +10,7 @@ import chess.dto.ErrorResponseDto;
 import chess.dto.GameDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
+import chess.dto.WinnerDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -48,6 +49,11 @@ public class WebChessController {
 			Position target = PositionConvertor.to(moveDto.getTarget());
 			GameDto gameDto = chessService.move(source, target);
 			return gson.toJson(gameDto);
+		});
+
+		get("/end", (req, res) -> {
+			WinnerDto winnerDto = chessService.end();
+			return gson.toJson(winnerDto);
 		});
 
 		handleException(gson, IllegalArgumentException.class);
