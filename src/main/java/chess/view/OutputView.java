@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.dto.GameStatus;
 import chess.domain.board.ChessBoard;
-import chess.domain.dto.StatusDto;
+import chess.domain.dto.StatusDTO;
 import chess.domain.piece.property.Team;
 import chess.domain.position.XPosition;
 import chess.domain.position.Position;
@@ -30,7 +30,7 @@ public final class OutputView {
         System.out.println();
     }
 
-    public static void printStatus(final StatusDto statusDto) {
+    public static void printStatus(final StatusDTO statusDto) {
         GameStatus gameStatus = statusDto.getGameStatus();
         System.out.printf("%s 점수 : %.1f (%s)" + System.lineSeparator(), gameStatus.getTurn(), gameStatus.getScore(),
                 gameStatus.getResult());
@@ -41,6 +41,6 @@ public final class OutputView {
     }
 
     public static void printErrorMessage(final String message) {
-        System.out.println(message);
+        System.err.println(message);
     }
 }

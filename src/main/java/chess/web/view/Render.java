@@ -1,7 +1,7 @@
 package chess.web.view;
 
 import chess.domain.board.ChessBoard;
-import chess.web.dto.BoardDto;
+import chess.web.dto.BoardDTO;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -13,7 +13,7 @@ public class Render {
     private static final TemplateEngine HANDLEBARS_RENDER = new HandlebarsTemplateEngine();
 
     public static Map<String, Object> renderBoard(ChessBoard chessBoard){
-        Map<String, Object> boardDto = new BoardDto(chessBoard).getResult();
+        Map<String, Object> boardDto = new BoardDTO(chessBoard).getResult();
         Map<String, Object> model = new HashMap<>();
 
         String boardHtml = renderHtml(boardDto, "/board.html");

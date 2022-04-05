@@ -1,13 +1,10 @@
 package chess;
 
-import chess.domain.board.BoardGenerator;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
-import chess.domain.piece.unit.Piece;
-import chess.web.dto.BoardDto;
+import chess.web.dto.BoardDTO;
 import chess.domain.position.Position;
 import chess.web.view.Render;
-import java.util.HashMap;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -23,7 +20,7 @@ public class WebApplication {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
         get("/chess", (req, res) -> {
-           Map<String, Object> model = new BoardDto(chessBoard).getResult();
+           Map<String, Object> model = new BoardDTO(chessBoard).getResult();
            return Render.renderHtml(model, "/index.html");
         });
 
@@ -47,12 +44,12 @@ public class WebApplication {
             chessBoard.move(Position.of(source), Position.of(target));
             System.out.println("소스 : " + Position.of(source));
             System.out.println("타겟 : " + Position.of(target));
-            return new BoardDto(chessBoard).getResult();
+            return new BoardDTO(chessBoard).getResult();
         }catch (Exception e){
             System.out.println("소스 : " + Position.of(source));
             System.out.println("타겟 : " + Position.of(target));
             System.out.println("오류 : " + e.getMessage());
-            return new BoardDto(chessBoard).getResult();
+            return new BoardDTO(chessBoard).getResult();
         }
     }
 
