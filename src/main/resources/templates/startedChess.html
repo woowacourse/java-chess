@@ -14,6 +14,9 @@
 <body>
 <h1>♟️ 체스 게임</h1>
 <script>
+    if ("{{kingDie}}") {
+        alert("King 잡혔다!!");
+    }
     if ("{{exit}}") {
         alert("{{score.whiteScore}}" + '\n' + "{{score.blackScore}}" + '\n게암 종료!!');
         document.location.href = "/";
