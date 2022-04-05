@@ -38,6 +38,7 @@ public class ChessService {
     public Map<String, String> terminate() {
         Map<String, String> terminateMessage = new HashMap<>();
         chessGame.end();
+        chessGame = new Ready();
         terminateMessage.put(TERMINATE_KEY, TERMINATE_MESSAGE);
         return terminateMessage;
     }

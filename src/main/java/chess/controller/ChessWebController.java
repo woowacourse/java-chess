@@ -54,9 +54,9 @@ public class ChessWebController {
     private void renderStatus() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.putAll(chessService.showBoard());
-            model.putAll(chessService.showStatus());
             try {
+                model.putAll(chessService.showBoard());
+                model.putAll(chessService.showStatus());
                 return render(model, "chess.html");
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
@@ -67,9 +67,9 @@ public class ChessWebController {
     private void renderEnd() {
         get("/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.putAll(chessService.terminate());
-            model.putAll(chessService.showBoard());
             try {
+                model.putAll(chessService.terminate());
+                model.putAll(chessService.showBoard());
                 return render(model, "chess.html");
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());

@@ -125,10 +125,6 @@ public final class Board {
         return board.get(fromPosition).isSameColor(color);
     }
 
-    public void clear() {
-        board.clear();
-    }
-
     public Map<String, Object> toMap() {
         return board.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
