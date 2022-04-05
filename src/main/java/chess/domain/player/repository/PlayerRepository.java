@@ -36,6 +36,13 @@ public class PlayerRepository {
         return new Player(id, color, pieces);
     }
 
+    public void update(final Player player) {
+        final Color color = player.getColor();
+        final Map<Position, Piece> pieces = player.getPieces();
+        final PlayerDto playerDto = new PlayerDto(player.getId(), color.getName(), convertPiecesToString(pieces));
+        playerDao.update(playerDto);
+    }
+
     private String convertPiecesToString(final Map<Position, Piece> pieces) {
         final List<String> values = new ArrayList<>();
         for (Entry<Position, Piece> entry : pieces.entrySet()) {
