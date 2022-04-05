@@ -8,41 +8,68 @@
 </head>
 
 <body>
-    <div id="app">
-        <h1>🦝 라쿤의 재미있는 체스 게임 🦝</h1>
+    {{#finish}}
+    <div class="js-container container" style="top:0px !important;">
+    {{/finish}}
+    {{^finish}}
+    <div class="container" style="top:0px" !important;">
+    {{/finish}}
+        <div id="app">
+            <h1>🦝 라쿤의 재미있는 체스 게임 🦝</h1>
 
-        {{#error}}
-            <h3> 에러가 있어요!! -> {{error}} </h3>
-        {{/error}}
+            {{#error}}
+                <h3> 에러가 있어요!! -> {{error}} </h3>
+            {{/error}}
 
-        {{#team}}
-            <h2>현재는 {{team}} 팀의 차례입니다🦝</h2>
-        {{/team}}
+            {{^finish}}
+                {{#team}}
+                    <h2>현재는 {{team}} 팀의 차례입니다🦝</h2>
+                {{/team}}
+            {{/finish}}
 
-        <h2>🐼검은 팀 : {{blackscore}}</h2>
-        <h2>🦝하얀 팀 : {{whitescore}}</h2>
+            {{#finish}}
+                <h2>{{team}} 팀의 승리입니다!!</h2>
+            {{/finish}}
 
-        <section class="chess-ui">
-            {{#pieces}}
-                <img id="{{position}}" class="img" onclick="" src="images/{{name}}.png">
-            {{/pieces}}
-        </section>
+            <h2>🐼검은 팀 : {{blackscore}}</h2>
+            <h2>🦝하얀 팀 : {{whitescore}}</h2>
 
-        <section>
-            {{^start}}
-                <form method="post" action="/start">
-                    <button type="submit" value="시작">게임을 시작해요</button>
-                </form>
-            {{/start}}
+            <section class="chess-ui">
+                {{#pieces}}
+                    <img id="{{position}}" class="img" onclick="" src="images/{{name}}.png">
+                {{/pieces}}
+            </section>
+
+            <section>
+                {{^start}}
+                    <form method="post" action="/start">
+                        <button type="submit" value="시작">게임을 시작해요</button>
+                    </form>
+                {{/start}}
+
+                {{#start}}
+
+                    <form id="moveform" method="post" action="/move">
+                        <input type="text" id="source" name="source" placeholder="시작점을 클릭해 주세요.">
+                        <input type="text" id="target" name="target" placeholder="도착점을 클릭해 주세요.">
+                        <button type="submit" value="제출">제출제출</button>
+                    </form>
+                {{/start}}
+            </section>
 
             {{#start}}
-                <form id="moveform" method="post" action="/move">
-                    <input type="text" id="source" name="source" placeholder="시작점을 클릭해 주세요.">
-                    <input type="text" id="target" name="target" placeholder="도착점을 클릭해 주세요.">
-                    <button type="submit" value="제출">제출제출</button>
-                </form>
+                <section>
+                    <br>
+                    <form method="post" action="/load">
+                        <button type="submit" value="불러오기">불러오기</button>
+                    </form>
+                    <br>
+                    <form method="post" action="/save">
+                        <button type="submit" value="저장하기">저장하기</button>
+                    </form>
+                </section>
             {{/start}}
-        </section>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

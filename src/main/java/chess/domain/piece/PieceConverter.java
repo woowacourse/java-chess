@@ -4,7 +4,6 @@ import chess.domain.Team;
 
 import java.util.Arrays;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 public enum PieceConverter{
     BISHOP("bishop", Bishop::new),

@@ -8,7 +8,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.state.command.Finish;
 import chess.domain.state.command.Playing;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
 import chess.domain.state.command.State;
@@ -62,17 +62,20 @@ public class ChessController {
         return result;
     }
 
-    public boolean isFinish() {
-        return state.isFinish();
+    public Team getWinner() {
+        if (board.isFinish()) {
+            return board.getFinalWinner();
+        }
+        return null;
     }
 
-    public List<PieceDTO> getCurrentImages() {
+    public List<PieceDto> getCurrentImages() {
         Map<Position, Piece> pieceMap = board.getBoard();
-        List<PieceDTO> boardDTOs = new ArrayList<>();
+        List<PieceDto> boardDtos = new ArrayList<>();
         for (Position position : Position.getReversePositions()) {
-            boardDTOs.add(new PieceDTO(position.toString(), pieceMap.get(position).getName()));
+            boardDtos.add(new PieceDto(position.toString(), pieceMap.get(position).getName()));
         }
-        return boardDTOs;
+        return boardDtos;
     }
 
     public Team getCurrentTeam() {
@@ -86,6 +89,8 @@ public class ChessController {
         return !state.isReady() && !state.isFinish();
     }
 
+    public boolean isFinish() { return board.isFinish(); }
+
     public void load() {
         board = new Board(pieceDao.load(), boardDao.loadState());
         if (board.isFinish()) {
@@ -95,7 +100,9 @@ public class ChessController {
     }
 
     public void save() {
+        boardDao.removeAll();
         boardDao.saveState(board.getState());
+        pieceDao.removeAll();
         pieceDao.save(board.getBoard());
     }
 }

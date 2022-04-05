@@ -64,6 +64,7 @@ public class WebController {
         addTurnInformation(model);
         addPlayingInformation(model);
         addScoreInformation(model);
+        addFinish(model);
         return model;
     }
 
@@ -91,6 +92,14 @@ public class WebController {
             return;
         }
         model.put("start", false);
+    }
+
+    private void addFinish(Map<String, Object> model) {
+        if (chessController.isFinish()) {
+            model.put("finish", true);
+            return;
+        }
+        model.put("finish", false);
     }
 
     private void processMove(Request request) {
