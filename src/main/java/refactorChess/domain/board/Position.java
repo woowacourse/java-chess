@@ -45,6 +45,10 @@ public class Position {
         return row;
     }
 
+    public boolean isSameRow(int value) {
+        return row == value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

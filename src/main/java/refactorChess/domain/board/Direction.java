@@ -40,6 +40,7 @@ public enum Direction {
             NORTH, NORTH_EAST, NORTH_WEST);
     public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(
             SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final int PAWN_START_LINE = 2;
 
     private final int column;
     private final int row;
@@ -76,6 +77,13 @@ public enum Direction {
             throw new IllegalArgumentException("직선 또는 대각선 방향이 아닙니다.");
         }
         return distinctCompareToConvert(column, row);
+    }
+
+    public static Direction ofPawnOfDefault(int column, int row) {
+        if (Math.abs(row) == PAWN_START_LINE) {
+            return distinctCompareToConvert(column, row);
+        }
+        return of(column, row);
     }
 
     private static Direction distinctCompareToConvert(int column, int row) {

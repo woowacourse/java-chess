@@ -16,6 +16,18 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public boolean isBlank() {
+        return this.pieceType == PieceType.NO_PIECE;
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
     protected abstract Direction findByDirection(Position from, Position to);
 
     protected abstract List<Direction> findByMovableDirection(Piece piece, Direction direction);
