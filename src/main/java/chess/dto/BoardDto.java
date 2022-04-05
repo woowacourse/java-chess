@@ -14,8 +14,7 @@ public class BoardDto {
     private final List<SquareDto> squares;
 
     public BoardDto(final Map<Position, Piece> board) {
-        squares = new ArrayList<>();
-
+        this.squares = new ArrayList<>();
         Arrays.stream(Rank.values())
             .forEach(rank -> addSquaresByRank(board, rank));
     }
