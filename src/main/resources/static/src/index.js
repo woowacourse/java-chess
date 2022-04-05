@@ -1,5 +1,9 @@
 let gameStatus = "";
 
+async function refreshAndDisplayBoard() {
+    await refreshBoard().then(r => displayBoard());
+}
+
 async function refreshBoard() {
     const board = document.getElementsByClassName("chess-ui")[0].childNodes;
     board.forEach(await function (value) {
@@ -27,12 +31,11 @@ async function displayBoard() {
 }
 
 async function loadButton() {
-    if (gameStatus ===  "") {
+    if (gameStatus === "") {
         await displayBoard();
         gameStatus = await status();
         console.log(gameStatus);
-    }
-    else {
+    } else {
         alert("이미 게임이 로딩되었습니다.");
     }
 }
@@ -48,7 +51,11 @@ async function startChessGame() {
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         }
-    });
+    }).then(response => handlingException(response))
+        .then(refreshAndDisplayBoard)
+        .catch(error => {
+            alert(error.message);
+        });
 }
 
 async function promotionButton() {
@@ -63,8 +70,11 @@ async function promotionButton() {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(promotion)
-    }).then(r => refreshBoard()
-        .then(r => displayBoard()));
+    }).then(response => handlingException(response))
+        .then(refreshAndDisplayBoard)
+        .catch(error => {
+            alert(error.message);
+        });
     document.getElementById("promotion").value = "";
 }
 
@@ -82,7 +92,11 @@ async function moveButton() {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(move)
-    }).then(r => refreshBoard().then(r => displayBoard()));
+    }).then(response => handlingException(response))
+        .then(refreshAndDisplayBoard)
+        .catch(error => {
+            alert(error.message);
+        });
     document.getElementById("source").value = "";
     document.getElementById("target").value = "";
 }
@@ -100,4 +114,12 @@ async function scoreButton() {
 async function status() {
     return await fetch("/status")
         .then((response) => response.json());
+}
+
+async function handlingException(response) {
+    if (response.ok) {
+        return response;
+    }
+    const error = await response.json();
+    throw Error(error.message);
 }
