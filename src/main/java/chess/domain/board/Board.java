@@ -50,26 +50,25 @@ public class Board {
     private final List<Piece> pieces;
     private TeamColor currentTurnTeamColor;
 
-    private Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
+    public Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
         this.pieces = pieces;
         this.currentTurnTeamColor = currentTurnTeamColor;
     }
 
-    public Board() {
+    public static Board create() {
         List<Piece> pieces = new ArrayList<>();
         pieces.addAll(initTeamPieces(BLACK));
         pieces.addAll(initTeamPieces(WHITE));
-        this.pieces = pieces;
-        currentTurnTeamColor = WHITE;
+        return new Board(pieces, WHITE);
     }
 
-    private List<Piece> initTeamPieces(TeamColor teamColor) {
+    private static List<Piece> initTeamPieces(TeamColor teamColor) {
         List<Piece> pieces = initPiecesExceptPawn(teamColor);
         pieces.addAll(initPawns(teamColor));
         return pieces;
     }
 
-    private List<Piece> initPiecesExceptPawn(TeamColor teamColor) {
+    private static List<Piece> initPiecesExceptPawn(TeamColor teamColor) {
         List<Piece> pieces = new ArrayList<>();
         Rank rank = RANK_BY_TEAM_COLOR.get(teamColor);
         for (File file : File.values()) {
@@ -78,7 +77,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> initPawns(TeamColor teamColor) {
+    private static List<Piece> initPawns(TeamColor teamColor) {
         List<Piece> pieces = new ArrayList<>();
         Rank rank = RANK_BY_TEAM_COLOR_PAWN.get(teamColor);
         for(File file : File.values()) {

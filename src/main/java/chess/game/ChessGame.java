@@ -17,7 +17,7 @@ public class ChessGame {
         printStartMessage();
         List<String> inputCommand = InputView.inputCommand();
         validateFirstCommand(findCommandType(inputCommand));
-        Board board = new Board();
+        Board board = Board.create();
         play(board);
     }
 

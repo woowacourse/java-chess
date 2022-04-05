@@ -11,7 +11,7 @@ class PieceDaoTest {
     @Test
     @DisplayName("보드판의 기물들로 DB를 최신화한다.")
     void updatePieces() {
-        Board board = new Board();
+        Board board = Board.create();
         PieceDao.updatePieces(board);
     }
 
