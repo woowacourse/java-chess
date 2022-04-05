@@ -35,4 +35,33 @@ class GameDaoTest {
         gameDao.save(ChessBoardFactory.initBoard());
     }
 
+    @Test
+    @DisplayName("가장 최근 게임을 불러온다")
+    void findLastGame() throws SQLException {
+        //given
+        gameDao.save(ChessBoardFactory.initBoard());
+        gameDao.save(ChessBoardFactory.initBoard());
+        //when
+        GameDto actual = gameDao.findLastGame();
+        //then
+        assertThat(actual.getId()).isEqualTo(2);
+        assertThat(actual.getTurn()).isEqualTo("WHITE");
+    }
+
+
+    @Test
+    @DisplayName("id로 게임을 불러온다")
+    void findById(){
+        //given
+        gameDao.save(ChessBoardFactory.initBoard());
+        //when
+        GameDto actual = gameDao.findById(1);
+        //then
+        assertThat(actual.getId()).isEqualTo(1);
+    }
+
+    @AfterEach
+    void end() throws SQLException {
+        connection.rollback();
+    }
 }
