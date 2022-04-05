@@ -44,7 +44,7 @@ public class H2Connection {
     }
 
     @Test
-    void test() {
+    void setUpH2Table() {
         assertDoesNotThrow(H2Connection::setUpTable);
     }
 }
