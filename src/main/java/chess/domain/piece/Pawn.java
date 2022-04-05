@@ -1,8 +1,5 @@
-package chess.domain.piece.pawn;
+package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Symbol;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
@@ -10,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Pawn extends Piece {
+public class Pawn extends Piece {
 
     public static final List<Position> BLACK_INIT_LOCATIONS = List.of(
             Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),
@@ -21,27 +18,26 @@ public abstract class Pawn extends Piece {
 
     private static final int PAWN_POINT = 1;
 
-    protected Pawn(final Color color) {
+    public Pawn(final Color color) {
         super(color, Symbol.PAWN);
     }
 
     @Override
-    public abstract Map<Direction, List<Position>> getMovablePositions(final Position position);
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
+        Direction direction = Direction.pawnDirection(color);
 
-    protected final Map<Direction, List<Position>> getMovablePositionsByDirection(final Position position,
-                                                                                  final Direction direction) {
         final Map<Direction, List<Position>> movablePositions = initMovablePositions(direction);
         putMovablePositionByDirection(movablePositions, position, direction);
         return movablePositions;
     }
 
-    private Map<Direction, List<Position>> initMovablePositions(final Direction direction) {
+    protected Map<Direction, List<Position>> initMovablePositions(final Direction direction) {
         final Map<Direction, List<Position>> movablePositions = new HashMap<>();
         movablePositions.put(direction, new ArrayList<>());
         return movablePositions;
     }
 
-    private void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
+    protected void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
                                                final Position position,
                                                final Direction direction) {
         final Position nextPosition = position.toDirection(direction);

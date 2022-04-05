@@ -1,8 +1,5 @@
-package chess.domain.piece.straightmovablepiece;
+package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Symbol;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
@@ -19,16 +16,7 @@ public abstract class StraightMovablePiece extends Piece {
     @Override
     public abstract Map<Direction, List<Position>> getMovablePositions(final Position position);
 
-    protected final Map<Direction, List<Position>> getMovablePositionsByDirections(final Position position,
-                                                                                   final List<Direction> directions) {
-        final Map<Direction, List<Position>> movablePositions = initMovablePositions(directions);
-        for (Direction direction : directions) {
-            putMovablePositionsByDirection(movablePositions, position, direction);
-        }
-        return movablePositions;
-    }
-
-    private Map<Direction, List<Position>> initMovablePositions(final List<Direction> directions) {
+    protected Map<Direction, List<Position>> initMovablePositions(final List<Direction> directions) {
         final Map<Direction, List<Position>> movablePositions = new HashMap<>();
         for (Direction direction : directions) {
             movablePositions.put(direction, new ArrayList<>());
@@ -36,20 +24,17 @@ public abstract class StraightMovablePiece extends Piece {
         return movablePositions;
     }
 
-    private void putMovablePositionsByDirection(final Map<Direction, List<Position>> movablePositions,
+    protected void putMovablePositionsByDirection(final Map<Direction, List<Position>> movablePositions,
                                                 final Position position,
                                                 final Direction direction) {
         final Position nextPosition = position.toDirection(direction);
         if (nextPosition == position) {
             return;
         }
+
         final List<Position> positionsToDirection = movablePositions.get(direction);
         positionsToDirection.add(nextPosition);
-        putMovablePositionsByDirection(movablePositions, nextPosition, direction);
-    }
 
-    @Override
-    public Direction getPawnDirection() {
-        throw new IllegalStateException("폰만 방향을 얻을 수 있습니다.");
+        putMovablePositionsByDirection(movablePositions, nextPosition, direction);
     }
 }

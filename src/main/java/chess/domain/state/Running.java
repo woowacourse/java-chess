@@ -3,16 +3,12 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public abstract class Running implements State {
 
     public abstract State move(final ChessBoard chessBoard, final GameCommand gameCommand);
-
-    @Override
-    public abstract Color getWinner();
 
     @Override
     public final State proceed(final ChessBoard chessBoard, final GameCommand gameCommand) {

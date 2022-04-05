@@ -36,7 +36,7 @@ public class GameController {
             chessGame.playGameByCommand(gameCommand);
             checkStatus(chessGame, gameCommand);
         } catch (RuntimeException exception) {
-            OutputView.printReplay(exception);
+            OutputView.printReplay(exception.getMessage());
             requestCommand(chessGame);
         }
     }

@@ -40,15 +40,13 @@ public class ChessBoard {
 
     public void move(final Position from, final Position to) {
         final Piece piece = selectPiece(from);
-        final List<Position> finalMovablePositions = getMovablePositions(from, piece);
-        System.out.println(finalMovablePositions);
-        checkMovable(to, finalMovablePositions);
+        final List<Position> MovablePositions = getMovablePositions(from, piece);
+        validateMovable(to, MovablePositions);
         movePiece(from, to, piece);
     }
 
     private List<Position> getMovablePositions(final Position from, final Piece piece) {
         final Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-
         return generateMovablePositionsExceptObstacles(from, piece, movablePositions);
     }
 
@@ -88,7 +86,7 @@ public class ChessBoard {
         return cutIndex + 1;
     }
 
-    private void checkMovable(final Position to, final List<Position> finalMovablePositions) {
+    private void validateMovable(final Position to, final List<Position> finalMovablePositions) {
         if (!finalMovablePositions.contains(to)) {
             throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
         }
@@ -101,7 +99,7 @@ public class ChessBoard {
 
     private void addDiagonalMoveForPawn(final Position position, final Piece piece, final List<Position> result) {
         if (piece.isSameSymbol(Symbol.PAWN)) {
-            final Direction direction = piece.getPawnDirection();
+            final Direction direction = Direction.pawnDirection(piece.getColor());
             final List<Direction> diagonalDirections = direction.getDiagonal();
             final List<Position> diagonalPositions = diagonalDirections.stream()
                     .map(position::toDirection)

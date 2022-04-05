@@ -2,13 +2,12 @@ package chess.domain.piece.generator;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.fixedmovablepiece.King;
-import chess.domain.piece.fixedmovablepiece.Knight;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
-import chess.domain.piece.straightmovablepiece.Bishop;
-import chess.domain.piece.straightmovablepiece.Queen;
-import chess.domain.piece.straightmovablepiece.Rook;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,12 +66,12 @@ public class NormalPiecesGenerator implements PiecesGenerator {
     }
 
     private static void createPawn() {
-        for (Position position : BlackPawn.BLACK_INIT_LOCATIONS) {
-            pieces.put(position, new BlackPawn());
+        for (Position position : Pawn.BLACK_INIT_LOCATIONS) {
+            pieces.put(position, new Pawn(Color.BLACK));
         }
 
-        for (Position position : WhitePawn.WHITE_INIT_LOCATIONS) {
-            pieces.put(position, new WhitePawn());
+        for (Position position : Pawn.WHITE_INIT_LOCATIONS) {
+            pieces.put(position, new Pawn(Color.WHITE));
         }
     }
 

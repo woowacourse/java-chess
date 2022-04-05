@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.ChessBoard;
 import chess.domain.GameCommand;
-import chess.domain.piece.Color;
 
 public final class Finish implements State {
 
@@ -14,10 +13,5 @@ public final class Finish implements State {
     @Override
     public boolean isFinished() {
         return true;
-    }
-
-    @Override
-    public Color getWinner() {
-        throw new IllegalStateException("사용할 수 없습니다.");
     }
 }

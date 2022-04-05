@@ -1,10 +1,7 @@
-package chess.domain.piece.straightmovablepiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -55,15 +52,5 @@ public class RookTest {
         final double point = rook.getPoint();
 
         assertThat(point).isEqualTo(5);
-    }
-
-    @Test
-    @DisplayName("폰의 방향을 얻을 시 예외가 발생한다.")
-    void getPawnDirection() {
-        final Piece rook = new Rook(Color.BLACK);
-        assertThatThrownBy(() ->
-                rook.getPawnDirection())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("폰만 방향을 얻을 수 있습니다.");
     }
 }

@@ -19,8 +19,6 @@ public abstract class Piece {
 
     public abstract double getPoint();
 
-    public abstract Direction getPawnDirection();
-
     public final Symbol getSymbol() {
         return symbol;
     }

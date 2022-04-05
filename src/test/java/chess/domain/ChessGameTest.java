@@ -3,15 +3,14 @@ package chess.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.position.Position;
 import chess.domain.state.Finish;
 import chess.domain.state.State;
 import chess.domain.state.WhiteRunning;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.fixedmovablepiece.King;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
-import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +24,8 @@ public class ChessGameTest {
     @BeforeEach
     void init() {
         testBoard.put(Position.of("d4"), new King(Color.WHITE));
-        testBoard.put(Position.of("d5"), new WhitePawn());
-        testBoard.put(Position.of("e3"), new BlackPawn());
+        testBoard.put(Position.of("d5"), new Pawn(Color.WHITE));
+        testBoard.put(Position.of("e3"), new Pawn(Color.BLACK));
     }
 
     @Test

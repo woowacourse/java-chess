@@ -1,9 +1,9 @@
-package chess.domain.piece.fixedmovablepiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -51,15 +51,5 @@ public class KingTest {
         final double point = king.getPoint();
 
         assertThat(point).isEqualTo(0);
-    }
-
-    @Test
-    @DisplayName("폰의 방향을 얻을 시 예외가 발생한다.")
-    void getPawnDirection() {
-        final Piece king = new King(Color.BLACK);
-        assertThatThrownBy(() ->
-                king.getPawnDirection())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("폰만 방향을 얻을 수 있습니다.");
     }
 }

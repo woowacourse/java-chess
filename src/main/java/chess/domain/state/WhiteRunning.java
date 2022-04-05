@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.ChessBoard;
 import chess.domain.GameCommand;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -24,10 +23,5 @@ public final class WhiteRunning extends Running {
         final Position fromPosition = gameCommand.getFromPosition();
         final Piece piece = chessBoard.selectPiece(fromPosition);
         return piece.isWhite();
-    }
-
-    @Override
-    public Color getWinner() {
-        return Color.BLACK;
     }
 }

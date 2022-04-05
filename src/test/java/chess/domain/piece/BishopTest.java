@@ -1,7 +1,8 @@
-package chess.domain.piece.straightmovablepiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;

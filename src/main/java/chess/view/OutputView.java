@@ -50,8 +50,8 @@ public class OutputView {
         return value;
     }
 
-    public static void printReplay(final Exception exception) {
-        System.out.println(exception.getMessage());
+    public static void printReplay(final String message) {
+        System.out.println(message);
         System.out.println("다시 입력 바랍니다." + System.lineSeparator());
     }
 
