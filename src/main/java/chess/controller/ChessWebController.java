@@ -3,6 +3,7 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.domain.game.ChessGame;
 import chess.dto.ChessResponseDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.StatusResponseDto;
@@ -56,8 +57,8 @@ public class ChessWebController {
 
     private ChessResponseDto load() {
         try {
-            chessService.load();
-            return chessService.createChessResponseDto();
+            final ChessGame chessGame = chessService.load();
+            return chessService.createChessResponseDto(chessGame);
         } catch (final Exception e) {
             return chessService.createErrorChessResponseDto(e.getMessage());
         }
@@ -65,8 +66,9 @@ public class ChessWebController {
 
     private ChessResponseDto start() {
         try {
-            chessService.start();
-            return chessService.createChessResponseDto();
+            ChessGame chessGame = chessService.load();
+            chessGame = chessService.start(chessGame);
+            return chessService.createChessResponseDto(chessGame);
         } catch (final Exception e) {
             return chessService.createErrorChessResponseDto(e.getMessage());
         }
@@ -74,8 +76,9 @@ public class ChessWebController {
 
     private ChessResponseDto end() {
         try {
-            chessService.end();
-            return chessService.createChessResponseDto();
+            ChessGame chessGame = chessService.load();
+            chessGame = chessService.end(chessGame);
+            return chessService.createChessResponseDto(chessGame);
         } catch (final Exception e) {
             return chessService.createErrorChessResponseDto(e.getMessage());
         }
@@ -83,8 +86,9 @@ public class ChessWebController {
 
     private StatusResponseDto status() {
         try {
-            chessService.status();
-            return chessService.createStatusResponseDto();
+            ChessGame chessGame = chessService.load();
+            chessGame = chessService.status(chessGame);
+            return chessService.createStatusResponseDto(chessGame);
         } catch (final Exception e) {
             return chessService.creatErrorStatusResponseDto(e.getMessage());
         }
@@ -92,8 +96,9 @@ public class ChessWebController {
 
     private ChessResponseDto move(final MoveRequestDto moveDto) {
         try {
-            chessService.move(moveDto.getSource(), moveDto.getTarget());
-            return chessService.createChessResponseDto();
+            ChessGame chessGame = chessService.load();
+            chessGame = chessService.move(chessGame, moveDto.getSource(), moveDto.getTarget());
+            return chessService.createChessResponseDto(chessGame);
         } catch (final Exception e) {
             return chessService.createErrorChessResponseDto(e.getMessage());
         }

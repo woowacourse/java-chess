@@ -13,6 +13,11 @@ public class ChessGame {
     private State state;
     private Board board;
 
+    public ChessGame(final State state, final Board board) {
+        this.state = state;
+        this.board = board;
+    }
+
     public ChessGame() {
         this.board = new Board(new BasicBoardFactory());
         this.state = new Ready(board);
@@ -21,11 +26,6 @@ public class ChessGame {
     public void initialize() {
         board = new Board(new BasicBoardFactory());
         state = new Ready(board);
-    }
-
-    public void load(final State state, final Board board) {
-        this.state = state;
-        this.board = board;
     }
 
     public void start() {
