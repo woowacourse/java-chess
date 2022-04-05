@@ -1,0 +1,36 @@
+package chess.domain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+class ChessBoardPositionTest {
+
+    @ParameterizedTest
+    @CsvSource(value = {"a:0", "a:9", "j:3", "j:10"}, delimiter = ':')
+    @DisplayName("유효하지 않은 체스판 내부 위치를 생성하면 에외를 발생한다.")
+    void validateChess(char column, int row) {
+        assertThatThrownBy(() -> ChessBoardPosition.of(column, row))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 체스판 범위를 벗어나는 위치가 입력되었습니다.");
+    }
+
+    @Test
+    @DisplayName("인자로 들어온 위치가 현재 내 위치랑 같은지 확인하는 테스트한다.")
+    void equalsTest() {
+        ChessBoardPosition chessBoardPosition = ChessBoardPosition.of('a', 3);
+        assertThat(chessBoardPosition.equals(ChessBoardPosition.of('a', 3))).isTrue();
+    }
+
+
+    @Test
+    @DisplayName("인자로 들어온 위치가 현재 내 위치랑 다른지 확인하는 테스트한다.")
+    void notEqualsTest() {
+        ChessBoardPosition chessBoardPosition = ChessBoardPosition.of('a', 3);
+        assertThat(chessBoardPosition.equals(ChessBoardPosition.of('a', 4))).isFalse();
+    }
+}
