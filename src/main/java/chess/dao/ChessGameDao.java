@@ -1,7 +1,9 @@
 package chess.dao;
 
+import chess.domain.game.state.ChessGame;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ChessGameDao {
@@ -26,5 +28,18 @@ public class ChessGameDao {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void save(ChessGame chessGame) {
+        Connection connection = getConnection();
+        final String sql = "insert into game (state) values (?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
