@@ -1,0 +1,18 @@
+
+.board {
+    width: 320px;
+    border: 1px solid slategrey;
+    display: grid;
+    grid-template-columns: repeat(8, 40px);
+    grid-template-rows: repeat(8, 40px);
+}
+
+.black {
+    width: 40px;
+    background-color: saddlebrown;
+}
+
+.white {
+    width: 40px;
+    background-color: antiquewhite;
+}
