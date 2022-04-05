@@ -44,3 +44,85 @@ input {
 div.center {
     text-align: center;
 }
+
+div.left {
+    width: 55%;
+    float: left;
+}
+
+img.piece {
+    width: 50px;
+    height: 70px;
+}
+
+div.file1 {
+    left: 25px;
+}
+
+div.file2 {
+    left: 125px;
+}
+
+div.file3 {
+    left: 225px;
+}
+
+div.file4 {
+    left: 325px;
+}
+
+div.file5 {
+    left: 425px;
+}
+
+div.file6 {
+    left: 525px;
+}
+
+div.file7 {
+    left: 625px;
+}
+
+div.file8 {
+    left: 725px;
+}
+
+div.rank8 {
+    position: absolute;
+    top: 25px;
+}
+
+div.rank7 {
+    position: absolute;
+    top: 125px;
+}
+
+div.rank6 {
+    position: absolute;
+    top: 225px;
+}
+
+div.rank5 {
+    position: absolute;
+    top: 325px;
+}
+
+div.rank4 {
+    position: absolute;
+    top: 425px;
+}
+
+div.rank3 {
+    position: absolute;
+    top: 525px;
+}
+
+div.rank2 {
+    position: absolute;
+    top: 625px;
+}
+
+div.rank1 {
+    position: absolute;
+    top: 725px;
+}
