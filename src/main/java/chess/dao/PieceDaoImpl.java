@@ -109,8 +109,6 @@ public class PieceDaoImpl implements PieceDao {
     public void deleteAllPiece() {
         final String query = "delete from piece";
 
-        jdbcTemplate.executeUpdate(connection -> {
-            return connection.prepareStatement(query);
-        });
+        jdbcTemplate.executeUpdate(connection -> connection.prepareStatement(query));
     }
 }
