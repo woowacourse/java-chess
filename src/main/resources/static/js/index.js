@@ -1,4 +1,4 @@
-function move() {
+async function move() {
     const from = document.getElementById('from').value;
     const to = document.getElementById('to').value;
 
@@ -6,7 +6,7 @@ function move() {
     const split = url.split("/");
     const boardId = split[split.length - 1];
 
-    fetch("/move/" + boardId, {
+    const response = await fetch("/move/" + boardId, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -15,11 +15,15 @@ function move() {
             from: from,
             to: to
         }),
-    }).then(response => {
-        if (response.redirected) {
-            window.location.href = response.url;
-        }
-    })
+    });
+
+    if ((await response).status === 400) {
+        let newVar = await response.json();
+        alert(newVar.model.message);
+    }
+    if (response.redirected) {
+        window.location.href = response.url;
+    }
 }
 
 function start() {
