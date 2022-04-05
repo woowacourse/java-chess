@@ -63,7 +63,11 @@ public abstract class Piece {
         return Objects.hash(teamColor, position);
     }
 
-    public String getColor() {
+    public String getTeamColor() {
         return teamColor.name();
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

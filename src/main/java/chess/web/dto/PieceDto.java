@@ -14,7 +14,7 @@ public class PieceDto {
     }
 
     public static PieceDto of(Piece piece) {
-        return new PieceDto(piece.getColor(), PieceSymbol.findWebSymbol(piece));
+        return new PieceDto(piece.getTeamColor(), PieceSymbol.findWebSymbol(piece));
     }
 
     public String getColor() {
