@@ -388,9 +388,10 @@
         to: toInput
       }),
     })
-    .then(() => window.location.href = '/')
-    .catch(() => {
-      alert("잘못된 움직임 입니다.")
+    .then(status)
+    .then(() => window.location.href = './')
+    .catch(error => {
+      alert(error.message)
     })
 
   })
@@ -400,6 +401,14 @@
       return event.target.parentNode.id;
     }
     return event.target.id;
+  }
+
+  function status(res) {
+    if (!res.ok) {
+      return res.text().then(text => {
+        throw new Error(text)
+      })
+    }
   }
 
 </script>

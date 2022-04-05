@@ -50,6 +50,8 @@ public class WebApplication {
 
             game.moveChessmen(new MovePositionCommandDto(from, to));
 
+            res.redirect("/");
+
             return null;
         });
 
