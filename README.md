@@ -148,6 +148,8 @@ end
 
 ### 5단계 DB 적용
 - [ ] 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있다.
+  - [ ] save 할 수 있는 기능
+  - [ ] load 할 수 있는 기능
 ---
 ### Reference
 [체스판을 준비하는 방법](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)
