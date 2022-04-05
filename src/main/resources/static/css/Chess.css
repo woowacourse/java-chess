@@ -1,0 +1,25 @@
+table.chess-board {
+    text-align: center;
+    color: #fff;
+    border: solid 3px burlywood;
+    border-spacing: 0;
+}
+
+table.chess-board td {
+    width: 70px;
+    height: 70px;
+}
+
+table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n) {
+    background-color: darkkhaki;
+}
+
+table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n-1) {
+    background-color: darkkhaki;
+}
+
+img.chess-piece-img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}

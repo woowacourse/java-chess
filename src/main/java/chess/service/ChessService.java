@@ -29,6 +29,10 @@ public class ChessService {
         return createRankDTO(board.getBoard());
     }
 
+    public String getTeam() {
+        return team.name();
+    }
+
     private List<RankDTO> createRankDTO(Map<Row, Rank> board) {
         return board.values().stream()
                 .map(rank -> new RankDTO(createPieceDTO(rank.getPieces())))
