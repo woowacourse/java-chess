@@ -37,12 +37,12 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
-    public final String getCamp() {
-        return this.camp.toString();
-    }
-
     public final String getType() {
         return this.type.toString();
+    }
+
+    public final Camp getCamp() {
+        return this.camp;
     }
 
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);

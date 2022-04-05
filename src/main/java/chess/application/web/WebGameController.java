@@ -10,6 +10,8 @@ import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Score;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
+import chess.dto.PieceDto;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,13 +69,23 @@ public class WebGameController {
     }
 
     public void load() throws SQLException {
-        Map<String, Piece> rawBoard = boardDao.load();
+        Map<String, PieceDto> rawBoard = boardDao.load();
         Map<Position, Piece> board = rawBoard.entrySet().stream()
-                        .collect(Collectors.toMap(
-                                entry -> parsePosition(entry.getKey()),
-                                Entry::getValue
-                        ));
+                .collect(Collectors.toMap(
+                        entry -> parsePosition(entry.getKey()),
+                        entry -> parsePiece(entry.getValue())
+                ));
         chessGame.load(board, gameDao.isWhiteTurn());
+    }
+
+    private Piece parsePiece(PieceDto piece) {
+        String rawType = piece.getType();
+        if (rawType.isBlank()) {
+            rawType = "none";
+        }
+        Type type = Type.valueOf(rawType.toUpperCase());
+        Camp camp = Camp.valueOf(piece.getCamp().toUpperCase());
+        return type.generatePiece(camp);
     }
 
     public void move(Request req) {

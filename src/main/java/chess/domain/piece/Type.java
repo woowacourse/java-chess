@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
-import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
@@ -35,8 +34,6 @@ public enum Type {
     private final double score;
     private final Function<Camp, Piece> pieceSupplier;
 
-    private static final String ERROR_NO_SUCH_TYPE = "존재하지 않는 기물 타입입니다.";
-
     Type(BiPredicate<Position, Position> distanceChecker, double score, Function<Camp, Piece> pieceSupplier) {
         this.distanceChecker = distanceChecker;
         this.score = score;
@@ -50,13 +47,6 @@ public enum Type {
             return true;
         }
         return columnDistance == DISTANCE_KNIGHT_FIRST_STEP && rowDistance == DISTANCE_KNIGHT_SECOND_STEP;
-    }
-
-    public static Type from(String name) {
-        return Arrays.stream(values())
-                .filter(type -> type.toString().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_TYPE));
     }
 
     public Piece generatePiece(Camp camp) {
