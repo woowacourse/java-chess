@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+<h1 id="title"> Chess Game</h1>
+
+<div class="right">
+    <form action="/start" method="get">
+        <button>시작</button>
+    </form>
+
+    <form action="/end" method="get">
+        <button>종료</button>
+    </form>
+
+    <br>
+</div>
+
+<div class="left">
+    <table class="chessboard">
+        <tr>
+            <td class="white">
+                {{#if pieces.0}}
+                <img src="/img/{{pieces.0}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.1}}
+                <img src="/img/{{pieces.1}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.2}}
+                <img src="/img/{{pieces.2}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.3}}
+                <img src="/img/{{pieces.3}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.4}}
+                <img src="/img/{{pieces.4}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.5}}
+                <img src="/img/{{pieces.5}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.6}}
+                <img src="/img/{{pieces.6}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.7}}
+                <img src="/img/{{pieces.7}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="black">
+                {{#if pieces.8}}
+                <img src="/img/{{pieces.8}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.9}}
+                <img src="/img/{{pieces.9}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.10}}
+                <img src="/img/{{pieces.10}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.11}}
+                <img src="/img/{{pieces.11}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.12}}
+                <img src="/img/{{pieces.12}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.13}}
+                <img src="/img/{{pieces.13}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.14}}
+                <img src="/img/{{pieces.14}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.15}}
+                <img src="/img/{{pieces.15}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="white">
+                {{#if pieces.16}}
+                <img src="/img/{{pieces.16}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.17}}
+                <img src="/img/{{pieces.17}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.18}}
+                <img src="/img/{{pieces.18}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.19}}
+                <img src="/img/{{pieces.19}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.20}}
+                <img src="/img/{{pieces.20}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.21}}
+                <img src="/img/{{pieces.21}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.22}}
+                <img src="/img/{{pieces.22}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.23}}
+                <img src="/img/{{pieces.23}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="black">
+                {{#if pieces.24}}
+                <img src="/img/{{pieces.24}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.25}}
+                <img src="/img/{{pieces.25}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.26}}
+                <img src="/img/{{pieces.26}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.27}}
+                <img src="/img/{{pieces.27}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.28}}
+                <img src="/img/{{pieces.28}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.29}}
+                <img src="/img/{{pieces.29}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.30}}
+                <img src="/img/{{pieces.30}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.31}}
+                <img src="/img/{{pieces.31}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="white">
+                {{#if pieces.32}}
+                <img src="/img/{{pieces.32}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.33}}
+                <img src="/img/{{pieces.33}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.34}}
+                <img src="/img/{{pieces.34}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.35}}
+                <img src="/img/{{pieces.35}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.36}}
+                <img src="/img/{{pieces.36}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.37}}
+                <img src="/img/{{pieces.37}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.38}}
+                <img src="/img/{{pieces.38}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.39}}
+                <img src="/img/{{pieces.39}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="black">
+                {{#if pieces.40}}
+                <img src="/img/{{pieces.40}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.41}}
+                <img src="/img/{{pieces.41}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.42}}
+                <img src="/img/{{pieces.42}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.43}}
+                <img src="/img/{{pieces.43}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.44}}
+                <img src="/img/{{pieces.44}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.45}}
+                <img src="/img/{{pieces.45}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.46}}
+                <img src="/img/{{pieces.46}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.47}}
+                <img src="/img/{{pieces.47}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="white">
+                {{#if pieces.48}}
+                <img src="/img/{{pieces.48}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.49}}
+                <img src="/img/{{pieces.49}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.50}}
+                <img src="/img/{{pieces.50}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.51}}
+                <img src="/img/{{pieces.51}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.52}}
+                <img src="/img/{{pieces.52}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.53}}
+                <img src="/img/{{pieces.53}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.54}}
+                <img src="/img/{{pieces.54}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.55}}
+                <img src="/img/{{pieces.55}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="black">
+                {{#if pieces.56}}
+                <img src="/img/{{pieces.56}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.57}}
+                <img src="/img/{{pieces.57}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.58}}
+                <img src="/img/{{pieces.58}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.59}}
+                <img src="/img/{{pieces.59}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.60}}
+                <img src="/img/{{pieces.60}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.61}}
+                <img src="/img/{{pieces.61}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="black">
+                {{#if pieces.62}}
+                <img src="/img/{{pieces.62}}.png" class="piece"/>
+                {{/if}}
+            </td>
+            <td class="white">
+                {{#if pieces.63}}
+                <img src="/img/{{pieces.63}}.png" class="piece"/>
+                {{/if}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

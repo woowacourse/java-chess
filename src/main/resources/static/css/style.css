@@ -1,0 +1,26 @@
+div.left {
+    width: 60%;
+    float: left;
+}
+
+div.right {
+    width: 40%;
+    float: right;
+}
+
+.black {
+    background-color: rgb(72, 72, 72);
+    width: 60px;
+    height: 60px;
+}
+
+.white {
+    background-color: rgb(231, 231, 231);
+    width: 60px;
+    height: 60px;
+}
+
+.piece {
+    width: 100%;
+    height: 100%;
+}

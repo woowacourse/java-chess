@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +46,7 @@ public enum InitialBoard {
 	}
 
 	public static Map<Coordinate, Piece> init() {
-		Map<Coordinate, Piece> map = new HashMap<>();
+		Map<Coordinate, Piece> map = new LinkedHashMap<>();
 		for (Row row : Row.values()) {
             initPiece(map, row);
         }
