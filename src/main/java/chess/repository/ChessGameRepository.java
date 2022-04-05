@@ -11,17 +11,17 @@ import chess.domain.state.GameState;
 import chess.converter.BoardToStringConverter;
 import chess.converter.StringToStateConverter;
 import chess.repository.dao.ChessGameDao;
-import chess.repository.dao.TileDao;
+import chess.repository.dao.PieceDao;
 
 public class ChessGameRepository implements GameRepository {
 
 	private final ChessGameDao chessGameDao = new ChessGameDao();
-	private final TileDao tileDao = new TileDao();
+	private final PieceDao pieceDao = new PieceDao();
 
 	@Override
 	public void save(ChessGame game) {
 		GameState state = game.getState();
-		tileDao.insertAll(
+		pieceDao.insertAll(
 			BoardToStringConverter.from(state.getBoard()),
 			chessGameDao.insert(game.getName(), state.toString())
 		);
@@ -35,7 +35,7 @@ public class ChessGameRepository implements GameRepository {
 		} catch (IllegalArgumentException exception) {
 			return Optional.empty();
 		}
-		Map<String, String> tiles = tileDao.selectByGameName(name);
+		Map<String, String> tiles = pieceDao.selectByGameName(name);
 		GameState gameState = StringToStateConverter.of(state, tiles);
 
 		return Optional.of(new ChessGame(name, gameState));
@@ -49,10 +49,10 @@ public class ChessGameRepository implements GameRepository {
 	@Override
 	public void updatePositionOfPiece(ChessGame game, Position from, Position to) {
 		String gameName = game.getName();
-		tileDao.deleteByPosition(to.toString(), gameName);
+		pieceDao.deleteByPosition(to.toString(), gameName);
 		Piece piece = game.getPieceByPosition(to);
 
-		tileDao.updatePositionOfPiece(piece.toString(), from.toString(), to.toString(), gameName);
+		pieceDao.updatePositionOfPiece(piece.toString(), from.toString(), to.toString(), gameName);
 	}
 
 	@Override

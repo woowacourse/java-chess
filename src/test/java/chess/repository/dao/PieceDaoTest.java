@@ -8,11 +8,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class TileDaoTest {
+class PieceDaoTest {
 
 	private static final String TEST_NAME = "test";
 
-	private final TileDao tileDao = new TileDao();
+	private final PieceDao pieceDao = new PieceDao();
 	private final ChessGameDao chessGameDao = new ChessGameDao();
 
 	@AfterEach
@@ -21,22 +21,22 @@ class TileDaoTest {
 	}
 
 	@Test
-	@DisplayName("타일 insert 확인")
+	@DisplayName("피스 insert 확인")
 	void insert() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
 
-		tileDao.insertAll(tiles, foreignKey);
+		pieceDao.insertAll(tiles, foreignKey);
 	}
 
 	@Test
-	@DisplayName("외래키로 tile 조회")
+	@DisplayName("외래키로 피스 조회")
 	void selectWhereForeignKey() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		tileDao.insertAll(tiles, foreignKey);
+		pieceDao.insertAll(tiles, foreignKey);
 
-		Map<String, String> result = tileDao.selectByGameId(foreignKey);
+		Map<String, String> result = pieceDao.selectByGameId(foreignKey);
 
 		assertThat(result)
 			.containsEntry("a1", "WHITE_PAWN")
@@ -44,13 +44,13 @@ class TileDaoTest {
 	}
 
 	@Test
-	@DisplayName("게임 이름으로 tile 조회")
+	@DisplayName("게임 이름으로 피스 조회")
 	void selectByGameName() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		tileDao.insertAll(tiles, foreignKey);
+		pieceDao.insertAll(tiles, foreignKey);
 
-		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
 
 		assertThat(result)
 			.containsEntry("a1", "WHITE_PAWN")
@@ -62,11 +62,11 @@ class TileDaoTest {
 	void deleteByPosition() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		tileDao.insertAll(tiles, foreignKey);
+		pieceDao.insertAll(tiles, foreignKey);
 
-		tileDao.deleteByPosition("a1", TEST_NAME);
+		pieceDao.deleteByPosition("a1", TEST_NAME);
 
-		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
 		assertThat(result)
 			.containsExactlyEntriesOf(Map.of("b2", "BLACK_KING"));
 	}
@@ -76,11 +76,11 @@ class TileDaoTest {
 	void update() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN");
-		tileDao.insertAll(tiles, foreignKey);
+		pieceDao.insertAll(tiles, foreignKey);
 
-		tileDao.updatePositionOfPiece("WHITE_PAWN", "a1", "a2", TEST_NAME);
+		pieceDao.updatePositionOfPiece("WHITE_PAWN", "a1", "a2", TEST_NAME);
 
-		Map<String, String> result = tileDao.selectByGameName(TEST_NAME);
+		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
 		assertThat(result)
 			.containsEntry("a2", "WHITE_PAWN");
 	}
