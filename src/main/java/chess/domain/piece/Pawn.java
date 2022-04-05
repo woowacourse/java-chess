@@ -5,7 +5,6 @@ import chess.domain.Distance;
 import java.util.List;
 
 public final class Pawn extends Piece {
-    //TODO 앙파상 처리 필요
     private final List<Distance> INITIAL_MOVABLE_DISTANCES =
             List.of(new Distance(0, 1), new Distance(0, 2));
     private final List<Distance> AFTER_INITIAL_MOVABLE_DISTANCES = List.of(new Distance(0, 1));
@@ -26,7 +25,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isRightFirstMove(Distance distance, Piece target) {
-        if(isOpponent(target) && INITIAL_MOVABLE_DISTANCES.contains(distance)){
+        if(isOpponent(target) && (INITIAL_MOVABLE_DISTANCES.contains(distance) || isDiagonalMove(distance, target))){
             isFirstMove = false;
             return true;
         }
