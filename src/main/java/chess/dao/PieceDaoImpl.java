@@ -112,4 +112,15 @@ public class PieceDaoImpl implements PieceDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteAllPiece() {
+        final String query = "delete from piece";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

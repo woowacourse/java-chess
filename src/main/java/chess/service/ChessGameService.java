@@ -33,6 +33,7 @@ public class ChessGameService {
         if (!gameTurn.isEnd()) {
             throw new IllegalStateException("아직 진행 중인 게임이 있습니다.");
         }
+        pieceDao.deleteAllPiece();
         pieceDao.savePieces(PieceFactory.createNewChessBoard());
         turnDao.updateTurn(findCurrentTurn(), Turn.WHITE_TURN);
     }

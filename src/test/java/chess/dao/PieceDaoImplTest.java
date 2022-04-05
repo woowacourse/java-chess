@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.pawn.Pawn;
 import chess.testutil.H2Connection;
@@ -89,5 +90,18 @@ class PieceDaoImplTest {
                 () -> assertThat(result.color()).isEqualTo(WHITE),
                 () -> assertThat(result.name()).isEqualTo("queen")
         );
+    }
+
+    @Test
+    @DisplayName("저장한 모든 piece를 삭제")
+    void saveAndDeleceAllPiece() {
+        // given
+        pieceDao.savePieces(PieceFactory.createNewChessBoard());
+
+        // when
+        pieceDao.deleteAllPiece();
+
+        // then
+        assertThat(pieceDao.findAllPieces()).isEmpty();
     }
 }
