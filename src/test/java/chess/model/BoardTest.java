@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.model.boardinitializer.DefaultArrangement;
+import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 

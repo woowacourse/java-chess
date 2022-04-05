@@ -15,7 +15,7 @@ public class ChessController {
     public void run() {
         OutputView.printInitMessage();
         ChessGame game = new ChessGame(new Turn(), new DefaultArrangement());
-        Request request = Request.toStart(inputCommandInStart());
+        Request request = Request.toStart(inputCommand());
 
         if (request.isEnd()) {
             return;
@@ -27,7 +27,7 @@ public class ChessController {
 
     private void playChess(ChessGame game) {
         while (!game.isFinished()) {
-            Request request = Request.toPlay(inputCommandInGaming());
+            Request request = Request.toPlay(inputCommand());
             if (request.isEnd()) {
                 break;
             }
