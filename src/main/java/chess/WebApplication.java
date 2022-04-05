@@ -18,7 +18,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
-    private static final Board BOARD = BoardFactory.newInstance();
+    private static Board BOARD = BoardFactory.newInstance();
 
     public static void main(String[] args) {
         staticFiles.location("/static");
@@ -42,6 +42,12 @@ public class WebApplication {
         }, new JsonTransformer());
 
         get("/score", (request, response) -> BOARD.getScore()
+                , new JsonTransformer());
+
+        get("/new", (request, response) -> {
+                    BOARD = BoardFactory.newInstance();
+                    return WebViewMapper.parse(BOARD.getBoard());
+                }
                 , new JsonTransformer());
     }
 

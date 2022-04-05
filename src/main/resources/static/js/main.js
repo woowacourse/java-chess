@@ -1,13 +1,14 @@
 const boardUrl = '/board';
 const moveUrl = `/move`;
 const scoreUrl = `/score`;
+const newGamemUrl = '/new';
 let selected = '';
 let from;
 
 /**
  * 페이지 첫 진입 시 => 기물 그리기 | 이벤트 적용 |점수 출력
  */
-const initializer = () => {
+const initialize = () => {
     fetch(boardUrl)
         .then(res => res.json())
         .then(board => board.forEach(boardDto =>
@@ -17,9 +18,13 @@ const initializer = () => {
         .forEach(square => square.addEventListener('click', (event) => squareClick(event)));
 
     setupScores();
-}
 
-initializer();
+    document.getElementById("newGame").addEventListener('click', (event) => {
+        fetch(newGamemUrl)
+            .then(res => res.json())
+            .then(json => location.reload());
+    });
+}
 
 const setupPieceToSquare = (square, pieceName) => {
     square.dataset.piece = pieceName;
@@ -109,4 +114,4 @@ const removePieceFromSquare = (square) => {
     square.style.backgroundImage = '';
 }
 
-
+initialize();
