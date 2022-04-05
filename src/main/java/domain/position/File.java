@@ -38,6 +38,10 @@ public enum File {
         return index;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
     public static boolean isFileRange(final int index) {
         return A.index <= index && index <= H.index;
     }

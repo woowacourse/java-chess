@@ -55,6 +55,10 @@ public class Position {
         return file.getIndex();
     }
 
+    public String getPosition() {
+        return file.getSymbol() + rank.getIndex();
+    }
+
     @Override
     public String toString() {
         return "Position{" +

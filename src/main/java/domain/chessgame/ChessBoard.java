@@ -68,4 +68,8 @@ public class ChessBoard {
     public Piece findPiece(final Position position) {
         return board.get(position);
     }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
 }
