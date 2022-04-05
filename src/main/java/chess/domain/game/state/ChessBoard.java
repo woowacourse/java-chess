@@ -15,6 +15,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.property.Color;
 import chess.web.dto.PieceDto;
+import chess.web.utils.Converter;
 
 public class ChessBoard {
     private static final int DUPLICATED_NUMBER = 2;
@@ -33,8 +34,7 @@ public class ChessBoard {
         Map<Position, Piece> board = new HashMap<>();
         for (PieceDto piece : pieces) {
             String position = piece.getPosition();
-            board.put(Position.of(position.substring(0, 1), position.substring(1, 2)),
-                PieceFactory.createBy(piece.getName()));
+            board.put(Converter.positionFrom(position), PieceFactory.createBy(piece.getName()));
         }
         return new ChessBoard(board);
     }
