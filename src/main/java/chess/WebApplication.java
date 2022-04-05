@@ -40,6 +40,9 @@ public class WebApplication {
                     WebViewMapper.parse(Position.from(moveRequestDto.getFrom())),
                     WebViewMapper.parse(Position.from(moveRequestDto.getTo())), moveResult);
         }, new JsonTransformer());
+
+        get("/score", (request, response) -> BOARD.getScore()
+                , new JsonTransformer());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
