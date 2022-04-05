@@ -1,37 +1,40 @@
-package chess.repository;
+package chess.dao;
 
-import chess.dao.GameDao;
 import chess.domain.ChessGame;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class DatabaseGameRepository implements GameRepository {
-    private final GameDao gameDao;
+public class MemoryGameDao implements GameDao {
 
-    public DatabaseGameRepository(GameDao gameDao) {
-        this.gameDao = gameDao;
-    }
+    private final static Map<Long, ChessGame> store = new ConcurrentHashMap<>();
+    private static int nextId = 1;
+
 
     @Override
-    public void save(ChessGame game) {
-        gameDao.save(game);
+    public Long save(ChessGame game) {
+        game = new ChessGame((long) nextId++, game.getState(), game.getParticipant());
+        store.put(game.getId(), game);
+        return game.getId();
     }
 
     @Override
     public Optional<ChessGame> findById(Long id) {
-        return Optional.of(gameDao.findById(id));
+        return Optional.ofNullable(store.get(id));
     }
 
     @Override
     public List<ChessGame> findAll() {
-        return gameDao.findAll();
+        return new ArrayList<>(store.values());
     }
 
     @Override
     public List<ChessGame> findHistorysByMemberId(Long memberId) {
-        return gameDao.findAll()
+        return store.values()
                 .stream()
                 .filter(ChessGame::isEnd)
                 .filter(game -> Objects.equals(game.getParticipant().getBlackId(), memberId)
@@ -41,6 +44,6 @@ public class DatabaseGameRepository implements GameRepository {
 
     @Override
     public void update(ChessGame game) {
-        gameDao.update(game);
+        store.put(game.getId(), game);
     }
 }

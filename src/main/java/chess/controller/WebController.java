@@ -7,14 +7,12 @@ import static spark.Spark.staticFiles;
 import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.Member;
-import chess.domain.Participant;
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
-import chess.domain.state.WhiteTurn;
 import chess.dto.GameResultDTO;
 import chess.dto.RankDTO;
-import chess.repository.GameRepository;
-import chess.repository.MemberRepository;
+import chess.dao.MemberDao;
+import chess.service.GameService;
+import chess.service.MemberService;
 import chess.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +23,12 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
-    private final GameRepository gameRepository;
-    private final MemberRepository memberRepository;
+    private final GameService gameService;
+    private final MemberService memberService;
 
-    public WebController(GameRepository gameRepository, MemberRepository memberRepository) {
-        this.gameRepository = gameRepository;
-        this.memberRepository = memberRepository;
+    public WebController(GameService gameService, MemberService memberService) {
+        this.gameService = gameService;
+        this.memberService = memberService;
     }
 
     public void run() {
@@ -38,8 +36,8 @@ public class WebController {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<ChessGame> games = gameRepository.findAll();
-            List<Member> members = memberRepository.findAll();
+            List<ChessGame> games = gameService.findPlayingGames();
+            List<Member> members = memberService.findAllMembers();
             model.put("games", games);
             model.put("members", members);
             return render(model, "index.html");
@@ -47,7 +45,7 @@ public class WebController {
 
         get("/play/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
-            ChessGame chessGame = gameRepository.findById(gameId).get();
+            ChessGame chessGame = gameService.findByGameId(gameId);
             if (chessGame.isEnd()) {
                 res.redirect(String.format("/result/%d", gameId));
             }
@@ -65,7 +63,7 @@ public class WebController {
 
         get("/result/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
-            ChessGame chessGame = gameRepository.findById(gameId).get();
+            ChessGame chessGame = gameService.findByGameId(gameId);
             Map<String, Object> model = new HashMap<>();
             model.put("winner", chessGame.getWinnerName());
             model.put("whiteScore", chessGame.getWhiteScore());
@@ -75,7 +73,7 @@ public class WebController {
 
         get("/history/:memberId", (req, res) -> {
             Long memberId = Long.valueOf(req.params("memberId"));
-            List<ChessGame> games = gameRepository.findHistorysByMemberId(memberId);
+            List<ChessGame> games = gameService.findHistorysByMemberId(memberId);
             List<GameResultDTO> history = games.stream()
                     .map(game -> GameResultDTO.toResultDTO(game, memberId))
                     .collect(Collectors.toList());
@@ -85,7 +83,7 @@ public class WebController {
         });
 
         get("/member-management", (req, res) -> {
-            List<Member> members = memberRepository.findAll();
+            List<Member> members = memberService.findAllMembers();
             Map<String, Object> model = new HashMap<>();
             model.put("members", members);
             return render(model, "member-management.html");
@@ -96,7 +94,7 @@ public class WebController {
          */
         get("/score/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
-            ChessGame chessGame = gameRepository.findById(gameId).get();
+            ChessGame chessGame = gameService.findByGameId(gameId);
             Map<String, String> jsonData = new HashMap<>();
             jsonData.put("whiteScore", String.valueOf(chessGame.getWhiteScore()));
             jsonData.put("blackScore", String.valueOf(chessGame.getBlackScore()));
@@ -107,19 +105,13 @@ public class WebController {
 
         post("/member", (req, res) -> {
             String memberName = req.body();
-            memberRepository.save(new Member(memberName));
-            return "";
-        });
-
-        post("/member", (req, res) -> {
-            String name = req.queryParams("name");
-            memberRepository.save(new Member(name));
+            memberService.addMember(memberName);
             return "";
         });
 
         post("/command/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
-            ChessGame chessGame = gameRepository.findById(gameId).get();
+            ChessGame chessGame = gameService.findByGameId(gameId);
             String command = req.body();
             List<String> input = List.of(command.split(" "));
             executeCommand(chessGame, input);
@@ -131,9 +123,7 @@ public class WebController {
             String[] ids = body.split(",");
             Long whiteId = Long.valueOf(ids[0]);
             Long blackId = Long.valueOf(ids[1]);
-            Member white = memberRepository.findById(whiteId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
-            Member black = memberRepository.findById(blackId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
-            gameRepository.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard())), new Participant(white, black)));
+            gameService.createGame(whiteId, blackId);
             return "";
         });
     }
@@ -145,7 +135,7 @@ public class WebController {
         if (Command.inGameCommand(input.get(0)) == Command.MOVE && input.size() == 3) {
             chessGame.move(input.get(1), input.get(2));
         }
-        gameRepository.update(chessGame);
+        gameService.update(chessGame);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RankDTO {
-    private final List<PieceDTO> pieces; // PieceDTO 로 바꿔서 positionString 가지게 하기
+    private final List<PieceDTO> pieces;
     private final int rankLine;
 
     public RankDTO(List<PieceDTO> pieces, int rankLine) {

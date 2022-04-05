@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MemoryMemberRepositoryTest {
+class MemoryMemberDaoTest {
 
     @Test
     @DisplayName("멤버를 저장소에 저장한다.")
     void save() {
-        MemoryMemberRepository repository = new MemoryMemberRepository();
+        MemoryMemberDao repository = new MemoryMemberDao();
         Member member = new Member("alex");
         repository.save(member);
         assertThat(repository.findById(1L).get().getName()).isEqualTo(member.getName());
@@ -23,7 +23,7 @@ class MemoryMemberRepositoryTest {
     @Test
     @DisplayName("저장소에 저장된 모든 멤버를 불러온다.")
     void findAll() {
-        MemoryMemberRepository repository = new MemoryMemberRepository();
+        MemoryMemberDao repository = new MemoryMemberDao();
         List<String> memberNames = new ArrayList<>();
         memberNames.add("alex");
         memberNames.add("eve");

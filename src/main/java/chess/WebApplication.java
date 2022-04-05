@@ -1,18 +1,16 @@
 package chess;
 
 import chess.controller.WebController;
-import chess.dao.GameDao;
-import chess.dao.MemberDao;
-import chess.repository.DatabaseGameRepository;
-import chess.repository.DatabaseMemberRepository;
-import chess.repository.MemoryGameRepository;
-import chess.repository.MemoryMemberRepository;
+import chess.dao.DatabaseGameDao;
+import chess.dao.DatabaseMemberDao;
+import chess.service.GameService;
+import chess.service.MemberService;
 
 public class WebApplication {
     public static void main(String[] args) {
         WebController controller = new WebController(
-                new DatabaseGameRepository(new GameDao(new MemberDao())),
-                new DatabaseMemberRepository(new MemberDao())
+                new GameService(new DatabaseGameDao(), new DatabaseMemberDao()),
+                new MemberService(new DatabaseMemberDao())
         );
         controller.run();
     }
