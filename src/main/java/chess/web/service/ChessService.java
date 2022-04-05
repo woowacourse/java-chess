@@ -13,6 +13,7 @@ import chess.domain.piece.property.Color;
 import chess.web.dao.PieceDao;
 import chess.web.dao.PlayerDao;
 import chess.web.dto.PieceDto;
+import chess.web.utils.Converter;
 
 public class ChessService {
     private ChessGame chessGame = new ChessGame();
@@ -26,6 +27,8 @@ public class ChessService {
     }
 
     public void start() {
+        pieceDao.removeAll();
+        playerDao.removeAll();
         Map<Position, Piece> pieces = chessGame.start();
         Map<String, PieceDto> pieceDtos = convertNewBoard(pieces);
         pieceDao.saveAll(new ArrayList<>(pieceDtos.values()));
@@ -43,5 +46,19 @@ public class ChessService {
 
     public Map<Color, Double> getStatus() {
         return chessGame.getState().status();
+    }
+
+    public void move(String command) {
+        String[] positions = command.split(",");
+        Position from = getPositionFrom(positions[0]);
+        Position to = getPositionFrom(positions[1]);
+        Map<Position, Piece> pieces = chessGame.move(from, to);
+        Map<String, PieceDto> pieceDtos = convertNewBoard(pieces);
+        pieceDao.update(new ArrayList<>(pieceDtos.values()));
+        playerDao.update(chessGame.getPlayer());
+    }
+
+    private static Position getPositionFrom(String position) {
+        return Converter.positionFrom(position);
     }
 }

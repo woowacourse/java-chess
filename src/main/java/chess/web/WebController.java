@@ -21,17 +21,16 @@ public class WebController {
 
     private final ChessService chessService = new ChessService();
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public void run() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<PieceDto> pieces = chessService.initializeData();
             initializeRowPieces(pieces, model);
-
-            if (!pieces.isEmpty()) {
-                Map<Color, Double> status = chessService.getStatus();
-                model.put("blackScore", status.get(Color.Black));
-                model.put("WhiteScore", status.get(Color.White));
-            }
+            putScore(model, pieces);
             return render(model, "/index.html");
         });
 
@@ -42,7 +41,7 @@ public class WebController {
         });
 
         post("/move", (req, res) -> {
-            // boardDto.setBoard(Request.move(chessGame, req.queryParams("command")));
+            chessService.move(req.queryParams("command"));
             res.redirect("/");
             return null;
         });
@@ -51,10 +50,6 @@ public class WebController {
             response.status(400);
             response.body(exception.getMessage());
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     private void initializeRowPieces(List<PieceDto> pieces, Map<String, Object> model) {
@@ -76,5 +71,13 @@ public class WebController {
             columnPieces.add(pieceDto);
         }
         return columnPieces;
+    }
+
+    private void putScore(Map<String, Object> model, List<PieceDto> pieces) {
+        if (!pieces.isEmpty()) {
+            Map<Color, Double> status = chessService.getStatus();
+            model.put("blackScore", status.get(Color.Black));
+            model.put("WhiteScore", status.get(Color.White));
+        }
     }
 }

@@ -15,11 +15,11 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
-        return POOL.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
+        return POOL.computeIfAbsent(file.name() + rank.getValue(), ignored -> new Position(file, rank));
     }
 
-    public static Position of(String position) {
-        return POOL.get(position);
+    public static Position of(String file, String rank) {
+        return POOL.computeIfAbsent(file + rank, ignored -> new Position(File.of(file), Rank.of(Integer.parseInt(rank))));
     }
 
     public boolean isBlocked(Direction direction) {

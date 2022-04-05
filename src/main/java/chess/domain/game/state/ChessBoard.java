@@ -32,7 +32,9 @@ public class ChessBoard {
     public static ChessBoard of(List<PieceDto> pieces) {
         Map<Position, Piece> board = new HashMap<>();
         for (PieceDto piece : pieces) {
-            board.put(Position.of(piece.getPosition()), PieceFactory.createBy(piece.getName()));
+            String position = piece.getPosition();
+            board.put(Position.of(position.substring(0, 1), position.substring(1, 2)),
+                PieceFactory.createBy(piece.getName()));
         }
         return new ChessBoard(board);
     }

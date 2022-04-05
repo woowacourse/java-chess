@@ -71,4 +71,19 @@ public class PieceDao {
             e.printStackTrace();
         }
     }
+
+    public void update(List<PieceDto> pieces) {
+        removeAll();
+        saveAll(pieces);
+    }
+
+    public void removeAll() {
+        final String sql = "delete from piece";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
