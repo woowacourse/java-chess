@@ -18,6 +18,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 public class WebApplication {
+
     public static void main(String[] args) {
         port(8081);
         staticFiles.location("/static");
@@ -28,9 +29,9 @@ public class WebApplication {
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
             final BoardDto boardDto = BoardDto.of(chessController.state());
             model.put("board", boardDto);
+
             return render(model, "index.html");
         });
 
@@ -38,6 +39,7 @@ public class WebApplication {
             final String commandString = "move " + req.body();
             final Command command = Command.from(commandString);
             final ResponseDto responseDto = chessController.progress(command);
+
             return responseDto.toString();
         });
 
@@ -46,9 +48,17 @@ public class WebApplication {
             final Command command = Command.from("status");
             chessController.progress(command);
             var score = chessController.state().status();
-
             model.put("score", score);
+
             return render(model, "index.html");
+        });
+
+        get("/end", (req, res) -> {
+            final Command command = Command.from("end");
+            chessController.progress(command);
+            chessController.restart();
+
+            return "게임종료되었습니다.";
         });
     }
 
