@@ -128,6 +128,25 @@ function updateResult(result) {
     }
 }
 
+function checkEnd(state) {
+    if (state.end === 'true') {
+        fetchFinalResult();
+    }
+}
+
+function showFinalResult(result) {
+    lockPiece();
+    lockSquare();
+    document.getElementById('white-score').innerHTML = result.whiteScore + '점';
+    document.getElementById('black-score').innerHTML = result.blackScore + '점';
+    document.getElementById(result.winner + '-score').innerHTML += ' 승리';
+}
+
+function resetScores() {
+    document.getElementById('white-score').innerHTML = '-점';
+    document.getElementById('black-score').innerHTML = '-점';
+}
+
 window.onload = async function () {
     let piecesContainer = document.getElementById('pieces-container');
     await initBlocks(piecesContainer);
@@ -142,6 +161,7 @@ function fetchNewChess() {
     })
         .then(res => res.json())
         .then(res => {
+            resetScores();
             toggleTurn(res.state);
             initPieces(res.pieces);
         })
@@ -165,6 +185,7 @@ function fetchMove(source, target) {
             }
             toggleTurn(res.state);
             initPieces(res.pieces);
+            checkEnd(res.state);
         })
         .catch(err => {
             showErrorMessage(err.message);
@@ -183,4 +204,15 @@ function fetchResult() {
     })
         .then(res => res.json())
         .then(res => updateResult(res.result));
+}
+
+function fetchFinalResult() {
+    fetch('http://localhost:8080/result', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(res => res.json())
+        .then(res => showFinalResult(res.result));
 }

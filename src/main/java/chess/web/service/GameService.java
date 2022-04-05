@@ -1,14 +1,16 @@
-package chess.service;
+package chess.web.service;
 
 import chess.domain.Color;
+import chess.domain.Result;
 import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.CommendDto;
-import chess.dto.GameStateDto;
-import chess.dto.PieceDto;
-import chess.dto.ResultDto;
+import chess.web.dto.CommendDto;
+import chess.web.dto.GameStateDto;
+import chess.web.dto.PieceDto;
+import chess.web.dto.ResultDto;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +25,14 @@ public class GameService {
 
     public void move(CommendDto commendDto) {
         board.move(commendDto.getSource(), commendDto.getTarget());
+    }
+
+    public ResultDto getFinalResultDto() {
+        int whiteScore = (int) board.calculateScore(Color.WHITE);
+        int blackScore = (int) board.calculateScore(Color.BLACK);
+        Map<Result, Color> winner = new HashMap<>();
+        winner.put(Result.WIN, board.winnersColor());
+        return new ResultDto(whiteScore, blackScore, winner);
     }
 
     public ResultDto getResultDto() {
