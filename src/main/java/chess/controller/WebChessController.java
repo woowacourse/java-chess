@@ -22,12 +22,19 @@ public class WebChessController {
         displayHome();
         moveChessPiece();
         calculateEachTeamScore();
+        endChessGame();
     }
 
-    private void calculateEachTeamScore() {
-        get("/status", (req, res)
-                -> chessService.getBlackTeamScore() + "//" + chessService.getWhiteTeamScore()
-        );
+    private void displayHome() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            List<RankDTO> board = chessService.getBoardStatus();
+            model.put("board", board);
+            model.put("team", chessService.getTeam());
+
+            return render(model, "index.html");
+        });
     }
 
     private void moveChessPiece() {
@@ -36,7 +43,8 @@ public class WebChessController {
             String srcPosition = positions[0];
             String dstPosition = positions[1];
 
-            if (chessService.move(srcPosition, dstPosition)) {
+            boolean isKingDead = chessService.move(srcPosition, dstPosition);
+            if (isKingDead) {
                 String winner = chessService.getWinnerTeam();
                 chessService = new ChessService();
                 return winner;
@@ -46,14 +54,17 @@ public class WebChessController {
         });
     }
 
-    private void displayHome() {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
+    private void calculateEachTeamScore() {
+        get("/status", (req, res)
+                -> chessService.getWhiteTeamScore() + "//" + chessService.getBlackTeamScore()
+        );
+    }
 
-            List<RankDTO> board = chessService.getBoardStatus();
-            model.put("board", board);
-
-            return render(model, "index.html");
+    private void endChessGame() {
+        get("/end", (req, res) -> {
+            chessService = new ChessService();
+            res.redirect("/");
+            return null;
         });
     }
 
