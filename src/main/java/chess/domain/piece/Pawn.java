@@ -8,7 +8,7 @@ import chess.domain.position.Row;
 import java.util.EnumMap;
 import java.util.List;
 
-public class Pawn extends MultiStepPiece {
+public class Pawn extends Piece {
 
     private static final double PAWN_SCORE = 1;
 
@@ -31,12 +31,20 @@ public class Pawn extends MultiStepPiece {
 
     @Override
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
+        validateSteps(destination);
         if (isBlackTeam()) {
-            Direction direction = super.findDirection(destination, Direction.blackPawnDirection(isFirstTurn()));
-            return getPath(destination, direction);
+            return getPath(destination, Direction.SOUTH);
         }
-        Direction direction = super.findDirection(destination, Direction.whitePawnDirection(isFirstTurn()));
-        return getPath(destination, direction);
+        return getPath(destination, Direction.NORTH);
+    }
+
+    private void validateSteps(Position destination) {
+        int colDiff = destination.getColDifference(position);
+        int rowDiff = destination.getRowDifference(position);
+
+        if ((!isFirstTurn() && rowDiff > 1) || rowDiff > 2 || colDiff > 1) {
+            throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        }
     }
 
     private List<Position> getPath(Position destination, Direction direction) {
