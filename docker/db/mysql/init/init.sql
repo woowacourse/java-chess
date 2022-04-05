@@ -12,5 +12,5 @@ CREATE TABLE piece (
     team varchar(10) NOT NULL,
     coordinate varchar(10) NOT NULL,
     type varchar(10) NOT NULL,
-    FOREIGN KEY (piece_id) REFERENCES board(id) ON UPDATE CASCADE
+    FOREIGN KEY (board_id) REFERENCES board(id) ON UPDATE CASCADE
 );
