@@ -88,4 +88,15 @@ public class SquareDao {
             throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
         }
     }
+
+    public void removeAll(long roomId) {
+        String sql = "delete from square where room_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, roomId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+        }
+    }
 }

@@ -8,21 +8,19 @@ import java.util.Map;
 public class BoardDto {
 
     private final Map<String, String> board;
+    private final String turn;
 
-    private BoardDto(Map<String, String> board) {
+    private BoardDto(Map<String, String> board, String turn) {
         this.board = board;
+        this.turn = turn;
     }
 
-    static public BoardDto of(Map<Position, Piece> board) {
+    public static BoardDto of(Map<Position, Piece> board, String turn) {
         Map<String, String> aBoard = new HashMap<>();
 
         for (Position position : board.keySet()) {
             aBoard.put(position.convertToString(), board.get(position).convertToString());
         }
-        return new BoardDto(aBoard);
-    }
-
-    public Map<String, String> getBoard() {
-        return board;
+        return new BoardDto(aBoard, turn);
     }
 }

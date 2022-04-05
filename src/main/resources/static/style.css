@@ -51,3 +51,7 @@
     display: block;
     margin: 0 auto;
 }
+
+.selected {
+    background: green;
+}

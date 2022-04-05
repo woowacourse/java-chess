@@ -38,7 +38,6 @@ public class PieceFactory {
     }
 
     public static Piece convertToPiece(String pieceName) {
-        System.out.println(pieceName);
         if (!factory.containsKey(pieceName)) {
             throw new IllegalStateException();
         }

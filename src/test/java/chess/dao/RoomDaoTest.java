@@ -52,6 +52,7 @@ class RoomDaoTest {
     }
 
     @Test
+    @DisplayName("Room을 업데이트한다.")
     void update() {
         roomDao.update(1, "black");
         assertThat(roomDao.findById(1).getTurn()).isEqualTo("black");

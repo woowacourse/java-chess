@@ -1,7 +1,9 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
+import chess.dto.MoveDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -26,6 +28,11 @@ public class ChessController {
 
         get("/start", (req, res) -> {
             return gson.toJson(chessService.start(1));
+        });
+
+        post("/move", (req, res) -> {
+            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            return gson.toJson(chessService.move(1, moveDto));
         });
     }
 

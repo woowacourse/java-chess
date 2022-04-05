@@ -51,8 +51,16 @@ public class Position {
         validateBlank(value);
         validateLength(value);
         Column column = Column.of(getColumnString(value));
-        Row row = Row.of(Integer.parseInt(getRowString(value)));
+        Row row = Row.of(parseRowStringToInt(value));
         return CACHE.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
+    }
+
+    private static int parseRowStringToInt(String value) {
+        try {
+            return Integer.parseInt(getRowString(value));
+        } catch(NumberFormatException e){
+            throw new IllegalArgumentException("행은 숫자가 와야합니다.");
+        }
     }
 
     private static String getColumnString(String value) {
