@@ -1,37 +1,32 @@
 package chess.domain.piece;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public enum PieceFactory {
+public class PieceFactory {
 
-    WHITE_BISHOP("bishop", Team.WHITE, new Bishop(Team.WHITE)),
-    WHITE_KING("king", Team.WHITE, new King(Team.WHITE)),
-    WHITE_KNIGHT("knight", Team.WHITE, new Knight(Team.WHITE)),
-    WHITE_PAWN("pawn", Team.WHITE, new Pawn(Team.WHITE)),
-    WHITE_QUEEN("queen", Team.WHITE, new Queen(Team.WHITE)),
-    WHITE_ROOK("rook", Team.WHITE, new Rook(Team.WHITE)),
-    BLACK_BISHOP("bishop", Team.BLACK, new Bishop(Team.BLACK)),
-    BLACK_KING("king", Team.BLACK, new King(Team.BLACK)),
-    BLACK_KNIGHT("knight", Team.BLACK, new Knight(Team.BLACK)),
-    BLACK_PAWN("pawn", Team.BLACK, new Pawn(Team.BLACK)),
-    BLACK_QUEEN("queen", Team.BLACK, new Queen(Team.BLACK)),
-    BLACK_ROOK("rook", Team.BLACK, new Rook(Team.BLACK));
+    private static final Map<String, Piece> cache = new HashMap<>();
 
-    private final String type;
-    private final Team team;
-    private final Piece piece;
-
-    PieceFactory(String type, Team team, Piece piece) {
-        this.type = type;
-        this.team = team;
-        this.piece = piece;
+    static {
+        cache.put("bishop_black", new Bishop(Team.BLACK));
+        cache.put("rook_black", new Rook(Team.BLACK));
+        cache.put("king_black", new King(Team.BLACK));
+        cache.put("knight_black", new Knight(Team.BLACK));
+        cache.put("pawn_black", new Pawn(Team.BLACK));
+        cache.put("queen_black", new Queen(Team.BLACK));
+        cache.put("bishop_white", new Bishop(Team.WHITE));
+        cache.put("rook_white", new Rook(Team.WHITE));
+        cache.put("king_white", new King(Team.WHITE));
+        cache.put("knight_white", new Knight(Team.WHITE));
+        cache.put("pawn_white", new Pawn(Team.WHITE));
+        cache.put("queen_white", new Queen(Team.WHITE));
     }
 
     public static Piece of(String type, Team team) {
-        return Arrays.stream(PieceFactory.values())
-                .filter(piece -> piece.type.equals(type) && piece.team == team)
-                .findAny()
-                .map(pieceInfo -> pieceInfo.piece)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입의 Piece 입니다."));
+        return cache.get(madeKey(type, team));
+    }
+
+    private static String madeKey(String type, Team team) {
+        return type.toLowerCase() + "_" + team.name().toLowerCase();
     }
 }
