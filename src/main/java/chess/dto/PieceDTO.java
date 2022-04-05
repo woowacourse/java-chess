@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.dto;
 
 public class PieceDTO {
     public String position;

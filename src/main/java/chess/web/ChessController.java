@@ -1,105 +1,42 @@
 package chess.web;
 
-import chess.controller.dto.PieceDTO;
-import chess.dao.BoardDao;
-import chess.dao.RoomDao;
-import chess.database.factory.BoardFactory;
-import chess.database.factory.RoomFactory;
-import chess.domain.Score;
-import chess.domain.Team;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import chess.domain.position.Position;
-import chess.domain.state.*;
+import chess.dto.PieceDTO;
+import chess.service.ChessService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessController {
-    private GameState gameState;
+    private final ChessService chessService = new ChessService();
 
-    public Map<String, Object> getInitialBoard(String roomId) {
-        Map<String, Object> model = new HashMap<>();
-        gameState = getGameState(roomId);
-        return getBoardPieces(model);
-    }
-
-    public Map<String, Object> getBoard() {
-        Map<String, Object> model = new HashMap<>();
-        return getBoardPieces(model);
-    }
-
-    private GameState getGameState(String roomId) {
-        RoomDao roomDao = RoomFactory.findById(roomId);
-        if (roomDao == null) {
-            return createGameState(roomId);
-        }
-        return getGameState(roomDao);
-    }
-
-    private WhiteTurn createGameState(String roomId) {
-        RoomFactory.save(roomId, "White");
-        Map<Position, Piece> board = BoardInitialize.create();
-        BoardFactory.saveAll(board);
-        return new WhiteTurn(board);
-    }
-
-    private Playing getGameState(RoomDao roomDao) {
-        List<BoardDao> boardDaos = BoardFactory.findAll(roomDao.getId());
-        Map<Position, Piece> board = new HashMap<>();
-        for (BoardDao boardDao : boardDaos) {
-            Piece piece = PieceFactory.create(boardDao.getSymbol());
-            board.put(Position.from(boardDao.getPosition()), piece);
-        }
-        if (roomDao.isWhiteTurn()) {
-            return new WhiteTurn(board);
-        }
-        return new BlackTurn(board);
-    }
-
-    public String move(String source, String destination, String roomId) {
-        Map<Position, Piece> board = gameState.getBoard();
-        Piece sourcePiece = board.get(Position.from(source));
-        gameState = gameState.move(source, destination);
-
-        BoardFactory.updatePosition(source, Blank.SYMBOL);
-        BoardFactory.updatePosition(destination, sourcePiece.getSymbol());
-        RoomFactory.updateStatus(gameState.getTeam().getValue(), roomId);
-
-        return getGameStateResult(roomId);
-    }
-
-    private String getGameStateResult(String roomId) {
-        if (gameState.isFinished()) {
-            RoomFactory.updateStatus(Team.WHITE.getValue(), roomId);
-            return "게임 종료" + gameState.getTeam() + "팀 승";
-        }
-        return "";
-    }
-
-    public Map<String, Object> getStatus() {
-        Map<String, Object> model = new HashMap<>();
-        Score score = new Score(gameState.getBoard());
-        model.put("whiteScore", score.getTotalScoreWhiteTeam());
-        model.put("blackScore", score.getTotalScoreBlackTeam());
+    public Map<String, Object> getBoard(String roomId) {
+        HashMap<String, Object> model = new HashMap<>();
+        Map<String, String> board = chessService.getInitialBoard(roomId);
+        List<PieceDTO> pieces = board.entrySet()
+                .stream()
+                .map(i -> new PieceDTO(i.getKey(), i.getValue()))
+                .collect(Collectors.toUnmodifiableList());
+        model.put("chessPiece", pieces);
         return model;
     }
 
-    public Map<String, Object> resetBoard(String roomId) {
-        Map<String, Object> model = new HashMap<>();
-        gameState = createGameState(roomId);
-        return getBoardPieces(model);
+    public String move(String source, String destination, String roomId) {
+        return chessService.move(source, destination, roomId);
     }
 
-    private Map<String, Object> getBoardPieces(Map<String, Object> model) {
-        Map<Position, Piece> board = gameState.getBoard();
-        List<PieceDTO> pieces = new ArrayList<>();
-        for (Position position : board.keySet()) {
-            pieces.add(new PieceDTO(position.getPositionToString(), board.get(position).getSymbol()));
-        }
+    public Map<String, Object> getStatus() {
+        return chessService.getStatus();
+    }
+
+    public Map<String, Object> resetBoard(String roomId) {
+        HashMap<String, Object> model = new HashMap<>();
+        Map<String, String> board = chessService.resetBoard(roomId);
+        List<PieceDTO> pieces = board.entrySet()
+                .stream()
+                .map(i -> new PieceDTO(i.getKey(), i.getValue()))
+                .collect(Collectors.toUnmodifiableList());
         model.put("chessPiece", pieces);
         return model;
     }

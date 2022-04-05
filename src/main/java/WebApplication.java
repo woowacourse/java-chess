@@ -12,8 +12,10 @@ public class WebApplication {
         staticFileLocation("templates");
         BasicConfigurator.configure();
         ChessController chessController = new ChessController();
-        get("/board", (req, res) -> ViewUtil.render(chessController.getInitialBoard("1"),
-                "/contents/chessBoard.html"));
+
+        get("/board", (req, res) -> ViewUtil.render(
+                chessController.getBoard("1")
+                , "/chessBoard.html"));
 
         post("/move", (req, res) -> {
             JSONParser jsonParser = new JSONParser();
@@ -28,7 +30,7 @@ public class WebApplication {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(req.body());
             return ViewUtil.render(chessController.resetBoard(jsonObject.get("roomId").toString())
-                    , "/contents/chessBoard.html");
+                    , "/chessBoard.html");
         });
 
         exception(Exception.class, (exception, request, response) -> {
