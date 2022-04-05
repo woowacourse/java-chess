@@ -1,6 +1,6 @@
 package chess.domain.command;
 
-import chess.ChessGame;
+import chess.console.ChessGame;
 
 public interface CommandGenerator {
     void execute(final String command,

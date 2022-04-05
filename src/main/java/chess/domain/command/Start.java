@@ -1,6 +1,6 @@
 package chess.domain.command;
 
-import chess.ChessGame;
+import chess.console.ChessGame;
 
 public final class Start implements CommandGenerator {
     @Override

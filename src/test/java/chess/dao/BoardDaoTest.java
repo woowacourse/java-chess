@@ -52,10 +52,10 @@ class BoardDaoTest {
     @Test
     void updateWith() {
         Assertions.assertAll(
-            () -> boardDao.updatePieceByPosition("a2", "white_pawn"),
-            () -> boardDao.updatePieceByPosition("a4", "blank"),
-            () -> boardDao.updatePieceByPosition("b7", "black_pawn"),
-            () -> boardDao.updatePieceByPosition("b5", "blank")
+            () -> boardDao.updatePiecePosition("a2", "white_pawn"),
+            () -> boardDao.updatePiecePosition("a4", "blank"),
+            () -> boardDao.updatePiecePosition("b7", "black_pawn"),
+            () -> boardDao.updatePiecePosition("b5", "blank")
         );
     }
 }

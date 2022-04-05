@@ -1,5 +1,6 @@
-package chess;
+package chess.console;
 
+import chess.GameSwitch;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;

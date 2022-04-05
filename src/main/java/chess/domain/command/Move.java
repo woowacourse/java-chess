@@ -1,6 +1,6 @@
 package chess.domain.command;
 
-import chess.ChessGame;
+import chess.console.ChessGame;
 import chess.domain.board.Positions;
 
 public final class Move implements CommandGenerator {

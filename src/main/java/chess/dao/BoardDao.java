@@ -73,7 +73,7 @@ public class BoardDao {
         }
     }
 
-    public void updatePieceByPosition(final String position, final String piece) {
+    public void updatePiecePosition(final String position, final String piece) {
         final String sql = ""
             + "UPDATE " + TABLE
             + "  SET piece = ?"

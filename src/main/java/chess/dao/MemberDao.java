@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.Member;
+import chess.domain.Member;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,9 +17,11 @@ public class MemberDao {
     private static final String TABLE = "member";
     private static final String ID_COLUMN = "id";
     private static final String NAME_COLUMN = "name";
+    private static final String SCORE_COLUMN = "score";
     private static final int ID_COLUMN_NUMBER = 1;
     private static final int NAME_COLUMN_NUMBER = 2;
     private static final int NAME_COLUMN_NUMBER_ON_UPDATE = 1;
+    private static final int SCORE_COLUMN_NUMBER_ON_UPDATE = 1;
     private static final int ID_COLUMN_NUMBER_ON_UPDATE = 2;
 
     public Connection getConnection() {
@@ -50,8 +52,8 @@ public class MemberDao {
     public void save(final Member member) {
         final String sql = ""
             + "INSERT INTO " + TABLE
-            + " (id, name)"
-            + "  VALUES (?,?)";
+            + " (id, name, score)"
+            + "  VALUES (?,?, score)";
         try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(ID_COLUMN_NUMBER, member.getId());
             statement.setString(NAME_COLUMN_NUMBER, member.getName());
@@ -62,14 +64,21 @@ public class MemberDao {
     }
 
     public Member findById(final String id) {
-        final String sql = "" + "SELECT id, name" + "  FROM " + TABLE + "  WHERE id = ?";
+        final String sql = ""
+            + "SELECT id, name, score"
+            + "  FROM " + TABLE
+            + "  WHERE id = ?";
         try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(ID_COLUMN_NUMBER, id);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 return null;
             }
-            return new Member(resultSet.getString(ID_COLUMN), resultSet.getString(NAME_COLUMN));
+            return new Member(
+                resultSet.getString(ID_COLUMN),
+                resultSet.getString(NAME_COLUMN),
+                resultSet.getDouble(SCORE_COLUMN)
+            );
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,13 +87,16 @@ public class MemberDao {
 
     public List<Member> findAll() {
         final String sql = ""
-            + "SELECT id, name"
+            + "SELECT id, name, score"
             + "  FROM " + TABLE;
         final List<Member> members = new ArrayList<>();
         try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             final ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                members.add(new Member(resultSet.getString("id"), resultSet.getString("name")));
+                members.add(new Member(
+                    resultSet.getString(ID_COLUMN),
+                    resultSet.getString(NAME_COLUMN),
+                    resultSet.getDouble(SCORE_COLUMN)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,6 +112,21 @@ public class MemberDao {
             + "  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(NAME_COLUMN_NUMBER_ON_UPDATE, name);
+            preparedStatement.setString(ID_COLUMN_NUMBER_ON_UPDATE, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateScoreById(final String id, final double score) {
+        final Connection connection = getConnection();
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET score = ?"
+            + "  WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(SCORE_COLUMN_NUMBER_ON_UPDATE, score);
             preparedStatement.setString(ID_COLUMN_NUMBER_ON_UPDATE, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

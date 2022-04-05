@@ -1,6 +1,6 @@
 package chess.domain.command;
 
-import chess.ChessGame;
+import chess.console.ChessGame;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
