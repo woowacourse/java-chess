@@ -2,7 +2,7 @@ const gameStatusLocalStorage = 'gameStatus';
 
 localStorage.clear();
 
-// start
+// start button
 const startButton = document.querySelector('#command-button__start');
 startButton.addEventListener('click', () => {
     if (localStorage.getItem(gameStatusLocalStorage) !== null) {
@@ -28,7 +28,7 @@ function startRequest(command) {
         .catch(error => console.log(error));
 }
 
-// move
+// move button
 const moveCommand = {
     start: '',
     end: '',
@@ -82,6 +82,7 @@ function saveGameStatus(gameStatus) {
     localStorage.setItem('gameStatus', gameStatus);
 }
 
+// start game
 function startGame() {
     const name = prompt("게임 진행을 위해 닉네임을 입력해 주세요.");
     fetch(`http://localhost:8080/user/name/${name}`, {
@@ -109,5 +110,28 @@ function arrangePieces(pieces) {
 
 startGame();
 
+// status button
+const statusButton = document.querySelector('#command-button__status');
+statusButton.addEventListener('click', () => {
+    statusRequest('status');
+});
 
+function statusRequest(command) {
+    fetch(`http://localhost:8080/game/command/${command}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    })
+        .then(response => response.json())
+        .then(({game_status: gameStatus, black_score: blackScore, white_score: whiteScore}) => {
+            saveGameStatus(gameStatus);
+            alertScore(blackScore, whiteScore);
+        })
+        .catch(error => console.log(error));
+}
 
+function alertScore(blackScore, whiteScore) {
+    alert(`black score: ${blackScore}, white score: ${whiteScore}`);
+}
