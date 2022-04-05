@@ -1,7 +1,6 @@
 package chess.web;
 
 import chess.controller.dto.PieceDTO;
-import chess.controller.dto.StatusDTO;
 import chess.dao.BoardDao;
 import chess.dao.RoomDao;
 import chess.database.factory.BoardFactory;
@@ -24,26 +23,12 @@ public class ChessController {
     public Map<String, Object> getInitialBoard() {
         Map<String, Object> model = new HashMap<>();
         gameState = getInitialBoard("1");
-        Map<Position, Piece> board = gameState.getBoard();
-        List<PieceDTO> pieces = new ArrayList<>();
-        for (Position position : board.keySet()) {
-            Position piecePosition = board.get(position).getPosition();
-            pieces.add(new PieceDTO(piecePosition.getPositionToString(), board.get(position).getSymbol()));
-        }
-        model.put("chessPiece", pieces);
-        return model;
+        return getBoardPieces(model);
     }
 
     public Map<String, Object> getBoard() {
         Map<String, Object> model = new HashMap<>();
-        Map<Position, Piece> board = gameState.getBoard();
-        List<PieceDTO> pieces = new ArrayList<>();
-        for (Position position : board.keySet()) {
-            Position piecePosition = board.get(position).getPosition();
-            pieces.add(new PieceDTO(piecePosition.getPositionToString(), board.get(position).getSymbol()));
-        }
-        model.put("chessPiece", pieces);
-        return model;
+        return getBoardPieces(model);
     }
 
     private GameState getInitialBoard(String roomId) {
@@ -76,19 +61,16 @@ public class ChessController {
 
     public Map<String, Object> move(String source, String destination) {
         Map<String, Object> model = new HashMap<>();
-        try {
+        try{
             Map<Position, Piece> board = gameState.getBoard();
             Piece sourcePiece = board.get(Position.from(source));
             gameState = gameState.move(source, destination);
-
             BoardFactory.updatePosition(source, Blank.SYMBOL);
             BoardFactory.updatePosition(destination, sourcePiece.getSymbol());
             RoomFactory.updateStatus(gameState.getTeam().getValue(), "1");
-
-            model.put("status", "무브 성공");
             return model;
-        } catch (IllegalArgumentException exception) {
-            model.put("status", exception.getMessage());
+        }catch (Exception exception) {
+            model.put("error", exception.getMessage());
             return model;
         }
     }
@@ -98,6 +80,23 @@ public class ChessController {
         Score score = new Score(gameState.getBoard());
         model.put("whiteScore", score.getTotalScoreWhiteTeam());
         model.put("blackScore", score.getTotalScoreBlackTeam());
+        return model;
+    }
+
+    public Map<String, Object> resetBoard() {
+        Map<String, Object> model = new HashMap<>();
+        gameState = createGameState("1");
+        return getBoardPieces(model);
+    }
+
+    private Map<String, Object> getBoardPieces(Map<String, Object> model) {
+        Map<Position, Piece> board = gameState.getBoard();
+        List<PieceDTO> pieces = new ArrayList<>();
+        for (Position position : board.keySet()) {
+            Position piecePosition = board.get(position).getPosition();
+            pieces.add(new PieceDTO(piecePosition.getPositionToString(), board.get(position).getSymbol()));
+        }
+        model.put("chessPiece", pieces);
         return model;
     }
 }

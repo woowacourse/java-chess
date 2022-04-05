@@ -22,5 +22,6 @@ public class WebApplication {
         });
 
         get("/status", (req, res) -> new JSONObject(chessController.getStatus()));
+        post("/reset", (req, res) -> ViewUtil.render(chessController.resetBoard(), "/contents/chessBoard.html"));
     }
 }

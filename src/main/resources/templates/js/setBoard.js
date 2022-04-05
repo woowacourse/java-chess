@@ -18,3 +18,16 @@ function findById(position, symbol) {
         document.getElementById(position).innerHTML = piece[symbol];
     }
 }
+
+function reset() {
+    $.ajax({
+        url: "/reset",
+        type: "POST",
+        success: function () {
+            location.reload()
+        },
+        error: function (data){
+            alert(data);
+        }
+    })
+}

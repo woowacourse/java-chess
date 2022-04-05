@@ -1,15 +1,9 @@
-function move(position) {
-    console.log(position)
+async function move(position) {
     if (document.getElementsByClassName('sourcePosition').length === 0) {
         document.getElementById(position).classList.add('sourcePosition');
         return;
     }
-    document.getElementById(position).innerHTML = document.getElementsByClassName('sourcePosition')[0].innerHTML;
-    console.log(document.getElementsByClassName('sourcePosition')[0].id)
-    console.log(position)
     const source = document.getElementsByClassName('sourcePosition')[0].id;
-    document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
-    document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
     const object = {
         "source" : source,
         "destination": position
@@ -19,10 +13,16 @@ function move(position) {
         type: "POST",
         data: JSON.stringify(object),
         success: function (data) {
-            console.log(data);
+                movePiece(position)
         },
-        error: function (data){
-            alert(data);
+        error: function (request, status, error){
+            alert(error);
         }
     })
+}
+
+function movePiece(position) {
+    document.getElementById(position).innerHTML = document.getElementsByClassName('sourcePosition')[0].innerHTML;
+    document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
+    document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
 }
