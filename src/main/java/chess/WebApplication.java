@@ -5,7 +5,6 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.board.Board;
 import chess.web.controller.BoardController;
 
 public class WebApplication {
@@ -14,7 +13,7 @@ public class WebApplication {
         port(8080);
 
         staticFiles.location("/static");
-        BoardController boardController = new BoardController(new Board());
+        BoardController boardController = new BoardController();
 
         get("/chess", boardController::printCurrentBoard);
         get("/chess/status", boardController::status);
