@@ -12,7 +12,7 @@ public class JdbcTemplate {
         this.connection = connection;
     }
 
-    public void execute(PreparedStatementCreator creator) {
+    public void executeUpdate(PreparedStatementCreator creator) {
         try (PreparedStatement pstmt = creator.excute(connection)) {
 
             pstmt.executeUpdate();

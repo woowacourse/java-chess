@@ -35,7 +35,7 @@ public class TurnDaoImpl implements TurnDao {
     public void updateTurn(Turn currentTurn, Turn turn) {
         final String query = "update chess_game set turn = ? where turn = ?";
 
-        jdbcTemplate.execute(connection -> {
+        jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, turn.name());
             pstmt.setString(2, currentTurn.name());

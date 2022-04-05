@@ -66,7 +66,7 @@ public class PieceDaoImpl implements PieceDao {
     public void updatePiecePosition(Position position, Position movePosition) {
         final String query = "update piece set position_col = ?, position_row = ? "
                 + "where position_col = ? and position_row = ?";
-        jdbcTemplate.execute(connection -> {
+        jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.valueOf(movePosition.column()));
             pstmt.setString(2, String.valueOf(movePosition.row()));
@@ -81,7 +81,7 @@ public class PieceDaoImpl implements PieceDao {
         final String query = "update piece set type = ? "
                 + "where position_col = ? and position_row = ?";
 
-        jdbcTemplate.execute(connection -> {
+        jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, changePiece.name());
             pstmt.setString(2, String.valueOf(position.column()));
@@ -94,7 +94,7 @@ public class PieceDaoImpl implements PieceDao {
     public void deletePiece(final Position position) {
         final String query = "delete from piece where position_col = ? and position_row = ?";
 
-        jdbcTemplate.execute(connection -> {
+        jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.valueOf(position.column()));
             pstmt.setString(2, String.valueOf(position.row()));
@@ -106,7 +106,7 @@ public class PieceDaoImpl implements PieceDao {
     public void deleteAllPiece() {
         final String query = "delete from piece";
 
-        jdbcTemplate.execute(connection -> {
+        jdbcTemplate.executeUpdate(connection -> {
             return connection.prepareStatement(query);
         });
     }
