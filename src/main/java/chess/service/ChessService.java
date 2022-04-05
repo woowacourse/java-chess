@@ -21,16 +21,23 @@ public class ChessService {
         return generateBoardModel(chessGame);
     }
 
+    private Map<String, Object> generateBoardModel(ChessGame chessGame) {
+        Board board = chessGame.getBoard();
+
+        Map<String, Object> model = new HashMap<>();
+        for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
+            model.put(entry.getKey().getName()
+                    , new PieceDto(entry.getValue(), entry.getKey()));
+        }
+        model.put("turn", chessGame.getTurn());
+        return model;
+    }
+
     public void createNewBoard(BoardGenerator boardGenerator, ChessGame chessGame) {
         chessGame.start(boardGenerator);
     }
 
-    public Map<String, Object> move(ChessGame chessGame, Request request) {
-        List<String> inputs = new ArrayList<>();
-        inputs.add("move");
-        inputs.add(request.queryParams("from"));
-        inputs.add(request.queryParams("to"));
-
+    public Map<String, Object> move(ChessGame chessGame, List<String> inputs) {
         Map<String, Object> model = new HashMap<>();
 
         try {
@@ -80,17 +87,5 @@ public class ChessService {
 
     public void end(ChessGame chessGame) {
         chessGame.end();
-    }
-
-    private Map<String, Object> generateBoardModel(ChessGame chessGame) {
-        Board board = chessGame.getBoard();
-
-        Map<String, Object> model = new HashMap<>();
-        for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
-            model.put(entry.getKey().getName()
-                    , new PieceDto(entry.getValue(), entry.getKey()));
-        }
-        model.put("turn", chessGame.getTurn());
-        return model;
     }
 }

@@ -6,7 +6,9 @@ import static spark.Spark.post;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.service.ChessService;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -33,7 +35,14 @@ public class ChessController {
             return null;
         });
 
-        get("/move", (request, response) -> render(chessService.move(chessGame, request), BOARD_PAGE));
+        get("/move", (request, response) -> {
+            List<String> inputs = new ArrayList<>();
+            inputs.add("move");
+            inputs.add(request.queryParams("from"));
+            inputs.add(request.queryParams("to"));
+
+            return render(chessService.move(chessGame, inputs), BOARD_PAGE);
+        });
 
         get("/status", (request, response) -> render(chessService.calculateScore(chessGame), BOARD_PAGE));
 
