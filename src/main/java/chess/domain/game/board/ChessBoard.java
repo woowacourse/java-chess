@@ -193,4 +193,6 @@ public class ChessBoard {
     public void start() {
         gameStatus = GameStatus.PLAYING;
     }
+
+    public void end(){ gameStatus = GameStatus.END; }
 }

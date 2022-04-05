@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.domain.dto.ResponseDto;
-import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.piece.ChessPiece;
@@ -19,13 +18,15 @@ public class ChessService {
         chessBoard.start();
     }
 
-    public Map<String, ChessPiece> getCurrentBoard() {
-        return chessBoard.convertToMap();
+    public void end(){
+        chessBoard.end();
     }
 
     public String move(String source, String target){
         try{
-            chessBoard.move(new Position(source), new Position(target));
+            if(chessBoard.isPlaying()){
+                chessBoard.move(new Position(source), new Position(target));
+            }
         }catch (IllegalArgumentException e){
             return new ResponseDto(500, e.getMessage()).toString();
         }
@@ -35,5 +36,17 @@ public class ChessService {
     public Map<String, Double> status(){
         return chessBoard.calculateScore().entrySet().stream()
                 .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
+    }
+
+    public String findWinner() {
+        return chessBoard.decideWinner().name();
+    }
+
+    public boolean isEnd(){
+        return chessBoard.isEnd();
+    }
+
+    public Map<String, ChessPiece> getCurrentBoard() {
+        return chessBoard.convertToMap();
     }
 }
