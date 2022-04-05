@@ -12,10 +12,11 @@ import java.util.stream.Collectors;
 public class Board {
 
     private final Map<Position, Piece> value;
-    private Team turn = Team.WHITE;
+    private Team turn;
 
-    public Board(Map<Position, Piece> value) {
+    public Board(Map<Position, Piece> value, Team team) {
         this.value = value;
+        this.turn = team;
     }
 
     public Map<Position, Piece> getValue() {

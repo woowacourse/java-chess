@@ -20,9 +20,10 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    public Map<String, Object> findBoardModel(ChessGame chessGame, PieceDao pieceDao, int boardId) {
+    public Map<String, Object> findBoardModel(ChessGame chessGame, PieceDao pieceDao, BoardDao boardDao, int boardId) {
         List<PieceDto> pieces = pieceDao.findByBoardId(boardId);
-        chessGame.start(new DatabaseLoadBoardGenerator(pieces));
+        Team turn = boardDao.findTurn(boardId);
+        chessGame.start(new DatabaseLoadBoardGenerator(pieces, turn));
 
         return generateBoardModel(chessGame);
     }

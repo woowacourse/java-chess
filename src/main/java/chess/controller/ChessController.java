@@ -41,7 +41,7 @@ public class ChessController {
 
         get(BOARD_URL, (request, response) -> {
             boardId.set(Integer.parseInt(request.queryParams("id")));
-            return render(chessService.findBoardModel(chessGame, pieceDao, boardId.intValue()), BOARD_PAGE);
+            return render(chessService.findBoardModel(chessGame, pieceDao, boardDao, boardId.intValue()), BOARD_PAGE);
         });
 
         post("/new", (request, response) -> {

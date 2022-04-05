@@ -6,4 +6,6 @@ public interface BoardDao {
     int createBoard(Team team);
 
     void updateTurn(Team turn, int id);
+
+    Team findTurn(int boardId);
 }

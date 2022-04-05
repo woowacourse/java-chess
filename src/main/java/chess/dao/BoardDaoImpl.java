@@ -25,7 +25,7 @@ public class BoardDaoImpl implements BoardDao {
 
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if(!resultSet.next()) {
+            if (!resultSet.next()) {
                 throw new SQLException("increment key 발급 실패");
             }
             return resultSet.getInt(1);
@@ -44,6 +44,25 @@ public class BoardDaoImpl implements BoardDao {
             preparedStatement.setInt(2, id);
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException();
+        }
+    }
+
+    @Override
+    public Team findTurn(int id) {
+        String sql = "select turn from board where id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new SQLException("쿼리문 실행 결과가 존재하지 않습니다.");
+            }
+            return Team.of(resultSet.getString("turn"));
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException();

@@ -3,6 +3,7 @@ package chess.domain.board.boardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class TestBoardGenerator implements BoardGenerator {
 
     @Override
     public Board create() {
-        return new Board(board);
+        return new Board(board, Team.WHITE);
     }
 
     public void put(Position position, Piece piece) {
