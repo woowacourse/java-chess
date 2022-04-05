@@ -49,6 +49,8 @@ public class WebApplication {
                     return WebViewMapper.parse(BOARD.getBoard());
                 }
                 , new JsonTransformer());
+
+        get("/isFinished", ((request, response) -> BOARD.isFinished()), new JsonTransformer());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -2,6 +2,7 @@ const boardUrl = '/board';
 const moveUrl = `/move`;
 const scoreUrl = `/score`;
 const newGamemUrl = '/new';
+const isFinishedUrl = '/isFinished';
 let selected = '';
 let from;
 
@@ -12,10 +13,11 @@ const initialize = () => {
     fetch(boardUrl)
         .then(res => res.json())
         .then(board => board.forEach(boardDto =>
-            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)));
+            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)
+        ));
 
     document.querySelectorAll('.square')
-        .forEach(square => square.addEventListener('click', (event) => squareClick(event)));
+        .forEach(square => square.addEventListener('click', squareClick));
 
     setupScores();
 
@@ -80,7 +82,8 @@ const processMove = (selectedSquare) => {
             from: from,
             to: selectedSquare.innerText
         })
-    }).then(res => res.json())
+    })
+        .then(res => res.json())
         .then(moveResult => {
             if (!moveResult.result) {
                 showFailMessage();
@@ -89,7 +92,8 @@ const processMove = (selectedSquare) => {
             removePieceFromSquare(document.getElementById(moveResult.from));
             setupPieceToSquare(document.getElementById(moveResult.to), moveResult.piece);
             setupScores();
-        });
+            gameOverProcess();
+        })
 
     document.querySelector('.selected').classList.remove('selected');
     selected = '';
@@ -112,6 +116,20 @@ const removePieceFromSquare = (square) => {
     square.classList.remove('hasPiece');
     square.dataset.piece = '';
     square.style.backgroundImage = '';
+}
+
+/**
+ * 기물 이동 성공 시 마다, 게임 종료 여부 확인 및 이벤트 제거 처리
+ */
+const gameOverProcess = () => {
+    fetch(isFinishedUrl)
+        .then(res => res.json())
+        .then(result => {
+            if (result) {
+                document.querySelector('h2').innerHTML = 'GAME OVER';
+                document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
+            }
+        })
 }
 
 initialize();
