@@ -24,13 +24,6 @@ public enum Column {
         this.value = value;
     }
 
-    static Column from(String name) {
-        return Arrays.stream(values())
-                .filter(column -> column.toString().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_COLUMN));
-    }
-
     private static Column from(int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)

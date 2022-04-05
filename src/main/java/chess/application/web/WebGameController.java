@@ -1,5 +1,8 @@
 package chess.application.web;
 
+import static chess.view.Expressions.EXPRESSIONS_COLUMN;
+import static chess.view.Expressions.EXPRESSIONS_ROW;
+
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.domain.Camp;
@@ -22,8 +25,14 @@ public class WebGameController {
     private static final String KEY_TARGET = "target";
     private static final String KEY_WINNER = "winner";
     private static final String KEY_TIE = "tie";
+
     private static final String REGEX_VALUE = "=";
     private static final String REGEX_DATA = "&";
+
+    private static final int INDEX_KEY = 0;
+    private static final int INDEX_VALUE = 1;
+    private static final int INDEX_COLUMN = 0;
+    private static final int INDEX_ROW = 1;
 
     private final ChessGame chessGame;
     private final GameDao gameDao;
@@ -48,23 +57,38 @@ public class WebGameController {
     public Map<String, Object> modelPlayingBoard() {
         Map<Position, Piece> board = chessGame.getBoard().getSquares();
         Map<String, Object> model = board.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(), Entry::getValue));
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().toString(),
+                        Entry::getValue
+                ));
         model.put(KEY_STARTED, true);
         model.put(KEY_READY, false);
         return model;
     }
 
     public void load() throws SQLException {
-        chessGame.load(boardDao.load(), gameDao.isWhiteTurn());
+        Map<String, Piece> rawBoard = boardDao.load();
+        Map<Position, Piece> board = rawBoard.entrySet().stream()
+                        .collect(Collectors.toMap(
+                                entry -> parsePosition(entry.getKey()),
+                                Entry::getValue
+                        ));
+        chessGame.load(board, gameDao.isWhiteTurn());
     }
 
     public void move(Request req) {
         Map<String, String> positions = Arrays.stream(req.body().split(REGEX_DATA))
+                .map(data -> data.split(REGEX_VALUE))
                 .collect(Collectors.toMap(
-                        data -> data.substring(0, data.indexOf(REGEX_VALUE)),
-                        data -> data.substring(data.indexOf(REGEX_VALUE) + 1)
+                        data -> data[INDEX_KEY],
+                        data -> data[INDEX_VALUE]
                 ));
-        chessGame.move(Position.of(positions.get(KEY_SOURCE)), Position.of(positions.get(KEY_TARGET)));
+        chessGame.move(parsePosition(positions.get(KEY_SOURCE)), parsePosition(positions.get(KEY_TARGET)));
+    }
+
+    private Position parsePosition(String rawPosition) {
+        return Position.of(EXPRESSIONS_COLUMN.get(rawPosition.charAt(INDEX_COLUMN)),
+                EXPRESSIONS_ROW.get(rawPosition.charAt(INDEX_ROW)));
     }
 
     public Map<String, Object> modelStatus() {

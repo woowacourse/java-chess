@@ -53,11 +53,11 @@ public class BoardDao {
         return boardExist;
     }
 
-    public Map<Position, Piece> load() throws SQLException {
+    public Map<String, Piece> load() throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         final String sql = "select type, white, position from piece";
 
-        Map<Position, Piece> board = new TreeMap<>();
+        Map<String, Piece> board = new TreeMap<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
@@ -67,10 +67,10 @@ public class BoardDao {
         return board;
     }
 
-    private void putPiece(Map<Position, Piece> board, ResultSet resultSet) throws SQLException {
+    private void putPiece(Map<String, Piece> board, ResultSet resultSet) throws SQLException {
         Type type = Type.from(resultSet.getString("type"));
         Piece piece = type.generatePiece(loadCamp(resultSet));
-        board.put(Position.of(resultSet.getString("position")), piece);
+        board.put(resultSet.getString("position"), piece);
     }
 
     private Camp loadCamp(ResultSet resultSet) throws SQLException {
