@@ -50,4 +50,10 @@ class RoomDaoTest {
         Room room = new Room();
         assertThat(roomDao.save(room)).isTrue();
     }
+
+    @Test
+    void update() {
+        roomDao.update(1, "black");
+        assertThat(roomDao.findById(1).getTurn()).isEqualTo("black");
+    }
 }

@@ -44,4 +44,16 @@ public class RoomDao {
             throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
         }
     }
+
+    public void update(long id, String turn){
+        String sql = "update room set turn = ? where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, turn);
+            statement.setLong(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+        }
+    }
 }
