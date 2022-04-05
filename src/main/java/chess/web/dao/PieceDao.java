@@ -19,6 +19,21 @@ public class PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    public List<Piece> findAll(Board board) {
+        List<Piece> pieces = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            String sql = "select teamColor, symbol, position from piece";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            pieces = convertPieces(resultSet);
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pieces;
+    }
+
     public void updatePieces(Board board) {
         try {
             initialize();
@@ -47,6 +62,17 @@ public class PieceDao {
         }
     }
 
+    private List<Piece> convertPieces(ResultSet resultSet) throws SQLException {
+        List<Piece> pieces = new ArrayList<>();
+        while (resultSet.next()) {
+            pieces.add(PieceSymbol.getConstructor(resultSet.getString("symbol")).apply(
+                    TeamColor.valueOf(resultSet.getString("teamColor")),
+                    Position.from(resultSet.getString("position")
+                    )));
+        }
+        return pieces;
+    }
+
     private Connection getConnection() {
         loadDriver();
         Connection connection = null;
@@ -64,31 +90,5 @@ public class PieceDao {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<Piece> findAll(Board board) {
-        List<Piece> pieces = new ArrayList<>();
-        try {
-            Connection connection = getConnection();
-            String sql = "select teamColor, symbol, position from piece";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            pieces = convertPieces(resultSet);
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pieces;
-    }
-
-    private List<Piece> convertPieces(ResultSet resultSet) throws SQLException {
-        List<Piece> pieces = new ArrayList<>();
-        while (resultSet.next()) {
-            pieces.add(PieceSymbol.getConstructor(resultSet.getString("symbol")).apply(
-                    TeamColor.valueOf(resultSet.getString("teamColor")),
-                    Position.from(resultSet.getString("position")
-                    )));
-        }
-        return pieces;
     }
 }
