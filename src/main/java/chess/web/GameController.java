@@ -31,7 +31,11 @@ public class GameController {
                     return objectMapper.writeValueAsString(gameService.move(moveDto));
                 }
         );
+
+        get("/status", (request, response) ->
+                objectMapper.writeValueAsString(gameService.status()));
     }
+
     private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }

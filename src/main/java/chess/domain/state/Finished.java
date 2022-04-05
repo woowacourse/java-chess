@@ -22,7 +22,7 @@ abstract class Finished implements State {
     }
 
     @Override
-    public final Map<Color, Double> getScore() {
+    public final Map<Color, Double> getScores() {
         double whiteScore = board.calculateScore(Color.WHITE);
         double blackScore = board.calculateScore(Color.BLACK);
 

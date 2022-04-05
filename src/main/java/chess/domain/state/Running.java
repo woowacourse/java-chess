@@ -19,7 +19,7 @@ abstract class Running implements State {
     public abstract State movePiece(Position src, Position dest);
 
     @Override
-    public final Map<Color, Double> getScore() {
+    public final Map<Color, Double> getScores() {
         double whiteScore = board.calculateScore(Color.WHITE);
         double blackScore = board.calculateScore(Color.BLACK);
 

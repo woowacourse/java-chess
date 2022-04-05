@@ -11,37 +11,33 @@ import java.util.Map;
 
 public final class GameManager {
 
-    private State currentState;
+    private State currentState = State.start(Board.getInitializedInstance());
 
-    public void start() {
-        currentState = State.start(Board.getInitializedInstance());
-    }
 
     public void move(String source, String destination) {
-        checkInitiated();
         currentState = currentState.movePiece(Position.of(source), Position.of(destination));
     }
 
     public StatusResult getStatus() {
-        checkInitiated();
-        Map<Color, Double> scoreByColor = currentState.getScore();
-        Result result = currentState.getResult();
+        Map<Color, Double> scoreByColor = getScores();
+        Result result = getResult();
         return new StatusResult(scoreByColor, result);
     }
 
     public boolean isFinished() {
-        checkInitiated();
         return currentState.isFinished();
+    }
+
+    public Map<Color, Double> getScores() {
+        return currentState.getScores();
+    }
+
+    public Result getResult() {
+        return currentState.getResult();
     }
 
     public Map<Position, Piece> getBoard() {
         return currentState.getBoard();
-    }
-
-    private void checkInitiated() {
-        if (currentState == null) {
-            throw new IllegalStateException("start가 호출되지 않았습니다.");
-        }
     }
 
     public StatusResult stop() {

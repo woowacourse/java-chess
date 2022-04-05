@@ -13,7 +13,7 @@ public interface State {
 
     Map<Position, Piece> getBoard();
 
-    Map<Color, Double> getScore();
+    Map<Color, Double> getScores();
 
     Result getResult();
 

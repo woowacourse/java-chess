@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:8081/"
 
 const START_URL = BASE_URL + "start"
 const MOVE_URL = BASE_URL + "move"
+const STATUS_URL = BASE_URL + "status"
 
 let source = "";
 let destination = "";
@@ -24,8 +25,15 @@ const EMOJI_MAP = {
 const start = async () => {
     (await fetch(START_URL))
         .json()
-        .then(value => renderBoard(value.board));
+        .then(value => updateChessBoard(value));
+
+    await requestScore()
+        .then(value => updateScoreBoard(value))
 };
+
+async function requestScore() {
+    return (await fetch(STATUS_URL)).json();
+}
 
 const moveClickHandler = async position => {
 
@@ -49,12 +57,17 @@ async function movePiece(source, destination) {
     }
 
     (await requestToMove(source, destination)).json()
-        .then(value => renderBoard(value.board))
+        .then(value => updateChessBoard(value))
+
+    await requestScore()
+        .then(value => updateScoreBoard(value))
 }
 
-async function renderBoard(board) {
-    let boardElem = document.getElementById("chessboard");
-    let children = boardElem.children;
+
+async function updateChessBoard(response) {
+    let board = response.board;
+    const boardElem = document.getElementById("chessboard");
+    const children = boardElem.children;
     for (const child of children) {
         child.innerHTML = "";
     }
@@ -65,6 +78,17 @@ async function renderBoard(board) {
         let square = document.getElementById(positionId);
         square.innerHTML = EMOJI_MAP[board[position].name]
     }
+}
+
+async function updateScoreBoard(response) {
+
+    const whiteScore = response.whiteScore;
+    const blackScore = response.blackScore;
+    const winningTeam = response.winningTeam;
+
+    document.getElementById("whiteScore").innerText = "White Score: " + whiteScore;
+    document.getElementById("blackScore").innerText = "Black Score: " + blackScore;
+    document.getElementById("winningTeam").innerText = "Winning Team: " + winningTeam;
 }
 
 async function requestToMove(source, destination) {

@@ -15,13 +15,14 @@ public class ChessDto {
     }
 
 
-    public static ChessDto from(Map<Position, Piece> value) {
+    public static ChessDto from(Map<Position, Piece> board) {
         Map<PositionDto, PieceDto> result = new HashMap<>();
-        Set<Position> positions = value.keySet();
+        Set<Position> positions = board.keySet();
         for (Position position : positions) {
-            Piece piece = value.get(position);
+            Piece piece = board.get(position);
             result.put(PositionDto.from(position), PieceDto.from(piece));
         }
+
         return new ChessDto(result);
     }
 
