@@ -8,16 +8,14 @@ import chess.controller.dto.ErrorResponse;
 import chess.controller.dto.StatusResponse;
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.request.PromotionRequest;
+import chess.controller.dto.response.GameStatueResponse;
 import chess.controller.dto.response.PieceResponse;
 import chess.controller.dto.response.ScoreResponse;
-import chess.controller.dto.response.TurnResponse;
-import chess.domain.Position;
+import chess.controller.dto.response.WinnerResponse;
 import chess.domain.PromotionPiece;
-import chess.domain.piece.Piece;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import spark.ModelAndView;
@@ -40,8 +38,8 @@ public class ChessGameController {
         get("/board", "application/json", (req, res) -> {
             res.type("application/json");
 
-            Map<Position, Piece> pieces = chessGameService.currentChessBoard();
-            return gson.toJson(pieces.entrySet()
+            return gson.toJson(chessGameService.currentChessBoard()
+                    .entrySet()
                     .stream()
                     .map(PieceResponse::from)
                     .collect(Collectors.toList()));
@@ -56,37 +54,38 @@ public class ChessGameController {
 
         post("/promotion", "application/json", (req, res) -> {
             res.type("application/json");
-
             PromotionRequest promotionRequest = gson.fromJson(req.body(), PromotionRequest.class);
-            PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece(promotionRequest.getPromotionValue());
-            chessGameService.promotion(promotionPiece);
+
+            chessGameService.promotion(PromotionPiece.createPromotionPiece(promotionRequest.getPromotionValue()));
             return StatusResponse.SUCCESS;
         });
 
         post("/move", "application/json", (req, res) -> {
             res.type("application/json");
-
             MoveRequest moveRequest = gson.fromJson(req.body(), MoveRequest.class);
-            Position source = moveRequest.toSourcePosition();
-            Position target = moveRequest.toTargetPosition();
-            chessGameService.move(source, target);
+
+            chessGameService.move(moveRequest.toSourcePosition(), moveRequest.toTargetPosition());
             return StatusResponse.SUCCESS;
         });
 
         get("/score", "application/json", (req, res) -> {
             res.type("application/json");
 
-            List<ScoreResponse> collect = chessGameService.currentScore()
+            return gson.toJson(chessGameService.currentScore()
                     .entrySet()
                     .stream()
                     .map(ScoreResponse::from)
-                    .collect(Collectors.toList());
-            return gson.toJson(collect);
+                    .collect(Collectors.toList()));
         });
 
         get("/status", "application/json", (req, res) -> {
             res.type("application/json");
-            return gson.toJson(TurnResponse.from(chessGameService.findCurrentTurn()));
+            return gson.toJson(new GameStatueResponse(chessGameService.isEndGame()));
+        });
+
+        get("/winner", "application/json", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(WinnerResponse.from(chessGameService.winner()));
         });
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {

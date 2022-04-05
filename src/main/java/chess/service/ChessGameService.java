@@ -58,13 +58,22 @@ public class ChessGameService {
         return gameTurn.currentScore();
     }
 
+    public boolean isEndGame() {
+        return findGameTurn().isEnd();
+    }
+
+    public Color winner() {
+        ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
+        return chessBoard.winner();
+    }
+
     private GameTurn findGameTurn() {
         Turn currentTurn = findCurrentTurn();
         ChessBoard chessBoard = new ChessBoard(pieceDao.findAllPieces());
         return currentTurn.createGameTurn(chessBoard);
     }
 
-    public Turn findCurrentTurn() {
+    private Turn findCurrentTurn() {
         return turnDao.findCurrentTurn()
                 .orElseThrow(() -> new RuntimeException("현재 턴이 존재하지 않습니다."));
     }
