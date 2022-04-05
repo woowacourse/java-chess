@@ -44,7 +44,7 @@ public class BoardDto {
             File file = File.from((j));
             Position position = new Position(file, rank);
             String symbol = getBoardSymbol(position, cells);
-            newRank.add(PieceDto.of(symbol, file, rank));
+            newRank.add(PieceDto.of(symbol, file, rank, background(position)));
         }
 
         return newRank;
@@ -58,6 +58,17 @@ public class BoardDto {
         }
 
         return BOARD_BLANK_SYMBOL;
+    }
+
+    private static String background(Position position) {
+        final File file = position.getFile();
+        final Rank rank = position.getRank();
+
+        if ((file.getNumber() + rank.getNumber()) % 2 == 0) {
+            return "black";
+        }
+
+        return "white";
     }
 
     public List<List<PieceDto>> getCells() {
