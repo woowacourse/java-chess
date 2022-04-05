@@ -21,40 +21,45 @@ public class Controller {
     public void run() {
         OutputView.announceStart();
 
-        while (true) {
-            inGame();
+        boolean keepGaming = true;
+        while (keepGaming) {
+            keepGaming = inGame();
         }
     }
 
-    private void inGame() {
+    private boolean inGame() {
         try {
-            executeCommand(InputView.requireCommand());
+            return executeCommand(InputView.requireCommand());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
+            return true;
         }
     }
 
-    protected void executeCommand(Map.Entry<Command, List<Square>> commands) {
+    private boolean executeCommand(Map.Entry<Command, List<Square>> commands) {
         Command command = commands.getKey();
         if (command == Command.START) {
             start();
+            return true;
         }
 
         if (command == Command.MOVE) {
             move(commands);
+            return true;
         }
 
         if (command == Command.END) {
-            System.exit(0);
+            return false;
         }
 
         if (command == Command.STATUS) {
             status();
-            System.exit(0);
+            return false;
         }
+        return true;
     }
 
-    protected void start() {
+    private void start() {
         if (game != null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
@@ -62,7 +67,7 @@ public class Controller {
         OutputView.showBoard(game.getBoard());
     }
 
-    protected void move(Map.Entry<Command, List<Square>> commands) {
+    private void move(Map.Entry<Command, List<Square>> commands) {
         checkGameStarted();
         if (game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
@@ -75,13 +80,13 @@ public class Controller {
         checkKingDieAfterMove();
     }
 
-    protected void checkKingDieAfterMove() {
+    private void checkKingDieAfterMove() {
         if (game.isKingDie()) {
             OutputView.printKingDieMessage();
         }
     }
 
-    protected void status() {
+    private void status() {
         checkGameStarted();
         if (!game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
@@ -91,7 +96,7 @@ public class Controller {
         OutputView.showScore(status, Color.BLACK);
     }
 
-    protected void checkGameStarted() {
+    private void checkGameStarted() {
         if (game == null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }

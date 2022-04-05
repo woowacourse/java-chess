@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
     <link rel="stylesheet" href="chessboard.css">
+
+    <script>
+        function change_img(square, pieceColor, pieceType) {
+            document.getElementById(square).src = 'images/' + pieceType + '_' + pieceColor + '.png';
+        }
+    </script>
 </head>
 <body>
 <h1>♟️ 체스 게임</h1>
+<script>
+    if ("{{exit}}") {
+        alert("{{score.whiteScore}}" + '\n' + "{{score.blackScore}}" + '\n게암 종료!!');
+        document.location.href = "/";
+    }
+</script>
+<div>
+    에러메세지 : {{error.message}}
+</div>
+
+<br><br>
+
 <div class="board">
     <!-- 1st -->
     <div class="white"><img id="a8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
@@ -93,7 +111,12 @@
     <input type="text" name="command">
     <input type="submit" value="실행">
 </form>
+
 <br><br>
+
+{{#infos}}
+<script>change_img("{{square}}", "{{piece.color}}", "{{piece.type}}")</script>
+{{/infos}}
 
 </body>
 </html>
