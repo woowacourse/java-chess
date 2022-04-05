@@ -83,10 +83,7 @@ public final class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "file=" + column +
-                ", rank=" + rank +
-                '}';
+        return column.name() + rank.getNumber();
     }
 
     public Column getColumn() {

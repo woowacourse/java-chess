@@ -23,9 +23,9 @@ public final class ChessGame {
     }
 
     public void reset() {
-        turn = Team.WHITE;
-        isFinished = false;
-        board = new Board(new InitBoardStrategy().create());
+        this.turn = Team.WHITE;
+        this.isFinished = false;
+        this.board = new Board(new InitBoardStrategy().create());
     }
 
     public void play(Position from, Position to) {

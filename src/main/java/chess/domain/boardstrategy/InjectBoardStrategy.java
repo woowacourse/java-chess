@@ -34,6 +34,10 @@ public class InjectBoardStrategy implements BoardStrategy {
         stringPieceMap.put("p", new Pawn(Team.WHITE));
     }
 
+    public static Map<String, Piece> getStringPieceMap() {
+        return stringPieceMap;
+    }
+
     private final Map<Position, Piece> positionPieceMap;
 
     public InjectBoardStrategy(String text) {
@@ -63,6 +67,4 @@ public class InjectBoardStrategy implements BoardStrategy {
     public Map<Position, Piece> create() {
         return positionPieceMap;
     }
-
-
 }
