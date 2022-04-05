@@ -27,7 +27,7 @@ public class BoardController {
         List<PieceDto> pieces = PiecesDto.of(board)
                 .getValue();
         model.put("pieces", pieces);
-        model.put("turnColor", board.getCurrentTurnTeamColor());
+        model.put("currentTurn", board.getCurrentTurnTeamColor());
         return render(model, "board.html");
     }
 

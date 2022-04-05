@@ -16,4 +16,8 @@ public enum TeamColor {
         }
         return BLACK;
     }
+
+    public String getColor() {
+        return name();
+    }
 }
