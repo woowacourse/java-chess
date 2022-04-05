@@ -24,6 +24,7 @@ public class ChessGame {
     }
 
     public void move(final String sourcePosition, final String targetPosition) {
+        checkPlaying();
         board = board.movePiece(Position.from(sourcePosition), Position.from(targetPosition));
     }
 
@@ -35,6 +36,7 @@ public class ChessGame {
     }
 
     public Score getScore() {
+        checkPlaying();
         return new Score(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
     }
 
@@ -43,6 +45,12 @@ public class ChessGame {
             throw new IllegalStateException("진행중인 게임이 없습니다.");
         }
         board = null;
+    }
+
+    private void checkPlaying() {
+        if (board == null) {
+            throw new IllegalStateException("진행 중인 게임이 없습니다.");
+        }
     }
 
     class Score {

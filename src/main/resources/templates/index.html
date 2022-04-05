@@ -358,6 +358,7 @@
                 fetch('/status')
                     .then(res => res.json())
                     .then(data => alert(`white:${data.whiteScore} : black:${data.blackScore}점`))
+                    .catch(alert('진행 중인 게임이 없습니다.'))
             }
         </script>
 
@@ -366,6 +367,7 @@
             function end() {
                 fetch('/end')
                     .then(alert('게임이 종료되었습니다.'))
+                    .catch(alert('진행 중인 게임이 없습니다.'))
             }
         </script>
     </section>
