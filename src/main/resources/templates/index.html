@@ -2,9 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>게임 화면</title>
+
+    <style>
+        table.chess-board {
+            font-size: 37px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+        }
+
+        table.chess-board td {
+            width: 70px;
+            height: 70px;
+            border: solid 1px black;
+        }
+
+        table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n) {
+            background-color: #aaa;
+        }
+
+        table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n-1) {
+            background-color: #aaa;
+        }
+
+        img.chess-piece-img {
+            width: 99%;
+            height: 99%;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<table class="chess-board">
+    {{#board}}
+    <tr>
+        {{#rank}}
+        <td>
+            <img src="/images/{{team}}_{{name}}.png" id="{{column}}{{row}}" onclick="pieceClickHandler(this)">
+        </td>
+        {{/rank}}
+    </tr>
+    {{/board}}
+</table>
+<button onclick="statusHandler()">점수 확인</button>
+<button onclick="endGameHandler()">게임종료</button>
 </body>
 </html>
