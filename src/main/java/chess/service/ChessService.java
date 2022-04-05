@@ -1,6 +1,5 @@
 package chess.service;
 
-import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
@@ -19,12 +18,14 @@ public class ChessService {
         chessGame = new Ready();
     }
 
-    public void start() {
+    public Map<String, Object> start() {
         chessGame = chessGame.initBoard();
+        return chessGame.getBoard().toMap();
     }
 
-    public void move(String from, String to) {
+    public Map<String, Object> move(String from, String to) {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
+        return chessGame.getBoard().toMap();
     }
 
     public Map<String, Double> showStatus() {
@@ -41,7 +42,7 @@ public class ChessService {
         return terminateMessage;
     }
 
-    public Board getBoard() {
-        return chessGame.getBoard();
+    public Map<String, Object> showBoard() {
+        return chessGame.getBoard().toMap();
     }
 }
