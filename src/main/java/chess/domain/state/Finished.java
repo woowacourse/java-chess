@@ -1,10 +1,9 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.position.Position;
-import chess.domain.position.Result;
 import chess.domain.board.Color;
 import chess.domain.board.Piece;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,10 +37,6 @@ abstract class Finished implements State {
         return board.getValue();
     }
 
-    @Override
-    public final Result getResult() {
-        return board.calculateCurrentResult();
-    }
     @Override
     public boolean isFinished() {
         return true;

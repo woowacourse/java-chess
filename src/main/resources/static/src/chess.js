@@ -6,6 +6,7 @@ const STATUS_URL = BASE_URL + "status"
 
 let source = "";
 let destination = "";
+let isEnd = true;
 
 const EMOJI_MAP = {
     "white_pawn": String.fromCodePoint(0x2659),
@@ -25,17 +26,25 @@ const EMOJI_MAP = {
 const start = async () => {
     (await fetch(START_URL))
         .json()
-        .then(value => updateChessBoard(value));
+        .then(value => {
+            updateChessBoard(value)
+            isEnd = false;
+        });
 
-    await requestScore()
+    (await requestScore())
+        .json()
         .then(value => updateScoreBoard(value))
 };
 
 async function requestScore() {
-    return (await fetch(STATUS_URL)).json();
+    return await fetch(STATUS_URL);
 }
 
 const moveClickHandler = async position => {
+
+    if (isEnd) {
+        alert("게임을 시작해주세요");
+    }
 
     if (source === "") {
         source = position;
@@ -51,16 +60,24 @@ const moveClickHandler = async position => {
 }
 
 async function movePiece(source, destination) {
-    if (source == null || destination == null) {
-        alert("source 혹은 destination이 선택되지 않음");
-        return;
-    }
 
     (await requestToMove(source, destination)).json()
-        .then(value => updateChessBoard(value))
+        .then(value => {
+            updateChessBoard(value);
+            checkFinished(value);
+        })
+        .catch(response => {
+            if (!response.ok) {
+                alert("canot move");
+            }
+        });
 
-    await requestScore()
-        .then(value => updateScoreBoard(value))
+    (await requestScore())
+        .json()
+        .then(value => {
+            updateScoreBoard(value);
+        })
+
 }
 
 
@@ -80,8 +97,16 @@ async function updateChessBoard(response) {
     }
 }
 
-async function updateScoreBoard(response) {
+async function checkFinished(response) {
+    isEnd = response.end;
+    console.log("게임 상태 = " + isEnd);
+    if (isEnd) {
+        alert("게임 종료");
+    }
+}
 
+async function updateScoreBoard(response) {
+    console.log(response);
     const whiteScore = response.whiteScore;
     const blackScore = response.blackScore;
     const winningTeam = response.winningTeam;
@@ -89,6 +114,10 @@ async function updateScoreBoard(response) {
     document.getElementById("whiteScore").innerText = "White Score: " + whiteScore;
     document.getElementById("blackScore").innerText = "Black Score: " + blackScore;
     document.getElementById("winningTeam").innerText = "Winning Team: " + winningTeam;
+
+    if (isEnd) {
+        document.getElementById("winningTeam").innerText = "Winning Team: " + winningTeam + "(게임종료)";
+    }
 }
 
 async function requestToMove(source, destination) {
