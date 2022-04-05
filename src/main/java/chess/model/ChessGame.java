@@ -2,7 +2,7 @@ package chess.model;
 
 import java.util.Map;
 
-import chess.model.boardinitializer.BoardInitializer;
+import chess.model.boardinitializer.PieceArrangement;
 import chess.model.piece.Piece;
 
 public class ChessGame {
@@ -11,11 +11,11 @@ public class ChessGame {
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
 
     private final Board board;
-    private final TurnDecider turnDecider;
+    private final Turn turn;
 
-    public ChessGame(TurnDecider turnDecider, BoardInitializer initializer) {
+    public ChessGame(Turn turn, PieceArrangement initializer) {
         this.board = new Board(initializer);
-        this.turnDecider = turnDecider;
+        this.turn = turn;
     }
 
     public void move(Position source, Position target) {
@@ -23,7 +23,7 @@ public class ChessGame {
         finishIfKingCaptured(target);
 
         board.move(source, target);
-        turnDecider.nextState();
+        turn.nextState();
     }
 
     private void validateMovable(Position source) {
@@ -32,7 +32,7 @@ public class ChessGame {
     }
 
     private void validateCorrectTurn(Position source) {
-        if (!turnDecider.isTurnOf(board.pieceAt(source))) {
+        if (!turn.isTurnOf(board.pieceAt(source))) {
             throw new IllegalArgumentException(ERROR_NOT_CORRECT_TURN);
         }
     }
@@ -44,17 +44,17 @@ public class ChessGame {
     }
 
     public boolean isFinished() {
-        return turnDecider.isFinished();
+        return turn.isFinished();
     }
 
     private void finishIfKingCaptured(Position target) {
         if (board.isTargetKing(target)) {
-            turnDecider.finish();
+            turn.finish();
         }
     }
 
     public double getScore() {
-        return new Score(board.getValues(), turnDecider).calculate();
+        return new Score(board.getValues(), turn).calculate();
     }
 
     public Map<Position, Piece> getBoardValue() {

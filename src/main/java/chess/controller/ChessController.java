@@ -4,8 +4,8 @@ import static chess.vo.Command.*;
 
 import chess.dto.Request;
 import chess.model.ChessGame;
-import chess.model.TurnDecider;
-import chess.model.boardinitializer.defaultInitializer;
+import chess.model.Turn;
+import chess.model.boardinitializer.DefaultArrangement;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -13,7 +13,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        ChessGame game = new ChessGame(new TurnDecider(), new defaultInitializer());
+        ChessGame game = new ChessGame(new Turn(), new DefaultArrangement());
 
         if (InputView.inputCommandInStart() == END) {
             return;

@@ -12,8 +12,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.model.boardinitializer.BoardInitializer;
-import chess.model.boardinitializer.defaultInitializer;
+import chess.model.boardinitializer.PieceArrangement;
+import chess.model.boardinitializer.DefaultArrangement;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
@@ -24,8 +24,8 @@ class ScoreTest {
     void apply() {
         //given
         Score score = new Score(
-            new Board(new defaultInitializer()).getValues(),
-            new TurnDecider());
+            new Board(new DefaultArrangement()).getValues(),
+            new Turn());
 
         //when
         double actual = score.calculate();
@@ -38,14 +38,14 @@ class ScoreTest {
     void when_pawns_in_same_file() {
         Score score = new Score(
             new Board(new testInitializer()).getValues(),
-            new TurnDecider());
+            new Turn());
 
         //then
         double actual = score.calculate();
         assertThat(actual).isEqualTo(2.0);
     }
 
-    public static class testInitializer implements BoardInitializer {
+    public static class testInitializer implements PieceArrangement {
 
         @Override
         public Map<Position, Piece> apply() {

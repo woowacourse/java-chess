@@ -5,6 +5,6 @@ import java.util.Map;
 import chess.model.Position;
 import chess.model.piece.Piece;
 
-public interface BoardInitializer {
+public interface PieceArrangement {
     Map<Position, Piece> apply();
 }

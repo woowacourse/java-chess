@@ -1,7 +1,7 @@
 package chess.model.piece;
 
 import static chess.model.PieceColor.*;
-import static chess.model.boardinitializer.defaultInitializer.*;
+import static chess.model.boardinitializer.DefaultArrangement.*;
 
 import chess.model.MoveType;
 import chess.model.Path;

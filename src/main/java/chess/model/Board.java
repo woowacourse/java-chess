@@ -3,7 +3,7 @@ package chess.model;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.model.boardinitializer.BoardInitializer;
+import chess.model.boardinitializer.PieceArrangement;
 import chess.model.piece.Piece;
 
 public class Board {
@@ -13,7 +13,7 @@ public class Board {
 
     private final Map<Position, Piece> values;
 
-    public Board(BoardInitializer initializer) {
+    public Board(PieceArrangement initializer) {
         this.values = initializer.apply();
     }
 

@@ -2,7 +2,7 @@ package chess.model;
 
 import chess.model.piece.Piece;
 
-public class TurnDecider {
+public class Turn {
 
     private PieceColor currentColor = PieceColor.WHITE;
     private boolean isFinished = false;
