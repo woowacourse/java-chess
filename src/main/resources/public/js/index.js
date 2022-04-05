@@ -136,6 +136,12 @@ const checkEndGame = (isRunning) => {
     }
 }
 
+const load = async () => {
+    let chessMap = await fetch('/load');
+    chessMap = await chessMap.json();
+    showChessMap(chessMap.chessMap);
+}
+
 const restartChess = async () => {
     let chessMap = await fetch('/start');
     chessMap = await chessMap.json();
