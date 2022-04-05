@@ -44,17 +44,6 @@ public class ChessController {
             return render(model, "chess.html");
         });
 
-        get("/restart", (request,response) -> {
-            Map<String, Object> model = new HashMap<>();
-
-            String gameName = request.queryParams("game_name");
-
-            List<String> chessBoard = chessService.createChessBoard(gameName);
-            model.put("chessboard", chessBoard);
-
-            return render(model, "chess.html");
-        });
-
         post("/move", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
 
