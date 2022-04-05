@@ -40,3 +40,7 @@ body {
     height: 80px;
     width : 80px;
 }
+
+.clicked {
+    background-color: chartreuse;
+}

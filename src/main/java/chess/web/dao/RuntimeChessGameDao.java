@@ -22,4 +22,8 @@ public class RuntimeChessGameDao {
         this.table = board;
         this.turn = turn;
     }
+
+    public Color getTurn() {
+        return turn;
+    }
 }

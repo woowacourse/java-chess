@@ -2,6 +2,7 @@ package chess.console.service;
 
 import chess.model.ChessGame;
 import chess.model.File;
+import chess.model.piece.PieceLetter;
 import chess.model.Rank;
 import chess.model.board.Board;
 import chess.model.board.Square;

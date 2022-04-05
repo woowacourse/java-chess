@@ -1,6 +1,9 @@
 package chess.web;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.redirect;
 import static spark.Spark.staticFileLocation;
 
 import chess.web.controller.ChessController;
@@ -21,7 +24,25 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
-        get("/board", (req, res) -> render(controller.initGame()));
+        get("/new-board", (req, res) ->
+        {
+            controller.initGame();
+            res.redirect("/board");
+            return null;
+        });
+
+        get("/board", (req, res) -> render(controller.getBoard()));
+
+        post("/move", (req, res) ->
+        {
+            controller.move(req, res);
+            res.redirect("/board");
+            return null;
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.body(exception.getMessage());
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

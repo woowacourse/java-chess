@@ -1,12 +1,5 @@
-package chess.console.service;
+package chess.model.piece;
 
-import chess.model.piece.Bishop;
-import chess.model.piece.Empty;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
-import chess.model.piece.Piece;
-import chess.model.piece.Queen;
-import chess.model.piece.Rook;
 import chess.model.piece.pawn.Pawn;
 import java.util.Arrays;
 import java.util.function.Function;
