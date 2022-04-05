@@ -27,6 +27,8 @@ public class BoardController {
                 .getValue();
         model.put("pieces", pieces);
         model.put("currentTurn", board.getCurrentTurnTeamColor());
+        model.put("whiteTotalScore", board.getTotalPoint(TeamColor.WHITE));
+        model.put("blackTotalScore", board.getTotalPoint(TeamColor.BLACK));
         return render(model, "board.html");
     }
 
@@ -47,14 +49,6 @@ public class BoardController {
         if (board.hasOneKing()) {
             response.redirect("/chess/reset");
         }
-    }
-
-    public String status(Request request, Response response) {
-        Board board = getBoard();
-        Map<String, Object> model = new HashMap<>();
-        model.put("whiteTotalScore", board.getTotalPoint(TeamColor.WHITE));
-        model.put("blackTotalScore", board.getTotalPoint(TeamColor.BLACK));
-        return render(model, "status.html");
     }
 
     public String reset(Request request, Response response) {

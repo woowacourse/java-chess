@@ -16,7 +16,6 @@ public class WebApplication {
         BoardController boardController = new BoardController();
 
         get("/chess", boardController::printCurrentBoard);
-        get("/chess/status", boardController::status);
         post("/chess/move", boardController::move);
         get("/chess/reset", boardController::reset);
     }
