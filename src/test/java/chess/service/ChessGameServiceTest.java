@@ -17,7 +17,7 @@ class ChessGameServiceTest {
 
 	private static final String TEST_NAME = "test";
 
-	private final ChessGameService gameService = new ChessGameService();
+	private final ChessGameService gameService = new ChessGameService(new MemoryChessGameRepository());
 
 	@AfterEach
 	void clear() {

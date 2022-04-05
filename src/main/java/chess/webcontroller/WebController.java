@@ -12,6 +12,7 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.command.Start;
 import chess.domain.state.Ready;
+import chess.repository.ChessGameRepository;
 import chess.service.ChessGameService;
 import chess.converter.RequestToCommandConverter;
 import chess.converter.RequestToMapConverter;
@@ -26,7 +27,11 @@ public class WebController {
 	private static final String MAIN_PAGE = "index.html";
 	private static final String GAME_PAGE = "game.html";
 
-	private final ChessGameService gameService = new ChessGameService();
+	private final ChessGameService gameService;
+
+	public WebController() {
+		this.gameService = new ChessGameService(new ChessGameRepository());
+	}
 
 	public void run() {
 		port(8081);

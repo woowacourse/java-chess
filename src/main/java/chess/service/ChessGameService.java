@@ -4,14 +4,17 @@ import java.util.List;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
-import chess.repository.ChessGameRepository;
 import chess.repository.GameRepository;
 
 public class ChessGameService {
 
 	private static final String NOT_EXIST_GAME = "해당하는 이름의 게임이 존재하지 않습니다.";
 
-	private final GameRepository gameRepository = new ChessGameRepository();
+	private final GameRepository gameRepository;
+
+	public ChessGameService(GameRepository gameRepository) {
+		this.gameRepository = gameRepository;
+	}
 
 	public void saveGame(ChessGame game) {
 		gameRepository.save(game);
