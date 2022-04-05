@@ -3,6 +3,11 @@ function startChess() {
         url: "/pieces",
         type: 'get',
         success(data) {
+            document.getElementById("board").hidden = false;
+            document.getElementById("start_btn").hidden = true;
+            document.getElementById("status_btn").hidden = false;
+            document.getElementById("end_btn").hidden = false;
+
             let pieces = JSON.parse(data);
             $.each(pieces, function (idx, piece) {
                 setPiece(piece.position, piece.symbol);
@@ -34,4 +39,33 @@ let pieceImages = {
 
 function findPieceImageSrc(symbol) {
     return pieceImages[symbol];
+}
+
+let positions = []
+
+function move(position) {
+    positions.push(position);
+    if (positions.length < 2) {
+        return;
+    }
+
+    let sourcePosition = positions[0];
+    let targetPosition = positions[1];
+    $.ajax({
+        url: "/move",
+        type: 'post',
+        traditional: true,
+        data: {
+            source: sourcePosition,
+            target: targetPosition
+        },
+        success() {
+            document.getElementById(targetPosition).innerHTML = document.getElementById(sourcePosition).innerHTML;
+            document.getElementById(sourcePosition).innerHTML = "";
+        },
+        error(request) {
+            alert(request.responseText);
+        }
+    });
+    positions = []
 }
