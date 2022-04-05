@@ -71,6 +71,13 @@ public enum Direction {
         return distinctCompareToConvert(column, row);
     }
 
+    public static Direction ofAll(int column, int row) {
+        if (Math.abs(column) - Math.abs(row) != 0 && Math.abs(column - row) != Math.abs(column + row)) {
+            throw new IllegalArgumentException("직선 또는 대각선 방향이 아닙니다.");
+        }
+        return distinctCompareToConvert(column, row);
+    }
+
     private static Direction distinctCompareToConvert(int column, int row) {
         return of(Integer.compare(column, 0), Integer.compare(row, 0));
     }
