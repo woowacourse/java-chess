@@ -352,6 +352,14 @@
             이동시킬 위치<input name="target" type="text">
             <input type="submit">
         </form>
+        <input type="button" onclick=score() value="점수 계산">
+        <script>
+            function score() {
+                fetch('/status')
+                    .then(res => res.json())
+                    .then(data => alert(`white:${data.whiteScore} : black:${data.blackScore}점`))
+            }
+        </script>
     </section>
 </div>
 </body>

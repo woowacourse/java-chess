@@ -3,7 +3,6 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.ChessGame;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -16,6 +15,7 @@ public class WebController {
         ready();
         start(chessGame);
         move(chessGame);
+        status(chessGame);
     }
 
     private void ready() {
@@ -48,6 +48,14 @@ public class WebController {
         if (chessGame == null) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
+    }
+
+    private void status(final ChessGame chessGame) {
+        get("/status", ((req, res) -> {
+            checkGameIsNotPlaying(chessGame);
+            final JsonTransformer jsonTransformer = new JsonTransformer();
+            return jsonTransformer.render(chessGame.getScore());
+        }));
     }
 
     private String render(final Map<String, Object> model, final String templatePath) {
