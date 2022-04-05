@@ -8,7 +8,7 @@ body {
     height: 75px;
     display: inline-block;
     background-size: cover;
-    margin: 0;
+    margin: 0px;
 }
 
 #board {

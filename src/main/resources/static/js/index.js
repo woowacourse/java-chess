@@ -9,5 +9,5 @@ function onClickSquare(e) {
         return;
     }
 
-    location.href = "/chess/move?source=" + firstId + '&target=' + e.target.id;
+    location.href = "/chess/move?source=" + firstId + "&target=" + e.target.id;
 }
