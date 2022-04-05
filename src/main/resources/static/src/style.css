@@ -1,5 +1,8 @@
 body {
     font-family: 'BMHANNAPro', monospace;
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%, -50%);
 }
 
 @font-face {
@@ -23,5 +26,12 @@ input {
 .btn {
     font-family: 'BMHANNAPro', monospace;
     background-color: #bdb4fa;
-    box-shadow: 0 5px 0 0 #cec5fb;
+    box-shadow: 0 5px 0 0 #9b92d8;
+    border: 0;
+}
+
+.btn:hover {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    box-shadow: 0 0 0 0 #cec5fb;
 }
