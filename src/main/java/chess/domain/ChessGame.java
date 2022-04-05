@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
+import chess.domain.board.InitialBoardGenerator;
 import chess.domain.position.Square;
 
 public final class ChessGame {
@@ -16,6 +17,7 @@ public final class ChessGame {
     }
 
     public void startGame() {
+        board = new Board(new InitialBoardGenerator());
         turn = GameTurn.WHITE;
     }
 
