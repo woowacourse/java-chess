@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.PieceDto;
+import chess.utils.DataAccessException;
 import chess.utils.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +29,7 @@ public class PieceDaoImpl implements PieceDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
     }
 
@@ -56,24 +58,24 @@ public class PieceDaoImpl implements PieceDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
     }
 
     @Override
     public List<PieceDto> findByBoardId(int id) {
         String sql = "select team, coordinate, type from piece where board_id = ?";
-        List<PieceDto> pieces = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            pieces = asList(resultSet);
+            return asList(resultSet);
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
-        return pieces;
     }
 
     private List<PieceDto> asList(ResultSet resultSet) throws SQLException {
@@ -99,6 +101,7 @@ public class PieceDaoImpl implements PieceDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
     }
 }

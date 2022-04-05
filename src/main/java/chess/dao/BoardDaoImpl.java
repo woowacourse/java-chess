@@ -1,7 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Team;
-import chess.utils.DatabaseUtil;
+import chess.utils.DataAccessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,17 +15,17 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void createBoard(Team team) {
+    public int createBoard(Team team) {
         String sql = "insert into board (turn) values (?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, team.name());
 
-            int result = preparedStatement.executeUpdate();
-            DatabaseUtil.validExecute(result);
-
+            preparedStatement.executeUpdate();
+            return preparedStatement.getGeneratedKeys().getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
     }
 
@@ -37,11 +37,10 @@ public class BoardDaoImpl implements BoardDao {
             preparedStatement.setString(1, turn.name());
             preparedStatement.setInt(2, id);
 
-            int result = preparedStatement.executeUpdate();
-            DatabaseUtil.validExecute(result);
-
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
     }
 }

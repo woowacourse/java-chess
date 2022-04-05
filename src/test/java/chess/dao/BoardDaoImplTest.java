@@ -1,5 +1,6 @@
 package chess.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.domain.piece.Team;
@@ -22,7 +23,9 @@ class BoardDaoImplTest {
     @Test
     void create() {
         BoardDao boardDao = new BoardDaoImpl(connection);
-        assertThatNoException().isThrownBy(() -> boardDao.createBoard(Team.WHITE));
+
+        int id = boardDao.createBoard(Team.WHITE);
+        assertThat(id > 0).isTrue();
     }
 
     @DisplayName("현재 turn 변경")
