@@ -10,11 +10,20 @@ import java.sql.Statement;
 
 public class GameDao {
 
+    private final Connection connection;
+
+    public GameDao() {
+        this(MySqlConnector.getConnection());
+    }
+
+    public GameDao(final Connection connection) {
+        this.connection = connection;
+    }
+
     public void save(final GameDto game) {
         final String sql = "INSERT INTO game (state, turn) values (?, ?)";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, game.getState());
             statement.setString(2, game.getTurn());
             statement.execute();
@@ -26,8 +35,7 @@ public class GameDao {
     public GameDto findById(final int id) {
         final String sql = "SELECT * FROM game WHERE id = ?";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             final ResultSet resultSet = statement.executeQuery();
 
@@ -44,8 +52,7 @@ public class GameDao {
     public void updateById(final GameDto gameDto) {
         final String sql = "UPDATE game SET state = ?, turn = ? WHERE id =?";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameDto.getState());
             statement.setString(2, gameDto.getTurn());
             statement.setInt(3, gameDto.getId());
@@ -58,8 +65,7 @@ public class GameDao {
     public GameDto findByMaxId() {
         final String sql = "SELECT * FROM game WHERE id IN (SELECT MAX(id) FROM game)";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final Statement statement = connection.createStatement();
+        try (final Statement statement = connection.createStatement();) {
             final ResultSet resultSet = statement.executeQuery(sql);
 
             if (!resultSet.next()) {
@@ -75,8 +81,7 @@ public class GameDao {
     public Integer findMaxId() {
         final String sql = "SELECT MAX(id) AS id FROM game";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final Statement statement = connection.createStatement();
+        try (final Statement statement = connection.createStatement()) {
             final ResultSet resultSet = statement.executeQuery(sql);
 
             if (!resultSet.next()) {

@@ -12,34 +12,41 @@ import java.util.Map;
 
 public class BoardDao {
 
+    private final Connection connection;
+
+    public BoardDao() {
+        this(MySqlConnector.getConnection());
+    }
+
+    public BoardDao(final Connection connection) {
+        this.connection = connection;
+    }
+
     public void save(final BoardDto board) {
         final String sql = "INSERT INTO board (game_id, position, type, color) values (?, ?, ?, ?)";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final Map<String, PieceDto> pieces = board.getBoard();
-            for (String position : pieces.keySet()) {
-                savePiece(connection, sql, board.getGameId(), position, pieces.get(position));
-            }
+        final Map<String, PieceDto> pieces = board.getBoard();
+        for (String position : pieces.keySet()) {
+            savePiece(sql, board.getGameId(), position, pieces.get(position));
+        }
+    }
+
+    public void savePiece(final String sql, final Integer gameId, final String position, final PieceDto piece) {
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameId);
+            statement.setString(2, position);
+            statement.setString(3, piece.getType());
+            statement.setString(4, piece.getColor());
+            statement.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void savePiece(final Connection connection, final String sql, final Integer gameId, final String position,
-                          final PieceDto piece) throws SQLException {
-        final PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, gameId);
-        statement.setString(2, position);
-        statement.setString(3, piece.getType());
-        statement.setString(4, piece.getColor());
-        statement.execute();
-    }
-
     public void updateOnePosition(final Integer gameId, final String position, final PieceDto piece) {
         final String sql = "INSERT INTO board (game_id, position, type, color) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE type = ?, color = ?";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, gameId);
             statement.setString(2, position);
             statement.setString(3, piece.getType());
@@ -55,8 +62,7 @@ public class BoardDao {
     public BoardDto findByGameId(final Integer gameId) {
         final String sql = "SELECT * FROM board WHERE game_id = ?";
 
-        try (final Connection connection = MySqlConnector.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, gameId);
 
             final ResultSet resultSet = statement.executeQuery();
