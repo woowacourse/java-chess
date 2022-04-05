@@ -21,22 +21,12 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isSameColor(final Color color) {
+    public boolean isSame(final Color color) {
         return false;
     }
 
     @Override
     public boolean isJumpable() {
-        return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
         return false;
     }
 }

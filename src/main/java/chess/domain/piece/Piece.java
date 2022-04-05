@@ -17,7 +17,11 @@ public abstract class Piece {
 
     public abstract double getScore();
 
-    public boolean isSameColor(final Color color) {
+    public boolean isSame(final Type type) {
+        return this.type == type;
+    }
+
+    public boolean isSame(final Color color) {
         return this.color.equals(color);
     }
 
@@ -25,31 +29,19 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public Color color() {
+    public Color getColor() {
         return color;
     }
 
-    public Type type() {
+    public Type getType() {
         return type;
     }
 
-    public String getColor() {
+    public String getColorName() {
         return color.getName();
     }
 
-    public String getType() {
+    public String getTypeName() {
         return type.getName();
     }
 

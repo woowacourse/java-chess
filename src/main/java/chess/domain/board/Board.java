@@ -4,6 +4,7 @@ import chess.domain.Direction;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.Collections;
@@ -46,7 +47,7 @@ public class Board {
     }
 
     private void checkTurn(final Piece source, final Color turn) {
-        if (!source.isSameColor(turn)) {
+        if (!source.isSame(turn)) {
             throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
         }
     }
@@ -58,7 +59,7 @@ public class Board {
     }
 
     private void checkTargetColor(final Piece target, final Color turn) {
-        if (target.isSameColor(turn)) {
+        if (target.isSame(turn)) {
             throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
         }
     }
@@ -75,7 +76,7 @@ public class Board {
         if (next.equals(to)) {
             return false;
         }
-        if (!board.get(next).isEmpty()) {
+        if (!board.get(next).isSame(Type.EMPTY)) {
             return true;
         }
         return isBlocked(next, to);
@@ -89,7 +90,7 @@ public class Board {
     }
 
     public boolean isCheckmate(final Position to) {
-        return board.get(to).isKing();
+        return board.get(to).isSame(Type.KING);
     }
 
     public void move(final Position from, final Position to) {
@@ -100,15 +101,15 @@ public class Board {
     public List<Piece> findPieceNotPawn(final Color color) {
         return board.values()
                 .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> !piece.isPawn())
+                .filter(piece -> piece.isSame(color))
+                .filter(piece -> !piece.isSame(Type.PAWN))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Piece> findPawnOnSameColumn(final Color color, final Column column) {
         return findPieceOnSameColumn(column).stream()
-                .filter(piece -> piece.isSameColor(color))
-                .filter(Piece::isPawn)
+                .filter(piece -> piece.isSame(color))
+                .filter(piece -> piece.isSame(Type.PAWN))
                 .collect(Collectors.toUnmodifiableList());
     }
 

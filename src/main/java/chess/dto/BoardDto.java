@@ -3,6 +3,7 @@ package chess.dto;
 import chess.domain.board.Board;
 import chess.domain.board.CustomBoardFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class BoardDto {
 
     private static void putPiece(final Map<String, PieceDto> strings, final Map<Position, Piece> board,
                                  final Position position) {
-        if (!board.get(position).isEmpty()) {
+        if (!board.get(position).isSame(Type.EMPTY)) {
             strings.put(position.getName(), new PieceDto(board.get(position)));
         }
     }

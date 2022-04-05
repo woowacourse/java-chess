@@ -34,29 +34,29 @@ public class BoardResponseDto {
 
     private String decideName(final Piece piece) {
         final String name = decideNameByType(piece);
-        if (piece.color() == Color.BLACK) {
+        if (piece.getColor() == Color.BLACK) {
             return name.toUpperCase(Locale.ROOT);
         }
         return name;
     }
 
     private String decideNameByType(final Piece piece) {
-        if (piece.type() == Type.KING) {
+        if (piece.getType() == Type.KING) {
             return "k";
         }
-        if (piece.type() == Type.QUEEN) {
+        if (piece.getType() == Type.QUEEN) {
             return "q";
         }
-        if (piece.type() == Type.BISHOP) {
+        if (piece.getType() == Type.BISHOP) {
             return "b";
         }
-        if (piece.type() == Type.KNIGHT) {
+        if (piece.getType() == Type.KNIGHT) {
             return "n";
         }
-        if (piece.type() == Type.ROOK) {
+        if (piece.getType() == Type.ROOK) {
             return "r";
         }
-        if (piece.type() == Type.PAWN) {
+        if (piece.getType() == Type.PAWN) {
             return "p";
         }
         return ".";

@@ -10,7 +10,7 @@ public class PieceDto {
     private final String color;
 
     public PieceDto(final Piece piece) {
-        this(piece.getType(), piece.getColor());
+        this(piece.getTypeName(), piece.getColorName());
     }
 
     public PieceDto(final String type, final String color) {
