@@ -13,20 +13,28 @@ public final class Board {
     private static final double DISCOUNT_UNIT = 0.5;
 
     private final Map<Position, Piece> board;
+    private Color turn = Color.WHITE;
 
     Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
     public boolean move(Position from, Position to) {
+        if (!board.get(from).isSameColor(turn)) {
+            return false;
+        }
         final Piece piece = board.getOrDefault(from, Piece.EMPTY);
         if (piece.movable(from, to, this)) {
             board.put(to, piece);
             board.remove(from);
+            changeTurn();
             return true;
         }
-
         return false;
+    }
+
+    private void changeTurn() {
+        turn = turn.opposite();
     }
 
     public boolean isFinished() {
