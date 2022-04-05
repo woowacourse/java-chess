@@ -3,8 +3,8 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.command.Commands;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 
 public final class GameMachine {
 

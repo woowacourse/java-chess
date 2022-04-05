@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.web.dto;
 
 import chess.domain.Color;
 import chess.domain.piece.Piece;
