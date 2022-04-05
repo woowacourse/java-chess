@@ -63,3 +63,17 @@ input {
 #move {
     float: right;
 }
+
+.inlineBtn {
+    display: inline;
+}
+
+.score {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+#restart {
+    float: left;
+    margin-right: 50px;
+}

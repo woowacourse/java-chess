@@ -2,14 +2,11 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/src/style.css">
-    <title>야호의 체스 - 쉿! 게임 중이에요^0^</title>
+    <title>야호의 체스 - 게임 끝~!~!</title>
     <meta charset="UTF-8">
 </head>
 <body>
-<form action="/" method="get" class="endBox">
-    <span class="message">{{message}}</span>
-    <input type="submit" value="END" class="btn" id="end"/>
-</form>
+<div class="message">{{message}}</div>
 <table class="chess-board">
     <tbody>
     <tr>
@@ -113,11 +110,11 @@
     </tr>
     </tbody>
 </table>
-<form action="/ingame" method="post" class="textBoxWrapper">
-    FROM : <input type="text" name="source" class="textBox"/>
-    TO : <input type="text" name="target" class="textBox"/>
-    <input type="submit" value="MOVE" class="btn" id="move"/>
+<form action="/status" method="post" class="inlineBtn">
+    <input type="submit" value="STATUS" class="btn" id="status"/>
 </form>
-<br>
+<form action="/" method="get" class="inlineBtn">
+    <input type="submit" value="END" class="btn" id="end"/>
+</form>
 </body>
 </html>

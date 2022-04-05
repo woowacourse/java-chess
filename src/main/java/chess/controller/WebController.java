@@ -2,14 +2,14 @@ package chess.controller;
 
 import static spark.Spark.*;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import chess.domain.ChessGame;
+import chess.domain.GameResult;
 import chess.domain.board.InitialBoardGenerator;
+import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.dto.BoardDto;
 import spark.ModelAndView;
@@ -30,7 +30,7 @@ public class WebController {
             List<String> emojis = boardDto.getEmojis();
 
             model.put("pieces", emojis);
-            model.put("error", "누가 이기나 보자구~!");
+            model.put("message", "누가 이기나 보자구~!");
 
             return render(model, "/ingame.html");
         });
@@ -44,11 +44,23 @@ public class WebController {
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 List<String> emojis = boardDto.getEmojis();
                 model.put("pieces", emojis);
-                model.put("error", "누가 이기나 보자구~!");
+                model.put("message", "누가 이기나 보자구~!");
             } catch (IllegalArgumentException e) {
-                model.put("error", e.getMessage());
+                model.put("message", e.getMessage());
+            }
+            if (chessGame.isKingDie()) {
+                model.put("message", "킹 잡았다!! 게임 끝~!~!");
+                return render(model, "/finished.html");
             }
             return render(model, "/ingame.html");
+        });
+
+        post("/status", (request, response) -> {
+            GameResult gameResult = new GameResult(chessGame.getBoard());
+            model.put("whiteScore", gameResult.calculateScore(Color.WHITE));
+            model.put("blackScore", gameResult.calculateScore(Color.BLACK));
+            model.put("message", "수고하셨습니다 ^0^");
+            return render(model, "/status.html");
         });
     }
 
