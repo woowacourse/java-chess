@@ -27,6 +27,11 @@ public class Controller {
     public void run() {
         staticFiles.location("/static");
         get("/", (req, res) -> getStartObject());
+        post("/start", (req, res) -> {
+            model.put("name", req.queryParams("name"));
+            System.out.println(model.get("name"));
+            return getObject();
+        });
         post("/command", (req, res) -> {
             if (!req.queryParams("command").equals("시작하기")) {
                 go(req.queryParams("command"));
