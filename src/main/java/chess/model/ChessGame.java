@@ -10,11 +10,11 @@ public class ChessGame {
     static final String ERROR_NOT_MOVABLE_CHESS_FINISHED = "[ERROR] 체스 게임이 종료되어 이동할 수 없습니다.";
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
 
-    private final Board board;
+    private Board board;
     private final Turn turn;
 
-    public ChessGame(Turn turn, PieceArrangement initializer) {
-        this.board = new Board(initializer);
+    public ChessGame(Turn turn, PieceArrangement pieceArrangement) {
+        this.board = new Board(pieceArrangement);
         this.turn = turn;
     }
 
@@ -51,6 +51,10 @@ public class ChessGame {
         if (board.isTargetKing(target)) {
             turn.finish();
         }
+    }
+
+    public void init(PieceArrangement pieceArrangement) {
+        this.board = new Board(pieceArrangement);
     }
 
     public double getScore() {

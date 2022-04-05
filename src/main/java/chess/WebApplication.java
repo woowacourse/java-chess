@@ -84,6 +84,7 @@ public class WebApplication {
     private static void end(ChessGame chessGame) {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            chessGame.init(new DefaultArrangement());
             return render(model, "index.html");
         });
     }
