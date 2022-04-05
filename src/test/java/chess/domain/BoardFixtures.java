@@ -24,7 +24,7 @@ public class BoardFixtures {
         return new ChessBoard(() -> generateEmptyBoard());
     }
 
-    private static List<List<Piece>> generateEmptyBoard() {
+    public static List<List<Piece>> generateEmptyBoard() {
         String inputBoard = new StringBuilder()
                 .append("........").append(NEW_LINE)
                 .append("........").append(NEW_LINE)
