@@ -37,6 +37,14 @@ public class Position {
         return POSITIONS.get(value.toLowerCase(Locale.ROOT));
     }
 
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -52,5 +60,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }
