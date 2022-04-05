@@ -32,23 +32,27 @@ public class Controller {
         staticFiles.location("/static");
         get("/", (req, res) -> getStartObject());
         post("/start", (req, res) -> {
-            saveName(req);
-            initError();
-            boardDao.create(new ChessGameDto((String) model.get("name"), new ChessGame(new InitBoardStrategy())));
-            chessGame = boardDao.findByName((String) model.get("name")).getChessGame();
-            state = new Play(chessGame);
+            initGame(req);
             return getObject();
         });
         post("/command", (req, res) -> {
             go(req.queryParams("command"));
-            boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
+            saveToDB();
             return getObject();
         });
         post("/end", (req, res) -> getEndObject());
     }
 
-    private void saveName(Request req) {
+    private void initGame(Request req) {
         model.put("name", req.queryParams("name"));
+        initError();
+        boardDao.create(new ChessGameDto((String) model.get("name"), new ChessGame(new InitBoardStrategy())));
+        chessGame = boardDao.findByName((String) model.get("name")).getChessGame();
+        state = new Play(chessGame);
+    }
+
+    private void saveToDB() {
+        boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
     }
 
     private void go(String input) {
