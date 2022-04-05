@@ -116,6 +116,7 @@ function loadState(state, turn) {
         document.getElementsByClassName('state')[0].textContent += "(" + turn + ")";
     }
     if (state === "Ended") {
+        document.getElementsByClassName('chess-ui')[0].style.visibility = 'visible';
         alert("게임이 종료되었습니다.");
     }
 }
