@@ -21,7 +21,7 @@ public class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"a4", "h4", "d1", "d8"})
     @DisplayName("룩은 직선으로 갈 수 있다.")
-    void isMovableTrue(String position) {
+    void isMovableTrue(final String position) {
         final Piece rook = new Rook(Color.BLACK);
         final boolean actual = rook.isMovable(Position.of("d4"), Position.of(position));
 
@@ -31,7 +31,7 @@ public class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"h1", "h8", "e3", "a7"})
     @DisplayName("룩은 직선이 아닌 방향으로 갈 수 없다.")
-    void isMovableFalse(String position) {
+    void isMovableFalse(final String position) {
         final Piece rook = new Rook(Color.BLACK);
         final boolean actual = rook.isMovable(Position.of("d4"), Position.of(position));
 

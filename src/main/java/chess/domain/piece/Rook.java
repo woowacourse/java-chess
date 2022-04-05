@@ -17,7 +17,7 @@ public final class Rook extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return checkDirection(from, to ,Direction.rookDirections());
+        return checkDirection(from, to, Direction.rookDirections());
     }
 
     @Override

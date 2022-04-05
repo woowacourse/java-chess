@@ -21,7 +21,7 @@ public class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"a4", "h4", "d1", "d8", "g1", "h8", "a1", "a7"})
     @DisplayName("퀸은 직선, 대각선으로 갈 수 있다.")
-    void isMovableTrue(String position) {
+    void isMovableTrue(final String position) {
         final Piece queen = new Queen(Color.BLACK);
         final boolean actual = queen.isMovable(Position.of("d4"), Position.of(position));
 
@@ -31,7 +31,7 @@ public class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"a2", "e6", "c2", "a8"})
     @DisplayName("퀸은 직선, 대각선이 아닌 방향으로 갈 수 없다.")
-    void isMovableFalse(String position) {
+    void isMovableFalse(final String position) {
         final Piece queen = new Queen(Color.BLACK);
         final boolean actual = queen.isMovable(Position.of("d4"), Position.of(position));
 

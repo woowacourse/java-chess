@@ -21,25 +21,16 @@ public class Position {
     }
 
     public static Position of(final Column column, final Row row) {
-        final String columnValue = column.name();
-        final String value = columnValue.toLowerCase(Locale.ROOT) + row.getValue();
+        final String columnValue = column.name().toLowerCase(Locale.ROOT);
+        final String value = columnValue + row.getValue();
         return cache.computeIfAbsent(value, ignored -> new Position(column, row));
     }
 
     public static Position of(final String value) {
         validatePosition(value);
         final Column column = Column.of(value.substring(0, 1));
-        final Row row = Row.of(getRow(value));
+        final Row row = Row.of(validateRow(value));
         return cache.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
-    }
-
-    private static int getRow(final String value) {
-        final String row = value.substring(1, 2);
-        try {
-            return Integer.parseInt(row);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("잘못된 행이름이 들어왔습니다.");
-        }
     }
 
     private static void validatePosition(final String value) {
@@ -59,11 +50,20 @@ public class Position {
         }
     }
 
+    private static int validateRow(final String value) {
+        final String row = value.substring(1, 2);
+        try {
+            return Integer.parseInt(row);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("행이름은 숫자여야합니다.");
+        }
+    }
+
     public Position toDirection(final Direction direction) {
         try {
             final Column movedColumn = column.move(direction.getColumnValue());
             final Row movedRow = row.move(direction.getRowValue());
-            return new Position(movedColumn, movedRow);
+            return Position.of(movedColumn, movedRow);
         } catch (IndexOutOfBoundsException exception) {
             return this;
         }

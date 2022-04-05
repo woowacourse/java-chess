@@ -2,11 +2,11 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Bishop;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class ScoreCalculatorTest {
     }
 
     @Test
-    @DisplayName("여러 컬럼의 한약색 점수를 계산한다.")
+    @DisplayName("여러 컬럼의 하얀색 점수를 계산한다.")
     void calculateColumnsForWhite() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new King(Color.WHITE)),

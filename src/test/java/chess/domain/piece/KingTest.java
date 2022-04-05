@@ -21,7 +21,7 @@ public class KingTest {
     @ParameterizedTest
     @CsvSource(value = {"c3", "c4", "c5", "d3", "d5", "e3", "e4", "e5"})
     @DisplayName("킹은 주위 8개의 위치로 갈 수 있다.")
-    void isMovableTrue(String position) {
+    void isMovableTrue(final String position) {
         final Piece king = new King(Color.BLACK);
         final boolean actual = king.isMovable(Position.of("d4"), Position.of(position));
 

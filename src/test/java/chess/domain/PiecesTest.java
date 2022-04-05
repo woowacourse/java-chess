@@ -13,7 +13,7 @@ public class PiecesTest {
 
     @Test
     @DisplayName("Pieces를 생성한다")
-    void constructPieces() {
+    void construct() {
         final var pieces = new Pieces(List.of(new Rook(Color.WHITE), new Pawn(Color.WHITE)));
 
         assertThat(pieces).isInstanceOf(Pieces.class);

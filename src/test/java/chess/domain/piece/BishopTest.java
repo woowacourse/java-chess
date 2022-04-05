@@ -21,7 +21,7 @@ public class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"a1", "a7", "g1", "h8", "c3", "c5", "e3", "e5"})
     @DisplayName("비숍은 대각선으로 갈 수 있다.")
-    void isMovableTrue(String position) {
+    void isMovableTrue(final String position) {
         final Piece bishop = new Bishop(Color.BLACK);
         final boolean actual = bishop.isMovable(Position.of("d4"), Position.of(position));
 
@@ -31,7 +31,7 @@ public class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"d3", "d5", "c4", "e4", "a8", "h1"})
     @DisplayName("비숍은 대각선이 아닌 방향으로 갈 수 없다.")
-    void isMovableFalse(String position) {
+    void isMovableFalse(final String position) {
         final Piece bishop = new Bishop(Color.BLACK);
         final boolean actual = bishop.isMovable(Position.of("a1"), Position.of(position));
 

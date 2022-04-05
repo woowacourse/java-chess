@@ -23,7 +23,7 @@ public abstract class Piece {
 
         try {
             direction = Direction.getDirection(from, to);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
 

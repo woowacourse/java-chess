@@ -16,7 +16,7 @@ public final class Queen extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return checkDirection(from, to ,Direction.queenDirections());
+        return checkDirection(from, to, Direction.queenDirections());
     }
 
     @Override

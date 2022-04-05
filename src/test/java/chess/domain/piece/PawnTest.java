@@ -36,7 +36,7 @@ public class PawnTest {
 
     @Test
     @DisplayName("이미 움직인 폰은 앞으로 두 칸 갈 수 없다.")
-    void isMovableFalse1() {
+    void isMovableFalseIfMoving() {
         final Piece pawn = new Pawn(Color.WHITE);
         final boolean actual = pawn.isMovable(Position.of("b3"), Position.of("b5"));
 

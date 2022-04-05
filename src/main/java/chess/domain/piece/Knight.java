@@ -17,7 +17,7 @@ public final class Knight extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return checkDirection(from, to ,Direction.knightDirections()) && checkPosition(from, to);
+        return checkDirection(from, to, Direction.knightDirections()) && checkPosition(from, to);
     }
 
     private boolean checkPosition(final Position from, final Position to) {

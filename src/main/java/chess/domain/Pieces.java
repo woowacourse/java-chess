@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import java.util.List;
-import java.util.Objects;
 
 public class Pieces {
 
@@ -23,22 +22,5 @@ public class Pieces {
         return value.stream()
                 .mapToDouble(Piece::getPoint)
                 .sum();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Pieces pieces = (Pieces) o;
-        return Objects.equals(value, pieces.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 }

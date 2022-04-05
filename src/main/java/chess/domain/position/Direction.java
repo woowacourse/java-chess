@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.domain.piece.Color;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,29 +34,7 @@ public enum Direction {
         this.rowValue = rowValue;
     }
 
-    public List<Direction> getDiagonal() {
-        final List<Direction> directions = new ArrayList<>();
-        if (this == NORTH || this == SOUTH) {
-            directions.add(getDirectionByValues(-1, rowValue));
-            directions.add(getDirectionByValues(1, rowValue));
-            return directions;
-        }
-        if (this == EAST || this == WEST) {
-            directions.add(getDirectionByValues(columnValue, -1));
-            directions.add(getDirectionByValues(columnValue, 1));
-            return directions;
-        }
-        throw new IllegalStateException("해당 디렉션의 대각선을 구할 수 없습니다");
-    }
-
-    public static Direction getDirectionByValues(final int columnValue, final int rowValue) {
-        return Arrays.stream(Direction.values())
-                .filter(direction -> direction.columnValue == columnValue && direction.rowValue == rowValue)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 Direction이 없습니다."));
-    }
-
-    public static Direction getDirection(Position from, Position to) {
+    public static Direction getDirection(final Position from, final Position to) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> Math.atan2(direction.rowValue, direction.columnValue) == from.getAngle(to))
                 .findAny()

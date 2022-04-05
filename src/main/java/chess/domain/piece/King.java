@@ -16,7 +16,7 @@ public final class King extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return checkDirection(from, to ,Direction.kingDirections()) && checkPosition(from, to);
+        return checkDirection(from, to, Direction.kingDirections()) && checkPosition(from, to);
     }
 
     private boolean checkPosition(final Position from, final Position to) {

@@ -72,7 +72,7 @@ public class ChessBoard {
     private void checkEmptyInDiagonalPosition(Position from, Direction direction) {
         Position position = from.toDirection(direction);
         if (selectPiece(position).isEmpty()) {
-            throw new IllegalArgumentException("비어있는 곳으로는 직선만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("폰은 해당 위치로 이동할 수 없습니다.");
         }
     }
 

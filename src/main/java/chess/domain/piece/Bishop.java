@@ -17,7 +17,7 @@ public final class Bishop extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return checkDirection(from, to ,Direction.bishopDirections());
+        return checkDirection(from, to, Direction.bishopDirections());
     }
 
     @Override

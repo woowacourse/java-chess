@@ -61,6 +61,16 @@ public class PositionTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("포지션은 두 글자입니다.");
         }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"aa", "a."})
+        @DisplayName("생성할 때 행의 이름은 숫자여야한다.")
+        void throwNumberFormat(final String value) {
+            assertThatThrownBy(() ->
+                    Position.of(value))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("행이름은 숫자여야합니다.");
+        }
     }
 
     @ParameterizedTest
@@ -81,5 +91,16 @@ public class PositionTest {
         final Position nextPosition = position.toDirection(direction);
 
         assertThat(nextPosition).isEqualTo(position);
+    }
+
+    @Test
+    @DisplayName("다른 포지션과의 각도를 얻는다.")
+    void getAngle() {
+        final Position d4 = Position.of("d4");
+        final Position d8 = Position.of("d8");
+        final double actual = d4.getAngle(d8);
+        final double expected = 1.5707963267948966;
+
+        assertThat(actual).isEqualTo(expected);
     }
 }

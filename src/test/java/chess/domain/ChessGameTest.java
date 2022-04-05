@@ -1,14 +1,15 @@
 package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.state.BlackRunning;
 import chess.domain.state.Finish;
+import chess.domain.state.Running;
 import chess.domain.state.State;
 import chess.domain.state.WhiteRunning;
 import java.util.HashMap;
@@ -47,25 +48,26 @@ public class ChessGameTest {
     }
 
     @Test
-    @DisplayName("move 명령어를 입력하면 예외가 발생한다.")
+    @DisplayName("move 명령어를 사용하면 턴이 바뀐다.")
     void playGameByCommandWithMove() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        chessGame.playGameByCommand(new GameCommand("start"));
 
-        assertThatThrownBy(() ->
-                chessGame.playGameByCommand(new GameCommand("move", "b2", "b4")))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("준비 상태에서는 해당 명령어를 사용할 수 없습니다.");
+        final State state = chessGame.playGameByCommand(new GameCommand("move", "d4", "e3"));
+
+        assertThat(state).isInstanceOf(BlackRunning.class);
+
     }
 
     @Test
-    @DisplayName("status 명령어를 입력하면 예외가 발생한다.")
+    @DisplayName("status 명령어를 입력하면 게임 진행 상태이다.")
     void playGameByCommandWithStatus() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        chessGame.playGameByCommand(new GameCommand("start"));
 
-        assertThatThrownBy(() ->
-                chessGame.playGameByCommand(new GameCommand("status")))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("준비 상태에서는 해당 명령어를 사용할 수 없습니다.");
+        final State state = chessGame.playGameByCommand(new GameCommand("status"));
+
+        assertThat(state).isInstanceOf(Running.class);
     }
 
     @Test

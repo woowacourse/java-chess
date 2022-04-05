@@ -1,45 +1,43 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class DirectionTest {
 
-    @Test
-    @DisplayName("columnValue, rowValue를 이용해 Direction을 구한다.")
-    void getDirectionByValues() {
-        final Direction directionByValues = Direction.getDirectionByValues(1, 0);
+    @ParameterizedTest
+    @CsvSource(value = {"d8, NORTH", "h4, EAST", "a4, WEST", "d1, SOUTH"})
+    @DisplayName("직선 관계의 두 포지션 간의 Direction을 얻는다.")
+    void getDirectionOfStraight(String to, Direction expected) {
+        final Position fromPosition = Position.of("d4");
+        final Position toPosition = Position.of(to);
+        final Direction direction = Direction.getDirection(fromPosition, toPosition);
 
-        assertThat(directionByValues).isEqualTo(Direction.EAST);
+        assertThat(direction).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("columnValue, rowValue가 범위를 벗어날 경우 예외가 발생한다.")
-    void getDirectionByValuesThrowException() {
-        assertThatThrownBy(() ->
-                Direction.getDirectionByValues(-5, 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("일치하는 Direction이 없습니다.");
+    @ParameterizedTest
+    @CsvSource(value = {"a1, SOUTH_WEST", "a7, NORTH_WEST", "g1, SOUTH_EAST", "h8, NORTH_EAST"})
+    @DisplayName("대각선 관계의 두 포지션 간의 Direction을 얻는다.")
+    void getDirectionOfDiagonal(String to, Direction expected) {
+        final Position fromPosition = Position.of("d4");
+        final Position toPosition = Position.of(to);
+        final Direction direction = Direction.getDirection(fromPosition, toPosition);
+
+        assertThat(direction).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("현재 방향에서의 대각선 방향들을 구한다.")
-    void getDiagonal() {
-        final List<Direction> diagonal = Direction.EAST.getDiagonal();
+    @ParameterizedTest
+    @CsvSource(value = {"b3, WWS", "c2, SSW", "e2, SSE", "f3, EES"})
+    @DisplayName("나이트 방향의 두 포지션 간의 Direction을 얻는다.")
+    void getDirectionOfKnight(String to, Direction expected) {
+        final Position fromPosition = Position.of("d4");
+        final Position toPosition = Position.of(to);
+        final Direction direction = Direction.getDirection(fromPosition, toPosition);
 
-        assertThat(diagonal).contains(Direction.NORTH_EAST, Direction.SOUTH_EAST);
-    }
-
-    @Test
-    @DisplayName("현재 방향이 대각선을 구할 수 없는 경우 예외가 발생한다.")
-    void getDiagonalThrowException() {
-        assertThatThrownBy(() ->
-                Direction.NORTH_EAST.getDiagonal())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("해당 디렉션의 대각선을 구할 수 없습니다");
+        assertThat(direction).isEqualTo(expected);
     }
 }
