@@ -111,7 +111,7 @@
 
 - `post`, `/api/move` : 체스 기물들을 from에서 to로 움직입니다.
 
-  위 api는 아래와 같은 형태로 `from`위치와 `to`위치를 json형태로 보내주고 통신합니다.
+ 위 api는 아래와 같은 형태로 `from`위치와 `to`위치를 json형태로 보내주고 통신합니다.
 ```json
 POST
 {

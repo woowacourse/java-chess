@@ -5,12 +5,8 @@ import chess.board.piece.Piece;
 import chess.board.piece.Pieces;
 import chess.board.piece.position.Position;
 import chess.web.dao.BoardDao;
-import chess.web.dao.BoardDaoImpl;
-import chess.web.dao.PieceDao;
-import chess.web.dao.PieceDaoImpl;
 import chess.web.service.dto.MoveDto;
 import chess.web.service.dto.ScoreDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,20 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessServiceTest {
 
-    private final BoardDao boardDao = new BoardDaoImpl();
-    private final PieceDao pieceDao = new PieceDaoImpl();
-    private final ChessService chessService = new ChessService();
-    private Long boardId;
+    private final BoardDao boardDao = new MockBoardDao();
+    private final ChessService chessService = new ChessService(boardDao, new MockPieceDao());
+    private final Long boardId = 1L;
 
-    @BeforeEach
-    void setUp() {
-        boardId = boardDao.save();
-        Pieces pieces = Pieces.createInit();
-        pieceDao.save(pieces.getPieces(), boardId);
-    }
 
     @Test
-    @DisplayName("64개의 piece을 갖고 있는 게임을 불러왔을 떄, 그떄의 piece 개수도 64개여야한다.")
+    @DisplayName("64개의 piece를 갖고 있는 게임을 불러왔을 떄, 그떄의 piece 개수도 64개여야한다.")
     void loadGame() {
         Board board = chessService.loadGame(boardId);
         assertThat(board.getPieces().getPieces().size()).isEqualTo(64);

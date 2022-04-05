@@ -25,6 +25,11 @@ public class ChessService {
         pieceDao = new PieceDaoImpl();
     }
 
+    public ChessService(BoardDao boardDao, PieceDao pieceDao) {
+        this.boardDao = boardDao;
+        this.pieceDao = pieceDao;
+    }
+
     public Board loadGame(Long boardId) {
         Turn turn = boardDao.findTurnById(boardId).orElseThrow(() -> new IllegalArgumentException("없는 차례입니다."));
         List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
