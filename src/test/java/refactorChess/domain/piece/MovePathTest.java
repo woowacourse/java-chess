@@ -26,9 +26,9 @@ class MovePathTest {
     }
 
     @Test
-    @DisplayName("기물의 시작지점과 도착지점의 같을 경우 false를 반환 할 수 있다.")
+    @DisplayName("기물의 시작지점과 다음 도착지점의 같을 경우 false를 반환 할 수 있다.")
     void returnFalseOfSourcePositionAndTargetPositionIsSame() {
-        final MovePath movePath = new MovePath(Position.valueOf("a2"), Position.valueOf("a2"), Direction.NORTH);
+        final MovePath movePath = new MovePath(Position.valueOf("a2"), Position.valueOf("a3"), Direction.NORTH);
 
         assertThat(movePath.hasNext()).isFalse();
     }
