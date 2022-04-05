@@ -33,13 +33,15 @@ public class BoardDaoTest {
         Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
-        boardDao.save(position, piece);
+        boardDao.save(position, piece, gameNumber);
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "select * from board where position = ?";
+        String sql = "select * from board where position = ? and game_number = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, position.getStringValue());
+        statement.setInt(2, gameNumber);
         ResultSet resultSet = statement.executeQuery();
         assertThat(resultSet.next()).isTrue();
         assertThat(resultSet.getString("position")).isEqualTo(position.getStringValue());
@@ -55,14 +57,16 @@ public class BoardDaoTest {
         Position destination = Position.valueOf("a2");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
-        boardDao.save(source, piece);
-        boardDao.updateByPosition(destination, source);
+        boardDao.save(source, piece, gameNumber);
+        boardDao.updateByPosition(destination, source, gameNumber);
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "select * from board where position = ?";
+        String sql = "select * from board where position = ? and game_number = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, destination.getStringValue());
+        statement.setInt(2, gameNumber);
         ResultSet resultSet = statement.executeQuery();
         assertThat(resultSet.next()).isTrue();
         assertThat(resultSet.getString("position")).isEqualTo(destination.getStringValue());
@@ -77,16 +81,18 @@ public class BoardDaoTest {
         Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "insert into board (position, color, piece) values (?,?,?)";
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getStringValue());
-        statement.setString(2, piece.getColor());
-        statement.setString(3, piece.getType());
+        statement.setInt(1, gameNumber);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
         statement.executeUpdate();
 
-        Piece result = boardDao.findByPosition(position);
+        Piece result = boardDao.findByPositionAndGameNumber(position, gameNumber);
 
         assertThat(result).isEqualTo(piece);
     }
@@ -98,16 +104,18 @@ public class BoardDaoTest {
         Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "insert into board (position, color, piece) values (?,?,?)";
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getStringValue());
-        statement.setString(2, piece.getColor());
-        statement.setString(3, piece.getType());
+        statement.setInt(1, gameNumber);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
         statement.executeUpdate();
 
-        Board result = boardDao.findAll();
+        Board result = boardDao.findAllByGameNumber(gameNumber);
 
         assertThat(result.findPieceBy(position).get()).isEqualTo(piece);
     }
@@ -119,18 +127,20 @@ public class BoardDaoTest {
         Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "insert into board (position, color, piece) values (?,?,?)";
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getStringValue());
-        statement.setString(2, piece.getColor());
-        statement.setString(3, piece.getType());
+        statement.setInt(1, gameNumber);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
         statement.executeUpdate();
 
-        boardDao.delete(position);
+        boardDao.delete(position, gameNumber);
 
-        assertThat(boardDao.findByPosition(position)).isNull();
+        assertThat(boardDao.findByPositionAndGameNumber(position, gameNumber)).isNull();
     }
 
     @DisplayName("DB에 저장된 정보를 모두 제거한다.")
@@ -140,17 +150,50 @@ public class BoardDaoTest {
         Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
+        int gameNumber = 1;
 
         Connection connection = JdbcConnector.getConnection();
-        String sql = "insert into board (position, color, piece) values (?,?,?)";
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, position.getStringValue());
-        statement.setString(2, piece.getColor());
-        statement.setString(3, piece.getType());
+        statement.setInt(1, gameNumber);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
         statement.executeUpdate();
 
         boardDao.deleteAll();
 
-        assertThat(boardDao.findByPosition(position)).isNull();
+        assertThat(boardDao.findByPositionAndGameNumber(position, gameNumber)).isNull();
+    }
+
+    @DisplayName("특정 게임방의 정보만을 모두 제거한다.")
+    @Test
+    void deleteAllByGameNumberTest() throws SQLException {
+        BoardDao boardDao = new BoardDao();
+        Position position = Position.valueOf("a1");
+        Color color = Color.WHITE;
+        Piece piece = new Knight(color);
+        int gameNumber1 = 1;
+        int gameNumber2 = 2;
+
+        Connection connection = JdbcConnector.getConnection();
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, gameNumber1);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
+        statement.executeUpdate();
+        statement = connection.prepareStatement(sql);
+        statement.setInt(1, gameNumber2);
+        statement.setString(2, position.getStringValue());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, piece.getType());
+        statement.executeUpdate();
+
+        boardDao.deleteAllByGameNumber(gameNumber1);
+
+        assertThat(boardDao.findByPositionAndGameNumber(position, gameNumber1)).isNull();
+        assertThat(boardDao.findByPositionAndGameNumber(position, gameNumber2)).isNotNull();
     }
 }

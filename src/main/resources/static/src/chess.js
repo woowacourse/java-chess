@@ -3,7 +3,8 @@ var source = undefined;
 var destination = undefined;
 
 function gameStart() {
-    fetch('/initialize', {
+    var gameNumber = document.getElementById('game-number').innerHTML;
+    fetch('/room/' + gameNumber + '/initialize', {
         headers: {
             "Content-Type": "application/json",
         }}
@@ -41,12 +42,14 @@ function clickPiece(id) {
 }
 
 function sendMoveCommand() {
+    var gameNumber = document.getElementById('game-number').innerHTML;
     var data = {
+        gameNumber: gameNumber,
         source: source,
         destination: destination
     };
 
-    fetch('/move', {
+    fetch('/room/' + gameNumber + '/move', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -67,7 +70,8 @@ function sendMoveCommand() {
 }
 
 function printStatus() {
-    fetch('/status', {
+    var gameNumber = document.getElementById('game-number').innerHTML;
+    fetch('/room/' + gameNumber + '/status', {
         headers: {
             "Content-Type": "application/json",
         }}

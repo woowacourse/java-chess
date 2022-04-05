@@ -21,17 +21,20 @@ public class ChessWebService {
 
     private static final Color FIRST_TURN = Color.WHITE;
 
-    private final BoardDao boardDao = new BoardDao();
-    private final TurnDao turnDao = new TurnDao();
+    private static final BoardDao BOARD_DAO = new BoardDao();
+    private static final TurnDao TURN_DAO = new TurnDao();
     private State state;
 
-    public ChessWebService() {
-        Color color = turnDao.find();
+    private ChessWebService(State state) {
+        this.state = state;
+    }
+
+    public static ChessWebService numberOf(int gameNumber) {
+        Color color = TURN_DAO.findByGameNumber(gameNumber);
         if (color == null) {
-            this.state = Ready.start(new Board(new HashMap<>()));
-            return;
+            return new ChessWebService(Ready.start(new Board(new HashMap<>())));
         }
-        this.state = Ready.continueOf(color, boardDao.findAll());
+        return new ChessWebService(Ready.continueOf(color, BOARD_DAO.findAllByGameNumber(gameNumber)));
     }
 
     public Board getBoard() {
@@ -43,24 +46,25 @@ public class ChessWebService {
         return ApiResult.succeed(new StatusResult(score));
     }
 
-    public void initializeState() {
+    public void initializeState(int gameNumber) {
         state = Ready.start(BasicChessBoardGenerator.generator());
 
-        deleteAllPiece();
-        deleteTurn();
+        deleteAllPiece(gameNumber);
+        deleteTurn(gameNumber);
 
         Map<Position, Piece> value = state.getBoard().getValue();
-        value.forEach(this::savePiece);
-        saveTurn(FIRST_TURN);
+        value.forEach((position, piece) -> savePiece(position, piece, gameNumber));
+        saveTurn(FIRST_TURN, gameNumber);
     }
 
     public ApiResult movePiece(MoveCommand command) {
         Position source = Position.valueOf(command.getSource());
         Position destination = Position.valueOf(command.getDestination());
+        int gameNumber = command.getGameNumber();
         try {
             state = state.movePiece(source, destination);
-            updateDbPiece(source, destination);
-            updateDbTurn(state.getTurn());
+            updateDbPiece(source, destination, gameNumber);
+            updateDbTurn(state.getTurn(), gameNumber);
             return ApiResult.succeed(new MoveResponseDto(command.getSource(), command.getDestination(), isFinished()));
         } catch (RuntimeException e) {
             return ApiResult.failed(e.getMessage());
@@ -71,28 +75,28 @@ public class ChessWebService {
         return state.isFinished();
     }
 
-    private void savePiece(Position position, Piece piece) {
-        boardDao.save(position, piece);
+    private void savePiece(Position position, Piece piece, int gameNumber) {
+        BOARD_DAO.save(position, piece, gameNumber);
     }
 
-    private void saveTurn(Color color) {
-        turnDao.save(color);
+    private void saveTurn(Color color, int gameNumber) {
+        TURN_DAO.save(color, gameNumber);
     }
 
-    private void updateDbPiece(Position source, Position destination) {
-        boardDao.updateByPosition(destination, source);
-        boardDao.delete(source);
+    private void updateDbPiece(Position source, Position destination, int gameNumber) {
+        BOARD_DAO.updateByPosition(destination, source, gameNumber);
+        BOARD_DAO.delete(source, gameNumber);
     }
 
-    private void updateDbTurn(Color color) {
-        turnDao.update(color);
+    private void updateDbTurn(Color color, int gameNumber) {
+        TURN_DAO.update(color, gameNumber);
     }
 
-    private void deleteAllPiece() {
-        boardDao.deleteAll();
+    private void deleteAllPiece(int gameNumber) {
+        BOARD_DAO.deleteAllByGameNumber(gameNumber);
     }
 
-    private void deleteTurn() {
-        turnDao.delete();
+    private void deleteTurn(int gameNumber) {
+        TURN_DAO.deleteByGameNumber(gameNumber);
     }
 }

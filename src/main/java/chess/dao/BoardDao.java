@@ -14,42 +14,45 @@ import java.util.Map;
 
 public class BoardDao {
 
-    public void save(Position position, Piece piece) {
-        String sql = "insert into board (position, color, piece) values (?,?,?)";
+    public void save(Position position, Piece piece, int gameNumber) {
+        String sql = "insert into board (game_number, position, color, piece) values (?,?,?,?)";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, position.getStringValue());
-            statement.setString(2, piece.getColor());
-            statement.setString(3, piece.getType());
+            statement.setInt(1, gameNumber);
+            statement.setString(2, position.getStringValue());
+            statement.setString(3, piece.getColor());
+            statement.setString(4, piece.getType());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateByPosition(Position nextPosition, Position previousPosition) {
-        if (findByPosition(nextPosition) == null) {
-            save(nextPosition, findByPosition(previousPosition));
+    public void updateByPosition(Position nextPosition, Position previousPosition, int gameNumber) {
+        if (findByPositionAndGameNumber(nextPosition, gameNumber) == null) {
+            save(nextPosition, findByPositionAndGameNumber(previousPosition, gameNumber), gameNumber);
             return;
         }
-        String sql = "update board set color = ?, piece = ? where position = ?";
+        String sql = "update board set color = ?, piece = ? where position = ? and game_number = ?";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            Piece piece = findByPosition(previousPosition);
+            Piece piece = findByPositionAndGameNumber(previousPosition, gameNumber);
             statement.setString(1, piece.getColor());
             statement.setString(2, piece.getType());
             statement.setString(3, nextPosition.getStringValue());
+            statement.setInt(4, gameNumber);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Piece findByPosition(Position position) {
-        final String sql = "select * from board where position = ?";
+    public Piece findByPositionAndGameNumber(Position position, int gameNumber) {
+        final String sql = "select * from board where position = ? and game_number = ?";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.getStringValue());
+            statement.setInt(2, gameNumber);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 return null;
@@ -64,10 +67,11 @@ public class BoardDao {
         }
     }
 
-    public Board findAll() {
-        final String sql = "select * from board";
+    public Board findAllByGameNumber(int gameNumber) {
+        final String sql = "select * from board where game_number = ?";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameNumber);
             ResultSet resultSet = statement.executeQuery();
 
             Map<Position, Piece> value = new HashMap<>();
@@ -85,11 +89,12 @@ public class BoardDao {
         }
     }
 
-    public void delete(Position position) {
-        String sql = "delete from board where position = ?";
+    public void delete(Position position, int gameNumber) {
+        String sql = "delete from board where position = ? and game_number = ?";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.getStringValue());
+            statement.setInt(2, gameNumber);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,6 +105,17 @@ public class BoardDao {
         String sql = "delete from board where 1";
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAllByGameNumber(int gameNumber) {
+        String sql = "delete from board where game_number = ?";
+        try (Connection connection = JdbcConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameNumber);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

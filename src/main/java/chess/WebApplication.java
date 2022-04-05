@@ -10,7 +10,12 @@ import chess.dto.MoveCommand;
 import chess.service.ChessWebService;
 import chess.utils.RequestToCommand;
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -19,28 +24,46 @@ public class WebApplication {
         port(8089);
         staticFileLocation("/static");
 
-        ChessWebService service = new ChessWebService();
+        int MAX_GAME_NUMBER = 3;
+        List<ChessWebService> services = IntStream.range(0, MAX_GAME_NUMBER)
+                .mapToObj(ChessWebService::numberOf)
+                .collect(Collectors.toList());
         Gson gson = new Gson();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = service.getBoard().toMap();
-            return render(model, "index.html");
+        get("/room", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Integer> gameNumbers = new ArrayList<>();
+            for (int i = 0 ; i < MAX_GAME_NUMBER ; i++) {
+                gameNumbers.add(i);
+            }
+            model.put("gameNumbers", gameNumbers);
+            return render(model, "room.html");
         });
 
-        get("/initialize", (req, res) -> {
-            service.initializeState();
-            res.redirect("/");
+        get("/room/:gameNumber", (req, res) -> {
+            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
+            Map<String, Object> model = services.get(gameNumber).getBoard().toMap();
+            model.put("gameNumber", gameNumber);
+            return render(model, "board.html");
+        });
+
+        get("/room/:gameNumber/initialize", (req, res) -> {
+            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
+            services.get(gameNumber).initializeState(gameNumber);
+            res.redirect("/room/" + gameNumber);
             return null;
         });
 
-        get("/status", (req, res) -> {
-            ApiResult statusResult = service.getStatus();
+        get("/room/:gameNumber/status", (req, res) -> {
+            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
+            ApiResult statusResult = services.get(gameNumber).getStatus();
             return gson.toJson(statusResult);
         });
 
-        post("/move", (req, res) -> {
+        post("/room/:gameNumber/move", (req, res) -> {
             final MoveCommand command = RequestToCommand.toMoveCommand(req.body());
-            ApiResult apiResult = service.movePiece(command);
+            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
+            ApiResult apiResult = services.get(gameNumber).movePiece(command);
 
             return gson.toJson(apiResult);
         });
