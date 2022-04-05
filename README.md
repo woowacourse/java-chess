@@ -75,3 +75,51 @@
 - [x] 남아있는 말에 대해서 점수를 계산한다.
 - [x] 게임이 끝나고 `status`를 입력하면 결과를 보여주고 우승 팀을 알려준다.
 - [x] 게임이 끝나고 아무키나 입력하면 그냥 종료된다.
+
+## 4, 5단계
+
+### api 명세
+
+- `get`, `/` : `index.html`을 부르면서 처음 페이지를 불러옵니다.
+- `get`, `/api/load` : 현재 진행 중인 게임을 불러옵니다.
+- `get`, `/api/restart` : 게임을 재시작합니다. 체스판과 체스 기물들이 초기화되어서 생성됩니다.
+
+위 api들은 `boardDto`를 통해서 아래의 json형태로 보내줍니다.
+```json
+{
+  turn: "white",
+  board: {
+    "a2": "pawn",
+    ...
+    (position: piece)
+    ...
+  },
+  isFinish: true
+}
+```
+
+- `get`, `/api/status` : 현재 게임의 점수를 보여줍니다.
+
+위 api는 아래의 json형태로 보내줍니다.
+```json
+{
+  blackTeam : 38.0,
+  whiteTeam : 38.0
+}
+    
+```
+
+- `post`, `/api/move` : 체스 기물들을 from에서 to로 움직입니다.
+
+  위 api는 아래와 같은 형태로 `from`위치와 `to`위치를 json형태로 보내주고 통신합니다.
+```json
+POST
+{
+  "from": "a2",
+  "to" : "a4"
+}
+```
+
+
+
+
