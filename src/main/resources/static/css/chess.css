@@ -1,0 +1,63 @@
+table.chess-board {
+    width: 80vh;
+    font-size: 4vh;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    justify-content: center;
+}
+table.chess-board th {
+    width: 8vh;
+    height: 8vh;
+    border: solid 1px black;
+    background: black;
+}
+table.chess-board td {
+    width: 8vh;
+    height: 8vh;
+    border: solid 1px black;
+}
+
+table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n) {
+    background-color: gray;
+}
+
+table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n-1) {
+    background-color: wheat;
+}
+
+table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n-1) {
+    background-color: gray;
+}
+
+table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n) {
+    background-color: wheat;
+}
+
+img.chess-piece-img {
+    width: 99%;
+    height: 99%;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.turn-message {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 4vh;
+}
+.chess-header {
+    height: 7vh;
+    margin-top: 2vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    text-align: right;
+    justify-content: right;
+}

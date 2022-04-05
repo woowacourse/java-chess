@@ -11,57 +11,45 @@ import java.util.List;
 import java.util.Optional;
 
 public class DatabaseMemberDao implements MemberDao {
+    private final SQLExecutor executor = SQLExecutor.getInstance();
 
     @Override
     public Long save(Member member) {
-        final Connection connection = MysqlConnector.getConnection();
         final String sql = "insert into Member (name) values (?)";
-        try {
+        return executor.insertAndGetGeneratedKey(connection -> {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, member.getName());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0L;
+            return statement;
+        });
     }
 
     @Override
     public Optional<Member> findById(Long id) {
-        final Connection connection = MysqlConnector.getConnection();
         final String sql = "select id, name from Member where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        Member member = executor.select(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return Optional.empty();
-            }
-            return Optional.of(new Member(resultSet.getLong("id"), resultSet.getString("name")));
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return statement;
+        }, this::serializeMember);
+        return Optional.ofNullable(member);
+    }
+
+    private Member serializeMember(ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            return null;
         }
-        return Optional.empty();
+        return new Member(resultSet.getLong("id"), resultSet.getString("name"));
     }
 
     @Override
     public List<Member> findAll() {
-        final Connection connection = MysqlConnector.getConnection();
         final String sql = "select id, name from Member";
-        List<Member> members = new ArrayList<>();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+        return executor.select(connection -> connection.prepareStatement(sql), resultSet -> {
+            List<Member> members = new ArrayList<>();
             while (resultSet.next()) {
                 members.add(new Member(resultSet.getLong("id"), resultSet.getString("name")));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return members;
+            return members;
+        });
     }
 }

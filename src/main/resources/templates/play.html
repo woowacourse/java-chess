@@ -5,51 +5,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>게임 화면</title>
-
-    <style>
-        table.chess-board {
-            font-size: 37px;
-            font-weight: bold;
-            text-align: center;
-            color: #fff;
-        }
-        table.chess-board th {
-            width: 70px;
-            height: 70px;
-            border: solid 1px black;
-            background: black;
-        }
-        table.chess-board td {
-            width: 70px;
-            height: 70px;
-            border: solid 1px black;
-        }
-
-        table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n) {
-            background-color: gray;
-        }
-
-        table.chess-board > tbody > tr:nth-child(2n) > td:nth-child(2n-1) {
-            background-color: wheat;
-        }
-
-        table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n-1) {
-            background-color: gray;
-        }
-
-        table.chess-board > tbody > tr:nth-child(2n-1) > td:nth-child(2n) {
-            background-color: wheat;
-        }
-
-        img.chess-piece-img {
-            width: 99%;
-            height: 99%;
-            margin: 0;
-        }
-    </style>
+    <link href="/css/chess.css" rel="stylesheet">
 </head>
 <body>
-    {{turn}} 차례입니다.
+    <div class="chess-header">
+        <button class="btn btn-info" id="scoreBtn" onclick="getScoreData()">점수 보기</button>
+        <button class="btn btn-danger" id="terminateBtn" onclick="terminate()">강제 종료</button>
+        <button class="btn btn-dark" onclick="location.href ='/'">로비로 이동</button>
+    </div>
+    <div class="turn-message">{{turn}} 차례입니다.</div>
+    <div class="container">
         <table class="chess-board">
             <thead>
                 <th></th>
@@ -87,10 +52,7 @@
             </tr>
             </tbody>
         </table>
-
-        <button class="btn btn-info" id="scoreBtn" onclick="getScoreData()">점수 보기</button>
-        <button class="btn btn-danger" id="terminateBtn" onclick="terminate()">강제 종료</button>
-        <a class="btn btn-danger" href="/">로비로 이동</a>
+    </div>
 </body>
 
 <script>

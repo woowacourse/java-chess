@@ -10,7 +10,6 @@ import chess.domain.Member;
 import chess.domain.board.Board;
 import chess.dto.GameResultDTO;
 import chess.dto.RankDTO;
-import chess.dao.MemberDao;
 import chess.service.GameService;
 import chess.service.MemberService;
 import chess.util.JsonUtil;

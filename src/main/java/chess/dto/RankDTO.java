@@ -2,6 +2,7 @@ package chess.dto;
 
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class RankDTO {
         return rank.getPieces()
                 .stream()
                 .map(PieceDTO::toDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public List<PieceDTO> getPieces() {

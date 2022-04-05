@@ -9,7 +9,7 @@ import chess.service.MemberService;
 public class WebApplication {
     public static void main(String[] args) {
         WebController controller = new WebController(
-                new GameService(new DatabaseGameDao(), new DatabaseMemberDao()),
+                new GameService(new DatabaseGameDao(new DatabaseMemberDao()), new DatabaseMemberDao()),
                 new MemberService(new DatabaseMemberDao())
         );
         controller.run();

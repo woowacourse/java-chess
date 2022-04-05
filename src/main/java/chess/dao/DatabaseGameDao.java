@@ -9,7 +9,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 import chess.domain.state.StateType;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,116 +24,117 @@ import java.util.stream.Collectors;
 
 public class DatabaseGameDao implements GameDao {
 
+    private final PieceDao pieceDao = new PieceDao();
+    private final SQLExecutor executor = SQLExecutor.getInstance();
+    private final MemberDao memberDao;
+
+    public DatabaseGameDao(MemberDao memberDao) {
+        this.memberDao = memberDao;
+    }
+
     @Override
     public Long save(ChessGame game) {
-        final Connection connection = MysqlConnector.getConnection();
-        Long gameId = saveGame(game, connection);
-        savePieces(new ChessGame(gameId, game.getState(), game.getParticipant()), connection);
+        Long gameId = saveGame(game);
+        savePieces(gameId, game.getBoard());
         return gameId;
     }
 
-    private Long saveGame(ChessGame game, Connection connection) {
+    private Long saveGame(ChessGame game) {
         final String sql = "insert into Game (state, white_member_id, black_member_id) values (?, ?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        return executor.insertAndGetGeneratedKey(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, game.getStateString());
             statement.setLong(2, game.getWhiteId());
             statement.setLong(3, game.getBlackId());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0L;
+            return statement;
+        });
     }
 
     @Override
     public Optional<ChessGame> findById(Long id) {
-        final Connection connection = MysqlConnector.getConnection();
         final String sql = "select id, state, white_member_id, black_member_id from Game where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        ChessGame game = executor.select(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return Optional.empty();
-            }
-            Member white = findMember(resultSet.getLong("white_member_id"), connection).orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-            Member black = findMember(resultSet.getLong("black_member_id"), connection).orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-            return Optional.of(new ChessGame(id,
-                    StateType.createState(
-                            resultSet.getString("state"),
-                            loadBoard(id, connection)),
-                    new Participant(white, black)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+            return statement;
+        }, resultSet -> loadChessGame(id, resultSet));
+        return Optional.ofNullable(game);
     }
 
-    private Board loadBoard(Long gameId, Connection connection) {
-        final String sql = "select line_number,"
-                + " position_x, position_y, team, type, first_turn "
+    private ChessGame loadChessGame(Long id, ResultSet resultSet)
+            throws SQLException {
+        if (!resultSet.next()) {
+            return null;
+        }
+        return makeChessGame(id, resultSet);
+    }
+
+    private ChessGame makeChessGame(Long id, ResultSet resultSet) throws SQLException {
+        Member white = memberDao.findById(resultSet.getLong("white_member_id"))
+                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
+        Member black = memberDao.findById(resultSet.getLong("black_member_id"))
+                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
+        String stateName = resultSet.getString("state");
+        return new ChessGame(id, StateType.createState(stateName, loadBoard(id)),
+                new Participant(white, black));
+    }
+
+    private Board loadBoard(Long gameId) {
+        final String sql = "select line_number, position_x, position_y, team, type, first_turn "
                 + "from Piece "
                 + "where game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        Map<Integer, Rank> boardValues = executor.select(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, gameId);
-            ResultSet pieceResultSet = statement.executeQuery();
-            Map<Integer, List<Piece>> rankValues = new HashMap<>();
-            for (int i = 0; i < 8; i++) {
-                rankValues.put(i, new ArrayList<>());
-            }
-            while (pieceResultSet.next()) {
-                rankValues.get(pieceResultSet.getInt("line_number"))
-                        .add(PieceFactory.createPiece(
-                                pieceResultSet.getString("team"),
-                                pieceResultSet.getString("type"),
-                                new Position(pieceResultSet.getInt("position_x"),
-                                        pieceResultSet.getInt("position_y")
-                                ), pieceResultSet.getBoolean("first_turn")
-                        ));
-            }
-            Map<Integer, Rank> ranks = new HashMap<>();
-            for (Entry<Integer, List<Piece>> pieces : rankValues.entrySet()) {
-                ranks.put(pieces.getKey(), new Rank(pieces.getValue()));
-            }
+            return statement;
+        }, this::makeRanks);
+        return new Board(boardValues);
+    }
 
-            return new Board(ranks);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private Map<Integer, Rank> makeRanks(ResultSet resultSet) throws SQLException {
+        Map<Integer, List<Piece>> rankValues = loadRankValues(resultSet);
+        Map<Integer, Rank> ranks = new HashMap<>();
+        for (Entry<Integer, List<Piece>> pieces : rankValues.entrySet()) {
+            ranks.put(pieces.getKey(), new Rank(pieces.getValue()));
         }
-        return null;
+        return ranks;
+    }
+
+    private Map<Integer, List<Piece>> loadRankValues(ResultSet pieceResultSet) throws SQLException {
+        Map<Integer, List<Piece>> rankValues = new HashMap<>();
+        for (int i = 0; i < 8; i++) {
+            rankValues.put(i, new ArrayList<>());
+        }
+        while (pieceResultSet.next()) {
+            fillRankValue(pieceResultSet, rankValues);
+        }
+        return rankValues;
+    }
+
+    private void fillRankValue(ResultSet pieceResultSet, Map<Integer, List<Piece>> rankValues) throws SQLException {
+        int lineNumber = pieceResultSet.getInt("line_number");
+        String teamName = pieceResultSet.getString("team");
+        String typeName = pieceResultSet.getString("type");
+        Position position = new Position(pieceResultSet.getInt("position_x"),
+                pieceResultSet.getInt("position_y"));
+        boolean firstTurn = pieceResultSet.getBoolean("first_turn");
+        rankValues.get(lineNumber)
+                .add(PieceFactory.createPiece(teamName, typeName, position, firstTurn));
     }
 
     @Override
     public List<ChessGame> findAll() {
-        final Connection connection = MysqlConnector.getConnection();
         final String sql = "select id, state, white_member_id, black_member_id from Game";
-        List<ChessGame> games = new ArrayList<>();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                games.add(makeChessGame(connection, resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return games;
+        return executor.select(connection -> connection.prepareStatement(sql), this::makeAllChessGame);
     }
 
-    private ChessGame makeChessGame(Connection connection, ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
-        Member white = findMember(resultSet.getLong("white_member_id"), connection).orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-        Member black = findMember(resultSet.getLong("black_member_id"), connection).orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-        String stateName = resultSet.getString("state");
-        return new ChessGame(id,
-                StateType.createState(stateName, loadBoard(id, connection)),
-                new Participant(white, black));
+    private List<ChessGame> makeAllChessGame(ResultSet resultSet) throws SQLException {
+        List<ChessGame> games = new ArrayList<>();
+        while (resultSet.next()) {
+            Long id = resultSet.getLong("id");
+            games.add(makeChessGame(id, resultSet));
+        }
+        return games;
     }
 
     @Override
@@ -148,73 +148,65 @@ public class DatabaseGameDao implements GameDao {
 
     @Override
     public void update(ChessGame game) {
-        final Connection connection = MysqlConnector.getConnection();
-        updateGame(game, connection);
-        movePieces(game, connection);
+        updateGame(game);
+        movePieces(game);
     }
 
-    private void updateGame(ChessGame game, Connection connection) {
-        final String stateSql = "update Game set state = ? where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(stateSql);
+    private void updateGame(ChessGame game) {
+        final String sql = "update Game set state = ? where id = ?";
+        executor.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, game.getStateString());
             statement.setLong(2, game.getId());
-            statement.executeUpdate();
-            savePieces(game, connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            return statement;
+        });
+        savePieces(game.getId(), game.getBoard());
     }
 
-    private void movePieces(ChessGame game, Connection connection) {
+    private void movePieces(ChessGame game) {
         final String deleteSql = "delete from Piece where game_id = ?";
-        try {
+        executor.delete(connection -> {
             final PreparedStatement statement = connection.prepareStatement(deleteSql);
             statement.setLong(1, game.getId());
-            statement.executeUpdate();
-            savePieces(game, connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return statement;
+        });
+        savePieces(game.getId(), game.getBoard());
+    }
+
+    private void savePieces(Long gameId, Board board) {
+        for (int i = 0; i < 8; i++) {
+            saveRank(gameId, board, i);
         }
     }
 
-    private void savePieces(ChessGame game, Connection connection) {
-        for (int i = 0; i < 8; i++) {
-            Rank rank = game.getBoard().getRank(i);
+    private void saveRank(Long gameId, Board board, int lineNumber) {
+        Rank rank = board.getRank(lineNumber);
+        for (Piece piece : rank.getPieces()) {
+            pieceDao.save(gameId, piece, lineNumber);
+        }
+    }
+
+    private class PieceDao {
+        public void save(Long gameId, Piece piece, int lineNumber) {
             final String sql = "insert into "
                     + "Piece(line_number, position_x, position_y, team, type, first_turn, game_id) "
                     + "values (?, ?, ?, ?, ?, ?, ?);";
-            for (Piece piece : rank.getPieces()) {
-                try {
-                    final PreparedStatement statement = connection.prepareStatement(sql);
-                    statement.setInt(1, i);
-                    statement.setInt(2, piece.getPosition().getX());
-                    statement.setInt(3, piece.getPosition().getY());
-                    statement.setString(4, piece.getTeam().getName());
-                    statement.setString(5, piece.getType().getName());
-                    statement.setBoolean(6, piece.isFirstTurn());
-                    statement.setLong(7, game.getId());
-                    statement.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            executor.insert(connection -> {
+                final PreparedStatement statement = connection.prepareStatement(sql);
+                setPieceSaveParams(gameId, piece, lineNumber, statement);
+                return statement;
+            });
         }
-    }
 
-    private Optional<Member> findMember(Long id, Connection connection) {
-        final String sql = "select id, name from Member where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return Optional.empty();
-            }
-            return Optional.of(new Member(resultSet.getLong("id"), resultSet.getString("name")));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        private void setPieceSaveParams(Long gameId, Piece piece, int lineNumber, PreparedStatement statement)
+                throws SQLException {
+            statement.setInt(1, lineNumber);
+            statement.setInt(2, piece.getPosition().getX());
+            statement.setInt(3, piece.getPosition().getY());
+            statement.setString(4, piece.getTeam().getName());
+            statement.setString(5, piece.getType().getName());
+            statement.setBoolean(6, piece.isFirstTurn());
+            statement.setLong(7, gameId);
         }
-        return Optional.empty();
     }
 }

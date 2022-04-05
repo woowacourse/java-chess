@@ -15,7 +15,7 @@ public class MysqlConnector {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException("mysql 연결 실패");
     }
 
     private static void loadDriver() {
