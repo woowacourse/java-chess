@@ -53,4 +53,9 @@ public class Queen extends Piece {
     public double getScore() {
         return 9.0;
     }
+
+    @Override
+    public String getName() {
+        return "Queen";
+    }
 }

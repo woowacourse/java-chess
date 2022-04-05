@@ -50,4 +50,9 @@ public class Bishop extends Piece {
     public double getScore() {
         return BISHOP_SCORE;
     }
+
+    @Override
+    public String getName() {
+        return "Bishop";
+    }
 }

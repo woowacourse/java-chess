@@ -25,6 +25,10 @@ public abstract class State {
         return new Ready(board);
     }
 
+    public static State create(Map<Position, Piece> board, Color color) {
+        return new Running(board, color);
+    }
+
     public abstract State proceed(Command command);
 
     public boolean isFinished() {
@@ -45,5 +49,9 @@ public abstract class State {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Color getColor() {
+        throw new IllegalStateException(CANNOT_GET_COLOR);
     }
 }

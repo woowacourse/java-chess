@@ -69,4 +69,9 @@ public class Running extends State {
     public boolean isWhite() {
         return this.color == Color.WHITE;
     }
+
+    @Override
+    public Color getColor() {
+        return this.color;
+    }
 }

@@ -48,4 +48,9 @@ public class Rook extends Piece {
     public double getScore() {
         return 5.0;
     }
+
+    @Override
+    public String getName() {
+        return "Rook";
+    }
 }

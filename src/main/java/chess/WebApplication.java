@@ -1,7 +1,11 @@
 package chess;
 
+import chess.db.BoardDAO;
 import chess.domain.command.Command;
 import chess.domain.command.CommandConverter;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.web.BoardDTO;
 import chess.web.MyState;
 import chess.web.Request;
@@ -20,7 +24,17 @@ public class WebApplication {
         staticFiles.location("/static");
         MyState myState = MyState.generate();
         BoardDTO dto = BoardDTO.buildModel();
+        BoardDAO dao = new BoardDAO();
         get("/", (req, res) -> {
+            if (dao.isSaved()) {
+                Color color = dao.findTurn();
+                myState.loadFromDB(dao.findAllPieces(), color);
+                dto.update(myState.getBoard());
+                if (color == Color.WHITE) {
+                    return new ModelAndView(dto.getData(), "saved_white.html");
+                }
+                return new ModelAndView(dto.getData(), "saved_black.html");
+            }
             dto.update(myState.getBoard());
             return new ModelAndView(dto.getData(), "index.html");
         }, new HandlebarsTemplateEngine());
@@ -28,6 +42,7 @@ public class WebApplication {
         post("/ready", (req, res) -> {
             try{
                 myState.run(CommandConverter.convertCommand(Request.from(req.body()).getCommand()));
+                dao.initializeDB(myState);
                 dto.update(myState.getBoard());
                 if (myState.isRunning()) {
                     return new ModelAndView(dto.getData(), "white.html");
@@ -35,7 +50,6 @@ public class WebApplication {
                 if (myState.isFinished()) {
                     dto.update(myState.getBoard());
                     res.redirect("/finished");
-                    return null;
                 }
                 return null;
             }
@@ -56,15 +70,22 @@ public class WebApplication {
                 }
                 Command command = CommandConverter.convertCommand(Request.from(req.body()).getCommand());
                 myState.run(command);
-                if (myState.isRunning()) {
-                    if (command.isStatus()) {
-                        dto.updateWithScore(myState.getBoard(), myState.generateScore());
-                        return new ModelAndView(dto.getData(), "status.html");
-                    }
+                if (command.isStatus()) {
+                    dto.updateWithScore(myState.getBoard(), myState.generateScore());
+                    return new ModelAndView(dto.getData(), "status.html");
+                }
+                if (command.isMove()) {
+                    Position to = command.getToPosition();
+                    Position from = command.getFromPosition();
+                    dao.delete(to);
+                    dao.delete(from);
+                    dao.insert(to, myState.getBoard().findPiece(to), myState.getColor());
                     dto.update(myState.getBoard());
                     if (!myState.isWhite()) {
+                        dao.convertOneItem(Color.BLACK);
                         return new ModelAndView(dto.getData(), "black.html");
                     }
+                    dao.convertOneItem(Color.WHITE);
                     return new ModelAndView(dto.getData(), "white.html");
                 }
                 if (myState.isFinished()) {
@@ -97,7 +118,12 @@ public class WebApplication {
             return new ModelAndView(dto.getData(), "black.html");
         }, new HandlebarsTemplateEngine());
 
+        post("/saved", (req, res) -> {
+            return new ModelAndView(dto.getData(), "saved.html");
+        }, new HandlebarsTemplateEngine());
+
         get("/finished", (req, res) -> {
+            dao.terminateDB();
             return new ModelAndView(dto.getData(), "finished.html");
         }, new HandlebarsTemplateEngine());
     }

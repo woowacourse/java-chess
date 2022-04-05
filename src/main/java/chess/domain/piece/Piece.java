@@ -86,4 +86,6 @@ public abstract class Piece {
             throw new IllegalArgumentException(PIECE_BLOCK);
         }
     }
+
+    public abstract String getName();
 }

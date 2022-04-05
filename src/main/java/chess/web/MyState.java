@@ -2,6 +2,7 @@ package chess.web;
 
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.state.State;
 import chess.domain.command.Command;
 
@@ -39,5 +40,13 @@ public class MyState {
 
     public Board getBoard() {
         return this.state.getBoard();
+    }
+
+    public void loadFromDB(Board board, Color turn) {
+        state = State.create(board.getPieces(), turn);
+    }
+
+    public Color getColor() {
+        return state.getColor();
     }
 }
