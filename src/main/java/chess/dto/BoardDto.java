@@ -19,7 +19,6 @@ public class BoardDto {
 
     public static BoardDto toDto(Board board) {
         final List<List<PieceDto>> boardPieces = new ArrayList<>();
-
         final Map<Position, Piece> pieces = board.getValue();
         System.out.println(board.toString());
         for (int i = 8; i >= 1; i--) {
@@ -36,12 +35,19 @@ public class BoardDto {
 
     private static PieceDto createPieceDto(final Map<Position, Piece> pieces, final Position position) {
         if (pieces.containsKey(position)) {
-            return PieceDto.toDto(pieces.get(position));
+            return PieceDto.toDto(pieces.get(position), position);
         }
-        return PieceDto.toEmptyDto();
+        return PieceDto.toEmptyDto("BLANK", position);
     }
 
     public List<List<PieceDto>> getValue() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardDto{" +
+                "value=" + value +
+                '}';
     }
 }

@@ -82,8 +82,11 @@ public class Position {
     }
 
     private static boolean isExist(final String position, final Position cachedPositions) {
-        return cachedPositions.column == Column.of(position.substring(0, COLUMN_END_INDEX)) &&
-                cachedPositions.row == Row.of(position.substring(COLUMN_END_INDEX, ROW_END_INDEX));
+        final int column = Integer.parseInt(position.substring(0, COLUMN_END_INDEX));
+        final int row = Integer.parseInt(position.substring(COLUMN_END_INDEX, ROW_END_INDEX));
+
+        return cachedPositions.column == Column.of(column) &&
+                cachedPositions.row == Row.of(row);
     }
 
     private boolean isValidPosition(Position from, Position to, Direction direction) {
@@ -112,6 +115,14 @@ public class Position {
         final Column column = this.column.add(direction.getColumn());
         final Row row = this.row.add(direction.getRow());
         return Position.of(column, row);
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 
     @Override
