@@ -4,6 +4,7 @@ import refactorChess.domain.board.ChessBoard;
 import refactorChess.domain.board.Position;
 import refactorChess.domain.game.Score;
 import refactorChess.domain.game.Status;
+import refactorChess.domain.piece.PieceColor;
 
 public class Ready implements State {
 
@@ -27,13 +28,10 @@ public class Ready implements State {
         throw new UnsupportedOperationException("상태가 Ready인 경우 체스판을 호출 할 수 없습니다.");
     }
 
-    public Score getScore() {
-        throw new UnsupportedOperationException("상태가 Ready인 경우 점수를 호출 할 수 없습니다.");
-    }
-
     @Override
     public Status getStatus() {
-        throw new UnsupportedOperationException("상태가 Ready인 경우 게임 상태를 호출 할 수 없습니다.");
+        throw new UnsupportedOperationException("상태가 Ready인 경우 상태를 호출 할 수 없습니다.");
+
     }
 
     @Override

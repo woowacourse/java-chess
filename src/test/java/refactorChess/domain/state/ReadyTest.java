@@ -2,6 +2,7 @@ package refactorChess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static refactorChess.domain.piece.PieceColor.NONE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,19 +46,9 @@ class ReadyTest {
     void invalidGetScoreToReady() {
         State state = new Ready();
 
-        assertThatThrownBy(() -> state.getScore())
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("상태가 Ready인 경우 점수를 호출 할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("상태가 Ready일 때는 상태를 확인하면 예외가 발생한다.")
-    void invalidGetStatusToReady() {
-        State state = new Ready();
-
         assertThatThrownBy(() -> state.getStatus())
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("상태가 Ready인 경우 게임 상태를 호출 할 수 없습니다.");
+                .hasMessage("상태가 Ready인 경우 상태를 호출 할 수 없습니다.");
     }
 
     @Test

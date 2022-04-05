@@ -1,6 +1,7 @@
 package refactorChess.domain.game;
 
 import java.util.Map;
+import java.util.Objects;
 import refactorChess.domain.board.ChessBoard;
 import refactorChess.domain.board.Position;
 import refactorChess.domain.piece.Piece;
@@ -22,7 +23,7 @@ public class Score {
 
     private static double getDefaultScore(ChessBoard chessBoard, PieceColor pieceColor) {
         return chessBoard.getBoard().entrySet().stream()
-                .filter(positionPiece -> isSameColor(chessBoard, positionPiece.getKey(), pieceColor))
+                .filter(entry -> isSameColor(chessBoard, entry.getKey(), pieceColor))
                 .mapToDouble(pieces -> pieces.getValue().getPieceType().getScore())
                 .sum();
     }
@@ -34,8 +35,8 @@ public class Score {
     private static double getSameLinePawnScore(ChessBoard chessBoard, PieceColor pieceColor) {
         final Map<Position, Piece> board = chessBoard.getBoard();
         final long sameLinePawnCount = board.entrySet().stream()
-                .filter(positionArticle -> isSamePawnAndColor(positionArticle.getValue(), pieceColor))
-                .filter(positionArticle -> isSameColorPawnInColumn(board, positionArticle.getKey(), pieceColor))
+                .filter(entry -> isSamePawnAndColor(entry.getValue(), pieceColor))
+                .filter(entry -> isSameColorPawnInColumn(board, entry.getKey(), pieceColor))
                 .count();
 
         return sameLinePawnCount * DECREASE_PAWN_SCORE;
@@ -63,5 +64,22 @@ public class Score {
 
     public double getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Score)) {
+            return false;
+        }
+        Score score1 = (Score) o;
+        return Double.compare(score1.score, score) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

@@ -21,8 +21,8 @@ class ScoreTest {
         final Score blackScore = Score.calculateScore(chessBoard, BLACK);
 
         assertAll(
-                () -> assertThat(whiteScore.getScore() == 24.0),
-                () -> assertThat(blackScore.getScore() == 24.0)
+                () -> assertThat(whiteScore.getScore() == 34.0),
+                () -> assertThat(blackScore.getScore() == 34.0)
         );
     }
 }
