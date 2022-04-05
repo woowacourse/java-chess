@@ -27,9 +27,7 @@ public class WebController {
 
     public void start(final ChessGame chessGame) {
         get("/start", ((req, res) -> {
-            if (chessGame.isPlaying()) {
-                throw new IllegalStateException("이미 게임이 시작중입니다.");
-            }
+            checkGameIsPlaying(chessGame);
             chessGame.start();
             return render(chessGame.toMap(), "index.html");
         }));
@@ -44,8 +42,14 @@ public class WebController {
         }));
     }
 
+    private void checkGameIsPlaying(final ChessGame chessGame) {
+        if (chessGame.isPlaying()) {
+            throw new IllegalStateException("이미 게임이 시작중입니다.");
+        }
+    }
+
     private void checkGameIsNotPlaying(final ChessGame chessGame) {
-        if (chessGame == null) {
+        if (!chessGame.isPlaying()) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
     }
