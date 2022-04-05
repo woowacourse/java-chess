@@ -101,13 +101,4 @@ public class ChessService {
     public void finish() {
         gameState = gameState.finish();
     }
-
-    // 게임 입장 ->
-    //          새로운 방을 만들 것인가?
-    //          아니면 기존 방을 들어갈 것인가!
-    // 게임 시작 ->
-    //          게임 이어서 하도록!!
-    //          새로운 게임 생성
-    // 게임 말 이동로직
-    // 게임 종료 로직 -> 게임 삭제할 것인가? 게임을 유지하고 종료만 할 것인가
 }
