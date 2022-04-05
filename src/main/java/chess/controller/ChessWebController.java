@@ -25,6 +25,7 @@ public class ChessWebController {
         renderStart();
         renderMove();
         renderStatus();
+        renderEnd();
     }
 
     private void renderReady() {
@@ -57,6 +58,15 @@ public class ChessWebController {
             Map<String, Object> model = new HashMap<>();
             model.putAll(chessService.getBoard().toMap());
             model.putAll(chessService.showStatus());
+            return render(model, "chess.html");
+        });
+    }
+
+    private void renderEnd() {
+        get("/terminate", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.putAll(chessService.terminate());
+            model.putAll(chessService.getBoard().toMap());
             return render(model, "chess.html");
         });
     }

@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessService {
+
+    private static final String TERMINATE_KEY = "end";
+    private static final String TERMINATE_MESSAGE = "게임이 종료되었습니다.";
+
     private ChessGame chessGame;
 
     public ChessService() {
@@ -28,6 +32,13 @@ public class ChessService {
         scoreStatus.put(Color.WHITE.name(), chessGame.calculateScore(Color.WHITE));
         scoreStatus.put(Color.BLACK.name(), chessGame.calculateScore(Color.BLACK));
         return scoreStatus;
+    }
+
+    public Map<String, String> terminate() {
+        Map<String, String> terminateMessage = new HashMap<>();
+        chessGame.end();
+        terminateMessage.put(TERMINATE_KEY, TERMINATE_MESSAGE);
+        return terminateMessage;
     }
 
     public Board getBoard() {

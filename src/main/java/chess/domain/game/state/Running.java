@@ -21,6 +21,7 @@ public abstract class Running implements ChessGame {
 
     @Override
     public ChessGame end() {
+        board.clear();
         return new Terminate(board);
     }
 
