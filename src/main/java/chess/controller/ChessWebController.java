@@ -3,12 +3,8 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dao.ChessGameDao;
-import chess.dao.PieceDao;
-import chess.dto.BoardDto;
 import chess.dto.MoveDto;
-import chess.dto.ScoreDto;
-import chess.dto.TurnDto;
+import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,14 +12,10 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
-    private final ChessGame chessGame;
-    private final ChessGameDao chessGameDao;
-    private final PieceDao pieceDao;
+    private final ChessGameService chessGameService;
 
     public ChessWebController() {
-        this.chessGame = new ChessGame();
-        this.chessGameDao = new ChessGameDao();
-        this.pieceDao = new PieceDao();
+        this.chessGameService = new ChessGameService();
     }
 
     public void run() {
@@ -34,42 +26,18 @@ public class ChessWebController {
             return render(model, "index.html");
         });
 
-        get("/start", (req, res) -> {
-            chessGame.start();
-            chessGameDao.save("chess", "start");
-            pieceDao.save(chessGame.getBoard().getValue());
-            BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-            return gson.toJson(boardDto.getBoard());
-        });
+        get("/start", (req, res) -> gson.toJson(chessGameService.start().getBoard()));
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            chessGame.move(moveDto);
-            if(chessGame.isEnded()){
-                res.redirect("/end");
-            }
-            pieceDao.movePiece(chessGame.getBoard().getValue(), "chess");
-            chessGameDao.updateTurn(chessGame.getTurn().getValue(), "chess");
-            BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-            return gson.toJson(boardDto.getBoard());
+            return gson.toJson(chessGameService.move(res, moveDto).getBoard());
         });
 
-        get("/turn", (req, res) -> {
-            TurnDto turnDto = TurnDto.from(chessGame.getTurn());
-            return gson.toJson(turnDto.getTurn());
-        });
+        get("/turn", (req, res) -> gson.toJson(chessGameService.turn().getTurn()));
 
-        get("/status", (req, res) -> {
-            ScoreDto scoreDto = chessGame.status();
-            return gson.toJson(scoreDto.getScore());
-        });
+        get("/status", (req, res) -> gson.toJson(chessGameService.status().getScore()));
 
-        get("/end", (req, res) -> {
-            chessGame.end();
-            chessGameDao.deleteByName("chess");
-            pieceDao.deleteByGameName("chess");
-            return gson.toJson(chessGame.getWinner());
-        });
+        get("/end", (req, res) -> gson.toJson(chessGameService.end()));
     }
 
 
