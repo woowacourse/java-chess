@@ -24,7 +24,7 @@ public class MoveChecker {
     public void checkPawnMove(Piece fromPiece, Piece toPiece, Direction direction) {
         if (fromPiece.isSamePieceType(PieceType.PAWN)) {
             checkPawnStraightMove(toPiece, direction);
-            checkEnemyInDiagonal(fromPiece, toPiece);
+            checkEnemyInDiagonal(fromPiece, toPiece, direction);
         }
     }
 
@@ -40,7 +40,10 @@ public class MoveChecker {
         }
     }
 
-    private void checkEnemyInDiagonal(Piece fromPiece, Piece toPiece) {
+    private void checkEnemyInDiagonal(Piece fromPiece, Piece toPiece, Direction direction) {
+        if (direction.isPawnStraigtDirection()) {
+            return;
+        }
         if (toPiece.isEmpty() || fromPiece.isSameColor(toPiece)) {
             throw new IllegalStateException(NOT_MOVABLE_EXCEPTION_MESSAGE);
         }
