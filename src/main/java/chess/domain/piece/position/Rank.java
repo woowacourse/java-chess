@@ -28,6 +28,10 @@ public enum Rank {
             .orElseThrow(NoSuchElementException::new);
     }
 
+    public static Rank of(String value) {
+        return Rank.of(Integer.parseInt(value));
+    }
+
     public Rank getNext(int next) {
         if (value + next < ONE.value || value + next > EIGHT.value) {
             return OUT;

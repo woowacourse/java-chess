@@ -34,4 +34,8 @@ public class ChessGame {
     public Map<Color, Double> status() {
         return state.status();
     }
+
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
+    }
 }

@@ -34,4 +34,13 @@ public class Position {
     public Rank getRank() {
         return rank;
     }
+
+    public static Position toPosition(String input) {
+        return Position.of(File.of(input.substring(0, 1)), Rank.of(input.substring(1, 2)));
+    }
+
+    @Override
+    public String toString() {
+        return getFile().name() + getRank().getValue();
+    }
 }

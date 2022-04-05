@@ -71,13 +71,13 @@ public class ChessBoard {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
+        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.color());
     }
 
     private void changePosition(Position source, Position target) {
         Piece sourcePiece = getPiece(source);
         if (sourcePiece.getClass().equals(StartedPawn.class)) {
-            sourcePiece = new MovedPawn(sourcePiece.getColor());
+            sourcePiece = new MovedPawn(sourcePiece.color());
         }
 
         board.put(target, sourcePiece);

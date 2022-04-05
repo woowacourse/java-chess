@@ -36,7 +36,11 @@ public abstract class Piece {
         return name.getName();
     }
 
-    public Color getColor() {
+    public String getColor() {
+        return color.name();
+    }
+
+    public Color color() {
         return color;
     }
 
