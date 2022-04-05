@@ -33,6 +33,21 @@ public class Board {
         return countKingPiece() == DEAD_KING_COUNT;
     }
 
+    public Color findWinColor() {
+        if (!isKingDead()) {
+            return Color.NONE;
+        }
+        return findKingColor();
+    }
+
+    private Color findKingColor() {
+        return value.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .map(piece -> piece.getColor().reverse())
+                .orElse(Color.NONE);
+    }
+
     public Piece findPiece(final Position position) {
         if (!value.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");

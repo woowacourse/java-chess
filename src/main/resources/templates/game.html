@@ -8,8 +8,16 @@
 <body>
 <h1>♟️ 체스</h1>
 
+{{#finished}}
+    {{#color}}
+    <h3>
+        <p id="winner">{{color}}가(이) 승리하였습니다.</p>
+    </h3>
+    {{/color}}
+{{/finished}}
+
 <section class="chess-ui">
-    {{#this}}
+    {{#value}}
     <div class="black-square pawn">
         {{#a8}}
         <img src="/images/{{name}}_{{color}}.png" class="piece-img"/>
@@ -337,19 +345,19 @@
         <img src="/images/{{name}}_{{color}}.png" class="piece-img"/>
         {{/h1}}
     </div>
-    {{/this}}
+    {{/value}}
 </section>
 
 <section>
     <h2>Move</h2>
 
-    {{#this}}
+    {{#value}}
     <form class="form" action="/move" method="post">
         <input class="from-input" id="from" name="from" type="text" placeholder="현재 위치" maxlength="2">
         <input class="to-input" id="to" name="to" type="text" placeholder="움직일 위치" maxlength="2">
         <input type="button" onclick="move()" value="이동">
     </form>
-    {{/this}}
+    {{/value}}
 </section>
 
 <section>

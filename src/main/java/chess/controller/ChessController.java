@@ -46,7 +46,7 @@ public class ChessController {
     public ModelAndView game(final Request request, final Response response) {
         final Long boardId = Long.valueOf(request.params("boardId"));
         final BoardResult boardResult = chessService.findBoardById(boardId);
-        return new ModelAndView(boardResult.getValue(), "game.html");
+        return new ModelAndView(boardResult, "game.html");
     }
 
     public ModelAndView score(final Request request, final Response response) {

@@ -44,3 +44,8 @@ async function scoreButton() {
     const score = await response.json();
     alert("블랙 : " + score.model.BLACK + ", 화이트 : " + score.model.WHITE);
 }
+
+async function winner() {
+    const winner = document.getElementById("winner");
+    winner.innerText = "sss";
+}
