@@ -59,13 +59,12 @@ public final class ChessController {
     }
 
     public void status(GameCommandRequest request) {
-        OutputView.printStatus(service.getScores());
+        OutputView.printWinner(service.getResult());
         this.end(request);
     }
 
     public void end(GameCommandRequest request) {
         service.endGame();
-        OutputView.printWinner(service.getResult());
         OutputView.printEndMessage();
     }
 }

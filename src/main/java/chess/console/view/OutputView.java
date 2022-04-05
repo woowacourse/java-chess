@@ -1,6 +1,6 @@
 package chess.console.view;
 
-import chess.service.GameResult;
+import chess.service.GameResultDto;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +37,6 @@ public final class OutputView {
         }
     }
 
-    public static void printStatus(Map<String, Double> scores) {
-        for (String name : scores.keySet()) {
-            System.out.println(name + NAME_SCORE_DELIMITER + scores.get(name));
-        }
-        System.out.println();
-    }
 
     public static void printException(RuntimeException exception) {
         System.out.println(ERROR + exception.getMessage());
@@ -52,11 +46,19 @@ public final class OutputView {
         System.out.println(END_MESSAGE);
     }
 
-    public static void printWinner(GameResult result) {
+    public static void printWinner(GameResultDto result) {
+        printStatus(result.getPlayerPoints());
         if (result.getIsDraw()) {
             System.out.println("비겼습니다!");
             return;
         }
         System.out.println(String.format("승자는 %s입니다!", result.getWinnerColor()));
+    }
+
+    private static void printStatus(Map<String, Double> scores) {
+        for (String name : scores.keySet()) {
+            System.out.println(name + NAME_SCORE_DELIMITER + scores.get(name));
+        }
+        System.out.println();
     }
 }

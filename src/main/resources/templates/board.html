@@ -7,21 +7,26 @@
 </head>
 <script src="/script/chessBoardInit.js"></script>
 <body>
-    <h1>즐겁게 즐기세요</h1>
-    <div>
-        <button class="center-object button status-button">
-            게임 중단하고 결과보기
-        </button>
-    </div>
     </br>
-    <div id="board-div"></div>
+    <div id="board-div" class="center-object"></div>
     <script>initBoard()</script>
-    {{#each this.pieces}}
+    {{#each board.pieces}}
     <script>
         fillSquare("{{@key}}", "{{this.type}}", "{{this.color}}")
     </script>
     {{/each}}
-
+    </br>
+    <div class="center-object">
+        <button class="button start-button">
+            다시하기
+        </button>
+        <button class="button status-button">
+            게임 중단하고 결과보기
+        </button>
+        <button class="button end-button">
+            게임 종료하기
+        </button>
+    </div>
 </body>
 <script src="/script/chess.js"></script>
 </html>

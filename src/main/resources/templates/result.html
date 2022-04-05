@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klay's Chess Game</title>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    {{#each this.playerPoints}}
+    <div>
+        <h1 class="center-object">{{@key}}의 점수 : {{this}}</h1>
+    </div>
+    {{/each}}
+    <div>
+        {{#if this.isDraw}}
+        <h1 class="main-message center-object">
+            무승부입니다!
+        </h1>
+        {{else}}
+        <h1 class="main-message center-object">
+            승자는 {{this.winnerColor}}입니다!
+        </h1>
+        {{/if}}
+    </div>
+    <div class="center-object">
+        <button type="button" class="button start-button">
+            다시하기
+        </button>
+    </div>
+</body>
+<script src="script/chess.js"></script>
+</html>

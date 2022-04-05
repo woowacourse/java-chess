@@ -1,6 +1,9 @@
 package chess.web.controller;
 
+import chess.service.BoardDto;
 import chess.service.ChessService;
+import java.util.HashMap;
+import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,7 +20,12 @@ public class ChessController {
     }
 
     public ModelAndView getBoard() {
-        return new ModelAndView(service.getBoard(), "board.html");
+        Map<String, Object> model = new HashMap<>();
+        if (service.isWaitingOrRunning()) {
+            model.put("board", service.getBoard());
+            return new ModelAndView(model, "board.html");
+        }
+        return null;
     }
 
     public void move(Request req, Response res) {
@@ -29,6 +37,6 @@ public class ChessController {
     }
 
     public ModelAndView status() {
-        return new ModelAndView(service.getScores(), "status.html");
+        return new ModelAndView(service.getResult(), "result.html");
     }
 }

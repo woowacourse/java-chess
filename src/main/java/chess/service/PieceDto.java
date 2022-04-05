@@ -1,4 +1,4 @@
-package chess.web.service;
+package chess.service;
 
 public class PieceDto {
     private String type;

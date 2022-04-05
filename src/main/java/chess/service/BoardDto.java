@@ -1,4 +1,4 @@
-package chess.web.service;
+package chess.service;
 
 import java.util.Map;
 

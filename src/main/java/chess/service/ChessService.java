@@ -13,9 +13,7 @@ import chess.model.piece.Piece;
 import chess.model.piece.PieceLetter;
 import chess.model.status.End;
 import chess.model.status.Playing;
-import chess.web.dao.RuntimeChessGameDao;
-import chess.web.service.BoardDto;
-import chess.web.service.PieceDto;
+import chess.model.dao.RuntimeChessGameDao;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +67,6 @@ public class ChessService {
         dao.saveAll(chessGame.getBoard().getBoard(), chessGame.getTurn(), chessGame.getStatus());
     }
 
-    public Map<String, Double> getScores() {
-        return getGameFromDao().getPlayersScore().entrySet()
-                .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
-    }
-
     public boolean isWaitingOrRunning() {
         return getGameFromDao().isRunning();
     }
@@ -83,11 +75,17 @@ public class ChessService {
         dao.updateStatus(new End());
     }
 
-    public GameResult getResult() {
+    public GameResultDto getResult() {
         Color winner = getGameFromDao().findWinner();
         if (winner.equals(Color.NOTHING)) {
-            return new GameResult(winner.name(), true);
+            return new GameResultDto(getScores(), winner.name(), true);
         }
-        return new GameResult(winner.name(), false);
+        return new GameResultDto(getScores(), winner.name(), false);
+    }
+
+    private Map<String, Double> getScores() {
+        return getGameFromDao().getPlayersScore().entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
     }
 }

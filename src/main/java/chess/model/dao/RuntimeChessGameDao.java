@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.model.dao;
 
 import chess.model.Color;
 import chess.model.board.Square;

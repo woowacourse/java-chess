@@ -39,7 +39,7 @@ public class ChessGame {
 
     private void endWhenKingDead() {
         if (!board.aliveTwoKings()) {
-            end();
+            status = status.changeStatus(GameCommand.END);
         }
     }
 
@@ -63,10 +63,6 @@ public class ChessGame {
 
     public GameStatus getStatus() {
         return status;
-    }
-
-    public void end() {
-        status = status.changeStatus(GameCommand.END);
     }
 
     public Color findWinner() {

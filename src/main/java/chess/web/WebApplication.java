@@ -6,7 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.web.controller.ChessController;
-import chess.web.dao.RuntimeChessGameDao;
+import chess.model.dao.RuntimeChessGameDao;
 import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +33,10 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
+            ModelAndView modelAndView = controller.getBoard();
+            if (modelAndView == null) {
+                res.redirect("/status");
+            }
             return render(controller.getBoard());
         });
 
