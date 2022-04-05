@@ -37,7 +37,8 @@ public class Score {
     }
 
     private static List<Position> findPawnPositionsOf(Map<Position, Piece> pieces) {
-        return pieces.keySet().stream()
+        return pieces.keySet()
+                .stream()
                 .filter(position -> pieces.get(position).isPawn())
                 .collect(Collectors.toList());
     }

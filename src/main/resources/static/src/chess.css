@@ -1,0 +1,30 @@
+.light_board {
+    height: 80px;
+    width: 80px;
+    background-color: rgb(232, 203, 156);
+}
+
+.dark_board {
+    height: 80px;
+    width: 80px;
+    background-color: rgb(177, 134, 74);
+}
+
+.light_board:hover {
+    background-color: rgb(107, 134, 74);
+}
+
+.dark_board:hover {
+    background-color: rgb(107, 134, 74);
+}
+
+.board_table {
+    border-collapse: collapse;
+}
+
+.piece {
+    height: 75px;
+    width: 75px;
+    display: block;
+    margin: auto;
+}
