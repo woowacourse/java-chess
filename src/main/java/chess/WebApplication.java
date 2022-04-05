@@ -28,6 +28,7 @@ public class WebApplication {
         startGame(chessGame);
         move(chessGame);
         getStatus(chessGame);
+        restart(chessGame);
     }
 
     private static void initialGame() {
@@ -71,6 +72,17 @@ public class WebApplication {
             return score.getTeam() + "팀 점수는" + score.getScore();
         });
         return " ";
+    }
+
+    private static void restart(ChessGame chessGame) {
+        post("/restart", (req, res) -> {
+            if (chessGame.isRunning()) {
+                chessGame.end();
+            }
+            chessGame.start();
+            res.redirect("/board");
+            return null;
+        });
     }
 
     private static String render(Map<String, PieceDto> model, String templatePath) {
