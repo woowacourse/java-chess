@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 public class ChessGame {
 
@@ -38,6 +39,19 @@ public class ChessGame {
             .stream()
             .map(piece -> piece.getTeam().getName() + "-" + piece.getSymbol().toUpperCase())
             .collect(Collectors.toList());
+    }
+
+    public String getWinTeam(Map<Team, Double> status) {
+        Double whiteScore = status.get(Team.WHITE);
+        Double blackScore = status.get(Team.BLACK);
+
+        if (state.getBoard().isBothKingAlive() && whiteScore.equals(blackScore)) {
+            return "DRAW";
+        }
+        if (whiteScore > blackScore) {
+            return "WHITE";
+        }
+        return "BLACK";
     }
 
 	public boolean isFinished() {

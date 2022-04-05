@@ -34,6 +34,11 @@ public class Start implements State {
 		return board.getValue();
 	}
 
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
 	@Override
 	public boolean isFinished() {
 		return false;

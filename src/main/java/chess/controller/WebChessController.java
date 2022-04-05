@@ -40,7 +40,12 @@ public class WebChessController {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame.end();
-            return render(model, "game,html");
+            ScoreCalculator scoreCalculator = new ScoreCalculator(chessGame.getValue());
+            Map<Team, Double> status = scoreCalculator.createStatus();
+            model.put("blackScore", status.get(Team.BLACK));
+            model.put("whiteScore", status.get(Team.WHITE));
+            model.put("winTeam", chessGame.getWinTeam(status));
+            return render(model, "game.html");
         });
 
         get("/status", (req, res) -> {

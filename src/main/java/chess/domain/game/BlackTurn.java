@@ -45,7 +45,12 @@ public class BlackTurn implements State {
 		return board.getValue();
 	}
 
-	@Override
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
 	public boolean isFinished() {
 		return false;
 	}
