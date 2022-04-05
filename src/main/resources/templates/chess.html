@@ -27,152 +27,182 @@
         <input type="submit" id="move-button">
     </div>
     <div>
-        <table id="board">
-            <tr>
-                <td id="a8" class="white">
-                    <img src="images/black_rook.png" alt="black rook">
-                </td>
-                <td id="b8" class="black">
-                    <img src="images/black_bishop.png" alt="black bishop">
-                </td>
-                <td id="c8" class="white">
-                    <img src="images/black_knight.png" alt="black knight">
-                </td>
-                <td id="d8" class="black">
-                    <img src="images/black_king.png" alt="black king">
-                </td>
-                <td id="e8" class="white">
-                    <img src="images/black_queen.png" alt="black queen">
-                </td>
-                <td id="f8" class="black">
-                    <img src="images/black_knight.png" alt="black knight">
-                </td>
-                <td id="g8" class="white">
-                    <img src="images/black_bishop.png" alt="black bishop">
-                </td>
-                <td id="h8" class="black">
-                    <img src="images/black_rook.png" alt="black rook">
-                </td>
-            </tr>
-            <tr>
-                <td id="a7" class="black">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="b7" class="white">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="c7" class="black">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="d7" class="white">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="e7" class="black">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="f7" class="white">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="g7" class="black">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-                <td id="h7" class="white">
-                    <img src="images/black_pawn.png" alt="black pawn">
-                </td>
-            </tr>
-            <tr>
-                <td id="a6" class="white"></td>
-                <td id="b6" class="black"></td>
-                <td id="c6" class="white"></td>
-                <td id="d6" class="black"></td>
-                <td id="e6" class="white"></td>
-                <td id="f6" class="black"></td>
-                <td id="g6" class="white"></td>
-                <td id="h6" class="black"></td>
-            </tr>
-            <tr>
-                <td id="a5" class="black"></td>
-                <td id="b5" class="white"></td>
-                <td id="c5" class="black"></td>
-                <td id="d5" class="white"></td>
-                <td id="e5" class="black"></td>
-                <td id="f5" class="white"></td>
-                <td id="g5" class="black"></td>
-                <td id="h5" class="white"></td>
-            </tr>
-            <tr>
-                <td id="a4" class="white"></td>
-                <td id="b4" class="black"></td>
-                <td id="c4" class="white"></td>
-                <td id="d4" class="black"></td>
-                <td id="e4" class="white"></td>
-                <td id="f4" class="black"></td>
-                <td id="g4" class="white"></td>
-                <td id="h4" class="black"></td>
-            </tr>
-            <tr>
-                <td id="a3" class="black"></td>
-                <td id="b3" class="white"></td>
-                <td id="c3" class="black"></td>
-                <td id="d3" class="white"></td>
-                <td id="e3" class="black"></td>
-                <td id="f3" class="white"></td>
-                <td id="g3" class="black"></td>
-                <td id="h3" class="white"></td>
-            </tr>
-            <tr>
-                <td id="a2" class="white">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="b2" class="black">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="c2" class="white">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="d2" class="black">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="e2" class="white">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="f2" class="black">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="g2" class="white">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-                <td id="h2" class="black">
-                    <img src="images/white_pawn.png" alt="white pawn">
-                </td>
-            </tr>
-            <tr>
-                <td id="a1" class="black">
-                    <img src="images/white_rook.png" alt="white rook">
-                </td>
-                <td id="b1" class="white">
-                    <img src="images/white_bishop.png" alt="white bishop">
-                </td>
-                <td id="c1" class="black">
-                    <img src="images/white_knight.png" alt="white knight">
-                </td>
-                <td id="d1" class="white">
-                    <img src="images/white_king.png" alt="white king">
-                </td>
-                <td id="e1" class="black">
-                    <img src="images/white_queen.png" alt="white queen">
-                </td>
-                <td id="f1" class="white">
-                    <img src="images/white_knight.png" alt="white knight">
-                </td>
-                <td id="g1" class="black">
-                    <img src="images/white_bishop.png" alt="white bishop">
-                </td>
-                <td id="h1" class="white">
-                    <img src="images/white_rook.png" alt="white rook">
-                </td>
-            </tr>
-        </table>
+        <div class="row">
+            <div id="a8" class="white cell">
+                <img src="images/black_rook.png" alt="black rook">
+            </div>
+            <div id="b8" class="black cell">
+                <img src="images/black_knight.png" alt="black knight">
+            </div>
+            <div id="c8" class="white cell">
+                <img src="images/black_bishop.png" alt="black rook">
+            </div>
+            <div id="d8" class="black cell">
+                <img src="images/black_king.png" alt="black king">
+            </div>
+            <div id="e8" class="white cell">
+                <img src="images/black_queen.png" alt="black queen">
+            </div>
+            <div id="f8" class="black cell">
+                <img src="images/black_bishop.png" alt="black bishop">
+            </div>
+            <div id="g8" class="white cell">
+                <img src="images/black_knight.png" alt="black knight">
+            </div>
+            <div id="h8" class="black cell">
+                <img src="images/black_rook.png" alt="black rook">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a7" class="black cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="b7" class="white cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="c7" class="black cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="d7" class="white cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="e7" class="black cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="f7" class="white cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="g7" class="black cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+            <div id="h7" class="white cell">
+                <img src="images/black_pawn.png" alt="black pawn">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a6" class="white cell">
+            </div>
+            <div id="b6" class="black cell">
+            </div>
+            <div id="c6" class="white cell">
+            </div>
+            <div id="d6" class="black cell">
+            </div>
+            <div id="e6" class="white cell">
+            </div>
+            <div id="f6" class="black cell">
+            </div>
+            <div id="g6" class="white cell">
+            </div>
+            <div id="h6" class="black cell">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a5" class="black cell">
+            </div>
+            <div id="b5" class="white cell">
+            </div>
+            <div id="c5" class="black cell">
+            </div>
+            <div id="d5" class="white cell">
+            </div>
+            <div id="e5" class="black cell">
+            </div>
+            <div id="f5" class="white cell">
+            </div>
+            <div id="g5" class="black cell">
+            </div>
+            <div id="h5" class="white cell">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a4" class="white cell">
+            </div>
+            <div id="b4" class="black cell">
+            </div>
+            <div id="c4" class="white cell">
+            </div>
+            <div id="d4" class="black cell">
+            </div>
+            <div id="e4" class="white cell">
+            </div>
+            <div id="f4" class="black cell">
+            </div>
+            <div id="g4" class="white cell">
+            </div>
+            <div id="h4" class="black cell">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a3" class="black cell">
+            </div>
+            <div id="b3" class="white cell">
+            </div>
+            <div id="c3" class="black cell">
+            </div>
+            <div id="d3" class="white cell">
+            </div>
+            <div id="e3" class="black cell">
+            </div>
+            <div id="f3" class="white cell">
+            </div>
+            <div id="g3" class="black cell">
+            </div>
+            <div id="h3" class="white cell">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a2" class="white cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="b2" class="black cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="c2" class="white cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="d2" class="black cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="e2" class="white cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="f2" class="black cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="g2" class="white cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+            <div id="h2" class="black cell">
+                <img src="images/white_pawn.png" alt="white pawn">
+            </div>
+        </div>
+        <div class="row">
+            <div id="a1" class="black cell">
+                <img src="images/white_rook.png" alt="white rook">
+            </div>
+            <div id="b1" class="white cell">
+                <img src="images/white_knight.png" alt="white knight">
+            </div>
+            <div id="c1" class="black cell">
+                <img src="images/white_bishop.png" alt="white bishop">
+            </div>
+            <div id="d1" class="white cell">
+                <img src="images/white_king.png" alt="white king">
+            </div>
+            <div id="e1" class="black cell">
+                <img src="images/white_queen.png" alt="white queen">
+            </div>
+            <div id="f1" class="white cell">
+                <img src="images/white_bishop.png" alt="white knight">
+            </div>
+            <div id="g1" class="black cell">
+                <img src="images/white_knight.png" alt="white bishop">
+            </div>
+            <div id="h1" class="white cell">
+                <img src="images/white_rook.png" alt="white rook">
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="/src/js/chess.js"></script>
 </body>
