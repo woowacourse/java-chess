@@ -21,9 +21,9 @@ public class PieceDao {
         final QueryReader reader = new QueryBuilder(sql).setInt(gameId)
                 .execute();
 
-        List<PieceEntity> pieces = initPieceEntities(reader);
-        reader.close();
-        return pieces;
+        try (reader) {
+            return initPieceEntities(reader);
+        }
     }
 
     private List<PieceEntity> initPieceEntities(QueryReader reader) {

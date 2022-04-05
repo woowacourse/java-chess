@@ -18,7 +18,6 @@ public class QueryBuilder {
         try {
             this.statement = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
@@ -29,7 +28,6 @@ public class QueryBuilder {
             statement.setString(parameterIndex++, stringValue);
             return this;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
@@ -39,7 +37,6 @@ public class QueryBuilder {
             statement.setInt(parameterIndex++, parameter);
             return this;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
@@ -47,7 +44,6 @@ public class QueryBuilder {
         try {
             return new QueryReader(statement.executeQuery(), connection);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }

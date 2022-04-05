@@ -18,7 +18,6 @@ public class CommandBuilder {
         try {
             this.statement = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
     }
@@ -29,7 +28,6 @@ public class CommandBuilder {
             statement.setString(parameterIndex++, stringValue);
             return this;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
     }
@@ -39,17 +37,14 @@ public class CommandBuilder {
             statement.setInt(parameterIndex++, parameter);
             return this;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
     }
 
     public void execute() {
-        try {
+        try(connection) {
             statement.executeUpdate();
-            connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
     }
