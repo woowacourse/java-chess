@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -42,5 +44,9 @@ public class ChessGame {
 
     public Winner findWinner() {
         return this.state.findWinner();
+    }
+
+    public void load(Map<Position, Piece> board, Color turn) {
+        this.state = this.state.load(board, turn);
     }
 }

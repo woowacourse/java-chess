@@ -22,7 +22,6 @@ public enum Type {
     }
 
     public static Type from(String text) {
-        System.out.println(text);
         return Arrays.stream(values())
                 .filter(type -> type.symbol.equals(text))
                 .findFirst()

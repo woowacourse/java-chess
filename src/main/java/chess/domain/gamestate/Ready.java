@@ -1,8 +1,11 @@
 package chess.domain.gamestate;
 
+import chess.domain.Color;
 import chess.domain.Winner;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Ready implements State {
     private static final String INVALID_STATE_MOVE_EXCEPTION = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
@@ -13,6 +16,11 @@ public class Ready implements State {
     @Override
     public State start() {
         return new Running(new Board());
+    }
+
+    @Override
+    public State load(Map<Position, Piece> pieces, Color turn) {
+        return new Running(new Board(pieces, turn));
     }
 
     @Override
