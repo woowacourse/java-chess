@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import chess.dao.dto.PlayerDto;
 
@@ -23,17 +24,24 @@ public class PlayerDao {
 
     public Long save(final PlayerDto playerDto) {
         final Connection connection = mysqlConnector.getConnection();
-        final String sql = "INSERT INTO Player (color, pieces) VALUES (?,?)";
 
+        Long playerId = null;
         try {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final String sql = "INSERT INTO Player (color, pieces) VALUES (?,?)";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, playerDto.getColorName());
             preparedStatement.setString(2, playerDto.getPieces());
-            return (long) preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+
+            final ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                playerId = (long) resultSet.getInt(1);
+            }
+            mysqlConnector.closeConnection(connection, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return playerId;
     }
 
     public PlayerDto findById(final Long id) {
