@@ -2,7 +2,9 @@ package chess.service;
 
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.response.ChessGameResponse;
+import chess.controller.dto.response.ErrorResponse;
 import chess.controller.dto.response.StatusResponse;
+import chess.controller.dto.response.SuccessResponse;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Column;
@@ -17,27 +19,51 @@ public class ChessService {
 
     private ChessGame chessGame;
 
+    public void createGame() {
+        this.chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
+    }
+
     public ChessGameResponse startGame() {
-        chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
-        chessGame.start();
-        return new ChessGameResponse(chessGame);
+        try {
+            chessGame.start();
+            return new SuccessResponse(chessGame);
+        } catch (IllegalArgumentException e) {
+            return handleError(e);
+        }
     }
 
     public ChessGameResponse move(final MoveRequest moveRequest) {
-        Position start = parseStringToPosition(moveRequest.getStart());
-        Position target = parseStringToPosition(moveRequest.getTarget());
-        chessGame.move(start, target);
-        System.out.println(chessGame.getGameState());
-        return new ChessGameResponse(chessGame);
+        try {
+            Position start = parseStringToPosition(moveRequest.getStart());
+            Position target = parseStringToPosition(moveRequest.getTarget());
+            chessGame.move(start, target);
+            System.out.println(chessGame.getGameState());
+            return new SuccessResponse(chessGame);
+        } catch (IllegalArgumentException e) {
+            return handleError(e);
+        }
     }
 
-    public StatusResponse status() {
-        return new StatusResponse(chessGame.createStatus());
+    public ChessGameResponse status() {
+        try {
+            return new StatusResponse(chessGame.createStatus());
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            return handleError(e);
+        }
     }
 
     public ChessGameResponse end() {
-        chessGame.end();
-        return new ChessGameResponse(chessGame);
+        try {
+            chessGame.end();
+            return new SuccessResponse(chessGame);
+        } catch (IllegalArgumentException e) {
+            return handleError(e);
+        }
+    }
+
+    private ChessGameResponse handleError(Exception e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     private Position parseStringToPosition(final String rawPosition) {

@@ -26,6 +26,7 @@ public class WebChessController {
 
         get("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            chessService.createGame();
             return render(model, "game.html");
         });
 

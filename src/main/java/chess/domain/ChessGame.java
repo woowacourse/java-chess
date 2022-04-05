@@ -51,7 +51,10 @@ public class ChessGame {
     }
 
     public Status createStatus() {
-        return new Status(board);
+        if (gameState.isRunning() || gameState.isFinished()) {
+            return new Status(board);
+        }
+        throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
     }
 
     public boolean isFinished() {

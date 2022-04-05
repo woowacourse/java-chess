@@ -21,7 +21,7 @@ const darkCellColor = "#8977ad";
 let firstSelected;
 let secondSelected;
 
-window.onload = async function () {
+window.onload = function () {
   for (let i = 0; i < 8; i++) {
     const row = document.createElement("div");
     row.classList.add("row");
@@ -62,8 +62,12 @@ function printTurn(res) {
 async function start() {
   let res = await fetch("/api/start");
   res = await res.json();
-  rendBoard(res.board.pieces);
-  printTurn(res);
+  if (res.isOk) {
+    rendBoard(res.board.pieces);
+    printTurn(res);
+    return;
+  }
+  alert(res.message);
 }
 
 function rendBoard(pieces) {
@@ -90,18 +94,27 @@ function createPieceImage(position, pieceType) {
   cell.appendChild(piece);
 }
 
+async function move() {
+  const res = await requestMove();
+  if (!res.isOk) {
+    alert(res.message);
+    return;
+  }
+  rendBoard(res.board.pieces);
+  if (res.gameState === "WHITE_WIN" || res.gameState === "BLACK_WIN") {
+    turnInfo.innerText = `${turn[res.gameState]}의 승리입니다.`;
+    score.innerText = null;
+    alert(`${turn[res.gameState]}의 승리입니다.`);
+    return;
+  }
+  printTurn(res);
+}
+
 async function onclick(event) {
   const cell = event.currentTarget;
   decideSelection(cell);
   if (firstSelected && secondSelected) {
-    const res = await move();
-    rendBoard(res.board.pieces);
-    if (res.gameState === "WHITE_WIN" || res.gameState === "BLACK_WIN") {
-      turnInfo.innerText = `${turn[res.gameState]}의 승리입니다.`;
-      score.innerText = null;
-      return;
-    }
-    printTurn(res);
+    await move();
   }
 }
 
@@ -128,7 +141,7 @@ function highlightSelectedCell(cell) {
   piece.classList.add("selected");
 }
 
-async function move() {
+async function requestMove() {
   try {
     const res = await fetch("/api/move", {
       method: "post",
@@ -157,13 +170,20 @@ function clearSelection() {
 async function getStatus() {
   let res = await fetch("/api/status");
   res = await res.json();
-  score.innerText = `백: ${res.whiteScore}점
+  console.log(res);
+  if (res.isOk) {
+    score.innerText = `백: ${res.whiteScore}점
   흑: ${res.blackScore}점`;
+    return;
+  }
+  alert(res.message);
 }
 
 async function end() {
   const res = await fetch("/api/end");
   if (res.ok) {
     alert("게임을 종료합니다.");
+    return;
   }
+  alert(res.message);
 }
