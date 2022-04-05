@@ -20,23 +20,22 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position withFileAndRank(File file, Rank rank) {
-        String key = file.name() + rank.name();
-
-        if (!cachePosition.containsKey(key)) {
-            cachePosition.put(key, new Position(file, rank));
-        }
-        return cachePosition.get(key);
-    }
-
-    public static Position of(String input) {
+    public static Position valueOf(String input) {
         validateBlank(input);
         validateSize(input);
 
         File file = File.of(input.substring(FILE_INDEX, FILE_INDEX + 1));
         Rank rank = Rank.of(input.substring(RANK_INDEX, RANK_INDEX + 1));
 
-        return withFileAndRank(file, rank);
+        if (!cachePosition.containsKey(input)) {
+            cachePosition.put(input, new Position(file, rank));
+        }
+        return cachePosition.get(input);
+    }
+
+    public static Position withFileAndRank(File file, Rank rank) {
+        String key = file.getValue() + rank.getValue();
+        return valueOf(key);
     }
 
     private static void validateBlank(String input) {

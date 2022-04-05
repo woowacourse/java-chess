@@ -23,13 +23,13 @@ class RookTest {
 
     static Stream<Arguments> rookMoveEastTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a3"), Position.of("b3")),
-                Arguments.of(Position.of("a3"), Position.of("c3")),
-                Arguments.of(Position.of("a3"), Position.of("d3")),
-                Arguments.of(Position.of("a3"), Position.of("e3")),
-                Arguments.of(Position.of("a3"), Position.of("f3")),
-                Arguments.of(Position.of("a3"), Position.of("g3")),
-                Arguments.of(Position.of("a3"), Position.of("h3"))
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("b3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("d3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("g3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("h3"))
         );
     }
 
@@ -44,13 +44,13 @@ class RookTest {
 
     static Stream<Arguments> rookMoveWestTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("h3"), Position.of("a3")),
-                Arguments.of(Position.of("h3"), Position.of("b3")),
-                Arguments.of(Position.of("h3"), Position.of("c3")),
-                Arguments.of(Position.of("h3"), Position.of("d3")),
-                Arguments.of(Position.of("h3"), Position.of("e3")),
-                Arguments.of(Position.of("h3"), Position.of("f3")),
-                Arguments.of(Position.of("h3"), Position.of("g3"))
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("b3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("d3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("g3"))
         );
     }
 
@@ -65,13 +65,13 @@ class RookTest {
 
     static Stream<Arguments> rookMoveSouthTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a8"), Position.of("a7")),
-                Arguments.of(Position.of("a8"), Position.of("a6")),
-                Arguments.of(Position.of("a8"), Position.of("a5")),
-                Arguments.of(Position.of("a8"), Position.of("a4")),
-                Arguments.of(Position.of("a8"), Position.of("a3")),
-                Arguments.of(Position.of("a8"), Position.of("a2")),
-                Arguments.of(Position.of("a8"), Position.of("a1"))
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a7")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a6")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a5")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a4")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a2")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a1"))
         );
     }
 
@@ -86,13 +86,13 @@ class RookTest {
 
     static Stream<Arguments> rookMoveNorthTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Position.of("a8")),
-                Arguments.of(Position.of("a1"), Position.of("a7")),
-                Arguments.of(Position.of("a1"), Position.of("a6")),
-                Arguments.of(Position.of("a1"), Position.of("a5")),
-                Arguments.of(Position.of("a1"), Position.of("a4")),
-                Arguments.of(Position.of("a1"), Position.of("a3")),
-                Arguments.of(Position.of("a1"), Position.of("a2"))
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a8")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a7")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a6")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a5")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a4")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a2"))
         );
     }
 
@@ -101,8 +101,8 @@ class RookTest {
     void rookCannotMoveNorthEast() {
         Piece piece = new Rook(Color.BLACK);
 
-        Position source = Position.of("d3");
-        Position destination = Position.of("e4");
+        Position source = Position.valueOf("d3");
+        Position destination = Position.valueOf("e4");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

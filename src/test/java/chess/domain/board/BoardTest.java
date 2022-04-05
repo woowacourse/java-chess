@@ -34,41 +34,41 @@ class BoardTest {
 
     static Stream<Arguments> boardInitTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a8"), Rook.class, Color.BLACK),
-                Arguments.of(Position.of("b8"), Knight.class, Color.BLACK),
-                Arguments.of(Position.of("c8"), Bishop.class, Color.BLACK),
-                Arguments.of(Position.of("d8"), Queen.class, Color.BLACK),
-                Arguments.of(Position.of("e8"), King.class, Color.BLACK),
-                Arguments.of(Position.of("f8"), Bishop.class, Color.BLACK),
-                Arguments.of(Position.of("g8"), Knight.class, Color.BLACK),
-                Arguments.of(Position.of("h8"), Rook.class, Color.BLACK),
+                Arguments.of(Position.valueOf("a8"), Rook.class, Color.BLACK),
+                Arguments.of(Position.valueOf("b8"), Knight.class, Color.BLACK),
+                Arguments.of(Position.valueOf("c8"), Bishop.class, Color.BLACK),
+                Arguments.of(Position.valueOf("d8"), Queen.class, Color.BLACK),
+                Arguments.of(Position.valueOf("e8"), King.class, Color.BLACK),
+                Arguments.of(Position.valueOf("f8"), Bishop.class, Color.BLACK),
+                Arguments.of(Position.valueOf("g8"), Knight.class, Color.BLACK),
+                Arguments.of(Position.valueOf("h8"), Rook.class, Color.BLACK),
 
-                Arguments.of(Position.of("a7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("b7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("c7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("d7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("e7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("f7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("g7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("h7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("a7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("b7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("c7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("d7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("e7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("f7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("g7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.valueOf("h7"), Pawn.class, Color.BLACK),
 
-                Arguments.of(Position.of("a1"), Rook.class, Color.WHITE),
-                Arguments.of(Position.of("b1"), Knight.class, Color.WHITE),
-                Arguments.of(Position.of("c1"), Bishop.class, Color.WHITE),
-                Arguments.of(Position.of("d1"), Queen.class, Color.WHITE),
-                Arguments.of(Position.of("e1"), King.class, Color.WHITE),
-                Arguments.of(Position.of("f1"), Bishop.class, Color.WHITE),
-                Arguments.of(Position.of("g1"), Knight.class, Color.WHITE),
-                Arguments.of(Position.of("h1"), Rook.class, Color.WHITE),
+                Arguments.of(Position.valueOf("a1"), Rook.class, Color.WHITE),
+                Arguments.of(Position.valueOf("b1"), Knight.class, Color.WHITE),
+                Arguments.of(Position.valueOf("c1"), Bishop.class, Color.WHITE),
+                Arguments.of(Position.valueOf("d1"), Queen.class, Color.WHITE),
+                Arguments.of(Position.valueOf("e1"), King.class, Color.WHITE),
+                Arguments.of(Position.valueOf("f1"), Bishop.class, Color.WHITE),
+                Arguments.of(Position.valueOf("g1"), Knight.class, Color.WHITE),
+                Arguments.of(Position.valueOf("h1"), Rook.class, Color.WHITE),
 
-                Arguments.of(Position.of("a2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("b2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("c2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("d2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("e2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("f2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("g2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("h2"), Pawn.class, Color.WHITE)
+                Arguments.of(Position.valueOf("a2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("b2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("c2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("d2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("e2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("f2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("g2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.valueOf("h2"), Pawn.class, Color.WHITE)
         );
     }
 
@@ -76,11 +76,11 @@ class BoardTest {
     @Test
     void pawnMoveCheckObstacleInPathOne() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
-        value.put(Position.of("a3"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a3"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("a2"), Position.valueOf("a3"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("도착 위치에 아군이 있어 이동할 수 없습니다.");
     }
@@ -89,11 +89,11 @@ class BoardTest {
     @Test
     void pawnCannotCatchFront() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
-        value.put(Position.of("a3"), Pawn.of(Color.BLACK));
+        value.put(Position.valueOf("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a3"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("a2"), Position.valueOf("a3"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 직진으로 기물을 잡을 수 없습니다");
     }
@@ -102,11 +102,11 @@ class BoardTest {
     @Test
     void whitePawnMoveCheckObstacleInPathTwo() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a3"), Pawn.of(Color.WHITE));
-        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a3"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a2"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a4"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("a2"), Position.valueOf("a4"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 다른 기물이 있습니다.");
     }
@@ -115,11 +115,11 @@ class BoardTest {
     @Test
     void blackPawnMoveCheckObstacleInPathTwo() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a7"), Pawn.of(Color.BLACK));
-        value.put(Position.of("a6"), Pawn.of(Color.BLACK));
+        value.put(Position.valueOf("a7"), Pawn.of(Color.BLACK));
+        value.put(Position.valueOf("a6"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("a7"), Position.of("a5"), Color.BLACK))
+        assertThatThrownBy(() -> board.move(Position.valueOf("a7"), Position.valueOf("a5"), Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 다른 기물이 있습니다.");
     }
@@ -142,10 +142,10 @@ class BoardTest {
 
     static Stream<Arguments> pawnMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a2"), Position.of("a3"), Color.WHITE),
-                Arguments.of(Position.of("a7"), Position.of("a6"), Color.BLACK),
-                Arguments.of(Position.of("a2"), Position.of("a4"), Color.WHITE),
-                Arguments.of(Position.of("a7"), Position.of("a5"), Color.BLACK)
+                Arguments.of(Position.valueOf("a2"), Position.valueOf("a3"), Color.WHITE),
+                Arguments.of(Position.valueOf("a7"), Position.valueOf("a6"), Color.BLACK),
+                Arguments.of(Position.valueOf("a2"), Position.valueOf("a4"), Color.WHITE),
+                Arguments.of(Position.valueOf("a7"), Position.valueOf("a5"), Color.BLACK)
         );
     }
 
@@ -167,14 +167,14 @@ class BoardTest {
 
     static Stream<Arguments> knightMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d5"), Position.of("e7")),
-                Arguments.of(Position.of("d5"), Position.of("e3")),
-                Arguments.of(Position.of("d5"), Position.of("c7")),
-                Arguments.of(Position.of("d5"), Position.of("c3")),
-                Arguments.of(Position.of("d5"), Position.of("b6")),
-                Arguments.of(Position.of("d5"), Position.of("b4")),
-                Arguments.of(Position.of("d5"), Position.of("f6")),
-                Arguments.of(Position.of("d5"), Position.of("f4"))
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e7")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c7")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("b6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("b4")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("f6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("f4"))
         );
     }
 
@@ -182,11 +182,11 @@ class BoardTest {
     @Test
     void knightCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new Knight(Color.WHITE));
-        value.put(Position.of("e7"), new Knight(Color.WHITE));
+        value.put(Position.valueOf("d5"), new Knight(Color.WHITE));
+        value.put(Position.valueOf("e7"), new Knight(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("e7"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("d5"), Position.valueOf("e7"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
@@ -209,14 +209,14 @@ class BoardTest {
 
     static Stream<Arguments> kingMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d3"), Position.of("d4")),
-                Arguments.of(Position.of("d3"), Position.of("d2")),
-                Arguments.of(Position.of("d3"), Position.of("e3")),
-                Arguments.of(Position.of("d3"), Position.of("c3")),
-                Arguments.of(Position.of("d3"), Position.of("e4")),
-                Arguments.of(Position.of("d3"), Position.of("e2")),
-                Arguments.of(Position.of("d3"), Position.of("c4")),
-                Arguments.of(Position.of("d3"), Position.of("c2"))
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("d4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("d2")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e2")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c2"))
         );
     }
 
@@ -224,11 +224,11 @@ class BoardTest {
     @Test
     void kingCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new King(Color.WHITE));
-        value.put(Position.of("d6"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("d5"), new King(Color.WHITE));
+        value.put(Position.valueOf("d6"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d6"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("d5"), Position.valueOf("d6"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
@@ -252,37 +252,37 @@ class BoardTest {
     static Stream<Arguments> rookMoveTestSet() {
         return Stream.of(
                 // 동
-                Arguments.of(Position.of("a3"), Position.of("b3")),
-                Arguments.of(Position.of("a3"), Position.of("c3")),
-                Arguments.of(Position.of("a3"), Position.of("d3")),
-                Arguments.of(Position.of("a3"), Position.of("e3")),
-                Arguments.of(Position.of("a3"), Position.of("f3")),
-                Arguments.of(Position.of("a3"), Position.of("g3")),
-                Arguments.of(Position.of("a3"), Position.of("h3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("b3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("d3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("g3")),
+                Arguments.of(Position.valueOf("a3"), Position.valueOf("h3")),
                 // 서
-                Arguments.of(Position.of("h3"), Position.of("a3")),
-                Arguments.of(Position.of("h3"), Position.of("b3")),
-                Arguments.of(Position.of("h3"), Position.of("c3")),
-                Arguments.of(Position.of("h3"), Position.of("d3")),
-                Arguments.of(Position.of("h3"), Position.of("e3")),
-                Arguments.of(Position.of("h3"), Position.of("f3")),
-                Arguments.of(Position.of("h3"), Position.of("g3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("b3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("d3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("h3"), Position.valueOf("g3")),
                 // 남
-                Arguments.of(Position.of("a8"), Position.of("a7")),
-                Arguments.of(Position.of("a8"), Position.of("a6")),
-                Arguments.of(Position.of("a8"), Position.of("a5")),
-                Arguments.of(Position.of("a8"), Position.of("a4")),
-                Arguments.of(Position.of("a8"), Position.of("a3")),
-                Arguments.of(Position.of("a8"), Position.of("a2")),
-                Arguments.of(Position.of("a8"), Position.of("a1")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a7")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a6")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a5")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a4")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a2")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("a1")),
                 // 북
-                Arguments.of(Position.of("a1"), Position.of("a8")),
-                Arguments.of(Position.of("a1"), Position.of("a7")),
-                Arguments.of(Position.of("a1"), Position.of("a6")),
-                Arguments.of(Position.of("a1"), Position.of("a5")),
-                Arguments.of(Position.of("a1"), Position.of("a4")),
-                Arguments.of(Position.of("a1"), Position.of("a3")),
-                Arguments.of(Position.of("a1"), Position.of("a2"))
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a8")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a7")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a6")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a5")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a4")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a3")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("a2"))
         );
     }
 
@@ -290,11 +290,11 @@ class BoardTest {
     @Test
     void rookCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new Rook(Color.WHITE));
-        value.put(Position.of("d8"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("d5"), new Rook(Color.WHITE));
+        value.put(Position.valueOf("d8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d8"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("d5"), Position.valueOf("d8"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
@@ -306,12 +306,12 @@ class BoardTest {
         Piece rook = new Rook(Color.WHITE);
         Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position source = Position.of("d3");
+        Position source = Position.valueOf("d3");
         value.put(source, rook);
-        value.put(Position.of("f3"), obstacle);
+        value.put(Position.valueOf("f3"), obstacle);
         Board board = new Board(value);
 
-        Position destination = Position.of("h3");
+        Position destination = Position.valueOf("h3");
 
         assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -336,10 +336,10 @@ class BoardTest {
 
     static Stream<Arguments> bishopMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d5"), Position.of("e6")),
-                Arguments.of(Position.of("d5"), Position.of("e4")),
-                Arguments.of(Position.of("d5"), Position.of("c6")),
-                Arguments.of(Position.of("d5"), Position.of("c4"))
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e4")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c4"))
         );
     }
 
@@ -347,11 +347,11 @@ class BoardTest {
     @Test
     void bishopCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new Bishop(Color.WHITE));
-        value.put(Position.of("g8"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("d5"), new Bishop(Color.WHITE));
+        value.put(Position.valueOf("g8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("d5"), Position.valueOf("g8"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
@@ -363,12 +363,12 @@ class BoardTest {
         Piece bishop = new Bishop(Color.WHITE);
         Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position source = Position.of("d3");
+        Position source = Position.valueOf("d3");
         value.put(source, bishop);
-        value.put(Position.of("f5"), obstacle);
+        value.put(Position.valueOf("f5"), obstacle);
         Board board = new Board(value);
 
-        Position destination = Position.of("g6");
+        Position destination = Position.valueOf("g6");
 
         assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -393,22 +393,22 @@ class BoardTest {
 
     static Stream<Arguments> queenMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d5"), Position.of("e5")), // 동
-                Arguments.of(Position.of("d5"), Position.of("h5")), // 동
-                Arguments.of(Position.of("d5"), Position.of("c5")), // 서
-                Arguments.of(Position.of("d5"), Position.of("a5")), // 서
-                Arguments.of(Position.of("d5"), Position.of("d4")), // 남
-                Arguments.of(Position.of("d5"), Position.of("d1")), // 남
-                Arguments.of(Position.of("d5"), Position.of("d6")), // 북
-                Arguments.of(Position.of("d5"), Position.of("d8")), // 북
-                Arguments.of(Position.of("d5"), Position.of("e6")), // 북동
-                Arguments.of(Position.of("d5"), Position.of("g8")), // 북동
-                Arguments.of(Position.of("d5"), Position.of("c6")), // 북서
-                Arguments.of(Position.of("d5"), Position.of("a8")), // 북서
-                Arguments.of(Position.of("d5"), Position.of("e4")), // 남동
-                Arguments.of(Position.of("d5"), Position.of("h1")), // 남동
-                Arguments.of(Position.of("d5"), Position.of("c4")), // 남서
-                Arguments.of(Position.of("d5"), Position.of("a2"))  // 남서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e5")), // 동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("h5")), // 동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c5")), // 서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a5")), // 서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d4")), // 남
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d1")), // 남
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d6")), // 북
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d8")), // 북
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e6")), // 북동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("g8")), // 북동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c6")), // 북서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a8")), // 북서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e4")), // 남동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("h1")), // 남동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c4")), // 남서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a2"))  // 남서
         );
     }
 
@@ -416,11 +416,11 @@ class BoardTest {
     @Test
     void queenCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new Queen(Color.WHITE));
-        value.put(Position.of("g8"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("d5"), new Queen(Color.WHITE));
+        value.put(Position.valueOf("g8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
-        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8"), Color.WHITE))
+        assertThatThrownBy(() -> board.move(Position.valueOf("d5"), Position.valueOf("g8"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
@@ -432,12 +432,12 @@ class BoardTest {
         Piece queen = new Queen(Color.WHITE);
         Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position source = Position.of("d3");
+        Position source = Position.valueOf("d3");
         value.put(source, queen);
-        value.put(Position.of("f5"), obstacle);
+        value.put(Position.valueOf("f5"), obstacle);
         Board board = new Board(value);
 
-        Position destination = Position.of("g6");
+        Position destination = Position.valueOf("g6");
 
         assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -450,8 +450,8 @@ class BoardTest {
 
         Piece pawn = Pawn.of(Color.WHITE);
         Piece target = Pawn.of(Color.BLACK);
-        Position source = Position.of("a2");
-        Position destination = Position.of("b3");
+        Position source = Position.valueOf("a2");
+        Position destination = Position.valueOf("b3");
 
         Map<Position, Piece> value = new HashMap<>();
         value.put(source, pawn);
@@ -471,8 +471,8 @@ class BoardTest {
 
         Piece pawn = Pawn.of(Color.BLACK);
         Piece target = Pawn.of(Color.WHITE);
-        Position source = Position.of("a7");
-        Position destination = Position.of("b6");
+        Position source = Position.valueOf("a7");
+        Position destination = Position.valueOf("b6");
 
         Map<Position, Piece> value = new HashMap<>();
         value.put(source, pawn);
@@ -500,10 +500,10 @@ class BoardTest {
     @Test
     void testCalculateScoreSameLinePawn() {
         HashMap<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("b2"), Pawn.of(Color.WHITE));
-        value.put(Position.of("b3"), Pawn.of(Color.WHITE));
-        value.put(Position.of("b4"), Pawn.of(Color.WHITE));
-        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("b2"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("b3"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("b4"), Pawn.of(Color.WHITE));
+        value.put(Position.valueOf("a2"), Pawn.of(Color.WHITE));
 
         Board board = new Board(value);
 
@@ -526,7 +526,7 @@ class BoardTest {
     @Test
     void testHasKing() {
         HashMap<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a7"), new King(Color.BLACK));
+        value.put(Position.valueOf("a7"), new King(Color.BLACK));
         Board board = new Board(value);
 
         assertThat(board.hasKing(Color.BLACK)).isTrue();
@@ -536,7 +536,7 @@ class BoardTest {
     @Test
     void testHasNotKing() {
         HashMap<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a7"), Pawn.of(Color.BLACK));
+        value.put(Position.valueOf("a7"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
         assertThat(board.hasKing(Color.BLACK)).isFalse();

@@ -55,8 +55,8 @@ public class ChessWebService {
     }
 
     public ApiResult movePiece(MoveCommand command) {
-        Position source = Position.of(command.getSource());
-        Position destination = Position.of(command.getDestination());
+        Position source = Position.valueOf(command.getSource());
+        Position destination = Position.valueOf(command.getDestination());
         try {
             state = state.movePiece(source, destination);
             updateDbPiece(source, destination);

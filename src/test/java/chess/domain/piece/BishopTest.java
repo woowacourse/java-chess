@@ -23,13 +23,13 @@ class BishopTest {
 
     static Stream<Arguments> bishopMoveNorthEastTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Position.of("b2")),
-                Arguments.of(Position.of("a1"), Position.of("c3")),
-                Arguments.of(Position.of("a1"), Position.of("d4")),
-                Arguments.of(Position.of("a1"), Position.of("e5")),
-                Arguments.of(Position.of("a1"), Position.of("f6")),
-                Arguments.of(Position.of("a1"), Position.of("g7")),
-                Arguments.of(Position.of("a1"), Position.of("h8"))
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("b2")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("d4")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("e5")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("f6")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("g7")),
+                Arguments.of(Position.valueOf("a1"), Position.valueOf("h8"))
         );
     }
 
@@ -44,13 +44,13 @@ class BishopTest {
 
     static Stream<Arguments> bishopMoveNorthWestTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("h1"), Position.of("a8")),
-                Arguments.of(Position.of("h1"), Position.of("b7")),
-                Arguments.of(Position.of("h1"), Position.of("c6")),
-                Arguments.of(Position.of("h1"), Position.of("d5")),
-                Arguments.of(Position.of("h1"), Position.of("e4")),
-                Arguments.of(Position.of("h1"), Position.of("f3")),
-                Arguments.of(Position.of("h1"), Position.of("g2"))
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("a8")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("b7")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("c6")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("d5")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("e4")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("h1"), Position.valueOf("g2"))
         );
     }
 
@@ -65,13 +65,13 @@ class BishopTest {
 
     static Stream<Arguments> bishopMoveSouthEastTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("a8"), Position.of("b7")),
-                Arguments.of(Position.of("a8"), Position.of("c6")),
-                Arguments.of(Position.of("a8"), Position.of("d5")),
-                Arguments.of(Position.of("a8"), Position.of("e4")),
-                Arguments.of(Position.of("a8"), Position.of("f3")),
-                Arguments.of(Position.of("a8"), Position.of("g2")),
-                Arguments.of(Position.of("a8"), Position.of("h1"))
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("b7")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("c6")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("d5")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("e4")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("f3")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("g2")),
+                Arguments.of(Position.valueOf("a8"), Position.valueOf("h1"))
         );
     }
 
@@ -86,13 +86,13 @@ class BishopTest {
 
     static Stream<Arguments> bishopMoveSouthWestTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("h8"), Position.of("a1")),
-                Arguments.of(Position.of("h8"), Position.of("b2")),
-                Arguments.of(Position.of("h8"), Position.of("c3")),
-                Arguments.of(Position.of("h8"), Position.of("d4")),
-                Arguments.of(Position.of("h8"), Position.of("e5")),
-                Arguments.of(Position.of("h8"), Position.of("f6")),
-                Arguments.of(Position.of("h8"), Position.of("g7"))
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("a1")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("b2")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("d4")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("e5")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("f6")),
+                Arguments.of(Position.valueOf("h8"), Position.valueOf("g7"))
         );
     }
 
@@ -100,8 +100,8 @@ class BishopTest {
     @Test
     void bishopMoveNorth() {
         Piece piece = new Bishop(Color.BLACK);
-        Position source = Position.of("d5");
-        Position destination = Position.of("d6");
+        Position source = Position.valueOf("d5");
+        Position destination = Position.valueOf("d6");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

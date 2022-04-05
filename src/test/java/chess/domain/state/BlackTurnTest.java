@@ -23,8 +23,8 @@ class BlackTurnTest {
     void test() {
         Board board = BasicChessBoardGenerator.generator();
         State blackTurn = new BlackTurn(board);
-        Position source = Position.of("a7");
-        Position destination = Position.of("a6");
+        Position source = Position.valueOf("a7");
+        Position destination = Position.valueOf("a6");
 
         blackTurn.movePiece(source, destination);
 
@@ -38,8 +38,8 @@ class BlackTurnTest {
         Board board = BasicChessBoardGenerator.generator();
         State blackTurn = new BlackTurn(board);
 
-        Position source = Position.of("a2");
-        Position destination = Position.of("a3");
+        Position source = Position.valueOf("a2");
+        Position destination = Position.valueOf("a3");
 
         assertThatThrownBy(() -> blackTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -52,8 +52,8 @@ class BlackTurnTest {
         Board board = BasicChessBoardGenerator.generator();
         State blackTurn = new BlackTurn(board);
 
-        Position source = Position.of("d5");
-        Position destination = Position.of("a6");
+        Position source = Position.valueOf("d5");
+        Position destination = Position.valueOf("a6");
 
         assertThatThrownBy(() -> blackTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -64,14 +64,14 @@ class BlackTurnTest {
     @Test
     void testBlackWin() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new King(Color.WHITE));
-        value.put(Position.of("d4"), new Queen(Color.BLACK));
-        value.put(Position.of("a4"), new King(Color.BLACK));
+        value.put(Position.valueOf("d5"), new King(Color.WHITE));
+        value.put(Position.valueOf("d4"), new Queen(Color.BLACK));
+        value.put(Position.valueOf("a4"), new King(Color.BLACK));
         Board board = new Board(value);
 
         State whiteTurn = Ready.start(board);
-        State state = whiteTurn.movePiece(Position.of("d5"), Position.of("d6"));
-        state = state.movePiece(Position.of("d4"), Position.of("d6"));
+        State state = whiteTurn.movePiece(Position.valueOf("d5"), Position.valueOf("d6"));
+        state = state.movePiece(Position.valueOf("d4"), Position.valueOf("d6"));
 
         assertThat(state).isInstanceOf(BlackWin.class);
     }

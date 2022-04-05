@@ -23,7 +23,7 @@ class ReadyTest {
     void blackTurn() {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
-        State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
+        State blackTurn = whiteTurn.movePiece(Position.valueOf("a2"), Position.valueOf("a3"));
 
         assertThat(blackTurn).isInstanceOf(BlackTurn.class);
     }
@@ -33,8 +33,8 @@ class ReadyTest {
     void whiteBlackWhiteTurn() {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
-        State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
-        State whiteTurn2 = blackTurn.movePiece(Position.of("a7"), Position.of("a6"));
+        State blackTurn = whiteTurn.movePiece(Position.valueOf("a2"), Position.valueOf("a3"));
+        State whiteTurn2 = blackTurn.movePiece(Position.valueOf("a7"), Position.valueOf("a6"));
 
         assertThat(whiteTurn2).isInstanceOf(WhiteTurn.class);
     }

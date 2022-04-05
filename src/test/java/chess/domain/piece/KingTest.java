@@ -23,15 +23,15 @@ class KingTest {
 
     static Stream<Arguments> kingMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d3"), Position.of("d4")),
-                Arguments.of(Position.of("d3"), Position.of("d2")),
-                Arguments.of(Position.of("d3"), Position.of("e3")),
-                Arguments.of(Position.of("d3"), Position.of("c3")),
-                Arguments.of(Position.of("d3"), Position.of("e4")),
-                Arguments.of(Position.of("d3"), Position.of("e2")),
-                Arguments.of(Position.of("d3"), Position.of("c4")),
-                Arguments.of(Position.of("d3"), Position.of("c2")),
-                Arguments.of(Position.of("e8"), Position.of("e7"))
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("d4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("d2")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("e2")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c4")),
+                Arguments.of(Position.valueOf("d3"), Position.valueOf("c2")),
+                Arguments.of(Position.valueOf("e8"), Position.valueOf("e7"))
         );
     }
 
@@ -39,8 +39,8 @@ class KingTest {
     @Test
     void kingTest() {
         Piece piece = new King(Color.BLACK);
-        Position source = Position.of("d3");
-        Position destination = Position.of("d5");
+        Position source = Position.valueOf("d3");
+        Position destination = Position.valueOf("d5");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

@@ -72,7 +72,7 @@ public class BoardDao {
 
             Map<Position, Piece> value = new HashMap<>();
             while (resultSet.next()) {
-                Position position = Position.of(resultSet.getString("position"));
+                Position position = Position.valueOf(resultSet.getString("position"));
                 Piece piece = PieceFactory.create(
                         resultSet.getString("color"),
                         resultSet.getString("piece"));

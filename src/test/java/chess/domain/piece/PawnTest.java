@@ -12,8 +12,8 @@ class PawnTest {
     @Test
     void testWhitePawnMoveTrue() {
         Piece piece = Pawn.of(Color.WHITE);
-        Position source = Position.of("a2");
-        Position destination = Position.of("a3");
+        Position source = Position.valueOf("a2");
+        Position destination = Position.valueOf("a3");
 
         assertThat(piece.canMove(source, destination)).isTrue();
     }
@@ -22,8 +22,8 @@ class PawnTest {
     @Test
     void testWhitePawnMoveFalse() {
         Piece piece = Pawn.of(Color.WHITE);
-        Position source = Position.of("a3");
-        Position destination = Position.of("a2");
+        Position source = Position.valueOf("a3");
+        Position destination = Position.valueOf("a2");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }
@@ -32,8 +32,8 @@ class PawnTest {
     @Test
     void testWhitePawnMoveTwiceFirst() {
         Piece piece = Pawn.of(Color.WHITE);
-        Position source = Position.of("a2");
-        Position destination = Position.of("a4");
+        Position source = Position.valueOf("a2");
+        Position destination = Position.valueOf("a4");
 
         assertThat(piece.canMove(source, destination)).isTrue();
     }
@@ -42,8 +42,8 @@ class PawnTest {
     @Test
     void testThree() {
         Piece piece = Pawn.of(Color.WHITE);
-        Position source = Position.of("a3");
-        Position destination = Position.of("a5");
+        Position source = Position.valueOf("a3");
+        Position destination = Position.valueOf("a5");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }
@@ -52,8 +52,8 @@ class PawnTest {
     @Test
     void testBlackPawnMoveTrue() {
         Piece piece = Pawn.of(Color.BLACK);
-        Position source = Position.of("a7");
-        Position destination = Position.of("a6");
+        Position source = Position.valueOf("a7");
+        Position destination = Position.valueOf("a6");
 
         assertThat(piece.canMove(source, destination)).isTrue();
     }
@@ -62,8 +62,8 @@ class PawnTest {
     @Test
     void testBlackPawnMoveDoubleTrue() {
         Piece piece = Pawn.of(Color.BLACK);
-        Position source = Position.of("a7");
-        Position destination = Position.of("a5");
+        Position source = Position.valueOf("a7");
+        Position destination = Position.valueOf("a5");
 
         assertThat(piece.canMove(source, destination)).isTrue();
     }
@@ -72,8 +72,8 @@ class PawnTest {
     @Test
     void testBlackPawnMoveDoubleFalse() {
         Piece piece = Pawn.of(Color.BLACK);
-        Position source = Position.of("a6");
-        Position destination = Position.of("a4");
+        Position source = Position.valueOf("a6");
+        Position destination = Position.valueOf("a4");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }
@@ -82,8 +82,8 @@ class PawnTest {
     @Test
     void testBlackPawnMoveFalse() {
         Piece piece = Pawn.of(Color.BLACK);
-        Position source = Position.of("a6");
-        Position destination = Position.of("a7");
+        Position source = Position.valueOf("a6");
+        Position destination = Position.valueOf("a7");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

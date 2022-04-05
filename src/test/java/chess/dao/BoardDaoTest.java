@@ -30,7 +30,7 @@ public class BoardDaoTest {
     @Test
     void saveTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position position = Position.of("a1");
+        Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 
@@ -51,8 +51,8 @@ public class BoardDaoTest {
     @Test
     void updateByPositionTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position source = Position.of("a1");
-        Position destination = Position.of("a2");
+        Position source = Position.valueOf("a1");
+        Position destination = Position.valueOf("a2");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 
@@ -74,7 +74,7 @@ public class BoardDaoTest {
     @Test
     void findByPositionTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position position = Position.of("a1");
+        Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 
@@ -95,7 +95,7 @@ public class BoardDaoTest {
     @Test
     void findAllTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position position = Position.of("a1");
+        Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 
@@ -116,7 +116,7 @@ public class BoardDaoTest {
     @Test
     void deleteTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position position = Position.of("a1");
+        Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 
@@ -137,7 +137,7 @@ public class BoardDaoTest {
     @Test
     void deleteAllTest() throws Exception {
         BoardDao boardDao = new BoardDao();
-        Position position = Position.of("a1");
+        Position position = Position.valueOf("a1");
         Color color = Color.WHITE;
         Piece piece = new Knight(color);
 

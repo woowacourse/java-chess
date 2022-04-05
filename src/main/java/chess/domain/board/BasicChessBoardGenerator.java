@@ -16,41 +16,41 @@ public class BasicChessBoardGenerator {
     public static Board generator() {
         Map<Position, Piece> board = new HashMap<>();
 
-        board.put(Position.of("a8"), new Rook(Color.BLACK));
-        board.put(Position.of("b8"), new Knight(Color.BLACK));
-        board.put(Position.of("c8"), new Bishop(Color.BLACK));
-        board.put(Position.of("d8"), new Queen(Color.BLACK));
-        board.put(Position.of("e8"), new King(Color.BLACK));
-        board.put(Position.of("f8"), new Bishop(Color.BLACK));
-        board.put(Position.of("g8"), new Knight(Color.BLACK));
-        board.put(Position.of("h8"), new Rook(Color.BLACK));
+        board.put(Position.valueOf("a8"), new Rook(Color.BLACK));
+        board.put(Position.valueOf("b8"), new Knight(Color.BLACK));
+        board.put(Position.valueOf("c8"), new Bishop(Color.BLACK));
+        board.put(Position.valueOf("d8"), new Queen(Color.BLACK));
+        board.put(Position.valueOf("e8"), new King(Color.BLACK));
+        board.put(Position.valueOf("f8"), new Bishop(Color.BLACK));
+        board.put(Position.valueOf("g8"), new Knight(Color.BLACK));
+        board.put(Position.valueOf("h8"), new Rook(Color.BLACK));
 
-        board.put(Position.of("a7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("b7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("c7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("d7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("e7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("f7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("g7"), Pawn.of(Color.BLACK));
-        board.put(Position.of("h7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("a7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("b7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("c7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("d7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("e7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("f7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("g7"), Pawn.of(Color.BLACK));
+        board.put(Position.valueOf("h7"), Pawn.of(Color.BLACK));
 
-        board.put(Position.of("a1"), new Rook(Color.WHITE));
-        board.put(Position.of("b1"), new Knight(Color.WHITE));
-        board.put(Position.of("c1"), new Bishop(Color.WHITE));
-        board.put(Position.of("d1"), new Queen(Color.WHITE));
-        board.put(Position.of("e1"), new King(Color.WHITE));
-        board.put(Position.of("f1"), new Bishop(Color.WHITE));
-        board.put(Position.of("g1"), new Knight(Color.WHITE));
-        board.put(Position.of("h1"), new Rook(Color.WHITE));
+        board.put(Position.valueOf("a1"), new Rook(Color.WHITE));
+        board.put(Position.valueOf("b1"), new Knight(Color.WHITE));
+        board.put(Position.valueOf("c1"), new Bishop(Color.WHITE));
+        board.put(Position.valueOf("d1"), new Queen(Color.WHITE));
+        board.put(Position.valueOf("e1"), new King(Color.WHITE));
+        board.put(Position.valueOf("f1"), new Bishop(Color.WHITE));
+        board.put(Position.valueOf("g1"), new Knight(Color.WHITE));
+        board.put(Position.valueOf("h1"), new Rook(Color.WHITE));
 
-        board.put(Position.of("a2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("b2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("c2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("d2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("e2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("f2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("g2"), Pawn.of(Color.WHITE));
-        board.put(Position.of("h2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("a2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("b2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("c2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("d2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("e2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("f2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("g2"), Pawn.of(Color.WHITE));
+        board.put(Position.valueOf("h2"), Pawn.of(Color.WHITE));
 
         return new Board(board);
     }
