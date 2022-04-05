@@ -8,7 +8,7 @@ public class Turn {
     private boolean isFinished = false;
 
     boolean isTurnOf(Piece Piece) {
-        return isSameColor(Piece);
+        return Piece.isSameColor(currentColor);
     }
 
     void nextState() {
@@ -19,10 +19,6 @@ public class Turn {
         currentColor = PieceColor.WHITE;
     }
 
-    private boolean isSameColor(Piece sourcePiece) {
-        return sourcePiece.isSameColor(currentColor);
-    }
-
     boolean isFinished() {
         return isFinished;
     }
@@ -30,5 +26,9 @@ public class Turn {
     void finish() {
         isFinished = true;
         nextState();
+    }
+
+    public PieceColor getCurrentColor() {
+        return currentColor;
     }
 }

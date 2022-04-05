@@ -10,8 +10,8 @@ public class ChessGame {
     static final String ERROR_NOT_MOVABLE_CHESS_FINISHED = "[ERROR] 체스 게임이 종료되어 이동할 수 없습니다.";
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
 
-    private Board board;
     private final Turn turn;
+    private Board board;
 
     public ChessGame(Turn turn, PieceArrangement pieceArrangement) {
         this.board = new Board(pieceArrangement);
@@ -63,5 +63,9 @@ public class ChessGame {
 
     public Map<Position, Piece> getBoardValue() {
         return board.getValues();
+    }
+
+    public PieceColor getTurnColor() {
+        return turn.getCurrentColor();
     }
 }

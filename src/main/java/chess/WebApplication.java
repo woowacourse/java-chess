@@ -41,6 +41,7 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
 
             model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+            model.put("color", chessGame.getTurnColor());
             return render(model, "game.html");
         });
     }
@@ -53,6 +54,7 @@ public class WebApplication {
                     "move" + " " + req.queryParams("source") + " " + req.queryParams("target"));
                 chessGame.move(Position.of(request.getSource()), Position.of(request.getTarget()));
                 model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+                model.put("color", chessGame.getTurnColor());
                 if (chessGame.isFinished()) {
                     return finish(chessGame, model);
                 }
@@ -69,6 +71,8 @@ public class WebApplication {
 
     private static String finish(ChessGame chessGame, Map<String, Object> model) {
         model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+        model.put("score", chessGame.getScore());
+        model.put("color", chessGame.getTurnColor());
         return render(model, "finish.html");
     }
 
@@ -76,7 +80,7 @@ public class WebApplication {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
-            model.put("status", chessGame.getScore());
+            model.put("score", chessGame.getScore());
             return render(model, "game.html");
         });
     }
