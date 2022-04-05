@@ -22,4 +22,11 @@ public class ChessGameDaoTest {
         ChessGame chessGame = new Ready();
         chessGameDao.save(chessGame);
     }
+
+    @Test
+    void findReadyGame() {
+        final ChessGameDao chessGameDao = new ChessGameDao();
+        int readyGame = chessGameDao.findReadyGame();
+        assertThat(readyGame).isEqualTo(1);
+    }
 }

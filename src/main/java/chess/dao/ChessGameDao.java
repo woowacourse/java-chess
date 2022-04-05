@@ -4,6 +4,7 @@ import chess.domain.game.state.ChessGame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
@@ -40,6 +41,22 @@ public class ChessGameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public int findReadyGame() {
+        final Connection connection = getConnection();
+        final String sql = "select id from game where state = 'ready' ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return 0;
+            }
+            return resultSet.getInt("id");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
