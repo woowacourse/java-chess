@@ -1,7 +1,5 @@
 package chess.console.controller;
 
-import chess.console.controller.state.GameState;
-import chess.console.controller.state.Ready;
 import chess.console.service.ChessService;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
@@ -13,16 +11,13 @@ public final class ChessController {
     private static final int TO_INDEX = 1;
 
     private final ChessService service;
-    private GameState gameState;
 
     public ChessController(ChessService service) {
         this.service = service;
-        this.gameState = new Ready();
     }
 
     public void run() {
-        gameState = new Ready();
-        while (gameState.isRunning(service)) {
+        while (service.isWaitingOrRunning()) {
             runUntilValid(this::executeByInput);
         }
     }
@@ -47,7 +42,6 @@ public final class ChessController {
     private void executeByInput() {
         GameCommandRequest request = GameCommandRequest.of(InputView.inputCommandRequest());
         GameCommand gameCommand = request.getGameCommand();
-        gameState = gameState.changeStateBy(gameCommand);
         gameCommand.executeRequest(this, request);
     }
 
@@ -67,6 +61,8 @@ public final class ChessController {
     }
 
     public void end(GameCommandRequest request) {
+        service.endGame();
+        OutputView.printWinner(service.getResult());
         OutputView.printEndMessage();
     }
 }

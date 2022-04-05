@@ -1,5 +1,6 @@
 package chess.console.view;
 
+import chess.console.service.GameResult;
 import java.util.List;
 import java.util.Map;
 
@@ -41,17 +42,6 @@ public final class OutputView {
             System.out.println(name + NAME_SCORE_DELIMITER + scores.get(name));
         }
         System.out.println();
-        System.out.printf(GAME_RESULT, findWinnerName(scores));
-    }
-
-    private static String findWinnerName(Map<String, Double> scores) {
-        if (scores.get(BLACK_PLAYER_NAME).equals(scores.get(WHITE_PLAYER_NAME))) {
-            return DRAW;
-        }
-        if (scores.get(BLACK_PLAYER_NAME) > scores.get(WHITE_PLAYER_NAME)) {
-            return BLACK_PLAYER_NAME + WIN;
-        }
-        return WHITE_PLAYER_NAME + WIN;
     }
 
     public static void printException(RuntimeException exception) {
@@ -60,5 +50,13 @@ public final class OutputView {
 
     public static void printEndMessage() {
         System.out.println(END_MESSAGE);
+    }
+
+    public static void printWinner(GameResult result) {
+        if(result.getIsDraw()) {
+            System.out.println("비겼습니다!");
+            return;
+        }
+        System.out.println(String.format("승자는 %s입니다!", result.getWinnerColor()));
     }
 }

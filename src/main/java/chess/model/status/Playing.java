@@ -1,10 +1,10 @@
-package chess.console.controller.state;
+package chess.model.status;
 
 import chess.console.controller.GameCommand;
 
-public class Playing implements GameState {
+public class Playing implements GameStatus {
     @Override
-    public GameState changeStateBy(GameCommand gameCommand) {
+    public GameStatus changeStatus(GameCommand gameCommand) {
         if (gameCommand.isStatus() || gameCommand.isEnd()) {
             return new End();
         }

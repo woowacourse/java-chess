@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.Color;
 import chess.model.piece.Empty;
+import chess.model.piece.King;
 import chess.model.piece.Piece;
 import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
@@ -96,5 +97,10 @@ public final class Board {
                 .filter(square -> sourceSquare.isSameFile(square) && sourceSquare.isDifferent(square))
                 .map(board::get)
                 .anyMatch(piece -> piece.isPawn() && piece.isAlly(sourcePiece));
+    }
+
+    public boolean has(Piece piece) {
+        return board.values().stream()
+                .anyMatch(piece::equals);
     }
 }

@@ -10,13 +10,6 @@ function onClick(event) {
         onButtonClick();
     }
 
-    function postTwoCells(clickedCellCount) {
-        if (squareIdList.length === 2) {
-            postForm('/move', squareIdList)
-            makeAllCellsNotClicked()
-        }
-    }
-
     if (target.classList.contains('piece-image') || target.classList.contains('cell')) {
         if (squareIdList.length !== 2) {
             squareIdList.push(onCellClick());
@@ -28,6 +21,13 @@ function onClick(event) {
         console.log(target.closest("td").id)
         target.closest("td").classList.toggle("clicked")
         return target.closest("td").id
+    }
+
+    function postTwoCells(clickedCellCount) {
+        if (squareIdList.length === 2) {
+            makeAllCellsNotClicked()
+            postForm('/move', squareIdList)
+        }
     }
 
     function makeAllCellsNotClicked() {
@@ -64,5 +64,6 @@ function onClick(event) {
             location.href = "/status"
         }
     }
-
 }
+
+

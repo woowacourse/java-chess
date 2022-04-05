@@ -1,10 +1,10 @@
-package chess.console.controller.state;
+package chess.model.status;
 
 import chess.console.controller.GameCommand;
 
-public class End implements GameState {
+public class End implements GameStatus {
     @Override
-    public GameState changeStateBy(GameCommand gameCommand) {
+    public GameStatus changeStatus(GameCommand gameCommand) {
         throw new IllegalStateException("잘못된 상태입력입니다.");
     }
 }

@@ -3,7 +3,6 @@ package chess.web;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
-import static spark.Spark.redirect;
 import static spark.Spark.staticFileLocation;
 
 import chess.web.controller.ChessController;
@@ -33,7 +32,9 @@ public class WebApplication {
             return null;
         });
 
-        get("/board", (req, res) -> render(controller.getBoard()));
+        get("/board", (req, res) -> {
+            return render(controller.getBoard());
+        });
 
         post("/move", (req, res) ->
         {
@@ -44,7 +45,7 @@ public class WebApplication {
 
         get("/status", (req, res) -> render(controller.status()));
 
-        exception(Exception.class, WebApplication::handle);
+        exception(RuntimeException.class, WebApplication::handle);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -55,7 +56,7 @@ public class WebApplication {
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
 
-    private static void handle(Exception exception, Request request, Response response) {
+    private static void handle(RuntimeException exception, Request request, Response response) {
         response.body(exception.getMessage());
     }
 }
