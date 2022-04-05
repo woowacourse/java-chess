@@ -13,8 +13,4 @@ public class WinnerResponse {
     public static WinnerResponse from(Color color) {
         return new WinnerResponse(color.name());
     }
-
-    public String getWinner() {
-        return winner;
-    }
 }

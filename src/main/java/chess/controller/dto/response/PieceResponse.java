@@ -30,12 +30,4 @@ public class PieceResponse {
     private static String toLowerName(String name) {
         return name.toLowerCase(Locale.ROOT);
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
 }
