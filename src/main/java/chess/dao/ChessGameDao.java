@@ -44,4 +44,31 @@ public class ChessGameDao {
         }
         return null;
     }
+
+    public void deleteByName(String name) {
+        final String sql = "DELETE FROM chess_game WHERE name = ?";
+        try (final Connection connection = DatabaseConnector.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateTurn(String turn, String name) {
+        System.out.println("turn = " + turn);
+        System.out.println("name = " + name);
+        final String sql = "UPDATE chess_game SET turn = ? WHERE name = ?";
+        try (final Connection connection = DatabaseConnector.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, turn);
+            statement.setString(2, name);
+            statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
