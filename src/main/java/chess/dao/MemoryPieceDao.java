@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class MemoryPieceDaoImpl implements PieceDao {
+public class MemoryPieceDao implements PieceDao {
 
-    private static Map<String, PieceDto> store = new HashMap<>();
+    private static final Map<String, PieceDto> store = new HashMap<>();
 
     @Override
     public void save(PieceDto pieceDto) {
+        if (store.containsKey(pieceDto.getId())) {
+            throw new IllegalArgumentException("기물의 좌표를 중복될 수 없습니다.");
+        }
+
         store.put(pieceDto.getId(), pieceDto);
     }
 
