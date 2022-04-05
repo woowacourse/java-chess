@@ -12,4 +12,9 @@ public final class Terminate extends End {
     public Winner findWinner() {
         return Winner.TERMINATE;
     }
+
+    @Override
+    public String getTurn() {
+        return "종료";
+    }
 }

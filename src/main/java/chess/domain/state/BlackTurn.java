@@ -32,4 +32,9 @@ public final class BlackTurn extends Playing {
     public String findTurn() {
         return "흑";
     }
+
+    @Override
+    public String getTurn() {
+        return "흑팀 차례";
+    }
 }

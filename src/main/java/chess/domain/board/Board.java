@@ -154,8 +154,8 @@ public class Board {
         return ranks.get(rankLine);
     }
 
-    public Map<String, Piece> toMap() {
-        Map<String, Piece> map = new HashMap<>();
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
         List<Piece> pieces = new ArrayList<>();
         for (Rank value : ranks.values()) {
             pieces.addAll(value.getPieces());
@@ -163,6 +163,8 @@ public class Board {
         for (Piece piece : pieces) {
             map.put(piece.getPosition().getPosition(), piece);
         }
+        map.put("white-score", calculateWhiteScore());
+        map.put("black-score", calculateBlackScore());
         return map;
     }
 }

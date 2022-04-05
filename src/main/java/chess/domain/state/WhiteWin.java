@@ -12,4 +12,9 @@ public final class WhiteWin extends End {
     public Winner findWinner() {
         return Winner.WHITE;
     }
+
+    @Override
+    public String getTurn() {
+        return "백팀 승리";
+    }
 }

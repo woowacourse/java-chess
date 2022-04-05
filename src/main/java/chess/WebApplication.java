@@ -7,11 +7,9 @@ import static spark.Spark.staticFileLocation;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
-import chess.view.OutputView;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,7 +22,7 @@ public class WebApplication {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
-            Map<String, Piece> model = gameState.getBoard().toMap();
+            Map<String, Object> model = gameState.toMap();
             return render(model, "index.html");
         });
 
@@ -35,10 +33,14 @@ public class WebApplication {
             try {
                 gameState = gameState.move(start, target);
             } catch (Exception e) {
-                System.out.println("경고" + e.getMessage());
+                throw new Exception(e.getMessage());
             }
-            OutputView.printBoard(gameState);
-            return null;
+            return "";
+        });
+
+        get("/terminate", (req, res) -> {
+            gameState = new WhiteTurn(new Board(BoardInitializer.initBoard()));
+            return "";
         });
 
         exception(Exception.class, (exception, request, response) -> {
@@ -47,7 +49,7 @@ public class WebApplication {
         });
     }
 
-    private static String render(Map<String, Piece> model, String templatePath) {
+    private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

@@ -1,5 +1,18 @@
 var command = "";
 var clickCount = 0;
+
+document.getElementById("terminate").addEventListener('click', (e) => {
+    if (e.target.id) {
+        if (confirm("재시작 하시겠습니까?")) {
+            fetch("/terminate", {
+            }).then(() => {
+                location.href = "/";
+            });
+        }
+        location.href = "/";
+    }
+});
+
 let chessUI = document.getElementById('chessUi');
 for (let node of chessUI.childNodes) {
     node.addEventListener('click', (e) => {
@@ -16,7 +29,17 @@ for (let node of chessUI.childNodes) {
             fetch("/move", {
                 method: "POST",
                 body: `command=${command}`
-            }).then(() => {location.href = "/"})
+            }).then(res => {
+                if (!res.ok) {
+                    throw res;
+                }
+                location.href = "/";
+            }).catch(err => {
+                err.text().then(msg => {
+                    alert(msg);
+                    location.href = "/";
+                })
+            })
         }
     });
 }

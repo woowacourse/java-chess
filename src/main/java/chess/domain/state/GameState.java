@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Position;
+import java.util.Map;
 
 public interface GameState {
 
@@ -16,4 +17,8 @@ public interface GameState {
     Winner findWinner();
 
     Board getBoard();
+
+    String getTurn();
+
+    Map<String, Object> toMap();
 }

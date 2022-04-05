@@ -3,15 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>미니 체스 게임</title>
+    <title>♟️ 체스 게임</title>
     <link rel="stylesheet" href="/src/index.css">
 </head>
 
 <body>
 <div id="app">
-    <h1>♟️ 초간단 체스</h1>
+    <h1>♟️ 체스 게임</h1>
+    <h3>흑팀 점수 : {{white-score}}</h3>
+    <h3>백팀 점수 : {{black-score}}</h3>
+    <h3>현재 상태 : {{turn}}</h3>
+    <input type="button" value="재시작" id="terminate">
+    <br>
+    <br>
     <section class="chess-ui" id="chessUi">
-        {{#this}}
         <div class="black-square">
             <img src="images/{{a8.name}}.png" class="pawn-img" id="a8"/>
         </div>
@@ -211,9 +216,8 @@
         <div class="black-square">
             <img src="images/{{h1.name}}.png" class="pawn-img" id="h1"/>
         </div>
-        {{/this}}
     </section>
 </div>
 </body>
-<script src="src/index.js"></script>
+<script src="/src/index.js"></script>
 </html>
