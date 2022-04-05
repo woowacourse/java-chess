@@ -1,0 +1,27 @@
+body {
+    font-family: 'BMHANNAPro', monospace;
+}
+
+@font-face {
+    font-family: 'BMHANNAPro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+input {
+    font-size: 50px;
+    padding: 0 20px;
+}
+
+.chess-board { border-spacing: 0; border-collapse: collapse; text-align: center; }
+.chess-board th { padding: .5em; font-size: 25px; }
+.chess-board td { border: 0 solid; width: 60px; height: 60px; font-size: 50px; }
+.chess-board .light { background: #ffffe1; }
+.chess-board .dark { background: #e0e0ff; }
+
+.btn {
+    font-family: 'BMHANNAPro', monospace;
+    background-color: #bdb4fa;
+    box-shadow: 0 5px 0 0 #cec5fb;
+}
