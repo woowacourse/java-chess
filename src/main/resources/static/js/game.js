@@ -170,7 +170,6 @@ function clearSelection() {
 async function getStatus() {
   let res = await fetch("/api/status");
   res = await res.json();
-  console.log(res);
   if (res.isOk) {
     score.innerText = `백: ${res.whiteScore}점
   흑: ${res.blackScore}점`;
