@@ -20,11 +20,11 @@ public class RunningTurn implements GameTurn {
 
     @Override
     public Turn nextTurn() {
-        if (chessBoard.isPromotionStatus(color)) {
-            return color.currentTurn();
-        }
         if (chessBoard.isFinished()) {
             return Turn.END;
+        }
+        if (chessBoard.isPromotionStatus(color)) {
+            return color.currentTurn();
         }
         return color.reverseTurn();
     }
