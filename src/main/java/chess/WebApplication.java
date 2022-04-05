@@ -2,11 +2,10 @@ package chess;
 
 import chess.controller.Command;
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.web.Response;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -26,20 +25,43 @@ public class WebApplication {
         Command.execute("start", chessGame);
 
         get("/", (req, res) -> {
-            return boardRender(chessGame.getBoard(), "index.html");
+            Response response = Response.success(chessGame.getBoard());
+            return render(response, "index.html");
         });
 
         post("/move", (req, res) -> {
-            String commands = req.body().split("=")[1].replace("+", " ");
-            Command.execute(commands, chessGame);
-            res.redirect("/");
-            return null;
+            Response response;
+            try {
+                String commands = getCommands(req.body());
+                Command.execute(commands, chessGame);
+                response = Response.success(chessGame.getBoard());
+            } catch (Exception exception) {
+                response = Response.exception(chessGame.getBoard(), exception.getMessage());
+            }
+            return render(response, "index.html");
         });
     }
 
-    private static String boardRender(final Map<Position, Piece> board, final String templatePath) {
-        BoardDto boardDto = BoardDto.from(board);
+    private static String render(final Response response, final String templatePath) {
         return new HandlebarsTemplateEngine()
-                .render(new ModelAndView(boardDto, templatePath));
+                .render(new ModelAndView(response, templatePath));
+    }
+
+    private static String getCommands(final String body) {
+        if (body == null) {
+            return "";
+        }
+        String[] commands = convert(body).split(":|=");
+        if (commands.length < 2) {
+            return "";
+        }
+        return commands[1];
+    }
+
+    private static String convert(final String string) {
+        return string.replace("\"", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace("+", " ");
     }
 }
