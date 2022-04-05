@@ -7,6 +7,7 @@ import static spark.Spark.post;
 import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.dto.ChessBoardDto;
+import chess.dto.ResultDto;
 import chess.dto.StatusDto;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,10 +41,13 @@ public class ChessWebController {
         });
 
         post("/move", (req, res) -> {
-            System.out.println(req.body());
             List<String> command = Arrays.asList(req.body().split(" "));
             chessGame.move(Position.from(command.get(0)), Position.from(command.get(1)));
-            res.redirect("/chess");
+            if (!chessGame.isRunning()) {
+                res.status(301);
+                return res.toString();
+            }
+            res.status(302);
             return res.toString();
         });
 
@@ -53,6 +57,13 @@ public class ChessWebController {
             return render(model, "status.hbs");
         });
 
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            chessGame.end();
+            model.put("result",
+                    ResultDto.of(chessGame.statusOfWhite(), chessGame.statusOfBlack(), chessGame.findWinner()));
+            return render(model, "result.hbs");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

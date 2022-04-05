@@ -130,21 +130,21 @@ end
   
 ### 4단계 웹 UI 적용
 #### API 명세
-- [ ] GET /
+- [x] GET /
   - 체스 게임 home
 - [x] GET /start
   - 체스 게임 시작
-- [ ] POST /move
+- [x] POST /move
   - source, target position 을 기준으로 이동 명령 수행
-- [ ] GET /end
+- [x] GET /end
   - 해당 게임 종료
-- [ ] GET /status
+- [x] GET /status
   - 점수 확인
   
 #### UI 기능
 - [x] 체스 보드의 칸을 클릭해 source, target position 선택 가능
-- [ ] status 버튼을 클릭하면 점수를 볼 수 있음
-- [ ] 끝내기 버튼을 클릭하면 게임을 끝내고 결과를 볼 수 있음
+- [x] status 버튼을 클릭하면 점수를 볼 수 있음
+- [x] 끝내기 버튼을 클릭하면 게임을 끝내고 결과를 볼 수 있음
 
 ---
 ### Reference

@@ -13,26 +13,28 @@ function move(id) {
         let elementById = document.getElementById(id);
         elementById.style.backgroundColor = "#FF0000";
         target = id;
-
-        fetch("/move", {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain"
-            },
-            body: source + " " + target
-        }).then((res) => {
-            console.log(res);
-        })
-        document.getElementById(source).style.backgroundColor = '';
-        elementById.style.backgroundColor = '';
-        source = '';
-        target = '';
-        location.reload();
+        movePiece();
     }
 }
 
-function start() {
-    fetch("/start").then((res) => {
-        console.log(res);
-    });
+function movePiece() {
+    fetch("/move", {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body: source + " " + target
+    }).then((res) => {
+        document.getElementById(source).style.backgroundColor = '';
+        document.getElementById(target).style.backgroundColor = '';
+        source = '';
+        target = '';
+        if (res.status === 301) {
+            location.replace("/end");
+        }
+        if (res.status === 302) {
+            location.replace("/chess")
+        }
+    })
 }
+
