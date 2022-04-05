@@ -10,8 +10,7 @@ public class ChessConnectionManager implements ConnectionManager {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    @Override
-    public Connection getConnection() {
+    private Connection getConnection() {
         loadDriver();
         Connection connection = null;
         try {
@@ -31,11 +30,11 @@ public class ChessConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public void close(Connection connection) {
-        try {
-            connection.close();
+    public <T> T run(ConnectionFunction<Connection, T> runnable) {
+        try (final Connection connection = getConnection()) {
+            return runnable.execute(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(e);
         }
     }
 }

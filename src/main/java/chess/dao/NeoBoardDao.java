@@ -18,87 +18,72 @@ public class NeoBoardDao {
     }
 
     public NeoBoard save(NeoBoard board) {
-        final Connection connection = connectionManager.getConnection();
-        try {
-            final ResultSet generatedKeys = saveBoard(connection, board);
-            final NeoBoard neoBoard = new NeoBoard(generatedKeys.getInt(1), board.getRoomTitle());
-            connectionManager.close(connection);
-            return neoBoard;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public NeoBoard save(Connection connection, NeoBoard board) {
-        try {
-            final ResultSet generatedKeys = saveBoard(connection, board);
-            return new NeoBoard(generatedKeys.getInt(1), board.getRoomTitle());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private ResultSet saveBoard(Connection connection, NeoBoard board) throws SQLException {
-        final String sql = "insert into neo_board (room_title, turn) values (?, ?)";
-        final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setString(1, board.getRoomTitle());
-        preparedStatement.setString(2, board.getTurn().name());
-        preparedStatement.executeUpdate();
-        final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-        if (!generatedKeys.next()) {
-            throw new IllegalArgumentException("did not save");
-        }
-        return generatedKeys;
+        ConnectionFunction<Connection, NeoBoard> runnable  = connection -> {
+            final String sql = "insert into neo_board (room_title, turn) values (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, board.getRoomTitle());
+            preparedStatement.setString(2, board.getTurn().name());
+            preparedStatement.executeUpdate();
+            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (!generatedKeys.next()) {
+                throw new IllegalArgumentException("보드 없어요");
+            }
+            return new NeoBoard(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
+        };
+        return connectionManager.run(runnable);
     }
 
     public NeoBoard findById(int id) {
-        final Connection connection = connectionManager.getConnection();
-        final String sql = "select * from neo_board where id=?";
-        try {
+        ConnectionFunction<Connection, NeoBoard> runnable = connection -> {
+            final String sql = "select * from neo_board where id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 return null;
             }
-            final NeoBoard neoBoard = new NeoBoard(
+           return new NeoBoard(
                     resultSet.getInt("id"),
                     resultSet.getString("room_title"),
                     Color.findColor(resultSet.getString("turn"))
             );
-            connectionManager.close(connection);
-            return neoBoard;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        };
+        return connectionManager.run(runnable);
     }
 
     public void init(NeoBoard board, Map<Position, Piece> initialize) {
-        Connection connection = connectionManager.getConnection();
-        final NeoBoard savedBoard = save(connection, board);
-        final NeoPositionDao neoPositionDao = new NeoPositionDao(connectionManager);
-        final NeoPieceDao neoPieceDao = new NeoPieceDao(connectionManager);
-        neoPositionDao.saveAllPosition(connection, savedBoard.getId());
-        for (Position position : initialize.keySet()) {
-            int lastPositionId = neoPositionDao.findPositionIdByColumnAndRowAndBoardId(connection, position.getColumn(), position.getRow(), savedBoard.getId());
-            final Piece piece = initialize.get(position);
-            neoPieceDao.save(connection, new NeoPiece(piece.getType(), piece.getColor(), lastPositionId));
-        }
-        connectionManager.close(connection);
+        ConnectionFunction<Connection, Integer> runnable = connection -> {
+            final NeoBoard savedBoard = save(board);
+            final NeoPositionDao neoPositionDao = new NeoPositionDao(connectionManager);
+            final NeoPieceDao neoPieceDao = new NeoPieceDao(connectionManager);
+            neoPositionDao.saveAllPosition(savedBoard.getId());
+            for (Position position : initialize.keySet()) {
+                int lastPositionId = neoPositionDao.findPositionIdByColumnAndRowAndBoardId(position.getColumn(), position.getRow(), savedBoard.getId());
+                final Piece piece = initialize.get(position);
+                neoPieceDao.save(new NeoPiece(piece.getType(), piece.getColor(), lastPositionId));
+            }
+            return null;
+        };
+        connectionManager.run(runnable);
     }
 
     public int deleteById(int boardId) {
-        final Connection connection = connectionManager.getConnection();
-        final String sql = "delete from neo_board where id=?";
-        final PreparedStatement preparedStatement;
-        try {
-            preparedStatement = connection.prepareStatement(sql);
+        ConnectionFunction<Connection, Integer> runnable = connection -> {
+            String sql = "delete from neo_board where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, boardId);
-            final int affectedRow = preparedStatement.executeUpdate();
-            connectionManager.close(connection);
-            return affectedRow;
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("그런 보드 없습니다.");
-        }
+            return preparedStatement.executeUpdate();
+        };
+        return connectionManager.run(runnable);
+    }
+
+
+    public int deleteAll() {
+        ConnectionFunction<Connection, Integer> runnable = connection -> {
+            String sql = "delete from neo_board";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            return preparedStatement.executeUpdate();
+        };
+        return connectionManager.run(runnable);
     }
 }

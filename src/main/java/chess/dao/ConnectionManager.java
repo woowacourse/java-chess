@@ -4,7 +4,5 @@ import java.sql.Connection;
 
 public interface ConnectionManager {
 
-    Connection getConnection();
-
-    void close(Connection connection);
+    <T> T run(ConnectionFunction<Connection, T> runnable);
 }
