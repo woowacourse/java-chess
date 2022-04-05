@@ -43,4 +43,8 @@
 
 ## 웹 UI 적용하기
 - HTML 구현하기
+  - GET 방식의 start (보드판 초기화하기)
+  - POST 방식의 move (웹에서 input에 입력한 값으로 말 움직이기)
+  - GET 방식의 status (현재 점수 상황 조회하기)
+  - GET 방식의 END (게임 종료하기)
 
