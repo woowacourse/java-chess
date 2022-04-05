@@ -8,6 +8,7 @@ import chess.util.DBConnection;
 import chess.util.JdbcTemplate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class PieceDaoImpl implements PieceDao {
         return jdbcTemplate.executeSelect(connection -> connection.prepareStatement(query), this::piecesMapper);
     }
 
-    private Map<Position, Piece> piecesMapper(final java.sql.ResultSet resultSet) throws SQLException {
+    private Map<Position, Piece> piecesMapper(ResultSet resultSet) throws SQLException {
         Map<Position, Piece> pieces = new HashMap<>();
         while (resultSet.next()) {
             String type = resultSet.getString("type");
@@ -93,7 +94,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void deletePiece(final Position position) {
+    public void deletePiece(Position position) {
         final String query = "delete from piece where position_col = ? and position_row = ?";
 
         jdbcTemplate.executeUpdate(connection -> {

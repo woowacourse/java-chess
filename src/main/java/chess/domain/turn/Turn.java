@@ -15,7 +15,7 @@ public enum Turn {
 
     private final Function<ChessBoard, GameTurn> gameTurnCreator;
 
-    Turn(final Function<ChessBoard, GameTurn> gameTurnCreator) {
+    Turn(Function<ChessBoard, GameTurn> gameTurnCreator) {
         this.gameTurnCreator = gameTurnCreator;
     }
 

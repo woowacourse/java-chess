@@ -5,6 +5,7 @@ import chess.util.DBConnection;
 import chess.util.JdbcTemplate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class TurnDaoImpl implements TurnDao {
         return jdbcTemplate.executeSelect(connection -> connection.prepareStatement(query), this::turnMapper);
     }
 
-    private Optional<Turn> turnMapper(final java.sql.ResultSet resultSet) throws SQLException {
+    private Optional<Turn> turnMapper(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
             String turn = resultSet.getString("turn");
             return Optional.of(Turn.valueOf(turn));
