@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.LectureMember;
+import chess.Member;
 import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +32,7 @@ class MemberDaoTest {
     @Test
     void save() {
         Assertions.assertDoesNotThrow(
-            () -> memberDao.save(new LectureMember("테스트용Id", "테스트용Name"))
+            () -> memberDao.save(new Member("테스트용Id", "테스트용Name"))
         );
     }
 
@@ -40,10 +40,10 @@ class MemberDaoTest {
     @DisplayName("member 테이블에서 id를 통해 특정 데이터를 가져와 해당 class 객체로 응답받는다.")
     @Test
     void findById() {
-        memberDao.save(new LectureMember("테스트용Id", "테스트용Name"));
-        final LectureMember lectureMember = memberDao.findById("테스트용Id");
+        memberDao.save(new Member("테스트용Id", "테스트용Name"));
+        final Member member = memberDao.findById("테스트용Id");
 
-        assertThat(lectureMember.getName()).isEqualTo("테스트용Name");
+        assertThat(member.getName()).isEqualTo("테스트용Name");
     }
 
     //findAll_by_select_noWhere(R2)
@@ -52,23 +52,23 @@ class MemberDaoTest {
     void select_findAll() {
         // 최소 1개 데이터(tearDown에서 removeById될)를 넣어주고,
         // -> 데이터를 EmptyList가 아닌 list를 받아오면 통과다
-        memberDao.save(new LectureMember("테스트용Id", "테스트용Name"));
-        final List<LectureMember> lectureMembers = memberDao.findAll();
+        memberDao.save(new Member("테스트용Id", "테스트용Name"));
+        final List<Member> members = memberDao.findAll();
 
-        assertThat(lectureMembers).isNotEmpty();
+        assertThat(members).isNotEmpty();
     }
 
     @DisplayName("member 테이블에 있는 특정 데이터를 id로 찾아 name 값을 변경한다.")
     @Test
     void updateNameById() {
         //바뀌기전 데이터
-        memberDao.save(new LectureMember("테스트용Id", "테스트용Name"));
+        memberDao.save(new Member("테스트용Id", "테스트용Name"));
 
         //바뀐후 데이터
         memberDao.updateNameById("테스트용Id", "바뀐이름");
-        final LectureMember lectureMember = memberDao.findById("테스트용Id");
+        final Member members = memberDao.findById("테스트용Id");
 
-        assertThat(lectureMember.getName()).isEqualTo("바뀐이름");
+        assertThat(members.getName()).isEqualTo("바뀐이름");
     }
 
     @AfterEach

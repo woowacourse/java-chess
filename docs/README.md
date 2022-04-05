@@ -10,9 +10,10 @@
 
 ### 적용 예정 사항
 
-- try-with-resource
-- fk 제약조건 걸어주기
-- custom error
+- [x] try-with-resource
+- [ ] fk 제약조건 걸어주기
+- [ ] custom exception
+- [ ] jdbcTemple에서 dao중복코드 제거
 
 ## 목표
 
