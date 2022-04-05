@@ -63,9 +63,16 @@
         fetch("/move", {
             method : "post",
             body : `${srcPosition}//${piece.id}`
-        }).then(response => {
+        }).then(async response => {
             if (!response.ok) {
                 alert("잘못 누름");
+                return;
+            }
+            let moveResult = await response.text();
+            if (moveResult !== "kingAlive") {
+                alert("Winner : " + moveResult + " Team");
+                location.href = "/";
+                return;
             }
             location.reload();
         });
@@ -74,7 +81,13 @@
     }
 
     function statusHandler() {
-
+        fetch("/status", {
+            method : "get"
+        }).then( async response => {
+            let score = await response.text();
+            let scores = score.split("//");
+            alert("White : " + scores[0] + "\nBlack : " + scores[1]);
+        });
     }
 
     function endGameHandler() {

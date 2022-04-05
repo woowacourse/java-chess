@@ -8,7 +8,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.dto.BoardDTO;
 import chess.dto.PieceDTO;
 import chess.dto.RankDTO;
 import java.util.LinkedList;
@@ -38,8 +37,15 @@ public class ChessService {
 
     private List<PieceDTO> createPieceDTO(Map<Column, Piece> rank) {
         return rank.values().stream()
-                .map(piece -> new PieceDTO(piece.getName(), piece.getColValue(), piece.getRowValue(), piece.getTeamName()))
+                .map(piece -> new PieceDTO(piece.getName(), piece.getColValue(), piece.getRowValue(),
+                        piece.getTeamName()))
                 .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public boolean move(String source, String destination) {
+        boolean isKingDead = board.movePiece(Position.from(source), Position.from(destination), team);
+        team = Team.switchTeam(team);
+        return isKingDead;
     }
 
     public double getWhiteTeamScore() {
@@ -50,13 +56,7 @@ public class ChessService {
         return Score.calculateScore(board.getBoard(), Team.BLACK).getTotalScore();
     }
 
-    public boolean move(String source, String destination) {
-        boolean isKingDead = board.movePiece(Position.from(source), Position.from(destination), team);
-        team = Team.switchTeam(team);
-        return isKingDead;
-    }
-
     public String getWinnerTeam() {
-        return team.name();
+        return Team.switchTeam(team).name();
     }
 }

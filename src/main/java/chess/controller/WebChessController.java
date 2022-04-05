@@ -14,23 +14,36 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final ChessService chessService = new ChessService();
+    private ChessService chessService = new ChessService();
 
     public void run() {
         staticFiles.location("/static");
 
         displayHome();
+        moveChessPiece();
+        calculateEachTeamScore();
+    }
 
+    private void calculateEachTeamScore() {
+        get("/status", (req, res)
+                -> chessService.getBlackTeamScore() + "//" + chessService.getWhiteTeamScore()
+        );
+    }
+
+    private void moveChessPiece() {
         post("/move", (req, res) -> {
-            String[] positions = req.body().split("//"); // a1//b2
+            String[] positions = req.body().split("//");
             String srcPosition = positions[0];
             String dstPosition = positions[1];
 
-            chessService.move(srcPosition, dstPosition);
+            if (chessService.move(srcPosition, dstPosition)) {
+                String winner = chessService.getWinnerTeam();
+                chessService = new ChessService();
+                return winner;
+            }
 
-            return "success";
+            return "kingAlive";
         });
-
     }
 
     private void displayHome() {
