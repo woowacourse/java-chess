@@ -1,5 +1,23 @@
 .background {
     background-image: url("/image/wood.svg");
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    width: 650px;
+    height: 650px;
+    margin: 10px;
+}
+
+.game {
+    width: 300px;
+    height: 300px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .rank {
