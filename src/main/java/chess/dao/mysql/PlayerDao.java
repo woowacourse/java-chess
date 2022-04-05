@@ -46,25 +46,28 @@ public class PlayerDao {
 
     public PlayerDto findById(final Long id) {
         final Connection connection = mysqlConnector.getConnection();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+
+        PlayerDto playerDto = null;
         try {
             final String sql = "SELECT id, color, pieces FROM Player where id=?";
-            preparedStatement = connection.prepareStatement(sql);
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, id);
-            resultSet = preparedStatement.executeQuery();
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 return null;
             }
-            return new PlayerDto(
+
+            playerDto = new PlayerDto(
                     resultSet.getLong("id"),
                     resultSet.getString("color"),
-                    resultSet.getString("pieces")
-            );
+                    resultSet.getString("pieces"));
+
+            mysqlConnector.closeConnection(connection, preparedStatement, resultSet);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        mysqlConnector.closeConnection(connection, preparedStatement, resultSet);
-        return null;
+        return playerDto;
     }
 }
