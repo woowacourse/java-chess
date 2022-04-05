@@ -1,32 +1,59 @@
-const gameStatusLocalStorage = 'gameStatus';
-
-localStorage.clear();
-
-// start button
-const startButton = document.querySelector('#command-button__start');
-startButton.addEventListener('click', () => {
-    if (localStorage.getItem(gameStatusLocalStorage) !== null) {
-        alert("기존 게임을 끝내고 시작해 주세요.");
-        return;
-    }
-    startRequest('start');
-});
-
-function startRequest(command) {
-    fetch(`http://localhost:8080/game/command/${command}`, {
+function commandRequest(command, actionAfterSuccess, mc) {
+    const url = makeUrlBy(command);
+    fetch(`http://localhost:8080/game/command/${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
         credentials: 'include',
     })
+        .then(errorHandling)
         .then(response => response.json())
-        .then(({game_status: gameStatus, pieces}) => {
-            saveGameStatus(gameStatus);
-            arrangePieces(pieces);
+        .then((response) => {
+            if (command === 'move') {
+                actionAfterSuccess(response, mc);
+                return;
+            }
+            actionAfterSuccess(response);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            alert(error.message);
+        });
 }
+
+function makeUrlBy(command) {
+    if (command === 'move') {
+        return `${command}?start=${moveCommand.start}&end=${moveCommand.end}`;
+    }
+    return command;
+}
+
+function errorHandling(res) {
+    if (!res.ok) {
+        return res.json().then(text => {
+            throw new Error(text.error_message)
+        });
+    }
+    return res;
+}
+
+// start button
+const startButton = document.querySelector('#command-button__start');
+startButton.addEventListener('click', () => {
+    commandRequest('start', (response) => startSuccess(response));
+});
+
+// end button
+const endButton = document.querySelector('#command-button__end');
+endButton.addEventListener('click', () => {
+    commandRequest('end', (response) => statusSuccess(response));
+});
+
+// status button
+const statusButton = document.querySelector('#command-button__status');
+statusButton.addEventListener('click', () => {
+    commandRequest('status', (response) => statusSuccess(response));
+});
 
 // move button
 const moveCommand = {
@@ -42,7 +69,9 @@ Array.from(spaces).map(space => {
             return;
         }
         moveCommand.end = id;
-        moveRequest('move', moveCommand);
+        commandRequest('move', (response, moveCommand) => {
+            moveSuccess(response, moveCommand);
+        }, {...moveCommand});
         initMoveCommand();
     });
 });
@@ -52,21 +81,21 @@ function initMoveCommand() {
     moveCommand.end = '';
 }
 
-function moveRequest(command, {start, end} = {start: '', end: ''}) {
+function moveSuccess({game_status: gameStatus, pieces}, {start, end}) {
+    movePieces(start, end);
+}
 
-    fetch(`http://localhost:8080/game/command/${command}?start=${start}&end=${end}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    })
-        .then(response => response.json())
-        .then(({game_status: gameStatus, pieces}) => {
-            saveGameStatus(gameStatus);
-            movePieces(start, end);
-        })
-        .catch(error => console.log(error));
+function startSuccess({game_status: gameStatus, pieces}) {
+    arrangePieces(pieces);
+}
+
+function statusSuccess(response) {
+    const {game_status: gameStatus, black_score: blackScore, white_score: whiteScore} = response;
+    alertScore(blackScore, whiteScore);
+}
+
+function alertScore(blackScore, whiteScore) {
+    alert(`black score: ${blackScore}, white score: ${whiteScore}`);
 }
 
 function movePieces(startPosition, endPosition) {
@@ -75,11 +104,6 @@ function movePieces(startPosition, endPosition) {
     document.getElementById(startPosition).firstChild.remove();
     document.getElementById(endPosition).firstChild?.remove();
     targetSpace.appendChild(piece);
-}
-
-
-function saveGameStatus(gameStatus) {
-    localStorage.setItem('gameStatus', gameStatus);
 }
 
 // start game
@@ -93,7 +117,6 @@ function startGame() {
         credentials: 'include',
     }).then(response => response.json())
         .then(({game_status: gameStatus, pieces}) => {
-            console.log(gameStatus);
             if (gameStatus !== 'ready') {
                 arrangePieces(pieces);
             }
@@ -110,33 +133,6 @@ function arrangePieces(pieces) {
 
 startGame();
 
-// status button
-const statusButton = document.querySelector('#command-button__status');
-statusButton.addEventListener('click', () => {
-    statusRequest('status');
-});
 
-function statusRequest(command) {
-    fetch(`http://localhost:8080/game/command/${command}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    })
-        .then(response => response.json())
-        .then(({game_status: gameStatus, black_score: blackScore, white_score: whiteScore}) => {
-            saveGameStatus(gameStatus);
-            alertScore(blackScore, whiteScore);
-        })
-        .catch(error => console.log(error));
-}
 
-function alertScore(blackScore, whiteScore) {
-    alert(`black score: ${blackScore}, white score: ${whiteScore}`);
-}
 
-const endButton = document.querySelector('#command-button__end');
-endButton.addEventListener('click', () => {
-    statusRequest('end');
-})

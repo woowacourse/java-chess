@@ -51,17 +51,23 @@ public class WebApplication {
             final Optional<String> endPosition = Optional.ofNullable(req.queryParams("end"));
             final String rawCommand = command + " " + startPosition.orElse("") + " " + endPosition.orElse("");
             final ParsedCommand parsedCommand = new ParsedCommand(rawCommand);
+
             final ChessController chess = new ChessController();
-            if (command.equals("start") || command.equals("move")) {
-                final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
-                return JsonParser.makePiecesToJsonArray(piecesDto);
+            try {
+                if (command.equals("start") || command.equals("move")) {
+                    final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
+                    return JsonParser.makePiecesToJsonArray(piecesDto);
+                }
+                final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
+                final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+                if (command.equals("end")) {
+                    chess.finishGame(userId);
+                }
+                return responseObject;
+            } catch (IllegalArgumentException exception) {
+                res.status(400);
+                return JsonParser.errorToJson(exception.getMessage());
             }
-            final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
-            final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
-            if (command.equals("end")) {
-                chess.finishGame(userId);
-            }
-            return responseObject;
         });
 
     }

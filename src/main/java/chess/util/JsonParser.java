@@ -34,4 +34,10 @@ public class JsonParser {
         return jsonObject;
     }
 
+    public static JSONObject errorToJson(final String message) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("error_message", message);
+        return jsonObject;
+    }
+
 }
