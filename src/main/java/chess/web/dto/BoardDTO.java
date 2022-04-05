@@ -14,12 +14,12 @@ public class BoardDTO {
         Map<Position, Piece> board = chessBoard.getBoard();
         for (Position position : board.keySet()) {
             Piece piece = board.get(position);
-            String symbol = calculateSymbol(piece);
+            String symbol = convertPieceSymbol(piece);
             result.put(position.toString(), symbol);
         }
     }
 
-    private String calculateSymbol(Piece piece) {
+    private String convertPieceSymbol(Piece piece) {
         String symbol = "";
         if (piece != null) {
             symbol = piece.getSymbolByTeam();

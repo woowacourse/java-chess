@@ -1,9 +1,9 @@
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
-import chess.domain.dao.ChessGame;
-import chess.domain.dao.ChessGameDAO;
-import chess.domain.dao.Movement;
-import chess.domain.dao.MovementDAO;
+import chess.web.dao.ChessGame;
+import chess.web.dao.ChessGameDAO;
+import chess.web.dao.Movement;
+import chess.web.dao.MovementDAO;
 import chess.web.dto.BoardDTO;
 import chess.domain.position.Position;
 import chess.web.dto.ChessGameDTO;
