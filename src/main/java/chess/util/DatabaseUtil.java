@@ -2,8 +2,6 @@ package chess.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.StringJoiner;
@@ -14,6 +12,11 @@ public class DatabaseUtil {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private static final String PARAMETER_FORMAT = "?";
+    private static final String PARAMETER_GROUP_DELIMITER = ", ";
+    private static final String PARAMETER_GROUP_FORMAT = "(%s)";
+    private static final String CONNECTION_FAILED_EXCEPTION_MESSAGE = "데이터베이스 접속에 실패하였습니다.";
+
     private DatabaseUtil() {
     }
 
@@ -21,38 +24,12 @@ public class DatabaseUtil {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new IllegalStateException("데이터베이스 접속에 실패하였습니다.");
-        }
-    }
-
-    public static ResultSet getQueryResult(String sql, Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql);
-        return statement.executeQuery();
-    }
-
-    public static void executeCommand(String sql) {
-        try (final Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 변경 작업에 실패하였습니다.");
-        }
-    }
-
-    public static int getCountResult(String sql) {
-        try (final Connection connection = getConnection()) {
-            final ResultSet resultSet = getQueryResult(sql, connection);
-            resultSet.next();
-            return resultSet.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 계산 작업에 실패하였습니다.");
+            throw new IllegalStateException(CONNECTION_FAILED_EXCEPTION_MESSAGE);
         }
     }
 
     public static <T> String parameterGroupsOf(List<T> group, int size) {
-        StringJoiner joiner = new StringJoiner(", ");
+        StringJoiner joiner = new StringJoiner(PARAMETER_GROUP_DELIMITER);
         for (int i = 0; i < group.size(); i++) {
             joiner.add(parameterGroupOf(size));
         }
@@ -60,10 +37,10 @@ public class DatabaseUtil {
     }
 
     public static String parameterGroupOf(int size) {
-        StringJoiner joiner = new StringJoiner(", ");
+        StringJoiner joiner = new StringJoiner(PARAMETER_GROUP_DELIMITER);
         for (int i = 0; i < size; i++) {
-            joiner.add("?");
+            joiner.add(PARAMETER_FORMAT);
         }
-        return "(" + joiner + ")";
+        return String.format(PARAMETER_GROUP_FORMAT, joiner);
     }
 }

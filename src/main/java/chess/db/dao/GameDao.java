@@ -2,10 +2,6 @@ package chess.db.dao;
 
 import chess.db.entity.GameEntity;
 import chess.domain.game.GameState;
-import chess.util.DatabaseUtil;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class GameDao {
 
@@ -19,19 +15,15 @@ public class GameDao {
     }
 
     public GameEntity findById(int gameId) {
-        final String sql = "SELECT id, state FROM " + table + " WHERE id = " + gameId;
+        final String sql = String.format("SELECT id, state FROM %s WHERE id = ?", table);
 
-        try (final Connection connection = DatabaseUtil.getConnection()) {
-            final ResultSet resultSet = DatabaseUtil.getQueryResult(sql, connection);
-            if (!resultSet.next()) {
-                throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION);
-            }
-            String state = resultSet.getString(2);
-            return new GameEntity(gameId, GameState.valueOf(state));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 조회 작업에 실패하였습니다.");
+        final QueryReader reader = new QueryBuilder(sql).setInt(gameId)
+                .execute();
+        if (!reader.nextRow()) {
+            throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION);
         }
+        String state = reader.readStringAndClose("state");
+        return new GameEntity(gameId, GameState.valueOf(state));
     }
 
     public void save(GameEntity gameEntity) {
@@ -59,18 +51,27 @@ public class GameDao {
     }
 
     public boolean checkById(int gameId) {
-        final String sql = "SELECT COUNT(*) FROM " + table + " WHERE id = " + gameId;
-        return DatabaseUtil.getCountResult(sql) > 0;
+        final String sql = String.format("SELECT COUNT(*) FROM %s WHERE id = ?", table);
+
+        int existingGameCount = new QueryBuilder(sql).setInt(gameId)
+                .execute()
+                .readCountResultAndClose();
+
+        return existingGameCount > 0;
     }
 
     public int countAll() {
         final String sql = "SELECT COUNT(*) FROM " + table;
-        return DatabaseUtil.getCountResult(sql);
+
+        return new QueryBuilder(sql).execute()
+                .readCountResultAndClose();
     }
 
     public int countByState(GameState state) {
-        final String sql = "SELECT COUNT(*) FROM " + table +
-                " WHERE state = '" + state + "'";
-        return DatabaseUtil.getCountResult(sql);
+        final String sql = String.format("SELECT COUNT(*) FROM %s WHERE state = ?", table);
+
+        return new QueryBuilder(sql).setString(state)
+                .execute()
+                .readCountResultAndClose();
     }
 }

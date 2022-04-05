@@ -18,11 +18,11 @@ class GameDaoTest {
 
     private static final String TEST_TABLE_NAME = "game_test";
     private static final List<String> SETUP_TEST_DB_SQL = List.of(
-            "INSERT INTO " + TEST_TABLE_NAME + " (id, state) VALUES (1, 'WHITE_TURN')",
-            "INSERT INTO " + TEST_TABLE_NAME + " (id, state) VALUES (2, 'BLACK_TURN')",
-            "INSERT INTO " + TEST_TABLE_NAME + " (id, state) VALUES (3, 'OVER')");
+            String.format("INSERT INTO %s (id, state) VALUES (1, 'WHITE_TURN')", TEST_TABLE_NAME),
+            String.format("INSERT INTO %s (id, state) VALUES (2, 'BLACK_TURN')", TEST_TABLE_NAME),
+            String.format("INSERT INTO %s (id, state) VALUES (3, 'OVER')", TEST_TABLE_NAME));
 
-    private static final String CLEANSE_TEST_DB_SQL = "TRUNCATE TABLE " + TEST_TABLE_NAME;
+    private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE_NAME);
 
     private final GameDao dao = new GameDao(TEST_TABLE_NAME);
 

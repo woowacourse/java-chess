@@ -5,10 +5,6 @@ import static chess.util.DatabaseUtil.parameterGroupsOf;
 
 import chess.db.entity.PieceEntity;
 import chess.domain.board.position.Position;
-import chess.util.DatabaseUtil;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,23 +17,22 @@ public class PieceDao {
     }
 
     public List<PieceEntity> findAllByGameId(int gameId) {
-        final String sql = "SELECT position, type, color FROM " + table
-                + " WHERE game_id = " + gameId;
-        try (final Connection connection = DatabaseUtil.getConnection()) {
-            return toEntities(DatabaseUtil.getQueryResult(sql, connection));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 조회 작업에 실패하였습니다.");
-        }
+        final String sql = String.format("SELECT position, type, color FROM %s WHERE game_id = ?", table);
+        final QueryReader reader = new QueryBuilder(sql).setInt(gameId)
+                .execute();
+
+        List<PieceEntity> pieces = initPieceEntities(reader);
+        reader.close();
+        return pieces;
     }
 
-    private List<PieceEntity> toEntities(ResultSet resultSet) throws SQLException {
+    private List<PieceEntity> initPieceEntities(QueryReader reader) {
         List<PieceEntity> pieces = new ArrayList<>();
-        while (resultSet.next()) {
+        while (reader.nextRow()) {
             pieces.add(new PieceEntity(
-                    resultSet.getString("position"),
-                    resultSet.getString("type"),
-                    resultSet.getString("color")
+                    reader.readStringAt("position"),
+                    reader.readStringAt("type"),
+                    reader.readStringAt("color")
             ));
         }
         return pieces;

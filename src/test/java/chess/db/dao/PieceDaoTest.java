@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.db.entity.PieceEntity;
 import chess.domain.board.position.Position;
-import chess.util.DatabaseUtil;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -18,8 +18,9 @@ import org.junit.jupiter.api.Test;
 public class PieceDaoTest {
 
     private static final String TEST_TABLE_NAME = "piece_test";
-    private static final String TEST_FIXTURE_INSERT_SQL = "INSERT INTO "
-            + TEST_TABLE_NAME + " (game_id, position, type, color) VALUES ";
+    private static final String TEST_FIXTURE_INSERT_SQL = String.format(
+            "INSERT INTO %s (game_id, position, type, color) VALUES ", TEST_TABLE_NAME);
+
     private static final List<String> SETUP_TEST_DB_SQL = List.of(
             TEST_FIXTURE_INSERT_SQL + "(1, 'a1', 'PAWN', 'WHITE')",
             TEST_FIXTURE_INSERT_SQL + "(1, 'c3', 'KNIGHT', 'BLACK')",
@@ -28,7 +29,7 @@ public class PieceDaoTest {
             TEST_FIXTURE_INSERT_SQL + "(10, 'c3', 'KNIGHT', 'BLACK')",
             TEST_FIXTURE_INSERT_SQL + "(10, 'e3', 'QUEEN', 'BLACK')");
 
-    private static final String CLEANSE_TEST_DB_SQL = "TRUNCATE TABLE " + TEST_TABLE_NAME;
+    private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE_NAME);
 
     private final PieceDao dao = new PieceDao(TEST_TABLE_NAME);
 
@@ -80,8 +81,7 @@ public class PieceDaoTest {
                 new PieceEntity("a1", "PAWN", "WHITE"),
                 new PieceEntity("c3", "QUEEN", "BLACK")));
 
-        int createdDataCount = DatabaseUtil.getCountResult(
-                "SELECT COUNT(*) FROM " + TEST_TABLE_NAME + " WHERE game_id = 2");
+        int createdDataCount = getCountResult("SELECT COUNT(*) FROM " + TEST_TABLE_NAME + " WHERE game_id = 2");
 
         assertThat(createdDataCount).isEqualTo(2);
     }
@@ -91,8 +91,7 @@ public class PieceDaoTest {
         dao.deleteAllByGameIdAndPositions(10,
                 List.of(Position.of("a1"), Position.of("c3")));
 
-        int dataLeftCount = DatabaseUtil.getCountResult(
-                "SELECT COUNT(*) FROM " + TEST_TABLE_NAME + " WHERE game_id = 10");
+        int dataLeftCount = getCountResult("SELECT COUNT(*) FROM " + TEST_TABLE_NAME + " WHERE game_id = 10");
 
         assertThat(dataLeftCount).isEqualTo(3 - 2);
     }
@@ -102,5 +101,17 @@ public class PieceDaoTest {
         assertThatNoException().isThrownBy(() -> dao.deleteAllByGameIdAndPositions(
                 1, List.of(Position.of("f3"), Position.of("f8")))
         );
+    }
+
+    private static int getCountResult(String sql) {
+        try (final Connection connection = getConnection()) {
+            final ResultSet resultSet = connection.prepareStatement(sql)
+                    .executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("데이터 계산 작업에 실패하였습니다.");
+        }
     }
 }
