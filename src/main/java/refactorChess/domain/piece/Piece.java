@@ -1,6 +1,5 @@
 package refactorChess.domain.piece;
 
-import chess.domain.piece.attribute.Color;
 import java.util.List;
 import refactorChess.domain.board.Direction;
 import refactorChess.domain.board.Position;

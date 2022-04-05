@@ -22,6 +22,10 @@ public class Status {
         return blackScore;
     }
 
+    public PieceColor getWinnerColor() {
+        return winnerColor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
