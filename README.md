@@ -20,7 +20,7 @@
 - 체스판 출력 : get : `/chess`
 - 기물 위치 이동 : post : `/chess/move` - body : from = 움직일 기물 위치, to = 목표 위치
 - 현재 점수 출력 : get : `/chess/status`
-- 게임 종료(서버 종료) : `/chess/end`
+- 보드판 초기화 : `/chess/reset`
 
 ### 콘솔 UI 기능 요구 사항(Application)
 ```text
