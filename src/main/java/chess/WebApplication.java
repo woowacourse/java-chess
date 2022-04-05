@@ -51,6 +51,10 @@ public class WebApplication {
                     "move" + " " + req.queryParams("source") + " " + req.queryParams("target"));
                 chessGame.move(Position.of(request.getSource()), Position.of(request.getTarget()));
                 model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+                if (chessGame.isFinished()) {
+                    return finish(chessGame, model);
+                }
+
                 return render(model, "game.html");
 
             } catch (RuntimeException e) {
@@ -59,6 +63,11 @@ public class WebApplication {
                 return render(model, "game.html");
             }
         });
+    }
+
+    private static String finish(ChessGame chessGame, Map<String, Object> model) {
+        model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+        return render(model, "finish.html");
     }
 
     private static Map<String, String> StringPieceMapByPiecesByPositions(ChessGame chessGame) {
