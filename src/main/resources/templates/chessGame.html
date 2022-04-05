@@ -14,6 +14,22 @@
 
 <p>턴 : {{turn}}</p>
 
+<p>{{error}}</p>
+
+<p>{{result}}</p>
+
+<br>
+move a2(움직일 말) a3(이동 위치) 형식으로 입력해주세요.
+<br>
+
+<form action="/command" method="post">
+    <input type="text" name="command">
+    <input type="submit" value="커멘드 입력"/>
+</form>
+<form action="/end" method="post">
+    <input type="submit" name="end" value="end">
+</form>
+
 <table>
     <tbody>
     <tr>
@@ -116,21 +132,5 @@
     </tr>
     </tbody>
 </table>
-
-<p>{{error}}</p>
-
-<p>{{result}}</p>
-
-<br>
-커멘드
-<br>
-
-<form action="/command" method="post">
-    <input type="text" name="command">
-    <input type="submit" value="커멘드 입력"/>
-</form>
-<form action="/end" method="post">
-    <input type="submit" name="end" value="end">
-</form>
 </body>
 </html>
