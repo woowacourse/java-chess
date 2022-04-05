@@ -1,8 +1,10 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.controller.dto.ErrorResponse;
 import chess.controller.dto.StatusResponse;
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.request.PromotionRequest;
@@ -85,6 +87,21 @@ public class ChessGameController {
         get("/status", "application/json", (req, res) -> {
             res.type("application/json");
             return gson.toJson(TurnResponse.from(chessGameService.findCurrentTurn()));
+        });
+
+        exception(IllegalArgumentException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(gson.toJson(ErrorResponse.from(exception)));
+        });
+
+        exception(IllegalStateException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(gson.toJson(ErrorResponse.from(exception)));
+        });
+
+        exception(NullPointerException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(gson.toJson(ErrorResponse.from(exception)));
         });
     }
 
