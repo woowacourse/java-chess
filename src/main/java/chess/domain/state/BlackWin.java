@@ -10,6 +10,11 @@ public class BlackWin extends Finished {
     }
 
     @Override
+    public StateType getStateType() {
+        return StateType.BLACK_WIN;
+    }
+
+    @Override
     public Result winner() {
         return Result.BLACK;
     }

@@ -15,6 +15,8 @@ public interface State {
 
     boolean isFinished();
 
+    StateType getStateType();
+
     Result winner();
 
     ChessBoard chessBoard();

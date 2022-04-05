@@ -23,4 +23,9 @@ public class WhiteTurn extends Running {
 
         return new BlackTurn(chessBoard);
     }
+
+    @Override
+    public StateType getStateType() {
+        return StateType.WHITE_TURN;
+    }
 }

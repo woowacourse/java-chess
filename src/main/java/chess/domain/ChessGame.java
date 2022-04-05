@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.state.State;
+import chess.domain.state.StateType;
 
 public class ChessGame {
 
@@ -20,6 +21,10 @@ public class ChessGame {
 
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public StateType getStateType() {
+        return state.getStateType();
     }
 
     public double score(Color color) {

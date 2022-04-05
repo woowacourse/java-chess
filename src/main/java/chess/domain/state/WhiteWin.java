@@ -10,6 +10,11 @@ public class WhiteWin extends Finished {
     }
 
     @Override
+    public StateType getStateType() {
+        return StateType.WHITE_WIN;
+    }
+
+    @Override
     public Result winner() {
         return Result.WHITE;
     }

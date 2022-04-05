@@ -36,6 +36,11 @@ public class Ready extends Started {
     }
 
     @Override
+    public StateType getStateType() {
+        return StateType.READY;
+    }
+
+    @Override
     public Result winner() {
         throw new UnsupportedOperationException();
     }

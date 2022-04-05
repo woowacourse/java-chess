@@ -11,6 +11,11 @@ public class End extends Finished {
     }
 
     @Override
+    public StateType getStateType() {
+        return StateType.END;
+    }
+
+    @Override
     public Result winner() {
         double whiteScore = chessBoard.calculateScore(Color.WHITE);
         double blackScore = chessBoard.calculateScore(Color.BLACK);

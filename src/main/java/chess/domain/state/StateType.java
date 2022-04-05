@@ -4,7 +4,7 @@ import chess.domain.ChessBoard;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum StateGenerator {
+public enum StateType {
 
     READY("ready", chessBoard -> new Ready()),
     WHITE_TURN("white turn", chessBoard -> new WhiteTurn(chessBoard)),
@@ -16,12 +16,12 @@ public enum StateGenerator {
     private final String value;
     private final Function<ChessBoard, State> function;
 
-    StateGenerator(String value, Function<ChessBoard, State> function) {
+    StateType(String value, Function<ChessBoard, State> function) {
         this.value = value;
         this.function = function;
     }
 
-    public static StateGenerator of(String value) {
+    public static StateType of(String value) {
         return Arrays.stream(values())
                 .filter(stateGenerator -> stateGenerator.getValue().equals(value))
                 .findFirst()
