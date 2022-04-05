@@ -33,4 +33,11 @@ class NeoBoardDaoTest {
         BoardInitializer boardInitializer = new BoardInitializer();
         dao.init(new NeoBoard("에덴파이팅"), boardInitializer.initialize());
     }
+
+    @Test
+    void deleteBoard() {
+        final int boardId = 26;
+        int affectedRow = dao.deleteById(boardId);
+        assertThat(affectedRow).isEqualTo(1);
+    }
 }

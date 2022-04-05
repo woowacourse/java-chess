@@ -23,17 +23,17 @@ class NeoPositionDaoTest {
 
     @Test
     void findByColumnAndRowAndBoardId() {
-        NeoPosition neoPosition = dao.findByColumnAndRowAndBoardId(Column.A, Row.TWO, 15);
+        NeoPosition neoPosition = dao.findByColumnAndRowAndBoardId(Column.A, Row.TWO, 26);
         assertAll(
                 () -> assertThat(neoPosition.getColumn().value()).isEqualTo(1),
                 () -> assertThat(neoPosition.getRow().value()).isEqualTo(2),
-                () -> assertThat(neoPosition.getId()).isEqualTo(71)
+                () -> assertThat(neoPosition.getId()).isEqualTo(2)
         );
     }
 
     @Test
     void findAllPositionsAndPieces() {
-        final int boardId = 15;
+        final int boardId = 26;
         Map<NeoPosition, NeoPiece> all = dao.findAllPositionsAndPieces(boardId);
         assertThat(all.size()).isEqualTo(32);
     }

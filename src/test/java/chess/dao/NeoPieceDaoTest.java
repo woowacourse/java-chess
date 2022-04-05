@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.pieces.Bishop;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.NeoPiece;
 import chess.domain.pieces.Pawn;
@@ -15,30 +14,30 @@ class NeoPieceDaoTest {
 
     @Test
     void saveTest() {
-        dao.save(new NeoPiece(new Pawn(), Color.WHITE, 117));
+        dao.save(new NeoPiece(new Pawn(), Color.WHITE, 1));
     }
 
     @Test
     void findByPositionId() {
-        NeoPiece neoPiece = dao.findByPositionId(117);
+        NeoPiece neoPiece = dao.findByPositionId(26);
         assertAll(
-                () -> assertThat(neoPiece.getId()).isEqualTo(67),
-                () -> assertThat(neoPiece.getType()).isInstanceOf(Bishop.class),
-                () -> assertThat(neoPiece.getColor()).isEqualTo(Color.BLACK)
+                () -> assertThat(neoPiece.getId()).isEqualTo(3),
+                () -> assertThat(neoPiece.getType()).isInstanceOf(Pawn.class),
+                () -> assertThat(neoPiece.getColor()).isEqualTo(Color.WHITE)
         );
     }
 
     @Test
     void updatePiecePositionId() {
-        final int sourcePositionId = 71;
-        final int targetPosition = 73;
+        final int sourcePositionId = 2;
+        final int targetPosition = 4;
         NeoPiece neoPiece = dao.updatePiecePositionId(sourcePositionId, targetPosition);
         assertThat(neoPiece.getType()).isInstanceOf(Pawn.class);
     }
 
     @Test
     void deletePieceByPositionId() {
-        final int positionId = 71;
+        final int positionId = 2;
         int affectedRows = dao.deletePieceByPositionId(positionId);
         assertThat(affectedRows).isEqualTo(1);
     }

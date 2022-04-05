@@ -86,4 +86,19 @@ public class NeoBoardDao {
         }
         connectionManager.close(connection);
     }
+
+    public int deleteById(int boardId) {
+        final Connection connection = connectionManager.getConnection();
+        final String sql = "delete from neo_board where id=?";
+        final PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, boardId);
+            final int affectedRow = preparedStatement.executeUpdate();
+            connectionManager.close(connection);
+            return affectedRow;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("그런 보드 없습니다.");
+        }
+    }
 }
