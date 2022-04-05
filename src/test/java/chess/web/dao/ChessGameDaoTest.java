@@ -15,11 +15,8 @@ class ChessGameDaoTest {
     @DisplayName("커넥션 테스트")
     @Test
     public void connection() {
-        //given
-        ChessGameDao chessGameDao = new ChessGameDao();
-
-        //when
-        Connection connection = chessGameDao.getConnection();
+        //given & when
+        Connection connection = DBConnector.getConnection();
 
         //then
         assertThat(connection).isNotNull();
