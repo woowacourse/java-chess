@@ -1,9 +1,10 @@
 package chess.controller;
 
+import chess.domain.piece.ChessPiece;
 import chess.service.ChessService;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -23,24 +24,24 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
-        post("/start", (req, res) -> {
+        get("/play", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", chessService.start());
+            model.put("board", chessService.getCurrentBoard());
             return render(model, "game.html");
+        });
+
+        post("/start", (req, res) -> {
+            chessService.start();
+            res.redirect("/play");
+            return null;
         });
 
         post("/move", (req, res) -> {
-            JSONObject request = (JSONObject) jsonParser(req);
-
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", chessService.move(request.get("source").toString(), request.get("target").toString()));
-            return render(model, "game.html");
+            Gson gson = new GsonBuilder().create();
+            JsonObject request = gson.fromJson(req.body(), JsonObject.class);
+            Map<String, ChessPiece> result = chessService.move(request.get("source").getAsString(), request.get("target").getAsString());
+            return gson.toJson(result);
         });
-    }
-
-    private Object jsonParser(Request req) throws ParseException {
-        JSONParser jsonParser = new JSONParser();
-        return jsonParser.parse(req.body());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

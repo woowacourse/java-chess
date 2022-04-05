@@ -194,4 +194,7 @@ public class ChessBoard {
         gameStatus = GameStatus.PLAYING;
     }
 
+    public Map<Position, ChessPiece> getChessBoard() {
+        return chessBoard;
+    }
 }

@@ -10,7 +10,7 @@ function selectBlock(id) {
     move(source, target)
 }
 
-function move(source, target) {
+function move (source, target) {
     const request = {
         source: source.id,
         target: target.id
@@ -25,7 +25,9 @@ function move(source, target) {
             'Accept': 'application/json',
         },
         body: JSON.stringify(request)
-    }).then();
+    }).then(response => response.json());
+
+    location.reload();
 }
 
 function reinitialize(){

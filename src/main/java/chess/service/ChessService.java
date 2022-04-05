@@ -12,13 +12,12 @@ public class ChessService {
 
     private ChessBoard chessBoard = null;
 
-    public Map<String, ChessPiece> start(){
+    public void start(){
         chessBoard = ChessBoardFactory.initBoard();
         chessBoard.start();
-        return getCurrentBoard();
     }
 
-    private Map<String, ChessPiece> getCurrentBoard() {
+    public Map<String, ChessPiece> getCurrentBoard() {
         return chessBoard.convertToMap();
     }
 
