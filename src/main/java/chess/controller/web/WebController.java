@@ -21,11 +21,7 @@ public class WebController {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final BoardDao boardDao = new BoardDao();
-    private ChessGame chessGame = new ChessGame(
-            BoardFactory.generateChessBoard(),
-            new GameSwitch(true),
-            new Turn(Team.WHITE)
-    );
+    private ChessGame chessGame = chessGameDao.load(boardDao.load());
 
     public void run() {
         staticFileLocation("/static");
