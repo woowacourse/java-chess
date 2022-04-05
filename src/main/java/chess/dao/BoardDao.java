@@ -29,15 +29,23 @@ public class BoardDao {
         return connection;
     }
 
-    public void initBoard() {
+    public int initBoard() {
         final Connection connection = getConnection();
         final ScriptRunner scriptRunner = new ScriptRunner(connection);
         final String filePath = System.getProperty("user.dir") + INIT_BOARD_FILE_PATH;
+        final String sql = "SELECT id FROM board ORDER BY id DESC LIMIT 1";
         try (Reader reader = new BufferedReader(new FileReader(filePath))) {
             scriptRunner.runScript(reader);
-        } catch (IOException e) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return -1;
+            }
+            return resultSet.getInt("id");
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     public GameState getGameStatus(final int boardId) {

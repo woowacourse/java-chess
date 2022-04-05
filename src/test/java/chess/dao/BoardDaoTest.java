@@ -23,7 +23,8 @@ class BoardDaoTest {
     @DisplayName("보드 초기화를 수행한다.")
     void init_Board() {
         final BoardDao boardDao = new BoardDao();
-        assertThatNoException().isThrownBy(boardDao::initBoard);
+        final int boardId = boardDao.initBoard();
+        assertThat(boardId).isGreaterThan(1);
     }
 
     @Test
