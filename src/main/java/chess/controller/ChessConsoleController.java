@@ -1,7 +1,10 @@
 package chess.controller;
 
 import chess.domain.Command;
+import chess.domain.board.BasicBoardFactory;
+import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.Ready;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
 import chess.dto.console.BoardResponseDto;
@@ -17,7 +20,7 @@ public class ChessConsoleController {
 
     public void run() {
         OutputView.printStartMessage();
-        final ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame(new Ready(), new Board(new BasicBoardFactory()));
         do {
             runTurn(chessGame);
         } while (chessGame.isNotEnded());

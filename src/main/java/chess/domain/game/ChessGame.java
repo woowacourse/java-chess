@@ -1,8 +1,6 @@
 package chess.domain.game;
 
-import chess.domain.board.BasicBoardFactory;
 import chess.domain.board.Board;
-import chess.domain.game.state.Ready;
 import chess.domain.game.state.State;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -10,22 +8,12 @@ import chess.domain.result.Score;
 
 public class ChessGame {
 
+    private final Board board;
     private State state;
-    private Board board;
 
     public ChessGame(final State state, final Board board) {
-        this.state = state;
         this.board = board;
-    }
-
-    public ChessGame() {
-        this.board = new Board(new BasicBoardFactory());
-        this.state = new Ready(board);
-    }
-
-    public void initialize() {
-        board = new Board(new BasicBoardFactory());
-        state = new Ready(board);
+        this.state = state;
     }
 
     public void start() {
@@ -37,7 +25,7 @@ public class ChessGame {
     }
 
     public void move(final Position from, final Position to) {
-        state = state.move(from, to);
+        state = state.move(board, from, to);
     }
 
     public void status() {

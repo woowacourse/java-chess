@@ -18,7 +18,7 @@ class StartedTest {
     @BeforeEach
     void setUp() {
         Board board = new Board(new BasicBoardFactory());
-        started = new Started(Color.WHITE, board);
+        started = new Started(Color.WHITE);
     }
 
     @Test
@@ -35,25 +35,27 @@ class StartedTest {
 
     @Test
     void move() {
+        Board board = new Board(new BasicBoardFactory());
         Position from = Position.from("b2");
         Position to = Position.from("b3");
 
-        assertThat(started.move(from, to)).isInstanceOf(Started.class);
+        assertThat(started.move(board, from, to)).isInstanceOf(Started.class);
     }
 
     @Test
     @DisplayName("Started 상태에서 체크메이트를 한 경우 Ended 상태가 된다.")
     void moveCheckmate() {
-        started = started.move(Position.from("a2"), Position.from("a4"));
-        started = started.move(Position.from("e7"), Position.from("e5"));
-        started = started.move(Position.from("a4"), Position.from("a5"));
-        started = started.move(Position.from("e5"), Position.from("e4"));
-        started = started.move(Position.from("a1"), Position.from("a4"));
-        started = started.move(Position.from("e4"), Position.from("e3"));
-        started = started.move(Position.from("a4"), Position.from("e4"));
-        started = started.move(Position.from("h7"), Position.from("h5"));
+        Board board = new Board(new BasicBoardFactory());
+        started = started.move(board, Position.from("a2"), Position.from("a4"));
+        started = started.move(board, Position.from("e7"), Position.from("e5"));
+        started = started.move(board, Position.from("a4"), Position.from("a5"));
+        started = started.move(board, Position.from("e5"), Position.from("e4"));
+        started = started.move(board, Position.from("a1"), Position.from("a4"));
+        started = started.move(board, Position.from("e4"), Position.from("e3"));
+        started = started.move(board, Position.from("a4"), Position.from("e4"));
+        started = started.move(board, Position.from("h7"), Position.from("h5"));
 
-        assertThat(started.move(Position.from("e4"), Position.from("e8")))
+        assertThat(started.move(board, Position.from("e4"), Position.from("e8")))
                 .isInstanceOf(Ended.class);
     }
 

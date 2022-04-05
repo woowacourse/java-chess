@@ -6,15 +6,9 @@ import chess.domain.position.Position;
 
 public class Ended implements State {
 
-    private final Board board;
-
-    public Ended(final Board board) {
-        this.board = board;
-    }
-
     @Override
     public State start() {
-        return new Started(Color.WHITE, board); // 수정 필요
+        return new Started(Color.WHITE);
     }
 
     @Override
@@ -23,7 +17,7 @@ public class Ended implements State {
     }
 
     @Override
-    public State move(final Position from, final Position to) {
+    public State move(final Board board, final Position from, final Position to) {
         throw new IllegalStateException("[ERROR] 게임이 끝나 move 할 수 없습니다.");
     }
 

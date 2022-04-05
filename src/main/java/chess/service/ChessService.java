@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.domain.board.BasicBoardFactory;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Ended;
@@ -40,16 +41,18 @@ public class ChessService {
 
     private State createState(final String state, final String turn, final Board board) {
         if (Objects.equals(state, "Ready")) {
-            return new Ready(board);
+            return new Ready();
         }
         if (Objects.equals(state, "Started")) {
-            return new Started(Color.from(turn), board);
+            return new Started(Color.from(turn));
         }
-        return new Ended(board);
+        return new Ended();
     }
 
-    public ChessGame start(final ChessGame chessGame) {
-        initializeChessGame(chessGame);
+    public ChessGame start(ChessGame chessGame) {
+        if (!chessGame.isNotEnded()) {
+            chessGame = new ChessGame(new Ready(), new Board(new BasicBoardFactory()));
+        }
 
         chessGame.start();
 
@@ -57,12 +60,6 @@ public class ChessService {
         final Integer id = gameDao.findMaxId();
         boardDao.save(BoardDto.of(id, chessGame.getBoard()));
         return chessGame;
-    }
-
-    private void initializeChessGame(final ChessGame chessGame) {
-        if (!chessGame.isNotEnded()) {
-            chessGame.initialize();
-        }
     }
 
     public ChessGame end(final ChessGame chessGame) {
@@ -95,7 +92,7 @@ public class ChessService {
     }
 
     public ChessResponseDto createErrorChessResponseDto(final String message) {
-        return new ChessResponseDto("error", message, new ChessGame());
+        return new ChessResponseDto("error", message, new ChessGame(new Ready(), new Board(new BasicBoardFactory())));
     }
 
     public StatusResponseDto createStatusResponseDto(final ChessGame chessGame) {
@@ -106,6 +103,6 @@ public class ChessService {
     }
 
     public StatusResponseDto creatErrorStatusResponseDto(final String message) {
-        return new StatusResponseDto("error", message, new ChessGame());
+        return new StatusResponseDto("error", message, new ChessGame(new Ready(), new Board(new BasicBoardFactory())));
     }
 }

@@ -6,24 +6,18 @@ import chess.domain.position.Position;
 
 public class Ready implements State {
 
-    private final Board board;
-
-    public Ready(final Board board) {
-        this.board = board;
-    }
-
     @Override
     public State start() {
-        return new Started(Color.WHITE, board);
+        return new Started(Color.WHITE);
     }
 
     @Override
     public State end() {
-        return new Ended(board);
+        return new Ended();
     }
 
     @Override
-    public State move(final Position from, final Position to) {
+    public State move(final Board board, final Position from, final Position to) {
         throw new IllegalStateException("[ERROR] start를 하지 않아 move 할 수 없습니다.");
     }
 

@@ -15,7 +15,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUp() {
-        ready = new Ready(new Board(new BasicBoardFactory()));
+        ready = new Ready();
     }
 
     @Test
@@ -30,9 +30,10 @@ class ReadyTest {
 
     @Test
     void move() {
+        Board board = new Board(new BasicBoardFactory());
         Position from = Position.from("b2");
         Position to = Position.from("b3");
-        assertThatThrownBy(() -> ready.move(from, to))
+        assertThatThrownBy(() -> ready.move(board, from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] start를 하지 않아 move 할 수 없습니다.");
     }
