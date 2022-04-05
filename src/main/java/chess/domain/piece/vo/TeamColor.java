@@ -3,6 +3,7 @@ package chess.domain.piece.vo;
 public enum TeamColor {
     WHITE(),
     BLACK(),
+    EMPTY()
     ;
 
     public boolean isBlack() {

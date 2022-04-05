@@ -6,8 +6,10 @@ create table piece
     primary key (position)
 );
 
-create table currentTurnTeamColor
+create table teamColor
 (
-    teamColor varchar(10) not null,
+    currentTurn varchar(10) not null,
     primary key (teamColor)
 );
+
+insert into teamColor (currentTurn) values 'WHITE';
