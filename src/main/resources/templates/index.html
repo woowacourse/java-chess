@@ -25,24 +25,18 @@
     </table>
     <br/>
     <form action="/status" method="get">
-        <button>점수</button>
+        <button>진행 상황 출력</button>
     </form>
-
-    <div class="score">
-        {{#each score}}
+    <div class="result">
+        {{#each result}}
         <h1> {{@key}} : {{this}} </h1>
         {{/each}}
     </div>
 
-    <form action="/end" method="get">
-        <button> 게임종료</button>
+    <form action="/restart" method="get">
+        <button> 게임 재시작 </button>
     </form>
 </div>
-
-<form enctype="text/plain" name="moveform" action="/move" method="post"><br>
-    명령 : <input type="text" name="command" size="12">
-    <input type="submit" value="제출">
-</form>
 
 </body>
 </html>

@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.game.Game;
 import chess.piece.detail.Color;
+import chess.view.Command;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,5 +15,9 @@ public class GameController {
             return game.run(splitInput.get(0), splitInput);
         }
         return null;
+    }
+
+    public void restart(final Game game) {
+
     }
 }

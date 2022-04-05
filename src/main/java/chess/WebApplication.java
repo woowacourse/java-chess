@@ -7,12 +7,15 @@ import chess.dto.BoardDto;
 import chess.dto.ResponseDto;
 import chess.dto.ResultDto;
 import chess.game.Game;
+import chess.piece.detail.Color;
 import chess.status.Ready;
 import chess.status.State;
 import chess.view.Command;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WebApplication {
@@ -21,7 +24,7 @@ public class WebApplication {
         final Game game = new Game(ready());
         final GameController controller = new GameController();
 
-        get("/", (req, res) -> {
+        get("/start", (req, res) -> {
             final BoardDto boardDto = BoardDto.toDto(game.getBoard());
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardDto);
@@ -34,12 +37,25 @@ public class WebApplication {
             return responseDto.toString();
         });
 
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            final Map<Color, Double> result = game.getResult();
+            model.put("result", result);
+            return render(model, "index.html");
+        });
+
         get("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             final ResultDto result = new ResultDto(game.getResult(), game.getWinColor());
             model.put("result", result);
 
             return render(model, "result.html");
+        });
+
+        get("/restart", (req, res) -> {
+            game.restart();
+            res.redirect("/start");
+            return null;
         });
     }
 

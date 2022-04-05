@@ -4,6 +4,7 @@ import static chess.game.MoveCommand.FROM_POSITION_INDEX;
 import static chess.game.MoveCommand.TO_POSITION_INDEX;
 
 import chess.piece.detail.Color;
+import chess.status.Ready;
 import chess.status.State;
 import chess.view.Command;
 import java.util.Collections;
@@ -51,6 +52,15 @@ public class Game {
             state = state.turn(Command.END);
         }
         return Collections.emptyMap();
+    }
+
+    public void restart() {
+        state = Ready.start(Command.START);
+    }
+
+    public void end(final String input) {
+        final Command command = Command.of(input);
+        state.turn(command);
     }
 
     private void validate(final Command command, final List<String> input) {
