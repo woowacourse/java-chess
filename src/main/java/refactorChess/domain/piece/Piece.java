@@ -70,6 +70,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract boolean isPawn();
+
     @Override
     public String toString() {
         return "Piece{" +
