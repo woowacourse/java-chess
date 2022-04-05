@@ -10,7 +10,7 @@ function selectBlock(id) {
     move(source, target)
 }
 
-function move (source, target) {
+function move(source, target) {
     const request = {
         source: source.id,
         target: target.id
@@ -19,17 +19,21 @@ function move (source, target) {
     console.log(request);
     reinitialize();
 
-    fetch('/move', {
+    let res = fetch('/move', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
         body: JSON.stringify(request)
-    }). then(response => response.json())
-        .then(response => response.json().then(data => console.log(data.status)))
+    }).then(response => response.json())
+        .then(response => {
+            if (response.status !== 200) {
+                alert(response.message);
+            }
+        });
     sleep();
-    location.reload()
+    location.replace("/play")
 }
 
 function sleep() {
@@ -38,7 +42,7 @@ function sleep() {
     }
 }
 
-function reinitialize(){
+function reinitialize() {
     source = null;
     target = null;
 }
