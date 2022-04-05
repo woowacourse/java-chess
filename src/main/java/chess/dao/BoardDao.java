@@ -42,7 +42,7 @@ public class BoardDao {
             }
             return new Turn(resultSet.getString("color"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
         return null;
     }
@@ -65,7 +65,7 @@ public class BoardDao {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
         return connection;
     }
