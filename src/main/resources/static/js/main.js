@@ -92,6 +92,7 @@ const processMove = (selectedSquare) => {
             removePieceFromSquare(document.getElementById(moveResult.from));
             setupPieceToSquare(document.getElementById(moveResult.to), moveResult.piece);
             setupScores();
+            document.getElementById('audio').play();
             gameOverProcess();
         })
 
