@@ -20,7 +20,7 @@ class StatusTest {
     @Test
     @DisplayName("킹이 없으면 -1점을 반환한다")
     void check_Score_Without_King() {
-        Board board = new Board(new HashMap<>());
+        Board board = new Board(new HashMap<>(), GameState.READY);
 
         Status status = new Status(board);
 
@@ -34,7 +34,7 @@ class StatusTest {
         Piece queen = new Queen(Color.BLACK);
         Position p1 = CachedPosition.a1;
         Position p2 = CachedPosition.a3;
-        Board board = new Board(Map.of(p1, king, p2, queen));
+        Board board = new Board(Map.of(p1, king, p2, queen), GameState.READY);
 
         Status status = new Status(board);
 
@@ -49,7 +49,7 @@ class StatusTest {
         Position p2 = CachedPosition.a3;
         Piece king = new King(Color.BLACK);
         Position p3 = CachedPosition.a2;
-        Board board = new Board(Map.of(p1, pawn, p2, pawn, p3, king));
+        Board board = new Board(Map.of(p1, pawn, p2, pawn, p3, king), GameState.READY);
 
         Status status = new Status(board);
 

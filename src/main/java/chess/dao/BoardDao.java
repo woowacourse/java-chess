@@ -48,12 +48,12 @@ public class BoardDao {
         return -1;
     }
 
-    public GameState getGameStatus(final int boardId) {
+    public GameState getGameStatus(final int userId) {
         final Connection connection = getConnection();
-        final String sql = "SELECT game_status FROM board LEFT JOIN user on board.id = user.board_id WHERE user.board_id=?;";
+        final String sql = "SELECT b.game_status FROM user LEFT JOIN board b on user.board_id = b.id WHERE user.id=?;";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, boardId);
+            statement.setInt(1, userId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 return null;
@@ -73,6 +73,18 @@ public class BoardDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, gameStatus);
             statement.setInt(2, boardId);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteBoard(final int id) {
+        final Connection connection = getConnection();
+        final String sql = "DELETE FROM board WHERE id=?;";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.Controller.dto.UserDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -35,7 +34,7 @@ public class UserDao {
         }
     }
 
-    public UserDto getUser(final String name) {
+    public int getUser(final String name) {
         final Connection connection = getConnection();
         final String sql = "SELECT id, board_id FROM user WHERE name=?";
         try {
@@ -43,12 +42,41 @@ public class UserDao {
             statement.setString(1, name);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                return -1;
             }
-            return UserDto.fromEntity(resultSet);
+            return resultSet.getInt("id");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return -1;
+    }
+
+    public int getBoard(final int userId) {
+        final Connection connection = getConnection();
+        final String sql = "SELECT board_id FROM user WHERE id=?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return -1;
+            }
+            return resultSet.getInt("board_id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void deleteUser(final int userId) {
+        final Connection connection = getConnection();
+        final String sql = "DELETE FROM user WHERE id=?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -63,8 +63,8 @@ public class PiecesDao {
 
     private Position createPosition(final ResultSet resultSet) throws SQLException {
         final String rawPosition = resultSet.getString("position");
-        return new Position(Column.from(rawPosition.substring(ROW, 1)),
-                Row.from(Integer.parseInt(rawPosition.substring(COLUMN, 2))));
+        return new Position(Column.from(rawPosition.substring(COLUMN, 1)),
+                Row.from(Integer.parseInt(rawPosition.substring(ROW, 2))));
     }
 
     public void changePosition(final String currentPosition, final String targetPosition, final int boardId) {
@@ -87,6 +87,18 @@ public class PiecesDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, position);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePieces(final int boardId) {
+        final Connection connection = getConnection();
+        final String sql = "DELETE FROM pieces WHERE board_id=?;";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, boardId);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

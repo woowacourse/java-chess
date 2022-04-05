@@ -10,7 +10,7 @@ public class Status extends ScoreCommand {
     }
 
     @Override
-    protected chess.domain.Status doAction(final ParsedCommand parsedCommand, final Board board) {
+    protected chess.domain.Status doAction(final ParsedCommand parsedCommand, final Board board, final int userId) {
         return new chess.domain.Status(board);
     }
 }

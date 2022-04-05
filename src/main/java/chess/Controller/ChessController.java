@@ -6,37 +6,59 @@ import chess.Controller.command.ScoreCommandFactory;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
 import chess.Controller.dto.StateDto;
+import chess.dao.BoardDao;
+import chess.dao.PiecesDao;
+import chess.dao.UserDao;
+import chess.domain.GameState;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class ChessController {
 
-    private final Board board;
-
-    public ChessController(Board board) {
-        this.board = board;
+    public ChessController() {
     }
 
-    public PiecesDto doActionAboutPieces(final ParsedCommand parsedCommand) {
-        // 디비에서 필요한 정보를 가져온다 -
-        // 가져온 정보로 도메인 객체를 만든다 -
-        // 도메인 객체를 호출한다
-        // 도메인 객체가 만든 결과를 DTO로 만든다
-        // 만들어진 DTO를 가지고 DB 레코드를 수정한다
-        // DTO를 반환한다.
+    public int initGame(final String userName) {
+        final UserDao userDao = new UserDao();
+        final int exUserId = userDao.getUser(userName);
+        int boardId = userDao.getBoard(exUserId);
+        if (exUserId == -1) {
+            boardId = (new BoardDao()).initBoard();
+        }
+        userDao.createUser(userName, boardId);
+        return userDao.getUser(userName);
+    }
+
+    public PiecesDto doActionAboutPieces(final ParsedCommand parsedCommand, final int userId) {
+        final int boardId = (new UserDao()).getBoard(userId);
+        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
+        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        final Board board = new Board(pieces, gameState);
         return PieceCommandFactory.from(parsedCommand.getCommand())
-                .doCommandAction(parsedCommand, board);
+                .doCommandAction(parsedCommand, board, userId);
     }
 
-    public PiecesDto getPieces() {
-        return PiecesDto.fromEntity(board);
-    }
-
-    public ScoreDto doActionAboutScore(final ParsedCommand parsedCommand) {
+    public ScoreDto doActionAboutScore(final ParsedCommand parsedCommand, final int userId) {
+        final int boardId = (new UserDao()).getBoard(userId);
+        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
+        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        final Board board = new Board(pieces, gameState);
         return ScoreCommandFactory.from(parsedCommand.getCommand())
-                .doCommandAction(parsedCommand, board);
+                .doCommandAction(parsedCommand, board, userId);
     }
 
-    public StateDto getCurrentStatus() {
-        return StateDto.fromEntity(board);
+    public StateDto getCurrentStatus(final int userId) {
+        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        return StateDto.fromEntity(gameState);
+    }
+
+    public void finishGame(final int userId) {
+        final UserDao userDao = new UserDao();
+        final int boardId = userDao.getBoard(userId);
+        userDao.deleteUser(userId);
+        (new PiecesDao()).deletePieces(boardId);
+        (new BoardDao()).deleteBoard(boardId);
     }
 }

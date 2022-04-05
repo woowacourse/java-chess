@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.CachedPosition;
+import chess.domain.GameState;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -33,7 +34,7 @@ class BoardTest {
     @MethodSource("providePieceAndExpectedCount")
     void valid_Count(final Piece piece, final int expected) {
         final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
-        Board board = new Board(initialPieces);
+        Board board = new Board(initialPieces, GameState.READY);
         Map<Position, Piece> pieces = board.getPieces();
         final int actual = (int) pieces.values()
                 .stream()
@@ -66,7 +67,7 @@ class BoardTest {
             Position target = CachedPosition.b3;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -83,7 +84,7 @@ class BoardTest {
             Position target = CachedPosition.b3;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, midPoint, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
@@ -106,7 +107,7 @@ class BoardTest {
             Position target = CachedPosition.b2;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
@@ -125,7 +126,7 @@ class BoardTest {
             Position target = CachedPosition.b2;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -142,7 +143,7 @@ class BoardTest {
             Position target = CachedPosition.a4;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, midPoint, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -158,7 +159,7 @@ class BoardTest {
             Position target = CachedPosition.a4;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -173,7 +174,7 @@ class BoardTest {
             Position target = CachedPosition.a4;
 
             final Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
             board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
             assertAll(
@@ -190,7 +191,7 @@ class BoardTest {
         @DisplayName("빈 칸을 이동시킬 말로 지정할 경우 예외를 반환한다.")
         @Test
         void designate_Empty_Space() {
-            Board board = new Board(new HashMap<>());
+            Board board = new Board(new HashMap<>(), GameState.READY);
             Position start = CachedPosition.a1;
             Position target = CachedPosition.b2;
 
@@ -209,7 +210,7 @@ class BoardTest {
             Position target = CachedPosition.a3;
 
             Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, midpoint, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -225,7 +226,7 @@ class BoardTest {
             Position target = CachedPosition.a3;
 
             Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -240,7 +241,7 @@ class BoardTest {
             Position target = CachedPosition.a2;
 
             Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece));
-            Board board = new Board(initialPieces);
+            Board board = new Board(initialPieces, GameState.READY);
 
             board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
@@ -260,7 +261,7 @@ class BoardTest {
         Position target = CachedPosition.a3;
 
         Map<Position, Piece> initialPieces = new HashMap<>(Map.of(start, startPiece, target, existPiece));
-        Board board = new Board(initialPieces);
+        Board board = new Board(initialPieces, GameState.READY);
 
         assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -271,7 +272,7 @@ class BoardTest {
     @Test
     void count_Specific_Piece() {
         final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
-        Board board = new Board(initialPieces);
+        Board board = new Board(initialPieces, GameState.READY);
         final int actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
 
         assertThat(actualCount).isEqualTo(2);
@@ -281,7 +282,7 @@ class BoardTest {
     @Test
     void calculate_Score() {
         final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
-        Board board = new Board(initialPieces);
+        Board board = new Board(initialPieces, GameState.READY);
         final double actualBlackScore = board.calculateScore(Color.BLACK);
         final double actualWhiteScore = board.calculateScore(Color.WHITE);
 
@@ -297,7 +298,7 @@ class BoardTest {
         final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
         initialPieces.put(CachedPosition.b3, new Pawn(Color.WHITE));
         initialPieces.remove(CachedPosition.a2);
-        Board board = new Board(initialPieces);
+        Board board = new Board(initialPieces, GameState.READY);
         final double actualBlackScore = board.calculateScore(Color.BLACK);
         final double actualWhiteScore = board.calculateScore(Color.WHITE);
 

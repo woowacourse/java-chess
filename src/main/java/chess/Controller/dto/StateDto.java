@@ -1,7 +1,6 @@
 package chess.Controller.dto;
 
 import chess.domain.GameState;
-import chess.domain.board.Board;
 import java.util.Locale;
 
 public class StateDto {
@@ -13,8 +12,8 @@ public class StateDto {
         this.state = state.toUpperCase(Locale.ROOT);
     }
 
-    public static StateDto fromEntity(final Board board) {
-        return new StateDto(board.getGameState());
+    public static StateDto fromEntity(final GameState gameState) {
+        return new StateDto(gameState);
     }
 
     public String getState() {

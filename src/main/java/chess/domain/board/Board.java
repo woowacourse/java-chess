@@ -26,9 +26,9 @@ public class Board {
     private final Map<Position, Piece> pieces;
     private GameState gameState;
 
-    public Board(final Map<Position, Piece> pieces) {
+    public Board(final Map<Position, Piece> pieces, final GameState gameState) {
         this.pieces = pieces;
-        gameState = GameState.READY;
+        this.gameState = gameState;
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
@@ -175,8 +175,8 @@ public class Board {
         gameState = GameState.WHITE_RUNNING;
     }
 
-    public void changeTurn() {
-        gameState = gameState.getOpposite();
+    public GameState changeTurn() {
+        return gameState.getOpposite();
     }
 
     public void terminateGame() {
@@ -191,7 +191,7 @@ public class Board {
     }
 
     public GameState getGameState() {
-        return gameState;
+        return gameState.getOpposite();
     }
 
     public Map<Position, Piece> getPieces() {

@@ -3,7 +3,6 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.Controller.dto.UserDto;
 import java.sql.Connection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,8 +31,8 @@ class UserDaoTest {
     @DisplayName("유저를 가져올 수 있어야 한다.")
     void get_User() {
         final UserDao userDao = new UserDao();
-        final UserDto userDto = userDao.getUser("test");
-        assertThat(userDto.getId()).isEqualTo(1);
+//        final UserDto userDto = userDao.getUser("test");
+        assertThat(userDao.getUser("test")).isEqualTo(1);
     }
 
 }
