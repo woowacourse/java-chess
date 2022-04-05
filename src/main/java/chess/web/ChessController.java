@@ -59,20 +59,17 @@ public class ChessController {
         return new BlackTurn(board);
     }
 
-    public Map<String, Object> move(String source, String destination) {
-        Map<String, Object> model = new HashMap<>();
-        try{
-            Map<Position, Piece> board = gameState.getBoard();
-            Piece sourcePiece = board.get(Position.from(source));
-            gameState = gameState.move(source, destination);
-            BoardFactory.updatePosition(source, Blank.SYMBOL);
-            BoardFactory.updatePosition(destination, sourcePiece.getSymbol());
-            RoomFactory.updateStatus(gameState.getTeam().getValue(), "1");
-            return model;
-        }catch (Exception exception) {
-            model.put("error", exception.getMessage());
-            return model;
+    public String move(String source, String destination) {
+        Map<Position, Piece> board = gameState.getBoard();
+        Piece sourcePiece = board.get(Position.from(source));
+        gameState = gameState.move(source, destination);
+        BoardFactory.updatePosition(source, Blank.SYMBOL);
+        BoardFactory.updatePosition(destination, sourcePiece.getSymbol());
+        RoomFactory.updateStatus(gameState.getTeam().getValue(), "1");
+        if (gameState.isFinished()) {
+            return "게임 종료" + gameState.getTeam() +"팀 승";
         }
+        return "";
     }
 
     public Map<String, Object> getStatus() {

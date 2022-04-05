@@ -23,5 +23,10 @@ public class WebApplication {
 
         get("/status", (req, res) -> new JSONObject(chessController.getStatus()));
         post("/reset", (req, res) -> ViewUtil.render(chessController.resetBoard(), "/contents/chessBoard.html"));
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(403);
+            response.body(exception.getMessage());
+        });
     }
 }

@@ -32,4 +32,9 @@ public class BlackTurn extends Playing {
     public Team getTeam() {
         return Team.BLACK;
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -39,4 +39,9 @@ public class Finished implements GameState {
     public Team getTeam() {
         return team;
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

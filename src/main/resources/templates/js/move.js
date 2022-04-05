@@ -5,18 +5,23 @@ async function move(position) {
     }
     const source = document.getElementsByClassName('sourcePosition')[0].id;
     const object = {
-        "source" : source,
+        "source": source,
         "destination": position
     }
     $.ajax({
         url: "/move",
         type: "POST",
         data: JSON.stringify(object),
-        success: function (data) {
-                movePiece(position)
+        success(request, status, error) {
+            if (request) {
+                alert(request);
+                getScore();
+            }
+            movePiece(position)
         },
-        error: function (request, status, error){
-            alert(error);
+        error(request, status, error) {
+            document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
+            alert(request.responseText);
         }
     })
 }
