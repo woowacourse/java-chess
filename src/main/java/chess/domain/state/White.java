@@ -26,4 +26,9 @@ public final class White extends Started {
     public boolean isGameOver() {
         return (!board().isKingAlive(Team.WHITE));
     }
+
+    @Override
+    public String toString() {
+        return "White";
+    }
 }
