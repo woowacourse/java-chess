@@ -65,16 +65,16 @@ public class ChessBoardTest {
         assertThat(piece).isInstanceOf(Rook.class);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"a2, true", "a3, false", "h7, true", "h8, false"})
-    @DisplayName("해당 위치에 움직이지 않은 폰이 있는지 확인한다.")
-    void isFirstMovePawn(final String position, final boolean expected) {
-        final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-        final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-        boolean actual = chessBoard.isFirstMovePawn(Position.of(position));
-
-        assertThat(actual).isEqualTo(expected);
-    }
+//    @ParameterizedTest
+//    @CsvSource(value = {"a2, true", "a3, false", "h7, true", "h8, false"})
+//    @DisplayName("해당 위치에 움직이지 않은 폰이 있는지 확인한다.")
+//    void isFirstMovePawn(final String position, final boolean expected) {
+//        final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+//        final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+//        boolean actual = chessBoard.isFirstMovePawn(Position.of(position));
+//
+//        assertThat(actual).isEqualTo(expected);
+//    }
 
     @Nested
     @DisplayName("장애물 처리를 한 움직일 수 있는 포지션들을 반환한다.")

@@ -12,6 +12,13 @@ import java.util.Map;
 
 public abstract class Pawn extends Piece {
 
+    public static final List<Position> BLACK_INIT_LOCATIONS = List.of(
+            Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),
+            Position.of("e7"), Position.of("f7"), Position.of("g7"), Position.of("h7"));
+    public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
+            Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
+            Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
+
     private static final int PAWN_POINT = 1;
 
     protected Pawn(final Color color) {
@@ -24,7 +31,7 @@ public abstract class Pawn extends Piece {
     protected final Map<Direction, List<Position>> getMovablePositionsByDirection(final Position position,
                                                                                   final Direction direction) {
         final Map<Direction, List<Position>> movablePositions = initMovablePositions(direction);
-        putFirstMovablePositionByDirection(movablePositions, position, direction);
+        putMovablePositionByDirection(movablePositions, position, direction);
         return movablePositions;
     }
 
@@ -32,13 +39,6 @@ public abstract class Pawn extends Piece {
         final Map<Direction, List<Position>> movablePositions = new HashMap<>();
         movablePositions.put(direction, new ArrayList<>());
         return movablePositions;
-    }
-
-    private void putFirstMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
-                                                    final Position position,
-                                                    final Direction direction) {
-        putMovablePositionByDirection(movablePositions, position, direction);
-        putMovablePositionByDirection(movablePositions, position.toDirection(direction), direction);
     }
 
     private void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
@@ -50,6 +50,21 @@ public abstract class Pawn extends Piece {
         }
         final List<Position> positionsToDirection = movablePositions.get(direction);
         positionsToDirection.add(nextPosition);
+        if (isFirstMovePawn(position)) {
+            putMovablePositionByDirection(movablePositions, nextPosition, direction);
+        }
+    }
+
+    private boolean isFirstMovePawn(final Position position) {
+        return isBlackFirstMovePawn(position) || isWhiteFirstMovePawn(position);
+    }
+
+    private boolean isBlackFirstMovePawn(final Position position) {
+        return color == Color.BLACK && BLACK_INIT_LOCATIONS.contains(position);
+    }
+
+    private boolean isWhiteFirstMovePawn(final Position position) {
+        return color == Color.WHITE && WHITE_INIT_LOCATIONS.contains(position);
     }
 
     @Override

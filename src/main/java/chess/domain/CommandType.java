@@ -26,3 +26,4 @@ public enum CommandType {
         return isSingleCommand;
     }
 }
+

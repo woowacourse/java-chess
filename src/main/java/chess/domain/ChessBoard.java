@@ -5,8 +5,6 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.generator.PiecesGenerator;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -20,22 +18,12 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final int KING_COUNTS = 2;
-    private static final int FIRST_MOVE_POSITION_INDEX_FOR_PAWN = 1;
-    private static final int NUMBER_OF_POSITIONS_FIRST_MOVE_PAWN_CAN_MOVE = 2;
 
     private final Map<Position, Piece> pieces;
-    private final List<Position> firstPositionsOfPawn;
 
     public ChessBoard(final PiecesGenerator piecesGenerator) {
         this.pieces = piecesGenerator.generate();
-        firstPositionsOfPawn = new ArrayList<>();
-        initFirstPositionsOfPawn();
         fillEmptyPieceIfAbsent();
-    }
-
-    private void initFirstPositionsOfPawn() {
-        firstPositionsOfPawn.addAll(BlackPawn.BLACK_INIT_LOCATIONS);
-        firstPositionsOfPawn.addAll(WhitePawn.WHITE_INIT_LOCATIONS);
     }
 
     private void fillEmptyPieceIfAbsent() {
@@ -53,51 +41,15 @@ public class ChessBoard {
     public void move(final Position from, final Position to) {
         final Piece piece = selectPiece(from);
         final List<Position> finalMovablePositions = getMovablePositions(from, piece);
-
+        System.out.println(finalMovablePositions);
         checkMovable(to, finalMovablePositions);
         movePiece(from, to, piece);
     }
 
     private List<Position> getMovablePositions(final Position from, final Piece piece) {
         final Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        refinePawnMovablePositions(from, piece, movablePositions);
 
         return generateMovablePositionsExceptObstacles(from, piece, movablePositions);
-    }
-
-    private void refinePawnMovablePositions(final Position from, final Piece piece,
-                                            final Map<Direction, List<Position>> movablePositions) {
-        if (!isFirstMovePawn(from) && piece.isSameSymbol(Symbol.PAWN)) {
-            removeFirstMovablePositionForPawn(piece, movablePositions);
-        }
-    }
-
-    public boolean isFirstMovePawn(final Position position) {
-        return firstPositionsOfPawn.contains(position);
-    }
-
-    private void removeFirstMovablePositionForPawn(final Piece piece,
-                                                   final Map<Direction, List<Position>> movablePositions) {
-        final Direction pawnDirection = piece.getPawnDirection();
-        final List<Position> positions = movablePositions.get(pawnDirection);
-
-        if (positions.size() == NUMBER_OF_POSITIONS_FIRST_MOVE_PAWN_CAN_MOVE) {
-            positions.remove(FIRST_MOVE_POSITION_INDEX_FOR_PAWN);
-        }
-    }
-
-    private void checkMovable(final Position to, final List<Position> finalMovablePositions) {
-        if (!finalMovablePositions.contains(to)) {
-            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void movePiece(final Position from, final Position to, final Piece piece) {
-        pieces.put(to, piece);
-        pieces.put(from, EmptyPiece.getInstance());
-        if (piece.isSameSymbol(Symbol.PAWN)) {
-            firstPositionsOfPawn.remove(from);
-        }
     }
 
     public List<Position> generateMovablePositionsExceptObstacles(final Position position, final Piece piece,
@@ -134,6 +86,17 @@ public class ChessBoard {
             return cutIndex;
         }
         return cutIndex + 1;
+    }
+
+    private void checkMovable(final Position to, final List<Position> finalMovablePositions) {
+        if (!finalMovablePositions.contains(to)) {
+            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
+        }
+    }
+
+    private void movePiece(final Position from, final Position to, final Piece piece) {
+        pieces.put(to, piece);
+        pieces.put(from, EmptyPiece.getInstance());
     }
 
     private void addDiagonalMoveForPawn(final Position position, final Piece piece, final List<Position> result) {
