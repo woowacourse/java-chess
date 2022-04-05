@@ -46,8 +46,10 @@ public class ChessService {
         }
     }
 
-    public WebBoardDto move(String from, String to) {
-        gameState = gameState.move(List.of(Point.of(from), Point.of(to)));
+    public WebBoardDto move(MoveInfoDto moveInfo) {
+        gameState = gameState.move(List.of(Point.of(moveInfo.getFrom()), Point.of(moveInfo.getTo())));
+        boardDao.deleteByRoomNameAndPosition(moveInfo.getRoomName(), moveInfo.getTo());
+        boardDao.update(moveInfo.getRoomName(), moveInfo.getFrom(), moveInfo.getTo());
         return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), gameState.isRunnable());
     }
 

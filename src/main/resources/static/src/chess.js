@@ -130,6 +130,7 @@ async function requestMovePiece(from, to) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
+            roomName: currentRoomName,
             from: from,
             to: to,
         }),

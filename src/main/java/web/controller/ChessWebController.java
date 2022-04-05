@@ -58,7 +58,7 @@ public class ChessWebController {
         post("/move", (req, res) -> {
             try {
                 MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
-                return gson.toJson(service.move(moveInfo.getFrom(), moveInfo.getTo()));
+                return gson.toJson(service.move(moveInfo));
             } catch (RuntimeException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
