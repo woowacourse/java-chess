@@ -29,6 +29,7 @@ public class WebApplication {
         game(chessGame);
         move(chessGame);
         status(chessGame);
+        end(chessGame);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -77,6 +78,13 @@ public class WebApplication {
             model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
             model.put("status", chessGame.getScore());
             return render(model, "game.html");
+        });
+    }
+
+    private static void end(ChessGame chessGame) {
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
         });
     }
 
