@@ -1,6 +1,6 @@
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
-import chess.domain.dto.BoardDto;
+import chess.web.dto.BoardDto;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
