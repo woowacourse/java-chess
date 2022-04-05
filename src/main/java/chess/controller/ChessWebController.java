@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
@@ -21,6 +22,7 @@ public class ChessWebController {
         ChessGame chessGame = new Ready();
         renderReady();
         renderStart();
+        renderMove();
     }
 
     private void renderReady() {
@@ -33,6 +35,16 @@ public class ChessWebController {
     private void renderStart() {
         get("/start", (req, res) -> {
             chessService.start();
+            Map<String, Object> model = chessService.getBoard().toMap();
+            return render(model, "chess.html");
+        });
+    }
+
+    private void renderMove() {
+        post("/move", (req, res) -> {
+            String from = req.queryParams("from");
+            String to = req.queryParams("to");
+            chessService.move(from, to);
             Map<String, Object> model = chessService.getBoard().toMap();
             return render(model, "chess.html");
         });
