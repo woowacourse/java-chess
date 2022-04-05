@@ -60,16 +60,8 @@ public class Position {
         this.row = row;
     }
 
-    public Column getCol() {
-        return col;
-    }
-
     public boolean matchPosition(Position position) {
         return this.equals(position);
-    }
-
-    public Row getRow() {
-        return row;
     }
 
     public int getRowDifference(Row row) {
@@ -78,6 +70,20 @@ public class Position {
 
     public int getColDifference(Column col) {
         return this.col.getDifference(col);
+    }
+
+    public Position plusDirection(Direction direction) {
+        Column column = this.col.plusColumn(direction.getXDegree());
+        Row row = this.row.plusRow(direction.getYDegree());
+        return new Position(column, row);
+    }
+
+    public Column getCol() {
+        return col;
+    }
+
+    public Row getRow() {
+        return row;
     }
 
     @Override
@@ -99,11 +105,5 @@ public class Position {
                 "col=" + col +
                 ", row=" + row +
                 '}';
-    }
-
-    public Position plusDirection(Direction direction) {
-        Column column = this.col.plusColumn(direction.getXDegree());
-        Row row = this.row.plusRow(direction.getYDegree());
-        return new Position(column, row);
     }
 }
