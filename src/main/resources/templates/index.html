@@ -2,9 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
-Hello World!!
+<h1>체스게임</h1>
+<div id="app">
+        <section class="chess-ui">
+        {{#this}}
+        <div class="black-square pawn"><img src="images/{{a8.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{b8.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{c8.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{d8.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{e8.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{f8.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{g8.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{h8.piece}}.png" class="img" /></div>
+
+        <div class="white-square pawn"><img src="images/{{a7.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{b7.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{c7.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{d7.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{e7.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{f7.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{g7.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{h7.piece}}.png" class="img" /></div>
+
+        <div class="black-square pawn"><img src="images/{{a6.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{b6.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{c6.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{d6.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{e6.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{f6.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{g6.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{h6.piece}}.png" class="img" /></div>
+
+        <div class="white-square pawn"><img src="images/{{a5.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{b5.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{c5.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{d5.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{e5.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{f5.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{g5.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{h5.piece}}.png" class="img" /></div>
+
+        <div class="black-square pawn"><img src="images/{{a4.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{b4.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{c4.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{d4.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{e4.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{f4.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{g4.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{h4.piece}}.png" class="img" /></div>
+
+        <div class="white-square pawn"><img src="images/{{a3.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{b3.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{c3.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{d3.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{e3.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{f3.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{g3.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{h3.piece}}.png" class="img" /></div>
+
+        <div class="black-square pawn"><img src="images/{{a2.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{b2.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{c2.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{d2.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{e2.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{f2.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{g2.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{h2.piece}}.png" class="img" /></div>
+
+        <div class="white-square pawn"><img src="images/{{a1.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{b1.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{c1.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{d1.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{e1.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{f1.piece}}.png" class="img" /></div>
+        <div class="white-square pawn"><img src="images/{{g1.piece}}.png" class="img" /></div>
+        <div class="black-square pawn"><img src="images/{{h1.piece}}.png" class="img" /></div>
+        {{/this}}
+    </section>
+        <h1>{{winner}}</h1>
+        <h1>{{error}}</h1>
+        <form action="/start">
+            <input type="submit" value="시작">
+        </form>
+
+        <form action="/end">
+            <input type="submit" value="종료">
+        </form>
+
+        <form method="post" action="/move">
+            <input type="text" name="from">
+            <input type="text" name="to">
+            <input type="submit" value="움직이기">
+        </form>
+
+        <form action="/status">
+            <input type="submit" value="점수현황">
+            <p>{{white}}</p>
+            <p>{{black}}</p>
+        </form>
+</div>
 </body>
 </html>

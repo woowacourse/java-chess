@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Column {
 
@@ -44,5 +45,10 @@ public enum Column {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase(Locale.ROOT);
     }
 }

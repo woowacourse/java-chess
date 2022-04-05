@@ -61,4 +61,8 @@ public abstract class Piece {
     public final Color getColor() {
         return color;
     }
+
+    public final String getPiece() {
+        return color.name() + symbol.name();
+    }
 }

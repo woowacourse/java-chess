@@ -1,0 +1,29 @@
+.chess-ui {
+    width: 640px;
+    border: 4px solid slategrey;
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+}
+
+.white-square {
+    background-color: slategrey;
+    color: white;
+}
+
+.white-square.selected {
+    background-color: rosybrown;
+}
+
+.black-square {
+    background-color: white;
+    color: slategrey;
+}
+
+.black-square.selected {
+    background-color: rosybrown;
+}
+
+img {
+    width: 100%;
+}

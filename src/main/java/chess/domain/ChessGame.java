@@ -1,22 +1,29 @@
 package chess.domain;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.state.Finish;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import java.util.Map;
 
 public class ChessGame {
 
     private State state;
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.state = new Ready();
         this.chessBoard = chessBoard;
     }
 
+    public void init(final ChessBoard chessBoard) {
+        this.state = new Ready();
+        this.chessBoard = chessBoard;
+    }
+
     public State playGameByCommand(final GameCommand gameCommand) {
-        return state = state.proceed(chessBoard, gameCommand);
+        return this.state = state.proceed(chessBoard, gameCommand);
     }
 
     public boolean isFinished() {
@@ -41,5 +48,9 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public Map<String, Piece> chessBoardToMap() {
+        return chessBoard.toMap();
     }
 }

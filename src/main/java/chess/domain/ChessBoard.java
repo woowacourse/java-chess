@@ -12,6 +12,7 @@ import chess.domain.position.Row;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -134,5 +135,11 @@ public class ChessBoard {
 
     public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(pieces);
+    }
+
+    public Map<String, Piece> toMap() {
+        return pieces.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }
