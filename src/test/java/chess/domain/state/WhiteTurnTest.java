@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,51 +13,70 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class WhiteTurnTest {
     @ParameterizedTest
-    @CsvSource(value = {"a1:Rook", "b1:Knight", "c8:Bishop", "d1:Queen", "e1:King", "a2:Pawn", "a3:Blank"}, delimiter = ':')
+    @CsvSource(value = {"a8:R", "c8:B", "d2:p", "d1:q", "e1:k", "a2:p", "a3:."}, delimiter = ':')
+    @DisplayName("위치 값 문자를 입력하여 해당되는 말을 조회한다.")
     void findPiece(String position, String symbol) {
+        // given
         GameState board = new WhiteTurn(BoardInitialize.create());
-        assertThat(board.getPiece(Position.from(position)).getClass().getSimpleName()).isEqualTo(symbol);
+
+        //when
+        Piece piece = board.getPiece(Position.from(position));
+        String result = piece.getSymbol();
+
+        // then
+        assertThat(result).isEqualTo(symbol);
     }
 
-    @Test
-    void movePiece() {
+    @ParameterizedTest
+    @CsvSource(value = {"a2:a4:p", "b2:b4:p", "h2:h4:p"}, delimiter = ':')
+    @DisplayName("출발 위치와 도착 위치를 입력하여 말을 움직인다.")
+    void movePiece(String source, String destination, String symbol) {
+        // given
         GameState board = new WhiteTurn(BoardInitialize.create());
-        String source = "f2";
-        String destination = "f4";
+
+        // when
         board.move(source, destination);
-        assertThat(board.getPiece(Position.from(destination)).isPawn()).isTrue();
-        assertThat(board.getPiece(Position.from(source)).isBlank()).isTrue();
+        Piece piece = board.getPiece(Position.from(destination));
+        String result = piece.getSymbol();
+
+        // then
+        assertThat(result).isEqualTo(symbol);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"a1:b1", "d1:e1", "d1:e1"}, delimiter = ':')
     @DisplayName("같은 팀 말 kill을 시도할 시, 예외가 발생한다.")
-    void killSameTeam() {
+    void killSameTeam(String source, String destination) {
         GameState board = new WhiteTurn(BoardInitialize.create());
-        String source = "e1";
-        String destination = "f1";
+
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("목적지에 같은 팀 말이 있습니다.");
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"a7:a6", "b8:c8", "h7:h6"}, delimiter = ':')
     @DisplayName("다른 팀 말을 움직일 시, 예외가 발생한다.")
-    void otherTeamPieceMove() {
+    void otherTeamPieceMove(String source, String destination) {
         GameState board = new WhiteTurn(BoardInitialize.create());
-        String source = "e8";
-        String destination = "e7";
+
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편 말을 옮길 수 없습니다.");
     }
 
-    @Test
-    @DisplayName("말을 움직일 시, BlackTurn으로 변경된다.")
-    void changeTeam() {
+    @ParameterizedTest
+    @CsvSource(value = {"a2:a4", "b2:b4", "h2:h4"}, delimiter = ':')
+    @DisplayName("말을 움직일 시, WhiteTurn으로 변경된다.")
+    void changeTeam(String source, String destination) {
+        // given
         GameState board = new WhiteTurn(BoardInitialize.create());
-        String source = "e2";
-        String destination = "e4";
-        GameState blackTurn = board.move(source, destination);
-        assertThat(blackTurn.getTeam()).isEqualTo(Team.BLACK);
+
+        // when
+        GameState whiteTurn = board.move(source, destination);
+        Team result = whiteTurn.getTeam();
+
+        // then
+        assertThat(result).isEqualTo(Team.BLACK);
     }
 }
