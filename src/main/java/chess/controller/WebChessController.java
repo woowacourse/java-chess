@@ -1,18 +1,20 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.domain.board.Position;
 import chess.domain.state.Ready;
+import chess.dto.ErrorResponseDto;
 import chess.dto.GameDto;
+import chess.dto.MoveDto;
 import chess.dto.StatusDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
-import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
@@ -27,27 +29,39 @@ public class WebChessController {
 		Gson gson = new Gson();
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.html");
+			return render(model, "chess.html");
 		});
 
-		post("/play", (req, res) -> {
-			GameDto gameDto = chessService.playCommand(parseCommand(req));
-			Map<String, Object> model = gameDto.getBoard();
-			return render(model, "chess.html");
+		get("/start", (req, res) -> {
+			GameDto gameDto = chessService.start();
+			return gson.toJson(gameDto);
 		});
 
 		get("/status", (req, res) -> {
 			StatusDto statusDto = chessService.status();
 			return gson.toJson(statusDto);
 		});
+
+		post("/move", (req, res) -> {
+			MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+			Position source = PositionConvertor.to(moveDto.getSource());
+			Position target = PositionConvertor.to(moveDto.getTarget());
+			GameDto gameDto = chessService.move(source, target);
+			return gson.toJson(gameDto);
+		});
+
+		handleException(gson, IllegalArgumentException.class);
+		handleException(gson, IllegalStateException.class);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 
-	private List<String> parseCommand(Request request) {
-		String requestCommand = request.queryParams("command");
-		return List.of(requestCommand.split(" "));
+	private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
+		exception(exceptionClass, (e, req, res) -> {
+			res.status(400);
+			res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
+		});
 	}
 }
