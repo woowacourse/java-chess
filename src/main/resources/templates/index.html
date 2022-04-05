@@ -1,10 +1,353 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <h1>♟️ 초간단 체스</h1>
+    <section class="chess-ui">
+        {{#this}}
+        <div class="gray-square">
+            {{#a8}}
+            <img src="images/{{a8.team}}_{{a8.name}}.png"/>
+            {{/a8}}
+        </div>
+
+        <div class="white-square">
+            {{#b8}}
+            <img src="images/{{a7.team}}_{{a7.name}}.png"/>
+            {{/b8}}
+        </div>
+        <div class="gray-square">
+            {{#c8}}
+            <img src="images/{{c8.team}}_{{c8.name}}.png"/>
+            {{/c8}}
+        </div>
+        <div class="white-square">
+            {{#d8}}
+            <img src="images/{{d8.team}}_{{d8.name}}.png"/>
+            {{/d8}}
+        </div>
+        <div class="gray-square">
+            {{#e8}}
+            <img src="images/{{e8.team}}_{{e8.name}}.png"/>
+            {{/e8}}
+        </div>
+        <div class="white-square">
+            {{#f8}}
+            <img src="images/{{f8.team}}_{{f8.name}}.png"/>
+            {{/f8}}
+        </div>
+        <div class="gray-square">
+            {{#g8}}
+            <img src="images/{{g8.team}}_{{g8.name}}.png"/>
+            {{/g8}}
+        </div>
+        <div class="white-square">
+            {{#h8}}
+            <img src="images/{{h8.team}}_{{h8.name}}.png"/>
+            {{/h8}}
+        </div>
+
+        <div class="white-square">
+            {{#a7}}
+            <img src="images/{{a7.team}}_{{a7.name}}.png"/>
+            {{/a7}}
+        </div>
+        <div class="gray-square">
+            {{#b7}}
+            <img src="images/{{b7.team}}_{{b7.name}}.png"/>
+            {{/b7}}
+        </div>
+        <div class="white-square">
+            {{#c7}}
+            <img src="images/{{c7.team}}_{{c7.name}}.png"/>
+            {{/c7}}
+        </div>
+        <div class="gray-square">
+            {{#d7}}
+            <img src="images/{{d7.team}}_{{d7.name}}.png"/>
+            {{/d7}}
+        </div>
+        <div class="white-square">
+            {{#e7}}
+            <img src="images/{{e7.team}}_{{e7.name}}.png"/>
+            {{/e7}}
+        </div>
+        <div class="gray-square">
+            {{#f7}}
+            <img src="images/{{f7.team}}_{{f7.name}}.png"/>
+            {{/f7}}
+        </div>
+        <div class="white-square">
+            {{#g7}}
+            <img src="images/{{g7.team}}_{{g7.name}}.png"/>
+            {{/g7}}
+        </div>
+        <div class="gray-square">
+            {{#h7}}
+            <img src="images/{{h7.team}}_{{h7.name}}.png"/>
+            {{/h7}}
+        </div>
+
+        <div class="gray-square">
+            {{#a6}}
+            <img src="images/{{a6.team}}_{{a6.name}}.png"/>
+            {{/a6}}
+        </div>
+        <div class="white-square">
+            {{#b6}}
+            <img src="images/{{b6.team}}_{{b6.name}}.png"/>
+            {{/b6}}
+        </div>
+        <div class="gray-square">
+            {{#c6}}
+            <img src="images/{{c6.team}}_{{c6.name}}.png"/>
+            {{/c6}}
+        </div>
+        <div class="white-square">
+            {{#d6}}
+            <img src="images/{{d6.team}}_{{d6.name}}.png"/>
+            {{/d6}}
+        </div>
+        <div class="gray-square">
+            {{#e6}}
+            <img src="images/{{e6.team}}_{{e6.name}}.png"/>
+            {{/e6}}
+        </div>
+        <div class="white-square">
+            {{#f6}}
+            <img src="images/{{f6.team}}_{{f6.name}}.png"/>
+            {{/f6}}
+        </div>
+        <div class="gray-square">
+            {{#g6}}
+            <img src="images/{{g6.team}}_{{g6.name}}.png"/>
+            {{/g6}}
+        </div>
+        <div class="white-square">
+            {{#h6}}
+            <img src="images/{{h6.team}}_{{h6.name}}.png"/>
+            {{/h6}}
+        </div>
+
+        <div class="white-square">
+            {{#a5}}
+            <img src="images/{{a5.team}}_{{a5.name}}.png"/>
+            {{/a5}}
+        </div>
+        <div class="gray-square">
+            {{#b5}}
+            <img src="images/{{b5.team}}_{{b5.name}}.png"/>
+            {{/b5}}
+        </div>
+        <div class="white-square">
+            {{#c5}}
+            <img src="images/{{c5.team}}_{{c5.name}}.png"/>
+            {{/c5}}
+        </div>
+        <div class="gray-square">
+            {{#d5}}
+            <img src="images/{{d5.team}}_{{d5.name}}.png"/>
+            {{/d5}}
+        </div>
+        <div class="white-square">
+            {{#e5}}
+            <img src="images/{{e5.team}}_{{e5.name}}.png"/>
+            {{/e5}}
+        </div>
+        <div class="gray-square">
+            {{#f5}}
+            <img src="images/{{f5.team}}_{{f5.name}}.png"/>
+            {{/f5}}
+        </div>
+        <div class="white-square">
+            {{#g5}}
+            <img src="images/{{g5.team}}_{{g5.name}}.png"/>
+            {{/g5}}
+        </div>
+        <div class="gray-square">
+            {{#h5}}
+            <img src="images/{{h5.team}}_{{h5.name}}.png"/>
+            {{/h5}}
+        </div>
+
+        <div class="gray-square">
+            {{#a4}}
+            <img src="images/{{a4.team}}_{{a4.name}}.png"/>
+            {{/a4}}
+        </div>
+        <div class="white-square">
+            {{#b4}}
+            <img src="images/{{b4.team}}_{{b4.name}}.png"/>
+            {{/b4}}
+        </div>
+        <div class="gray-square">
+            {{#c4}}
+            <img src="images/{{c4.team}}_{{c4.name}}.png"/>
+            {{/c4}}
+        </div>
+        <div class="white-square">
+            {{#d4}}
+            <img src="images/{{d4.team}}_{{d4.name}}.png"/>
+            {{/d4}}
+        </div>
+        <div class="gray-square">
+            {{#e4}}
+            <img src="images/{{e4.team}}_{{e4.name}}.png"/>
+            {{/e4}}
+        </div>
+        <div class="white-square">
+            {{#f4}}
+            <img src="images/{{f4.team}}_{{f4.name}}.png"/>
+            {{/f4}}
+        </div>
+        <div class="gray-square">
+            {{#g4}}
+            <img src="images/{{g4.team}}_{{g4.name}}.png"/>
+            {{/g4}}
+        </div>
+        <div class="white-square">
+            {{#h4}}
+            <img src="images/{{h4.team}}_{{h4.name}}.png"/>
+            {{/h4}}
+        </div>
+
+        <div class="white-square">
+            {{#a3}}
+            <img src="images/{{a3.team}}_{{a3.name}}.png"/>
+            {{/a3}}
+        </div>
+        <div class="gray-square">
+            {{#b3}}
+            <img src="images/{{b3.team}}_{{b3.name}}.png"/>
+            {{/b3}}
+        </div>
+        <div class="white-square">
+            {{#c3}}
+            <img src="images/{{c3.team}}_{{c3.name}}.png"/>
+            {{/c3}}
+        </div>
+        <div class="gray-square">
+            {{#d3}}
+            <img src="images/{{d3.team}}_{{d3.name}}.png"/>
+            {{/d3}}
+        </div>
+        <div class="white-square">
+            {{#e3}}
+            <img src="images/{{e3.team}}_{{e3.name}}.png"/>
+            {{/e3}}
+        </div>
+        <div class="gray-square">
+            {{#f3}}
+            <img src="images/{{f3.team}}_{{f3.name}}.png"/>
+            {{/f3}}
+        </div>
+        <div class="white-square">
+            {{#g3}}
+            <img src="images/{{g3.team}}_{{g3.name}}.png"/>
+            {{/g3}}
+        </div>
+        <div class="gray-square">
+            {{#h3}}
+            <img src="images/{{h3.team}}_{{h3.name}}.png"/>
+            {{/h3}}
+        </div>
+
+        <div class="gray-square">
+            {{#a2}}
+            <img src="images/{{a2.team}}_{{a2.name}}.png"/>
+            {{/a2}}
+        </div>
+        <div class="white-square">
+            {{#b2}}
+            <img src="images/{{b2.team}}_{{b2.name}}.png"/>
+            {{/b2}}
+        </div>
+        <div class="gray-square">
+            {{#c2}}
+            <img src="images/{{c2.team}}_{{c2.name}}.png"/>
+            {{/c2}}
+        </div>
+        <div class="white-square">
+            {{#d2}}
+            <img src="images/{{d2.team}}_{{d2.name}}.png"/>
+            {{/d2}}
+        </div>
+        <div class="gray-square">
+            {{#e2}}
+            <img src="images/{{e2.team}}_{{e2.name}}.png"/>
+            {{/e2}}
+        </div>
+        <div class="white-square">
+            {{#f2}}
+            <img src="images/{{f2.team}}_{{f2.name}}.png"/>
+            {{/f2}}
+        </div>
+        <div class="gray-square">
+            {{#g2}}
+            <img src="images/{{g2.team}}_{{g2.name}}.png"/>
+            {{/g2}}
+        </div>
+        <div class="white-square">
+            {{#h2}}
+            <img src="images/{{h2.team}}_{{h2.name}}.png"/>
+            {{/h2}}
+        </div>
+
+        <div class="white-square">
+            {{#a1}}
+            <img src="images/{{a1.team}}_{{a1.name}}.png"/>
+            {{/a1}}
+        </div>
+        <div class="gray-square">
+            {{#b1}}
+            <img src="images/{{b1.team}}_{{b1.name}}.png"/>
+            {{/b1}}
+        </div>
+        <div class="white-square">
+            {{#c1}}
+            <img src="images/{{c1.team}}_{{c1.name}}.png"/>
+            {{/c1}}
+        </div>
+        <div class="gray-square">
+            {{#d1}}
+            <img src="images/{{d1.team}}_{{d1.name}}.png"/>
+            {{/d1}}
+        </div>
+        <div class="white-square">
+            {{#e1}}
+            <img src="images/{{e1.team}}_{{e1.name}}.png"/>
+            {{/e1}}
+        </div>
+        <div class="gray-square">
+            {{#f1}}
+            <img src="images/{{f1.team}}_{{f1.name}}.png"/>
+            {{/f1}}
+        </div>
+        <div class="white-square">
+            {{#g1}}
+            <img src="images/{{g1.team}}_{{g1.name}}.png"/>
+            {{/g1}}
+        </div>
+        <div class="gray-square">
+            {{#h1}}
+            <img src="images/{{h1.team}}_{{h1.name}}.png"/>
+            {{/h1}}
+        </div>
+        {{/this}}
+    </section>
+
+    <section>
+        <form action="/start" method="get">
+            <button>start</button>
+        </form>
+    </section>
+</div>
 </body>
 </html>

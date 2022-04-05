@@ -10,6 +10,7 @@ import java.util.function.BiPredicate;
 
 public class Pawn extends PromotablePiece {
 
+    private static final String NAME = "Pawn";
     private static final String SYMBOL = "p";
     private static final double SCORE = 1;
 
@@ -93,5 +94,10 @@ public class Pawn extends PromotablePiece {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

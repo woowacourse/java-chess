@@ -34,4 +34,10 @@ public abstract class Piece {
     public abstract boolean canPromote(final Position sourcePosition);
 
     public abstract Piece promote(final String promotionType);
+
+    public abstract String getName();
+
+    public String getTeam() {
+        return team.name();
+    }
 }

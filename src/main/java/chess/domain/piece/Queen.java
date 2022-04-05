@@ -6,6 +6,7 @@ import java.util.function.BiPredicate;
 
 public class Queen extends UnpromotablePiece {
 
+    private static final String NAME = "Queen";
     static final String SYMBOL = "q";
     private static final double SCORE = 9;
 
@@ -39,5 +40,10 @@ public class Queen extends UnpromotablePiece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }
