@@ -35,7 +35,7 @@ public class WebController extends Controller {
         });
     }
 
-    protected void inGame(String input, Map<String, Object> model) {
+    private void inGame(String input, Map<String, Object> model) {
         try {
             executeCommand(InputView.requireCommand(input));
         } catch (IllegalArgumentException e) {

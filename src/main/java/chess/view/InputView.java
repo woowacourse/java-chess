@@ -40,18 +40,13 @@ public class InputView {
     }
 
     public static Map.Entry<Command, List<Square>> requireCommand(String input) {
-        try {
-            List<String> commands = getCommands(input);
-            Command command = Command.from(commands.get(COMMAND_INDEX));
-            validateCommandFormatSize(command, commands);
-            if (command == Command.MOVE) {
-                return Map.entry(command, getSourceAndTarget(commands));
-            }
-            return Map.entry(command, List.of());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return requireCommand();
+        List<String> commands = getCommands(input);
+        Command command = Command.from(commands.get(COMMAND_INDEX));
+        validateCommandFormatSize(command, commands);
+        if (command == Command.MOVE) {
+            return Map.entry(command, getSourceAndTarget(commands));
         }
+        return Map.entry(command, List.of());
     }
 
     private static List<String> getCommands() {
