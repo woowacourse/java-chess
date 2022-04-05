@@ -24,7 +24,7 @@ class ScoreTest {
     void apply() {
         //given
         Score score = new Score(
-            new Board(new TurnDecider(), new defaultInitializer()).getValues(),
+            new Board(new defaultInitializer()).getValues(),
             new TurnDecider());
 
         //when
@@ -37,7 +37,7 @@ class ScoreTest {
     @DisplayName("폰이 같은 File에 두 개, 일반적 폰 1개, 다른 팀 폰 1개 있을 경우 2점으로 계산한다.")
     void when_pawns_in_same_file() {
         Score score = new Score(
-            new Board(new TurnDecider(), new testInitializer()).getValues(),
+            new Board(new testInitializer()).getValues(),
             new TurnDecider());
 
         //then

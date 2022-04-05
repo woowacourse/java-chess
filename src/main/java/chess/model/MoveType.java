@@ -10,4 +10,14 @@ public enum MoveType {
     public boolean isEnemy() {
         return this == ENEMY;
     }
+
+    public static MoveType of(boolean isTargetEmpty, boolean isTargetFriendly) {
+        if (isTargetEmpty) {
+            return MoveType.EMPTY;
+        }
+        if (isTargetFriendly) {
+            return MoveType.FRIENDLY;
+        }
+        return MoveType.ENEMY;
+    }
 }
