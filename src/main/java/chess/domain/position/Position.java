@@ -47,6 +47,6 @@ public final class Position {
 
     @Override
     public String toString() {
-        return "{" + xPosition.getXPosition() + ", " + yPosition.getYPosition() + "}";
+        return String.valueOf(xPosition.getXPosition()) + String.valueOf(yPosition.getYPosition());
     }
 }
