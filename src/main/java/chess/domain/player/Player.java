@@ -18,7 +18,7 @@ public class Player {
     private final Color color;
     private final Map<Position, Piece> pieces;
 
-    private Player(final Long id, final Color color, final Map<Position, Piece> pieces) {
+    public Player(final Long id, final Color color, final Map<Position, Piece> pieces) {
         this.id = id;
         this.color = color;
         this.pieces = pieces;
