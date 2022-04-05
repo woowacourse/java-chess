@@ -23,14 +23,6 @@ public class ChessService {
         this.pieceDAO = new PieceDao();
     }
 
-    public List<String> createChessBoard(String gameName) {
-        this.chessGame = new ChessGame(gameName);
-
-        chessGame.progress(Command.from("start"));
-
-        return chessGame.getChessBoardSymbol();
-    }
-
     public List<String> getCurrentChessBoard() {
         return chessGame.getChessBoardSymbol();
     }
@@ -57,13 +49,18 @@ public class ChessService {
         ChessGame selectedChessGame = chessGameDao.findByName(gameName);
 
         if (selectedChessGame == null) {
-            chessGame = new ChessGame(gameName);
-            chessGame.progress(Command.from("start"));
-
-            return chessGame.getChessBoardSymbol();
+            return createChessBoard(gameName);
         }
 
         chessGame = selectedChessGame;
+
+        return chessGame.getChessBoardSymbol();
+    }
+
+    private List<String> createChessBoard(String gameName) {
+        this.chessGame = new ChessGame(gameName);
+
+        chessGame.progress(Command.from("start"));
 
         return chessGame.getChessBoardSymbol();
     }
@@ -76,14 +73,21 @@ public class ChessService {
         int chessboardId = chessGameDao.findIdByName(gameName);
 
         if (chessboardId > 0) {
-            chessGameDao.update(chessGameDto, chessboardId);
-            pieceDAO.update(chessboardId, chessGameDto);
+            updateChessGame(chessGameDto, chessboardId);
             return;
         }
 
+        saveChessGame(chessGameDto);
+    }
+
+    private void updateChessGame(ChessGameDto chessGameDto, int chessboardId) {
+        chessGameDao.update(chessGameDto, chessboardId);
+        pieceDAO.update(chessboardId, chessGameDto);
+    }
+
+    private void saveChessGame(ChessGameDto chessGameDto) {
         int savedId = chessBoardDao.save();
         pieceDAO.save(savedId, chessGameDto);
-
         chessGameDao.save(chessGameDto, savedId);
     }
 
