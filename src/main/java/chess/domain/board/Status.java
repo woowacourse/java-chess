@@ -25,15 +25,15 @@ public class Status {
         }
     }
 
-    private void showColorStatus(final ObjDoubleConsumer<String> printScore, final Color color) {
-        printScore.accept(color.getName(), calculateScore(color));
-    }
-
-    private double calculateScore(final Color color) {
+    public double calculateScore(final Color color) {
         double pawnScore = calculateScorePawn(color);
         double otherScore = calculateScoreOtherPiece(color);
 
         return pawnScore + otherScore;
+    }
+
+    private void showColorStatus(final ObjDoubleConsumer<String> printScore, final Color color) {
+        printScore.accept(color.getName(), calculateScore(color));
     }
 
     private double calculateScorePawn(final Color color) {
