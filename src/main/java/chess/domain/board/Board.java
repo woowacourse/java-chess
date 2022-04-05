@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.direction.DiagonalDirection;
 import chess.domain.position.direction.Direction;
+import chess.dto.BoardDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

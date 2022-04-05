@@ -13,6 +13,10 @@ public class ChessGame {
         this.state = new Ready();
     }
 
+    public void startsWith(State state) {
+        this.state = state;
+    }
+
     public void startGame() {
         this.state = state.startGame();
     }
