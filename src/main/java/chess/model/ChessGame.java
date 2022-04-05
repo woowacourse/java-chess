@@ -1,6 +1,5 @@
 package chess.model;
 
-import chess.console.controller.GameCommand;
 import chess.model.board.Board;
 import chess.model.board.BoardInitializer;
 import chess.model.board.Square;

@@ -1,7 +1,6 @@
 package chess.web.controller;
 
-import chess.web.service.ChessService;
-import java.util.List;
+import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -14,7 +13,7 @@ public class ChessController {
     }
 
     public void initGame() {
-        service.initBoard();
+        service.initGame();
     }
 
     public ModelAndView getBoard() {

@@ -1,6 +1,7 @@
 package chess.console.controller;
 
-import chess.console.service.ChessService;
+import chess.model.GameCommand;
+import chess.service.ChessService;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import java.util.List;
@@ -47,12 +48,14 @@ public final class ChessController {
 
     public void start(GameCommandRequest request) {
         OutputView.startGame();
-        OutputView.printBoard(service.initGame());
+        service.initGame();
+        OutputView.printBoard(service.getAllPieceLetter());
     }
 
     public void move(GameCommandRequest request) {
         List<String> body = request.getBody();
-        OutputView.printBoard(service.move(body.get(FROM_INDEX), body.get(TO_INDEX)));
+        service.move(body.get(FROM_INDEX), body.get(TO_INDEX));
+        OutputView.printBoard(service.getAllPieceLetter());
     }
 
     public void status(GameCommandRequest request) {

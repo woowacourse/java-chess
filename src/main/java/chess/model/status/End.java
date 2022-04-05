@@ -1,6 +1,6 @@
 package chess.model.status;
 
-import chess.console.controller.GameCommand;
+import chess.model.GameCommand;
 
 public class End implements GameStatus {
     @Override

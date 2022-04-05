@@ -1,4 +1,4 @@
-package chess.console.service;
+package chess.service;
 
 public class GameResult {
     private String winnerColor;

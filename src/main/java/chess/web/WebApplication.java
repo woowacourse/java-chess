@@ -7,7 +7,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.web.controller.ChessController;
 import chess.web.dao.RuntimeChessGameDao;
-import chess.web.service.ChessService;
+import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;

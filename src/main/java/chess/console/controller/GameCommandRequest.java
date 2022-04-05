@@ -1,5 +1,6 @@
 package chess.console.controller;
 
+import chess.model.GameCommand;
 import java.util.List;
 
 public class GameCommandRequest {

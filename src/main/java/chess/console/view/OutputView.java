@@ -1,6 +1,6 @@
 package chess.console.view;
 
-import chess.console.service.GameResult;
+import chess.service.GameResult;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +53,7 @@ public final class OutputView {
     }
 
     public static void printWinner(GameResult result) {
-        if(result.getIsDraw()) {
+        if (result.getIsDraw()) {
             System.out.println("비겼습니다!");
             return;
         }

@@ -1,5 +1,7 @@
-package chess.console.controller;
+package chess.model;
 
+import chess.console.controller.ChessController;
+import chess.console.controller.GameCommandRequest;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
