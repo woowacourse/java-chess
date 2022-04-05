@@ -1,19 +1,26 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.DOWN_LEFT;
-import static chess.domain.board.Direction.DOWN_RIGHT;
-import static chess.domain.board.Direction.TOP_LEFT;
-import static chess.domain.board.Direction.TOP_RIGHT;
+import java.util.List;
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
 
-import chess.domain.piece.attribute.Color;
-import java.util.Arrays;
+public class Bishop extends Piece {
 
-public class Bishop extends MultipleMovablePiece {
+    public Bishop(PieceColor pieceColor, Position position) {
+        super(PieceType.BISHOP, pieceColor, position);
+    }
 
-    private static final String BISHOP_INITIAL = "B";
+    @Override
+    public Direction findByDirection(Position from, Position to) {
+        final int colum = to.getColumn() - from.getColumn();
+        final int row = to.getRow() - from.getRow();
 
-    public Bishop(Color color) {
-        super(color, BISHOP_INITIAL, Arrays.asList(TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
+        return Direction.ofDiagonal(colum, row);
+    }
+
+    @Override
+    protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
+        return Direction.DIAGONAL_DIRECTION;
     }
 
     @Override

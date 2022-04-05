@@ -1,109 +1,79 @@
 package chess.domain.board;
 
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Score;
-import chess.domain.piece.Article;
-import java.util.EnumMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import chess.domain.piece.Blank;
+import chess.domain.piece.MovePath;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 
 public class ChessBoard {
 
-    private static final int BASE_KING_COUNT = 2;
-    private static final double DECREASE_PAWN_SCORE = 0.5;
+    private static final int DEFAULT_ALIVE_KING_COUNT = 2;
+    private final Map<Position, Piece> board;
 
-    private final Map<Position, Article> pieces;
-
-    public ChessBoard(Map<Position, Article> pieces) {
-        this.pieces = pieces;
+    public ChessBoard(Map<Position, Piece> pieces) {
+        this.board = pieces;
     }
 
-    private static double scoreOfPiece(Entry<Position, Article> positionPiece) {
-        return Score.valueOf(positionPiece.getValue()).getValue();
+    public static ChessBoard create() {
+        return new ChessBoard(ChessBoardFactory.initChessBoard());
     }
 
-    public void movePiece(Position from, Position to) {
-        Article movePiece = findByPiece(from).move(from, to, this);
+    public void move(Position from, Position to) {
+        final Piece sourcePiece = findByPiece(from);
+        final Piece targetPiece = findByPiece(to);
 
-        pieces.remove(from);
-        pieces.put(to, movePiece);
+        MovePath movePath = sourcePiece.findByMovePath(targetPiece);
+        validatePath(movePath);
+
+        sourcePiece.move(to);
+        updateBoard(from, to);
     }
 
-    public Article findByPiece(Position position) {
-        if (pieces.containsKey(position)) {
-            return pieces.get(position);
+    public Piece findByPiece(Position position) {
+        if (board.containsKey(position)) {
+            return board.get(position);
         }
 
-        throw new IllegalArgumentException("보드판에 존재하는 기물이 없습니다.");
+        throw new IllegalArgumentException("해당 위치에 아무 값도 없습니다.");
     }
 
-    public boolean isEmptyPosition(Position position) {
-        return !pieces.containsKey(position);
+    private void validatePath(MovePath movePath) {
+        if (movePath.hasNext()) {
+            validateBlank(movePath.next());
+        }
     }
 
-    public Map<Color, Double> getColorsTotalScore() {
-        Map<Color, Double> totalScore = new EnumMap<>(Color.class);
-        totalScore.put(Color.WHITE, getDefaultScore(Color.WHITE) - getSameLinePawnScore(Color.WHITE));
-        totalScore.put(Color.BLACK, getDefaultScore(Color.BLACK) - getSameLinePawnScore(Color.WHITE));
+    private void validateBlank(Position position) {
+        Piece piece = findByPiece(position);
 
-        return totalScore;
+        if (!piece.isBlank()) {
+            throw new IllegalArgumentException("이동 경로에 장애물이 존재하여 이동할 수 없습니다.");
+        }
     }
 
-    private double getDefaultScore(Color color) {
-        return pieces.entrySet().stream()
-                .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
-                .mapToDouble(ChessBoard::scoreOfPiece)
-                .sum();
+    private void updateBoard(Position from, Position to) {
+        Piece piece = findByPiece(from);
+        board.put(to, piece);
+        board.put(from, new Blank(from));
     }
 
-    private boolean isSameColor(Position position, Color color) {
-        return findByPiece(position).getColor() == color;
-    }
-
-    private double getSameLinePawnScore(Color color) {
-        final long sameLinePawnCount = pieces.entrySet().stream()
-                .filter(positionArticle -> isSamePawnAndColor(positionArticle.getValue(), color))
-                .filter(positionArticle -> isSameColorPawnInColumn(positionArticle.getKey(), color))
-                .count();
-
-        return sameLinePawnCount * DECREASE_PAWN_SCORE;
-    }
-
-    private boolean isSameColorPawnInColumn(Position position, Color color) {
-        return pieces.entrySet().stream()
-                .filter(positionArticle -> isSamePawnAndColor(positionArticle.getValue(), color))
-                .anyMatch(positionArticle -> isExistOtherPawnInColumn(position, positionArticle.getKey()));
-    }
-
-    public boolean isSamePawnAndColor(Article article, Color color) {
-        return article.isPawn() && article.getColor() == color;
-    }
-
-    private boolean isExistOtherPawnInColumn(Position position, Position otherPosition) {
-        return !position.equals(otherPosition) && position.isEqualsColumn(otherPosition);
-    }
-
-    public Color getWinner() {
-        return pieces.values()
-                .stream()
-                .filter(Article::isKing)
-                .map(Article::getColor)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("보드 판에 왕이 존재하지 않습니다."));
-    }
-
-    public boolean isKingAlive() {
-        return getAliveKingCount() != BASE_KING_COUNT;
+    public boolean isFinished() {
+        return getAliveKingCount() != DEFAULT_ALIVE_KING_COUNT;
     }
 
     private long getAliveKingCount() {
-        return pieces.values()
-                .stream()
-                .filter(Article::isKing)
+        return board.values().stream()
+                .filter(Piece::isKing)
                 .count();
     }
 
-    public Map<Position, Article> getPieces() {
-        return Map.copyOf(pieces);
+    public boolean hasKing(PieceColor pieceColor) {
+        return board.values().stream()
+                .anyMatch(piece -> piece.isKing() && piece.isSameColor(pieceColor));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }

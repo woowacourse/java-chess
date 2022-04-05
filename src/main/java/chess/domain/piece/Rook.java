@@ -1,20 +1,26 @@
 package chess.domain.piece;
 
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
+import java.util.List;
 
-import static chess.domain.board.Direction.DOWN;
-import static chess.domain.board.Direction.LEFT;
-import static chess.domain.board.Direction.RIGHT;
-import static chess.domain.board.Direction.TOP;
+public class Rook extends Piece {
 
-import chess.domain.piece.attribute.Color;
-import java.util.Arrays;
+    public Rook(PieceColor pieceColor, Position position) {
+        super(PieceType.ROOK, pieceColor, position);
+    }
 
-public class Rook extends MultipleMovablePiece {
+    @Override
+    public List<Direction> findByMovableDirection(Piece piece, Direction direction) {
+        return Direction.LINEAR_DIRECTION;
+    }
 
-    private static final String ROOK_INITIAL = "R";
+    @Override
+    public Direction findByDirection(Position from, Position to) {
+        final int column = to.getColumn() - from.getColumn();
+        final int row = to.getRow() - from.getRow();
 
-    public Rook(Color color) {
-        super(color, ROOK_INITIAL, Arrays.asList(TOP, DOWN, LEFT, RIGHT));
+        return Direction.ofLinear(column, row);
     }
 
     @Override

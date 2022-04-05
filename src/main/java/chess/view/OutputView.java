@@ -1,23 +1,16 @@
 package chess.view;
 
+import static chess.domain.piece.PieceColor.BLACK;
 
-import chess.domain.board.File;
-
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.Article;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
+import chess.domain.game.Status;
+import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
     private static final String ARROW = "> ";
-    private static final String COMMA = ".";
     private static final String TEAM_STATUS = "%s 점수 : %.1f졈" + SEPARATOR;
     private static final String WINNER_TEAM = "게임 결과 : %s 승" + SEPARATOR;
     private static final String DRAW = "무승부";
@@ -32,38 +25,40 @@ public class OutputView {
         System.out.println(INIT_MESSAGE);
     }
 
-    public static void printChessBoard(Map<Position, Article> board) {
-        List<Rank> ranks = Arrays.stream(Rank.values())
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-
-        for (Rank rank : ranks) {
-            for (File file : File.values()) {
-                printPiece(board, rank, file);
-            }
-            System.out.println();
+    public static void printChessBoard(ChessBoard chessBoard) {
+        final Map<Position, Piece> board = chessBoard.getBoard();
+        for (int column = 7; column >= 0; column--) {
+            printPieces(board, column);
         }
         System.out.println();
     }
 
-    private static void printPiece(Map<Position, Article> board, Rank rank, File file) {
-        Position position = new Position(file, rank);
-        if (board.containsKey(position)) {
-            System.out.print(board.get(position).getName());
-            return;
-        }
-        System.out.print(COMMA);
-    }
-
-    public static void printStatus(Map<Color, Double> colorsTotalScore) {
-        for (Entry<Color, Double> entry : colorsTotalScore.entrySet()) {
-            System.out.printf(TEAM_STATUS, entry.getKey().name(), entry.getValue());
+    private static void printPieces(Map<Position, Piece> board, int column) {
+        for (int row = 0; row <=7; row++) {
+            final Piece piece = board.get(Position.valueOf(getKey(row, column)));
+            System.out.print(getPiece(piece));
         }
         System.out.println();
     }
 
-    public static void printGameResult(Color winnerColor) {
-        System.out.printf(WINNER_TEAM, winnerColor.name());
+    private static String getKey(int row, int column) {
+        return (char) ('a' + row) + String.valueOf(1 + column);
+    }
+
+    private static String getPiece(Piece piece) {
+        if (piece.getPieceColor() == BLACK) {
+            return piece.getPieceType().getName().toUpperCase();
+        }
+        return piece.getPieceType().getName();
+    }
+
+    public static void printStatus(Status status) {
+        System.out.printf(TEAM_STATUS, "BLACK", status.getBlackScore().getScore());
+        System.out.printf(TEAM_STATUS, "WHITE", status.getWhiteScore().getScore());
+    }
+
+    public static void printGameResult(Status status) {
+        System.out.printf(WINNER_TEAM, status.getWinnerColor());
     }
 
     public static void printErrorMessage(String errorMessage) {
