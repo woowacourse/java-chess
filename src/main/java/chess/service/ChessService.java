@@ -1,9 +1,10 @@
 package chess.service;
 
+import chess.dao.BoardDao;
 import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.board.Score;
-import chess.domain.board.generator.BoardGenerator;
+import chess.domain.board.generator.BasicBoardGenerator;
 import chess.domain.board.generator.DatabaseLoadBoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class ChessService {
 
@@ -32,13 +34,23 @@ public class ChessService {
             model.put(entry.getKey().getName()
                     , new PieceDto(entry.getValue(), entry.getKey()));
         }
-        model.put("turn", chessGame.getTurn());
+        model.put("turn", chessGame.getTurn().name());
         return model;
     }
 
-    public int createNewBoard(BoardGenerator boardGenerator, ChessGame chessGame) {
-        chessGame.start(boardGenerator);
-        return 1; // TODO
+    public int createNewBoard(BoardDao boardDao, PieceDao pieceDao, ChessGame chessGame) {
+        chessGame.start(new BasicBoardGenerator());
+        int boardId = boardDao.createBoard(chessGame.getTurn());
+        pieceDao.create(convertPieceDtos(chessGame.getBoard()), boardId);
+        return boardId;
+    }
+
+    private List<PieceDto> convertPieceDtos(Board board) {
+        return board.getValue()
+                .entrySet()
+                .stream()
+                .map(entry -> new PieceDto(entry.getValue(), entry.getKey()))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Map<String, Object> move(ChessGame chessGame, PieceDao pieceDao, List<String> inputs) {

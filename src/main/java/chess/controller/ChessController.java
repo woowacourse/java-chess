@@ -7,7 +7,6 @@ import chess.dao.BoardDao;
 import chess.dao.BoardDaoImpl;
 import chess.dao.PieceDao;
 import chess.dao.PieceDaoImpl;
-import chess.domain.board.generator.BoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.service.ChessService;
 import java.sql.Connection;
@@ -34,7 +33,7 @@ public class ChessController {
         this.boardDao = new BoardDaoImpl(connection);
     }
 
-    public void run(BoardGenerator boardGenerator) {
+    public void run() {
         ChessGame chessGame = new ChessGame();
 
         get(INDEX_URL, (request, response) -> render(new HashMap<>(), INDEX_PAGE));
@@ -45,7 +44,7 @@ public class ChessController {
         });
 
         post("/new", (request, response) -> {
-            int id = chessService.createNewBoard(boardGenerator, chessGame);
+            int id = chessService.createNewBoard(boardDao, pieceDao, chessGame);
             response.redirect(BOARD_URL + "?id=" + id);
             return null;
         });

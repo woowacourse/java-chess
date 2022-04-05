@@ -27,6 +27,6 @@ public class DatabaseLoadBoardGenerator implements BoardGenerator {
     }
 
     private Piece createPiece(PieceDto pieceDto) {
-        return PieceFactory.of(pieceDto.getType(), Team.valueOf(pieceDto.getTeam()));
+        return PieceFactory.of(pieceDto.getType(), Team.of(pieceDto.getTeam()));
     }
 }

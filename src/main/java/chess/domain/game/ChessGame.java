@@ -6,6 +6,7 @@ import static chess.console.view.InputView.TO_POSITION_INDEX;
 import chess.domain.board.Board;
 import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class ChessGame {
         return board;
     }
 
-    public String getTurn() {
-        return board.getTurn().name();
+    public Team getTurn() {
+        return board.getTurn();
     }
 
     public void end() {
