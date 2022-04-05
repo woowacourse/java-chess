@@ -21,6 +21,15 @@ public class JdbcTemplate {
         }
     }
 
+    public void executeBatch(PreparedStatementCreator creator) {
+        try (PreparedStatement pstmt = creator.excute(connection)) {
+
+            pstmt.executeBatch();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
     public <T> T executeSelect(PreparedStatementCreator creator, ResultSetMapper<T> mapper) {
         try (PreparedStatement pstmt = creator.excute(connection)) {
 

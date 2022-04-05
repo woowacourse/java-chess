@@ -11,12 +11,12 @@ public class TurnDaoImpl implements TurnDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public TurnDaoImpl() {
-        this(DBConnection.getConnection());
-    }
-
     public TurnDaoImpl(Connection connection) {
         this.jdbcTemplate = new JdbcTemplate(connection);
+    }
+
+    public TurnDaoImpl() {
+        this(DBConnection.getConnection());
     }
 
     public Optional<Turn> findCurrentTurn() {
