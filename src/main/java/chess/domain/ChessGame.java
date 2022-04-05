@@ -36,23 +36,28 @@ public class ChessGame {
         checkMovable(sourcePiece, toPosition);
 
         moveOrKill(sourcePiece, toPosition);
+
+        changeTurn();
     }
 
     private void checkMovable(Piece sourcePiece, Position toPosition) {
-        checkTurn(sourcePiece);
+        validateTurn(sourcePiece);
         if (chessmen.isOccupied(toPosition)) {
             checkOccupiedByFriendly(sourcePiece, toPosition);
         }
-
         checkPath(sourcePiece, toPosition);
     }
 
-    private void checkTurn(Piece sourcePiece) {
+    private void validateTurn(Piece sourcePiece) {
         if (sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(TURN_EXCEPTION_MESSAGE);
         }
+    }
+
+    private void changeTurn() {
         turn = turn.nextTurn();
     }
+
 
     private void checkOccupiedByFriendly(Piece sourcePiece, Position toPosition) {
         Piece targetPiece = chessmen.extractPiece(toPosition);
@@ -99,7 +104,7 @@ public class ChessGame {
     public BoardMapDto toBoard() {
         Map<String, Object> model = new HashMap<>();
 
-        for (Piece piece: chessmen.getPieces()) {
+        for (Piece piece : chessmen.getPieces()) {
             ChessmenDto chessmenDto = new ChessmenDto(piece.getPosition(), piece.getName(), piece.getColor());
             model.put(chessmenDto.getPosition(), chessmenDto);
         }
