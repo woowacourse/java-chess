@@ -4,6 +4,7 @@ import java.util.Map;
 import refactorChess.domain.piece.Blank;
 import refactorChess.domain.piece.MovePath;
 import refactorChess.domain.piece.Piece;
+import refactorChess.domain.piece.PieceColor;
 
 public class ChessBoard {
 
@@ -56,7 +57,7 @@ public class ChessBoard {
         board.put(to, piece);
         board.put(from, new Blank(from));
     }
-    
+
     public boolean isFinished() {
         return getAliveKingCount() != DEFAULT_ALIVE_KING_COUNT;
     }
@@ -65,6 +66,11 @@ public class ChessBoard {
         return board.values().stream()
                 .filter(Piece::isKing)
                 .count();
+    }
+
+    public boolean hasKing(PieceColor pieceColor) {
+        return board.values().stream()
+                .anyMatch(piece -> piece.isKing() && piece.isSameColor(pieceColor));
     }
 
     public Map<Position, Piece> getBoard() {

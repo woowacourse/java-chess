@@ -2,7 +2,6 @@ package refactorChess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static refactorChess.domain.piece.PieceColor.NONE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

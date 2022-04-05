@@ -39,4 +39,13 @@ public class Status {
     public int hashCode() {
         return Objects.hash(whiteScore, blackScore, winnerColor);
     }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "whiteScore=" + whiteScore +
+                ", blackScore=" + blackScore +
+                ", winnerColor=" + winnerColor +
+                '}';
+    }
 }

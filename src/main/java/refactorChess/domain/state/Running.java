@@ -57,7 +57,7 @@ public class Running implements State {
     @Override
     public Status getStatus() {
         Score whiteScore = Score.calculateScore(chessBoard, PieceColor.WHITE);
-        Score blackScore = Score.calculateScore(chessBoard, PieceColor.WHITE);
+        Score blackScore = Score.calculateScore(chessBoard, PieceColor.BLACK);
         PieceColor winnerColor = PieceColor.NONE;
         if (whiteScore.isOverScore(blackScore)) {
             winnerColor = PieceColor.WHITE;
