@@ -1,0 +1,25 @@
+td.brown {
+  width:80px;
+  height:80px;
+  background-color:#b58865;
+}
+
+td.white {
+  width:80px;
+  height:80px;
+  background-color:#f0d9b7;
+}
+
+td{
+  text-align:center;
+}
+
+.button{
+  text-align:center;
+  float:left;
+  width:33%;
+}
+
+.move-box{
+  text-align:center;
+}

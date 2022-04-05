@@ -2,6 +2,7 @@ package chess;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
 
 import controller.WebChessController;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebApplication {
 
     public static void main(String[] args) {
+        staticFileLocation("/static");
         WebChessController webChessController = new WebChessController();
 
         get("/", (req, res) -> {
@@ -33,6 +35,7 @@ public class WebApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("command", "end");
             return render(model, "index.html");
         });
 

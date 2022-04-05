@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <style>
-  td.brown {
-    width:80px;
-    height:80px;
-    background-color:#b58865;
-  }
-  td.white {
-    width:80px;
-    height:80px;
-    background-color:#f0d9b7;
-  }
-  td{
-    text-align:center;
-  }
-  .button{
-    text-align:center;
-    float:left;
-    width:33%;
-  }
-  .move-box{
-    text-align:center;
-  }
-  </style>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src="/script.js"></script>
   <meta charset="UTF-8">
   <title>체스</title>
 </head>
@@ -164,22 +142,37 @@
         </table>
       </div>
     </div>
-    <div class="col-md-5"></div>
+    <div class="col-md-5">
+        <div class="black-player-box">
+          <div>Black</div>
+          <form action="/move" method="post">
+            <label>출발 위치</label>
+            <input type="text" name="source" id="black-source"/>
+            <label>도착 위치</label>
+            <input type="text" name="target" id="black-target"/>
+            <input type="submit" value="Move"/>
+          </form>
+          <div>
+            <label>Black 점수</label>
+            <span>{{blackScore}}</span>
+          </div>
+        </div>
+      <div class="white-player-box">
+        <div>Black</div>
+        <form action="/move" method="post">
+          <label>출발 위치</label>
+          <input type="text" name="source" id="white-source"/>
+          <label>도착 위치</label>
+          <input type="text" name="target" id="white-target"/>
+          <input type="submit" value="Move"/>
+        </form>
+        <div>
+          <label>White 점수</label>
+          <span>{{whiteScore}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-  <script>
-  function clickSpace(e){
-   var click_position = e.getAttribute('id');
-   var source_value = document.getElementById("source").value;
-    if(source_value == ""){
-      document.getElementById("source").value = e.getAttribute('id');
-      return;
-    }
-    if(source_value != click_position){
-      document.getElementById("target").value = e.getAttribute('id');
-      return;
-    }
-  }
-  </script>
 </body>
 </html>

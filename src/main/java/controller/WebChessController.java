@@ -27,6 +27,7 @@ public class WebChessController {
         for (Position position : board.keySet()) {
             model.put(position.getPosition(), board.get(position).symbolByPlayer());
         }
+        model.put("player",chessGame.getCurrentPlayer());
         return model;
     }
 
