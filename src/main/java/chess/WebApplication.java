@@ -1,5 +1,6 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
@@ -44,6 +45,11 @@ public class WebApplication {
             chessGame.move(Position.toPosition(source), Position.toPosition(target));
             res.redirect("/");
             return null;
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
         });
     }
 
