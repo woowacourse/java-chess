@@ -14,7 +14,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
 
-        assertThat(chessGame.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(chessGame.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 
     @Test

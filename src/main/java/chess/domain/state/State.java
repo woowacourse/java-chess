@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.Score;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -14,7 +15,9 @@ public interface State {
 
     boolean isFinished();
 
-    double computeScore(Color color);
+    Score computeScore(Color color);
 
     Chessboard getChessboard();
+
+    boolean isRunning();
 }

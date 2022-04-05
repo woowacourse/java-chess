@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.Score;
 import chess.domain.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -114,29 +115,14 @@ public class Chessboard {
                 .count() == KING_COUNT;
     }
 
-    public double computeScore(Color color) {
-        double score = board.keySet()
-                .stream()
-                .filter(piece -> board.get(piece).isColor(color))
-                .mapToDouble(piece -> board.get(piece).getScore())
-                .sum();
-
-        for (int column = 0; column < SIZE.size(); column++) {
-            score -= EXIST_PAWN_SAME_COLUMN * countSameColumnPawn(column, color);
-        }
-        return score;
+    public Score computeScore(Color color) {
+        return Score.create(board, color);
     }
 
-    private long countSameColumnPawn(int column, Color color) {
-        long count = SIZE.stream()
-                .filter(row -> board.containsKey(new Position(row, column)))
-                .filter(row -> board.get(new Position(row, column)).isColor(color)
-                        && board.get(new Position(row, column)).isSameType(Pawn.class))
-                .count();
-        if (count < DUPLICATE) {
-            return 0;
-        }
-        return count;
+    public Map<String, Piece> toModel() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 
     public Piece getPiece(int row, int column) {

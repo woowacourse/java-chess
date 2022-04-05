@@ -23,11 +23,22 @@ public enum Rank {
         this.rowIndex = rowIndex;
     }
 
-    public static int findRow(String column) {
+    public static int findRow(String targetRank) {
         Rank rank = Arrays.stream(values())
-                .filter(value -> value.rank.equals(column))
+                .filter(value -> value.rank.equals(targetRank))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_RANK_POSITION));
         return rank.rowIndex;
+    }
+
+    public static String findRank(int row) {
+        Rank rank = Arrays.stream(values()).filter(value -> value.rowIndex == row)
+                .findAny()
+                .orElseThrow();
+        return rank.rank;
+    }
+
+    public String rank() {
+        return rank;
     }
 }

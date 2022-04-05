@@ -1,0 +1,78 @@
+body {
+	background-color: #767885;
+	padding-top: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+h2 {
+    font-size: 28px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+row {
+    display: flex;
+    flex-direction: row;
+}
+
+column {
+    display: flex;
+    flex-direction: column;
+}
+
+.score-format {
+    padding-left: 30px;
+}
+
+.button {
+    padding-top: 43px;
+    padding-left: 20px;
+}
+
+.input-button {
+    width: 65px;
+    height: 30px;
+}
+
+.white-square {
+    background-color: #ada3a3;
+    width: 70px;
+    height: 70px;
+}
+
+.brown-square {
+    background-color: #6b5454;
+    width: 70px;
+    height: 70px;
+}
+
+.piece {
+    width: 65px;
+    height: 65px;
+}
+
+.rank {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    width: 65px;
+}
+
+.file {
+    display: flex;
+    justify-content: center;
+    width: 70px;
+    height: 20px;
+}
+
+.location-input {
+    padding-top: 200px;
+    padding-left: 60px;
+}
+
+.input-left {
+    padding-left: 60px;
+}

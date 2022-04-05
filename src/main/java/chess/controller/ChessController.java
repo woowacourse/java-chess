@@ -1,11 +1,12 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Positions;
 import chess.domain.piece.Color;
-import chess.view.MoveCommand;
 import chess.view.OutputView;
 
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 import static chess.view.Command.*;
 import static chess.view.InputView.inputCommand;
@@ -50,8 +51,9 @@ public class ChessController {
     }
 
     private void executeMove(ChessGame chessGame, String input) {
-        MoveCommand moveCommand = new MoveCommand(input);
-        chessGame.move(moveCommand.getSource(), moveCommand.getTarget());
+        StringTokenizer tokenizer = new StringTokenizer(input);
+        tokenizer.nextToken();
+        chessGame.move(Positions.findPosition(tokenizer.nextToken()), Positions.findPosition(tokenizer.nextToken()));
     }
 
     private boolean isExistCommand(String input) {

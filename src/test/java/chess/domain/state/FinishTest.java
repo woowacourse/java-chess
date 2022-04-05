@@ -25,14 +25,15 @@ class FinishTest {
     void checkScore() {
         Finish finish = new Finish(new Chessboard(BoardCache.create()));
 
-        assertThat(finish.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(finish.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 
     @Test
     @DisplayName("Finish 상태에서 start를 하는 경우")
     void checkStartException() {
-        assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create())).start())
-                .isInstanceOf(UnsupportedOperationException.class);
+        Finish finish = new Finish(new Chessboard(BoardCache.create()));
+
+        assertThat(finish.start()).isInstanceOf(Play.class);
     }
 
     @Test

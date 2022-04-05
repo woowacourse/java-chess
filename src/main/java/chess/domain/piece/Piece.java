@@ -15,10 +15,12 @@ public abstract class Piece {
 
     private final double score;
     protected final Color color;
+    private final String piece;
 
     public Piece(double score, Color color) {
         this.score = score;
         this.color = color;
+        this.piece = this.getClass().getSimpleName().toLowerCase();
     }
 
     public abstract boolean isMovablePosition(Position source, Position target, Map<Position, Piece> board);
@@ -39,25 +41,27 @@ public abstract class Piece {
 
     public boolean isMovableLine(List<Position> positions, List<Direction> move,
                                                  Map<Position, Piece> board) {
+
         Position source = positions.get(SOURCE);
         Position target = positions.get(TARGET);
 
         return move.stream()
-                .anyMatch(moveUnit -> isMovablePositionByRecursion(source, target,
-                        List.of(moveUnit.row(), moveUnit.column()), board));
+                .anyMatch(unit -> isMovableByRecursion(source.findPossiblePosition(unit.row(), unit.column()),
+                        target, List.of(unit.row(), unit.column()), board));
     }
 
-    private boolean isMovablePositionByRecursion(Position source, Position target, List<Integer> moveUnit,
+    private boolean isMovableByRecursion(Position source, Position target, List<Integer> unit,
                                                   Map<Position, Piece> board) {
-        int row = moveUnit.get(ROW);
-        int column = moveUnit.get(COLUMN);
         if (source.isOverRange()) {
             return false;
         }
-        if (source.isSamePosition(target)) {
-            return !board.containsKey(source);
+        if (!source.isSamePosition(target) && board.containsKey(source)) {
+            return false;
         }
-        return isMovablePositionByRecursion(source.findPossiblePosition(row, column), target, moveUnit, board);
+        if (source.isSamePosition(target)) {
+            return true;
+        }
+        return isMovableByRecursion(source.findPossiblePosition(unit.get(ROW), unit.get(COLUMN)), target, unit, board);
     }
 
     public boolean isColor(Color color) {
@@ -74,5 +78,15 @@ public abstract class Piece {
 
     public double getScore() {
         return score;
+    }
+
+    public String getPiece() {
+        return this.getClass().getSimpleName().toLowerCase();
+    }
+
+    @Override
+    public String toString() {
+        return "{" + "piece=" + piece + "}" +
+                "{" + "color=" + color + "}" ;
     }
 }

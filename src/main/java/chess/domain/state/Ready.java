@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.Score;
 import chess.domain.Turn;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
@@ -43,12 +44,17 @@ public class Ready implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
+    public Score computeScore(Color color) {
         throw new UnsupportedOperationException(EXCEPTION_COMPUTE_SCORE_IMPOSSIBLE);
     }
 
     @Override
     public Chessboard getChessboard() {
         return new Chessboard(chessboard);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

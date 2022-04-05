@@ -23,11 +23,22 @@ public enum File {
         this.columnIndex = columnIndex;
     }
 
-    public static int findColumn(String row) {
+    public static int findColumn(String targetFile) {
         File file = Arrays.stream(values())
-                .filter(value -> value.file.equals(row))
+                .filter(value -> value.file.equals(targetFile))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_POSITION));
         return file.columnIndex;
+    }
+
+    public static String findFile(int column) {
+        File file = Arrays.stream(values()).filter(value -> value.columnIndex == column)
+                .findAny()
+                .orElseThrow();
+        return file.file;
+    }
+
+    public String file() {
+        return file;
     }
 }

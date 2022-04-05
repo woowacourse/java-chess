@@ -56,6 +56,6 @@ class PlayTest {
     void checkScore() {
         Play play = Play.from(new Turn());
 
-        assertThat(play.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(play.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 }

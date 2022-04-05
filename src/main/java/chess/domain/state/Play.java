@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.Score;
 import chess.domain.Turn;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
@@ -47,12 +48,17 @@ public class Play implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
+    public Score computeScore(Color color) {
         return chessboard.computeScore(color);
     }
 
     @Override
     public Chessboard getChessboard() {
         return chessboard;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 }

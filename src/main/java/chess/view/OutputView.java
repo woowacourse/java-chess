@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.Score;
 import chess.domain.board.Chessboard;
 
 public class OutputView {
@@ -36,17 +37,17 @@ public class OutputView {
         }
     }
 
-    public static void printProgressScore(double scoreOfBlack, double scoreOfWhite) {
-        System.out.println(SCORE_MESSAGE);
-        System.out.println(BLACK + DELIMITER + scoreOfBlack);
-        System.out.println(WHITE + DELIMITER + scoreOfWhite);
-    }
-
-    public static void printFinalScore(double scoreOfBlack, double scoreOfWhite) {
+    public static void printFinalScore(Score scoreOfBlack, Score scoreOfWhite) {
         printProgressScore(scoreOfBlack, scoreOfWhite);
-        if (scoreOfWhite > scoreOfBlack) {
+        if (scoreOfWhite.getScore() > scoreOfBlack.getScore()) {
             System.out.println(WINNER + DELIMITER + WHITE);
         }
         System.out.println(WINNER + DELIMITER + BLACK);
+    }
+
+    public static void printProgressScore(Score scoreOfBlack, Score scoreOfWhite) {
+        System.out.println(SCORE_MESSAGE);
+        System.out.println(BLACK + DELIMITER + scoreOfBlack.getScore());
+        System.out.println(WHITE + DELIMITER + scoreOfWhite.getScore());
     }
 }

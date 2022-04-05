@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RookTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"2:0"}, delimiter = ':')
+    @CsvSource(value = {"2:0", "3:0"}, delimiter = ':')
     @DisplayName("rook 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Rook rook = new Rook(Color.BLACK);

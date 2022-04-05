@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.Score;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -8,7 +9,7 @@ import chess.domain.state.State;
 
 public class ChessGame {
 
-    private State state;
+     private State state;
 
     public ChessGame() {
         this.state = new Ready();
@@ -30,7 +31,11 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public double computeScore(Color color) {
+    public boolean isRunning() {
+        return state.isRunning();
+    }
+
+    public Score computeScore(Color color) {
         return state.computeScore(color);
     }
 

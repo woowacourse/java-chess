@@ -84,7 +84,7 @@ public class ChessboardTest {
     void checkScoreSum() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(chessboard.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 
     @Test
