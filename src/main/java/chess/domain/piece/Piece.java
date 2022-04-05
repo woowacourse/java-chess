@@ -33,7 +33,11 @@ public abstract class Piece {
 
     public abstract void move(Map<Point, Piece> pointPieces, Point from, Point to);
 
-    public String convertPieceInfoToString() {
-        return color.toString().toLowerCase() + "-" + type.toString().toLowerCase();
+    public String getPieceType() {
+        return type.toString().toLowerCase();
+    }
+
+    public String getPieceColor() {
+        return color.toString().toLowerCase();
     }
 }

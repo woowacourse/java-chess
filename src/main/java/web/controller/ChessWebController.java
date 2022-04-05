@@ -1,11 +1,14 @@
 package web.controller;
 
 import chess.dto.ErrorMessageDto;
+import chess.dto.GameDto;
 import chess.dto.MoveInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import web.dao.BoardDao;
+import web.dao.GameDao;
 import web.service.ChessService;
 
 import java.util.HashMap;
@@ -19,7 +22,7 @@ public class ChessWebController {
     private final ChessService service;
 
     public ChessWebController() {
-        this.service = new ChessService();
+        this.service = new ChessService(new BoardDao(), new GameDao());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -33,9 +36,19 @@ public class ChessWebController {
             return render(new HashMap<>(), "index.html");
         });
 
-        get("/start", (req, res) -> {
+//        get("/start", (req, res) -> {
+//            try {
+//                return gson.toJson(service.start());
+//            } catch (RuntimeException e) {
+//                res.status(503);
+//                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+//            }
+//        });
+
+        post("/start/newGame", (req, res) -> {
             try {
-                return gson.toJson(service.start());
+                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                return gson.toJson(service.startNewGame(gameDto));
             } catch (RuntimeException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));

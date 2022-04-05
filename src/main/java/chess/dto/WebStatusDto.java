@@ -1,4 +1,4 @@
-package web.service;
+package chess.dto;
 
 public class WebStatusDto {
 

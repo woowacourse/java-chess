@@ -2,7 +2,6 @@ package chess.dto;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Piece;
-import chess.dto.BoardAndTurnInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +18,7 @@ public class WebBoardDto {
         Map<Point, Piece> responseBoard = response.getBoard();
         for (Point point : responseBoard.keySet()) {
             this.board.put(point.convertPointToId(),
-                    responseBoard.get(point).convertPieceInfoToString());
+                    responseBoard.get(point).getPieceColor() + "-" + responseBoard.get(point).getPieceType());
         }
         this.isRunnable = isRunnable;
     }
