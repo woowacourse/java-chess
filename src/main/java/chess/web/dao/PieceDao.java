@@ -19,7 +19,7 @@ public class PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public List<Piece> findAll(Board board) {
+    public static List<Piece> findAll() {
         List<Piece> pieces = new ArrayList<>();
         try {
             Connection connection = getConnection();
@@ -34,7 +34,7 @@ public class PieceDao {
         return pieces;
     }
 
-    public void updatePieces(Board board) {
+    public static void updatePieces(Board board) {
         try {
             initialize();
             saveAllPieceBy(board);
@@ -43,14 +43,14 @@ public class PieceDao {
         }
     }
 
-    private void initialize() throws SQLException{
+    private static void initialize() throws SQLException{
         Connection connection = getConnection();
         final String clearSql = "truncate table piece";
         connection.prepareStatement(clearSql).executeUpdate();
         connection.close();
     }
 
-    private void saveAllPieceBy(Board board) throws SQLException {
+    private static void saveAllPieceBy(Board board) throws SQLException {
         Connection connection = getConnection();
         final String sql = "insert into piece (teamColor, symbol, position) values (?, ?, ?)";
         for (Piece piece : board.getPieces()) {
@@ -62,7 +62,7 @@ public class PieceDao {
         }
     }
 
-    private List<Piece> convertPieces(ResultSet resultSet) throws SQLException {
+    private static List<Piece> convertPieces(ResultSet resultSet) throws SQLException {
         List<Piece> pieces = new ArrayList<>();
         while (resultSet.next()) {
             pieces.add(PieceSymbol.getConstructor(resultSet.getString("symbol")).apply(
@@ -73,7 +73,7 @@ public class PieceDao {
         return pieces;
     }
 
-    private Connection getConnection() {
+    private static Connection getConnection() {
         loadDriver();
         Connection connection = null;
         try {
@@ -84,7 +84,7 @@ public class PieceDao {
         return connection;
     }
 
-    private void loadDriver() { // 생략 가능( 드라이버를 지정하고 싶을 때 작성, 하나만 사용한다면 DriverManager가 알아서 해준다.
+    private static void loadDriver() { // 생략 가능( 드라이버를 지정하고 싶을 때 작성, 하나만 사용한다면 DriverManager가 알아서 해준다.
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

@@ -11,16 +11,14 @@ class TeamColorDaoTest {
     @Test
     @DisplayName("현재 턴인 색깔을 최신화한다.")
     void findCurrentTeamColor() {
-        TeamColorDao teamColorDao = new TeamColorDao();
-        teamColorDao.update(TeamColor.BLACK);
+        TeamColorDao.update(TeamColor.BLACK);
     }
 
     @Test
     @DisplayName("현재 턴인 색깔을 가져온다.")
     void findCurrentTurnTeamColor() {
-        TeamColorDao teamColorDao = new TeamColorDao();
-        teamColorDao.update(TeamColor.WHITE);
-        assertThat(teamColorDao.findCurrentTurn()).isEqualTo(TeamColor.WHITE);
+        TeamColorDao.update(TeamColor.WHITE);
+        assertThat(TeamColorDao.findCurrentTurn()).isEqualTo(TeamColor.WHITE);
     }
 
 }
