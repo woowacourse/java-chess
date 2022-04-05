@@ -39,7 +39,7 @@ public class BoardDto {
     public Board toBoard() {
         final Map<Position, Piece> pieces = new HashMap<>();
         for (String position : board.keySet()) {
-            pieces.put(Position.create(position), board.get(position).toPiece());
+            pieces.put(Position.from(position), board.get(position).toPiece());
         }
 
         return new Board(new CustomBoardFactory(pieces));

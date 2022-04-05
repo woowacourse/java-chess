@@ -32,8 +32,8 @@ class EndedTest {
 
     @Test
     void move() {
-        Position from = Position.create("b2");
-        Position to = Position.create("b3");
+        Position from = Position.from("b2");
+        Position to = Position.from("b3");
         assertThatThrownBy(() -> ended.move(from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 게임이 끝나 move 할 수 없습니다.");

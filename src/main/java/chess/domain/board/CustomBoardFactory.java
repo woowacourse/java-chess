@@ -27,7 +27,7 @@ public class CustomBoardFactory implements BoardFactory {
 
     private Map<Position, Piece> initializeBoard() {
         final Map<Position, Piece> board = new HashMap<>(INITIAL_CAPACITY);
-        for (Position position : Position.toPieces()) {
+        for (Position position : Position.toPositions()) {
             board.put(position, new EmptyPiece());
         }
         return board;

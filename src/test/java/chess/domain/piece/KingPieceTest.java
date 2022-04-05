@@ -15,8 +15,8 @@ class KingPieceTest {
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece king = new KingPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(king.isRightMovement(from, to, false));
     }
@@ -25,8 +25,8 @@ class KingPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMove() {
         Piece king = new KingPiece(Color.BLACK);
-        Position from = Position.create("a1");
-        Position to = Position.create("a3");
+        Position from = Position.from("a1");
+        Position to = Position.from("a3");
 
         assertFalse(king.isRightMovement(from, to, false));
     }

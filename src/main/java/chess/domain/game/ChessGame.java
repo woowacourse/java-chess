@@ -19,6 +19,11 @@ public class ChessGame {
         this.state = new Ready(board);
     }
 
+    public void initialize() {
+        board = new Board(new BasicBoardFactory());
+        state = new Ready(board);
+    }
+
     public void load(final State state, final Board board) {
         this.state = state;
         this.board = board;
@@ -28,9 +33,8 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void initialize() {
-        board = new Board(new BasicBoardFactory());
-        state = new Ready(board);
+    public void end() {
+        state = state.end();
     }
 
     public void move(final Position from, final Position to) {
@@ -39,10 +43,6 @@ public class ChessGame {
 
     public void status() {
         state = state.status();
-    }
-
-    public void end() {
-        state = state.end();
     }
 
     public Score calculateMyScore() {

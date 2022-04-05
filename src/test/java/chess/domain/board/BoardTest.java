@@ -24,8 +24,8 @@ public class BoardTest {
     @Test
     @DisplayName("기물이 이동하는지 확인한다.")
     void move() {
-        Position from = Position.create("a2");
-        Position to = Position.create("a3");
+        Position from = Position.from("a2");
+        Position to = Position.from("a3");
         Piece source = board.getBoard().get(from);
 
         board.move(from, to);
@@ -45,10 +45,10 @@ public class BoardTest {
     @Test
     @DisplayName("같은 Column에 있는 특정 색의 Pawn을 모두 반환한다.")
     void countTwoPawnOnSameColumn() {
-        board.move(Position.create("a2"), Position.create("a4"));
-        board.move(Position.create("a4"), Position.create("a5"));
-        board.move(Position.create("a5"), Position.create("a6"));
-        board.move(Position.create("a6"), Position.create("b7"));
+        board.move(Position.from("a2"), Position.from("a4"));
+        board.move(Position.from("a4"), Position.from("a5"));
+        board.move(Position.from("a5"), Position.from("a6"));
+        board.move(Position.from("a6"), Position.from("b7"));
 
         assertThat(board.findPawnOnSameColumn(Color.WHITE, Column.B).size()).isEqualTo(2);
     }

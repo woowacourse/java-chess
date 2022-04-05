@@ -73,8 +73,8 @@ public class ChessService {
     }
 
     public void move(final String source, final String target) {
-        final Position from = Position.create(source);
-        final Position to = Position.create(target);
+        final Position from = Position.from(source);
+        final Position to = Position.from(target);
         chessGame.move(from, to);
 
         final Integer id = gameDao.findMaxId();
@@ -92,7 +92,7 @@ public class ChessService {
     }
 
     public ChessResponseDto createErrorChessResponseDto(final String message) {
-        return new ChessResponseDto("Error", message, chessGame);
+        return new ChessResponseDto("error", message, chessGame);
     }
 
     public StatusResponseDto createStatusResponseDto() {

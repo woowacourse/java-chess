@@ -123,11 +123,4 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(board));
     }
-
-    public Map<String, Piece> toMap() {
-        return board.entrySet()
-                .stream()
-                .filter(entry -> !entry.getValue().isEmpty())
-                .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue));
-    }
 }

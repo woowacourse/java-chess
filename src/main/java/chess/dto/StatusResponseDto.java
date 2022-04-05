@@ -12,7 +12,8 @@ public class StatusResponseDto {
     private final double opponentScore;
     private final String result;
 
-    public StatusResponseDto(final ChessGame chessGame, final double myScore, final double opponentScore, final String result) {
+    public StatusResponseDto(final ChessGame chessGame, final double myScore, final double opponentScore,
+                             final String result) {
         this("success", "", chessGame, myScore, opponentScore, result);
     }
 

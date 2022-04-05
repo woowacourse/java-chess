@@ -15,7 +15,7 @@ import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasicBoardFactory implements BoardFactory{
+public class BasicBoardFactory implements BoardFactory {
 
     private static final int INITIAL_CAPACITY = 64;
     private static final int START_EMPTY_ROW = 6;
@@ -41,19 +41,19 @@ public class BasicBoardFactory implements BoardFactory{
     }
 
     private void putPiecesWithoutPawn(final Map<Position, Piece> board, final Row row, final Color color) {
-        board.put(new Position(Column.A, row), new RookPiece(color));
-        board.put(new Position(Column.B, row), new KnightPiece(color));
-        board.put(new Position(Column.C, row), new BishopPiece(color));
-        board.put(new Position(Column.D, row), new QueenPiece(color));
-        board.put(new Position(Column.E, row), new KingPiece(color));
-        board.put(new Position(Column.F, row), new BishopPiece(color));
-        board.put(new Position(Column.G, row), new KnightPiece(color));
-        board.put(new Position(Column.H, row), new RookPiece(color));
+        board.put(Position.of(Column.A, row), new RookPiece(color));
+        board.put(Position.of(Column.B, row), new KnightPiece(color));
+        board.put(Position.of(Column.C, row), new BishopPiece(color));
+        board.put(Position.of(Column.D, row), new QueenPiece(color));
+        board.put(Position.of(Column.E, row), new KingPiece(color));
+        board.put(Position.of(Column.F, row), new BishopPiece(color));
+        board.put(Position.of(Column.G, row), new KnightPiece(color));
+        board.put(Position.of(Column.H, row), new RookPiece(color));
     }
 
     private void putPiecesOnRow(final Map<Position, Piece> board, final Row row, final Piece piece) {
         for (Column column : Column.values()) {
-            board.put(new Position(column, row), piece);
+            board.put(Position.of(column, row), piece);
         }
     }
 }

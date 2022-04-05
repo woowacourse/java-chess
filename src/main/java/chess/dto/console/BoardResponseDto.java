@@ -27,7 +27,7 @@ public class BoardResponseDto {
 
     private List<String> createNamesOnSameRow(final Map<Position, Piece> board, final Row row) {
         return Arrays.stream(Column.values())
-                .map(column -> board.get(new Position(column, row)))
+                .map(column -> board.get(Position.of(column, row)))
                 .map(this::decideName)
                 .collect(Collectors.toList());
     }

@@ -64,8 +64,8 @@ public class ChessConsoleController {
     }
 
     private static void move(final ChessGame chessGame, final List<String> commands) {
-        final Position from = Position.create(toPosition(commands, SOURCE_INDEX));
-        final Position to = Position.create(toPosition(commands, TARGET_INDEX));
+        final Position from = Position.from(toPosition(commands, SOURCE_INDEX));
+        final Position to = Position.from(toPosition(commands, TARGET_INDEX));
         chessGame.move(from, to);
         OutputView.printNewLine();
         OutputView.printBoard(new BoardResponseDto(chessGame.getBoard()));

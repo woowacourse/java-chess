@@ -35,41 +35,41 @@ class BoardFactoryTest {
 
     private static Stream<Arguments> initialPieces() {
         return Stream.of(
-                Arguments.of(new Position(Column.A, Row.EIGHT), new RookPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.B, Row.EIGHT), new KnightPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.C, Row.EIGHT), new BishopPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.D, Row.EIGHT), new QueenPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.E, Row.EIGHT), new KingPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.F, Row.EIGHT), new BishopPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.G, Row.EIGHT), new KnightPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.H, Row.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.A, Row.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.B, Row.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.C, Row.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.D, Row.EIGHT), new QueenPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.E, Row.EIGHT), new KingPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.F, Row.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.G, Row.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.H, Row.EIGHT), new RookPiece(Color.BLACK)),
 
-                Arguments.of(new Position(Column.A, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.B, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.C, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.D, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.E, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.F, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.G, Row.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(Column.H, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.A, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.B, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.C, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.D, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.E, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.F, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.G, Row.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(Position.of(Column.H, Row.SEVEN), new PawnPiece(Color.BLACK)),
 
-                Arguments.of(new Position(Column.A, Row.ONE), new RookPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.B, Row.ONE), new KnightPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.C, Row.ONE), new BishopPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.D, Row.ONE), new QueenPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.E, Row.ONE), new KingPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.F, Row.ONE), new BishopPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.G, Row.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.A, Row.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.B, Row.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.C, Row.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.D, Row.ONE), new QueenPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.E, Row.ONE), new KingPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.F, Row.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.G, Row.ONE), new KnightPiece(Color.WHITE)),
 
-                Arguments.of(new Position(Column.H, Row.ONE), new RookPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.A, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.B, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.C, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.D, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.E, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.F, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.G, Row.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(Column.H, Row.TWO), new PawnPiece(Color.WHITE))
+                Arguments.of(Position.of(Column.H, Row.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.A, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.B, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.C, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.D, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.E, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.F, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.G, Row.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(Position.of(Column.H, Row.TWO), new PawnPiece(Color.WHITE))
         );
     }
 
@@ -77,10 +77,10 @@ class BoardFactoryTest {
     @DisplayName("원하는 상태의 체스판을 생성한다.")
     void createCustomBoard() {
         Map<Position, Piece> board = new HashMap<>();
-        board.put(Position.create("a1"), new BishopPiece(Color.BLACK));
+        board.put(Position.from("a1"), new BishopPiece(Color.BLACK));
 
         Map<Position, Piece> actual = new CustomBoardFactory(board).create();
 
-        assertThat(actual.get(Position.create("a1"))).isEqualTo(new BishopPiece(Color.BLACK));
+        assertThat(actual.get(Position.from("a1"))).isEqualTo(new BishopPiece(Color.BLACK));
     }
 }

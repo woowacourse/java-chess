@@ -2,26 +2,49 @@ package chess.domain.position;
 
 import chess.domain.Direction;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private static final int FILE_INDEX = 0;
-    private static final int ROW_INDEX = 1;
+    private static final Map<String, Position> CACHE = new LinkedHashMap<>();
+
+    static {
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
+                CACHE.put(toName(column, row), new Position(column, row));
+            }
+        }
+    }
 
     private final Column column;
     private final Row row;
 
-    public Position(final Column column, final Row row) {
+    private Position(final Column column, final Row row) {
         this.column = column;
         this.row = row;
     }
 
-    public static Position create(final String position) {
-        final Column column = Column.of(position.substring(FILE_INDEX, ROW_INDEX));
-        final Row row = Row.of(position.substring(ROW_INDEX));
-        return new Position(column, row);
+    public static Position from(final String name) {
+        final Position position = CACHE.get(name);
+        checkNull(position);
+        return CACHE.get(name);
+    }
+
+    public static Position of(final Column column, final Row row) {
+        return CACHE.get(toName(column, row));
+    }
+
+    private static String toName(final Column column, final Row row) {
+        return column.getName() + row.getName();
+    }
+
+    private static void checkNull(final Position position) {
+        if (position == null) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 위치입니다.");
+        }
     }
 
     public Position move(final Direction direction) {
@@ -44,18 +67,12 @@ public class Position {
         return this.row.calculateDistance(from.row);
     }
 
-    public static List<Position> toPieces() {
-        final List<Position> positions = new ArrayList<>();
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                positions.add(new Position(column, row));
-            }
-        }
-        return positions;
+    public static List<Position> toPositions() {
+        return new ArrayList<>(CACHE.values());
     }
 
     public String getName() {
-        return column.getName() + row.getName();
+        return toName(column, row);
     }
 
     @Override
