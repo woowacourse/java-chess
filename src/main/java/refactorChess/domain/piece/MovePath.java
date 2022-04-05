@@ -31,12 +31,12 @@ public class MovePath implements Iterator<Position> {
 
     @Override
     public boolean hasNext() {
-        return from.change(direction.getColumn(), direction.getRow()) != to;
+        return from.add(direction.getColumn(), direction.getRow()) != to;
     }
 
     @Override
     public Position next() {
-        return from = from.change(direction.getColumn(), direction.getRow());
+        return from.add(direction.getColumn(), direction.getRow());
     }
 
     @Override

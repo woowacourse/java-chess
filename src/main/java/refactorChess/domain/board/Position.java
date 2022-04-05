@@ -1,5 +1,7 @@
 package refactorChess.domain.board;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -30,11 +32,31 @@ public class Position {
     }
 
     public static Position valueOf(String value) {
-        if (!Position.POSITIONS.containsKey(value.toLowerCase(Locale.ROOT))) {
+        if (!POSITIONS.containsKey(value.toLowerCase(Locale.ROOT))) {
             throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
         }
 
         return POSITIONS.get(value.toLowerCase(Locale.ROOT));
+    }
+
+    public Position add(int column, int row) {
+        if (!POSITIONS.containsKey(getKey(column, row))) {
+            throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
+        }
+
+        return POSITIONS.get(getKey(this.column + column, this.row + row));
+    }
+
+    public static Position change(int column, int row) {
+        if (!POSITIONS.containsKey(getKey(column, row))) {
+            throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
+        }
+
+        return POSITIONS.get(getKey(column, row));
+    }
+
+    public static Collection<Position> values() {
+        return Collections.unmodifiableCollection(POSITIONS.values());
     }
 
     public int getColumn() {

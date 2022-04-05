@@ -39,6 +39,10 @@ public abstract class Piece {
         }
     }
 
+    public void move(Position position) {
+        this.position = Position.change(position.getColumn(), position.getRow());
+    }
+
     public boolean isBlank() {
         return this.pieceType == PieceType.NO_PIECE;
     }
@@ -51,7 +55,20 @@ public abstract class Piece {
         return position;
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
     protected abstract Direction findByDirection(Position from, Position to);
 
     protected abstract List<Direction> findByMovableDirection(Piece piece, Direction direction);
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "pieceType=" + pieceType +
+                ", pieceColor=" + pieceColor +
+                ", position=" + position +
+                '}';
+    }
 }
