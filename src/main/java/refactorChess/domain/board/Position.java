@@ -40,10 +40,6 @@ public class Position {
     }
 
     public Position add(int column, int row) {
-        if (!POSITIONS.containsKey(getKey(column, row))) {
-            throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
-        }
-
         return POSITIONS.get(getKey(this.column + column, this.row + row));
     }
 
