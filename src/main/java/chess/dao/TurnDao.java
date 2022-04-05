@@ -7,6 +7,4 @@ public interface TurnDao {
     void save(TurnDto turnDto);
 
     TurnDto findLastTurn();
-
-    boolean isFirstTurn();
 }
