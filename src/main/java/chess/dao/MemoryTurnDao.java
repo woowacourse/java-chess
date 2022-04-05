@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MemoryTurnDao implements TurnDao {
 
-    private static final List<TurnDto> store = new ArrayList<>();
+    private static final List<TurnDto> store = new ArrayList<>(List.of(new TurnDto("black win")));
 
     @Override
     public void save(TurnDto turnDto) {
