@@ -49,4 +49,8 @@ public enum Rank {
         }
         return this;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

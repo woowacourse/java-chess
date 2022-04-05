@@ -45,4 +45,8 @@ public enum File {
         }
         return this;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
