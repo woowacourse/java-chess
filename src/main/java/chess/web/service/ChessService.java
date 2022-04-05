@@ -9,6 +9,8 @@ import chess.model.board.Square;
 import chess.model.piece.Piece;
 import chess.web.dao.RuntimeChessGameDao;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class ChessService {
     private final RuntimeChessGameDao dao;
@@ -44,5 +46,11 @@ public class ChessService {
 
     private ChessGame getChessGameFromDao() {
         return new ChessGame(new Board(dao.getAllPieces()), dao.getTurn());
+    }
+
+    public Map<String, Double> getScores() {
+        return getChessGameFromDao().status().entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
     }
 }

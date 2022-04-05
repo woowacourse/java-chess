@@ -13,7 +13,6 @@ public class ChessController {
         this.service = service;
     }
 
-
     public void initGame() {
         service.initBoard();
     }
@@ -22,12 +21,15 @@ public class ChessController {
         return new ModelAndView(service.getBoard(), "board.html");
     }
 
-
     public void move(Request req, Response res) {
         String body = req.body();
         String[] keyValues = body.split("&");
         String from = keyValues[0].split("=")[1];
         String to = keyValues[1].split("=")[1];
         service.move(from, to);
+    }
+
+    public ModelAndView status() {
+        return new ModelAndView(service.getScores(), "status.html");
     }
 }

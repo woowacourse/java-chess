@@ -12,6 +12,8 @@ import chess.web.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
@@ -40,9 +42,9 @@ public class WebApplication {
             return null;
         });
 
-        exception(Exception.class, (exception, request, response) -> {
-            response.body(exception.getMessage());
-        });
+        get("/status", (req, res) -> render(controller.status()));
+
+        exception(Exception.class, WebApplication::handle);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -51,5 +53,9 @@ public class WebApplication {
 
     private static String render(ModelAndView modelAndView) {
         return new HandlebarsTemplateEngine().render(modelAndView);
+    }
+
+    private static void handle(Exception exception, Request request, Response response) {
+        response.body(exception.getMessage());
     }
 }
