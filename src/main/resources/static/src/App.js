@@ -16,6 +16,7 @@ function move (source, target) {
         target: target.id
     }
 
+    console.log(request);
     reinitialize();
 
     fetch('/move', {
@@ -25,9 +26,16 @@ function move (source, target) {
             'Accept': 'application/json',
         },
         body: JSON.stringify(request)
-    }).then(response => response.json());
+    }). then(response => response.json())
+        .then(response => response.json().then(data => console.log(data.status)))
+    sleep();
+    location.reload()
+}
 
-    location.reload();
+function sleep() {
+    const wakeUpTime = Date.now() + 100;
+    while (Date.now() < wakeUpTime) {
+    }
 }
 
 function reinitialize(){

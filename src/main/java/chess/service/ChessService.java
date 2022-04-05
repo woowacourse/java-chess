@@ -15,6 +15,7 @@ public class ChessService {
     public void start(){
         chessBoard = ChessBoardFactory.initBoard();
         chessBoard.start();
+        System.out.println("asdf" + chessBoard.isPlaying());
     }
 
     public Map<String, ChessPiece> getCurrentBoard() {
@@ -22,6 +23,7 @@ public class ChessService {
     }
 
     public Map<String, ChessPiece> move(String source, String target){
+        System.out.println("asdfm"+chessBoard.isPlaying());
         chessBoard.move(new Position(source), new Position(target));
         return getCurrentBoard();
     }
