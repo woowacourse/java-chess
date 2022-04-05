@@ -41,4 +41,8 @@ public enum Column {
         }
         return of(indexAfterMove);
     }
+
+    public int getValue() {
+        return value;
+    }
 }

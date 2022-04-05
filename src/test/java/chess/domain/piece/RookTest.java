@@ -2,47 +2,40 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class RookTest {
 
     @Test
     @DisplayName("룩을 생성한다.")
-    void constructRook() {
+    void construct() {
         final var piece = new Rook(Color.BLACK);
 
         assertThat(piece).isInstanceOf(Rook.class);
     }
 
-    @Test
-    @DisplayName("룩이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByRook() {
+    @ParameterizedTest
+    @CsvSource(value = {"a4", "h4", "d1", "d8"})
+    @DisplayName("룩은 직선으로 갈 수 있다.")
+    void isMovableTrue(String position) {
         final Piece rook = new Rook(Color.BLACK);
-        final Map<Direction, List<Position>> positions = rook.getMovablePositions(Position.of("d4"));
-        final Map<Direction, List<Position>> expected = new HashMap<>(
-                Map.ofEntries(
-                        Map.entry(Direction.EAST, List.of(
-                                Position.of("e4"), Position.of("f4"),
-                                Position.of("g4"), Position.of("h4"))),
-                        Map.entry(Direction.WEST, List.of(
-                                Position.of("c4"), Position.of("b4"),
-                                Position.of("a4"))),
-                        Map.entry(Direction.NORTH, List.of(
-                                Position.of("d5"), Position.of("d6"),
-                                Position.of("d7"), Position.of("d8"))),
-                        Map.entry(Direction.SOUTH, List.of(
-                                Position.of("d3"), Position.of("d2"),
-                                Position.of("d1")))
-                )
-        );
+        final boolean actual = rook.isMovable(Position.of("d4"), Position.of(position));
 
-        assertThat(positions).isEqualTo(expected);
+        assertThat(actual).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"h1", "h8", "e3", "a7"})
+    @DisplayName("룩은 직선이 아닌 방향으로 갈 수 없다.")
+    void isMovableFalse(String position) {
+        final Piece rook = new Rook(Color.BLACK);
+        final boolean actual = rook.isMovable(Position.of("d4"), Position.of(position));
+
+        assertThat(actual).isFalse();
     }
 
     @Test

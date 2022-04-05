@@ -2,10 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Pawn extends Piece {
 
@@ -23,32 +20,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
-        Direction direction = Direction.pawnDirection(color);
-
-        final Map<Direction, List<Position>> movablePositions = initMovablePositions(direction);
-        putMovablePositionByDirection(movablePositions, position, direction);
-        return movablePositions;
+    public boolean isMovable(final Position from, final Position to) {
+        return checkDirection(from, to, Direction.pawnDirection(color)) && checkPosition(from, to);
     }
 
-    private Map<Direction, List<Position>> initMovablePositions(final Direction direction) {
-        final Map<Direction, List<Position>> movablePositions = new HashMap<>();
-        movablePositions.put(direction, new ArrayList<>());
-        return movablePositions;
-    }
+    private boolean checkPosition(final Position from, final Position to) {
+        final Direction direction = Direction.getDirection(from, to);
+        final Position position = from.toDirection(direction);
+        final List<Direction> directions = Direction.pawnStraightDirection();
 
-    private void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
-                                               final Position position,
-                                               final Direction direction) {
-        final Position nextPosition = position.toDirection(direction);
-        if (nextPosition == position) {
-            return;
+        if (isFirstMove(from) && directions.contains(direction)) {
+            Position additionalPosition = position.toDirection(direction);
+            return position.equals(to) || additionalPosition.equals(to);
         }
-        final List<Position> positionsToDirection = movablePositions.get(direction);
-        positionsToDirection.add(nextPosition);
-        if (isFirstMove(position)) {
-            putMovablePositionByDirection(movablePositions, nextPosition, direction);
-        }
+
+        return position.equals(to);
     }
 
     private boolean isFirstMove(final Position position) {

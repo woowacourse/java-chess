@@ -2,50 +2,40 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class BishopTest {
 
     @Test
     @DisplayName("비숍을 생성한다.")
-    void constructBishop() {
+    void construct() {
         final var piece = new Bishop(Color.BLACK);
 
         assertThat(piece).isInstanceOf(Bishop.class);
     }
 
-    @Test
-    @DisplayName("비숍이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByBishop() {
+    @ParameterizedTest
+    @CsvSource(value = {"a1", "a7", "g1", "h8", "c3", "c5", "e3", "e5"})
+    @DisplayName("비숍은 대각선으로 갈 수 있다.")
+    void isMovableTrue(String position) {
         final Piece bishop = new Bishop(Color.BLACK);
-        final Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
-        final Map<Direction, List<Position>> expected = new HashMap<>(
-                Map.ofEntries(
-                        Map.entry(Direction.NORTH_EAST, List.of(
-                                Position.of("e5"), Position.of("f6"),
-                                Position.of("g7"), Position.of("h8"))),
-                        Map.entry(Direction.NORTH_WEST, List.of(
-                                Position.of("c5"), Position.of("b6"),
-                                Position.of("a7"))),
-                        Map.entry(Direction.SOUTH_EAST, List.of(
-                                Position.of("e3"), Position.of("f2"),
-                                Position.of("g1"))),
-                        Map.entry(Direction.SOUTH_WEST, List.of(
-                                Position.of("c3"), Position.of("b2"),
-                                Position.of("a1")))
-                )
-        );
+        final boolean actual = bishop.isMovable(Position.of("d4"), Position.of(position));
 
-        assertThat(positions).isEqualTo(expected);
+        assertThat(actual).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"d3", "d5", "c4", "e4", "a8", "h1"})
+    @DisplayName("비숍은 대각선이 아닌 방향으로 갈 수 없다.")
+    void isMovableFalse(String position) {
+        final Piece bishop = new Bishop(Color.BLACK);
+        final boolean actual = bishop.isMovable(Position.of("a1"), Position.of(position));
+
+        assertThat(actual).isFalse();
     }
 
     @Test

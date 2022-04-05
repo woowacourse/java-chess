@@ -33,6 +33,15 @@ public class Position {
         return cache.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
     }
 
+    private static int getRow(final String value) {
+        final String row = value.substring(1, 2);
+        try {
+            return Integer.parseInt(row);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 행이름이 들어왔습니다.");
+        }
+    }
+
     private static void validatePosition(final String value) {
         validateBlank(value);
         validateLength(value);
@@ -50,15 +59,6 @@ public class Position {
         }
     }
 
-    private static int getRow(final String value) {
-        final String row = value.substring(1, 2);
-        try {
-            return Integer.parseInt(row);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("잘못된 행이름이 들어왔습니다.");
-        }
-    }
-
     public Position toDirection(final Direction direction) {
         try {
             final Column movedColumn = column.move(direction.getColumnValue());
@@ -67,6 +67,12 @@ public class Position {
         } catch (IndexOutOfBoundsException exception) {
             return this;
         }
+    }
+
+    public double getAngle(final Position position) {
+        final int columnValue = position.column.getValue() - this.column.getValue();
+        final int rowValue = position.row.getValue() - this.row.getValue();
+        return Math.atan2(rowValue, columnValue);
     }
 
     @Override

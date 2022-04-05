@@ -2,46 +2,40 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class KingTest {
 
     @Test
     @DisplayName("킹을 생성한다.")
-    void constructKing() {
+    void construct() {
         final var piece = new King(Color.BLACK);
 
         assertThat(piece).isInstanceOf(King.class);
     }
 
-    @Test
-    @DisplayName("킹이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByKing() {
+    @ParameterizedTest
+    @CsvSource(value = {"c3", "c4", "c5", "d3", "d5", "e3", "e4", "e5"})
+    @DisplayName("킹은 주위 8개의 위치로 갈 수 있다.")
+    void isMovableTrue(String position) {
         final Piece king = new King(Color.BLACK);
-        final Map<Direction, List<Position>> positions = king.getMovablePositions(Position.of("d4"));
-        final Map<Direction, List<Position>> expected = new HashMap<>(
-                Map.ofEntries(
-                        Map.entry(Direction.EAST, List.of(Position.of("e4"))),
-                        Map.entry(Direction.WEST, List.of(Position.of("c4"))),
-                        Map.entry(Direction.NORTH, List.of(Position.of("d5"))),
-                        Map.entry(Direction.SOUTH, List.of(Position.of("d3"))),
-                        Map.entry(Direction.NORTH_EAST, List.of(Position.of("e5"))),
-                        Map.entry(Direction.NORTH_WEST, List.of(Position.of("c5"))),
-                        Map.entry(Direction.SOUTH_EAST, List.of(Position.of("e3"))),
-                        Map.entry(Direction.SOUTH_WEST, List.of(Position.of("c3")))
-                )
-        );
+        final boolean actual = king.isMovable(Position.of("d4"), Position.of(position));
 
-        assertThat(positions).isEqualTo(expected);
+        assertThat(actual).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"b4", "d6", "d2", "f4"})
+    @DisplayName("킹은 주위 8개 외의 윛치로 갈 수 없다.")
+    void isMovableFalse() {
+        final Piece king = new King(Color.BLACK);
+        final boolean actual = king.isMovable(Position.of("a1"), Position.of("b8"));
+
+        assertThat(actual).isFalse();
     }
 
     @Test

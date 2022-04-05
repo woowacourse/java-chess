@@ -2,43 +2,40 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
     @Test
     @DisplayName("나이트를 생성한다.")
-    void constructKnight() {
+    void construct() {
         final var piece = new Knight(Color.BLACK);
 
         assertThat(piece).isInstanceOf(Knight.class);
     }
 
-    @Test
-    @DisplayName("나이트가 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByKnight() {
+    @ParameterizedTest
+    @CsvSource(value = {"b3", "b5", "c2", "c6", "e2", "e6", "f3", "f5"})
+    @DisplayName("나이트는 정해진 8개의 위치로 갈 수 있다.")
+    void isMovableTrue(String position) {
         final Piece knight = new Knight(Color.BLACK);
-        final Map<Direction, List<Position>> positions = knight.getMovablePositions(Position.of("d4"));
-        final Map<Direction, List<Position>> expected = new HashMap<>(
-                Map.ofEntries(
-                        Map.entry(Direction.SSE, List.of(Position.of("e2"))),
-                        Map.entry(Direction.SSW, List.of(Position.of("c2"))),
-                        Map.entry(Direction.NNE, List.of(Position.of("e6"))),
-                        Map.entry(Direction.NNW, List.of(Position.of("c6"))),
-                        Map.entry(Direction.EES, List.of(Position.of("f3"))),
-                        Map.entry(Direction.EEN, List.of(Position.of("f5"))),
-                        Map.entry(Direction.WWS, List.of(Position.of("b3"))),
-                        Map.entry(Direction.WWN, List.of(Position.of("b5")))
-                )
-        );
+        final boolean actual = knight.isMovable(Position.of("d4"), Position.of(position));
 
-        assertThat(positions).isEqualTo(expected);
+        assertThat(actual).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"b1", "b2", "b4", "b6", "d6", "f6", "f4", "f2"})
+    @DisplayName("나이트는 정해진 8개 외의 위치로는 갈 수 없다.")
+    void isMovableFalse(String position) {
+        final Piece knight = new Knight(Color.BLACK);
+        final boolean actual = knight.isMovable(Position.of("a1"), Position.of(position));
+
+        assertThat(actual).isFalse();
     }
 
     @Test

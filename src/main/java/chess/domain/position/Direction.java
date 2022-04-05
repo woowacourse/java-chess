@@ -57,6 +57,13 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 Direction이 없습니다."));
     }
 
+    public static Direction getDirection(Position from, Position to) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> Math.atan2(direction.rowValue, direction.columnValue) == from.getAngle(to))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("갈 수 있는 방향이 존재하지 않습니다."));
+    }
+
     public static List<Direction> kingDirections() {
         return List.of(
                 Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
@@ -85,14 +92,22 @@ public enum Direction {
                 Direction.WWS, Direction.WWN);
     }
 
-    public static Direction pawnDirection(Color color) {
+    public static List<Direction> pawnDirection(Color color) {
         if (color == Color.BLACK) {
-            return Direction.SOUTH;
+            return List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
         }
         if (color == Color.WHITE) {
-            return Direction.NORTH;
+            return List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
         }
         throw new IllegalStateException("해당 폰의 디렉션은 존재하지 않습니다.");
+    }
+
+    public static List<Direction> pawnStraightDirection() {
+        return List.of(Direction.SOUTH, Direction.NORTH);
+    }
+
+    public static List<Direction> pawnDiagonalDirection() {
+        return List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.NORTH_WEST);
     }
 
     public int getColumnValue() {

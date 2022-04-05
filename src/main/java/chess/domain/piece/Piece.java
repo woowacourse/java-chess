@@ -2,10 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Piece {
 
@@ -17,16 +14,20 @@ public abstract class Piece {
         this.symbol = symbol;
     }
 
-    public abstract Map<Direction, List<Position>> getMovablePositions(final Position position);
+    public abstract boolean isMovable(final Position from, final Position to);
 
     public abstract double getPoint();
 
-    protected Map<Direction, List<Position>> initMovablePositions(final List<Direction> directions) {
-        final Map<Direction, List<Position>> movablePositions = new HashMap<>();
-        for (final Direction direction : directions) {
-            movablePositions.put(direction, new ArrayList<>());
+    protected boolean checkDirection(final Position from, final Position to, final List<Direction> directions) {
+        final Direction direction;
+
+        try {
+            direction = Direction.getDirection(from, to);
+        } catch(IllegalArgumentException e) {
+            return false;
         }
-        return movablePositions;
+
+        return directions.contains(direction);
     }
 
     public final boolean isBlack() {

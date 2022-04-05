@@ -2,10 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,22 +10,37 @@ public class PawnTest {
 
     @Test
     @DisplayName("흑색 폰을 생성한다.")
-    void constructPawn() {
+    void construct() {
         final var piece = new Pawn(Color.BLACK);
 
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
     @Test
-    @DisplayName("폰은 처음에 2칸 움직일 수 있다.")
-    void firstMove() {
+    @DisplayName("처음 움직이는 폰은 앞으로 두 칸 갈 수 있다.")
+    void isMovableTrue() {
         final Piece pawn = new Pawn(Color.WHITE);
-        final Position position = Position.of("d2");
-        final Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
+        final boolean actual = pawn.isMovable(Position.of("b2"), Position.of("b4"));
 
-        assertThat(positions).containsEntry(
-                Direction.NORTH, List.of(Position.of("d3"), Position.of("d4"))
-        );
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 앞으로 한 칸 갈 수 있다.")
+    void isMovableFalse() {
+        final Piece pawn = new Pawn(Color.BLACK);
+        final boolean actual = pawn.isMovable(Position.of("b2"), Position.of("b1"));
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("이미 움직인 폰은 앞으로 두 칸 갈 수 없다.")
+    void isMovableFalse1() {
+        final Piece pawn = new Pawn(Color.WHITE);
+        final boolean actual = pawn.isMovable(Position.of("b3"), Position.of("b5"));
+
+        assertThat(actual).isFalse();
     }
 
     @Test
@@ -38,23 +50,5 @@ public class PawnTest {
         final double point = pawn.getPoint();
 
         assertThat(point).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("검은색 폰의 방향은 SOUTH이다.")
-    void getBlackPawnDirection() {
-        final Piece pawn = new Pawn(Color.BLACK);
-        final Direction actual = Direction.pawnDirection(pawn.getColor());
-
-        assertThat(actual).isEqualTo(Direction.SOUTH);
-    }
-
-    @Test
-    @DisplayName("흰색 폰의 방향은 NORTH이다.")
-    void getWhitePawnDirection() {
-        final Piece pawn = new Pawn(Color.WHITE);
-        final Direction actual = Direction.pawnDirection(pawn.getColor());
-
-        assertThat(actual).isEqualTo(Direction.NORTH);
     }
 }

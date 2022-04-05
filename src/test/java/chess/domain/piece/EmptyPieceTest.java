@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 public class EmptyPieceTest {
 
     @Test
-    @DisplayName("빈 피스는 움직일 수 없습니다.")
-    void getMovablePositions() {
+    @DisplayName("빈 말은 움직일 수 없습니다.")
+    void isMovableThrowException() {
         final Piece emptyPiece = EmptyPiece.getInstance();
 
         assertThatThrownBy(() ->
-                emptyPiece.getMovablePositions(Position.of("d5")))
+                emptyPiece.isMovable(Position.of("d5"), Position.of("d6")))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("해당 자리에는 말이 존재하지 않습니다.");
+                .hasMessage("비어있는 곳은 움직일 수 없습니다.");
     }
 
     @Test

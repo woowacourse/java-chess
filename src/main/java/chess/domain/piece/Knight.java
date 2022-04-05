@@ -3,9 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 
-public final class Knight extends FixedMovablePiece {
+public final class Knight extends Piece {
 
     public static final List<Position> BLACK_INIT_LOCATIONS = List.of(Position.of("b8"), Position.of("g8"));
     public static final List<Position> WHITE_INIT_LOCATIONS = List.of(Position.of("b1"), Position.of("g1"));
@@ -17,14 +16,15 @@ public final class Knight extends FixedMovablePiece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
-        List<Direction> directions = Direction.knightDirections();
+    public boolean isMovable(final Position from, final Position to) {
+        return checkDirection(from, to ,Direction.knightDirections()) && checkPosition(from, to);
+    }
 
-        final Map<Direction, List<Position>> movablePositions = initMovablePositions(directions);
-        for (Direction direction : directions) {
-            putMovablePositionsByDirection(movablePositions, position, direction);
-        }
-        return movablePositions;
+    private boolean checkPosition(final Position from, final Position to) {
+        final Direction direction = Direction.getDirection(from, to);
+        final Position position = from.toDirection(direction);
+
+        return position.equals(to);
     }
 
     @Override

@@ -9,11 +9,9 @@ import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -40,86 +38,74 @@ public class ChessBoard {
 
     public void move(final Position from, final Position to) {
         final Piece piece = selectPiece(from);
-        final List<Position> movablePositions = getMovablePositions(from, piece);
-        validateMovable(to, movablePositions);
-        movePiece(from, to, piece);
-    }
-
-    private List<Position> getMovablePositions(final Position from, final Piece piece) {
-        final Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        return generateMovablePositionsExceptObstacles(from, piece, movablePositions);
-    }
-
-    public List<Position> generateMovablePositionsExceptObstacles(final Position position, final Piece piece,
-                                                                  final Map<Direction, List<Position>> movablePositions) {
-        final List<Position> result = new ArrayList<>();
-
-        for (final Direction direction : movablePositions.keySet()) {
-            final List<Position> positions = movablePositions.get(direction);
-            addMovablePositionsExceptObstacles(piece, result, positions);
-        }
-
-        addDiagonalMoveForPawn(position, piece, result);
-        return Collections.unmodifiableList(result);
-    }
-
-    private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result,
-                                                    final List<Position> positions) {
-        if (positions.size() != 0) {
-            final int removeIndex = getRemoveIndex(piece, positions);
-            final List<Position> movablePositions = positions.subList(0, removeIndex);
-            result.addAll(movablePositions);
-        }
-    }
-
-    private int getRemoveIndex(Piece nowPiece, List<Position> positions) {
-        int cutIndex = 0;
-
-        while (cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty()) {
-            cutIndex++;
-        }
-
-        final Piece target = selectPiece(positions.get(cutIndex));
-        if (target.isSameColor(nowPiece) || (nowPiece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
-            return cutIndex;
-        }
-        return cutIndex + 1;
-    }
-
-    private void validateMovable(final Position to, final List<Position> finalMovablePositions) {
-        if (!finalMovablePositions.contains(to)) {
-            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void movePiece(final Position from, final Position to, final Piece piece) {
+        validateMovable(from, to);
+        validatePawn(from, to);
+        checkRoute(from, to);
+        validateMyTeam(piece, from, to);
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
     }
 
-    private void addDiagonalMoveForPawn(final Position position, final Piece piece, final List<Position> result) {
+    private void validateMovable(final Position from, final Position to) {
+        final Piece piece = selectPiece(from);
+        if (!piece.isMovable(from, to)) {
+            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        }
+    }
+
+    private void validatePawn(final Position from, final Position to) {
+        final Piece piece = selectPiece(from);
         if (piece.isSameSymbol(Symbol.PAWN)) {
-            final Direction direction = Direction.pawnDirection(piece.getColor());
-            final List<Direction> diagonalDirections = direction.getDiagonal();
-            final List<Position> diagonalPositions = diagonalDirections.stream()
-                    .map(position::toDirection)
-                    .collect(Collectors.toList());
-
-            addPositionsIfEnemy(piece, result, diagonalPositions);
+            checkDirection(from, to);
         }
     }
 
-    private void addPositionsIfEnemy(final Piece piece, final List<Position> result,
-                                     final List<Position> diagonalPositions) {
-        for (final Position position : diagonalPositions) {
-            addPositionIfEnemy(piece, result, position);
+    private void checkDirection(final Position from, final Position to) {
+        final Direction direction = Direction.getDirection(from, to);
+        final List<Direction> directions = Direction.pawnDiagonalDirection();
+
+        if (directions.contains(direction)) {
+            checkEmptyInDiagonalPosition(from, direction);
         }
     }
 
-    private void addPositionIfEnemy(final Piece piece, final List<Position> result, final Position position) {
-        final Piece targetPiece = selectPiece(position);
-        if (!targetPiece.isSameColor(piece) && !targetPiece.isEmpty()) {
-            result.add(position);
+    private void checkEmptyInDiagonalPosition(Position from, Direction direction) {
+        Position position = from.toDirection(direction);
+        if (selectPiece(position).isEmpty()) {
+            throw new IllegalArgumentException("비어있는 곳으로는 직선만 이동할 수 있습니다.");
+        }
+    }
+
+    private void checkRoute(Position from, Position to) {
+        Position initialPosition = from;
+        Direction direction = Direction.getDirection(from, to);
+        while (!initialPosition.equals(to)) {
+            initialPosition = initialPosition.toDirection(direction);
+            validateRoute(initialPosition, to);
+        }
+    }
+
+    private void validateRoute(final Position position, final Position toPosition) {
+        if (position.equals(toPosition)) {
+            return;
+        }
+
+        final Piece piece = pieces.get(position);
+        if (!piece.isEmpty()) {
+            throw new IllegalArgumentException("장애물 때문에 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateMyTeam(final Piece piece, final Position from, final Position to) {
+        if (pieces.get(to).isEmpty()) {
+            return;
+        }
+        if (piece.isSameColor(pieces.get(to))) {
+            throw new IllegalArgumentException("같은 말은 잡을 수 없습니다.");
+        }
+        if (piece.isSameSymbol(Symbol.PAWN) &&
+                Direction.pawnStraightDirection().contains(Direction.getDirection(from, to))) {
+            throw new IllegalArgumentException("폰은 앞으로 움직일때는 빈칸으로 움직일 수 있습니다.");
         }
     }
 
