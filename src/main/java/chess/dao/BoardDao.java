@@ -5,6 +5,7 @@ import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.InjectBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Team;
 import chess.dto.ChessGameDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -46,12 +47,13 @@ public class BoardDao {
         if (checkInDB(chessGameDto)) {
             return;
         }
-        final String sql = "INSERT into board (name, board) values (?, ?);";
+        final String sql = "INSERT into board (name, turn, board) values (?, ?, ?);";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getName());
-            statement.setString(2, chessGameDto.getBoardJson());
+            statement.setString(2, chessGameDto.getChessGame().getTurn().name());
+            statement.setString(3, chessGameDto.getBoardJson());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,10 +71,11 @@ public class BoardDao {
     public void save(final ChessGameDto chessGameDto) {
         try {
             final Connection connection = getConnection();
-            final String sql = "update board set board = ? where name = ?";
+            final String sql = "update board set board = ?, turn = ? where name = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getBoardJson());
-            statement.setString(2, chessGameDto.getName());
+            statement.setString(2, chessGameDto.getChessGame().getTurn().name());
+            statement.setString(3, chessGameDto.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +105,8 @@ public class BoardDao {
                 return null;
             }
             Map<Position, Piece> squares = getSquares(resultSet);
-            return new ChessGameDto(resultSet.getString("name"), new ChessGame(new Board(squares)));
+            return new ChessGameDto(resultSet.getString("name"),
+                    new ChessGame(Team.valueOf(resultSet.getString("turn")), new Board(squares)));
         } catch (SQLException e) {
             e.printStackTrace();
         }

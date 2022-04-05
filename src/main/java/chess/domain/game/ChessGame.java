@@ -14,7 +14,8 @@ public final class ChessGame {
     private boolean isFinished = false;
     private Team turn = Team.WHITE;
 
-    public ChessGame(Board board) {
+    public ChessGame(Team turn, Board board) {
+        this.turn = turn;
         this.board = board;
     }
 

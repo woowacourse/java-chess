@@ -6,6 +6,7 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Team;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -16,6 +17,7 @@ import java.util.Map.Entry;
 
 public class ChessGameDto {
     private final String name;
+
 
     private final ChessGame chessGame;
 
