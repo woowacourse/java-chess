@@ -102,10 +102,8 @@ async function moveButton() {
 }
 
 async function checkEndGame() {
-    console.log("호출은 함");
     const gameStatus = await fetch("/status")
         .then((response) => response.json());
-    console.log(gameStatus.isEnd);
     if (gameStatus.isEnd) {
         await fetch("/winner")
             .then(response => handlingException(response))
@@ -117,9 +115,7 @@ async function checkEndGame() {
 }
 
 async function displayWinner(response) {
-    console.log(response);
     const result = await response.json();
-    console.log(result);
     alert(`우승자는 ${result.winner}입니다.`);
 }
 
