@@ -7,4 +7,8 @@ public class DataAccessException extends RuntimeException {
     public DataAccessException() {
         super(MESSAGE);
     }
+
+    public DataAccessException(String message) {
+        super(message);
+    }
 }

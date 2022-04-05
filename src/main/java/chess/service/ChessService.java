@@ -1,23 +1,26 @@
 package chess.service;
 
+import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
+import chess.domain.board.generator.DatabaseLoadBoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import spark.Request;
 
 public class ChessService {
 
-    public Map<String, Object> findBoardModel(ChessGame chessGame) {
+    public Map<String, Object> findBoardModel(ChessGame chessGame, PieceDao pieceDao, int boardId) {
+        List<PieceDto> pieces = pieceDao.findByBoardId(boardId);
+        chessGame.start(new DatabaseLoadBoardGenerator(pieces));
+
         return generateBoardModel(chessGame);
     }
 
@@ -33,15 +36,17 @@ public class ChessService {
         return model;
     }
 
-    public void createNewBoard(BoardGenerator boardGenerator, ChessGame chessGame) {
+    public int createNewBoard(BoardGenerator boardGenerator, ChessGame chessGame) {
         chessGame.start(boardGenerator);
+        return 1; // TODO
     }
 
-    public Map<String, Object> move(ChessGame chessGame, List<String> inputs) {
+    public Map<String, Object> move(ChessGame chessGame, PieceDao pieceDao, List<String> inputs) {
         Map<String, Object> model = new HashMap<>();
 
         try {
             chessGame.move(inputs);
+            pieceDao.updatePosition(inputs.get(1), inputs.get(2));
         } catch (IllegalArgumentException | IllegalStateException e) {
             model.put("message", e.getMessage());
         }
