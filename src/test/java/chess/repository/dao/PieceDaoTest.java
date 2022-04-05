@@ -23,18 +23,20 @@ class PieceDaoTest {
 	@Test
 	@DisplayName("피스 insert 확인")
 	void insert() {
+		insertChessGame();
+	}
+
+	private int insertChessGame() {
 		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-
 		pieceDao.insertAll(tiles, foreignKey);
+		return foreignKey;
 	}
 
 	@Test
 	@DisplayName("외래키로 피스 조회")
 	void selectWhereForeignKey() {
-		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
-		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		pieceDao.insertAll(tiles, foreignKey);
+		int foreignKey = insertChessGame();
 
 		Map<String, String> result = pieceDao.selectByGameId(foreignKey);
 
@@ -46,9 +48,7 @@ class PieceDaoTest {
 	@Test
 	@DisplayName("게임 이름으로 피스 조회")
 	void selectByGameName() {
-		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
-		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		pieceDao.insertAll(tiles, foreignKey);
+		insertChessGame();
 
 		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
 
@@ -60,9 +60,7 @@ class PieceDaoTest {
 	@Test
 	@DisplayName("위치와 게임 이름으로 피스 삭제")
 	void deleteByPosition() {
-		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
-		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		pieceDao.insertAll(tiles, foreignKey);
+		insertChessGame();
 
 		pieceDao.deleteByPosition("a1", TEST_NAME);
 
@@ -74,9 +72,7 @@ class PieceDaoTest {
 	@Test
 	@DisplayName("피스 위치를 수정한다.")
 	void update() {
-		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
-		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN");
-		pieceDao.insertAll(tiles, foreignKey);
+		insertChessGame();
 
 		pieceDao.updatePositionOfPiece("WHITE_PAWN", "a1", "a2", TEST_NAME);
 
