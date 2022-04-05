@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.service.ChessService;
+import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -23,6 +24,7 @@ public class ChessWebController {
         renderReady();
         renderStart();
         renderMove();
+        renderStatus();
     }
 
     private void renderReady() {
@@ -46,6 +48,15 @@ public class ChessWebController {
             String to = req.queryParams("to");
             chessService.move(from, to);
             Map<String, Object> model = chessService.getBoard().toMap();
+            return render(model, "chess.html");
+        });
+    }
+
+    private void renderStatus() {
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.putAll(chessService.getBoard().toMap());
+            model.putAll(chessService.showStatus());
             return render(model, "chess.html");
         });
     }

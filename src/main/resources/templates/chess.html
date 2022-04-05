@@ -20,8 +20,13 @@
             <input type="submit">
         </form>
         <form action="/status" method="get">
-            <button>Status</button>
+            <button id="status">Status</button>
         </form>
+        <div class="score hidden">
+            {{#this}}
+            <span>White 점수 : {{WHITE}} Black 점수 : {{BLACK}}</span>
+            {{/this}}
+        </div>
         <form action="/end" method="get">
             <button>End</button>
         </form>
@@ -351,8 +356,7 @@
         </div>
         {{/this}}
     </section>
-
-
 </div>
+<script defer src="/js/chess.js"></script>
 </body>
 </html>
