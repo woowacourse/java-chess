@@ -2,7 +2,9 @@ package chess.controller;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.post;
 
+import chess.dto.CommendDto;
 import chess.service.GameService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -30,6 +32,15 @@ public class ChessController {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             gameService.startNewGame();
+            model.put("state", gameService.getGameStateDto());
+            model.put("pieces", gameService.getPieceDtos());
+            return new Gson().toJson(model);
+        });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            CommendDto commendDto = new Gson().fromJson(req.body(), CommendDto.class);
+            gameService.move(commendDto);
             model.put("state", gameService.getGameStateDto());
             model.put("pieces", gameService.getPieceDtos());
             return new Gson().toJson(model);

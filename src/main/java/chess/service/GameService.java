@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.CommendDto;
 import chess.dto.GameStateDto;
 import chess.dto.PieceDto;
 import java.util.List;
@@ -16,6 +17,10 @@ public class GameService {
 
     public void startNewGame() {
         board = new Board(new RegularRuleSetup());
+    }
+
+    public void move(CommendDto commendDto) {
+        board.move(commendDto.getSource(), commendDto.getTarget());
     }
 
     public GameStateDto getGameStateDto() {
