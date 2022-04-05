@@ -18,9 +18,9 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void validateIsPossibleByWhiteTeam(String input) {
         Position position = Position.from("e7");
-        Pawn pawn = new Pawn(Team.WHITE, position);
+        Pawn pawn = new Pawn(Team.WHITE);
         Assertions.assertThatThrownBy(() -> {
-                    pawn.findPath(Position.from(input));
+                    pawn.findPath(position, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -30,8 +30,8 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void isPossibleByWhiteTeam(String input) {
         Position position = Position.from("e2");
-        Pawn pawn = new Pawn(Team.WHITE, position);
-        pawn.findPath(Position.from(input));
+        Pawn pawn = new Pawn(Team.WHITE);
+        pawn.findPath(position, Position.from(input));
     }
 
     @ParameterizedTest
@@ -39,9 +39,9 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void validateIsPossibleByBlackTeam(String input) {
         Position position = Position.from("c4");
-        Pawn pawn = new Pawn(Team.BLACK, position);
+        Pawn pawn = new Pawn(Team.BLACK);
         Assertions.assertThatThrownBy(() -> {
-                    pawn.findPath(Position.from(input));
+                    pawn.findPath(position, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -51,8 +51,8 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void isPossibleByBlackTeam(String input) {
         Position position = Position.from("e7");
-        Pawn pawn = new Pawn(Team.BLACK, position);
-        pawn.findPath(Position.from(input));
+        Pawn pawn = new Pawn(Team.BLACK);
+        pawn.findPath(position, Position.from(input));
     }
 
     @ParameterizedTest
@@ -60,8 +60,8 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void findPathByBlack(String input) {
         Position position = Position.from("e7");
-        Pawn pawn = new Pawn(Team.BLACK, position);
-        List<Position> path = pawn.findPath(Position.from(input));
+        Pawn pawn = new Pawn(Team.BLACK);
+        List<Position> path = pawn.findPath(position, Position.from(input));
         assertThat(path).containsExactly(Position.from(input));
     }
 
@@ -70,8 +70,8 @@ class PawnTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void findPathByWhite(String input) {
         Position position = Position.from("e2");
-        Pawn pawn = new Pawn(Team.WHITE, position);
-        List<Position> path = pawn.findPath(Position.from(input));
+        Pawn pawn = new Pawn(Team.WHITE);
+        List<Position> path = pawn.findPath(position, Position.from(input));
         assertThat(path).containsExactly(Position.from(input));
     }
 }

@@ -51,7 +51,7 @@ public class ChessController {
         List<BoardDao> boardDaos = BoardFactory.findAll(roomDao.getId());
         Map<Position, Piece> board = new HashMap<>();
         for (BoardDao boardDao : boardDaos) {
-            Piece piece = PieceFactory.create(boardDao.getSymbol(), Position.from(boardDao.getPosition()));
+            Piece piece = PieceFactory.create(boardDao.getSymbol());
             board.put(Position.from(boardDao.getPosition()), piece);
         }
         if (roomDao.isWhiteTurn()) {
@@ -98,8 +98,7 @@ public class ChessController {
         Map<Position, Piece> board = gameState.getBoard();
         List<PieceDTO> pieces = new ArrayList<>();
         for (Position position : board.keySet()) {
-            Position piecePosition = board.get(position).getPosition();
-            pieces.add(new PieceDTO(piecePosition.getPositionToString(), board.get(position).getSymbol()));
+            pieces.add(new PieceDTO(position.getPositionToString(), board.get(position).getSymbol()));
         }
         model.put("chessPiece", pieces);
         return model;

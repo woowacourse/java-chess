@@ -15,9 +15,9 @@ class KnightTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void validateIsPossible(String input) {
         Position position = Position.from("c4");
-        Knight knight = new Knight(Team.BLACK, position);
+        Knight knight = new Knight(Team.BLACK);
         Assertions.assertThatThrownBy(() -> {
-                    knight.findPath(Position.from(input));
+                    knight.findPath(position, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -27,7 +27,7 @@ class KnightTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void isPossible(String input) {
         Position position = Position.from("e4");
-        Knight knight = new Knight(Team.BLACK, position);
-        knight.findPath(Position.from(input));
+        Knight knight = new Knight(Team.BLACK);
+        knight.findPath(position, Position.from(input));
     }
 }

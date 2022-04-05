@@ -72,8 +72,7 @@ public class BoardFactory {
             PreparedStatement statement = connection.prepareStatement(sql);
             for (Position position : board.keySet()) {
                 Piece piece = board.get(position);
-                Position piecePosition = piece.getPosition();
-                String positionToString = piecePosition.getPositionToString();
+                String positionToString = position.getPositionToString();
                 String symbol = piece.getSymbol();
                 statement.setString(1, positionToString);
                 statement.setString(2, symbol);

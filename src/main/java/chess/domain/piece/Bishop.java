@@ -10,16 +10,14 @@ public class Bishop extends Piece {
     private static final String SYMBOL = "B";
     private static final float SCORE = 3.0f;
 
-    public Bishop(Team team, Position position) {
-        super(team, SYMBOL, position, SCORE);
+    public Bishop(Team team) {
+        super(team, SYMBOL, SCORE);
     }
 
     @Override
-    public List<Position> findPath(Position destination) {
-        Direction direction = findDirection(destination);
-        return getPath(destination, direction,
-                position.getCol().plusColumn(direction.getXDegree()),
-                position.getRow().plusRow(direction.getYDegree()));
+    public List<Position> findPath(Position source, Position destination) {
+        Direction direction = findDirection(source, destination);
+        return getPath(destination, direction, source.plusDirection(direction));
     }
 
     @Override

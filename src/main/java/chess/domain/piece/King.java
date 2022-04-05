@@ -10,13 +10,13 @@ public class King extends Piece {
     private static final String SYMBOL = "K";
     private static final float SCORE = 0;
 
-    public King(Team team, Position position) {
-        super(team, SYMBOL, position, SCORE);
+    public King(Team team) {
+        super(team, SYMBOL, SCORE);
     }
 
     @Override
-    public List<Position> findPath(Position destination) {
-        findDirection(destination);
+    public List<Position> findPath(Position source, Position destination) {
+        findDirection(source, destination);
         return List.of();
     }
 

@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +64,8 @@ public class Position {
         return col;
     }
 
-    public boolean matchPosition(Column col, Row row) {
-        return this.col == col && this.row == row;
+    public boolean matchPosition(Position position) {
+        return this.equals(position);
     }
 
     public Row getRow() {
@@ -97,5 +99,11 @@ public class Position {
                 "col=" + col +
                 ", row=" + row +
                 '}';
+    }
+
+    public Position plusDirection(Direction direction) {
+        Column column = this.col.plusColumn(direction.getXDegree());
+        Row row = this.row.plusRow(direction.getYDegree());
+        return new Position(column, row);
     }
 }

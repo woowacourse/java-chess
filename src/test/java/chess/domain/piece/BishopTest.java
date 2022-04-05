@@ -18,10 +18,10 @@ class BishopTest {
     @ValueSource(strings = {"d4", "c5", "d6", "e5"})
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void validateIsPossible(String input) {
-        Position position = Position.from("d5");
-        Bishop bishop = new Bishop(Team.BLACK, position);
+        Position source = Position.from("d5");
+        Bishop bishop = new Bishop(Team.BLACK);
         Assertions.assertThatThrownBy(() -> {
-                    bishop.findPath(Position.from(input));
+                    bishop.findPath(source, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -30,17 +30,17 @@ class BishopTest {
     @ValueSource(strings = {"h7", "a8", "b1", "h1"})
     @DisplayName("출발 지점과 도착 지점을 입력 후, 이동 가능한 경로인지 검증한다.")
     void isPossible(String input) {
-        Position position = Position.from("e4");
-        Bishop bishop = new Bishop(Team.BLACK, position);
-        bishop.findPath(Position.from(input));
+        Position source = Position.from("e4");
+        Bishop bishop = new Bishop(Team.BLACK);
+        bishop.findPath(source, Position.from(input));
     }
 
     @Test
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void findPath() {
-        Position position = Position.from("e4");
-        Bishop bishop = new Bishop(Team.BLACK, position);
-        List<Position> path = bishop.findPath(Position.from("h7"));
+        Position source = Position.from("e4");
+        Bishop bishop = new Bishop(Team.BLACK);
+        List<Position> path = bishop.findPath(source, Position.from("h7"));
         assertThat(path).containsExactly(Position.from("f5"), Position.from("g6"));
     }
 }

@@ -3,24 +3,26 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Column {
-    A('a'),
-    B('b'),
-    C('c'),
-    D('d'),
-    E('e'),
-    F('f'),
-    G('g'),
-    H('h');
+    A('a', 1),
+    B('b', 2),
+    C('c', 3),
+    D('d', 4),
+    E('e', 5),
+    F('f', 6),
+    G('g', 7),
+    H('h', 8);
 
     private final char value;
+    private final int number;
 
-    Column(char value) {
+    Column(char value, int number) {
         this.value = value;
+        this.number = number;
     }
 
-    public static Column find(char input) {
+    public static Column find(int number) {
         return Arrays.stream(values())
-                .filter(i -> i.value == input)
+                .filter(i -> i.number == number)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Column 값 입니다."));
     }
@@ -34,6 +36,6 @@ public enum Column {
     }
 
     public Column plusColumn(int number) {
-        return find((char) (value + number));
+        return find(this.number + number);
     }
 }

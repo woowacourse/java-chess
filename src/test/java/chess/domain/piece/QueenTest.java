@@ -20,9 +20,9 @@ class QueenTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void validateIsPossible(String input) {
         Position position = Position.from("e5");
-        Queen queen = new Queen(Team.BLACK, position);
+        Queen queen = new Queen(Team.BLACK);
         Assertions.assertThatThrownBy(() -> {
-                    queen.findPath(Position.from(input));
+                    queen.findPath(position, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -32,16 +32,16 @@ class QueenTest {
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void isPossible(String input) {
         Position position = Position.from("f6");
-        Queen queen = new Queen(Team.BLACK, position);
-        queen.findPath(Position.from(input));
+        Queen queen = new Queen(Team.BLACK);
+        queen.findPath(position, Position.from(input));
     }
 
     @Test
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void findPath() {
         Position position = Position.from("f6");
-        Queen queen = new Queen(Team.BLACK, position);
-        List<Position> path = queen.findPath(Position.from("f3"));
+        Queen queen = new Queen(Team.BLACK);
+        List<Position> path = queen.findPath(position, Position.from("f3"));
         assertThat(path).containsExactly(Position.from("f5"), Position.from("f4"));
     }
 }

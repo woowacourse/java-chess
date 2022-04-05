@@ -13,8 +13,7 @@ public class RoomDaoTest {
         Map<Position, Piece> board = BoardInitialize.create();
         for (Position position : board.keySet()) {
             Piece piece = board.get(position);
-            Position position1 = piece.getPosition();
-            String positionToString = position1.getPositionToString();
+            String positionToString = position.getPositionToString();
             String symbol = piece.getSymbol();
         }
     }
