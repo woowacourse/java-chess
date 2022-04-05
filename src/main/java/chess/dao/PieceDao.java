@@ -63,7 +63,7 @@ public class PieceDao {
         save(board);
     }
 
-    private void deleteByGameName(String gameName) {
+    public void deleteByGameName(String gameName) {
         final String sql = "DELETE FROM piece WHERE game_name = ?";
 
         try (final Connection connection = DatabaseConnector.getConnection();

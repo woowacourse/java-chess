@@ -4,6 +4,8 @@ let to = "";
 
 startButton.addEventListener("click", async function startOrEnd() {
     if (startButton.textContent === "Start") {
+        let score = document.getElementById("score");
+        score.textContent = "";
         await start();
         startButton.textContent = "End";
         return;
@@ -24,15 +26,6 @@ async function initBoard() {
         .then(response => response.json());
 }
 
-async function setTurn() {
-    const turnMessages = {"WHITE_TURN": "흰색 팀의 순서입니다", "BLACK_TURN": "검은색 팀의 순서입니다", "END": "게임이 종료되었습니다."}
-    let message = await fetch("/turn")
-        .then(response => response.json());
-
-    let turn = document.getElementById("turn");
-    turn.textContent = turnMessages[message];
-}
-
 async function setBoard(board) {
     await clearBoard();
     for (let position in board) {
@@ -48,11 +41,24 @@ function putPiece(piece, div) {
     div.appendChild(pieceImage);
 }
 
+async function setTurn() {
+    const turnMessages = {
+        "START": "게임을 시작합니다. 흰색 팀부터 시작합니다.",
+        "WHITE_TURN": "흰색 팀의 순서입니다",
+        "BLACK_TURN": "검은색 팀의 순서입니다",
+        "END": "게임이 종료되었습니다."
+    }
+    let message = await fetch("/turn")
+        .then(response => response.json());
+    let turn = document.getElementById("turn");
+    turn.textContent = turnMessages[message];
+}
+
 async function end() {
-    await fetch("/end");
-    await clearBoard();
+    const gameResult = await fetch("/end").then(response => response.json());
     await setTurn();
-    document.getElementById("score").textContent = "";
+    await clearBoard();
+    setWinnerScore(gameResult);
 }
 
 async function clearBoard() {
@@ -81,13 +87,34 @@ async function clickPosition(id) {
         div.style.border = "none";
 
         to = id;
-        const boardAfterMove = await movePiece(from, to);
-        await setBoard(boardAfterMove);
-        await setTurn();
+        const moveResult = await movePiece(from, to);
 
         from = "";
         to = "";
+        await setAfterMove(moveResult);
     }
+}
+
+async function setAfterMove(moveResult) {
+    if (moveResult === "WHITE" || moveResult === "BLACK" || moveResult === "EMPTY") {
+        setWinnerScore(moveResult);
+        await clearBoard();
+        await setTurn();
+        startButton.textContent = "Start"
+        return;
+    }
+    await setBoard(moveResult);
+    await setTurn();
+}
+
+function setWinnerScore(moveResult) {
+    const messages = {
+        "WHITE": "흰색 팀의 승리입니다.",
+        "BLACK": "검은색 팀의 승리입니다.",
+        "EMPTY": ""
+    }
+    let score = document.getElementById("score");
+    score.textContent = messages[moveResult];
 }
 
 async function movePiece(from, to) {

@@ -45,13 +45,17 @@ public class ChessWebController {
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             chessGame.move(moveDto);
+            if(chessGame.isEnded()){
+                res.redirect("/end");
+            }
             pieceDao.movePiece(chessGame.getBoard().getValue(), "chess");
+            chessGameDao.updateTurn(chessGame.getTurn().getValue(), "chess");
             BoardDto boardDto = BoardDto.from(chessGame.getBoard());
             return gson.toJson(boardDto.getBoard());
         });
 
         get("/turn", (req, res) -> {
-            TurnDto turnDto = chessGameDao.findByName("chess");
+            TurnDto turnDto = TurnDto.from(chessGame.getTurn());
             return gson.toJson(turnDto.getTurn());
         });
 
@@ -62,8 +66,9 @@ public class ChessWebController {
 
         get("/end", (req, res) -> {
             chessGame.end();
-            TurnDto turnDto = TurnDto.from(chessGame.getTurn());
-            return gson.toJson(turnDto.getTurn());
+            chessGameDao.deleteByName("chess");
+            pieceDao.deleteByGameName("chess");
+            return gson.toJson(chessGame.getWinner());
         });
     }
 

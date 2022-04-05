@@ -21,4 +21,8 @@ public enum Turn {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 기물입니다."));
     }
+
+    public String getValue() {
+        return value;
+    }
 }
