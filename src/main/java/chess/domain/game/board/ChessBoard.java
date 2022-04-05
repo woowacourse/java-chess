@@ -195,4 +195,19 @@ public class ChessBoard {
     }
 
     public void end(){ gameStatus = GameStatus.END; }
+
+    public String getChessBoard() {
+        return chessBoard.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue()))
+                .toString();
+    }
+
+    public Color getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
 }

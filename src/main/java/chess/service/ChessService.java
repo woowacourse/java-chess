@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.dao.GameDao;
 import chess.domain.dto.ResponseDto;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private ChessBoard chessBoard = null;
+    private GameDao gameDao = new GameDao();
 
     public void start(){
         chessBoard = ChessBoardFactory.initBoard();
         chessBoard.start();
+        gameDao.save(chessBoard);
     }
 
     public void end(){
