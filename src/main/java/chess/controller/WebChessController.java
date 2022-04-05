@@ -86,8 +86,11 @@ public class WebChessController {
     private void status() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("now", chessService.status());
-            model.put("board", chessService.getCurrentBoard());
+            if(chessService.isPlaying()){
+                model.put("now", chessService.status());
+                model.put("board", chessService.getCurrentBoard());
+                return render(model, "game.html");
+            }
             return render(model, "game.html");
         });
     }

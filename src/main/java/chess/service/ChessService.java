@@ -49,4 +49,8 @@ public class ChessService {
     public Map<String, ChessPiece> getCurrentBoard() {
         return chessBoard.convertToMap();
     }
+
+    public boolean isPlaying() {
+        return chessBoard.isPlaying();
+    }
 }
