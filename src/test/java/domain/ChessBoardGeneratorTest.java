@@ -1,19 +1,20 @@
 package domain;
 
+import static chess.domain.piece.property.Team.*;
 import static domain.PositionFixtures.*;
-import static domain.piece.property.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.board.ChessBoardGenerator;
-import domain.piece.unit.Piece;
-import domain.piece.unit.Bishop;
-import domain.piece.unit.King;
-import domain.piece.unit.Knight;
-import domain.piece.unit.Pawn;
-import domain.piece.unit.Queen;
-import domain.piece.unit.Rook;
-import domain.position.Position;
+import chess.domain.board.ChessBoardGenerator;
+import chess.domain.piece.property.Team;
+import chess.domain.piece.unit.Piece;
+import chess.domain.piece.unit.Bishop;
+import chess.domain.piece.unit.King;
+import chess.domain.piece.unit.Knight;
+import chess.domain.piece.unit.Pawn;
+import chess.domain.piece.unit.Queen;
+import chess.domain.piece.unit.Rook;
+import chess.domain.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

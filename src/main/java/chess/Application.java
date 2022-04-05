@@ -1,12 +1,13 @@
+package chess;
 
-import domain.board.BoardGenerator;
-import domain.board.ChessBoard;
-import domain.board.ChessBoardGenerator;
-import domain.classification.Command;
-import domain.dto.GameStatus;
-import domain.dto.StatusDto;
-import view.InputView;
-import view.OutputView;
+import chess.domain.board.BoardGenerator;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
+import chess.domain.classification.Command;
+import chess.domain.dto.GameStatus;
+import chess.domain.dto.StatusDto;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public final class Application {
 

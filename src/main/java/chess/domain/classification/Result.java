@@ -1,4 +1,4 @@
-package domain.classification;
+package chess.domain.classification;
 
 public enum Result {
 

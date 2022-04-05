@@ -1,4 +1,4 @@
-package domain.dto;
+package chess.domain.dto;
 
 public final class StatusDto {
 

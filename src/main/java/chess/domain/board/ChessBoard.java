@@ -1,9 +1,9 @@
-package domain.board;
+package chess.domain.board;
 
-import domain.piece.property.PieceFeature;
-import domain.piece.property.Team;
-import domain.piece.unit.Piece;
-import domain.position.Position;
+import chess.domain.piece.property.PieceFeature;
+import chess.domain.piece.unit.Piece;
+import chess.domain.piece.property.Team;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 

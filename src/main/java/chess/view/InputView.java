@@ -1,9 +1,9 @@
-package view;
+package chess.view;
 
-import static domain.classification.CommandCase.*;
+import static chess.domain.classification.CommandCase.*;
 
-import domain.classification.Command;
-import domain.classification.CommandCase;
+import chess.domain.classification.Command;
+import chess.domain.classification.CommandCase;
 import java.util.Scanner;
 
 public final class InputView {

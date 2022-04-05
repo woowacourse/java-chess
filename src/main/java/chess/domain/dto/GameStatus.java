@@ -1,13 +1,13 @@
-package domain.dto;
+package chess.domain.dto;
 
-import domain.board.ChessBoard;
-import domain.classification.Result;
-import domain.piece.property.PieceFeature;
-import domain.piece.property.Team;
-import domain.piece.unit.Piece;
-import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
+import chess.domain.board.ChessBoard;
+import chess.domain.classification.Result;
+import chess.domain.piece.property.PieceFeature;
+import chess.domain.piece.property.Team;
+import chess.domain.piece.unit.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.XPosition;
+import chess.domain.position.YPosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

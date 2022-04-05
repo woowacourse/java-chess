@@ -1,11 +1,9 @@
-package domain.piece.unit;
+package chess.domain.piece.unit;
 
-import static domain.piece.property.Direction.*;
-
-import domain.piece.property.PieceInfo;
-import domain.piece.property.PieceFeature;
-import domain.piece.property.Team;
-import domain.piece.property.Direction;
+import chess.domain.piece.property.Direction;
+import chess.domain.piece.property.PieceFeature;
+import chess.domain.piece.property.PieceInfo;
+import chess.domain.piece.property.Team;
 import java.util.List;
 
 public final class Rook extends CommonMovablePiece {
@@ -13,7 +11,7 @@ public final class Rook extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(EAST, WEST, SOUTH, NORTH);
+        directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
     }
 
     public Rook(final Team team) {

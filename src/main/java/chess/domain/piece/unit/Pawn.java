@@ -1,12 +1,10 @@
-package domain.piece.unit;
+package chess.domain.piece.unit;
 
-import static domain.piece.property.Direction.*;
-
-import domain.piece.property.PieceInfo;
-import domain.piece.property.PieceFeature;
-import domain.piece.property.Team;
-import domain.position.Position;
-import domain.piece.property.Direction;
+import chess.domain.piece.property.Direction;
+import chess.domain.piece.property.PieceFeature;
+import chess.domain.piece.property.PieceInfo;
+import chess.domain.piece.property.Team;
+import chess.domain.position.Position;
 import java.util.List;
 
 public final class Pawn extends SpecificMovablePiece {
@@ -20,10 +18,10 @@ public final class Pawn extends SpecificMovablePiece {
     public Pawn(final Team team) {
         super(new PieceInfo(team, PieceFeature.PAWN));
         if (team == Team.BLACK) {
-            directions = List.of(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_SOUTH);
+            directions = List.of(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.SOUTH_SOUTH);
             return;
         }
-        directions = List.of(NORTH, NORTHEAST, NORTHWEST, NORTH_NORTH);
+        directions = List.of(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST, Direction.NORTH_NORTH);
     }
 
     @Override
@@ -89,7 +87,8 @@ public final class Pawn extends SpecificMovablePiece {
 
     @Override
     public boolean checkOneAndTwoSouthNorthDirections(Position target) {
-        List<Direction> directions = List.of(SOUTH, NORTH, SOUTH_SOUTH, NORTH_NORTH);
+        List<Direction> directions = List.of(
+                Direction.SOUTH, Direction.NORTH, Direction.SOUTH_SOUTH, Direction.NORTH_NORTH);
         return directions.stream()
                 .anyMatch(direction -> direction == getDirection(target));
     }

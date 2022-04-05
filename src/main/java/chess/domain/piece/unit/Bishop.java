@@ -1,11 +1,9 @@
-package domain.piece.unit;
+package chess.domain.piece.unit;
 
-import static domain.piece.property.Direction.*;
-
-import domain.piece.property.PieceInfo;
-import domain.piece.property.PieceFeature;
-import domain.piece.property.Team;
-import domain.piece.property.Direction;
+import chess.domain.piece.property.Direction;
+import chess.domain.piece.property.PieceFeature;
+import chess.domain.piece.property.PieceInfo;
+import chess.domain.piece.property.Team;
 import java.util.List;
 
 public final class Bishop extends CommonMovablePiece {
@@ -13,7 +11,7 @@ public final class Bishop extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+        directions = List.of(Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST, Direction.SOUTHWEST);
     }
 
     public Bishop(final Team team) {

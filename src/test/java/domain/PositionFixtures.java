@@ -1,8 +1,8 @@
 package domain;
 
-import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
+import chess.domain.position.Position;
+import chess.domain.position.XPosition;
+import chess.domain.position.YPosition;
 
 public final class PositionFixtures {
 

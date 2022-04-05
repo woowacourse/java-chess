@@ -1,10 +1,10 @@
-package domain.classification;
+package chess.domain.classification;
 
-import static domain.classification.CommandCase.*;
+import static chess.domain.classification.CommandCase.*;
 
-import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
+import chess.domain.position.Position;
+import chess.domain.position.XPosition;
+import chess.domain.position.YPosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,10 +1,10 @@
-package domain.piece.unit;
+package chess.domain.piece.unit;
 
-import domain.piece.property.PieceInfo;
-import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
-import domain.piece.property.Direction;
+import chess.domain.piece.property.Direction;
+import chess.domain.piece.property.PieceInfo;
+import chess.domain.position.XPosition;
+import chess.domain.position.YPosition;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
