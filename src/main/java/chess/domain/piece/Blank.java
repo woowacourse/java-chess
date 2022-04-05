@@ -27,6 +27,6 @@ public final class Blank extends Piece {
 
     @Override
     public MoveStrategy getMoveStrategy() {
-        throw new IllegalStateException("[ERROR] 움직이고자 하는 기물이 존재하지 않습니다.");
+        throw new IllegalStateException("[ERROR] Blank 는 이동전략이 존재하지 않습니다.");
     }
 }

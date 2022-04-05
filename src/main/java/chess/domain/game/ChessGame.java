@@ -28,15 +28,22 @@ public class ChessGame {
 
     private void validateGameSwitch() {
         if (!isOn()) {
-            throw new  IllegalStateException("[ERROR] 게임이 종료되어 기물을 이동시킬 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 게임이 종료되어 기물을 이동시킬 수 없습니다.");
         }
     }
 
     private void movePiece(final Position source, final Position target) {
         Piece sourcePiece = board.getPiece(source);
+        validateBlank(sourcePiece);
         validateTurn(turn, sourcePiece);
         validateMove(source, target, sourcePiece.getMoveStrategy());
         board.movePiece(source, target);
+    }
+
+    private void validateBlank(Piece sourcePiece) {
+        if (sourcePiece.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 체스 기물이 아닌 빈칸을 선택하였습니다.");
+        }
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {
@@ -73,8 +80,8 @@ public class ChessGame {
         return board.getBoard();
     }
 
-    public Map<String, Piece> getCurrentBoardForSpark() {
-        return board.getBoardForSpark();
+    public Map<String, Piece> getCurrentBoardByRawPosition() {
+        return board.getBoardByRawPosition();
     }
 
     public Turn getTurn() {

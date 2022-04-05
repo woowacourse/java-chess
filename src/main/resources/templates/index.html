@@ -340,7 +340,7 @@
             <h2>🎯 체스 기물 이동 🎯</h2>
             <input type="text" name="source" placeholder="Source Position">
             <input type="text" name="target" placeholder="Target Position">
-            <input type="submit">
+            <input type="submit" value="MOVE">
         </form>
         <div class="status">
             <p>{{turn.now.value}} 턴</p>
@@ -350,6 +350,17 @@
             <p>승리 팀 : {{winningTeam.value}} ({{winningTeam.winningType}})</p>
             {{/result}}
         </div>
+        <form class="save" method="post" action="/save">
+            <input type="submit" value="SAVE GAME">
+        </form>
+        <br/>
+        <form class="load" action="/load">
+            <input type="submit" value="LOAD GAME">
+        </form>
+        <br/>
+        <form class="reset" method="post" action="/reset">
+            <input type="submit" value="RESET">
+        </form>
     </section>
 </div>
 </body>

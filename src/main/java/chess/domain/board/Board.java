@@ -44,7 +44,7 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public Map<String, Piece> getBoardForSpark() {
+    public Map<String, Piece> getBoardByRawPosition() {
         return board.keySet().stream()
                 .collect(Collectors.toMap(Position::generateRawPosition, this::getPiece));
     }
