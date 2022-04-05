@@ -42,7 +42,7 @@ public class BoardDao {
         }
     }
 
-    public void create(final ChessGameDto chessGameDto){
+    public void create(final ChessGameDto chessGameDto) {
         final Connection connection = getConnection();
         if (checkInDB(chessGameDto)) {
             return;
@@ -82,7 +82,7 @@ public class BoardDao {
         }
     }
 
-    public void delete(final String name){
+    public void delete(final String name) {
         final Connection connection = getConnection();
         final String sql = "DELETE FROM board WHERE name = ?";
         try {

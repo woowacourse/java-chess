@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class MoveValidator {
     private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
-    protected void validateMove(Map<Position, Piece> squares,  Position from, Position to) {
+
+    protected void validateMove(Map<Position, Piece> squares, Position from, Position to) {
         checkNotSameTeam(squares, from, to);
         checkCanMove(squares, from, to);
         checkRoute(squares, from, to);

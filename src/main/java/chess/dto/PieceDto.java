@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PieceDto {
-    private static final Map<Name,String> WHITE_CACHE = new HashMap<>();
-    private static final Map<Name,String> BLACK_CACHE = new HashMap<>();
+    private static final Map<Name, String> WHITE_CACHE = new HashMap<>();
+    private static final Map<Name, String> BLACK_CACHE = new HashMap<>();
+
     static {
         WHITE_CACHE.put(Name.PAWN, "♙");
         WHITE_CACHE.put(Name.BISHOP, "♗");
@@ -26,6 +27,7 @@ public class PieceDto {
         BLACK_CACHE.put(Name.ROOK, "♜");
         BLACK_CACHE.put(Name.NONE, " ");
     }
+
     private final Piece piece;
 
     private final String emoji;

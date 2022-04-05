@@ -1,12 +1,10 @@
 package chess.dto;
 
-import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Team;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

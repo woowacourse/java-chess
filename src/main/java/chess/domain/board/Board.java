@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public final class Board{
+public final class Board {
     private static final MoveValidator validator = new MoveValidator();
 
     private final Map<Position, Piece> squares;

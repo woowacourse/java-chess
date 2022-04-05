@@ -34,14 +34,14 @@ public class InjectBoardStrategy implements BoardStrategy {
         stringPieceMap.put("p", new Pawn(Team.WHITE));
     }
 
-    public static Map<String, Piece> getStringPieceMap() {
-        return stringPieceMap;
-    }
-
     private final Map<Position, Piece> positionPieceMap;
 
     public InjectBoardStrategy(String text) {
         this.positionPieceMap = stringToBoard(text);
+    }
+
+    public static Map<String, Piece> getStringPieceMap() {
+        return stringPieceMap;
     }
 
     private static Map<Position, Piece> stringToBoard(String text) {

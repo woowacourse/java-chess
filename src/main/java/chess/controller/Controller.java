@@ -23,10 +23,13 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Controller {
     private final Map<String, Object> model = new HashMap<>();
+    private final BoardDao boardDao = new BoardDao();
     private ChessGame chessGame = new ChessGame(new InitBoardStrategy());
     private State state = new Play(chessGame);
 
-    private final BoardDao boardDao = new BoardDao();
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
 
     public void run() {
         staticFiles.location("/static");
@@ -117,9 +120,5 @@ public class Controller {
             return;
         }
         model.put("winner", winner);
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
