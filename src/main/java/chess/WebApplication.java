@@ -13,6 +13,7 @@ import chess.util.JsonParser;
 import chess.util.ViewUtil;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class WebApplication {
     public static String STATUS = "dev";
@@ -45,9 +46,9 @@ public class WebApplication {
         get("/game/command/:command", (req, res) -> {
             final int userId = req.session().attribute("user-id");
             final String command = req.params(":command");
-            final String startPosition = req.queryParams("start");
-            final String endPosition = req.queryParams("end");
-            final String rawCommand = command + " " + startPosition + " " + endPosition;
+            final Optional<String> startPosition = Optional.ofNullable(req.queryParams("start"));
+            final Optional<String> endPosition = Optional.ofNullable(req.queryParams("end"));
+            final String rawCommand = command + " " + startPosition.orElse("") + " " + endPosition.orElse("");
             final ParsedCommand parsedCommand = new ParsedCommand(rawCommand);
             final ChessController chess = new ChessController();
             if (command.equals("start") || command.equals("move")) {

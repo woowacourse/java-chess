@@ -2,15 +2,31 @@ const gameStatusLocalStorage = 'gameStatus';
 
 localStorage.clear();
 
+// start
 const startButton = document.querySelector('#command-button__start');
 startButton.addEventListener('click', () => {
     if (localStorage.getItem(gameStatusLocalStorage) !== null) {
         alert("기존 게임을 끝내고 시작해 주세요.");
         return;
     }
-    commandRequest('start');
+    startRequest('start');
 });
 
+function startRequest(command) {
+    fetch(`http://localhost:8080/game/command/${command}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    })
+        .then(response => response.json())
+        .then(({game_status: gameStatus, pieces}) => {
+            saveGameStatus(gameStatus);
+            arrangePieces(pieces);
+        })
+        .catch(error => console.log(error));
+}
 
 // move
 const moveCommand = {

@@ -1,6 +1,7 @@
 package chess.Controller.command;
 
 import chess.domain.board.Position;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class ParsedCommand {
@@ -16,6 +17,7 @@ public class ParsedCommand {
 
     public ParsedCommand(final String rawCommand) {
         final String[] splitCommand = rawCommand.split(COMMAND_DISTRIBUTOR);
+        System.err.println(Arrays.toString(splitCommand));
         command = Command.from(splitCommand[0]);
         start = getPositionFromCommand(splitCommand, STARTING_POINT);
         destination = getPositionFromCommand(splitCommand, DESTINATION);
