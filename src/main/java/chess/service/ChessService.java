@@ -67,13 +67,12 @@ public class ChessService {
     }
 
     private void shift(String source, String target) {
-        pieceDao.remove(source);
-
         if (!pieceDao.findById(target).isEmpty()) {
             pieceDao.remove(target);
         }
 
         pieceDao.save(new PieceDto(target, findPiece(source).getPieceType()));
+        pieceDao.remove(source);
     }
 
     private PieceDto findPiece(String source) {
