@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-h1 {
+h1, h2, h3 {
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -12,26 +12,33 @@ h1 {
 
 #board {
     margin: 0 auto;
-    width: 750px;
-    height: 750px;
+    width: 550px;
+    height: 550px;
     box-shadow: 5px 5px 15px 5px gray;
 }
 
 .rank {
     flex-direction: row;
     display: flex;
-    height: calc(750px / 8);
+    height: calc(550px / 8);
 }
 
 .square {
     flex: 1;
-    /*border: 1px solid black;*/
     font-size: 0.3rem;
     color: gray;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-color: burlywood;
+}
+
+.selected {
+    border: 5px solid pink;
+}
+
+.hasPiece {
+    cursor: pointer;
 }
 
 #board .rank:nth-child(2n -1) .square:nth-child(2n -1) {
