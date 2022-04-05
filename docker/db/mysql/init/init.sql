@@ -25,7 +25,7 @@ create table neo_position
     position_row    int(10) NOT NULL,
     board_id        int(10) NOT NULL,
     foreign key (board_id) references neo_board (id)
-    on delete cascade
+        on delete cascade
 );
 
 create table neo_piece
@@ -35,5 +35,14 @@ create table neo_piece
     color       varchar(10) NOT NULL,
     position_id int(10)     NOT NULL,
     foreign key (position_id) references neo_position (id)
-    on delete cascade
+        on delete cascade
+);
+
+create table neo_member
+(
+    id       int(10)     NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name     varchar(20) NOT NULL,
+    board_id int(10)     NOT NULL,
+    foreign key (board_id) references neo_board (id)
+        on delete cascade
 );

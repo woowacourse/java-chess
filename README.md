@@ -66,4 +66,4 @@
 - [x] if movable, update query and delete origin record
 - [x] if status, get all positions and pieces
 - [x] if end, destroy the room
-- [ ] create a room and create members
+- [x] create a room and create members

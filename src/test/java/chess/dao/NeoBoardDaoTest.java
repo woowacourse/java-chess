@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.game.BoardInitializer;
 import chess.domain.game.NeoBoard;
 import chess.domain.pieces.Color;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -36,8 +37,8 @@ class NeoBoardDaoTest {
 
     @Test
     void deleteBoard() {
-        final int boardId = 26;
-        int affectedRow = dao.deleteById(boardId);
+        final NeoBoard neoBoard = dao.save(new NeoBoard("aaa"));
+        int affectedRow = dao.deleteById(neoBoard.getId());
         assertThat(affectedRow).isEqualTo(1);
     }
 }
