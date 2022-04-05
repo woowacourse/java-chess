@@ -7,7 +7,6 @@ import java.util.List;
 
 public class KingPiece extends Piece {
 
-    private static final double SCORE = 0;
     private static final int LIMIT_DISTANCE = 2;
 
     private final List<Direction> movableDirections;
@@ -29,10 +28,5 @@ public class KingPiece extends Piece {
 
         return movableDirections.contains(direction) &&
                 Math.abs(columnDistance) < LIMIT_DISTANCE && Math.abs(rowDistance) < LIMIT_DISTANCE;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

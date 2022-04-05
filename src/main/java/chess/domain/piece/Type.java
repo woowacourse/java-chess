@@ -6,20 +6,22 @@ import java.util.function.Function;
 
 public enum Type {
 
-    KING("king", KingPiece::new),
-    QUEEN("queen", QueenPiece::new),
-    BISHOP("bishop", BishopPiece::new),
-    KNIGHT("knight", KnightPiece::new),
-    ROOK("rook", RookPiece::new),
-    PAWN("pawn", PawnPiece::new),
-    EMPTY("empty", color -> new EmptyPiece()),
+    KING("king", 0.0, KingPiece::new),
+    QUEEN("queen", 9.0, QueenPiece::new),
+    BISHOP("bishop", 3.0, BishopPiece::new),
+    KNIGHT("knight", 2.5, KnightPiece::new),
+    ROOK("rook", 5.0, RookPiece::new),
+    PAWN("pawn", 1.0, PawnPiece::new),
+    EMPTY("empty", 0.0, color -> new EmptyPiece()),
     ;
 
     private final String name;
+    private final double score;
     private final Function<Color, Piece> create;
 
-    Type(final String name, final Function<Color, Piece> create) {
+    Type(final String name, final double score, final Function<Color, Piece> create) {
         this.name = name;
+        this.score = score;
         this.create = create;
     }
 
@@ -36,5 +38,9 @@ public enum Type {
 
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

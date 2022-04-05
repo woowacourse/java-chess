@@ -7,8 +7,6 @@ import java.util.List;
 
 public class RookPiece extends Piece {
 
-    private static final double SCORE = 5.0;
-
     private final List<Direction> movableDirections;
 
     public RookPiece(final Color color) {
@@ -25,10 +23,5 @@ public class RookPiece extends Piece {
         final Direction direction = Direction.of(columnDistance, rowDistance);
 
         return movableDirections.contains(direction);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

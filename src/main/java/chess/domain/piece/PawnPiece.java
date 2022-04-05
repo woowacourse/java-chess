@@ -6,7 +6,6 @@ import chess.domain.position.Row;
 
 public class PawnPiece extends Piece {
 
-    private static final double SCORE = 1.0;
     private static final int LIMIT_DISTANCE = 2;
 
     public PawnPiece(final Color color) {
@@ -53,10 +52,5 @@ public class PawnPiece extends Piece {
                 (direction == Direction.NORTH_EAST || direction == Direction.NORTH_WEST)) ||
                 (super.isSame(Color.BLACK) &&
                         (direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST));
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }
