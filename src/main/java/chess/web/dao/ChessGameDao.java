@@ -8,10 +8,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.web.converter.PieceConverter;
-import chess.web.dto.ChessBoardDto;
 import chess.web.dto.ChessGameDto;
-import chess.web.dto.PieceDto;
-import chess.web.dto.PositionDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,47 +49,7 @@ public class ChessGameDao {
             statement.setString(3, chessGameDto.getGameName());
 
             statement.executeUpdate();
-            deletePieces(connection, chessboardId);
-            updatePieces(connection, chessGameDto, chessboardId);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void deletePieces(Connection connection, int chessboardId) {
-        String sql = "delete from piece where chessboard_id = ?";
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            statement.setInt(1, chessboardId);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updatePieces(Connection connection, ChessGameDto chessGameDto, int chessboardId) {
-        ChessBoardDto chessBoard = chessGameDto.getChessBoard();
-
-        Map<PositionDto, PieceDto> cells = chessBoard.getCells();
-
-        final String sql = "insert into piece (type, team, `rank`, file, chessboard_id) values (?, ?, ?, ?, ?)";
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            for (PositionDto positionDto : cells.keySet()) {
-                statement.setString(1, cells.get(positionDto).getSymbol());
-                statement.setString(2, cells.get(positionDto).getTeam());
-                statement.setInt(3, positionDto.getRank());
-                statement.setString(4, positionDto.getFile());
-                statement.setInt(5, chessboardId);
-
-                statement.executeUpdate();
-            }
-        } catch(SQLException e) {
             e.printStackTrace();
         }
     }
@@ -121,7 +78,7 @@ public class ChessGameDao {
         return id;
     }
 
-    public ChessGame findAllByName(String gameName) {
+    public ChessGame findByName(String gameName) {
         Connection connection = getConnection();
 
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, CHESSBOARD, PIECE\n"

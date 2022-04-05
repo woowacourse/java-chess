@@ -5,6 +5,7 @@ import chess.domain.Command;
 import chess.domain.piece.Team;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.ChessGameDao;
+import chess.web.dao.PieceDAO;
 import chess.web.dto.ChessGameDto;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,13 @@ public class ChessService {
 
     private final ChessGameDao chessGameDao;
     private final ChessBoardDao chessBoardDao;
+    private final PieceDAO pieceDAO;
     private ChessGame chessGame;
 
     public ChessService() {
         this.chessGameDao = new ChessGameDao();
         this.chessBoardDao = new ChessBoardDao();
+        this.pieceDAO = new PieceDAO();
     }
 
     public List<String> createChessBoard(String gameName) {
@@ -51,7 +54,7 @@ public class ChessService {
     }
 
     public List<String> findAllByName(String gameName) {
-        ChessGame selectedChessGame = chessGameDao.findAllByName(gameName);
+        ChessGame selectedChessGame = chessGameDao.findByName(gameName);
 
         if (selectedChessGame == null) {
             chessGame = new ChessGame(gameName);
@@ -72,19 +75,16 @@ public class ChessService {
 
         int chessboardId = chessGameDao.findIdByName(gameName);
 
-        System.out.println("chessboardId = " + chessboardId);
-
         if (chessboardId > 0) {
-            System.out.println("있으니까 여기 실행");
             chessGameDao.update(chessGameDto, chessboardId);
+            pieceDAO.update(chessboardId, chessGameDto);
             return;
         }
 
-        int savedId = chessBoardDao.save(chessGameDto);
+        int savedId = chessBoardDao.save();
+        pieceDAO.save(savedId, chessGameDto);
 
         chessGameDao.save(chessGameDto, savedId);
-
-        System.out.println("없으면 여기 실행");
     }
 
     public boolean isEnd() {

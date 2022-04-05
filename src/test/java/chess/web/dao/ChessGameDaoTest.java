@@ -35,7 +35,7 @@ class ChessGameDaoTest {
         ChessGameDao chessGameDao = new ChessGameDao();
 
         //when & then
-        int chessBoardId = chessBoardDao.save(chessGameDto);
+        int chessBoardId = chessBoardDao.save();
 
         chessGameDao.save(chessGameDto, chessBoardId);
     }
