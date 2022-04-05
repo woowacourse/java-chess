@@ -11,7 +11,7 @@
 }
 
 .button {
-    width: 240px;
+    width: 360px;
     height: 80px;
     background-color: antiquewhite;
     color: dimgrey;
@@ -19,6 +19,24 @@
     font-weight: bold;
     font-size: 50px;
     border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+#game-info-section {
+    height: 100%;
+    margin: auto;
+}
+
+#turn-box {
+    width: 360px;
+    height: 300px;
+    background-color: antiquewhite;
+    text-align: center;
+    border-color: dimgrey;
+    display:table-cell;
+    vertical-align:middle;
+    font-weight: bold;
+    font-size: 40px;
 }
 
 #piece-image {
@@ -29,3 +47,4 @@
 #page {
     display: flex;
 }
+
