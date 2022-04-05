@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.DeadPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,19 +13,17 @@ public class BishopMoveStrategyTest {
 
     private Board board;
     private BishopMoveStrategy bishopMoveStrategy;
-    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.generateChessBoard();
         bishopMoveStrategy = new BishopMoveStrategy();
-        deadPieces = new DeadPieces();
     }
 
     @Test
     @DisplayName("비숍이 양의 대각선으로 이동 할 수 있다.")
     void isMovable_PositiveDiagonal() {
-        board.movePiece(Position.valueOf("d7"), Position.valueOf("d6"), deadPieces);
+        board.movePiece(Position.valueOf("d7"), Position.valueOf("d6"));
 
         Position source = Position.valueOf("c8");
         Position target = Position.valueOf("e6");
@@ -37,7 +34,7 @@ public class BishopMoveStrategyTest {
     @Test
     @DisplayName("비숍이 음의 대각선으로 이동 할 수 있다.")
     void isMovable_NegativeDiagonal() {
-        board.movePiece(Position.valueOf("b7"), Position.valueOf("d6"), deadPieces);
+        board.movePiece(Position.valueOf("b7"), Position.valueOf("d6"));
 
         Position source = Position.valueOf("c8");
         Position target = Position.valueOf("a6");

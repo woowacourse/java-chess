@@ -1,14 +1,5 @@
-create table member
+create table chess-game
 (
-    id varchar(10) not null,
-    name varchar(20) not null,
-    primary key (id)
-);
+    id int primary key auto_increment,
 
-create table role
-(
-    user_id varchar(10) not null,
-    role varchar(10) not null,
-    primary key (user_id),
-    foreign key (user_id) references member (id)
-);
+)

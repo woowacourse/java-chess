@@ -10,15 +10,13 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
-    private final DeadPieces deadPieces;
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final Board board, final GameSwitch gameSwitch, final Turn turn) {
         this.board = board;
-        this.deadPieces = new DeadPieces();
-        this.gameSwitch = new GameSwitch(true);
-        this.turn = new Turn(Team.WHITE);
+        this.gameSwitch = gameSwitch;
+        this.turn = turn;
     }
 
     public void move(final String rawSource, final String rawTarget) {
@@ -38,7 +36,7 @@ public class ChessGame {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         validateMove(source, target, sourcePiece.getMoveStrategy());
-        board.movePiece(source, target, deadPieces);
+        board.movePiece(source, target);
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {
@@ -54,7 +52,7 @@ public class ChessGame {
     }
 
     private void turnOffWhenKingDie() {
-        if (deadPieces.isKingDead()) {
+        if (board.searchTeamOfDeadKing() != Team.NONE) {
             turnOff();
         }
     }
@@ -68,7 +66,7 @@ public class ChessGame {
     }
 
     public Result generateResult() {
-        return new Result(getCurrentBoard(), deadPieces);
+        return new Result(getCurrentBoard(), board.searchTeamOfDeadKing());
     }
 
     public Map<Position, Piece> getCurrentBoard() {

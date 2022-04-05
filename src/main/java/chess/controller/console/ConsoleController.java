@@ -2,7 +2,10 @@ package chess.controller.console;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.game.GameSwitch;
 import chess.domain.game.Result;
+import chess.domain.game.Turn;
+import chess.domain.piece.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -20,7 +23,11 @@ public class ConsoleController {
     public void run() {
         OutputView.printStartGame();
         if (InputView.inputCommandForStart() == START_COMMAND_STRING) {
-            ChessGame chessGame = new ChessGame(BoardFactory.generateChessBoard());
+            ChessGame chessGame = new ChessGame(
+                    BoardFactory.generateChessBoard(),
+                    new GameSwitch(true),
+                    new Turn(Team.WHITE)
+            );
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }
@@ -43,7 +50,7 @@ public class ConsoleController {
         }
     }
 
-    private void move(final ChessGame chessGame, final List<String> inputs,final String commandMessage) {
+    private void move(final ChessGame chessGame, final List<String> inputs, final String commandMessage) {
         if (commandMessage.equals(MOVE_COMMAND_STRING)) {
             chessGame.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
             printCurrentBoard(chessGame);

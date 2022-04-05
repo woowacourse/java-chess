@@ -3,7 +3,7 @@ package chess.domain.move;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
-public final class QueenMoveStrategy extends LinearMoveStrategy {
+public final class  QueenMoveStrategy extends LinearMoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {

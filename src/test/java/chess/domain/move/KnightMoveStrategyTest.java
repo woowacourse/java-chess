@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.DeadPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +13,11 @@ public class KnightMoveStrategyTest {
 
     private Board board;
     private KnightMoveStrategy knightMoveStrategy;
-    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.generateChessBoard();
         knightMoveStrategy = new KnightMoveStrategy();
-        deadPieces = new DeadPieces();
     }
 
     @Test
@@ -44,7 +41,7 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
     void isMovableWhenTargetColorSame() {
-        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"), deadPieces);
+        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"));
 
         Position source = Position.valueOf("b8");
         Position target = Position.valueOf("c6");

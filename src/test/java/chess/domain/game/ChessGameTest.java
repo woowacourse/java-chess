@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,11 @@ public class ChessGameTest {
     @BeforeEach
     void setUp() {
         board = BoardFactory.generateChessBoard();
-        chessGame = new ChessGame(board);
+        chessGame = new ChessGame(
+                board,
+                new GameSwitch(true),
+                new Turn(Team.WHITE)
+        );
     }
 
     @Test
@@ -40,9 +45,9 @@ public class ChessGameTest {
     @Test
     @DisplayName("King 이 죽으면 GameSwitch 가 꺼진다.")
     void turnOffWhenKingDie() {
-        board.movePiece(Position.valueOf("e1"), Position.valueOf("e7"), new DeadPieces());
+        board.movePiece(Position.valueOf("e8"), Position.valueOf("e2"));
 
-        chessGame.move("e7", "e8");
+        chessGame.move("e1", "e2");
 
         assertThat(chessGame.isOn()).isFalse();
     }

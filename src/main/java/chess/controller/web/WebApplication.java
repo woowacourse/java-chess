@@ -7,6 +7,9 @@ import static spark.Spark.staticFileLocation;
 
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.game.GameSwitch;
+import chess.domain.game.Turn;
+import chess.domain.piece.Team;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -17,7 +20,11 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
 
-        ChessGame chessGame = new ChessGame(BoardFactory.generateChessBoard());
+        ChessGame chessGame = new ChessGame(
+                BoardFactory.generateChessBoard(),
+                new GameSwitch(true),
+                new Turn(Team.WHITE)
+        );
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>(chessGame.getCurrentBoardForSpark());

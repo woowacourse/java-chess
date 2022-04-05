@@ -10,7 +10,7 @@ public class WinningTeam {
     private final String value;
     private final String winningType;
 
-    public WinningTeam(final double blackScore, final double whiteScore, final DeadPieces deadPieces) {
+    public WinningTeam(final double blackScore, final double whiteScore, final Team teamOfDeadKing) {
         Team winTeam = Team.NONE;
         String winType = WIN_BY_SCORE;
         if (whiteScore > blackScore) {
@@ -19,8 +19,8 @@ public class WinningTeam {
         if (whiteScore <= blackScore) {
             winTeam = Team.BLACK;
         }
-        if (deadPieces.isKingDead()) {
-            winTeam = deadPieces.searchTeamOfDeadKing();
+        if (teamOfDeadKing != Team.NONE) {
+            winTeam = teamOfDeadKing.oppositeTeam();
             winType = WIN_BY_KING_DEAD;
         }
         this.value = winTeam.getValue();

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.DeadPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,19 +13,17 @@ public class QueenMoveStrategyTest {
 
     private Board board;
     private QueenMoveStrategy queenMoveStrategy;
-    private DeadPieces deadPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.generateChessBoard();
         queenMoveStrategy = new QueenMoveStrategy();
-        deadPieces = new DeadPieces();
     }
 
     @Test
     @DisplayName("퀸이 수직 이동할 수 있다.")
     void isMovable_Vertical() {
-        board.movePiece(Position.valueOf("d2"), Position.valueOf("e3"), deadPieces);
+        board.movePiece(Position.valueOf("d2"), Position.valueOf("e3"));
 
         Position source = Position.valueOf("d1");
         Position target = Position.valueOf("d4");
@@ -37,7 +34,7 @@ public class QueenMoveStrategyTest {
     @Test
     @DisplayName("퀸이 수평 이동할 수 있다.")
     void isMovableHorizon() {
-        board.movePiece(Position.valueOf("e1"), Position.valueOf("e3"), deadPieces);
+        board.movePiece(Position.valueOf("e1"), Position.valueOf("e3"));
 
         Position source = Position.valueOf("d1");
         Position target = Position.valueOf("e1");
@@ -66,7 +63,7 @@ public class QueenMoveStrategyTest {
     @Test
     @DisplayName("퀸이 양의 대각선으로 이동 할 수 있다.")
     void isMovable_PositiveDiagonal() {
-        board.movePiece(Position.valueOf("e2"), Position.valueOf("e4"), deadPieces);
+        board.movePiece(Position.valueOf("e2"), Position.valueOf("e4"));
 
         Position source = Position.valueOf("d1");
         Position target = Position.valueOf("e2");
@@ -77,7 +74,7 @@ public class QueenMoveStrategyTest {
     @Test
     @DisplayName("퀸이 음의 대각선으로 이동 할 수 있다.")
     void isMovable_NegativeDiagonal() {
-        board.movePiece(Position.valueOf("c2"), Position.valueOf("c4"), deadPieces);
+        board.movePiece(Position.valueOf("c2"), Position.valueOf("c4"));
 
         Position source = Position.valueOf("d1");
         Position target = Position.valueOf("c2");

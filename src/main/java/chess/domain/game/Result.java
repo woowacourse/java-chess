@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.piece.Team;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,10 +17,10 @@ public class Result {
     private final double whiteScore;
     private final WinningTeam winningTeam;
 
-    public Result(final Map<Position, Piece> board, final DeadPieces deadPieces) {
+    public Result(final Map<Position, Piece> board, final Team teamOfDeadKing) {
         this.blackScore = calculateScore(board, Team.BLACK);
         this.whiteScore = calculateScore(board, Team.WHITE);
-        this.winningTeam = new WinningTeam(blackScore, whiteScore, deadPieces);
+        this.winningTeam = new WinningTeam(blackScore, whiteScore, teamOfDeadKing);
     }
 
     public double calculateScore(final Map<Position, Piece> board, final Team team) {
