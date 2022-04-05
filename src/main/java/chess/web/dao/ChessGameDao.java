@@ -120,6 +120,7 @@ public class ChessGameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

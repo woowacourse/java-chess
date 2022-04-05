@@ -37,7 +37,7 @@ public class ChessController {
 
             String gameName = request.queryParams("game_name");
 
-            List<String> chessBoard = chessService.findAllByName(gameName);
+            List<String> chessBoard = chessService.findByName(gameName);
 
             model.put("chessboard", chessBoard);
 

@@ -5,7 +5,7 @@ import chess.domain.Command;
 import chess.domain.piece.Team;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.ChessGameDao;
-import chess.web.dao.PieceDAO;
+import chess.web.dao.PieceDao;
 import chess.web.dto.ChessGameDto;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +14,13 @@ public class ChessService {
 
     private final ChessGameDao chessGameDao;
     private final ChessBoardDao chessBoardDao;
-    private final PieceDAO pieceDAO;
+    private final PieceDao pieceDAO;
     private ChessGame chessGame;
 
     public ChessService() {
         this.chessGameDao = new ChessGameDao();
         this.chessBoardDao = new ChessBoardDao();
-        this.pieceDAO = new PieceDAO();
+        this.pieceDAO = new PieceDao();
     }
 
     public List<String> createChessBoard(String gameName) {
@@ -53,7 +53,7 @@ public class ChessService {
         return chessGame.getWinTeamName();
     }
 
-    public List<String> findAllByName(String gameName) {
+    public List<String> findByName(String gameName) {
         ChessGame selectedChessGame = chessGameDao.findByName(gameName);
 
         if (selectedChessGame == null) {
