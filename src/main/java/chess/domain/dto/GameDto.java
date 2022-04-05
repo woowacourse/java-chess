@@ -15,7 +15,4 @@ public class GameDto {
         return id;
     }
 
-    public String getTurn() {
-        return turn;
-    }
 }

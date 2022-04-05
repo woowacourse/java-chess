@@ -32,7 +32,8 @@ class GameDaoTest {
     @Test
     @DisplayName("게임을 저장한다.")
     void save() {
-        gameDao.save(ChessBoardFactory.initBoard());
+        int actual = gameDao.save(ChessBoardFactory.initBoard());
+        assertThat(actual).isEqualTo(1);
     }
 
     @Test
@@ -42,10 +43,9 @@ class GameDaoTest {
         gameDao.save(ChessBoardFactory.initBoard());
         gameDao.save(ChessBoardFactory.initBoard());
         //when
-        GameDto actual = gameDao.findLastGame();
+        int actual = gameDao.findLastGame();
         //then
-        assertThat(actual.getId()).isEqualTo(2);
-        assertThat(actual.getTurn()).isEqualTo("WHITE");
+        assertThat(actual).isEqualTo(2);
     }
 
 
@@ -63,12 +63,13 @@ class GameDaoTest {
     @Test
     @DisplayName("가장 최근 게임을 삭제한다.")
     void delete() throws SQLException {
+        //given
         gameDao.save(ChessBoardFactory.initBoard());
         gameDao.save(ChessBoardFactory.initBoard());
         //when
         gameDao.delete();
         //then
-        assertThat(gameDao.findLastGame().getId()).isEqualTo(1);
+        assertThat(gameDao.findLastGame()).isEqualTo(1);
     }
 
     @AfterEach

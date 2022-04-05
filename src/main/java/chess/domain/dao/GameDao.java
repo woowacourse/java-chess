@@ -18,7 +18,7 @@ public class GameDao {
         this.connection = connection;
     }
 
-    public void save(ChessBoard chessBoard) {
+    public int save(ChessBoard chessBoard) {
         final String sql = "insert into Game (id, status, turn) values(?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -26,23 +26,21 @@ public class GameDao {
             statement.setBoolean(2, chessBoard.isPlaying());
             statement.setString(3, chessBoard.getCurrentTurn().name());
             statement.executeUpdate();
+            return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return 0;
     }
 
-    public GameDto findLastGame() throws SQLException {
+    public int findLastGame() throws SQLException {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
         final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ResultSet result = statement.executeQuery();
         if (!result.next()) {
-            return null;
+            return 0;
         }
-        return new GameDto(
-                result.getInt("id"),
-                result.getBoolean("status"),
-                result.getString("turn")
-        );
+        return result.getInt("id");
     }
 
     public GameDto findById(int id) {
@@ -65,14 +63,17 @@ public class GameDao {
         return null;
     }
 
-    public void delete(){
+    public int delete(){
         final String sql = "delete from game where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1,findLastGame().getId());
+            int id = findLastGame();
+            statement.setInt(1, id);
             statement.executeUpdate();
+            return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return 0;
     }
 }
