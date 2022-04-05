@@ -1,7 +1,7 @@
 let gameStatus = "";
 
 async function refreshAndDisplayBoard() {
-    await refreshBoard().then(r => displayBoard());
+    await refreshBoard().then(displayBoard);
 }
 
 async function refreshBoard() {
@@ -32,9 +32,8 @@ async function displayBoard() {
 
 async function loadButton() {
     if (gameStatus === "") {
-        await displayBoard();
-        gameStatus = await status();
-        console.log(gameStatus);
+        await refreshAndDisplayBoard();
+        gameStatus = "run status";
     } else {
         alert("이미 게임이 로딩되었습니다.");
     }
@@ -94,11 +93,34 @@ async function moveButton() {
         body: JSON.stringify(move)
     }).then(response => handlingException(response))
         .then(refreshAndDisplayBoard)
+        .then(checkEndGame)
         .catch(error => {
             alert(error.message);
         });
     document.getElementById("source").value = "";
     document.getElementById("target").value = "";
+}
+
+async function checkEndGame() {
+    console.log("호출은 함");
+    const gameStatus = await fetch("/status")
+        .then((response) => response.json());
+    console.log(gameStatus.isEnd);
+    if (gameStatus.isEnd) {
+        await fetch("/winner")
+            .then(response => handlingException(response))
+            .then(response => displayWinner(response))
+            .catch(error => {
+                alert(error.message);
+            });
+    }
+}
+
+async function displayWinner(response) {
+    console.log(response);
+    const result = await response.json();
+    console.log(result);
+    alert(`우승자는 ${result.winner}입니다.`);
 }
 
 async function scoreButton() {
@@ -109,11 +131,6 @@ async function scoreButton() {
     } else {
         alert("게임을 로드하지 않았습니다.");
     }
-}
-
-async function status() {
-    return await fetch("/status")
-        .then((response) => response.json());
 }
 
 async function handlingException(response) {
