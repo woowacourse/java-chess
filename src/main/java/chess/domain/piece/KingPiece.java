@@ -29,4 +29,9 @@ public class KingPiece extends Piece {
         return movableDirections.contains(direction) &&
                 Math.abs(columnDistance) < LIMIT_DISTANCE && Math.abs(rowDistance) < LIMIT_DISTANCE;
     }
+
+    @Override
+    public boolean isJumpable() {
+        return false;
+    }
 }

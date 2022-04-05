@@ -26,4 +26,9 @@ public class QueenPiece extends Piece {
 
         return movableDirections.contains(direction);
     }
+
+    @Override
+    public boolean isJumpable() {
+        return false;
+    }
 }

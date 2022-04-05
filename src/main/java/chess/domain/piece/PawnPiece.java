@@ -53,4 +53,9 @@ public class PawnPiece extends Piece {
                 (super.isSame(Color.BLACK) &&
                         (direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST));
     }
+
+    @Override
+    public boolean isJumpable() {
+        return false;
+    }
 }

@@ -15,16 +15,14 @@ public abstract class Piece {
 
     public abstract boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget);
 
+    public abstract boolean isJumpable();
+
     public boolean isSame(final Type type) {
         return this.type == type;
     }
 
     public boolean isSame(final Color color) {
         return this.color.equals(color);
-    }
-
-    public boolean isJumpable() {
-        return false;
     }
 
     public double getScore() {
