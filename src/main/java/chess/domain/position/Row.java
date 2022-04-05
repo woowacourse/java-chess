@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum Row {
 
-    RANK_1("1", 7),
-    RANK_2("2", 6),
-    RANK_3("3", 5),
-    RANK_4("4", 4),
-    RANK_5("5", 3),
-    RANK_6("6", 2),
+    RANK_8("8", 0),
     RANK_7("7", 1),
-    RANK_8("8", 0);
+    RANK_6("6", 2),
+    RANK_5("5", 3),
+    RANK_4("4", 4),
+    RANK_3("3", 5),
+    RANK_2("2", 6),
+    RANK_1("1", 7);
 
     private final String name;
     private final int rank;
@@ -45,9 +45,5 @@ public enum Row {
 
     public String getName() {
         return name;
-    }
-
-    public int getRank() {
-        return rank;
     }
 }

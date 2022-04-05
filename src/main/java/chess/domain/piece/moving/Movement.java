@@ -1,6 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.moving;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiPredicate;
 
 public enum Movement {
@@ -70,5 +71,100 @@ public enum Movement {
                 this == NORTH_EAST_UNLIMITED ||
                 this == NORTH_WEST_1STEP ||
                 this == NORTH_WEST_UNLIMITED;
+    }
+
+    public static List<Movement> getBishopMoving() {
+        return List.of(
+                SOUTH_EAST_UNLIMITED,
+                SOUTH_EAST_1STEP,
+                SOUTH_WEST_UNLIMITED,
+                SOUTH_WEST_1STEP,
+                NORTH_EAST_UNLIMITED,
+                NORTH_EAST_1STEP,
+                NORTH_WEST_UNLIMITED,
+                NORTH_WEST_1STEP
+        );
+    }
+
+    public static List<Movement> getKingMoving() {
+        return List.of(
+                EAST_1STEP,
+                WEST_1STEP,
+                SOUTH_1STEP,
+                NORTH_1STEP,
+                NORTH_EAST_1STEP,
+                NORTH_WEST_1STEP,
+                SOUTH_EAST_1STEP,
+                SOUTH_WEST_1STEP
+        );
+    }
+
+    public static List<Movement> getRookMoving() {
+        return List.of(
+                EAST_UNLIMITED,
+                EAST_1STEP,
+                WEST_UNLIMITED,
+                WEST_1STEP,
+                SOUTH_UNLIMITED,
+                SOUTH_1STEP,
+                SOUTH_2STEP,
+                NORTH_UNLIMITED,
+                NORTH_1STEP,
+                NORTH_2STEP
+        );
+    }
+
+    public static List<Movement> getKnightMoving() {
+        return List.of(
+                KNIGHT_EAST_SOUTH,
+                KNIGHT_EAST_NORTH,
+                KNIGHT_WEST_SOUTH,
+                KNIGHT_WEST_NORTH,
+                KNIGHT_SOUTH_EAST,
+                KNIGHT_SOUTH_WEST,
+                KNIGHT_NORTH_EAST,
+                KNIGHT_NORTH_WEST
+        );
+    }
+
+    public static List<Movement> getQueenMoving() {
+        return List.of(
+                EAST_UNLIMITED,
+                EAST_1STEP,
+                WEST_UNLIMITED,
+                WEST_1STEP,
+                SOUTH_UNLIMITED,
+                SOUTH_1STEP,
+                SOUTH_2STEP,
+                NORTH_UNLIMITED,
+                NORTH_1STEP,
+                NORTH_2STEP,
+                SOUTH_EAST_UNLIMITED,
+                SOUTH_EAST_1STEP,
+                SOUTH_WEST_UNLIMITED,
+                SOUTH_WEST_1STEP,
+                NORTH_EAST_UNLIMITED,
+                NORTH_EAST_1STEP,
+                NORTH_WEST_UNLIMITED,
+                NORTH_WEST_1STEP
+        );
+    }
+
+    public static List<Movement> getWhitePawnMoving() {
+        return List.of(
+                NORTH_1STEP,
+                NORTH_2STEP,
+                NORTH_EAST_1STEP,
+                NORTH_WEST_1STEP
+        );
+    }
+
+    public static List<Movement> getBlackPawnMoving() {
+        return List.of(
+                SOUTH_1STEP,
+                SOUTH_2STEP,
+                SOUTH_EAST_1STEP,
+                SOUTH_WEST_1STEP
+        );
     }
 }

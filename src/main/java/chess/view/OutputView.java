@@ -2,9 +2,13 @@ package chess.view;
 
 import chess.domain.Score;
 import chess.domain.WinResult;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.dto.BoardDto;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.dto.StatusDto;
+
 import java.util.Map;
 
 public class OutputView {
@@ -22,16 +26,6 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source 위치 target 위치 (예. move b2 b3)");
         System.out.println("> 게임 현황 : status");
         System.out.println("> 게임 종료 : end");
-    }
-
-    public static void printBoard(BoardDto board) {
-        Map<Integer, String> piecesByRow = board.getPiecesByRow();
-        System.out.println("------------------------");
-        for (int rank = board.getFirstRank(); rank <= board.getLastRank(); rank++) {
-            System.out.println(piecesByRow.get(rank) + "\t(rank" + rank + ")");
-        }
-        System.out.println(board.getFileNames());
-        System.out.println("------------------------");
     }
 
     public static void printErrorMessage(String message) {
@@ -52,5 +46,26 @@ public class OutputView {
         }
         System.out.println(winResult + " 진영이 이기고 있습니다.");
         System.out.println();
+    }
+
+    public static void printBoard(Map<Position, Piece> pieces) {
+        for (Row row : Row.values()) {
+            printBoardByRow(pieces, row);
+        }
+    }
+
+    private static void printBoardByRow(Map<Position, Piece> pieces, Row row) {
+        for (Column column : Column.values()) {
+            Position position = Position.of(column, row);
+            System.out.print(getPieceSignature(pieces, position));
+        }
+        System.out.println();
+    }
+
+    private static String getPieceSignature(Map<Position, Piece> pieces, Position position) {
+        if (pieces.containsKey(position)) {
+            return pieces.get(position).getSignature();
+        }
+        return ".";
     }
 }

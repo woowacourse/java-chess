@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -10,15 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static chess.domain.PiecesUtil.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class KnightTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK:N", "WHITE:n"}, delimiter = ':')
+    @Test
     @DisplayName("Knight 의 색깔에 맞는 이름을 반환하는지")
-    void checkNameByColor(PieceColor color, String pieceName) {
-        Knight knight = new Knight(color);
+    void signatureOfBlack() {
+        assertThat(BLACK_KNIGHT.getSignature()).isEqualTo("N");
+    }
 
-        assertThat(knight.signature()).isEqualTo(pieceName);
+    @Test
+    @DisplayName("Knight 의 색깔에 맞는 이름을 반환하는지")
+    void signatureOfWhite() {
+        assertThat(WHITE_KNIGHT.getSignature()).isEqualTo("n");
     }
 
     @ParameterizedTest
@@ -28,11 +32,9 @@ public class KnightTest {
             delimiter = ':')
     @DisplayName("Knight 가 L 자로 움직이는 경우 - 가능")
     void canMove(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Knight knight = new Knight(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
-
-        assertThat(knight.isCorrectMovement(source, target, false)).isTrue();
+        assertThat(BLACK_KNIGHT.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @ParameterizedTest
@@ -40,22 +42,18 @@ public class KnightTest {
             delimiter = ':')
     @DisplayName("Knight 가 대각선으로 1칸 움직일 경우 - 불가능")
     void canNotMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Knight knight = new Knight(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
-
-        assertThat(knight.isCorrectMovement(source, target, false)).isFalse();
+        assertThat(BLACK_KNIGHT.isCorrectMovement(source, target, false)).isFalse();
     }
 
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Knight 가 대각선으로 2칸 이상 움직일 경우 - 불가능")
     void canMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Knight knight = new Knight(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
-
-        assertThat(knight.isCorrectMovement(source, target, false)).isFalse();
+        assertThat(BLACK_KNIGHT.isCorrectMovement(source, target, false)).isFalse();
     }
 
     @ParameterizedTest
@@ -63,53 +61,41 @@ public class KnightTest {
             delimiter = ':')
     @DisplayName("Knight 가 상하좌우로 1칸 움직일 경우 - 불가능")
     void canNotMoveWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Knight knight = new Knight(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
-
-        assertThat(knight.isCorrectMovement(source, target, false)).isFalse();
+        assertThat(BLACK_KNIGHT.isCorrectMovement(source, target, false)).isFalse();
     }
 
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:C:RANK_2", "C:RANK_5:A:RANK_5", "A:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Knight 가 상하좌우로 2칸 이상 움직일 경우 - 불가능")
     void canNotMoveWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Knight knight = new Knight(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
-
-        assertThat(knight.isCorrectMovement(source, target, false)).isFalse();
+        assertThat(BLACK_KNIGHT.isCorrectMovement(source, target, false)).isFalse();
     }
 
     @Test
     @DisplayName("Knight 은 기물을 넘을 수 있다.")
     void canNotJumpOverPieces() {
-        Knight knight = new Knight(PieceColor.BLACK);
-
-        assertThat(knight.canJumpOverPieces()).isTrue();
+        assertThat(BLACK_KNIGHT.canJumpOverPieces()).isTrue();
     }
 
     @Test
     @DisplayName("Knight 은 Pawn 이 아니다.")
     void isNotPawn() {
-        Knight knight = new Knight(PieceColor.BLACK);
-
-        assertThat(knight.isPawn()).isFalse();
+        assertThat(BLACK_KNIGHT.isPawn()).isFalse();
     }
 
     @Test
     @DisplayName("Knight 은 King 이 아니다.")
     void isNotKing() {
-        Knight knight = new Knight(PieceColor.BLACK);
-
-        assertThat(knight.isKing()).isFalse();
+        assertThat(BLACK_KNIGHT.isKing()).isFalse();
     }
 
     @Test
     @DisplayName("Knight 의 점수는 2.5 이다.")
     void isScore2_5() {
-        Knight knight = new Knight(PieceColor.BLACK);
-
-        assertThat(knight.score()).isEqualTo(2.5);
+        assertThat(BLACK_KNIGHT.score()).isEqualTo(2.5);
     }
 }

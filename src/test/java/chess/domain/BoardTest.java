@@ -1,34 +1,33 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import chess.domain.command.MoveCommand;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.AbstractPiece;
-import chess.domain.piece.Queen;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.HashMap;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static chess.domain.PiecesUtil.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BoardTest {
 
     @Test
     @DisplayName("King 이 모두 살아있는 경우 true를 반환하는지")
     void checkAliveAllKings() {
-        Map<Position, AbstractPiece> pieces = new HashMap<>();
-        pieces.put(Position.of(Column.C, Row.RANK_3), new King(PieceColor.BLACK));
-        pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(PieceColor.BLACK));
-        pieces.put(Position.of(Column.H, Row.RANK_3), new Pawn(PieceColor.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_1), new King(PieceColor.WHITE));
-        pieces.put(Position.of(Column.A, Row.RANK_7), new Pawn(PieceColor.WHITE));
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(Position.of(Column.C, Row.RANK_3), BLACK_KING);
+        pieces.put(Position.of(Column.H, Row.RANK_4), BLACK_PAWN);
+        pieces.put(Position.of(Column.H, Row.RANK_3), BLACK_PAWN);
+        pieces.put(Position.of(Column.C, Row.RANK_1), WHITE_KING);
+        pieces.put(Position.of(Column.A, Row.RANK_7), WHITE_PAWN);
 
         Board board = new Board(pieces);
 
@@ -38,11 +37,11 @@ public class BoardTest {
     @Test
     @DisplayName("King 이 하나라도 없는 경우 false를 반환하는지")
     void checkDeadKing() {
-        Map<Position, AbstractPiece> pieces = new HashMap<>();
-        pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(PieceColor.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_6), new Pawn(PieceColor.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_1), new King(PieceColor.WHITE));
-        pieces.put(Position.of(Column.A, Row.RANK_2), new Pawn(PieceColor.WHITE));
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(Position.of(Column.C, Row.RANK_2), BLACK_QUEEN);
+        pieces.put(Position.of(Column.C, Row.RANK_6), BLACK_PAWN);
+        pieces.put(Position.of(Column.C, Row.RANK_1), WHITE_KING);
+        pieces.put(Position.of(Column.A, Row.RANK_2), WHITE_PAWN);
 
         Board board = new Board(pieces);
 
@@ -55,10 +54,10 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e2 e4");
         Position targetPosition = Position.of("e4");
-        Map<Position, AbstractPiece> beforePieces = board.getPieces();
+        Map<Position, Piece> beforePieces = board.getPieces();
 
         board.movePiece(PieceColor.WHITE, moveCommand);
-        Map<Position, AbstractPiece> afterPieces = board.getPieces();
+        Map<Position, Piece> afterPieces = board.getPieces();
 
         assertAll(
                 () -> assertThat(beforePieces.get(targetPosition)).isNull(),

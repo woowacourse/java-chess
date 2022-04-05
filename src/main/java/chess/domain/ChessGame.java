@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.command.MoveCommand;
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public final class ChessGame {
     private final Board board;
     private PieceColor turnColor = PieceColor.WHITE;
 
-    public ChessGame(Map<Position, AbstractPiece> pieces) {
+    public ChessGame(Map<Position, Piece> pieces) {
         this.board = new Board(pieces);
     }
 
@@ -29,16 +29,16 @@ public final class ChessGame {
         return board.hasBothKings();
     }
 
-    public Map<PieceColor, Score> calculateScore() {
+    public Map<PieceColor, Score> calculateScoreByColor() {
         Map<PieceColor, Score> scores = new HashMap<>();
         for (PieceColor color : PieceColor.values()) {
-            Map<Position, AbstractPiece> pieces = board.getPiecesOf(color);
+            Map<Position, Piece> pieces = board.getPiecesOf(color);
             scores.put(color, Score.of(pieces));
         }
         return scores;
     }
 
-    public Map<Position, AbstractPiece> getPieces() {
+    public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
 }

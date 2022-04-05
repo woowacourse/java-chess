@@ -1,9 +1,10 @@
 package chess.domain;
 
 import chess.domain.command.MoveCommand;
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +14,15 @@ public class Board {
 
     private static final int ALL_KING_COUNT = 2;
 
-    private final Map<Position, AbstractPiece> pieces;
+    private final Map<Position, Piece> pieces;
 
-    public Board(Map<Position, AbstractPiece> pieces) {
+    public Board(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
 
     public void movePiece(PieceColor turnColor, MoveCommand command) {
         validateMovement(turnColor, command);
-        AbstractPiece sourcePiece = pieces.get(command.from());
+        Piece sourcePiece = pieces.get(command.from());
         pieces.remove(command.from());
         pieces.put(command.to(), sourcePiece);
     }
@@ -37,7 +38,7 @@ public class Board {
         if (!pieces.containsKey(source)) {
             throw new IllegalArgumentException("source 위치에 기물이 존재하지 않습니다.");
         }
-        AbstractPiece sourcePiece = pieces.get(source);
+        Piece sourcePiece = pieces.get(source);
         if (!sourcePiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("현재 순서 진영의 기물이 아닙니다.");
         }
@@ -50,14 +51,14 @@ public class Board {
     }
 
     private void validateMovable(Position source, Position target) {
-        AbstractPiece sourcePiece = pieces.get(source);
+        Piece sourcePiece = pieces.get(source);
         if (!sourcePiece.isCorrectMovement(source, target, pieces.containsKey(target))) {
             throw new IllegalArgumentException("해당 기물이 움직일 수 있는 행마법이 아닙니다.");
         }
     }
 
     private void validateRoute(Position source, Position target) {
-        AbstractPiece sourcePiece = pieces.get(source);
+        Piece sourcePiece = pieces.get(source);
         if (sourcePiece.canJumpOverPieces()) {
             return;
         }
@@ -94,18 +95,18 @@ public class Board {
     private long countKingsOnBoard() {
         return pieces.values()
                 .stream()
-                .filter(AbstractPiece::isKing)
+                .filter(Piece::isKing)
                 .count();
     }
 
-    public Map<Position, AbstractPiece> getPiecesOf(PieceColor color) {
+    public Map<Position, Piece> getPiecesOf(PieceColor color) {
         return pieces.keySet()
                 .stream()
                 .filter(position -> pieces.get(position).isSameColor(color))
                 .collect(Collectors.toMap(position -> position, pieces::get));
     }
 
-    public Map<Position, AbstractPiece> getPieces() {
+    public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
 }

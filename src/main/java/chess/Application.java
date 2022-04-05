@@ -3,7 +3,6 @@ package chess;
 import chess.domain.ChessGame;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.PieceFactory;
-import chess.dto.BoardDto;
 import chess.dto.StatusDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -14,7 +13,7 @@ public class Application {
         OutputView.printGameStartMessage();
         Command command = getFirstCommand();
         if (command == Command.START) {
-            startGame();
+            startChessGame();
         }
     }
 
@@ -27,19 +26,19 @@ public class Application {
         }
     }
 
-    private static void startGame() {
-        ChessGame game = new ChessGame(PieceFactory.createChessPieces());
-        OutputView.printBoard(new BoardDto(game));
+    private static void startChessGame() {
+        ChessGame chessGame = new ChessGame(PieceFactory.createChessPieces());
+        OutputView.printBoard(chessGame.getPieces());
 
-        while (game.isRunning()) {
+        while (chessGame.isRunning()) {
             OutputView.printPlayingCommandMessage();
             String commandValue = InputView.getCommand();
             Command command = Command.of(commandValue);
             if (command == Command.MOVE) {
-                playTurn(commandValue, game);
+                playTurn(commandValue, chessGame);
             }
             if (command == Command.STATUS) {
-                showStatus(game);
+                showStatus(chessGame);
             }
             if (command == Command.END) {
                 return;
@@ -47,16 +46,16 @@ public class Application {
         }
     }
 
-    private static void playTurn(String command, ChessGame game) {
+    private static void playTurn(String command, ChessGame chessGame) {
         try {
-            game.proceedWith(MoveCommand.of(command));
-            OutputView.printBoard(new BoardDto(game));
+            chessGame.proceedWith(MoveCommand.of(command));
+            OutputView.printBoard(chessGame.getPieces());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private static void showStatus(ChessGame game) {
-        OutputView.printStatus(new StatusDto(game.calculateScore()));
+    private static void showStatus(ChessGame chessGame) {
+        OutputView.printStatus(new StatusDto(chessGame.calculateScoreByColor()));
     }
 }
