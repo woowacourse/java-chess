@@ -7,6 +7,7 @@ import refactorChess.domain.piece.Piece;
 
 public class ChessBoard {
 
+    private static final int DEFAULT_ALIVE_KING_COUNT = 2;
     private final Map<Position, Piece> board;
 
     public ChessBoard(Map<Position, Piece> pieces) {
@@ -54,6 +55,16 @@ public class ChessBoard {
         Piece piece = findByPiece(from);
         board.put(to, piece);
         board.put(from, new Blank(from));
+    }
+    
+    public boolean isFinished() {
+        return getAliveKingCount() != DEFAULT_ALIVE_KING_COUNT;
+    }
+
+    private long getAliveKingCount() {
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .count();
     }
 
     public Map<Position, Piece> getBoard() {

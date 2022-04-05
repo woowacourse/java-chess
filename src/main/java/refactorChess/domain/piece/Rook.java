@@ -22,4 +22,9 @@ public class Rook extends Piece {
 
         return Direction.ofLinear(column, row);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

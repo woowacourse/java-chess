@@ -22,4 +22,9 @@ public class King extends Piece {
     protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
         return Direction.EVERY_DIRECTION;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

@@ -27,4 +27,12 @@ class ChessBoardTest {
 
         assertThat(chessBoard.findByPiece(to).getPieceType()).isEqualTo(PieceType.PAWN);
     }
+
+    @Test
+    @DisplayName("체스 판에 왕이 2명 살아 있으면 게임을 계속 진행할 수 있다.")
+    void isGameFinished() {
+        final ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.initChessBoard());
+
+        assertThat(chessBoard.isFinished()).isFalse();
+    }
 }

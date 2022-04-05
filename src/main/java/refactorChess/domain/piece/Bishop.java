@@ -22,4 +22,9 @@ public class Bishop extends Piece {
     protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
         return Direction.DIAGONAL_DIRECTION;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

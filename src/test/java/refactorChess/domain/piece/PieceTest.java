@@ -27,6 +27,11 @@ class PieceTest {
             protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
                 return null;
             }
+
+            @Override
+            public boolean isKing() {
+                return false;
+            }
         };
     }
 }

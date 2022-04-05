@@ -19,4 +19,9 @@ public class Blank extends Piece {
     protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -1,5 +1,6 @@
 package refactorChess.domain.piece;
 
+import chess.domain.piece.attribute.Color;
 import java.util.List;
 import refactorChess.domain.board.Direction;
 import refactorChess.domain.board.Position;
@@ -33,6 +34,10 @@ public abstract class Piece {
         return this.pieceColor == piece.pieceColor;
     }
 
+    public boolean isSameColor(PieceColor pieceColor) {
+        return this.pieceColor == pieceColor;
+    }
+
     private void validateDirection(Direction direction, List<Direction> directions) {
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("해당 방향으로 기물이 움직일 수 없습니다.");
@@ -62,6 +67,8 @@ public abstract class Piece {
     protected abstract Direction findByDirection(Position from, Position to);
 
     protected abstract List<Direction> findByMovableDirection(Piece piece, Direction direction);
+
+    public abstract boolean isKing();
 
     @Override
     public String toString() {
