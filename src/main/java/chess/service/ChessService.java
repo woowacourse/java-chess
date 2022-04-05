@@ -22,6 +22,7 @@ public class ChessService {
 
     public void end(){
         chessBoard.end();
+        gameDao.delete();
     }
 
     public String move(String source, String target){

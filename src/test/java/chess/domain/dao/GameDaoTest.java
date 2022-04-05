@@ -60,8 +60,20 @@ class GameDaoTest {
         assertThat(actual.getId()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("가장 최근 게임을 삭제한다.")
+    void delete() throws SQLException {
+        gameDao.save(ChessBoardFactory.initBoard());
+        gameDao.save(ChessBoardFactory.initBoard());
+        //when
+        gameDao.delete();
+        //then
+        assertThat(gameDao.findLastGame().getId()).isEqualTo(1);
+    }
+
     @AfterEach
     void end() throws SQLException {
         connection.rollback();
     }
+
 }

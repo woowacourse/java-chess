@@ -64,4 +64,15 @@ public class GameDao {
         }
         return null;
     }
+
+    public void delete(){
+        final String sql = "delete from game where id = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1,findLastGame().getId());
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
