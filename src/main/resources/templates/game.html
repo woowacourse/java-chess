@@ -15,7 +15,12 @@
         <input type="submit" value="이동">
     </form>
 
+    <form action="/status" method="get">
+        <button>현재 점수</button>
+    </form>
+
     <div class="status">
+        현재 점수: {{status}}<br>
         {{error}}
     </div>
 </div>
