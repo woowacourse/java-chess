@@ -1,20 +1,17 @@
 package chess.controller;
 
-import chess.model.ChessGame;
-import chess.model.board.Board;
-import chess.model.board.BoardFactory;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebController {
 
@@ -41,6 +38,13 @@ public class WebController {
             MoveDto moveCommand = gson.fromJson(req.body(), MoveDto.class);
             WebBoardDto board = chessService.move(moveCommand);
             return gson.toJson(board.getWebBoard());
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("message", "[ERROR] " + exception.getMessage());
+            response.body(gson.toJson(jsonObject));
         });
     }
 

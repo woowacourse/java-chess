@@ -26,9 +26,9 @@ public class ChessService {
         try {
             chessGame.move(source, target, turn);
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
-        turn.change();
+        turn = turn.change();
 
         return WebBoardDto.from(chessGame.getBoard());
     }

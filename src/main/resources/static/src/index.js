@@ -15,6 +15,11 @@ function drawBoard(body) {
     })
 }
 
+function drawTurnBox() {
+    const turnBox = document.getElementById("turn-box")
+    turnBox.innerText = "white 팀 차례!";
+}
+
 const startGame = () => {
     const response = fetch(`/start`, {
         method: "GET",
@@ -25,9 +30,8 @@ const startGame = () => {
             drawBoard(body);
             const button = document.getElementById("start-button")
             button.innerText = "end!";
-            const turnBox = document.getElementById("turn-box")
-            turnBox.innerText = "white 팀 차례!";
-        })
+            drawTurnBox();
+        });
 
     movePiece();
 }
@@ -59,10 +63,12 @@ function clickBLock(e, block) {
 
         response.then(data => data.json())
             .then(body => {
-                initTurn();
                 drawBoard(body)
             })
-            .catch((e) => console.log(e));
+            .catch(err => {
+                alert("움직일 수 없는 위치입니다.")
+            })
+        initTurn();
     }
 }
 
