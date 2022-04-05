@@ -1,0 +1,10 @@
+
+#exception-message-wrap {
+    margin-top: 50px;
+}
+
+#exception-message-wrap p {
+    width: fit-content;
+    margin: auto;
+    color: red;
+}

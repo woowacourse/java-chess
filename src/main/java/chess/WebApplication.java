@@ -2,14 +2,9 @@ package chess;
 
 import chess.controller.Command;
 import chess.domain.ChessGame;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import chess.dto.BoardDto;
 import chess.web.Response;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
@@ -23,22 +18,22 @@ public class WebApplication {
 
         ChessGame chessGame = new ChessGame();
         Command.execute("start", chessGame);
+        Response response = Response.init(chessGame);
 
         get("/", (req, res) -> {
-            Response response = Response.success(chessGame.getBoard());
             return render(response, "index.html");
         });
 
         post("/move", (req, res) -> {
-            Response response;
             try {
                 String commands = getCommands(req.body());
                 Command.execute(commands, chessGame);
-                response = Response.success(chessGame.getBoard());
+                response.success();
             } catch (Exception exception) {
-                response = Response.exception(chessGame.getBoard(), exception.getMessage());
+                response.exception(exception.getMessage());
             }
-            return render(response, "index.html");
+            res.redirect("/");
+            return null;
         });
     }
 

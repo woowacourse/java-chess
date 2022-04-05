@@ -5,6 +5,7 @@
     <title>체스</title>
     <link rel="stylesheet" href="/src/board.css">
     <link rel="stylesheet" href="/src/command.css">
+    <link rel="stylesheet" href="/src/exception.css">
 <!--    <script type="text/javascript" src="/js/board.js"></script>-->
 </head>
 <body>
@@ -103,6 +104,9 @@
                 <input type="text" id="command" name="command" autocomplete="off" autofocus required />
                 <input type="submit" value="실행" />
             </form>
+        </div>
+        <div id="exception-message-wrap">
+            <p>{{exceptionMessage}}</p>
         </div>
     </div>
 </body>
