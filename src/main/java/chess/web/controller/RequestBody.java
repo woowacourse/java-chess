@@ -6,18 +6,18 @@ import static java.util.stream.Collectors.toMap;
 import java.util.Arrays;
 import java.util.Map;
 
-public final class Request {
+public final class RequestBody {
 
     private final Map<String, String> value;
 
-    private Request(final Map<String, String> value) {
+    private RequestBody(final Map<String, String> value) {
         this.value = value;
     }
 
-    public static Request of(final String body) {
+    public static RequestBody of(final String body) {
         return Arrays.stream(body.strip().split("\n"))
                 .map(s -> s.split("="))
-                .collect(collectingAndThen(toMap(Request::extractKey, Request::extractValue), Request::new));
+                .collect(collectingAndThen(toMap(RequestBody::extractKey, RequestBody::extractValue), RequestBody::new));
     }
 
     public static String extractKey(final String[] value) {

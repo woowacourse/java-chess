@@ -32,14 +32,21 @@ public class BoardController {
 
     public String move(Request request, Response response) {
         Board board = getBoard();
-        chess.web.controller.Request requestBody = chess.web.controller.Request.of(request.body());
+        RequestBody requestBody = RequestBody.of(request.body());
         Position from = Position.from(requestBody.get("from"));
         Position to = Position.from(requestBody.get("to"));
         board.movePiece(from, to);
+        isCheckmate(response, board);
         PieceDao.updatePieces(board);
         TeamColorDao.update(board.getCurrentTurnTeamColor());
         response.redirect("/chess");
         return "";
+    }
+
+    private void isCheckmate(Response response, Board board) {
+        if (board.hasOneKing()) {
+            response.redirect("/chess/reset");
+        }
     }
 
     public String status(Request request, Response response) {
