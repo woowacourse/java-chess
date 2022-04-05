@@ -10,10 +10,10 @@
 <body>
 <div class="horizontal-vertical-center">
     <h1>♟️ 체스 게임 </h1>
-    <input type="text" id="newRoomName">
-    <button type="button" id="newGame">새로운 게임 시작하기</button>
-    <input type="text" id="existRoomName">
-    <button type="button" id="resumeGame">게임 이어서하기</button>
+    <input type="text" class="input-box" id="newRoomName" placeholder="방 이름을 입력해주세요">
+    <button type="button" class="w-btn-outline2 w-btn-gray-outline" id="newGame">새로운 게임 시작하기</button>
+    <input type="text" class="input-box" id="existRoomName" placeholder="방 이름을 입력해주세요">
+    <button type="button" class="w-btn-outline2 w-btn-gray-outline" id="resumeGame">게임 이어서하기</button>
     <div class="chess-ui">
         <div class="chess-board">
             <div class="chess-row">
@@ -105,7 +105,6 @@
             </div>
         </div>
         <div class="chess-control">
-            <input type="submit" class="w-btn-outline w-btn-gray-outline" id="startButton" value="게임 시작"/>
             <input type="submit" class="w-btn-outline w-btn-gray-outline" id="stopButton" value="게임 중단"/>
             <input type="submit" class="w-btn-outline w-btn-gray-outline" id="statusButton" value="현재 점수 집계"/>
 

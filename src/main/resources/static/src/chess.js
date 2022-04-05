@@ -1,6 +1,5 @@
 const newGameButton = document.getElementById("newGame");
 const resumeGameButton = document.getElementById("resumeGame");
-const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const statusButton = document.getElementById("statusButton")
 let from = "";
@@ -17,29 +16,13 @@ resumeGameButton.addEventListener("click", async function () {
     await initializeBoard(board);
 })
 
-startButton.addEventListener("click", async function () {
-    let board = startGame();
-    await initializeBoard(board);
-})
-
 statusButton.addEventListener("click", async function () {
     await getStatus();
 });
 
 stopButton.addEventListener("click", async function () {
     await finish();
-})
-
-async function startGame() {
-    let boardAndTurnInfo = await fetch("/start")
-        .then(handleErrors)
-        .catch(function (error) {
-            alert(error.message);
-        });
-    boardAndTurnInfo = await boardAndTurnInfo.json();
-    document.getElementById("turnInfo").innerHTML = "현재 턴: " + boardAndTurnInfo.turnColor;
-    return boardAndTurnInfo.board;
-}
+});
 
 async function newGame() {
     currentRoomName = document.getElementById('newRoomName').value;
@@ -178,5 +161,3 @@ async function handleErrors(response) {
     }
     return response;
 }
-
-

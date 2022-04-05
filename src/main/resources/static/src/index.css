@@ -90,3 +90,39 @@ img {
   color: #e3dede;
 }
 
+.w-btn-outline2 {
+  width: 160px;
+  height: 50px;
+  position: relative;
+  padding: 5px 8px;
+  margin: 10px 5px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.w-btn-outline2:hover {
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.w-btn-outline2:active {
+  transform: scale(1.2);
+}
+
+.input-box {
+  width: 120px;
+  height: 30px;
+  position: relative;
+  padding: 5px 8px;
+  margin: 7px 3px;
+  border-radius: 15px;
+  font-size: 10px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
