@@ -3,8 +3,6 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.game.state.ChessGame;
-import chess.domain.game.state.Ready;
 import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,6 @@ public class ChessWebController {
     }
 
     public void run() {
-        ChessGame chessGame = new Ready();
         renderReady();
         renderStart();
         renderMove();
@@ -30,35 +27,40 @@ public class ChessWebController {
 
     private void renderReady() {
         get("/", (req, res) -> {
-            Map<String, Object> model = chessService.getBoard().toMap();
-            return render(model, "chess.html");
+            return render(chessService.showBoard(), "chess.html");
         });
     }
 
     private void renderStart() {
         get("/start", (req, res) -> {
-            chessService.start();
-            Map<String, Object> model = chessService.getBoard().toMap();
-            return render(model, "chess.html");
+            try {
+                return render(chessService.start(), "chess.html");
+            } catch (IllegalStateException exception) {
+                return renderErrorMessage(exception.getMessage());
+            }
         });
     }
 
     private void renderMove() {
         post("/move", (req, res) -> {
-            String from = req.queryParams("from");
-            String to = req.queryParams("to");
-            chessService.move(from, to);
-            Map<String, Object> model = chessService.getBoard().toMap();
-            return render(model, "chess.html");
+            try {
+                return render(chessService.move(req.queryParams("from"), req.queryParams("to")), "chess.html");
+            } catch (IllegalStateException | IllegalArgumentException exception) {
+                return renderErrorMessage(exception.getMessage());
+            }
         });
     }
 
     private void renderStatus() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.putAll(chessService.getBoard().toMap());
+            model.putAll(chessService.showBoard());
             model.putAll(chessService.showStatus());
-            return render(model, "chess.html");
+            try {
+                return render(model, "chess.html");
+            } catch (IllegalStateException exception) {
+                return renderErrorMessage(exception.getMessage());
+            }
         });
     }
 
@@ -66,12 +68,23 @@ public class ChessWebController {
         get("/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.putAll(chessService.terminate());
-            model.putAll(chessService.getBoard().toMap());
-            return render(model, "chess.html");
+            model.putAll(chessService.showBoard());
+            try {
+                return render(model, "chess.html");
+            } catch (IllegalStateException exception) {
+                return renderErrorMessage(exception.getMessage());
+            }
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private String renderErrorMessage(String errorMessage) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("error", errorMessage);
+        model.putAll(chessService.showBoard());
+        return render(model, "chess.html");
+    }
+
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
