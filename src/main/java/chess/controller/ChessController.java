@@ -1,11 +1,14 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
+import chess.dto.ScoresDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
@@ -38,11 +41,18 @@ public class ChessController {
 
         post("/move", (req, res) -> gson.toJson(movePieces(req)));
 
+        get("/status", (req, res) -> gson.toJson(getStatus()));
+
         exception(Exception.class, (exception, request, response) -> {
             System.out.println(exception.getMessage());
             response.status(500);
             response.body(exception.getMessage());
         });
+    }
+
+    private ScoresDto getStatus() {
+        Map<PieceColor, Score> scoresByColor = game.calculateScoreByColor();
+        return ScoresDto.of(scoresByColor);
     }
 
     private String render(Map<String, Object> model, String templatePath) {
