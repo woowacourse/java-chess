@@ -30,7 +30,9 @@ public class WebChessController {
 
     private void save(){
         post("/save", (req, res) -> {
-            chessService.save();
+            if(chessService.isPlaying()){
+                chessService.save();
+            }
             res.redirect("/play");
             return null;
         });
@@ -46,6 +48,7 @@ public class WebChessController {
 
     private void result() {
         get("/result", (req, res) -> {
+            chessService.end();
             Map<String, Object> model = new HashMap<>();
             model.put("now", chessService.status());
             model.put("board", chessService.getCurrentBoard());

@@ -1,12 +1,15 @@
 package chess.service;
 
+import chess.domain.dao.BoardDao;
 import chess.domain.dao.GameDao;
+import chess.domain.dto.PieceDto;
 import chess.domain.dto.ResponseDto;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.piece.ChessPiece;
 import chess.domain.position.Position;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -14,14 +17,18 @@ public class ChessService {
 
     private ChessBoard chessBoard = null;
     private GameDao gameDao = new GameDao();
+    private BoardDao boardDao = new BoardDao();
 
     public void start(){
-        chessBoard = ChessBoardFactory.initBoard();
-        chessBoard.start();
+        if(chessBoard == null){
+            chessBoard = ChessBoardFactory.initBoard();
+            chessBoard.start();
+        }
     }
 
-    public void end(){
+    public void end() throws SQLException {
         chessBoard.end();
+        boardDao.delete(gameDao.findLastGame());
         gameDao.delete();
     }
 
@@ -58,6 +65,9 @@ public class ChessService {
     }
 
     public void save() {
-        gameDao.save(chessBoard);
+        int gameId = gameDao.save(chessBoard);
+        for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
+            boardDao.save(gameId, entry.getKey(), entry.getValue().getName(), entry.getValue().getColor().name());
+        }
     }
 }
