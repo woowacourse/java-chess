@@ -6,6 +6,7 @@ import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
 import chess.Controller.ChessController;
+import chess.Controller.command.Command;
 import chess.Controller.command.ParsedCommand;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.json.simple.JSONObject;
+import spark.Request;
 
 public class WebApplication {
     public static String STATUS = "dev";
@@ -46,30 +48,49 @@ public class WebApplication {
 
         get("/game/command/:command", (req, res) -> {
             final int userId = req.session().attribute("user-id");
-            final String command = req.params(":command");
-            final Optional<String> startPosition = Optional.ofNullable(req.queryParams("start"));
-            final Optional<String> endPosition = Optional.ofNullable(req.queryParams("end"));
-            final String rawCommand = command + " " + startPosition.orElse("") + " " + endPosition.orElse("");
-            final ParsedCommand parsedCommand = new ParsedCommand(rawCommand);
-
-            final ChessController chess = new ChessController();
+            final ParsedCommand parsedCommand = parseRequestToCommand(req);
             try {
-                if (command.equals("start") || command.equals("move")) {
-                    final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
-                    return JsonParser.makePiecesToJsonArray(piecesDto);
-                }
-                final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
-                final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
-                if (command.equals("end")) {
-                    chess.finishGame(userId);
-                }
-                return responseObject;
+                return doCommandAction(userId, parsedCommand);
             } catch (IllegalArgumentException exception) {
                 res.status(400);
                 return JsonParser.errorToJson(exception.getMessage());
             }
         });
 
+    }
+
+    private static ParsedCommand parseRequestToCommand(final Request req) {
+        final String command = req.params(":command");
+        final Optional<String> startPosition = Optional.ofNullable(req.queryParams("start"));
+        final Optional<String> endPosition = Optional.ofNullable(req.queryParams("end"));
+        final String rawCommand = command + " " + startPosition.orElse("") + " " + endPosition.orElse("");
+        return new ParsedCommand(rawCommand);
+    }
+
+    private static JSONObject doCommandAction(final int userId, final ParsedCommand parsedCommand) {
+        final ChessController chess = new ChessController();
+        final Command command = parsedCommand.getCommand();
+        if (command == Command.START || command == Command.MOVE) {
+            return doActionAboutPieces(userId, parsedCommand, chess);
+        }
+        return doActionAboutScore(userId, parsedCommand, chess);
+
+    }
+
+    private static JSONObject doActionAboutPieces(final int userId, final ParsedCommand parsedCommand,
+                                                  final ChessController chess) {
+        final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
+        return JsonParser.makePiecesToJsonArray(piecesDto);
+    }
+
+    private static JSONObject doActionAboutScore(final int userId, final ParsedCommand parsedCommand,
+                                                 final ChessController chess) {
+        final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
+        final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+        if (parsedCommand.getCommand() == Command.END) {
+            chess.finishGame(userId);
+        }
+        return responseObject;
     }
 
 
