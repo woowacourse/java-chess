@@ -12,10 +12,12 @@ import chess.view.OutputView;
 public final class ChessGame {
 
     public void run() {
+        InputView.announceStart();
         State state = start();
 
         while (!state.isGameOver()) {
             Command command = Command.from(InputView.command());
+            printStatus(command, state);
             state = progress(command, state);
             printBoard(command, state);
         }
@@ -25,17 +27,11 @@ public final class ChessGame {
     }
 
     private State start() {
-        InputView.announceStart();
         Board initBoard = new BoardInitializer().init();
-
         return new Ready(initBoard);
     }
 
     private State progress(Command command, State state) {
-        if (command instanceof StatusCommand) {
-            OutputView.printStatus(state.status());
-        }
-
         final State newState = command.changeChessState(state);
         return newState;
     }
@@ -44,6 +40,12 @@ public final class ChessGame {
         if (!(command instanceof StatusCommand)) {
             Board currentBoard = state.board();
             OutputView.printBoard(currentBoard.cells());
+        }
+    }
+
+    private void printStatus(final Command command, final State state) {
+        if (command instanceof StatusCommand) {
+            OutputView.printStatus(state.status());
         }
     }
 }
