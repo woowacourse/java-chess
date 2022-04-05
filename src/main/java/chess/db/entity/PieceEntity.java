@@ -1,6 +1,7 @@
 package chess.db.entity;
 
 import chess.domain.board.piece.Color;
+import chess.domain.board.piece.Piece;
 import chess.domain.board.piece.PieceType;
 import chess.domain.board.position.Position;
 import java.util.Objects;
@@ -21,6 +22,10 @@ public class PieceEntity {
         this.position = Position.of(positionKey);
         this.type = PieceType.valueOf(typeValue);
         this.color = Color.valueOf(colorValue);
+    }
+
+    public Piece toModel() {
+        return Piece.of(color, type);
     }
 
     public Position getPosition() {

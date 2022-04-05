@@ -1,8 +1,6 @@
 package chess.util;
 
 import chess.domain.board.piece.Color;
-import chess.domain.board.piece.NonPawn;
-import chess.domain.board.piece.Pawn;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.piece.PieceType;
 import java.util.HashMap;
@@ -30,13 +28,6 @@ public class PieceDisplayUtil {
         static final String COLORLESS_DISPLAY_FORMATS = "♟♞♝♜♛♚";
         static final String WEB_EMPTY_DISPLAY_FORMAT = "";
 
-        static final int PAWN_IDX = 0;
-        static final int KNIGHT_IDX = 1;
-        static final int BISHOP_IDX = 2;
-        static final int ROOK_IDX = 3;
-        static final int QUEEN_IDX = 4;
-        static final int KING_IDX = 5;
-
         static final Map<Piece, String> displayMap;
         static final Map<Piece, String> colorlessDisplayMap;
 
@@ -62,12 +53,11 @@ public class PieceDisplayUtil {
 
         static void putEachPiece(String displayFormat, Map<Piece, String> displayMap, Color color) {
             String[] displayFormats = displayFormat.split("");
-            displayMap.put(new Pawn(color), displayFormats[PAWN_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.BISHOP), displayFormats[BISHOP_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.ROOK), displayFormats[ROOK_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.QUEEN), displayFormats[QUEEN_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.KING), displayFormats[KING_IDX]);
+            PieceType[] pieceTypes = PieceType.values();
+            for (int idx = 0; idx < pieceTypes.length; idx++ ){
+                Piece piece = Piece.of(color, pieceTypes[idx]);
+                displayMap.put(piece, displayFormats[idx]);
+            }
         }
 
         static String displayOf(Piece piece) {
