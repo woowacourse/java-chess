@@ -77,4 +77,14 @@ public class Pawn extends Piece {
     public boolean isPawn() {
         return true;
     }
+
+
+    @Override
+    public String getName() {
+        String name = "pawn";
+        if (isBlack()) {
+            return name + "_black";
+        }
+        return name + "_white";
+    }
 }

@@ -54,4 +54,13 @@ public class King extends Piece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        String name = "king";
+        if (isBlack()) {
+            return name + "_black";
+        }
+        return name + "_white";
+    }
 }

@@ -5,6 +5,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -151,5 +152,17 @@ public class Board {
 
     public Rank getRank(int rankLine) {
         return ranks.get(rankLine);
+    }
+
+    public Map<String, Piece> toMap() {
+        Map<String, Piece> map = new HashMap<>();
+        List<Piece> pieces = new ArrayList<>();
+        for (Rank value : ranks.values()) {
+            pieces.addAll(value.getPieces());
+        }
+        for (Piece piece : pieces) {
+            map.put(piece.getPosition().getPosition(), piece);
+        }
+        return map;
     }
 }

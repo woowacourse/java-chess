@@ -79,6 +79,10 @@ public class Position {
         return Math.max(Math.abs(x - destination.getX()), Math.abs(y - destination.getY()));
     }
 
+    public String getPosition() {
+        return String.valueOf((char) (x + ASCII_ALPHABET)) + (char) (y + ASCII_NUMBER);
+    }
+
     public int getX() {
         return x;
     }

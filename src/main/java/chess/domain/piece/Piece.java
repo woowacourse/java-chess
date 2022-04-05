@@ -16,6 +16,8 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract String getName();
+
     public boolean isBlank() {
         return false;
     }
