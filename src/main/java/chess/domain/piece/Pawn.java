@@ -31,13 +31,13 @@ public class Pawn extends Piece {
         return movablePositions;
     }
 
-    protected Map<Direction, List<Position>> initMovablePositions(final Direction direction) {
+    private Map<Direction, List<Position>> initMovablePositions(final Direction direction) {
         final Map<Direction, List<Position>> movablePositions = new HashMap<>();
         movablePositions.put(direction, new ArrayList<>());
         return movablePositions;
     }
 
-    protected void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
+    private void putMovablePositionByDirection(final Map<Direction, List<Position>> movablePositions,
                                                final Position position,
                                                final Direction direction) {
         final Position nextPosition = position.toDirection(direction);
@@ -46,20 +46,20 @@ public class Pawn extends Piece {
         }
         final List<Position> positionsToDirection = movablePositions.get(direction);
         positionsToDirection.add(nextPosition);
-        if (isFirstMovePawn(position)) {
+        if (isFirstMove(position)) {
             putMovablePositionByDirection(movablePositions, nextPosition, direction);
         }
     }
 
-    private boolean isFirstMovePawn(final Position position) {
-        return isBlackFirstMovePawn(position) || isWhiteFirstMovePawn(position);
+    private boolean isFirstMove(final Position position) {
+        return isBlackMovingFirst(position) || isWhiteMovingFirst(position);
     }
 
-    private boolean isBlackFirstMovePawn(final Position position) {
+    private boolean isBlackMovingFirst(final Position position) {
         return color == Color.BLACK && BLACK_INIT_LOCATIONS.contains(position);
     }
 
-    private boolean isWhiteFirstMovePawn(final Position position) {
+    private boolean isWhiteMovingFirst(final Position position) {
         return color == Color.WHITE && WHITE_INIT_LOCATIONS.contains(position);
     }
 

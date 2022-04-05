@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +9,6 @@ public abstract class StraightMovablePiece extends Piece {
 
     protected StraightMovablePiece(final Color color, final Symbol symbol) {
         super(color, symbol);
-    }
-
-    @Override
-    public abstract Map<Direction, List<Position>> getMovablePositions(final Position position);
-
-    protected Map<Direction, List<Position>> initMovablePositions(final List<Direction> directions) {
-        final Map<Direction, List<Position>> movablePositions = new HashMap<>();
-        for (Direction direction : directions) {
-            movablePositions.put(direction, new ArrayList<>());
-        }
-        return movablePositions;
     }
 
     protected void putMovablePositionsByDirection(final Map<Direction, List<Position>> movablePositions,

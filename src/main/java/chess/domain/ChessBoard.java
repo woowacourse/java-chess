@@ -40,8 +40,8 @@ public class ChessBoard {
 
     public void move(final Position from, final Position to) {
         final Piece piece = selectPiece(from);
-        final List<Position> MovablePositions = getMovablePositions(from, piece);
-        validateMovable(to, MovablePositions);
+        final List<Position> movablePositions = getMovablePositions(from, piece);
+        validateMovable(to, movablePositions);
         movePiece(from, to, piece);
     }
 
