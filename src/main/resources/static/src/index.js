@@ -4,6 +4,7 @@ let target = "";
 function clicked(id) {
     console.log(id);
     setVariable(id);
+    changeClickedBackground(id);
     checkSendToServer();
 }
 
@@ -13,6 +14,11 @@ function setVariable(id) {
     } else {
         source = id;
     }
+}
+
+function changeClickedBackground(id) {
+    let elementById = document.getElementById(id);
+    elementById.style.backgroundColor = "#ff0";
 }
 
 function checkSendToServer() {

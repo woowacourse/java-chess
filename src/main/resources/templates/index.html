@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Chess</title>
+    <link rel="stylesheet" href="/src/index.css">
     <script type="text/javascript" src="/src/index.js"></script>
 </head>
     <body>
     <div align="center">
         <h1>Play Chess!</h1>
-        <table>
+        <table class="chess-board">
             {{#board}}
             {{#cells}}
          <tr>
                 {{#this}}
-             <td id="{{position}}" onclick="clicked(this.id)">
-                {{symbol}}
+             <td id="{{position}}" class="{{background}}"  onclick="clicked(this.id)">
+                 <img src="images/{{symbol}}.png" style="width:7vw; height: 7vw;"/>
              </td>
                 {{/this}}
          </tr>
