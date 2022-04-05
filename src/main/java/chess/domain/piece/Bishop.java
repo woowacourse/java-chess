@@ -14,6 +14,7 @@ public class Bishop extends Piece {
 
     private static final Bishop whiteBishop = new Bishop(Color.WHITE);
     private static final Bishop blackBishop = new Bishop(Color.BLACK);
+    private static final double BISHOP_SCORE = 3.0;
 
     private Bishop(Color color) {
         super(color);
@@ -43,5 +44,10 @@ public class Bishop extends Piece {
             return "white_bishop.png";
         }
         return "black_bishop.png";
+    }
+
+    @Override
+    public double getScore() {
+        return BISHOP_SCORE;
     }
 }

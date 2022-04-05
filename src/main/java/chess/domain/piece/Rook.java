@@ -43,4 +43,9 @@ public class Rook extends Piece {
         }
         return "black_rook.png";
     }
+
+    @Override
+    public double getScore() {
+        return 5.0;
+    }
 }

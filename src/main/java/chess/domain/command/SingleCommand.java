@@ -5,22 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum SingleCommand implements Command {
-    START("start"),
-    END("end"),
-    STATUS("status");
-
-    private final String prefix;
-
-    SingleCommand(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public static Command from(List<String> input) {
-        return Arrays.stream(SingleCommand.values())
-                .filter(each -> each.prefix.equals(input.get(0)))
-                .findAny()
-                .orElseThrow(IllegalArgumentException::new);
-    }
+    START,
+    END,
+    STATUS;
 
     @Override
     public boolean isStart() {

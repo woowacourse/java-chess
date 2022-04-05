@@ -26,6 +26,8 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public abstract double getScore();
+
     public boolean isPawn() {
         return false;
     }

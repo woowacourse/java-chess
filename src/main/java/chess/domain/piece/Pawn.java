@@ -110,4 +110,9 @@ public class Pawn extends Piece {
         }
         return "black_pawn.png";
     }
+
+    @Override
+    public double getScore() {
+        return 1.0;
+    }
 }

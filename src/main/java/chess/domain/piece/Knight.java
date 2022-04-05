@@ -43,4 +43,9 @@ public class Knight extends Piece {
         }
         return "black_knight.png";
     }
+
+    @Override
+    public double getScore() {
+        return 2.5;
+    }
 }

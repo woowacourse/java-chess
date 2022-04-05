@@ -16,6 +16,7 @@ public class King extends Piece {
     private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
 
     private static final int KING_MAX_DISTANCE = 1;
+    private static final double KING_SCORE = 0.0;
 
     private static final King whiteKing = new King(Color.WHITE);
     private static final King blackKing = new King(Color.BLACK);
@@ -55,5 +56,10 @@ public class King extends Piece {
             return "white_king.png";
         }
         return "black_king.png";
+    }
+
+    @Override
+    public double getScore() {
+        return KING_SCORE;
     }
 }

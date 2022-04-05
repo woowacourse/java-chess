@@ -48,4 +48,9 @@ public class Queen extends Piece {
         }
         return "black_queen.png";
     }
+
+    @Override
+    public double getScore() {
+        return 9.0;
+    }
 }
