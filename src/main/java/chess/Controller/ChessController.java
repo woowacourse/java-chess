@@ -22,6 +22,7 @@ public class ChessController {
 
     public int initGame(final String userName) {
         final UserDao userDao = new UserDao();
+        System.err.println(userName);
         final int exUserId = userDao.getUser(userName);
         int boardId = userDao.getBoard(exUserId);
         if (exUserId == -1) {

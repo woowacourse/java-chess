@@ -14,6 +14,7 @@ import chess.util.ViewUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.json.simple.JSONObject;
 
 public class WebApplication {
     public static String STATUS = "dev";
@@ -56,7 +57,11 @@ public class WebApplication {
                 return JsonParser.makePiecesToJsonArray(piecesDto);
             }
             final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
-            return JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+            final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+            if (command.equals("end")) {
+                chess.finishGame(userId);
+            }
+            return responseObject;
         });
 
     }

@@ -135,3 +135,8 @@ function statusRequest(command) {
 function alertScore(blackScore, whiteScore) {
     alert(`black score: ${blackScore}, white score: ${whiteScore}`);
 }
+
+const endButton = document.querySelector('#command-button__end');
+endButton.addEventListener('click', () => {
+    statusRequest('end');
+})
