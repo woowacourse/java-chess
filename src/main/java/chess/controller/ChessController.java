@@ -25,7 +25,7 @@ public class ChessController {
 
     private static final String STATIC_FILE_LOCATION = "/static";
 
-    private final ChessGame game;
+    private ChessGame game;
 
     public ChessController() {
         game = new ChessGame(PieceFactory.createChessPieces());
@@ -37,17 +37,32 @@ public class ChessController {
 
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
-        get("/pieces", (req, res) -> gson.toJson(getPieces()));
+        get("/start", (req, res) -> gson.toJson(getPieces()));
+
+        get("/restart", (req, res) -> gson.toJson(restartGame()));
 
         post("/move", (req, res) -> gson.toJson(movePieces(req)));
 
         get("/status", (req, res) -> gson.toJson(getStatus()));
+
+        post("/end", (req, res) -> gson.toJson(finishGame()));
 
         exception(Exception.class, (exception, request, response) -> {
             System.out.println(exception.getMessage());
             response.status(500);
             response.body(exception.getMessage());
         });
+    }
+
+    private Object restartGame() {
+        game = new ChessGame(PieceFactory.createChessPieces());
+        return getPieces();
+    }
+
+    private ScoresDto finishGame() {
+        ScoresDto scoresDto = getStatus();
+        game.finish();
+        return scoresDto;
     }
 
     private ScoresDto getStatus() {
