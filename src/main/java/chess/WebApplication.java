@@ -18,6 +18,6 @@ public class WebApplication {
         get("/chess", boardController::printCurrentBoard);
         get("/chess/status", boardController::status);
         post("/chess/move", boardController::move);
-        get("/chess/end", boardController::end);
+        get("/chess/reset", boardController::reset);
     }
 }

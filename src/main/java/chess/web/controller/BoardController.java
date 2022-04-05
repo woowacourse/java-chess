@@ -14,7 +14,6 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class BoardController {
@@ -51,8 +50,11 @@ public class BoardController {
         return render(model, "status.html");
     }
 
-    public String end(Request request, Response response) {
-        Spark.stop();
+    public String reset(Request request, Response response) {
+        Board board = Board.create();
+        PieceDao.updatePieces(board);
+        TeamColorDao.update(board.getCurrentTurnTeamColor());
+        response.redirect("/chess");
         return "end";
     }
 
