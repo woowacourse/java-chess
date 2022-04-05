@@ -1,8 +1,11 @@
 package console.controller;
 
+import chess.domain.board.Board;
+import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
+import chess.domain.piece.Color;
 import chess.dto.BoardAndTurnInfo;
 import chess.dto.ScoreResponse;
 import console.view.InputView;
@@ -38,7 +41,7 @@ public class ChessConsoleController {
     }
 
     static GameState start(GameState gameState, List<Point> ignored) {
-        GameState state = gameState.start();
+        GameState state = gameState.start(new Board(InitialBoardGenerator.generate()), Color.WHITE);
         OutputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
         return state;
     }

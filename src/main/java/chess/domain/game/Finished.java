@@ -15,8 +15,8 @@ public class Finished extends Started {
     }
 
     @Override
-    public GameState start() {
-        return new Ready().start();
+    public GameState start(Board board, Color turnColor) {
+        throw new UnsupportedOperationException("[ERROR] 이미 게임이 끝났습니다.");
     }
 
     @Override

@@ -1,13 +1,15 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.piece.Color;
 import chess.dto.Response;
 
 import java.util.List;
 
 public interface GameState {
 
-    GameState start();
+    GameState start(Board board, Color turnColor);
 
     GameState finish();
 

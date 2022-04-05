@@ -23,7 +23,8 @@ class StatusTest {
     void startTest() {
         GameState gameState = new Status(BoardFixtures.initial(), Color.WHITE);
 
-        assertThatThrownBy(gameState::start)
+        assertThatThrownBy(() -> gameState.start(BoardFixtures.initial(), Color.WHITE)
+        )
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessageContaining("[ERROR]");
     }

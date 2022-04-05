@@ -1,6 +1,8 @@
 package chess.domain.game;
 
+import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +26,7 @@ class ReadyTest {
     void startTest() {
         GameState gameState = new Ready();
 
-        assertThat(gameState.start()).isInstanceOf(Running.class);
+        assertThat(gameState.start(BoardFixtures.initial(), Color.WHITE)).isInstanceOf(Running.class);
     }
 
     @Test

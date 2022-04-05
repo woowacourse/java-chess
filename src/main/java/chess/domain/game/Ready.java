@@ -11,11 +11,11 @@ import java.util.List;
 public class Ready extends Started {
 
     public Ready() {
-        super(new Board(InitialBoardGenerator.generate()), Color.WHITE);
+        super(null, null);
     }
 
     @Override
-    public GameState start() {
+    public GameState start(Board board, Color turnColor) {
         return new Running(board, turnColor);
     }
 

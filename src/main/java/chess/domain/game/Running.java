@@ -16,7 +16,7 @@ public class Running extends Started {
     }
 
     @Override
-    public GameState start() {
+    public GameState start(Board board, Color turnColor) {
         throw new UnsupportedOperationException("[ERROR] 이미 게임이 시작되었습니다.");
     }
 

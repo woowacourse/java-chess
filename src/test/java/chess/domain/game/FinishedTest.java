@@ -3,6 +3,8 @@ package chess.domain.game;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
+import chess.dto.BoardAndTurnInfo;
+import chess.dto.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ class FinishedTest {
     void startTest() {
         GameState gameState = new Finished(BoardFixtures.initial(), Color.WHITE);
 
-        assertThatThrownBy(gameState::start)
+        assertThatThrownBy(() ->gameState.start(BoardFixtures.initial(), Color.WHITE))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessageContaining("[ERROR]");
     }
@@ -63,11 +65,12 @@ class FinishedTest {
 
 
     @Test
-    @DisplayName("종료 상태에서는 응답을 얻을 수 없다.")
+    @DisplayName("종료 상태에서는 응답을 얻을 수 있다.")
     void throwsExceptionWithGettingResponse() {
         GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
 
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(state::getResponse);
+        Response response = state.getResponse();
+
+        assertThat(response).isInstanceOf(BoardAndTurnInfo.class);
     }
 }
