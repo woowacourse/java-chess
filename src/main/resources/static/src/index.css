@@ -10,6 +10,10 @@
     background-color: dimgrey;
 }
 
+td[class*='click'] {
+    background-color: maroon;
+}
+
 .button {
     width: 360px;
     height: 80px;

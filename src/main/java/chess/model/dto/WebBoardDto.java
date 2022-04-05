@@ -1,5 +1,6 @@
 package chess.model.dto;
 
+import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.position.Position;
 
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WebBoardDto {
+    private Turn turn;
     private Map<String, String> webBoard;
 
     public WebBoardDto(Map<String, String> webBoard) {
