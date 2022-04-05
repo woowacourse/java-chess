@@ -8,12 +8,12 @@ import chess.dao.BoardDaoImpl;
 import chess.dao.PieceDao;
 import chess.dao.PieceDaoImpl;
 import chess.domain.game.ChessGame;
+import chess.dto.MoveRequestDto;
 import chess.service.ChessService;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -35,27 +35,25 @@ public class ChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame();
+        AtomicInteger boardId = new AtomicInteger();
 
         get(INDEX_URL, (request, response) -> render(new HashMap<>(), INDEX_PAGE));
 
         get(BOARD_URL, (request, response) -> {
-            int id = Integer.parseInt(request.queryParams("id"));
-            return render(chessService.findBoardModel(chessGame, pieceDao, id), BOARD_PAGE);
+            boardId.set(Integer.parseInt(request.queryParams("id")));
+            return render(chessService.findBoardModel(chessGame, pieceDao, boardId.intValue()), BOARD_PAGE);
         });
 
         post("/new", (request, response) -> {
-            int id = chessService.createNewBoard(boardDao, pieceDao, chessGame);
-            response.redirect(BOARD_URL + "?id=" + id);
+            boardId.set(chessService.createNewBoard(boardDao, pieceDao, chessGame));
+            response.redirect(BOARD_URL + "?id=" + boardId.intValue());
             return null;
         });
 
         get("/move", (request, response) -> {
-            List<String> inputs = new ArrayList<>();
-            inputs.add("move");
-            inputs.add(request.queryParams("from"));
-            inputs.add(request.queryParams("to"));
-
-            return render(chessService.move(chessGame, pieceDao, inputs), BOARD_PAGE);
+            MoveRequestDto moveRequestDto = new MoveRequestDto(request.queryParams("from"), request.queryParams("to"));
+            return render(chessService.move(chessGame, pieceDao, boardDao, boardId.intValue(), moveRequestDto),
+                    BOARD_PAGE);
         });
 
         get("/status", (request, response) -> render(chessService.calculateScore(chessGame), BOARD_PAGE));

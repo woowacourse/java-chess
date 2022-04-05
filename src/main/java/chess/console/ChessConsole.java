@@ -9,6 +9,7 @@ import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Command;
+import chess.dto.MoveRequestDto;
 import java.util.List;
 
 public class ChessConsole {
@@ -87,7 +88,8 @@ public class ChessConsole {
         }
 
         try {
-            chessGame.move(inputs);
+            MoveRequestDto moveRequestDto = new MoveRequestDto(inputs.get(1), inputs.get(2));
+            chessGame.move(moveRequestDto);
             printBoard(chessGame.getBoard());
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());

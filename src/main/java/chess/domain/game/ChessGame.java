@@ -1,14 +1,11 @@
 package chess.domain.game;
 
-import static chess.console.view.InputView.FROM_POSITION_INDEX;
-import static chess.console.view.InputView.TO_POSITION_INDEX;
-
 import chess.domain.board.Board;
 import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import java.util.List;
+import chess.dto.MoveRequestDto;
 
 public class ChessGame {
 
@@ -18,10 +15,10 @@ public class ChessGame {
         board = boardGenerator.create();
     }
 
-    public void move(List<String> inputs) {
+    public void move(MoveRequestDto moveRequestDto) {
         validCheck();
-        board.move(Position.of(inputs.get(FROM_POSITION_INDEX))
-                , Position.of(inputs.get(TO_POSITION_INDEX)));
+        board.move(Position.of(moveRequestDto.getFrom())
+                , Position.of(moveRequestDto.getTo()));
     }
 
     public Score status() {

@@ -10,6 +10,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.dto.MoveRequestDto;
 import chess.dto.PieceDto;
 import java.util.HashMap;
 import java.util.List;
@@ -53,12 +54,15 @@ public class ChessService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Map<String, Object> move(ChessGame chessGame, PieceDao pieceDao, List<String> inputs) {
+    public Map<String, Object> move(ChessGame chessGame, PieceDao pieceDao, BoardDao boardDao, int boardId,
+                                    MoveRequestDto moveRequestDto) {
         Map<String, Object> model = new HashMap<>();
 
         try {
-            chessGame.move(inputs);
-            pieceDao.updatePosition(inputs.get(1), inputs.get(2));
+            chessGame.move(moveRequestDto);
+            pieceDao.updatePosition(moveRequestDto.getFrom(), moveRequestDto.getTo());
+            pieceDao.delete(moveRequestDto.getFrom());
+            boardDao.updateTurn(chessGame.getTurn(), boardId);
         } catch (IllegalArgumentException | IllegalStateException e) {
             model.put("message", e.getMessage());
         }
