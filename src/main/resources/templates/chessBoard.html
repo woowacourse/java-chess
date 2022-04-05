@@ -94,6 +94,7 @@
 </table>
 
 <button onclick="getScore()">점수 조회</button>
+<p id="turn"></p>
 <p id="whiteScore"></p>
 <p id="blackScore"></p>
 <button onclick="reset()">게임 다시 시작하기</button>
@@ -103,9 +104,7 @@
 <script src="js/score.js"></script>
 <script>
     window.onload = function () {
-        {{#chessPiece}}
-        findById("{{position}}", "{{symbol}}");
-        {{/chessPiece}}
+        setBoard();
 }
 </script>
 </html>

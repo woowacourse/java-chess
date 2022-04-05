@@ -25,9 +25,10 @@ public abstract class Playing implements GameState {
         Position sourcePosition = Position.from(source);
         Position destinationPosition = Position.from(destination);
         validateMovePiece(sourcePosition, destinationPosition);
-        movePiece(sourcePosition, destinationPosition);
 
         Piece destinationPiece = board.get(destinationPosition);
+        movePiece(sourcePosition, destinationPosition);
+
         if (destinationPiece.isKing()) {
             return finished();
         }

@@ -1,43 +1,33 @@
 package chess.web;
 
-import chess.dto.PieceDTO;
+import chess.dto.MoveDTO;
 import chess.service.ChessService;
+import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import static spark.Spark.*;
 
 public class ChessController {
+    private static final int roomId = 1;
+
     private final ChessService chessService = new ChessService();
 
-    public Map<String, Object> getBoard(String roomId) {
-        HashMap<String, Object> model = new HashMap<>();
-        Map<String, String> board = chessService.getInitialBoard(roomId);
-        List<PieceDTO> pieces = board.entrySet()
-                .stream()
-                .map(i -> new PieceDTO(i.getKey(), i.getValue()))
-                .collect(Collectors.toUnmodifiableList());
-        model.put("chessPiece", pieces);
-        return model;
-    }
+    public void run() {
+        Gson gson = new Gson();
 
-    public String move(String source, String destination, String roomId) {
-        return chessService.move(source, destination, roomId);
-    }
+        get("/board", (req, res) -> gson.toJson(chessService.getInitialBoard(roomId)));
 
-    public Map<String, Object> getStatus() {
-        return chessService.getStatus();
-    }
+        post("/move", (req, res) -> {
+            MoveDTO moveDTO = gson.fromJson(req.body(), MoveDTO.class);
+            return gson.toJson(chessService.move(moveDTO, roomId));
+        });
 
-    public Map<String, Object> resetBoard(String roomId) {
-        HashMap<String, Object> model = new HashMap<>();
-        Map<String, String> board = chessService.resetBoard(roomId);
-        List<PieceDTO> pieces = board.entrySet()
-                .stream()
-                .map(i -> new PieceDTO(i.getKey(), i.getValue()))
-                .collect(Collectors.toUnmodifiableList());
-        model.put("chessPiece", pieces);
-        return model;
+        get("/status", (req, res) -> gson.toJson(chessService.getStatus()));
+
+        post("/reset", (req, res) -> gson.toJson(chessService.resetBoard(roomId)));
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(500);
+            response.body(exception.getMessage());
+        });
     }
 }

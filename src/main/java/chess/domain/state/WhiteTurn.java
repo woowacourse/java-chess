@@ -32,9 +32,4 @@ public class WhiteTurn extends Playing {
     public Team getTeam() {
         return Team.WHITE;
     }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }

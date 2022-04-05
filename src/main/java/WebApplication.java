@@ -1,10 +1,8 @@
-import chess.uitils.ViewUtil;
 import chess.web.ChessController;
 import org.apache.log4j.BasicConfigurator;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import static spark.Spark.*;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
 
 public class WebApplication {
     public static void main(String[] args) {
@@ -12,30 +10,6 @@ public class WebApplication {
         staticFileLocation("templates");
         BasicConfigurator.configure();
         ChessController chessController = new ChessController();
-
-        get("/board", (req, res) -> ViewUtil.render(
-                chessController.getBoard("1")
-                , "/chessBoard.html"));
-
-        post("/move", (req, res) -> {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(req.body());
-            return chessController.move(jsonObject.get("source").toString(), jsonObject.get("destination").toString(),
-                    jsonObject.get("roomId").toString());
-        });
-
-        get("/status", (req, res) -> new JSONObject(chessController.getStatus()));
-
-        post("/reset", (req, res) -> {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(req.body());
-            return ViewUtil.render(chessController.resetBoard(jsonObject.get("roomId").toString())
-                    , "/chessBoard.html");
-        });
-
-        exception(Exception.class, (exception, request, response) -> {
-            response.status(403);
-            response.body(exception.getMessage());
-        });
+        chessController.run();
     }
 }
