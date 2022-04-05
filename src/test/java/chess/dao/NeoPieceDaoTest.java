@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class NeoPieceDaoTest {
 
     private final NeoPieceDao dao = new NeoPieceDao(new RollbackConnectionManager());
+
     @Test
     void saveTest() {
         dao.save(new NeoPiece(new Pawn(), Color.WHITE, 117));
@@ -25,5 +26,20 @@ class NeoPieceDaoTest {
                 () -> assertThat(neoPiece.getType()).isInstanceOf(Bishop.class),
                 () -> assertThat(neoPiece.getColor()).isEqualTo(Color.BLACK)
         );
+    }
+
+    @Test
+    void updatePiecePositionId() {
+        final int sourcePositionId = 71;
+        final int targetPosition = 73;
+        NeoPiece neoPiece = dao.updatePiecePositionId(sourcePositionId, targetPosition);
+        assertThat(neoPiece.getType()).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    void deletePieceByPositionId() {
+        final int positionId = 71;
+        int affectedRows = dao.deletePieceByPositionId(positionId);
+        assertThat(affectedRows).isEqualTo(1);
     }
 }
