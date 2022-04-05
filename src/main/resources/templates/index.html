@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <title>체스 게임</title>
     <link rel="stylesheet" href="/src/index.css">
-    <script src = "/src/index.js"></script>
 </head>
 
-<body onload="displayBoard()">
+<body>
 <div id="app">
     <h1>♟️ 체스</h1>
-<!--    <input type="button" onclick="displayBoard()" value="Console log   ">-->
     <section class="chess-ui">
         <div id="a8" class="white-square"></div>
         <div id="b8" class="black-square"></div>
@@ -85,20 +83,24 @@
         <div id="g1" class="black-square"></div>
         <div id="h1" class="white-square"></div>
     </section>
-    <section>
-        <h2>체스 form</h2>
-        <div class="chess_turn">
-            {{#isEnd}}
-            게임이 종료되지 않았습니다.
-            {{/isEnd}}
-
-            {{^isEnd}}
-            게임이 종료되었습니다.
-            {{/isEnd}}
-        </div>
-        <form enctype="text/plain"></form>
-    </section>
 </div>
+<h2>체스 form</h2>
+<div>
+    <input type="button" onclick="startChessGame()" value="start">
+    <input type="button" onclick="loadButton()" value="load game">
+    <input type="button" onclick="scoreButton()" value="score">
+</div>
+<br>
+<form>
+    <input id="source" placeholder="source 위치 (ex. a5)">
+    <input id="target" placeholder="target 위치 (ex. a5)">
+    <input type="button" onclick="moveButton()" value="move">
+</form>
+<br>
+<form>
+    <input id="promotion" placeholder="promotion 기물이름 (ex. Q)">
+    <input type="button" onclick="promotionButton()" value="promotion">
+</form>
+<script src="/src/index.js"></script>
 </body>
-
 </html>

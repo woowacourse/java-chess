@@ -1,15 +1,23 @@
 let gameStatus = "";
 
-async function setUpIndex() {
-    await displayBoard();
-    const tweetDiv = document.createElement('div');
-    document.body.append(tweetDiv);
+async function refreshBoard() {
+    const board = document.getElementsByClassName("chess-ui")[0].childNodes;
+    board.forEach(await function (value) {
+        if (value.hasChildNodes()) {
+            value.removeChild(document.getElementById("piece_img"));
+        }
+    })
 }
 
 async function displayBoard() {
     Array.from(await getBoard()).forEach(
-        function(element) {
+        function (element) {
+            let position = document.getElementById(element.position);
+            if (position.hasChildNodes()) {
+                position.removeChild(document.getElementById("piece_img"));
+            }
             const imgTeg = document.createElement("img");
+            imgTeg.setAttribute("id", "piece_img");
             const imgPath = `images/${element.color}_${element.name}.png`;
 
             imgTeg.setAttribute("src", imgPath);
@@ -18,8 +26,19 @@ async function displayBoard() {
     )
 }
 
-async function getBoard() {
-    return await fetch("/board")
+async function loadButton() {
+    if (gameStatus ===  "") {
+        await displayBoard();
+        gameStatus = await status();
+        console.log(gameStatus);
+    }
+    else {
+        alert("이미 게임이 로딩되었습니다.");
+    }
+}
+
+function getBoard() {
+    return fetch("/board")
         .then((response) => response.json());
 }
 
@@ -32,7 +51,8 @@ async function startChessGame() {
     });
 }
 
-async function promotion(promotionPiece) {
+async function promotionButton() {
+    const promotionPiece = document.getElementById("promotion").value;
     const promotion = {
         promotionValue: promotionPiece
     }
@@ -43,27 +63,38 @@ async function promotion(promotionPiece) {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(promotion)
-    });
+    }).then(r => refreshBoard()
+        .then(r => displayBoard()));
+    document.getElementById("promotion").value = "";
 }
 
-async function move(source, target) {
+async function moveButton() {
+    const source = document.getElementById("source").value;
+    const target = document.getElementById("target").value;
     const move = {
-        source : source,
-        target : target
+        source: source,
+        target: target
     }
 
-    await fetch("/move", {
+    fetch("/move", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(move)
-    });
+    }).then(r => refreshBoard().then(r => displayBoard()));
+    document.getElementById("source").value = "";
+    document.getElementById("target").value = "";
 }
 
-async function score() {
-    return await fetch("/score")
+async function scoreButton() {
+    const value = await fetch("/score")
         .then((response) => response.json());
+    if (gameStatus !== "") {
+        alert(`${value[0].color}의 점수는 ${value[0].score}\n${value[1].color}의 점수는 ${value[1].score}`);
+    } else {
+        alert("게임을 로드하지 않았습니다.");
+    }
 }
 
 async function status() {
