@@ -10,6 +10,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
     public static void main(String[] args) {
+        staticFiles.location("/");
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
