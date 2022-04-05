@@ -1,7 +1,6 @@
 package chess.web.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,21 +26,24 @@ public class ChessService {
     }
 
     public void start() {
-        pieceDao.removeAll();
-        playerDao.removeAll();
+        initDB();
         Map<Position, Piece> pieces = chessGame.start();
-        Map<String, PieceDto> pieceDtos = convertNewBoard(pieces);
-        pieceDao.saveAll(new ArrayList<>(pieceDtos.values()));
+        pieceDao.saveAll(extractPieceDtos(pieces));
         playerDao.save(chessGame.getPlayer());
     }
 
-    private Map<String, PieceDto> convertNewBoard(Map<Position, Piece> board) {
-        Map<String, PieceDto> newBoard = new HashMap<>();
+    private void initDB() {
+        pieceDao.removeAll();
+        playerDao.removeAll();
+    }
+
+    private List<PieceDto> extractPieceDtos(Map<Position, Piece> board) {
+        List<PieceDto> pieceDtos = new ArrayList<>();
         for (Position position : board.keySet()) {
             String positionStr = position.getFile().name() + position.getRank().getValue();
-            newBoard.put(positionStr, PieceDto.of(positionStr, board.get(position)));
+            pieceDtos.add(PieceDto.of(positionStr, board.get(position)));
         }
-        return newBoard;
+        return pieceDtos;
     }
 
     public Map<Color, Double> getStatus() {
@@ -49,13 +51,16 @@ public class ChessService {
     }
 
     public void move(String command) {
+        Map<Position, Piece> pieces = moveByCommand(command);
+        pieceDao.update(extractPieceDtos(pieces));
+        playerDao.update(chessGame.getPlayer());
+    }
+
+    private Map<Position, Piece> moveByCommand(String command) {
         String[] positions = command.split(",");
         Position from = getPositionFrom(positions[0]);
         Position to = getPositionFrom(positions[1]);
-        Map<Position, Piece> pieces = chessGame.move(from, to);
-        Map<String, PieceDto> pieceDtos = convertNewBoard(pieces);
-        pieceDao.update(new ArrayList<>(pieceDtos.values()));
-        playerDao.update(chessGame.getPlayer());
+        return chessGame.move(from, to);
     }
 
     private static Position getPositionFrom(String position) {
