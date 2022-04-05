@@ -10,13 +10,13 @@ table {
 }
 
 td.black-box {
-    background-color: beige;
+    background-color: saddlebrown;
     width: 3rem;
     height: 3rem;
 }
 
 td.white-box {
-    background-color: saddlebrown;
+    background-color: beige;
     width: 3rem;
     height: 3rem;
 }
@@ -25,4 +25,8 @@ td.white-box {
     alignment: center;
     width: 3rem;
     height: 3rem;
+}
+
+div {
+    text-align; center;
 }
