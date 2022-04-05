@@ -11,6 +11,24 @@
 <body>
 <div id="app">
     <h1>♟️체스</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan="1">현재 턴</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {{#turn}}
+                <img src="images/{{turn}}_turn.png" class="img"/>
+                {{/turn}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
     <section class="chess-ui">
 
         {{#this}}

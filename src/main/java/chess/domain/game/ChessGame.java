@@ -38,4 +38,8 @@ public class ChessGame {
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
     }
+
+    public String getTurn() {
+        return state.getTurn();
+    }
 }

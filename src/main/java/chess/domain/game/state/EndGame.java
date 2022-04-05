@@ -38,4 +38,9 @@ public class EndGame implements GameState {
     public Map<Position, Piece> getBoard() {
         return new HashMap<>();
     }
+
+    @Override
+    public String getTurn() {
+        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
+    }
 }

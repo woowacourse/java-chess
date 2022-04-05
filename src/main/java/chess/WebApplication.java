@@ -28,6 +28,9 @@ public class WebApplication {
                 Piece piece = board.get(position);
                 model.put(position.toString(), piece);
             }
+
+            model.put("turn", chessGame.getTurn());
+
             return render(model, "index.html");
         });
 
