@@ -68,8 +68,8 @@ public class ChessService {
 
         try {
             chessGame.move(moveRequestDto);
+            pieceDao.delete(moveRequestDto.getTo());
             pieceDao.updatePosition(moveRequestDto.getFrom(), moveRequestDto.getTo());
-            pieceDao.delete(moveRequestDto.getFrom());
             boardDao.updateTurn(chessGame.getTurn(), boardId);
         } catch (IllegalArgumentException | IllegalStateException e) {
             model.put(MESSAGE_KEY, e.getMessage());
