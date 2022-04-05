@@ -15,16 +15,8 @@
   background-color: white;
 }
 
-.white-square.selected {
-  background-color: yellow;
-}
-
 .brown-square {
   background-color: burlywood;
-}
-
-.brown-square.selected {
-  background-color: yellow;
 }
 
 img {
