@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.Command;
+import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.web.Response;
 import spark.ModelAndView;
@@ -19,8 +20,14 @@ public class WebApplication {
         ChessGame chessGame = new ChessGame();
         Command.execute("start", chessGame);
         Response response = Response.init(chessGame);
+        ChessGameDao chessGameDao = new ChessGameDao();
 
         get("/", (req, res) -> {
+            chessGameDao.save(chessGame);
+            return render(response, "index.html");
+        });
+
+        get("/temp", (req, res) -> {
             return render(response, "index.html");
         });
 
@@ -32,7 +39,7 @@ public class WebApplication {
             } catch (Exception exception) {
                 response.exception(exception.getMessage());
             }
-            res.redirect("/");
+            res.redirect("/temp"); // TODO: chessGameID 로 수정 ex) /1
             return null;
         });
     }
