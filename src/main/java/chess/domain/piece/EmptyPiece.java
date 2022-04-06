@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 
 public class EmptyPiece extends Piece {
 
-    private static final String NOTATION = "empty";
+    private static final String NOTATION = ".";
     private static final double SCORE = 0;
 
     public EmptyPiece() {
