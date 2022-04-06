@@ -38,6 +38,33 @@ class PieceDaoTest {
                 entry("a3", new PieceDto("WHITE", "Rook")));
     }
 
+    @Test
+    @DisplayName("위치 값과 기물을 받아 DB에 저장한다.")
+    void save() {
+        //given
+        final String position = "a2";
+        final Piece piece = new Pawn(BLACK);
+        pieceDao.save(position, piece);
+        //actual
+        final PieceDto actual = pieceDao.findAll().get(position);
+        //when
+        assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
+    }
+
+    @Test
+    @DisplayName("위치 값을 받아 DB에서 해당 위치 값을 키로 가지는 데이터를 삭제한다.")
+    void removeByPosition() {
+        //given
+        pieceDao.save("a2", new Pawn(BLACK));
+        pieceDao.save("a3", new Knight(BLACK));
+        pieceDao.removeByPosition("a2");
+        //when
+        final Map<String, PieceDto> actual = pieceDao.findAll();
+        //then
+        assertThat(actual).contains(entry("a3", new PieceDto("BLACK", "Knight")))
+                .doesNotContain(entry("a2", new PieceDto("BLACK", "Pawn")));
+    }
+
     @AfterEach
     void removeAll() {
         pieceDao.removeAll();
