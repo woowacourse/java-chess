@@ -28,7 +28,7 @@ public class PieceDao {
     }
 
     public void init(Board board) {
-        String query = "insert into pieces (position, piece) values (?, ?)";
+        String query = "insert into pieces (position, name) values (?, ?)";
         board.getBoard().forEach(((position, piece) -> {
             try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
                 preparedStatement.setString(1, position.getPosition());
@@ -41,7 +41,7 @@ public class PieceDao {
     }
 
     public Map<Position, Piece> findAll() {
-        String query = "select position, piece from boards";
+        String query = "select position, name from pieces";
         Map<Position, Piece> board = new HashMap<>();
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
@@ -57,5 +57,20 @@ public class PieceDao {
             throwables.printStackTrace();
         }
         return board;
+    }
+
+    public String findByPosition(String source) {
+        String query = "select name from pieces where position = (?)";
+        String piece = "";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, source);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            piece = resultSet.getString("name");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return piece;
     }
 }

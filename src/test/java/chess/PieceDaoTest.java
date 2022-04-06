@@ -25,4 +25,16 @@ class PieceDaoTest {
 
         assertThat(boardMap.entrySet().size()).isEqualTo(64);
     }
+
+    @Test
+    @DisplayName("체스판이 db에 저장되었는지 확인한다")
+    void findByPosition() {
+        PieceDao pieceDao = new PieceDao();
+        Board board = BoardFactory.create();
+        pieceDao.init(board);
+
+        String pieceName = pieceDao.findByPosition("a2");
+
+        assertThat(pieceName).isEqualTo("white-p");
+    }
 }

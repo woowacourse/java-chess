@@ -15,7 +15,6 @@ public class ChessService {
     private ChessGame chessGame;
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
-    private Turn turn;
 
     public ChessService() {
         this.pieceDao = new PieceDao();
@@ -37,11 +36,13 @@ public class ChessService {
         Turn turn = Turn.from(turnDao.findOne());
         try {
             chessGame.move(source, target, turn);
+            String originalSourcePiece = pieceDao.findByPosition(moveDto.getSource());
+//            pieceDao.updateByPosition(moveDto.getTarget(), originalSourcePiece);
+//            pieceDao.updateByPosition(moveDto.getSource(), "NONE-.");
         } catch(Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
         turnDao.update(turn.change().getThisTurn());
-        //turn = turn.change();
         if (chessGame.isKingDead()) {
             turnDao.update(turn.finish());
         }
@@ -50,7 +51,7 @@ public class ChessService {
     }
 
     public String getTurn() {
-        return turn.getThisTurn();
+        return turnDao.findOne();
     }
 
     public boolean isKingDead() {
