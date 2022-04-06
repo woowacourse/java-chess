@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.Square;
 import java.util.List;
 import java.util.Optional;
@@ -20,18 +20,18 @@ public abstract class LinearMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
-        Piece targetPiece = board.get(target);
+    public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
+        Piece targetPiece = consoleBoard.get(target);
         Optional<List<Square>> route = getRoute(source, target);
         if (route.isEmpty()) {
             return false;
         }
-        return checkEachSquare(board, targetPiece, route.get());
+        return checkEachSquare(consoleBoard, targetPiece, route.get());
     }
 
-    private boolean checkEachSquare(Board board, Piece targetPiece, List<Square> route) {
+    private boolean checkEachSquare(ConsoleBoard consoleBoard, Piece targetPiece, List<Square> route) {
         for (Square square : route) {
-            Piece tempPiece = board.get(square);
+            Piece tempPiece = consoleBoard.get(square);
             if (tempPiece.equals(targetPiece) && isNotAlly(targetPiece)) {
                 return true;
             }

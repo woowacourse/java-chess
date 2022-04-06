@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Board {
+public final class ConsoleBoard {
 
     private static final int LINE_RANGE = 8;
     private static final int KING_COUNT = 2;
     private final Map<Square, Piece> board;
     private Status status;
 
-    public Board() {
+    public ConsoleBoard() {
         this.status = new Ready();
         this.board = new HashMap<>();
         final List<File> files = Arrays.asList(File.values());

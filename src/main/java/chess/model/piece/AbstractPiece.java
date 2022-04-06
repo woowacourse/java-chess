@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public boolean movable(Board board, Square source, Square target) {
+    public boolean movable(ConsoleBoard consoleBoard, Square source, Square target) {
         return movable(source, target);
     }
 

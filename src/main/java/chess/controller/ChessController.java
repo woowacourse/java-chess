@@ -3,42 +3,42 @@ package chess.controller;
 import chess.dto.BoardDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 
 public class ChessController {
 
-    private Board board;
+    private ConsoleBoard consoleBoard;
 
     public ChessController() {
-        this.board = new Board();
+        this.consoleBoard = new ConsoleBoard();
     }
 
     public void reStartGame() {
-        board = new Board();
+        consoleBoard = new ConsoleBoard();
     }
 
     public BoardDto getBoard() {
-        return BoardDto.of(board);
+        return BoardDto.of(consoleBoard);
     }
 
     public ResponseDto move(String source, String target) {
         try {
-            board.move(source, target);
+            consoleBoard.move(source, target);
         } catch (IllegalArgumentException e) {
-            return ResponseDto.of(400, e.getMessage(), board.isEnd());
+            return ResponseDto.of(400, e.getMessage(), consoleBoard.isEnd());
         }
-        return ResponseDto.of(200, null, board.isEnd());
+        return ResponseDto.of(200, null, consoleBoard.isEnd());
     }
 
     public ScoreDto score() {
-        return ScoreDto.of(board.calculateScore());
+        return ScoreDto.of(consoleBoard.calculateScore());
     }
 
     public boolean isEnd() {
-        return board.isEnd();
+        return consoleBoard.isEnd();
     }
 
     public void finishGame() {
-        board.finishGame();
+        consoleBoard.finishGame();
     }
 }

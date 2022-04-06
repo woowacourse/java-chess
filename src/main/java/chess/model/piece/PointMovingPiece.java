@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.Square;
 
 public abstract class PointMovingPiece extends AbstractPiece {
@@ -16,8 +16,8 @@ public abstract class PointMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
-        Piece targetPiece = board.get(target);
+    public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
+        Piece targetPiece = consoleBoard.get(target);
         return isNotAlly(targetPiece);
     }
 }

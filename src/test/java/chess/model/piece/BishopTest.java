@@ -9,7 +9,7 @@ import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
@@ -18,11 +18,11 @@ import org.junit.jupiter.api.Test;
 
 public class BishopTest {
 
-    private Board board;
+    private ConsoleBoard consoleBoard;
 
     @BeforeEach
     public void setUp() {
-        board = new Board();
+        consoleBoard = new ConsoleBoard();
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BishopTest {
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SEVEN);
 
-        assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
+        assertThat(bishop.canMoveWithoutObstacle(consoleBoard, source, target)).isFalse();
     }
 
     @Test
@@ -65,6 +65,6 @@ public class BishopTest {
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SIX);
 
-        assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
+        assertThat(bishop.canMoveWithoutObstacle(consoleBoard, source, target)).isFalse();
     }
 }

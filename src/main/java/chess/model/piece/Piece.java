@@ -1,9 +1,7 @@
 package chess.model.piece;
 
-import chess.model.Board;
-import chess.model.square.Direction;
+import chess.model.ConsoleBoard;
 import chess.model.square.Square;
-import java.util.List;
 
 public interface Piece {
 
@@ -11,9 +9,9 @@ public interface Piece {
 
     String name();
 
-    boolean movable(Board board, Square source, Square target);
+    boolean movable(ConsoleBoard consoleBoard, Square source, Square target);
 
-    boolean canMoveWithoutObstacle(Board board, Square source, Square target);
+    boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target);
 
     double getPoint();
 

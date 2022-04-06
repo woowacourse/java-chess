@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>체스</title>
     <style>
-        .chess-board .white {
+        .chess-consoleBoard .white {
             background: #eee;
         }
 
-        .chess-board .black {
+        .chess-consoleBoard .black {
             background: #aaa;
         }
     </style>
@@ -74,8 +74,8 @@
 <body>
 <div align="center">
     <h1>산체스</h1>
-    <table class="chess-board" border="1">
-        {{#board}}
+    <table class="chess-consoleBoard" border="1">
+        {{#consoleBoard}}
         {{#dto}}
         <tr>
             {{#this}}
@@ -87,7 +87,7 @@
             {{/this}}
         </tr>
         {{/dto}}
-        {{/board}}
+        {{/consoleBoard}}
     </table>
 </div>
 <br/>

@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
@@ -20,8 +20,8 @@ public abstract class PawnMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean movable(Board board, Square source, Square target) {
-        Piece targetPiece = board.get(target);
+    public boolean movable(ConsoleBoard consoleBoard, Square source, Square target) {
+        Piece targetPiece = consoleBoard.get(target);
         if (isEnemy(targetPiece)) {
             return getDiagonalDirection().stream()
                     .anyMatch(direction -> source.findLocation(direction, target));
@@ -35,10 +35,10 @@ public abstract class PawnMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
         Optional<List<Square>> route = getRoute(source, target);
         if (route.isPresent()) {
-            Piece targetPiece = board.get(target);
+            Piece targetPiece = consoleBoard.get(target);
             return isNotAlly(targetPiece);
         }
         return true;

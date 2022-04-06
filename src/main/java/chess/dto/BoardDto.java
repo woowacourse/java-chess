@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class BoardDto {
 
@@ -19,12 +18,12 @@ public class BoardDto {
         this.dto = dto;
     }
 
-    public static BoardDto of(Board board) {
+    public static BoardDto of(ConsoleBoard consoleBoard) {
         List<List<PieceDto>> boardDto = new ArrayList<>();
         List<Rank> ranks = Arrays.asList(Rank.values());
         Collections.reverse(ranks);
         for (Rank rank : ranks) {
-            boardDto.add(makeLineByFile(board, rank));
+            boardDto.add(makeLineByFile(consoleBoard, rank));
         }
         return new BoardDto(boardDto);
     }
@@ -33,10 +32,10 @@ public class BoardDto {
         return dto;
     }
 
-    private static List<PieceDto> makeLineByFile(Board board, Rank rank) {
+    private static List<PieceDto> makeLineByFile(ConsoleBoard consoleBoard, Rank rank) {
         List<PieceDto> tempLine = new ArrayList<>();
         for (File file : File.values()) {
-            Piece piece = board.get(Square.of(file, rank));
+            Piece piece = consoleBoard.get(Square.of(file, rank));
             tempLine.add(PieceDto.of(piece, file, rank));
         }
         return tempLine;

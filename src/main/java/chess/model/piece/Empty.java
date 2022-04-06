@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
         return false;
     }
 
