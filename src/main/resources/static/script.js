@@ -86,9 +86,8 @@ async function selectPiece(pieceDiv) {
 }
 
 async function move(fromPosition, toPosition) {
-    let pieces;
     from = "";
-    await fetch("/move", {
+    let response = await fetch("/move", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -97,9 +96,15 @@ async function move(fromPosition, toPosition) {
             from: fromPosition,
             to: toPosition
         })
-    }).then(res => res.json())
-        .then(data => pieces = data);
+    })
 
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        alert("[ERROR] " + errorMessage.message);
+        return;
+    }
+
+    let pieces = await response.json();
     printPieces(pieces.board);
     before = turn;
     turn = pieces.turn;
@@ -107,5 +112,7 @@ async function move(fromPosition, toPosition) {
     if (turn === "empty") {
         isStart = false;
         alert(before + " 팀 승리!");
+        let element = document.getElementById("chess-status");
+        element.innerText = text;
     }
 }
