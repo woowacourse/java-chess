@@ -8,13 +8,27 @@ public class Square {
 
     private static final int ROW_INDEX = 0;
     private static final int COL_INDEX = 1;
+
+    private final int id;
     private final File file;
     private final Rank rank;
+    private final int boardId;
 
-    private Square(File file, Rank rank) {
+    public Square(int id, File file, Rank rank, int boardId) {
+        this.id = id;
         this.file = file;
         this.rank = rank;
+        this.boardId = boardId;
     }
+
+    public  Square(File file, Rank rank) {
+        this(0, file, rank, 0);
+    }
+
+    public  Square(File file, Rank rank, int boardId) {
+        this(0, file, rank, boardId);
+    }
+
 
     public static Square of(File file, Rank rank) {
         return new Square(file, rank);
@@ -63,6 +77,22 @@ public class Square {
 
     public boolean sameFile(File file) {
         return this.file.equals(file);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public int getBoardId() {
+        return boardId;
     }
 
     @Override

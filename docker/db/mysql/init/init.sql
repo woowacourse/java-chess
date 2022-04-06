@@ -6,26 +6,29 @@ create table board
 
 create table square
 (
-    id       int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    square_file     int(10) NOT NULL,
-    square_rank     int(10) NOT NULL,
-    board_id int(10) NOT NULL,
+    id          int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    square_file int(10) NOT NULL,
+    square_rank int(10) NOT NULL,
+    board_id    int(10) NOT NULL,
     foreign key (board_id) references board (id)
+        on delete cascade
 );
 
 create table piece
 (
-    id       int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    type     int(10) NOT NULL,
+    id        int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type      int(10) NOT NULL,
     color     int(10) NOT NULL,
     square_id int(10) NOT NULL,
     foreign key (square_id) references square (id)
+        on delete cascade
 );
 
 create table member
 (
     id       int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(20) NOT NULL,
+    name     varchar(20) NOT NULL,
     board_id int(10) NOT NULL,
     foreign key (board_id) references board (id)
+        on delete cascade
 );

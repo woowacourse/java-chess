@@ -29,6 +29,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 입니다."));
     }
 
+    public static File findFile(int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == value)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public boolean availableLocation(int distance) {
         return Arrays.stream(File.values())
                 .anyMatch(file -> file.value == (this.value + distance));
