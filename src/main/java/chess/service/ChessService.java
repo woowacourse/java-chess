@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private static final int EMPTY = 0;
     private ChessBoard chessBoard = null;
     private GameDao gameDao = new GameDao();
     private BoardDao boardDao = new BoardDao();
@@ -33,14 +34,30 @@ public class ChessService {
     }
 
     private boolean isNotSaved() throws SQLException {
-        return gameDao.findLastGameId() == 0;
+        return gameDao.findLastGameId() == EMPTY;
     }
 
     public void save() {
         int gameId = gameDao.save(chessBoard);
         for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
-            boardDao.save(gameId, entry.getKey(), entry.getValue().getName(), entry.getValue().getColor().name());
+            boardDao.save(
+                    gameId,
+                    getPosition(entry),
+                    getPiece(entry),
+                    getColor(entry));
         }
+    }
+
+    private String getPosition(Map.Entry<String, ChessPiece> entry) {
+        return entry.getKey();
+    }
+
+    private String getPiece(Map.Entry<String, ChessPiece> entry) {
+        return entry.getValue().getName();
+    }
+
+    private String getColor(Map.Entry<String, ChessPiece> entry) {
+        return entry.getValue().getColor().name();
     }
 
     private void loadLastGame() throws SQLException {
