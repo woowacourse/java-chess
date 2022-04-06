@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BoardDao {
 
+    private static final int EMPTY = 0;
     private final Connection connection;
     private int id = 0;
 
@@ -56,17 +57,17 @@ public class BoardDao {
         List<PieceDto> pieces = new ArrayList<>();
         while (result.next()) {
             pieces.add(
-                    new PieceDto(
-                            result.getInt("game_id"),
-                            result.getString("position"),
-                            result.getString("piece"),
-                            result.getString("color")));
+                new PieceDto(
+                    result.getInt("game_id"),
+                    result.getString("position"),
+                    result.getString("piece"),
+                    result.getString("color")));
         }
         return pieces;
     }
 
     public void delete(int gameId) {
-        if (gameId == 0) {
+        if (isSavedGameExist(gameId)) {
             return;
         }
 
@@ -78,5 +79,9 @@ public class BoardDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    private boolean isSavedGameExist(int gameId) {
+        return gameId == EMPTY;
     }
 }

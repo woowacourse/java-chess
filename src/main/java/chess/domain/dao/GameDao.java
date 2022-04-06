@@ -7,6 +7,7 @@ import java.sql.*;
 
 public class GameDao {
 
+    private static final int EMPTY = 0;
     private final Connection connection;
     private int id = 0;
 
@@ -43,7 +44,7 @@ public class GameDao {
         final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ResultSet result = statement.executeQuery();
         if (!result.next()) {
-            return 0;
+            return EMPTY;
         }
         return result.getInt("id");
     }
