@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Pieces;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -54,6 +55,27 @@ public class PieceDao {
         }
     }
 
+    public void saveAll(List<Piece> pieces) {
+        final Connection connection = getConnection();
+        final String sql = "insert into piece (name, color, position) values (?, ?, ?)";
+        try {
+            for (Piece piece : pieces) {
+                final PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, piece.getName());
+                statement.setString(2, piece.getColor().getName());
+                statement.setString(3, piece.getPosition().getPosition());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void deleteByPosition(String position) {
         final Connection connection = getConnection();
@@ -90,7 +112,7 @@ public class PieceDao {
         }
     }
 
-    public List<Piece> findAll() {
+    public Pieces findAll() {
         final Connection connection = getConnection();
         final String sql = "select name, color, position from piece";
         final List<Piece> members = new ArrayList<>();
@@ -113,7 +135,7 @@ public class PieceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return members;
+        return new Pieces(members);
     }
 
     public Piece findByPosition(String position) {
@@ -126,7 +148,7 @@ public class PieceDao {
             statement.setString(1, position);
             resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                throw new IllegalArgumentException("해당위치에는 말이 없습니다.");
             }
             return PieceFactory.of(resultSet.getString("name"), resultSet.getString("color"),
                 resultSet.getString("position"));
@@ -141,5 +163,22 @@ public class PieceDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public void deleteAll() {
+        final Connection connection = getConnection();
+        final String sql = "delete from piece";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

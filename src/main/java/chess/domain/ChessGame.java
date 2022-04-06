@@ -1,11 +1,12 @@
 package chess.domain;
 
+import chess.dao.PieceDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.dto.ChessmenDto;
 import chess.dto.BoardMapDto;
+import chess.dto.ChessmenDto;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.HashMap;
@@ -18,12 +19,13 @@ public class ChessGame {
     private static final String FRIENDLY_OCCUPIED_EXCEPTION_MESSAGE = "이동하려는 위치에 아군 말이 있습니다.";
     private static final String PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE = "가는 길목에 다른 말이 있어 이동할 수 없습니다.";
 
-    private final Pieces chessmen;
     private Color turn = Color.BLACK;
     private boolean forceEndFlag = false;
 
+    private final PieceDao pieceDao = new PieceDao();
+
     private ChessGame(Pieces chessmen) {
-        this.chessmen = chessmen;
+        pieceDao.saveAll(chessmen.getPieces());
     }
 
     public static ChessGame of(Pieces chessmen) {
@@ -31,6 +33,8 @@ public class ChessGame {
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
+        Pieces chessmen = pieceDao.findAll();
+
         Piece sourcePiece = chessmen.extractPiece(Position.of(dto.getSource()));
         Position toPosition = Position.of(dto.getTarget());
 
@@ -43,6 +47,7 @@ public class ChessGame {
 
     private void checkMovable(Piece sourcePiece, Position toPosition) {
         validateTurn(sourcePiece);
+        Pieces chessmen = pieceDao.findAll();
         if (chessmen.isOccupied(toPosition)) {
             checkOccupiedByFriendly(sourcePiece, toPosition);
         }
@@ -61,13 +66,14 @@ public class ChessGame {
 
 
     private void checkOccupiedByFriendly(Piece sourcePiece, Position toPosition) {
-        Piece targetPiece = chessmen.extractPiece(toPosition);
+        Piece targetPiece = pieceDao.findByPosition(toPosition.getPosition());
         if (sourcePiece.isFriendly(targetPiece)) {
             throw new IllegalArgumentException(FRIENDLY_OCCUPIED_EXCEPTION_MESSAGE);
         }
     }
 
     private void checkPath(Piece sourcePiece, Position toPosition) {
+        Pieces chessmen = pieceDao.findAll();
         List<Position> positions = sourcePiece.getPositionsInPath(toPosition);
         if (chessmen.isAnyPieceExistInPositions(positions)) {
             throw new IllegalArgumentException(PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE);
@@ -75,20 +81,27 @@ public class ChessGame {
     }
 
     private void moveOrKill(Piece sourcePiece, Position toPosition) {
+        Pieces chessmen = pieceDao.findAll();
         if (chessmen.isOccupied(toPosition)) {
             killEnemy(sourcePiece, toPosition);
             return;
         }
+        Position sourcePosition = sourcePiece.getPosition();
         sourcePiece.move(toPosition);
+        pieceDao.updateByPosition(sourcePosition.getPosition(), toPosition.getPosition());
     }
 
     private void killEnemy(Piece sourcePiece, Position toPosition) {
-        Piece targetPiece = chessmen.extractPiece(toPosition);
+        Position sourcePosition = sourcePiece.getPosition();
+        Piece targetPiece = pieceDao.findByPosition(toPosition.getPosition());
         sourcePiece.kill(targetPiece);
-        chessmen.remove(targetPiece);
+
+        pieceDao.deleteByPosition(toPosition.getPosition());
+        pieceDao.updateByPosition(sourcePosition.getPosition(), toPosition.getPosition());
     }
 
     public boolean isEnd() {
+        Pieces chessmen = pieceDao.findAll();
         return chessmen.hasLessThanTotalKingCount() || forceEndFlag;
     }
 
@@ -97,6 +110,7 @@ public class ChessGame {
     }
 
     public GameResultDto calculateGameResult() {
+        Pieces chessmen = pieceDao.findAll();
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         Color winner = findWinner();
@@ -107,6 +121,7 @@ public class ChessGame {
     }
 
     public BoardMapDto toBoard() {
+        Pieces chessmen = pieceDao.findAll();
         Map<String, Object> model = new HashMap<>();
 
         for (Piece piece : chessmen.getPieces()) {
@@ -117,16 +132,21 @@ public class ChessGame {
     }
 
     private Color findWinner() {
+        Pieces chessmen = pieceDao.findAll();
         return chessmen.findKingWinner();
     }
 
     public Pieces getChessmen() {
-        return chessmen;
+        return pieceDao.findAll();
+    }
+
+    public void clean() {
+        pieceDao.deleteAll();
     }
 
     @Override
     public String toString() {
-        return "ChessGame{" + "chessmen=" + chessmen + '}';
+        return "ChessGame{" + "chessmen=" + pieceDao.findAll() + '}';
     }
 
 }
