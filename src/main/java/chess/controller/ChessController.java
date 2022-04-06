@@ -28,8 +28,8 @@ public class ChessController {
             return command.run(chessGame, dto.getFromPosition(), dto.getToPosition());
         } catch (IllegalStateException | IllegalArgumentException exception) {
             OutputView.printError(exception.getMessage());
+            return chessGame;
         }
-        return chessGame;
     }
 
     public static void showBoard(Board board) {
