@@ -4,6 +4,7 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dao.GameDao;
 import chess.domain.board.Position;
 import chess.domain.state.Ready;
 import chess.dto.ErrorResponseDto;
@@ -23,7 +24,7 @@ public class WebChessController {
 	private final ChessService chessService;
 
 	public WebChessController() {
-		this.chessService = new ChessService(new Ready());
+		this.chessService = new ChessService(new GameDao(), new Ready());
 	}
 
 	public void run() {
