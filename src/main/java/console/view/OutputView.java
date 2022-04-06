@@ -1,10 +1,10 @@
 package console.view;
 
+import chess.domain.piece.Symbol;
 import chess.domain.board.ChessBoard;
 import chess.domain.game.Score;
 import chess.domain.piece.*;
 import chess.domain.position.*;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class OutputView {

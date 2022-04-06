@@ -11,6 +11,11 @@ public class Ready extends ChessGameState {
         super(chessBoard, Color.WHITE);
     }
 
+    public Ready(ChessBoard chessBoard, Color color) {
+        super(chessBoard, color);
+    }
+
+
     @Override
     public State start() {
         return new Running(chessBoard(), currentColor());

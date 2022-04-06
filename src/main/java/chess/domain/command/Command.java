@@ -36,6 +36,13 @@ public class Command {
         return new Command(commandType, positions);
     }
 
+    public static Command move(String from, String to) {
+        List<String> positions = new ArrayList<>();
+        positions.add(from);
+        positions.add(to);
+        return new Command(CommandType.MOVE, positions);
+    }
+
     public boolean isStart() {
         return commandType == CommandType.START;
     }

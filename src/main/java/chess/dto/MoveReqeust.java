@@ -1,4 +1,4 @@
-package web.dto;
+package chess.dto;
 
 public class MoveReqeust {
 

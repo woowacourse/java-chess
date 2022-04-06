@@ -4,17 +4,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.command.Command;
-import chess.domain.game.ChessGame;
-import chess.domain.game.Score;
-import chess.domain.state.Ready;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import web.dto.ChessBoardResponse;
-import web.dto.MoveReqeust;
+import chess.dto.MoveReqeust;
+import web.service.ChessService;
 
 public class WebApplication {
 
@@ -22,33 +17,29 @@ public class WebApplication {
         staticFiles.location("/static");
 
         JsonTransformer jsonTransformer = new JsonTransformer();
-        ChessGame chessGame = new ChessGame(new Ready(ChessBoard.createChessBoard()));
-        chessGame.start();
+        ChessService chessService = new ChessService();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            chessService.init();
             return render(model, "index.html");
         });
 
-        post("/board", (req, res) -> {
-            ChessBoardResponse chessBoardResponse = new ChessBoardResponse(chessGame);
-            return chessBoardResponse.getResult();
-        }, jsonTransformer);
+        post("/board", (req, res) -> chessService.currentBoard(), jsonTransformer);
 
         post("/move", (req, res) -> {
             MoveReqeust moveReqeust = jsonTransformer.getGson()
                 .fromJson(req.body(), MoveReqeust.class);
-            chessGame.execute(Command.from("move " + moveReqeust.from() + " " + moveReqeust.to()));
-            return null;
+            return chessService.move(moveReqeust);
         }, jsonTransformer);
 
+        post("/score", (req, res) -> chessService.score(), jsonTransformer);
 
-        post("/score", (req, res) -> {
-            return Score.from(chessGame.chessBoard());
-        }, jsonTransformer);
+        post("/turn", (req, res) -> chessService.turn(), jsonTransformer);
 
-        post("/turn", (req, res) -> {
-            return chessGame.currentTurn();
+        post("/restart", (req, res) -> {
+            chessService.initChessBoard();
+            return "보드 초기화 성공";
         }, jsonTransformer);
     }
 

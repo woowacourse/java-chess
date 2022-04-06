@@ -45,9 +45,12 @@ function initPieceImg() {
 }
 
 function initChessBoardColor(row, column) {
-  return (row + column) % 2
-      ? "background-color: #e09a2b"
-      : "background-color: #fcf6f5";
+  if ((row + column) % 2 === 0) {
+    return "background-color: #fcf6f5";
+  }
+  if ((row + column) % 2 === 1) {
+    return "background-color: #e09a2b";
+  }
 }
 
 function initPiecePosition(row, column) {
@@ -88,9 +91,22 @@ async function move(from, to) {
   }).then(res => {
     return res.json();
   }).then(obj => {
-    changeImg(from, to);
-    changeTurn();
-    score();
+    if (obj.code === "400") {
+      alert(obj.message);
+      return;
+    }
+    if (obj.code === "300") {
+      changeImg(from, to);
+      gameFinished = true;
+      document.querySelector(".currentTurn").textContent = " 승자 :";
+      alert(obj.turn + " 승리!");
+      return;
+    }
+    if (obj.code === "200") {
+      changeImg(from, to);
+      changeTurn();
+      score();
+    }
   })
 }
 
