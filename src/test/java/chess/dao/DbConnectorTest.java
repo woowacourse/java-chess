@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 
-class DBConnectorTest {
+class DbConnectorTest {
 
     @Test
     void connection() {
-        final Connection connection = DBConnector.getConnection();
+        final Connection connection = DbConnector.getConnection();
         assertThat(connection).isNotNull();
     }
 }

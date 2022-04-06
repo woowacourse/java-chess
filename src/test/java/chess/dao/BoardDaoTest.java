@@ -2,6 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.fixture.MockBoardDao;
 import chess.piece.detail.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ class BoardDaoTest {
     void findTurnById() {
         final BoardDao boardDao = new MockBoardDao();
 
-        boardDao.save(Color.WHITE);
-        final Color turn = boardDao.findById(1);
+        final int boardId = boardDao.save(Color.WHITE);
+        final Color turn = boardDao.findById(boardId);
         assertThat(turn).isEqualTo(Color.WHITE);
     }
 }
