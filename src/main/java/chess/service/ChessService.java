@@ -89,7 +89,7 @@ public class ChessService {
 
             return gson.toJson(moveResult);
         } catch (IllegalArgumentException e) {
-            res.status(404);
+            res.status(400);
             final Map<String, String> map = new HashMap<>();
             map.put("error", e.getMessage());
             return gson.toJson(map);
@@ -109,7 +109,7 @@ public class ChessService {
             final Score score = chessGame.calculateScore();
             return gson.toJson(score);
         } catch (IllegalArgumentException e) {
-            res.status(404);
+            res.status(400);
             final Map<String, String> map = new HashMap<>();
             map.put("error", e.getMessage());
             return gson.toJson(map);
@@ -125,7 +125,7 @@ public class ChessService {
             updateRoomStatusTo(roomName, GameStatus.END);
             return gson.toJson(result);
         } catch (IllegalArgumentException e) {
-            res.status(404);
+            res.status(400);
             final Map<String, String> map = new HashMap<>();
             map.put("error", e.getMessage());
             return gson.toJson(map);

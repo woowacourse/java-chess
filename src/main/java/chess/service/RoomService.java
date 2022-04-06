@@ -54,7 +54,7 @@ public class RoomService {
             }
             return null;
         } catch (IllegalArgumentException e) {
-            res.status(404);
+            res.status(400);
             final Map<String, String> map = new HashMap<>();
             map.put("error", e.getMessage());
             return gson.toJson(map);
@@ -68,7 +68,7 @@ public class RoomService {
             final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
             return gson.toJson(dto);
         } catch (IllegalArgumentException e) {
-            res.status(404);
+            res.status(400);
             final Map<String, String> map = new HashMap<>();
             map.put("error", e.getMessage());
             return gson.toJson(map);
