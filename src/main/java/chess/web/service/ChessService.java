@@ -3,7 +3,9 @@ package chess.web.service;
 import chess.board.Board;
 import chess.board.Team;
 import chess.board.Turn;
+import chess.board.piece.Empty;
 import chess.board.piece.Piece;
+import chess.board.piece.PieceFactory;
 import chess.board.piece.Pieces;
 import chess.board.piece.position.Position;
 import chess.web.dao.BoardDao;
@@ -31,13 +33,16 @@ public class ChessService {
     }
 
     public Board loadGame(Long boardId) {
-        Turn turn = boardDao.findTurnById(boardId).orElseThrow(() -> new IllegalArgumentException("없는 차례입니다."));
+        Turn turn = boardDao.findTurnById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 차례입니다."));
+
         List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
         return Board.create(Pieces.from(pieces), turn);
     }
 
     public Board move(final MoveDto moveDto, final Long boardId) {
-        Turn turn = boardDao.findTurnById(boardId).orElseThrow(() -> new IllegalArgumentException("없는 정보입니다."));
+        Turn turn = boardDao.findTurnById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 정보입니다."));
 
         Board board = Board.create(Pieces.from(pieceDao.findAllByBoardId(boardId)), turn);
         Pieces pieces = board.getPieces();
@@ -51,7 +56,8 @@ public class ChessService {
 
     private Turn updatePieces(MoveDto moveDto, Turn turn, Piece piece, final Long boardId) {
         Turn changedTurn = changeTurn(turn);
-        pieceDao.updatePieceByPositionAndBoardId("empty", "none", moveDto.getFrom(), boardId);
+
+        pieceDao.updatePieceByPositionAndBoardId(PieceFactory.getEmptyType(), PieceFactory.getEmptyTeam(), moveDto.getFrom(), boardId);
         pieceDao.updatePieceByPositionAndBoardId(piece.getType(), piece.getTeam().value(), moveDto.getTo(), boardId);
         return changedTurn;
     }

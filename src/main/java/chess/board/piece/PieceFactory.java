@@ -6,6 +6,12 @@ import chess.board.piece.position.Position;
 
 public class PieceFactory {
 
+    private static final String EMPTY_TYPE = "empty";
+    private static final String EMPTY_TEAM = "none";
+
+    private PieceFactory() {
+    }
+
     public static Piece create(final String position, final String team, final String type) {
         Position loadPosition = Position.of(position.charAt(0), position.charAt(1));
         if (type.equals("rook")) {
@@ -32,5 +38,12 @@ public class PieceFactory {
         throw new IllegalArgumentException("[ERROR] 잘못 입력되었습니다.");
     }
 
+    public static String getEmptyTeam() {
+        return EMPTY_TEAM;
+    }
+
+    public static String getEmptyType() {
+        return EMPTY_TYPE;
+    }
 
 }
