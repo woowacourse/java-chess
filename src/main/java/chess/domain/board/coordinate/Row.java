@@ -18,6 +18,13 @@ public enum Row {
         this.value = value;
     }
 
+    public static Row of(String value) {
+        return Arrays.stream(values())
+                .filter(row -> Integer.toString(row.value).equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 Row는 존재하지 않습니다."));
+    }
+
     public Row move(int distance) {
         return Arrays.stream(values())
                 .filter(row -> row.value == this.value + distance)
