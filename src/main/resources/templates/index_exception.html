@@ -153,13 +153,13 @@
         </td>
     </tr>
 </table>
-    <form action="backwardToReady" method="post" enctype="text/plain">
-        {{#exception}}
-        <center>[ERROR] {{message}} </center>
-        {{/exception}}
-        <center>
-            <button type="submit"> 확인 </button>
-        </center>
-    </form>
+<form action="backwardToPreprocess" method="post" enctype="text/plain">
+    {{#exception}}
+    <center>[ERROR] {{message}} </center>
+    {{/exception}}
+    <center>
+        <button type="submit"> 확인 </button>
+    </center>
+</form>
 </body>
 </html>

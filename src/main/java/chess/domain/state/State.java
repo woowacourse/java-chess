@@ -21,10 +21,6 @@ public abstract class State {
         return new Ready(BoardInitializer.generate());
     }
 
-    public static State create(Map<Position, Piece> board) {
-        return new Ready(board);
-    }
-
     public static State create(Map<Position, Piece> board, Color color) {
         return new Running(board, color);
     }
@@ -40,6 +36,10 @@ public abstract class State {
     }
 
     public boolean isRunning() {
+        return false;
+    }
+
+    public boolean isReady() {
         return false;
     }
 

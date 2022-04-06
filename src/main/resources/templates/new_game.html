@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Alpha Chess_WhiteTurn</title>
+    <title>Alpha Chess</title>
     <link rel="stylesheet" href="/src/indexDesign.css">
 </head>
 <body>
@@ -153,13 +153,12 @@
         </td>
     </tr>
 </table>
-    <form action="backwardToReady" method="post" enctype="text/plain">
-        {{#exception}}
-        <center>[ERROR] {{message}} </center>
-        {{/exception}}
-        <center>
-            <button type="submit"> 확인 </button>
-        </center>
-    </form>
+    <center> 체스게임을 시작하려면 start, 체스게임을 끝내려면 end를 입력하세요. </center>
+    <br />
+    <center>
+        <form action="ready" method="post" enctype="text/plain">
+            입력 <input name="command" type="text">  <button type="submit"> 제출 </button>
+        </form>
+    </center>
 </body>
 </html>
