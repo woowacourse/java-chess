@@ -44,11 +44,11 @@ class PieceDaoTest {
     void removeByPosition() {
         //given
         pieceDao.saveAll(Map.of(Position.from("a2"), new Pawn(BLACK)));
-        pieceDao.update("a2", new Knight(WHITE));
+        pieceDao.removeByPosition("a2");
         //when
         final Map<String, PieceDto> actual = pieceDao.findAll();
         //then
-        assertThat(actual).contains(entry("a2", new PieceDto("WHITE", "Knight")));
+        assertThat(actual).doesNotContain(entry("a2", new PieceDto("WHITE", "Knight")));
     }
 
     @Test
