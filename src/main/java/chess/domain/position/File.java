@@ -41,11 +41,11 @@ public enum File {
 
     public static List<File> sorted() {
         return Arrays.stream(File.values())
-                .sorted(Comparator.comparing(File::getFile))
+                .sorted(Comparator.comparing(File::getName))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public String getFile() {
+    public String getName() {
         return name;
     }
 
