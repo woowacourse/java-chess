@@ -27,7 +27,7 @@ public final class Board {
         this.turn = Color.WHITE;
     }
 
-    public Board(Map<Position,Piece> pieces, Color turn) {
+    public Board(Map<Position, Piece> pieces, Color turn) {
         this.piecesByPosition = pieces;
         this.turn = turn;
     }

@@ -59,7 +59,8 @@ public class ChessWebController {
             Map<String, Object> model = new HashMap<>();
             chessGameService.end();
             model.put("result",
-                    ResultDto.of(chessGameService.statusOfWhite(), chessGameService.statusOfBlack(), chessGameService.findWinner()));
+                    ResultDto.of(chessGameService.statusOfWhite(), chessGameService.statusOfBlack(),
+                            chessGameService.findWinner()));
             return render(model, "result.hbs");
         });
 

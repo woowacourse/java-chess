@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class NullPiece extends Piece{
+public final class NullPiece extends Piece {
 
     private static final String INVALID_BLANK_MOVE_EXCEPTION = "빈칸은 움직일 수 없습니다.";
 

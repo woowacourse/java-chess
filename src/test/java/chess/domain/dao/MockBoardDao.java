@@ -4,7 +4,7 @@ import chess.domain.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MockBoardDao implements BoardDao{
+public class MockBoardDao implements BoardDao {
 
     private Map<Integer, FakeBoard> fakeBoard = new HashMap<>();
 
