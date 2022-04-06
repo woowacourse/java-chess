@@ -2,6 +2,7 @@ package chess.converter;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
@@ -11,6 +12,7 @@ import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.domain.state.RunningBlackTurn;
 import chess.domain.state.RunningWhiteTurn;
+import chess.repository.PieceDto;
 
 public class StringToStateConverter {
 
@@ -21,8 +23,8 @@ public class StringToStateConverter {
 	private static final String RUNNING_BLACK = "RUNNING_BLACK";
 	private static final String FINISHED = "FINISHED";
 
-	public static GameState of(String state, Map<String, String> inputBoard) {
-		Map<Position, Piece> board = convertToBoard(inputBoard);
+	public static GameState of(String state, List<PieceDto> pieceDtos) {
+		Map<Position, Piece> board = convertToBoard(pieceDtos);
 		if (state.equals(READY)) {
 			return new Ready(board);
 		}
@@ -38,11 +40,8 @@ public class StringToStateConverter {
 		throw new IllegalArgumentException(NOT_EXIST_STATE_NAME);
 	}
 
-	private static Map<Position, Piece> convertToBoard(Map<String, String> tiles) {
-		return tiles.entrySet().stream()
-			.collect(toMap(
-				entry -> StringToPositionConverter.from(entry.getKey()),
-				entry -> StringToPieceConverter.from(entry.getValue())
-			));
+	private static Map<Position, Piece> convertToBoard(List<PieceDto> pieceDtos) {
+		return pieceDtos.stream()
+			.collect(toMap(PieceDto::getPosition, PieceDto::getPiece));
 	}
 }

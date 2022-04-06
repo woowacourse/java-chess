@@ -1,15 +1,25 @@
 package chess.repository.dao;
 
+import static java.util.stream.Collectors.*;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import chess.converter.StringToPieceConverter;
+import chess.converter.StringToPositionConverter;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.repository.PieceDto;
 
 public class PieceDao {
 
 	private static final String PIECE_NAME = "name";
 	private static final String POSITION = "position";
 
-	public void insertAll(Map<String, String> tiles, int foreignKey) {
-		for (String position : tiles.keySet()) {
-			insert(tiles.get(position), position, foreignKey);
+	public void insertAll(List<PieceDto> pieceDtos, int foreignKey) {
+		for (PieceDto dto : pieceDtos) {
+			insert(dto.getPiece().toString(), dto.getPosition().toString(), foreignKey);
 		}
 	}
 
@@ -21,43 +31,53 @@ public class PieceDao {
 			.executeUpdate();
 	}
 
-	public Map<String, String> selectByGameId(int foreignKey) {
-		return ConnectionManager
+	public List<PieceDto> selectByGameId(int foreignKey) {
+		Map<String, String> result = ConnectionManager
 			.createQuery("select position, name from piece where game_id = ?")
 			.setParameter(1, foreignKey)
 			.executeQuery()
 			.getResultMap(POSITION, PIECE_NAME);
+
+		return collectToDto(result);
 	}
 
-	public Map<String, String> selectByGameName(String gameName) {
-		return ConnectionManager.createQuery(
-				"select p.position, p.name "
-					+ "from piece p join chessGame g "
-					+ "on p.game_id = g.game_id "
-					+ "where g.name = ?")
+	public List<PieceDto> selectByGameName(String gameName) {
+		Map<String, String> result = ConnectionManager.createQuery(
+				"select p.position, p.name from piece p "
+					+ "join chessGame g on p.game_id = g.game_id where g.name = ?")
 			.setParameter(1, gameName)
 			.executeQuery()
 			.getResultMap(POSITION, PIECE_NAME);
+
+		return collectToDto(result);
 	}
 
-	public void deleteByPosition(String position, String gameName) {
+	private List<PieceDto> collectToDto(Map<String, String> result) {
+		return result.entrySet().stream()
+			.map(entry -> new PieceDto(
+				StringToPieceConverter.from(entry.getValue()),
+				StringToPositionConverter.from(entry.getKey())))
+			.collect(toList());
+	}
+
+	public void deleteByPosition(Position position, String gameName) {
 		ConnectionManager.createQuery(
 				"delete p from piece p "
 					+ "join chessGame g on p.game_id = g.game_id "
 					+ "where p.position = ? and g.name = ?")
-			.setParameter(1, position)
+			.setParameter(1, position.toString())
 			.setParameter(2, gameName)
 			.executeUpdate();
 	}
 
-	public void updatePositionOfPiece(String pieceName, String from, String to, String gameName) {
+	public void updatePositionOfPiece(Piece piece, Position from, Position to, String gameName) {
 		ConnectionManager.createQuery(
 				"update piece p join chessGame g on p.game_id = g.game_id "
 					+ "set p.position = ? "
 					+ "where p.name = ? and p.position = ? and g.name = ?")
-			.setParameter(1, to)
-			.setParameter(2, pieceName)
-			.setParameter(3, from)
+			.setParameter(1, to.toString())
+			.setParameter(2, piece.toString())
+			.setParameter(3, from.toString())
 			.setParameter(4, gameName)
 			.executeUpdate();
 	}

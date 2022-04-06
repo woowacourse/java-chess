@@ -3,6 +3,7 @@ package chess.repository.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
@@ -10,7 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.ChessGame;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.position.Position;
 import chess.domain.state.Ready;
+import chess.repository.PieceDto;
 
 class PieceDaoTest {
 
@@ -33,8 +38,11 @@ class PieceDaoTest {
 
 	private int insertChessGame() {
 		int foreignKey = chessGameDao.insert(game);
-		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
-		pieceDao.insertAll(tiles, foreignKey);
+		List<PieceDto> pieceDtos = List.of(
+			new PieceDto(Pawn.createWhite(), new Position(1, 1)),
+			new PieceDto(King.createBlack(), new Position(2, 2))
+		);
+		pieceDao.insertAll(pieceDtos, foreignKey);
 		return foreignKey;
 	}
 
@@ -43,11 +51,11 @@ class PieceDaoTest {
 	void selectWhereForeignKey() {
 		int foreignKey = insertChessGame();
 
-		Map<String, String> result = pieceDao.selectByGameId(foreignKey);
+		List<PieceDto> pieceDtos = pieceDao.selectByGameId(foreignKey);
 
-		assertThat(result)
-			.containsEntry("a1", "WHITE_PAWN")
-			.containsEntry("b2", "BLACK_KING");
+		assertThat(pieceDtos)
+			.containsExactly(new PieceDto(Pawn.createWhite(), new Position(1, 1)),
+				new PieceDto(King.createBlack(), new Position(2, 2)));
 	}
 
 	@Test
@@ -55,11 +63,11 @@ class PieceDaoTest {
 	void selectByGameName() {
 		insertChessGame();
 
-		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
+		List<PieceDto> pieceDtos = pieceDao.selectByGameName(TEST_NAME);
 
-		assertThat(result)
-			.containsEntry("a1", "WHITE_PAWN")
-			.containsEntry("b2", "BLACK_KING");
+		assertThat(pieceDtos)
+			.containsExactly(new PieceDto(Pawn.createWhite(), new Position(1, 1)),
+				new PieceDto(King.createBlack(), new Position(2, 2)));
 	}
 
 	@Test
@@ -67,11 +75,11 @@ class PieceDaoTest {
 	void deleteByPosition() {
 		insertChessGame();
 
-		pieceDao.deleteByPosition("a1", TEST_NAME);
+		pieceDao.deleteByPosition(new Position(1, 1), TEST_NAME);
 
-		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
-		assertThat(result)
-			.containsExactlyEntriesOf(Map.of("b2", "BLACK_KING"));
+		List<PieceDto> pieceDtos = pieceDao.selectByGameName(TEST_NAME);
+		assertThat(pieceDtos)
+			.containsExactly(new PieceDto(King.createBlack(), new Position(2, 2)));
 	}
 
 	@Test
@@ -79,10 +87,11 @@ class PieceDaoTest {
 	void update() {
 		insertChessGame();
 
-		pieceDao.updatePositionOfPiece("WHITE_PAWN", "a1", "a2", TEST_NAME);
+		pieceDao.updatePositionOfPiece(Pawn.createWhite(),
+			new Position(1, 1), new Position(2, 1), TEST_NAME);
 
-		Map<String, String> result = pieceDao.selectByGameName(TEST_NAME);
-		assertThat(result)
-			.containsEntry("a2", "WHITE_PAWN");
+		List<PieceDto> pieceDtos = pieceDao.selectByGameName(TEST_NAME);
+		assertThat(pieceDtos)
+			.contains(new PieceDto(Pawn.createWhite(), new Position(2, 1)));
 	}
 }

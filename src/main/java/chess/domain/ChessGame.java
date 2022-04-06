@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Map;
+
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -26,6 +28,10 @@ public class ChessGame {
 
 	public GameState getState() {
 		return this.state;
+	}
+
+	public Map<Position, Piece> getBoard() {
+		return this.state.getBoard();
 	}
 
 	public boolean isFinished() {

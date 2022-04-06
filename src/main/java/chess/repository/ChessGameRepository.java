@@ -1,15 +1,15 @@
 package chess.repository;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import chess.converter.StringToStateConverter;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
-import chess.converter.BoardToStringConverter;
-import chess.converter.StringToStateConverter;
 import chess.repository.dao.ChessGameDao;
 import chess.repository.dao.PieceDao;
 
@@ -20,11 +20,10 @@ public class ChessGameRepository implements GameRepository {
 
 	@Override
 	public void save(ChessGame game) {
-		GameState state = game.getState();
-		pieceDao.insertAll(
-			BoardToStringConverter.from(state.getBoard()),
-			chessGameDao.insert(game)
-		);
+		List<PieceDto> pieceDtos = game.getBoard().entrySet().stream()
+			.map(entry -> new PieceDto(entry.getValue(), entry.getKey()))
+			.collect(toList());
+		pieceDao.insertAll(pieceDtos, chessGameDao.insert(game));
 	}
 
 	@Override
@@ -35,8 +34,7 @@ public class ChessGameRepository implements GameRepository {
 		} catch (IllegalArgumentException exception) {
 			return Optional.empty();
 		}
-		Map<String, String> tiles = pieceDao.selectByGameName(name);
-		GameState gameState = StringToStateConverter.of(state, tiles);
+		GameState gameState = StringToStateConverter.of(state, pieceDao.selectByGameName(name));
 
 		return Optional.of(new ChessGame(name, gameState));
 	}
@@ -49,10 +47,10 @@ public class ChessGameRepository implements GameRepository {
 	@Override
 	public void updatePositionOfPiece(ChessGame game, Position from, Position to) {
 		String gameName = game.getName();
-		pieceDao.deleteByPosition(to.toString(), gameName);
+		pieceDao.deleteByPosition(to, gameName);
 		Piece piece = game.getPieceByPosition(to);
 
-		pieceDao.updatePositionOfPiece(piece.toString(), from.toString(), to.toString(), gameName);
+		pieceDao.updatePositionOfPiece(piece, from, to, gameName);
 	}
 
 	@Override
