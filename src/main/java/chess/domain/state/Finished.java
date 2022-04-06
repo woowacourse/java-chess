@@ -9,8 +9,9 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public final State start() {
-        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
+    public State start() {
+        chessBoard.init();
+        return new WhiteTurn(chessBoard);
     }
 
     @Override

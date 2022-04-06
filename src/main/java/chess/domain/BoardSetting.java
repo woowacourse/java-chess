@@ -5,6 +5,7 @@ import static chess.domain.Color.WHITE;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -28,9 +29,16 @@ public enum BoardSetting {
     WHITE_BISHOP(new Bishop(WHITE), List.of("c1", "f1")),
     WHITE_KNIGHT(new Knight(WHITE), List.of("b1", "g1")),
     WHITE_ROOK(new Rook(WHITE), List.of("a1", "h1")),
-    WHITE_PAWN(new Pawn(WHITE), List.of("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"));
+    WHITE_PAWN(new Pawn(WHITE), List.of("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2")),
+
+    EMPTY_PIECE(new EmptyPiece(), List.of("a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
+            "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
+            "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
+            "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"))
+    ;
 
     private final Piece piece;
+
     private final List<String> positions;
 
     BoardSetting(Piece piece, List<String> positions) {
