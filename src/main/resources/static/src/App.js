@@ -29,7 +29,7 @@ function showStatusButton() {
 function initBoard() {
     fetch('/api/restart')
         .then(res => res.json())
-        .then(window.alert("game reset successfully!!!"))
+        .then(window.alert("성공적으로 게임이 재시작되었습니다!"))
         .then(imageSetting)
 }
 

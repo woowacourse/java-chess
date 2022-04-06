@@ -18,7 +18,7 @@ import static spark.Spark.post;
 public class ChessWebController {
 
     private final ChessService chessService;
-
+    private static final Gson gson = new Gson();
     public ChessWebController(ChessService chessService) {
         this.chessService = chessService;
     }
@@ -28,9 +28,6 @@ public class ChessWebController {
     }
 
     public void run() {
-
-        Gson gson = new Gson();
-
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
         get("/api/load", (req, res) -> {
