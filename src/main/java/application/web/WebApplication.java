@@ -1,22 +1,57 @@
 package application.web;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.path;
+import static spark.Spark.port;
+import static spark.Spark.post;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import application.web.controller.GameController;
+import application.web.service.GameService;
+import chess.dao.mysql.GameDao;
+import chess.dao.mysql.PlayerDao;
+import chess.domain.game.repository.GameRepository;
+import chess.domain.player.repository.PlayerRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class WebApplication {
+
+    private static final int HTTP_STATUS_ERROR = 400;
+
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+        final WebApplication webApplication = new WebApplication();
+        webApplication.run();
+    }
+
+    private void run() {
+        final GameController gameController = initializeGameController();
+        final Gson gson = new GsonBuilder().create();
+
+        port(8081);
+
+        get("/", gameController.index());
+
+        path("/room", () -> {
+            get("/start", gameController.createNewGame());
+            get("/:gameId", gameController.loadGame());
+            post("/:gameId/move", gameController.movePiece());
+            post("/:gameId/promotion", gameController.promotion());
+            get("/:gameId/status", gameController.calculatePlayerScores());
+            get("/:gameId/end", gameController.endGame());
+        });
+
+        exception(RuntimeException.class, (e, request, response) -> {
+            response.type("application/json; charset=utf-8");
+            response.status(HTTP_STATUS_ERROR);
+            response.body(gson.toJson(e.getMessage()));
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private GameController initializeGameController() {
+        final PlayerRepository playerRepository = new PlayerRepository(PlayerDao.getInstance());
+        final GameRepository gameRepository = new GameRepository(playerRepository, GameDao.getInstance());
+        final GameService gameService = new GameService(gameRepository);
+        return new GameController(gameService);
     }
 }
