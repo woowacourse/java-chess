@@ -92,16 +92,16 @@
         <td class="black_board" id="h1" onclick="move(this.id)"></td>
     </tr>
 </table>
-
-<div class="gameInformation">
-    <button onclick="getScore()" id="score">점수 조회</button>
+<div class="gameInformation" style="display: inline-block">
+    <button onclick="getScore()" class="scoreButton" style="justify-content: center">점수 조회</button>
     <p id="turn"></p>
-    <p id="whiteScore"></p>
-    <p id="blackScore"></p>
-    <button onclick="reset()">게임 다시 시작하기</button>
+    <p id="whiteScore">White팀 점수</p>
+    <p id="blackScore">Black팀 점수</p>
+    <button onclick="reset()" class="resetButton">게임 다시 시작하기</button>
+    <button onclick="end()" class="endButton">게임 종료하기</button>
 </div>
 </body>
-<script src="js/setBoard.js"></script>
+<script src="js/board.js"></script>
 <script src="js/move.js"></script>
 <script src="js/score.js"></script>
 <script>

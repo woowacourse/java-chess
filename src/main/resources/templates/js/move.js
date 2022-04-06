@@ -1,7 +1,6 @@
 let sourcePosition = "";
 
 
-
 function move(position) {
     if (sourcePosition === "") {
         sourcePosition = position;
@@ -13,6 +12,10 @@ function move(position) {
         "destination": position,
     }
 
+    movePiece(object, position);
+}
+
+function movePiece(object, position) {
     $.ajax({
         url: "/move",
         type: "POST",
@@ -20,7 +23,7 @@ function move(position) {
         success(data) {
             const result = JSON.parse(data);
             printGameState(result);
-            movePiece(position);
+            changePiece(position);
         },
         error(error) {
             resetSourPosition();
@@ -29,7 +32,7 @@ function move(position) {
     })
 }
 
-function movePiece(position) {
+function changePiece(position) {
     const source = sourcePosition;
     document.getElementById(position).innerHTML = document.getElementById(source).innerHTML;
     document.getElementById(source).innerHTML = "";
@@ -47,5 +50,5 @@ function printGameState(result) {
         getScore();
         return;
     }
-    document.getElementById("turn").innerText = result.gameState + "차례입니다.";
+    document.getElementById("turn").innerText = result.gameState + " Turn";
 }

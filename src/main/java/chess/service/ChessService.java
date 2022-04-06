@@ -9,10 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import chess.domain.state.*;
-import chess.dto.GameStateDTO;
-import chess.dto.MoveDTO;
-import chess.dto.PieceDTO;
-import chess.dto.ScoreDTO;
+import chess.dto.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +21,14 @@ public class ChessService {
     BoardDao boardDao = new BoardDao();
     RoomDao roomDao = new RoomDao();
 
-    public List<PieceDTO> getInitialBoard(int roomId) {
+    public BoardDto getInitialBoard(int roomId) {
         gameState = getGameState(roomId);
         Map<String, String> board = getBoardPieces();
-        return board.entrySet()
+        List<PieceDTO> pieces = board.entrySet()
                 .stream()
                 .map(i -> new PieceDTO(i.getKey(), i.getValue()))
                 .collect(Collectors.toUnmodifiableList());
+        return new BoardDto(pieces, gameState.getTeam().getValue());
     }
 
     private GameState getGameState(int roomId) {
@@ -93,14 +91,15 @@ public class ChessService {
         return new ScoreDTO(score.getTotalScoreWhiteTeam(), score.getTotalScoreBlackTeam());
     }
 
-    public List<PieceDTO> resetBoard(int roomId) {
+    public BoardDto resetBoard(int roomId) {
         deleteAll(roomId);
         gameState = createGameState(roomId);
         Map<String, String> board = getBoardPieces();
-        return board.entrySet()
+        List<PieceDTO> pieces = board.entrySet()
                 .stream()
                 .map(i -> new PieceDTO(i.getKey(), i.getValue()))
                 .collect(Collectors.toUnmodifiableList());
+        return new BoardDto(pieces, gameState.getTeam().getValue());
     }
 
     private Map<String, String> getBoardPieces() {
@@ -116,5 +115,13 @@ public class ChessService {
     private void deleteAll(int roomId) {
         boardDao.delete();
         roomDao.delete(roomId);
+    }
+
+    public GameStateDTO end(int roomId) {
+        gameState = new Finished(gameState.getTeam(), gameState.getBoard());
+        deleteAll(roomId);
+        Score score = new Score(gameState.getBoard());
+        Team winningTeam = score.getWinningTeam();
+        return new GameStateDTO(winningTeam.getValue(), gameState.isRunning());
     }
 }

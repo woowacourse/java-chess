@@ -3,7 +3,10 @@ function setBoard() {
         url: "/board",
         type: "get",
         success: function (data) {
-            let pieces = JSON.parse(data);
+            let board = JSON.parse(data);
+            const team = board.team;
+            const pieces = board.pieces;
+            document.getElementById("turn").innerText = team + " Turn";
             $.each(pieces, function(index, piece) {
                 findById(piece.position, piece.symbol);
             })
@@ -40,11 +43,31 @@ function reset() {
         url: "/reset",
         type: "POST",
         success: function (data) {
-            let pieces = JSON.parse(data);
+            let board = JSON.parse(data);
+            const team = board.team;
+            const pieces = board.pieces;
+            document.getElementById("turn").innerText = team + " Turn";
             location.reload()
             $.each(pieces, function(index, piece) {
                 findById(piece.position, piece.symbol);
             })
+        },
+        error: function (data){
+            alert(data);
+        }
+    })
+}
+
+function end() {
+    $.ajax({
+        url: "/end",
+        type: "POST",
+        success: function (data) {
+            const result = JSON.parse(data);
+            if (result.isRunning === false) {
+                const winningTeam = result.gameState;
+                alert("게임이 종료되었습니다." + "우승자는 "+ winningTeam);
+            }
         },
         error: function (data){
             alert(data);

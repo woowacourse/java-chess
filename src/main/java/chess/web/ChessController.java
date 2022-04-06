@@ -25,6 +25,8 @@ public class ChessController {
 
         post("/reset", (req, res) -> gson.toJson(chessService.resetBoard(roomId)));
 
+        post("/end", (req, res) -> gson.toJson(chessService.end(roomId)));
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(500);
             response.body(exception.getMessage());
