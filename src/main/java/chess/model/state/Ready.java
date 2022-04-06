@@ -39,7 +39,7 @@ public final class Ready implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        return new HashMap<>();
+        return board.getBoard();
     }
 
     @Override

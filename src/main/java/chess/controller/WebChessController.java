@@ -20,7 +20,11 @@ public class WebChessController {
 
         get("/start", (req, res) -> {
             gameService.startGame();
-            System.out.println("제이슨파일이예요!!! " + gson.toJson(gameService.loadGameBoard()));
+            return gson.toJson(gameService.loadGameBoard());
+        });
+
+        get("/end", (req, res) -> {
+            gameService.endGame();
             return gson.toJson(gameService.loadGameBoard());
         });
 

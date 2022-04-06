@@ -1,8 +1,6 @@
 package chess.model.position;
 
 import chess.model.direction.Direction;
-import chess.model.piece.King;
-import chess.model.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

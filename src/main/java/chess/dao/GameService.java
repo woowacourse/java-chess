@@ -39,4 +39,9 @@ public class GameService {
         squareDao.delete();
         squareDao.save(Board.init().getBoard());
     }
+
+    public void endGame() {
+        stateDao.delete();
+        squareDao.delete();
+    }
 }

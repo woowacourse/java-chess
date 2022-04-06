@@ -1,5 +1,6 @@
 const button = document.getElementById("button");
 const status_button = document.getElementById("status-button");
+const load_button = document.getElementById("load-button");
 const squares = document.getElementsByClassName("piece");
 
 source = ""
