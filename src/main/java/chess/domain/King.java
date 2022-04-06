@@ -15,7 +15,7 @@ public class King extends Piece {
         final int column = to.getColumn() - from.getColumn();
         final int row = to.getRow() - from.getRow();
 
-        return Direction.ofAll(column, row);
+        return Direction.of(column, row);
     }
 
     @Override
