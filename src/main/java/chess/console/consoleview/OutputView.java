@@ -1,11 +1,11 @@
-package chess.view;
+package chess.console.consoleview;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.piece.Color;
 import chess.dto.GameResultDto;
-import chess.view.boardview.BoardView;
+import chess.console.consoleview.boardview.BoardView;
 
 public class OutputView {
 

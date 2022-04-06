@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.consoleview;
 
 import chess.dto.CommandDto;
 import java.util.Scanner;

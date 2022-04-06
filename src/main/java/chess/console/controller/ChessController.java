@@ -1,31 +1,24 @@
-package chess.controller;
+package chess.console.controller;
 
-import static chess.view.InputView.requestMoveOrEndOrStatusInput;
-import static chess.view.InputView.requestStartOrEndInput;
-import static chess.view.InputView.requestStatusOrEndInput;
-import static chess.view.OutputView.printBoard;
-import static chess.view.OutputView.printChessGameInitInstruction;
-import static chess.view.OutputView.printForceEndInstruction;
-import static chess.view.OutputView.printForceQuitStatus;
-import static chess.view.OutputView.printGameInstructions;
-import static chess.view.OutputView.printGameOverInstructions;
-import static chess.view.OutputView.printIntermediateGameResult;
-import static chess.view.OutputView.printStatus;
+import static chess.console.consoleview.InputView.requestMoveOrEndOrStatusInput;
+import static chess.console.consoleview.InputView.requestStartOrEndInput;
+import static chess.console.consoleview.InputView.requestStatusOrEndInput;
 
+import chess.console.consoleview.OutputView;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.piece.ChessmenInitializer;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
-import chess.view.boardview.BoardView;
+import chess.console.consoleview.boardview.BoardView;
 
 public class ChessController {
 
     private boolean playerWantToEndStatus = false;
 
     public void run() {
-        printGameInstructions();
+        OutputView.printGameInstructions();
         if (!requestStartOrEndInput()) {
             return;
         }
@@ -37,12 +30,12 @@ public class ChessController {
     }
 
     private ChessGame initAndShowBoard() {
-        printChessGameInitInstruction();
+        OutputView.printChessGameInitInstruction();
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         ChessGame game = ChessGame.of(chessmenInitializer.init());
 
-        printBoard(new BoardView(new ChessGameDto(game)));
+        OutputView.printBoard(new BoardView(new ChessGameDto(game)));
 
         return game;
     }
@@ -50,7 +43,7 @@ public class ChessController {
     private ChessGame progressGameUntilEnd(ChessGame chessGame) {
         while (!chessGame.isEnd() && !playerWantToEndStatus) {
             chessGame = progressByCommand(chessGame, requestMoveOrEndOrStatusInput());
-            printBoard(new BoardView(new ChessGameDto(chessGame)));
+            OutputView.printBoard(new BoardView(new ChessGameDto(chessGame)));
         }
         return chessGame;
     }
@@ -68,7 +61,7 @@ public class ChessController {
     }
 
     private ChessGame end(ChessGame chessGame) {
-        printForceEndInstruction();
+        OutputView.printForceEndInstruction();
 
         playerWantToEndStatus = true;
 
@@ -86,7 +79,7 @@ public class ChessController {
             return;
         }
 
-        printGameOverInstructions();
+        OutputView.printGameOverInstructions();
 
         if (requestStatusOrEndInput()) {
             normalQuitGameResult(chessGame);
@@ -94,15 +87,15 @@ public class ChessController {
     }
 
     private void intermediateGameResult(ChessGame chessGame) {
-        printIntermediateGameResult(chessGame.calculateGameResult());
+        OutputView.printIntermediateGameResult(chessGame.calculateGameResult());
     }
 
     private void forceQuitGameResult(ChessGame chessGame) {
-        printForceQuitStatus(chessGame.calculateGameResult());
+        OutputView.printForceQuitStatus(chessGame.calculateGameResult());
     }
 
     private void normalQuitGameResult(ChessGame chessGame) {
-        printStatus(chessGame.calculateGameResult());
+        OutputView.printStatus(chessGame.calculateGameResult());
     }
 
 }

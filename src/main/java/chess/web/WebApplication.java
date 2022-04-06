@@ -1,4 +1,4 @@
-package chess;
+package chess.web;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -10,6 +10,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.ChessmenInitializer;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
+import chess.web.util.JsonTransformer;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
