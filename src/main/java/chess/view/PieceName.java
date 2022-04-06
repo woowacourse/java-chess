@@ -14,36 +14,26 @@ import java.util.Arrays;
 
 public enum PieceName {
 
-    KING_BLACK(King.from(BLACK), "K", "/images/king_black.png"),
-    KING_WHITE(King.from(WHITE), "k", "/images/king_white.png"),
-    QUEEN_BLACK(Queen.from(BLACK), "Q", "/images/queen_black.png"),
-    QUEEN_WHITE(Queen.from(WHITE), "q", "/images/queen_white.png"),
-    BISHOP_BLACK(Bishop.from(BLACK), "B", "/images/bishop_black.png"),
-    BISHOP_WHITE(Bishop.from(WHITE), "b", "/images/bishop_white.png"),
-    ROOK_BLACK(Rook.from(BLACK), "R", "/images/rook_black.png"),
-    ROOK_WHITE(Rook.from(WHITE), "r", "/images/rook_white.png"),
-    KNIGHT_BLACK(Knight.from(BLACK), "N", "/images/knight_black.png"),
-    KNIGHT_WHITE(Knight.from(WHITE), "n", "/images/knight_white.png"),
-    PAWN_BLACK(Pawn.from(BLACK), "P", "/images/pawn_black.png"),
-    PAWN_WHITE(Pawn.from(WHITE), "p", "/images/pawn_white.png"),
+    KING_BLACK(King.from(BLACK), "K"),
+    KING_WHITE(King.from(WHITE), "k"),
+    QUEEN_BLACK(Queen.from(BLACK), "Q"),
+    QUEEN_WHITE(Queen.from(WHITE), "q"),
+    BISHOP_BLACK(Bishop.from(BLACK), "B"),
+    BISHOP_WHITE(Bishop.from(WHITE), "b"),
+    ROOK_BLACK(Rook.from(BLACK), "R"),
+    ROOK_WHITE(Rook.from(WHITE), "r"),
+    KNIGHT_BLACK(Knight.from(BLACK), "N"),
+    KNIGHT_WHITE(Knight.from(WHITE), "n"),
+    PAWN_BLACK(Pawn.from(BLACK), "P"),
+    PAWN_WHITE(Pawn.from(WHITE), "p"),
     ;
 
     private final ChessPiece chessPiece;
     private final String consoleName;
-    private final String webImagePath;
 
-    PieceName(final ChessPiece chessPiece, final String consoleName, final String webImagePath) {
+    PieceName(final ChessPiece chessPiece, final String consoleName) {
         this.chessPiece = chessPiece;
         this.consoleName = consoleName;
-        this.webImagePath = webImagePath;
-    }
-
-    public static String findWebImagePath(ChessPiece chessPiece) {
-        return Arrays.stream(values())
-                .filter(it -> it.chessPiece.equals(chessPiece))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 기물이 없습니다."))
-                .webImagePath;
     }
 
     public static String findConsoleName(final ChessPiece chessPiece) {
