@@ -7,12 +7,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
-import chess.domain.game.GameSwitch;
-import chess.domain.game.Turn;
-import chess.domain.piece.Team;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -22,11 +17,7 @@ public class WebController {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final BoardDao boardDao = new BoardDao();
-    private ChessGame chessGame = new ChessGame(
-            new Board(new HashMap<>()),
-            new GameSwitch(false),
-            new Turn(Team.NONE)
-    );
+    private ChessGame chessGame = ChessGame.createNotStart();
 
     public void run() {
         staticFileLocation("/static");
@@ -58,11 +49,7 @@ public class WebController {
         });
 
         post("/reset", (req, res) -> {
-            chessGame = new ChessGame(
-                    BoardFactory.generateChessBoard(),
-                    new GameSwitch(true),
-                    new Turn(Team.WHITE)
-            );
+            chessGame = ChessGame.createInit();
             chessGameDao.save(chessGame);
             boardDao.save(chessGame);
             res.redirect("/");

@@ -6,7 +6,6 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
 import chess.domain.piece.Rook;
-import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.generateChessBoard();
+        board = BoardFactory.createInitChessBoard();
     }
 
     @Test
@@ -38,7 +37,7 @@ public class BoardTest {
     @Test
     @DisplayName("Position 을 입력하면 piece 를 반환한다.")
     void getPiece() {
-        Board board = BoardFactory.generateChessBoard();
+        Board board = BoardFactory.createInitChessBoard();
         assertThat(board.getPiece(Position.valueOf("a8"))).isEqualTo(new Rook(Team.BLACK));
     }
 }

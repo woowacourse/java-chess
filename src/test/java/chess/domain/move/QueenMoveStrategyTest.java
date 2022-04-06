@@ -16,7 +16,7 @@ public class QueenMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.generateChessBoard();
+        board = BoardFactory.createInitChessBoard();
         queenMoveStrategy = new QueenMoveStrategy();
     }
 

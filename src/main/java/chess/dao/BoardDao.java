@@ -53,7 +53,7 @@ public class BoardDao {
                 board.put(position, piece);
             }
             if (board.size() == 0) {
-                return BoardFactory.generateChessBoard();
+                return BoardFactory.createInitChessBoard();
             }
         } catch (SQLException e) {
             e.printStackTrace();

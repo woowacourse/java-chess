@@ -24,7 +24,7 @@ public class ConsoleController {
         OutputView.printStartGame();
         if (InputView.inputCommandForStart() == START_COMMAND_STRING) {
             ChessGame chessGame = new ChessGame(
-                    BoardFactory.generateChessBoard(),
+                    BoardFactory.createInitChessBoard(),
                     new GameSwitch(true),
                     new Turn(Team.WHITE)
             );

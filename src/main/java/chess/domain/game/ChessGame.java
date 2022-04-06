@@ -1,10 +1,12 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
@@ -17,6 +19,22 @@ public class ChessGame {
         this.board = board;
         this.gameSwitch = gameSwitch;
         this.turn = turn;
+    }
+
+    public static ChessGame createInit() {
+        return new ChessGame(
+                BoardFactory.createInitChessBoard(),
+                new GameSwitch(true),
+                new Turn(Team.WHITE)
+        );
+    }
+
+    public static ChessGame createNotStart() {
+        return new ChessGame(
+                new Board(new HashMap<>()),
+                new GameSwitch(false),
+                new Turn(Team.NONE)
+        );
     }
 
     public void move(final String rawSource, final String rawTarget) {

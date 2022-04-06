@@ -6,7 +6,6 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
-import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ public class ResultTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.generateChessBoard();
+        board = BoardFactory.createInitChessBoard();
     }
 
     @Test

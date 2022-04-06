@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameSwitch;
 import chess.domain.game.Turn;
@@ -42,11 +41,7 @@ public class ChessGameDao {
             PreparedStatement statement = ConnectionManager.getConnection().prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return new ChessGame(
-                        BoardFactory.generateChessBoard(),
-                        new GameSwitch(true),
-                        new Turn(Team.WHITE)
-                );
+                return ChessGame.createInit();
             }
             boolean isOn = resultSet.getBoolean("is_on");
             Team now = Team.valueOf(resultSet.getString("team_value_of_turn"));

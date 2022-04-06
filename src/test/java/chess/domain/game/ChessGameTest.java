@@ -18,7 +18,7 @@ public class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.generateChessBoard();
+        board = BoardFactory.createInitChessBoard();
         chessGame = new ChessGame(
                 board,
                 new GameSwitch(true),

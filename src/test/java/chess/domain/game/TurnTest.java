@@ -18,9 +18,9 @@ public class TurnTest {
     }
 
     @Test
-    @DisplayName("Team.NONE 으로 Turn 을 생성하면 예외 발생")
-    void constructor_WhenTeamNONE() {
-        assertThatThrownBy(() -> new Turn(Team.NONE))
+    @DisplayName("Team.NONE 일 때 턴을 넘길 경우 에러를 발생시킨다.")
+    void passTurn_WhenTeamNONE() {
+        assertThatThrownBy(() -> new Turn(Team.NONE).passTurn())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 입력된 Team 은 게임을 할 수 없습니다.");
     }
