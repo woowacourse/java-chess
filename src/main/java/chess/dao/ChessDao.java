@@ -43,7 +43,19 @@ public class ChessDao {
         }
     }
 
-    public State getState() {
+    public void updateState(State state) {
+        Connection connection = getConnection();
+        final String sql = "update chess_game set state = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, state.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getState() {
         Connection connection = getConnection();
         final String sql = "select state from chess_game";
         try {
@@ -52,8 +64,7 @@ public class ChessDao {
             if (!resultSet.next()) {
                 return null;
             }
-            String state = resultSet.getString("state");
-            return StateConverter.of(state);
+            return resultSet.getString("state");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,7 +76,7 @@ public class ChessDao {
         final String sql = "truncate table chess_game";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.execute();
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

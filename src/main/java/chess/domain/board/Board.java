@@ -18,12 +18,17 @@ import java.util.stream.Collectors;
 public class Board {
     private final Map<Location, Piece> chessBoard;
 
+    public Board(Map<Location, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
     public Board() {
         this.chessBoard = new LinkedHashMap<>();
         initializeEmptyBoard();
     }
 
     public void initializeBoard() {
+        initializeEmptyBoard();
         initializePiece(Rank.ONE, Team.WHITE);
         initializePiece(Rank.EIGHT, Team.BLACK);
 

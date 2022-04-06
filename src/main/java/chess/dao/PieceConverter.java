@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -28,6 +29,9 @@ public class PieceConverter {
         }
         if (name.equals("KING")) {
             return new King(TeamConverter.of(team));
+        }
+        if (name.equals("EMPTY")) {
+            return new EmptyPiece();
         }
         throw new IllegalArgumentException("[ERROR] 없는 기물입니다.");
     }

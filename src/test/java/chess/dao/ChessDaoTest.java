@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.domain.board.Board;
 import chess.domain.state.Black;
-import chess.domain.state.State;
 import java.sql.Connection;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,8 +19,8 @@ class ChessDaoTest {
     void save() {
         ChessDao chessDao = new ChessDao();
         chessDao.saveState(new Black(new Board()));
-        State state = chessDao.getState();
-        Assertions.assertThat(state).isInstanceOf(Black.class);
+        String state = chessDao.getState();
+        Assertions.assertThat(state).isEqualTo("black");
     }
 
     @Test

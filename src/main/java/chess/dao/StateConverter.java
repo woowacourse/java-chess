@@ -9,21 +9,18 @@ import chess.domain.state.White;
 
 public class StateConverter {
 
-    public static State of(String state) {
-        System.out.println(state);
+    public static State of(String state, Board board) {
         if (state.equals("black")) {
-            return new Black(new Board());
+            return new Black(board);
         }
-
         if (state.equals("white")) {
-            return new White(new Board());
+            return new White(board);
         }
-
         if (state.equals("ready")) {
-            return new Ready();
+            return new Ready(board);
         }
         if (state.equals("end")) {
-            return new End(new Board());
+            return new End(board);
         }
         throw new IllegalArgumentException("[ERROR] 상태가 존재하지 않습니다.");
     }

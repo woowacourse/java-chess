@@ -17,7 +17,8 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
+        board.initializeBoard();
+        return new White(board);
     }
 
     @Override

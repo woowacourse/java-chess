@@ -6,7 +6,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Location;
-import java.util.Map;
+import chess.domain.state.State;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -17,6 +17,10 @@ public class WebApplication {
         WebChessService webChessService = new WebChessService();
 
         get("/", (req, res) -> {
+            State state = webChessService.getState();
+            if (state.isRunning()) {
+                chessGame.setState(state);
+            }
             return new ModelAndView(chessGame.toMap(), "index.html");
         }, new HandlebarsTemplateEngine());
 
@@ -31,6 +35,9 @@ public class WebApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
             chessGame.move(Location.of(source), Location.of(target));
+
+            webChessService.move(source, target);
+            webChessService.updateState(chessGame.getState());
             res.redirect("/");
             return null;
         });
@@ -39,14 +46,11 @@ public class WebApplication {
             return chessGame.status();
         }, new JsonTransformer());
 
-        get("/end", (req, res) ->{
+        get("/end", (req, res) -> {
             chessGame.end();
+            webChessService.updateState(chessGame.getState());
             res.redirect("/");
             return null;
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

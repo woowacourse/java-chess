@@ -32,7 +32,6 @@ public class ChessGame {
     }
 
     public void move(Location source, Location target) {
-
         Team team = state.getTeam();
         Piece targetPiece = state.move(team, source, target);
         this.state = state.getNextState(targetPiece);
@@ -60,5 +59,9 @@ public class ChessGame {
 
     public State getState() {
         return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

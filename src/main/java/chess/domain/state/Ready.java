@@ -8,7 +8,15 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class Ready implements State {
-    private final Board board = new Board();
+    private final Board board;
+
+    public Ready(Board board) {
+        this.board = board;
+    }
+
+    public Ready() {
+        this.board = new Board();
+    }
 
     @Override
     public State start() {
