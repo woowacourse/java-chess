@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     startButtonInitializer.initializeStartButton();
     endButtonInitializer.initializeEndButton();
     scoreButtonInitializer.initializeScoreButton();
-    moveButtonInitializer.initializeMoveButton();
 });
 
 const startButtonInitializer = {
@@ -16,6 +15,7 @@ const startButtonInitializer = {
                 if (httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200) {
                     let chessBoard = JSON.parse(httpRequest.responseText);
                     boardDrawer.drawBoard(chessBoard);
+                    moveButtonInitializer.initializeMoveButton(chessBoard);
                 } else {
                     if (httpRequest.readyState === XMLHttpRequest.DONE) {
                         alert('요청을 처리할 수 없습니다');
@@ -72,25 +72,36 @@ const scoreButtonInitializer = {
 }
 
 const moveButtonInitializer = {
-    initializeMoveButton: function() {
+    initializeMoveButton: function(chessBoard) {
         let moveButton = document.getElementById('move-button');
+        let turn = chessBoard.turn;
 
         moveButton.addEventListener("click", async () => {
             let httpRequest = new XMLHttpRequest();
             let commands = document.getElementById("move-input").value;
 
-            httpRequest.onreadystatechange = function() {
-                if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                    let chessBoard = JSON.parse(httpRequest.responseText);
-                    console.log(chessBoard);
-                    boardDrawer.drawBoard(chessBoard);
+            if (this.validateTurn(commands, turn)) {
+                httpRequest.onreadystatechange = function() {
+                    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                        let chessBoard = JSON.parse(httpRequest.responseText);
+                        boardDrawer.drawBoard(chessBoard);
+                    }
                 }
-            }
 
-            httpRequest.open("post", "/move/1");
-            httpRequest.setRequestHeader("Content-Type", "application/json");
-            httpRequest.send(commands);
+                httpRequest.open("post", "/move/1");
+                httpRequest.setRequestHeader("Content-Type", "application/json");
+                httpRequest.send(commands);
+            }
         })
+    },
+
+    validateTurn: function(commands, turn) {
+        let from = commands.split(" ")[0];
+        let piece = document.getElementById(from);
+        if (piece.classList[0].toLowerCase() == turn.toLowerCase()) {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -100,7 +111,6 @@ const boardDrawer = {
         let board = chessBoard.board;
         let positions = Object.keys(board);
         positions.sort();
-        console.log(positions);
         for (let i = 0; i < positions.length; i++) {
             let piece = board[positions[i]][0].toLowerCase();
             let color = board[positions[i]][1].toLowerCase();

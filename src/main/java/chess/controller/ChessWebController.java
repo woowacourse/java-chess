@@ -26,8 +26,7 @@ public class ChessWebController {
 
     public void run() {
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "chess.html");
+            return render(new HashMap<>(), "chess.html");
         });
 
         get("/start/:gamenumber", (req, res) -> {
@@ -44,10 +43,6 @@ public class ChessWebController {
         get("/status/:gamenumber", (req, res) -> {
             ScoreDto scoreDto = chessService.getScore();
             String score = objectMapper.writeValueAsString(scoreDto);
-            for (int i = 0; i < 30; i++) {
-                System.out.println("################");
-            }
-            System.out.println(score);
             return score;
         });
 
