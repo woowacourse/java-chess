@@ -31,4 +31,8 @@ public class ChessGameService {
     public void move(Position source, Position target) {
         chessGame.move(source, target);
     }
+
+    public void delete() {
+        boardDao.deleteById(gameId);
+    }
 }

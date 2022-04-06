@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,7 @@ public class ChessGameServiceTest {
 
     @Test
     @DisplayName("체스말을 이동시킨다.")
-    void init() {
+    void move() {
         //given
         Board board = new Board(new DefaultArrangement());
         Position source = Position.of("a2");
@@ -67,6 +66,18 @@ public class ChessGameServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("체스판 데이터를 삭제한다.")
+    void delete() {
+        //when
+        chessGameService.save();
+        chessGameService.delete();
+        Map<String, String> actual = chessGameService.find();
+
+        //then
+        assertThat(actual).isNull();
+    }
+
     private static class fakeBoardDao implements BoardDao {
         private final Map<Integer, Map<String, String>> table;
 
@@ -82,6 +93,11 @@ public class ChessGameServiceTest {
         @Override
         public Map<String, String> findById(int gameId) {
             return table.get(gameId);
+        }
+
+        @Override
+        public void deleteById(int gameId) {
+            table.remove(gameId);
         }
     }
 }
