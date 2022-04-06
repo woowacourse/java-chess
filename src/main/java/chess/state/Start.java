@@ -9,7 +9,6 @@ public final class Start extends Running {
 
     public Start(final Board board) {
         super(board);
-        initBoard();
     }
 
     public static State initState(final String command) {
@@ -28,11 +27,5 @@ public final class Start extends Running {
             return new Turn(command, board, Player.WHITE);
         }
         throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
-    }
-
-    private void initBoard() {
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 }

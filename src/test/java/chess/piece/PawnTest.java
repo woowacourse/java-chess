@@ -22,9 +22,6 @@ class PawnTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 
     @DisplayName("한 칸 움직일 수 있으면 true를 반환한다.")

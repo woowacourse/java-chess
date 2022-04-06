@@ -21,9 +21,6 @@ class KnightTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
