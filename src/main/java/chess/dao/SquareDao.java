@@ -40,17 +40,6 @@ public class SquareDao {
         }
     }
 
-    public void delete() {
-        final Connection connection = getConnection();
-        final String sql = "delete from square";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Map<String, String> find() {
         final Map<String, String> squares = new HashMap();
         final Connection connection = getConnection();
@@ -69,13 +58,25 @@ public class SquareDao {
         return squares;
     }
 
-    public void update(String source, String target) {
+    public void delete() {
         final Connection connection = getConnection();
-        final String sql = "update square set position = ? where position ?";
+        final String sql = "delete from square";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, target);
-            statement.setString(2, source);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(String position, Piece piece) {
+        final Connection connection = getConnection();
+        final String sql = "update square set team = ?, symbol = ? where position = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, piece.getTeam());
+            statement.setString(2, piece.getSymbol());
+            statement.setString(3, position);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
