@@ -19,7 +19,6 @@ public class DBConnector {
     }
 
     private static void setConnection() {
-        connection = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
