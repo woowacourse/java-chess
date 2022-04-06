@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import spark.Request;
 
@@ -61,7 +60,7 @@ public class WebGameController {
         Map<String, Object> model = board.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().toString(),
-                        Entry::getValue
+                        entry -> PieceDto.of(entry.getValue())
                 ));
         model.put(KEY_STARTED, true);
         model.put(KEY_READY, false);

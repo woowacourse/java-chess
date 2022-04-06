@@ -1,5 +1,8 @@
 package chess.dto;
 
+import chess.domain.Camp;
+import chess.domain.piece.Piece;
+
 public class PieceDto {
     private final String type;
     private final String camp;
@@ -14,6 +17,10 @@ public class PieceDto {
             return new PieceDto(type, "white");
         }
         return new PieceDto(type, "black");
+    }
+
+    public static PieceDto of(Piece piece) {
+        return of(piece.getType().toString(), piece.isCamp(Camp.WHITE));
     }
 
     public String getType() {

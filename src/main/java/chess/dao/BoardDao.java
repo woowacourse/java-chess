@@ -36,7 +36,7 @@ public class BoardDao {
 
     private void savePiece(PreparedStatement statement, Entry<Position, Piece> entry) throws SQLException {
         Piece piece = entry.getValue();
-        statement.setString(1, piece.getType());
+        statement.setString(1, piece.getType().toString());
         statement.setBoolean(2, piece.isCamp(Camp.WHITE));
         statement.setString(3, entry.getKey().toString());
         statement.execute();
