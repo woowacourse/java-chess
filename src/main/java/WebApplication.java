@@ -1,4 +1,4 @@
-import chess.web.ChessController;
+import chess.controller.ChessController;
 import org.apache.log4j.BasicConfigurator;
 
 import static spark.Spark.*;

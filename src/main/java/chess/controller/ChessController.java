@@ -1,4 +1,4 @@
-package chess.web;
+package chess.controller;
 
 import chess.dto.MoveDTO;
 import chess.service.ChessService;

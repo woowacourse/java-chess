@@ -73,7 +73,6 @@ public class ChessService {
     private void updateMove(int roomId, String source, String destination) {
         Map<Position, Piece> board = gameState.getBoard();
         Piece sourcePiece = board.get(Position.from(source));
-
         gameState = gameState.move(source, destination);
 
         boardDao.updatePosition(source, Blank.SYMBOL);
