@@ -1,9 +1,12 @@
 package chess.service;
 
+import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
 import chess.domain.Position;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,19 +16,45 @@ public class ChessService {
     private static final String TERMINATE_MESSAGE = "게임이 종료되었습니다.";
 
     private ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
+    private final BoardDao boardDao;
 
     public ChessService() {
         chessGame = new Ready();
+        chessGameDao = new ChessGameDao();
+        chessGameDao.save(chessGame);
+        boardDao = new BoardDao();
+        saveEmpty();
+    }
+
+    public void saveEmpty() {
+        int gameId = chessGameDao.findRecentGame();
+        for (String position : Position.values()) {
+            boardDao.save(position, gameId);
+        }
     }
 
     public Map<String, Object> start() {
         chessGame = chessGame.initBoard();
-        return chessGame.getBoard().toMap();
+        Map<String, Object> board = chessGame.getBoard().toMap();
+        int gameId = chessGameDao.findRecentGame();
+        for (String position : board.keySet()) {
+            Piece piece = (Piece) board.get(position);
+            boardDao.update(position, piece.getPiece(), piece.getColor().toString(), gameId);
+        }
+        chessGameDao.update(gameId, chessGame);
+        return board;
     }
 
     public Map<String, Object> move(String from, String to) {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
-        return chessGame.getBoard().toMap();
+        Map<String, Object> board = chessGame.getBoard().toMap();
+        int gameId = chessGameDao.findRecentGame();
+        boardDao.update(from, null, null, gameId);
+        Piece piece = (Piece) board.get(to);
+        boardDao.update(to, piece.getPiece(), piece.getColor().toString(), gameId);
+        chessGameDao.update(gameId, chessGame);
+        return board;
     }
 
     public Map<String, Double> showStatus() {
@@ -37,8 +66,9 @@ public class ChessService {
 
     public Map<String, String> terminate() {
         Map<String, String> terminateMessage = new HashMap<>();
-        chessGame.end();
-        chessGame = new Ready();
+        chessGame = chessGame.end();
+        int gameId = chessGameDao.findRecentGame();
+        chessGameDao.update(gameId, chessGame);
         terminateMessage.put(TERMINATE_KEY, TERMINATE_MESSAGE);
         return terminateMessage;
     }

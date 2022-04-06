@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Position {
@@ -41,6 +42,10 @@ public final class Position {
 
     public static Position valueOf(final File abscissa, final Rank ordinate) {
         return valueOf(makeKey(abscissa, ordinate));
+    }
+
+    public static List<String> values() {
+        return List.copyOf(CACHE.keySet());
     }
 
     public boolean isSameFile(Position position) {
