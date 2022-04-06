@@ -35,12 +35,16 @@ public class ChessGame {
 
     public void start() {
         final String gameState = pieceDao.getGameState();
-        if (board != null && !gameState.equals(DATABASE_EMPTY_SYMBOL)) {
+        if (isNotFirstConnection(gameState)) {
             throw new IllegalStateException("이미 진행중인 게임이 있습니다.");
         }
         initializeBoard();
         pieceDao.saveAll(board.getPieces());
         pieceDao.saveTurn(board.getTurn().name());
+    }
+
+    private boolean isNotFirstConnection(final String gameState) {
+        return board != null && !gameState.equals(DATABASE_EMPTY_SYMBOL);
     }
 
     public void initializeBoard() {
