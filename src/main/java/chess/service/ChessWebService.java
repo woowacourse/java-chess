@@ -23,31 +23,31 @@ public class ChessWebService {
 
     private static final BoardDao BOARD_DAO = new BoardDao();
     private static final TurnDao TURN_DAO = new TurnDao();
-    private State state;
 
-    private ChessWebService(State state) {
-        this.state = state;
+    public ChessWebService() {
     }
 
-    public static ChessWebService numberOf(int gameNumber) {
+    private State getState(int gameNumber) {
         Color color = TURN_DAO.findByGameNumber(gameNumber);
         if (color == null) {
-            return new ChessWebService(Ready.start(new Board(new HashMap<>())));
+            return Ready.start(new Board(new HashMap<>()));
         }
-        return new ChessWebService(Ready.continueOf(color, BOARD_DAO.findAllByGameNumber(gameNumber)));
+        return Ready.continueOf(color, BOARD_DAO.findAllByGameNumber(gameNumber));
     }
 
-    public Board getBoard() {
+    public Board getBoard(int gameNumber) {
+        State state = getState(gameNumber);
         return state.getBoard();
     }
 
-    public ApiResult getStatus() {
+    public ApiResult getStatus(int gameNumber) {
+        State state = getState(gameNumber);
         Map<Color, Score> score = state.getScore();
         return ApiResult.succeed(new StatusResult(score));
     }
 
     public void initializeState(int gameNumber) {
-        state = Ready.start(BasicChessBoardGenerator.generator());
+        State state = Ready.start(BasicChessBoardGenerator.generator());
 
         deleteAllPiece(gameNumber);
         deleteTurn(gameNumber);
@@ -58,20 +58,21 @@ public class ChessWebService {
     }
 
     public ApiResult movePiece(MoveCommand command) {
+        int gameNumber = command.getGameNumber();
+        State state = getState(gameNumber);
         Position source = Position.valueOf(command.getSource());
         Position destination = Position.valueOf(command.getDestination());
-        int gameNumber = command.getGameNumber();
         try {
             state = state.movePiece(source, destination);
             updateDbPiece(source, destination, gameNumber);
             updateDbTurn(state.getTurn(), gameNumber);
-            return ApiResult.succeed(new MoveResponseDto(command.getSource(), command.getDestination(), isFinished()));
+            return ApiResult.succeed(new MoveResponseDto(command.getSource(), command.getDestination(), isFinished(state)));
         } catch (RuntimeException e) {
             return ApiResult.failed(e.getMessage());
         }
     }
 
-    private boolean isFinished() {
+    private boolean isFinished(State state) {
         return state.isFinished();
     }
 

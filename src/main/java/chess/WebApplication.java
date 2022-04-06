@@ -26,7 +26,7 @@ public class WebApplication {
 
         int MAX_GAME_NUMBER = 3;
         List<ChessWebService> services = IntStream.range(0, MAX_GAME_NUMBER)
-                .mapToObj(ChessWebService::numberOf)
+                .mapToObj(gameNumber -> new ChessWebService())
                 .collect(Collectors.toList());
         Gson gson = new Gson();
 
@@ -42,7 +42,7 @@ public class WebApplication {
 
         get("/room/:gameNumber", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            Map<String, Object> model = services.get(gameNumber).getBoard().toMap();
+            Map<String, Object> model = services.get(gameNumber).getBoard(gameNumber).toMap();
             model.put("gameNumber", gameNumber);
             return render(model, "board.html");
         });
@@ -56,7 +56,7 @@ public class WebApplication {
 
         get("/room/:gameNumber/status", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            ApiResult statusResult = services.get(gameNumber).getStatus();
+            ApiResult statusResult = services.get(gameNumber).getStatus(gameNumber);
             return gson.toJson(statusResult);
         });
 
