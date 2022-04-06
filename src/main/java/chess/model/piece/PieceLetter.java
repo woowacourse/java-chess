@@ -11,7 +11,7 @@ public enum PieceLetter {
     ROOK(Rook.class, "r", "rook"),
     BISHOP(Bishop.class, "b", "bishop"),
     PAWN(Pawn.class, "p", "pawn"),
-    EMPTY(Empty.class, ".", "nothing");
+    EMPTY(Empty.class, ".", "empty");
 
     private final Class<? extends Piece> pieceClass;
     private final String letter;

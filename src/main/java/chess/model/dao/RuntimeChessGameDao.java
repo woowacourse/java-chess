@@ -3,12 +3,10 @@ package chess.model.dao;
 import chess.model.Color;
 import chess.model.board.Square;
 import chess.model.piece.Piece;
-import chess.model.status.End;
 import chess.model.status.GameStatus;
 import chess.model.status.Ready;
 import java.util.HashMap;
 import java.util.Map;
-import jdk.jshell.Snippet.Status;
 
 public class RuntimeChessGameDao {
     private Map<Square, Piece> table = new HashMap<>();
