@@ -2,6 +2,7 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -12,9 +13,22 @@ public class BoardDaoImpl implements BoardDao{
     private static final String PASSWORD = "password";
 
     @Override
-    public void save(int gameId, Map<String, String> StringPieceMapByPiecesByPositions) {
-
+    public void save(int gameId, Map<String, String> boardMap) {
+        Connection connection = getConnection();
+        String sql = "insert into board (game_id, position, piece) values (?, ?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            for (Map.Entry<String, String> entry : boardMap.entrySet()) {
+                statement.setInt(1, gameId);
+                statement.setString(2, entry.getKey());
+                statement.setString(3, entry.getValue());
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public Map<String, String> findById(int gameId) {
@@ -23,7 +37,14 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void deleteById(int gameId) {
-
+        Connection connection = getConnection();
+        String sql = "delete from board where game_id = " + "'" + gameId + "'";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
