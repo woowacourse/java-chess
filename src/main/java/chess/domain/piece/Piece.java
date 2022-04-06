@@ -4,9 +4,30 @@ import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.direction.Direction;
 import chess.domain.piece.movestrategy.MoveStrategy;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
+
+    private static final Map<String, Piece> CACHE = new HashMap<>();
+
+    static {
+        CACHE.put(Team.WHITE.name() + Symbol.PAWN.name(), new Pawn(Symbol.PAWN, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.PAWN.name(), new Pawn(Symbol.PAWN, Team.BLACK));
+        CACHE.put(Team.WHITE.name() + Symbol.KING.name(), new King(Symbol.KING, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.KING.name(), new King(Symbol.KING, Team.BLACK));
+        CACHE.put(Team.WHITE.name() + Symbol.ROOK.name(), new Rook(Symbol.ROOK, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.ROOK.name(), new Rook(Symbol.ROOK, Team.BLACK));
+        CACHE.put(Team.WHITE.name() + Symbol.KNIGHT.name(), new Knight(Symbol.KNIGHT, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.KNIGHT.name(), new Knight(Symbol.KNIGHT, Team.BLACK));
+        CACHE.put(Team.WHITE.name() + Symbol.BISHOP.name(), new Bishop(Symbol.BISHOP, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.BISHOP.name(), new Bishop(Symbol.BISHOP, Team.BLACK));
+        CACHE.put(Team.WHITE.name() + Symbol.QUEEN.name(), new Queen(Symbol.QUEEN, Team.WHITE));
+        CACHE.put(Team.BLACK.name() + Symbol.QUEEN.name(), new Queen(Symbol.QUEEN, Team.BLACK));
+        CACHE.put(Team.NONE.name() + Symbol.EMPTY.name(), new Empty(Symbol.EMPTY, Team.NONE));
+    }
 
     protected final Symbol symbol;
     protected final Team team;
@@ -14,6 +35,10 @@ public abstract class Piece {
     protected Piece(final Symbol symbol, final Team team) {
         this.symbol = symbol;
         this.team = team;
+    }
+
+    public static Piece of(String symbol, String team) {
+        return CACHE.get(team + symbol);
     }
 
     public boolean isMovable(Board board, Coordinate from, Coordinate to) {
@@ -24,7 +49,15 @@ public abstract class Piece {
         return moveStrategy().isMovable(board, from, to);
     }
 
-    public abstract boolean hasNotDirection(Direction direction);
+    public boolean hasDirection(Direction direction) {
+        return direction().contains(direction);
+    }
+
+    public boolean hasNotDirection(Direction direction) {
+        return !hasDirection(direction);
+    }
+
+    public abstract List<Direction> direction();
 
     public abstract MoveStrategy moveStrategy();
 

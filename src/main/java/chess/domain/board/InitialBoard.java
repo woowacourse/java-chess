@@ -1,38 +1,41 @@
 package chess.domain.board;
 
+
+import static chess.domain.piece.Symbol.BISHOP;
+import static chess.domain.piece.Symbol.EMPTY;
+import static chess.domain.piece.Symbol.KING;
+import static chess.domain.piece.Symbol.KNIGHT;
+import static chess.domain.piece.Symbol.PAWN;
+import static chess.domain.piece.Symbol.QUEEN;
+import static chess.domain.piece.Symbol.ROOK;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.NONE;
+import static chess.domain.piece.Team.WHITE;
+
 import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Symbol;
-import chess.domain.piece.Team;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public enum InitialBoard {
-    BLACK_BISHOP(Arrays.asList(Column.C, Column.F), Arrays.asList(Row.EIGHT), new Bishop(Symbol.BISHOP, Team.BLACK)),
-    WHITE_BISHOP(Arrays.asList(Column.C, Column.F), Arrays.asList(Row.ONE), new Bishop(Symbol.BISHOP, Team.WHITE)),
-    BLACK_KING(Arrays.asList(Column.E), Arrays.asList(Row.EIGHT), new King(Symbol.KING, Team.BLACK)),
-    WHITE_KING(Arrays.asList(Column.E), Arrays.asList(Row.ONE), new King(Symbol.KING, Team.WHITE)),
-    BLACK_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.EIGHT), new Knight(Symbol.KNIGHT, Team.BLACK)),
-    WHITE_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.ONE), new Knight(Symbol.KNIGHT, Team.WHITE)),
-    BLACK_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.SEVEN), new Pawn(Symbol.PAWN, Team.BLACK)),
-    WHITE_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.TWO), new Pawn(Symbol.PAWN, Team.WHITE)),
-    BLACK_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.EIGHT), new Queen(Symbol.QUEEN, Team.BLACK)),
-    WHITE_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.ONE), new Queen(Symbol.QUEEN, Team.WHITE)),
-    BLACK_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.EIGHT), new Rook(Symbol.ROOK, Team.BLACK)),
-    WHITE_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.ONE), new Rook(Symbol.ROOK, Team.WHITE)),
-    EMPTY(Arrays.asList(Column.values()),
-            Arrays.asList(Row.THREE, Row.FOUR, Row.FIVE, Row.SIX), new Empty(Symbol.EMPTY, Team.NONE));
+    BLACK_BISHOP(Arrays.asList(Column.C, Column.F), Arrays.asList(Row.EIGHT), Piece.of(BISHOP.name(), BLACK.name())),
+    WHITE_BISHOP(Arrays.asList(Column.C, Column.F), Arrays.asList(Row.ONE), Piece.of(BISHOP.name(), WHITE.name())),
+    BLACK_KING(Arrays.asList(Column.E), Arrays.asList(Row.EIGHT), Piece.of(KING.name(), BLACK.name())),
+    WHITE_KING(Arrays.asList(Column.E), Arrays.asList(Row.ONE), Piece.of(KING.name(), WHITE.name())),
+    BLACK_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.EIGHT), Piece.of(KNIGHT.name(), BLACK.name())),
+    WHITE_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.ONE), Piece.of(KNIGHT.name(), WHITE.name())),
+    BLACK_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.SEVEN), Piece.of(PAWN.name(), BLACK.name())),
+    WHITE_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.TWO), Piece.of(PAWN.name(), WHITE.name())),
+    BLACK_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.EIGHT), Piece.of(QUEEN.name(), BLACK.name())),
+    WHITE_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.ONE), Piece.of(QUEEN.name(), WHITE.name())),
+    BLACK_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.EIGHT), Piece.of(ROOK.name(), BLACK.name())),
+    WHITE_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.ONE), Piece.of(ROOK.name(), WHITE.name())),
+    NONE_EMPTY(Arrays.asList(Column.values()),
+            Arrays.asList(Row.THREE, Row.FOUR, Row.FIVE, Row.SIX), Piece.of(EMPTY.name(), NONE.name()));
 
     private final List<Column> columns;
     private final List<Row> rows;

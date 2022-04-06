@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.Team;
@@ -13,7 +12,7 @@ public class Board {
 
     private final Map<Coordinate, Piece> value;
 
-    private Board(Map<Coordinate, Piece> value) {
+    public Board(Map<Coordinate, Piece> value) {
         this.value = value;
     }
 
@@ -44,7 +43,7 @@ public class Board {
 
     private void swapPiece(Coordinate from, Coordinate to) {
         Piece piece = findPiece(from);
-        value.put(from, new Empty(Symbol.EMPTY, Team.NONE));
+        value.put(from, Piece.of(Symbol.EMPTY.name(), Team.NONE.name()));
         value.put(to, piece);
     }
 
