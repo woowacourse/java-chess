@@ -36,20 +36,6 @@ public class BoardDao {
         }
     }
 
-    public void save(String position, int gameId) {
-        Connection connection = getConnection();
-        final String sql = "insert into board (position, game_id) values (?, ?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setInt(2, gameId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public void save(String position, String piece, String color, int gameId) {
         Connection connection = getConnection();
         final String sql = "insert into board (position, piece, color, game_id) values (?, ?, ?, ?)";
