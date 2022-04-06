@@ -15,9 +15,7 @@ public class ChessboardDao {
 
     public void save(ChessGameDto chessGameDto) {
         truncateAll();
-        chessGameDto.getPieces()
-                .forEach(this::addBoard);
-        addGameInfos(chessGameDto.getState(), chessGameDto.getTurn());
+        addAll(chessGameDto);
     }
 
     public boolean isDataExist() {
@@ -67,6 +65,12 @@ public class ChessboardDao {
             e.printStackTrace();
         }
         return pieces;
+    }
+
+    private void addAll(ChessGameDto chessGameDto) {
+        chessGameDto.getPieces()
+                .forEach(this::addBoard);
+        addGameInfos(chessGameDto.getState(), chessGameDto.getTurn());
     }
 
     private void addBoard(PieceDto pieceDto) {
