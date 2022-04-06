@@ -6,26 +6,30 @@ public abstract class Piece {
     protected boolean isFirstTurn;
     private final String signature;
 
-    protected Piece(Position position, String signature) {
+    protected Piece(Position position, boolean first, String signature) {
         this.position = position;
-        this.isFirstTurn = true;
+        this.isFirstTurn = first;
         this.signature = signature;
     }
 
-    public static Piece create(Position position, String name) {
+    protected Piece(Position position, String signature) {
+        this(position, true, signature);
+    }
+
+    public static Piece create(Position position, boolean first, String name) {
         if (name.equals("blank")) {
             return new Blank(position);
         }
         if (name.contains("black")) {
-            return createBlack(position, name);
+            return createBlack(position, first, name);
         }
         if (name.contains("white")) {
-            return createWhite(position, name);
+            return createWhite(position, first, name);
         }
         throw new IllegalArgumentException("생성할 수 없는 기물입니다.");
     }
 
-    private static Piece createBlack(Position position, String name) {
+    private static Piece createBlack(Position position, boolean first, String name) {
         if (name.contains("bishop")) {
             return Bishop.createBlack(position);
         }
@@ -36,7 +40,7 @@ public abstract class Piece {
             return Knight.createBlack(position);
         }
         if (name.contains("pawn")) {
-            return Pawn.createBlack(position);
+            return Pawn.createBlack(position, first);
         }
         if (name.contains("queen")) {
             return Queen.createBlack(position);
@@ -47,7 +51,7 @@ public abstract class Piece {
         throw new IllegalArgumentException("생성할 수 없는 기물입니다.");
     }
 
-    private static Piece createWhite(Position position, String name) {
+    private static Piece createWhite(Position position, boolean first, String name) {
         if (name.contains("bishop")) {
             return Bishop.createWhite(position);
         }
@@ -58,7 +62,7 @@ public abstract class Piece {
             return Knight.createWhite(position);
         }
         if (name.contains("pawn")) {
-            return Pawn.createWhite(position);
+            return Pawn.createWhite(position, first);
         }
         if (name.contains("queen")) {
             return Queen.createWhite(position);
@@ -111,5 +115,9 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public boolean isFirstTurn() {
+        return isFirstTurn;
     }
 }

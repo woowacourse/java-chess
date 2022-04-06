@@ -9,16 +9,24 @@ public class Pawn extends Piece {
     private static final String BLACK_SIGNATURE = "P";
     private static final double SCORE = 1.0;
 
-    private Pawn(Position position, String signature) {
-        super(position, signature);
+    private Pawn(Position position, boolean first, String signature) {
+        super(position, first, signature);
     }
 
     public static Pawn createWhite(Position position) {
-        return new Pawn(position, WHITE_SIGNATURE);
+        return new Pawn(position, true, WHITE_SIGNATURE);
     }
 
     public static Pawn createBlack(Position position) {
-        return new Pawn(position, BLACK_SIGNATURE);
+        return new Pawn(position, true, BLACK_SIGNATURE);
+    }
+
+    public static Pawn createWhite(Position position, boolean first) {
+        return new Pawn(position, first, WHITE_SIGNATURE);
+    }
+
+    public static Pawn createBlack(Position position, boolean first) {
+        return new Pawn(position, first, BLACK_SIGNATURE);
     }
 
     @Override

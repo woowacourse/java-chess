@@ -28,7 +28,7 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        final String sql = "insert into board (position, name) values (?, ?)";
+        final String sql = "insert into board (position, first, name) values (?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final List<Piece> pieces = new ArrayList<>();
@@ -37,7 +37,8 @@ public class BoardDao {
             }
             for (Piece piece : pieces) {
                 statement.setString(1, piece.getPosition().getPosition());
-                statement.setString(2, piece.getName());
+                statement.setBoolean(2, piece.isFirstTurn());
+                statement.setString(3, piece.getName());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -47,7 +48,7 @@ public class BoardDao {
 
     public Board findBoard() {
         final Connection connection = getConnection();
-        final String sql = "select position, name from board";
+        final String sql = "select position, first, name from board";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
@@ -61,7 +62,9 @@ public class BoardDao {
             while (resultSet.next()) {
                 Position position = new Position(resultSet.getString("position"));
                 l.get(position.getY())
-                        .add(position.getX(), Piece.create(position, resultSet.getString("name")));
+                        .add(position.getX(), Piece.create(position,
+                                resultSet.getBoolean("first"),
+                                resultSet.getString("name")));
             }
 
             for (int i = 0; i < 8; i++) {
