@@ -2,15 +2,17 @@ package chess.repository.dao;
 
 import java.util.List;
 
+import chess.domain.ChessGame;
+
 public class ChessGameDao {
 
 	private static final String STATE = "state";
 	private static final String NAME = "name";
 
-	public int insert(String name, String state) {
+	public int insert(ChessGame game) {
 		return ConnectionManager.createQuery("insert into chessGame (name, state) values (? ,?)")
-			.setParameter(1, name)
-			.setParameter(2, state)
+			.setParameter(1, game.getName())
+			.setParameter(2, game.getState().toString())
 			.executeUpdate()
 			.getGeneratedKey();
 	}
@@ -34,10 +36,10 @@ public class ChessGameDao {
 			.getResultList(NAME);
 	}
 
-	public void updateState(String name, String state) {
+	public void updateState(ChessGame game) {
 		ConnectionManager.createQuery("update chessgame set state = ? where name = ?")
-			.setParameter(1, state)
-			.setParameter(2, name)
+			.setParameter(1, game.getState().toString())
+			.setParameter(2, game.getName())
 			.executeUpdate();
 	}
 }

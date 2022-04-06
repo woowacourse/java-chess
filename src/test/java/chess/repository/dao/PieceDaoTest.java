@@ -2,11 +2,15 @@ package chess.repository.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.ChessGame;
+import chess.domain.state.Ready;
 
 class PieceDaoTest {
 
@@ -14,6 +18,7 @@ class PieceDaoTest {
 
 	private final PieceDao pieceDao = new PieceDao();
 	private final ChessGameDao chessGameDao = new ChessGameDao();
+	private final ChessGame game = new ChessGame(TEST_NAME, new Ready(new HashMap<>()));
 
 	@AfterEach
 	void clear() {
@@ -27,7 +32,7 @@ class PieceDaoTest {
 	}
 
 	private int insertChessGame() {
-		int foreignKey = chessGameDao.insert(TEST_NAME, "READY");
+		int foreignKey = chessGameDao.insert(game);
 		Map<String, String> tiles = Map.of("a1", "WHITE_PAWN", "b2", "BLACK_KING");
 		pieceDao.insertAll(tiles, foreignKey);
 		return foreignKey;

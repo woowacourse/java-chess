@@ -23,7 +23,7 @@ public class ChessGameRepository implements GameRepository {
 		GameState state = game.getState();
 		pieceDao.insertAll(
 			BoardToStringConverter.from(state.getBoard()),
-			chessGameDao.insert(game.getName(), state.toString())
+			chessGameDao.insert(game)
 		);
 	}
 
@@ -43,7 +43,7 @@ public class ChessGameRepository implements GameRepository {
 
 	@Override
 	public void updateStateOfGame(ChessGame game) {
-		chessGameDao.updateState(game.getName(), game.getState().toString());
+		chessGameDao.updateState(game);
 	}
 
 	@Override
