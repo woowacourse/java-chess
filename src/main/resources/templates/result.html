@@ -8,11 +8,20 @@
     <title>게임 결과</title>
 </head>
 <body>
-    <div class="chess-header">
-        <button class="btn btn-dark" onclick="location.href ='/'">로비로 이동</button>
+    <div style="display: flex; justify-content: center; text-align: center; padding-top: 25vh;">
+        <div class="card text-center" style="width: 80vw;">
+            <div class="card-header">
+                게임 결과
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">승자: {{winner}}</h5>
+                <p class="card-text">백팀 점수: {{whiteScore}}</p>
+                <p class="card-text">흑팀 점수: {{blackScore}}</p>
+            </div>
+            <div class="card-footer text-muted">
+                <button class="btn btn-dark" onclick="location.href ='/'">로비로 이동</button>
+            </div>
+        </div>
     </div>
-    승자: {{winner}} <br/>
-    백팀 점수: {{whiteScore}} <br/>
-    흑팀 점수: {{blackScore}} <br/>
 </body>
 </html>
