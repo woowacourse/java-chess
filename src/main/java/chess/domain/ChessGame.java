@@ -1,8 +1,5 @@
-package chess.controller;
+package chess.domain;
 
-import chess.dao.BoardDao;
-import chess.dao.PieceDao;
-import chess.domain.Command;
 import chess.domain.board.BoardBuilder;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -12,25 +9,20 @@ import chess.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
 import chess.domain.state.command.State;
-import chess.domain.Team;
 import chess.domain.result.StatusResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ChessController {
+public class ConsoleController {
 
     private State state;
     private Board board;
-    private final BoardDao boardDao;
-    private final PieceDao pieceDao;
 
-    public ChessController() {
+    public ConsoleController() {
         state = new Ready();
         board = new Board(new BoardBuilder());
-        boardDao = new BoardDao();
-        pieceDao = new PieceDao();
     }
 
     public Map<Position, Piece> start() {
@@ -47,7 +39,7 @@ public class ChessController {
 
     public Team end() {
         state = state.execute(Command.END);
-        Team winner = board.getFinalWinner();
+        Team winner = board.getCurrentWinner().getTeam();
         return winner;
     }
 
@@ -92,7 +84,7 @@ public class ChessController {
     public boolean isFinish() { return board.isFinish(); }
 
     public void load() {
-        board = new Board(pieceDao.load(), boardDao.loadState());
+        board = new Board(pieceDao.loadAllPieces(), boardDao.loadState());
         if (board.isFinish()) {
             state = new Finish();
         }
@@ -103,6 +95,6 @@ public class ChessController {
         boardDao.removeAll();
         boardDao.saveState(board.getState());
         pieceDao.removeAll();
-        pieceDao.save(board.getBoard());
+        pieceDao.saveAllPieces(board.getBoard());
     }
 }

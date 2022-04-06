@@ -1,47 +1,83 @@
 package chess.dao;
 
-import chess.domain.state.turn.State;
-import chess.domain.state.turn.TurnMapper;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceMapper;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BoardDao {
+public class PieceDao {
 
-    public State loadState() {
-        final String sql = "select state from board";
+    public Map<Position, Piece> loadAllPieces() {
+        final String sql = "select position, name from board";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery();){
-            String state = getRawState(resultSet);
-            return TurnMapper.getStateByName(state);
+            Map<Position, Piece> pieceByPosition = new HashMap<>();
+            placePieceByPosition(resultSet, pieceByPosition);
+            return pieceByPosition;
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
     }
 
-    private String getRawState(ResultSet resultSet) throws SQLException {
-        if (!resultSet.next()) {
-            throw new IllegalStateException("[ERROR] 저장된 정보가 없습니다.");
+    private void placePieceByPosition(ResultSet resultSet, Map<Position, Piece> pieceByPosition) throws SQLException {
+        while (resultSet.next()) {
+            String position = resultSet.getString(1);
+            String rawPiece = resultSet.getString(2);
+
+            pieceByPosition.put(Position.of(position),
+                    PieceMapper.convert(rawPiece));
         }
-        String state = resultSet.getString(1);
-        return state;
     }
 
-    public void saveState(State state) {
-        final String sql = "insert into board(state) values (?)";
+    public void saveAllPieces(Map<Position, Piece> pieces) {
+        for (Map.Entry<Position, Piece> piece : pieces.entrySet()) {
+            saveEachPiece(piece);
+        }
+    }
+
+    public void removeAll() {
+        final String deleteSql = "delete from board";
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);){
-            preparedStatement.setString(1, state.toString());
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteSql);){
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
     }
 
-    public void removeAll() {
-        final String sql = "delete from board";
+    private void saveEachPiece(Map.Entry<Position, Piece> piece) {
+        final String insertSql = "insert into board(position, name) values (?, ?)";
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);) {
+            preparedStatement.setString(1, piece.getKey().toString());
+            preparedStatement.setString(2, piece.getValue().getName());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    public boolean isExist() {
+        final String sql = "select * from board limit 1";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery();) {
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    public void updatePiece(Position position, Piece piece) {
+        final String sql = "update board set piece=? where position=?";
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            preparedStatement.setString(1, position.toString());
+            preparedStatement.setString(2, piece.toString());
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
