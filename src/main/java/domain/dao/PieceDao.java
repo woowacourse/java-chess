@@ -70,4 +70,17 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void delete(String gameName) {
+        final Connection connection = getConnection();
+        final String sql = "delete from piece where game_name = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, gameName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

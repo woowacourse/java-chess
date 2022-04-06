@@ -61,11 +61,11 @@ public class ChessGameDao {
                 String player = resultSet.getString("player");
                 return new ChessGameDto(findName, player);
             }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<String> findAllName() {
@@ -84,5 +84,16 @@ public class ChessGameDao {
             throw new RuntimeException(e);
         }
     }
-
+    public void delete(String gameName) {
+        final Connection connection = getConnection();
+        final String sql = "delete from game where name = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, gameName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

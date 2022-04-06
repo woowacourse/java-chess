@@ -30,11 +30,13 @@
 ### 체스게임 저장
 - 체스 게임 저장 방식
     1. Web, `save` 버튼 클릭
-    2. 현재까지의 `ChessGame` 정보를 저장
+       - Game의 이름을 입력 
+    2. 저장하고자 하는 이름에 데이터가 있을 경우 기존 데이터 삭제
+    3. 현재까지의 `ChessGame` 정보를 저장
         - 필요 데이터
             1. Game ID
             2. 현재 게임의 순서 정보
-    3. `ChessGame`의 Game ID 정보에 따른 `Piece` 정보 저장
+    4. `ChessGame`의 Game ID 정보에 따른 `Piece` 정보 저장
         - 필요 데이터
             1. 저장된 Game ID (그러기 위해서 ChessGame 저장 시 Game ID 정보 필요)
             2. 해당 `Piece`가 위치한 위치 정보

@@ -33,7 +33,11 @@ public class WebApplication {
             Map<String, Object> model = webChessController.modelBoard();
             return render(model, "chess.html");
         });
-
+        get("/play/:gameName", (req, res) -> {
+            Map<String, Object> model = webChessController.modelBoard();
+            model.put("gameName", req.params(":gameName"));
+            return render(model, "chess.html");
+        });
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             webChessController.start();
@@ -67,7 +71,11 @@ public class WebApplication {
 
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            webChessController.save(req.queryParams("gameName"));
+            String gameName = req.queryParams("gameName");
+            if (webChessController.findByGameName(gameName) != null) {
+                webChessController.delete(gameName);
+            }
+            webChessController.save(gameName);
             res.redirect("/play");
             return null;
         });
@@ -75,7 +83,7 @@ public class WebApplication {
         post("/load", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             webChessController.load(req.queryParams("gameName"));
-            res.redirect("/play");
+            res.redirect("/play/" + req.queryParams("gameName"));
             return null;
         });
     }

@@ -75,8 +75,6 @@ public class WebChessController {
     }
 
     public void load(String gameName) {
-        System.out.println("Load 명령어 진입");
-        System.out.println("gameName : "+ gameName);
         ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
         List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
         System.out.println("가지고온 PieceList 사이즈 " +pieceDtoList.size());
@@ -103,5 +101,14 @@ public class WebChessController {
 
     public List<String> findAllGameName() {
         return chessGameDao.findAllName();
+    }
+
+    public ChessGameDto findByGameName(String gameName) {
+        return chessGameDao.findByName(gameName);
+    }
+
+    public void delete(String gameName) {
+        pieceDao.delete(gameName);
+        chessGameDao.delete(gameName);
     }
 }
