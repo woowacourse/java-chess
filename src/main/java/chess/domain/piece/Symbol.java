@@ -1,13 +1,16 @@
 package console.view;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import java.util.Arrays;
+import java.util.Map;
 
 public enum Symbol {
 
@@ -32,5 +35,13 @@ public enum Symbol {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당 유형의 기물은 존재하지 않습니다."))
             .value;
+    }
+
+    public static String makePieceName(Position position, Map<Position, Piece> board) {
+        Piece piece = board.get(position);
+        if (piece.isSameColor(Color.BLACK)) {
+            return "B" + Symbol.findBySymbol(piece.getClass());
+        }
+        return "W" + Symbol.findBySymbol(piece.getClass());
     }
 }
