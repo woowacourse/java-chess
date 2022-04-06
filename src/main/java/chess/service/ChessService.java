@@ -96,6 +96,16 @@ public class ChessService {
         return terminateMessage;
     }
 
+    public Map<String, String> complete(String message) {
+        Map<String, String> winningMessage = new HashMap<>();
+        winningMessage.put("complete", String.format(message, chessGame.judgeWinner().name()));
+        return winningMessage;
+    }
+
+    public boolean isComplete() {
+        return chessGame.isFinish() && !chessGame.isTerminate();
+    }
+
     public Map<String, Object> showBoard() {
         return chessGame.getBoard().toMap();
     }

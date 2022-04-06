@@ -13,6 +13,7 @@ public class ChessWebController {
 
     private static final String TERMINATE_MESSAGE = "게임이 종료되었습니다.";
     private static final String TEMPLATE_PATH = "chess.html";
+    private static final String WINNING_MESSAGE = "%s가 이겼습니다!!";
 
     private final ChessService chessService;
 
@@ -45,11 +46,21 @@ public class ChessWebController {
     private void renderMove() {
         post("/move", (req, res) -> {
             try {
-                return render(chessService.move(req.queryParams("from"), req.queryParams("to")));
+                Map<String, Object> model = chessService.move(req.queryParams("from"), req.queryParams("to"));
+                model.putAll(renderWinner());
+                return render(model);
             } catch (IllegalStateException | IllegalArgumentException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
         });
+    }
+
+    private Map<String, Object> renderWinner() {
+        Map<String, Object> winningMessage = new HashMap<>();
+        if (chessService.isComplete()) {
+            winningMessage.putAll(chessService.complete(WINNING_MESSAGE));
+        }
+        return winningMessage;
     }
 
     private void renderStatus() {
