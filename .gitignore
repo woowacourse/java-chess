@@ -31,6 +31,8 @@ out/
 ### VS Code ###
 .vscode/
 
-docker/db/mysql/data
+### Docker ###
+docker/db/mysql/data/
 docker/db/mysql/init/*
-docker/db/mysql/init/init.sql
+!docker/db/mysql/init/init.sql
+
