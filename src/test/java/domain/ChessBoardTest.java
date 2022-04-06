@@ -324,7 +324,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부) ")
+    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부)")
     void checkScoreDraw() {
         CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
         customBoardGenerator.add(A1, new Pawn(WHITE));
