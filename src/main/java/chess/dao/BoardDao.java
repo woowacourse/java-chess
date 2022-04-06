@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.piece.Piece;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,6 +45,19 @@ public class BoardDao {
         }
     }
 
+    public void delete(String position, int id) {
+        Connection connection = getConnection();
+        final String sql = "delete from board  where game_id = ? and position = ? ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.setString(2, position);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update(String position, String piece, String color, int id) {
         Connection connection = getConnection();
         final String sql = "update board set piece = ?, color = ? where game_id = ? and position = ? ";
@@ -57,5 +71,6 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }
