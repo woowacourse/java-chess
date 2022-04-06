@@ -99,3 +99,9 @@
 
 ### 게임 끝
 - [x] status 버튼이 나오고, 버튼을 누르면 결과를 출력한다.
+
+
+## 5단계 - db 연동
+### 필수 요구사항
+- [ ] board table
+  - board id/ position/ piece

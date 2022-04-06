@@ -5,12 +5,14 @@ import chess.model.GameResult;
 import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
+import chess.model.dao.BoardDao;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
 import chess.model.position.Position;
 
 public class ChessService {
     private ChessGame chessGame;
+    private BoardDao boardDao;
     private Turn turn;
 
     public WebBoardDto start() {

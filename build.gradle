@@ -15,6 +15,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     implementation 'com.google.code.gson:gson:2.8.5'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 }
 
 java {
