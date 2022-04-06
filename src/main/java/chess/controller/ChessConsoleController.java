@@ -1,19 +1,18 @@
 package chess.controller;
 
 import chess.dto.BoardDto;
-import chess.dto.MoveDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessController {
+public class ChessConsoleController {
 
     private static final String REGEX = " ";
     private final OutputView outputView = OutputView.getInstance();
     private final ChessGame chessGame;
 
 
-    public ChessController() {
+    public ChessConsoleController() {
         chessGame = new ChessGame();
     }
 
