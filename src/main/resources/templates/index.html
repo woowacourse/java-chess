@@ -55,9 +55,9 @@
             document.getElementById("roomNameInput").value = "";
             return;
         }
-        fetch(`/rooms/${roomName}`, {method: "POST"});
-        fetch(`/rooms/${roomName}/pieces`, {method: "POST"});
-        window.location.href = `/rooms/${roomName}`;
+        fetch(`/rooms/${roomName}`, {method: "POST"})
+            .then(it => fetch(`/rooms/${roomName}/pieces`, {method: "POST"}))
+            .then(it => window.location.href = `/rooms/${roomName}`)
     }
 </script>
 
