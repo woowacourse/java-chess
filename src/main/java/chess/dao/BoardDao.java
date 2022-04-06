@@ -1,13 +1,11 @@
 package chess.dao;
 
 import chess.domain.board.Board;
-import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
-import chess.domain.boardstrategy.InjectBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
+import chess.dto.BoardDto;
 import chess.dto.ChessGameDto;
 import chess.dto.PieceDto;
 import java.sql.Connection;
@@ -15,9 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -46,20 +42,23 @@ public class BoardDao {
     }
 
     public void create(final ChessGameDto chessGameDto) {
-        final Connection connection = getConnection();
-        if (checkInDB(chessGameDto)) {
+        if (findTurnByName(chessGameDto.getName()) != null) {
             return;
         }
-        try {
-            final String board_sql = "INSERT into board (name, turn) values (?, ?);";
-            PreparedStatement board_statement = connection.prepareStatement(board_sql);
-            board_statement.setString(1, chessGameDto.getName());
-            board_statement.setString(2, chessGameDto.getChessGame().getTurn().name());
-            board_statement.executeUpdate();
+        try (Connection connection = getConnection()) {
+            createBoard(chessGameDto, connection);
             createSquares(chessGameDto, connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createBoard(ChessGameDto chessGameDto, Connection connection) throws SQLException {
+        final String board_sql = "INSERT into board (name, turn) values (?, ?);";
+        PreparedStatement board_statement = connection.prepareStatement(board_sql);
+        board_statement.setString(1, chessGameDto.getName());
+        board_statement.setString(2, chessGameDto.getChessGame().getTurn().name());
+        board_statement.executeUpdate();
     }
 
     private void createSquares(ChessGameDto chessGameDto, Connection connection) throws SQLException {
@@ -73,52 +72,37 @@ public class BoardDao {
         }
     }
 
-    private boolean checkInDB(ChessGameDto chessGameDto) {
-        if (findTurnByName(chessGameDto.getName()) != null) {
-            System.out.println("이미 해당 이름의 정보가 있습니다.");
-            return true;
-        }
-        return false;
-    }
-
     public ChessGameDto findByName(String name) {
         Team turn = findTurnByName(name);
         Map<Position, Piece> squares = findSquaresByName(name);
-        return new ChessGameDto(name,new ChessGame(turn, new Board(squares)));
+        return new ChessGameDto(name, new ChessGame(turn, new Board(squares)));
     }
 
     private Team findTurnByName(String name) {
-        final Connection connection = getConnection();
-        final String sql = "select * from board where name = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return Team.valueOf(resultSet.getString("turn"));
+        try (Connection connection = getConnection()) {
+            return getTeam(name, connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private Map<Position, Piece> findSquaresByName(String name){
+    private Team getTeam(String name, Connection connection) throws SQLException {
+        final String sql = "select * from board where name = ?";
+        final PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, name);
+        final ResultSet resultSet = statement.executeQuery();
+        if (!resultSet.next()) {
+            return null;
+        }
+        return Team.valueOf(resultSet.getString("turn"));
+    }
+
+    private Map<Position, Piece> findSquaresByName(String name) {
         Map<Position, Piece> squares = new HashMap<>();
-        final Connection connection = getConnection();
-        final String sql = "select piece from squares where board_name = ? AND position = ?";
-        try {
-            for (Position position : getAblePositions()) {
-                final PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, name);
-                statement.setString(2, position.toString());
-                final ResultSet resultSet = statement.executeQuery();
-                if (!resultSet.next()) {
-                    return null;
-                }
-                String pieceStr = resultSet.getString("piece");
-                squares.put(position, PieceDto.getPiece(pieceStr));
+        try (Connection connection = getConnection()) {
+            if (addToSquares(name, squares, connection)) {
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,14 +110,20 @@ public class BoardDao {
         return squares;
     }
 
-    private List<Position> getAblePositions() {
-        List<Position> positions = new ArrayList<>();
-        for (Column column : Column.values()) {
-            for (Rank rank : Rank.values()) {
-                positions.add(new Position(column, rank));
+    private boolean addToSquares(String name, Map<Position, Piece> squares, Connection connection) throws SQLException {
+        final String sql = "select piece from squares where board_name = ? AND position = ?";
+        for (Position position : BoardDto.getAblePositions()) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, position.toString());
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return true;
             }
+            String pieceStr = resultSet.getString("piece");
+            squares.put(position, PieceDto.getPiece(pieceStr));
         }
-        return positions;
+        return false;
     }
 
     public void save(final ChessGameDto chessGameDto) {
@@ -142,8 +132,7 @@ public class BoardDao {
     }
 
     private void saveBoard(final ChessGameDto chessGameDto) {
-        try {
-            final Connection connection = getConnection();
+        try (Connection connection = getConnection()) {
             final String sql = "update board set turn = ? where name = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getChessGame().getTurn().name());
@@ -155,10 +144,9 @@ public class BoardDao {
     }
 
     private void saveSquares(ChessGameDto chessGameDto) {
-        try {
-            final Connection connection = getConnection();
+        try (Connection connection = getConnection()) {
             final String sql = "update squares set piece = ? where board_name = ? AND position = ?";
-            for (Position position : getAblePositions()) {
+            for (Position position : BoardDto.getAblePositions()) {
                 final PreparedStatement statement = connection.prepareStatement(sql);
                 Piece piece = chessGameDto.getSquares().get(position);
                 statement.setString(1, piece.getName().getValue(piece.getTeam()));
@@ -177,9 +165,8 @@ public class BoardDao {
     }
 
     private void deleteBoard(final String name) {
-        final Connection connection = getConnection();
-        final String sql = "DELETE FROM board WHERE name = ?";
-        try {
+        try (Connection connection = getConnection()) {
+            final String sql = "DELETE FROM board WHERE name = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.executeUpdate();
@@ -189,9 +176,8 @@ public class BoardDao {
     }
 
     private void deleteSquares(String name) {
-        final Connection connection = getConnection();
-        final String sql = "DELETE FROM squares WHERE board_name = ?";
-        try {
+        try (Connection connection = getConnection()) {
+            final String sql = "DELETE FROM squares WHERE board_name = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.executeUpdate();
