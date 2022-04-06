@@ -36,4 +36,9 @@ public class PieceDto {
     public int hashCode() {
         return Objects.hash(team, name);
     }
+
+    @Override
+    public String toString() {
+        return team + ", " + name;
+    }
 }

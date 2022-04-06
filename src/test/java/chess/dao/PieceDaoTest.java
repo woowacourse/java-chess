@@ -52,17 +52,29 @@ class PieceDaoTest {
     }
 
     @Test
-    @DisplayName("위치 값을 받아 DB에서 해당 위치 값을 키로 가지는 데이터를 삭제한다.")
+    @DisplayName("위치 값과 기물을 받아, 해당 위치 값 데이터를 기물 정보로 업데이트 시킨다.")
     void removeByPosition() {
         //given
         pieceDao.save("a2", new Pawn(BLACK));
-        pieceDao.save("a3", new Knight(BLACK));
-        pieceDao.removeByPosition("a2");
+        pieceDao.update("a2", new Knight(WHITE));
         //when
         final Map<String, PieceDto> actual = pieceDao.findAll();
         //then
-        assertThat(actual).contains(entry("a3", new PieceDto("BLACK", "Knight")))
-                .doesNotContain(entry("a2", new PieceDto("BLACK", "Pawn")));
+        assertThat(actual).contains(entry("a2", new PieceDto("WHITE", "Knight")));
+    }
+
+    @Test
+    @DisplayName("position에 해당 하는 기물 정보를 업데이트한다.")
+    void update() {
+        //given
+        final Piece piece = new Pawn(BLACK);
+        pieceDao.save("a2", piece);
+        pieceDao.save("a3", new Knight(WHITE));
+        pieceDao.update("a3", piece);
+        //when
+        final PieceDto actual = pieceDao.findAll().get("a3");
+        //then
+        assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
     }
 
     @AfterEach

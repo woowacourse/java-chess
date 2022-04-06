@@ -25,9 +25,8 @@ public class ChessGame {
     public void move(final String sourcePosition, final String targetPosition) {
         checkPlaying();
         board = board.movePiece(Position.from(sourcePosition), Position.from(targetPosition));
+        pieceDao.update(targetPosition, board.getPieces().get(Position.from(targetPosition)));
         pieceDao.removeByPosition(sourcePosition);
-        pieceDao.removeByPosition(targetPosition);
-        pieceDao.save(targetPosition, board.getPieces().get(Position.from(targetPosition)));
     }
 
     public Map<String, Object> getAllPiecesByPosition() {

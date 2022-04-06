@@ -69,8 +69,7 @@ class ChessGameTest {
         //when
         final Map<String, Object> actual = chessGame.getAllPiecesByPosition();
         //then
-        assertThat(actual).contains(entry("a4", new PieceDto("WHITE", "Pawn")))
-                .doesNotContain(entry("a2", new PieceDto("WHITE", "Pawn")));
+        assertThat(actual).contains(entry("a4", new PieceDto("WHITE", "Pawn")));
     }
 
     @Test

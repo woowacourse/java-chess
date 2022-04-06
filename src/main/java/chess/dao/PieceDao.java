@@ -98,6 +98,24 @@ public class PieceDao {
         }
     }
 
+    public void update(final String position, final Piece piece) {
+        final Connection connection = getConnection();
+        final String sql = "insert into piece (position, team, name) values (?, ?, ?) "
+                + "on duplicate key update team = (?), name = (?)";
+
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, position);
+            statement.setString(2, piece.getTeam());
+            statement.setString(3, piece.getName());
+            statement.setString(4, piece.getTeam());
+            statement.setString(5, piece.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void removeAll() {
         final Connection connection = getConnection();
         final String sql = "TRUNCATE piece";
