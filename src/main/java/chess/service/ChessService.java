@@ -5,20 +5,28 @@ import chess.model.GameResult;
 import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
-import chess.model.dao.BoardDao;
+import chess.model.dao.PieceDao;
+import chess.model.dao.TurnDao;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
 import chess.model.position.Position;
 
 public class ChessService {
     private ChessGame chessGame;
-    private BoardDao boardDao;
+    private final PieceDao pieceDao;
+    private final TurnDao turnDao;
     private Turn turn;
+
+    public ChessService() {
+        this.pieceDao = new PieceDao();
+        this.turnDao = new TurnDao();
+    }
 
     public WebBoardDto start() {
         Board board = BoardFactory.create();
+        pieceDao.init(board);
+        turnDao.init();
         chessGame = new ChessGame(board);
-        turn = Turn.init();
 
         return WebBoardDto.from(board);
     }
@@ -26,6 +34,7 @@ public class ChessService {
     public WebBoardDto move(MoveDto moveDto) {
         Position source = Position.from(moveDto.getSource());
         Position target = Position.from(moveDto.getTarget());
+        Turn turn = Turn.from(turnDao.findOne());
         try {
             chessGame.move(source, target, turn);
         } catch(Exception e) {

@@ -14,6 +14,16 @@ public class Turn {
         return TURN_WHITE;
     }
 
+    public static Turn from(String team) {
+        if ("black".equalsIgnoreCase(team)) {
+            return TURN_BLACK;
+        }
+        else if ("white".equalsIgnoreCase(team)) {
+            return TURN_WHITE;
+        }
+        return TURN_NONE;
+    }
+
     public boolean isCurrentTeam(Team team) {
         return this.team.equals(team);
     }

@@ -1,7 +1,15 @@
-CREATE TABLE board
+CREATE TABLE pieces
 (
-    board_id int        not null AUTO_INCREMENT,
-    position varchar(4) not null,
-    piece    varchar(10) not null,
-    primary key (board_id)
+    piece_id int         not null AUTO_INCREMENT,
+    position varchar(4)  not null,
+    name    varchar(10) not null,
+    primary key (piece_id),
+    foreign key (board_id) references boards (board_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE turns
+(
+    turn_id  int        not null AUTO_INCREMENT,
+    turn     varchar(5) not null,
+    primary key (turn_id)
 );

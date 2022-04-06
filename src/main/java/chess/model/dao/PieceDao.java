@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardDao {
+public class PieceDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -28,7 +28,7 @@ public class BoardDao {
     }
 
     public void init(Board board) {
-        String query = "insert into board (position, piece) values (?, ?)";
+        String query = "insert into pieces (position, piece) values (?, ?)";
         board.getBoard().forEach(((position, piece) -> {
             try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
                 preparedStatement.setString(1, position.getPosition());
@@ -41,7 +41,7 @@ public class BoardDao {
     }
 
     public Map<Position, Piece> findAll() {
-        String query = "select position, piece from board";
+        String query = "select position, piece from boards";
         Map<Position, Piece> board = new HashMap<>();
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
