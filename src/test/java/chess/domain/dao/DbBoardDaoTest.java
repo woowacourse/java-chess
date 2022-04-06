@@ -3,13 +3,9 @@ package chess.domain.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.dao.DbBoardDao;
-import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
-import db.dao.MemberDao;
 import java.sql.Connection;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class DbBoardDaoTest {
@@ -25,7 +21,7 @@ class DbBoardDaoTest {
     void updateAll() {
         final DbBoardDao dbBoardDao = new DbBoardDao();
         final Connection connection = dbBoardDao.getConnection();
-        ChessGame chessGame = ChessGame.create();
+        ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialze();
         dbBoardDao.updateAll(chessGame.getChessBoardInformation());
     }
@@ -34,7 +30,7 @@ class DbBoardDaoTest {
     void findAll() {
         final DbBoardDao dbBoardDao = new DbBoardDao();
         final Connection connection = dbBoardDao.getConnection();
-        ChessGame chessGame = ChessGame.create();
+        ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialze();
         ChessBoardDto chessBoardDto = dbBoardDao.findAll();
         assertThat(chessBoardDto.isEmpty()).isFalse();

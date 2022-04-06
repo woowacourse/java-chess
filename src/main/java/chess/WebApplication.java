@@ -30,6 +30,7 @@ public class WebApplication {
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
+    private static final int GAME_ID = 1111;
     private static final String IN_GAME_COMMAND_DELIMITER = " ";
 
     static {
@@ -46,7 +47,7 @@ public class WebApplication {
     public static void main(String[] args) {
         port(8082);
         staticFiles.location("/public");
-        ChessGame chessGame = ChessGame.create();
+        ChessGame chessGame = ChessGame.create(GAME_ID);
 
         get("/applicationCommand", (req, res) -> {
             Command command = Command.of(req.queryParams("command"));

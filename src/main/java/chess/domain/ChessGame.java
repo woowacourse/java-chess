@@ -9,13 +9,15 @@ import java.util.Map;
 
 public class ChessGame {
     private ChessBoard chessBoard;
+    private int gameId;
 
-    private ChessGame() {
+    private ChessGame(int gameId) {
         this.chessBoard = ChessBoard.initialize();
+        this.gameId = gameId;
     }
 
-    public static ChessGame create() {
-        return new ChessGame();
+    public static ChessGame create(int gameId) {
+        return new ChessGame(gameId);
     }
 
     public ChessBoardDto getChessBoardInformation() {
@@ -36,6 +38,10 @@ public class ChessGame {
 
     public WebChessStatusDto getStatusInformationForWeb() {
         return WebChessStatusDto.of(chessBoard);
+    }
+
+    public int getGameId() {
+        return gameId;
     }
 
     public void initialze() {

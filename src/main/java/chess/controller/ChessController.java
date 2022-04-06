@@ -18,6 +18,7 @@ public class ChessController {
     private static final int ROW_INDEX = 1;
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
     private static final String ONLY_START_OR_END_COMMAND_EXCEPTION = "[ERROR] start, end 명령 중 하나를 입력해주세요";
+    private static final int GAME_ID = 0;
 
     static {
         convertColumn.put('a', 1);
@@ -50,7 +51,7 @@ public class ChessController {
     }
 
     private void playChessGame() {
-        ChessGame chessGame = ChessGame.create();
+        ChessGame chessGame = ChessGame.create(GAME_ID);
         sendDataForPrintCurrentChessBoard(chessGame);
 
         while (!chessGame.isGameEnd()) {

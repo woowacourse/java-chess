@@ -16,7 +16,15 @@ create table role
 create table board
 (
     id int not null auto_increment primary key,
+    game_id int,
     type varchar(1) not null,
     y int not null,
-    x int not null
+    x int not null,
+    foreign key (game_id) references game(id)
+);
+
+create table game
+(
+    id int not null primary key,
+    turn varchar(5) not null
 );
