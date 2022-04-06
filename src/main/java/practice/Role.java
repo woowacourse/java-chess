@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.practice;
 
 public class Role {
 
