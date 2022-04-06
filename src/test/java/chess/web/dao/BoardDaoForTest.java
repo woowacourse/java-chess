@@ -16,7 +16,7 @@ public class BoardDaoForTest implements BoardDao {
         boards = boardDto;
     }
 
-    public String getBoardState() {
+    public String selectState() {
         return boards.getState();
     }
 }

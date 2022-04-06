@@ -1,10 +1,8 @@
 package chess.web.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.web.dto.BoardDto;
-import chess.web.dto.PieceDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,7 @@ class BoardDaoTest {
 
         boardDao.save(new BoardDto("ready"));
 
-        assertThat(boardDao.getBoardState()).isEqualTo("ready");
+        assertThat(boardDao.selectState()).isEqualTo("ready");
     }
 
     @DisplayName("보드 상태를 변경한다.")
@@ -28,6 +26,16 @@ class BoardDaoTest {
         boardDao.save(new BoardDto("ready"));
         boardDao.update(new BoardDto("whiteTurn"));
 
-        assertThat(boardDao.getBoardState()).isEqualTo("whiteTurn");
+        assertThat(boardDao.selectState()).isEqualTo("whiteTurn");
+    }
+
+    @DisplayName("보드 상태를 가져온다.")
+    @Test
+    void 보드_상태를_가져온다() {
+        final BoardDaoForTest boardDao = new BoardDaoForTest();
+
+        boardDao.save(new BoardDto("ready"));
+
+        assertThat(boardDao.selectState()).isEqualTo("ready");
     }
 }
