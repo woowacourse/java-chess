@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceConvertor;
+import chess.service.PieceConvertor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
