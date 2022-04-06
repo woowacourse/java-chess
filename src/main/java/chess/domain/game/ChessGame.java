@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.game.state.beforerunning.Ready;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
+import chess.dto.ScoreDto;
 
 public class ChessGame {
 
@@ -35,5 +36,9 @@ public class ChessGame {
 
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    public ScoreDto getScore() {
+        return new ScoreDto(state.calculateWhiteScore(), state.calculateBlackScore());
     }
 }

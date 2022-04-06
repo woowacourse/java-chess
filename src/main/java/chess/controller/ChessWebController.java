@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.dto.GameDto;
+import chess.dto.ScoreDto;
 import chess.service.ChessService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
@@ -41,8 +42,13 @@ public class ChessWebController {
         });
 
         get("/status/:gamenumber", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "chess.html");
+            ScoreDto scoreDto = chessService.getScore();
+            String score = objectMapper.writeValueAsString(scoreDto);
+            for (int i = 0; i < 30; i++) {
+                System.out.println("################");
+            }
+            System.out.println(score);
+            return score;
         });
 
         post("/move/:gamenumber", (req, res) -> {

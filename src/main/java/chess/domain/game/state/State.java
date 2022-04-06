@@ -13,4 +13,8 @@ public interface State {
     Board getBoard();
 
     boolean isEnd();
+
+    double calculateBlackScore();
+
+    double calculateWhiteScore();
 }

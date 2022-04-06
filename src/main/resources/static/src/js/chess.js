@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     startButtonInitializer.initializeStartButton();
     endButtonInitializer.initializeEndButton();
+    scoreButtonInitializer.initializeScoreButton();
     moveButtonInitializer.initializeMoveButton();
-
 });
 
 const startButtonInitializer = {
@@ -43,9 +43,30 @@ const endButtonInitializer = {
                 }
             }
 
-            httpRequest.open("post", "/move/1");
+            httpRequest.open("post", "/end/1");
             httpRequest.setRequestHeader("Content-Type", "application/json");
-            httpRequest.send();
+            httpRequest.send({});
+        })
+    }
+}
+
+const scoreButtonInitializer = {
+    initializeScoreButton: function() {
+        let endButton = document.getElementById('score-button');
+
+        endButton.addEventListener("click", async () => {
+            let httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function() {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    let score = JSON.parse(httpRequest.responseText);
+                    alert('백팀점수 : ' + score.whiteScore + " 흑팀점수 : " + score.blackScore);
+                }
+            }
+
+            httpRequest.open("get", "/status/1");
+            httpRequest.setRequestHeader("Content-Type", "application/json");
+            httpRequest.send({});
         })
     }
 }

@@ -18,6 +18,7 @@ import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.dto.GameDto;
+import chess.dto.ScoreDto;
 import chess.dto.TurnDto;
 import java.util.HashMap;
 import java.util.List;
@@ -88,5 +89,9 @@ public class ChessService {
 
     public void endGame() {
         chessGame.endGame();
+    }
+
+    public ScoreDto getScore() {
+        return chessGame.getScore();
     }
 }
