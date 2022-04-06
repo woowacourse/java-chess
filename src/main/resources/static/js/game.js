@@ -218,5 +218,5 @@ async function end() {
     alert(data.message);
     return;
   }
-  alert("게임을 종료합니다.");
+  alert("게임을 중단합니다.");
 }

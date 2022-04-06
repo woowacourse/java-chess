@@ -58,7 +58,7 @@ public class WebChessController {
         get("/api/status/:gameId", (req, res) -> chessService.status(parseGameId(req.params("gameId"))),
                 jsonTransformer);
 
-        get("/api/end/:gameId", (req, res) -> chessService.end(parseGameId(req.params("gameId"))));
+        get("/api/end/:gameId", (req, res) -> chessService.end(parseGameId(req.params("gameId"))), jsonTransformer);
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
             response.status(400);
