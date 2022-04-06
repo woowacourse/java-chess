@@ -150,7 +150,7 @@ end
 - [x] 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있다.
   - [x] save 할 수 있는 기능
   - [x] load 할 수 있는 기능
-- [ ] 게임을 종료하면 해당 게임은 삭제된다.
+- [x] 게임을 종료하면 해당 게임은 삭제된다.
 ---
 ### Reference
 [체스판을 준비하는 방법](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)
