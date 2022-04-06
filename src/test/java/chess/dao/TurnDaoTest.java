@@ -14,7 +14,7 @@ class TurnDaoTest {
 
     @BeforeEach
     void setUp() {
-        turnDao = new TurnDaoImpl();
+        turnDao = new MemoryTurnDao();
     }
 
     @DisplayName("현재 turn 정보를 저장한다.")

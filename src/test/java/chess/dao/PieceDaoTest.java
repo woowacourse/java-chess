@@ -30,7 +30,7 @@ class PieceDaoTest {
 
     @BeforeEach
     void setUp() {
-        pieceDao = new PieceDaoImpl();
+        pieceDao = new MemoryPieceDao();
         pieceDao.removeAll();
     }
 
