@@ -24,4 +24,9 @@ public final class BlackRunning extends Running {
         final Piece piece = chessBoard.selectPiece(fromPosition);
         return piece.isBlack();
     }
+
+    @Override
+    public String toString() {
+        return "BlackRunning";
+    }
 }

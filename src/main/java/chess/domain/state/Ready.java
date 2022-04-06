@@ -29,4 +29,9 @@ public final class Ready implements State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Ready";
+    }
 }

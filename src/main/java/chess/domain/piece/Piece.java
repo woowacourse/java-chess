@@ -2,9 +2,29 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
+
+    private static final Map<String, Piece> cache = new HashMap<>();
+
+    static {
+        cache.put("whitepawn", new Pawn(Color.WHITE));
+        cache.put("blackpawn", new Pawn(Color.BLACK));
+        cache.put("whiteking", new King(Color.WHITE));
+        cache.put("blackking", new King(Color.BLACK));
+        cache.put("whiterook", new Rook(Color.WHITE));
+        cache.put("blackrook", new Rook(Color.BLACK));
+        cache.put("whiteknight", new Knight(Color.WHITE));
+        cache.put("blackknight", new Knight(Color.BLACK));
+        cache.put("whitebishop", new Bishop(Color.WHITE));
+        cache.put("blackbishop", new Bishop(Color.BLACK));
+        cache.put("whitequeen", new Queen(Color.WHITE));
+        cache.put("blackqueen", new Queen(Color.BLACK));
+        cache.put("emptyempty", EmptyPiece.getInstance());
+    }
 
     protected final Symbol symbol;
     protected final Color color;
@@ -12,6 +32,10 @@ public abstract class Piece {
     protected Piece(final Color color, final Symbol symbol) {
         this.color = color;
         this.symbol = symbol;
+    }
+
+    public static Piece of(String color, String symbol) {
+        return cache.get(color + symbol);
     }
 
     public abstract boolean isMovable(final Position from, final Position to);

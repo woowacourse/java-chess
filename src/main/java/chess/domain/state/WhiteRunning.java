@@ -24,4 +24,9 @@ public final class WhiteRunning extends Running {
         final Piece piece = chessBoard.selectPiece(fromPosition);
         return piece.isWhite();
     }
+
+    @Override
+    public String toString() {
+        return "WhiteRunning";
+    }
 }

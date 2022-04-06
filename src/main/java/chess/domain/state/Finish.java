@@ -22,4 +22,9 @@ public final class Finish implements State {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Finish";
+    }
 }

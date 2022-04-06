@@ -17,8 +17,8 @@ public class ChessGame {
         this.chessBoard = chessBoard;
     }
 
-    public void init(final ChessBoard chessBoard) {
-        this.state = new Ready();
+    public ChessGame(State state, ChessBoard chessBoard) {
+        this.state = state;
         this.chessBoard = chessBoard;
     }
 
@@ -52,5 +52,9 @@ public class ChessGame {
 
     public Map<String, Piece> chessBoardToMap() {
         return chessBoard.toMap();
+    }
+
+    public State getState() {
+        return state;
     }
 }

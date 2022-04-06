@@ -25,6 +25,10 @@ public class ChessBoard {
         fillEmptyPieceIfAbsent();
     }
 
+    public ChessBoard(final Map<Position, Piece> pieces) {
+        this.pieces = pieces;
+    }
+
     private void fillEmptyPieceIfAbsent() {
         for (final Column column : Column.values()) {
             fillEmptyPieceInColumn(column);
