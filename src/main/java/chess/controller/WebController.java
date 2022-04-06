@@ -52,9 +52,6 @@ public class WebController {
         get("/end", ((req, res) -> {
             final Map<String, Object> model = chessGame.getAllPiecesByPosition();
             chessGame.end();
-            if (!chessGame.isPlaying()) {
-                throw new IllegalStateException();
-            }
             return render(model, "index.html");
         }));
     }

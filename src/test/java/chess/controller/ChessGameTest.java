@@ -32,4 +32,28 @@ class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 진행중인 게임이 있습니다.");
     }
+
+    @Test
+    @DisplayName("게임을 종료한다. 게임이 종료되면 DB의 모든 데이터가 삭제된다.")
+    void end() {
+        //when
+        final ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        chessGame.end();
+        //actual
+        final Map<String, Object> actual = chessGame.getAllPiecesByPosition();
+        //then
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    @DisplayName("진행 중인 게임이 없는데 게임을 종료하려고 하면 예외를 발생시킨다.")
+    void endException() {
+        //given
+        final ChessGame chessGame = new ChessGame();
+        //when, then
+        assertThatThrownBy(chessGame::end)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("진행 중인 게임이 없습니다.");
+    }
 }

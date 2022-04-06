@@ -44,10 +44,9 @@ public class ChessGame {
     }
 
     public void end() {
-        if (board == null) {
-            throw new IllegalStateException("진행중인 게임이 없습니다.");
-        }
+        checkPlaying();
         board = null;
+        pieceDao.removeAll();
     }
 
     private void checkPlaying() {
