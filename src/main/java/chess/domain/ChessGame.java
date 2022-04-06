@@ -39,10 +39,6 @@ public final class ChessGame {
         return scores;
     }
 
-    public void finish() {
-        board.removeAllPieces();
-    }
-
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }

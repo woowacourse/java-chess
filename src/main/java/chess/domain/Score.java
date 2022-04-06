@@ -20,10 +20,17 @@ public class Score {
     }
 
     public static Score of(Map<Position, Piece> pieces) {
-        double pawnsScore = calculatePawnScore(pieces);
-        double scoreExceptPawn = calculateScoreExceptPawn(pieces);
+        if (hasKing(pieces)) {
+            double pawnsScore = calculatePawnScore(pieces);
+            double scoreExceptPawn = calculateScoreExceptPawn(pieces);
 
-        return new Score(pawnsScore + scoreExceptPawn);
+            return new Score(pawnsScore + scoreExceptPawn);
+        }
+        return new Score(0);
+    }
+
+    private static boolean hasKing(Map<Position, Piece> pieces) {
+        return pieces.values().stream().anyMatch(Piece::isKing);
     }
 
     private static double calculatePawnScore(Map<Position, Piece> pieces) {

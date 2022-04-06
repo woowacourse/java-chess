@@ -109,8 +109,4 @@ public class Board {
     public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
-
-    public void removeAllPieces() {
-        pieces.clear();
-    }
 }
