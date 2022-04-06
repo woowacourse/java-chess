@@ -25,7 +25,7 @@ public enum StateType {
         return Arrays.stream(values())
                 .filter(stateGenerator -> stateGenerator.getValue().equals(value))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태입니다."));
     }
 
     public State parseState(ChessBoard chessBoard) {
