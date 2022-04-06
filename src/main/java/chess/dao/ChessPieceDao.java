@@ -32,11 +32,7 @@ public class ChessPieceDao {
 
                 final List<ChessPieceDto> dtos = new ArrayList<>();
                 while (resultSet.next()) {
-                    dtos.add(ChessPieceDto.of(
-                            resultSet.getString("position"),
-                            resultSet.getString("chess_piece"),
-                            resultSet.getString("color")
-                    ));
+                    dtos.add(ChessPieceDto.from(resultSet));
                 }
                 return dtos;
             }

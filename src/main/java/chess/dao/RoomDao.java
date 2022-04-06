@@ -57,10 +57,7 @@ public class RoomDao {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return CurrentTurnDto.from(
-                        resultSet.getString("name"),
-                        resultSet.getString("current_turn")
-                );
+                return CurrentTurnDto.from(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,10 +77,7 @@ public class RoomDao {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return RoomStatusDto.from(
-                        resultSet.getString("name"),
-                        resultSet.getString("game_status")
-                );
+                return RoomStatusDto.from(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();

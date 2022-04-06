@@ -1,6 +1,8 @@
 package chess.dto;
 
 import chess.domain.GameStatus;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class RoomStatusDto {
 
@@ -12,8 +14,12 @@ public class RoomStatusDto {
         this.gameStatus = gameStatus;
     }
 
-    public static RoomStatusDto from(final String name, final String gameStatus) {
-        return new RoomStatusDto(name, GameStatus.from(gameStatus));
+    public static RoomStatusDto from(final ResultSet resultSet) throws SQLException {
+        return new RoomStatusDto(
+                resultSet.getString("name"),
+                GameStatus.from(resultSet.getString("game_status")
+                )
+        );
     }
 
     public String getName() {
