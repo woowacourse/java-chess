@@ -44,7 +44,7 @@ public class ChessService {
 	}
 
 	public GameDto move(int gameId, Position source, Position target) {
-		state = state.play(source, target);
+		state = state.move(source, target);
 		String command = String.join(COMMAND_DELIMITER,
 				List.of(Command.MOVE.getCommand(), source.convertPositionToString(), target.convertPositionToString())
 		);

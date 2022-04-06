@@ -23,7 +23,7 @@ public abstract class Finished implements State {
 	}
 
 	@Override
-	public final State play(final Position source, final Position target) {
+	public final State move(final Position source, final Position target) {
 		throw new IllegalStateException(FINISH_GAME_ERROR);
 	}
 

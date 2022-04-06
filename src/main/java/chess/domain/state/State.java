@@ -9,7 +9,7 @@ public interface State {
 
 	State start(Board board);
 
-	State play(Position source, Position target);
+	State move(Position source, Position target);
 
 	ScoreResult createStatus();
 

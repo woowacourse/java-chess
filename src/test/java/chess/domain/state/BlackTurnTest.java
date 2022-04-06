@@ -34,45 +34,57 @@ class BlackTurnTest {
 	}
 
 	@Test
-	void playBlackToWhite() {
+	void moveSamePosition() {
+		Board board = new Board(BoardFactory.initiate());
+		State state = new BlackTurn(board);
+		Position blackPawn = initialBlackPawn;
+		Position target = initialBlackPawn;
+
+		assertThatThrownBy(() -> state.move(blackPawn, target))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("출발지와 같은 곳으로 이동할 수 없습닌다.");
+	}
+
+	@Test
+	void moveBlackToWhite() {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position blackPawn = initialBlackPawn;
 		Position target = Position.of(SIX, A);
 
-		assertThat(state.play(blackPawn, target)).isInstanceOf(WhiteTurn.class);
+		assertThat(state.move(blackPawn, target)).isInstanceOf(WhiteTurn.class);
 	}
 
 	@Test
-	void playBlackCatchKing() {
+	void moveBlackCatchKing() {
 		Board board = new Board(createCatchKingBoard());
 		State state = new BlackTurn(board);
 		Position blackKing = Position.of(FIVE, E);
 		Position whiteKing = Position.of(FOUR, D);
 
-		assertThat(state.play(blackKing, whiteKing)).isInstanceOf(KingDeath.class);
+		assertThat(state.move(blackKing, whiteKing)).isInstanceOf(KingDeath.class);
 	}
 
 	@Test
-	void playWithEnemyPiece() {
+	void moveWithEnemyPiece() {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position whitePawn = initialWhitePawn;
 		Position target = Position.of(THREE, A);
 
-		assertThatThrownBy(() -> state.play(whitePawn, target))
+		assertThatThrownBy(() -> state.move(whitePawn, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("상대 팀의 기물을 옮길 수 없습니다.");
 	}
 
 	@Test
-	void playCatchSameTeamPiece() {
+	void moveCatchSameTeamPiece() {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position blackKing = initialBlackKing;
 		Position blackQueen = initialBlackQueen;
 
-		assertThatThrownBy(() -> state.play(blackKing, blackQueen))
+		assertThatThrownBy(() -> state.move(blackKing, blackQueen))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
 	}

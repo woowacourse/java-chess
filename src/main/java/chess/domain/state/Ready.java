@@ -15,7 +15,7 @@ public final class Ready implements State {
 	}
 
 	@Override
-	public State play(final Position source, final Position target) {
+	public State move(final Position source, final Position target) {
 		throw new IllegalStateException(GAME_START_ERROR);
 	}
 

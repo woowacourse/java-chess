@@ -12,6 +12,7 @@ public abstract class Running implements State {
 
 	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
 	private static final String ALREADY_GAME_START = "게임이 이미 시작되었습니다.";
+	private static final String SAME_POSITION_ERROR = "출발지와 같은 곳으로 이동할 수 없습닌다.";
 
 	protected final Board board;
 
@@ -25,7 +26,10 @@ public abstract class Running implements State {
 	}
 
 	@Override
-	public final State play(final Position source, final Position target) {
+	public final State move(final Position source, final Position target) {
+		if (source.equals(target)) {
+			throw new IllegalArgumentException(SAME_POSITION_ERROR);
+		}
 		validateTurn(source);
 		boolean check = board.isCheck(target);
 		board.move(source, target);

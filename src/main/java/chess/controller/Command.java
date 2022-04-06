@@ -21,7 +21,7 @@ public enum Command {
 	MOVE("move", (state, input) -> {
 		Position source = PositionConvertor.to(input.get(1));
 		Position target = PositionConvertor.to(input.get(2));
-		return state.play(source, target);
+		return state.move(source, target);
 	}),
 	STATUS("status", (state, input) -> {
 		ScoreResult result = state.createStatus();
