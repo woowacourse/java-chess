@@ -22,10 +22,6 @@ public class ChessGame {
         pieceDao.saveAll(board.getPieces());
     }
 
-    public boolean isPlaying() {
-        return board != null;
-    }
-
     public void move(final String sourcePosition, final String targetPosition) {
         checkPlaying();
         board = board.movePiece(Position.from(sourcePosition), Position.from(targetPosition));
