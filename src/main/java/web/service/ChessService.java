@@ -101,4 +101,9 @@ public class ChessService {
     public void finish() {
         gameState = gameState.finish();
     }
+
+    public void deleteAndFinish(GameDto gameDto) {
+        gameState = gameState.finish();
+        gameDao.delete(gameDto.getRoomName());
+    }
 }

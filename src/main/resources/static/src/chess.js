@@ -21,7 +21,11 @@ statusButton.addEventListener("click", async function () {
 });
 
 stopButton.addEventListener("click", async function () {
-    await finish();
+    if (!confirm("방을 삭제하시겠습니까?")) {
+        await finish();
+    } else {
+        await deleteAndFinish();
+    }
 });
 
 async function newGame() {
@@ -87,7 +91,20 @@ async function getStatus() {
 
 async function finish() {
     await fetch("/finish");
-    alert("게임이 종료되었습니다.");
+    alert("방을 유지한채 게임이 종료되었습니다.");
+}
+
+async function deleteAndFinish() {
+    await fetch("/finish", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            roomName: currentRoomName,
+        }),
+    })
+    alert("방이 삭제됐습니다.");
 }
 
 async function initializeBoard(board) {

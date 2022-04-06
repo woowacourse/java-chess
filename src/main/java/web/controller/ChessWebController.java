@@ -85,5 +85,16 @@ public class ChessWebController {
             }
             return null;
         });
+
+        post("/finish", (req, res) -> {
+            try {
+                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                service.deleteAndFinish(gameDto);
+            } catch (RuntimeException e) {
+                res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
+            return null;
+        });
     }
 }
