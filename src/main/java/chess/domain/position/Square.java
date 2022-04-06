@@ -32,6 +32,10 @@ public class Square {
         return this.column == column;
     }
 
+    public String getName() {
+        return column.name() + row.getIndex();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

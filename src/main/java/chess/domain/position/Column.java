@@ -21,7 +21,7 @@ public enum Column {
         this.index = index;
     }
 
-    static Column find(char value) {
+    public static Column find(char value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findFirst()

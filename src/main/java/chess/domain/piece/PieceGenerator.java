@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
@@ -8,13 +9,13 @@ import chess.domain.position.Column;
 import chess.domain.position.Row;
 
 public enum PieceGenerator {
-    KING((file, rank) -> new PieceTypeChecker(file, rank).isKing(), rank -> new King(getColor(rank))),
-    QUEEN((file, rank) -> new PieceTypeChecker(file, rank).isQueen(), rank -> new Queen(getColor(rank))),
-    ROOK((file, rank) -> new PieceTypeChecker(file, rank).isRook(), rank -> new Rook(getColor(rank))),
-    BISHOP((file, rank) -> new PieceTypeChecker(file, rank).isBishop(), rank -> new Bishop(getColor(rank))),
-    KNIGHT((file, rank) -> new PieceTypeChecker(file, rank).isKnight(), rank -> new Knight(getColor(rank))),
-    PAWN((file, rank) -> new PieceTypeChecker(file, rank).isPawn(), rank -> new Pawn(getColor(rank))),
-    NONE((file, rank) -> new PieceTypeChecker(file, rank).isNone(), rank -> new None(getColor(rank)));
+    KING((column, row) -> new PieceTypeChecker(column, row).isKing(), row -> new King(getColor(row))),
+    QUEEN((column, row) -> new PieceTypeChecker(column, row).isQueen(), row -> new Queen(getColor(row))),
+    ROOK((column, row) -> new PieceTypeChecker(column, row).isRook(), row -> new Rook(getColor(row))),
+    BISHOP((column, row) -> new PieceTypeChecker(column, row).isBishop(), row -> new Bishop(getColor(row))),
+    KNIGHT((column, row) -> new PieceTypeChecker(column, row).isKnight(), row -> new Knight(getColor(row))),
+    PAWN((column, row) -> new PieceTypeChecker(column, row).isPawn(), row -> new Pawn(getColor(row))),
+    NONE((column, row) -> new PieceTypeChecker(column, row).isNone(), row -> new None(getColor(row)));
 
     private final BiPredicate<Column, Row> condition;
     private final Function<Row, Piece> of;
@@ -24,7 +25,7 @@ public enum PieceGenerator {
         this.of = of;
     }
 
-    static Piece generatePiece(Column column, Row row) {
+    public static Piece generatePiece(Column column, Row row) {
         return Arrays.stream(PieceGenerator.values())
                 .filter(piece -> piece.condition.test(column, row))
                 .map(piece -> piece.of.apply(row))
@@ -32,7 +33,14 @@ public enum PieceGenerator {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static Color getColor(Row row) {
+    public static PieceGenerator getType(Column column, Row row) {
+        return Arrays.stream(PieceGenerator.values())
+                .filter(piece -> piece.condition.test(column, row))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static Color getColor(Row row) {
         if (row == Row.SEVEN || row == Row.EIGHT) {
             return Color.BLACK;
         }

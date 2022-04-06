@@ -52,4 +52,8 @@ public final class ChessGame {
     public Board getBoard() {
         return board;
     }
+
+    public GameTurn getTurn() {
+        return turn;
+    }
 }

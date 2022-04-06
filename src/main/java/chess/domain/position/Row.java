@@ -21,7 +21,7 @@ public enum Row {
         this.index = index;
     }
 
-    static Row find(char value) {
+    public static Row find(char value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
@@ -37,5 +37,9 @@ public enum Row {
                 .filter(rank -> rank.index == this.index + dRank)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(BUG_MESSAGE_BOUND));
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
