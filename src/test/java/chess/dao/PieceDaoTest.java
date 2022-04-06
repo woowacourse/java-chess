@@ -21,12 +21,6 @@ class PieceDaoTest {
         pieceDao = new PieceDao();
     }
 
-    @Test
-    void connection() {
-        final Connection connection = pieceDao.getConnection();
-        assertThat(connection).isNotNull();
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"1:Pawn:true", "2:Bishop:true", "3:Rook:true", "4:Knight:true", "5:King:true", "6:Queen:true"
             ,"7:Pawn:false", "8:Bishop:false", "9:Rook:false", "10:Knight:false", "11:King:false", "12:Queen:false", "13:Empty:false"}, delimiter = ':')

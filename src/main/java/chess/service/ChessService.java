@@ -2,6 +2,8 @@ package chess.service;
 
 import static java.util.stream.Collectors.toMap;
 
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.model.ChessGame;
 import chess.model.Color;
 import chess.model.File;
@@ -11,36 +13,53 @@ import chess.model.board.ChessInitializer;
 import chess.model.board.Square;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceLetter;
-import chess.model.status.End;
-import chess.model.status.Playing;
 import chess.dao.RuntimeChessGameDao;
+import chess.model.status.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+//todo
 public class ChessService {
     private final RuntimeChessGameDao dao;
+    private BoardDao boardDao = new BoardDao();
+    private GameDao gameDao = new GameDao();
+    private int gameId = getGameIdFromDao();
 
     public ChessService(RuntimeChessGameDao dao) {
         this.dao = dao;
     }
 
     public void initGame() {
-        ChessGame chessGame = new ChessGame(new ChessInitializer(), new Playing());
-        Map<Square, Piece> board = chessGame.getBoard().getBoard();
-        dao.saveAll(board, chessGame.getTurn(), new Playing());
+        ChessGame chessGame = new ChessGame(new ChessInitializer(), Status.PLAYING);
+        Map<Square, Piece> pieces = chessGame.getBoard().getPieces();
+        boardDao.initBoard(toBoardDto(pieces), gameId);
+        updateGame(chessGame);
+    }
+
+    private void updateGame(ChessGame chessGame) {
+        gameDao.update(new ChessGameDto(chessGame.getStatus().name(), chessGame.getTurn().name()), gameId);
     }
 
     private ChessGame getGameFromDao() {
-        return new ChessGame(new Board(dao.getAllPieces()), dao.getTurn(), dao.getStatus());
+        ChessGameDto game = gameDao.findByName("game");
+        BoardDto boardDto = boardDao.getBoardByGameId(game.getId());
+        return new ChessGame(new Board(boardDto), Color.valueOf(game.getTurn()), Status.valueOf(game.getStatus()));
+    }
+
+    private int getGameIdFromDao() {
+        return gameDao.findByName("game").getId();
     }
 
     public BoardDto getBoard() {
-        Map<Square, Piece> allPieces = dao.getAllPieces();
-        return new BoardDto(allPieces.keySet().stream()
-                .collect(toMap(Square::getName, key -> toDto(allPieces.get(key)))));
+        return boardDao.getBoardByGameId(gameId);
+    }
+
+    private BoardDto toBoardDto(Map<Square, Piece> board) {
+        return new BoardDto(board.keySet().stream()
+                .collect(toMap(Square::getName, key -> toDto(board.get(key)))));
     }
 
     private PieceDto toDto(Piece piece) {
@@ -64,7 +83,8 @@ public class ChessService {
     public void move(String from, String to) {
         ChessGame chessGame = getGameFromDao();
         chessGame.move(Square.of(from), Square.of(to));
-        dao.saveAll(chessGame.getBoard().getBoard(), chessGame.getTurn(), chessGame.getStatus());
+        boardDao.move(from, to, gameId);
+        updateGame(chessGame);
     }
 
     public boolean isWaitingOrRunning() {
@@ -72,7 +92,7 @@ public class ChessService {
     }
 
     public void endGame() {
-        dao.updateStatus(new End());
+        gameDao.updateStatus(new StatusDto(Status.END.name()), gameId);
     }
 
     public GameResultDto getResult() {

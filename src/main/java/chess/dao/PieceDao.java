@@ -21,30 +21,10 @@ public class PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public Connection getConnection() {
-        loadDriver();
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public Piece findById(int id) {
-        Connection connection = getConnection();
+        Connection connection = JdbcUtil.getConnection();
         final String sql = "select * from piece where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
@@ -63,6 +43,7 @@ public class PieceDao {
         try {
             typeName = resultSet.getString(2);
             colorName = resultSet.getString(3);
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,12 +70,11 @@ public class PieceDao {
     }
 
     public int findIdByPiece(Piece piece) {
-        Connection connection = getConnection();
         final String sql = "select id from piece where type = ? and color = ?";
         String pieceType = PieceLetter.getName(piece);
         String colorName = piece.getColor().name().toLowerCase();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try(Connection connection = JdbcUtil.getConnection();
+            final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, pieceType);
             statement.setString(2, colorName);
             ResultSet resultSet = statement.executeQuery();

@@ -36,6 +36,7 @@ public class ChessController {
     }
 
     public GameResultDto status() {
+        service.endGame();
         return service.getResult();
     }
 

@@ -4,7 +4,7 @@ import chess.model.board.Board;
 import chess.model.board.BoardInitializer;
 import chess.model.board.Square;
 import chess.model.piece.King;
-import chess.model.status.GameStatus;
+import chess.model.status.Status;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 public class ChessGame {
     private Board board;
     private Color turn;
-    private GameStatus status;
+    private Status status;
 
-    public ChessGame(BoardInitializer initializer, GameStatus status) {
+    public ChessGame(BoardInitializer initializer, Status status) {
         this.board = new Board(initializer);
         this.turn = Color.WHITE;
         this.status = status;
     }
 
-    public ChessGame(Board board, Color turn, GameStatus status) {
+    public ChessGame(Board board, Color turn, Status status) {
         this.board = board;
         this.turn = turn;
         this.status = status;
@@ -44,25 +44,13 @@ public class ChessGame {
     }
 
     public Map<Color, Double> getPlayersScore() {
-        status.changeStatus(GameCommand.STATUS);
+        status = status.changeStatus(GameCommand.STATUS);
         return Color.getPlayerColors().stream()
                 .collect(Collectors.toMap(Function.identity(), color -> board.calculatePoint(color)));
     }
 
     public boolean isRunning() {
         return status.isRunning();
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public Color getTurn() {
-        return this.turn;
-    }
-
-    public GameStatus getStatus() {
-        return status;
     }
 
     public Color findWinner() {
@@ -92,5 +80,17 @@ public class ChessGame {
             return Color.BLACK;
         }
         return Color.NOTHING;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Color getTurn() {
+        return this.turn;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }

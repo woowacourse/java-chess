@@ -1,11 +1,14 @@
 package chess.model.board;
 
+import static java.util.stream.Collectors.toMap;
+
 import chess.model.Color;
 import chess.model.piece.Empty;
-import chess.model.piece.King;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceFactory;
 import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
+import chess.service.BoardDto;
 import java.util.Map;
 
 public final class Board {
@@ -23,7 +26,12 @@ public final class Board {
         this(boardInitializer.initPieces());
     }
 
-    public Map<Square, Piece> getBoard() {
+    public Board(BoardDto boardDto) {
+        this.board = boardDto.getPieces().entrySet().stream()
+                .collect(toMap(entry -> Square.of(entry.getKey()), entry -> PieceFactory.create(entry.getValue())));
+    }
+
+    public Map<Square, Piece> getPieces() {
         return board;
     }
 

@@ -65,7 +65,7 @@ public class WebApplication {
 
         get("/game-end", (req, res) -> {
            controller.end();
-           res.redirect("/");
+           res.redirect("/board");
            return null;
         });
 
