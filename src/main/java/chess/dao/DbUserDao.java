@@ -1,7 +1,6 @@
-package lecture.jason.dao;
+package chess.dao;
 
-import chess.dao.Dao;
-import lecture.jason.domain.Member;
+import chess.domain.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,15 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDao extends Dao {
+public class DbUserDao extends Dao implements UserDao {
 
-    public void save(Member member) {
+    public void save(User user) {
         final Connection connection = getConnection();
-        final String sql = "insert member(member_id, member_name) values(?, ?)";
+        final String sql = "insert users(user_id, user_name) values(?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, member.getId());
-            statement.setString(2, member.getName());
+            statement.setLong(1, user.getId());
+            statement.setString(2, user.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -26,9 +25,9 @@ public class MemberDao extends Dao {
         }
     }
 
-    public Member findById(int id) {
+    public User findById(int id) {
         final Connection connection = getConnection();
-        final String sql = "select * from `member` where member_id = ?";
+        final String sql = "select * from users where user_id = ?";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
@@ -37,9 +36,9 @@ public class MemberDao extends Dao {
             if (!resultSet.next()) {
                 return null;
             }
-            return new Member(
-                    resultSet.getInt("member_id"),
-                    resultSet.getString("member_name")
+            return new User(
+                    resultSet.getLong("user_id"),
+                    resultSet.getString("user_name")
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,35 +46,36 @@ public class MemberDao extends Dao {
         }
     }
 
-    public List<Member> findAll() {
+    public List<User> findAll() {
         final Connection connection = getConnection();
-        final String sql = "select * from `member`";
+        final String sql = "select * from users";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-            final List<Member> findMembers = new ArrayList<>();
+            final List<User> findUsers = new ArrayList<>();
             while (resultSet.next()) {
-                final Member findMember = new Member(
-                        resultSet.getInt("member_id"),
-                        resultSet.getString("member_name")
+                final User findUser = new User(
+                        resultSet.getLong("user_id"),
+                        resultSet.getString("user_name")
                 );
-                findMembers.add(findMember);
+                findUsers.add(findUser);
             }
-            return findMembers;
+            return findUsers;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
+
     }
 
     public void deleteById(int id) {
         final Connection connection = getConnection();
-        final String sql = "delete from `member` where member_id = ?";
+        final String sql = "delete from users where user_id = ?";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class MemberDao extends Dao {
 
     public void deleteAll() {
         final Connection connection = getConnection();
-        final String sql = "delete from `member`";
+        final String sql = "delete from users";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
