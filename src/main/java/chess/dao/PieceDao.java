@@ -18,6 +18,8 @@ public class PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private static final String DATABASE_EMPTY_SYMBOL = "nothing";
+
     private Connection getConnection() {
         Connection connection = null;
         try {
@@ -173,7 +175,7 @@ public class PieceDao {
             e.printStackTrace();
         }
         if (state == null) {
-            return "nothing";
+            return DATABASE_EMPTY_SYMBOL;
         }
         return state;
     }
@@ -192,7 +194,7 @@ public class PieceDao {
             e.printStackTrace();
         }
         if (turn == null) {
-            return "nothing";
+            return DATABASE_EMPTY_SYMBOL;
         }
         return turn;
     }

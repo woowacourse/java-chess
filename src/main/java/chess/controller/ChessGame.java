@@ -23,6 +23,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ChessGame {
+
+    private static final String DATABASE_EMPTY_SYMBOL = "nothing";
     private Board board;
     private final PieceDao pieceDao = new PieceDao();
 
@@ -33,7 +35,7 @@ public class ChessGame {
 
     public void start() {
         final String gameState = pieceDao.getGameState();
-        if (board != null && !gameState.equals("nothing")) {
+        if (board != null && !gameState.equals(DATABASE_EMPTY_SYMBOL)) {
             throw new IllegalStateException("이미 진행중인 게임이 있습니다.");
         }
         initializeBoard();
@@ -44,7 +46,7 @@ public class ChessGame {
     public void initializeBoard() {
         final String gameState = pieceDao.getGameState();
         final String turn = pieceDao.getTurn();
-        if (gameState.equals("nothing")) {
+        if (gameState.equals(DATABASE_EMPTY_SYMBOL)) {
             board = new Board();
             return;
         }
