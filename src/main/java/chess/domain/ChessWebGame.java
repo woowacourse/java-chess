@@ -131,16 +131,6 @@ public class ChessWebGame {
     private Result getResultByScore() {
         final double whiteScore = whitePlayer.calculateScore();
         final double blackScore = blackPlayer.calculateScore();
-        return findWinner(whiteScore, blackScore);
-    }
-
-    private Result findWinner(final double whiteScore, final double blackScore) {
-        if (whiteScore > blackScore) {
-            return Result.WHITE_WIN_SCORE;
-        }
-        if (whiteScore < blackScore) {
-            return Result.BLACK_WIN_SCORE;
-        }
-        return Result.DRAW;
+        return Result.of(whiteScore, blackScore);
     }
 }

@@ -14,6 +14,16 @@ public enum Result {
         this.result = result;
     }
 
+    public static Result of(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            return Result.WHITE_WIN_SCORE;
+        }
+        if (whiteScore < blackScore) {
+            return Result.BLACK_WIN_SCORE;
+        }
+        return Result.DRAW;
+    }
+
     public String getResult() {
         return result;
     }
