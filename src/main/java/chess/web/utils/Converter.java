@@ -31,4 +31,12 @@ public class Converter {
         String color = piece.getColor().toLowerCase();
         return "images/" + name + "_" + color + ".png";
     }
+
+    public static int convertToInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+    }
 }

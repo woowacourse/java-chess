@@ -11,6 +11,7 @@ import chess.domain.piece.property.Color;
 import chess.web.dto.PieceDto;
 import chess.web.dto.RoomDto;
 import chess.web.service.ChessService;
+import chess.web.utils.Converter;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -42,7 +43,7 @@ public class WebController {
         });
 
         post("/:id/delete", (req, res) -> {
-            int roomId = Integer.parseInt(req.params("id"));
+            int roomId = Converter.convertToInt(req.params("id"));
             chessService.deleteRoom(roomId);
             res.redirect("/");
             return null;
@@ -50,7 +51,7 @@ public class WebController {
 
         get("/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int roomId = Integer.parseInt(req.params("id"));
+            int roomId = Converter.convertToInt(req.params("id"));
             List<PieceDto> pieces = chessService.initializeData(roomId);
             initializeRowPieces(pieces, model);
             putScore(model, pieces);
@@ -59,14 +60,14 @@ public class WebController {
         });
 
         get("/:id/start", (req, res) -> {
-            int roomId = Integer.parseInt(req.params("id"));
+            int roomId = Converter.convertToInt(req.params("id"));
             chessService.start(roomId);
             res.redirect("/" + roomId);
             return null;
         });
 
         post("/:id/move", (req, res) -> {
-            int roomId = Integer.parseInt(req.params("id"));
+            int roomId = Converter.convertToInt(req.params("id"));
             chessService.move(req.queryParams("command"), roomId);
             res.redirect("/" + roomId);
             return null;
