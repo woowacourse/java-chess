@@ -1,7 +1,9 @@
 package chess.web.dao;
 
 import chess.web.dto.PieceDto;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PieceDaoForTest implements PieceDao {
@@ -16,6 +18,11 @@ public class PieceDaoForTest implements PieceDao {
     @Override
     public void update(String position, PieceDto pieceDto) {
         pieces.computeIfPresent(position, (k, v) -> pieceDto);
+    }
+
+    @Override
+    public List<PieceDto> selectAll() {
+        return new ArrayList<>(pieces.values());
     }
 
     @Override

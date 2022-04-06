@@ -4,7 +4,10 @@ import chess.web.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PieceDaoImpl implements PieceDao {
 
@@ -45,6 +48,30 @@ public class PieceDaoImpl implements PieceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<PieceDto> selectAll() {
+        final String sql = "select * from piece";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            return toPieceDtos(resultSet);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private List<PieceDto> toPieceDtos(ResultSet resultSet) throws SQLException {
+        final List<PieceDto> pieces = new ArrayList<>();
+        while (resultSet.next()) {
+            pieces.add(new PieceDto(
+                    resultSet.getString("piece_type"),
+                    resultSet.getString("position"),
+                    resultSet.getString("color")
+            ));
+        }
+        return pieces;
     }
 
     @Override

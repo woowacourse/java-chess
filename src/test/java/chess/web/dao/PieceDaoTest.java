@@ -30,6 +30,17 @@ class PieceDaoTest {
         assertThat(pieceDao.getPieceDtoByPosition("a2")).isEqualTo(pieceDto);
     }
 
+    @DisplayName("기물을 전부 가져온다.")
+    @Test
+    void 기물을_전부_가져온다() {
+        final PieceDaoForTest pieceDao = new PieceDaoForTest();
+
+        pieceDao.save(new PieceDto("P", "a2", "black"));
+        pieceDao.save(new PieceDto("p", "b2", "white"));
+
+        assertThat(pieceDao.selectAll().size()).isEqualTo(2);
+    }
+
     @DisplayName("기물을 전부 삭제한다.")
     @Test
     void 기물을_전부_삭제한다() {
