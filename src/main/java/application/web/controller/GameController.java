@@ -56,7 +56,7 @@ public class GameController {
     public Route promotion() {
         return (request, response) -> {
             final long gameId = parseGameId(request.params(":gameId"));
-            final String pieceName = request.queryParams("target");
+            final String pieceName = request.queryParams("pieceName");
             return renderBoard(gameService.promotion(gameId, pieceName));
         };
     }
@@ -87,7 +87,9 @@ public class GameController {
     private String renderBoard(final ChessGame chessGame) {
         final Map<String, Object> model = new HashMap<>();
         model.put("game", GameDto.toDto(chessGame));
-        model.put("promotable", chessGame.isPromotable());
+        if (chessGame.isRunning()) {
+            model.put("promotable", chessGame.isPromotable());
+        }
         return render(model, "board.html");
     }
 

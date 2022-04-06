@@ -21,6 +21,7 @@ public class GameService {
 
     public ChessGame createNewGame() {
         final ChessGame chessGame = ChessGame.initializeChessGame();
+        chessGame.start();
         return gameRepository.save(chessGame);
     }
 
