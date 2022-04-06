@@ -8,10 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.EmblemMapper;
 import chess.Game;
-import chess.model.Board;
-import chess.model.PieceArrangement.DefaultArrangement;
 
 public class GameDaoImplTest {
 
@@ -37,5 +34,12 @@ public class GameDaoImplTest {
     void save() {
         assertThatCode(() -> gameDao.save())
             .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("DB에 존재하는 game 정보를 id로 찾아 삭제한다.")
+    void deleteById() {
+        gameDao.save();
+        gameDao.deleteById(gameDao.getId());
     }
 }
