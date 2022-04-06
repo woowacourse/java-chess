@@ -7,7 +7,6 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,25 +15,12 @@ import java.util.Map;
 
 public class PieceDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    public Connection getConnection() {
-
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new IllegalStateException("connection 획득 실패");
-        }
-        return connection;
-    }
+    private final DataSource dataSource = new DataSource();
 
     public void savePieces(Map<Position, Piece> board) {
         String sql = "insert into piece (color, piece_type, position_column, position_row) values (?, ?, ?, ?)";
 
-        Connection connection = getConnection();
+        Connection connection = dataSource.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             for (Position position : board.keySet()) {
@@ -54,7 +40,7 @@ public class PieceDao {
     public void removeAll() {
         String sql = "delete from piece";
 
-        Connection connection = getConnection();
+        Connection connection = dataSource.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -66,7 +52,7 @@ public class PieceDao {
         String sql = "select color, piece_type, position_column, position_row from piece";
         Map<Position, Piece> result = new HashMap<>();
 
-        Connection connection = getConnection();
+        Connection connection = dataSource.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeQuery();
             ResultSet resultSet = statement.getResultSet();
@@ -85,5 +71,27 @@ public class PieceDao {
             throw new IllegalStateException("sql 실행 실패", e.getCause());
         }
         return result;
+    }
+
+    public Piece findPieceByPosition(Position position) {
+        String sql = "select color, piece_type from piece where position_column = ? and position_row = ?";
+
+        Connection connection = dataSource.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, position.getColumn().name());
+            statement.setString(2, position.getRow().name());
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Color color = Color.valueOf(resultSet.getString("color"));
+                String type = resultSet.getString("piece_type");
+
+                return PieceFactory.generate(type, color);
+            }
+            throw new IllegalStateException("해당 위치에 Piece가 존재하지 않습니다");
+        } catch (SQLException e) {
+            throw new IllegalStateException("sql 실행 실패", e.getCause());
+        }
     }
 }

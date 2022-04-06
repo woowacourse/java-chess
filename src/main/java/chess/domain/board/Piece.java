@@ -32,6 +32,14 @@ public abstract class Piece {
 
     public abstract double getPoint();
 
+    public Color getColor() {
+        return color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -41,19 +49,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color;
+        return color == piece.color && type.equals(piece.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public String getType() {
-        return type;
+        return Objects.hash(color, type);
     }
 }

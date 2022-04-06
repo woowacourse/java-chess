@@ -9,7 +9,7 @@ import chess.web.dto.StatusDto;
 public class GameService {
 
     private GameManager gameManager;
-    private PieceDao pieceDao;
+    private PieceDao pieceDao = new PieceDao();
 
     public ChessDto start() {
         gameManager = new GameManager();
