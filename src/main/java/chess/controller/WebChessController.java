@@ -48,7 +48,7 @@ public class WebChessController {
 			MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
 			Position source = PositionConvertor.to(moveDto.getSource());
 			Position target = PositionConvertor.to(moveDto.getTarget());
-			GameDto gameDto = chessService.move(source, target);
+			GameDto gameDto = chessService.move(moveDto.getGameId(), source, target);
 			return gson.toJson(gameDto);
 		});
 

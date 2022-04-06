@@ -5,6 +5,7 @@ const board = document.querySelector("#board");
 
 let source = "";
 let target = "";
+let game = "";
 
 addBoardClickEvent();
 
@@ -55,6 +56,7 @@ function move(event) {
 
 function movePiece(source, target) {
     const request = {
+        gameId: game,
         source: source,
         target: target
     }
@@ -74,6 +76,7 @@ function movePiece(source, target) {
 
 function updatePieceContainer(response) {
     const divs = board.querySelectorAll("div");
+    game = response["gameId"];
     let pieces = response["board"];
     for (const div of divs) {
         if (div.className === "rank") {

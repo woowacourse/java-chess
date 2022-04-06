@@ -17,4 +17,14 @@ class GameDaoTest {
 		assertDoesNotThrow(() -> gameDao.save("start\n"));
 		connection.rollback();
 	}
+
+	@Test
+	void update() throws SQLException {
+		Connection connection = DatabaseConnection.getConnection();
+		connection.setAutoCommit(false);
+		GameDao gameDao = new GameDao(connection);
+		int gameId = gameDao.save("start\n");
+		assertDoesNotThrow(() -> gameDao.update(gameId, "move a2 a3"));
+		connection.rollback();
+	}
 }
