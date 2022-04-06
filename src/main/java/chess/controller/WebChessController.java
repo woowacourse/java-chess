@@ -7,8 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.dao.PieceDao;
 import chess.dao.BoardDao;
-import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
@@ -26,8 +26,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebChessController {
 
     private ChessGame chessGame;
-    private GameDao gameDao = new GameDao();
     private BoardDao boardDao = new BoardDao();
+    private PieceDao pieceDao = new PieceDao();
 
     public void run() {
         port(9090);
@@ -47,9 +47,8 @@ public class WebChessController {
         post("/load", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String id = req.queryParams("id");
-
-            Map<Coordinate, Piece> board = init(boardDao.findByGameId(id));
-            State state = createState(board, gameDao.findState(id));
+            Map<Coordinate, Piece> board = init(pieceDao.findByGameId(id));
+            State state = createState(board, boardDao.findState(id));
 
             chessGame = new ChessGame(state);
             model.put("id", id);
@@ -60,8 +59,8 @@ public class WebChessController {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame.start();
-            int id = gameDao.save(chessGame);
-            boardDao.save(chessGame.getValue(), id);
+            int id = boardDao.save(chessGame);
+            pieceDao.save(chessGame.getValue(), id);
             model.put("id", id);
             model.put("pieces", chessGame.getPieces());
             return render(model, "game.html");
@@ -70,7 +69,7 @@ public class WebChessController {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame.end();
-            gameDao.delete(req.queryParams("id"));
+            boardDao.delete(req.queryParams("id"));
 
             ScoreCalculator scoreCalculator = new ScoreCalculator(chessGame.getValue());
             Map<Team, Double> status = scoreCalculator.createStatus();
@@ -98,9 +97,9 @@ public class WebChessController {
             String to = req.queryParams("to");
 
             chessGame.move(from, to);
-            boardDao.updatePosition(id, from, chessGame.getValue().get(Coordinate.of(from)));
-            boardDao.updatePosition(id, to, chessGame.getValue().get(Coordinate.of(to)));
-            gameDao.updateById(req.queryParams("id"), chessGame.getState().getState());
+            pieceDao.updatePosition(id, from, chessGame.getValue().get(Coordinate.of(from)));
+            pieceDao.updatePosition(id, to, chessGame.getValue().get(Coordinate.of(to)));
+            boardDao.updateById(req.queryParams("id"), chessGame.getState().getState());
 
             model.put("id", req.queryParams("id"));
             model.put("pieces", chessGame.getPieces());

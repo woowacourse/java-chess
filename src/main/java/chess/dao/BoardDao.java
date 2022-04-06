@@ -5,12 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.sql.Statement;
 
-import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
+import chess.domain.game.ChessGame;
 
 public class BoardDao {
 
@@ -18,56 +15,58 @@ public class BoardDao {
     private static final String USER = "username";
     private static final String PASSWORD = "password";
 
-    private Connection connection = getConnection();
+    private final Connection connection = getConnection();
 
-    public void save(Map<Coordinate, Piece> board, int gameId) {
-        final String sql = "INSERT INTO board (game_id, position, type, color) values (?, ?, ?, ?)";
-        board.forEach((key, value) -> savePiece(sql, gameId, key, value));
-    }
+    public int save(ChessGame chessGame) {
+        String sql = "INSERT INTO board (state) values (?)";
 
-    public void savePiece(String sql, int gameId, Coordinate coordinate, Piece piece) {
-        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, gameId);
-            statement.setString(2, coordinate.getColumn().getName() + coordinate.getRow().getValue());
-            statement.setString(3, piece.getSymbol().toUpperCase());
-            statement.setString(4, piece.getTeam().getName());
-            statement.execute();
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<Coordinate, Piece> findByGameId(String id) {
-        String sql = "SELECT * FROM board WHERE game_id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, id);
-
-            ResultSet resultSet = statement.executeQuery();
-            Map<Coordinate, Piece> board = new LinkedHashMap<>();
-            while (resultSet.next()) {
-                String position = resultSet.getString("position");
-                String type = resultSet.getString("type");
-                String color = resultSet.getString("color");
-                board.put(Coordinate.of(position), PieceFactory.of(color, type));
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, chessGame.getState().getState());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (!resultSet.next()) {
+                throw new SQLException();
             }
-            return board;
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new IllegalArgumentException();
         }
     }
 
-    public void updatePosition(String id, String coordinate, Piece piece) {
-        String sql = "UPDATE board "
-            + "set type = ?, color = ? "
-            + "where game_id = ? and position = ?";
+    public String findState(String id) {
+        String sql = "SELECT state FROM board WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, piece.getSymbol().toUpperCase());
-            statement.setString(2, piece.getTeam().getName());
-            statement.setString(3, id);
-            statement.setString(4, coordinate);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                throw new SQLException("쿼리문 실행 결과가 존재하지 않습니다.");
+            }
+            return resultSet.getString("state");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void updateById(String id, String state) {
+        String sql = "UPDATE board SET state = ? where id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, state);
+            statement.setString(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(String id) {
+        String sql = "DELETE FROM board WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
