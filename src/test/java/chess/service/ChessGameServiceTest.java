@@ -97,7 +97,7 @@ public class ChessGameServiceTest {
         Map<String, String> actual = chessGameService.find();
 
         //then
-        assertThat(actual).isNull();
+        assertThat(actual).isEmpty();
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ChessGameServiceTest {
 
         @Override
         public Map<String, String> findById(int gameId) {
-            return table.get(gameId);
+            return table.getOrDefault(gameId, Map.of());
         }
 
         @Override

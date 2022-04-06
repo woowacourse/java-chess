@@ -56,7 +56,7 @@ public class WebApplication {
                 Request request = Request.toPlay(
                     "move" + " " + req.queryParams("source") + " " + req.queryParams("target"));
                 service.move(Position.of(request.getSource()), Position.of(request.getTarget()));
-                model.put("pieces", service.find());
+                model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
                 model.put("color", service.getTurnColor());
                 if (service.isFinished()) {
                     return finish(service, model);

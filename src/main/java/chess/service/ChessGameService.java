@@ -1,6 +1,7 @@
 package chess.service;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.EmblemMapper;
 import chess.dao.BoardDao;
@@ -29,6 +30,7 @@ public class ChessGameService {
     }
 
     public void save() {
+        gameDao.save();
         boardDao.save(gameDao.getId(), EmblemMapper.StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
     }
 

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class BoardDaoImpl implements BoardDao {
 
@@ -45,11 +46,13 @@ public class BoardDaoImpl implements BoardDao {
                 boardMap.put(resultSet.getString("position"),
                     resultSet.getString("piece"));
             }
+            System.out.println("[null]은 아닌데??");
             return boardMap;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("[null 등장]");
         return null;
     }
 
