@@ -8,10 +8,12 @@
 }
 
 .selectable {
+    text-align: center;
     pointer-events: auto;
 }
 
 .non_selectable {
+    text-align: center;
     pointer-events: none;
 }
 
@@ -37,6 +39,8 @@
 }
 
 .board_table {
+    margin-left: auto;
+    margin-right: auto;
     border-collapse: collapse;
 }
 

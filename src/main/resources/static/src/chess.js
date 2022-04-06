@@ -9,7 +9,12 @@ function getChess() {
         success(data) {
             clearPieces();
             let obj = JSON.parse(data);
-            setButton(obj.status);
+            if (obj.status === "finished") {
+                end();
+            } else {
+                setGameStatus(obj.status);
+                setButton(obj.status);
+            }
             setPieces(obj.pieces);
         }
     });
@@ -22,19 +27,23 @@ function clearPieces() {
     });
 }
 
+function setGameStatus(status) {
+    if (status === "playing") document.getElementById("game_status").textContent = "게임 진행 중입니다.";
+    if (status === "finished") document.getElementById("game_status").textContent = "게임이 종료됐습니다. 시작 버튼을 눌러주세요!";
+    if (status === "ready") document.getElementById("game_status").textContent = "게임 준비 중입니다. 시작 버튼을 눌러주세요!";
+}
+
 function setButton(status) {
     if (status === "playing") {
         document.getElementById("board_div").className = "selectable";
         document.getElementById("status_btn").hidden = false;
         document.getElementById("end_btn").hidden = false;
-        document.getElementById("restart_btn").hidden = true;
         document.getElementById("start_btn").hidden = true;
         return;
     }
     document.getElementById("board_div").className = "non_selectable";
     document.getElementById("status_btn").hidden = true;
     document.getElementById("end_btn").hidden = true;
-    document.getElementById("restart_btn").hidden = true;
     document.getElementById("start_btn").hidden = false;
 }
 
@@ -51,25 +60,9 @@ function start() {
         success(data) {
             clearPieces();
             let obj = JSON.parse(data);
+            setGameStatus(obj.status);
             setButton(obj.status);
             setPieces(obj.pieces);
-        }
-    });
-}
-
-function restart() {
-    $.ajax({
-        url: "/restart",
-        type: 'get',
-        success(data) {
-            document.getElementById("board_div").className = "selectable";
-            document.getElementById("status_btn").hidden = false;
-            document.getElementById("end_btn").hidden = false;
-
-            let pieces = JSON.parse(data);
-            $.each(pieces, function (idx, piece) {
-                setPiece(piece.position, piece.color, piece.type);
-            });
         }
     });
 }
@@ -96,7 +89,11 @@ function move(position) {
             source: sourcePosition,
             target: targetPosition
         },
-        success() {
+        success(data) {
+            let obj = JSON.parse(data);
+            if (obj.status === "finished") {
+                end();
+            }
             document.getElementById(targetPosition).innerHTML = document.getElementById(sourcePosition).innerHTML;
             document.getElementById(sourcePosition).innerHTML = "";
         },
@@ -132,9 +129,8 @@ function end() {
         url: "/end",
         type: 'post',
         success(data) {
-            setButton("finished");
             let status = JSON.parse(data);
-            var message = "♟ 게임 결과 ♟\n";
+            var message = "게임 종료 !!!\n♟ 게임 결과 ♟\n";
             $.each(status.scores, function (idx, score) {
                 message += score.name + " : " + score.score + "점\n";
             });
@@ -144,6 +140,8 @@ function end() {
                 message += status.winnerName + " 진영이 이겼습니다.";
             }
             alert(message);
+            setGameStatus("finished");
+            setButton("finished");
         }
     });
 }

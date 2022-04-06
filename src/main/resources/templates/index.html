@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>♟ LALA's Chess Game ♟</title>
     <link href="/src/chess.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="non_selectable" id="board_div">
+    <div style="font-size: xx-large; padding-top:30px">♟ LALA's Chess Game ♟</div>
+    <div id="game_status" style="font-size: x-large; padding-top:30px"></div>
+    <br/>
     <table class="board_table" id="board">
         <tr>
             <td class="board_square dark_board" id="a8" onclick="move(this.id)"></td>
@@ -91,10 +94,13 @@
         </tr>
     </table>
 </div>
-<button class="button" id="start_btn" onclick="start()" hidden>시작</button>
-<button class="button" id="restart_btn" onclick="restart()" hidden>재시작</button>
-<button class="button" id="status_btn" onclick="showScore()" hidden>점수</button>
-<button class="button" id="end_btn" onclick="end()" hidden>종료</button>
+<div style="text-align: center">
+    <div style="margin-left: auto; margin-right: auto">
+        <button class="button" id="start_btn" onclick="start()" hidden>시작</button>
+        <button class="button" id="status_btn" onclick="showScore()" hidden>점수</button>
+        <button class="button" id="end_btn" onclick="end()" hidden>종료</button>
+    </div>
+</div>
 
 <script src="/src/chess.js"></script>
 </body>
