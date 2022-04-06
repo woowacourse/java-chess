@@ -46,4 +46,9 @@ public final class Turn extends Running{
         checkTurn(source);
         board.move(source, target);
     }
+
+    @Override
+    public Player getPlayer() {
+        return player;
+    }
 }

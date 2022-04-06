@@ -28,4 +28,9 @@ public final class Start extends Running {
         }
         throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
     }
+
+    @Override
+    public Player getPlayer() {
+        return Player.BLACK;
+    }
 }

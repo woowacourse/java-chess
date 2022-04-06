@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../static/src/board.css"/>
     <meta charset="UTF-8">
-    <title>체스 게임</title>
+    <title>체스 게임 종료</title>
     <link rel="stylesheet" href="src/board.css"/>
 </head>
 <body>
@@ -14,23 +14,13 @@
             <img src="images/{{symbol}}.png" id="{{position}}"/>
             {{/squares}}
         </div>
-        <form action="/game" method="post">
+        <form action="/" method="get">
+            흰색 플레이어 점수: {{whiteScore}}
             <br />
-            {{player}} 차례입니다.
+            검은색 플레이어 점수: {{blackScore}}
             <br />
-            > 게임 종료 : end
-            <br />
-            > 이동 : move source위치 target위치 - 예. move b2 b3
-            <br />
-            > 게임이 종료되면 아무키나 입력하세요.
-            <br />
-            <br />
-            {{message}}
-            <br />
-            입력하세요: <input type="text" name="command" />
-            <input type="submit" />
+                <input type="submit" value="처음으로"/>
         </form>
     </div>
-
 </body>
 </html>
