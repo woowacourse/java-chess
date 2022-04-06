@@ -4,8 +4,10 @@ import static spark.Spark.*;
 
 import chess.controller.GameController;
 import chess.dto.ResponseDto;
+import chess.dto.ResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WebApplication {
@@ -24,17 +26,9 @@ public class WebApplication {
             return responseDto.toString();
         });
 
-//        get("/save", controller::save, new HandlebarsTemplateEngine());
-//
-//        get("/status", controller::status, new HandlebarsTemplateEngine());
-//
-//        get("/result", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            final ResultDto result = new ResultDto(game.getResult(), game.getWinColor());
-//            model.put("result", result);
-//
-//            return render(model, "result.html");
-//        });
+        get("/status", controller::status, new HandlebarsTemplateEngine());
+
+        get("/result", controller::result, new HandlebarsTemplateEngine());
 //
 //        get("/restart", (req, res) -> {
 //            game.restart();
@@ -47,14 +41,10 @@ public class WebApplication {
         try {
             controller.move(command);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            return new ResponseDto(400, e.getMessage(), true);
+            return new ResponseDto(400, e.getMessage(), controller.isRunning());
         }
 
-//        if (!game.isRunning()) {
-//            return new ResponseDto(200, "", true);
-//        }
-
-        return new ResponseDto(200, "", true);
+        return new ResponseDto(200, "", controller.isRunning());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.dto.BoardDto;
+import chess.dto.ResultDto;
+import chess.piece.detail.Color;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
@@ -33,18 +35,26 @@ public class GameController {
         chessService.movePiece(input);
     }
 
-//    public ModelAndView save(final Request request, final Response response) {
-//        chessService.save();
-//        response.redirect("/chess");
-//        return null;
-//    }
+    public ModelAndView status(final Request request, final Response response) {
+        final Map<Color, Double> result = chessService.getResult();
+        final Color winningColor = chessService.getWinningColor();
+        Map<String, Object> model = new HashMap<>();
+        model.put("result", new ResultDto(result, winningColor));
 
-//    public ModelAndView status(final Request request, final Response response) {
-//        final Map<Color, Double> result = chessService.getResult();
-//        final Color winningColor = chessService.getWinningColor();
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("result", new ResultDto(result, winningColor));
-//
-//        return new ModelAndView(model, "result.html");
-//    }
+        return new ModelAndView(model, "result.html");
+    }
+
+    public ModelAndView result(final Request request, final Response response) {
+        final Map<Color, Double> result = chessService.getResult();
+        final Color winningColor = chessService.getWinnerColor();
+        Map<String, Object> model = new HashMap<>();
+
+        model.put("result", new ResultDto(result, winningColor));
+
+        return new ModelAndView(model, "result.html");
+    }
+
+    public boolean isRunning() {
+        return chessService.isRunning();
+    }
 }

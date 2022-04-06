@@ -8,7 +8,7 @@ import chess.position.Position;
 import chess.view.Command;
 import java.util.Map;
 
-public final class Ready implements State {
+public final class Ready extends AbstractState {
 
     private Ready() {
     }

@@ -8,18 +8,22 @@ import chess.position.Position;
 import chess.view.Command;
 import java.util.Map;
 
-public final class Finished extends AbstractState {
+public class AbstractState implements State{
 
-    Finished() {
+    protected Board board;
+    protected Color turn;
+
+    AbstractState() {
     }
 
-    Finished(final Board board, final Color turn) {
-        super(board, turn);
+    AbstractState(final Board board, final Color turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     @Override
     public State turn(final Command command) {
-        throw new IllegalStateException("게임이 이미 종료되었습니다.");
+        return null;
     }
 
     @Override
@@ -29,7 +33,7 @@ public final class Finished extends AbstractState {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-        throw new IllegalStateException("게임이 종료되어 말을 움직일 수 없습니다.");
+
     }
 
     @Override
@@ -39,26 +43,26 @@ public final class Finished extends AbstractState {
 
     @Override
     public Board getBoard() {
-        return board;
+        return null;
     }
 
     @Override
     public boolean isGameEnd() {
-        return true;
+        return false;
     }
 
     @Override
     public Color getTurn() {
-        return turn;
+        return null;
     }
 
     @Override
     public Map<Color, Double> getStatus() {
-        throw new IllegalCallerException("게임이 종료되어 상태를 불러올 수 없습니다.");
+        return null;
     }
 
     @Override
     public void load(final Map<Position, Piece> board) {
-        throw new IllegalCallerException("불가능");
+
     }
 }

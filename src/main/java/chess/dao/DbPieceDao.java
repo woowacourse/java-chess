@@ -16,7 +16,16 @@ public class DbPieceDao implements PieceDao {
 
     @Override
     public boolean isExist() {
-        return true;
+        final String sql = "select * from piece";
+
+        try (Connection connection = DbConnector.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

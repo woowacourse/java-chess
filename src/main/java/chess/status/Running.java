@@ -11,20 +11,17 @@ import chess.position.Position;
 import chess.view.Command;
 import java.util.Map;
 
-public final class Running implements State {
+public final class Running extends AbstractState {
 
     private static final Color FIRST_TURN_COLOR = WHITE;
 
-    private Board board;
-    private Color turn = FIRST_TURN_COLOR;
 
     Running() {
-        this.board = Board.create();
+        super(Board.create(), FIRST_TURN_COLOR);
     }
 
     public Running(final Map<Position, Piece> value, final Color turn) {
-        this.board = Board.of(value);
-        this.turn = turn;
+        super(Board.of(value), turn);
     }
 
     @Override
@@ -34,7 +31,7 @@ public final class Running implements State {
         }
 
         if (command.isEnd()) {
-            return new Finished();
+            return new Finished(board, turn);
         }
         return this;
     }

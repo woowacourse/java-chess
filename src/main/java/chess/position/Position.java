@@ -82,7 +82,11 @@ public class Position {
     }
 
     private static boolean isExist(final String position, final Position cachedPositions) {
-        final int column = Integer.parseInt(position.substring(0, COLUMN_END_INDEX));
+        String substring = position.substring(0, COLUMN_END_INDEX);
+        if (substring.charAt(0) >= 97 && substring.charAt(0) <= 122) {
+            substring = String.valueOf(substring.charAt(0) - 'a' + 1);
+        }
+        final int column = Integer.parseInt(substring);
         final int row = Integer.parseInt(position.substring(COLUMN_END_INDEX, ROW_END_INDEX));
 
         return cachedPositions.column == Column.of(column) &&
