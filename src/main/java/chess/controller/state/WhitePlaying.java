@@ -10,11 +10,6 @@ public class WhitePlaying extends Playing {
     }
 
     @Override
-    public Turn getTurn() {
-        return Turn.WHITE_TURN;
-    }
-
-    @Override
     public ChessGameState move(String from, String to) {
         MoveResult result = movePiece(from, to, Color.WHITE);
 

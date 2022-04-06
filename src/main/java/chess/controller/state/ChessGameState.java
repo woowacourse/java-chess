@@ -13,8 +13,6 @@ public interface ChessGameState {
 
     ChessGameState end();
 
-    Turn getTurn();
-
     Board getBoard();
 
     Color getWinner();

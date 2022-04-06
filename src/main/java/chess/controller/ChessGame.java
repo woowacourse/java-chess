@@ -2,8 +2,6 @@ package chess.controller;
 
 import chess.controller.state.ChessGameState;
 import chess.controller.state.Ready;
-import chess.controller.state.Turn;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.dto.MoveDto;
 import chess.dto.ScoreDto;
@@ -31,14 +29,6 @@ public class ChessGame {
         return chessGameState.isEnded();
     }
 
-    public Turn getTurn() {
-        return chessGameState.getTurn();
-    }
-
-    public Color getWinner()
-    {
-        return chessGameState.getWinner();
-    }
     public Board getBoard() {
         return chessGameState.getBoard();
     }
