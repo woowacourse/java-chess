@@ -11,9 +11,13 @@ public class PieceDto {
     private final String color;
 
     public PieceDto(Piece piece, Position position, Color color) {
-        this.pieceType = piece.getNotation();
-        this.position = position.getNotation();
-        this.color = color.getName();
+        this(piece.getNotation(), position.getNotation(), color.getName());
+    }
+
+    public PieceDto(String pieceType, String position, String color) {
+        this.pieceType = pieceType;
+        this.position = position;
+        this.color = color;
     }
 
     public String getPieceType() {
