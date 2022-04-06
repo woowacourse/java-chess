@@ -1,9 +1,9 @@
 package chess.domain.dao;
 
-import chess.domain.entity.Board;
-import chess.domain.util.DbConnection;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
+import chess.domain.entity.Board;
+import chess.domain.util.DbConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +70,21 @@ public class BoardDaoImpl implements BoardDao {
             return boards;
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void updateByPosition(Long gameId, String position, PieceDto pieceDto) {
+        final String sql = "UPDATE chess_board SET board_piece = ?, board_color = ? WHERE game_id = ? AND board_position = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, pieceDto.getType());
+            statement.setString(2, pieceDto.getColor());
+            statement.setLong(3, gameId);
+            statement.setString(4, position);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

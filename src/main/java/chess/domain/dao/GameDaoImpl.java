@@ -1,8 +1,8 @@
 package chess.domain.dao;
 
+import chess.domain.dto.GameDto;
 import chess.domain.entity.Game;
 import chess.domain.util.DbConnection;
-import chess.domain.dto.GameDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +57,20 @@ public class GameDaoImpl implements GameDao {
                     rs.getString("game_turn"));
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void updateByGame(GameDto gameDto) {
+        final String sql = "UPDATE chess_game SET game_state = ?, game_turn = ? WHERE game_id = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, gameDto.getState());
+            statement.setString(2, gameDto.getTurn());
+            statement.setLong(3, gameDto.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

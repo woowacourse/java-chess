@@ -2,6 +2,7 @@ package chess.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,4 +24,12 @@ class ChessServiceTest {
         assertDoesNotThrow(() -> chessService.load(1L));
     }
 
+    @Test
+    @DisplayName("체스 게임의 말을 움직일 수 있다.")
+    public void move() {
+        final ChessService chessService = new ChessService();
+        final ChessGame chessGame = chessService.load(1L);
+
+        assertDoesNotThrow(() -> chessService.move(chessGame, "a2", "a4"));
+    }
 }

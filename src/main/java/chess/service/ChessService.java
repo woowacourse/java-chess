@@ -16,6 +16,7 @@ import chess.domain.dao.GameDao;
 import chess.domain.dao.GameDaoImpl;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.GameDto;
+import chess.domain.dto.PieceDto;
 import chess.domain.entity.Board;
 import chess.domain.entity.Game;
 import chess.domain.game.ChessGame;
@@ -105,5 +106,20 @@ public class ChessService {
             return new Running(chessBoard, Turn.from(turn));
         }
         return new Finished(chessBoard);
+    }
+
+    public ChessGame move(ChessGame chessGame, String source, String target) {
+        final Position from = Position.valueOf(source);
+        final Position to = Position.valueOf(target);
+
+        final Long gameId = chessGame.getId();
+
+        chessGame.move(from, to);
+
+        boardDao.updateByPosition(gameId, from.getName(), new PieceDto(chessGame.board().findByPiece(from)));
+        boardDao.updateByPosition(gameId, to.getName(), new PieceDto(chessGame.board().findByPiece(to)));
+        gameDao.updateByGame(GameDto.of(gameId, chessGame.getState(), chessGame.turn().name()));
+
+        return chessGame;
     }
 }

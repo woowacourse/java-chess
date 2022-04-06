@@ -8,4 +8,7 @@ public interface GameDao {
     Long save(GameDto gameDto);
 
     Game findGameById(Long id);
+
+    void updateByGame(GameDto of);
+
 }

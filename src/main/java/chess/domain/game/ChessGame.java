@@ -54,4 +54,12 @@ public class ChessGame {
     public State getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "ChessGame{" +
+                "id=" + id +
+                ", state=" + state +
+                '}';
+    }
 }
