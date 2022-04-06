@@ -59,7 +59,7 @@ class ChessServiceTest {
     @DisplayName("초기 board들의 점수는 black, white팀 모두 38이다.")
     void getStatus() {
         ScoreDto status = chessService.getStatus(boardId);
-        assertThat(status.getBlackTeam()).isEqualTo(38D);
-        assertThat(status.getWhiteTeam()).isEqualTo(38D);
+        assertThat(status.getBlackTeamScore()).isEqualTo(38D);
+        assertThat(status.getWhiteTeamScore()).isEqualTo(38D);
     }
 }

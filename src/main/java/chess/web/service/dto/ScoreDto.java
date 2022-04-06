@@ -1,20 +1,20 @@
 package chess.web.service.dto;
 
 public class ScoreDto {
-    private final double blackTeam;
-    private final double whiteTeam;
+    private final double blackTeamScore;
+    private final double whiteTeamScore;
 
-    public ScoreDto(double blackTeam, double whiteTeam) {
-        this.blackTeam = blackTeam;
-        this.whiteTeam = whiteTeam;
+    public ScoreDto(double blackTeamScore, double whiteTeamScore) {
+        this.blackTeamScore = blackTeamScore;
+        this.whiteTeamScore = whiteTeamScore;
     }
 
-    public double getWhiteTeam() {
-        return whiteTeam;
+    public double getWhiteTeamScore() {
+        return whiteTeamScore;
     }
 
-    public double getBlackTeam() {
-        return blackTeam;
+    public double getBlackTeamScore() {
+        return blackTeamScore;
     }
 
 }
