@@ -26,7 +26,7 @@ public class PieceFactory {
     }
 
     public static Map<Position, Piece> initBoard() {
-        return INITIAL_BOARD;
+        return new HashMap<>(INITIAL_BOARD);
     }
     
     private static void createBlankIn(final Rank rank) {
