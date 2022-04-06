@@ -5,14 +5,10 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChessGameDto {
     private final String name;
@@ -46,7 +42,7 @@ public class ChessGameDto {
         Map<String, String> squaresDB = new HashMap<>();
         chessGame.getBoard().getSquares().forEach((position, piece) ->
                 squaresDB.put(position.toString(),
-                piece.getName().getValue(piece.getTeam()))
+                        piece.getName().getValue(piece.getTeam()))
         );
         return squaresDB;
     }
@@ -64,5 +60,13 @@ public class ChessGameDto {
 
     public ChessGame getChessGame() {
         return chessGame;
+    }
+
+    public String getTurn() {
+        return chessGame.getTurn().name();
+    }
+
+    public Piece findPiece(Position position) {
+        return getSquares().get(position);
     }
 }
