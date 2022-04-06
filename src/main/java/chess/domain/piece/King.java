@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class King extends LinearMovePiece {
     public King(Color color) {
-        super(color);
+        super(color, PieceType.King);
     }
 
     @Override

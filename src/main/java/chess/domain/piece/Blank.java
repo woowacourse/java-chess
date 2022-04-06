@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Blank extends Piece {
     public Blank() {
-        super(Color.NONE);
+        super(Color.NONE, PieceType.Blank);
     }
 
     @Override

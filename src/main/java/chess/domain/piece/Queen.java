@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Queen extends LinearMovePiece {
     public Queen(Color color) {
-        super(color);
+        super(color, PieceType.Queen);
     }
 
     @Override

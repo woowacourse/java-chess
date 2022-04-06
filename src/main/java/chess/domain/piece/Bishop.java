@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Bishop extends LinearMovePiece {
     public Bishop(Color color) {
-        super(color);
+        super(color, PieceType.Bishop);
     }
 
     @Override

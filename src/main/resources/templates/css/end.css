@@ -1,0 +1,30 @@
+* {
+
+}
+
+body {
+    background: url("../img/background_img.jpg");
+    background-size: cover;
+}
+
+#return-btn {
+    width: 300px;
+    height: 200px;
+    background: transparent url('../img/turn_board.jfif');
+    background-size: contain;
+    border: transparent;
+    align-content: center;
+    color: antiquewhite;
+    font-size: xx-large;
+    font-weight: bolder;
+    margin: auto;
+}
+
+div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}

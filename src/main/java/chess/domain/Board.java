@@ -38,7 +38,7 @@ public class Board {
 
     private static void fillRankWithBlank(Map<Position, Piece> pieces, PositionY positionY) {
         Arrays.stream(PositionX.values())
-                .map(positionX -> new Position(positionX, positionY))
+                .map(positionX -> Position.of(positionX, positionY))
                 .forEach(position -> pieces.put(position, new Blank()));
     }
 
@@ -134,7 +134,7 @@ public class Board {
         movePiece(source, target);
     }
 
-    private void validateSourceColor(Color color, Position source) {
+    public void validateSourceColor(Color color, Position source) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isSameColor(color)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
@@ -183,7 +183,15 @@ public class Board {
         board.replace(target, piece);
     }
 
+    public Result createResult() {
+        return new Result(Map.of(Color.WHITE, calculateScoreOf(Color.WHITE), Color.BLACK, calculateScoreOf(Color.BLACK)));
+    }
+
     public double calculateScoreOf(Color color) {
+        if (isKingDeadOf(color)) {
+            return 0.0;
+        }
+
         double score = board.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
@@ -202,6 +210,13 @@ public class Board {
                 .filter(list -> list.size() > 1)
                 .mapToInt(List::size)
                 .sum();
+    }
+
+    private boolean isKingDeadOf(Color color) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isSameColor(color))
+                .noneMatch(Piece::isKing);
     }
 
     private List<Position> findPawnPositionsOf(Color color) {

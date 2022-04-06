@@ -9,7 +9,7 @@ import java.util.Map;
 public class Pawn extends LinearMovePiece {
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PieceType.Pawn);
     }
 
     @Override

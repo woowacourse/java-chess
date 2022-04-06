@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class LinearMovePiece extends Piece {
-    public LinearMovePiece(Color color) {
-        super(color);
+    public LinearMovePiece(Color color, PieceType pieceType) {
+        super(color, pieceType);
     }
 
     protected List<Position> findLinearRoute(Position source, Position target) {

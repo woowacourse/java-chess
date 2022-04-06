@@ -8,10 +8,12 @@ import java.util.Map;
 
 public abstract class Piece {
     protected final Color color;
+    protected final PieceType pieceType;
     protected int moveCount;
 
-    public Piece(Color color) {
+    public Piece(Color color, PieceType pieceType) {
         this.color = color;
+        this.pieceType=pieceType;
         this.moveCount = 0;
     }
 
@@ -59,4 +61,8 @@ public abstract class Piece {
     public abstract List<Position> findRoute(Position source, Position target);
 
     public abstract double score();
+
+    public String getPieceName() {
+        return (pieceType.name()+color.name()).toLowerCase();
+    }
 }

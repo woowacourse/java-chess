@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Knight extends Piece {
     public Knight(Color color) {
-        super(color);
+        super(color, PieceType.Knight);
     }
 
     @Override
