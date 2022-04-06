@@ -1,7 +1,6 @@
 package chess.web.service;
 
 import chess.console.ChessGame;
-import chess.domain.StatusScore;
 import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
 import chess.web.dao.camp.CampDao;
@@ -39,26 +38,32 @@ public class ChessService {
         final HashMap<String, Object> model = new HashMap<>();
         return () -> {
             if (chessGame.isRunning()) {
-//                OutputView.printBoard(getBoard());
+//                OutputView.printBoard(getBoardDto());
                 System.err.println("게임이 진행중입니다. 현재 데이터를 받아와요");
+                model.put("meesage", "게임이 진행중 입니다.");
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
 
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
-                final StatusScore statusScore = chessGame.calculateStatus();
-                model.put("status", statusScore);
+                model.put("status", chessGame.calculateStatus());
+                return model;
             }
-            return model;
 //            if (isStatusInRunning()) {
 //                OutputView.printStatus(calculateStatus());
 //            }
-//            if (isEndInRunning()) {
+            if (isEndInRunning()) {
 //                OutputView.printFinalStatus(calculateStatus());
-//            }
+                model.put("message", "현재 게임이 종료되었습니다.");
+                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+                model.put("camp", chessGame.getCamp());
+                model.put("status", chessGame.calculateStatus());
+                return model;
+            }
 //            if (isEndInGameOff()) {
-//                OutputView.printEndMessage();
+//
 //            }
+            return null;
         };
     }
 

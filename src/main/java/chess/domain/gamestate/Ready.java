@@ -88,7 +88,7 @@ public class Ready implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new IllegalStateException(NOT_INIT_CHESS_BOARD);
+        return board.getBoard();
     }
 
     @Override

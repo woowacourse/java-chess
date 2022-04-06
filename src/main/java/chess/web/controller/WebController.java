@@ -27,16 +27,18 @@ public class WebController {
 
     public void run() {
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             chessService.init();
-            return render(model, "index.html");
+            return render(new HashMap<>(), "index.html");
         });
 
         post("/:command", (req, res) -> {
             if (chessService.isNotExistGame()) {
                 res.redirect("/");
             }
-            return render(executeAndGetModel(req), "index.html");
+            if (chessService.isEndInGameOff()) {
+                render(executeAndGetModel(req), "index.html");
+            }
+            return render(executeAndGetModel(req), "game.html");
         });
     }
 
@@ -44,7 +46,6 @@ public class WebController {
         try {
             return chessService.executeCommand(req);
         } catch (IllegalArgumentException | IllegalStateException e) {
-
             return new HashMap<>(Map.of("errorMessage", e.getMessage()));
         }
     }
