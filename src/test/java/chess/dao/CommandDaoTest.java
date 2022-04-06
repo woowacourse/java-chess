@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.view.Square;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -34,6 +33,8 @@ class CommandDaoTest {
     @Test
     void findAll() {
         final CommandDao commandDao = new CommandDao();
+        commandDao.init();
+        commandDao.save("start");
         final List<String> commands = commandDao.findAll();
         assertThat(commands).isNotEmpty();
     }
