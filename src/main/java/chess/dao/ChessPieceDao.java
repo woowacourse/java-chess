@@ -23,7 +23,7 @@ public class ChessPieceDao {
         final String sql = "SELECT * FROM chess_piece WHERE room_name = ?";
 
         try (final PreparedStatement statement = ConnectionGenerator.getStatement(sql)) {
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
             try (final ResultSet resultSet = statement.executeQuery()) {
                 final List<ChessPieceDto> dtos = new ArrayList<>();
                 while (resultSet.next()) {
@@ -63,9 +63,7 @@ public class ChessPieceDao {
 
     public int saveAll(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
         String sql = "INSERT INTO chess_piece (room_name, position, chess_piece, color) VALUES ";
-        sql += IntStream.range(0, pieceByPosition.size())
-                .mapToObj(i -> "(?, ?, ?, ?)")
-                .collect(Collectors.joining(", "));
+        sql += appendSqlParameter(pieceByPosition.size());
 
         try (final PreparedStatement statement = ConnectionGenerator.getStatement(sql)) {
             setAllParameter(roomName, pieceByPosition, statement);
@@ -74,6 +72,13 @@ public class ChessPieceDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    private String appendSqlParameter(final int rowSize) {
+        final String values = "(?, ?, ?, ?)";
+        return IntStream.range(0, rowSize)
+                .mapToObj(i -> values)
+                .collect(Collectors.joining(", "));
     }
 
     public int update(final String roomName, final Position from, final Position to) {
