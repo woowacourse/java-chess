@@ -1,11 +1,15 @@
 package chess.domain.dao;
 
+import chess.domain.entity.Board;
 import chess.domain.util.DbConnection;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class BoardDaoImpl implements BoardDao {
@@ -42,6 +46,30 @@ public class BoardDaoImpl implements BoardDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Board> findBoardById(Long id) {
+        final String sql = "SELECT * from chess_board WHERE game_id = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+
+            ResultSet rs = statement.executeQuery();
+            List<Board> boards = new ArrayList<>();
+            while (rs.next()) {
+                boards.add(new Board(
+                        rs.getLong("board_id"),
+                        rs.getLong("game_id"),
+                        rs.getString("board_position"),
+                        rs.getString("board_piece"),
+                        rs.getString("board_color")));
+            }
+
+            return boards;
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 }

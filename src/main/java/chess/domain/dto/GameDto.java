@@ -21,6 +21,10 @@ public class GameDto {
         return new GameDto(0L, convertToString(chessGame.getState()), chessGame.turn().name());
     }
 
+    public static GameDto of(Long gameId, State state, String name) {
+        return new GameDto(gameId, convertToString(state), name);
+    }
+
     private static String convertToString(State state) {
         if (state instanceof Ready) {
             return "ready";

@@ -1,5 +1,6 @@
 package chess.domain.dao;
 
+import chess.domain.entity.Game;
 import chess.domain.util.DbConnection;
 import chess.domain.dto.GameDto;
 import java.sql.Connection;
@@ -34,6 +35,26 @@ public class GameDaoImpl implements GameDao {
                 id = rs.getLong(1);
             }
             return id;
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public Game findGameById(Long id) {
+        final String sql = "SELECT * from chess_game WHERE game_id = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return new Game(
+                    rs.getLong("game_id"),
+                    rs.getString("game_state"),
+                    rs.getString("game_turn"));
         } catch (SQLException e) {
             throw new RuntimeException();
         }

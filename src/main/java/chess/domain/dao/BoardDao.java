@@ -5,4 +5,6 @@ import chess.domain.dto.BoardDto;
 public interface BoardDao {
 
     Long save(BoardDto boardDto);
+
+    List<Board> findBoardById(Long id);
 }

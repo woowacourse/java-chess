@@ -14,4 +14,13 @@ class ChessServiceTest {
 
         assertDoesNotThrow(() -> chessService.createRoom());
     }
+
+    @Test
+    @DisplayName("진행 중인 체스 게임을 불러올 수 있다.")
+    public void load() {
+        final ChessService chessService = new ChessService();
+
+        assertDoesNotThrow(() -> chessService.load(1L));
+    }
+
 }
