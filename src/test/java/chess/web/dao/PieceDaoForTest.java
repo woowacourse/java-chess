@@ -13,6 +13,11 @@ public class PieceDaoForTest implements PieceDao {
         pieces.put(pieceDto.getPosition(), pieceDto);
     }
 
+    @Override
+    public void deleteAll() {
+        pieces.clear();
+    }
+
     public int getSize() {
         return pieces.size();
     }

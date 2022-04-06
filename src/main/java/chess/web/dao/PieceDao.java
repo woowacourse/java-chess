@@ -6,4 +6,5 @@ public interface PieceDao {
 
     void save(PieceDto pieceDto);
 
+    void deleteAll();
 }

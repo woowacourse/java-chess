@@ -12,15 +12,31 @@ public class PieceDaoImpl implements PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private final Connection connection;
+
+    public PieceDaoImpl() {
+        connection = getConnection();
+    }
+
     @Override
     public void save(PieceDto pieceDto) {
-        final Connection connection = getConnection();
         final String sql = "insert into piece (piece_type, position, color) values (?, ?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, pieceDto.getPieceType());
             statement.setString(2, pieceDto.getPosition());
             statement.setString(3, pieceDto.getColor());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        final String sql = "delete from piece";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
