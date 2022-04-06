@@ -58,16 +58,16 @@
 
 4. 터미널을 켠 후, 아래 명령어를 실행해서 DB를 도커로 띄웁니다! 🐳
 
-```shell
-cd docker
-docker-compose -p chess -up
-```
+    ```shell
+    cd docker;
+    docker-compose -p chess -up
+    ```
 
-5. `WebApplication`을 실행한 후, [http://localhost:4567](http://localhost:4567)로 접속합니다 🤗
+5. `WebApplication`을 실행한 후, <a href="http://localhost:4567" target="_blank">http://localhost:4567 </a>로 접속합니다 🤗
 6. 프로그램을 종료했다면 아래 명령어로 도커 컨테이너를 내려주세요 👋
-```shell
-docker-compose -p chess down
-```
+    ```shell
+    docker-compose -p chess down
+    ```
 
 ---
 
