@@ -33,19 +33,22 @@ public class ChessService {
         this.squareDao = squareDao;
     }
 
-    public BoardDto start(long roomId) {
+    public BoardDto startNewGame(long roomId) {
         WebChessGame webChessGame = new WebChessGame();
         webChessGame.start();
-
         squareDao.removeAll(roomId);
         Map<Position, Piece> board = webChessGame.getBoard();
-        List<Square> squares = board.keySet().stream()
-                .map(position -> new Square(position.convertToString(), board.get(position).convertToString()))
-                .collect(Collectors.toList());
+        List<Square> squares = convertBoardToSquares(board);
         squareDao.saveAll(squares, roomId);
         roomDao.update(roomId, webChessGame.getTurn());
 
         return BoardDto.of(board, webChessGame.getTurn());
+    }
+
+    private List<Square> convertBoardToSquares(Map<Position, Piece> board) {
+        return board.keySet().stream()
+                .map(position -> new Square(position.convertToString(), board.get(position).convertToString()))
+                .collect(Collectors.toList());
     }
 
     public BoardDto move(long roomId, MoveDto moveDto) {
@@ -67,7 +70,6 @@ public class ChessService {
     private ChessBoard loadChessBoard(long roomId) {
         List<Square> squares = squareDao.findByRoomId(roomId);
         Map<Position, Piece> board = new HashMap<>();
-
         for (Square square : squares) {
             Position position = Position.of(square.getPosition());
             Piece piece = PieceFactory.convertToPiece(square.getPiece());

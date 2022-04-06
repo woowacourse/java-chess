@@ -31,7 +31,7 @@ public class ChessController {
         });
 
         get("/start", (req, res) -> {
-            return gson.toJson(chessService.start(1));
+            return gson.toJson(chessService.startNewGame(1));
         });
 
         post("/move", (req, res) -> {
