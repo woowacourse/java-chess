@@ -3,7 +3,6 @@ package chess.controller.state;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.dto.ScoreDto;
-import javax.swing.JColorChooser;
 
 public class Finished implements ChessGameState {
 
