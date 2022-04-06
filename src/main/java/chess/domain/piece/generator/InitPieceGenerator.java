@@ -1,9 +1,13 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.None;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.mulitiplemovepiece.Bishop;
 import chess.domain.piece.mulitiplemovepiece.Queen;
 import chess.domain.piece.mulitiplemovepiece.Rook;
@@ -29,7 +33,7 @@ public enum InitPieceGenerator {
         this.of = of;
     }
 
-    static Piece generatePiece(File file, Rank rank) {
+    public static Piece generatePiece(File file, Rank rank) {
         return Arrays.stream(InitPieceGenerator.values())
             .filter(piece -> piece.condition.test(file, rank))
             .map(piece -> piece.of.apply(rank))

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
 import chess.domain.position.File;
 import chess.domain.position.Rank;

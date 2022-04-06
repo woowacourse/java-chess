@@ -11,8 +11,9 @@ import chess.domain.position.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class Controller {
+public class ConsoleController {
     private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
+    private static final String ERROR_CONSOLE_CANT_CONTINUE = "[ERROR] 콘솔에선 안되!";
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
 
@@ -55,6 +56,10 @@ public class Controller {
         if (command == Command.STATUS) {
             status();
             return false;
+        }
+
+        if (command == Command.CONTINUE) {
+            throw new IllegalArgumentException(ERROR_CONSOLE_CANT_CONTINUE);
         }
         return true;
     }

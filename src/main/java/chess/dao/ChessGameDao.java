@@ -30,7 +30,7 @@ public class ChessGameDao {
         }
     }
 
-    public ChessGame findById(int board_id, Connection connection) {
+    public ChessGame find(int board_id, Connection connection) {
         final String sql = "select board_id, turn from chessGame where board_id = ?";
         ChessGame chessGame = null;
         PreparedStatement statement = null;
@@ -91,6 +91,13 @@ public class ChessGameDao {
             statement.setInt(1, board_id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.generator.InitPieceGenerator;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Rank;

@@ -1,10 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.piece.None;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.mulitiplemovepiece.Bishop;
 import chess.domain.piece.mulitiplemovepiece.Queen;
 import chess.domain.piece.mulitiplemovepiece.Rook;

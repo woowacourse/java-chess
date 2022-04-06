@@ -25,14 +25,15 @@ public class WebController {
     private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
     private static final String ERROR_GAME_NOT_START_YET = "[ERROR]게임부터 시작하지지?!";
     private static final String ERROR_GAME_IS_OVER = "[ERROR] 지금은 못 움직여!";
+    private static final String ERROR_NO_SAVE_GAME = "[ERROR] 저장된 게임이 없습니다";
     private static final String ERROR_GAME_IS_NOT_END = "[ERROR]아직 게임 안끝났어!";
 
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
-    public static final int BOARD_ID = 1;
+    private static final int BOARD_ID = 1;
 
     private ChessGame game;
-    private ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao();
 
     public void run() {
         port(8080);
@@ -140,10 +141,10 @@ public class WebController {
         if (game != null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
-        game = chessGameDao.findById(BOARD_ID, DBConnectorGenerator.getConnection());
+        game = chessGameDao.find(BOARD_ID, DBConnectorGenerator.getConnection());
 
         if (game == null) {
-            throw new IllegalArgumentException("[ERROR] 저장된 게임이 없습니다");
+            throw new IllegalArgumentException(ERROR_NO_SAVE_GAME);
         }
         packBoardInfo(model);
     }

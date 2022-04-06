@@ -1,9 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.mulitiplemovepiece.Bishop;
 import chess.domain.piece.mulitiplemovepiece.Queen;
 import chess.domain.piece.mulitiplemovepiece.Rook;

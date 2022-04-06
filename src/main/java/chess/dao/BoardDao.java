@@ -13,7 +13,7 @@ import chess.domain.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.None;
 import chess.domain.piece.Piece;
-import chess.domain.piece.SavePieceGenerator;
+import chess.domain.piece.generator.SavePieceGenerator;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
