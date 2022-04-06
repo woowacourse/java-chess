@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.db.DBConnector;
 import chess.dto.GameDto;
+import chess.dto.GameStatusDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,11 +67,11 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void updateStatus(String status) {
+    public void updateStatus(GameStatusDto statusDto) {
         final String sql = "update game set status = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, status);
+            statement.setString(1, statusDto.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

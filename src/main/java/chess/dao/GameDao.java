@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.GameDto;
+import chess.dto.GameStatusDto;
 
 public interface GameDao {
 
@@ -13,7 +14,7 @@ public interface GameDao {
 
     void updateTurn(String turn);
 
-    void updateStatus(String status);
+    void updateStatus(GameStatusDto statusDto);
 
     GameDto find();
 }

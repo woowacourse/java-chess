@@ -2,6 +2,7 @@ package chess.dao;
 
 
 import chess.dto.GameDto;
+import chess.dto.GameStatusDto;
 
 public class FakeGameDao implements GameDao {
 
@@ -28,8 +29,8 @@ public class FakeGameDao implements GameDao {
     }
 
     @Override
-    public void updateStatus(String status) {
-        this.gameDto = new GameDto(this.gameDto.getTurn(), status);
+    public void updateStatus(GameStatusDto statusDto) {
+        this.gameDto = new GameDto(this.gameDto.getTurn(), statusDto.getName());
     }
 
     @Override

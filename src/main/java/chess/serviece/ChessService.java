@@ -9,10 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
-import chess.dto.ChessResponseDto;
-import chess.dto.GameDto;
-import chess.dto.PieceDto;
-import chess.dto.ScoresDto;
+import chess.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -75,5 +72,10 @@ public class ChessService {
         ChessGame game = getGame();
         Map<PieceColor, Score> scoresByColor = game.calculateScoreByColor();
         return ScoresDto.of(scoresByColor);
+    }
+
+    public ScoresDto finishGame() {
+        gameDao.updateStatus(GameStatusDto.FINISHED);
+        return getScore();
     }
 }

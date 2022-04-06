@@ -2,6 +2,9 @@ package chess.dto;
 
 import chess.domain.piece.PieceColor;
 
+import static chess.dto.GameStatusDto.FINISHED;
+import static chess.dto.GameStatusDto.PLAYING;
+
 public class GameDto {
 
     private final String turn;
@@ -14,9 +17,9 @@ public class GameDto {
 
     public static GameDto from(PieceColor turnColor, boolean isPlaying) {
         if (isPlaying) {
-            return new GameDto(turnColor.getName(), "playing");
+            return new GameDto(turnColor.getName(), PLAYING.getName());
         }
-        return new GameDto(turnColor.getName(), "finished");
+        return new GameDto(turnColor.getName(), FINISHED.getName());
     }
 
     public String getTurn() {
