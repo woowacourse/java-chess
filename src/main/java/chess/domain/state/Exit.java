@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -12,7 +14,7 @@ public final class Exit extends State {
 
     @Override
     public State start() {
-        throw new IllegalStateException(EXIT_MESSAGE);
+        return new Running(Color.WHITE, new Board(new BoardInitializer()));
     }
 
     @Override
