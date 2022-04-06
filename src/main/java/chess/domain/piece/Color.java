@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Color {
 
     WHITE("백색"),
@@ -29,6 +31,13 @@ public enum Color {
             return BLACK;
         }
         return WHITE;
+    }
+
+    public static Color of(String name) {
+        return Arrays.stream(values())
+            .filter(x -> x.name.equals(name))
+            .findFirst()
+            .orElse(NONE);
     }
 
     public String getName() {
