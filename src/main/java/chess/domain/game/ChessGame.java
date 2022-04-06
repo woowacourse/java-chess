@@ -21,7 +21,7 @@ public class ChessGame {
     private final Long id;
     private GameState gameState;
 
-    public ChessGame(final Long id, final GameState gameState) {
+    private ChessGame(final Long id, final GameState gameState) {
         this.id = id;
         this.gameState = gameState;
     }
@@ -58,9 +58,9 @@ public class ChessGame {
         gameState = moveCommand.execute();
     }
 
-    public void promotePiece(final String pieceInitial) {
+    public void promotePiece(final String pieceName) {
         final RunningState runningState = convertToRunningState(gameState);
-        final PromotionCommand promotionCommand = PromotionCommand.of(runningState, pieceInitial);
+        final PromotionCommand promotionCommand = PromotionCommand.of(runningState, pieceName);
         gameState = promotionCommand.execute();
     }
 
