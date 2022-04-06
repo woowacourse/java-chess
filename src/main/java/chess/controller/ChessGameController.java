@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Command;
+import chess.domain.board.Command;
 import chess.domain.piece.Position;
 import chess.domain.state.GameState;
 import chess.view.InputView;
