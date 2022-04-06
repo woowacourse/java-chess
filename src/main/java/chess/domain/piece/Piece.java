@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    protected final Notation notation;
+    private final Notation notation;
     private final Color color;
     private final MoveStrategy moveStrategy;
 
@@ -55,5 +55,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(notation, color);
+    }
+
+    public final Color getColor() {
+        return color;
     }
 }

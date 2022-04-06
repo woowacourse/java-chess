@@ -39,7 +39,7 @@ public final class WebController {
         return gson.toJson(new BoardDto(chessGame));
     }
 
-    private Boolean end() {
+    private boolean end() {
         chessGame.end();
         return true;
     }
@@ -47,11 +47,11 @@ public final class WebController {
     private boolean move(final Request request) {
         final var moveDto = gson.fromJson(request.body(), MoveDto.class);
         chessGame.move(new String[]{moveDto.getFrom(), moveDto.getTo()});
-        return chessGame.isFinish();
+        return chessGame.removedKing();
     }
 
     private void exceptionHanding(final Exception exception, final Response response) {
-        // 이런식으로 핸들링해도 되는지?
+        // 이런식으로 처리해도 되는지?
         response.status(500);
         response.body(gson.toJson(exception.getMessage()));
     }
