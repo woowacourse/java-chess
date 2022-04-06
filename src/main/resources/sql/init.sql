@@ -12,12 +12,6 @@ create table PIECE
     file   varchar(1)                          not null
 );
 
-create table CHSSBOARD_PIECE (
-                                 chessboard_id bigint not null,
-                                 piece_id bigint not null,
-                                 PRIMARY KEY(chessboard_id, piece_id)
-);
-
 create table CHESSGAME
 (
     game_name varchar(20) not null,
