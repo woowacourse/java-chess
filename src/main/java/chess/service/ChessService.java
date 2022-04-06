@@ -40,9 +40,10 @@ public class ChessService {
         } catch(Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        turn = turn.change();
+        turnDao.update(turn.change().getThisTurn());
+        //turn = turn.change();
         if (chessGame.isKingDead()) {
-            turn = turn.finish();
+            turnDao.update(turn.finish());
         }
 
         return WebBoardDto.from(chessGame.getBoard());

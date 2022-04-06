@@ -42,4 +42,15 @@ public class TurnDao {
         }
         return turn;
     }
+
+    public void update(String nextTurn) {
+        String query = "UPDATE turns SET turn = (?)";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, nextTurn);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

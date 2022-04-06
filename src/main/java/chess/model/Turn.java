@@ -39,7 +39,7 @@ public class Turn {
         return team.name();
     }
 
-    public Turn finish() {
-        return TURN_NONE;
+    public String finish() {
+        return TURN_NONE.getThisTurn();
     }
 }

@@ -1,5 +1,6 @@
 package chess;
 
+import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.dao.PieceDao;
@@ -23,5 +24,17 @@ class TurnDaoTest {
         String turn = turnDao.findOne();
 
         assertThat(turn).isEqualToIgnoringCase("white");
+    }
+
+    @Test
+    @DisplayName("턴이 update 되는지 확인한다")
+    void update() {
+        TurnDao turnDao = new TurnDao();
+        turnDao.init();
+
+        turnDao.update("BLACK");
+        String turn = turnDao.findOne();
+
+        assertThat(turn).isEqualToIgnoringCase("black");
     }
 }
