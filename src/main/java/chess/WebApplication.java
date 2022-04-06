@@ -1,4 +1,4 @@
-package chess.web;
+package chess;
 
 import static spark.Spark.get;
 

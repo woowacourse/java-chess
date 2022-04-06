@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.web.dao.camp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,8 +1,8 @@
 package chess.console;
 
-import chess.GameSwitch;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
+import chess.domain.GameSwitch;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;

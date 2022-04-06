@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.web.dao.member;
 
 import chess.web.Member;
 import java.util.ArrayList;

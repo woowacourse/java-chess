@@ -1,7 +1,7 @@
 package chess.web.service;
 
 import chess.web.Member;
-import chess.web.dao.MemberDao;
+import chess.web.dao.member.MemberDao;
 
 public class MemberService {
     private MemberDao memberDao;
