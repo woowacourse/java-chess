@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.game;
 
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.state.Finish;

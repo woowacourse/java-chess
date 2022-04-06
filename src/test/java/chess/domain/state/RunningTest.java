@@ -3,8 +3,8 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.ChessBoard;
-import chess.domain.GameCommand;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.command.GameCommand;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Symbol;
 import java.util.List;
 
 public class Pieces {

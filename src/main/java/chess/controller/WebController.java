@@ -5,9 +5,9 @@ import static spark.Spark.post;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.domain.ChessBoard;
-import chess.domain.ChessGame;
-import chess.domain.GameCommand;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.game.ChessGame;
+import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;

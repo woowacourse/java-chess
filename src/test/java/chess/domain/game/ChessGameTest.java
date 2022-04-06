@@ -1,7 +1,9 @@
-package chess.domain;
+package chess.domain.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;

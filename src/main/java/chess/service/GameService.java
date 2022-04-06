@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.dao.GameDao;
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.GameDto;

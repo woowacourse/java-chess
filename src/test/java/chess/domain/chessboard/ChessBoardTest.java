@@ -1,9 +1,10 @@
-package chess.domain;
+package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.command.GameCommand;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
