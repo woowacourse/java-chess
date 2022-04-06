@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MockBoardDao implements BoardDao{
 
-    private final Map<Integer, FakeBoard> fakeBoard = new HashMap<>();
+    private Map<Integer, FakeBoard> fakeBoard = new HashMap<>();
 
     @Override
     public int save(Color turn) {
@@ -18,5 +18,10 @@ public class MockBoardDao implements BoardDao{
     public Color getCurrentTurn() {
         FakeBoard fakeBoard = this.fakeBoard.get(1);
         return Color.from(fakeBoard.getTurn());
+    }
+
+    @Override
+    public void deleteBoard() {
+        fakeBoard = new HashMap<>();
     }
 }

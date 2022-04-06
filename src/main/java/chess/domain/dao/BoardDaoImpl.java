@@ -57,4 +57,16 @@ public class BoardDaoImpl implements BoardDao {
             return Color.NONE;
         }
     }
+
+    @Override
+    public void deleteBoard() {
+        final String sql = "delete from board where id = 1";
+        try (final Connection connection = DBConnector.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

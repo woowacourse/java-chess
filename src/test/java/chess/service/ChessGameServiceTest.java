@@ -38,4 +38,21 @@ public class ChessGameServiceTest {
         Map<String, Piece> pieceMap = chessBoardDto.getBoard();
         assertThat(pieceMap.get("a4")).isInstanceOf(Pawn.class);
     }
+
+    @Test
+    @DisplayName("게임을 종료하면 저장된 게임이 삭제된다.")
+    void delete() {
+        //given
+        Board board = new Board();
+        PieceDao pieceDao = new MockPieceDao();
+        BoardDao boardDao = new MockBoardDao();
+        pieceDao.save(board.getPiecesByPosition(), 1);
+        boardDao.save(Color.WHITE);
+        ChessGameService chessGameService = new ChessGameService(pieceDao, boardDao);
+        chessGameService.start();
+        //when
+        chessGameService.end();
+        //then
+        assertThat(pieceDao.isExistsPieces()).isFalse();
+    }
 }

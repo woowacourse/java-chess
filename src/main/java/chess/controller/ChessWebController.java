@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.domain.dao.BoardDaoImpl;
 import chess.domain.dao.PieceDaoImpl;
@@ -19,8 +18,6 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
-
-    private ChessGame chessGame;
 
     public void run() {
         port(8081);

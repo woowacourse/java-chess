@@ -39,6 +39,9 @@ public class ChessGameService {
 
     public void move(Position source, Position target) {
         chessGame.move(source, target);
+        if (!isRunning()) {
+            end();
+        }
     }
 
     public boolean isRunning() {
@@ -55,6 +58,8 @@ public class ChessGameService {
 
     public void end() {
         chessGame.end();
+        boardDao.deleteBoard();
+        pieceDao.deleteByBoardId(1);
     }
 
     public Winner findWinner() {

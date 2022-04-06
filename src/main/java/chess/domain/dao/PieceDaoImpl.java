@@ -95,4 +95,17 @@ public class PieceDaoImpl implements PieceDao {
             return false;
         }
     }
+
+    @Override
+    public void deleteByBoardId(int boardId) {
+        final String sql = "delete from piece where board_id = ?";
+        try (final Connection connection = DBConnector.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, boardId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

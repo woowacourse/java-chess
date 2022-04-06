@@ -40,4 +40,9 @@ public class MockPieceDao implements PieceDao {
     public boolean isExistsPieces() {
         return fakePiece.size() > 0;
     }
+
+    @Override
+    public void deleteByBoardId(int boardId) {
+        fakePiece = new HashMap<>();
+    }
 }

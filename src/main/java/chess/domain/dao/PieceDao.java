@@ -10,4 +10,6 @@ public interface PieceDao {
     Map<Position, Piece> load();
 
     boolean isExistsPieces();
+
+    void deleteByBoardId(int boardId);
 }
