@@ -6,7 +6,6 @@ import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
@@ -29,15 +28,6 @@ public class ChessGame {
                 BoardFactory.createInitChessBoard(),
                 new GameSwitch(true),
                 new Turn(Team.WHITE)
-        );
-    }
-
-    public static ChessGame createNotStart(final String name) {
-        return new ChessGame(
-                name,
-                new Board(new HashMap<>()),
-                new GameSwitch(false),
-                new Turn(Team.NONE)
         );
     }
 
