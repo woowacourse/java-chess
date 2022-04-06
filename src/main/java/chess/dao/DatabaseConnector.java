@@ -22,16 +22,4 @@ public class DatabaseConnector {
 
         return connection;
     }
-
-
-    public static void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("연결 오류 : " + e.getMessage());
-        }
-    }
-
 }
