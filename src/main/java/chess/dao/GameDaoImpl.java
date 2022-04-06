@@ -25,8 +25,7 @@ public class GameDaoImpl implements GameDao {
 	public int save(final String name, final String state) {
 		final String sql = "insert into game (name, command_log) values (?, ?)";
 		int insertId = -1;
-		try {
-			final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, name);
 			statement.setString(2, state);
 			statement.executeUpdate();
@@ -43,8 +42,7 @@ public class GameDaoImpl implements GameDao {
 	@Override
 	public void update(final int gameId, final String state) {
 		final String sql = "update game set command_log = concat(command_log, '\n', ?) where game.id = ?";
-		try {
-			final PreparedStatement statement = connection.prepareStatement(sql);
+		try (final PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, state);
 			statement.setInt(2, gameId);
 			statement.executeUpdate();
@@ -56,8 +54,7 @@ public class GameDaoImpl implements GameDao {
 	@Override
 	public Game findById(final int gameId) {
 		final String sql = "select id, name, command_log from game where id = ?";
-		try {
-			final PreparedStatement statement = connection.prepareStatement(sql);
+		try (final PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setInt(1, gameId);
 			final ResultSet resultSet = statement.executeQuery();
 			if (!resultSet.next()) {
@@ -78,8 +75,7 @@ public class GameDaoImpl implements GameDao {
 	public List<Game> findAll() {
 		final String sql = "select id, name, command_log from game";
 		final List<Game> games = new ArrayList<>();
-		try {
-			final PreparedStatement statement = connection.prepareStatement(sql);
+		try (final PreparedStatement statement = connection.prepareStatement(sql)) {
 			final ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Game game = new Game(
