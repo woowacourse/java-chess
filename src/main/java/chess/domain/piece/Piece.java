@@ -15,8 +15,12 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public static Piece from(Column column, Row row) {
-        return PieceGenerator.generatePiece(column, row);
+    public static Piece createByPosition(Column column, Row row) {
+        return InitialPositionPieceGenerator.generatePiece(column, row);
+    }
+
+    public static Piece createByTypeAndColor(String type, String color) {
+        return SavedConditionPieceGenerator.generatePiece(type, color);
     }
 
     public abstract String getEmoji();
