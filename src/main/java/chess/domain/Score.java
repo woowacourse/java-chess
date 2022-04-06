@@ -3,14 +3,14 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 
-public class Status {
+public class Score {
 
     private static final int TERMINATE_GAME = -1;
 
     private final double whiteScore;
     private final double blackScore;
 
-    public Status(final Board board) {
+    public Score(final Board board) {
         whiteScore = calculateScore(board, Color.WHITE);
         blackScore = calculateScore(board, Color.BLACK);
     }

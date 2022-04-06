@@ -1,5 +1,6 @@
 package chess.Controller.command;
 
+import chess.domain.Score;
 import chess.domain.board.Board;
 
 public class Status extends ScoreCommand {
@@ -10,7 +11,7 @@ public class Status extends ScoreCommand {
     }
 
     @Override
-    protected chess.domain.Status doAction(final ParsedCommand parsedCommand, final Board board, final int userId) {
-        return new chess.domain.Status(board);
+    protected Score doAction(final ParsedCommand parsedCommand, final Board board, final int userId) {
+        return new Score(board);
     }
 }

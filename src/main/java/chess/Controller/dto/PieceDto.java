@@ -14,7 +14,7 @@ public class PieceDto {
 
     private PieceDto(final Position position, final Piece piece) {
         final String imageKey = piece.getColor().toString()
-                + piece.getPieceType().getSymbol();
+                + piece.getPieceSymbol();
         this.symbol = makeSymbol(piece);
         this.imageUrl = PieceImage.of(imageKey);
         this.position = position.getColumn().toString().toLowerCase(Locale.ROOT)
@@ -23,7 +23,7 @@ public class PieceDto {
 
     private String makeSymbol(Piece piece) {
         final Color color = piece.getColor();
-        final String symbol = piece.getPieceType().getSymbol();
+        final String symbol = piece.getPieceSymbol();
         if (color == Color.BLACK) {
             return symbol.toUpperCase(Locale.ROOT);
         }

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 public class CommonDao {
 
+    public static final int FAILED = -1;
+
     private static final String URL = "jdbc:mysql://localhost:3308/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -40,13 +42,13 @@ public class CommonDao {
             statementMaker.makeStatement(statement);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return -1;
+                return FAILED;
             }
             return resultSet.getInt(columnLabel);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+        return FAILED;
     }
 
 }

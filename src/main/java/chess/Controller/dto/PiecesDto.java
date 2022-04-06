@@ -29,10 +29,6 @@ public class PiecesDto {
         return new PiecesDto(board);
     }
 
-    public static PiecesDto fromEntity(final Map<Position, Piece> pieces) {
-        return new PiecesDto(pieces, "READY");
-    }
-
     public List<PieceDto> getPieces() {
         return pieces;
     }

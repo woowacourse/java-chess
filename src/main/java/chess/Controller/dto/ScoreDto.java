@@ -1,18 +1,18 @@
 package chess.Controller.dto;
 
-import chess.domain.Status;
+import chess.domain.Score;
 
 public class ScoreDto {
 
     private final double whiteScore;
     private final double blackScore;
 
-    private ScoreDto(final Status status) {
+    private ScoreDto(final Score status) {
         whiteScore = status.getWhiteScore();
         blackScore = status.getBlackScore();
     }
 
-    public static ScoreDto fromEntity(final Status status) {
+    public static ScoreDto fromEntity(final Score status) {
         return new ScoreDto(status);
     }
 

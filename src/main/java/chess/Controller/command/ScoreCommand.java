@@ -1,7 +1,7 @@
 package chess.Controller.command;
 
 import chess.Controller.dto.ScoreDto;
-import chess.domain.Status;
+import chess.domain.Score;
 import chess.domain.board.Board;
 
 public abstract class ScoreCommand {
@@ -17,6 +17,6 @@ public abstract class ScoreCommand {
 
     protected abstract boolean canDoAction(final Command command, final Board board);
 
-    protected abstract Status doAction(final ParsedCommand parsedCommand, final Board board, final int userId);
+    protected abstract Score doAction(final ParsedCommand parsedCommand, final Board board, final int userId);
 
 }

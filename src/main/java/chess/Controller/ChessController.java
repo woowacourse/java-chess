@@ -7,6 +7,7 @@ import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
 import chess.Controller.dto.StateDto;
 import chess.dao.BoardDao;
+import chess.dao.CommonDao;
 import chess.dao.PiecesDao;
 import chess.dao.UserDao;
 import chess.domain.GameState;
@@ -24,7 +25,7 @@ public class ChessController {
         final UserDao userDao = new UserDao();
         final int exUserId = userDao.getUser(userName);
         int boardId = userDao.getBoard(exUserId);
-        if (exUserId == -1) {
+        if (exUserId == CommonDao.FAILED) {
             boardId = (new BoardDao()).initBoard();
         }
         userDao.createUser(userName, boardId);

@@ -28,7 +28,7 @@ public class BoardDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return -1;
+        return CommonDao.FAILED;
     }
 
     public GameState getGameStatus(final int userId) {

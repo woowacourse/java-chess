@@ -24,7 +24,7 @@ public class Board {
     private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
-    private GameState gameState;
+    private final GameState gameState;
 
     public Board(final Map<Position, Piece> pieces, final GameState gameState) {
         this.pieces = pieces;
@@ -159,10 +159,6 @@ public class Board {
                 .count();
     }
 
-    public boolean isEnd() {
-        return gameState == GameState.END;
-    }
-
     public boolean isReady() {
         return gameState == GameState.READY;
     }
@@ -171,16 +167,8 @@ public class Board {
         return gameState.isRunning();
     }
 
-    public void startFirstTurn() {
-        gameState = GameState.WHITE_RUNNING;
-    }
-
     public GameState changeTurn() {
         return gameState.getOpposite();
-    }
-
-    public void terminateGame() {
-        gameState = GameState.END;
     }
 
     public Color getCurrentColor() {
