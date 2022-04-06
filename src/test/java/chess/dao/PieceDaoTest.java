@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
+
     final PieceDao pieceDao = new PieceDao();
 
     @Test
@@ -42,11 +43,11 @@ class PieceDaoTest {
     @DisplayName("위치 값과 기물을 받아 DB에 저장한다.")
     void save() {
         //given
-        final String position = "a2";
+        final Position position = Position.from("a2");
         final Piece piece = new Pawn(BLACK);
-        pieceDao.save(position, piece);
+        pieceDao.saveAll(Map.of(position, piece));
         //actual
-        final PieceDto actual = pieceDao.findAll().get(position);
+        final PieceDto actual = pieceDao.findAll().get("a2");
         //when
         assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
     }
@@ -55,7 +56,7 @@ class PieceDaoTest {
     @DisplayName("위치 값과 기물을 받아, 해당 위치 값 데이터를 기물 정보로 업데이트 시킨다.")
     void removeByPosition() {
         //given
-        pieceDao.save("a2", new Pawn(BLACK));
+        pieceDao.saveAll(Map.of(Position.from("a2"), new Pawn(BLACK)));
         pieceDao.update("a2", new Knight(WHITE));
         //when
         final Map<String, PieceDto> actual = pieceDao.findAll();
@@ -68,8 +69,9 @@ class PieceDaoTest {
     void update() {
         //given
         final Piece piece = new Pawn(BLACK);
-        pieceDao.save("a2", piece);
-        pieceDao.save("a3", new Knight(WHITE));
+        pieceDao.saveAll(Map.of(
+                Position.from("a2"), new Pawn(BLACK),
+                Position.from("a3"), new Knight(WHITE)));
         pieceDao.update("a3", piece);
         //when
         final PieceDto actual = pieceDao.findAll().get("a3");

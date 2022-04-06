@@ -72,20 +72,6 @@ public class PieceDao {
         }
     }
 
-    public void save(final String position, final Piece piece) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (position, team, name) values (?, ?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setString(2, piece.getTeam());
-            statement.setString(3, piece.getName());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void removeByPosition(final String position) {
         final Connection connection = getConnection();
         final String sql = "delete from piece where position = (?)";
