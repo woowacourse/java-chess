@@ -1,9 +1,6 @@
 package chess.web.controller;
 
 import chess.board.Board;
-import chess.board.Team;
-import chess.board.Turn;
-import chess.board.piece.Piece;
 import chess.web.service.ChessService;
 import chess.web.service.dto.BoardDto;
 import chess.web.service.dto.MoveDto;
@@ -14,7 +11,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -39,14 +35,12 @@ public class ChessWebController {
 
         get("/api/load", (req, res) -> {
             Board board = chessService.loadGame(1L);
-            BoardDto boardDto = convertToDto(board);
-            return gson.toJson(boardDto);
+            return gson.toJson(BoardDto.from(board));
         });
 
         get("/api/restart", (req, res) -> {
             Board board = chessService.initBoard(1L);
-            BoardDto boardDto = convertToDto(board);
-            return gson.toJson(boardDto);
+            return gson.toJson(BoardDto.from(board));
         });
 
         get("/api/status", (req, res) -> {
@@ -57,24 +51,8 @@ public class ChessWebController {
         post("/api/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             Board board = chessService.move(moveDto, 1L);
-            BoardDto boardDto = convertToDto(board);
-            return gson.toJson(boardDto);
+
+            return gson.toJson(BoardDto.from(board));
         });
-    }
-
-    private BoardDto convertToDto(Board board) {
-        Map<String, String> collect = board.getPieces().getPieces().stream()
-                .collect(Collectors.toMap(
-                        piece -> piece.getPosition().name(),
-                        Piece::getName
-                ));
-
-        return new BoardDto(getCurrentTurn(board), collect, board.isDeadKing());
-    }
-
-    private String getCurrentTurn(Board board) {
-        Turn turn = board.getTurn();
-        Team currentTeam = turn.getTeam();
-        return currentTeam.value();
     }
 }
