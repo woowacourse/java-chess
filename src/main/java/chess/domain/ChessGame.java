@@ -11,8 +11,8 @@ import java.util.Map;
 
 public final class ChessGame {
 
-    private static final int FROM = 1;
-    private static final int TO = 2;
+    private static final int FROM = 0;
+    private static final int TO = 1;
 
     private State state = new Ready();
 
@@ -45,5 +45,9 @@ public final class ChessGame {
 
     public boolean isExit() {
         return state.isExit();
+    }
+
+    public boolean removedKing() {
+        return state.removedKing();
     }
 }

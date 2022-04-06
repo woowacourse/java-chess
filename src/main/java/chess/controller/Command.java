@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.view.Output;
@@ -24,7 +24,8 @@ public enum Command {
     ;
 
     private static final String BLANK = " ";
-    private static final int MOVE_INPUT_WORD_COUNT = 3;
+    private static final String EMPTY = "";
+    private static final int MOVE_INPUT_WORD_COUNT = 2;
 
     private final String value;
     private final BiConsumer<String, ChessGame> consumer;
@@ -44,16 +45,16 @@ public enum Command {
     }
 
     private static String[] convertToMoveInput(final String moveInput) {
-        final String[] split = moveInput.split(BLANK);
-        checkMoveInput(split);
-        return split;
+        final var positions = moveInput.replaceAll(MOVE.value + BLANK, EMPTY).split(BLANK);
+        checkMoveOrder(positions);
+        return positions;
     }
 
-    private static void checkMoveInput(final String[] value) {
-        if (value.length != MOVE_INPUT_WORD_COUNT) {
+    private static void checkMoveOrder(final String[] positions) {
+        if (positions.length != MOVE_INPUT_WORD_COUNT) {
             throw new IllegalArgumentException("시작 위치와 도착 위치를 입력해주세요.");
         }
-        if (Arrays.stream(value).distinct().count() != MOVE_INPUT_WORD_COUNT) {
+        if (Arrays.stream(positions).distinct().count() != MOVE_INPUT_WORD_COUNT) {
             throw new IllegalArgumentException("중복된 위치값은 사용될 수 없습니다.");
         }
     }
