@@ -5,9 +5,8 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
-import chess.dto.BoardDto;
+import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,7 +14,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
 
-    private ChessGame chessGame = new ChessGame();
+    private ChessService chessService = new ChessService();
 
     public void run() {
         staticFileLocation("/static");
@@ -24,15 +23,16 @@ public class ChessWebController {
         post("/move", this::move);
         get("/update", this::update);
         get("/result", this::result);
+        get("/restart", this::restart);
     }
 
     private String start(Request request, Response response) {
-        chessGame.start();
+        chessService.startGame();
 
         Map<String, Object> model = new HashMap<>();
-        Map<Color, Double> scores = chessGame.calculateScore();
+        Map<Color, Double> scores = chessService.getGameScores();
 
-        model.put("board", new BoardDto(chessGame.getBoard().getValue()));
+        model.put("board", chessService.getBoard());
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
 
@@ -43,9 +43,9 @@ public class ChessWebController {
         String source = request.queryMap().get("source").value();
         String target = request.queryMap().get("target").value();
 
-        chessGame.movePiece(source, target);
+        chessService.movePiece(source, target);
 
-        if (chessGame.isFinish()) {
+        if (chessService.isGameFinish()) {
             response.redirect("/result");
             return null;
         }
@@ -55,9 +55,9 @@ public class ChessWebController {
 
     private String update(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        Map<Color, Double> scores = chessGame.calculateScore();
+        Map<Color, Double> scores = chessService.getGameScores();
 
-        model.put("board", new BoardDto(chessGame.getBoard().getValue()));
+        model.put("board", chessService.getBoard());
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
 
@@ -66,8 +66,14 @@ public class ChessWebController {
 
     private String result(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        model.put("winner", chessGame.judgeWinner());
+        model.put("winner", chessService.getWinner());
         return render(model, "result.html");
+    }
+
+    private String restart(Request request, Response response) {
+        chessService.deleteCurrentGame();
+        response.redirect("/");
+        return null;
     }
 
     private String render(Object model, String templatePath) {
