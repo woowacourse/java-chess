@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게임 불러오기</title>
+</head>
+<body>
+<div>
+    <h2>게임들</h2>
+    {{#games}}
+    <button onclick="loadGame({{id}})">{{id}}</button>
+    {{/games}}
+</div>
+<script src="/js/chess.js"></script>
+</body>
+</html>

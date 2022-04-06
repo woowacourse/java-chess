@@ -9,6 +9,7 @@ import chess.domain.board.Position;
 import chess.domain.state.Ready;
 import chess.dto.ErrorResponseDto;
 import chess.dto.GameDto;
+import chess.dto.GamesDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
 import chess.dto.WinnerDto;
@@ -52,9 +53,22 @@ public class WebChessController {
 			return gson.toJson(gameDto);
 		});
 
-		get("/end", (req, res) -> {
-			WinnerDto winnerDto = chessService.end();
+		get("/end/:id", (req, res) -> {
+			WinnerDto winnerDto = chessService.end(Integer.parseInt(req.params(":id")));
 			return gson.toJson(winnerDto);
+		});
+
+		get("/load/:id", (req, res) -> {
+			GameDto gameDto = chessService.load(Integer.parseInt(req.params(":id")));
+			return gson.toJson(gameDto);
+		});
+
+		get("/findGames", (req, res) -> {
+			GamesDto gamesDto = chessService.findAll();
+			Map<String, Object> model = new HashMap<>();
+			model.put("games", gamesDto.getGames());
+			System.out.println(model);
+			return render(model, "load.html");
 		});
 
 		handleException(gson, IllegalArgumentException.class);
@@ -65,8 +79,13 @@ public class WebChessController {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 
+	private static String render2(Map<String, Object> model, String templatePath) {
+		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+	}
+
 	private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
 		exception(exceptionClass, (e, req, res) -> {
+			System.out.println(e.getMessage());
 			res.status(400);
 			res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
 		});

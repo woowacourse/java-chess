@@ -1,10 +1,13 @@
 package chess.dao;
 
+import chess.domain.game.Game;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameDao {
 
@@ -45,5 +48,40 @@ public class GameDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String findById(final int gameId) {
+		final String sql = "select command_log from game where id = ?";
+		try {
+			final PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, gameId);
+			final ResultSet resultSet = statement.executeQuery();
+			if (!resultSet.next()) {
+				return null;
+			}
+			return resultSet.getString("command_log");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Game> findAll() {
+		final String sql = "select id from game";
+		final List<Game> games = new ArrayList<>();
+		try {
+			final PreparedStatement statement = connection.prepareStatement(sql);
+			final ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Game game = new Game(
+						resultSet.getInt("id")
+				);
+				games.add(game);
+			}
+			return games;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return games;
 	}
 }

@@ -1,11 +1,12 @@
 const start = document.getElementById('start-button');
 const status = document.getElementById('status-button');
 const end = document.getElementById('end-button');
+const load = document.getElementById('load-button');
 const board = document.querySelector("#board");
 
 let source = "";
 let target = "";
-let game = "";
+var game = "";
 
 addBoardClickEvent();
 
@@ -118,13 +119,33 @@ function alertStatus(scoreResult) {
 }
 
 end.addEventListener('click', function () {
-    fetch('/end')
+    fetch('/end/' + game)
         .then(handleErrors)
         .then(res => res.json())
         .then(alertWinner)
         .catch(function (error) {
             alert(error.message)
         })
+})
+
+function openWindowPop(url, name) {
+    var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+    var win = window.open(url, name, options);
+    win.loadGame = function (id) {
+        console.log(id);
+        game = id;
+        fetch('/load/' + id)
+            .then(handleErrors)
+            .then(res => res.json())
+            .then(res => updatePieceContainer(res))
+            .catch(function (error) {
+                alert(error.message)
+            });
+    }
+}
+
+load.addEventListener('click', function () {
+    openWindowPop('/findGames', '게임 불러오기')
 })
 
 function alertWinner(winnerResponse) {
