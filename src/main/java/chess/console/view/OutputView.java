@@ -4,6 +4,7 @@ import chess.Controller.dto.PieceDto;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
 import java.util.List;
+import java.util.Locale;
 
 public class OutputView {
 
@@ -33,10 +34,14 @@ public class OutputView {
 
     private static void printRow(final List<PieceDto> pieces, final int rawRow) {
         for (int i = BOARD_ROW_MIN_POSITION; i <= BOARD_ROW_MAX_POSITION; i++) {
-            final String position = "" + (char) (97 + i - 1) + rawRow;
+            final String position = rowNumberToString(rawRow, i);
             final String pieceSymbol = findPieceSymbol(pieces, position);
             System.out.print(pieceSymbol);
         }
+    }
+
+    private static String rowNumberToString(final int rawRow, final int rawColumn) {
+        return ("" + (char) (97 + rawColumn - 1) + rawRow).toUpperCase(Locale.ROOT);
     }
 
     private static String findPieceSymbol(final List<PieceDto> pieces, final String position) {

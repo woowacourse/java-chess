@@ -17,7 +17,7 @@ public class PieceDto {
                 + piece.getPieceSymbol();
         this.symbol = makeSymbol(piece);
         this.imageUrl = PieceImage.of(imageKey);
-        this.position = position.getColumn().toString().toLowerCase(Locale.ROOT)
+        this.position = position.getColumn().toString()
                 + position.getRow().getValue();
     }
 

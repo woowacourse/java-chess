@@ -2,6 +2,7 @@ package chess.Controller.command;
 
 import chess.domain.board.Position;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 
 public class ParsedCommand {
@@ -27,7 +28,7 @@ public class ParsedCommand {
         if (command.length < index + 1) {
             return Optional.empty();
         }
-        return Optional.of(Position.from(command[index]));
+        return Optional.of(Position.from(command[index].toLowerCase(Locale.ROOT)));
     }
 
     public Command getCommand() {
