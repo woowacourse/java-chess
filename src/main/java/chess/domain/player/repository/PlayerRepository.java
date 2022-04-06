@@ -52,6 +52,10 @@ public class PlayerRepository {
         playerDao.update(playerDto);
     }
 
+    public void remove(final Long id) {
+        playerDao.remove(id);
+    }
+
     private String convertPiecesToString(final Map<Position, Piece> pieces) {
         final List<String> values = new ArrayList<>();
         for (Entry<Position, Piece> entry : pieces.entrySet()) {

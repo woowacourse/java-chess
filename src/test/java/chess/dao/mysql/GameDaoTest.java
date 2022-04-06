@@ -33,6 +33,7 @@ class GameDaoTest {
                     assertThat(gameDto.getFinished()).isEqualTo(finished);
                     assertThat(gameDto.getCurrentTurnColor()).isEqualTo(currentTurnColor);
                 });
+        gameDao.remove(id);
     }
 
     @DisplayName("데이터를 수정할 수 있어야 한다.")
@@ -50,5 +51,6 @@ class GameDaoTest {
             assertThat(updatedGameDto.getFinished()).isEqualTo(finished);
             assertThat(updatedGameDto.getCurrentTurnColor()).isEqualTo(currentTurnColor);
         });
+        gameDao.remove(id);
     }
 }

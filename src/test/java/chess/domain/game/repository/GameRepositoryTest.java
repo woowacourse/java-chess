@@ -31,6 +31,7 @@ class GameRepositoryTest {
 
         final Long gameId = gameRepository.save(chessGame).getId();
         assertThat(gameId).isNotEqualTo(0L);
+        gameRepository.remove(gameId);
     }
 
     @DisplayName("데이터를 조회할 수 있어야 한다.")
@@ -46,6 +47,7 @@ class GameRepositoryTest {
             assertThat(chessGame.getColorOfCurrentTurn()).isEqualTo(expectedChessGame.getColorOfCurrentTurn());
             assertThat(chessGame.isFinished()).isEqualTo(expectedChessGame.isFinished());
         });
+        gameRepository.remove(gameId);
     }
 
     @DisplayName("데이터를 수정할 수 있어야 한다.")
@@ -64,5 +66,6 @@ class GameRepositoryTest {
             assertThat(updatedChessGame.getColorOfCurrentTurn()).isEqualTo(expectedChessGame.getColorOfCurrentTurn());
             assertThat(updatedChessGame.isFinished()).isEqualTo(expectedChessGame.isFinished());
         });
+        gameRepository.remove(updatedChessGame.getId());
     }
 }

@@ -31,6 +31,7 @@ class PlayerDaoTest {
                     assertThat(playerDto.getColorName()).isEqualTo(colorName);
                     assertThat(playerDto.getPieces()).isEqualTo(pieces);
                 });
+        playerDao.remove(id);
     }
 
     @DisplayName("데이터를 수정할 수 있어야 한다.")
@@ -43,5 +44,6 @@ class PlayerDaoTest {
 
         final PlayerDto updatedPlayerDto = playerDao.findById(id);
         assertThat(updatedPlayerDto.getPieces()).isEqualTo(expectedPieces);
+        playerDao.remove(id);
     }
 }

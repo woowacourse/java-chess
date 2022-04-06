@@ -58,4 +58,12 @@ public class GameRepository {
         }
         return findById(gameId);
     }
+
+    public void remove(final long id) {
+        final Players players = findById(id).getPlayers();
+        for (final Player player : players.getPlayers()) {
+            playerRepository.remove(player.getId());
+        }
+        gameDao.remove(id);
+    }
 }

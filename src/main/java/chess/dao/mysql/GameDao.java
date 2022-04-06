@@ -114,4 +114,17 @@ public class GameDao {
             e.printStackTrace();
         }
     }
+
+    public void remove(final long id) {
+        final Connection connection = mysqlConnector.getConnection();
+        try {
+            final String sql = "DELETE FROM Game WHERE id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            mysqlConnector.closeConnection(connection, preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

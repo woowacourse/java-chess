@@ -35,6 +35,7 @@ class PlayerRepositoryTest {
         ));
         final Long playerId = playerRepository.save(player).getId();
         assertThat(playerId).isNotEqualTo(0L);
+        playerRepository.remove(playerId);
     }
 
     @DisplayName("데이터를 조회할 수 있어야 한다.")
@@ -52,6 +53,7 @@ class PlayerRepositoryTest {
             assertThat(player.getColor()).isEqualTo(expectedColor);
             assertThat(player.getPieces()).isEqualTo(expectedPieces);
         });
+        playerRepository.remove(playerId);
     }
 
     @DisplayName("데이터를 수정할 수 있어야 한다.")
@@ -69,5 +71,6 @@ class PlayerRepositoryTest {
 
         final Player player = playerRepository.findById(playerId);
         assertThat(player.getPieces()).isEqualTo(updatedPieces);
+        playerRepository.remove(playerId);
     }
 }

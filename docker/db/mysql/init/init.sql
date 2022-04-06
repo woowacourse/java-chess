@@ -11,7 +11,5 @@ create table Game (
     player_id2 integer not null,
     finished boolean not null,
     turn_color varchar(5) not null,
-    primary key (id),
-    foreign key (player_id1) references Player (id),
-    foreign key (player_id2) references Player (id)
+    primary key (id)
 );
