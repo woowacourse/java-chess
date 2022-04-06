@@ -39,7 +39,7 @@ public class PieceFactory {
 
     public static Piece convertToPiece(String pieceName) {
         if (!factory.containsKey(pieceName)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("잘못된 pieceName이 들어왔습니다.");
         }
         return factory.get(pieceName);
     }
