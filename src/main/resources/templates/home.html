@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>입장 방 선택</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <h1>현재 열린 방</h1>
+    {{#rooms}}
+    <div>
+        <form action="/{{number}}">
+            <input type="submit" value="{{name}}" class="room">
+        </form>
+    </div>
+    {{/rooms}}
+
+    <h2>새로운 방 생성</h2>
+    <form action="/home" method="post">
+        방 이름을 적어주세요. <br>
+        <input type="text" name="name">
+        <button type="submit">방 생성</button>
+    </form>
+</body>
+</html>

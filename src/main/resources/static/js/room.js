@@ -1,6 +1,6 @@
 function makeForm() {
     let form = document.createElement('form');
-    form.action = '/move';
+    form.action = document.location.href + '/move';
     form.method = 'POST';
     document.body.append(form);
     form.appendChild(makeInputInForm());
@@ -15,11 +15,11 @@ function makeInputInForm() {
     return input;
 }
 
-function clicked(id) {
+function clicked(position) {
     if (movePositions.start === '') {
-        movePositions.start = id;
+        movePositions.start = position;
     } else {
-        movePositions.end = id;
+        movePositions.end = position;
         let form = makeForm();
         form.submit();
 

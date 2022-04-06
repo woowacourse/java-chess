@@ -9,6 +9,7 @@ import java.util.Map;
 
 import chess.domain.piece.property.Color;
 import chess.web.dto.PieceDto;
+import chess.web.dto.RoomDto;
 import chess.web.service.ChessService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -28,21 +29,39 @@ public class WebController {
     public void run() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<PieceDto> pieces = chessService.initializeData();
-            initializeRowPieces(pieces, model);
-            putScore(model, pieces);
-            return render(model, "/index.html");
+            List<RoomDto> roomDtos = chessService.findAllRoom();
+            model.put("rooms", roomDtos);
+            return render(model, "/home.html");
         });
 
-        get("/start", (req, res) -> {
-            chessService.start();
+        post("/home", (req, res) -> {
+            String name = req.queryParams("name");
+            chessService.saveRoom(name);
             res.redirect("/");
             return null;
         });
 
-        post("/move", (req, res) -> {
-            chessService.move(req.queryParams("command"));
-            res.redirect("/");
+        get("/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int roomId = Integer.parseInt(req.params("id"));
+            List<PieceDto> pieces = chessService.initializeData(roomId);
+            initializeRowPieces(pieces, model);
+            putScore(model, pieces);
+            model.put("roomId", req.params("id"));
+            return render(model, "/room.html");
+        });
+
+        get("/:id/start", (req, res) -> {
+            int roomId = Integer.parseInt(req.params("id"));
+            chessService.start(roomId);
+            res.redirect("/" + roomId);
+            return null;
+        });
+
+        post("/:id/move", (req, res) -> {
+            int roomId = Integer.parseInt(req.params("id"));
+            chessService.move(req.queryParams("command"), roomId);
+            res.redirect("/" + roomId);
             return null;
         });
 

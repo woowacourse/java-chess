@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>체스게임</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/room.css">
 </head>
 <body>
     <h1>체스게임 가보자고</h1>
@@ -68,9 +68,12 @@
                 </tr>
             </table>
         </section>
-
         <section class="sidebar">
-            <form action="/start" method="get">
+            <form action="/">
+                <input type="submit" value="로비로 가기" class="btn">
+            </form>
+            <br>
+            <form action="/{{roomId}}/start" method="get">
                 <input type="submit" value="게임 시작" class="btn">
             </form>
             <div class="score">
@@ -82,4 +85,4 @@
 </body>
 </html>
 
-<script src="/js/main.js"></script>
+<script src="/js/room.js"></script>

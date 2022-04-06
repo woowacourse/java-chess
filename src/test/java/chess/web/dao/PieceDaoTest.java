@@ -17,7 +17,7 @@ class PieceDaoTest {
         final PieceDao pieceDao = new PieceDao();
         PieceDto pieceDto = PieceDto.of ("a1", "R", "images/r_black.png");
         assertThatCode(() -> {
-            int savedId = pieceDao.save(pieceDto);
+            int savedId = pieceDao.save(pieceDto, 1);
             remove(savedId);
         }).doesNotThrowAnyException();
     }
@@ -30,7 +30,7 @@ class PieceDaoTest {
         pieces.add(PieceDto.of("a2", "B", "images/b_black.png"));
         pieces.add(PieceDto.of("a3", "P", "images/p_black.png"));
         assertThatCode(() -> {
-            List<Integer> ids = pieceDao.saveAll(pieces);
+            List<Integer> ids = pieceDao.saveAll(pieces, 1);
             remove(ids);
         }).doesNotThrowAnyException();
     }
@@ -46,7 +46,7 @@ class PieceDaoTest {
         pieces.add(piece1);
         pieces.add(piece2);
         pieces.add(piece3);
-        List<Integer> ids = pieceDao.saveAll(pieces);
+        List<Integer> ids = pieceDao.saveAll(pieces, 1);
         List<PieceDto> findPieces = pieceDao.findAll();
 
         assertThat(findPieces).hasSize(3)
