@@ -56,7 +56,7 @@ public class Position {
     }
 
     public String getName() {
-        return (char) ('a' + row) + String.valueOf(1 + column);
+        return (char) ('a' + column) + String.valueOf(1 + row);
     }
 
     public int getColumn() {
