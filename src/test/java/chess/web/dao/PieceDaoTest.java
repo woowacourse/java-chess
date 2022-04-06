@@ -2,6 +2,7 @@ package chess.web.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ class PieceDaoTest {
     }
 
     @Test
-    void findAll() {
+    void findAll() throws SQLException {
         final PieceDao pieceDao = new PieceDao();
         List<PieceDto> pieces = new ArrayList<>();
         PieceDto piece1 = PieceDto.of("a1", "R", "images/r_black.png");
@@ -53,12 +54,12 @@ class PieceDaoTest {
         remove(ids);
     }
 
-    private void remove(int id) {
+    private void remove(int id) throws SQLException {
         final PieceDao pieceDao = new PieceDao();
         pieceDao.remove(id);
     }
 
-    private void remove(List<Integer> ids) {
+    private void remove(List<Integer> ids) throws SQLException {
         final PieceDao pieceDao = new PieceDao();
         for (Integer id : ids) {
             pieceDao.remove(id);

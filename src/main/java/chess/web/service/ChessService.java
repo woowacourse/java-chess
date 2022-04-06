@@ -1,5 +1,6 @@
 package chess.web.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,20 +20,20 @@ public class ChessService {
     private final PieceDao pieceDao = new PieceDao();
     private final PlayerDao playerDao = new PlayerDao();
 
-    public List<PieceDto> initializeData() {
+    public List<PieceDto> initializeData() throws SQLException {
         List<PieceDto> pieces = pieceDao.findAll();
         chessGame = ChessGame.of(ChessBoard.of(pieces), playerDao.find());
         return pieces;
     }
 
-    public void start() {
+    public void start() throws SQLException {
         initDB();
         Map<Position, Piece> pieces = chessGame.start();
         pieceDao.saveAll(extractPieceDtos(pieces));
         playerDao.save(chessGame.getPlayer());
     }
 
-    private void initDB() {
+    private void initDB() throws SQLException {
         pieceDao.removeAll();
         playerDao.removeAll();
     }
@@ -50,7 +51,7 @@ public class ChessService {
         return chessGame.getState().status();
     }
 
-    public void move(String command) {
+    public void move(String command) throws SQLException {
         Map<Position, Piece> pieces = moveByCommand(command);
         pieceDao.update(extractPieceDtos(pieces));
         playerDao.update(chessGame.getPlayer());
