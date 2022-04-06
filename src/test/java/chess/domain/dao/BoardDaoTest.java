@@ -2,6 +2,7 @@ package chess.domain.dao;
 
 import chess.domain.dto.PieceDto;
 import chess.domain.game.board.ChessBoardFactory;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardDaoTest {
@@ -30,8 +32,12 @@ class BoardDaoTest {
     @Test
     @DisplayName("체스 기물을 저장한다.")
     void save() {
+        //given
         gameDao.save(ChessBoardFactory.initBoard());
-        boardDao.save(1,"a1","Pawn","WHITE");
+        //when
+        boardDao.save(1, "a1", "Pawn", "WHITE");
+        //then
+        assertThat(boardDao.findByGameId(1).size()).isEqualTo(1);
     }
 
     @Test
@@ -39,11 +45,13 @@ class BoardDaoTest {
     void delete() throws SQLException {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
-        boardDao.save(gameDao.findLastGameId(),"a1","Pawn","WHITE");
-        boardDao.save(gameDao.findLastGameId(),"a2","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
+        boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
         //when
-        boardDao.delete(gameDao.findLastGameId());
+        int lastGameId = gameDao.findLastGameId();
+        boardDao.delete(lastGameId);
         //then
+        assertThat(boardDao.findByGameId(lastGameId).size()).isEqualTo(0);
     }
 
     @Test
@@ -51,8 +59,8 @@ class BoardDaoTest {
     void findByGameId() throws SQLException {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
-        boardDao.save(gameDao.findLastGameId(),"a1","Pawn","WHITE");
-        boardDao.save(gameDao.findLastGameId(),"a2","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
+        boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
         //when
         List<PieceDto> actual = boardDao.findByGameId(gameDao.findLastGameId());
         //then

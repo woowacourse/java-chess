@@ -2,7 +2,10 @@ package chess.domain.dao;
 
 import chess.domain.dto.GameDto;
 import chess.domain.game.board.ChessBoardFactory;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +25,8 @@ class GameDaoTest {
     }
 
     @Test
-    void connection(){
+    @DisplayName("DB 연결을 확인한다.")
+    void connection() {
         assertThat(Connector.getConnection()).isNotNull();
     }
 
@@ -48,7 +52,7 @@ class GameDaoTest {
 
     @Test
     @DisplayName("id로 게임을 불러온다")
-    void findById(){
+    void findById() {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
         //when
