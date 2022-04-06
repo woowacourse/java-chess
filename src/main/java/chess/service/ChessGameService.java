@@ -28,20 +28,34 @@ public class ChessGameService {
         chessGame.start();
     }
 
-    public void save(Color turn) {
+    public void move(Position source, Position target) {
+        chessGame.move(source, target);
+        savePieces(source, target);
+        if (!isRunning()) {
+            end();
+        }
+    }
+
+    private void savePieces(Position source, Position target) {
+        if (pieceDao.isExistsPieces()) {
+            updatePosition(source, target, chessGame.getTurn());
+            return;
+        }
+        save(chessGame.getTurn());
+    }
+
+    private void updatePosition(Position source, Position target, Color turn) {
+        final int boardId = boardDao.save(turn);
+        pieceDao.updatePosition(source.stringName(), target.stringName(), boardId);
+    }
+
+    private void save(Color turn) {
         final int boardId = boardDao.save(turn);
         pieceDao.save(chessGame.getBoard().getPiecesByPosition(), boardId);
     }
 
     public ChessBoardDto getBoard() {
         return ChessBoardDto.from(chessGame.getBoard().getPiecesByPosition());
-    }
-
-    public void move(Position source, Position target) {
-        chessGame.move(source, target);
-        if (!isRunning()) {
-            end();
-        }
     }
 
     public boolean isRunning() {

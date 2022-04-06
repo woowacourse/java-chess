@@ -16,15 +16,11 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void save(Map<Position, Piece> board, int boardId) {
-        Connection connection = DBConnector.getConnection();
-        if (isExistsPieces()) {
-            updatePieces(board, boardId, connection);
-            return;
-        }
-        insertPiece(board, boardId, connection);
+        insertPiece(board, boardId);
     }
 
-    private void insertPiece(Map<Position, Piece> board, int boardId, Connection connection) {
+    private void insertPiece(Map<Position, Piece> board, int boardId) {
+        final Connection connection = DBConnector.getConnection();
         final String sql = "insert into piece (board_id, position, type, color) values (?, ?, ?, ?)";
         for (Entry<Position, Piece> positionPieceEntry : board.entrySet()) {
             executeInsertPiece(boardId, connection, sql, positionPieceEntry);
@@ -35,35 +31,11 @@ public class PieceDaoImpl implements PieceDao {
                                     Entry<Position, Piece> positionPieceEntry) {
         Position position = positionPieceEntry.getKey();
         Piece piece = positionPieceEntry.getValue();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setInt(1, boardId);
             statement.setString(2, position.stringName());
             statement.setString(3, piece.getSymbol());
             statement.setInt(4, piece.getColor().ordinal());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updatePieces(Map<Position, Piece> board, int boardId, Connection connection) {
-        final String sql = "update piece set board_id = ?, type = ?, color = ? where position = ?";
-        for (Entry<Position, Piece> positionPieceEntry : board.entrySet()) {
-            executeUpdatePiece(boardId, connection, sql, positionPieceEntry);
-        }
-    }
-
-    private void executeUpdatePiece(int boardId, Connection connection, String sql,
-                                    Entry<Position, Piece> positionPieceEntry) {
-        Position position = positionPieceEntry.getKey();
-        Piece piece = positionPieceEntry.getValue();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, boardId);
-            statement.setString(2, piece.getSymbol());
-            statement.setInt(3, piece.getColor().ordinal());
-            statement.setString(4, position.stringName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,6 +91,37 @@ public class PieceDaoImpl implements PieceDao {
             statement.setInt(1, boardId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updatePosition(String source, String target, int boardId) {
+        final String getSourcePieceSql = "select type, color from piece where position = ? and board_id = ?";
+        final String updateSourceSql = "update piece set type = '.', color = 2 where position = ? and board_id = ?";
+        final String updateTargetSql = "update piece set type = ?, color = ? where position = ? and board_id = ?";
+        try (final Connection connection = DBConnector.getConnection();
+             final PreparedStatement statement1 = connection.prepareStatement(getSourcePieceSql);
+             final PreparedStatement statement2 = connection.prepareStatement(updateSourceSql);
+             final PreparedStatement statement3 = connection.prepareStatement(updateTargetSql)) {
+
+            statement1.setString(1, source);
+            statement1.setInt(2, boardId);
+            final ResultSet resultSet = statement1.executeQuery();
+            if (!resultSet.next()) {
+                throw new IllegalAccessException("저장된 기물이 없습니다.");
+            }
+            final String type = resultSet.getString("type");
+            final int color = resultSet.getInt("color");
+            statement2.setString(1, source);
+            statement2.setInt(2, boardId);
+            statement2.executeUpdate();
+            statement3.setString(1, type);
+            statement3.setInt(2, color);
+            statement3.setString(3, target);
+            statement3.setInt(4, boardId);
+            statement3.executeUpdate();
+        } catch (SQLException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }

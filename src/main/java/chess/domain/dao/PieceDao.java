@@ -12,4 +12,6 @@ public interface PieceDao {
     boolean isExistsPieces();
 
     void deleteByBoardId(int boardId);
+
+    void updatePosition(String source, String target, int boardId);
 }

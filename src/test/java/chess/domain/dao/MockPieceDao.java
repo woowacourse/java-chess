@@ -45,4 +45,9 @@ public class MockPieceDao implements PieceDao {
     public void deleteByBoardId(int boardId) {
         fakePiece = new HashMap<>();
     }
+
+    @Override
+    public void updatePosition(String source, String target, int boardId) {
+
+    }
 }

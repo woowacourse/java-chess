@@ -63,12 +63,6 @@ public class ChessWebController {
                             chessGameService.findWinner()));
             return render(model, "result.hbs");
         });
-
-        get("/save", (req, res) -> {
-            chessGameService.save(chessGameService.getTurn());
-            res.redirect("/chess");
-            return null;
-        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
