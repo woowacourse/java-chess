@@ -28,11 +28,21 @@ public class ChessApplication {
 
     private void play(final ChessGame chessGame) {
         final CommandRequest commandRequest = chessView.requestGameCommand();
-        final String command = commandRequest.getCommand();
+        final Command command = Command.from(commandRequest.getCommand());
         final List<String> commandOptions = commandRequest.getOptions();
 
-        final CommandExecutor commandExecutor = CommandExecutor.from(command);
-        commandExecutor.execute(this, chessGame, commandOptions);
+        if (command.isStartCommand()) {
+            executeStart(chessGame);
+        }
+        if (command.isMoveCommand()) {
+            executeMove(chessGame, commandOptions);
+        }
+        if (command.isStatusCommand()) {
+            executeStatus(chessGame);
+        }
+        if (command.isEndCommand()) {
+            executeEnd(chessGame);
+        }
     }
 
     public void executeStart(final ChessGame chessGame) {
@@ -52,7 +62,7 @@ public class ChessApplication {
     }
 
     private void validateMoveCommandOptionSizeEnough(final List<String> commandOptions) {
-        if (!CommandExecutor.MOVE.equalsOptionCount(commandOptions.size())) {
+        if (!Command.MOVE.equalsOptionCount(commandOptions.size())) {
             throw new IllegalArgumentException("MOVE 옵션이 잘못되었습니다.");
         }
     }
