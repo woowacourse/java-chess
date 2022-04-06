@@ -126,6 +126,9 @@ const movePiece = async () => {
     currentClickPosition = '';
     destinationClickPosition = '';
     chessMap = await chessMap.json();
+    if (chessMap.message) {
+        alert(chessMap.message);
+    }
     return chessMap;
 }
 

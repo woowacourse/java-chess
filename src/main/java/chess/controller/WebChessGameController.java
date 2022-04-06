@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessWebGame;
+import chess.dto.ErrorMessageDto;
 import chess.dto.MoveDto;
 import chess.dto.ResultDto;
 import chess.dto.ScoreDto;
@@ -13,7 +14,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebChessGameController {
 
@@ -53,8 +55,12 @@ public class WebChessGameController {
 
         post("/move", (req, res) -> {
             final MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            final ChessMap chessMap = chessService.move(chessWebGame, moveDto);
-            return gson.toJson(chessMap);
+            try {
+                final ChessMap chessMap = chessService.move(chessWebGame, moveDto);
+                return gson.toJson(chessMap);
+            } catch (final Exception e) {
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
         });
     }
 }
