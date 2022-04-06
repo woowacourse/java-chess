@@ -19,12 +19,13 @@ import static spark.Spark.post;
 
 public class WebChessGameController {
 
+    private static final Gson gson = new Gson();
+
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     public void run() {
-        final Gson gson = new Gson();
         final ChessWebGame chessWebGame = new ChessWebGame();
         final ChessService chessService = new ChessService();
 
