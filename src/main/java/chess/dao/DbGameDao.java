@@ -16,7 +16,6 @@ public class DbGameDao implements GameDao {
     private static final String PASSWORD = "password";
     private static final Map<String, Team> nameToTeam = new HashMap<>();
     private static final Map<Team, String> teamToName = new HashMap<>();
-    private static final String NO_DATA_IN_DB_GAME_TABLE_EXCEPTION = "[ERROR] db game table에 데이터가 없습니다.";
 
     static {
         nameToTeam.put("white", Team.WHITE);
@@ -69,12 +68,27 @@ public class DbGameDao implements GameDao {
             statement.setInt(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException(NO_DATA_IN_DB_GAME_TABLE_EXCEPTION);
+                return null;
             }
             return GameInformationDto.of(resultSet.getInt("id"),
                     nameToTeam.get(resultSet.getString("turn")));
         } catch (SQLException e) {
             e.printStackTrace();;
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateGameData(int gameId, GameInformationDto gameInformationDto) {
+        final Connection connection = getConnection();
+        final String sql = "update game set turn = ? where id = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, teamToName.get(gameInformationDto.getTurn()));
+            statement.setInt(2, gameId);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

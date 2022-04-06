@@ -2,6 +2,10 @@ package chess.dao;
 
 import chess.domain.Team;
 import chess.dto.GameInformationDto;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JSpinner.ListEditor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +32,15 @@ class DbGameDaoTest {
         DbGameDao dbGameDao = new DbGameDao();
         dbGameDao.saveGame(GameInformationDto.of(1112, Team.WHITE));
         dbGameDao.deleteGameData(1112);
+    }
+
+    @Test
+    void updateGameDataTest() {
+        DbGameDao dbGameDao = new DbGameDao();
+        dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
+        GameInformationDto gameInformationDto = GameInformationDto.of(1111, Team.BLACK);
+        dbGameDao.updateGameData(1111, gameInformationDto);
+        assertThat(dbGameDao.getGameData(1111).getTurn()).isEqualTo(Team.BLACK);
     }
 
     @AfterEach

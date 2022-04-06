@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
+import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,5 +47,15 @@ public class ChessGame {
 
     public void initialze() {
         this.chessBoard = ChessBoard.initialize();
+    }
+
+    public Team getTurn() {
+        return chessBoard.getTurn();
+    }
+
+    public void initFromDb(GameInformationDto gameInformationDto, ChessBoardDto chessBoardDto) {
+        gameId = gameInformationDto.getId();
+        chessBoard.initFromDb(gameInformationDto, chessBoardDto);
+
     }
 }

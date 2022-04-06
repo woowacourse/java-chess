@@ -10,4 +10,6 @@ public interface GameDao {
     GameInformationDto getGameData(int gameId);
 
     void deleteGameData(int gameId);
+
+    void updateGameData(int gameId, GameInformationDto gameInformationDto);
 }

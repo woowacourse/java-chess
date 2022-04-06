@@ -3,10 +3,13 @@ package chess;
 import chess.controller.Command;
 import chess.dao.BoardDao;
 import chess.dao.DbBoardDao;
+import chess.dao.DbGameDao;
+import chess.dao.GameDao;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
+import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
 import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
@@ -96,32 +99,49 @@ public class WebApplication {
     private static String doMoveCommand(Response res, ChessGame chessGame, ChessBoardPosition source, ChessBoardPosition target) {
         chessGame.move(source, target);
         if (chessGame.isGameEnd()) {
+            deleteAllData(chessGame.getGameId(), new DbGameDao(), new DbBoardDao());
             return render(null, "../public/index.html");
         }
-        saveDataToDb(chessGame.getGameId(), chessGame.getChessBoardInformation(), new DbBoardDao());
+        saveDataToDb(chessGame, new DbGameDao(), new DbBoardDao());
         res.redirect("/board");
         return null;
     }
 
-    private static void saveDataToDb(int gameId, ChessBoardDto chessBoardInformation, BoardDao boardDao) {
-        boardDao.updateAll(gameId, chessBoardInformation);
+    private static void deleteAllData(int gamdId, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
+        dbBoardDao.deleteAll(gamdId);
+        dbGameDao.deleteGameData(gamdId);
+    }
+
+    private static void saveDataToDb(ChessGame chessGame, GameDao gameDao, BoardDao boardDao) {
+        gameDao.updateGameData(chessGame.getGameId(), GameInformationDto.of(chessGame.getGameId(), chessGame.getTurn()));
+        boardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
     }
 
     private static void doApplicationCommand(Response res, ChessGame chessGame, Command command) {
         if (Command.START.equals(command)) {
-            doStartCommand(res, chessGame, new DbBoardDao());
+            doStartCommand(res, chessGame);
             return;
         }
         stop();
     }
 
-    private static void doStartCommand(Response res, ChessGame chessGame, DbBoardDao dbBoardDao) {
-        ChessBoardDto chessBoardDto = getChessBoardInformation(chessGame.getGameId(), dbBoardDao);
-        if (chessBoardDto.isEmpty()) {
-            chessGame.initialze();
-            saveDataToDb(chessGame.getGameId(), chessGame.getChessBoardInformation(), dbBoardDao);
-        }
+    private static void doStartCommand(Response res, ChessGame chessGame) {
+        loadData(chessGame, new DbGameDao(), new DbBoardDao());
         res.redirect("/board");
+    }
+
+    private static void loadData(ChessGame chessGame, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
+        GameInformationDto gameInformationDto = dbGameDao.getGameData(chessGame.getGameId());
+        if (gameInformationDto == null) {
+            saveInitData(chessGame, dbGameDao, dbBoardDao);
+            return;
+        }
+        chessGame.initFromDb(gameInformationDto, dbBoardDao.findAll(chessGame.getGameId()));
+    }
+
+    private static void saveInitData(ChessGame chessGame, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
+        dbGameDao.saveGame(GameInformationDto.of(chessGame.getGameId(), chessGame.getTurn()));
+        dbBoardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
     }
 
     private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {

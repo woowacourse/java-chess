@@ -7,6 +7,8 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.dto.ChessBoardDto;
+import chess.dto.GameInformationDto;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ public class ChessBoard {
     private static final String UNVALID_SOURCE_POSITION_EXCEPTION = "[ERROR] sourcePosition에 체스 기물이 없습니다.";
     private static final String SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION = "[ERROR] targetPosition에 같은 팀 체스 기물이 있습니다.";
     private static final String IMPOSSIBLE_TO_KILL_EXCEPTION = "[ERROR] 잡을 수 없는 위치에 있는 말입니다.";
-    private final Map<ChessBoardPosition, ChessPiece> mapInformation;
+    private Map<ChessBoardPosition, ChessPiece> mapInformation;
     private Team turn;
 
     private ChessBoard(final Map<ChessBoardPosition, ChessPiece> mapInformation) {
@@ -198,5 +200,14 @@ public class ChessBoard {
             return Team.WHITE;
         }
         return Team.BLACK;
+    }
+
+    public Team getTurn() {
+        return turn;
+    }
+
+    public void initFromDb(GameInformationDto gameInformationDto, ChessBoardDto chessBoardDto) {
+        turn = gameInformationDto.getTurn();
+        mapInformation = chessBoardDto.getMapInformation();
     }
 }
