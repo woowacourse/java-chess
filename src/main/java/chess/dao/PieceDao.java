@@ -1,10 +1,10 @@
 package chess.dao;
 
+import chess.dao.util.DatabaseConnector;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,34 +13,20 @@ import java.util.List;
 
 public class PieceDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    public Connection getConnection() {
-        loadDriver();
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private final DatabaseConnector databaseConnector = new DatabaseConnector();
 
     public void save(Piece piece) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (name, color, position) values (?, ?, ?)";
+        final Connection connection = databaseConnector.getConnection();
+
+        PreparedStatement statement = executeInsertStatement(piece, connection);
+
+        databaseConnector.close(statement, connection);
+    }
+
+    private PreparedStatement executeInsertStatement(Piece piece, Connection connection) {
+        PreparedStatement statement = null;
         try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement("insert into piece (name, color, position) values (?, ?, ?)");
             statement.setString(1, piece.getName());
             statement.setString(2, piece.getColor().getName());
             statement.setString(3, piece.getPosition().getPosition());
@@ -48,117 +34,136 @@ public class PieceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return statement;
     }
 
+
     public void saveAll(List<Piece> pieces) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (name, color, position) values (?, ?, ?)";
-        try {
-            for (Piece piece : pieces) {
-                final PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, piece.getName());
-                statement.setString(2, piece.getColor().getName());
-                statement.setString(3, piece.getPosition().getPosition());
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        final Connection connection = databaseConnector.getConnection();
+        PreparedStatement statement = null;
+
+        for (Piece piece : pieces) {
+            statement = executeInsertStatement(piece, connection);
         }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        databaseConnector.close(statement, connection);
     }
 
 
     public void deleteByPosition(String position) {
-        final Connection connection = getConnection();
-        final String sql = "delete from piece where position = ?";
+        final Connection connection = databaseConnector.getConnection();
+
+        PreparedStatement statement = executeDeleteByPositionStatement(position, connection);
+
+        databaseConnector.close(statement, connection);
+    }
+
+    private PreparedStatement executeDeleteByPositionStatement(String position, Connection connection) {
+        PreparedStatement statement = null;
         try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement("delete from piece where position = ?");
             statement.setString(1, position);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return statement;
     }
 
     public void updateByPosition(String source, String target) {
-        final Connection connection = getConnection();
-        final String sql = "update piece set position = ? where position = ?";
+        final Connection connection = databaseConnector.getConnection();
+
+        PreparedStatement statement = executeUpdateByPositionStatement(source, target, connection);
+
+        databaseConnector.close(statement, connection);
+    }
+
+    private PreparedStatement executeUpdateByPositionStatement(String source, String target, Connection connection) {
+        PreparedStatement statement = null;
         try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(
+                "update piece set position = ? where position = ?");
             statement.setString(1, target);
             statement.setString(2, source);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return statement;
     }
 
     public Pieces findAll() {
-        final Connection connection = getConnection();
+        final Connection connection = databaseConnector.getConnection();
         final String sql = "select name, color, position from piece";
-        final List<Piece> members = new ArrayList<>();
+        PreparedStatement statement = executeStatement(connection, sql);
+
+        ResultSet resultSet = executeQueryAndgetResultSet(connection, statement);
+        final List<Piece> pieces = getPiecesFromResultSet(resultSet);
+
+        databaseConnector.close(statement, resultSet, connection);
+
+        return new Pieces(pieces);
+    }
+
+    private PreparedStatement executeStatement(Connection connection, String sql) {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statement;
+    }
+
+    private ResultSet executeQueryAndgetResultSet(Connection connection, PreparedStatement statement) {
+        ResultSet resultSet = null;
+
+        try {
             resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
+    private List<Piece> getPiecesFromResultSet(ResultSet resultSet) {
+        final List<Piece> pieces = new ArrayList<>();
+        try {
             while (resultSet.next()) {
-                members.add(PieceFactory.of(resultSet.getString("name"), resultSet.getString("color"),
+                pieces.add(PieceFactory.of(
+                    resultSet.getString("name")
+                    , resultSet.getString("color"),
                     resultSet.getString("position")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new Pieces(members);
+        return new ArrayList<>(pieces);
     }
 
     public Piece findByPosition(String position) {
-        final Connection connection = getConnection();
+        final Connection connection = databaseConnector.getConnection();
         final String sql = "select name, color, position from piece where position = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+
+        PreparedStatement statement = executeSelectByPositionStatement(connection, sql, position);
+        ResultSet resultSet = executeQueryAndgetResultSet(connection, statement);
+
+        Piece piece = getPieceFromResultSet(resultSet);
+
+        databaseConnector.close( statement, resultSet, connection);
+
+        return piece;
+    }
+
+    private Piece getPieceFromResultSet(ResultSet resultSet) {
         try {
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("해당위치에는 말이 없습니다.");
             }
-            return PieceFactory.of(resultSet.getString("name"), resultSet.getString("color"),
+            return PieceFactory.of(
+                resultSet.getString("name"),
+                resultSet.getString("color"),
                 resultSet.getString("position"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -166,19 +171,24 @@ public class PieceDao {
     }
 
 
+    private PreparedStatement executeSelectByPositionStatement(Connection connection, String sql, String position) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, position);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statement;
+    }
+
+
     public void deleteAll() {
-        final Connection connection = getConnection();
+        final Connection connection = databaseConnector.getConnection();
         final String sql = "delete from piece";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        PreparedStatement statement = executeStatement(connection, sql);
+
+        databaseConnector.close(statement, connection);
     }
 }
