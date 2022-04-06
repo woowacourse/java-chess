@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RookPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, d5", "d4, d2", "d4, a4", "d4, h4"})
+    @CsvSource({"44, 45", "44, 42", "44, 14", "44, 84"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece rook = new RookPiece(Color.BLACK);
@@ -26,8 +26,8 @@ class RookPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMove() {
         Piece rook = new RookPiece(Color.BLACK);
-        Position from = Position.create("a1");
-        Position to = Position.create("c3");
+        Position from = Position.create("11");
+        Position to = Position.create("33");
 
         assertFalse(rook.isMovable(from, to, false));
     }

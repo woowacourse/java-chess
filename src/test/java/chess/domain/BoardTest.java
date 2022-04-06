@@ -98,8 +98,8 @@ public class BoardTest {
     @Test
     @DisplayName("기물이 이동하는지 확인한다.")
     void move() {
-        Position from = Position.create("a2");
-        Position to = Position.create("a3");
+        Position from = Position.create("22");
+        Position to = Position.create("23");
         Piece source = board.getBoard().get(from);
 
         board.move(from, to);
@@ -125,10 +125,10 @@ public class BoardTest {
     @Test
     @DisplayName("같은 파일에 Pawn의 개수를 구한다.")
     void countTwoPawnOnSameFile() {
-        board.move(Position.create("a2"), Position.create("a4"));
-        board.move(Position.create("a4"), Position.create("a5"));
-        board.move(Position.create("a5"), Position.create("a6"));
-        board.move(Position.create("a6"), Position.create("b7"));
+        board.move(Position.create("12"), Position.create("14"));
+        board.move(Position.create("14"), Position.create("15"));
+        board.move(Position.create("15"), Position.create("16"));
+        board.move(Position.create("16"), Position.create("27"));
 
         assertThat(board.countPieceOnSameFile(new PawnPiece(Color.WHITE), File.B)).isEqualTo(2);
     }

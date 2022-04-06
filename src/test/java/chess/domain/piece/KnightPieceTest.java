@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class KnightPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, f5", "d4, f3", "d4, b3", "d4, b5", "d4, c6", "d4, e6", "d4, e2", "d4, c2"})
+    @CsvSource({"44, 65", "44, 63", "44, 23", "44, 25", "44, 36", "44, 56", "44, 52", "44, 32"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece knight = new KnightPiece(Color.BLACK);
@@ -23,7 +23,7 @@ class KnightPieceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"a1, a3", "a1, c3"})
+    @CsvSource({"11, 13", "11, 33"})
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMove(String source, String target) {
         Piece knight = new KnightPiece(Color.BLACK);

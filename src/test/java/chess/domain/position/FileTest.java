@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class FileTest {
 
     @Test
-    @DisplayName("File에 a~h이 포함되는지 확인한다.")
+    @DisplayName("File에 A~F가 포함되는지 확인한다.")
     void contain() {
         assertThat(File.values())
                 .containsOnly(File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H);
@@ -18,13 +18,13 @@ public class FileTest {
     @Test
     @DisplayName("값을 이용해 File을 찾는다.")
     void findFile() {
-        assertThat(File.from('c')).isEqualTo(File.C);
+        assertThat(File.from(3)).isEqualTo(File.C);
     }
 
     @Test
     @DisplayName("a~h 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
-        assertThatThrownBy(() -> File.from('i'))
+        assertThatThrownBy(() -> File.from(9))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
     }
@@ -32,14 +32,14 @@ public class FileTest {
     @Test
     @DisplayName("File을 1 증가시킨다.")
     void plus() {
-        File file = File.from('b');
-        assertThat(file.move(1)).isEqualTo(File.C);
+        File file = File.from(4);
+        assertThat(file.move(1)).isEqualTo(File.E);
     }
 
     @Test
     @DisplayName("File을 1 감소시킨다.")
     void minus() {
-        File file = File.from('b');
+        File file = File.from(2);
         assertThat(file.move(-1)).isEqualTo(File.A);
     }
 

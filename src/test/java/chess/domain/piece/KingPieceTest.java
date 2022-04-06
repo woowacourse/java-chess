@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class KingPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, d3", "d4, d5", "d4, e4", "d4, c4", "d4, e3", "d4, e5", "d4, c3", "d4, c5"})
+    @CsvSource({"44, 43", "44, 45", "44, 44", "44, 34", "44, 53", "44, 55", "44, 33", "44, 55"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece king = new KingPiece(Color.BLACK);
@@ -26,8 +26,8 @@ class KingPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMove() {
         Piece king = new KingPiece(Color.BLACK);
-        Position from = Position.create("a1");
-        Position to = Position.create("a3");
+        Position from = Position.create("11");
+        Position to = Position.create("13");
 
         assertFalse(king.isMovable(from, to, false));
     }
