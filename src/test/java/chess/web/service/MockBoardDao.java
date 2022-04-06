@@ -36,4 +36,9 @@ public class MockBoardDao implements BoardDao {
     public Optional<Board> findById(Long id) {
         return Optional.of(Board.create(Pieces.createInit(), Turn.init()));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        mockDb.remove(id);
+    }
 }

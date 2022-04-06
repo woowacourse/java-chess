@@ -97,4 +97,18 @@ public class BoardDaoImpl implements BoardDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public void deleteById(Long id) {
+        final String query = "DELETE FROM board WHERE id = ?";
+        try (
+                Connection connection = JdbcConnector.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

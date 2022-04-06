@@ -121,6 +121,11 @@ public class MockPieceDao implements PieceDao {
         saveFakePieces(fakePieces);
     }
 
+    @Override
+    public void deleteByBoardId(Long boardId) {
+        mockDb.clear();
+    }
+
     private List<FakePiece> convertPieceToFake(List<Piece> pieces, Long boardId) {
         return pieces.stream()
                 .map(piece -> new FakePiece(boardId, piece.getPosition().name(), piece.getType(), piece.getTeam().value()))

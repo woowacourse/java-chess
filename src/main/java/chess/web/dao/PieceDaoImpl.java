@@ -70,4 +70,18 @@ public class PieceDaoImpl implements PieceDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void deleteByBoardId(Long boardId) {
+        final String query = "DELETE FROM piece WHERE board_id = ?";
+        try (
+                Connection connection = JdbcConnector.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setLong(1, boardId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

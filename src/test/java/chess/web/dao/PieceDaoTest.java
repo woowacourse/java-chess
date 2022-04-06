@@ -2,6 +2,7 @@ package chess.web.dao;
 
 import chess.board.piece.Piece;
 import chess.board.piece.Pieces;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,12 @@ class PieceDaoTest {
         pieces = Pieces.createInit();
         boardId = boardDao.save();
         pieceDao.save(pieces.getPieces(), boardId);
+    }
+
+    @AfterEach
+    void tearDown(){
+        boardDao.deleteById(boardId);
+        pieceDao.deleteByBoardId(boardId);
     }
 
     @Test

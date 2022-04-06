@@ -3,6 +3,7 @@ package chess.web.dao;
 import chess.board.Board;
 import chess.board.Team;
 import chess.board.Turn;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ class BoardDaoTest {
     @BeforeEach
     void setUp() {
         boardId = boardDao.save();
+    }
+
+    @AfterEach
+    void tearDown(){
+        boardDao.deleteById(boardId);
     }
 
     @Test
@@ -43,9 +49,10 @@ class BoardDaoTest {
     void save() {
         //when
         Long saveId = boardDao.save();
-
         //then
         assertThat(boardId + 1).isEqualTo(saveId);
+        boardDao.deleteById(saveId);
+
     }
 
     @Test

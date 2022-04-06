@@ -14,4 +14,6 @@ public interface BoardDao {
     Long save();
 
     Optional<Board> findById(Long id);
+
+    void deleteById(Long id);
 }
