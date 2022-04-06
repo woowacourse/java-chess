@@ -12,6 +12,9 @@ public class PieceDto {
 
     public static PieceDto from(final Piece piece) {
         final String character = piece.getCharacter();
+        if (piece.isNullPiece()) {
+            return new PieceDto(".");
+        }
         if (piece.isBlack()) {
             return new PieceDto("b_" + character);
         }

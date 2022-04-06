@@ -5,16 +5,37 @@
     <title>로또</title>
 </head>
 <br>
+<form action="/" method="get">
+    <input name="restart" type="submit" value="재시작">
+</form>
 <form action="/start" method="post">
     <input name="command" value="start" type="hidden">
     <input name="start" type="submit" value="시작하기">
 </form>
-<form action="/" method="get">
-    <input name="restart" type="submit" value="재시작">
+
+<br>
+<!--move-->
+<form action="/move" method="post">
+move a2 a3 형식으로 입력해주세요.
+    <input name="command" value="move a2 a4" type="text">
+    <input type="submit" value="말이동시키기"/>
+</form>
+<!--end-->
+<form action="/end" method="post">
+    <input name="command" value="end" type="hidden">
+    <input name="end" type="submit" value="종료">
 </form>
 
 
-{{camp}} 진영 차례입니다.
+
+
+<!--정보 출력-->
+<p>점수</p>
+<p>White 팀 : {{whiteScore}}점</p>
+<p>Black 팀 : {{blackScore}}점</p>
+<p>턴 : {{camp}}</p>
+<p>{{error}}</p>
+<p>{{result}}</p>
 <br>
 
 <table>

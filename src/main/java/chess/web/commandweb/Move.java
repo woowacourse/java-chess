@@ -11,9 +11,14 @@ public final class Move implements WebCommandGenerator {
                                        final ChessGame chessGame,
                                        final Supplier returnModelToState) {
         final Positions movePositions = Positions.from(command);
+
+        System.err.println("move 커맨드가 req된 것을 확인.");
+        System.err.println("move 커맨드가 req된 것을 확인.");
+
         chessGame.move(movePositions);
 
-        //returnModelToState.run();
-        return null;
+        final Object model = returnModelToState.get();
+        System.err.println("move 커맨드가 return되는 모델은?" + model);
+        return (Map<String, Object>) model;
     }
 }
