@@ -47,7 +47,6 @@ public class WebController {
             return new ModelAndView(model, "game.html");
         }, new HandlebarsTemplateEngine());
 
-        // 하나만 움직이는 쿼리로 변경
         post("/move/:game_name", (req, res) -> {
             String gameName = req.params(":game_name");
             ChessGame loadedChessGame = ChessGameDao.load(gameName);
