@@ -31,6 +31,10 @@ public class WebController {
         this.memberService = memberService;
     }
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public void run() {
         staticFiles.location("/static");
         /** 웹 페이지 */
@@ -48,74 +52,13 @@ public class WebController {
         post("/game", this::createGame);
     }
 
-    private String createGame(Request req, Response res) {
-        String body = req.body();
-        String[] ids = body.split(",");
-        Long whiteId = Long.valueOf(ids[0]);
-        Long blackId = Long.valueOf(ids[1]);
-        gameService.createGame(whiteId, blackId);
-        return "OK";
-    }
-
-    private String terminateGame(Request req, Response res) {
-        Long gameId = Long.valueOf(req.params("gameId"));
-        gameService.terminate(gameId);
-        return "OK";
-    }
-
-    private String movePiece(Request req, Response res) {
-        Long gameId = Long.valueOf(req.params("gameId"));
-        String[] positions = req.body().split(",");
-        if (gameService.move(gameId, positions[0], positions[1])) {
-            return "OK";
-        }
-        res.status(400);
-        return "FAIL";
-    }
-
-    private String addMember(Request req, Response res) {
-        String memberName = req.body();
-        memberService.addMember(memberName);
-        return "OK";
-    }
-
-    private String getGameScore(Request req, Response res) {
-        Long gameId = Long.valueOf(req.params("gameId"));
-        ChessGame chessGame = gameService.findByGameId(gameId);
-        Map<String, String> jsonData = new HashMap<>();
-        jsonData.put("whiteScore", String.valueOf(chessGame.getWhiteScore()));
-        jsonData.put("blackScore", String.valueOf(chessGame.getBlackScore()));
-        res.header("Content-Type", "application/json");
-        res.body(JsonUtil.serialize(jsonData));
-        return JsonUtil.serialize(jsonData);
-    }
-
-    private String renderMemberManagement(Request req, Response res) {
+    private String renderHome(Request req, Response res) {
+        Map<String, Object> model = new HashMap<>();
+        List<ChessGame> games = gameService.findPlayingGames();
         List<Member> members = memberService.findAllMembers();
-        Map<String, Object> model = new HashMap<>();
+        model.put("games", games);
         model.put("members", members);
-        return render(model, "member-management.html");
-    }
-
-    private String renderMemberHistory(Request req, Response res) {
-        Long memberId = Long.valueOf(req.params("memberId"));
-        List<ChessGame> games = gameService.findHistorysByMemberId(memberId);
-        List<GameResultDTO> history = games.stream()
-                .map(game -> GameResultDTO.toResultDTO(game, memberId))
-                .collect(Collectors.toList());
-        Map<String, Object> model = new HashMap<>();
-        model.put("history", history);
-        return render(model, "history.html");
-    }
-
-    private String renderGameResult(Request req, Response res) {
-        Long gameId = Long.valueOf(req.params("gameId"));
-        ChessGame chessGame = gameService.findByGameId(gameId);
-        Map<String, Object> model = new HashMap<>();
-        model.put("winner", chessGame.getWinnerName());
-        model.put("whiteScore", chessGame.getWhiteScore());
-        model.put("blackScore", chessGame.getBlackScore());
-        return render(model, "result.html");
+        return render(model, "index.html");
     }
 
     private String renderPlayGame(Request req, Response res) {
@@ -136,16 +79,73 @@ public class WebController {
         return render(model, "play.html");
     }
 
-    private String renderHome(Request req, Response res) {
+    private String renderGameResult(Request req, Response res) {
+        Long gameId = Long.valueOf(req.params("gameId"));
+        ChessGame chessGame = gameService.findByGameId(gameId);
         Map<String, Object> model = new HashMap<>();
-        List<ChessGame> games = gameService.findPlayingGames();
-        List<Member> members = memberService.findAllMembers();
-        model.put("games", games);
-        model.put("members", members);
-        return render(model, "index.html");
+        model.put("winner", chessGame.getWinnerName());
+        model.put("whiteScore", chessGame.getWhiteScore());
+        model.put("blackScore", chessGame.getBlackScore());
+        return render(model, "result.html");
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private String renderMemberHistory(Request req, Response res) {
+        Long memberId = Long.valueOf(req.params("memberId"));
+        List<ChessGame> games = gameService.findHistorysByMemberId(memberId);
+        List<GameResultDTO> history = games.stream()
+                .map(game -> GameResultDTO.toResultDTO(game, memberId))
+                .collect(Collectors.toList());
+        Map<String, Object> model = new HashMap<>();
+        model.put("history", history);
+        return render(model, "history.html");
+    }
+
+    private String renderMemberManagement(Request req, Response res) {
+        List<Member> members = memberService.findAllMembers();
+        Map<String, Object> model = new HashMap<>();
+        model.put("members", members);
+        return render(model, "member-management.html");
+    }
+
+    private String getGameScore(Request req, Response res) {
+        Long gameId = Long.valueOf(req.params("gameId"));
+        ChessGame chessGame = gameService.findByGameId(gameId);
+        Map<String, String> jsonData = new HashMap<>();
+        jsonData.put("whiteScore", String.valueOf(chessGame.getWhiteScore()));
+        jsonData.put("blackScore", String.valueOf(chessGame.getBlackScore()));
+        res.header("Content-Type", "application/json");
+        res.body(JsonUtil.serialize(jsonData));
+        return JsonUtil.serialize(jsonData);
+    }
+
+    private String addMember(Request req, Response res) {
+        String memberName = req.body();
+        memberService.addMember(memberName);
+        return "OK";
+    }
+
+    private String movePiece(Request req, Response res) {
+        Long gameId = Long.valueOf(req.params("gameId"));
+        String[] positions = req.body().split(",");
+        if (gameService.move(gameId, positions[0], positions[1])) {
+            return "OK";
+        }
+        res.status(400);
+        return "FAIL";
+    }
+
+    private String terminateGame(Request req, Response res) {
+        Long gameId = Long.valueOf(req.params("gameId"));
+        gameService.terminate(gameId);
+        return "OK";
+    }
+
+    private String createGame(Request req, Response res) {
+        String body = req.body();
+        String[] ids = body.split(",");
+        Long whiteId = Long.valueOf(ids[0]);
+        Long blackId = Long.valueOf(ids[1]);
+        gameService.createGame(whiteId, blackId);
+        return "OK";
     }
 }

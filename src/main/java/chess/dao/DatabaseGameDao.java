@@ -69,59 +69,6 @@ public class DatabaseGameDao implements GameDao {
         return makeChessGame(id, resultSet);
     }
 
-    private ChessGame makeChessGame(Long id, ResultSet resultSet) throws SQLException {
-        Member white = memberDao.findById(resultSet.getLong("white_member_id"))
-                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-        Member black = memberDao.findById(resultSet.getLong("black_member_id"))
-                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
-        String stateName = resultSet.getString("state");
-        return new ChessGame(id, StateType.createState(stateName, loadBoard(id)),
-                new Participant(white, black));
-    }
-
-    private Board loadBoard(Long gameId) {
-        final String sql = "select line_number, position_x, position_y, team, type, first_turn "
-                + "from Piece "
-                + "where game_id = ?";
-        Map<Integer, Rank> boardValues = executor.select(connection -> {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, gameId);
-            return statement;
-        }, this::makeRanks);
-        return new Board(boardValues);
-    }
-
-    private Map<Integer, Rank> makeRanks(ResultSet resultSet) throws SQLException {
-        Map<Integer, List<Piece>> rankValues = loadRankValues(resultSet);
-        Map<Integer, Rank> ranks = new HashMap<>();
-        for (Entry<Integer, List<Piece>> pieces : rankValues.entrySet()) {
-            ranks.put(pieces.getKey(), new Rank(pieces.getValue()));
-        }
-        return ranks;
-    }
-
-    private Map<Integer, List<Piece>> loadRankValues(ResultSet pieceResultSet) throws SQLException {
-        Map<Integer, List<Piece>> rankValues = new HashMap<>();
-        for (int i = 0; i < 8; i++) {
-            rankValues.put(i, new ArrayList<>());
-        }
-        while (pieceResultSet.next()) {
-            fillRankValue(pieceResultSet, rankValues);
-        }
-        return rankValues;
-    }
-
-    private void fillRankValue(ResultSet pieceResultSet, Map<Integer, List<Piece>> rankValues) throws SQLException {
-        int lineNumber = pieceResultSet.getInt("line_number");
-        String teamName = pieceResultSet.getString("team");
-        String typeName = pieceResultSet.getString("type");
-        Position position = new Position(pieceResultSet.getInt("position_x"),
-                pieceResultSet.getInt("position_y"));
-        boolean firstTurn = pieceResultSet.getBoolean("first_turn");
-        rankValues.get(lineNumber)
-                .add(PieceFactory.createPiece(teamName, typeName, position, firstTurn));
-    }
-
     @Override
     public List<ChessGame> findAll() {
         final String sql = "select id, state, white_member_id, black_member_id from Game";
@@ -184,6 +131,59 @@ public class DatabaseGameDao implements GameDao {
         for (Piece piece : rank.getPieces()) {
             pieceDao.save(gameId, piece, lineNumber);
         }
+    }
+
+    private ChessGame makeChessGame(Long id, ResultSet resultSet) throws SQLException {
+        Member white = memberDao.findById(resultSet.getLong("white_member_id"))
+                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
+        Member black = memberDao.findById(resultSet.getLong("black_member_id"))
+                .orElseThrow(() -> new RuntimeException("찾는 멤버가 존재하지 않습니다."));
+        String stateName = resultSet.getString("state");
+        return new ChessGame(id, StateType.createState(stateName, loadBoard(id)),
+                new Participant(white, black));
+    }
+
+    private Board loadBoard(Long gameId) {
+        final String sql = "select line_number, position_x, position_y, team, type, first_turn "
+                + "from Piece "
+                + "where game_id = ?";
+        Map<Integer, Rank> boardValues = executor.select(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, gameId);
+            return statement;
+        }, this::makeRanks);
+        return new Board(boardValues);
+    }
+
+    private Map<Integer, Rank> makeRanks(ResultSet resultSet) throws SQLException {
+        Map<Integer, List<Piece>> rankValues = loadRankValues(resultSet);
+        Map<Integer, Rank> ranks = new HashMap<>();
+        for (Entry<Integer, List<Piece>> pieces : rankValues.entrySet()) {
+            ranks.put(pieces.getKey(), new Rank(pieces.getValue()));
+        }
+        return ranks;
+    }
+
+    private Map<Integer, List<Piece>> loadRankValues(ResultSet pieceResultSet) throws SQLException {
+        Map<Integer, List<Piece>> rankValues = new HashMap<>();
+        for (int i = 0; i < 8; i++) {
+            rankValues.put(i, new ArrayList<>());
+        }
+        while (pieceResultSet.next()) {
+            fillRankValue(pieceResultSet, rankValues);
+        }
+        return rankValues;
+    }
+
+    private void fillRankValue(ResultSet pieceResultSet, Map<Integer, List<Piece>> rankValues) throws SQLException {
+        int lineNumber = pieceResultSet.getInt("line_number");
+        String teamName = pieceResultSet.getString("team");
+        String typeName = pieceResultSet.getString("type");
+        Position position = new Position(pieceResultSet.getInt("position_x"),
+                pieceResultSet.getInt("position_y"));
+        boolean firstTurn = pieceResultSet.getBoolean("first_turn");
+        rankValues.get(lineNumber)
+                .add(PieceFactory.createPiece(teamName, typeName, position, firstTurn));
     }
 
     private class PieceDao {
