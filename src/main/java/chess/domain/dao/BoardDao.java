@@ -3,6 +3,7 @@ package chess.domain.dao;
 import chess.domain.dto.PieceDto;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDao {
@@ -33,21 +34,24 @@ public class BoardDao {
         }
     }
 
-    public PieceDto findByGameId(int gameId){
+    public List<PieceDto> findByGameId(int gameId){
+        List<PieceDto> pieces = new ArrayList<>();
         final String sql = "select * from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
             final ResultSet result = statement.executeQuery();
-            if (!result.next()) {
-                return null;
+            while (result.next()) {
+                pieces.add(
+                        new PieceDto(
+                                result.getInt("id"),
+                                result.getInt("game_id"),
+                                result.getString("position"),
+                                result.getString("piece"),
+                                result.getString("color")));
             }
-            return new PieceDto(
-                    result.getInt("id"),
-                    result.getInt("game_id"),
-                    result.getString("position"),
-                    result.getString("piece")
-            );
+
+            return pieces;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

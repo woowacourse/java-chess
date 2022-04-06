@@ -1,8 +1,19 @@
 package chess.domain.game;
 
+import chess.domain.piece.Type;
+
+import java.util.Arrays;
+
 public enum Color {
     WHITE,
     BLACK;
+
+    public static Color from(String color){
+        return Arrays.stream(Color.values())
+                .filter(colorType -> colorType.name().equals(color))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색깔입니다."));
+    }
 
     public boolean isBlack() {
         return this == BLACK;

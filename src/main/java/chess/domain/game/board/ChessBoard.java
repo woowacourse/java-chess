@@ -8,6 +8,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
@@ -21,6 +22,12 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, ChessPiece> board) {
         this.chessBoard = board;
+    }
+
+    public ChessBoard(HashMap<Position, ChessPiece> board, GameStatus status, Color turn) {
+        this.chessBoard = board;
+        this.currentTurn = turn;
+        this.gameStatus = status;
     }
 
     public void move(Position source, Position target) {

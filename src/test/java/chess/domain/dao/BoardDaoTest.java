@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,11 +57,12 @@ class BoardDaoTest {
         boardDao.save(gameDao.findLastGame(),"a1","Pawn","WHITE");
         boardDao.save(gameDao.findLastGame(),"a2","Pawn","WHITE");
         //when
-        PieceDto actual = boardDao.findByGameId(gameDao.findLastGame());
+        List<PieceDto> actual = boardDao.findByGameId(gameDao.findLastGame());
         //then
-        Assertions.assertThat(actual.getGameId()).isEqualTo(1);
-        Assertions.assertThat(actual.getPosition()).isEqualTo("a1");
-        Assertions.assertThat(actual.getPiece()).isEqualTo("Pawn");
+        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual.get(0).getGameId()).isEqualTo(1);
+        assertThat(actual.get(0).getPosition()).isEqualTo("a1");
+        assertThat(actual.get(0).getPiece()).isEqualTo("Pawn");
     }
 
 

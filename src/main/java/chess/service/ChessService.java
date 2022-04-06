@@ -2,14 +2,18 @@ package chess.service;
 
 import chess.domain.dao.BoardDao;
 import chess.domain.dao.GameDao;
+import chess.domain.dto.GameDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.ResponseDto;
+import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
 import chess.domain.piece.ChessPiece;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,11 +23,35 @@ public class ChessService {
     private GameDao gameDao = new GameDao();
     private BoardDao boardDao = new BoardDao();
 
-    public void start(){
-        if(chessBoard == null){
+    public void start() throws SQLException {
+        if(isNotSaved() && chessBoard == null){
             chessBoard = ChessBoardFactory.initBoard();
             chessBoard.start();
+            return;
         }
+        loadLastGame();
+    }
+
+    private boolean isNotSaved() throws SQLException {
+        return gameDao.findLastGame() == 0;
+    }
+
+    private void loadLastGame() throws SQLException {
+        HashMap<Position, ChessPiece> board = new HashMap<>();
+        for (PieceDto pieceDto : boardDao.findByGameId(gameDao.findLastGame())) {
+            ChessPiece piece = makePiece(pieceDto);
+            board.put(new Position(pieceDto.getPosition()), piece);
+        }
+        GameDto game = gameDao.findById(gameDao.findLastGame());
+        chessBoard = new ChessBoard(board, game.getStatus(), game.getTurn());
+    }
+
+    private ChessPiece makePiece(PieceDto pieceDto) {
+        return Type.from(pieceDto.getPiece()).createPiece(getPieceColor(pieceDto));
+    }
+
+    private Color getPieceColor(PieceDto pieceDto) {
+        return Color.from(pieceDto.getColor());
     }
 
     public void end() throws SQLException {
