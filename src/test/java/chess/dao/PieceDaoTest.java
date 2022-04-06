@@ -75,7 +75,6 @@ class PieceDaoTest {
         final String actual = pieceDao.getTurn();
         //then
         assertThat(actual).isEqualTo("WHITE");
-        pieceDao.removeGameState();
     }
 
     @Test
@@ -87,11 +86,11 @@ class PieceDaoTest {
         final String actual = pieceDao.getGameState();
         //then
         assertThat(actual).isEqualTo("playing");
-        pieceDao.removeGameState();
     }
 
     @AfterEach
     void removeAll() {
+        pieceDao.removeGameState();
         pieceDao.removeAllPieces();
     }
 }

@@ -115,15 +115,18 @@ public class PieceDao {
 
     public boolean hasGameStateAlready() {
         final Connection connection = getConnection();
-        final String sql = "select count(*) from game";
+        final String sql = "select count(*) as result from game";
+        int count = 0;
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            final int count = statement.executeUpdate();
-            return count > 0;
+            final ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt("result");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return count > 0;
     }
 
     public void saveState(final String state) {
