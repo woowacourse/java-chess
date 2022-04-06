@@ -10,6 +10,21 @@ body {
   font-style: normal;
 }
 
+.explanation {
+  margin: 1vmin;
+  font-size: 3vmin;
+}
+
+input {
+  margin: 2vmin;
+  font-size: 3vmin;
+  font-family: 'BMHANNAPro', monospace;
+}
+
+.submit {
+  border: none;
+}
+
 .hidden {
   display: none !important;
 }

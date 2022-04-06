@@ -31,24 +31,34 @@ public class WebChessController {
         });
 
         get("/game", (req, res) -> {
+            System.err.println(req.url());
+            res.redirect("/game/" + req.queryParams("gameId"));
+            return null;
+        });
+
+        get("/game/:gameId", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "game.html");
         });
 
-        get("/api/load", (req, res) -> chessService.createOrLoadGame(), jsonTransformer);
+        get("/api/load/:gameId", (req, res) -> chessService.createOrLoadGame(parseGameId(req.params("gameId"))),
+                jsonTransformer);
 
-        get("/api/start", (req, res) -> chessService.startGame(), jsonTransformer);
+        get("/api/start/:gameId", (req, res) -> chessService.startGame(parseGameId(req.params("gameId"))),
+                jsonTransformer);
 
-        get("/api/restart", (req, res) -> chessService.restartGame(), jsonTransformer);
+        get("/api/restart/:gameId", (req, res) -> chessService.restartGame(parseGameId(req.params("gameId"))),
+                jsonTransformer);
 
-        post("/api/move", (req, res) -> {
+        post("/api/move/:gameId", (req, res) -> {
             MoveRequest moveRequest = new Gson().fromJson(req.body(), MoveRequest.class);
-            return chessService.move(moveRequest);
+            return chessService.move(parseGameId(req.params("gameId")), moveRequest);
         }, jsonTransformer);
 
-        get("/api/status", (req, res) -> chessService.status(), jsonTransformer);
+        get("/api/status/:gameId", (req, res) -> chessService.status(parseGameId(req.params("gameId"))),
+                jsonTransformer);
 
-        get("/api/end", (req, res) -> chessService.end());
+        get("/api/end/:gameId", (req, res) -> chessService.end(parseGameId(req.params("gameId"))));
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
             response.status(400);
@@ -58,5 +68,13 @@ public class WebChessController {
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private Long parseGameId(String idString) {
+        try {
+            return Long.parseLong(idString);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 주소 입력입니다.");
+        }
     }
 }

@@ -8,8 +8,26 @@
 </head>
 <body>
 <div>
-  <h1>Chess!</h1>
-  <button class="button" id="start-button">start</button>
+  <div id="contents">
+    <div id="title-bar">
+      Chess With Me
+    </div>
+    <div class="explanation">
+      Input the game number!
+    </div>
+    <form method="get" id="game-id-form" action="/game">
+      <label>
+        <input type="text" name="gameId"/>
+      </label>
+      <input type="submit" class="submit button" value="submit">
+    </form>
+    <div class="explanation">
+      or...
+    </div>
+    <div id="buttons">
+      <div id="random-start-button" class="button">start random game</div>
+    </div>
+  </div>
 </div>
 </body>
 </html>

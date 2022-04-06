@@ -1,5 +1,6 @@
-const startButton = document.getElementById("start-button");
+const randomStartButton = document.getElementById("random-start-button");
 
-startButton.addEventListener("click", () => {
-  location.href = "/game";
+randomStartButton.addEventListener("click", () => {
+  const gameId = Math.floor(Math.random() * 10000);
+  location.href = `/game/${gameId}`;
 });

@@ -26,45 +26,54 @@ public class ChessService {
     private final GameDao gameDao;
     private final PieceDao pieceDao;
 
-    private ChessGame chessGame;
+    private final Map<Long, ChessGame> chessGames;
 
     public ChessService(GameDao gameDao, PieceDao pieceDao) {
         this.gameDao = gameDao;
         this.pieceDao = pieceDao;
+        this.chessGames = new HashMap<>();
     }
 
-    public ChessGameResponse createOrLoadGame() {
-        return loadGame();
+    public ChessGameResponse createOrLoadGame(long gameId) {
+        return loadGame(gameId);
     }
 
-    public ChessGameResponse loadGame() {
-        Optional<GameState> gameStateOptional = gameDao.load(1);
+    public ChessGameResponse loadGame(long gameId) {
+        Optional<GameState> gameStateOptional = gameDao.load(gameId);
         if (gameStateOptional.isEmpty()) {
-            return createGame();
+            return createGame(gameId);
         }
         GameState gameState = gameStateOptional.get();
         Map<Position, Piece> pieces = new HashMap<>();
-        for (PieceResponse pieceResponse : pieceDao.findAll(1)) {
+        for (PieceResponse pieceResponse : pieceDao.findAll(gameId)) {
             Position position = parseStringToPosition(pieceResponse.getPosition());
             Piece piece = pieceResponse.toPiece();
             pieces.put(position, piece);
         }
         Board board = new Board(() -> pieces);
-        this.chessGame = new ChessGame(board, gameState);
+        chessGames.put(gameId, new ChessGame(board, gameState));
+        return new ChessGameResponse(getChessGame(gameId));
+    }
+
+    private ChessGame getChessGame(long gameId) {
+        if (!chessGames.containsKey(gameId)) {
+            throw new IllegalArgumentException("해당하는 게임이 없습니다.");
+        }
+        return chessGames.get(gameId);
+    }
+
+    private ChessGameResponse createGame(long gameId) {
+        ChessGame chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
+        gameDao.save(gameId);
+        saveBoard(gameId, chessGame.getBoard());
+        chessGames.put(gameId, chessGame);
         return new ChessGameResponse(chessGame);
     }
 
-    private ChessGameResponse createGame() {
-        this.chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
-        gameDao.save(1);
-        saveBoard(1, chessGame.getBoard());
-        return new ChessGameResponse(chessGame);
-    }
-
-    public ChessGameResponse restartGame() {
-        pieceDao.deleteAll(1);
-        gameDao.delete(1);
-        return createGame();
+    public ChessGameResponse restartGame(long gameId) {
+        pieceDao.deleteAll(gameId);
+        gameDao.delete(gameId);
+        return createGame(gameId);
     }
 
     public void saveBoard(long gameId, Map<Position, Piece> board) {
@@ -77,31 +86,35 @@ public class ChessService {
         }
     }
 
-    public ChessGameResponse startGame() {
+    public ChessGameResponse startGame(long gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         chessGame.start();
-        gameDao.updateState(1, chessGame.getGameState());
+        gameDao.updateState(gameId, chessGame.getGameState());
         return new ChessGameResponse(chessGame);
     }
 
-    public ChessGameResponse move(final MoveRequest moveRequest) {
+    public ChessGameResponse move(long gameId, MoveRequest moveRequest) {
+        ChessGame chessGame = getChessGame(gameId);
         Position start = parseStringToPosition(moveRequest.getStart());
         Position target = parseStringToPosition(moveRequest.getTarget());
         chessGame.move(start, target);
-        if (pieceDao.find(1, target).isPresent()) {
-            pieceDao.delete(1, target);
+        if (pieceDao.find(gameId, target).isPresent()) {
+            pieceDao.delete(gameId, target);
         }
-        pieceDao.updatePosition(1, start, target);
-        gameDao.updateState(1, chessGame.getGameState());
+        pieceDao.updatePosition(gameId, start, target);
+        gameDao.updateState(gameId, chessGame.getGameState());
         return new ChessGameResponse(chessGame);
     }
 
-    public StatusResponse status() {
+    public StatusResponse status(long gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         return new StatusResponse(chessGame.createStatus());
     }
 
-    public ChessGameResponse end() {
+    public ChessGameResponse end(long gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         chessGame.end();
-        gameDao.updateState(1, chessGame.getGameState());
+        gameDao.updateState(gameId, chessGame.getGameState());
         return new ChessGameResponse(chessGame);
     }
 

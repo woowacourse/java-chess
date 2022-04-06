@@ -1,6 +1,8 @@
 const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
+const gameId = window.location.pathname.split("/")[2];
+
 const section = document.getElementById("chess-section");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
@@ -34,7 +36,7 @@ window.onload = async function () {
   statusButton.addEventListener("click", getStatus);
   endButton.addEventListener("click", end);
 
-  const res = await fetch("/api/load");
+  const res = await fetch(`/api/load/${gameId}`);
   const data = await res.json();
   if (!res.ok) {
     alert(data.message);
@@ -97,7 +99,7 @@ function printTurn(data) {
 }
 
 async function start() {
-  const res = await fetch("/api/start");
+  const res = await fetch(`/api/start/${gameId}`);
   const data = await res.json();
   if (!res.ok) {
     alert(data.message);
@@ -110,7 +112,7 @@ async function start() {
 }
 
 async function restart() {
-  const res = await fetch("/api/restart");
+  const res = await fetch(`/api/restart/${gameId}`);
   const data = await res.json();
   if (!res.ok) {
     alert(data.message);
@@ -180,7 +182,7 @@ function highlightSelectedCell(cell) {
 }
 
 async function requestMove() {
-  return await fetch("/api/move", {
+  return await fetch(`/api/move/${gameId}`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -199,7 +201,7 @@ function clearSelection() {
 }
 
 async function getStatus() {
-  const res = await fetch("/api/status");
+  const res = await fetch(`/api/status/${gameId}`);
   const data = await res.json();
   if (!res.ok) {
     alert(data.message);
@@ -210,7 +212,7 @@ async function getStatus() {
 }
 
 async function end() {
-  const res = await fetch("/api/end");
+  const res = await fetch(`/api/end/${gameId}`);
   const data = await res.json();
   if (!res.ok) {
     alert(data.message);

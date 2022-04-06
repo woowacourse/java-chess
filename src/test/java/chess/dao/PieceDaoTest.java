@@ -20,33 +20,35 @@ import org.junit.jupiter.api.Test;
 
 public class PieceDaoTest {
 
+    private static final long testGameId = 1;
+
     private final GameDao gameDao = new GameDaoImpl(new TestConnectionSetup());
     private final PieceDao pieceDao = new PieceDaoImpl(new TestConnectionSetup());
 
     @BeforeEach
     void createGame() {
-        gameDao.save(1);
+        gameDao.save(testGameId);
     }
 
     @AfterEach
     void clear() {
-        pieceDao.deleteAll(1);
-        gameDao.deleteAll();
+        pieceDao.deleteAll(testGameId);
+        gameDao.delete(testGameId);
     }
 
     @DisplayName("기물 저장 테스트")
     @Test
     void save() {
-        pieceDao.save(1, a2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
     }
 
     @DisplayName("게임의 전체 기물 조회 테스트")
     @Test
     void findAll() {
-        pieceDao.save(1, a2, new Pawn(Color.WHITE));
-        pieceDao.save(1, b2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, b2, new Pawn(Color.WHITE));
 
-        List<PieceResponse> pieces = pieceDao.findAll(1);
+        List<PieceResponse> pieces = pieceDao.findAll(testGameId);
 
         assertThat(pieces.size()).isEqualTo(2);
     }
@@ -54,9 +56,9 @@ public class PieceDaoTest {
     @DisplayName("위치에 맞는 기물 조회 테스트")
     @Test
     void find() {
-        pieceDao.save(1, a2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
 
-        Optional<Piece> pieceOptional = pieceDao.find(1, a2);
+        Optional<Piece> pieceOptional = pieceDao.find(testGameId, a2);
         Piece actual = pieceOptional.orElseThrow(() -> new AssertionFailedException("해당하는 기물이 없습니다."));
 
         assertThat(actual).isEqualTo(new Pawn(Color.WHITE));
@@ -65,11 +67,11 @@ public class PieceDaoTest {
     @DisplayName("기물의 위치 변경 테스트")
     @Test
     void update() {
-        pieceDao.save(1, a2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
 
-        pieceDao.updatePosition(1, a2, a3);
-        Optional<Piece> shouldEmpty = pieceDao.find(1, a2);
-        Piece actual = pieceDao.find(1, a3).orElseThrow(() -> new AssertionFailedException("해당하는 기물이 없습니다."));
+        pieceDao.updatePosition(testGameId, a2, a3);
+        Optional<Piece> shouldEmpty = pieceDao.find(testGameId, a2);
+        Piece actual = pieceDao.find(testGameId, a3).orElseThrow(() -> new AssertionFailedException("해당하는 기물이 없습니다."));
 
         Assertions.assertAll(
                 () -> assertThat(shouldEmpty.isPresent()).isFalse(),
@@ -80,9 +82,9 @@ public class PieceDaoTest {
     @DisplayName("위치에 맞는 기물 삭제 테스트")
     @Test
     void delete() {
-        pieceDao.save(1, a2, new Pawn(Color.WHITE));
+        pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
 
-        pieceDao.delete(1, a2);
+        pieceDao.delete(testGameId, a2);
         Optional<Piece> pieceOptional = pieceDao.find(1, a2);
 
         assertThat(pieceOptional.isPresent()).isFalse();
@@ -91,7 +93,7 @@ public class PieceDaoTest {
     @DisplayName("게임의 전체 기물 삭제 테스트")
     @Test
     void deleteAll() {
-        pieceDao.deleteAll(1);
+        pieceDao.deleteAll(testGameId);
 
         List<PieceResponse> pieces = pieceDao.findAll(1);
 

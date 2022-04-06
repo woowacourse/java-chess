@@ -11,25 +11,29 @@ import org.junit.jupiter.api.Test;
 
 public class GameDaoTest {
 
+    private static final long testGameId = 1;
+
     private final GameDao gameDao = new GameDaoImpl(new TestConnectionSetup());
+    private final PieceDao pieceDao = new PieceDaoImpl(new TestConnectionSetup());
 
     @AfterEach
     void clear() {
-        gameDao.deleteAll();
+        pieceDao.deleteAll(testGameId);
+        gameDao.delete(testGameId);
     }
 
     @DisplayName("게임 저장 테스트")
     @Test
     void save() {
-        gameDao.save(1);
+        gameDao.save(testGameId);
     }
 
     @DisplayName("게임 조회 테스트")
     @Test
     void load() {
-        gameDao.save(1);
+        gameDao.save(testGameId);
 
-        Optional<GameState> chessGameOptional = gameDao.load(1);
+        Optional<GameState> chessGameOptional = gameDao.load(testGameId);
         GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
         assertThat(actual).isEqualTo(GameState.READY);
@@ -38,10 +42,10 @@ public class GameDaoTest {
     @DisplayName("게임 정보 업데이트 테스트")
     @Test
     void update() {
-        gameDao.save(1);
-        gameDao.updateState(1, GameState.WHITE_RUNNING);
+        gameDao.save(testGameId);
+        gameDao.updateState(testGameId, GameState.WHITE_RUNNING);
 
-        Optional<GameState> chessGameOptional = gameDao.load(1);
+        Optional<GameState> chessGameOptional = gameDao.load(testGameId);
         GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
         assertThat(actual).isEqualTo(GameState.WHITE_RUNNING);
@@ -50,7 +54,7 @@ public class GameDaoTest {
     @DisplayName("게임 삭제 테스트")
     @Test
     void delete() {
-        gameDao.delete(1);
+        gameDao.delete(testGameId);
     }
 
     @DisplayName("게임 전체 삭제 테스트")
