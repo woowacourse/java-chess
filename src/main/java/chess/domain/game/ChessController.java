@@ -1,11 +1,17 @@
 package chess.domain.game;
 
+import chess.dao.Member;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Piece;
+import chess.domain.position.Position;
 import chess.machine.Command;
+import chess.view.BoardDto;
 import chess.view.ResponseDto;
 import chess.view.StatusDto;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
@@ -14,34 +20,52 @@ public class ChessController {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
-    public ResponseDto move(final Game game, final String command) {
+    private final GameService gameService;
+
+    public ChessController() {
+        gameService = new GameService();
+    }
+
+    public int startGame(String roomTitle, String member1, String member2) {
+        final Board board = new Board(roomTitle, Color.WHITE, List.of(new Member(member1), new Member(member2)));
+        return gameService.saveBoard(board, new BoardInitializer()).getId();
+    }
+
+    public ResponseDto move(int roomId, final String command) {
         if (Command.isMove(command)) {
-            return getResponseDto(game, command);
+            return getResponseDto(roomId, command);
         }
-        return new ResponseDto(400, "잘못된 명령어 입니다.", game.isEnd());
+        return new ResponseDto(400, "잘못된 명령어 입니다.", gameService.isEnd(roomId));
     }
 
-    public StatusDto status(final Game game) {
-        return StatusDto.of(game);
+    public StatusDto status(int roomId) {
+        return gameService.status(roomId);
     }
 
-    private ResponseDto getResponseDto(Game game, String command) {
+    private ResponseDto getResponseDto(int roomId, String command) {
         try {
-            movePiece(game, Arrays.asList(command.split(MOVE_DELIMITER)));
+            movePiece(roomId, Arrays.asList(command.split(MOVE_DELIMITER)));
         } catch (IllegalArgumentException e) {
-            return new ResponseDto(400, e.getMessage(), game.isEnd());
+            return new ResponseDto(400, e.getMessage(), gameService.isEnd(roomId));
         }
-        return new ResponseDto(200, "", game.isEnd());
+        return new ResponseDto(200, "", gameService.isEnd(roomId));
     }
 
-    private void movePiece(Game game, final List<String> commands) {
+    private void movePiece(int roomId, final List<String> commands) {
         if (commands.size() == MOVE_COMMAND_SIZE) {
-            movePieceOnBoard(game, commands);
+            gameService.move(roomId, Position.of(commands.get(SOURCE_INDEX)), Position.of(commands.get(TARGET_INDEX)));
         }
     }
 
-    private void movePieceOnBoard(Game game, final List<String> commands) {
-        game.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+    public BoardDto getBoard(int roomId) {
+        return gameService.getBoard(roomId);
     }
 
+    public void end(int roomId) {
+        gameService.end(roomId);
+    }
+
+    public BoardsDto getBoards() {
+        return gameService.getBoards();
+    }
 }

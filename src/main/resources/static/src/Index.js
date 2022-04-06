@@ -29,7 +29,9 @@ function checkSendToServer() {
 }
 
 function checkStatus() {
-    fetch('/status', {
+    let element = document.getElementById("roomId");
+
+    fetch('/room/' + element.value + '/status', {
         method: "GET",
         headers: {
             "Content-Type": "text/plain",
@@ -45,7 +47,8 @@ function checkStatus() {
 }
 
 function sendToServer(first, second) {
-    fetch('/move', {
+    let element = document.getElementById("roomId");
+    fetch('/room/' + element.value + '/move', {
         method: "POST",
         headers: {
             "Content-Type": "text/plain",
@@ -59,7 +62,7 @@ function sendToServer(first, second) {
                 }
                 if (data.finished === true) {
                     alert("게임이 종료되었습니다.");
-                    document.location.href = '/start'
+                    document.location.href = '/'
                     return;
                 }
                 location.reload();
@@ -67,3 +70,4 @@ function sendToServer(first, second) {
         }
     );
 }
+

@@ -8,12 +8,24 @@ public final class Position {
     private static final int COLUMN_ROW_LENGTH = 2;
     private static final Map<String, Position> caches = new HashMap<>();
 
+    private final int id;
     private final Column column;
     private final Row row;
+    private final int boardId;
 
-    private Position(final Column column, final Row row) {
+    public Position(final int id, final Column column, final Row row, final int boardId) {
+        this.id = id;
         this.column = column;
         this.row = row;
+        this.boardId = boardId;
+    }
+
+    public Position(final Column column, final Row row) {
+        this(0, column, row, 0);
+    }
+
+    public Position(final Column column, final Row row, final int boardId) {
+        this(0, column, row, boardId);
     }
 
     public static Position of(final String value) {
@@ -83,6 +95,14 @@ public final class Position {
 
     public Row getRow() {
         return row;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getBoardId() {
+        return boardId;
     }
 
     private List<Position> calculateByDirection(final Position target, final Direction direction) {

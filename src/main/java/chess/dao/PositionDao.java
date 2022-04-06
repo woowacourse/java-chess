@@ -1,57 +1,57 @@
 package chess.dao;
 
 import chess.domain.pieces.Color;
-import chess.domain.pieces.NeoPiece;
+import chess.domain.pieces.Piece;
 import chess.domain.pieces.Symbol;
 import chess.domain.position.Column;
-import chess.domain.position.NeoPosition;
+import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class NeoPositionDao {
+public class PositionDao {
 
     private final ConnectionManager connectionManager;
 
-    public NeoPositionDao(ConnectionManager connectionManager) {
+    public PositionDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
-    public NeoPosition save(NeoPosition neoPosition) {
-        ConnectionFunction<Connection, NeoPosition> runnable = connection -> {
-            final String sql = "insert into neo_position (position_column, position_row, board_id) values (?, ?, ?)";
+    public Position save(Position position) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, neoPosition.getColumn().value());
-            preparedStatement.setInt(2, neoPosition.getRow().value());
-            preparedStatement.setInt(3, neoPosition.getBoardId());
+            preparedStatement.setInt(1, position.getColumn().value());
+            preparedStatement.setInt(2, position.getRow().value());
+            preparedStatement.setInt(3, position.getBoardId());
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
                 throw new SQLException("실행에 오류가 생겼습니다");
             }
-            return new NeoPosition(generatedKeys.getInt(1), neoPosition.getColumn(), neoPosition.getRow(), neoPosition.getBoardId());
-        };
-        return connectionManager.run(runnable);
+            return new Position(generatedKeys.getInt(1), position.getColumn(), position.getRow(), position.getBoardId());
+        });
     }
 
-    public NeoPosition findByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
-        ConnectionFunction<Connection, NeoPosition> runnable = connection -> {
+    public Position getByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
+        return connectionManager.executeQuery(connection -> {
             final ResultSet resultSet = findPosition(column, row, boardId, connection);
-            return new NeoPosition(
+            return new Position(
                     resultSet.getInt("id"),
                     Column.findColumn(resultSet.getInt("position_column")),
                     Row.findRow(resultSet.getInt("position_row")),
                     resultSet.getInt("board_id")
             );
-        };
-        return connectionManager.run(runnable);
+        });
     }
 
     public void saveAllPosition(int boardId) {
-        ConnectionFunction<Connection, Void> runnable = connection -> {
-            final String sql = "insert into neo_position (position_column, position_row, board_id) values (?, ?, ?)";
+        connectionManager.executeQuery(connection -> {
+            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             for (Column column : Column.values()) {
                 for (Row row : Row.values()) {
@@ -64,21 +64,19 @@ public class NeoPositionDao {
             }
             preparedStatement.executeBatch();
             return null;
-        };
-        connectionManager.run(runnable);
+        });
     }
 
-    public int findPositionIdByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
-        ConnectionFunction<Connection, Integer> runnable = connection -> {
+    public int getPositionIdByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
+        return connectionManager.executeQuery(connection -> {
             final ResultSet resultSet = findPosition(column, row, boardId, connection);
             return resultSet.getInt("id");
-        };
-        return connectionManager.run(runnable);
+        });
     }
 
     private ResultSet findPosition(Column column, Row row, int boardId, Connection connection) throws SQLException {
         final String sql = "select np.id, np.position_column, np.position_row, np.board_id " +
-                "from neo_position as np " +
+                "from position as np " +
                 "where np.position_column=? and np.position_row=? and np.board_id=?";
         final PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, column.value());
@@ -91,49 +89,55 @@ public class NeoPositionDao {
         return resultSet;
     }
 
-    public Map<NeoPosition, NeoPiece> findAllPositionsAndPieces(int boardId) {
-        ConnectionFunction<Connection, Map<NeoPosition, NeoPiece>> runnable = connection -> {
+    public Map<Position, Piece> findAllPositionsAndPieces(int boardId) {
+        return connectionManager.executeQuery(connection -> {
             final String sql = "select po.id as po_id, po.position_column, po.position_row, po.board_id, " +
                     "pi.id as pi_id, pi.type, pi.color, pi.position_id " +
-                    "from neo_position po " +
-                    "inner join neo_piece pi on po.id = pi.position_id " +
+                    "from position po " +
+                    "inner join piece pi on po.id = pi.position_id " +
                     "where board_id=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, boardId);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            Map<NeoPosition, NeoPiece> existPiecesWithPosition = new HashMap<>();
+            Map<Position, Piece> existPiecesWithPosition = new HashMap<>();
             while (resultSet.next()) {
-                existPiecesWithPosition.put(makeNeoPosition(resultSet), makeNeoPiece(resultSet));
+                existPiecesWithPosition.put(makePosition(resultSet), makePiece(resultSet));
             }
             return existPiecesWithPosition;
-        };
-        return connectionManager.run(runnable);
+        });
     }
 
-    private NeoPosition makeNeoPosition(ResultSet resultSet) throws SQLException {
-        return new NeoPosition(
+    private Position makePosition(ResultSet resultSet) throws SQLException {
+        return new Position(
                 resultSet.getInt("po_id"),
                 Column.findColumn(resultSet.getInt("position_column")),
                 Row.findRow(resultSet.getInt("position_row")),
                 resultSet.getInt("board_id"));
     }
 
-    private NeoPiece makeNeoPiece(ResultSet resultSet) throws SQLException {
-        return new NeoPiece(
+    private Piece makePiece(ResultSet resultSet) throws SQLException {
+        return new Piece(
                 resultSet.getInt("pi_id"),
-                Symbol.findSymbol(resultSet.getString("type")).type(),
                 Color.findColor(resultSet.getString("color")),
+                Symbol.findSymbol(resultSet.getString("type")).type(),
                 resultSet.getInt("position_id")
         );
     }
 
     public int deleteAll() {
-        ConnectionFunction<Connection, Integer> runnable = connection -> {
-            String sql = "delete from neo_position";
+        return connectionManager.executeQuery(connection -> {
+            String sql = "delete from position";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             return preparedStatement.executeUpdate();
-        };
-        return connectionManager.run(runnable);
+        });
+    }
+
+    public List<Position> getPaths(List<Position> positions, int roomId) {
+        List<Position> realPositions = new ArrayList<>();
+        for (Position position : positions) {
+            realPositions.add(getByColumnAndRowAndBoardId(position.getColumn(), position.getRow(), roomId));
+        }
+        return realPositions;
     }
 }

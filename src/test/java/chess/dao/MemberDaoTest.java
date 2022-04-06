@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.game.NeoBoard;
+import chess.domain.game.Board;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberDaoTest {
 
-    private final NeoMemberDao dao = new NeoMemberDao(new ChessConnectionManager());
-    private final NeoBoardDao boardDao = new NeoBoardDao(new ChessConnectionManager());
+    private final MemberDao dao = new MemberDao(new ChessConnectionManager());
+    private final BoardDao boardDao = new BoardDao(new ChessConnectionManager());
     private int boardId;
 
     @BeforeEach
     void setup() {
-        final NeoBoard neoBoard = boardDao.save(new NeoBoard("에덴파이팅~!"));
-        this.boardId = neoBoard.getId();
+        final Board board = boardDao.save(new Board("에덴파이팅~!"));
+        this.boardId = board.getId();
     }
 
     @AfterEach
@@ -26,7 +26,7 @@ class MemberDaoTest {
 
     @Test
     void save() {
-        final NeoMember member = dao.save("eden", boardId);
+        final Member member = dao.save("eden", boardId);
         assertThat(member.getName()).isEqualTo("eden");
     }
 }

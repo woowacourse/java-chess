@@ -1,21 +1,22 @@
 package chess.dao;
 
 public class Member {
-    private final String id;
-    private final String name;
-    private final Role role;
 
-    public Member(String id, String name) {
-        this(id, name, null);
+    private final int id;
+    private final String name;
+    private final int boardId;
+
+    public Member(String name) {
+        this(0, name, 0);
     }
 
-    public Member(String id, String name, Role role) {
+    public Member(int id, String name, int boardId) {
         this.id = id;
         this.name = name;
-        this.role = role;
+        this.boardId = boardId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -23,15 +24,7 @@ public class Member {
         return name;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public int getBoardId() {
+        return boardId;
     }
 }

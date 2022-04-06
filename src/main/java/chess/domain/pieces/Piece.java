@@ -9,12 +9,24 @@ public final class Piece {
     private static final String WHITE_SYMBOL = "white";
     private static final String BLACK_SYMBOL = "black";
 
+    private final int id;
     private final Color color;
     private final Type type;
+    private final int positionId;
 
-    public Piece(final Color color, final Type type) {
+    public Piece(int id, Color color, Type type, int positionId) {
+        this.id = id;
         this.color = color;
         this.type = type;
+        this.positionId = positionId;
+    }
+
+    public Piece(Color color, Type type, int positionId) {
+        this(0, color, type, positionId);
+    }
+
+    public Piece(final Color color, final Type type) {
+        this(0, color, type, 0);
     }
 
     public String symbol() {
@@ -65,6 +77,14 @@ public final class Piece {
 
     public Type getType() {
         return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getPositionId() {
+        return positionId;
     }
 
     @Override

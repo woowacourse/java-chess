@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.dao.Member;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Symbol;
 import chess.domain.position.Column;
@@ -12,17 +13,23 @@ import java.util.Map;
 public class BoardDto {
 
     private final List<List<PieceDto>> boardSymbols;
+    private final String roomTitle;
+    private final String whiteMemberName;
+    private final String blackMemberName;
 
-    private BoardDto(List<List<PieceDto>> boardSymbols) {
+    private BoardDto(List<List<PieceDto>> boardSymbols, String roomTitle, String whiteMemberName, String blackMemberName) {
         this.boardSymbols = boardSymbols;
+        this.roomTitle = roomTitle;
+        this.whiteMemberName = whiteMemberName;
+        this.blackMemberName = blackMemberName;
     }
 
-    public static BoardDto of(Map<String, Piece> pieces) {
+    public static BoardDto of(Map<String, Piece> pieces, String roomName, Member whiteMember, Member blackMember) {
         List<List<PieceDto>> boardSymbols = new ArrayList<>();
         for (Integer row : Row.valuesByDescending()) {
             boardSymbols.add(makeLine(pieces, row));
         }
-        return new BoardDto(boardSymbols);
+        return new BoardDto(boardSymbols, roomName, whiteMember.getName(), blackMember.getName());
     }
 
     private static List<PieceDto> makeLine(Map<String, Piece> pieces, Integer row) {
@@ -49,5 +56,17 @@ public class BoardDto {
 
     public List<List<PieceDto>> getBoardSymbols() {
         return boardSymbols;
+    }
+
+    public String getWhiteMemberName() {
+        return whiteMemberName;
+    }
+
+    public String getBlackMemberName() {
+        return blackMemberName;
+    }
+
+    public String getRoomTitle() {
+        return roomTitle;
     }
 }

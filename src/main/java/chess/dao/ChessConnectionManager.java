@@ -30,9 +30,9 @@ public class ChessConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public <T> T run(ConnectionFunction<Connection, T> runnable) {
+    public <T> T executeQuery(ConnectionMapper<T> connectionMapper) {
         try (final Connection connection = getConnection()) {
-            return runnable.execute(connection);
+            return connectionMapper.execute(connection);
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }

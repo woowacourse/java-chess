@@ -1,0 +1,119 @@
+package chess.dao;
+
+import chess.domain.game.Board;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Piece;
+import chess.domain.position.Position;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class BoardDao {
+
+    private final ConnectionManager connectionManager;
+
+    public BoardDao(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
+    public Board save(Board board) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "insert into board (room_title, turn) values (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, board.getRoomTitle());
+            preparedStatement.setString(2, board.getTurn().name());
+            preparedStatement.executeUpdate();
+            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (!generatedKeys.next()) {
+                throw new IllegalArgumentException("보드를 찾을 수 없어용~");
+            }
+            return new Board(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
+        });
+    }
+
+    public Board getById(int id) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "select * from board where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            final MemberDao memberDao = new MemberDao(connectionManager);
+            if (!resultSet.next()) {
+                throw new IllegalArgumentException("그런 보드 없어용용죽겠지");
+            }
+            return new Board(
+                    resultSet.getInt("id"),
+                    resultSet.getString("room_title"),
+                    Color.findColor(resultSet.getString("turn")),
+                    memberDao.getAllByBoardId(resultSet.getInt("id"))
+            );
+        });
+    }
+
+    public List<Board> findAll() {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "select * from board";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            final MemberDao memberDao = new MemberDao(connectionManager);
+            List<Board> boards = new ArrayList<>();
+            while (resultSet.next()) {
+                boards.add(new Board(
+                        resultSet.getInt("id"),
+                        resultSet.getString("room_title"),
+                        Color.findColor(resultSet.getString("turn")),
+                        memberDao.getAllByBoardId(resultSet.getInt("id")))
+                );
+            }
+            return boards;
+        });
+    }
+
+    public Board init(Board board, Map<Position, Piece> initialize) {
+        return connectionManager.executeQuery(connection -> {
+            final Board savedBoard = save(board);
+            final PositionDao positionDao = new PositionDao(connectionManager);
+            final PieceDao pieceDao = new PieceDao(connectionManager);
+            final MemberDao memberDao = new MemberDao(connectionManager);
+            positionDao.saveAllPosition(savedBoard.getId());
+            for (Position position : initialize.keySet()) {
+                int lastPositionId = positionDao.getPositionIdByColumnAndRowAndBoardId(position.getColumn(), position.getRow(), savedBoard.getId());
+                final Piece piece = initialize.get(position);
+                pieceDao.save(new Piece(piece.getColor(), piece.getType(), lastPositionId));
+            }
+            memberDao.saveAll(board.getMembers(), savedBoard.getId());
+            return savedBoard;
+        });
+    }
+
+    public int deleteById(int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "delete from board where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, boardId);
+            return preparedStatement.executeUpdate();
+        });
+    }
+
+    public int deleteAll() {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "delete from board";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            return preparedStatement.executeUpdate();
+        });
+    }
+
+    public int updateTurn(Color color, int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "update board set turn=? where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, color.name());
+            preparedStatement.setInt(2, boardId);
+            return preparedStatement.executeUpdate();
+        });
+    }
+}

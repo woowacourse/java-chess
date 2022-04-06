@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.game.Game;
+import chess.domain.game.GameService;
 import chess.domain.pieces.Color;
 
 import java.util.*;
@@ -13,7 +13,7 @@ public class StatusDto {
     private final Map<String, Double> score;
     private final String winner;
 
-    private StatusDto(Map<String, Double> score) {
+    public StatusDto(Map<String, Double> score) {
         this.score = score;
         this.winner = findWinner(score);
     }
@@ -37,11 +37,6 @@ public class StatusDto {
                 .mapToDouble(point -> point)
                 .max()
                 .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public static StatusDto of(Game game) {
-        return new StatusDto(Arrays.stream(Color.values())
-                .collect(Collectors.toMap(Enum::name, game::calculateScore)));
     }
 
     public Map<String, Double> getScore() {

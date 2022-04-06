@@ -2,15 +2,18 @@ package chess;
 
 import chess.domain.game.BoardInitializer;
 import chess.domain.game.ChessController;
-import chess.domain.game.Game;
+import chess.domain.game.GameService;
 import chess.view.ResponseDto;
 import chess.view.BoardDto;
 import chess.view.StatusDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -21,32 +24,48 @@ public class WebApplication {
         staticFiles.location("/static");
 
         ChessController controller = new ChessController();
-        Game game = new Game(new BoardInitializer());
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", BoardDto.of(game.toMap()));
-            return render(model, "index.html");
+            model.put("boards", controller.getBoards());
+            return render(model, "home.html");
         });
-        post("/move", (req, res) -> {
-            final String[] split = req.body().strip().split("=");
-            ResponseDto response = controller.move(game, split[1]);
-            return response.toString();
-        });
-        get("/start", (req, res) -> {
-            game.restart(new BoardInitializer());
-            res.redirect("/");
+
+        post("/make-room", (req, res) -> {
+            System.out.println(req.body().strip());
+            final List<String> createRoomInput = Arrays.stream(req.body().strip().split("\n"))
+                    .map(s -> s.split("=")[1])
+                    .collect(Collectors.toList());
+            final int roomId = controller.startGame(createRoomInput.get(0), createRoomInput.get(1), createRoomInput.get(2));
+            res.redirect("/room/" + roomId);
             return null;
         });
 
-        post("/end", (req, res) -> {
+
+        get("/room/:roomId", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("result", controller.status(game));
-            game.restart(new BoardInitializer());
+            model.put("roomId", Integer.parseInt(req.params(":roomId")));
+            model.put("board", controller.getBoard(Integer.parseInt(req.params(":roomId"))));
+            return render(model, "index.html");
+        });
+
+        post("/room/:roomId/move", (req, res) -> {
+            final String[] split = req.body().strip().split("=");
+            final int roomId = Integer.parseInt(req.params(":roomId"));
+            ResponseDto response = controller.move(roomId, split[1]);
+            return response.toString();
+        });
+
+        post("/room/:roomId/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            final int roomId = Integer.parseInt(req.params(":roomId"));
+            model.put("result", controller.status(roomId));
+            controller.end(roomId);
             return render(model, "result.html");
         });
 
-        get("/status", (req, res) -> {
-            final StatusDto statusDto = controller.status(game);
+        get("/room/:roomId/status", (req, res) -> {
+            int roomId = Integer.parseInt(req.params(":roomId"));
+            final StatusDto statusDto = controller.status(roomId);
             return statusDto.toString();
         });
     }
