@@ -2,10 +2,10 @@ package chess.web;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
-import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.web.dto.BoardDto;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,8 @@ public class WebApplication {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", BoardDto.newInstance(chessGame.board()).getPieces());
+            model.put("black-score", chessGame.score(Color.WHITE));
+            model.put("white-score", chessGame.score(Color.BLACK));
             return render(model, "index.html");
         });
 
@@ -35,6 +37,8 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("error-message", exception.getMessage());
             model.put("pieces", BoardDto.newInstance(chessGame.board()).getPieces());
+            model.put("black-score", chessGame.score(Color.WHITE));
+            model.put("white-score", chessGame.score(Color.BLACK));
             response.body(render(model, "index.html"));
         });
     }
