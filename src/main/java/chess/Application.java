@@ -3,6 +3,7 @@ package chess;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.GameCommand;
+import chess.domain.state.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
         OutputView.printChessCommandInfo();
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new ChessGame(new Ready());
         do {
             executeCommand(chessGame);
         } while (chessGame.isRunning());

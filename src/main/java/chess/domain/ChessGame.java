@@ -1,14 +1,14 @@
 package chess.domain;
 
 import chess.domain.location.Location;
-import chess.domain.state.Ready;
+import chess.domain.piece.Team;
 import chess.domain.state.State;
 
 public class ChessGame {
     private State state;
 
-    public ChessGame() {
-        this.state = new Ready();
+    public ChessGame(State state) {
+        this.state = state;
     }
 
     public boolean isRunning() {
@@ -45,5 +45,9 @@ public class ChessGame {
 
     public TeamScore getScore() {
         return state.getScore();
+    }
+
+    public Team getTeam() {
+        return state.getTeam();
     }
 }

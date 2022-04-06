@@ -1,8 +1,9 @@
 package chess.domain.state;
 
 import chess.domain.Board;
-import chess.domain.location.Location;
 import chess.domain.TeamScore;
+import chess.domain.location.Location;
+import chess.domain.piece.Team;
 
 public interface State {
 
@@ -17,4 +18,6 @@ public interface State {
     State move(Location source, Location target);
 
     TeamScore getScore();
+
+    Team getTeam();
 }

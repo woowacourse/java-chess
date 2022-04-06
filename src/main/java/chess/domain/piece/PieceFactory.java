@@ -26,6 +26,10 @@ public class PieceFactory {
             return new Rook(team);
         }
 
+        if (name == Name.KNIGHT) {
+            return new Knight(team);
+        }
+
         return new EmptyPiece();
     }
 }
