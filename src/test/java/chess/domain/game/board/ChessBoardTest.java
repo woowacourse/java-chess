@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,7 +34,7 @@ class ChessBoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
+    @CsvSource(value = {"a7:P","a8:R"}, delimiter = ':')
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     void findPiece(String position, String expected) {
         Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
