@@ -63,20 +63,20 @@
     }
 
     let clickCount = 0;
-    let moveCommand = "move";
+    let startPosition = "";
     const pieceClickHandler = (target) => {
         let position = target.id;
         target.style.border = "aqua 2px solid";
         clickCount++;
-        moveCommand += ` ${position}`;
 
         if (clickCount !== 2) {
+            startPosition += position;
             return;
         }
 
-        fetch("/command/{{gameId}}", {
+        fetch("/move/{{gameId}}", {
             method: "POST",
-            body: moveCommand
+            body: `${startPosition},${position}`
         }).then(response => {
             if(!response.ok) {
                 alert("이동 실패");
@@ -86,9 +86,8 @@
     }
 
     const terminate = () => {
-        fetch("/command/{{gameId}}", {
-            method: "POST",
-            body: "end"
+        fetch("/terminate/{{gameId}}", {
+            method: "POST"
         }).then(response => {
             if(!response.ok) {
                 alert("명령 실패");

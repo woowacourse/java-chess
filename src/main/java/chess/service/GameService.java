@@ -47,4 +47,22 @@ public class GameService {
     public void update(ChessGame chessGame) {
         gameDao.update(chessGame);
     }
+
+    public boolean move(Long gameId, String start, String target) {
+        ChessGame chessGame = findByGameId(gameId);
+        try {
+            chessGame.move(start, target);
+            update(chessGame);
+            return true;
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void terminate(Long gameId) {
+        ChessGame chessGame = findByGameId(gameId);
+        chessGame.terminate();
+        update(chessGame);
+    }
 }
