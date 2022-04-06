@@ -91,8 +91,10 @@ const markDestinationPiece = async (e) => {
     destinationClickPosition = e.currentTarget;
     currentClickPosition.style.backgroundColor = '';
     const chessMap = await movePiece();
-    showChessMap(chessMap.chessMap);
-    checkEndGame(chessMap.isRunning);
+    if (chessMap.chessMap) {
+        showChessMap(chessMap.chessMap);
+        checkEndGame(chessMap.isRunning);
+    }
 }
 
 const showChessMap = (chessMap) => {
