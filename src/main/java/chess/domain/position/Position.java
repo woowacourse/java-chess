@@ -79,4 +79,12 @@ public class Position {
     public String toString() {
         return File.findFile(column) + Rank.findRank(row);
     }
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
+    }
 }

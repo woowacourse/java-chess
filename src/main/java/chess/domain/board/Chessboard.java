@@ -1,6 +1,7 @@
 package chess.domain.board;
 
-import chess.Score;
+import chess.domain.Score;
+import chess.domain.position.Positions;
 import chess.domain.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -9,6 +10,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,15 +21,13 @@ public class Chessboard {
     public static final List<Integer> SIZE = IntStream.range(0, 8)
             .boxed()
             .collect(Collectors.toList());
-    private static final double EXIST_PAWN_SAME_COLUMN = 0.5;
-    private static final int DUPLICATE = 2;
     private static final int KING_COUNT = 2;
     private static final String EXCEPTION_SOURCE_TARGET_SAME_POSITION = "현재 위치와 같은 위치로 이동할 수 없습니다.";
     private static final String EXCEPTION_EMPTY_SOURCE_PIECE = "이동하려는 위치에 기물이 없습니다.";
     private static final String EXCEPTION_CATCH_PIECE_SAME_TEAM = "같은편의 기물을 공격할 수 없습니다.";
     private static final String EXCEPTION_MOVE_OPPOSITE_TEAM_PIECE = "상대편의 기물은 움직일 수 없습니다.";
     private static final String EXCEPTION_IMPOSSIBLE_MOVE = "해당 위치로 이동할 수 없습니다.";
-    private static final String EXCEPTION_NOT_EXIST_PIECE = "기물이 존재하지 않습니다.";
+    private static final String EXCEPTION_NOT_EXIST_PIECE = "체스 보드에 해당 기물이 존재하지 않습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -37,6 +37,14 @@ public class Chessboard {
 
     public static Chessboard create() {
         return new Chessboard(BoardCache.create());
+    }
+
+    public static Chessboard load(Map<String, Piece> pieces) {
+        Map<Position, Piece> board = new LinkedHashMap<>();
+        for (String rankFile : pieces.keySet()) {
+            board.put(Positions.findPosition(rankFile), pieces.get(rankFile));
+        }
+        return new Chessboard(board);
     }
 
     public void movePiece(Position source, Position target, Turn turn) {
@@ -125,7 +133,7 @@ public class Chessboard {
                 .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 
-    public Piece getPiece(int row, int column) {
+    public Piece findPiece(int row, int column) {
         return board.keySet()
                 .stream()
                 .filter(position -> position.isSamePosition(row, column))

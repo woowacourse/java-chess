@@ -1,9 +1,12 @@
 package chess.domain.state;
 
-import chess.Score;
+import chess.domain.Score;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+
+import java.util.Map;
 
 public class Finish implements State {
 
@@ -36,17 +39,36 @@ public class Finish implements State {
     }
 
     @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isRightTurn(String turn) {
+        return false;
+    }
+
+    @Override
     public Score computeScore(Color color) {
         return chessboard.computeScore(color);
     }
 
     @Override
-    public Chessboard getChessboard() {
-        return chessboard;
+    public void loadTurn() {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public State loadBoard(Map<String, Piece> pieces) {
+        return new Finish(chessboard);
+    }
+
+    @Override
+    public String turn() {
+        return INIT_TURN;
+    }
+
+    @Override
+    public Chessboard getChessboard() {
+        return chessboard;
     }
 }

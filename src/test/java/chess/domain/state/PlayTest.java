@@ -58,4 +58,28 @@ class PlayTest {
 
         assertThat(play.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
+
+    @Test
+    @DisplayName("현재 턴이 맞는지 확인")
+    void checkTurn() {
+        Play play = Play.from(new Turn());
+
+        assertThat(play.isRightTurn("white")).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 턴을 String으로 확인")
+    void checkTurnString() {
+        Play play = Play.from(new Turn());
+
+        assertThat(play.turn()).isEqualTo("white");
+    }
+
+    @Test
+    @DisplayName("running 중인지 확인")
+    void isRunning() {
+        Play play = Play.from(new Turn());
+
+        assertThat(play.isRunning()).isTrue();
+    }
 }

@@ -3,14 +3,15 @@ package chess.domain;
 import chess.domain.piece.Color;
 
 public class Turn {
+
     Color color;
 
     public Turn() {
         this.color = Color.WHITE;
     }
 
-    public boolean isRightTurn(Color color) {
-        return this.color == color;
+    public boolean isRightTurn(String color) {
+        return this.color.name().equalsIgnoreCase(color);
     }
 
     public void nextTurn() {
@@ -21,5 +22,9 @@ public class Turn {
         if (color == Color.WHITE) {
             color = Color.BLACK;
         }
+    }
+
+    public String getColor() {
+        return color.name().toLowerCase();
     }
 }

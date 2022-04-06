@@ -50,4 +50,20 @@ class FinishTest {
         assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create())).end())
                 .isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("현재 턴을 String으로 확인")
+    void checkTurnString() {
+        Finish finish = new Finish(Chessboard.create());
+
+        assertThat(finish.turn()).isEqualTo("blank");
+    }
+
+    @Test
+    @DisplayName("running 중인지 확인")
+    void isRunning() {
+        Finish finish = new Finish(Chessboard.create());
+
+        assertThat(finish.isRunning()).isFalse();
+    }
 }

@@ -22,6 +22,9 @@ public class BoardCache {
         initializePiece(WHITE_PAWN, Color.WHITE);
     }
 
+    private BoardCache() {
+    }
+
     public static Map<Position, Piece> create() {
         return new LinkedHashMap<>(CACHE);
     }

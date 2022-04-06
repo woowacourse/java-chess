@@ -1,15 +1,18 @@
 package chess.domain;
 
-import chess.Score;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 
+import java.util.Map;
+
 public class ChessGame {
 
-     private State state;
+    private State state;
 
     public ChessGame() {
         this.state = new Ready();
@@ -35,8 +38,33 @@ public class ChessGame {
         return state.isRunning();
     }
 
+    public boolean isRightTurn(String turn) {
+        return state.isRightTurn(turn);
+    }
+
     public Score computeScore(Color color) {
         return state.computeScore(color);
+    }
+
+    public void loadTurn() {
+        state.loadTurn();
+    }
+
+    public void loadBoard(Map<String, Piece> pieces) {
+        state = state.loadBoard(pieces);
+    }
+
+    public Piece findPiece(String from) {
+        Position position = Positions.findPosition(from);
+        return state.getChessboard().findPiece(position.row(), position.column());
+    }
+
+    public Map<String, Piece> toBoardModel() {
+        return state.getChessboard().toModel();
+    }
+
+    public String getTurn() {
+        return state.turn();
     }
 
     public Chessboard getChessBoard() {

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.Score;
+import chess.domain.Score;
 import chess.domain.board.Chessboard;
 
 public class OutputView {
@@ -30,7 +30,7 @@ public class OutputView {
     private static void printPiece(Chessboard board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
             if (board.isExistPosition(row, column)) {
-                System.out.print(Symbol.findSymbol(board.getPiece(row, column)).symbol(board.getPiece(row, column)));
+                System.out.print(Symbol.findSymbol(board.findPiece(row, column)).symbol(board.findPiece(row, column)));
                 continue;
             }
             System.out.print(BLANK);

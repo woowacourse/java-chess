@@ -50,4 +50,20 @@ class ReadyTest {
         assertThatThrownBy(() -> ready.computeScore(Color.WHITE))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("현재 턴을 String으로 확인")
+    void checkTurnString() {
+        Ready ready = new Ready();
+
+        assertThat(ready.turn()).isEqualTo("blank");
+    }
+
+    @Test
+    @DisplayName("running 중인지 확인")
+    void isRunning() {
+        Ready ready = new Ready();
+
+        assertThat(ready.isRunning()).isFalse();
+    }
 }

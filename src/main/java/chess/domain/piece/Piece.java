@@ -72,9 +72,14 @@ public abstract class Piece {
         return this.color == piece.color;
     }
 
-    public Color getColor() {
-        return color;
+    public String getColor() {
+        return color.name().toLowerCase();
     }
+
+
+
+
+
 
     public double getScore() {
         return score;
@@ -87,6 +92,6 @@ public abstract class Piece {
     @Override
     public String toString() {
         return "{" + "piece=" + piece + "}" +
-                "{" + "color=" + color + "}" ;
+                "{" + "color=" + color.name().toLowerCase() + "}" ;
     }
 }

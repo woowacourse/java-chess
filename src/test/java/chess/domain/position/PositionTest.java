@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,5 +26,18 @@ class PositionTest {
                 Arguments.of("5", "d", new Position(3, 3)),
                 Arguments.of("1", "h", new Position(7, 7))
         );
+    }
+
+    @Test
+    @DisplayName("toString 테스트")
+    void testToString() {
+        assertThat(Position.of("1", "a").toString()).isEqualTo("a1");
+    }
+
+    @Test
+    @DisplayName("좌표값 변환 확인")
+    void testRowAndColumn() {
+        assertThat(Position.of("1", "a").row()).isEqualTo(7);
+        assertThat(Position.of("1", "a").column()).isEqualTo(0);
     }
 }

@@ -56,14 +56,6 @@ public class ChessboardTest {
     }
 
     @Test
-    @DisplayName("기물이 king인지 확인")
-    void isKing() {
-        Chessboard chessboard = Chessboard.create();
-
-        //assertThat(chessboard.isKing(new Position(7, 4))).isTrue();
-    }
-
-    @Test
     @DisplayName("존재하는 위치인 경우(Blank가 아닌지)")
     void isExistPosition() {
         Chessboard chessboard = Chessboard.create();
@@ -92,6 +84,6 @@ public class ChessboardTest {
     void checkGetPosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.getPiece(0, 0).getClass()).isEqualTo(Rook.class);
+        assertThat(chessboard.findPiece(0, 0).getClass()).isEqualTo(Rook.class);
     }
 }
