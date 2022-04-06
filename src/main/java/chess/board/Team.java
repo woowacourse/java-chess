@@ -35,6 +35,10 @@ public enum Team {
         throw new IllegalStateException("[ERROR] 알맞은 값이 없습니다.");
     }
 
+    public boolean isOpposingTeam(Team team){
+        return this.forwardDirection + team.forwardDirection == 0;
+    }
+
     public int getForwardDirection() {
         return this.forwardDirection;
     }

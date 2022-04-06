@@ -41,7 +41,7 @@ public final class Board {
     }
 
     private void validateTurn(Turn thisTurn, Piece sourcePiece) {
-        if (!sourcePiece.isCurrentTurn(thisTurn)) {
+        if (sourcePiece.isNotCurrentTurn(thisTurn)) {
             throw new IllegalArgumentException("[ERROR] 현재 차례가 아닙니다.");
         }
     }

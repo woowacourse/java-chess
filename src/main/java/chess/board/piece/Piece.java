@@ -72,8 +72,8 @@ public abstract class Piece implements Comparable<Piece> {
         return false;
     }
 
-    public boolean isCurrentTurn(Turn turn) {
-        return turn.isCurrentTeam(team);
+    public boolean isNotCurrentTurn(Turn turn) {
+        return turn.isNotCurrentTurn(team);
     }
 
     public abstract double getScore();

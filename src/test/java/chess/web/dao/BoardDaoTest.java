@@ -1,5 +1,6 @@
 package chess.web.dao;
 
+import chess.board.Board;
 import chess.board.Team;
 import chess.board.Turn;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +32,8 @@ class BoardDaoTest {
     @DisplayName("현재 턴이 black으로 업데이트히면 DB에 반영이 되는지 테스트")
     void updateTurnById() {
         //when
-        boardDao.updateTurnById(1L, "black");
-        Turn turn = boardDao.findTurnById(1L).get();
+        boardDao.updateTurnById(boardId, "black");
+        Turn turn = boardDao.findTurnById(boardId).get();
         //then
         assertThat(turn).isEqualTo(new Turn(Team.BLACK));
     }
@@ -50,6 +51,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("현재 board판만 있고 piece들은 없으므로 empty가 나와야 한다.")
     void findById() {
-        assertThat(boardDao.findById(boardId).isEmpty()).isTrue();
+        Board board = boardDao.findById(boardId).get();
+        assertThat(board.getPieces().getPieces().size()).isEqualTo(0);
     }
 }

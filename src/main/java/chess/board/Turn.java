@@ -13,8 +13,8 @@ public final class Turn {
         return new Turn(Team.WHITE);
     }
 
-    public boolean isCurrentTeam(Team team) {
-        return this.team.equals(team);
+    public boolean isNotCurrentTurn(Team team) {
+        return this.team.isOpposingTeam(team);
     }
 
     public Turn change() {
