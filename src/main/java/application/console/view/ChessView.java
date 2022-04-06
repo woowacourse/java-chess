@@ -1,16 +1,16 @@
-package chess.console.view;
+package application.console.view;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import chess.console.domain.CommandRequest;
-import chess.console.view.input.InputView;
-import chess.console.domain.Color;
-import chess.console.domain.PieceCharacter;
-import chess.console.domain.Position;
-import chess.console.view.output.OutputView;
+import application.console.domain.Color;
+import application.console.domain.CommandRequest;
+import application.console.domain.PieceCharacter;
+import application.console.domain.Position;
+import application.console.view.input.InputView;
+import application.console.view.output.OutputView;
 import chess.dto.ColorDto;
 import chess.dto.PlayerDto;
 import chess.dto.PlayerScoresDto;

@@ -1,9 +1,9 @@
-package chess.console;
+package application.console;
 
 import java.util.List;
 
-import chess.console.view.ChessView;
-import chess.console.domain.CommandRequest;
+import application.console.domain.CommandRequest;
+import application.console.view.ChessView;
 import chess.domain.Position;
 import chess.domain.game.ChessGame;
 import chess.dto.PlayerScoresDto;

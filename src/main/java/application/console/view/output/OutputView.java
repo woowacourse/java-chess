@@ -1,11 +1,9 @@
-package chess.console.view.output;
-
-import static chess.console.domain.PositionRange.COLUMN_RANGE;
-import static chess.console.domain.PositionRange.ROW_RANGE;
+package application.console.view.output;
 
 import java.util.Map;
 
-import chess.console.domain.Position;
+import application.console.domain.PositionRange;
+import application.console.domain.Position;
 
 public class OutputView {
 
@@ -19,14 +17,14 @@ public class OutputView {
     }
 
     public void printChessBoard(final Map<Position, String> playerPieces) {
-        for (final char row : ROW_RANGE.getReverseSortedAllValues()) {
+        for (final char row : PositionRange.ROW_RANGE.getReverseSortedAllValues()) {
             printChessBoardByRow(playerPieces, row);
             System.out.println();
         }
     }
 
     private void printChessBoardByRow(final Map<Position, String> playerPieces, final char row) {
-        for (final char column : COLUMN_RANGE.getSortedAllValues()) {
+        for (final char column : PositionRange.COLUMN_RANGE.getSortedAllValues()) {
             final Position position = new Position(column, row);
             System.out.print(piecePrintName(playerPieces, position));
         }

@@ -1,4 +1,4 @@
-package chess.console.domain;
+package application.console.domain;
 
 import java.util.Arrays;
 import java.util.function.Function;

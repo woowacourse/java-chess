@@ -1,7 +1,4 @@
-package chess.console.domain;
-
-import static chess.console.domain.PositionRange.COLUMN_RANGE;
-import static chess.console.domain.PositionRange.ROW_RANGE;
+package application.console.domain;
 
 import java.util.Objects;
 
@@ -18,16 +15,16 @@ public class Position {
     }
 
     private void validateColumnInRange(final char column) {
-        if (COLUMN_RANGE.isOutOfRange(column)) {
+        if (PositionRange.COLUMN_RANGE.isOutOfRange(column)) {
             throw new IllegalArgumentException(String.format("열 위치는 %s~%s 범위에 포함되어야 합니다.",
-                    COLUMN_RANGE.getAllowedMinimum(), COLUMN_RANGE.getAllowedMaximum()));
+                    PositionRange.COLUMN_RANGE.getAllowedMinimum(), PositionRange.COLUMN_RANGE.getAllowedMaximum()));
         }
     }
 
     private void validateRowInRange(final char row) {
-        if (ROW_RANGE.isOutOfRange(row)) {
+        if (PositionRange.ROW_RANGE.isOutOfRange(row)) {
             throw new IllegalArgumentException(String.format("행 위치는 %s~%s 범위에 포함되어야 합니다.",
-                    ROW_RANGE.getAllowedMinimum(), ROW_RANGE.getAllowedMaximum()));
+                    PositionRange.ROW_RANGE.getAllowedMinimum(), PositionRange.ROW_RANGE.getAllowedMaximum()));
         }
     }
 

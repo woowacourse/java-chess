@@ -1,8 +1,8 @@
-package chess.console;
+package application.console;
 
-import chess.console.view.ChessView;
-import chess.console.view.input.InputView;
-import chess.console.view.output.OutputView;
+import application.console.view.ChessView;
+import application.console.view.input.InputView;
+import application.console.view.output.OutputView;
 
 public class MainApplication {
 

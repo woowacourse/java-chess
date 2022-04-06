@@ -1,11 +1,11 @@
-package chess.console.view.input;
+package application.console.view.input;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import camp.nextstep.edu.missionutils.Console;
-import chess.console.domain.CommandRequest;
+import application.console.domain.CommandRequest;
 
 public class InputView {
 
