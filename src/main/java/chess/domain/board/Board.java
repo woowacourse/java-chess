@@ -13,7 +13,7 @@ public class Board {
 	
 	private final Map<Coordinate, Piece> value;
 
-	private Board(Map<Coordinate, Piece> value) {
+	public Board(Map<Coordinate, Piece> value) {
 		this.value = value;
 	}
 

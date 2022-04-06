@@ -3,13 +3,22 @@ package chess.controller;
 import static spark.Spark.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.domain.board.Board;
+import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
+import chess.domain.board.coordinate.Row;
+import chess.domain.game.BlackTurn;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreCalculator;
+import chess.domain.game.State;
+import chess.domain.game.WhiteTurn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -32,6 +41,19 @@ public class WebChessController {
         get("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame = new ChessGame();
+            return render(model, "game.html");
+        });
+
+        post("/load", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String id = req.queryParams("id");
+
+            Map<Coordinate, Piece> board = init(boardDao.findByGameId(id));
+            State state = createState(board, gameDao.findState(id));
+
+            chessGame = new ChessGame(state);
+            model.put("id", id);
+            model.put("pieces", chessGame.getPieces());
             return render(model, "game.html");
         });
 
@@ -84,6 +106,27 @@ public class WebChessController {
             model.put("pieces", chessGame.getPieces());
             return render(model, "game.html");
         });
+    }
+
+    private State createState(Map<Coordinate, Piece> board, String state) {
+        if (Objects.equals(state, "WhiteTurn")) {
+            return new WhiteTurn(new Board(board));
+        }
+        return new BlackTurn(new Board(board));
+    }
+
+    public Map<Coordinate, Piece> init(Map<Coordinate, Piece> board) {
+        Map<Coordinate, Piece> map = new LinkedHashMap<>();
+        for (Row row : Row.values()) {
+            initPiece(map, row, board);
+        }
+        return map;
+    }
+
+    private void initPiece(Map<Coordinate, Piece> map, Row row, Map<Coordinate, Piece> board) {
+        for (Column column : Column.values()) {
+            map.put(Coordinate.of(column, row), board.get(Coordinate.of(column, row)));
+        }
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

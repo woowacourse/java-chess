@@ -34,6 +34,22 @@ public class GameDao {
         }
     }
 
+    public String findState(String id) {
+        String sql = "SELECT state FROM game WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                throw new SQLException("쿼리문 실행 결과가 존재하지 않습니다.");
+            }
+            return resultSet.getString("state");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
     public void updateById(String id, String state) {
         String sql = "UPDATE game SET state = ? where id = ?";
 

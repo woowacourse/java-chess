@@ -3,11 +3,14 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 
 public class BoardDao {
 
@@ -31,6 +34,27 @@ public class BoardDao {
             statement.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public Map<Coordinate, Piece> findByGameId(String id) {
+        String sql = "SELECT * FROM board WHERE game_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            Map<Coordinate, Piece> board = new LinkedHashMap<>();
+            while (resultSet.next()) {
+                String position = resultSet.getString("position");
+                String type = resultSet.getString("type");
+                String color = resultSet.getString("color");
+                board.put(Coordinate.of(position), PieceFactory.of(color, type));
+            }
+            return board;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
         }
     }
 

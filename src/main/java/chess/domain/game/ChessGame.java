@@ -13,6 +13,10 @@ public class ChessGame {
 
 	private State state;
 
+    public ChessGame(State state) {
+        this.state = state;
+    }
+
 	public ChessGame() {
 		state = new Start(Board.create());
 	}

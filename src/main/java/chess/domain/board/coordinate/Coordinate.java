@@ -12,6 +12,14 @@ public class Coordinate {
     private static final int BLACK_PAWN_START_ROW = 7;
     private static final int WHITE_PAWN_START_ROW = 2;
 
+    static {
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
+            }
+        }
+    }
+
     private final Column column;
 	private final Row row;
 
@@ -26,9 +34,6 @@ public class Coordinate {
 
 	public static Coordinate of(Column column, Row row) {
 		String key = column.getName() + row.getValue();
-        if (!CACHE.containsKey(key)) {
-            CACHE.put(key, new Coordinate(column, row));
-        }
         return of(key);
 	}
 
