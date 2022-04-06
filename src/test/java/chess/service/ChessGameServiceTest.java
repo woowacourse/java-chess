@@ -16,8 +16,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.EmblemMapper;
+import chess.Game;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.dao.GameDaoImpl;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
@@ -31,10 +33,12 @@ import chess.model.piece.Rook;
 public class ChessGameServiceTest {
 
     private static ChessGameService chessGameService;
+    private static final GameDao gameDao = new GameDaoImpl(new Game("white", "black"));
 
     @BeforeEach
     void setUp() {
-        chessGameService = new ChessGameService(new fakeGameDao(), new fakeBoardDao());
+        chessGameService = new ChessGameService(new fakeBoardDao());
+        chessGameService.setGameDao(gameDao);
     }
 
     @AfterEach
@@ -147,33 +151,6 @@ public class ChessGameServiceTest {
             result.put(Position.of(A, TWO), Rook.colorOf(PieceColor.WHITE));
             result.put(Position.of(A, THREE), King.colorOf(PieceColor.BLACK));
             return result;
-        }
-    }
-
-    private static class fakeGameDao implements GameDao {
-        @Override
-        public Connection getConnection() {
-            return null;
-        }
-
-        @Override
-        public void save() {
-
-        }
-
-        @Override
-        public void deleteById(int id) {
-
-        }
-
-        @Override
-        public int getId() {
-            return 0;
-        }
-
-        @Override
-        public List<String> findById(int id) {
-            return List.of();
         }
     }
 }

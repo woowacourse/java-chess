@@ -8,19 +8,24 @@ import chess.dao.GameDao;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
+import chess.model.PieceArrangement.SavedPieceArrangement;
 import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
+import chess.model.piece.Piece;
 
 public class ChessGameService {
     private final BoardDao boardDao;
-    private final GameDao gameDao;
+    private GameDao gameDao;
     private ChessGame chessGame;
 
-    public ChessGameService(GameDao gameDao, BoardDao boardDao) {
-        this.gameDao = gameDao;
+    public ChessGameService(BoardDao boardDao) {
         this.boardDao = boardDao;
         this.chessGame = new ChessGame(new Turn(), new DefaultArrangement());
+    }
+
+    public void setGameDao(GameDao gameDao) {
+        this.gameDao = gameDao;
     }
 
     public void save() {
@@ -41,10 +46,26 @@ public class ChessGameService {
     }
 
     public void init(Turn turn, PieceArrangement pieceArrangement) {
-        this.chessGame = new ChessGame(turn, pieceArrangement);
+        if (find().isEmpty()) {
+            this.chessGame = new ChessGame(turn, pieceArrangement);
+            return;
+        }
+        this.chessGame = new ChessGame(turn, new SavedPieceArrangement(find()));
     }
 
     public PieceColor getTurnColor() {
         return chessGame.getTurnColor();
+    }
+
+    public Map<Position, Piece> getPiecesByPositions() {
+        return chessGame.getBoardValue();
+    }
+
+    public boolean isFinished() {
+        return chessGame.isFinished();
+    }
+
+    public double getScore() {
+        return chessGame.getScore();
     }
 }
