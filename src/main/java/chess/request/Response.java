@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.request;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Piece;

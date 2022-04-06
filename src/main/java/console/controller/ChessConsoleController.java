@@ -6,8 +6,8 @@ import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.domain.piece.Color;
-import chess.dto.BoardAndTurnInfo;
-import chess.dto.ScoreResponse;
+import chess.request.BoardAndTurnInfo;
+import chess.request.ScoreResponse;
 import console.view.InputView;
 import console.view.OutputView;
 

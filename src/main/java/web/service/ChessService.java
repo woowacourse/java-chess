@@ -7,9 +7,11 @@ import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.domain.piece.*;
-import chess.dto.*;
+import chess.request.BoardAndTurnInfo;
+import chess.request.ScoreResponse;
 import web.dao.BoardDao;
 import web.dao.GameDao;
+import web.dto.*;
 
 import java.util.HashMap;
 import java.util.List;

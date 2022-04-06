@@ -3,8 +3,8 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
-import chess.dto.Response;
-import chess.dto.ScoreResponse;
+import chess.request.Response;
+import chess.request.ScoreResponse;
 import console.controller.Request;
 
 import java.util.List;

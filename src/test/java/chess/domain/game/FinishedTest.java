@@ -3,8 +3,8 @@ package chess.domain.game;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
-import chess.dto.BoardAndTurnInfo;
-import chess.dto.Response;
+import chess.request.BoardAndTurnInfo;
+import chess.request.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

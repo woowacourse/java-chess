@@ -5,8 +5,8 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Queen;
-import chess.dto.Response;
-import chess.dto.ScoreResponse;
+import chess.request.Response;
+import chess.request.ScoreResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

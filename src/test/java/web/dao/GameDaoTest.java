@@ -1,7 +1,7 @@
 package web.dao;
 
 import chess.domain.piece.Color;
-import chess.dto.GameDto;
+import web.dto.GameDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,8 +1,8 @@
 package web.controller;
 
-import chess.dto.ErrorMessageDto;
-import chess.dto.GameDto;
-import chess.dto.MoveInfoDto;
+import web.dto.ErrorMessageDto;
+import web.dto.GameDto;
+import web.dto.MoveInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;

@@ -1,7 +1,8 @@
-package chess.dto;
+package web.dto;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Piece;
+import chess.request.BoardAndTurnInfo;
 
 import java.util.HashMap;
 import java.util.Map;

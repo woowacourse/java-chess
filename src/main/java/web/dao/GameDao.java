@@ -1,6 +1,6 @@
 package web.dao;
 
-import chess.dto.GameDto;
+import web.dto.GameDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -4,8 +4,8 @@ import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.dto.BoardAndTurnInfo;
-import chess.dto.ScoreResponse;
+import chess.request.BoardAndTurnInfo;
+import chess.request.ScoreResponse;
 
 import java.util.Map;
 

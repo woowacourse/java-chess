@@ -1,8 +1,9 @@
-package chess.dto;
+package chess.request;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.request.Response;
 
 import java.util.Map;
 
