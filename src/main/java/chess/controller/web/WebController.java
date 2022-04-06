@@ -26,47 +26,47 @@ public class WebController {
         post("/create_game", (req, res) -> {
             String name = req.queryParams("name");
             ChessGameDao.save(ChessGame.createInit(name));
+            res.redirect("/game/" + name);
+            return null;
+        });
+
+        post("/delete/:name", (req, res) -> {
+            String name = req.params(":name");
+            ChessGameDao.delete(name);
             res.redirect("/");
             return null;
         });
 
-//        get("/game", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>(chessGame.getCurrentBoardByRawPosition());
-//            model.put("turn", chessGame.getTurn());
-//            model.put("result", chessGame.generateResult());
-//            return new ModelAndView(model, "game.html");
-//        }, new HandlebarsTemplateEngine());
-//
-//        post("/move", (req, res) -> {
-//            chessGame.move(req.queryParams("source"), req.queryParams("target"));
-//            res.redirect("/");
-//            return null;
-//        });
-//
-//        post("/save", (req, res) -> {
-//            ChessGameDao.save(chessGame);
-//            boardDao.save(chessGame);
-//            res.redirect("/");
-//            return null;
-//        });
-//
-//        get("/load", (req, res) -> {
-//            chessGame = ChessGameDao.load(boardDao.load());
-//            res.redirect("/");
-//            return null;
-//        });
-//
-//        post("/reset", (req, res) -> {
-//            chessGame = ChessGame.createInit();
-//            ChessGameDao.save(chessGame);
-//            boardDao.save(chessGame);
-//            res.redirect("/");
-//            return null;
-//        });
+        get("/game/:name", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            ChessGame chessGame = ChessGameDao.load(req.params("name"));
+            model.put("game_name", req.params("name"));
+            model.putAll(chessGame.getCurrentBoardByRawPosition());
+            model.put("turn", chessGame.getTurn());
+            model.put("result", chessGame.generateResult());
+            return new ModelAndView(model, "game.html");
+        }, new HandlebarsTemplateEngine());
+
+        // 하나만 움직이는 쿼리로 변경
+        post("/move/:game_name", (req, res) -> {
+            String gameName = req.params(":game_name");
+            ChessGame loadedChessGame = ChessGameDao.load(gameName);
+            loadedChessGame.move(req.queryParams("source"), req.queryParams("target"));
+            ChessGameDao.save(loadedChessGame);
+            res.redirect("/game/" + gameName);
+            return null;
+        });
+
+        post("/reset/:game_name", (req, res) -> {
+            String gameName = req.params(":game_name");
+            ChessGameDao.save(ChessGame.createInit(gameName));
+            res.redirect("/game/" + gameName);
+            return null;
+        });
 
         exception(Exception.class, (exception, req, res) -> {
             res.status(400);
-            res.body("<a href=\"/\">HOME</a><br/>" + exception.getMessage());
+            res.body(exception.getMessage());
         });
     }
 }

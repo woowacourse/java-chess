@@ -4,6 +4,10 @@ body {
     padding: 20px 550px;
 }
 
+img {
+    width: 50%;
+}
+
 .info {
     background-color: seashell;
     padding: 3px;

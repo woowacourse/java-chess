@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <h1>♟️ 체스 게임</h1>
+    <img src="/images/QUEEN_BLACK.png" class="img"/>
     <div>
         <p class="info">🕹 새 게임 만들기</p>
         <form action="/create_game" method="post">
@@ -19,7 +19,7 @@
         <p class="info">📝 게임 목록</p>
         {{#chess_games}}
         <form action="delete/{{name}}" method="post">
-            <a class="name" href="/{{name}}">{{name}}</a>
+            <a class="name" href="/game/{{name}}">{{name}}</a>
             <input type="submit" value="삭제">
         </form>
         <br/>

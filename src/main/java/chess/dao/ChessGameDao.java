@@ -42,6 +42,7 @@ public class ChessGameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        BoardDao.delete(name);
     }
 
     public static ChessGame load(final String name) {
@@ -72,10 +73,10 @@ public class ChessGameDao {
     }
 
     public static List<ChessGame> loadAll() {
-        String loadNamesSql = "select * from chess_game";
+        String loadAllSql = "select * from chess_game";
         List<ChessGame> chessGames = new ArrayList<>();
         try {
-            PreparedStatement loadNamesStatement = connection.prepareStatement(loadNamesSql);
+            PreparedStatement loadNamesStatement = connection.prepareStatement(loadAllSql);
             ResultSet resultSet = loadNamesStatement.executeQuery();
             while (resultSet.next()) {
                 chessGames.add(generateChessGame(resultSet));

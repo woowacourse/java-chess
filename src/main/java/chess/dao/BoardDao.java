@@ -51,7 +51,7 @@ public class BoardDao {
             PreparedStatement loadStatement = connection.prepareStatement(loadSql);
             loadStatement.setString(1, name);
             ResultSet resultSet = loadStatement.executeQuery();
-            gatherPositionAndPiece(board, resultSet);
+            putPositionAndPiece(board, resultSet);
             validateBoardExist(board);
             return new Board(board);
         } catch (SQLException e) {
@@ -60,7 +60,7 @@ public class BoardDao {
         return null;
     }
 
-    private static void gatherPositionAndPiece(Map<Position, Piece> board, ResultSet resultSet) throws SQLException {
+    private static void putPositionAndPiece(Map<Position, Piece> board, ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
             Position position = Position.valueOf(resultSet.getString("raw_position"));
             Piece piece = StringToPieceConvertor.convert(
