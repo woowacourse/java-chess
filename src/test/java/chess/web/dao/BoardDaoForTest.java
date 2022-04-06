@@ -11,6 +11,11 @@ public class BoardDaoForTest implements BoardDao {
         boards = boardDto;
     }
 
+    @Override
+    public void update(BoardDto boardDto) {
+        boards = boardDto;
+    }
+
     public String getBoardState() {
         return boards.getState();
     }

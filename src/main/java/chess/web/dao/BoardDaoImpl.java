@@ -31,6 +31,18 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
+    @Override
+    public void update(BoardDto boardDto) {
+        final String sql = "update piece state=? where state=?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, boardDto.getState());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Connection getConnection() {
         Connection connection = null;
         try {
