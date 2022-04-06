@@ -1,8 +1,5 @@
 package chess.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import chess.dto.GameDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,11 +17,7 @@ class GameDaoTest {
     @DisplayName("새로운 게임을 game 테이블에 생성한다.")
     @Test
     void createGame() {
-        // given & when
-        GameDto gameDto = gameDao.createGame(TEST_GAME_ID);
-
-        // then
-        assertThat(gameDto).isNotNull();
+        gameDao.createGame(TEST_GAME_ID);
     }
 
     @DisplayName("게임을 game 테이블로부터 제거한다.")

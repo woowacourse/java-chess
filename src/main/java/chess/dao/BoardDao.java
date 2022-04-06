@@ -1,14 +1,49 @@
 package chess.dao;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
+import chess.domain.position.XAxis;
+import chess.domain.position.YAxis;
+import chess.dto.BoardDto;
 import chess.dto.CreatePieceDto;
 import chess.dto.DeletePieceDto;
 import chess.dto.UpdatePiecePositionDto;
 import chess.exception.DatabaseException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardDao extends Dao {
     private static final String TABLE_NAME = "board";
+
+    public BoardDto getBoard(String gameId) {
+        String query = String.format("SELECT x_axis, y_axis, piece_type, piece_color FROM %s WHERE game_id = ?",
+                TABLE_NAME);
+
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, gameId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<Position, Piece> boardValue = new HashMap<>();
+            while (resultSet.next()) {
+                XAxis xAxis = XAxis.getByValue(resultSet.getString("x_axis"));
+                YAxis yAxis = YAxis.getByValue(resultSet.getString("y_axis"));
+                PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
+                PieceColor pieceColor = PieceColor.valueOf(resultSet.getString("piece_color"));
+
+                boardValue.put(Position.of(xAxis, yAxis), new Piece(pieceType, pieceColor));
+            }
+
+            return BoardDto.from(boardValue);
+        } catch (SQLException e) {
+            throw new DatabaseException();
+        }
+    }
 
     public void createPiece(CreatePieceDto createPieceDto) {
         String query = String.format(
@@ -24,6 +59,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(5, createPieceDto.getPieceColorName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e);
             throw new DatabaseException();
         }
     }
@@ -53,6 +89,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(2, updatePiecePositionDto.getToYAxisValueAsString());
             preparedStatement.setString(3, updatePiecePositionDto.getFromXAxisValueAsString());
             preparedStatement.setString(4, updatePiecePositionDto.getFromYAxisValueAsString());
+            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException();

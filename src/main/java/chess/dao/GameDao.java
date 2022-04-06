@@ -3,6 +3,7 @@ package chess.dao;
 import chess.dto.GameDto;
 import chess.exception.DatabaseException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GameDao extends Dao {
@@ -11,19 +12,32 @@ public class GameDao extends Dao {
     private static final String WHITE_TURN = "WHITE";
     private static final String BLACK_TURN = "BLACK";
 
-    public GameDto createGame(String gameId) {
-        String query = String.format("INSERT INTO %s VALUES (?, null)", TABLE_NAME);
+    public GameDto getGame(String gameId) {
+        String query = String.format("SELECT turn FROM %s WHERE id = ?", TABLE_NAME);
+
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, gameId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+            return GameDto.from(gameId, resultSet.getString("turn"));
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DatabaseException();
+        }
+    }
+
+    public void createGame(String gameId) {
+        String query = String.format("INSERT INTO %s VALUES (?, 'WHITE')", TABLE_NAME);
 
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new DatabaseException();
         }
-
-        return GameDto.from(gameId);
     }
 
     public void deleteGame(String gameId) {
@@ -56,7 +70,6 @@ public class GameDao extends Dao {
             preparedStatement.setString(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
             throw new DatabaseException();
         }
     }

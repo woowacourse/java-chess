@@ -1,7 +1,9 @@
 package chess.dao;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 import chess.dto.CreatePieceDto;
@@ -13,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardDaoTest {
-    private static final String GAME_ID = "test-board";
+    private static final String GAME_ID = "test-game";
     private static final XAxis X_AXIS = XAxis.A;
     private static final YAxis Y_AXIS = YAxis.ONE;
     private static final XAxis X_AXIS_2 = XAxis.B;
@@ -31,11 +33,24 @@ class BoardDaoTest {
         gameDao.createGame(GAME_ID);
     }
 
+    @DisplayName("getBoard")
+    @Test
+    void getBoard() {
+        boardDao.createPiece(
+                CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
+        boardDao.createPiece(
+                CreatePieceDto.of(GAME_ID, Position.of(XAxis.B, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
+        boardDao.createPiece(
+                CreatePieceDto.of(GAME_ID, Position.of(XAxis.C, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
+        boardDao.getBoard(GAME_ID);
+    }
+
     @DisplayName("CreatePieceDto를 전달받아 board 테이블에 기물을 생성한다.")
     @Test
     void createPiece() {
         // given
-        CreatePieceDto createPieceDto = CreatePieceDto.of(GAME_ID, X_AXIS, Y_AXIS, PIECE_TYPE, PIECE_COLOR);
+        CreatePieceDto createPieceDto = CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS),
+                new Piece(PIECE_TYPE, PIECE_COLOR));
 
         // when & then
         boardDao.createPiece(createPieceDto);
@@ -46,7 +61,8 @@ class BoardDaoTest {
     void deletePiece() {
         // given
         DeletePieceDto deletePieceDto = DeletePieceDto.of(GAME_ID, X_AXIS, Y_AXIS);
-        boardDao.createPiece(CreatePieceDto.of(GAME_ID, X_AXIS, Y_AXIS, PIECE_TYPE, PIECE_COLOR));
+        boardDao.createPiece(
+                CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
 
         // when & then
         boardDao.deletePiece(deletePieceDto);
@@ -58,7 +74,8 @@ class BoardDaoTest {
         // given
         UpdatePiecePositionDto updatePiecePositionDto = UpdatePiecePositionDto.of(GAME_ID, X_AXIS, Y_AXIS, X_AXIS_2,
                 Y_AXIS_2);
-        boardDao.createPiece(CreatePieceDto.of(GAME_ID, X_AXIS, Y_AXIS, PIECE_TYPE, PIECE_COLOR));
+        boardDao.createPiece(
+                CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
 
         // then
         boardDao.updatePiecePosition(updatePiecePositionDto);

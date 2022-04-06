@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.domain.game.ChessGame;
+import chess.domain.piece.PieceColor;
 
 public class CurrentTurnDto {
 
@@ -18,8 +19,17 @@ public class CurrentTurnDto {
         return new CurrentTurnDto(Turn.BLACK);
     }
 
+    public static CurrentTurnDto from(String turn) {
+        return new CurrentTurnDto(Turn.valueOf(turn));
+    }
+
     public String getDisplayName() {
         return turn.displayName;
+    }
+
+    public PieceColor toPieceColor() {
+        System.out.println("turn : " + turn);
+        return PieceColor.valueOf(turn.name());
     }
 
     enum Turn {
@@ -31,9 +41,6 @@ public class CurrentTurnDto {
         Turn(String displayName) {
             this.displayName = displayName;
         }
-
-
     }
-
 }
 

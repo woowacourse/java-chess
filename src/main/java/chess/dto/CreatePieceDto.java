@@ -1,7 +1,9 @@
 package chess.dto;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 
@@ -20,9 +22,9 @@ public class CreatePieceDto {
         this.pieceColor = pieceColor;
     }
 
-    public static CreatePieceDto of(String boardId, XAxis xAxis, YAxis yAxis, PieceType pieceType,
-                                    PieceColor pieceColor) {
-        return new CreatePieceDto(boardId, xAxis, yAxis, pieceType, pieceColor);
+    public static CreatePieceDto of(String gameId, Position position, Piece piece) {
+        return new CreatePieceDto(gameId, position.getXAxis(), position.getYAxis(), piece.getPieceType(),
+                piece.getPieceColor());
     }
 
     public String getGameId() {

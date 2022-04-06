@@ -9,7 +9,7 @@ public class WhiteTurn extends InGame {
         super(Board.createInitializedBoard());
     }
 
-    protected WhiteTurn(Board board) {
+    public WhiteTurn(Board board) {
         super(board);
     }
 

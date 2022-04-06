@@ -181,6 +181,10 @@ public class Board {
                 .collect(Collectors.toSet());
     }
 
+    public Map<Position, Piece> getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "Board{" +

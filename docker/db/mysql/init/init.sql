@@ -5,10 +5,6 @@ CREATE TABLE game
     PRIMARY KEY (id)
 );
 
-INSERT INTO game
-VALUES ('b2c2256e-c30c-4f9d-8603-f439e47c4f03', null);
--- TODO: 제거 예정
-
 CREATE TABLE board
 (
     game_id     VARCHAR(36) NOT NULL,

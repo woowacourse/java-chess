@@ -1,5 +1,6 @@
 package chess.dto;
 
+import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 
@@ -24,14 +25,14 @@ public class UpdatePiecePositionDto {
         return new UpdatePiecePositionDto(gameId, fromXAxis, fromYAxis, toXAxis, toYAxis);
     }
 
-//    public static UpdatePiecePositionDto of(String gameId, Position from, Position to) {
-//        XAxis fromXAxis = from.getXAxis();
-//        YAxis fromYAxis = from.getYAxis();
-//        XAxis toXAxis = to.getXAxis();
-//        YAxis toYAxis = to.getYAxis();
-//
-//        return new UpdatePiecePositionDto(gameId, fromXAxis, fromYAxis, toXAxis, toYAxis);
-//    }
+    public static UpdatePiecePositionDto of(String gameId, Position from, Position to) {
+        XAxis fromXAxis = from.getXAxis();
+        YAxis fromYAxis = from.getYAxis();
+        XAxis toXAxis = to.getXAxis();
+        YAxis toYAxis = to.getYAxis();
+
+        return new UpdatePiecePositionDto(gameId, fromXAxis, fromYAxis, toXAxis, toYAxis);
+    }
 
     public String getGameId() {
         return gameId;
@@ -45,12 +46,20 @@ public class UpdatePiecePositionDto {
         return fromYAxis.getValueAsString();
     }
 
+    public Position getFrom() {
+        return Position.of(getFromXAxisValueAsString(), getFromYAxisValueAsString());
+    }
+
     public String getToXAxisValueAsString() {
         return toXAxis.getValueAsString();
     }
 
     public String getToYAxisValueAsString() {
         return toYAxis.getValueAsString();
+    }
+
+    public Position getTo() {
+        return Position.of(getToXAxisValueAsString(), getToYAxisValueAsString());
     }
 
     @Override

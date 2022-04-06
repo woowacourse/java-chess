@@ -3,11 +3,13 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
-import chess.dto.CurrentTurnDto;
-import chess.dto.ScoreResultDto;
+import chess.dto.GameDto;
+import chess.dto.UpdatePiecePositionDto;
+import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -16,18 +18,21 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebController {
 
     private static final String HTML_PATH = "index.html";
+    private static final String GAME_ID = "game-id"; // TODO: 여러 게임 방 기능 구현시 제거
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = ChessGame.create();
         chessGame.startGame();
+
+        ChessService chessService = ChessService.of(new GameDao(), new BoardDao());
 
         Map<String, Object> model = new HashMap<>();
 
         get("/", (req, res) -> {
-            BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-            model.put("boards", boardDto.getPieceImages());
-            model.put("score", ScoreResultDto.from(chessGame));
-            model.put("turn", CurrentTurnDto.from(chessGame));
+            GameDto gameDto = chessService.getGame(GAME_ID);
+            model.put("boards", gameDto.getBoardDto().getPieceImages());
+            model.put("score", gameDto.getScoreResultDto());
+            model.put("turn", gameDto.getCurrentTurnDto());
 
             return render(model);
         });
@@ -43,7 +48,8 @@ public class WebController {
             Position from = Position.from(fromText);
             Position to = Position.from(toText);
 
-            chessGame.movePiece(from, to);
+            chessService.movePiece(UpdatePiecePositionDto.of(GAME_ID, from, to));
+
             return request;
         });
     }

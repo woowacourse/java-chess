@@ -5,7 +5,7 @@ import chess.domain.piece.PieceColor;
 
 public class BlackTurn extends InGame {
 
-    protected BlackTurn(Board board) {
+    public BlackTurn(Board board) {
         super(board);
     }
 

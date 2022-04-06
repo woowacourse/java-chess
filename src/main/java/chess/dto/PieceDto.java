@@ -26,6 +26,10 @@ public class PieceDto {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Piece가 전달됐습니다."));
     }
 
+    public static PieceDto of(PieceNotation pieceNotation, PieceColor pieceColor) {
+        return new PieceDto(pieceNotation, pieceColor);
+    }
+
     public String getConsoleText() {
         if (pieceColor.equals(PieceColor.WHITE)) {
             return pieceNotation.whiteConsoleText;
@@ -40,6 +44,18 @@ public class PieceDto {
         }
 
         return pieceNotation.blackImageName;
+    }
+
+    public PieceType getPieceType() {
+        return pieceNotation.getPieceType();
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
+    public Piece toPiece() {
+        return new Piece(pieceNotation.pieceType, pieceColor);
     }
 
     @Override
@@ -72,6 +88,10 @@ public class PieceDto {
             this.whiteConsoleText = whiteConsoleText;
             this.blackImageName = blackImageName;
             this.whiteImageName = whiteImageName;
+        }
+
+        public PieceType getPieceType() {
+            return pieceType;
         }
     }
 }

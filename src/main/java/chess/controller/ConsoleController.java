@@ -12,7 +12,7 @@ import chess.view.console.OutputView;
 public class ConsoleController {
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = ChessGame.create();
 
         OutputView.printCommandGuide();
 
