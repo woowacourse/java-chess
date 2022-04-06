@@ -3,7 +3,6 @@ package chess.web.dto;
 import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.Locale;
 
 public class PieceDto {
 
@@ -12,9 +11,9 @@ public class PieceDto {
     private final String color;
 
     public PieceDto(Piece piece, Position position, Color color) {
-        this.pieceType = piece.getNotation().toLowerCase();
-        this.position = position.getNotation().toLowerCase();
-        this.color = color.toString().toLowerCase();
+        this.pieceType = piece.getNotation();
+        this.position = position.getNotation();
+        this.color = color.getName();
     }
 
     public String getPieceType() {
