@@ -1,8 +1,10 @@
 package chess;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import chess.model.File;
 import chess.model.Position;
@@ -37,14 +39,18 @@ public class EmblemMapper {
     }
 
     public static Map<String, String> StringPieceMapByPiecesByPositions(Map<Position, Piece> piecesByPositions) {
-        Map<String, String> stringBoardPieces = new HashMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                stringBoardPieces.put(file.getValue() + rank.getValue(),
-                    EmblemMapper.fullNameFrom(piecesByPositions.get(Position.of(file, rank))));
-            }
+        Map<String, String> stringPieces = new HashMap<>();
+        for (Rank rank : Rank.values()) {
+            stringPieces.putAll(getStringPiecesInOneRank(piecesByPositions, rank));
         }
-        return stringBoardPieces;
+
+        return stringPieces;
+    }
+
+    private static Map<String, String> getStringPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
+        return Arrays.stream(File.values())
+            .collect(Collectors.toUnmodifiableMap(file -> file.getValue() + rank.getValue(),
+                file -> fullNameFrom(piecesByPositions.get(Position.of(file, rank)))));
     }
 
     public static String emblemFrom(String fullName) {
