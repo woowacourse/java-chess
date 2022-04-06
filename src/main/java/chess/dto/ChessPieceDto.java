@@ -5,23 +5,25 @@ import chess.domain.position.Position;
 
 public class ChessPieceDto {
 
-    private final Position position;
-    private final ChessPiece chessPiece;
+    private final String position;
+    private final String pieceType;
+    private final String color;
 
-    private ChessPieceDto(final Position position, final ChessPiece chessPiece) {
+    private ChessPieceDto(final String position, final String pieceType, final String color) {
         this.position = position;
-        this.chessPiece = chessPiece;
+        this.pieceType = pieceType;
+        this.color = color;
     }
 
     public static ChessPieceDto of(String position, String pieceType, String color) {
-        return new ChessPieceDto(Position.from(position), ChessPieceMapper.toChessPiece(pieceType, color));
+        return new ChessPieceDto(position, pieceType, color);
     }
 
     public Position getPosition() {
-        return position;
+        return Position.from(position);
     }
 
     public ChessPiece getChessPiece() {
-        return chessPiece;
+        return ChessPieceMapper.toChessPiece(pieceType, color);
     }
 }
