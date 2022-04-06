@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Name {
     PAWN("p"),
     ROOK("r"),
@@ -20,5 +22,12 @@ public enum Name {
             return name.toUpperCase();
         }
         return name.toLowerCase();
+    }
+
+    public static Name of(String n) {
+        return Arrays.stream(Name.values())
+                .filter(name -> name.name.equalsIgnoreCase(n))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 }

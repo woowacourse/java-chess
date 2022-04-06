@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Team {
-    BLACK("Black"), WHITE("White"), NONE("None");
+    BLACK("black"), WHITE("white"), NONE("none");
 
     private final String name;
 
@@ -23,5 +25,12 @@ public enum Team {
 
     public String getTeamName() {
         return name;
+    }
+
+    public static Team of(String teamInput) {
+        return Arrays.stream(Team.values())
+                .filter(team -> team.name.equalsIgnoreCase(teamInput))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 }

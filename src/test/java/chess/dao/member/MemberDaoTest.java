@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

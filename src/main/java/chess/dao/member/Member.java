@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.member;
 
 public class Member {
     private final String id;

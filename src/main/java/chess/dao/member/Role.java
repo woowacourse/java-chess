@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.member;
 
 public class Role {
     private final String role;

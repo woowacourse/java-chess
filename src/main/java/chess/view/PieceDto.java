@@ -4,10 +4,10 @@ import chess.domain.piece.Piece;
 
 public class PieceDto {
 
-    private final String img;
+    private final String piece;
 
-    private PieceDto(String img) {
-        this.img = img;
+    private PieceDto(String piece) {
+        this.piece = piece;
     }
 
     public static PieceDto of(Piece piece) {
@@ -19,10 +19,19 @@ public class PieceDto {
             return new PieceDto("white-" + piece.getName());
         }
 
-        return new PieceDto("blank");
+        return new PieceDto("none-.");
     }
 
-    public String getImg() {
-        return img;
+    public String getPiece() {
+        return piece;
     }
+
+    public String getTeam() {
+        return piece.split("-")[0];
+    }
+
+    public String getName() {
+        return piece.split("-")[1];
+    }
+
 }
