@@ -34,6 +34,10 @@ public class ChessController {
             return gson.toJson(chessService.startNewGame(1));
         });
 
+        get("/load", (req, res) -> {
+            return gson.toJson(chessService.load(1));
+        });
+
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             return gson.toJson(chessService.move(1, moveDto));

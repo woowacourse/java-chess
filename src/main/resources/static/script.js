@@ -13,6 +13,26 @@ async function start() {
     printStatus();
 }
 
+async function load() {
+    let pieces;
+    await fetch("/load")
+        .then(res => res.json())
+        .then(data => pieces = data)
+
+    turn = pieces.turn;
+    if (turn === "empty") {
+        let status = document.getElementById("chess-status");
+        let turnStatus = document.getElementById("turn-status");
+        status.innerText = "진행중인 게임이 없습니다.\n새 게임을 시작해주세요.";
+        turnStatus.innerText = "";
+        return;
+    }
+    printPieces(pieces.board);
+    isStart = true;
+    printStatus();
+
+}
+
 function end() {
     let whiteSquares = document.getElementsByClassName("white-square");
     let blackSquares = document.getElementsByClassName("black-square");

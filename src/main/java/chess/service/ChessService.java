@@ -45,10 +45,11 @@ public class ChessService {
         return BoardDto.of(board, webChessGame.getTurn());
     }
 
-    private List<Square> convertBoardToSquares(Map<Position, Piece> board) {
-        return board.keySet().stream()
-                .map(position -> new Square(position.convertToString(), board.get(position).convertToString()))
-                .collect(Collectors.toList());
+    public BoardDto load(long roomId) {
+        Room room = roomDao.findById(roomId);
+        ChessBoard chessBoard = loadChessBoard(roomId);
+
+        return BoardDto.of(chessBoard.getPieces(), room.getTurn());
     }
 
     public BoardDto move(long roomId, MoveDto moveDto) {
@@ -65,6 +66,12 @@ public class ChessService {
         String fromPiece = squareDao.findByRoomIdAndPosition(roomId, moveDto.getFrom()).getPiece();
         squareDao.update(roomId, moveDto.getFrom(), "empty");
         squareDao.update(roomId, moveDto.getTo(), fromPiece);
+    }
+
+    private List<Square> convertBoardToSquares(Map<Position, Piece> board) {
+        return board.keySet().stream()
+                .map(position -> new Square(position.convertToString(), board.get(position).convertToString()))
+                .collect(Collectors.toList());
     }
 
     private ChessBoard loadChessBoard(long roomId) {
