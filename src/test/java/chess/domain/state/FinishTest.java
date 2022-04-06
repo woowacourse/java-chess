@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
@@ -13,14 +14,12 @@ public class FinishTest {
     private final ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
 
     @Test
-    @DisplayName("종료상태에서 start 입력 시 에러가 발생한다.")
+    @DisplayName("종료상태에서 start 입력 시 하얀색의 시작상태가 발생한다.")
     void proceedStart() {
         final var state = new Finish();
+        final State actual = state.proceed(chessBoard, new GameCommand("start"));
 
-        assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("start")))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
+        assertThat(actual).isInstanceOf(WhiteRunning.class);
     }
 
     @Test

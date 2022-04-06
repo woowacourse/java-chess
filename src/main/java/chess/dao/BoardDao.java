@@ -26,67 +26,50 @@ public class BoardDao {
     }
 
     public List<BoardDto> findAll() {
-        final Connection connection = getConnection();
         final String sql = "select position, symbol, color from board";
+        final List<BoardDto> boardDtos = new ArrayList<>();
 
-        final List<BoardDto> chessDtos = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                chessDtos.add(
-                        new BoardDto(
-                                resultSet.getString("position"),
-                                resultSet.getString("symbol"),
-                                resultSet.getString("color")
-                        )
-                );
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    boardDtos.add(new BoardDto(
+                            resultSet.getString("position"),
+                            resultSet.getString("symbol"),
+                            resultSet.getString("color")));
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return chessDtos;
+        return boardDtos;
     }
 
-    public void save(final List<BoardDto> boardDtos, final int GameId) {
-        final Connection connection = getConnection();
+    public void save(final List<BoardDto> boardDtos, final int gameId) {
         final String sql = "insert into board (position, symbol, color, game_id) values (?, ?, ?, ?)";
 
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             for (BoardDto boardDto : boardDtos) {
                 statement.setString(1, boardDto.getPosition());
                 statement.setString(2, boardDto.getSymbol());
                 statement.setString(3, boardDto.getColor());
-                statement.setInt(4, GameId);
+                statement.setInt(4, gameId);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     public void update(final BoardDto boardDto) {
-        final Connection connection = getConnection();
         final String sql = "update board set symbol = (?), color = (?) where position = (?)";
 
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, boardDto.getSymbol());
             statement.setString(2, boardDto.getColor());
             statement.setString(3, boardDto.getPosition());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
