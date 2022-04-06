@@ -3,6 +3,7 @@ package chess.model;
 public class Turn {
     private static final Turn TURN_BLACK = new Turn(Team.BLACK);
     private static final Turn TURN_WHITE = new Turn(Team.WHITE);
+    private static final Turn TURN_NONE = new Turn(Team.NONE);
     private final Team team;
 
     public Turn(Team team) {
@@ -26,5 +27,9 @@ public class Turn {
 
     public String getThisTurn() {
         return team.name();
+    }
+
+    public Turn finish() {
+        return TURN_NONE;
     }
 }

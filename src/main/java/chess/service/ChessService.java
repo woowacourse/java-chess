@@ -29,11 +29,18 @@ public class ChessService {
             throw new IllegalArgumentException(e.getMessage());
         }
         turn = turn.change();
+        if (chessGame.isKingDead()) {
+            turn = turn.finish();
+        }
 
         return WebBoardDto.from(chessGame.getBoard());
     }
 
     public String getTurn() {
         return turn.getThisTurn();
+    }
+
+    public boolean isKingDead() {
+        return chessGame.isKingDead();
     }
 }

@@ -46,6 +46,8 @@ public class WebController {
             return gson.toJson(turn);
         });
 
+        get("/king/dead", (req, res) -> gson.toJson(chessService.isKingDead()));
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             JsonObject jsonObject = new JsonObject();

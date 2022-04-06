@@ -3,6 +3,41 @@ const movePosition = {
     target: undefined
 };
 
+function changeButton(value) {
+    const button = document.getElementById("game-button")
+    button.innerText = value;
+}
+
+const clickButton = () => {
+    const button = document.getElementById("game-button");
+    const buttonText = button.innerText;
+
+    if (buttonText.includes("start")) {
+        startGame();
+    }
+    else if(buttonText.includes("end")) {
+        endGame();
+    }
+    else if(buttonText.includes("status")) {
+        getStatus();
+    }
+}
+
+const startGame = () => {
+    const response = fetch(`/start`, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    response.then(data => data.json())
+        .then(body => {
+            drawBoard(body);
+            changeButton("end!");
+            drawTurnBox();
+        });
+
+    movePiece();
+}
+
 function drawBoard(body) {
     Object.entries(body).forEach((entry) => {
         const block = document.getElementById(entry[0]);
@@ -26,23 +61,10 @@ function drawTurnBox() {
         .then(data => data.json())
         .then(body => {
            turnBox.innerText = body +"팀 차례!";
+           if (body === "NONE") {
+               turnBox.innerText = "게임이 끝났습니다.";
+           }
         });
-}
-
-const startGame = () => {
-    const response = fetch(`/start`, {
-        method: "GET",
-        headers: {"Content-Type": "application/json"}
-    });
-    response.then(data => data.json())
-        .then(body => {
-            drawBoard(body);
-            const button = document.getElementById("start-button")
-            button.innerText = "end!";
-            drawTurnBox();
-        });
-
-    movePiece();
 }
 
 
@@ -54,7 +76,7 @@ const movePiece = () => {
     })
 }
 
-function clickBLock(e, block) {
+const clickBLock = (e, block) => {
     if (block.className.includes('click')) {
         block.className = block.className.replace('click', '')
         deleteMovePosition(block.id);
@@ -79,7 +101,51 @@ function clickBLock(e, block) {
                 alert("움직일 수 없는 위치입니다.")
             })
         initTurn();
+        setTimeout(kingDeadEndGame);
     }
+}
+
+function endGame() {
+    removeEventListener();
+    changeButton("status!")
+    const turnBox = document.getElementById("turn-box")
+    turnBox.innerText = "게임 종료";
+}
+
+const kingDeadEndGame = () => {
+    const response = fetch(`/king/dead`, {
+        method: "GET",
+        header: {"Content-Type": "application/json"}
+    });
+
+    response.then(data => data.json())
+        .then(body => {
+            console.log(body);
+            if (body === true) {
+                alert("왕이 죽었다!")
+                endGame();
+            }
+        })
+}
+
+const removeEventListener = () => {
+    const blocks = document.querySelectorAll('#chess-board tr td');
+
+    blocks.forEach(block => {
+        block.replaceWith(block.cloneNode(true));
+    })
+}
+
+const getStatus = () => {
+    const response = fetch(`/status`, {
+        method: "GET",
+        header: {"Content-Type": "application/json"}
+    });
+
+    response.then(data => data.json())
+        .then(body => {
+            // 서버에서 받아온 결과 값을 뿌려줌
+        })
 }
 
 const initTurn = () => {
@@ -90,6 +156,10 @@ const initTurn = () => {
     movePosition.source = undefined;
     movePosition.target = undefined;
 }
+
+
+
+
 
 const addMovePosition = (position) => {
     if (movePosition.source !== undefined && movePosition.target !== undefined) {
