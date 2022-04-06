@@ -1,6 +1,23 @@
+const COMMAND = {
+    START: 'start',
+    MOVE: 'move',
+    STATUS: 'status',
+    END: 'end',
+};
+Object.freeze(COMMAND);
+
+const GAME_STATUS = {
+    WHITE_RUNNING: 'WHITE_RUNNING',
+    BLACK_RUNNING: 'BLACK_RUNNING',
+    READY: 'READY',
+}
+Object.freeze(GAME_STATUS);
+
+const ORIGIN = 'http://localhost:8080';
+
 function commandRequest(command, actionAfterSuccess, moveCommand) {
     const url = makeUrlBy(command);
-    fetch(`http://localhost:8080/game/command/${url}`, {
+    fetch(`${ORIGIN}/game/command/${url}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -10,7 +27,7 @@ function commandRequest(command, actionAfterSuccess, moveCommand) {
         .then(errorHandling)
         .then(response => response.json())
         .then((response) => {
-            if (command === 'move') {
+            if (command === COMMAND.MOVE) {
                 actionAfterSuccess(response, moveCommand);
                 return;
             }
@@ -22,7 +39,7 @@ function commandRequest(command, actionAfterSuccess, moveCommand) {
 }
 
 function makeUrlBy(command) {
-    if (command === 'move') {
+    if (command === COMMAND.MOVE) {
         return `${command}?start=${moveCommand.start}&end=${moveCommand.end}`;
     }
     return command;
@@ -40,19 +57,19 @@ function errorHandling(res) {
 // start button
 const startButton = document.querySelector('#command-button__start');
 startButton.addEventListener('click', () => {
-    commandRequest('start', (response) => startSuccess(response));
+    commandRequest(COMMAND.START, (response) => startSuccess(response));
 });
 
 // end button
 const endButton = document.querySelector('#command-button__end');
 endButton.addEventListener('click', () => {
-    commandRequest('end', (response) => statusSuccess(response));
+    commandRequest(COMMAND.END, (response) => statusSuccess(response));
 });
 
 // status button
 const statusButton = document.querySelector('#command-button__status');
 statusButton.addEventListener('click', () => {
-    commandRequest('status', (response) => statusSuccess(response));
+    commandRequest(COMMAND.STATUS, (response) => statusSuccess(response));
 });
 
 // move button
@@ -69,7 +86,7 @@ Array.from(spaces).map(space => {
             return;
         }
         moveCommand.end = id;
-        commandRequest('move', (response, moveCommand) => {
+        commandRequest(COMMAND.MOVE, (response, moveCommand) => {
             moveSuccess(response, moveCommand);
         }, {...moveCommand});
         initMoveCommand();
@@ -98,7 +115,7 @@ function changeTurn(gameStatus) {
     console.log(gameStatus);
     const blackPieceUser = document.getElementById('game-information__black-team');
     const whitePieceUser = document.getElementById('game-information__white-team');
-    if (gameStatus === 'WHITE_RUNNING') {
+    if (gameStatus === GAME_STATUS.WHITE_RUNNING) {
         highlightTeam(blackPieceUser);
         unhighlightTeam(whitePieceUser);
         return;
@@ -135,7 +152,7 @@ function alertScore(blackScore, whiteScore) {
 // start game
 function startGame() {
     const name = prompt("게임 진행을 위해 닉네임을 입력해 주세요.");
-    fetch(`http://localhost:8080/user/name/${name}`, {
+    fetch(`${ORIGIN}/user/name/${name}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -143,7 +160,7 @@ function startGame() {
         credentials: 'include',
     }).then(response => response.json())
         .then(({game_status: gameStatus, pieces}) => {
-            if (gameStatus !== 'READY') {
+            if (gameStatus !== GAME_STATUS.READY) {
                 arrangePieces(pieces);
                 changeTurn(getTurn(gameStatus));
             }
@@ -152,10 +169,10 @@ function startGame() {
 }
 
 function getTurn(gameStatus) {
-    if (gameStatus === 'WHITE_RUNNING') {
-        return 'BLACK_RUNNING';
+    if (gameStatus === GAME_STATUS.WHITE_RUNNING) {
+        return GAME_STATUS.BLACK_RUNNING;
     }
-    return 'WHITE_RUNNING';
+    return GAME_STATUS.WHITE_RUNNING;
 }
 
 function arrangePieces(pieces) {
