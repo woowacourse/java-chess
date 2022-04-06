@@ -6,7 +6,6 @@ import java.util.List;
 
 public class MemberDao {
 
-    public static final int GAME_MEMBER_COUNT = 2;
     private final ConnectionManager connectionManager;
 
     public MemberDao(ConnectionManager connectionManager) {
@@ -25,19 +24,6 @@ public class MemberDao {
                 throw new IllegalArgumentException("저장에 실패하였습니다.");
             }
             return new Member(generatedKeys.getInt(1), name, boardId);
-        });
-    }
-
-    private int countByBoardId(int boardId) {
-        return connectionManager.executeQuery(connection -> {
-            String sql = "select count(*) as countMembers from member where board_id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, boardId);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                throw new IllegalArgumentException("그런 보드 없습니다~");
-            }
-            return resultSet.getInt("countMembers");
         });
     }
 
