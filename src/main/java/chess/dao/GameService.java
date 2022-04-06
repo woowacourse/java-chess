@@ -26,6 +26,12 @@ public class GameService {
         return BoardDto.from(board.getBoard());
     }
 
+    public BoardDto end() {
+        Board board = toBoard(squareDao.find());
+        deleteData();
+        return BoardDto.from(board.getBoard());
+    }
+
     public BoardDto move(String source, String target) {
         String nowTurn = turnDao.find();
         System.out.println(nowTurn);

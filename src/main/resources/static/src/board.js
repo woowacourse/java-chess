@@ -28,7 +28,7 @@ async function loadChess() {
     putPieceInSquare(board);
 }
 
-async function putPieceInSquare(board) {
+function putPieceInSquare(board) {
     Object.keys(board.values).forEach(function (key) {
         let position = document.getElementById(key);
          if (position.hasChildNodes()) {
@@ -42,10 +42,10 @@ async function putPieceInSquare(board) {
 }
 
 function removePieceInSquare(board) {
-   for (key in board)  {
-      let position = document.getElementById(key);
-      position.removeChild(position.firstChild);
-   }
+    Object.keys(board.values).forEach(function (key) {
+         let position = document.getElementById(key);
+         position.removeChild(position.firstChild);
+    })
 }
 
 function clickPosition(position) {
