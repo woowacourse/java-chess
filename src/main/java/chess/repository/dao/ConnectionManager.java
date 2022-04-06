@@ -18,6 +18,8 @@ public class ConnectionManager {
 	private static final String NOT_FOUND_PRIMARY_KEY = "기본키를 찾을 수 없습니다.";
 	private static final String NOT_EXIST = "존재하지 않는 값입니다..";
 	private static final String DUPLICATE_UNIQUE = "이미 존재하는 이름입니다.";
+	private static final String SQL_SYNTAX_ERROR = "잘못된 SQL 구문입니다.";
+	private static final String CONNECTION_ERROR = "커넥션을 불러올 수 없습니다.";
 
 	private static final String URL = "jdbc:mysql://localhost:3306/chess";
 	private static final String USER = "user";
@@ -31,12 +33,12 @@ public class ConnectionManager {
 	}
 
 	public static ConnectionManager createQuery(String sql) {
-		PreparedStatement statement = null;
+		PreparedStatement statement;
 		try {
 			statement = getConnection()
 				.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}  catch (SQLException e) {
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return new ConnectionManager(statement);
 	}
@@ -46,7 +48,7 @@ public class ConnectionManager {
 			Objects.requireNonNull(statement)
 				.setString(index, parameter);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return this;
 	}
@@ -56,7 +58,7 @@ public class ConnectionManager {
 			Objects.requireNonNull(statement)
 				.setInt(index, parameter);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return this;
 	}
@@ -67,7 +69,7 @@ public class ConnectionManager {
 		} catch (SQLIntegrityConstraintViolationException e) {
 			throw new IllegalStateException(DUPLICATE_UNIQUE);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return this;
 	}
@@ -76,7 +78,7 @@ public class ConnectionManager {
 		try {
 			resultSet = Objects.requireNonNull(this.statement).executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return this;
 	}
@@ -89,7 +91,7 @@ public class ConnectionManager {
 			}
 			throw new IllegalArgumentException(NOT_FOUND_PRIMARY_KEY);
 		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 	}
 
@@ -101,7 +103,7 @@ public class ConnectionManager {
 			}
 			throw new IllegalArgumentException(NOT_EXIST);
 		} catch (SQLException e) {
-			throw new IllegalArgumentException(e);
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 	}
 
@@ -113,7 +115,7 @@ public class ConnectionManager {
 				names.add(resultSet.getString(parameter));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return names;
 	}
@@ -126,17 +128,17 @@ public class ConnectionManager {
 				tiles.put(resultSet.getString(key), resultSet.getString(value));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(SQL_SYNTAX_ERROR);
 		}
 		return tiles;
 	}
 
 	private static Connection getConnection() {
-		Connection connection = null;
+		Connection connection;
 		try {
 			connection =  DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalStateException(CONNECTION_ERROR);
 		}
 		return connection;
 	}

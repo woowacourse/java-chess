@@ -9,12 +9,22 @@ import chess.domain.state.GameState;
 
 public class ChessGame {
 
+	private static final int NAME_LIMIT_LENGTH = 20;
+	private static final String INVALID_NAME_LENGTH = "이름은 20자 이하로 설정할 수 있습니다.";
+
 	private final String name;
 	private final GameState state;
 
 	public ChessGame(String name, GameState state) {
+		validateNameLength(name);
 		this.name = name;
 		this.state = state;
+	}
+
+	private void validateNameLength(String name) {
+		if (name.length() > NAME_LIMIT_LENGTH) {
+			throw new IllegalArgumentException(INVALID_NAME_LENGTH);
+		}
 	}
 
 	public String getName() {
