@@ -8,18 +8,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class PieceDaoTest {
-
-    @Test
-    void connection() {
-        final PieceDao pieceDao = new PieceDao();
-        final Connection connection = pieceDao.getConnection();
-        assertThat(connection).isNotNull();
-    }
 
     @Test
     void save() {

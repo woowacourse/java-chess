@@ -50,4 +50,12 @@ public class DatabaseConnector {
         }
     }
 
+    public void close(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
