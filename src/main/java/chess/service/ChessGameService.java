@@ -33,7 +33,9 @@ public class ChessGameService {
     }
 
     public BoardDto move(Response res, MoveDto moveDto) {
-        Color turn = chessGameDao.findByName("chess").getValue();
+        Color turn = chessGameDao.findByName("chess")
+                .orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."))
+                .getValue();
         Map<Position, Piece> boardInfo = pieceDao.findAllByGameName("chess");
         Board board = BoardFactory.createBoardBy(boardInfo);
 
@@ -43,7 +45,7 @@ public class ChessGameService {
         if (moveResult == MoveResult.ENDED) {
             res.redirect("/end");
         }
-        if(moveResult == MoveResult.SUCCESS){
+        if (moveResult == MoveResult.SUCCESS) {
             pieceDao.movePiece(updateBoard.getBoard(), "chess");
             chessGameDao.updateTurn(turn.nextColor().getValue(), "chess");
         }
@@ -51,7 +53,7 @@ public class ChessGameService {
     }
 
     public ColorDto turn() {
-        return chessGameDao.findByName("chess");
+        return chessGameDao.findByName("chess").orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."));
     }
 
     public ScoreDto status() {
@@ -61,7 +63,9 @@ public class ChessGameService {
     }
 
     public Color end() {
-        Color winnerColor = chessGameDao.findByName("chess").getValue();
+        Color winnerColor = chessGameDao.findByName("chess")
+                .orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."))
+                .getValue();
         pieceDao.deleteByGameName("chess");
         chessGameDao.deleteByName("chess");
         return winnerColor;

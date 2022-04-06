@@ -25,6 +25,6 @@ class ChessGameDaoTest {
     @Test
     @DisplayName("이름으로 탐색 확인")
     void findByName() {
-        assertThat(dao.findByName("test").getValue()).isEqualTo(Color.WHITE);
+        assertThat(dao.findByName("test").get().getValue()).isEqualTo(Color.WHITE);
     }
 }

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ChessGameDao {
 
@@ -24,7 +25,7 @@ public class ChessGameDao {
         return 0;
     }
 
-    public ColorDto findByName(String name) {
+    public Optional<ColorDto> findByName(String name) {
         final String sql = "SELECT * FROM chess_game WHERE name = ?";
 
         try (final Connection connection = DatabaseConnector.getConnection();
@@ -33,16 +34,16 @@ public class ChessGameDao {
             statement.setString(1, name);
             try (final ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
-                    return null;
+                    return Optional.empty();
                 }
                 Color chessTurn = Color.from(resultSet.getString("turn"));
-                return ColorDto.from(chessTurn);
+                return Optional.of(ColorDto.from(chessTurn));
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return Optional.empty();
     }
 
     public void deleteByName(String name) {
