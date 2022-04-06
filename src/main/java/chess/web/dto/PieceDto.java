@@ -13,11 +13,6 @@ public class PieceDto {
         this.symbol = piece.getSymbolByTeam();
     }
 
-    public PieceDto(String team, String symbol) {
-        this.team = team;
-        this.symbol = symbol;
-    }
-
     public String getTeam() {
         return team;
     }

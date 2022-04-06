@@ -13,11 +13,6 @@ public class PositionDto {
         this.file = position.getFile();
     }
 
-    public PositionDto(int rank, String file) {
-        this.rank = Rank.toRank(rank);
-        this.file = File.toFile(file.charAt(0));
-    }
-
     public int getRank() {
         return rank.getRank();
     }
@@ -28,13 +23,5 @@ public class PositionDto {
 
     public String getPosition() {
         return String.valueOf(file.getFile())+rank.getRank();
-    }
-
-    @Override
-    public String toString() {
-        return "PositionDto{" +
-                "rank=" + rank +
-                ", file=" + file +
-                '}';
     }
 }
