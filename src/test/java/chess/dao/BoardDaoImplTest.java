@@ -62,24 +62,24 @@ public class BoardDaoImplTest {
         //then
         assertThat(boardDao.findById(gameDao.getId())).isNull();
     }
-    //
-    //
-    // @Test
-    // @DisplayName("DB에서 Id로 기물 위치, 피스 정보를 불러온다.")
-    // void find() {
-    //     //given
-    //     GameDao gameDao = new GameDaoImpl(new Game("white", "black"));
-    //     gameDao.save();
-    //     int gameId = gameDao.getId();
-    //
-    //     Board board = new Board(new DefaultArrangement());
-    //     Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
-    //
-    //     //when
-    //     boardDao.save(gameId, expected);
-    //     Map<String, String> actual = boardDao.findById(gameId);
-    //
-    //     //then
-    //     assertThat(actual).isEqualTo(expected);
-    // }
+
+
+    @Test
+    @DisplayName("DB에서 Id로 기물 위치, 피스 정보를 불러온다.")
+    void find() {
+        //given
+        GameDao gameDao = new GameDaoImpl(new Game("white", "black"));
+        gameDao.save();
+        int gameId = gameDao.getId();
+
+        Board board = new Board(new DefaultArrangement());
+        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+
+        //when
+        boardDao.save(gameId, expected);
+        Map<String, String> actual = boardDao.findById(gameId);
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
