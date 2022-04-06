@@ -30,13 +30,17 @@ move a2 a3 형식으로 입력해주세요.
 
 
 <!--정보 출력-->
+<!--StatusScore to #status (white, black, gameResultMessage by getter) 시작-->
+{{#status}}
 <p>점수</p>
-<p>White 팀 : {{whiteScore}}점</p>
-<p>Black 팀 : {{blackScore}}점</p>
+<p>White 팀 : {{white}}점</p>
+<p>Black 팀 : {{black}}점</p>
 <p>턴 : {{camp}}</p>
 <p>{{error}}</p>
-<p>{{result}}</p>
+<p>{{gameResultMessage}}</p>
 <br>
+{{/status}}
+<!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
 
 <table>
     <tbody>

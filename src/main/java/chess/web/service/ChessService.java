@@ -1,6 +1,7 @@
 package chess.web.service;
 
 import chess.console.ChessGame;
+import chess.domain.StatusScore;
 import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
 import chess.web.dao.camp.CampDao;
@@ -42,6 +43,11 @@ public class ChessService {
                 System.err.println("게임이 진행중입니다. 현재 데이터를 받아와요");
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
+
+                // status요청이 아니라 항상 status를 같이 반환하도록 수정
+//                OutputView.printStatus(calculateStatus());
+                final StatusScore statusScore = chessGame.calculateStatus();
+                model.put("status", statusScore);
             }
             return model;
 //            if (isStatusInRunning()) {
