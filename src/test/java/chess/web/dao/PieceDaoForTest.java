@@ -14,8 +14,17 @@ public class PieceDaoForTest implements PieceDao {
     }
 
     @Override
+    public void update(String position, PieceDto pieceDto) {
+        pieces.computeIfPresent(position, (k, v) -> pieceDto);
+    }
+
+    @Override
     public void deleteAll() {
         pieces.clear();
+    }
+
+    public PieceDto getPieceDtoByPosition(String position) {
+        return pieces.get(position);
     }
 
     public int getSize() {
