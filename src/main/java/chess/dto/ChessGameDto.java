@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessGameDto {
-    private List<PieceDto> pieces;
-    private String state;
-    private String turn;
+    private final List<PieceDto> pieces;
+    private final String state;
+    private final String turn;
 
     public ChessGameDto(List<PieceDto> pieces, String state, String turn) {
         this.pieces = pieces;

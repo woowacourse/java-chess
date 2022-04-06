@@ -4,12 +4,12 @@ import chess.chessgame.Position;
 import chess.piece.Piece;
 
 public class PieceDto {
-    String color;
-    String type;
-    int x;
-    int y;
+    private final String color;
+    private final String type;
+    private final int x;
+    private final int y;
 
-    public PieceDto(Piece piece,Position position) {
+    public PieceDto(Piece piece, Position position) {
         color = piece.getColor().getColor();
         type = piece.getType().getSymbol();
         x = position.getX();
@@ -39,13 +39,4 @@ public class PieceDto {
         return y;
     }
 
-    @Override
-    public String toString() {
-        return "PieceDto{" +
-                "color='" + color + '\'' +
-                ", type='" + type + '\'' +
-                ", x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }
