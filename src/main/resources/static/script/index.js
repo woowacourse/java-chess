@@ -1,4 +1,4 @@
-function commandRequest(command, actionAfterSuccess, mc) {
+function commandRequest(command, actionAfterSuccess, moveCommand) {
     const url = makeUrlBy(command);
     fetch(`http://localhost:8080/game/command/${url}`, {
         method: 'GET',
@@ -11,7 +11,7 @@ function commandRequest(command, actionAfterSuccess, mc) {
         .then(response => response.json())
         .then((response) => {
             if (command === 'move') {
-                actionAfterSuccess(response, mc);
+                actionAfterSuccess(response, moveCommand);
                 return;
             }
             actionAfterSuccess(response);
@@ -83,19 +83,7 @@ function initMoveCommand() {
 
 function moveSuccess({game_status: gameStatus, pieces}, {start, end}) {
     movePieces(start, end);
-}
-
-function startSuccess({game_status: gameStatus, pieces}) {
-    arrangePieces(pieces);
-}
-
-function statusSuccess(response) {
-    const {game_status: gameStatus, black_score: blackScore, white_score: whiteScore} = response;
-    alertScore(blackScore, whiteScore);
-}
-
-function alertScore(blackScore, whiteScore) {
-    alert(`black score: ${blackScore}, white score: ${whiteScore}`);
+    changeTurn(gameStatus);
 }
 
 function movePieces(startPosition, endPosition) {
@@ -105,6 +93,44 @@ function movePieces(startPosition, endPosition) {
     document.getElementById(endPosition).firstChild?.remove();
     targetSpace.appendChild(piece);
 }
+
+function changeTurn(gameStatus) {
+    console.log(gameStatus);
+    const blackPieceUser = document.getElementById('game-information__black-team');
+    const whitePieceUser = document.getElementById('game-information__white-team');
+    if (gameStatus === 'WHITE_RUNNING') {
+        highlightTeam(blackPieceUser);
+        unhighlightTeam(whitePieceUser);
+        return;
+    }
+    highlightTeam(whitePieceUser);
+    unhighlightTeam(blackPieceUser);
+}
+
+function highlightTeam(team) {
+    console.log("team" + team);
+    team.style.borderColor = 'rgb(59,25,3)';
+    team.style.boxShadow = '0 0 100px rgb(63,26,3)';
+}
+
+function unhighlightTeam(team) {
+    team.style.borderColor = '';
+    team.style.boxShadow = '';
+}
+
+function startSuccess({pieces}) {
+    arrangePieces(pieces);
+}
+
+function statusSuccess(response) {
+    const {black_score: blackScore, white_score: whiteScore} = response;
+    alertScore(blackScore, whiteScore);
+}
+
+function alertScore(blackScore, whiteScore) {
+    alert(`black score: ${blackScore}, white score: ${whiteScore}`);
+}
+
 
 // start game
 function startGame() {
@@ -119,9 +145,17 @@ function startGame() {
         .then(({game_status: gameStatus, pieces}) => {
             if (gameStatus !== 'READY') {
                 arrangePieces(pieces);
+                changeTurn(getTurn(gameStatus));
             }
         })
         .catch(err => console.log(err));
+}
+
+function getTurn(gameStatus) {
+    if (gameStatus === 'WHITE_RUNNING') {
+        return 'BLACK_RUNNING';
+    }
+    return 'WHITE_RUNNING';
 }
 
 function arrangePieces(pieces) {
