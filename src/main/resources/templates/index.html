@@ -2,9 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <style>
+
+        .body {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .gameList {
+            display: inline-block;
+            overflow: scroll;
+            width: 500px;
+            height: 400px;
+        }
+
+        table {
+            border: 1px solid;
+        }
+
+        th, td {
+            border: 1px solid;
+            text-align: center;
+            width: 250px;
+        }
+
+        button {
+            display: inline-block;
+            font-size: 14px;
+        }
+
+    </style>
 </head>
 <body>
-Hello World!!
+
+<div class="body">
+    <h2>## 체스방 목록 ##</h2>
+    <p>입장하고 싶은 방을 클릭하세요!</p>
+    <div class="gameList">
+        <table>
+            <tr>
+                <th>방번호</th>
+                <th>진행여부</th>
+            </tr>
+            {{#each games as |value key|}}
+            <tr>
+                <td>
+                    <a href="/room/{{key}}">{{key}}</a>
+                </td>
+                <td>
+                    {{#if value}}
+                    종료
+                    {{else}}
+                    진행중
+                    {{/if}}
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <button type="button" onclick="location.href='/room/start';">새로 시작하기</button>
+</div>
+
 </body>
 </html>
