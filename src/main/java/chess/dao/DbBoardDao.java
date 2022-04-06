@@ -47,16 +47,17 @@ public class DbBoardDao implements BoardDao {
     }
 
     @Override
-    public void updateAll(ChessBoardDto chessBoardDto) {
-        deleteAll();
-        saveAll(chessBoardDto.getMapInformation());
+    public void updateAll(int gameId, ChessBoardDto chessBoardDto) {
+        deleteAll(gameId);
+        saveAll(gameId, chessBoardDto.getMapInformation());
     }
 
-    private void deleteAll() {
+    private void deleteAll(int gameId) {
         final Connection connection = getConnection();
-        final String sql = "delete from board";
+        final String sql = "delete from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, gameId);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,20 +65,21 @@ public class DbBoardDao implements BoardDao {
         }
     }
 
-    private void saveAll(Map<ChessBoardPosition, ChessPiece> mapInformation) {
+    private void saveAll(int gameId, Map<ChessBoardPosition, ChessPiece> mapInformation) {
         for (Entry<ChessBoardPosition, ChessPiece> entry : mapInformation.entrySet()) {
-            save(entry.getKey(), entry.getValue());
+            save(gameId, entry.getKey(), entry.getValue());
         }
     }
 
-    private void save(ChessBoardPosition chessBoardPosition, ChessPiece chessPiece) {
+    private void save(int gameId, ChessBoardPosition chessBoardPosition, ChessPiece chessPiece) {
         final Connection connection = getConnection();
-        final String sql = "insert into board (type, y, x) values (?, ?, ?)";
+        final String sql = "insert into board (game_id, type, y, x) values (?, ?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, ChessPieceName.of(chessPiece));
-            statement.setInt(2, chessBoardPosition.getColumn());
-            statement.setInt(3, chessBoardPosition.getRow());
+            statement.setInt(1, gameId);
+            statement.setString(2, ChessPieceName.of(chessPiece));
+            statement.setInt(3, chessBoardPosition.getColumn());
+            statement.setInt(4, chessBoardPosition.getRow());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,12 +88,13 @@ public class DbBoardDao implements BoardDao {
     }
 
     @Override
-    public ChessBoardDto findAll() {
+    public ChessBoardDto findAll(int gameId) {
         Map<ChessBoardPosition, ChessPiece> mapInfo = new HashMap<>();
         final Connection connection = getConnection();
-        final String sql = "select * from board";
+        final String sql = "select * from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 mapInfo.put(ChessBoardPosition.of(resultSet.getInt("y"), resultSet.getInt("x"))

@@ -56,7 +56,7 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(getChessBoardInformation(new DbBoardDao())), "board.html");
+            return render(makeBoardModel(getChessBoardInformation(chessGame.getGameId(), new DbBoardDao())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
@@ -76,8 +76,8 @@ public class WebApplication {
         });
     }
 
-    private static ChessBoardDto getChessBoardInformation(BoardDao boardDao) {
-        ChessBoardDto mapInfo = boardDao.findAll();
+    private static ChessBoardDto getChessBoardInformation(int gameId, BoardDao boardDao) {
+        ChessBoardDto mapInfo = boardDao.findAll(gameId);
         return mapInfo;
     }
 
@@ -98,13 +98,13 @@ public class WebApplication {
         if (chessGame.isGameEnd()) {
             return render(null, "../public/index.html");
         }
-        saveDataToDb(chessGame.getChessBoardInformation(), new DbBoardDao());
+        saveDataToDb(chessGame.getGameId(), chessGame.getChessBoardInformation(), new DbBoardDao());
         res.redirect("/board");
         return null;
     }
 
-    private static void saveDataToDb(ChessBoardDto chessBoardInformation, BoardDao boardDao) {
-        boardDao.updateAll(chessBoardInformation);
+    private static void saveDataToDb(int gameId, ChessBoardDto chessBoardInformation, BoardDao boardDao) {
+        boardDao.updateAll(gameId, chessBoardInformation);
     }
 
     private static void doApplicationCommand(Response res, ChessGame chessGame, Command command) {
@@ -116,10 +116,10 @@ public class WebApplication {
     }
 
     private static void doStartCommand(Response res, ChessGame chessGame, DbBoardDao dbBoardDao) {
-        ChessBoardDto chessBoardDto = getChessBoardInformation(dbBoardDao);
+        ChessBoardDto chessBoardDto = getChessBoardInformation(chessGame.getGameId(), dbBoardDao);
         if (chessBoardDto.isEmpty()) {
             chessGame.initialze();
-            saveDataToDb(chessGame.getChessBoardInformation(), dbBoardDao);
+            saveDataToDb(chessGame.getGameId(), chessGame.getChessBoardInformation(), dbBoardDao);
         }
         res.redirect("/board");
     }

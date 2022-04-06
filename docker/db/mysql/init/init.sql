@@ -16,7 +16,7 @@ create table role
 create table board
 (
     id int not null auto_increment primary key,
-    game_id int,
+    game_id int not null,
     type varchar(1) not null,
     y int not null,
     x int not null,

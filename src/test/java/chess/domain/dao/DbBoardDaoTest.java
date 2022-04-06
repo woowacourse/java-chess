@@ -23,7 +23,7 @@ class DbBoardDaoTest {
         final Connection connection = dbBoardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialze();
-        dbBoardDao.updateAll(chessGame.getChessBoardInformation());
+        dbBoardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
     }
 
     @Test
@@ -32,7 +32,7 @@ class DbBoardDaoTest {
         final Connection connection = dbBoardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialze();
-        ChessBoardDto chessBoardDto = dbBoardDao.findAll();
+        ChessBoardDto chessBoardDto = dbBoardDao.findAll(chessGame.getGameId());
         assertThat(chessBoardDto.isEmpty()).isFalse();
     }
 

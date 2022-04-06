@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface BoardDao {
 
-    void updateAll(ChessBoardDto chessBoardDto);
+    void updateAll(int gameId, ChessBoardDto chessBoardDto);
 
-    ChessBoardDto findAll();
+    ChessBoardDto findAll(int gameId);
 }
