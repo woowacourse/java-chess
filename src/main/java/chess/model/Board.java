@@ -18,21 +18,14 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        Piece sourcePiece = pieceAt(source);
+        Piece sourcePiece = sourcePieceAt(source);
         Piece targetPiece = pieceAt(target);
 
-        validateSourceNotEmpty(source);
         validateChangeable(source, target,
             MoveType.of(isEmpty(targetPiece), isTargetFriendly(sourcePiece, targetPiece)));
 
         values.put(target, sourcePiece);
         values.remove(source);
-    }
-
-    private void validateSourceNotEmpty(Position source) {
-        if (isEmpty(pieceAt(source))) {
-            throw new IllegalArgumentException(ERROR_SOURCE_PIECE_EMPTY);
-        }
     }
 
     private boolean isTargetFriendly(Piece sourcePiece, Piece targetPiece) {
@@ -75,5 +68,12 @@ public class Board {
 
     public Map<Position, Piece> getValues() {
         return values;
+    }
+
+    public Piece sourcePieceAt(Position source) {
+        if (isEmpty(pieceAt(source))) {
+            throw new IllegalArgumentException(ERROR_SOURCE_PIECE_EMPTY);
+        }
+        return pieceAt(source);
     }
 }

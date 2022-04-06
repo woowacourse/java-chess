@@ -32,7 +32,7 @@ public class ChessGame {
     }
 
     private void validateCorrectTurn(Position source) {
-        if (!turn.isTurnOf(board.pieceAt(source))) {
+        if (!turn.isTurnOf(board.sourcePieceAt(source))) {
             throw new IllegalArgumentException(ERROR_NOT_CORRECT_TURN);
         }
     }

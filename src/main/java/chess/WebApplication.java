@@ -21,19 +21,18 @@ public class WebApplication {
         staticFiles.location("/");
         ChessGame chessGame = new ChessGame(new Turn(), new DefaultArrangement());
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-
+        index();
         game(chessGame);
         move(chessGame);
         status(chessGame);
         end(chessGame);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void index() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
     }
 
     private static void game(ChessGame chessGame) {
@@ -63,17 +62,11 @@ public class WebApplication {
 
             } catch (RuntimeException e) {
                 model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
+                model.put("color", chessGame.getTurnColor());
                 model.put("error", e.getMessage());
                 return render(model, "game.html");
             }
         });
-    }
-
-    private static String finish(ChessGame chessGame, Map<String, Object> model) {
-        model.put("pieces", StringPieceMapByPiecesByPositions(chessGame));
-        model.put("score", chessGame.getScore());
-        model.put("color", chessGame.getTurnColor());
-        return render(model, "finish.html");
     }
 
     private static void status(ChessGame chessGame) {
@@ -85,12 +78,22 @@ public class WebApplication {
         });
     }
 
+    private static String finish(ChessGame chessGame, Map<String, Object> model) {
+        model.put("score", chessGame.getScore());
+        model.put("color", chessGame.getTurnColor());
+        return render(model, "finish.html");
+    }
+
     private static void end(ChessGame chessGame) {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame.init(new DefaultArrangement());
             return render(model, "index.html");
         });
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     private static Map<String, String> StringPieceMapByPiecesByPositions(ChessGame chessGame) {

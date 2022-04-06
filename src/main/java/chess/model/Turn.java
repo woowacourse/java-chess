@@ -4,6 +4,8 @@ import chess.model.piece.Piece;
 
 public class Turn {
 
+    private static final String ERROR_INVALID_PIECE = "[ERROR]: 빈 Piece 값이 전달되었습니다.";
+
     private PieceColor currentColor = PieceColor.WHITE;
     private boolean isFinished = false;
 
