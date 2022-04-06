@@ -32,8 +32,10 @@ public class WebApplication {
         });
 
         exception(Exception.class, (exception, request, response) -> {
-            response.status(400);
-            response.body(exception.getMessage());
+            Map<String, Object> model = new HashMap<>();
+            model.put("error-message", exception.getMessage());
+            model.put("pieces", BoardDto.newInstance(chessGame.board()).getPieces());
+            response.body(render(model, "index.html"));
         });
     }
 
