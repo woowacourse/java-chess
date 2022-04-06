@@ -41,7 +41,7 @@ class RookTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,R"})
+    @CsvSource(value = {"BLACK,rook"})
     void name(Team team, String expect) {
         // given
         Rook rook = new Rook(team);

@@ -4,7 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 public class King extends Piece {
 
-    private static final String name = "K";
+    private static final String name = "king";
     private static final float score = 0.0f;
 
     public King(Team team) {

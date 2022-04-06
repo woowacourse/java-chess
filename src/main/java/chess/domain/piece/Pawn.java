@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public abstract class Pawn extends Piece {
 
-    private static final String name = "P";
+    private static final String name = "pawn";
     private static final float score = 1.0f;
 
     public Pawn(Team team, List<Direction> directions) {

@@ -78,6 +78,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return name + "_" + team.toString();
+        return team.toString() + "_" + name;
     }
 }

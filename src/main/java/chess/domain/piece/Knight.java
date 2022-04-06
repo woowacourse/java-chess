@@ -4,7 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 public class Knight extends Piece {
 
-    private static final String name = "N";
+    private static final String name = "knight";
     private static final float score = 2.5f;
 
     public Knight(Team team) {

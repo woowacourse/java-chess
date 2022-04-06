@@ -116,7 +116,7 @@ public class PawnTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"P"})
+    @CsvSource(value = {"pawn"})
     void name(String expect) {
         // given
         Pawn pawn = new BlackPawn();
