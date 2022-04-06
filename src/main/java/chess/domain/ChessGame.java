@@ -112,7 +112,7 @@ public class ChessGame {
     }
 
     private Color findWinner() {
-        return chessmen.findKingSurvivor();
+        return chessmen.findKingWinner();
     }
 
     public Pieces getChessmen() {

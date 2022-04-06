@@ -3,7 +3,8 @@ package chess.domain.piece;
 public enum Color {
 
     WHITE("백색"),
-    BLACK("흑색");
+    BLACK("흑색"),
+    NONE("없음");
 
     private final String name;
 

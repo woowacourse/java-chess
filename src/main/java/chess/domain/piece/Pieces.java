@@ -68,13 +68,25 @@ public class Pieces {
             '}';
     }
 
-    public Color findKingSurvivor() {
+    public Color findKingWinner() {
+        if (findKingCount() != 1) {
+            return Color.NONE;
+        }
+
         return pieces
             .stream()
             .filter(Piece::isKing)
             .map(Piece::getColor)
             .findFirst()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalStateException("승자를 찾을 수 없습니다."));
     }
 
+    private long findKingCount() {
+        return pieces
+            .stream()
+            .filter(Piece::isKing)
+            .count();
+    }
 }
+
+
