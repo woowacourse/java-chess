@@ -76,7 +76,7 @@ public class ChessService {
         chessGame.movePiece(source, target);
         setState(chessGame.getTurn().name());
         chessDao.updateBoardSquare(source, null, null);
-        chessDao.updateBoardSquare(target, sourcePiece.getClass().getSimpleName(), sourcePiece.getColor().name());
+        chessDao.updateBoardSquare(target, sourcePiece.getClass().getSimpleName(), sourcePiece.getColorName());
     }
 
     public boolean isGameFinish() {

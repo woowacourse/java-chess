@@ -16,7 +16,7 @@ public class SquareDto {
     }
 
     public SquareDto(final String position) {
-        this.position = Position.valueOf(position);
+        this(Position.valueOf(position));
     }
 
     public SquareDto(final Position position, final Piece piece) {

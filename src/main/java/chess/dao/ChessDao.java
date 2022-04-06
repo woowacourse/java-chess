@@ -29,23 +29,23 @@ public class ChessDao {
         return connection;
     }
 
-    public void insertBoardSquares(List<SquareDto> squares) {
+    public void insertBoardSquares(final List<SquareDto> squares) {
         for (SquareDto square : squares) {
             insertBoardSquaresWithPositionAndPiece(square);
         }
     }
 
-    private void insertBoardSquaresWithPositionAndPiece(SquareDto square) {
-        Position position = square.getPosition();
+    private void insertBoardSquaresWithPositionAndPiece(final SquareDto square) {
+        final Position position = square.getPosition();
         if (square.getPiece() == null) {
             insertBoardSquare(position.getRankAndFile(), null, null);
             return;
         }
-        Piece piece = square.getPiece();
-        insertBoardSquare(position.getRankAndFile(), piece.getClass().getSimpleName(), piece.getColor().name());
+        final Piece piece = square.getPiece();
+        insertBoardSquare(position.getRankAndFile(), piece.getClass().getSimpleName(), piece.getColorName());
     }
 
-    private void insertBoardSquare(String position, String piece, String color) {
+    private void insertBoardSquare(final String position, final String piece, final String color) {
         final Connection connection = getConnection();
         final String query = "INSERT INTO board(position, piece, color) VALUES (?, ?, ?)";
         try {
@@ -59,7 +59,7 @@ public class ChessDao {
         }
     }
 
-    public void updateBoardSquare(String position, String piece, String color) {
+    public void updateBoardSquare(final String position, final String piece, final String color) {
         final Connection connection = getConnection();
         final String query = "UPDATE board SET piece = ? , color = ? WHERE position=?";
         try {
@@ -76,7 +76,7 @@ public class ChessDao {
     public List<SquareDto> getBoardSquares() {
         final Connection connection = getConnection();
         final String query = "SELECT * FROM board";
-        List<SquareDto> squares = new ArrayList<>();
+        final List<SquareDto> squares = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -90,7 +90,7 @@ public class ChessDao {
         return null;
     }
 
-    private void addSquare(List<SquareDto> squares, ResultSet resultSet) throws SQLException {
+    private void addSquare(final List<SquareDto> squares, final ResultSet resultSet) throws SQLException {
         if (resultSet.getString("piece") == null) {
             squares.add(new SquareDto(resultSet.getString("position")));
             return;
@@ -104,7 +104,7 @@ public class ChessDao {
         );
     }
 
-    public void insertState(String color) {
+    public void insertState(final String color) {
         final Connection connection = getConnection();
         final String query = "INSERT INTO state VALUES (?)";
         try {

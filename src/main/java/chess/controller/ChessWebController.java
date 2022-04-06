@@ -29,8 +29,8 @@ public class ChessWebController {
     private String start(Request request, Response response) {
         chessService.startGame();
 
-        Map<String, Object> model = new HashMap<>();
-        Map<Color, Double> scores = chessService.getGameScores();
+        final Map<String, Object> model = new HashMap<>();
+        final Map<Color, Double> scores = chessService.getGameScores();
 
         model.put("board", chessService.getBoard());
         model.put("black", scores.get(Color.BLACK));
@@ -40,8 +40,8 @@ public class ChessWebController {
     }
 
     private String move(Request request, Response response) {
-        String source = request.queryMap().get("source").value();
-        String target = request.queryMap().get("target").value();
+        final String source = request.queryMap().get("source").value();
+        final String target = request.queryMap().get("target").value();
 
         chessService.movePiece(source, target);
 
@@ -54,8 +54,8 @@ public class ChessWebController {
     }
 
     private String update(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
-        Map<Color, Double> scores = chessService.getGameScores();
+        final Map<String, Object> model = new HashMap<>();
+        final Map<Color, Double> scores = chessService.getGameScores();
 
         model.put("board", chessService.getBoard());
         model.put("black", scores.get(Color.BLACK));
@@ -65,7 +65,7 @@ public class ChessWebController {
     }
 
     private String result(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
+        final Map<String, Object> model = new HashMap<>();
         model.put("winner", chessService.getWinner());
         return render(model, "result.html");
     }
