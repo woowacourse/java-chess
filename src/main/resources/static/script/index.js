@@ -139,8 +139,7 @@ function startSuccess({pieces}) {
     arrangePieces(pieces);
 }
 
-function statusSuccess(response) {
-    const {black_score: blackScore, white_score: whiteScore} = response;
+function statusSuccess({black_score: blackScore, white_score: whiteScore}) {
     alertScore(blackScore, whiteScore);
 }
 

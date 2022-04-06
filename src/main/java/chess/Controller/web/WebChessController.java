@@ -27,7 +27,7 @@ public class WebChessController {
         final int userId = chess.initGame(userName);
         final PiecesDto pieces = chess.getCurrentBoardState(userId);
         req.session().attribute("user-id", userId);
-        return JsonParser.makePiecesToJsonArray(pieces);
+        return JsonParser.getPiecesAndGameStatus(pieces);
     };
 
     public static final Route runCommand = (req, res) -> {
@@ -62,6 +62,9 @@ public class WebChessController {
     private static JSONObject doActionAboutPieces(final int userId, final ParsedCommand parsedCommand,
                                                   final ChessController chess) {
         final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
+        if (parsedCommand.getCommand() == Command.MOVE) {
+            return JsonParser.getPiecesAndGameStatus(piecesDto);
+        }
         return JsonParser.makePiecesToJsonArray(piecesDto);
     }
 

@@ -10,6 +10,12 @@ import org.json.simple.JSONObject;
 
 public class JsonParser {
 
+    public static JSONObject getPiecesAndGameStatus(final PiecesDto piecesDto) {
+        JSONObject jsonObject = makePiecesToJsonArray(piecesDto);
+        jsonObject.put("game_status", piecesDto.getGameStatus());
+        return jsonObject;
+    }
+
     public static JSONObject makePiecesToJsonArray(final PiecesDto piecesDto) {
         final List<PieceDto> currentPieces = piecesDto.getPieces();
         JSONArray jsonArray = new JSONArray();
@@ -21,7 +27,6 @@ public class JsonParser {
             jsonArray.add(jsonObject);
         }
         JSONObject responseJson = new JSONObject();
-        responseJson.put("game_status", piecesDto.getGameStatus());
         responseJson.put("pieces", jsonArray);
         return responseJson;
     }
@@ -30,7 +35,6 @@ public class JsonParser {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("black_score", scoreDto.getBlackScore());
         jsonObject.put("white_score", scoreDto.getWhiteScore());
-        jsonObject.put("game_status", stateDto.getState());
         return jsonObject;
     }
 
