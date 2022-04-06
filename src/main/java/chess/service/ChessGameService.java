@@ -6,6 +6,7 @@ import chess.EmblemMapper;
 import chess.dao.BoardDao;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.Position;
 import chess.model.Turn;
 
 public class ChessGameService {
@@ -25,5 +26,9 @@ public class ChessGameService {
 
     public Map<String, String> find() {
         return boardDao.findById(gameId);
+    }
+
+    public void move(Position source, Position target) {
+        chessGame.move(source, target);
     }
 }

@@ -14,6 +14,7 @@ import chess.EmblemMapper;
 import chess.dao.BoardDao;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.Position;
 
 public class ChessGameServiceTest {
 
@@ -40,6 +41,26 @@ public class ChessGameServiceTest {
         //when
         chessGameService.save();
         Map<String, String> actual = chessGameService.find();
+        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("체스말을 이동시킨다.")
+    void init() {
+        //given
+        Board board = new Board(new DefaultArrangement());
+        Position source = Position.of("a2");
+        Position target = Position.of("a4");
+
+        //when
+        chessGameService.move(source, target);
+        chessGameService.save();
+        Map<String, String> actual = chessGameService.find();
+        board.move(source, target);
+
         Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
 
         //then
