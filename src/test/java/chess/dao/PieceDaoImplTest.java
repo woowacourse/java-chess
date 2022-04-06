@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.position.Position;
 import chess.dto.PieceDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,10 +22,24 @@ public class PieceDaoImplTest {
     }
 
     @Test
+    @DisplayName("piece 삭제")
+    void remove() {
+        PieceDto pieceDto = PieceDto.of("a7", "white", "bishop");
+        pieceDao.save(pieceDto);
+
+        assertAll(
+                () -> assertThatCode(() -> pieceDao.remove(Position.of("a7"))).doesNotThrowAnyException(),
+                () -> assertThat(pieceDao.findAll()).isEmpty()
+        );
+    }
+
+    @Test
     @DisplayName("piece 모두 삭제")
     void removeAll() {
-        assertThatCode(() -> pieceDao.removeAll())
-                .doesNotThrowAnyException();
+        assertAll(
+                () -> assertThatCode(() -> pieceDao.removeAll()).doesNotThrowAnyException(),
+                () -> assertThat(pieceDao.findAll()).isEmpty()
+        );
     }
 
     @Test
@@ -34,8 +49,11 @@ public class PieceDaoImplTest {
                 PieceDto.of("a7", "white", "bishop"),
                 PieceDto.of("a3", "white", "king")
         );
-        assertThatCode(() -> pieceDao.saveAll(pieceDtos))
-                .doesNotThrowAnyException();
+        assertAll(
+                () -> assertThatCode(() -> pieceDao.saveAll(pieceDtos)).doesNotThrowAnyException(),
+                () -> assertThat(pieceDao.findAll()).containsAll(pieceDtos),
+                () -> assertThat(pieceDao.findAll().size()).isEqualTo(2)
+        );
     }
 
     @Test
@@ -43,8 +61,11 @@ public class PieceDaoImplTest {
     void save() {
         PieceDto pieceDto = PieceDto.of("a7", "white", "bishop");
 
-        assertThatCode(() -> pieceDao.save(pieceDto))
-                .doesNotThrowAnyException();
+        assertAll(
+                () -> assertThatCode(() -> pieceDao.save(pieceDto)).doesNotThrowAnyException(),
+                () -> assertThat(pieceDao.findAll()).contains(pieceDto),
+                () -> assertThat(pieceDao.findAll().size()).isEqualTo(1)
+        );
     }
 
 
@@ -55,10 +76,26 @@ public class PieceDaoImplTest {
                 PieceDto.of("a7", "white", "bishop"),
                 PieceDto.of("a3", "white", "king")
         );
+
         assertAll(
-                () -> assertThatCode(() -> pieceDao.saveAll(pieceDtos))
-                        .doesNotThrowAnyException(),
+                () -> assertThatCode(() -> pieceDao.saveAll(pieceDtos)).doesNotThrowAnyException(),
                 () -> assertThat(pieceDao.findAll()).containsAll(pieceDtos)
+        );
+    }
+
+    @Test
+    @DisplayName("piece 위치 업데이트")
+    void update() {
+        PieceDto pieceDto = PieceDto.of("a7", "white", "bishop");
+        pieceDao.save(pieceDto);
+
+        PieceDto updatedPieceDto = PieceDto.of("a8", "white", "bishop");
+
+        assertAll(
+                () -> assertThatCode(() -> pieceDao.update(Position.of("a7"), Position.of("a8")))
+                        .doesNotThrowAnyException(),
+                () -> assertThat(pieceDao.findAll()).contains(updatedPieceDto),
+                () -> assertThat(pieceDao.findAll()).doesNotContain(pieceDto)
         );
     }
 }

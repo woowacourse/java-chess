@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.position.Position;
 import chess.dto.PieceDto;
 
 import java.util.ArrayList;
@@ -9,7 +10,13 @@ import java.util.Map;
 
 public class FakePieceDao implements PieceDao {
 
-    Map<String, PieceDto> pieces = new HashMap<>();
+    private Map<String, PieceDto> pieces = new HashMap<>();
+
+    @Override
+    public void remove(Position position) {
+        String positionName = position.getName();
+        pieces.remove(positionName);
+    }
 
     @Override
     public void removeAll() {
@@ -31,5 +38,13 @@ public class FakePieceDao implements PieceDao {
     @Override
     public List<PieceDto> findAll() {
         return new ArrayList<>(pieces.values());
+    }
+
+    @Override
+    public void update(Position source, Position target) {
+        PieceDto pieceDto = pieces.get(source.getName());
+        pieceDto.setPosition(target.getName());
+        pieces.remove(source.getName());
+        pieces.put(target.getName(), pieceDto);
     }
 }

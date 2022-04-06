@@ -84,4 +84,44 @@ public class PieceFactory {
         pieces.put(Position.of(Column.H, Row.RANK_8), BLACK_ROOK);
         return pieces;
     }
+
+    public static Piece find(PieceType type, PieceColor color) {
+        if (type == PAWN && color.isBlack()) {
+            return BLACK_PAWN;
+        }
+        if (type == PAWN && color.isWhite()) {
+            return WHITE_PAWN;
+        }
+        if (type == KNIGHT && color.isBlack()) {
+            return BLACK_KNIGHT;
+        }
+        if (type == KNIGHT && color.isWhite()) {
+            return WHITE_KNIGHT;
+        }
+        if (type == ROOK && color.isBlack()) {
+            return BLACK_ROOK;
+        }
+        if (type == ROOK && color.isWhite()) {
+            return WHITE_ROOK;
+        }
+        if (type == QUEEN && color.isBlack()) {
+            return BLACK_QUEEN;
+        }
+        if (type == QUEEN && color.isWhite()) {
+            return WHITE_QUEEN;
+        }
+        if (type == KING && color.isBlack()) {
+            return BLACK_KING;
+        }
+        if (type == KING && color.isWhite()) {
+            return WHITE_KING;
+        }
+        if (type == BISHOP && color.isBlack()) {
+            return BLACK_BISHOP;
+        }
+        if (type == BISHOP && color.isWhite()) {
+            return WHITE_BISHOP;
+        }
+        throw new IllegalArgumentException("해당 특징의 Piece 를 찾을 수 없습니다.");
+    }
 }

@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.db.DBConnector;
+import chess.domain.position.Position;
 import chess.dto.PieceDto;
 
 import java.sql.Connection;
@@ -16,6 +17,18 @@ public class PieceDaoImpl implements PieceDao {
 
     public PieceDaoImpl() {
         connection = DBConnector.getConnection();
+    }
+
+    @Override
+    public void remove(Position position) {
+        final String sql = "delete from piece where position = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, position.getName());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -68,5 +81,18 @@ public class PieceDaoImpl implements PieceDao {
             e.printStackTrace();
         }
         return pieces;
+    }
+
+    @Override
+    public void update(Position source, Position target) {
+        final String sql = "update piece set position = ? where position = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, target.getName());
+            statement.setString(2, source.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
