@@ -10,4 +10,11 @@ public class BoardDaoTest {
         ChessGameDao chessGameDao = new ChessGameDao();
         boardDao.save("a1", "pawn", "white", chessGameDao.findRecentGame());
     }
+
+    @Test
+    void update() {
+        final BoardDao boardDao = new BoardDao();
+        ChessGameDao chessGameDao = new ChessGameDao();
+        boardDao.update("a1", "empty", "empty", chessGameDao.findRecentGame());
+    }
 }

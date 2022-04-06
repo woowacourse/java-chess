@@ -43,4 +43,19 @@ public class BoardDao {
             e.printStackTrace();
         }
     }
+
+    public void update(String position, String piece, String color, int id) {
+        Connection connection = getConnection();
+        final String sql = "update board set piece = ?, color = ? where game_id = ? and position = ? ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, piece);
+            statement.setString(2, color);
+            statement.setInt(3, id);
+            statement.setString(4, position);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
