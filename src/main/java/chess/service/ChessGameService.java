@@ -22,7 +22,7 @@ public class ChessGameService {
     public void start() {
         chessGame = new ChessGame();
         if (pieceDao.isExistsPieces()) {
-            chessGame.load(pieceDao.load(), boardDao.getCurrentTurn());
+            chessGame.load(pieceDao.load(), boardDao.findTurn());
             return;
         }
         chessGame.start();

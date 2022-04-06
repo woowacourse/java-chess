@@ -11,13 +11,7 @@ public class BoardDaoImpl implements BoardDao {
     public int save(Color turn) {
         final String sql = decideSql();
 
-        try (final Connection connection = DBConnector.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, turn.ordinal());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executeSave(turn, sql);
         return 1;
     }
 
@@ -41,9 +35,23 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
+    private void executeSave(Color turn, String sql) {
+        try (final Connection connection = DBConnector.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, turn.ordinal());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public Color getCurrentTurn() {
+    public Color findTurn() {
         final String sql = "select turn from board";
+        return executeFindTurn(sql);
+    }
+
+    private Color executeFindTurn(String sql) {
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 

@@ -15,7 +15,7 @@ public class MockBoardDao implements BoardDao{
     }
 
     @Override
-    public Color getCurrentTurn() {
+    public Color findTurn() {
         FakeBoard fakeBoard = this.fakeBoard.get(1);
         return Color.from(fakeBoard.getTurn());
     }
