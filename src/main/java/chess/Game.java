@@ -8,4 +8,12 @@ public class Game {
         this.idWhitePlayer = idWhitePlayer;
         this.idBlackPlayer = idBlackPlayer;
     }
+
+    public String getIdWhitePlayer() {
+        return idWhitePlayer;
+    }
+
+    public String getIdBlackPlayer() {
+        return idBlackPlayer;
+    }
 }

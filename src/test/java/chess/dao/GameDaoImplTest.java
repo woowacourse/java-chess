@@ -8,7 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.EmblemMapper;
 import chess.Game;
+import chess.model.Board;
+import chess.model.PieceArrangement.DefaultArrangement;
 
 public class GameDaoImplTest {
 
@@ -27,5 +30,12 @@ public class GameDaoImplTest {
 
         //then
         assertThat(connection).isNotNull();
+    }
+
+    @Test
+    @DisplayName("DB에 현재 게임 정보를 저장한다.")
+    void save() {
+        assertThatCode(() -> gameDao.save())
+            .doesNotThrowAnyException();
     }
 }

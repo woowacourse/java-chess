@@ -2,7 +2,9 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import chess.Game;
 
@@ -27,5 +29,19 @@ public class GameDaoImpl implements GameDao{
             e.printStackTrace();
         }
         return connection;
+    }
+
+    @Override
+    public void save() {
+        Connection connection = getConnection();
+        String sql = "insert into game (id_white_player, id_black_player) values (?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, game.getIdWhitePlayer());
+            statement.setString(2, game.getIdBlackPlayer());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
