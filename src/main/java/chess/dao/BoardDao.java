@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.Board;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -61,19 +62,7 @@ public class BoardDao {
         }
     }
 
-    public void saveTurn(String team) {
-        final Connection connection = getConnection();
-        final String insertTurnSql = "update turn set team = ?";
-        try {
-            final PreparedStatement updateStatement = connection.prepareStatement(insertTurnSql);
-            updateStatement.setString(1, team);
-            updateStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<Location, Piece> getBoard() {
+    public Board getBoard() {
         final Connection connection = getConnection();
         final Map<Location, Piece> board = new LinkedHashMap<>();
         final String getBoardSql = "select * from board order by substr(location,2,1) desc, substr(location,1,1) asc";
@@ -88,6 +77,17 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return board;
+        return new Board(board);
+    }
+
+    public void removeBoard() {
+        final Connection connection = getConnection();
+        final String removeBoardSql = "delete from board";
+        try {
+            final PreparedStatement updateStatement = connection.prepareStatement(removeBoardSql);
+            updateStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

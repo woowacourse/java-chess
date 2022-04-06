@@ -9,14 +9,18 @@ public class BoardDaoTest {
     @Test
     void save() {
         final BoardDao boardDao = new BoardDao();
-        boardDao.saveBoard(BoardDto.of(new Board()));
-        boardDao.saveTurn("black");
+        boardDao.saveBoard(BoardDto.of(Board.of()));
     }
 
     @Test
     void getBoard() {
         final BoardDao boardDao = new BoardDao();
         boardDao.getBoard();
-        System.out.println(boardDao.getBoard());
+    }
+
+    @Test
+    void remove() {
+        final BoardDao boardDao = new BoardDao();
+        boardDao.removeBoard();
     }
 }

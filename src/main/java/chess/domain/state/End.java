@@ -14,7 +14,7 @@ public class End implements State {
 
     @Override
     public State start() {
-        return new White(new Board());
+        return new White(Board.of());
     }
 
     @Override
