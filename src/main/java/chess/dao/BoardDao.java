@@ -19,7 +19,6 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class BoardDao {
-
     private int piece_id = 1;
 
     public void save(Map<Square, Piece> board, int board_id, Connection connection) {
@@ -31,21 +30,14 @@ public class BoardDao {
                 .collect(Collectors.toList());
             for (Map.Entry<Square, Piece> entry : pieces) {
                 statement = connection.prepareStatement(sql);
-                Square square = entry.getKey();
-                Piece piece = entry.getValue();
-                setStatement(board_id, statement, square, piece);
+                setStatement(board_id, statement, entry.getKey(), entry.getValue());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DBConnector.closeDB(connection, statement);
     }
 
     private void setStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
@@ -67,53 +59,47 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        close(connection, statement);
+        DBConnector.closeDB(connection, statement);
     }
 
-    private void close(Connection connection, PreparedStatement statement) {
-        try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Board find(int board_id, Connection connection) {
+    public Board findAllPiecesOfBoard(int board_id, Connection connection) {
         final String sql = "select type, team, square from piece where board_id = ?";
         final Map<Square, Piece> board = new HashMap<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        createBlankBoard(board);
         try {
             statement = connection.prepareStatement(sql);
             statement.setInt(1, board_id);
             resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Square square = new Square(resultSet.getString("square"));
-                Piece piece = SavePieceGenerator.generatePiece(resultSet.getString("type"),
-                    resultSet.getString("team"));
-                board.put(square, piece);
-            }
-            for (Rank rank : Rank.values()) {
-                for (File file : File.values()) {
-                    board.putIfAbsent(new Square(file, rank), new None(Color.NONE));
-                }
-            }
+            insertPiecesFromDBToBoard(board, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        close(connection, statement, resultSet);
+        DBConnector.closeDB(connection, statement, resultSet);
         return new Board(board);
     }
 
-    private void close(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void createBlankBoard(Map<Square, Piece> board) {
+        for (Rank rank : Rank.values()) {
+            createBlankRow(board, rank);
         }
     }
+
+    private void createBlankRow(Map<Square, Piece> board, Rank rank) {
+        for (File file : File.values()) {
+            board.putIfAbsent(new Square(file, rank), new None(Color.NONE));
+        }
+    }
+
+    private void insertPiecesFromDBToBoard(Map<Square, Piece> board, ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            Square square = new Square(resultSet.getString("square"));
+            Piece piece = SavePieceGenerator.generatePiece(resultSet.getString("type"),
+                resultSet.getString("team"));
+            board.put(square, piece);
+        }
+    }
+
 }

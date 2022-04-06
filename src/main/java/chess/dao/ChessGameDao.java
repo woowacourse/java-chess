@@ -22,12 +22,7 @@ public class ChessGameDao {
             e.printStackTrace();
         }
 
-        try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DBConnector.closeDB(connection, statement);
     }
 
     public ChessGame find(int board_id, Connection connection) {
@@ -40,25 +35,17 @@ public class ChessGameDao {
             statement.setInt(1, board_id);
             resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                System.exit(0);
                 return null;
             }
             chessGame = new ChessGame(
-                new BoardDao().find(board_id, DBConnectorGenerator.getConnection()),
+                new BoardDao().findAllPiecesOfBoard(board_id, DBConnector.getConnection()),
                 Color.getColor(resultSet.getString("turn"))
             );
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        DBConnector.closeDB(connection, statement, resultSet);
         return chessGame;
     }
 
@@ -74,19 +61,14 @@ public class ChessGameDao {
             e.printStackTrace();
         }
 
-        try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DBConnector.closeDB(connection, statement);
     }
 
     public void remove(int board_id, Connection connection) {
         final String sql = "delete from chessGame where board_id = ?";
         PreparedStatement statement = null;
         try {
-            new BoardDao().remove(board_id, DBConnectorGenerator.getConnection());
+            new BoardDao().remove(board_id, DBConnector.getConnection());
             statement = connection.prepareStatement(sql);
             statement.setInt(1, board_id);
             statement.executeUpdate();
@@ -94,11 +76,6 @@ public class ChessGameDao {
             e.printStackTrace();
         }
 
-        try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DBConnector.closeDB(connection, statement);
     }
 }

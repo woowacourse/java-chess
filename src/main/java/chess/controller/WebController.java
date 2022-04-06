@@ -10,7 +10,7 @@ import java.util.Map;
 import chess.Command;
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
-import chess.dao.DBConnectorGenerator;
+import chess.dao.DBConnector;
 import chess.domain.ChessGame;
 import chess.domain.Status;
 import chess.domain.piece.Piece;
@@ -141,7 +141,7 @@ public class WebController {
         if (game != null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
-        game = chessGameDao.find(BOARD_ID, DBConnectorGenerator.getConnection());
+        game = chessGameDao.find(BOARD_ID, DBConnector.getConnection());
 
         if (game == null) {
             throw new IllegalArgumentException(ERROR_NO_SAVE_GAME);
@@ -156,20 +156,20 @@ public class WebController {
     }
 
     private void save() {
-        chessGameDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
-        chessGameDao.save(game, BOARD_ID, DBConnectorGenerator.getConnection());
-        new BoardDao().save(game.getBoard(), BOARD_ID, DBConnectorGenerator.getConnection());
+        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
+        chessGameDao.save(game, BOARD_ID, DBConnector.getConnection());
+        new BoardDao().save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
     }
 
     private void update() {
-        chessGameDao.update(game, BOARD_ID, DBConnectorGenerator.getConnection());
+        chessGameDao.update(game, BOARD_ID, DBConnector.getConnection());
         BoardDao boardDao = new BoardDao();
-        boardDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
-        boardDao.save(game.getBoard(), BOARD_ID, DBConnectorGenerator.getConnection());
+        boardDao.remove(BOARD_ID, DBConnector.getConnection());
+        boardDao.save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
     }
 
     private void remove() {
-        chessGameDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
+        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
