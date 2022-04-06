@@ -8,7 +8,6 @@ import chess.domain.board.Pawn;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
 import chess.web.dao.PieceDao;
-import java.sql.Connection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +18,6 @@ class PieceDaoTest {
     @AfterEach
     void tearDown() {
         pieceDao.removeAll();
-    }
-
-    @Test
-    void connection() {
-        Connection connection = pieceDao.getConnection();
-        assertThat(connection).isNotNull();
     }
 
     @Test
