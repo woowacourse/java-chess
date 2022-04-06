@@ -16,6 +16,10 @@ public class Board {
         this.board = BoardInitializer.initPieces();
     }
 
+    public Board(Map<Row, Rank> board) {
+        this.board = board;
+    }
+
     public Piece getPiece(Position position) {
         return board.get(position.getRow()).getPiece(position.getCol());
     }
