@@ -28,7 +28,7 @@ public class PieceDaoTest {
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         final List<Piece> pieces = chessmenInitializer.init().getPieces();
         assertThatCode(() ->
-            pieceDao.saveAll(pieces))
+            pieceDao.saveAll(pieces, 1))
             .doesNotThrowAnyException();
     }
 

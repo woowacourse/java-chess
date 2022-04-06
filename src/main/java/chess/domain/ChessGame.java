@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.dao.GameDao;
 import chess.dao.PieceDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -19,17 +20,26 @@ public class ChessGame {
     private static final String FRIENDLY_OCCUPIED_EXCEPTION_MESSAGE = "이동하려는 위치에 아군 말이 있습니다.";
     private static final String PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE = "가는 길목에 다른 말이 있어 이동할 수 없습니다.";
 
-    private Color turn = Color.BLACK;
     private boolean forceEndFlag = false;
+    private int gameId;
 
     private final PieceDao pieceDao = new PieceDao();
+    private final GameDao gameDao = new GameDao();
 
     private ChessGame(Pieces chessmen) {
-        pieceDao.saveAll(chessmen.getPieces());
+        gameId = gameDao.create();
+        pieceDao.saveAll(chessmen.getPieces(), gameId);
+    }
+
+    private ChessGame() {
     }
 
     public static ChessGame of(Pieces chessmen) {
         return new ChessGame(chessmen);
+    }
+
+    public static ChessGame of() {
+        return new ChessGame();
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
@@ -55,13 +65,14 @@ public class ChessGame {
     }
 
     private void validateTurn(Piece sourcePiece) {
-        if (sourcePiece.isSameColor(turn)) {
+        if (sourcePiece.isSameColor(gameDao.findTurnById(gameId))) {
             throw new IllegalArgumentException(TURN_EXCEPTION_MESSAGE);
         }
     }
 
     private void changeTurn() {
-        turn = turn.nextTurn();
+        Color turn = gameDao.findTurnById(gameId);
+        gameDao.updateTurnById(gameId, turn.nextTurn());
     }
 
 

@@ -8,10 +8,8 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessmenInitializer;
-import chess.domain.piece.Pieces;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
@@ -27,7 +25,7 @@ public class WebApplication {
         staticFiles.location("/static");
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
-        AtomicReference<ChessGame> game = new AtomicReference<>(ChessGame.of(new Pieces(List.of())));
+        AtomicReference<ChessGame> game = new AtomicReference<>(ChessGame.of());
 
         get("/", (req, res) -> {
             Map<String, Object> model = game.get().toBoard().getBoardMap();
@@ -54,6 +52,7 @@ public class WebApplication {
             game.get().moveChessmen(new MovePositionCommandDto(from, to));
 
             res.redirect("/");
+
             return null;
         });
 

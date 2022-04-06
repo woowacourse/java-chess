@@ -32,15 +32,17 @@ public class PieceDao {
         databaseConnector.close(connection);
     }
 
-    public void saveAll(List<Piece> pieces) {
+    public void saveAll(List<Piece> pieces, int gameId) {
         final Connection connection = databaseConnector.getConnection();
-        final String sql = "insert into piece (name, color, position) values (?, ?, ?)";
+        final String sql = "insert into piece (name, color, position, game_id) values (?, ?, ?, ?)";
         try {
             for (Piece piece : pieces) {
                 final PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, piece.getName());
                 statement.setString(2, piece.getColor().getName());
                 statement.setString(3, piece.getPosition().getPosition());
+                statement.setInt(4, gameId);
+
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
