@@ -3,7 +3,11 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public class Fixture {
+    public static final Position A5 = Position.from("A5");
+    public static final Position A7 = Position.from("A7");
+    public static final Position E2 = Position.from("E2");
     public static final Position E4 = Position.from("E4");
+    public static final Position E5 = Position.from("E5");
     public static final Position E6 = Position.from("E6");
     public static final Position E8 = Position.from("E8");
     public static final Position E7 = Position.from("E7");

@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Fixture.A5;
+import static chess.domain.piece.Fixture.A7;
+import static chess.domain.piece.Fixture.E2;
 import static chess.domain.piece.Fixture.E4;
+import static chess.domain.piece.Fixture.E5;
 import static chess.domain.piece.Fixture.E6;
-import static chess.domain.piece.Fixture.E7;
-import static chess.domain.piece.Fixture.E8;
 import static chess.domain.piece.Fixture.PAWN_BLACK;
 import static chess.domain.piece.Fixture.PAWN_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,16 +19,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
-
     @Test
     @DisplayName("폰은 첫 수에만 2칸 전진 가능하고 그 외에는 1칸 전진한다")
     void advanceTwoRanksForFirstMoveOnlyOtherwiseOneRank() {
-        final Board board = BoardFixture.of(E4, PAWN_WHITE);
-        final boolean firstMove = board.move(E4, E6);
-        final boolean secondMove = board.move(E6, E8);
-        final boolean thirdMove = board.move(E6, E7);
+        final Board board = BoardFixture.of(E2, PAWN_WHITE, A7, PAWN_BLACK);
+        final boolean firstMove = board.move(E2, E4);
+        final boolean blackMoveForChangeTurn = board.move(A7, A5);
+        final boolean secondMove = board.move(E4, E6);
+        final boolean thirdMove = board.move(E4, E5);
         assertAll(
                 () -> assertThat(firstMove).isTrue(),
+                () -> assertThat(blackMoveForChangeTurn).isTrue(),
                 () -> assertThat(secondMove).isFalse(),
                 () -> assertThat(thirdMove).isTrue()
         );
