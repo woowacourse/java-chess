@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <script src="/script.js"></script>
   <meta charset="UTF-8">
   <title>체스</title>
@@ -22,7 +23,7 @@
             <input class="btn btn-danger" type="submit" value="End"/>
           </form>
         </div>
-        <div class="col-md-4 button status-button" >
+        <div class="col-md-4 button status-button">
           <form action="/status" method="get">
             <input class="btn btn-success" type="submit" value="Status"/>
           </form>
@@ -143,20 +144,20 @@
       </div>
     </div>
     <div class="col-md-5">
-        <div class="black-player-box">
-          <div>Black</div>
-          <form action="/move" method="post">
-            <label>출발 위치</label>
-            <input type="text" name="source" id="black-source"/>
-            <label>도착 위치</label>
-            <input type="text" name="target" id="black-target"/>
-            <input type="submit" value="Move"/>
-          </form>
-          <div>
-            <label>Black 점수</label>
-            <span>{{blackScore}}</span>
-          </div>
+      <div class="black-player-box">
+        <div>Black</div>
+        <form action="/move" method="post">
+          <label>출발 위치</label>
+          <input type="text" name="source" id="black-source"/>
+          <label>도착 위치</label>
+          <input type="text" name="target" id="black-target"/>
+          <input type="submit" value="Move"/>
+        </form>
+        <div>
+          <label>Black 점수</label>
+          <span>{{blackScore}}</span>
         </div>
+      </div>
       <div class="white-player-box">
         <div>Black</div>
         <form action="/move" method="post">
@@ -170,6 +171,13 @@
           <label>White 점수</label>
           <span>{{whiteScore}}</span>
         </div>
+      </div>
+      <div class="save-button-box">
+        <form action="/save" method="post">
+          <label>게임 저장 이름</label>
+          <input type="text" name="gameName" id="gameName"/>
+          <input type="submit" value="Save"/>
+        </form>
       </div>
     </div>
   </div>

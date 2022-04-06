@@ -3,6 +3,10 @@ package controller;
 import domain.Status;
 import domain.chessgame.ChessBoard;
 import domain.chessgame.ChessGame;
+import domain.dao.ChessGameDao;
+import domain.dao.PieceDao;
+import domain.dto.ChessGameDto;
+import domain.dto.PieceDto;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.HashMap;
@@ -12,8 +16,11 @@ import utils.ChessBoardGenerator;
 public class WebChessController {
 
     private ChessGame chessGame;
-
+    private ChessGameDao chessGameDao;
+    private PieceDao pieceDao;
     public WebChessController() {
+        chessGameDao = new ChessGameDao();
+        pieceDao = new PieceDao();
     }
 
     public void start() {
@@ -47,5 +54,21 @@ public class WebChessController {
         Position targetPosition = Position.of(targets[0], targets[1]);
         chessGame.move(sourcePosition, targetPosition);
         return chessGame.isFinished();
+    }
+
+    public void save(String gameName){
+        String player = chessGame.getCurrentPlayer().name();
+        ChessGameDto chessGameDto = new ChessGameDto(gameName, player);
+        System.out.println(chessGameDto.getName()+", "+chessGameDto.getPlayer());
+        chessGameDao.save(chessGameDto);
+        for (Position position : chessGame.getChessBoard().getBoard().keySet()) {
+            String positionSymbol = position.getPosition();
+            Piece piece = chessGame.getChessBoard().findPiece(position);
+            String type = piece.symbolByPlayer();
+            String piecePlayer = piece.getPlayer().name();
+            PieceDto pieceDto = new PieceDto(gameName, positionSymbol, type, piecePlayer);
+            pieceDao.save(pieceDto);
+        }
+
     }
 }
