@@ -224,11 +224,10 @@
         }
     })
 
-    function move() {
+    async function move() {
+        document.getElementById("error").innerText = "";
         const pathName = window.location.pathname;
-        clearBoard();
-
-        fetch(`${pathName}/pieces`, {
+        await fetch(`${pathName}/pieces`, {
             method: "PUT",
             body: `{\"from\": ${from}, \"to\": ${to}}`
         })
