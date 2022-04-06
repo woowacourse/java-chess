@@ -1,22 +1,25 @@
 package chess.dao;
 
+import chess.domain.ChessGame;
 import chess.domain.GameState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class GameDaoImpl implements GameDao {
 
-    private final ConnectionSetup dbConnectionSetup;
+    private final ConnectionSetup connectionSetup;
 
     public GameDaoImpl(ConnectionSetup connectionSetup) {
-        this.dbConnectionSetup = connectionSetup;
+        this.connectionSetup = connectionSetup;
     }
 
     @Override
     public void save(long id) {
         String query = "INSERT INTO game VALUES (?, ?)";
-        try (Connection connection = dbConnectionSetup.getConnection();
+        try (Connection connection = connectionSetup.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, id);
             pstmt.setString(2, GameState.READY.toString());
@@ -27,11 +30,62 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void load(long id) {
-        String query = "SELECT * FROM game WHERE id = ?";
-        try (Connection connection = dbConnectionSetup.getConnection();
+    public Optional<ChessGame> load(long id) {
+        try (Connection connection = connectionSetup.getConnection();
+             PreparedStatement pstmt = createLoadPreparedStatement(connection, id);
+             ResultSet rs = pstmt.executeQuery()) {
+            return getGame(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    private PreparedStatement createLoadPreparedStatement(Connection connection, long id) throws SQLException {
+        String query = "SELECT * FROM game WHERE game_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setLong(1, id);
+        return pstmt;
+    }
+
+    private Optional<ChessGame> getGame(ResultSet rs) throws SQLException {
+        if (rs.next()) {
+            return Optional.of(new ChessGame(null, GameState.valueOf(rs.getString("state"))));
+            // TODO: PieceDao 완성 후 Piece 조회해서 게임 조합하는 기능 필요
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void updateState(long id, GameState gameState) {
+        String query = "UPDATE game SET state = ? WHERE game_id = ?";
+        try (Connection connection = connectionSetup.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, gameState.name());
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete(long id) {
+        String query = "DELETE FROM game WHERE game_id = ?";
+        try (Connection connection = connectionSetup.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        String query = "DELETE FROM game";
+        try (Connection connection = connectionSetup.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

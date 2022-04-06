@@ -1,7 +1,7 @@
 CREATE TABLE game
 (
     game_id int         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    state   varchar(10) NOT NULL
+    state   varchar(20) NOT NULL
 );
 
 CREATE TABLE piece

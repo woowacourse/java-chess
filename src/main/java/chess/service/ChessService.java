@@ -27,8 +27,8 @@ public class ChessService {
     }
 
     public ChessGameResponse move(final MoveRequest moveRequest) {
-        final Position start = parseStringToPosition(moveRequest.getStart());
-        final Position target = parseStringToPosition(moveRequest.getTarget());
+        Position start = parseStringToPosition(moveRequest.getStart());
+        Position target = parseStringToPosition(moveRequest.getTarget());
         chessGame.move(start, target);
         return new ChessGameResponse(chessGame);
     }

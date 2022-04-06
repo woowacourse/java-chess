@@ -17,6 +17,11 @@ public class ChessGame {
         this.gameState = GameState.READY;
     }
 
+    public ChessGame(Board board, GameState gameState) {
+        this.board = board;
+        this.gameState = gameState;
+    }
+
     public void start() {
         if (gameState.isRunning() || gameState.isFinished()) {
             throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
