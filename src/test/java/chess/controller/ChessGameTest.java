@@ -23,7 +23,7 @@ class ChessGameTest {
 
     @Test
     @DisplayName("진행중인 게임이 있는데 게임을 시작하려고 하면 예외를 발생시킨다.")
-    void a_Test() {
+    void startException() {
         //given
         final ChessGame chessGame = new ChessGame();
         chessGame.start();
