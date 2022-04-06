@@ -35,6 +35,10 @@ public class ChessGame {
         return state.isGameEnd();
     }
 
+    public Color currentTurn() {
+        return state.currentColor();
+    }
+
     public Color winner() {
         return state.winner();
     }

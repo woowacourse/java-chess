@@ -72,4 +72,8 @@ public class ChessBoard {
         }
         return Color.BLACK;
     }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
 }

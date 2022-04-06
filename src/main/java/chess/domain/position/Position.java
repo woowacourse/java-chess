@@ -36,10 +36,10 @@ public class Position {
     }
 
     public static Position from(String key) {
-        if (!CACHE.containsKey(key)) {
+        if (!CACHE.containsKey(key.toLowerCase(Locale.ROOT))) {
             throw new IllegalArgumentException("체스 보드 position의 범위를 넘어갑니다.");
         }
-        return CACHE.get(key);
+        return CACHE.get(key.toLowerCase(Locale.ROOT));
     }
 
     public boolean isVerticalWay(Position other) {
@@ -137,10 +137,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-            "row=" + column +
-            ", col=" + row +
-            '}';
+        return column.name() + row.getValue();
     }
 
     public boolean isSameFile(Column column) {
