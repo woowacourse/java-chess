@@ -7,9 +7,9 @@ public class GameDto {
     private final long gameId;
     private final PlayersDto playersDto;
     private final boolean finished;
-    private final ColorDto currentTurnColor;
+    private final String currentTurnColor;
 
-    private GameDto(final long gameId, final PlayersDto playersDto, final boolean finished, final ColorDto currentTurnColor) {
+    private GameDto(final long gameId, final PlayersDto playersDto, final boolean finished, final String currentTurnColor) {
         this.gameId = gameId;
         this.playersDto = playersDto;
         this.finished = finished;
@@ -19,7 +19,7 @@ public class GameDto {
     public static GameDto toDto(final ChessGame chessGame) {
         return new GameDto(
                 chessGame.getId(), PlayersDto.toDto(chessGame.getPlayers()),
-                chessGame.isFinished(), ColorDto.toDto(chessGame.getColorOfCurrentTurn()));
+                chessGame.isFinished(), chessGame.getColorOfCurrentTurn().getName());
     }
 
     public long getGameId() {
@@ -34,7 +34,7 @@ public class GameDto {
         return finished;
     }
 
-    public ColorDto getCurrentTurnColor() {
+    public String getCurrentTurnColor() {
         return currentTurnColor;
     }
 }

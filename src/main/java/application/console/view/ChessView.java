@@ -11,7 +11,6 @@ import application.console.domain.PieceCharacter;
 import application.console.domain.Position;
 import application.console.view.input.InputView;
 import application.console.view.output.OutputView;
-import chess.dto.ColorDto;
 import chess.dto.PlayerDto;
 import chess.dto.PlayerScoresDto;
 import chess.dto.PlayersDto;
@@ -48,12 +47,12 @@ public class ChessView {
     public void printChessBoard(final PlayersDto playersDto) {
         final Map<Position, String> chessBoard = new HashMap<>();
 
-        final Map<ColorDto, PlayerDto> playerDtos = playersDto.getPlayerDtos();
-        for (final Entry<ColorDto, PlayerDto> entry : playerDtos.entrySet()) {
-            final ColorDto colorDto = entry.getKey();
+        final Map<String, PlayerDto> playerDtos = playersDto.getPlayerDtos();
+        for (final Entry<String, PlayerDto> entry : playerDtos.entrySet()) {
+            final String colorName = entry.getKey();
             final PlayerDto playerDto = entry.getValue();
             final Map<Position, String> playerPieces = convertToPlayerPieces(
-                    Color.from(colorDto.getColorName()), playerDto);
+                    Color.from(colorName), playerDto);
             chessBoard.putAll(playerPieces);
         }
 
