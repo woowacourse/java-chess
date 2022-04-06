@@ -1,6 +1,6 @@
 create table board
 (
-    id int not null auto_increment,
+    id int not null,
     turn int not null,
     primary key (id)
 );

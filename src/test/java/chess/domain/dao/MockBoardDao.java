@@ -9,8 +9,9 @@ public class MockBoardDao implements BoardDao{
     private final Map<Integer, FakeBoard> fakeBoard = new HashMap<>();
 
     @Override
-    public void save(Color turn) {
+    public int save(Color turn) {
         fakeBoard.put(1, new FakeBoard(turn.ordinal()));
+        return 1;
     }
 
     @Override

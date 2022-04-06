@@ -4,7 +4,7 @@ import chess.domain.Color;
 
 public interface BoardDao {
 
-    void save(Color turn);
+    int save(Color turn);
 
     Color getCurrentTurn();
 }

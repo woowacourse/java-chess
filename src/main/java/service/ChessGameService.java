@@ -1,9 +1,13 @@
 package service;
 
 import chess.domain.ChessGame;
+import chess.domain.Color;
+import chess.domain.board.Position;
 import chess.domain.dao.BoardDao;
 import chess.domain.dao.PieceDao;
+import chess.domain.piece.Piece;
 import chess.dto.ChessBoardDto;
+import java.util.Map;
 
 public class ChessGameService {
 
@@ -25,11 +29,12 @@ public class ChessGameService {
         chessGame.start();
     }
 
-    public ChessBoardDto getBoard() {
-        return ChessBoardDto.from(chessGame.getBoard().getPiecesByPosition());
+    public void save(Map<Position, Piece> pieces, Color turn) {
+        final int boardId = boardDao.save(turn);
+        pieceDao.save(pieces, boardId);
     }
 
-    public void load() {
-
+    public ChessBoardDto getBoard() {
+        return ChessBoardDto.from(chessGame.getBoard().getPiecesByPosition());
     }
 }

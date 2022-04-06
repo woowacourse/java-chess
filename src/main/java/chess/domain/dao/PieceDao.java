@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public interface PieceDao {
-    void save(Map<Position, Piece> board);
+    void save(Map<Position, Piece> board, int boardId);
 
     Map<Position, Piece> load();
 
