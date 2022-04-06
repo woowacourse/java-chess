@@ -19,6 +19,7 @@ public class ChessGame {
     private static final String TURN_EXCEPTION_MESSAGE = "턴은 백색 말부터 시작해 한번씩 움직일 수 있습니다.";
     private static final String FRIENDLY_OCCUPIED_EXCEPTION_MESSAGE = "이동하려는 위치에 아군 말이 있습니다.";
     private static final String PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE = "가는 길목에 다른 말이 있어 이동할 수 없습니다.";
+    private static final String GAME_END_EXCEPTION_MESSAGE = "게임이 끝난 후에는 경기를 더 진행할 수 없습니다.";
 
     private boolean forceEndFlag = false;
     private int gameId;
@@ -48,11 +49,17 @@ public class ChessGame {
         Piece sourcePiece = chessmen.extractPiece(Position.of(dto.getSource()));
         Position toPosition = Position.of(dto.getTarget());
 
+        checkEnd();
         checkMovable(sourcePiece, toPosition);
-
         moveOrKill(sourcePiece, toPosition);
 
         changeTurn();
+    }
+
+    private void checkEnd() {
+        if (isEnd()) {
+            throw new IllegalArgumentException(GAME_END_EXCEPTION_MESSAGE);
+        }
     }
 
     private void checkMovable(Piece sourcePiece, Position toPosition) {
@@ -74,7 +81,6 @@ public class ChessGame {
         Color turn = gameDao.findTurnById(gameId);
         gameDao.updateTurnById(gameId, turn.nextTurn());
     }
-
 
     private void checkOccupiedByFriendly(Piece sourcePiece, Position toPosition) {
         Piece targetPiece = pieceDao.findByPosition(toPosition.getPosition());
