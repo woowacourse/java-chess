@@ -1,6 +1,6 @@
 create table piece
 (
-    piece_type varchar(10) not null,
+    piece_type varchar(20) not null,
     position   varchar(2)  not null,
     game_name  varchar(10) not null,
 

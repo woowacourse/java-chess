@@ -33,7 +33,7 @@ public class ChessWebController {
             return gson.toJson(chessGameService.move(res, moveDto).getBoard());
         });
 
-        get("/turn", (req, res) -> gson.toJson(chessGameService.turn().getTurn()));
+        get("/turn", (req, res) -> gson.toJson(chessGameService.turn().getValue()));
 
         get("/status", (req, res) -> gson.toJson(chessGameService.status().getScore()));
 

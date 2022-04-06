@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.controller.state.Turn;
-import chess.dto.TurnDto;
+import chess.domain.Color;
+import chess.dto.ColorDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +24,7 @@ public class ChessGameDao {
         return 0;
     }
 
-    public TurnDto findByName(String name) {
+    public ColorDto findByName(String name) {
         final String sql = "SELECT * FROM chess_game WHERE name = ?";
 
         try (final Connection connection = DatabaseConnector.getConnection();
@@ -35,8 +35,8 @@ public class ChessGameDao {
                 if (!resultSet.next()) {
                     return null;
                 }
-                Turn chessTurn = Turn.from(resultSet.getString("turn"));
-                return TurnDto.from(chessTurn);
+                Color chessTurn = Color.from(resultSet.getString("turn"));
+                return ColorDto.from(chessTurn);
             }
 
         } catch (SQLException e) {
@@ -58,8 +58,6 @@ public class ChessGameDao {
     }
 
     public void updateTurn(String turn, String name) {
-        System.out.println("turn = " + turn);
-        System.out.println("name = " + name);
         final String sql = "UPDATE chess_game SET turn = ? WHERE name = ?";
         try (final Connection connection = DatabaseConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {

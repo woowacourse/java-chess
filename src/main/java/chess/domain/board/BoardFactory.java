@@ -51,6 +51,10 @@ public class BoardFactory {
         return new Board(startBoard);
     }
 
+    public static Board createBoardBy(Map<Position, Piece> board) {
+        return new Board(board);
+    }
+
     private static List<Position> getPositions(List<Rank> ranks) {
         return ranks.stream()
                 .flatMap(BoardFactory::getPositionStream)

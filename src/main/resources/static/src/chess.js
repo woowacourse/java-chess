@@ -43,10 +43,8 @@ function putPiece(piece, div) {
 
 async function setTurn() {
     const turnMessages = {
-        "START": "게임을 시작합니다. 흰색 팀부터 시작합니다.",
-        "WHITE_TURN": "흰색 팀의 순서입니다",
-        "BLACK_TURN": "검은색 팀의 순서입니다",
-        "END": "게임이 종료되었습니다."
+        "WHITE": "흰색 팀의 순서입니다",
+        "BLACK": "검은색 팀의 순서입니다"
     }
     let message = await fetch("/turn")
         .then(response => response.json());
@@ -56,7 +54,8 @@ async function setTurn() {
 
 async function end() {
     const gameResult = await fetch("/end").then(response => response.json());
-    await setTurn();
+    const turn = document.getElementById("turn");
+    turn.textContent = "게임이 종료되었습니다.";
     await clearBoard();
     setWinnerScore(gameResult);
 }
@@ -99,7 +98,8 @@ async function setAfterMove(moveResult) {
     if (moveResult === "WHITE" || moveResult === "BLACK" || moveResult === "EMPTY") {
         setWinnerScore(moveResult);
         await clearBoard();
-        await setTurn();
+        const turn = document.getElementById("turn");
+        turn.textContent = "게임이 종료되었습니다.";
         startButton.textContent = "Start"
         return;
     }
