@@ -6,7 +6,7 @@ import chess.constant.Command;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.factory.RegularBoardFactory;
-import chess.dto.Request;
+import chess.dto.request.Request;
 import chess.turndecider.GameFlow;
 import chess.view.InputView;
 import chess.view.OutputView;

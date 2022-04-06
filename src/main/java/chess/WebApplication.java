@@ -7,11 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chess.domain.board.factory.RegularBoardFactory;
+import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
+import chess.dto.response.InitBoardResponse;
+import com.google.gson.Gson;
 import lecture.pobi.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
+
+    private static final Gson gson = new Gson();
+
     public static void main(String[] args) {
         staticFiles.location("/static");
 
@@ -20,17 +28,23 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
-        List<User> users = new ArrayList<>();
+        Map<Position, Piece> initBoard = RegularBoardFactory.getInstance().create();
+        InitBoardResponse initBoardResponse = InitBoardResponse.from(initBoard);
 
-        post("/members", (req, res) -> {
-            User user = new User(req.queryParams("name"), req.queryParams("age"));
-            users.add(user);
+        get("/board", "application/json", (req, res) -> {
+            return initBoardResponse;
+        }, gson::toJson);
 
-            Map<String, Object> model = new HashMap<>();
-            model.put("users", users);
+/*
+        Map<String, String> routes = new HashMap<>();
+        post("/move", (req, res) -> {
 
-            return render(model, "result.html");
+            Position from = Position.of(req.queryParams("from"));
+            Position to = Position.of(req.queryParams("to"));
+
+            return null;
         });
+*/
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

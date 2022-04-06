@@ -61,4 +61,8 @@ public enum File {
     public int displacement(File other) {
         return this.index - other.index;
     }
+
+    public String text() {
+        return text;
+    }
 }

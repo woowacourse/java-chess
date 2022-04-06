@@ -132,6 +132,14 @@ public class Position {
         return !rankIterator.hasNext();
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

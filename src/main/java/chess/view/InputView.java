@@ -7,9 +7,9 @@ import java.util.List;
 
 import chess.constant.Command;
 import chess.domain.board.position.Position;
-import chess.dto.MoveRequest;
-import chess.dto.NotMoveRequest;
-import chess.dto.Request;
+import chess.dto.request.MoveRequest;
+import chess.dto.request.NotMoveRequest;
+import chess.dto.request.Request;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
