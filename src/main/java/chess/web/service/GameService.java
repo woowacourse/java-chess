@@ -14,6 +14,7 @@ import chess.web.dto.ResultDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameService {
@@ -28,7 +29,22 @@ public class GameService {
     }
 
     public void move(CommendDto commendDto) {
-        board.move(commendDto.getSource(), commendDto.getTarget());
+        String source = commendDto.getSource();
+        String target = commendDto.getTarget();
+
+        board.move(source, target);
+        Piece pickedPiece = board.findPiece(Position.of(target)).get();
+        PieceDto pickedPieceDto = PieceDto.from(Position.of(target), pickedPiece);
+
+        pieceDao.deleteOne(source);
+        Optional<PieceDto> targetPieceDto = pieceDao.findOne(target);
+
+        if (!targetPieceDto.isEmpty()) {
+            pieceDao.updateOne(target, pickedPieceDto);
+            return;
+        }
+
+        pieceDao.saveOne(pickedPieceDto);
     }
 
     public ResultDto getFinalResultDto() {
