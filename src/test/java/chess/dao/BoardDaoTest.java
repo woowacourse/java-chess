@@ -8,13 +8,17 @@ public class BoardDaoTest {
     void save() {
         final BoardDao boardDao = new BoardDao();
         ChessGameDao chessGameDao = new ChessGameDao();
-        boardDao.save("a1", "pawn", "white", chessGameDao.findRecentGame());
+        int gameId = chessGameDao.findRecentGame();
+        boardDao.save("a1", "pawn", "white", gameId);
+        boardDao.delete("a1", gameId);
     }
 
     @Test
     void update() {
         final BoardDao boardDao = new BoardDao();
         ChessGameDao chessGameDao = new ChessGameDao();
-        boardDao.update("a1", "empty", "empty", chessGameDao.findRecentGame());
+        int gameId = chessGameDao.findRecentGame();
+        boardDao.update("a1", "empty", "empty", gameId);
+        boardDao.delete("a1", gameId);
     }
 }
