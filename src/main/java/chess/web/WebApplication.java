@@ -21,7 +21,7 @@ public class WebApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("pieces", BoardDto.newInstance(chessGame.board()).getPieces());
+            model.put("pieces", BoardDto.newInstance(chessGame.board()));
             model.put("black-score", chessGame.score(Color.WHITE));
             model.put("white-score", chessGame.score(Color.BLACK));
             return render(model, "index.html");
@@ -56,7 +56,7 @@ public class WebApplication {
         exception(Exception.class, (exception, request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("error-message", exception.getMessage());
-            model.put("pieces", BoardDto.newInstance(chessGame.board()).getPieces());
+            model.put("pieces", BoardDto.newInstance(chessGame.board()));
             model.put("black-score", chessGame.score(Color.WHITE));
             model.put("white-score", chessGame.score(Color.BLACK));
             response.body(render(model, "index.html"));

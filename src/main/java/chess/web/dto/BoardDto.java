@@ -8,13 +8,13 @@ import java.util.List;
 
 public class BoardDto {
 
-    private final List<PieceDto> pieces;
+    private final String state;
 
-    private BoardDto(List<PieceDto> pieces) {
-        this.pieces = pieces;
+    public BoardDto(String state) {
+        this.state = state;
     }
 
-    public static BoardDto newInstance(Board board) {
+    public static List<PieceDto> newInstance(Board board) {
         List<PieceDto> pieces = new ArrayList<>();
 
         for (int rankIndex = 0; rankIndex < 8; rankIndex++) {
@@ -26,10 +26,10 @@ public class BoardDto {
             }
         }
 
-        return new BoardDto(pieces);
+        return pieces;
     }
 
-    public List<PieceDto> getPieces() {
-        return pieces;
+    public String getState() {
+        return state;
     }
 }
