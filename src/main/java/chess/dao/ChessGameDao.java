@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.Color;
+import chess.domain.game.Color;
 import chess.dto.ResponseDto;
 
 import java.sql.*;

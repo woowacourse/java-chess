@@ -1,6 +1,6 @@
 package chess.console;
 
-import chess.domain.Color;
+import chess.domain.game.Color;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 

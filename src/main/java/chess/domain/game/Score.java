@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 public class Score {
     private final Color color;

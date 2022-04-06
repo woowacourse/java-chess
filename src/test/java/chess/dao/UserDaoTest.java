@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.User;
+import chess.domain.game.User;
 import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 

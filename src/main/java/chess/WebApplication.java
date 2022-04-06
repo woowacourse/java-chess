@@ -2,8 +2,9 @@ package chess;
 
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
-import chess.domain.Board;
-import chess.domain.Color;
+import chess.domain.game.Board;
+import chess.domain.game.Color;
+import chess.domain.game.Command;
 import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
 import spark.ModelAndView;

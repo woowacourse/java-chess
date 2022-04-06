@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
+import chess.domain.game.Color;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

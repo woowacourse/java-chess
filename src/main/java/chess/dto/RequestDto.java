@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.Command;
+import chess.domain.game.Command;
 import chess.domain.position.Position;
 import spark.Request;
 

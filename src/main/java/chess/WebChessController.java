@@ -1,8 +1,8 @@
 package chess;
 
-import chess.domain.Board;
-import chess.domain.Color;
-import chess.domain.Result;
+import chess.domain.game.Board;
+import chess.domain.game.Color;
+import chess.domain.game.Result;
 
 import chess.dto.BoardDto;
 import chess.dto.RequestDto;

@@ -1,7 +1,7 @@
 package chess.dto;
 
-import chess.domain.Color;
-import chess.domain.Result;
+import chess.domain.game.Color;
+import chess.domain.game.Result;
 
 public class ResponseDto {
     private final BoardDto boardDto;

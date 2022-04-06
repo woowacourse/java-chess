@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import java.util.Locale;
 import java.util.Objects;
