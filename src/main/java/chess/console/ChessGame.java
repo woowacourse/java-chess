@@ -2,6 +2,7 @@ package chess.console;
 
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
+import chess.domain.Camp;
 import chess.domain.GameSwitch;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
@@ -120,29 +121,33 @@ public class ChessGame {
         };
     }
 
-    private boolean isStatusInRunning() {
-        if (gameSwitch.isOff()) {
+    public boolean isStatusInRunning() {
+        if (isEndInGameOff()) {
             return false;
         }
         return state.isStatus();
     }
 
-    private boolean isEndInRunning() {
-        if (gameSwitch.isOff()) {
+    public boolean isEndInRunning() {
+        if (isEndInGameOff()) {
             return false;
         }
         return state.isFinished();
     }
 
-    private boolean isEndInGameOff() {
+    public boolean isEndInGameOff() {
         return gameSwitch.isOff();
+    }
+
+    public void ready() {
+        state = state.ready();
     }
 
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
     }
 
-    public void ready() {
-        state = state.ready();
+    public Camp getCamp() {
+        return state.getCamp();
     }
 }

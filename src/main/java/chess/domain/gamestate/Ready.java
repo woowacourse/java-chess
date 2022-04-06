@@ -92,6 +92,11 @@ public class Ready implements State {
     }
 
     @Override
+    public Camp getCamp() {
+        return Camp.WHITE;
+    }
+
+    @Override
     public List<Position> getKingCheckmatedPositions() {
         throw new UnsupportedOperationException("Ready#isKingCheckmated not implemented.");
     }

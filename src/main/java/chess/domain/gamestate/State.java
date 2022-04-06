@@ -36,7 +36,9 @@ public interface State {
 
     boolean isFinished();
 
+    boolean isAllKingCheckmated(List<Position> positions);
+
     Map<Position, Piece> getBoard();
 
-    boolean isAllKingCheckmated(List<Position> positions);
+    Camp getCamp();
 }

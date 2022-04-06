@@ -99,4 +99,9 @@ public final class Status implements State {
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
+
+    @Override
+    public Camp getCamp() {
+        return camp;
+    }
 }

@@ -2,7 +2,8 @@ package chess.domain;
 
 public enum Camp {
     WHITE,
-    BLACK;
+    BLACK,
+    NONE;
 
     public Camp switchCamp() {
         if (this == WHITE) {

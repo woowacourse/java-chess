@@ -98,4 +98,9 @@ public class Finished implements State {
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
+
+    @Override
+    public Camp getCamp() {
+        return Camp.NONE;
+    }
 }
