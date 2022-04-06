@@ -26,7 +26,7 @@ class BoardDaoTest {
     }
 
     @Test
-    void findByIdTest() {
+    void getByIdTest() {
         final Board board = dao.save(new Board("개초보만"));
         final Board foundBoard = dao.getById(board.getId());
         assertAll(
@@ -47,5 +47,12 @@ class BoardDaoTest {
         final Board board = dao.save(new Board("aaa"));
         int affectedRow = dao.deleteById(board.getId());
         assertThat(affectedRow).isEqualTo(1);
+    }
+
+    @Test
+    void findAllTest() {
+        final Board board1 = dao.save(new Board("개초보만"));
+        final Board board2 = dao.save(new Board("왕허접만"));
+        assertThat(dao.findAll().size()).isEqualTo(2);
     }
 }

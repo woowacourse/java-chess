@@ -3,7 +3,8 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface ConnectionMapper<R> {
+@FunctionalInterface
+public interface ConnectionMapper<T> {
 
-    R execute(Connection connection) throws SQLException;
+    T execute(Connection connection) throws SQLException;
 }

@@ -29,7 +29,7 @@ public class BoardDao {
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("보드를 찾을 수 없어용~");
+                throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
             return new Board(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
         });
@@ -43,7 +43,7 @@ public class BoardDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             final MemberDao memberDao = new MemberDao(connectionManager);
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("그런 보드 없어용용죽겠지");
+                throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
             return new Board(
                     resultSet.getInt("id"),
@@ -90,25 +90,25 @@ public class BoardDao {
         });
     }
 
-    public int deleteById(int boardId) {
+    public int deleteById(int id) {
         return connectionManager.executeQuery(connection -> {
             String sql = "delete from board where id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, boardId);
+            preparedStatement.setInt(1, id);
             return preparedStatement.executeUpdate();
         });
     }
 
-    public int deleteAll() {
-        return connectionManager.executeQuery(connection -> {
+    public void deleteAll() {
+        connectionManager.executeQuery(connection -> {
             String sql = "delete from board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             return preparedStatement.executeUpdate();
         });
     }
 
-    public int updateTurn(Color color, int boardId) {
-        return connectionManager.executeQuery(connection -> {
+    public void updateTurn(Color color, int boardId) {
+        connectionManager.executeQuery(connection -> {
             String sql = "update board set turn=? where id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, color.name());

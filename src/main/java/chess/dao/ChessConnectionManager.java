@@ -10,6 +10,15 @@ public class ChessConnectionManager implements ConnectionManager {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    @Override
+    public <T> T executeQuery(ConnectionMapper<T> connectionMapper) {
+        try (final Connection connection = getConnection()) {
+            return connectionMapper.execute(connection);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
     private Connection getConnection() {
         loadDriver();
         Connection connection = null;
@@ -26,15 +35,6 @@ public class ChessConnectionManager implements ConnectionManager {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (final Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public <T> T executeQuery(ConnectionMapper<T> connectionMapper) {
-        try (final Connection connection = getConnection()) {
-            return connectionMapper.execute(connection);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
         }
     }
 }
