@@ -33,7 +33,7 @@ public final class Board {
     }
 
     public void move(Position beforePosition, Position afterPosition) {
-        final Piece piece = this.piecesByPosition.get(beforePosition);
+        final Piece piece = piecesByPosition.get(beforePosition);
         validateMovable(beforePosition, afterPosition, piece);
 
         if (isBlank(afterPosition)) {
@@ -79,8 +79,8 @@ public final class Board {
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
-            this.piecesByPosition.put(afterPosition, piece);
-            this.piecesByPosition.put(beforePosition, new NullPiece());
+            piecesByPosition.put(afterPosition, piece);
+            piecesByPosition.put(beforePosition, new NullPiece());
         };
     }
 

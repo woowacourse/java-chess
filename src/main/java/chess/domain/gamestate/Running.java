@@ -24,16 +24,16 @@ public class Running implements State {
 
     @Override
     public State move(Position beforePosition, Position afterPosition) {
-        this.board.move(beforePosition, afterPosition);
-        if (this.board.hasKingCaptured()) {
-            return new Finished(this.board);
+        board.move(beforePosition, afterPosition);
+        if (board.hasKingCaptured()) {
+            return new Finished(board);
         }
         return this;
     }
 
     @Override
     public State end() {
-        return new Finished(this.board);
+        return new Finished(board);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Running implements State {
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
     }
 
     @Override

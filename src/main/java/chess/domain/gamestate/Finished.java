@@ -49,17 +49,17 @@ public class Finished implements State {
 
     @Override
     public Winner findWinner() {
-        if (this.board.hasBlackKingCaptured()) {
+        if (board.hasBlackKingCaptured()) {
             return Winner.WHITE;
         }
-        if (this.board.hasWhiteKingCaptured()) {
+        if (board.hasWhiteKingCaptured()) {
             return Winner.BLACK;
         }
         return findWinnerByScore();
     }
 
     private Winner findWinnerByScore() {
-        final int compared = Double.compare(this.board.scoreOfBlack(), this.board.scoreOfWhite());
+        final int compared = Double.compare(board.scoreOfBlack(), board.scoreOfWhite());
         if (compared > 0) {
             return Winner.BLACK;
         }
@@ -76,7 +76,7 @@ public class Finished implements State {
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
     }
 
     @Override

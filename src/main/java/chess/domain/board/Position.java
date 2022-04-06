@@ -46,15 +46,15 @@ public class Position implements Comparable<Position> {
 	}
 
 	public Position flipHorizontally() {
-		return new Position(this.column.flip(), this.row);
+		return new Position(column.flip(), row);
 	}
 
 	public Position flipVertically() {
-		return new Position(this.column, this.row.flip());
+		return new Position(column, row.flip());
 	}
 
 	public Position flipDiagonally() {
-		return new Position(this.column.flip(), this.row.flip());
+		return new Position(column.flip(), row.flip());
 	}
 
 	public boolean existObstacleToOtherPosition(Position otherPosition, Predicate<Position> positionPredicate) {
@@ -77,13 +77,13 @@ public class Position implements Comparable<Position> {
 
 	private List<Position> findHorizontalPath(List<Column> columnPath) {
 		return columnPath.stream()
-			.map(column -> Position.of(column, this.row))
+			.map(column -> Position.of(column, row))
 			.collect(Collectors.toList());
 	}
 
 	private List<Position> findVerticalPath(List<Row> rowPath) {
 		return rowPath.stream()
-			.map(row -> Position.of(this.column, row))
+			.map(row -> Position.of(column, row))
 			.collect(Collectors.toList());
 	}
 
