@@ -3,8 +3,7 @@ package chess.domain.game;
 public enum GameStatus {
     READY,
     PLAYING,
-    END,
-    ;
+    END;
 
     public boolean isReady() {
         return this == READY;

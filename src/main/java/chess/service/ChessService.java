@@ -21,8 +21,8 @@ public class ChessService {
 
     private static final int EMPTY = 0;
     private ChessBoard chessBoard = null;
-    private GameDao gameDao = new GameDao();
-    private BoardDao boardDao = new BoardDao();
+    private final GameDao gameDao = new GameDao();
+    private final BoardDao boardDao = new BoardDao();
 
     public void start() throws SQLException {
         if (isNotSaved()) {
