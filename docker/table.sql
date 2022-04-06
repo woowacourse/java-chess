@@ -1,4 +1,4 @@
---create table game (
+--create table chessgame (
 --    game_id int primary key auto_increment,
 --    name varchar(20) not null unique ,
 --    state varchar(20) not null
@@ -9,5 +9,5 @@
 --    name varchar(20) not null,
 --    position varchar(2) not null,
 --    game_id int not null,
---    foreign key (game_id) references game (game_id) on delete cascade
+--    foreign key (game_id) references chessgame (game_id) on delete cascade
 --);

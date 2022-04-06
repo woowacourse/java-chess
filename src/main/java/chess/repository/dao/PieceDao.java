@@ -32,7 +32,7 @@ public class PieceDao {
 	public Map<String, String> selectByGameName(String gameName) {
 		return ConnectionManager.createQuery(
 				"select p.position, p.name "
-					+ "from piece p join game g "
+					+ "from piece p join chessGame g "
 					+ "on p.game_id = g.game_id "
 					+ "where g.name = ?")
 			.setParameter(1, gameName)
@@ -43,7 +43,7 @@ public class PieceDao {
 	public void deleteByPosition(String position, String gameName) {
 		ConnectionManager.createQuery(
 				"delete p from piece p "
-					+ "join game g on p.game_id = g.game_id "
+					+ "join chessGame g on p.game_id = g.game_id "
 					+ "where p.position = ? and g.name = ?")
 			.setParameter(1, position)
 			.setParameter(2, gameName)
@@ -52,7 +52,7 @@ public class PieceDao {
 
 	public void updatePositionOfPiece(String pieceName, String from, String to, String gameName) {
 		ConnectionManager.createQuery(
-				"update piece p join game g on p.game_id = g.game_id "
+				"update piece p join chessGame g on p.game_id = g.game_id "
 					+ "set p.position = ? "
 					+ "where p.name = ? and p.position = ? and g.name = ?")
 			.setParameter(1, to)
