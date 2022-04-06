@@ -9,6 +9,7 @@ import chess.domain.game.command.PromotionCommand;
 import chess.domain.game.state.FinishedState;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.MoveState;
+import chess.domain.game.state.PromotionState;
 import chess.domain.game.state.RunningState;
 import chess.domain.player.Players;
 
@@ -27,6 +28,17 @@ public class ChessGame {
 
     public static ChessGame initializeChessGame() {
         return new ChessGame(TEMPORARY_PLAYER_ID, new FinishedState(new Players(), DEFAULT_COLOR));
+    }
+
+    public static ChessGame loadChessGame(final Long id, final Players players,
+                                          final boolean finished, final Color currentTurnColor) {
+        if (finished) {
+            return new ChessGame(id, new FinishedState(players, currentTurnColor));
+        }
+        if (players.isPlayerAbleToPromotePawn(currentTurnColor.reverse())) {
+            return new ChessGame(id, new PromotionState(players, currentTurnColor.reverse()));
+        }
+        return new ChessGame(id, new MoveState(players, currentTurnColor));
     }
 
     public void start() {
@@ -65,6 +77,10 @@ public class ChessGame {
         return gameState.isRunning();
     }
 
+    public boolean isFinished() {
+        return !isRunning();
+    }
+
     public boolean isPromotable() {
         final RunningState runningState = convertToRunningState(gameState);
         return runningState.isPromotable();
@@ -81,11 +97,15 @@ public class ChessGame {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Players getPlayers() {
         return gameState.getPlayers();
     }
 
-    public Long getId() {
-        return id;
+    public Color getColorOfCurrentTurn() {
+        return gameState.getColor();
     }
 }
