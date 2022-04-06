@@ -15,29 +15,34 @@ public class ChessDAO {
 
     public void deletePiece(String position, GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
         final String sql = "delete from board where position = (?) and game_id = (?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, position);
             statement.setInt(2, gameIdDTO.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement);
     }
 
     public List<ChessDTO> findAllPiece(GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         final String sql = "select * from board where game_id = (?)";
         
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, gameIdDTO.getId());
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             return toDTOFindPieces(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement, resultSet);
         return null;
     }
 
@@ -57,6 +62,7 @@ public class ChessDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection);
     }
 
     private void savePiece(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO, Connection connection) throws SQLException {

@@ -17,9 +17,10 @@ public class GameDAO {
 
     public void saveGameInformation(GameDTO gameDTO, TurnDTO turnDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
         final String sql = "insert into game(white_user_name, black_user_name, turn) values (?, ?, ?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, gameDTO.getWhiteUserName());
             statement.setString(2, gameDTO.getBlackUserName());
             statement.setString(3, turnDTO.getTurn());
@@ -27,20 +28,24 @@ public class GameDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement);
     }
 
     public int findGameIdByUser(GameDTO gameDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         final String sql = "select id from game where white_user_name= (?) and black_user_name = (?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, gameDTO.getWhiteUserName());
             statement.setString(2, gameDTO.getBlackUserName());
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             return findId(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement, resultSet);
         return NOT_EXIST_USER;
     }
 
@@ -53,40 +58,47 @@ public class GameDAO {
 
     public void deleteGame(GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
         final String sql = "delete from game where id = (?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, gameIdDTO.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement);
     }
 
     public void updateTurn(GameIdDTO gameIdDTO, String turn) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
         final String sql = "update game set turn = (?) where id = (?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, turn);
             statement.setInt(2, gameIdDTO.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement);
     }
 
     public String findTurn(GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         final String sql = "select turn from game where id = (?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, gameIdDTO.getId());
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             return findTurnName(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DBConnector.closeConnection(connection, statement, resultSet);
         return INIT_TURN;
     }
 
