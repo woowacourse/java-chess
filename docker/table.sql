@@ -1,6 +1,0 @@
---CREATE TABLE board (
---    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT primary key,
---    name VARCHAR(100) NOT NULL,
---    turn VARCHAR(10) NOT NULL,
---    board NVARCHAR(4000)
---);

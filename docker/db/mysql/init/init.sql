@@ -1,13 +1,13 @@
-create table member
-(
-    id varchar(10) not null,
-    name varchar(20) not null,
-    primary key (id)
+create table board(
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT primary key,
+    name VARCHAR(100) NOT NULL,
+    turn VARCHAR(10) NOT NULL
 );
 
-create table role(
-    user_id varchar (10) not null,
-    role varchar (10) not null,
-    primary key (user_id),
-    foreign  key (user_id) references member (id)
+create table squares(
+    squares_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT primary key,
+    board_name VARCHAR(100) NOT NULL,
+    position VARCHAR(5) NOT NULL,
+    piece VARCHAR(10) NOT NULL
 );
+
