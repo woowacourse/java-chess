@@ -55,11 +55,11 @@ public class WebApplication {
 
     private static void move(ChessGame chessGame) {
         post("/move", (req, res) -> {
-            Command command = new Command(List.of(req.queryParams("command").split(" ")));
+            Command command = new Command(List.of("move", req.queryParams("source"), req.queryParams("target")));
             try {
                 chessGame.move(command.getSourceLocation(), command.getTargetLocation());
                 checkGameEnd(chessGame);
-            } catch (IllegalArgumentException exception) {
+            } catch (Exception exception) {
                 return printException(exception.getMessage(), "exception.html");
             }
             res.redirect("/board");
