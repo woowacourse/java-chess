@@ -66,22 +66,6 @@ public class JdbcTemplate {
         }
     }
 
-    public boolean exist(String sql, Object... args) {
-        try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-            prepareStatement(pstmt, args);
-            return hasNext(pstmt);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    private boolean hasNext(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet rs = pstmt.executeQuery()) {
-            return rs.next();
-        }
-    }
-
     private Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
