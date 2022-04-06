@@ -1,6 +1,8 @@
 package chess.dao;
 
 import chess.domain.user.User;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +13,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DbUserDaoTest {
 
-    final DbUserDao userDao = new DbUserDao();
+    private static final DbUserDao userDao = new DbUserDao();
 
     @BeforeEach
     void setUp() {
+        userDao.deleteAll();
+    }
+
+    @AfterAll
+    static void afterAll() {
         userDao.deleteAll();
     }
 
@@ -38,6 +45,16 @@ class DbUserDaoTest {
         userDao.save(new User("user b", "사람 b"));
         List<User> Users = userDao.findAll();
         assertThat(Users.size()).isEqualTo(2);
+    }
+
+    @Test
+    void update() {
+        String id = "philz";
+        User user = new User(id, "성우");
+        userDao.save(user);
+        userDao.updateById(new User(id, "필즈쿤"));
+        User findUser = userDao.findById(id);
+        assertThat(findUser.getName()).isEqualTo("필즈쿤");
     }
 
     @Test

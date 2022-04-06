@@ -69,7 +69,22 @@ public class DbUserDao extends Dao implements UserDao {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
 
+    @Override
+    public void updateById(User user) {
+        final Connection connection = getConnection();
+        final String sql = "update users set user_name = ? where user_id = ?";
+        final PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @Override
