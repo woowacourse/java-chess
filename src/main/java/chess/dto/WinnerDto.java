@@ -11,4 +11,8 @@ public class WinnerDto {
 	public static WinnerDto of(final String winner) {
 		return new WinnerDto(winner);
 	}
+
+	public String getWinner() {
+		return winner;
+	}
 }

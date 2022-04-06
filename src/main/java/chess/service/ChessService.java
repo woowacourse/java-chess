@@ -19,19 +19,21 @@ import java.util.List;
 
 public class ChessService {
 
+	private static final String COMMAND_DELIMITER = " ";
+	private static final String LOG_DELIMITER = "\n";
+
 	private final GameDao gameDao;
 	private State state;
 
-	public ChessService(final GameDao gameDao, final State state) {
+	public ChessService(final GameDao gameDao) {
 		this.gameDao = gameDao;
-		this.state = state;
 	}
 
 	public GameDto start(String name) {
 		state = new Ready();
 		Board board = new Board(BoardFactory.initiate());
 		state = state.start(board);
-		int gameId = gameDao.save(name, "start");
+		int gameId = gameDao.save(name, Command.START.getCommand());
 		return GameDto.of(gameId, state.getBoard());
 	}
 
@@ -42,25 +44,26 @@ public class ChessService {
 
 	public GameDto move(int gameId, Position source, Position target) {
 		state = state.play(source, target);
-		String command = String.join(" ",
-				List.of("move", source.convertPositionToString(), target.convertPositionToString()));
+		String command = String.join(COMMAND_DELIMITER,
+				List.of(Command.MOVE.getCommand(), source.convertPositionToString(), target.convertPositionToString())
+		);
 		gameDao.update(gameId, command);
 		return GameDto.of(gameId, state.getBoard());
 	}
 
 	public WinnerDto end(int gameId) {
 		state = state.finish();
-		gameDao.update(gameId, "end");
+		gameDao.update(gameId, Command.END.getCommand());
 		Team winner = state.judgeWinner();
 		return WinnerDto.of(winner.getValue());
 	}
 
 	public GameDto load(int gameId) {
 		state = new Ready();
-		String commandLog = gameDao.findById(gameId);
-		List<String> commandLogs = Arrays.asList(commandLog.split("\n"));
+		Game game = gameDao.findById(gameId);
+		String[] commandLogs = game.getCommandLog().split(LOG_DELIMITER);
 		for (String log : commandLogs) {
-			List<String> inputCommand = Arrays.asList(log.split(" "));
+			List<String> inputCommand = Arrays.asList(log.split(COMMAND_DELIMITER));
 			Command command = Command.of(inputCommand);
 			state = command.apply(state, inputCommand);
 		}

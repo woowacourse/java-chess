@@ -50,4 +50,8 @@ public enum Command {
 	public State apply(State state, List<String> input) {
 		return function.apply(state, input);
 	}
+
+	public String getCommand() {
+		return command;
+	}
 }

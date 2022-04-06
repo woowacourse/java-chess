@@ -21,11 +21,11 @@ public class GameDto {
 				.filter(e -> !e.getValue().isBlank())
 				.collect(Collectors.toMap(
 						e -> e.getKey().convertPositionToString(),
-						e -> toString(e.getValue())));
+						e -> toImageRoot(e.getValue())));
 		return new GameDto(gameId, symbolBoard);
 	}
 
-	private static String toString(Piece piece) {
+	private static String toImageRoot(Piece piece) {
 		return piece.getTeam() + "/" + piece.getTeam() + "-" + piece.convertToString() + ".svg";
 	}
 
@@ -33,7 +33,7 @@ public class GameDto {
 		return gameId;
 	}
 
-	public Map<String, Object> getBoard() {
+	public Map<String, String> getBoard() {
 		return new HashMap<>(board);
 	}
 }

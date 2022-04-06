@@ -7,15 +7,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
-class GameDaoTest {
+class GameDaoImplTest {
 
 	@Test
 	void save() throws SQLException {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
-		GameDao gameDao = new GameDao(connection);
+		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
 
-		assertDoesNotThrow(() -> gameDao.save("test", "start"));
+		assertDoesNotThrow(() -> gameDaoImpl.save("test", "start"));
 		connection.rollback();
 	}
 
@@ -23,10 +23,10 @@ class GameDaoTest {
 	void update() throws SQLException {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
-		GameDao gameDao = new GameDao(connection);
-		int gameId = gameDao.save("test", "start");
+		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+		int gameId = gameDaoImpl.save("test", "start");
 
-		assertDoesNotThrow(() -> gameDao.update(gameId, "move a2 a3"));
+		assertDoesNotThrow(() -> gameDaoImpl.update(gameId, "move a2 a3"));
 		connection.rollback();
 	}
 
@@ -34,10 +34,10 @@ class GameDaoTest {
 	void findById() throws SQLException {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
-		GameDao gameDao = new GameDao(connection);
-		int gameId = gameDao.save("test", "start");
+		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+		int gameId = gameDaoImpl.save("test", "start");
 
-		assertThat(gameDao.findById(gameId)).isEqualTo("start");
+		assertThat(gameDaoImpl.findById(gameId).getCommandLog()).isEqualTo("start");
 		connection.rollback();
 	}
 
@@ -45,10 +45,10 @@ class GameDaoTest {
 	void findAll() throws SQLException {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
-		GameDao gameDao = new GameDao(connection);
-		gameDao.save("test", "start");
+		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+		gameDaoImpl.save("test", "start");
 
-		assertThat(gameDao.findAll().isEmpty()).isFalse();
+		assertThat(gameDaoImpl.findAll().isEmpty()).isFalse();
 		connection.rollback();
 	}
 }

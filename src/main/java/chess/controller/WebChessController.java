@@ -4,9 +4,8 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dao.GameDao;
+import chess.dao.GameDaoImpl;
 import chess.domain.board.Position;
-import chess.domain.state.Ready;
 import chess.dto.ErrorResponseDto;
 import chess.dto.GameDto;
 import chess.dto.GamesDto;
@@ -25,18 +24,13 @@ public class WebChessController {
 	private final ChessService chessService;
 
 	public WebChessController() {
-		this.chessService = new ChessService(new GameDao(), new Ready());
+		this.chessService = new ChessService(new GameDaoImpl());
 	}
 
 	public void run() {
 		Gson gson = new Gson();
 
 		get("/", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "start.html");
-		});
-
-		get("/newGame", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			return render(model, "start.html");
 		});
