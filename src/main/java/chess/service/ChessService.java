@@ -1,12 +1,13 @@
 package chess.service;
 
-import chess.StateConvertor;
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.game.state.BlackTurn;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
+import chess.domain.game.state.WhiteTurn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
@@ -15,7 +16,10 @@ import java.util.Map;
 public class ChessService {
 
     private static final String TERMINATE_KEY = "end";
-    private static final String TERMINATE_MESSAGE = "게임이 종료되었습니다.";
+    private static final String BLACK_TURN = "blackturn";
+    private static final String WHITE_TURN = "whiteturn";
+    private static final String TERMINATE = "terminate";
+    private static final String COMPLETE = "complete";
 
     private ChessGame chessGame;
     private final ChessGameDao chessGameDao;
@@ -32,15 +36,25 @@ public class ChessService {
         String state = chessGameDao.findById(gameId);
         if (gameId != 0 && !isEnded(state)) {
             Board board = new Board(boardDao.findGame(gameId));
-            chessGame = StateConvertor.of(board, state);
+            chessGame = toChessGame(board, state);
             return board.toMap();
         }
         chessGameDao.save(chessGame);
         return chessGame.getBoard().toMap();
     }
 
+    private ChessGame toChessGame(Board board, String state) {
+        if (BLACK_TURN.equals(state)) {
+            return new BlackTurn(board);
+        }
+        if (WHITE_TURN.equals(state)) {
+            return new WhiteTurn(board);
+        }
+        return new Ready();
+    }
+
     private boolean isEnded(String state) {
-        return state.equals("terminate") || state.equals("complete");
+        return state.equals(TERMINATE) || state.equals(COMPLETE);
     }
 
     public Map<String, Object> start() {
@@ -73,12 +87,12 @@ public class ChessService {
         return scoreStatus;
     }
 
-    public Map<String, String> terminate() {
+    public Map<String, String> terminate(String message) {
         Map<String, String> terminateMessage = new HashMap<>();
         chessGame = chessGame.end();
         int gameId = chessGameDao.findRecentGame();
         chessGameDao.update(gameId, chessGame);
-        terminateMessage.put(TERMINATE_KEY, TERMINATE_MESSAGE);
+        terminateMessage.put(TERMINATE_KEY, message);
         return terminateMessage;
     }
 
