@@ -88,7 +88,6 @@ public class GameController {
         final Map<String, Object> model = new HashMap<>();
         model.put("game", GameDto.toDto(chessGame));
         model.put("promotable", chessGame.isPromotable());
-        model.put("finished", chessGame.isFinished());
         return render(model, "board.html");
     }
 
