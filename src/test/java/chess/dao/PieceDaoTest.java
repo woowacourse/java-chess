@@ -22,7 +22,7 @@ class PieceDaoTest {
 
     @Test
     @DisplayName("위치에 따른 기물들을 받아 위치, 팀, 이름을 DB에 저장할 수 있다.")
-    void save_findByPosition() {
+    void saveAll() {
         //given
         final Map<Position, Piece> board = Map.of(
                 Position.from("a1"), new Pawn(WHITE),
@@ -37,19 +37,6 @@ class PieceDaoTest {
                 entry("a1", new PieceDto("WHITE", "Pawn")),
                 entry("a2", new PieceDto("BLACK", "Knight")),
                 entry("a3", new PieceDto("WHITE", "Rook")));
-    }
-
-    @Test
-    @DisplayName("위치 값과 기물을 받아 DB에 저장한다.")
-    void save() {
-        //given
-        final Position position = Position.from("a2");
-        final Piece piece = new Pawn(BLACK);
-        pieceDao.saveAll(Map.of(position, piece));
-        //actual
-        final PieceDto actual = pieceDao.findAll().get("a2");
-        //when
-        assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
     }
 
     @Test
