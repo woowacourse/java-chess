@@ -1,11 +1,13 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.position.Position;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Piece {
 
     private static final String INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE = "공격할 수 없는 대상입니다.";
+
     protected final Color color;
     protected final PieceType type;
 
@@ -15,10 +17,7 @@ public abstract class Piece {
     }
 
     public static Piece of(Color color, PieceType type) {
-        if (type == PieceType.PAWN) {
-            return new Pawn(color);
-        }
-        return new NonPawn(color, type);
+        return PieceCache.getCache(color, type);
     }
 
     public abstract boolean canMove(Position from, Position to);
@@ -45,25 +44,30 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return color == piece.color
-                && type == piece.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, type);
-    }
-
-    @Override
     public String toString() {
         return "Piece{" + color + " " + type + '}';
+    }
+
+    private static class PieceCache {
+
+        static final int TOTAL_PIECES_COUNT = 12;
+
+        static Map<String, Piece> cache = new HashMap<>(TOTAL_PIECES_COUNT);
+
+        static Piece getCache(Color color, PieceType type) {
+            String key = toKey(color, type);
+            return cache.computeIfAbsent(key, (__) -> initCacheOf(color, type));
+        }
+
+        static String toKey(Color color, PieceType type) {
+            return color + " " + type;
+        }
+
+        static Piece initCacheOf(Color color, PieceType type) {
+            if (type == PieceType.PAWN) {
+                return new Pawn(color);
+            }
+            return new NonPawn(color, type);
+        }
     }
 }

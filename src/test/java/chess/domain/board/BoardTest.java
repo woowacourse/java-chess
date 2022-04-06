@@ -3,12 +3,12 @@ package chess.domain.board;
 import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
 import static chess.domain.board.piece.PieceType.KING;
+import static chess.domain.board.piece.PieceType.PAWN;
 import static chess.domain.board.piece.PieceType.QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.piece.NonPawn;
-import chess.domain.board.piece.Pawn;
+import chess.domain.board.piece.Piece;
 import chess.domain.board.position.Position;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +27,8 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         board = new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(BLACK, KING));
-            put(WHITE_QUEEN_POSITION, new NonPawn(WHITE, QUEEN));
+            put(BLACK_KING_POSITION, Piece.of(BLACK, KING));
+            put(WHITE_QUEEN_POSITION, Piece.of(WHITE, QUEEN));
         }});
     }
 
@@ -39,8 +39,8 @@ class BoardTest {
         board.movePiece(WHITE_QUEEN_POSITION, movablePosition, WHITE);
 
         Board expected = new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(BLACK, KING));
-            put(movablePosition, new NonPawn(WHITE, QUEEN));
+            put(BLACK_KING_POSITION, Piece.of(BLACK, KING));
+            put(movablePosition, Piece.of(WHITE, QUEEN));
         }});
 
         assertThat(board).isEqualTo(expected);
@@ -51,7 +51,7 @@ class BoardTest {
         board.movePiece(WHITE_QUEEN_POSITION, BLACK_KING_POSITION, WHITE);
 
         Board expected = new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(WHITE, QUEEN));
+            put(BLACK_KING_POSITION, Piece.of(WHITE, QUEEN));
         }});
 
         assertThat(board).isEqualTo(expected);
@@ -97,8 +97,8 @@ class BoardTest {
     @Test
     void 아군_공격시도시_예외발생(){
         Board board = new Board(new HashMap<>() {{
-            put(WHITE_KING_POSITION, new NonPawn(WHITE, KING));
-            put(WHITE_QUEEN_POSITION, new NonPawn(WHITE, QUEEN));
+            put(WHITE_KING_POSITION, Piece.of(WHITE, KING));
+            put(WHITE_QUEEN_POSITION, Piece.of(WHITE, QUEEN));
         }});
 
         assertThatThrownBy(()->  board.movePiece(WHITE_QUEEN_POSITION, WHITE_KING_POSITION, WHITE))
@@ -109,8 +109,8 @@ class BoardTest {
     @Test
     void 이동하려는_곳에_적이_있더라도_공격_불가능한_방향이면_예외발생(){
         Board board = new Board(new HashMap<>() {{
-            put(BLACK_PAWN_POSITION, new Pawn(BLACK));
-            put(WHITE_QUEEN_POSITION, new NonPawn(WHITE, QUEEN));
+            put(BLACK_PAWN_POSITION, Piece.of(BLACK, PAWN));
+            put(WHITE_QUEEN_POSITION, Piece.of(WHITE, QUEEN));
         }});
 
         assertThatThrownBy(()->  board.movePiece(BLACK_PAWN_POSITION, WHITE_QUEEN_POSITION, BLACK))

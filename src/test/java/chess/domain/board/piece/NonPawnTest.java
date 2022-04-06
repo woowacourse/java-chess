@@ -10,11 +10,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class NonPawnTest {
 
-    private static final NonPawn KNIGHT = new NonPawn(WHITE, PieceType.KNIGHT);
-    private static final NonPawn BISHOP = new NonPawn(WHITE, PieceType.BISHOP);
-    private static final NonPawn ROOK = new NonPawn(WHITE, PieceType.ROOK);
-    private static final NonPawn QUEEN = new NonPawn(WHITE, PieceType.QUEEN);
-    private static final NonPawn KING = new NonPawn(WHITE, PieceType.KING);
+    private static final Piece KNIGHT = Piece.of(WHITE, PieceType.KNIGHT);
+    private static final Piece BISHOP = Piece.of(WHITE, PieceType.BISHOP);
+    private static final Piece ROOK = Piece.of(WHITE, PieceType.ROOK);
+    private static final Piece QUEEN = Piece.of(WHITE, PieceType.QUEEN);
+    private static final Piece KING = Piece.of(WHITE, PieceType.KING);
 
     @ParameterizedTest
     @ValueSource(strings = {"b2", "b4", "c1", "c5", "e1", "e5", "f2", "f4"})
@@ -129,7 +129,7 @@ public class NonPawnTest {
     @ParameterizedTest
     @ValueSource(strings = {"KNIGHT", "BISHOP", "ROOK", "QUEEN", "KING"})
     void canMove_메서드는_같은_위치로_이동하려는_경우_거짓_반환(String pieceType) {
-        Piece piece = new NonPawn(WHITE, PieceType.valueOf(pieceType));
+        Piece piece = Piece.of(WHITE, PieceType.valueOf(pieceType));
         Position samePosition = Position.of("a1");
 
         boolean actual = piece.canMove(samePosition, samePosition);

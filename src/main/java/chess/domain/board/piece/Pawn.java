@@ -1,6 +1,5 @@
 package chess.domain.board.piece;
 
-import static chess.domain.board.piece.Color.WHITE;
 import static chess.domain.board.position.Direction.DOWN;
 import static chess.domain.board.position.Direction.DOWN_LEFT;
 import static chess.domain.board.position.Direction.DOWN_RIGHT;
@@ -13,7 +12,7 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import java.util.List;
 
-public final class Pawn extends Piece {
+final class Pawn extends Piece {
 
     private static final Rank BLACK_INIT_RANK = Rank.SEVEN;
     private static final Rank WHITE_INIT_RANK = Rank.TWO;
@@ -24,7 +23,7 @@ public final class Pawn extends Piece {
     private static final List<Direction> WHITE_ATTACK_DIRECTION = List.of(UP_LEFT, UP_RIGHT);
     private static final List<Direction> BLACK_ATTACK_DIRECTION = List.of(DOWN_LEFT, DOWN_RIGHT);
 
-    public Pawn(Color color) {
+    Pawn(Color color) {
         super(color, PieceType.PAWN);
     }
 
@@ -37,7 +36,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isForward(Position from, Position to) {
-        if (hasColorOf(WHITE)) {
+        if (hasColorOf(Color.WHITE)) {
             return from.checkDirection(to, UP);
         }
         return from.checkDirection(to, DOWN);
@@ -67,7 +66,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isAttackDirection(Position from, Position to) {
-        if (hasColorOf(WHITE)) {
+        if (hasColorOf(Color.WHITE)) {
             return WHITE_ATTACK_DIRECTION.stream()
                     .anyMatch(direction -> from.checkDirection(to, direction));
         }

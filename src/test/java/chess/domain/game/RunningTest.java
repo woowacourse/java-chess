@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
-import chess.domain.board.piece.NonPawn;
+import chess.domain.board.piece.Piece;
 import chess.domain.board.position.Position;
 import chess.domain.event.MoveCommand;
 import chess.util.BoardMapGeneratorUtil;
@@ -32,10 +32,10 @@ class RunningTest {
     @BeforeEach
     void setUp() {
         game = new WhiteTurn(new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(Color.BLACK, KING));
-            put(BLACK_QUEEN_POSITION, new NonPawn(Color.BLACK, QUEEN));
-            put(WHITE_QUEEN_POSITION, new NonPawn(Color.WHITE, QUEEN));
-            put(WHITE_KING_POSITION, new NonPawn(Color.WHITE, KING));
+            put(BLACK_KING_POSITION, Piece.of(Color.BLACK, KING));
+            put(BLACK_QUEEN_POSITION, Piece.of(Color.BLACK, QUEEN));
+            put(WHITE_QUEEN_POSITION, Piece.of(Color.WHITE, QUEEN));
+            put(WHITE_KING_POSITION, Piece.of(Color.WHITE, KING));
         }}));
     }
 
@@ -44,10 +44,10 @@ class RunningTest {
         Game actual = game.moveChessmen(NON_KILL_MOVE);
 
         Game expected = new BlackTurn(new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(Color.BLACK, KING));
-            put(BLACK_QUEEN_POSITION, new NonPawn(Color.BLACK, QUEEN));
-            put(NON_KILL_MOVED_POSITION, new NonPawn(Color.WHITE, QUEEN));
-            put(WHITE_KING_POSITION, new NonPawn(Color.WHITE, KING));
+            put(BLACK_KING_POSITION, Piece.of(Color.BLACK, KING));
+            put(BLACK_QUEEN_POSITION, Piece.of(Color.BLACK, QUEEN));
+            put(NON_KILL_MOVED_POSITION, Piece.of(Color.WHITE, QUEEN));
+            put(WHITE_KING_POSITION, Piece.of(Color.WHITE, KING));
         }}));
 
         assertThat(actual).isEqualTo(expected);
@@ -58,9 +58,9 @@ class RunningTest {
         Game actual = game.moveChessmen(KILL_BLACK_QUEEN_MOVE);
 
         Game expected = new BlackTurn(new Board(new HashMap<>() {{
-            put(BLACK_KING_POSITION, new NonPawn(Color.BLACK, KING));
-            put(BLACK_QUEEN_POSITION, new NonPawn(Color.WHITE, QUEEN));
-            put(WHITE_KING_POSITION, new NonPawn(Color.WHITE, KING));
+            put(BLACK_KING_POSITION, Piece.of(Color.BLACK, KING));
+            put(BLACK_QUEEN_POSITION, Piece.of(Color.WHITE, QUEEN));
+            put(WHITE_KING_POSITION, Piece.of(Color.WHITE, KING));
         }}));
 
         assertThat(actual).isEqualTo(expected);

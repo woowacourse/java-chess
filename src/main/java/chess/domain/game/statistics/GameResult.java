@@ -71,9 +71,12 @@ public class GameResult {
                 .map(rank -> Position.of(file, rank))
                 .filter(board::containsKey)
                 .map(board::get)
-                .filter(piece -> piece.hasColorOf(color))
-                .filter(piece -> piece.hasTypeOf(PAWN))
+                .filter(piece -> isPawnAndHasColorOf(piece, color))
                 .count();
+    }
+
+    private boolean isPawnAndHasColorOf(Piece piece, Color color) {
+        return piece.hasTypeOf(PAWN) && piece.hasColorOf(color);
     }
 
     public Color getWinner() {

@@ -3,12 +3,11 @@ package chess.util;
 import static chess.domain.board.piece.PieceType.BISHOP;
 import static chess.domain.board.piece.PieceType.KING;
 import static chess.domain.board.piece.PieceType.KNIGHT;
+import static chess.domain.board.piece.PieceType.PAWN;
 import static chess.domain.board.piece.PieceType.QUEEN;
 import static chess.domain.board.piece.PieceType.ROOK;
 
 import chess.domain.board.piece.Color;
-import chess.domain.board.piece.NonPawn;
-import chess.domain.board.piece.Pawn;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
@@ -48,7 +47,7 @@ public class BoardMapGeneratorUtil {
         return File.allFilesAscending()
                 .stream()
                 .map(file -> Position.of(file, initRank))
-                .map(position -> new PositionPiecePair(position, new Pawn(color)))
+                .map(position -> new PositionPiecePair(position, Piece.of(color, PAWN)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -64,29 +63,29 @@ public class BoardMapGeneratorUtil {
     private static List<PositionPiecePair> initRooks(Color color, Rank initRank) {
         return ROOK_INIT_FILES.stream()
                 .map(file -> Position.of(file, initRank))
-                .map(position -> new PositionPiecePair(position, new NonPawn(color, ROOK)))
+                .map(position -> new PositionPiecePair(position, Piece.of(color, ROOK)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private static List<PositionPiecePair> initKnights(Color color, Rank initRank) {
         return KNIGHT_INIT_FILES.stream()
                 .map(file -> Position.of(file, initRank))
-                .map(position -> new PositionPiecePair(position, new NonPawn(color, KNIGHT)))
+                .map(position -> new PositionPiecePair(position, Piece.of(color, KNIGHT)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private static List<PositionPiecePair> initBishops(Color color, Rank initRank) {
         return BISHOP_INIT_FILES.stream()
                 .map(file -> Position.of(file, initRank))
-                .map(position -> new PositionPiecePair(position, new NonPawn(color, BISHOP)))
+                .map(position -> new PositionPiecePair(position, Piece.of(color, BISHOP)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private static List<PositionPiecePair> initQueenAndKing(Color color, Rank initRank) {
         Position queenPosition = Position.of(QUEEN_INIT_FILE, initRank);
         Position kingPosition = Position.of(KING_INIT_FILE, initRank);
-        return List.of(new PositionPiecePair(queenPosition, new NonPawn(color, QUEEN)),
-                new PositionPiecePair(kingPosition, new NonPawn(color, KING)));
+        return List.of(new PositionPiecePair(queenPosition, Piece.of(color, QUEEN)),
+                new PositionPiecePair(kingPosition, Piece.of(color, KING)));
     }
 
     private static void updateBoard(Map<Position, Piece> boardMap, List<PositionPiecePair> pieceInfos) {

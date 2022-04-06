@@ -10,8 +10,6 @@ import static chess.domain.board.piece.PieceType.QUEEN;
 import static chess.domain.board.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.piece.NonPawn;
-import chess.domain.board.piece.Pawn;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.position.Position;
 import java.util.ArrayList;
@@ -33,12 +31,12 @@ class BoardMapGeneratorUtilTest {
     @Test
     void 모든_종류의_체스말이_흑백_모두에_대해_생성() {
         List<Piece> actual = new ArrayList<>(boardMap.values());
-        List<Piece> expected = List.of(new Pawn(BLACK), new Pawn(WHITE),
-                new NonPawn(BLACK, KNIGHT), new NonPawn(WHITE, KNIGHT),
-                new NonPawn(BLACK, BISHOP), new NonPawn(WHITE, BISHOP),
-                new NonPawn(BLACK, ROOK), new NonPawn(WHITE, ROOK),
-                new NonPawn(BLACK, QUEEN), new NonPawn(WHITE, QUEEN),
-                new NonPawn(BLACK, KING), new NonPawn(WHITE, KING));
+        List<Piece> expected = List.of(Piece.of(BLACK, PAWN), Piece.of(WHITE, PAWN),
+                Piece.of(BLACK, KNIGHT), Piece.of(WHITE, KNIGHT),
+                Piece.of(BLACK, BISHOP), Piece.of(WHITE, BISHOP),
+                Piece.of(BLACK, ROOK), Piece.of(WHITE, ROOK),
+                Piece.of(BLACK, QUEEN), Piece.of(WHITE, QUEEN),
+                Piece.of(BLACK, KING), Piece.of(WHITE, KING));
 
         assertThat(actual).containsAll(expected);
     }
@@ -73,15 +71,14 @@ class BoardMapGeneratorUtilTest {
         assertThat(actual).isEqualTo(8);
     }
 
-
     @Test
     void 백색_킹1개_퀸1개_룩2개_비숍2개_나이트2개_생성() {
         List<Piece> actual = new ArrayList<>(boardMap.values());
         List<Piece> expected = List.of(
-                new NonPawn(WHITE, KNIGHT), new NonPawn(WHITE, KNIGHT),
-                new NonPawn(WHITE, BISHOP), new NonPawn(WHITE, BISHOP),
-                new NonPawn(WHITE, ROOK), new NonPawn(WHITE, ROOK),
-                new NonPawn(WHITE, QUEEN), new NonPawn(WHITE, KING));
+                Piece.of(WHITE, KNIGHT), Piece.of(WHITE, KNIGHT),
+                Piece.of(WHITE, BISHOP), Piece.of(WHITE, BISHOP),
+                Piece.of(WHITE, ROOK), Piece.of(WHITE, ROOK),
+                Piece.of(WHITE, QUEEN), Piece.of(WHITE, KING));
 
         assertThat(actual).containsAll(expected);
     }
@@ -90,10 +87,10 @@ class BoardMapGeneratorUtilTest {
     void 흑색_킹1개_퀸1개_룩2개_비숍2개_나이트2개_생성() {
         List<Piece> actual = new ArrayList<>(boardMap.values());
         List<Piece> expected = List.of(
-                new NonPawn(BLACK, KNIGHT), new NonPawn(BLACK, KNIGHT),
-                new NonPawn(BLACK, BISHOP), new NonPawn(BLACK, BISHOP),
-                new NonPawn(BLACK, ROOK), new NonPawn(BLACK, ROOK),
-                new NonPawn(BLACK, QUEEN), new NonPawn(BLACK, KING));
+                Piece.of(BLACK, KNIGHT), Piece.of(BLACK, KNIGHT),
+                Piece.of(BLACK, BISHOP), Piece.of(BLACK, BISHOP),
+                Piece.of(BLACK, ROOK), Piece.of(BLACK, ROOK),
+                Piece.of(BLACK, QUEEN), Piece.of(BLACK, KING));
 
         assertThat(actual).containsAll(expected);
     }
