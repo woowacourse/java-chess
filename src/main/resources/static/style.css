@@ -1,3 +1,7 @@
+body {
+    background-color: #fcffda;
+}
+
 .chess-board {
     display: grid;
     grid-template-columns: 20px repeat(8, 80px) 20px;
@@ -7,6 +11,7 @@
     background-color: #836936;
     background-image: url("/images/board_back.jpeg");
     box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
+    margin: 0 auto;
 }
 
 .white-square {
@@ -51,4 +56,39 @@
 
 .selected {
     background: green;
+}
+
+.chess-button-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#chess-status {
+    font-family: "Avenir Next Condensed", serif;
+    font-size: 30px;
+    line-height: 30px;
+    height: 100px;
+}
+
+.chess-header {
+    text-align: center;
+    font-size: 50px;
+    font-family: "Avenir Next Condensed", serif;
+    font-weight: bold;
+}
+
+.chess-btn {
+    width: 100px;
+    height: 30px;
+    font-size: 20px;
+    font-family: "Avenir Next Condensed", serif;
+    background-color: floralwhite;
+}
+
+#turn-status {
+    font-family: "Avenir Next Condensed", serif;
+    font-size: 35px;
+    line-height: 30px;
+    height: 40px;
+    font-weight: bold;
 }

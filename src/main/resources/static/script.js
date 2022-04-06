@@ -24,6 +24,11 @@ function end() {
         removeChildren(square);
     }
     isStart = false;
+
+    let status = document.getElementById("chess-status");
+    let turnState = document.getElementById("turn-status");
+    status.innerText = "게임이 종료되었습니다. 새 게임을 눌러주세요.";
+    turnState.innerText = "";
 }
 
 async function printStatus() {
@@ -31,14 +36,17 @@ async function printStatus() {
     await fetch("/status")
         .then(res => res.json())
         .then(data => stat = data)
-    let element = document.getElementById("chess-status");
+    let status = document.getElementById("chess-status");
+    let turnState = document.getElementById("turn-status");
+
     let text = "백팀 :" + stat.whiteScore + "\n흑팀 :" + stat.blackScore;
     if (stat.whiteScore > stat.blackScore) {
         text += "\n백팀 우세!";
     } else if (stat.blackScore > stat.whiteScore) {
         text += "\n흑팀 우세!";
     }
-    element.innerText = text;
+    turnState.innerText = turn.toUpperCase() + "팀 차례입니다.";
+    status.innerText = text;
 }
 
 function printPieces(pieces) {
@@ -103,16 +111,19 @@ async function move(fromPosition, toPosition) {
         alert("[ERROR] " + errorMessage.message);
         return;
     }
-
     let pieces = await response.json();
     printPieces(pieces.board);
-    before = turn;
+    const before = turn;
     turn = pieces.turn;
-    printStatus();
+    await printStatus();
     if (turn === "empty") {
         isStart = false;
-        alert(before + " 팀 승리!");
-        let element = document.getElementById("chess-status");
-        element.innerText = text;
+        alert(before.toUpperCase() + " 팀 승리!");
+        let status = document.getElementById("chess-status");
+        let turnStatus = document.getElementById("turn-status");
+        status.innerText = before.toUpperCase() + " 팀이 승리했습니다.\n" +
+            "새 게임 혹은 그만하기를 눌러주세요.";
+        turnStatus.innerText = "";
+
     }
 }
