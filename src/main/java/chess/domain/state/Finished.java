@@ -41,4 +41,9 @@ abstract class Finished implements State {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public final boolean isWhiteTurn() {
+        return false;
+    }
 }

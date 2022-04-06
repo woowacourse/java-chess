@@ -7,11 +7,11 @@ import java.util.Objects;
 public abstract class Piece {
 
     protected final Color color;
-    protected final String name;
+    protected final String type;
 
-    public Piece(Color color, String name) {
+    public Piece(Color color, String type) {
         this.color = color;
-        this.name = name;
+        this.type = type;
     }
 
     public final boolean isSameType(Class<? extends Piece> type) {
@@ -49,7 +49,11 @@ public abstract class Piece {
         return Objects.hash(color);
     }
 
-    public String getName() {
-        return color.name().toLowerCase() + name;
+    public Color getColor() {
+        return color;
+    }
+
+    public String getType() {
+        return type;
     }
 }

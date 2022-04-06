@@ -17,7 +17,7 @@ public final class Knight extends Piece {
     };
 
     public Knight(Color color) {
-        super(color, "_knight");
+        super(color, "knight");
     }
 
     @Override

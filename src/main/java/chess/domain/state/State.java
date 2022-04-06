@@ -23,7 +23,15 @@ public interface State {
         return new WhiteTurn(board);
     }
 
+    static State start(Board board, boolean isWhiteTurn) {
+        if (isWhiteTurn) {
+            return new WhiteTurn(board);
+        }
+        return new BlackTurn(board);
+    }
     static State stop() {
         return new Stopped(Board.getInitializedInstance());
     }
+
+    boolean isWhiteTurn();
 }

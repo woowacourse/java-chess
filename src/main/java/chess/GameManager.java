@@ -48,4 +48,8 @@ public final class GameManager {
         currentState = State.stop();
         return status;
     }
+
+    public boolean isWhiteTurn() {
+        return currentState.isWhiteTurn();
+    }
 }

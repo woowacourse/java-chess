@@ -18,4 +18,9 @@ final class BlackTurn extends Running {
         }
         return new WhiteTurn(board);
     }
+
+    @Override
+    public boolean isWhiteTurn() {
+        return false;
+    }
 }
