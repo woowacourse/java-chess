@@ -36,6 +36,13 @@ public class ChessService {
         return gameDao.findLastGameId() == 0;
     }
 
+    public void save() {
+        int gameId = gameDao.save(chessBoard);
+        for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
+            boardDao.save(gameId, entry.getKey(), entry.getValue().getName(), entry.getValue().getColor().name());
+        }
+    }
+
     private void loadLastGame() throws SQLException {
         HashMap<Position, ChessPiece> board = new HashMap<>();
         for (PieceDto pieceDto : boardDao.findByGameId(gameDao.findLastGameId())) {
@@ -54,12 +61,6 @@ public class ChessService {
         return Color.from(pieceDto.getColor());
     }
 
-    public void end() throws SQLException {
-        chessBoard.end();
-        boardDao.delete(gameDao.findLastGameId());
-        gameDao.delete();
-    }
-
     public String move(String source, String target) {
         try {
             if (chessBoard.isPlaying()) {
@@ -76,12 +77,14 @@ public class ChessService {
                 .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 
-    public String findWinner() {
-        return chessBoard.decideWinner().name();
+    public void end() throws SQLException {
+        chessBoard.end();
+        boardDao.delete(gameDao.findLastGameId());
+        gameDao.delete();
     }
 
-    public boolean isEnd() {
-        return chessBoard.isEnd();
+    public String findWinner() {
+        return chessBoard.decideWinner().name();
     }
 
     public Map<String, ChessPiece> getCurrentBoard() {
@@ -92,10 +95,7 @@ public class ChessService {
         return chessBoard.isPlaying();
     }
 
-    public void save() {
-        int gameId = gameDao.save(chessBoard);
-        for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
-            boardDao.save(gameId, entry.getKey(), entry.getValue().getName(), entry.getValue().getColor().name());
-        }
+    public boolean isEnd() {
+        return chessBoard.isEnd();
     }
 }

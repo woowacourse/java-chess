@@ -32,39 +32,18 @@ public class WebChessController {
         save();
     }
 
-    private void save() {
-        post("/save", (req, res) -> {
-            if (chessService.isPlaying()) {
-                chessService.save();
-            }
-            res.redirect("/play");
-            return null;
-        });
-    }
-
-    private void end() {
-        get("/end", (req, res) -> {
-            chessService.end();
-            res.redirect("/");
-            return null;
-        });
-    }
-
-    private void result() {
-        get("/result", (req, res) -> {
-            chessService.end();
-            Map<String, Object> model = new HashMap<>();
-            model.put("status", chessService.status());
-            model.put("board", chessService.getCurrentBoard());
-            model.put("winner", chessService.findWinner());
-            return render(model, "game.html");
-        });
-    }
-
     private void init() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "game.html");
+        });
+    }
+
+    private void start() {
+        post("/start", (req, res) -> {
+            chessService.start();
+            res.redirect("/play");
+            return null;
         });
     }
 
@@ -77,14 +56,6 @@ public class WebChessController {
             model.put("play", true);
             model.put("board", chessService.getCurrentBoard());
             return render(model, "game.html");
-        });
-    }
-
-    private void start() {
-        post("/start", (req, res) -> {
-            chessService.start();
-            res.redirect("/play");
-            return null;
         });
     }
 
@@ -111,6 +82,35 @@ public class WebChessController {
             }
             res.redirect("/end");
             return null;
+        });
+    }
+
+    private void save() {
+        post("/save", (req, res) -> {
+            if (chessService.isPlaying()) {
+                chessService.save();
+            }
+            res.redirect("/play");
+            return null;
+        });
+    }
+
+    private void end() {
+        get("/end", (req, res) -> {
+            chessService.end();
+            res.redirect("/");
+            return null;
+        });
+    }
+
+    private void result() {
+        get("/result", (req, res) -> {
+            chessService.end();
+            Map<String, Object> model = new HashMap<>();
+            model.put("status", chessService.status());
+            model.put("board", chessService.getCurrentBoard());
+            model.put("winner", chessService.findWinner());
+            return render(model, "game.html");
         });
     }
 }
