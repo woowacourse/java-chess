@@ -33,7 +33,7 @@ public class WebApplication {
         get("/room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Integer> gameNumbers = new ArrayList<>();
-            for (int i = 0 ; i < MAX_GAME_NUMBER ; i++) {
+            for (int i = 0; i < MAX_GAME_NUMBER; i++) {
                 gameNumbers.add(i);
             }
             model.put("gameNumbers", gameNumbers);

@@ -8,7 +8,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import java.util.HashMap;

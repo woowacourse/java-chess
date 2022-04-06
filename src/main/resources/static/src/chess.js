@@ -9,12 +9,10 @@ function gameStart() {
             "Content-Type": "application/json",
         }}
     ).then((response) => {
-        console.log('1');
         initializePosition();
         finished = false;
         location.reload();
     }).catch((error) => {
-        console.log('2');
         alert(JSON.stringify(error));
     });
 }
