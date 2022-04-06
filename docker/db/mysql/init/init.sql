@@ -17,6 +17,7 @@ create table game
     id int not null,
     id_white_player   varchar(20) not null,
     id_black_player   varchar(20) not null,
+    turn varchar(10) not null,
     primary key (id)
 );
 
@@ -29,3 +30,6 @@ create table board
     primary key (id),
     foreign key (game_id) references game (id)
 );
+
+drop table board;
+drop table game;

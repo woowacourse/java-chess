@@ -19,7 +19,6 @@ import chess.EmblemMapper;
 import chess.Game;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.dao.GameDaoImpl;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
@@ -33,10 +32,10 @@ import chess.model.piece.Rook;
 public class ChessGameServiceTest {
 
     private static ChessGameService chessGameService;
-    private static final GameDao gameDao = new GameDaoImpl(new Game("white", "black"));
 
     @BeforeEach
     void setUp() {
+        GameDao gameDao = new fakeGameDao(new Game("white", "black"));
         chessGameService = new ChessGameService(new fakeBoardDao());
         chessGameService.setGameDao(gameDao);
     }
@@ -47,7 +46,7 @@ public class ChessGameServiceTest {
     }
 
     @Test
-    @DisplayName("현재 체스판의 위치, 기물 정보를 저장한다.")
+    @DisplayName("현재 게임 정보와 체스판의 위치, 기물 정보를 저장한다.")
     void save() {
         assertThatCode(() -> chessGameService.save())
             .doesNotThrowAnyException();
@@ -115,6 +114,18 @@ public class ChessGameServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("저장된 Turn에 맞는 색을 꺼내온다.")
+    void findTurnById() {
+        //when
+        chessGameService.move(Position.of("a2"), Position.of("a4"));
+        chessGameService.save();
+        String actual = chessGameService.getTurnColor();
+
+        //then
+        assertThat(actual).isEqualTo(PieceColor.BLACK.toString());
+    }
+
     private static class fakeBoardDao implements BoardDao {
         private final Map<Integer, Map<String, String>> table;
 
@@ -151,6 +162,52 @@ public class ChessGameServiceTest {
             result.put(Position.of(A, TWO), Rook.colorOf(PieceColor.WHITE));
             result.put(Position.of(A, THREE), King.colorOf(PieceColor.BLACK));
             return result;
+        }
+    }
+
+    private static class fakeGameDao implements GameDao {
+        private final Game game;
+        private final Map<Integer, List<String>> table = new LinkedHashMap<>();
+
+        public fakeGameDao(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public Connection getConnection() {
+            return null;
+        }
+
+        @Override
+        public void save() {
+            table.remove(game.getId());
+            table.put(game.getId(), List.of(game.getIdWhitePlayer(), game.getIdBlackPlayer(),
+                game.getTurn().toString()));
+        }
+
+        @Override
+        public void deleteById(int id) {
+            table.remove(game.getId());
+        }
+
+        @Override
+        public int getId() {
+            return game.getId();
+        }
+
+        @Override
+        public List<String> findById(int id) {
+            return table.getOrDefault(game.getId(), List.of());
+        }
+
+        @Override
+        public String findTurnById(int id) {
+            return table.get(game.getId()).get(2);
+        }
+
+        @Override
+        public void nextTurn() {
+            game.nextTurn();
         }
     }
 }

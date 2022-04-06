@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.Game;
+import chess.model.Turn;
 
 public class GameDaoImpl implements GameDao {
 
@@ -37,12 +38,13 @@ public class GameDaoImpl implements GameDao {
     public void save() {
         Connection connection = getConnection();
         deleteById(getId());
-        String sql = "insert into game (id, id_white_player, id_black_player) values (?, ?, ?)";
+        String sql = "insert into game (id, id_white_player, id_black_player, turn) values (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, game.getId());
             statement.setString(2, game.getIdWhitePlayer());
             statement.setString(3, game.getIdBlackPlayer());
+            statement.setString(4, game.getTurn().toString());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,5 +89,30 @@ public class GameDaoImpl implements GameDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public String findTurnById(int id) {
+        Connection connection = getConnection();
+        String sql = "select turn from game where id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("turn");
+            }
+            return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void nextTurn() {
+        game.nextTurn();
     }
 }

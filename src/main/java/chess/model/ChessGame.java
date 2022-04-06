@@ -23,7 +23,7 @@ public class ChessGame {
         finishIfKingCaptured(target);
 
         board.move(source, target);
-        turn.nextState();
+        turn.nextTurn();
     }
 
     private void validateMovable(Position source) {

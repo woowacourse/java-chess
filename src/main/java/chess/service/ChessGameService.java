@@ -10,7 +10,6 @@ import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
 import chess.model.PieceArrangement.SavedPieceArrangement;
-import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.model.piece.Piece;
@@ -40,6 +39,7 @@ public class ChessGameService {
 
     public void move(Position source, Position target) {
         chessGame.move(source, target);
+        gameDao.nextTurn();
     }
 
     public void delete() {
@@ -55,8 +55,11 @@ public class ChessGameService {
         this.chessGame = new ChessGame(turn, new SavedPieceArrangement(find()));
     }
 
-    public PieceColor getTurnColor() {
-        return chessGame.getTurnColor();
+    public String getTurnColor() {
+        if (Objects.isNull(gameDao.findTurnById(gameDao.getId()))) {
+            return chessGame.getTurnColor().toString();
+        }
+        return gameDao.findTurnById(gameDao.getId());
     }
 
     public Map<Position, Piece> getPiecesByPositions() {

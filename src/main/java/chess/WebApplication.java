@@ -10,7 +10,6 @@ import chess.dao.BoardDaoImpl;
 import chess.dao.GameDaoImpl;
 import chess.dto.Request;
 import chess.model.PieceArrangement.DefaultArrangement;
-import chess.model.PieceArrangement.SavedPieceArrangement;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.service.ChessGameService;
@@ -77,6 +76,7 @@ public class WebApplication {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
+            model.put("color", service.getTurnColor());
             model.put("score", service.getScore());
             return render(model, "game.html");
         });

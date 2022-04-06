@@ -33,10 +33,10 @@ class TurnTest {
     void when_first_turn_white_is_ok_then_next_turn_black_is_black() {
         assertThat(turn.isTurnOf(Pawn.colorOf(WHITE))).isTrue();
 
-        turn.nextState();
+        turn.nextTurn();
         assertThat(turn.isTurnOf(Pawn.colorOf(BLACK))).isTrue();
 
-        turn.nextState();
+        turn.nextTurn();
         assertThat(turn.isTurnOf(Pawn.colorOf(WHITE))).isTrue();
     }
 }

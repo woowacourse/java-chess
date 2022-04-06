@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.Game;
+import chess.model.PieceColor;
 
 public class GameDaoImplTest {
 
@@ -61,5 +62,17 @@ public class GameDaoImplTest {
         List<String> expected = List.of("white", "black");
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("DB에 저장한 Turn이 옳은지 검증한다.")
+    void findTurnById() {
+        //when
+        int id = gameDao.getId();
+        gameDao.nextTurn();
+        gameDao.save();
+
+        //then
+        assertThat(gameDao.findTurnById(id)).isEqualTo(PieceColor.BLACK.toString());
     }
 }

@@ -13,4 +13,8 @@ public interface GameDao {
     int getId();
 
     List<String> findById(int id);
+
+    String findTurnById(int id);
+
+    void nextTurn();
 }

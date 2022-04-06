@@ -6,14 +6,22 @@ public class Turn {
 
     private static final String ERROR_INVALID_PIECE = "[ERROR]: 빈 Piece 값이 전달되었습니다.";
 
-    private PieceColor currentColor = PieceColor.WHITE;
+    private PieceColor currentColor;
     private boolean isFinished = false;
+
+    public Turn(PieceColor color) {
+        this.currentColor = color;
+    }
+
+    public Turn() {
+        this(PieceColor.WHITE);
+    }
 
     boolean isTurnOf(Piece Piece) {
         return Piece.isSameColor(currentColor);
     }
 
-    void nextState() {
+    public void nextTurn() {
         if (currentColor.isWhite()) {
             currentColor = PieceColor.BLACK;
             return;
@@ -27,7 +35,7 @@ public class Turn {
 
     void finish() {
         isFinished = true;
-        nextState();
+        nextTurn();
     }
 
     public PieceColor getCurrentColor() {
