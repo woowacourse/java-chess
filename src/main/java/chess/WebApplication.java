@@ -33,12 +33,12 @@ public class WebApplication {
 //            return render(response, "index.html");
 //        });
 //
-//        get("/:id", (req, res) -> {
-//            int chessGameId = Integer.parseInt(req.params("id"));
-//            response.restart(repository.find(chessGameId));
-//            return render(response, "index.html");
-//        });
-//
+        get("/:id", (req, res) -> {
+            int chessGameId = Integer.parseInt(req.params("id"));
+            Response response = Response.init(chessGameId, repository.find(chessGameId));
+            return render(response, "index.html");
+        });
+
         post("/move", (req, res) -> {
             Response response;
             String[] request = req.body().split("&");
