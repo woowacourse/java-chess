@@ -77,6 +77,10 @@ public class Position {
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
     }
 
+    public String getRankAndFile() {
+        return file.name().toLowerCase() + rank.getValue();
+    }
+
     public File getFile() {
         return file;
     }
