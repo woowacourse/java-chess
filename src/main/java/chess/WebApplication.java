@@ -1,6 +1,8 @@
 package chess;
 
 import chess.controller.Command;
+import chess.dao.BoardDao;
+import chess.dao.DbBoardDao;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessPiece;
@@ -53,7 +55,7 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(chessGame.getChessBoardInformation()), "board.html");
+            return render(makeBoardModel(getChessBoardInformation(new DbBoardDao())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
@@ -73,6 +75,11 @@ public class WebApplication {
         });
     }
 
+    private static ChessBoardDto getChessBoardInformation(BoardDao boardDao) {
+        ChessBoardDto mapInfo = boardDao.findAll();
+        return mapInfo;
+    }
+
     private static String doInGameCommand(Response res, ChessGame chessGame, List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (Command.MOVE.equals(command)) {
@@ -90,19 +97,31 @@ public class WebApplication {
         if (chessGame.isGameEnd()) {
             return render(null, "../public/index.html");
         }
+        saveDataToDb(chessGame.getChessBoardInformation(), new DbBoardDao());
         res.redirect("/board");
         return null;
     }
 
+    private static void saveDataToDb(ChessBoardDto chessBoardInformation, BoardDao boardDao) {
+        boardDao.updateAll(chessBoardInformation);
+    }
+
     private static void doApplicationCommand(Response res, ChessGame chessGame, Command command) {
         if (Command.START.equals(command)) {
-            chessGame.initialze();
-            res.redirect("/board");
+            doStartCommand(res, chessGame, new DbBoardDao());
             return;
         }
         stop();
     }
 
+    private static void doStartCommand(Response res, ChessGame chessGame, DbBoardDao dbBoardDao) {
+        ChessBoardDto chessBoardDto = getChessBoardInformation(dbBoardDao);
+        if (chessBoardDto.isEmpty()) {
+            chessGame.initialze();
+            saveDataToDb(chessGame.getChessBoardInformation(), dbBoardDao);
+        }
+        res.redirect("/board");
+    }
 
     private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
         Map<String, Object> model = new HashMap<>();
