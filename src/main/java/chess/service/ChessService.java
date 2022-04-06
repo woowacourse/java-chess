@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.dto.ChessDTO;
 import chess.dto.GameDTO;
+import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
 
 import java.util.ArrayList;
@@ -22,37 +23,37 @@ public class ChessService {
         gameDAO.saveGameInformation(new GameDTO(whiteUser, blackUser), new TurnDTO(turn));
     }
 
-    public void updateTurn(int id, String turn) {
-        gameDAO.updateTurn(id, turn);
+    public void updateTurn(GameIdDTO gameIdDTO, String turn) {
+        gameDAO.updateTurn(gameIdDTO, turn);
     }
 
-    public String findTurn(int id) {
-        return gameDAO.findTurn(id);
+    public TurnDTO findTurn(GameIdDTO gameIdDTO) {
+        return new TurnDTO(gameDAO.findTurn(gameIdDTO));
     }
 
-    public int findGameIdByUser(String whiteUser, String blackUser) {
-        return gameDAO.findGameIdByUser(new GameDTO(whiteUser, blackUser));
+    public GameIdDTO findGameIdByUser(String whiteUser, String blackUser) {
+        return new GameIdDTO(gameDAO.findGameIdByUser(new GameDTO(whiteUser, blackUser)));
     }
 
-    public void deleteGame(int gameId) {
-        gameDAO.deleteGame(gameId);
+    public void deleteGame(GameIdDTO gameIdDTO) {
+        gameDAO.deleteGame(gameIdDTO);
     }
 
-    public void initBoard(Map<String, Piece> board, int gameId) {
+    public void initBoard(Map<String, Piece> board, GameIdDTO gameIdDTO) {
         List<ChessDTO> chessDTOS = new ArrayList<>();
         for (String position : board.keySet()) {
             chessDTOS.add(new ChessDTO(board.get(position).getColor(),
                     board.get(position).getPiece(), position));
         }
-        chessDao.savePieces(chessDTOS, gameId);
+        chessDao.savePieces(chessDTOS, gameIdDTO);
     }
 
-    public void savePieces(List<ChessDTO> chessDTO, int gameId) {
-        chessDao.savePieces(chessDTO, gameId);
+    public void savePieces(List<ChessDTO> chessDTO, GameIdDTO id) {
+        chessDao.savePieces(chessDTO, id);
     }
 
-    public Map<String, Piece> findPieces(int gameId) {
-        List<ChessDTO> findChessDTOS = chessDao.findAllPiece(gameId);
+    public Map<String, Piece> findPieces(GameIdDTO gameIdDTO) {
+        List<ChessDTO> findChessDTOS = chessDao.findAllPiece(gameIdDTO);
         Map<String, Piece> pieces = new HashMap<>();
         for (ChessDTO chessDto : findChessDTOS) {
             pieces.put(chessDto.getPosition(), Pieces.findPiece(chessDto.getColor(), chessDto.getPiece()));
@@ -60,7 +61,7 @@ public class ChessService {
         return pieces;
     }
 
-    public void deletePiece(String position, int gameId) {
-        chessDao.deletePiece(position, gameId);
+    public void deletePiece(String position, GameIdDTO gameIdDTO) {
+        chessDao.deletePiece(position, gameIdDTO);
     }
 }

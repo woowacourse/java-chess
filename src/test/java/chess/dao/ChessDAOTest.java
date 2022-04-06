@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.dto.ChessDTO;
 import chess.dto.GameDTO;
+import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ class ChessDAOTest {
 
     @AfterEach
     void delete() {
-        gameDAO.deleteGame(gameId);
+        gameDAO.deleteGame(new GameIdDTO(gameId));
     }
 
     @Test
@@ -42,7 +43,7 @@ class ChessDAOTest {
         ChessDAO chessDAO = new ChessDAO();
         ChessDTO chessDTO = new ChessDTO("white", "pawn", "a2");
 
-        assertThatNoException().isThrownBy(() -> chessDAO.savePieces(List.of(chessDTO), gameId));
+        assertThatNoException().isThrownBy(() -> chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId)));
     }
 
     @Test
@@ -58,9 +59,9 @@ class ChessDAOTest {
             testDTOs.add(new ChessDTO(board.get(position).getColor(),
                     board.get(position).getPiece(), position));
         }
-        chessDAO.savePieces(testDTOs, gameId);
+        chessDAO.savePieces(testDTOs, new GameIdDTO(gameId));
 
-        assertThat(chessDAO.findAllPiece(gameId).size()).isEqualTo(32);
+        assertThat(chessDAO.findAllPiece(new GameIdDTO(gameId)).size()).isEqualTo(32);
     }
 
     @Test
@@ -69,7 +70,7 @@ class ChessDAOTest {
         ChessDAO chessDAO = new ChessDAO();
         ChessDTO chessDTO = new ChessDTO("white", "pawn", "a2");
 
-        chessDAO.savePieces(List.of(chessDTO), gameId);
-        assertThatNoException().isThrownBy(() -> chessDAO.deletePiece("a2", gameId));
+        chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId));
+        assertThatNoException().isThrownBy(() -> chessDAO.deletePiece("a2", new GameIdDTO(gameId)));
     }
 }

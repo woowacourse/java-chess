@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.GameDTO;
+import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +28,7 @@ class GameDAOTest {
 
     @AfterEach
     void delete() {
-        gameDAO.deleteGame(gameId);
+        gameDAO.deleteGame(new GameIdDTO(gameId));
     }
 
     @Test
@@ -38,7 +39,7 @@ class GameDAOTest {
 
         assertThatNoException().isThrownBy(() -> gameDAO.saveGameInformation(gameTestDTO, new TurnDTO("white")));
         int id = gameDAO.findGameIdByUser(gameTestDTO);
-        gameDAO.deleteGame(id);
+        gameDAO.deleteGame(new GameIdDTO(id));
     }
 
     @Test
@@ -58,7 +59,7 @@ class GameDAOTest {
         if (gameId == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
-        assertThatNoException().isThrownBy(() -> gameDAO.deleteGame(gameId));
+        assertThatNoException().isThrownBy(() -> gameDAO.deleteGame(new GameIdDTO(gameId)));
     }
 
     @Test
@@ -68,7 +69,7 @@ class GameDAOTest {
         if (gameId == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
-        assertThatNoException().isThrownBy(() -> gameDAO.updateTurn(gameId, "black"));
+        assertThatNoException().isThrownBy(() -> gameDAO.updateTurn(new GameIdDTO(gameId), "black"));
     }
 
     @Test
@@ -78,6 +79,6 @@ class GameDAOTest {
         if (gameId == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
-        assertThat(gameDAO.findTurn(gameId)).isEqualTo("white");
+        assertThat(gameDAO.findTurn(new GameIdDTO(gameId))).isEqualTo("white");
     }
 }

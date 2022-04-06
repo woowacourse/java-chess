@@ -5,6 +5,8 @@ import chess.domain.position.Positions;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.dto.ChessDTO;
+import chess.dto.GameIdDTO;
+import chess.dto.TurnDTO;
 import chess.service.ChessService;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -44,10 +46,10 @@ public class ChessWebController {
             String whiteName = req.queryParams(WHITE);
             String blackName = req.queryParams(BLACK);
 
-            if (chessService.findGameIdByUser(whiteName, blackName) == NOT_EXIST_USER) {
+            if (chessService.findGameIdByUser(whiteName, blackName).getId() == NOT_EXIST_USER) {
                 chessService.saveGame(whiteName, blackName, chessGame.getTurn());
             }
-            int gameId = chessService.findGameIdByUser(whiteName, blackName);
+            int gameId = chessService.findGameIdByUser(whiteName, blackName).getId();
             res.redirect("/start/" + gameId + "/init");
             return null;
         });
@@ -58,8 +60,8 @@ public class ChessWebController {
                 initGame(chessGame, gameId);
             }
 
-            chessGame.loadBoard(chessService.findPieces(gameId));
-            Map<String, Object> model = new LinkedHashMap<>(chessService.findPieces(gameId));
+            chessGame.loadBoard(chessService.findPieces(new GameIdDTO(gameId)));
+            Map<String, Object> model = new LinkedHashMap<>(chessService.findPieces(new GameIdDTO(gameId)));
             model.put("id", gameId);
 
             return modelAndView(model, VIEW);
@@ -70,7 +72,7 @@ public class ChessWebController {
             movePiece(chessGame, req, gameId);
 
             if (chessGame.isFinished()) {
-                chessService.deleteGame(gameId);
+                chessService.deleteGame(new GameIdDTO(gameId));
                 return modelAndView(createScore(chessGame, new HashMap<>()), VIEW);
             }
 
@@ -88,7 +90,7 @@ public class ChessWebController {
         get("/end/:id", (req, res) -> {
             int gameId = Integer.parseInt(req.params(GAME_ID));
             chessGame.end();
-            chessService.deleteGame(gameId);
+            chessService.deleteGame(new GameIdDTO(gameId));
 
             Map<String, Object> model = new HashMap<>(chessGame.toBoardModel());
             createScore(chessGame, model);
@@ -104,9 +106,9 @@ public class ChessWebController {
 
     private void initGame(ChessGame chessGame, int gameId) {
         chessGame.start();
-        String turn = chessService.findTurn(gameId);
-        loadTurn(chessGame, turn);
-        initBoard(chessGame, gameId, turn);
+        TurnDTO turn = chessService.findTurn(new GameIdDTO(gameId));
+        loadTurn(chessGame, turn.getTurn());
+        initBoard(chessGame, gameId, turn.getTurn());
     }
 
     private void movePiece(ChessGame chessGame, Request req, int gameId) {
@@ -115,9 +117,9 @@ public class ChessWebController {
 
         Piece piece = chessGame.findPiece(from);
         chessGame.move(Positions.findPosition(from), Positions.findPosition(to));
-        chessService.savePieces(List.of(new ChessDTO(piece.getColor(), piece.getPiece(), to)), gameId);
-        chessService.deletePiece(from, gameId);
-        chessService.updateTurn(gameId, chessGame.getTurn());
+        chessService.savePieces(List.of(new ChessDTO(piece.getColor(), piece.getPiece(), to)), new GameIdDTO(gameId));
+        chessService.deletePiece(from, new GameIdDTO(gameId));
+        chessService.updateTurn(new GameIdDTO(gameId), chessGame.getTurn());
     }
 
     private Map<String, Object> createScore(ChessGame chessGame, Map<String, Object> model) {
@@ -134,7 +136,7 @@ public class ChessWebController {
 
     private void initBoard(ChessGame chessGame, int gameId, String turn) {
         if (turn.equals(INIT_TURN)) {
-            chessService.initBoard(chessGame.toBoardModel(), gameId);
+            chessService.initBoard(chessGame.toBoardModel(), new GameIdDTO(gameId));
         }
     }
 }

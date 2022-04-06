@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.DBConnector;
 import chess.dto.GameDTO;
+import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
 
 import java.sql.Connection;
@@ -50,37 +51,37 @@ public class GameDAO {
         return NOT_EXIST_USER;
     }
 
-    public void deleteGame(int id) {
+    public void deleteGame(GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
         final String sql = "delete from game where id = (?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setInt(1, gameIdDTO.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void updateTurn(int id, String turn) {
+    public void updateTurn(GameIdDTO gameIdDTO, String turn) {
         Connection connection = DBConnector.getConnection();
         final String sql = "update game set turn = (?) where id = (?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, turn);
-            statement.setInt(2, id);
+            statement.setInt(2, gameIdDTO.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String findTurn(int id) {
+    public String findTurn(GameIdDTO gameIdDTO) {
         Connection connection = DBConnector.getConnection();
         final String sql = "select turn from game where id = (?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setInt(1, gameIdDTO.getId());
             ResultSet resultSet = statement.executeQuery();
             return findTurnName(resultSet);
         } catch (Exception e) {

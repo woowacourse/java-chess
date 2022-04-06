@@ -9,6 +9,9 @@ public class DBConnector {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private DBConnector() {
+    }
+
     private static void loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
