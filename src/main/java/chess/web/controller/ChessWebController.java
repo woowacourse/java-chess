@@ -28,6 +28,7 @@ public class ChessWebController {
 
         Map<String, Object> model = new HashMap<>();
         if (chessGame.isFinished()) {
+            chessService.ready();
             Result result = chessGame.result();
             model.put("result", result.name());
             return new ModelAndView(model, "result.html");

@@ -14,13 +14,12 @@
         체스 게임
     </h1>
 
-
     <section>
         <div class="error-message">
             {{error}}
         </div>
 
-        <div>
+        <div class="score">
             BLACK SCORE {{blackScore}}
         </div>
 
@@ -32,7 +31,7 @@
             {{/pieces}}
         </div>
 
-        <div>
+        <div class="score">
             WHITE SCORE {{whiteScore}}
         </div>
 
@@ -43,6 +42,12 @@
                 <input class="submit-input" type="submit" value="제출"/>
             </div>
         </form>
+
+        <a href="/start">
+            <div class="start-button">
+                다시 시작하기
+            </div>
+        </a>
     </section>
 </div>
 

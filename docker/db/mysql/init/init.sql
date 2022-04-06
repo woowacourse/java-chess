@@ -12,4 +12,4 @@ create table turn
     primary key (id)
 );
 
-insert into turn (turn_type) values (ready);
+insert into turn (turn_type) values ('ready');

@@ -33,6 +33,10 @@ public class ChessService {
         this.turnDao = turnDao;
     }
 
+    public void ready() {
+        turnDao.save(new TurnDto(StateType.READY));
+    }
+
     public void create() {
         pieceDao.removeAll();
         List<PieceDto> initPieces = initPieces();

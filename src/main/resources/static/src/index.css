@@ -12,15 +12,37 @@ section {
     margin: 0 auto;
 }
 
+.start-button {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid white;
+    background-color: white;
+}
+
+a {
+    color: #441a03;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
 .error-message {
+    text-align: center;
+    font-weight: bold;
+    color: darkred;
+}
+
+.score {
+    padding: 20px;
+    font-weight: bold;
     color: white;
+    text-align: center;
 }
 
 .chess-ui {
     display: grid;
     padding: 30px;
     width: 800px;
-    margin: 50px auto;
+    margin: 0 auto;
     grid-template-columns: repeat(8, 100px);
     grid-template-rows: repeat(8, 100px);
     grid-auto-flow: row;
@@ -33,7 +55,7 @@ section {
 
 form {
     padding: 30px;
-    margin: 50px auto;
+    margin: 0 auto;
     width: 800px;
     text-align: center;
 }
