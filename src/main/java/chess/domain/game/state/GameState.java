@@ -17,5 +17,7 @@ public interface GameState {
 
     Color getWinTeamColor();
 
+    Color getTurn();
+
     Board board();
 }

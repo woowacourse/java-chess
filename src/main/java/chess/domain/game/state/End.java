@@ -11,6 +11,7 @@ import chess.domain.position.Position;
 public class End implements GameState {
 
     private static final String GAME_IS_END_AND_NOT_MOVABLE_PIECE = "[ERROR] 게임이 끝나서 말을 옮길 수 없습니다.";
+    private static final String GAME_IS_END_AND_NOT_GET_TURN = "[ERROR] 게임이 끝나서 턴을 불러올 수 없습니다.";
 
     private final Board board;
 
@@ -43,6 +44,11 @@ public class End implements GameState {
     public Color getWinTeamColor() {
         final Winner winner = new Winner(board.getValue());
         return winner.getColor();
+    }
+
+    @Override
+    public Color getTurn() {
+        throw new UnsupportedOperationException(GAME_IS_END_AND_NOT_GET_TURN);
     }
 
     @Override

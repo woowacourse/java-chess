@@ -68,6 +68,11 @@ public class Running implements GameState {
     }
 
     @Override
+    public Color getTurn() {
+        return color;
+    }
+
+    @Override
     public Board board() {
         return board;
     }
