@@ -20,7 +20,7 @@ final class BlackTurn extends Running {
     }
 
     @Override
-    public boolean isWhiteTurn() {
-        return false;
+    public Turn currentTurn() {
+        return Turn.BLACK_TURN;
     }
 }

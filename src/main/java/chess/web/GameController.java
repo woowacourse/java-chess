@@ -34,6 +34,9 @@ public class GameController {
 
         get("/status", (request, response) ->
                 objectMapper.writeValueAsString(gameService.status()));
+
+        get("/load", (request, response) ->
+                objectMapper.writeValueAsString(gameService.load()));
     }
 
     private String render(Map<String, Object> model, String templatePath) {

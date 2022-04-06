@@ -43,7 +43,7 @@ abstract class Finished implements State {
     }
 
     @Override
-    public final boolean isWhiteTurn() {
-        return false;
+    public Turn currentTurn() {
+        return Turn.END;
     }
 }

@@ -19,8 +19,9 @@ final class WhiteTurn extends Running {
         return new BlackTurn(board);
     }
 
+
     @Override
-    public boolean isWhiteTurn() {
-        return true;
+    public Turn currentTurn() {
+        return Turn.WHITE_TURN;
     }
 }

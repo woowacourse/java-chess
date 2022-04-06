@@ -11,10 +11,12 @@ public class ChessDto {
 
     private final Map<PositionDto, PieceDto> board;
     private final boolean isEnd;
+    private final String currentTurn;
 
-    public ChessDto(Map<PositionDto, PieceDto> board, boolean isEnd) {
+    public ChessDto(Map<PositionDto, PieceDto> board, boolean isEnd, String currentTurn) {
         this.board = board;
         this.isEnd = isEnd;
+        this.currentTurn = currentTurn;
     }
 
 
@@ -26,7 +28,7 @@ public class ChessDto {
             Piece piece = board.get(position);
             result.put(PositionDto.from(position), PieceDto.from(piece));
         }
-        return new ChessDto(result, gameManager.isFinished());
+        return new ChessDto(result, gameManager.isFinished(), gameManager.getCurrentTurn().name());
     }
 
     public Map<PositionDto, PieceDto> getBoard() {
@@ -35,5 +37,9 @@ public class ChessDto {
 
     public boolean isEnd() {
         return isEnd;
+    }
+
+    public String getCurrentTurn() {
+        return currentTurn;
     }
 }

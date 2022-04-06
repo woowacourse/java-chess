@@ -7,12 +7,17 @@ import chess.domain.position.StatusResult;
 import chess.domain.board.Color;
 import chess.domain.board.Piece;
 import chess.domain.state.State;
+import chess.domain.state.Turn;
 import java.util.Map;
 
 public final class GameManager {
 
     private State currentState = State.start(Board.getInitializedInstance());
 
+
+    public void load(Board board, Turn turn) {
+        currentState = State.start(board, turn);
+    }
 
     public void move(String source, String destination) {
         currentState = currentState.movePiece(Position.of(source), Position.of(destination));
@@ -49,7 +54,7 @@ public final class GameManager {
         return status;
     }
 
-    public boolean isWhiteTurn() {
-        return currentState.isWhiteTurn();
+    public Turn getCurrentTurn() {
+        return currentState.currentTurn();
     }
 }

@@ -24,6 +24,11 @@
     </div>
 </div>
 
+<div id="currentTurn">
+
+</div>
+
+
 <div id="chessboard">
     <div id="A8" class="white" onclick="moveClickHandler(id)"></div>
     <div id="B8" class="black" onclick="moveClickHandler(id)"></div>
@@ -92,9 +97,11 @@
 </div>
 
 <div>
-    <input type="button" value="start" id="start" onclick="start()"/>
+    <input type="button" value="게임시작" id="start" onclick="start()"/>
 </div>
-
+<div>
+    <input type="button" value="불러오기" id="load" onclick="loadLastGame()"/>
+</div>
 <script type="text/javascript" src="/src/chess.js"></script>
 </body>
 </html>

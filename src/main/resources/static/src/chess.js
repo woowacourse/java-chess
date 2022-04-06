@@ -3,6 +3,7 @@ const BASE_URL = "http://localhost:8081/"
 const START_URL = BASE_URL + "start"
 const MOVE_URL = BASE_URL + "move"
 const STATUS_URL = BASE_URL + "status"
+const LOAD_LAST_GAME_URL = BASE_URL + "load";
 
 let source = "";
 let destination = "";
@@ -27,7 +28,20 @@ const start = async () => {
     (await fetch(START_URL))
         .json()
         .then(value => {
-            updateChessBoard(value)
+            updateChessBoardAndTurn(value)
+            isEnd = false;
+        });
+
+    (await requestScore())
+        .json()
+        .then(value => updateScoreBoard(value))
+};
+
+const loadLastGame = async () => {
+    (await fetch(LOAD_LAST_GAME_URL))
+        .json()
+        .then(value => {
+            updateChessBoardAndTurn(value)
             isEnd = false;
         });
 
@@ -63,12 +77,12 @@ async function movePiece(source, destination) {
 
     (await requestToMove(source, destination)).json()
         .then(value => {
-            updateChessBoard(value);
+            updateChessBoardAndTurn(value);
             checkFinished(value);
         })
         .catch(response => {
             if (!response.ok) {
-                alert("canot move");
+                alert("cannot move");
             }
         });
 
@@ -81,8 +95,14 @@ async function movePiece(source, destination) {
 }
 
 
-async function updateChessBoard(response) {
-    let board = response.board;
+async function updateChessBoardAndTurn(response) {
+    const board = response.board;
+    const currentTurn = response.currentTurn;
+
+    let turnElem = document.getElementById("currentTurn");
+    turnElem.innerText = "현재 턴 = " + currentTurn;
+
+
     const boardElem = document.getElementById("chessboard");
     const children = boardElem.children;
     for (const child of children) {
