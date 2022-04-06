@@ -48,4 +48,8 @@ public enum XAxis {
     public int getValue() {
         return value;
     }
+
+    public String getValueAsString() {
+        return Integer.toString(value);
+    }
 }

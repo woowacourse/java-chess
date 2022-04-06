@@ -1,0 +1,64 @@
+package chess.dao;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.dto.GameDto;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class GameDaoTest {
+    private static final String TEST_GAME_ID = "TEST-GAME-ID";
+    private GameDao gameDao;
+
+    @BeforeEach
+    void setUp() {
+        gameDao = new GameDao();
+    }
+
+    @DisplayName("새로운 게임을 game 테이블에 생성한다.")
+    @Test
+    void createGame() {
+        // given & when
+        GameDto gameDto = gameDao.createGame(TEST_GAME_ID);
+
+        // then
+        assertThat(gameDto).isNotNull();
+    }
+
+    @DisplayName("게임을 game 테이블로부터 제거한다.")
+    @Test
+    void deleteGame() {
+        // given & when
+        gameDao.createGame(TEST_GAME_ID);
+
+        // then
+        gameDao.deleteGame(TEST_GAME_ID);
+    }
+
+    @DisplayName("게임의 턴을 흰색으로 변경한다.")
+    @Test
+    void updateTurnToWhite() {
+        // given & when
+        gameDao.createGame(TEST_GAME_ID);
+
+        // then
+        gameDao.updateTurnToWhite(TEST_GAME_ID);
+    }
+
+    @DisplayName("게임의 턴을 검정색으로 변경한다.")
+    @Test
+    void updateTurnToBlack() {
+        // given & when
+        gameDao.createGame(TEST_GAME_ID);
+
+        // then
+        gameDao.updateTurnToBlack(TEST_GAME_ID);
+    }
+
+    @AfterEach
+    void tearDown() {
+        gameDao.deleteGame(TEST_GAME_ID);
+    }
+}

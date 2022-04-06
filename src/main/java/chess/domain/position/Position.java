@@ -138,6 +138,14 @@ public class Position {
         return yAxis == position.yAxis;
     }
 
+    public XAxis getXAxis() {
+        return xAxis;
+    }
+
+    public YAxis getYAxis() {
+        return yAxis;
+    }
+
     @Override
     public int hashCode() {
         int result = xAxis != null ? xAxis.hashCode() : 0;

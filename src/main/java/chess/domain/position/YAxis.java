@@ -48,4 +48,8 @@ public enum YAxis {
     public int getValue() {
         return value;
     }
+
+    public String getValueAsString() {
+        return Integer.toString(value);
+    }
 }
