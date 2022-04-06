@@ -23,6 +23,11 @@ public final class Position {
                 Rank.from(input.substring(FILE_INDEX)));
     }
 
+    public static Position fromDB(String input) {
+        return new Position(File.from(input.substring(BEGIN_INDEX, FILE_INDEX)),
+                Rank.fromOrdinal(input.substring(FILE_INDEX)));
+    }
+
     public static Position of(File file, Rank rank) {
         return new Position(file, rank);
     }

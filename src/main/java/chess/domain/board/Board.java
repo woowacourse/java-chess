@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.view.WebViewMapper;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,6 +18,11 @@ public final class Board {
 
     Board(Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    Board(Map<Position, Piece> board, Color turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     public boolean move(Position from, Position to) {
@@ -110,5 +116,9 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public String getPieceOnPosition(String from) {
+        return WebViewMapper.parse(board.get(Position.fromDB(from)));
     }
 }

@@ -1,11 +1,14 @@
-const boardUrl = '/board';
-const moveUrl = `/move`;
-const scoreUrl = `/score`;
 const newGamemUrl = '/';
-const isFinishedUrl = '/isFinished';
 let selected = '';
 let from;
 
+const urls = location.href.split('/');
+const gameId = urls[urls.length - 1];
+
+const moveUrl = `/move`;
+const scoreUrl = `/score/${gameId}`;
+const isFinishedUrl = `/isFinished/${gameId}`;
+const boardUrl = `/board/${gameId}`;
 /**
  * 페이지 첫 진입 시 => 기물 그리기 | 이벤트 적용 |점수 출력
  */
@@ -13,8 +16,7 @@ const initialize = () => {
     fetch(boardUrl)
         .then(res => res.json())
         .then(board => board.forEach(boardDto =>
-            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)
-        ));
+            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)));
 
     document.querySelectorAll('.square')
         .forEach(square => square.addEventListener('click', squareClick));
@@ -24,7 +26,18 @@ const initialize = () => {
     document.getElementById("newGame").addEventListener('click', (event) => {
         location.href = newGamemUrl;
     });
-    document.getElementById('start').play();
+
+    fetch(isFinishedUrl)
+        .then(res => res.json())
+        .then(result => {
+            if (result) {
+                document.querySelector('h2').innerHTML = 'GAME OVER';
+                document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
+                document.getElementById('finish').play();
+                return;
+            }
+            document.getElementById('start').play();
+        })
 }
 
 const setupPieceToSquare = (square, pieceName) => {
@@ -66,7 +79,7 @@ const squareClick = (event) => {
 const setupSelected = (selectedSquare) => {
     selectedSquare.classList.add('selected');
     selected = selectedSquare.dataset.piece;
-    from = selectedSquare.innerText;
+    from = selectedSquare.id;
 }
 
 /**
@@ -77,9 +90,10 @@ const processMove = (selectedSquare) => {
     fetch(moveUrl, {
         method: 'POST',
         body: JSON.stringify({
+            gameId: gameId,
             piece: selected,
             from: from,
-            to: selectedSquare.innerText
+            to: selectedSquare.id
         })
     })
         .then(res => res.json())

@@ -4,8 +4,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.dao.ChessService;
+import chess.dao.DBChessServiceImpl;
 import chess.domain.board.Position;
 import chess.dto.MoveRequestDto;
 import chess.dto.MoveResultDto;
@@ -18,38 +18,33 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
-    private static Board BOARD = BoardFactory.newInstance();
+    private static final ChessService CHESS_SERVICE = new DBChessServiceImpl();
 
     public static void main(String[] args) {
         staticFiles.location("/static");
 
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/", (request, response) -> render(new HashMap<>(), "index.html"));
 
-        get("/board", (request, response) -> WebViewMapper.parse(BOARD.getBoard())
+        get("/game/:gameId", (request, response) -> render(new HashMap<>(), "game.html"));
+
+        get("/board/:gameId", (request, response) ->
+                        WebViewMapper.parseBoardFromDB(CHESS_SERVICE.getBoardByGameId(request.params("gameId")))
                 , new JsonTransformer());
+
+        get("/score/:gameId",
+                (request, response) -> CHESS_SERVICE.getScore(request.params("gameId")), new JsonTransformer());
+
+        get("/isFinished/:gameId", ((request, response) -> CHESS_SERVICE.isFinished(request.params("gameId"))),
+                new JsonTransformer());
 
         post("/move", (request, response) -> {
             final MoveRequestDto moveRequestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
-            final boolean moveResult = BOARD.move(Position.from(moveRequestDto.getFrom()),
-                    Position.from(moveRequestDto.getTo()));
+            final boolean moveResult = CHESS_SERVICE.move(moveRequestDto.getGameId(), moveRequestDto.getFrom(),
+                    moveRequestDto.getTo());
             return new MoveResultDto(moveRequestDto.getPiece(),
-                    WebViewMapper.parse(Position.from(moveRequestDto.getFrom())),
-                    WebViewMapper.parse(Position.from(moveRequestDto.getTo())), moveResult);
+                    WebViewMapper.parse(Position.fromDB(moveRequestDto.getFrom())),
+                    WebViewMapper.parse(Position.fromDB(moveRequestDto.getTo())), moveResult);
         }, new JsonTransformer());
-
-        get("/score", (request, response) -> BOARD.getScore()
-                , new JsonTransformer());
-
-        get("/isFinished", ((request, response) -> BOARD.isFinished()), new JsonTransformer());
-
-        get("/game/:gameId", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", WebViewMapper.parse(BOARD.getBoard()));
-            return render(model, "game.html");
-        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

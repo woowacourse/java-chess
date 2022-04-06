@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -79,4 +80,19 @@ public class WebViewMapper {
                 .collect(Collectors.toList());
     }
 
+    public static List<PositionDto> parseBoardFromDB(Map<String, String> board) {
+        return board.entrySet()
+                .stream()
+                .map(entry -> PositionDto.of(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public static Piece from(String rawPiece) {
+        return PIECE_MAPPER.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equalsIgnoreCase(rawPiece))
+                .map(Entry::getKey)
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
+    }
 }
