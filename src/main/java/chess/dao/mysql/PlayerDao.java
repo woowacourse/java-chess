@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.NoSuchElementException;
 
 import chess.dao.dto.PlayerDto;
 
@@ -55,7 +56,7 @@ public class PlayerDao {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                throw new NoSuchElementException("해당 id의 플레이어를 조회할 수 없습니다.");
             }
 
             playerDto = new PlayerDto(

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import chess.dao.dto.GameDto;
 import chess.dao.dto.GameUpdateDto;
@@ -60,7 +61,7 @@ public class GameDao {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                throw new NoSuchElementException("해당 id의 게임을 조회할 수 없습니다.");
             }
 
             gameDto = new GameDto(
