@@ -12,6 +12,27 @@ body {
     color: white;
 }
 
+.exception-buttons {
+    display: grid;
+    grid-template-columns: 300px 300px;
+    grid-template-rows: 50px;
+    grid-gap: 20px;
+}
+
+.board-buttons {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 50px;
+    grid-gap: 20px;
+}
+
+.start-buttons {
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: 50px;
+    grid-gap: 20px;
+}
+
 .button {
     background-color: #38a176;
     border: none;

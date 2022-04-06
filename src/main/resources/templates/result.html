@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body>
+    <div class="header center-object">
+        <h1 class="main-message">초간단 체스게임♞</h1>
+    </div>
     {{#each this.playerPoints}}
     <div>
         <h1 class="center-object">{{@key}}의 점수 : {{this}}</h1>
@@ -22,7 +25,7 @@
         </h1>
         {{/if}}
     </div>
-    <div class="center-object">
+    <div class="center-object start-buttons">
         <button type="button" class="button start-button">
             다시하기
         </button>

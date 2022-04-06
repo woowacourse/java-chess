@@ -63,6 +63,12 @@ function onClick(event) {
         if (classList.contains('status-button')) {
             location.href = "/status"
         }
+        if (classList.contains('board-button')) {
+            location.href = "/board"
+        }
+        if (classList.contains('end-button')) {
+            location.href = '/'
+        }
     }
 }
 

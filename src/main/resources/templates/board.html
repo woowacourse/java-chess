@@ -8,6 +8,9 @@
 <script src="/script/chessBoardInit.js"></script>
 <body>
     </br>
+    <div class="header center-object">
+        <h1 class="main-message">초간단 체스게임♞</h1>
+    </div>
     <div id="board-div" class="center-object"></div>
     <script>initBoard()</script>
     {{#each board.pieces}}
@@ -16,7 +19,7 @@
     </script>
     {{/each}}
     </br>
-    <div class="center-object">
+    <div class="center-object board-buttons">
         <button class="button start-button">
             다시하기
         </button>
