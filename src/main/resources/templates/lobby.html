@@ -7,17 +7,20 @@
 </head>
 <body>
 <h1>ZERO Chess</h1>
-<h2>CLICK ON THE ROOM !</h2>
+<br><br>
 <form action="/chess/new" method="post">
     <input type="text" name="gameName" placeholder="NEW GAME">
     <input type="submit" value="NEW GAME START">
 </form>
-<ul class="game-list">
+
+<br>
+<h2>CLICK ON THE ROOM</h2>
+<table border="2" width ="500" height="300" align = "center" class="game-list">
     {{#games}}
-    <li>
-        <a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a>
-    </li>
+    <tr>
+       <td><a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a></td>
+    </tr>
     {{/games}}
-</ul>
+</table>
 </body>
 </html>
