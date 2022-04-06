@@ -40,6 +40,12 @@ public class WebController {
             return gson.toJson(board.getWebBoard());
         });
 
+        get("/turn", (req, res) -> {
+            String turn = chessService.getTurn();
+
+            return gson.toJson(turn);
+        });
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             JsonObject jsonObject = new JsonObject();

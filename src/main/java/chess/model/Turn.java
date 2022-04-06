@@ -23,4 +23,8 @@ public class Turn {
         }
         return TURN_BLACK;
     }
+
+    public String getThisTurn() {
+        return team.name();
+    }
 }

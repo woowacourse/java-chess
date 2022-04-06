@@ -32,4 +32,8 @@ public class ChessService {
 
         return WebBoardDto.from(chessGame.getBoard());
     }
+
+    public String getTurn() {
+        return turn.getThisTurn();
+    }
 }

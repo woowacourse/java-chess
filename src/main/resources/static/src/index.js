@@ -17,7 +17,16 @@ function drawBoard(body) {
 
 function drawTurnBox() {
     const turnBox = document.getElementById("turn-box")
-    turnBox.innerText = "white 팀 차례!";
+
+    const response = fetch(`/turn`, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+    });
+    response
+        .then(data => data.json())
+        .then(body => {
+           turnBox.innerText = body +"팀 차례!";
+        });
 }
 
 const startGame = () => {
@@ -64,6 +73,7 @@ function clickBLock(e, block) {
         response.then(data => data.json())
             .then(body => {
                 drawBoard(body)
+                drawTurnBox();
             })
             .catch(err => {
                 alert("움직일 수 없는 위치입니다.")
