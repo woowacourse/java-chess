@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Positions;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
 
@@ -34,7 +33,7 @@ public class OutputView {
 
     private static void printFilePieces(Map<Position, Piece> piecesByPositions, Rank rank) {
         for (File file : File.values()) {
-            Position searchPosition = Positions.findPositionBy(file, rank);
+            Position searchPosition = Position.of(file, rank);
             Piece piece = piecesByPositions.get(searchPosition);
             out.print(piece.getEmblem());
         }

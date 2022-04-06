@@ -3,7 +3,6 @@ package chess.view;
 import static java.lang.System.err;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
-import chess.domain.board.position.Positions;
 import java.util.List;
 
 import chess.constant.Command;
@@ -60,8 +59,8 @@ public class InputView {
             return new NotMoveRequest(command);
         }
         List<String> inputs = List.of(input.split(" "));
-        Position source = Positions.findPositionBy(inputs.get(1));
-        Position target = Positions.findPositionBy(inputs.get(2));
+        Position source = Position.of(inputs.get(1));
+        Position target = Position.of(inputs.get(2));
         return new MoveRequest(command, source, target);
     }
 

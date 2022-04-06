@@ -10,7 +10,6 @@ import static chess.domain.piece.PieceTeam.WHITE;
 
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Positions;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptySpace;
@@ -33,7 +32,7 @@ public class RegularBoardFactory extends BoardFactory {
 
     private final static BoardFactory CACHE = new RegularBoardFactory();
 
-    private static final EmptySpace EMPTY_PIECE = new EmptySpace(EMPTY);
+    private static final EmptySpace EMPTY_SPACE = new EmptySpace(EMPTY);
 
     private static final Function<PieceTeam, List<Piece>> PIECES_CREATOR_BY_COLOR =
             (PieceTeam color) -> List.of(
@@ -59,8 +58,8 @@ public class RegularBoardFactory extends BoardFactory {
     private static void placeAllEmptyPieces() {
 
         Map<Position, Piece> emptyPiecesByPositions = Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Positions.findPositionBy(file, rank)))
-                .collect(Collectors.toMap((position) -> position, (piece) -> EMPTY_PIECE));
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
+                .collect(Collectors.toMap((position) -> position, (piece) -> EMPTY_SPACE));
 
         BOARD.putAll(emptyPiecesByPositions);
     }
@@ -77,7 +76,7 @@ public class RegularBoardFactory extends BoardFactory {
 
     private static void placePawns(PieceTeam color, Rank rank) {
         for (File file : File.values()) {
-            Position findPosition = Positions.findPositionBy(file, rank);
+            Position findPosition = Position.of(file, rank);
             BOARD.put(findPosition, new Pawn(color));
         }
     }
@@ -87,7 +86,7 @@ public class RegularBoardFactory extends BoardFactory {
         ListIterator<Piece> piecesIterator = PIECES_CREATOR_BY_COLOR.apply(color).listIterator();
 
         for (File file : File.values()) {
-            Position findPosition = Positions.findPositionBy(file, rank);
+            Position findPosition = Position.of(file, rank);
             BOARD.put(findPosition, piecesIterator.next());
         }
     }

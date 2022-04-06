@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 public class StringChessBoardFactoryTest {
 
     private Piece findPiece(Map<Position, Piece> board, File file, Rank rank) {
-        return board.get(Positions.findPositionBy(file, rank));
+        return board.get(Position.of(file, rank));
     }
 
     @Test

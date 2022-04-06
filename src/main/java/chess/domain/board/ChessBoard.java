@@ -5,7 +5,6 @@ import static chess.domain.piece.PieceTeam.EMPTY;
 import chess.constant.TargetType;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Positions;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
@@ -115,7 +114,7 @@ public class ChessBoard {
 
     private long duplicatePieceCountByRank(File file) {
         return Arrays.stream(Rank.values())
-                .map(rank -> Positions.findPositionBy(file, rank))
+                .map(rank -> Position.of(file, rank))
                 .filter(position -> {
                             Piece piece = board.get(position);
                             return piece.isPawn() && gameFlow.isCorrectTurn(piece);

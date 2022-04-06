@@ -5,7 +5,6 @@ import static chess.domain.board.position.File.B;
 import static chess.domain.board.position.MoveDirection.RIGHT;
 import static chess.domain.board.position.MoveDirection.TWO_DOWN_ONE_RIGHT;
 import static chess.domain.board.position.MoveDirection.UP_LEFT;
-import static chess.domain.board.position.Positions.findPositionBy;
 import static chess.domain.board.position.Rank.EIGHT;
 import static chess.domain.board.position.Rank.ONE;
 import static chess.domain.board.position.Rank.SIX;
@@ -20,8 +19,8 @@ class MoveDirectionTest {
     @Test
     @DisplayName("1칸 오른쪽 이동을 검증한다")
     void right() {
-        Position from = findPositionBy(A, ONE);
-        Position to = findPositionBy(B, ONE);
+        Position from = Position.of(A, ONE);
+        Position to = Position.of(B, ONE);
 
         assertMoveDirectionCreation(from, to, RIGHT);
     }
@@ -29,8 +28,8 @@ class MoveDirectionTest {
     @Test
     @DisplayName("1칸 위, 1칸 왼쪽의 이동을 검증한다")
     void up_left() {
-        Position from = findPositionBy(B, ONE);
-        Position to = findPositionBy(A, TWO);
+        Position from = Position.of(B, ONE);
+        Position to = Position.of(A, TWO);
 
         assertMoveDirectionCreation(from, to, UP_LEFT);
     }
@@ -38,8 +37,8 @@ class MoveDirectionTest {
     @Test
     @DisplayName("2칸 아래, 1칸 오른쪽의 이동을 검증한다")
     void two_down_one_right() {
-        Position from = findPositionBy(A, EIGHT);
-        Position to = findPositionBy(B, SIX);
+        Position from = Position.of(A, EIGHT);
+        Position to = Position.of(B, SIX);
 
         assertMoveDirectionCreation(from, to, TWO_DOWN_ONE_RIGHT);
     }
