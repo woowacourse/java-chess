@@ -15,6 +15,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.dto.PieceDto;
+import chess.dto.ScoreDto;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -79,9 +80,9 @@ public class ChessGame {
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
-    public Score getScore() {
+    public ScoreDto getScore() {
         checkPlaying();
-        return new Score(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
+        return new ScoreDto(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
     }
 
     public void end() {
@@ -94,16 +95,6 @@ public class ChessGame {
     private void checkPlaying() {
         if (board == null) {
             throw new IllegalStateException("진행 중인 게임이 없습니다.");
-        }
-    }
-
-    class Score {
-        private final double whiteScore;
-        private final double blackScore;
-
-        public Score(final double whiteScore, final double blackScore) {
-            this.whiteScore = whiteScore;
-            this.blackScore = blackScore;
         }
     }
 }
