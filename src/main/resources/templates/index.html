@@ -2,9 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+<style>
+  td img {
+    max-width: 100%;
+  }
+  #chess-board td {
+    max-width: 50px;
+    width: 50px;
+    max-height: 50px;
+    height: 50px;
+    text-align: center;
+  }
+</style>
+<script src="library/jquery-3.6.0.js"></script>
+<script>
+  
+  const FILES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const RANKS = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  const REVERSE_RANKS = RANKS.reverse();
+
+  $(document).ready(function(){
+    initChessBoard();
+    placeChessPieces();
+  });
+
+  function initChessBoard() {
+    for (let r = 0 ; r < REVERSE_RANKS.length ; r++) {
+      addChessBoardRow();
+      for (let f = 0; f < FILES.length ; f++) {
+          addChessBoardSquare(r, f);
+        }
+    }
+  }
+
+  function addChessBoardRow() {
+    $('#chess-board').append('<tr>');
+  }
+
+  function addChessBoardSquare(r, f) {
+    const rank = REVERSE_RANKS[r];
+    const file = FILES[f];
+    const squareId = file + rank;
+    const color = getColor(r, f);
+    $('#chess-board tr').last().append(`<td id=${squareId} style="background-color: ${color}">`);
+  }
+
+  function getColor(r, f) {
+    if(isEven(r, f)) {
+      return "#AD8B73";
+    }
+    return "#CEAB93";
+  }
+
+  function isEven(r, f) {
+    return (r + f) % 2 === 0;
+  }
+
+  function placeChessPieces() {
+    $('#chess-board td#A1').append('<img src="images/BlackRook.png" />');
+    $('#chess-board td#B1').append('<img src="images/BlackKnight.png" />');
+    $('#chess-board td#C1').append('<img src="images/BlackBishop.png" />');
+    $('#chess-board td#D1').append('<img src="images/BlackKing.png" />');
+    $('#chess-board td#E1').append('<img src="images/BlackQueen.png" />');
+    $('#chess-board td#F1').append('<img src="images/BlackBishop.png" />');
+    $('#chess-board td#G1').append('<img src="images/BlackKnight.png" />');
+    $('#chess-board td#H1').append('<img src="images/BlackRook.png" />');
+
+    $('#chess-board td#A2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#B2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#C2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#D2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#E2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#F2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#G2').append('<img src="images/BlackPawn.png" />');
+    $('#chess-board td#H2').append('<img src="images/BlackPawn.png" />');
+
+    $('#chess-board td#A8').append('<img src="images/WhiteRook.png" />');
+    $('#chess-board td#B8').append('<img src="images/WhiteKnight.png" />');
+    $('#chess-board td#C8').append('<img src="images/WhiteBishop.png" />');
+    $('#chess-board td#D8').append('<img src="images/WhiteKing.png" />');
+    $('#chess-board td#E8').append('<img src="images/WhiteQueen.png" />');
+    $('#chess-board td#F8').append('<img src="images/WhiteBishop.png" />');
+    $('#chess-board td#G8').append('<img src="images/WhiteKnight.png" />');
+    $('#chess-board td#H8').append('<img src="images/WhiteRook.png" />');
+
+    $('#chess-board td#A7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#B7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#C7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#D7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#E7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#F7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#G7').append('<img src="images/WhitePawn.png" />');
+    $('#chess-board td#H7').append('<img src="images/WhitePawn.png" />');
+  }
+  
+</script>
+
 <body>
-Hello World!!
+  <table id="chess-board">
+  </table>
 </body>
 </html>

@@ -2,9 +2,12 @@ package chess;
 
 import static spark.Spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import lecture.pobi.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -13,27 +16,20 @@ public class WebApplication {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
+            final Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        // http://localhost:4567/hello/philz
-        get("/hello/:name", (req, res) -> {
-            return "hello ~! " + req.params(":name");
-        });
+        List<User> users = new ArrayList<>();
 
-        // http://localhost:4567/hello2?name=philz
-        get("/hello2", (req, res) -> {
-            return "hello ~! " + req.queryParams("name");
-        });
+        post("/members", (req, res) -> {
+            User user = new User(req.queryParams("name"), req.queryParams("age"));
+            users.add(user);
 
-        // http://localhost:4567/hello3?name=philz&age=123
-        get("/hello3", (req, res) -> {
-            return "hello ~! " + req.queryParams("name") + ", 나이는 " + req.queryParams("age");
-        });
+            Map<String, Object> model = new HashMap<>();
+            model.put("users", users);
 
-        post("/member", (req, res) -> {
-            return "save ~! " + req.queryParams("name") + ", 나이는 " + req.queryParams("age");
+            return render(model, "result.html");
         });
     }
 
