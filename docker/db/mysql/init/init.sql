@@ -12,3 +12,11 @@ create table role
     primary key (user_id),
     foreign key (user_id) references member (id)
 );
+
+create table board
+(
+    id int not null auto_increment primary key,
+    type varchar(1) not null,
+    y int not null,
+    x int not null
+);
