@@ -49,9 +49,6 @@ public class ChessService {
             updateChessPiece(roomName, startResult.getPieceByPosition());
             updateRoomStatusTo(roomName, GameStatus.PLAYING);
         } catch (IllegalArgumentException e) {
-            if (chessGame.canPlay()) {
-                result = findAllPiece(roomName);
-            }
             result.addError(e.getMessage());
         }
         return result;
@@ -71,9 +68,6 @@ public class ChessService {
             updatePosition(roomName, from, to);
             updateRoom(roomName, moveResult.getGameStatus(), moveResult.getCurrentTurn());
         } catch (IllegalArgumentException e) {
-            if (chessGame.canPlay()) {
-                result = findAllPiece(roomName);
-            }
             result.addError(e.getMessage());
         }
         return result;

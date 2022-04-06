@@ -226,6 +226,7 @@
         const json = response.json();
         await removeElement();
         drawBoard(json);
+        fetchPiece();
         fetchScore();
         fetchTurn();
     }
@@ -240,7 +241,6 @@
     async function fetchPiece() {
         const data = await fetch(`/protected/piece?room=${roomName}`);
         const json = data.json();
-        await removeElement();
         drawBoard(json);
     }
 
