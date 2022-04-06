@@ -16,10 +16,10 @@ public class StatusCalculator {
         this.value = value;
     }
 
-    public Map<Team, Double> createStatus() {
+    public Map<String, Double> createStatus() {
         return Arrays.stream(Team.values())
                 .filter(Team::isNotNone)
-                .collect(Collectors.toMap(team -> team, this::calculate));
+                .collect(Collectors.toMap(team -> team.name(), this::calculate));
     }
 
     public double calculate(Team team) {
