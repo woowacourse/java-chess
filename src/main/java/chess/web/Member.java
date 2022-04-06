@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.web;
 
 public class Member {
 

@@ -1,8 +1,8 @@
-package chess.dao;
+package chess.web.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Member;
+import chess.web.Member;
 import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;

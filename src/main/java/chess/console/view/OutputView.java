@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.view;
 
 import chess.domain.StatusScore;
 import chess.domain.board.Position;

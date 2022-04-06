@@ -1,6 +1,6 @@
-package chess.dao;
+package chess.web.dao;
 
-import chess.domain.Member;
+import chess.web.Member;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDaoImpl implements MemberDaoInterface {
+public class MemberDaoImpl implements MemberDao {
 
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "root";

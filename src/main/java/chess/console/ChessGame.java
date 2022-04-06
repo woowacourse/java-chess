@@ -1,6 +1,8 @@
 package chess.console;
 
 import chess.GameSwitch;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
@@ -8,8 +10,6 @@ import chess.domain.command.GameCommand;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;
-import chess.view.InputView;
-import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
