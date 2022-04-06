@@ -1,14 +1,23 @@
-package chess.domain.dao;
+package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.DbBoardDao;
 import chess.domain.ChessGame;
+import chess.domain.Team;
 import chess.dto.ChessBoardDto;
+import chess.dto.GameInformationDto;
 import java.sql.Connection;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class DbBoardDaoTest {
+
+    @BeforeAll
+    static  void setUp() {
+        DbGameDao dbGameDao = new DbGameDao();
+        dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
+    }
 
     @Test
     void connection() {
@@ -36,5 +45,12 @@ class DbBoardDaoTest {
         assertThat(chessBoardDto.isEmpty()).isFalse();
     }
 
+    @AfterAll
+    static void afterEach() {
+        DbBoardDao dbBoardDao = new DbBoardDao();
+        dbBoardDao.deleteAll(1111);
 
+        DbGameDao dbGameDao = new DbGameDao();
+        dbGameDao.deleteGameData(1111);
+    }
 }

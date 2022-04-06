@@ -52,7 +52,7 @@ public class DbBoardDao implements BoardDao {
         saveAll(gameId, chessBoardDto.getMapInformation());
     }
 
-    private void deleteAll(int gameId) {
+    void deleteAll(int gameId) {
         final Connection connection = getConnection();
         final String sql = "delete from board where game_id = ?";
         try {
