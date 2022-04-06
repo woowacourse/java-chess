@@ -25,6 +25,8 @@ public class WebChessController {
 
         get("/end", (req, res) -> gson.toJson(gameService.end()));
 
+        get("/load", (req, res) -> gson.toJson(gameService.load()));
+
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
             return gson.toJson(gameService.move(moveDto.getSource(), moveDto.getTarget()));
