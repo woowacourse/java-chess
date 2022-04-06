@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDao {
+public class MemberDaoImpl implements MemberDaoInterface {
 
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "root";
@@ -34,7 +34,7 @@ public class MemberDao {
         return connection;
     }
 
-    //removeById_by_delete
+    @Override
     public void removeById(final String id) {
         final String sql = ""
             + "DELETE"
@@ -48,7 +48,7 @@ public class MemberDao {
         }
     }
 
-    //save_by_insert(C)
+    @Override
     public void save(final Member member) {
         final String sql = ""
             + "INSERT INTO " + TABLE
@@ -63,6 +63,7 @@ public class MemberDao {
         }
     }
 
+    @Override
     public Member findById(final String id) {
         final String sql = ""
             + "SELECT id, name, score"
@@ -85,6 +86,7 @@ public class MemberDao {
         return null;
     }
 
+    @Override
     public List<Member> findAll() {
         final String sql = ""
             + "SELECT id, name, score"

@@ -11,19 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MemberDaoTest {
-    private MemberDao memberDao;
+class MemberDaoImplTest {
+    private MemberDaoImpl memberDaoImpl;
 
     @BeforeEach
     void setUp() {
-        memberDao = new MemberDao();
+        memberDaoImpl = new MemberDaoImpl();
     }
 
     //connection
     @DisplayName("member 테이블에 대한 connection 생성한다.")
     @Test
     void connection() {
-        final Connection connection = memberDao.getConnection();
+        final Connection connection = memberDaoImpl.getConnection();
         assertThat(connection).isNotNull();
     }
 
@@ -32,7 +32,7 @@ class MemberDaoTest {
     @Test
     void save() {
         Assertions.assertDoesNotThrow(
-            () -> memberDao.save(new Member("테스트용Id", "테스트용Name", 0.0))
+            () -> memberDaoImpl.save(new Member("테스트용Id", "테스트용Name", 0.0))
         );
     }
 
@@ -40,8 +40,8 @@ class MemberDaoTest {
     @DisplayName("member 테이블에서 id를 통해 특정 데이터를 가져와 해당 class 객체로 응답받는다.")
     @Test
     void findById() {
-        memberDao.save(new Member("테스트용Id", "테스트용Name", 0.0));
-        final Member member = memberDao.findById("테스트용Id");
+        memberDaoImpl.save(new Member("테스트용Id", "테스트용Name", 0.0));
+        final Member member = memberDaoImpl.findById("테스트용Id");
 
         assertThat(member.getName()).isEqualTo("테스트용Name");
     }
@@ -52,8 +52,8 @@ class MemberDaoTest {
     void select_findAll() {
         // 최소 1개 데이터(tearDown에서 removeById될)를 넣어주고,
         // -> 데이터를 EmptyList가 아닌 list를 받아오면 통과다
-        memberDao.save(new Member("테스트용Id", "테스트용Name", 0.0));
-        final List<Member> members = memberDao.findAll();
+        memberDaoImpl.save(new Member("테스트용Id", "테스트용Name", 0.0));
+        final List<Member> members = memberDaoImpl.findAll();
 
         assertThat(members).isNotEmpty();
     }
@@ -62,11 +62,11 @@ class MemberDaoTest {
     @Test
     void updateNameById() {
         //바뀌기전 데이터
-        memberDao.save(new Member("테스트용Id", "테스트용Name", 0.0));
+        memberDaoImpl.save(new Member("테스트용Id", "테스트용Name", 0.0));
 
         //바뀐후 데이터
-        memberDao.updateNameById("테스트용Id", "바뀐이름");
-        final Member members = memberDao.findById("테스트용Id");
+        memberDaoImpl.updateNameById("테스트용Id", "바뀐이름");
+        final Member members = memberDaoImpl.findById("테스트용Id");
 
         assertThat(members.getName()).isEqualTo("바뀐이름");
     }
@@ -75,6 +75,6 @@ class MemberDaoTest {
     void tearDown() {
         // C + C->R  + C -> U이 ----> 모두 @AfterEach에서 D에 의존한다.
         //.save()  / .save() 후 .findById() / .save()후 findAll() / .save()후 update
-        memberDao.removeById("테스트용Id");
+        memberDaoImpl.removeById("테스트용Id");
     }
 }
