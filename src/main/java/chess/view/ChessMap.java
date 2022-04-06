@@ -30,15 +30,6 @@ public class ChessMap {
         return new ChessMap(chessMap, isRunning);
     }
 
-    public static ChessMap load(final List<PieceDto> whitePieces, final List<PieceDto> blackPieces) {
-        final char[][] chessMap = initializeChessMap();
-
-        markPieceWhiteDto(chessMap, whitePieces);
-        markPieceBlackDto(chessMap, blackPieces);
-
-        return new ChessMap(chessMap, true);
-    }
-
     private static char[][] initializeChessMap() {
         return new char[][]{
                 {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
@@ -67,24 +58,6 @@ public class ChessMap {
             final int rank = CHESS_MAP_RANK_SIZE - position.getRank();
             final int file = position.getFile();
             chessMap[rank][file] = piece.getName();
-        }
-    }
-
-    private static void markPieceWhiteDto(final char[][] chessMap, final List<PieceDto> pieces) {
-        for (PieceDto piece : pieces) {
-            final Position position = Position.of(piece.getPosition());
-            final int rank = CHESS_MAP_RANK_SIZE - position.getRank();
-            final int file = position.getFile();
-            chessMap[rank][file] = Character.toLowerCase(piece.getName().charAt(PIECE_NAME_INDEX));
-        }
-    }
-
-    private static void markPieceBlackDto(final char[][] chessMap, final List<PieceDto> pieces) {
-        for (PieceDto piece : pieces) {
-            final Position position = Position.of(piece.getPosition());
-            final int rank = CHESS_MAP_RANK_SIZE - position.getRank();
-            final int file = position.getFile();
-            chessMap[rank][file] = piece.getName().charAt(PIECE_NAME_INDEX);
         }
     }
 

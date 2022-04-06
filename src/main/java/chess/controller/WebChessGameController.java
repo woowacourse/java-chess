@@ -43,12 +43,12 @@ public class WebChessGameController {
         });
 
         get("/status", (req, res) -> {
-            final ScoreDto scoreDto = chessWebGame.getScoreStatus();
+            final ScoreDto scoreDto = chessService.getStatus(chessWebGame);
             return gson.toJson(scoreDto);
         });
 
         get("/end", (req, res) -> {
-            final ResultDto resultDto = chessWebGame.getResult();
+            final ResultDto resultDto = chessService.getResult(chessWebGame);
             chessService.initializeGame(chessWebGame);
             return gson.toJson(resultDto);
         });

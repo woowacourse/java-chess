@@ -1,17 +1,15 @@
 package chess.domain;
 
 import chess.domain.generator.BlackGenerator;
-import chess.domain.generator.LoadGenerator;
 import chess.domain.generator.WhiteGenerator;
+import chess.domain.piece.Piece;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
-import chess.dto.PieceDto;
-import chess.dto.ResultDto;
-import chess.dto.ScoreDto;
-import chess.dto.TurnDto;
 import chess.view.ChessMap;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessWebGame {
 
@@ -29,16 +27,22 @@ public class ChessWebGame {
         this(new Player(new WhiteGenerator(), Team.WHITE), new Player(new BlackGenerator(), Team.BLACK));
     }
 
-    public void loadPlayers(List<PieceDto> whitePieces, List<PieceDto> blackPieces) {
-        this.whitePlayer = new Player(new LoadGenerator(whitePieces), Team.WHITE);
-        this.blackPlayer = new Player(new LoadGenerator(blackPieces), Team.BLACK);
-    }
-
     public ChessMap initializeChessGame() {
         whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         turn = Team.WHITE;
         return createMap();
+    }
+
+    public void loadPlayers(List<Piece> whitePieces, List<Piece> blackPieces) {
+        this.whitePlayer = new Player(whitePieces, Team.WHITE);
+        this.blackPlayer = new Player(blackPieces, Team.BLACK);
+    }
+
+    public void loadTurn(Team turn) {
+        if (this.turn != turn) {
+            changeTurn();
+        }
     }
 
     public ChessMap createMap() {
@@ -93,12 +97,6 @@ public class ChessWebGame {
         turn = Team.WHITE;
     }
 
-    public void changeTurn(TurnDto turnDto) {
-        if (!turn.isMyTeam(turnDto.getTurn())) {
-            changeTurn();
-        }
-    }
-
     public Player getCurrentPlayer() {
         if (turn == Team.WHITE) {
             return whitePlayer;
@@ -113,39 +111,36 @@ public class ChessWebGame {
         return whitePlayer;
     }
 
-    public ResultDto getResult() {
+    public Map<String, Double> getScoreStatus() {
+        final Map<String, Double> scores = new LinkedHashMap<>();
+        scores.put(whitePlayer.getTeamName(), whitePlayer.calculateScore());
+        scores.put(blackPlayer.getTeamName(), blackPlayer.calculateScore());
+        return scores;
+    }
+
+    public Result getResult() {
         if (!whitePlayer.hasKing()) {
-            return new ResultDto("BLACK이 WHITE의 킹을 캡처하여 승리하였습니다!");
+            return Result.BLACK_WIN_CAPTURE_KING;
         }
         if (!blackPlayer.hasKing()) {
-            return new ResultDto("WHITE가 BLACK의 킹을 캡처하여 승리하였습니다!");
+            return Result.WHITE_WIN_CAPTURE_KING;
         }
         return getResultByScore();
     }
 
-    private ResultDto getResultByScore() {
+    private Result getResultByScore() {
         final double whiteScore = whitePlayer.calculateScore();
         final double blackScore = blackPlayer.calculateScore();
-        final String status = String.format("%s: %.1f\n%s: %.1f\n",
-                whitePlayer.getTeamName(), whiteScore, blackPlayer.getTeamName(), blackScore);
-        return findWinner(whiteScore, blackScore, status);
+        return findWinner(whiteScore, blackScore);
     }
 
-    private ResultDto findWinner(final double whiteScore, final double blackScore, final String status) {
+    private Result findWinner(final double whiteScore, final double blackScore) {
         if (whiteScore > blackScore) {
-            return new ResultDto(status.concat("WHITE 승!"));
+            return Result.WHITE_WIN_SCORE;
         }
         if (whiteScore < blackScore) {
-            return new ResultDto(status.concat("BLACK 승!"));
+            return Result.BLACK_WIN_SCORE;
         }
-        return new ResultDto(status.concat("무승부!"));
-    }
-
-    public ScoreDto getScoreStatus() {
-        final double whiteScore = whitePlayer.calculateScore();
-        final double blackScore = blackPlayer.calculateScore();
-        final String status = String.format("%s: %.1f\n%s: %.1f",
-                whitePlayer.getTeamName(), whiteScore, blackPlayer.getTeamName(), blackScore);
-        return new ScoreDto(status);
+        return Result.DRAW;
     }
 }
