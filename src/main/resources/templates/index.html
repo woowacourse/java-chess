@@ -9,183 +9,19 @@
   <title>체스</title>
 </head>
 <body>
-<div class="container">
-  <div class="row">
-    <div class="col-md-7">
-      <div class="row button-box">
-        <div class="col-md-4 button start-button">
-          <form action="/start" method="get">
-            <input class="btn btn-default" type="submit" value="Start"/>
-          </form>
-        </div>
-        <div class="col-md-4 button end-button">
-          <form action="/end" method="get">
-            <input class="btn btn-danger" type="submit" value="End"/>
-          </form>
-        </div>
-        <div class="col-md-4 button status-button">
-          <form action="/status" method="get">
-            <input class="btn btn-success" type="submit" value="Status"/>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="status-box">
-        <div>
-          <label>게임 현황</label>
-          <span>{{winner}}</span>
-          <br/>
-          <label>White 점수</label>
-          <span>{{whiteScore}}</span>
-          <br/>
-          <label>Black 점수</label>
-          <span>{{blackScore}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-7">
-      <div class="move-box">
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="target"/>
-          <input type="submit" value="Move"/>
-        </form>
-      </div>
-      <div class="chessboard-box">
-        <table>
-          <tbody>
-          <tr>
-            <td id="a8" class="white space" onclick="clickSpace(this)">{{a8}}</td>
-            <td id="b8" class="brown space" onclick="clickSpace(this)">{{b8}}</td>
-            <td id="c8" class="white space" onclick="clickSpace(this)">{{c8}}</td>
-            <td id="d8" class="brown space" onclick="clickSpace(this)">{{d8}}</td>
-            <td id="e8" class="white space" onclick="clickSpace(this)">{{e8}}</td>
-            <td id="f8" class="brown space" onclick="clickSpace(this)">{{f8}}</td>
-            <td id="g8" class="white space" onclick="clickSpace(this)">{{g8}}</td>
-            <td id="h8" class="brown space" onclick="clickSpace(this)">{{h8}}</td>
-          </tr>
-          <tr>
-            <td id="a7" class="brown space" onclick="clickSpace(this)">{{a7}}</td>
-            <td id="b7" class="white space" onclick="clickSpace(this)">{{b7}}</td>
-            <td id="c7" class="brown space" onclick="clickSpace(this)">{{c7}}</td>
-            <td id="d7" class="white space" onclick="clickSpace(this)">{{d7}}</td>
-            <td id="e7" class="brown space" onclick="clickSpace(this)">{{e7}}</td>
-            <td id="f7" class="white space" onclick="clickSpace(this)">{{f7}}</td>
-            <td id="g7" class="brown space" onclick="clickSpace(this)">{{g7}}</td>
-            <td id="h7" class="white space" onclick="clickSpace(this)">{{h7}}</td>
-          </tr>
-          <tr>
-            <td id="a6" class="white space" onclick="clickSpace(this)">{{a6}}</td>
-            <td id="b6" class="brown space" onclick="clickSpace(this)">{{b6}}</td>
-            <td id="c6" class="white space" onclick="clickSpace(this)">{{c6}}</td>
-            <td id="d6" class="brown space" onclick="clickSpace(this)">{{d6}}</td>
-            <td id="e6" class="white space" onclick="clickSpace(this)">{{e6}}</td>
-            <td id="f6" class="brown space" onclick="clickSpace(this)">{{f6}}</td>
-            <td id="g6" class="white space" onclick="clickSpace(this)">{{g6}}</td>
-            <td id="h6" class="brown space" onclick="clickSpace(this)">{{h6}}</td>
-          </tr>
-          <tr>
-            <td id="a5" class="brown space" onclick="clickSpace(this)">{{a5}}</td>
-            <td id="b5" class="white space" onclick="clickSpace(this)">{{b5}}</td>
-            <td id="c5" class="brown space" onclick="clickSpace(this)">{{c5}}</td>
-            <td id="d5" class="white space" onclick="clickSpace(this)">{{d5}}</td>
-            <td id="e5" class="brown space" onclick="clickSpace(this)">{{e5}}</td>
-            <td id="f5" class="white space" onclick="clickSpace(this)">{{f5}}</td>
-            <td id="g5" class="brown space" onclick="clickSpace(this)">{{g5}}</td>
-            <td id="h5" class="white space" onclick="clickSpace(this)">{{h5}}</td>
-          </tr>
-          <tr>
-            <td id="a4" class="white space" onclick="clickSpace(this)">{{a4}}</td>
-            <td id="b4" class="brown space" onclick="clickSpace(this)">{{b4}}</td>
-            <td id="c4" class="white space" onclick="clickSpace(this)">{{c4}}</td>
-            <td id="d4" class="brown space" onclick="clickSpace(this)">{{d4}}</td>
-            <td id="e4" class="white space" onclick="clickSpace(this)">{{e4}}</td>
-            <td id="f4" class="brown space" onclick="clickSpace(this)">{{f4}}</td>
-            <td id="g4" class="white space" onclick="clickSpace(this)">{{g4}}</td>
-            <td id="h4" class="brown space" onclick="clickSpace(this)">{{h4}}</td>
-          </tr>
-          <tr>
-            <td id="a3" class="brown space" onclick="clickSpace(this)">{{a3}}</td>
-            <td id="b3" class="white space" onclick="clickSpace(this)">{{b3}}</td>
-            <td id="c3" class="brown space" onclick="clickSpace(this)">{{c3}}</td>
-            <td id="d3" class="white space" onclick="clickSpace(this)">{{d3}}</td>
-            <td id="e3" class="brown space" onclick="clickSpace(this)">{{e3}}</td>
-            <td id="f3" class="white space" onclick="clickSpace(this)">{{f3}}</td>
-            <td id="g3" class="brown space" onclick="clickSpace(this)">{{g3}}</td>
-            <td id="h3" class="white space" onclick="clickSpace(this)">{{h3}}</td>
-          </tr>
-          <tr>
-            <td id="a2" class="white space" onclick="clickSpace(this)">{{a2}}</td>
-            <td id="b2" class="brown space" onclick="clickSpace(this)">{{b2}}</td>
-            <td id="c2" class="white space" onclick="clickSpace(this)">{{c2}}</td>
-            <td id="d2" class="brown space" onclick="clickSpace(this)">{{d2}}</td>
-            <td id="e2" class="white space" onclick="clickSpace(this)">{{e2}}</td>
-            <td id="f2" class="brown space" onclick="clickSpace(this)">{{f2}}</td>
-            <td id="g2" class="white space" onclick="clickSpace(this)">{{g2}}</td>
-            <td id="h2" class="brown space" onclick="clickSpace(this)">{{h2}}</td>
-          </tr>
-          <tr>
-            <td id="a1" class="brown space" onclick="clickSpace(this)">{{a1}}</td>
-            <td id="b1" class="white space" onclick="clickSpace(this)">{{b1}}</td>
-            <td id="c1" class="brown space" onclick="clickSpace(this)">{{c1}}</td>
-            <td id="d1" class="white space" onclick="clickSpace(this)">{{d1}}</td>
-            <td id="e1" class="brown space" onclick="clickSpace(this)">{{e1}}</td>
-            <td id="f1" class="white space" onclick="clickSpace(this)">{{f1}}</td>
-            <td id="g1" class="brown space" onclick="clickSpace(this)">{{g1}}</td>
-            <td id="h1" class="white space" onclick="clickSpace(this)">{{h1}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="black-player-box">
-        <div>Black</div>
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="black-source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="black-target"/>
-          <input type="submit" value="Move"/>
-        </form>
-        <div>
-          <label>Black 점수</label>
-          <span>{{blackScore}}</span>
-        </div>
-      </div>
-      <div class="white-player-box">
-        <div>Black</div>
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="white-source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="white-target"/>
-          <input type="submit" value="Move"/>
-        </form>
-        <div>
-          <label>White 점수</label>
-          <span>{{whiteScore}}</span>
-        </div>
-      </div>
-      <div class="save-button-box">
-        <form action="/save" method="post">
-          <label>게임 저장 이름</label>
-          <input type="text" name="gameName" id="gameName"/>
-          <input type="submit" value="Save"/>
-        </form>
-        <form action="/load" method="post">
-          <label>게임 저장 이름</label>
-          <input type="text" name="gameName" id="load"/>
-          <input type="submit" value="Load"/>
-        </form>
-      </div>
-    </div>
-  </div>
+<div>
+  <form action="/start" method="get">
+    <input class="btn btn-default" type="submit" value="Start"/>
+  </form>
+  <form action="/load" method="post">
+    <select name="gameName">
+      <option value="">저장된 게임명 선택</option>
+      {{#each names}}
+      <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
+    <input class="btn btn-default" type="submit" value="Load"/>
+  </form>
 </div>
 </body>
 </html>

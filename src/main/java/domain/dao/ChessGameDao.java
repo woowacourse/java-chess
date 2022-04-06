@@ -75,15 +75,14 @@ public class ChessGameDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 names.add(resultSet.getString("name"));
-                return names;
             }
+            return names;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return names;
     }
 
 }

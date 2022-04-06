@@ -15,7 +15,10 @@ public class ChessGame {
         this.chessBoard = chessBoard;
         this.currentPlayer = Player.WHITE;
     }
-
+    public ChessGame(final ChessBoard chessBoard, Player player) {
+        this.chessBoard = chessBoard;
+        this.currentPlayer = player;
+    }
     public void move(final Position source, final Position target) {
         validateTurn(source);
         chessBoard.move(source, target);

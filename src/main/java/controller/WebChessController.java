@@ -75,8 +75,9 @@ public class WebChessController {
     }
 
     public void load(String gameName) {
-//        System.out.println("Load 명령어 진입");
-//        ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
+        System.out.println("Load 명령어 진입");
+        System.out.println("gameName : "+ gameName);
+        ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
         List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
         System.out.println("가지고온 PieceList 사이즈 " +pieceDtoList.size());
         Map<Position, Piece> board = new HashMap<>();
@@ -93,10 +94,14 @@ public class WebChessController {
             board.put(piecePosition, piece);
         }
         ChessBoard chessBoard = new ChessBoard(board);
-        changeBoard(chessBoard);
+        changeBoard(Player.valueOf(chessGameDto.getPlayer()), chessBoard);
     }
 
-    public void changeBoard(ChessBoard chessBoard){
-        chessGame = new ChessGame(chessBoard);
+    public void changeBoard(Player player, ChessBoard chessBoard){
+        chessGame = new ChessGame(chessBoard, player);
+    }
+
+    public List<String> findAllGameName() {
+        return chessGameDao.findAllName();
     }
 }

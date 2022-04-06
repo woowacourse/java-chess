@@ -6,6 +6,7 @@ import static spark.Spark.staticFileLocation;
 
 import controller.WebChessController;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,12 +19,19 @@ public class WebApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            List<String> names = webChessController.findAllGameName();
+            model.put("names", names);
             return render(model, "index.html");
+        });
+
+        get("/test", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "chess.html");
         });
 
         get("/play", (req, res) -> {
             Map<String, Object> model = webChessController.modelBoard();
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         get("/start", (req, res) -> {
@@ -36,13 +44,13 @@ public class WebApplication {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("command", "end");
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         get("/status", (req, res) -> {
             Map<String, Object> model = webChessController.status();
             model.put("state", "status");
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         post("/move", (req, res) -> {
