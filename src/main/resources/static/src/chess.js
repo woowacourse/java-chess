@@ -7,10 +7,18 @@ function getChess() {
         url: "/chess",
         type: 'get',
         success(data) {
+            clearPieces();
             let obj = JSON.parse(data);
             setButton(obj.status);
             setPieces(obj.pieces);
         }
+    });
+}
+
+function clearPieces() {
+    let childNodes = document.getElementsByClassName("board_square");
+    $.each(childNodes, function (idx, childNode) {
+        childNode.innerHTML = "";
     });
 }
 
@@ -41,6 +49,7 @@ function start() {
         url: "/start",
         type: 'get',
         success(data) {
+            clearPieces();
             let obj = JSON.parse(data);
             setButton(obj.status);
             setPieces(obj.pieces);
@@ -123,11 +132,7 @@ function end() {
         url: "/end",
         type: 'post',
         success(data) {
-            document.getElementById("board_div").className = "non_selectable";
-            document.getElementById("status_btn").hidden = true;
-            document.getElementById("end_btn").hidden = true;
-            document.getElementById("restart_btn").hidden = false;
-
+            setButton("finished");
             let status = JSON.parse(data);
             var message = "♟ 게임 결과 ♟\n";
             $.each(status.scores, function (idx, score) {

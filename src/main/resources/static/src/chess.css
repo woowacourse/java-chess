@@ -15,15 +15,16 @@
     pointer-events: none;
 }
 
-.light_board {
+.board_square {
     height: 80px;
     width: 80px;
+}
+
+.light_board {
     background-color: rgb(232, 203, 156);
 }
 
 .dark_board {
-    height: 80px;
-    width: 80px;
     background-color: rgb(177, 134, 74);
 }
 
