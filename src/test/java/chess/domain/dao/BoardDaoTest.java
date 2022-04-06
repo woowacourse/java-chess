@@ -2,7 +2,6 @@ package chess.domain.dao;
 
 import chess.domain.dto.PieceDto;
 import chess.domain.game.board.ChessBoardFactory;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,9 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BoardDaoTest {
 
@@ -42,10 +39,10 @@ class BoardDaoTest {
     void delete() throws SQLException {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
-        boardDao.save(gameDao.findLastGame(),"a1","Pawn","WHITE");
-        boardDao.save(gameDao.findLastGame(),"a2","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(),"a1","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(),"a2","Pawn","WHITE");
         //when
-        boardDao.delete(gameDao.findLastGame());
+        boardDao.delete(gameDao.findLastGameId());
         //then
     }
 
@@ -54,10 +51,10 @@ class BoardDaoTest {
     void findByGameId() throws SQLException {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
-        boardDao.save(gameDao.findLastGame(),"a1","Pawn","WHITE");
-        boardDao.save(gameDao.findLastGame(),"a2","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(),"a1","Pawn","WHITE");
+        boardDao.save(gameDao.findLastGameId(),"a2","Pawn","WHITE");
         //when
-        List<PieceDto> actual = boardDao.findByGameId(gameDao.findLastGame());
+        List<PieceDto> actual = boardDao.findByGameId(gameDao.findLastGameId());
         //then
         assertThat(actual.size()).isEqualTo(2);
         assertThat(actual.get(0).getGameId()).isEqualTo(1);

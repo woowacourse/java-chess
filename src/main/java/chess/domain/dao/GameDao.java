@@ -21,10 +21,7 @@ public class GameDao {
     public int save(ChessBoard chessBoard) {
         final String sql = "insert into Game (id, status, turn) values(?, ?, ?)";
         try {
-            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, ++id);
-            statement.setBoolean(2, chessBoard.isPlaying());
-            statement.setString(3, chessBoard.getCurrentTurn().name());
+            final PreparedStatement statement = makeSaveStatements(chessBoard, sql);
             statement.executeUpdate();
             return id;
         } catch (SQLException throwables) {
@@ -33,7 +30,15 @@ public class GameDao {
         return 0;
     }
 
-    public int findLastGame() throws SQLException {
+    private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) throws SQLException {
+        final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        statement.setInt(1, ++id);
+        statement.setBoolean(2, chessBoard.isPlaying());
+        statement.setString(3, chessBoard.getCurrentTurn().name());
+        return statement;
+    }
+
+    public int findLastGameId() throws SQLException {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
         final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ResultSet result = statement.executeQuery();
@@ -67,7 +72,7 @@ public class GameDao {
         final String sql = "delete from game where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            int id = findLastGame();
+            int id = findLastGameId();
             statement.setInt(1, id);
             statement.executeUpdate();
             return id;

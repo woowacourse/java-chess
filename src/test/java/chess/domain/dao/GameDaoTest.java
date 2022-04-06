@@ -2,15 +2,12 @@ package chess.domain.dao;
 
 import chess.domain.dto.GameDto;
 import chess.domain.game.board.ChessBoardFactory;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameDaoTest {
 
@@ -43,7 +40,7 @@ class GameDaoTest {
         gameDao.save(ChessBoardFactory.initBoard());
         gameDao.save(ChessBoardFactory.initBoard());
         //when
-        int actual = gameDao.findLastGame();
+        int actual = gameDao.findLastGameId();
         //then
         assertThat(actual).isEqualTo(2);
     }
@@ -69,7 +66,7 @@ class GameDaoTest {
         //when
         gameDao.delete();
         //then
-        assertThat(gameDao.findLastGame()).isEqualTo(1);
+        assertThat(gameDao.findLastGameId()).isEqualTo(1);
     }
 
     @AfterEach

@@ -33,16 +33,16 @@ public class ChessService {
     }
 
     private boolean isNotSaved() throws SQLException {
-        return gameDao.findLastGame() == 0;
+        return gameDao.findLastGameId() == 0;
     }
 
     private void loadLastGame() throws SQLException {
         HashMap<Position, ChessPiece> board = new HashMap<>();
-        for (PieceDto pieceDto : boardDao.findByGameId(gameDao.findLastGame())) {
+        for (PieceDto pieceDto : boardDao.findByGameId(gameDao.findLastGameId())) {
             ChessPiece piece = makePiece(pieceDto);
             board.put(new Position(pieceDto.getPosition()), piece);
         }
-        GameDto game = gameDao.findById(gameDao.findLastGame());
+        GameDto game = gameDao.findById(gameDao.findLastGameId());
         chessBoard = new ChessBoard(board, game.getStatus(), game.getTurn());
     }
 
@@ -56,7 +56,7 @@ public class ChessService {
 
     public void end() throws SQLException {
         chessBoard.end();
-        boardDao.delete(gameDao.findLastGame());
+        boardDao.delete(gameDao.findLastGameId());
         gameDao.delete();
     }
 
