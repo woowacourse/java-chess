@@ -9,16 +9,25 @@
 <body>
 <div id="app">
   <h1>♟️ 체스 게임 ♟</h1>
-<!--  <section class="game-ui">-->
 
-<!--  </section>-->
-
-
-  <div class = "start">
+  <div class="start">
     <form action="/ui/start" method="get">
       <button type="submit" formmethod="GET">start!</button>
     </form>
   </div>
+
+  <div class="end">
+    <form action="/ui/end" method="get">
+      <button type="submit" formmethod="GET">end!</button>
+    </form>
+  </div>
+
+    <div class="status" id="status">
+      <button id="btn">status</button>
+      <label>
+        게임 결과:
+      </label>
+    </div>
 
   <section class="chess-ui">
     {{#this}}
@@ -369,12 +378,28 @@
     </form>
 
   </section>
+
+
 </div>
+<div id="main"></div>
 </body>
 
 <script>
 
   const section = document.querySelector("section");
+  const buttonElement = document.getElementById('btn');
+
+  buttonElement.addEventListener('click', function (event) {
+    fetch("ui/status")
+    .then((res) => res.json())
+    .then((json) => JSON.stringify(json.result))
+    .then((json) => {
+          let statusDiv = document.getElementById('status');
+          let html = json
+          statusDiv.append(html);
+        }
+    )
+  })
 
   let fromInput;
   let toInput;

@@ -59,11 +59,32 @@ public class WebApplication {
 
             game.set(ChessGame.of(chessmenInitializer.init()));
 
+            if (game.get().isEnd()) {
+                res.redirect("/");
+            }
+
             res.redirect("/");
 
             return null;
         });
 
+        get("/ui/end", (req, res) -> {
+
+            game.set(ChessGame.of(chessmenInitializer.init()));
+
+            res.redirect("/");
+
+            return null;
+        });
+
+        get("ui/status", (req, res) -> {
+            res.type("application/json");
+            JsonTransformer jsonTransformer = new JsonTransformer();
+
+            Map<String, Object> model = game.get().calculateGameResult().getGameResultMap();
+
+            return jsonTransformer.render(model);
+        });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
