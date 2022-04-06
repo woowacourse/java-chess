@@ -14,9 +14,6 @@ public interface State {
         if (value.equals("whiterunning")) {
             return new WhiteRunning();
         }
-        if (value.equals("ready")) {
-            return new Ready();
-        }
         throw new IllegalArgumentException();
     }
 
