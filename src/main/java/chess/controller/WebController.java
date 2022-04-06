@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.model.GameResult;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
 import chess.service.ChessService;
@@ -47,6 +48,12 @@ public class WebController {
         });
 
         get("/king/dead", (req, res) -> gson.toJson(chessService.isKingDead()));
+
+        get("/status", (req, res) -> {
+            GameResult result = chessService.getResult();
+
+            return gson.toJson(result);
+        });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);

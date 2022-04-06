@@ -120,7 +120,6 @@ const kingDeadEndGame = () => {
 
     response.then(data => data.json())
         .then(body => {
-            console.log(body);
             if (body === true) {
                 alert("왕이 죽었다!")
                 endGame();
@@ -144,7 +143,12 @@ const getStatus = () => {
 
     response.then(data => data.json())
         .then(body => {
-            // 서버에서 받아온 결과 값을 뿌려줌
+            const turnBox = document.getElementById("turn-box")
+            turnBox.innerHTML = "<div> " +
+                "<div> BLACK TEAM 점수:" + body.blackScore + "</div>" +
+                "<div> WHITE TEAM 점수:" + body.whiteScore + "</div>" +
+                "<div> 우승 팀:" + body.winningTeam + "</div>" +
+                "</div> "
         })
 }
 
@@ -156,10 +160,6 @@ const initTurn = () => {
     movePosition.source = undefined;
     movePosition.target = undefined;
 }
-
-
-
-
 
 const addMovePosition = (position) => {
     if (movePosition.source !== undefined && movePosition.target !== undefined) {

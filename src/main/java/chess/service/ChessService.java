@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.model.ChessGame;
+import chess.model.GameResult;
 import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
@@ -42,5 +43,9 @@ public class ChessService {
 
     public boolean isKingDead() {
         return chessGame.isKingDead();
+    }
+
+    public GameResult getResult() {
+        return chessGame.getWinningResult();
     }
 }
