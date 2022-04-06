@@ -33,7 +33,7 @@ public class Play implements State {
     @Override
     public State move(Position source, Position target) {
         chessboard.movePiece(source, target, turn);
-        if (!chessboard.isKingAlive()) {
+        if (chessboard.isKingNotAlive()) {
             return new Finish(chessboard);
         }
         turn.nextTurn();

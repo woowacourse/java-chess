@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.domain.position.Positions;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -24,11 +25,16 @@ public class ChessWebController {
     private static final String INIT_TURN = "blank";
     private static final String WHITE = "white";
     private static final String BLACK = "black";
-    private static final String GAME_ID = ":id";
-    private static final String ERROR_ANNOUNCE_MESSAGE = "<br> 뒤로 가기를 눌러주세요. ";
-    private static final int NOT_EXIST_USER = 0;
+    private static final String GAME_ID = ":id";;
     private static final String INIT_STATE = "init";
     private static final String STATE = "state";
+    private static final String LOSE = "패";
+    private static final String WIN = "승";
+    public static final String WHITE_RESULT = "whiteResult";
+    public static final String BLACK_RESULT = "blackResult";
+    private static final int NOT_EXIST_USER = 0;
+    private static final int LOSE_SCORE = 0;
+    private static final String ERROR_ANNOUNCE_MESSAGE = "<br> 뒤로 가기를 눌러주세요. ";
 
     private final ChessService chessService;
 
@@ -97,7 +103,6 @@ public class ChessWebController {
             return modelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
 
-
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             response.body(exception.getMessage() + ERROR_ANNOUNCE_MESSAGE);
@@ -123,8 +128,25 @@ public class ChessWebController {
     }
 
     private Map<String, Object> createScore(ChessGame chessGame, Map<String, Object> model) {
+        Score whiteScore = chessGame.computeScore(Color.WHITE);
+        Score blackScore = chessGame.computeScore(Color.BLACK);
+
+        if (whiteScore.getScore() == LOSE_SCORE || blackScore.getScore() == LOSE_SCORE) {
+            return hasWinner(model, whiteScore);
+        }
         model.put(WHITE, chessGame.computeScore(Color.WHITE));
         model.put(BLACK, chessGame.computeScore(Color.BLACK));
+        return model;
+    }
+
+    private Map<String, Object> hasWinner(Map<String, Object> model, Score whiteScore) {
+        if (whiteScore.getScore() == LOSE_SCORE) {
+            model.put(WHITE_RESULT, LOSE);
+            model.put(BLACK_RESULT, WIN);
+            return model;
+        }
+        model.put(WHITE_RESULT, WIN);
+        model.put(BLACK_RESULT, LOSE);
         return model;
     }
 

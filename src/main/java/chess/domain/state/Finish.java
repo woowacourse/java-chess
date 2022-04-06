@@ -6,12 +6,14 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Finish implements State {
 
     private static final String EXCEPTION_MOVE_IMPOSSIBLE = "Finish 상태에서 움직일 수 없습니다.";
     private static final String EXCEPTION_END = "종료된 게임입니다.";
+    private static final String WHITE = "white";
 
     private final Chessboard chessboard;
 
@@ -51,7 +53,27 @@ public class Finish implements State {
 
     @Override
     public Score computeScore(Color color) {
+        if (chessboard.isKingNotAlive()) {
+            return computeWinnerScore(color);
+        }
         return chessboard.computeScore(color);
+    }
+
+    private Score computeWinnerScore(Color color) {
+        if (chessboard.isWinWhite()) {
+            return scoreWhite(color);
+        }
+        if (color.isSameColor(WHITE)) {
+            return Score.create(new HashMap<>(), Color.WHITE);
+        }
+        return chessboard.computeScore(color);
+    }
+
+    private Score scoreWhite(Color color) {
+        if (color.isSameColor(WHITE)) {
+            return chessboard.computeScore(color);
+        }
+        return Score.create(new HashMap<>(), Color.BLACK);
     }
 
     @Override

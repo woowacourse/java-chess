@@ -116,11 +116,18 @@ public class Chessboard {
                 .anyMatch(position -> position.isSamePosition(row, column));
     }
 
-    public boolean isKingAlive() {
+    public boolean isKingNotAlive() {
         return board.keySet()
                 .stream()
                 .filter(position -> board.get(position).isSameType(King.class))
-                .count() == KING_COUNT;
+                .count() != KING_COUNT;
+    }
+
+    public boolean isWinWhite() {
+        return board.keySet()
+                .stream()
+                .filter(position -> board.get(position).isSameType(King.class))
+                .anyMatch(position -> board.get(position).isColor(Color.WHITE));
     }
 
     public Score computeScore(Color color) {
