@@ -1,22 +1,24 @@
 package chess.dao;
 
 import chess.domain.board.Board;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.boardstrategy.InjectBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import chess.dto.ChessGameDto;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BoardDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -47,54 +49,44 @@ public class BoardDao {
         if (checkInDB(chessGameDto)) {
             return;
         }
-        final String sql = "INSERT into board (name, turn, board) values (?, ?, ?);";
-
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, chessGameDto.getName());
-            statement.setString(2, chessGameDto.getChessGame().getTurn().name());
-            statement.setString(3, chessGameDto.getBoardJson());
-            statement.executeUpdate();
+            final String board_sql = "INSERT into board (name, turn) values (?, ?);";
+            PreparedStatement board_statement = connection.prepareStatement(board_sql);
+            board_statement.setString(1, chessGameDto.getName());
+            board_statement.setString(2, chessGameDto.getChessGame().getTurn().name());
+            board_statement.executeUpdate();
+            createSquares(chessGameDto, connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    private void createSquares(ChessGameDto chessGameDto, Connection connection) throws SQLException {
+        final String squares_sql = "INSERT into squares (board_name, position, piece) values (?, ?, ?);";
+        for (Entry<String, String> entry : chessGameDto.getSquaresOfDB().entrySet()) {
+            PreparedStatement squares_statement = connection.prepareStatement(squares_sql);
+            squares_statement.setString(1, chessGameDto.getName());
+            squares_statement.setString(2, entry.getKey());
+            squares_statement.setString(3, entry.getValue());
+            squares_statement.executeUpdate();
+        }
+    }
+
     private boolean checkInDB(ChessGameDto chessGameDto) {
-        if (findByName(chessGameDto.getName()) != null) {
+        if (findTurnByName(chessGameDto.getName()) != null) {
             System.out.println("이미 해당 이름의 정보가 있습니다.");
             return true;
         }
         return false;
     }
 
-    public void save(final ChessGameDto chessGameDto) {
-        try {
-            final Connection connection = getConnection();
-            final String sql = "update board set board = ?, turn = ? where name = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, chessGameDto.getBoardJson());
-            statement.setString(2, chessGameDto.getChessGame().getTurn().name());
-            statement.setString(3, chessGameDto.getName());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void delete(final String name) {
-        final Connection connection = getConnection();
-        final String sql = "DELETE FROM board WHERE name = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public ChessGameDto findByName(String name) {
+        Team turn = findTurnByName(name);
+        Map<Position, Piece> squares = findSquaresByName(name);
+        return new ChessGameDto(name,new ChessGame(turn, new Board(squares)));
+    }
+
+    private Team findTurnByName(String name) {
         final Connection connection = getConnection();
         final String sql = "select * from board where name = ?";
         try {
@@ -104,24 +96,106 @@ public class BoardDao {
             if (!resultSet.next()) {
                 return null;
             }
-            Map<Position, Piece> squares = getSquares(resultSet);
-            return new ChessGameDto(resultSet.getString("name"),
-                    new ChessGame(Team.valueOf(resultSet.getString("turn")), new Board(squares)));
+            return Team.valueOf(resultSet.getString("turn"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private Map<Position, Piece> getSquares(ResultSet resultSet) throws SQLException {
+    private Map<Position, Piece> findSquaresByName(String name){
         Map<Position, Piece> squares = new HashMap<>();
-        JsonArray jsonElements = new Gson().fromJson(resultSet.getString("board"), JsonArray.class);
-
-        for (JsonElement jsonElement : jsonElements) {
-            String position = jsonElement.getAsJsonObject().get("position").getAsString();
-            String piece = jsonElement.getAsJsonObject().get("piece").getAsString();
-            squares.put(Position.from(position), InjectBoardStrategy.getStringPieceMap().get(piece));
+        final Connection connection = getConnection();
+        final String sql = "select piece from squares where board_name = ? AND position = ?";
+        try {
+            for (Position position : getAblePositions()) {
+                final PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, name);
+                statement.setString(2, position.toString());
+                final ResultSet resultSet = statement.executeQuery();
+                if (!resultSet.next()) {
+                    return null;
+                }
+                String pieceStr = resultSet.getString("piece");
+                squares.put(position, InjectBoardStrategy.getStringPieceMap().get(pieceStr));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return squares;
+    }
+
+    private List<Position> getAblePositions() {
+        List<Position> positions = new ArrayList<>();
+        for (Column column : Column.values()) {
+            for (Rank rank : Rank.values()) {
+                positions.add(new Position(column, rank));
+            }
+        }
+        return positions;
+    }
+
+    public void save(final ChessGameDto chessGameDto) {
+        saveBoard(chessGameDto);
+        saveSquares(chessGameDto);
+    }
+
+    private void saveBoard(final ChessGameDto chessGameDto) {
+        try {
+            final Connection connection = getConnection();
+            final String sql = "update board set turn = ? where name = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, chessGameDto.getChessGame().getTurn().name());
+            statement.setString(2, chessGameDto.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveSquares(ChessGameDto chessGameDto) {
+        try {
+            final Connection connection = getConnection();
+            final String sql = "update squares set piece = ? where board_name = ? AND position = ?";
+            for (Position position : getAblePositions()) {
+                final PreparedStatement statement = connection.prepareStatement(sql);
+                Piece piece = chessGameDto.getSquares().get(position);
+                statement.setString(1, piece.getName().getValue(piece.getTeam()));
+                statement.setString(2, chessGameDto.getName());
+                statement.setString(3, position.toString());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(final String name) {
+        deleteBoard(name);
+        deleteSquares(name);
+    }
+
+    private void deleteSquares(String name) {
+        final Connection connection = getConnection();
+        final String sql = "DELETE FROM squares WHERE board_name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteBoard(final String name) {
+        final Connection connection = getConnection();
+        final String sql = "DELETE FROM board WHERE name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

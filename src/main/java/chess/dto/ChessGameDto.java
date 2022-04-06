@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,15 +42,13 @@ public class ChessGameDto {
         return result;
     }
 
-    public String getBoardJson() {
-        JsonArray jsonElements = new JsonArray();
-        for (Entry<Position, Piece> entry : chessGame.getBoard().getSquares().entrySet()) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("position", entry.getKey().toString());
-            jsonObject.addProperty("piece", entry.getValue().getName().getValue(entry.getValue().getTeam()));
-            jsonElements.add(jsonObject);
-        }
-        return new Gson().toJson(jsonElements);
+    public Map<String, String> getSquaresOfDB() {
+        Map<String, String> squaresDB = new HashMap<>();
+        chessGame.getBoard().getSquares().forEach((position, piece) ->
+                squaresDB.put(position.toString(),
+                piece.getName().getValue(piece.getTeam()))
+        );
+        return squaresDB;
     }
 
     private void addPiecesDtoRank(List<PieceDto> result, Map<Position, Piece> squares, Rank rank) {

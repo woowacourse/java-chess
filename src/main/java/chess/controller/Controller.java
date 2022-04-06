@@ -35,7 +35,7 @@ public class Controller {
         staticFiles.location("/static");
         get("/", (req, res) -> getStartObject());
         post("/start", (req, res) -> {
-            initGame(req);
+            initGame(req.queryParams("name"));
             return getObject();
         });
         post("/command", (req, res) -> {
@@ -46,11 +46,12 @@ public class Controller {
         post("/end", (req, res) -> getEndObject());
     }
 
-    private void initGame(Request req) {
-        model.put("name", req.queryParams("name"));
+    private void initGame(String name) {
+        model.put("name", name);
         initError();
-        boardDao.create(new ChessGameDto((String) model.get("name"), new ChessGame(new InitBoardStrategy())));
-        chessGame = boardDao.findByName((String) model.get("name")).getChessGame();
+        boardDao.create(new ChessGameDto(name, new ChessGame(new InitBoardStrategy())));
+        chessGame = boardDao.findByName(name).getChessGame();
+        System.out.println(chessGame);
         state = new Play(chessGame);
     }
 
