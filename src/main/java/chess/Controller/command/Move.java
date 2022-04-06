@@ -28,6 +28,12 @@ public class Move extends PieceCommand {
             boardDao.changeGameStatus(GameState.END.toString(), boardId);
             return board;
         }
+        movePiece(start, target, boardId);
+        changeGameStatus(boardDao, board, boardId);
+        return board;
+    }
+
+    private void movePiece(final Position start, final Position target, final int boardId) {
         final String startPosition = start.getColumn().toString().toLowerCase(Locale.ROOT)
                 + start.getRow().getValue();
         final String targetPosition = target.getColumn().toString().toLowerCase(Locale.ROOT)
@@ -35,8 +41,11 @@ public class Move extends PieceCommand {
         final PiecesDao piecesDao = new PiecesDao();
         piecesDao.deletePiece(targetPosition);
         piecesDao.changePosition(startPosition, targetPosition, boardId);
+    }
+
+    private void changeGameStatus(final BoardDao boardDao, final Board board, final int boardId) {
         final GameState nextTurnGameState = board.changeTurn();
         boardDao.changeGameStatus(nextTurnGameState.toString(), boardId);
-        return board;
     }
+
 }

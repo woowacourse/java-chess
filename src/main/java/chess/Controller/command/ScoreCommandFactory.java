@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class ScoreCommandFactory {
 
-    private static Map<Command, Supplier<ScoreCommand>> cachedScoreCommand = new EnumMap<>(Command.class);
+    private static final Map<Command, Supplier<ScoreCommand>> cachedScoreCommand = new EnumMap<>(Command.class);
 
     static {
         cachedScoreCommand.put(Command.STATUS, Status::new);
