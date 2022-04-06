@@ -3,15 +3,15 @@ package chess.domain.user;
 import java.util.Objects;
 
 public class User {
-    private Long id;
+    private String id;
     private String name;
 
-    public User(Long id, String name) {
+    public User(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -35,7 +35,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

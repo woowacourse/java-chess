@@ -26,25 +26,25 @@ class DbUserDaoTest {
 
     @Test
     void saveAndFindById() {
-        User user = new User(1L, "philz");
+        User user = new User("philz", "성우");
         userDao.save(user);
-        User findUser = userDao.findById(1);
+        User findUser = userDao.findById("philz");
         assertThat(findUser).isEqualTo(user);
     }
 
     @Test
     void findAll() {
-        userDao.save(new User(1L, "user a"));
-        userDao.save(new User(2L, "user b"));
+        userDao.save(new User("user a", "사람 a"));
+        userDao.save(new User("user b", "사람 b"));
         List<User> Users = userDao.findAll();
         assertThat(Users.size()).isEqualTo(2);
     }
 
     @Test
     void deleteById() {
-        userDao.save(new User(1L, "user a"));
-        userDao.save(new User(2L, "user b"));
-        userDao.deleteById(1);
+        userDao.save(new User("user a", "사람 a"));
+        userDao.save(new User("user b", "사람 b"));
+        userDao.deleteById("user a");
         List<User> Users = userDao.findAll();
         assertThat(Users.size()).isEqualTo(1);
     }

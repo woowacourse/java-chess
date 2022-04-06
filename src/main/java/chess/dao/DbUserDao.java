@@ -11,12 +11,13 @@ import java.util.List;
 
 public class DbUserDao extends Dao implements UserDao {
 
+    @Override
     public void save(User user) {
         final Connection connection = getConnection();
         final String sql = "insert users(user_id, user_name) values(?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, user.getId());
+            statement.setString(1, user.getId());
             statement.setString(2, user.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -25,19 +26,20 @@ public class DbUserDao extends Dao implements UserDao {
         }
     }
 
-    public User findById(int id) {
+    @Override
+    public User findById(String id) {
         final Connection connection = getConnection();
         final String sql = "select * from users where user_id = ?";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 return null;
             }
             return new User(
-                    resultSet.getLong("user_id"),
+                    resultSet.getString("user_id"),
                     resultSet.getString("user_name")
             );
         } catch (SQLException e) {
@@ -46,6 +48,7 @@ public class DbUserDao extends Dao implements UserDao {
         }
     }
 
+    @Override
     public List<User> findAll() {
         final Connection connection = getConnection();
         final String sql = "select * from users";
@@ -56,7 +59,7 @@ public class DbUserDao extends Dao implements UserDao {
             final List<User> findUsers = new ArrayList<>();
             while (resultSet.next()) {
                 final User findUser = new User(
-                        resultSet.getLong("user_id"),
+                        resultSet.getString("user_id"),
                         resultSet.getString("user_name")
                 );
                 findUsers.add(findUser);
@@ -69,13 +72,14 @@ public class DbUserDao extends Dao implements UserDao {
 
     }
 
-    public void deleteById(int id) {
+    @Override
+    public void deleteById(String id) {
         final Connection connection = getConnection();
         final String sql = "delete from users where user_id = ?";
         final PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
-            statement.setLong(1, id);
+            statement.setString(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,6 +87,7 @@ public class DbUserDao extends Dao implements UserDao {
         }
     }
 
+    @Override
     public void deleteAll() {
         final Connection connection = getConnection();
         final String sql = "delete from users";
