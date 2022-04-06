@@ -26,6 +26,20 @@ public class WebController {
 
 	private static final String MAIN_PAGE = "index.html";
 	private static final String GAME_PAGE = "game.html";
+	private static final String FILE_LOCATION = "/static";
+
+	private static final int PORT_NUMBER = 8081;
+
+	private static final String MAIN_URL = "/";
+	private static final String NEW_GAME_URL = "/new_game";
+	private static final String START_URL = "/start";
+	private static final String MOVE_URL = "/move";
+	private static final String DELETE_URL = "/delete";
+
+	private static final String SLASH = "/";
+	private static final String PATH_VARIABLE_NAME = ":name";
+	private static final String NAMES = "names";
+	private static final String NAME = "name";
 
 	private final ChessGameService gameService;
 
@@ -34,8 +48,8 @@ public class WebController {
 	}
 
 	public void run() {
-		port(8081);
-		staticFileLocation("/static");
+		port(PORT_NUMBER);
+		staticFileLocation(FILE_LOCATION);
 
 		showMain(new HashMap<>());
 		enterNewGame(new HashMap<>());
@@ -49,19 +63,19 @@ public class WebController {
 	}
 
 	private void showMain(Map<String, Object> model) {
-		get("/", (req, res) -> {
+		get(MAIN_URL, (req, res) -> {
 			List<NameResponseDto> nameDtos = gameService.findAllGames().stream()
 				.map(NameResponseDto::new)
 				.collect(Collectors.toList());
-			model.put("names", nameDtos);
+			model.put(NAMES, nameDtos);
 			return render(model, MAIN_PAGE);
 		});
 	}
 
 	private void enterNewGame(Map<String, Object> model) {
-		post("/new_game", (request, response) -> {
+		post(NEW_GAME_URL, (request, response) -> {
 			Map<String, String> name = RequestToMapConverter.ofSingle(request);
-			ChessGame game = new ChessGame(name.get("name"), new Ready(BoardInitializer.generate()));
+			ChessGame game = new ChessGame(name.get(NAME), new Ready(BoardInitializer.generate()));
 
 			gameService.saveGame(game);
 
@@ -71,16 +85,16 @@ public class WebController {
 	}
 
 	private void startGame(Map<String, Object> model) {
-		get("/start/:name", (request, response) -> {
-			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(":name"));
+		get(START_URL + SLASH + PATH_VARIABLE_NAME, (request, response) -> {
+			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(PATH_VARIABLE_NAME));
 			model.putAll(new GameResponseDto(updatedGame).getValue());
 			return render(model, GAME_PAGE);
 		});
 	}
 
 	private void continueGame(Map<String, Object> model) {
-		get("/:name", (request, response) -> {
-			ChessGame findGame = gameService.findGame(request.params(":name"));
+		get(SLASH + PATH_VARIABLE_NAME, (request, response) -> {
+			ChessGame findGame = gameService.findGame(request.params(PATH_VARIABLE_NAME));
 			if (findGame.isReady()) {
 				fillModelEmptyBoard(model, findGame);
 				return render(model, GAME_PAGE);
@@ -92,16 +106,16 @@ public class WebController {
 
 	private void fillModelEmptyBoard(Map<String, Object> model, ChessGame game) {
 		model.putAll(BoardResponseDto.empty().getValue());
-		model.put("name", game.getName());
+		model.put(NAME, game.getName());
 	}
 
 	private void move(Map<String, Object> model) {
-		post("/move/:name", (request, response) -> {
+		post(MOVE_URL + SLASH + PATH_VARIABLE_NAME, (request, response) -> {
 			Command command = RequestToCommandConverter.from(request);
-			ChessGame updatedGame = gameService.updateGame(command, request.params(":name"));
+			ChessGame updatedGame = gameService.updateGame(command, request.params(PATH_VARIABLE_NAME));
 
 			if (updatedGame.isFinished()) {
-				response.redirect("/");
+				response.redirect(MAIN_URL);
 				return null;
 			}
 
@@ -111,9 +125,9 @@ public class WebController {
 	}
 
 	private void deleteGame() {
-		post("/delete/:name", (request, response) -> {
-			gameService.deleteGame(request.params(":name"));
-			response.redirect("/");
+		post(DELETE_URL + SLASH + PATH_VARIABLE_NAME, (request, response) -> {
+			gameService.deleteGame(request.params(PATH_VARIABLE_NAME));
+			response.redirect(MAIN_URL);
 			return null;
 		});
 	}

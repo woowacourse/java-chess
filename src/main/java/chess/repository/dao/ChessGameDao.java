@@ -29,7 +29,7 @@ public class ChessGameDao {
 	}
 
 	public List<String> selectAllNames() {
-		return ConnectionManager.createQuery("select chessGame from game")
+		return ConnectionManager.createQuery("select name from chessGame")
 			.executeQuery()
 			.getResultList(NAME);
 	}
