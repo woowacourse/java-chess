@@ -75,7 +75,8 @@ public class Position {
     public Position plusDirection(Direction direction) {
         Column column = this.col.plusColumn(direction.getXDegree());
         Row row = this.row.plusRow(direction.getYDegree());
-        return new Position(column, row);
+        String position = column.getSymbol() + row.getSymbol();
+        return Position.from(position);
     }
 
     public Column getCol() {
