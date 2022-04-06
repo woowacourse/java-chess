@@ -16,45 +16,46 @@ public class WebController {
 
     public void run() {
         staticFileLocation("/static");
-        getIndexPage();
-        createChessGame();
-        deleteChessGame();
-        getGamePage();
-        movePiece();
-        resetChessGame();
+        ChessGameDao chessGameDao = new ChessGameDao();
+        getIndexPage(chessGameDao);
+        createChessGame(chessGameDao);
+        deleteChessGame(chessGameDao);
+        getChessGamePage(chessGameDao);
+        movePiece(chessGameDao);
+        resetChessGame(chessGameDao);
         getException();
     }
 
-    private void getIndexPage() {
+    private void getIndexPage(final ChessGameDao chessGameDao) {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("chess_games", ChessGameDao.loadAll());
+            model.put("chess_games", chessGameDao.loadAll());
             return new ModelAndView(model, "index.html");
         }, new HandlebarsTemplateEngine());
     }
 
-    private void createChessGame() {
+    private void createChessGame(final ChessGameDao chessGameDao) {
         post("/create_chess_game", (req, res) -> {
             String name = req.queryParams("name");
-            ChessGameDao.save(ChessGame.createInit(name));
+            chessGameDao.save(ChessGame.createInit(name));
             res.redirect("/game/" + name);
             return null;
         });
     }
 
-    private void deleteChessGame() {
+    private void deleteChessGame(final ChessGameDao chessGameDao) {
         post("/delete/:name", (req, res) -> {
             String name = req.params(":name");
-            ChessGameDao.delete(name);
+            chessGameDao.delete(name);
             res.redirect("/");
             return null;
         });
     }
 
-    private void getGamePage() {
+    private void getChessGamePage(final ChessGameDao chessGameDao) {
         get("/game/:name", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGame chessGame = ChessGameDao.load(req.params("name"));
+            ChessGame chessGame = chessGameDao.load(req.params("name"));
             model.put("chess_game_name", req.params("name"));
             model.putAll(chessGame.getCurrentBoardByRawPosition());
             model.put("turn", chessGame.getTurn());
@@ -63,21 +64,21 @@ public class WebController {
         }, new HandlebarsTemplateEngine());
     }
 
-    private void movePiece() {
+    private void movePiece(final ChessGameDao chessGameDao) {
         post("/move/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
-            ChessGame loadedChessGame = ChessGameDao.load(chessGameName);
+            ChessGame loadedChessGame = chessGameDao.load(chessGameName);
             loadedChessGame.move(req.queryParams("source"), req.queryParams("target"));
-            ChessGameDao.save(loadedChessGame);
+            chessGameDao.save(loadedChessGame);
             res.redirect("/game/" + chessGameName);
             return null;
         });
     }
 
-    private void resetChessGame() {
+    private void resetChessGame(final ChessGameDao chessGameDao) {
         post("/reset/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
-            ChessGameDao.save(ChessGame.createInit(chessGameName));
+            chessGameDao.save(ChessGame.createInit(chessGameName));
             res.redirect("/game/" + chessGameName);
             return null;
         });

@@ -13,10 +13,14 @@ import java.util.Map;
 
 public class BoardDao {
 
-    private static final Connection connection = ConnectionManager.getConnection();
+    private final Connection connection = ConnectionManager.getConnection();
 
-    public static void save(final ChessGame chessGame) {
+    public void save(final ChessGame chessGame) {
         delete(chessGame.getName());
+        saveBoard(chessGame);
+    }
+
+    private void saveBoard(final ChessGame chessGame) {
         String insertSql = "insert into board (name, raw_position, piece_name, piece_team_value) values (?, ?, ?, ?)";
         Map<String, Piece> currentBoard = chessGame.getCurrentBoardByRawPosition();
         try {
@@ -33,7 +37,7 @@ public class BoardDao {
         }
     }
 
-    public static void delete(final String name) {
+    public void delete(final String name) {
         String deleteSql = "delete from board where name=?";
         try {
             PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
@@ -44,33 +48,32 @@ public class BoardDao {
         }
     }
 
-    public static Board load(final String name) {
+    public Board load(final String name) {
         String loadSql = "select * from board where name=?";
         Map<Position, Piece> board = new HashMap<>();
         try {
             PreparedStatement loadStatement = connection.prepareStatement(loadSql);
             loadStatement.setString(1, name);
-            ResultSet resultSet = loadStatement.executeQuery();
-            putPositionAndPiece(board, resultSet);
+            putPositionAndPiece(board, loadStatement.executeQuery());
             validateBoardExist(board);
-            return new Board(board);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new Board(board);
     }
 
-    private static void putPositionAndPiece(Map<Position, Piece> board, ResultSet resultSet) throws SQLException {
+    private void putPositionAndPiece(final Map<Position, Piece> board, final ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
             Position position = Position.valueOf(resultSet.getString("raw_position"));
             Piece piece = StringToPieceConvertor.convert(
-                    resultSet.getString("piece_name"), resultSet.getString("piece_team_value")
+                    resultSet.getString("piece_name"),
+                    resultSet.getString("piece_team_value")
             );
             board.put(position, piece);
         }
     }
 
-    private static void validateBoardExist(Map<Position, Piece> board) {
+    private void validateBoardExist(Map<Position, Piece> board) {
         if (board.size() == 0) {
             throw new IllegalArgumentException("[ERROR] Board 가 존재하지 않습니다.");
         }
