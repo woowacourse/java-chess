@@ -59,15 +59,39 @@ class PieceDaoTest {
         pieceDao.saveAll(Map.of(
                 Position.from("a2"), new Pawn(BLACK),
                 Position.from("a3"), new Knight(WHITE)));
-        pieceDao.update("a3", piece);
+        pieceDao.updatePiece("a3", piece);
         //when
         final PieceDto actual = pieceDao.findAll().get("a3");
         //then
         assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
     }
 
+    @Test
+    @DisplayName("턴 정보를 DB에 저장한다.")
+    void saveTurn() {
+        //given
+        pieceDao.saveTurn("WHITE");
+        //when
+        final String actual = pieceDao.getTurn();
+        //then
+        assertThat(actual).isEqualTo("WHITE");
+        pieceDao.removeGameState();
+    }
+
+    @Test
+    @DisplayName("게임 상태를 DB에 저장한다.")
+    void saveState() {
+        //given
+        pieceDao.saveState("playing");
+        //when
+        final String actual = pieceDao.getGameState();
+        //then
+        assertThat(actual).isEqualTo("playing");
+        pieceDao.removeGameState();
+    }
+
     @AfterEach
     void removeAll() {
-        pieceDao.removeAll();
+        pieceDao.removeAllPieces();
     }
 }

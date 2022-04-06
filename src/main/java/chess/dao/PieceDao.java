@@ -51,15 +51,15 @@ public class PieceDao {
     public Map<String, PieceDto> findAll() {
         final Connection connection = getConnection();
         final String sql = "select position, team, name from piece";
-        final Map<String, PieceDto> all = new HashMap<>();
+        final Map<String, PieceDto> allPieces = new HashMap<>();
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
-            putAll(all, resultSet);
+            putAll(allPieces, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return all;
+        return allPieces;
     }
 
     private void putAll(final Map<String, PieceDto> all, final ResultSet resultSet) throws SQLException {
@@ -84,7 +84,7 @@ public class PieceDao {
         }
     }
 
-    public void update(final String position, final Piece piece) {
+    public void updatePiece(final String position, final Piece piece) {
         final Connection connection = getConnection();
         final String sql = "insert into piece (position, team, name) values (?, ?, ?) "
                 + "on duplicate key update team = (?), name = (?)";
@@ -102,9 +102,101 @@ public class PieceDao {
         }
     }
 
-    public void removeAll() {
+    public void removeAllPieces() {
         final Connection connection = getConnection();
         final String sql = "TRUNCATE piece";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean hasGameStateAlready() {
+        final Connection connection = getConnection();
+        final String sql = "select count(*) from game";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final int count = statement.executeUpdate();
+            return count > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveState(final String state) {
+        final Connection connection = getConnection();
+        String sql = "insert into game (state) values (?)";
+        if (hasGameStateAlready()) {
+            sql = "update game set state = (?)";
+        }
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, state);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveTurn(final String turn) {
+        final Connection connection = getConnection();
+        String sql = "insert into game (turn) values (?)";
+        if (hasGameStateAlready()) {
+            sql = "update game set turn = (?)";
+        }
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, turn);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getGameState() {
+        final Connection connection = getConnection();
+        final String sql = "select state from game";
+        String state = null;
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                state = resultSet.getString("state");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (state == null) {
+            return "nothing";
+        }
+        return state;
+    }
+
+    public String getTurn() {
+        final Connection connection = getConnection();
+        final String sql = "select turn from game";
+        String turn = null;
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                turn = resultSet.getString("turn");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (turn == null) {
+            return "nothing";
+        }
+        return turn;
+    }
+
+    public void removeGameState() {
+        final Connection connection = getConnection();
+        final String sql = "TRUNCATE game";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();

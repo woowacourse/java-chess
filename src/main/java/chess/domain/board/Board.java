@@ -15,7 +15,7 @@ public class Board {
     private final Map<Position, Piece> pieces;
     private final Team currentTurnTeam;
 
-    private Board(final Map<Position, Piece> pieces, final Team currentTurnTeam) {
+    public Board(final Map<Position, Piece> pieces, final Team currentTurnTeam) {
         this.pieces = pieces;
         this.currentTurnTeam = currentTurnTeam;
     }
@@ -104,5 +104,9 @@ public class Board {
         return pieces.values()
                 .stream()
                 .anyMatch(piece -> piece.canPromote(sourcePosition));
+    }
+
+    public Team getTurn() {
+        return currentTurnTeam;
     }
 }

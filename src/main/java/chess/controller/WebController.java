@@ -3,7 +3,6 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -12,17 +11,17 @@ public class WebController {
 
     public void run() {
         ChessGame chessGame = new ChessGame();
-        ready();
+        ready(chessGame);
         start(chessGame);
         move(chessGame);
         status(chessGame);
         end(chessGame);
     }
 
-    private void ready() {
+    private void ready(final ChessGame chessGame) {
         get("/", (req, res) -> {
-            final Map<String, Object> model = new HashMap<>();
-            return render(model);
+            chessGame.initializeBoard();
+            return render(chessGame.getAllPiecesByPosition());
         });
     }
 

@@ -21,6 +21,7 @@ class ChessGameTest {
         final Map<String, Object> allPiecesByPosition = chessGame.getAllPiecesByPosition();
         //then
         assertThat(allPiecesByPosition).hasSize(32);
+        chessGame.end();
     }
 
     @Test
@@ -70,6 +71,7 @@ class ChessGameTest {
         final Map<String, Object> actual = chessGame.getAllPiecesByPosition();
         //then
         assertThat(actual).contains(entry("a4", new PieceDto("WHITE", "Pawn")));
+        chessGame.end();
     }
 
     @Test
@@ -85,5 +87,6 @@ class ChessGameTest {
         final Map<String, Object> allPiecesByPosition = chessGame.getAllPiecesByPosition();
         //actual
         assertThat(allPiecesByPosition).doesNotContain(entry("b5", new PieceDto("BLACK", "Pawn")));
+        chessGame.end();
     }
 }
