@@ -9,12 +9,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.EmblemMapper;
 import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
@@ -31,7 +33,12 @@ public class ChessGameServiceTest {
 
     @BeforeEach
     void setUp() {
-        chessGameService = new ChessGameService(1, new fakeBoardDao());
+        chessGameService = new ChessGameService(new fakeGameDao(), new fakeBoardDao());
+    }
+
+    @AfterEach
+    void tearDown() {
+        chessGameService.delete();
     }
 
     @Test
@@ -139,6 +146,28 @@ public class ChessGameServiceTest {
             result.put(Position.of(A, TWO), Rook.colorOf(PieceColor.WHITE));
             result.put(Position.of(A, THREE), King.colorOf(PieceColor.BLACK));
             return result;
+        }
+    }
+
+    private static class fakeGameDao implements GameDao {
+        @Override
+        public Connection getConnection() {
+            return null;
+        }
+
+        @Override
+        public void save() {
+
+        }
+
+        @Override
+        public void deleteById(int id) {
+
+        }
+
+        @Override
+        public int getId() {
+            return 0;
         }
     }
 }

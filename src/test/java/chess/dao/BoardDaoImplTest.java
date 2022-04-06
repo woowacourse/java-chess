@@ -26,7 +26,6 @@ public class BoardDaoImplTest {
         boardDao = new BoardDaoImpl();
     }
 
-
     @AfterEach
     void tearDown() {
         gameDao.deleteById(gameDao.getId());
@@ -69,7 +68,6 @@ public class BoardDaoImplTest {
         //then
         assertThat(boardDao.findById(gameDao.getId())).isEmpty();
     }
-
 
     @Test
     @DisplayName("DB에서 Id로 기물 위치, 피스 정보를 불러온다.")

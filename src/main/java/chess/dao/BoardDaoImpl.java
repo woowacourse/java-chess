@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardDaoImpl implements BoardDao{
+public class BoardDaoImpl implements BoardDao {
 
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "user";
@@ -30,7 +30,6 @@ public class BoardDaoImpl implements BoardDao{
             e.printStackTrace();
         }
     }
-
 
     @Override
     public Map<String, String> findById(int gameId) {
