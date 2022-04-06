@@ -23,17 +23,17 @@ public enum StringToPieceConvertor {
     BLANK("BLANK", teamValue -> new Blank());
 
     private final String name;
-    private final Function<String, Piece> returnPiece;
+    private final Function<String, Piece> convertPiece;
 
-    StringToPieceConvertor(final String name, final Function<String, Piece> returnPiece) {
+    StringToPieceConvertor(final String name, final Function<String, Piece> convertPiece) {
         this.name = name;
-        this.returnPiece = returnPiece;
+        this.convertPiece = convertPiece;
     }
 
     public static Piece convert(final String name, String teamValue) {
         return Arrays.stream(values())
                 .filter(it -> it.name.equals(name))
-                .map(it -> it.returnPiece.apply(teamValue))
+                .map(it -> it.convertPiece.apply(teamValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Piece 입니다."));
     }
