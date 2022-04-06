@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.view.WebViewMapper;
+import chess.view.web.WebViewMapper;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;

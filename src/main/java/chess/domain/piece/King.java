@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
 public final class King extends Piece {
     private static final int MAXIMUM_DISTANCE_OF_KING = 1;
