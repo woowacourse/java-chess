@@ -24,6 +24,10 @@ public class ChessGameEntity {
         return id;
     }
 
+    public String getState() {
+        return state;
+    }
+
     public State getState(final List<PieceEntity> pieceEntities) {
         Board board = getBoard(pieceEntities);
         return StateType.getState(state, board);

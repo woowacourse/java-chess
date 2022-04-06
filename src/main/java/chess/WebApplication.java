@@ -2,7 +2,6 @@ package chess;
 
 import chess.controller.Command;
 import chess.db.ChessGameRepository;
-import chess.db.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.web.Response;
 import spark.ModelAndView;
@@ -19,8 +18,7 @@ public class WebApplication {
         staticFileLocation("/static");
 
         ChessGameRepository repository = new ChessGameRepository();
-//        Response response = null;
-//        ChessGameDao chessGameDao = new ChessGameDao();
+
         get("/", (req, res) -> {
             ChessGame chessGame = new ChessGame();
             Command.execute("start", chessGame);
@@ -41,22 +39,38 @@ public class WebApplication {
 //            return render(response, "index.html");
 //        });
 //
-//        post("/move", (req, res) -> {
-//            try {
-//                String commands = getCommands(req.body());
-//                Command.execute(commands, chessGame);
-//                response.success();
-//            } catch (Exception exception) {
-//                response.exception(exception.getMessage());
-//            }
-//            res.redirect("/temp"); // TODO: chessGameID 로 수정 ex) /1
-//            return null;
-//        });
+        post("/move", (req, res) -> {
+            Response response;
+            String[] request = req.body().split("&");
+            int chessGameId = getChessGameId(request[0]);
+            ChessGame chessGame = getChessGame(chessGameId, repository);
+            try {
+                String commands = getCommands(request[1]);
+                Command.execute(commands, chessGame);
+                repository.move(chessGameId, chessGame);
+                response = Response.init(chessGameId, chessGame);
+            } catch (Exception exception) {
+                response = Response.exception(chessGameId, chessGame, exception.getMessage());
+            }
+            return render(response, "index.html");
+        });
     }
 
     private static String render(final Response response, final String templatePath) {
         return new HandlebarsTemplateEngine()
                 .render(new ModelAndView(response, templatePath));
+    }
+
+    private static int getChessGameId(final String body) {
+        if (body == null) {
+            return 0;
+        }
+        String[] chessGameId = convert(body).split(":|=");
+        return Integer.parseInt(chessGameId[1]);
+    }
+
+    private static ChessGame getChessGame(final int chessGameId, final ChessGameRepository repository) {
+        return repository.find(chessGameId);
     }
 
     private static String getCommands(final String body) {

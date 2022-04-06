@@ -7,6 +7,7 @@ import chess.db.entity.PieceEntity;
 import chess.domain.ChessGame;
 import chess.domain.state.State;
 import chess.dto.BoardDto;
+import chess.dto.StateType;
 
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,7 @@ public class ChessGameRepository {
 
     public int save(final ChessGame chessGame) {
         int chessGameId = chessGameDao.save(chessGame);
-        Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
-        for (Entry<String, String> entry : board.entrySet()) {
-            pieceDao.save(entry.getKey(), entry.getValue(), chessGameId);
-        }
+        savePieces(chessGame, chessGameId);
         return chessGameId;
     }
 
@@ -32,5 +30,28 @@ public class ChessGameRepository {
 
         State state = chessGameEntity.getState(pieceEntities);
         return new ChessGame(state);
+    }
+
+    public void move(final int chessGameId, final ChessGame chessGame) {
+        String nextState = StateType.move(chessGameDao.find(chessGameId).getState());
+        chessGameDao.move(chessGameId, nextState);
+
+        movePieces(chessGame, chessGameId);
+    }
+
+    private void savePieces(final ChessGame chessGame, final int chessGameId) {
+        Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
+        for (Entry<String, String> entry : board.entrySet()) {
+            pieceDao.save(entry.getKey(), entry.getValue(), chessGameId);
+        }
+    }
+
+    private void movePieces(final ChessGame chessGame, final int chessGameId) {
+        deletePieces(chessGameId);
+        savePieces(chessGame, chessGameId);
+    }
+
+    private void deletePieces(final int chessGameId) {
+        pieceDao.delete(chessGameId);
     }
 }

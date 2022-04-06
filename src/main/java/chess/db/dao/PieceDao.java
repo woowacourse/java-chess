@@ -71,6 +71,20 @@ public class PieceDao {
         return null;
     }
 
+    public void delete(final int chessGameId) {
+        connection = getConnection();
+        String sql = "DELETE FROM piece WHERE chess_game_id = ?";
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, chessGameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
     private void close() {
         try {
             resultSet.close();

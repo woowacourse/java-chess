@@ -86,6 +86,21 @@ public class ChessGameDao {
         return null;
     }
 
+    public void move(final int chessGameId, final String nextState) {
+        connection = getConnection();
+        String sql = "UPDATE chess_game SET state = ?, update_datetime = now() WHERE id = ?";
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, nextState);
+            statement.setInt(2, chessGameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
     private void close() {
         try {
             resultSet.close();
