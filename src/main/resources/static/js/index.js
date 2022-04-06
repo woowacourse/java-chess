@@ -4,8 +4,8 @@ const $currentTurn = document.querySelector('#currentTurn');
 
 const $gameSetResult = document.querySelector('#game-result');
 const $winner = document.querySelector('#winner');
-const $blackScore = document.querySelector('#black-score');
-const $whiteScore = document.querySelector('#white-score');
+const $currentBlackScore = document.querySelector('#currentBlackScore');
+const $currentWhiteScore = document.querySelector('#currentWhiteScore');
 
 $board.addEventListener('click', onClickSquare)
 
@@ -24,14 +24,14 @@ function onClickSquare(e) {
     move(sourceId, e.target.id, turn)
 }
 
-function move(source, target, turn) {
+function move(source, target, team) {
     $.ajax({
         type: "POST",
         url: "/chess/game/" + gameId() + "/move",
         data: {
             "source": source,
             "target": target,
-            "turn": turn
+            "team": team
         },
         dataType: "json",
         success: update,
@@ -55,6 +55,8 @@ function update(response) {
     $board.innerHTML = response.board;
     $currentTurn.innerHTML = response.currentTurn;
     turn = response.currentTurn;
+    $currentBlackScore.innerHTML = response.currentBlackScore;
+    $currentWhiteScore.innerHTML = response.currentWhiteScore;
 
     if (response.isGameSet) {
         showResult(response.gameResult)
@@ -63,8 +65,6 @@ function update(response) {
 
 function showResult(result) {
     $winner.innerHTML = result.winner
-    $blackScore.innerHTML = result.blackScore
-    $whiteScore.innerHTML = result.whiteScore
 
     $gameSetResult.classList.remove("none")
     $board.removeEventListener('click', onClickSquare)

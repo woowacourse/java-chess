@@ -1,6 +1,8 @@
 package chess.web.view;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.dto.GameStatus;
+import chess.domain.piece.property.Team;
 import chess.web.dao.ChessGame;
 import chess.web.dto.BoardDTO;
 import chess.web.dto.ChessGameDTO;
@@ -17,11 +19,19 @@ public class Render {
     public static Map<String, Object> renderBoard(ChessGame chessGame) {
         Map<String, Object> boardDto = new BoardDTO(chessGame.getChessBoard()).getResult();
         Map<String, Object> model = new HashMap<>();
-
         String boardHtml = renderHtml(boardDto, "/board.html");
         model.put("board", boardHtml);
         model.put("currentTurn", chessGame.getChessBoard().getCurrentTurn());
+        inputTeamScoresToModel(chessGame, model);
+
         return model;
+    }
+
+    private static void inputTeamScoresToModel(ChessGame chessGame, Map<String, Object> model) {
+        double blackScore = GameStatus.calculateTeamScore(chessGame.getChessBoard().getBoard(), Team.BLACK);
+        double whiteScore = GameStatus.calculateTeamScore(chessGame.getChessBoard().getBoard(), Team.WHITE);
+        model.put("currentBlackScore", blackScore);
+        model.put("currentWhiteScore", whiteScore);
     }
 
     public static String renderHtml(Map<String, Object> model, String templatePath) {

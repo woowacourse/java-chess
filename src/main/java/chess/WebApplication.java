@@ -53,7 +53,7 @@ public class WebApplication {
         post("/chess/game/:id/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            Team team = Team.valueOf(req.queryParams("turn"));
+            Team team = Team.valueOf(req.queryParams("team"));
 
             Map<String, Object> model = CHESS_SERVICE.movePiece(req.params(":id"), source, target, team);
             return GSON.toJson(model);
@@ -66,7 +66,7 @@ public class WebApplication {
 
         exception(SQLException.class, (e, request, response) -> {
             response.status(400);
-            response.body("에러 발생");
+            response.body("SQL 에러");
         });
     }
 }

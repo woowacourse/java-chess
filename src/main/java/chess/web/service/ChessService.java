@@ -76,7 +76,7 @@ public class ChessService {
         model.put("winner", chessGame.getChessBoard().calculateWhoWinner().toString());
 
         double blackScore = GameStatus.calculateTeamScore(chessGame.getChessBoard().getBoard(), Team.BLACK);
-        double whiteScore = GameStatus.calculateTeamScore(chessGame.getChessBoard().getBoard(), Team.BLACK);
+        double whiteScore = GameStatus.calculateTeamScore(chessGame.getChessBoard().getBoard(), Team.WHITE);
         model.put("blackScore", blackScore);
         model.put("whiteScore", whiteScore);
 
