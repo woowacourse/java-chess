@@ -2,25 +2,29 @@ package chess;
 
 public class Member {
 
-    private String id;
+    private int id;
     private String name;
-    private Role role;
+    private int boardId;
 
-    public Member(String id, String name) {
-        this(id, name, null);
+    public Member(String name, int boardId) {
+        this(0, name, boardId);
     }
 
-    public Member(String id, String name, Role role) {
+    public Member(int id, String name, int boardId) {
         this.id = id;
         this.name = name;
-        this.role = role;
+        this.boardId = boardId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getBoardId() {
+        return boardId;
     }
 }
