@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.generator.BlackGenerator;
-import chess.domain.generator.LoadGeneratorImpl;
 import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
@@ -50,11 +49,16 @@ public class ChessWebGame {
         final Player opponentPlayer = getOpponentPlayer();
         validateMovable(currentPlayer, currentPosition, destinationPosition);
         if (opponentPlayer.hasPiece(destinationPosition)) {
-            currentPlayer.capture(currentPosition, destinationPosition);
-            opponentPlayer.remove(destinationPosition);
+            capture(currentPosition, destinationPosition, currentPlayer, opponentPlayer);
             return;
         }
         currentPlayer.move(currentPosition, destinationPosition);
+    }
+
+    private void capture(final Position currentPosition, final Position destinationPosition,
+                         final Player currentPlayer, final Player opponentPlayer) {
+        currentPlayer.capture(currentPosition, destinationPosition);
+        opponentPlayer.remove(destinationPosition);
     }
 
     private void validateMovable(final Player currentPlayer, final Position currentPosition,
