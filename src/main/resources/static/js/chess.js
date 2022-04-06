@@ -27,6 +27,27 @@ function setBoard() {
         });
 }
 
+function updatePieceContainer(response) {
+    const divs = board.querySelectorAll("div");
+    game = response["gameId"];
+    let pieces = response["board"];
+    for (const div of divs) {
+        if (div.className === "rank") {
+            continue;
+        }
+        if (div.hasChildNodes()) {
+            div.removeChild(div.firstChild);
+        }
+        const key = div.getAttribute("id");
+        if (pieces[key] !== undefined) {
+            const img = document.createElement("img");
+            img.className = 'piece';
+            img.src = "/image/pieces/" + pieces[key];
+            div.appendChild(img);
+        }
+    }
+}
+
 function move(event) {
     if (source === "") {
         if (event.target.id === "") {
@@ -70,27 +91,6 @@ function movePiece(source, target) {
         .catch(function (error) {
             alert(error.message)
         });
-}
-
-function updatePieceContainer(response) {
-    const divs = board.querySelectorAll("div");
-    game = response["gameId"];
-    let pieces = response["board"];
-    for (const div of divs) {
-        if (div.className === "rank") {
-            continue;
-        }
-        if (div.hasChildNodes()) {
-            div.removeChild(div.firstChild);
-        }
-        const key = div.getAttribute("id");
-        if (pieces[key] !== undefined) {
-            const img = document.createElement("img");
-            img.className = 'piece';
-            img.src = "/image/pieces/" + pieces[key];
-            div.appendChild(img);
-        }
-    }
 }
 
 status.addEventListener('click', function () {

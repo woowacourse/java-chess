@@ -10,10 +10,10 @@ import chess.domain.piece.Team;
 import chess.domain.score.ScoreResult;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.dto.GameDto;
-import chess.dto.GamesDto;
-import chess.dto.StatusDto;
-import chess.dto.WinnerDto;
+import chess.dto.response.GameDto;
+import chess.dto.response.GamesDto;
+import chess.dto.response.StatusDto;
+import chess.dto.response.WinnerDto;
 import java.util.Arrays;
 import java.util.List;
 

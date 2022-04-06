@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.response;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameDto {
+
+	private static final String IMAGE_ROOT_FORMAT = "%s/%s-%s.svg";
 
 	private final int gameId;
 	private final Map<String, String> board;
@@ -26,7 +28,7 @@ public class GameDto {
 	}
 
 	private static String toImageRoot(Piece piece) {
-		return piece.getTeam() + "/" + piece.getTeam() + "-" + piece.convertToString() + ".svg";
+		return String.format(IMAGE_ROOT_FORMAT, piece.getTeam(), piece.getTeam(), piece.convertToString());
 	}
 
 	public int getGameId() {

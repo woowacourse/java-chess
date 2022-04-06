@@ -7,12 +7,12 @@ import static spark.Spark.post;
 
 import chess.dao.GameDaoImpl;
 import chess.domain.board.Position;
-import chess.dto.ErrorResponseDto;
-import chess.dto.GameDto;
-import chess.dto.GamesDto;
-import chess.dto.MoveDto;
-import chess.dto.StatusDto;
-import chess.dto.WinnerDto;
+import chess.dto.request.MoveDto;
+import chess.dto.response.ErrorDto;
+import chess.dto.response.GameDto;
+import chess.dto.response.GamesDto;
+import chess.dto.response.StatusDto;
+import chess.dto.response.WinnerDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -94,7 +94,7 @@ public class WebChessController {
 	private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
 		exception(exceptionClass, (e, req, res) -> {
 			res.status(400);
-			res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
+			res.body(gson.toJson(new ErrorDto(e.getMessage())));
 		});
 	}
 }
