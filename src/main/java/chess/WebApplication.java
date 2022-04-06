@@ -4,11 +4,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.dao.ChessService;
-import chess.dao.DBChessServiceImpl;
 import chess.domain.board.Position;
 import chess.dto.MoveRequestDto;
 import chess.dto.MoveResultDto;
+import chess.service.ChessJDBCDao;
+import chess.service.ChessService;
+import chess.service.DBChessServiceImpl;
 import chess.view.JsonTransformer;
 import chess.view.WebViewMapper;
 import com.google.gson.Gson;
@@ -18,7 +19,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
-    private static final ChessService CHESS_SERVICE = new DBChessServiceImpl();
+    private static final ChessService CHESS_SERVICE = new DBChessServiceImpl(new ChessJDBCDao());
 
     public static void main(String[] args) {
         staticFiles.location("/static");

@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
@@ -7,7 +7,11 @@ import chess.domain.piece.Color;
 import java.util.Map;
 
 public class DBChessServiceImpl implements ChessService {
-    private final ChessDao chessDao = new ChessDao();
+    private final ChessDao chessDao;
+
+    public DBChessServiceImpl(ChessDao chessDao) {
+        this.chessDao = chessDao;
+    }
 
     @Override
     public Map<String, String> getBoardByGameId(String gameId) {

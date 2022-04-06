@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service;
 
 import chess.domain.piece.Color;
 import java.util.Map;

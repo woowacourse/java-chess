@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service;
 
 import chess.domain.board.BoardFactory;
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ChessDao {
+public class ChessJDBCDao implements ChessDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -25,6 +25,7 @@ public class ChessDao {
         return connection;
     }
 
+    @Override
     public Map<String, String> getBoardByGameId(String gameId) {
         if (exists(gameId)) {
             return findBoardByGameId(gameId);
@@ -121,6 +122,7 @@ public class ChessDao {
         return board;
     }
 
+    @Override
     public void move(String gameId, String from, String to, String piece) {
         deleteFromAndTo(gameId, from, to);
         insertTo(gameId, to, piece);
@@ -155,6 +157,7 @@ public class ChessDao {
         }
     }
 
+    @Override
     public int getTurnByGameId(String gameId) {
         final String sql = "select turn from game where id = ?";
         int turn = 0;
