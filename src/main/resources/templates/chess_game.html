@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <h1>♟️ 게임 이름 : {{game_name}}</h1>
+    <h1>♟️ 게임 이름 : {{chess_game_name}}</h1>
     <section class="chess-board">
         <div class="black-square">
             {{#a8}}
@@ -335,7 +335,7 @@
         <!-- TWO LINE -->
     </section>
     <section class="user-ui">
-        <form class="move" method="post" action="/move/{{game_name}}">
+        <form class="move" method="post" action="/move/{{chess_game_name}}">
             <h2>🎯 체스 기물 이동 🎯</h2>
             <input type="text" name="source" placeholder="Source Position">
             <input type="text" name="target" placeholder="Target Position">
@@ -349,7 +349,7 @@
             <p>승리 팀 : {{winningTeam.value}} ({{winningTeam.winningType}})</p>
             {{/result}}
         </div>
-        <form class="button" method="post" action="/reset/{{game_name}}">
+        <form class="button" method="post" action="/reset/{{chess_game_name}}">
             <p class="info">🧨 체스 게임을 리셋합니다.</p>
             <input type="submit" value="RESET GAME">
         </form>
