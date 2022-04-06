@@ -1,7 +1,7 @@
 # java-chess
 ![](chessGame.png)
 
-# 테이블을 만들 떄 사용한 DDL
+# 테이블을 만들 때 사용한 DDL
 ```sql
 create table game (
     room_name varchar(10) not null,
@@ -18,7 +18,6 @@ create table board (
     on delete cascade
 );
 ```
-
 
 ## 기능 구현 목록
 ### 1단계
