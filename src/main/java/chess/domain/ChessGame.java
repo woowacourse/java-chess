@@ -11,6 +11,14 @@ public class ChessGame {
         this.state = state;
     }
 
+    public void start() {
+        state = state.start();
+    }
+
+    public void end() {
+        state = state.end();
+    }
+
     public void move(String source, String target) {
         state = state.move(source, target);
     }

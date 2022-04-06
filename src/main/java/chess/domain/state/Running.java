@@ -11,7 +11,7 @@ public abstract class Running extends Started {
 
     @Override
     public final State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("이미 게임이 시작되었습니다.");
     }
 
     @Override
@@ -31,6 +31,6 @@ public abstract class Running extends Started {
 
     @Override
     public final Result winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("게임이 끝나지 않아 확인할 수 없습니다.");
     }
 }
