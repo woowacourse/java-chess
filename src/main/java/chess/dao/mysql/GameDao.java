@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import chess.dao.dto.GameDto;
 import chess.dao.dto.GameUpdateDto;
@@ -74,6 +76,28 @@ public class GameDao {
             e.printStackTrace();
         }
         return gameDto;
+    }
+
+    public Map<Long, Boolean> findIdAndFinished() {
+        final Connection connection = mysqlConnector.getConnection();
+
+        try {
+            final String sql = "SELECT id, finished FROM Game order by id desc";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+
+            final Map<Long, Boolean> gameStates = new LinkedHashMap<>();
+            while (resultSet.next()) {
+                final Long gameId = resultSet.getLong("id");
+                final Boolean finished = resultSet.getBoolean("finished");
+                gameStates.put(gameId, finished);
+            }
+            mysqlConnector.closeConnection(connection, preparedStatement, resultSet);
+            return gameStates;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void update(final GameUpdateDto gameUpdateDto) {

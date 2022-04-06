@@ -59,9 +59,7 @@ class GameRepositoryTest {
         expectedChessGame.movePiece(Position.from("a2"), Position.from("a4"));
         expectedChessGame.end();
 
-        gameRepository.update(expectedChessGame);
-        final ChessGame updatedChessGame = gameRepository.findById(expectedChessGame.getId());
-
+        final ChessGame updatedChessGame = gameRepository.update(expectedChessGame);
         assertAll(() -> {
             assertThat(updatedChessGame.getColorOfCurrentTurn()).isEqualTo(expectedChessGame.getColorOfCurrentTurn());
             assertThat(updatedChessGame.isFinished()).isEqualTo(expectedChessGame.isFinished());

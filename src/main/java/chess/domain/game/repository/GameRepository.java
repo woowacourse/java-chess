@@ -1,6 +1,7 @@
 package chess.domain.game.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import chess.dao.dto.GameDto;
 import chess.dao.dto.GameUpdateDto;
@@ -41,7 +42,11 @@ public class GameRepository {
         return ChessGame.loadChessGame(id, players, finished, currentTurnColor);
     }
 
-    public void update(final ChessGame chessGame) {
+    public Map<Long, Boolean> findIdAndFinished() {
+        return gameDao.findIdAndFinished();
+    }
+
+    public ChessGame update(final ChessGame chessGame) {
         final Long gameId = chessGame.getId();
         final boolean finished = chessGame.isFinished();
         final Color currentTurnColor = chessGame.getColorOfCurrentTurn();
@@ -51,5 +56,6 @@ public class GameRepository {
         for (final Player player : players.getPlayers()) {
             playerRepository.update(player);
         }
+        return findById(gameId);
     }
 }
