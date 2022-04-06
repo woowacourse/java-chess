@@ -86,8 +86,12 @@ public class ChessService {
         updateGame(chessGame);
     }
 
-    public boolean isRunningOrEmpty() {
-        return getGameFromDao().isRunningOrEmpty();
+    public boolean isRunning() {
+        return getGameFromDao().isPlaying();
+    }
+
+    public boolean isGameEmpty() {
+        return getGameFromDao().isEmpty();
     }
 
     public void endGame() {

@@ -22,7 +22,7 @@ public class ChessController {
     }
 
     public BoardDto getRunningBoard() {
-        if (service.isRunningOrEmpty()) {
+        if (service.isRunning() && service.isGameEmpty()) {
             return service.getBoard();
         }
         return null;

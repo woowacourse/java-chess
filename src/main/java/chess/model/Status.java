@@ -45,7 +45,11 @@ public enum Status {
 
     public abstract Status changeStatus(GameCommand gameCommand);
 
-    public boolean isRunningOrEmpty() {
-        return this.equals(PLAYING) || this.equals(EMPTY);
+    public boolean isPlaying() {
+        return this.equals(PLAYING);
+    }
+
+    public boolean isEmpty() {
+        return this.equals(EMPTY);
     }
 }

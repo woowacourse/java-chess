@@ -48,8 +48,12 @@ public class ChessGame {
                 .collect(Collectors.toMap(Function.identity(), color -> board.calculatePoint(color)));
     }
 
-    public boolean isRunningOrEmpty() {
-        return status.isRunningOrEmpty();
+    public boolean isPlaying() {
+        return status.isPlaying();
+    }
+
+    public boolean isEmpty() {
+        return status.isEmpty();
     }
 
     public Color findWinner() {
