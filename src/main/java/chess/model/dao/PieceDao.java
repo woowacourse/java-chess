@@ -73,4 +73,16 @@ public class PieceDao {
         }
         return piece;
     }
+
+    public void updateByPosition(String position, String pieceName) {
+        String query = "UPDATE pieces SET name = (?) WHERE position = (?)";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, pieceName);
+            preparedStatement.setString(2, position);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

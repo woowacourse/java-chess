@@ -37,8 +37,8 @@ public class ChessService {
         try {
             chessGame.move(source, target, turn);
             String originalSourcePiece = pieceDao.findByPosition(moveDto.getSource());
-//            pieceDao.updateByPosition(moveDto.getTarget(), originalSourcePiece);
-//            pieceDao.updateByPosition(moveDto.getSource(), "NONE-.");
+            pieceDao.updateByPosition(moveDto.getTarget(), originalSourcePiece);
+            pieceDao.updateByPosition(moveDto.getSource(), "none-.");
         } catch(Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }

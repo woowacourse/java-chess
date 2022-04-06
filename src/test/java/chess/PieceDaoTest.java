@@ -37,4 +37,18 @@ class PieceDaoTest {
 
         assertThat(pieceName).isEqualTo("white-p");
     }
+
+    @Test
+    @DisplayName("체스판의 말을 update하는 것을 확인한다.")
+    void updatePieceNameByPosition() {
+        PieceDao pieceDao = new PieceDao();
+        Board board = BoardFactory.create();
+        pieceDao.init(board);
+
+        pieceDao.updateByPosition("a2", "none-.");
+
+        String pieceName = pieceDao.findByPosition("a2");
+
+        assertThat(pieceName).isEqualTo("none-.");
+    }
 }
