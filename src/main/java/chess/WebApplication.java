@@ -75,6 +75,12 @@ public class WebApplication {
             res.redirect("/start");
             return null;
         });
+
+        post("/save", (req, res) -> {
+            webChessGame.save();
+            res.redirect("/start");
+            return null;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
