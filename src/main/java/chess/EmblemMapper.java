@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.model.File;
 import chess.model.Position;
+import chess.model.Rank;
 import chess.model.piece.Piece;
 
 public class EmblemMapper {
@@ -32,5 +34,16 @@ public class EmblemMapper {
         }
 
         return emblemToFullNameTable.get(piece.getEmblem());
+    }
+
+    public static Map<String, String> StringPieceMapByPiecesByPositions(Map<Position, Piece> piecesByPositions) {
+        Map<String, String> stringBoardPieces = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                stringBoardPieces.put(file.getValue() + rank.getValue(),
+                    EmblemMapper.fullNameFrom(piecesByPositions.get(Position.of(file, rank))));
+            }
+        }
+        return stringBoardPieces;
     }
 }
