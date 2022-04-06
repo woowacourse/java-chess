@@ -45,7 +45,7 @@ public class ChessGameDao {
 
     public int findRecentGame() {
         final Connection connection = getConnection();
-        final String sql = "select id from game order by id desc";
+        final String sql = "select id from game order by id desc limit 1";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
