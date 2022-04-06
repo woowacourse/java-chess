@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.dao.dto.GameDto;
+import chess.dao.dto.GameUpdateDto;
 
 class GameDaoTest {
 
@@ -41,8 +42,8 @@ class GameDaoTest {
 
         final boolean finished = true;
         final String currentTurnColor = BLACK.getName();
-        final GameDto gameDto = new GameDto(id, 1L, 2L, finished, currentTurnColor);
-        gameDao.update(gameDto);
+        final GameUpdateDto gameUpdateDto = new GameUpdateDto(id, finished, currentTurnColor);
+        gameDao.update(gameUpdateDto);
 
         final GameDto updatedGameDto = gameDao.findById(id);
         assertAll(() -> {

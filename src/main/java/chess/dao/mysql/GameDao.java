@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import chess.dao.dto.GameDto;
+import chess.dao.dto.GameUpdateDto;
 
 public class GameDao {
 
@@ -75,14 +76,14 @@ public class GameDao {
         return gameDto;
     }
 
-    public void update(final GameDto gameDto) {
+    public void update(final GameUpdateDto gameUpdateDto) {
         final Connection connection = mysqlConnector.getConnection();
         try {
             final String sql = "UPDATE Game SET finished=?, turn_color=? WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setBoolean(1, gameDto.getFinished());
-            preparedStatement.setString(2, gameDto.getCurrentTurnColor());
-            preparedStatement.setLong(3, gameDto.getId());
+            preparedStatement.setBoolean(1, gameUpdateDto.getFinished());
+            preparedStatement.setString(2, gameUpdateDto.getCurrentTurnColor());
+            preparedStatement.setLong(3, gameUpdateDto.getId());
             preparedStatement.executeUpdate();
             mysqlConnector.closeConnection(connection, preparedStatement);
         } catch (SQLException e) {
