@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
@@ -33,40 +33,32 @@ public class ReadyTest {
     @DisplayName("Ready 상태에서 말을 움직이려고 하면 예외가 발생한다")
     void movePieceWhenReadyState() {
         assertThatThrownBy(() -> state.movePiece(Position.valueOf(File.A, Rank.ONE),
-            Position.valueOf(File.B, Rank.ONE)))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+                Position.valueOf(File.B, Rank.ONE)))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Test
     @DisplayName("Ready 상태에서 게임을 종료하려고 하면 예외가 발생한다")
     void endWhenReadyState() {
         assertThatThrownBy(() -> state.end())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
-    }
-
-    @Test
-    @DisplayName("Ready 보드의 상태를 꺼내려고 하면 예외가 발생한다")
-    void getBoardWhenReadyState() {
-        assertThatThrownBy(() -> state.getBoard())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Test
     @DisplayName("보드가 초기화되지 않은 상태에서 점수 계산을 하려고 하면 에외가 발생한다")
     void calculateScoreWhenReadyState() {
         assertThatThrownBy(() -> state.calculateScore(Color.BLACK))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Test
     @DisplayName("보드가 초기화되지 않은 상태에서 승자를 결정하려고 하면 에외가 발생한다")
     void judgeWinnerWhenReadyState() {
         assertThatThrownBy(() -> state.judgeWinner())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
 }
