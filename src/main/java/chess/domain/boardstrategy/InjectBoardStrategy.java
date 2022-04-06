@@ -40,10 +40,6 @@ public class InjectBoardStrategy implements BoardStrategy {
         this.positionPieceMap = stringToBoard(text);
     }
 
-    public static Map<String, Piece> getStringPieceMap() {
-        return stringPieceMap;
-    }
-
     private static Map<Position, Piece> stringToBoard(String text) {
         Map<Position, Piece> board = new HashMap<>();
         int rankY = 8;

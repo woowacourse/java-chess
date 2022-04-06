@@ -9,6 +9,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import chess.dto.ChessGameDto;
+import chess.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -117,7 +118,7 @@ public class BoardDao {
                     return null;
                 }
                 String pieceStr = resultSet.getString("piece");
-                squares.put(position, InjectBoardStrategy.getStringPieceMap().get(pieceStr));
+                squares.put(position, PieceDto.getPiece(pieceStr));
             }
         } catch (SQLException e) {
             e.printStackTrace();
