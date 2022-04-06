@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dao.ChessDAO;
 import chess.dto.RankDTO;
 import chess.service.ChessService;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private ChessService chessService = new ChessService();
+    private final ChessService chessService = new ChessService(new ChessDAO());
 
     public void run() {
         staticFiles.location("/static");
@@ -46,7 +47,7 @@ public class WebChessController {
             boolean isKingDead = chessService.move(srcPosition, dstPosition);
             if (isKingDead) {
                 String winner = chessService.getWinnerTeam();
-                chessService = new ChessService();
+                chessService.restartChessGame();
                 return winner;
             }
 
@@ -62,7 +63,7 @@ public class WebChessController {
 
     private void endChessGame() {
         get("/end", (req, res) -> {
-            chessService = new ChessService();
+            chessService.restartChessGame();
             res.redirect("/");
             return null;
         });

@@ -15,17 +15,17 @@ class ChessDAOTest {
 
     @Test
     void saveBoard() {
-        int boardId = chessDAO.saveBoard(new Board(), Team.WHITE.name());
-        System.out.println(boardId);
-        assertThat(boardId).isNotEqualTo(0);
+        int gameId = chessDAO.saveGame(new Board(), Team.WHITE.name());
+        System.out.println(gameId);
+        assertThat(gameId).isNotEqualTo(0);
     }
 
     @Test
-    void findBoardByBoardId() {
+    void findBoardByGameId() {
         Board board = new Board();
         board.movePiece(Position.from("a2"), Position.from("a4"), Team.WHITE);
-        int boardId = chessDAO.saveBoard(board, Team.WHITE.name());
-        Board boardData = chessDAO.findBoardByBoardId(boardId);
+        int gameId = chessDAO.saveGame(board, Team.WHITE.name());
+        Board boardData = chessDAO.findBoardByGameId(gameId);
 
         assertThat(boardData.getPiece(Position.from("a4"))).isInstanceOf(Pawn.class);
     }
@@ -34,10 +34,27 @@ class ChessDAOTest {
     void updatePiece() {
         Board board = new Board();
         board.movePiece(Position.from("a2"), Position.from("a4"), Team.WHITE);
-        int boardId = chessDAO.saveBoard(board, Team.WHITE.name());
-        chessDAO.updatePiece(board.getPiece(Position.from("a4")), boardId);
-        Piece piece = chessDAO.findPieceByPosition(Position.from("a4"), boardId);
+        int gameId = chessDAO.saveGame(board, Team.WHITE.name());
+        chessDAO.updatePiece(board.getPiece(Position.from("a4")), gameId);
+        Piece piece = chessDAO.findPieceByPosition(Position.from("a4"), gameId);
 
         assertThat(piece).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    void findTurnByGameId() {
+        int gameId = chessDAO.saveGame(new Board(), Team.BLACK.name());
+        Team team = chessDAO.findTurnByGameId(gameId);
+
+        assertThat(team).isEqualTo(Team.BLACK);
+    }
+
+    @Test
+    void updateTurn() {
+        int gameId = chessDAO.saveGame(new Board(), Team.BLACK.name());
+        chessDAO.updateTurn(Team.WHITE, gameId);
+        Team team = chessDAO.findTurnByGameId(gameId);
+
+        assertThat(team).isEqualTo(Team.WHITE);
     }
 }

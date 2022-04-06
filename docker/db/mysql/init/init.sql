@@ -1,5 +1,5 @@
-create table Board (
-    board_id int auto_increment primary key,
+create table Game (
+    game_id int auto_increment primary key,
     turn varchar(10) not null
 );
 
@@ -9,6 +9,6 @@ create table Piece (
     position_column varchar(1) not null,
     position_row int not null,
     team varchar(10) not null,
-    board_id int not null,
-    foreign key (board_id) references Board (board_id)
+    game_id int not null,
+    foreign key (game_id) references Game (game_id)
 )

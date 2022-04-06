@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.domain.Board;
 import chess.domain.Rank;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -18,18 +19,18 @@ public class ChessDAO {
 
     private final DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public int saveBoard(Board board, String team) {
-        String sql = "insert into Board(turn) values (?)";
+    public int saveGame(Board board, String team) {
+        String sql = "insert into Game(turn) values (?)";
 
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, team);
             statement.executeUpdate();
 
-            int boardId = getLastInsertKey(connection);
-            savePieces(board.getBoard(), boardId);
+            int gameId = getLastInsertKey(connection);
+            savePieces(board.getBoard(), gameId);
 
-            return boardId;
+            return gameId;
         } catch (SQLException exception) {
             exception.printStackTrace();
             throw new RuntimeException(exception);
@@ -37,7 +38,7 @@ public class ChessDAO {
     }
 
     private int getLastInsertKey(Connection connection) {
-        String sql = "select last_insert_id() from Board";
+        String sql = "select last_insert_id() from Game";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet lastInsertKey = statement.executeQuery();
@@ -48,23 +49,23 @@ public class ChessDAO {
             exception.printStackTrace();
             throw new RuntimeException(exception);
         }
-        return 0;
+        throw new RuntimeException("데이터를 찾지 못했습니다.");
     }
 
-    private void savePieces(Map<Row, Rank> board, int boardId) {
+    private void savePieces(Map<Row, Rank> board, int gameId) {
         for (Row row : Row.values()) {
             Rank rank = board.get(row);
             for (Column col : Column.values()) {
                 Piece piece = rank.getPiece(col);
                 savePiece(piece.getName(), String.valueOf(col.getValue()), row.getValue(), piece.getTeamName(),
-                        boardId);
+                        gameId);
             }
         }
     }
 
-    private void savePiece(String type, String col, int row, String team, int boardId) {
+    private void savePiece(String type, String col, int row, String team, int gameId) {
         String sql = "insert into Piece"
-                + "(piece_type, position_column, position_row, team, board_id) values (?,?,?,?,?)";
+                + "(piece_type, position_column, position_row, team, game_id) values (?,?,?,?,?)";
 
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -72,7 +73,7 @@ public class ChessDAO {
             statement.setString(2, col);
             statement.setInt(3, row);
             statement.setString(4, team);
-            statement.setInt(5, boardId);
+            statement.setInt(5, gameId);
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -80,11 +81,11 @@ public class ChessDAO {
         }
     }
 
-    public Board findBoardByBoardId(int boardId) {
+    public Board findBoardByGameId(int gameId) {
         try (Connection connection = databaseConnector.getConnection()) {
             Map<Row, Rank> ranks = new HashMap<>();
             for (Row row : Row.values()) {
-                ranks.put(row, findRankByRow(row.getValue(), boardId, connection));
+                ranks.put(row, findRankByRow(row.getValue(), gameId, connection));
             }
             return new Board(ranks);
         } catch (SQLException exception) {
@@ -93,13 +94,13 @@ public class ChessDAO {
         }
     }
 
-    private Rank findRankByRow(int row, int boardId, Connection connection) {
+    private Rank findRankByRow(int row, int gameId, Connection connection) {
         String sql = "select piece_type, position_column, position_row, team"
-                + " from Piece where position_row = ? and board_id = ?";
+                + " from Piece where position_row = ? and game_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, row);
-            statement.setInt(2, boardId);
+            statement.setInt(2, gameId);
             ResultSet resultSet = statement.executeQuery();
 
             EnumMap<Column, Piece> rank = new EnumMap<>(Column.class);
@@ -118,15 +119,15 @@ public class ChessDAO {
         }
     }
 
-    public Piece findPieceByPosition(Position position, int boardId) {
+    public Piece findPieceByPosition(Position position, int gameId) {
         String sql = "select piece_type, position_column, position_row, team"
-                + " from Piece where position_column = ? and position_row = ? and board_id = ?";
+                + " from Piece where position_column = ? and position_row = ? and game_id = ?";
 
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, String.valueOf(position.getCol().getValue()));
             statement.setInt(2, position.getRow().getValue());
-            statement.setInt(3, boardId);
+            statement.setInt(3, gameId);
             ResultSet resultSet = statement.executeQuery();
 
             Piece piece = null;
@@ -144,9 +145,9 @@ public class ChessDAO {
         }
     }
 
-    public void updatePiece(Piece piece, int boardId) {
+    public void updatePiece(Piece piece, int gameId) {
         String sql = "update Piece set piece_type = ?, team = ?"
-                + " where position_column = ? and position_row = ? and board_id = ?";
+                + " where position_column = ? and position_row = ? and game_id = ?";
 
         try (Connection connection = databaseConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -154,7 +155,38 @@ public class ChessDAO {
             statement.setString(2, piece.getTeamName());
             statement.setString(3, String.valueOf(piece.getColValue()));
             statement.setInt(4, piece.getRowValue());
-            statement.setInt(5, boardId);
+            statement.setInt(5, gameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public Team findTurnByGameId(int gameId) {
+        String sql = "select turn from Game where game_id = ?";
+
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Team.valueOf(resultSet.getString("turn"));
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new RuntimeException(exception);
+        }
+        throw new RuntimeException("데이터를 찾지 못했습니다.");
+    }
+
+    public void updateTurn(Team team, int gameId) {
+        String sql = "update Game set turn = ? where game_id = ?";
+
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, team.name());
+            statement.setInt(2, gameId);
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
