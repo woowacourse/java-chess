@@ -8,11 +8,14 @@ import chess.domain.Color;
 import chess.domain.game.ChessGame;
 import chess.dto.GameDto;
 import chess.dto.PlayerScoresDto;
+import spark.ExceptionHandler;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class GameController {
+
+    private static final int HTTP_STATUS_ERROR = 400;
 
     private final GameService gameService;
 
@@ -95,5 +98,13 @@ public class GameController {
 
     private String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    public ExceptionHandler<RuntimeException> handleException() {
+        return (exception, request, response) -> {
+            response.type("application/json; charset=utf-8");
+            response.status(HTTP_STATUS_ERROR);
+            response.body(exception.getMessage());
+        };
     }
 }

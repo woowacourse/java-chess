@@ -17,8 +17,6 @@ import com.google.gson.GsonBuilder;
 
 public class WebApplication {
 
-    private static final int HTTP_STATUS_ERROR = 400;
-
     public static void main(String[] args) {
         final WebApplication webApplication = new WebApplication();
         webApplication.run();
@@ -37,15 +35,11 @@ public class WebApplication {
             get("/:gameId", gameController.loadGame());
             post("/:gameId/move", gameController.movePiece());
             post("/:gameId/promotion", gameController.promotion());
-            get("/:gameId/status", gameController.calculatePlayerScores());
+            get("/:gameId/status", gameController.calculatePlayerScores(), gson::toJson);
             get("/:gameId/end", gameController.endGame());
         });
 
-        exception(RuntimeException.class, (e, request, response) -> {
-            response.type("application/json; charset=utf-8");
-            response.status(HTTP_STATUS_ERROR);
-            response.body(gson.toJson(e.getMessage()));
-        });
+        exception(RuntimeException.class, gameController.handleException());
     }
 
     private GameController initializeGameController() {
