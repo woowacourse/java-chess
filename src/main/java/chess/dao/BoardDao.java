@@ -171,13 +171,13 @@ public class BoardDao {
     }
 
     public void delete(final String name) {
-        deleteBoard(name);
         deleteSquares(name);
+        deleteBoard(name);
     }
 
-    private void deleteSquares(String name) {
+    private void deleteBoard(final String name) {
         final Connection connection = getConnection();
-        final String sql = "DELETE FROM squares WHERE board_name = ?";
+        final String sql = "DELETE FROM board WHERE name = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
@@ -187,9 +187,9 @@ public class BoardDao {
         }
     }
 
-    private void deleteBoard(final String name) {
+    private void deleteSquares(String name) {
         final Connection connection = getConnection();
-        final String sql = "DELETE FROM board WHERE name = ?";
+        final String sql = "DELETE FROM squares WHERE board_name = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);

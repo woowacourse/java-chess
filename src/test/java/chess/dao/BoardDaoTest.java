@@ -35,4 +35,10 @@ class BoardDaoTest {
         final ChessGameDto boardDaoByName = boardDao.findByName("hunch");
         assertThat(boardDaoByName.getName()).isEqualTo("hunch");
     }
+
+    @Test
+    void delete() {
+        final BoardDao boardDao = new BoardDao();
+        boardDao.delete("hunch");
+    }
 }
