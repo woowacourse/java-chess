@@ -4,11 +4,13 @@ import chess.chessboard.Board;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Position;
 import chess.chessboard.position.Rank;
+import game.Player;
 
 import java.util.HashMap;
 
-import static chess.game.Player.BLACK;
-import static chess.game.Player.WHITE;
+import static game.Player.BLACK;
+import static game.Player.WHITE;
+
 
 public final class Score {
 
