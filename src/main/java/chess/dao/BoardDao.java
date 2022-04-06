@@ -77,7 +77,7 @@ public class BoardDao {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             Map<Position, Piece> board = new HashMap<>();
-            while (resultSet.next() && resultSet.getString("piece") != null) {
+            while (resultSet.next()) {
                 Position position = Position.valueOf(resultSet.getString("position"));
                 Color color = Color.of(resultSet.getString("color"));
                 Piece piece = PieceMapper.of(resultSet.getString("piece"), color);
