@@ -19,8 +19,9 @@ public class ChessboardDao {
     }
 
     public boolean isDataExist() {
-        try {
-            final PreparedStatement statement = connection.prepareStatement("SELECT count(*) AS result FROM gameInfos");
+        final String sql = "SELECT count(*) AS result FROM gameInfos";
+
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             return resultSet.getInt("result") > 0;
@@ -32,8 +33,8 @@ public class ChessboardDao {
 
     public ChessGameDto load() {
         final String sql = "SELECT * FROM gameInfos";
-        try {
-            ResultSet gameInfos = select(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet gameInfos = statement.executeQuery(sql);
             gameInfos.next();
             return new ChessGameDto(loadPieces(), gameInfos.getString("state"), gameInfos.getString("turn"));
         } catch (SQLException e) {
@@ -42,18 +43,11 @@ public class ChessboardDao {
         return null;
     }
 
-    public void truncateAll() {
-        final String truncatePieces = "TRUNCATE TABLE pieces";
-        final String truncateGameInfos = "TRUNCATE TABLE gameInfos";
-        execute(truncatePieces);
-        execute(truncateGameInfos);
-    }
-
     private List<PieceDto> loadPieces() {
         final String sql = "SELECT * FROM pieces ORDER BY x ASC, y ASC";
         List<PieceDto> pieces = new ArrayList<>();
-        try {
-            ResultSet resultSet = select(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 pieces.add(new PieceDto(
                         resultSet.getString("color")
@@ -67,6 +61,21 @@ public class ChessboardDao {
         return pieces;
     }
 
+    public void truncateAll() {
+        final String truncatePieces = "TRUNCATE TABLE pieces";
+        final String truncateGameInfos = "TRUNCATE TABLE gameInfos";
+
+        try (final PreparedStatement piecesStatement = connection.prepareStatement(truncatePieces);
+             final PreparedStatement gameInfoStatement = connection.prepareStatement(truncateGameInfos)) {
+
+            piecesStatement.execute();
+            gameInfoStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void addAll(ChessGameDto chessGameDto) {
         chessGameDto.getPieces()
                 .forEach(this::addBoard);
@@ -75,8 +84,8 @@ public class ChessboardDao {
 
     private void addBoard(PieceDto pieceDto) {
         final String sql = "INSERT INTO pieces (color,type,x,y) VALUES (?,?,?,?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, pieceDto.getColor());
             statement.setString(2, pieceDto.getType());
             statement.setInt(3, pieceDto.getX());
@@ -88,10 +97,14 @@ public class ChessboardDao {
     }
 
     private void addGameInfos(String state, String turn) {
-        final String sql = "INSERT INTO gameInfos (state,turn) VALUES ('" + state + "','" + turn + "')";
-        execute(sql);
-    }
+        String sql = "INSERT INTO gameInfos (state,turn) VALUES ('" + state + "','" + turn + "')";
 
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Connection getConnection() {
         Connection connection = null;
@@ -101,25 +114,6 @@ public class ChessboardDao {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    private void execute(String sql) {
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private ResultSet select(String sql) {
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            return statement.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }
