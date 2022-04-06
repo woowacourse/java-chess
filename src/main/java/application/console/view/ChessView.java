@@ -65,7 +65,7 @@ public class ChessView {
         return playerPieces.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> new Position(entry.getKey().getColumn(), entry.getKey().getRow()),
+                        entry -> Position.from(entry.getKey().getPosition()),
                         entry -> color.convertCase(
                                 PieceCharacter.convertToOutputCharacter(entry.getValue())
                         )

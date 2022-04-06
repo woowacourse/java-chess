@@ -4,23 +4,17 @@ import chess.domain.Position;
 
 public class PositionDto {
 
-    private final char column;
-    private final char row;
+    private final String position;
 
-    private PositionDto(final char column, final char row) {
-        this.column = column;
-        this.row = row;
+    private PositionDto(final String position) {
+        this.position = position;
     }
 
     public static PositionDto toDto(final Position position) {
-        return new PositionDto(position.getColumn(), position.getRow());
+        return new PositionDto(String.valueOf(position.getColumn()) + position.getRow());
     }
 
-    public char getColumn() {
-        return column;
-    }
-
-    public char getRow() {
-        return row;
+    public String getPosition() {
+        return position;
     }
 }

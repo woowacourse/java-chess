@@ -14,6 +14,19 @@ public class Position {
         this.row = row;
     }
 
+    public static Position from(final String positionString) {
+        validatePositionStringLengthEnough(positionString);
+        char column = positionString.charAt(0);
+        char row = positionString.charAt(1);
+        return new Position(column, row);
+    }
+
+    private static void validatePositionStringLengthEnough(final String positionString) {
+        if (positionString.length() != 2) {
+            throw new IllegalArgumentException("Position 문자열은 길이가 2여야 합니다.");
+        }
+    }
+
     private void validateColumnInRange(final char column) {
         if (PositionRange.COLUMN_RANGE.isOutOfRange(column)) {
             throw new IllegalArgumentException(String.format("열 위치는 %s~%s 범위에 포함되어야 합니다.",
