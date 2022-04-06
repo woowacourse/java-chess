@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dto.GameDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
 import java.util.HashMap;
@@ -18,27 +19,39 @@ public class ChessController {
     public void run() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            return render(model, "game.html");
+        });
+
+        get("game/:gameId", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        get("/board", (req, res) -> chessService.getCurrentBoard(), jsonTransformer);
+        post("/start", (req, res) -> chessService.start(), jsonTransformer);
 
-        get("/turn", (req, res) -> chessService.getCurrentTurn(), jsonTransformer);
+        post("/board", (req, res) -> {
+            GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
+            return chessService.getCurrentBoard(gameDto.getGameId());
+        }, jsonTransformer);
+
+        post("/turn", (req, res) -> {
+            GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
+            return chessService.getCurrentTurn(gameDto.getGameId());
+        }, jsonTransformer);
 
         post("/move", (req, res) -> {
             MoveDto moveDto = jsonTransformer.getGson().fromJson(req.body(), MoveDto.class);
             return chessService.move(moveDto);
         }, jsonTransformer);
 
-        get("/start", (req, res) -> {
-            chessService.start();
-            return "chess game start!";
+        post("/status", (req, res) -> {
+            GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
+            return chessService.status(gameDto.getGameId());
         }, jsonTransformer);
 
-        get("/status", (req, res) -> chessService.status(), jsonTransformer);
-
-        get("/end", (req, res) -> {
-            chessService.end();
+        post("/end", (req, res) -> {
+            GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
+            chessService.end(gameDto.getGameId());
             return "chess game end!";
         }, jsonTransformer);
     }
