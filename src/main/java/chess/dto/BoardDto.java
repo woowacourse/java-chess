@@ -13,6 +13,10 @@ import chess.domain.position.Rank;
 public class BoardDto {
     private final List<SquareDto> squares;
 
+    public BoardDto(List<SquareDto> squares) {
+        this.squares = squares;
+    }
+
     public BoardDto(final Map<Position, Piece> board) {
         this.squares = new ArrayList<>();
         Arrays.stream(Rank.values())
