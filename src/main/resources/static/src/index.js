@@ -8,8 +8,9 @@ document.getElementById("terminate").addEventListener('click', (e) => {
             }).then(() => {
                 location.href = "/";
             });
+        } else {
+            location.href = "/";
         }
-        location.href = "/";
     }
 });
 
@@ -25,7 +26,6 @@ for (let node of chessUI.childNodes) {
         command += "," + target.id;
 
         if (clickCount === 2) {
-            console.log(command);
             fetch("/move", {
                 method: "POST",
                 body: `command=${command}`
