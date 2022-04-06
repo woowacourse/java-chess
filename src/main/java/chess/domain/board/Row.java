@@ -81,4 +81,8 @@ public enum Row {
         final int nextRowNumber = direction.nextRowNumber(number);
         return ONE.number <= nextRowNumber && nextRowNumber <= EIGHT.number;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }

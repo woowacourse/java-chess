@@ -83,4 +83,8 @@ public enum Column {
         final int nextColumnNumber = direction.nextColumnNumber(number);
         return A.number <= nextColumnNumber && nextColumnNumber <= H.number;
     }
+
+    public char getName() {
+        return name;
+    }
 }

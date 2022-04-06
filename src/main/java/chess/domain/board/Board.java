@@ -4,11 +4,11 @@ import chess.domain.Camp;
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -92,7 +92,7 @@ public final class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+        return new TreeMap<>(board);
     }
 
     public boolean isKingChecked(final Camp camp) {

@@ -5,6 +5,7 @@ import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
 import chess.web.dao.camp.CampDao;
 import chess.web.dao.member.MemberDaoImpl;
+import chess.web.dto.BoardDto;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -39,7 +40,7 @@ public class ChessService {
             if (chessGame.isRunning()) {
 //                OutputView.printBoard(getBoard());
                 System.err.println("게임이 진행중입니다. 현재 데이터를 받아와요");
-                model.put("board", chessGame.getBoard());
+                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
             }
             return model;
