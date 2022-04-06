@@ -16,8 +16,7 @@ public enum SavePieceGenerator {
     ROOK((type) -> new Rook(Color.NONE).isSameName(type), color -> new Rook(Color.getColor(color))),
     BISHOP((type) -> new Bishop(Color.NONE).isSameName(type), color -> new Bishop(Color.getColor(color))),
     KNIGHT((type) -> new Knight(Color.NONE).isSameName(type), color -> new Knight(Color.getColor(color))),
-    PAWN((type) -> new Pawn(Color.NONE).isSameName(type), color -> new Pawn(Color.getColor(color))),
-    NONE((type) -> new None(Color.NONE).isSameName(type), color -> new None(Color.getColor(color)));
+    PAWN((type) -> new Pawn(Color.NONE).isSameName(type), color -> new Pawn(Color.getColor(color)));
 
     private final Predicate<String> condition;
     private final Function<String, Piece> of;

@@ -1,13 +1,13 @@
 create table chessGame
 (
-    board_id int AUTO_INCREMENT,
+    board_id int,
     turn     varchar(10) not null,
     primary key (board_id)
 );
 
 create table piece
 (
-    piece_id int AUTO_INCREMENT,
+    piece_id int,
     board_id int,
     type     varchar(10) not null,
     team     varchar(10) not null,

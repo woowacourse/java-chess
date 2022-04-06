@@ -11,11 +11,12 @@ import chess.domain.piece.Color;
 public class ChessGameDao {
 
     public void save(ChessGame game, int board_id, Connection connection) {
-        final String sql = "insert into chessGame (turn) values (?)";
+        final String sql = "insert into chessGame (board_id,turn) values (?,?)";
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(sql);
-            statement.setString(1, game.getTurn());
+            statement.setInt(1, board_id);
+            statement.setString(2, game.getTurn());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,10 +40,11 @@ public class ChessGameDao {
             statement.setInt(1, board_id);
             resultSet = statement.executeQuery();
             if (!resultSet.next()) {
+                System.exit(0);
                 return null;
             }
             chessGame = new ChessGame(
-                new BoardDao().find(board_id, connection),
+                new BoardDao().find(board_id, DBConnectorGenerator.getConnection()),
                 Color.getColor(resultSet.getString("turn"))
             );
         } catch (SQLException e) {

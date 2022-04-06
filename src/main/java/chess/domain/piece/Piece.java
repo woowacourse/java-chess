@@ -60,6 +60,6 @@ public abstract class Piece {
     }
 
     public boolean isSameName(String type) {
-        return this.type == type;
+        return this.type.equals(type);
     }
 }

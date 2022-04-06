@@ -19,8 +19,11 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class BoardDao {
+
+    private int piece_id = 1;
+
     public void save(Map<Square, Piece> board, int board_id, Connection connection) {
-        final String sql = "insert into piece (board_id, type, team, square) values (?,?,?,?)";
+        final String sql = "insert into piece (piece_id, board_id, type, team, square) values (?,?,?,?,?)";
         PreparedStatement statement = null;
         try {
             List<Map.Entry<Square, Piece>> pieces = board.entrySet().stream()
@@ -47,10 +50,11 @@ public class BoardDao {
 
     private void setStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
         SQLException {
-        statement.setInt(1, board_id);
-        statement.setString(2, piece.getType());
-        statement.setString(3, piece.getColor());
-        statement.setString(4, square.getName());
+        statement.setInt(1, piece_id++);
+        statement.setInt(2, board_id);
+        statement.setString(3, piece.getType());
+        statement.setString(4, piece.getColor());
+        statement.setString(5, square.getName());
     }
 
     public void remove(int board_id, Connection connection) {
@@ -76,7 +80,7 @@ public class BoardDao {
     }
 
     public Board find(int board_id, Connection connection) {
-        final String sql = "select board_id, type, team, square from piece where board_id = ?";
+        final String sql = "select type, team, square from piece where board_id = ?";
         final Map<Square, Piece> board = new HashMap<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;

@@ -19,10 +19,10 @@ public enum Color {
     }
 
     public static Color getColor(String name) {
-        if (BLACK.name == name) {
+        if (BLACK.name.equals(name)) {
             return BLACK;
         }
-        if (WHITE.name == name) {
+        if (WHITE.name.equals(name)) {
             return WHITE;
         }
         return NONE;

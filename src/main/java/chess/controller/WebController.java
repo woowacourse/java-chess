@@ -22,7 +22,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
-
+    private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
     private static final String ERROR_GAME_NOT_START_YET = "[ERROR]게임부터 시작하지지?!";
     private static final String ERROR_GAME_IS_OVER = "[ERROR] 지금은 못 움직여!";
     private static final String ERROR_GAME_IS_NOT_END = "[ERROR]아직 게임 안끝났어!";
@@ -38,11 +38,7 @@ public class WebController {
         port(8080);
         staticFileLocation("/templates");
         get("/", (req, res) -> {
-            game = chessGameDao.findById(BOARD_ID, DBConnectorGenerator.getConnection());
             Map<String, Object> model = new HashMap<>();
-            if (game != null) {
-                packBoardInfo(model);
-            }
             return render(model, "index.html");
         });
 
@@ -96,6 +92,11 @@ public class WebController {
             status(model);
             remove();
         }
+
+        if (command == Command.CONTINUE) {
+            continueGame(model);
+            save();
+        }
     }
 
     private void start(Map<String, Object> model) {
@@ -135,6 +136,18 @@ public class WebController {
         game = null;
     }
 
+    private void continueGame(Map<String, Object> model) {
+        if (game != null) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
+        }
+        game = chessGameDao.findById(BOARD_ID, DBConnectorGenerator.getConnection());
+
+        if (game == null) {
+            throw new IllegalArgumentException("[ERROR] 저장된 게임이 없습니다");
+        }
+        packBoardInfo(model);
+    }
+
     private void checkGameStarted() {
         if (game == null) {
             throw new IllegalArgumentException(ERROR_GAME_NOT_START_YET);
@@ -142,8 +155,8 @@ public class WebController {
     }
 
     private void save() {
+        chessGameDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
         chessGameDao.save(game, BOARD_ID, DBConnectorGenerator.getConnection());
-        System.out.println("????");
         new BoardDao().save(game.getBoard(), BOARD_ID, DBConnectorGenerator.getConnection());
     }
 
