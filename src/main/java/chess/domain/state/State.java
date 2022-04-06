@@ -28,4 +28,8 @@ public abstract class State {
     public final Map<Position, Piece> getBoard() {
         return board.getValue();
     }
+
+    public final boolean removedKing() {
+        return board.removedKing();
+    }
 }

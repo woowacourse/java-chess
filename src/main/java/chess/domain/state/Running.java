@@ -32,12 +32,11 @@ public final class Running extends CalculableState {
     public State move(final Position from, final Position to) {
         checkPosition(currentColor, from, to);
         board.move(from, to);
-        final var nextColor = currentColor.next();
 
-        if (board.hasKing(nextColor)) {
-            return new Running(nextColor, board);
+        if (board.removedKing()) {
+            return new Finish(currentColor, board);
         }
-        return new Finish(currentColor, board);
+        return new Running(currentColor.next(), board);
     }
 
     private void checkPosition(final Color color, final Position from, final Position to) {
