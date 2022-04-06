@@ -2,9 +2,7 @@ package chess.domain.player;
 
 import chess.domain.Position;
 import chess.domain.generator.Generator;
-import chess.domain.generator.LoadGeneratorImpl;
 import chess.domain.piece.Piece;
-import chess.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +23,6 @@ public class Player {
 
     public Player(Generator generator, Team team) {
         this(generator.generate(), team);
-    }
-
-    public static Player of(List<PieceDto> piecesDto, Team team) {
-        return new Player(new LoadGeneratorImpl(piecesDto).generate(), team);
     }
 
     public boolean hasPiece(final Position position) {

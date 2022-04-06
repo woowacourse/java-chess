@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.generator.BlackGenerator;
+import chess.domain.generator.LoadGenerator;
 import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
@@ -29,8 +30,8 @@ public class ChessWebGame {
     }
 
     public void loadPlayers(List<PieceDto> whitePieces, List<PieceDto> blackPieces) {
-        this.whitePlayer = Player.of(whitePieces, Team.WHITE);
-        this.blackPlayer = Player.of(blackPieces, Team.BLACK);
+        this.whitePlayer = new Player(new LoadGenerator(whitePieces), Team.WHITE);
+        this.blackPlayer = new Player(new LoadGenerator(blackPieces), Team.BLACK);
     }
 
     public ChessMap initializeChessGame() {
