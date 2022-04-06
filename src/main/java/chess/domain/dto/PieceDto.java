@@ -2,15 +2,13 @@ package chess.domain.dto;
 
 public class PieceDto {
 
-    private final int id;
     private final int gameId;
     private final String position;
     private final String piece;
     private final String color;
 
 
-    public PieceDto(int id, int gameId, String position, String piece, String color) {
-        this.id = id;
+    public PieceDto(int gameId, String position, String piece, String color) {
         this.gameId = gameId;
         this.position = position;
         this.piece = piece;

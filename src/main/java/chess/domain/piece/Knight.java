@@ -4,7 +4,6 @@ import chess.domain.game.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Stack;
 
 public class Knight extends ChessPiece {
 
@@ -40,7 +39,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public boolean isKnight(){
+    public boolean isKnight() {
         return true;
     }
 

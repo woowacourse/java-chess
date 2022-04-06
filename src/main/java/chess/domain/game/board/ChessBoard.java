@@ -63,28 +63,28 @@ public class ChessBoard {
     }
 
     private Stack<Position> findPieceRoute(Position source, Position target, ChessPiece piece) {
-        if(piece.isKnight()){
+        if (piece.isKnight()) {
             return new Stack<>();
         }
         return makeRoute(source, target);
     }
 
     private Stack<Position> makeRoute(final Position from, Position to) {
-           Stack<Position> routes = new Stack<>();
-           Direction direction = to.findDirection(from);
+        Stack<Position> routes = new Stack<>();
+        Direction direction = to.findDirection(from);
 
-           Position newFrom = new Position(from.getValue());
+        Position newFrom = new Position(from.getValue());
 
-           while (!newFrom.equals(to)) {
-               Position nextPosition = newFrom.toNextPosition(direction);
-               routes.add(new Position(nextPosition.getValue()));
-               newFrom = nextPosition;
-           }
+        while (!newFrom.equals(to)) {
+            Position nextPosition = newFrom.toNextPosition(direction);
+            routes.add(new Position(nextPosition.getValue()));
+            newFrom = nextPosition;
+        }
 
-           routes.pop();
+        routes.pop();
 
-           return routes;
-       }
+        return routes;
+    }
 
     private void validateTurn(ChessPiece piece) {
         if (currentTurn != piece.getColor()) {
@@ -103,14 +103,14 @@ public class ChessBoard {
     }
 
     private void moveEmptyPosition(Position source, Position target, ChessPiece piece) {
-        if(piece.isPawn()){
+        if (piece.isPawn()) {
             checkPawnStraightMove(source, target, piece);
         }
         movePiece(source, target, piece);
     }
 
     private void catchAndMove(Position source, Position target, ChessPiece piece) {
-        if(piece.isPawn()){
+        if (piece.isPawn()) {
             checkPawnCrossMove(source, target, piece);
         }
         movePiece(source, target, piece);
@@ -118,12 +118,12 @@ public class ChessBoard {
 
     private void checkPawnStraightMove(Position source, Position target, ChessPiece piece) {
         Pawn pawn = (Pawn) piece;
-        pawn.validateStraight(source,target);
+        pawn.validateStraight(source, target);
     }
 
     private void checkPawnCrossMove(Position source, Position target, ChessPiece piece) {
         Pawn pawn = (Pawn) piece;
-        pawn.validateCross(source,target);
+        pawn.validateCross(source, target);
     }
 
     private void movePiece(Position source, Position target, ChessPiece piece) {
@@ -175,10 +175,10 @@ public class ChessBoard {
         return score.calculateScore();
     }
 
-    public Map<String, ChessPiece> convertToMap(){
+    public Map<String, ChessPiece> convertToMap() {
         return chessBoard.entrySet()
                 .stream()
-                .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue() ));
+                .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue()));
     }
 
     public Color decideWinner() {
@@ -201,7 +201,9 @@ public class ChessBoard {
         gameStatus = GameStatus.PLAYING;
     }
 
-    public void end(){ gameStatus = GameStatus.END; }
+    public void end() {
+        gameStatus = GameStatus.END;
+    }
 
     public String getChessBoard() {
         return chessBoard.entrySet()

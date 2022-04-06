@@ -66,8 +66,8 @@ public class OutputView {
         }
     }
 
-    private static void printPieceByColor(ChessPiece piece){
-        if(piece.isBlack()){
+    private static void printPieceByColor(ChessPiece piece) {
+        if (piece.isBlack()) {
             System.out.printf(Color.BLACK.convertByColor(piece.getName()));
             return;
         }

@@ -68,7 +68,7 @@ public class GameDao {
         return null;
     }
 
-    public int delete(){
+    public int delete() {
         final String sql = "delete from game where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

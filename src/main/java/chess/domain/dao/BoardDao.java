@@ -39,7 +39,7 @@ public class BoardDao {
         return statement;
     }
 
-    public List<PieceDto> findByGameId(int gameId){
+    public List<PieceDto> findByGameId(int gameId) {
         final String sql = "select * from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -57,7 +57,6 @@ public class BoardDao {
         while (result.next()) {
             pieces.add(
                     new PieceDto(
-                            result.getInt("id"),
                             result.getInt("game_id"),
                             result.getString("position"),
                             result.getString("piece"),
@@ -66,8 +65,8 @@ public class BoardDao {
         return pieces;
     }
 
-    public void delete(int gameId){
-        if(gameId == 0){
+    public void delete(int gameId) {
+        if (gameId == 0) {
             return;
         }
 
@@ -80,5 +79,4 @@ public class BoardDao {
             throwables.printStackTrace();
         }
     }
-
 }

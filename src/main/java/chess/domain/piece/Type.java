@@ -1,17 +1,17 @@
 package chess.domain.piece;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.Function;
 import chess.domain.game.Color;
+
+import java.util.Arrays;
+import java.util.function.Function;
 
 public enum Type {
     Bishop("B", Bishop::new),
     King("K", King::new),
-    Knight("N",Knight::new),
-    Pawn("P",Pawn::new),
+    Knight("N", Knight::new),
+    Pawn("P", Pawn::new),
     Queen("Q", Queen::new),
-    Rook("R",Rook::new);
+    Rook("R", Rook::new);
 
     private final String name;
     private final Function<Color, ChessPiece> create;

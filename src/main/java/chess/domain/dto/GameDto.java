@@ -18,8 +18,8 @@ public class GameDto {
         return id;
     }
 
-    public GameStatus getStatus(){
-        if(status){
+    public GameStatus getStatus() {
+        if (status) {
             return GameStatus.PLAYING;
         }
         return GameStatus.END;

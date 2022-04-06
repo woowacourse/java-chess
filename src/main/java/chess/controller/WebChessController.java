@@ -17,6 +17,10 @@ public class WebChessController {
 
     private ChessService chessService = new ChessService();
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public void run() {
         init();
         play();
@@ -28,9 +32,9 @@ public class WebChessController {
         save();
     }
 
-    private void save(){
+    private void save() {
         post("/save", (req, res) -> {
-            if(chessService.isPlaying()){
+            if (chessService.isPlaying()) {
                 chessService.save();
             }
             res.redirect("/play");
@@ -70,7 +74,7 @@ public class WebChessController {
             if (chessService.isEnd()) {
                 res.redirect("/result");
             }
-            model.put("play",true);
+            model.put("play", true);
             model.put("board", chessService.getCurrentBoard());
             return render(model, "game.html");
         });
@@ -99,7 +103,7 @@ public class WebChessController {
     private void status() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if(chessService.isPlaying()){
+            if (chessService.isPlaying()) {
                 model.put("now", chessService.status());
                 model.put("board", chessService.getCurrentBoard());
                 return render(model, "game.html");
@@ -107,9 +111,5 @@ public class WebChessController {
             res.redirect("/end");
             return null;
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

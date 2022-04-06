@@ -1,14 +1,12 @@
 package chess.domain.game;
 
-import chess.domain.piece.Type;
-
 import java.util.Arrays;
 
 public enum Color {
     WHITE,
     BLACK;
 
-    public static Color from(String color){
+    public static Color from(String color) {
         return Arrays.stream(Color.values())
                 .filter(colorType -> colorType.name().equals(color))
                 .findAny()

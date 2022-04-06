@@ -24,7 +24,7 @@ public class ChessService {
     private BoardDao boardDao = new BoardDao();
 
     public void start() throws SQLException {
-        if(isNotSaved()){
+        if (isNotSaved()) {
             chessBoard = ChessBoardFactory.initBoard();
             chessBoard.start();
             return;
@@ -60,18 +60,18 @@ public class ChessService {
         gameDao.delete();
     }
 
-    public String move(String source, String target){
-        try{
-            if(chessBoard.isPlaying()){
+    public String move(String source, String target) {
+        try {
+            if (chessBoard.isPlaying()) {
                 chessBoard.move(new Position(source), new Position(target));
             }
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return new ResponseDto(500, e.getMessage()).toString();
         }
         return new ResponseDto(200, null).toString();
     }
 
-    public Map<String, Double> status(){
+    public Map<String, Double> status() {
         return chessBoard.calculateScore().entrySet().stream()
                 .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
@@ -80,7 +80,7 @@ public class ChessService {
         return chessBoard.decideWinner().name();
     }
 
-    public boolean isEnd(){
+    public boolean isEnd() {
         return chessBoard.isEnd();
     }
 

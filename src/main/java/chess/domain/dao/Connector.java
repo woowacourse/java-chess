@@ -19,7 +19,7 @@ public class Connector {
         }
     }
 
-    static Connection makeConnection(){
+    static Connection makeConnection() {
         loadDriver();
         Connection connection = null;
 
