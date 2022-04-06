@@ -2,7 +2,7 @@ package chess.web.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Result;
-import chess.service.ChessService;
+import chess.dao.ChessService;
 import chess.web.dto.BoardResponse;
 import java.util.HashMap;
 import java.util.Map;

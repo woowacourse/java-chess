@@ -1,7 +1,7 @@
 package chess.dao;
 
 import chess.domain.state.StateType;
-import chess.web.dto.TurnDto;
+import chess.dao.dto.TurnDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

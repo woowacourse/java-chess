@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.web.dto.TurnDto;
+import chess.dao.dto.TurnDto;
 import java.util.Optional;
 
 public interface TurnDao {

@@ -1,4 +1,4 @@
-package chess.service;
+package chess.dao;
 
 import static chess.domain.piece.PieceType.BISHOP_BLACK;
 import static chess.domain.piece.PieceType.BISHOP_WHITE;
@@ -13,16 +13,14 @@ import static chess.domain.piece.PieceType.QUEEN_WHITE;
 import static chess.domain.piece.PieceType.ROOK_BLACK;
 import static chess.domain.piece.PieceType.ROOK_WHITE;
 
-import chess.dao.PieceDao;
-import chess.dao.TurnDao;
+import chess.dao.dto.PieceDto;
+import chess.dao.dto.TurnDto;
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.generator.EmptyBoardGenerator;
+import chess.domain.piece.PieceType;
 import chess.domain.state.State;
 import chess.domain.state.StateType;
-import chess.web.dto.PieceDto;
-import chess.domain.piece.PieceType;
-import chess.web.dto.TurnDto;
 import java.util.List;
 
 public class ChessService {

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.web.dto.TurnDto;
+import chess.dao.dto.TurnDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

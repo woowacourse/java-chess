@@ -7,7 +7,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.dao.PieceDaoImpl;
 import chess.dao.TurnDaoImpl;
-import chess.service.ChessService;
+import chess.dao.ChessService;
 import chess.web.controller.ChessWebController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

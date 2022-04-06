@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.web.dto.PieceDto;
+import chess.dao.dto.PieceDto;
 import java.util.List;
 import java.util.Optional;
 

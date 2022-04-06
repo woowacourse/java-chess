@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.dao.dto;
 
 import chess.domain.piece.PieceType;
 import java.util.Objects;

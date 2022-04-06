@@ -2,7 +2,7 @@ package chess.dao;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.web.dto.PieceDto;
+import chess.dao.dto.PieceDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

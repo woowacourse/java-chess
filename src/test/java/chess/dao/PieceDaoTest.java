@@ -15,7 +15,7 @@ import static chess.domain.piece.PieceType.ROOK_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.web.dto.PieceDto;
+import chess.dao.dto.PieceDto;
 import chess.domain.piece.PieceType;
 import java.util.List;
 import java.util.Optional;
