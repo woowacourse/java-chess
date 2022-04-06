@@ -65,9 +65,21 @@ public class ChessService {
     public Board initBoard(Long boardId) {
         Pieces pieces = Pieces.createInit();
         Board board = Board.create(pieces, Turn.init());
-        pieceDao.save(pieces.getPieces(), boardId);
+        for (Piece piece : pieces.getPieces()) {
+            pieceDao.updatePieceByPositionAndBoardId(piece.getType(), piece.getTeam().value(), piece.getPosition().name(), boardId);
+        }
+        boardDao.updateTurnById(boardId, Turn.init().getTeam().value());
         return board;
     }
+// 나중에 방 생성하고 게임 만들 때, 이용
+//    public Board createGame() {
+//        Long boardId = boardDao.save();
+//        Pieces pieces = Pieces.createInit();
+//        Board board = Board.create(pieces, Turn.init());
+//
+//        pieceDao.save(pieces.getPieces(), boardId);
+//        return board;
+//    }
 
     public ScoreDto getStatus(Long boardId) {
         List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
