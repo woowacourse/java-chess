@@ -3,8 +3,11 @@ package chess.game;
 import static chess.game.MoveCommand.FROM_POSITION_INDEX;
 import static chess.game.MoveCommand.TO_POSITION_INDEX;
 
+import chess.piece.Piece;
 import chess.piece.detail.Color;
+import chess.position.Position;
 import chess.status.Ready;
+import chess.status.Running;
 import chess.status.State;
 import chess.view.Command;
 import java.util.Collections;
@@ -48,7 +51,7 @@ public class Game {
         }
 
         if (state.isGameEnd()) {
-            winColor = state.getTurn();
+            winColor = state.getTurn().reverse();
             state = state.turn(Command.END);
         }
         return Collections.emptyMap();
@@ -82,6 +85,14 @@ public class Game {
     }
 
     public Map<Color, Double> getResult() {
-        return result;
+        return state.getStatus();
+    }
+
+    public void load(final Color turn, final Map<Position, Piece> board) {
+        this.state = new Running(board, turn);
+    }
+
+    public Color getTurn() {
+        return state.getTurn();
     }
 }

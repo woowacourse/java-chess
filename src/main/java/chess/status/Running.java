@@ -5,7 +5,9 @@ import static chess.piece.detail.Color.WHITE;
 
 import chess.game.Board;
 import chess.game.MoveCommand;
+import chess.piece.Piece;
 import chess.piece.detail.Color;
+import chess.position.Position;
 import chess.view.Command;
 import java.util.Map;
 
@@ -13,11 +15,16 @@ public final class Running implements State {
 
     private static final Color FIRST_TURN_COLOR = WHITE;
 
-    private final Board board;
+    private Board board;
     private Color turn = FIRST_TURN_COLOR;
 
     Running() {
         this.board = Board.create();
+    }
+
+    public Running(final Map<Position, Piece> value, final Color turn) {
+        this.board = Board.of(value);
+        this.turn = turn;
     }
 
     @Override
@@ -60,7 +67,6 @@ public final class Running implements State {
 
     @Override
     public Color getTurn() {
-        reverseColor(turn);
         return turn;
     }
 
@@ -75,6 +81,12 @@ public final class Running implements State {
 
     @Override
     public Map<Color, Double> getStatus() {
-        return board.getBoardScore();
+        return board.createBoardScore();
+    }
+
+
+    @Override
+    public void load(final Map<Position, Piece> value) {
+        board = Board.of(value);
     }
 }

@@ -1,11 +1,9 @@
 package chess.dto;
 
 import chess.piece.Piece;
-import chess.piece.detail.Color;
 import chess.position.Column;
 import chess.position.Position;
 import chess.position.Row;
-import java.sql.ResultSet;
 
 public class PieceDto {
 

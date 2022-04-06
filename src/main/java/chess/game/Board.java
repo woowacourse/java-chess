@@ -27,6 +27,10 @@ public class Board {
         return new Board(BoardInitializer.init());
     }
 
+    public static Board of(final Map<Position, Piece> pieces) {
+        return new Board(pieces);
+    }
+
     public void move(final MoveCommand moveCommand, Color color) {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
@@ -47,7 +51,7 @@ public class Board {
         return kingCount == MINIMUM_PIECE_COUNT;
     }
 
-    public Map<Color, Double> getBoardScore() {
+    public Map<Color, Double> createBoardScore() {
         final Map<Color, Double> score = new EnumMap<>(Color.class);
         score.put(BLACK, calculateScore(BLACK));
         score.put(WHITE, calculateScore(WHITE));

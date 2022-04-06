@@ -20,7 +20,20 @@ public class BoardDto {
     public static BoardDto toDto(Board board) {
         final List<List<PieceDto>> boardPieces = new ArrayList<>();
         final Map<Position, Piece> pieces = board.getValue();
-        System.out.println(board.toString());
+        for (int i = 8; i >= 1; i--) {
+            final List<PieceDto> line = new ArrayList<>();
+            for (int j = 1; j <= 8; j++) {
+                final Position position = Position.of(Column.of(j), Row.of(i));
+                line.add(createPieceDto(pieces, position));
+            }
+            boardPieces.add(line);
+        }
+
+        return new BoardDto(boardPieces);
+    }
+
+    public static BoardDto toDto(Map<Position, Piece> pieces) {
+        final List<List<PieceDto>> boardPieces = new ArrayList<>();
         for (int i = 8; i >= 1; i--) {
             final List<PieceDto> line = new ArrayList<>();
             for (int j = 1; j <= 8; j++) {

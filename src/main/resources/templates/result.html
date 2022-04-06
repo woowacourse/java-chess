@@ -10,13 +10,17 @@
 <div align="center">
 
     <h1>Result of Game</h1>
-    <h2> Winner: {{winner}} </h2>
+    <h2> Winning: {{winner}} </h2>
 
     <div class="score">
         {{#each score}}
         <h3> {{@key}} : {{this}} </h3>
         {{/each}}
     </div>
+
+    <form action="/chess" method="get">
+        <button> 뒤로가기</button>
+    </form>
 
     <form action="/restart" method="get">
         <button> 재시작</button>

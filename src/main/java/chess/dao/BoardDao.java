@@ -6,5 +6,11 @@ public interface BoardDao {
 
     int save(final Color color);
 
-    Color findById(final int id);
+    Color findTurnById(final int id);
+
+    Color load();
+
+    int findLastlyUsedBoard();
+
+    void updateById(int boardId, Color turn);
 }
