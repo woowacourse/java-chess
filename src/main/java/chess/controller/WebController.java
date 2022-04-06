@@ -55,6 +55,10 @@ public class WebController {
             return gson.toJson(result);
         });
 
+//        post("/exit", (req, res) -> {
+//
+//        })
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             JsonObject jsonObject = new JsonObject();

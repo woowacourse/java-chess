@@ -85,4 +85,14 @@ public class PieceDao {
             throwables.printStackTrace();
         }
     }
+
+    public void deleteAll() {
+        String query = "DELETE FROM pieces";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

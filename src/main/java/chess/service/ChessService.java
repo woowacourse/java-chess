@@ -81,4 +81,8 @@ public class ChessService {
     public GameResult getResult() {
         return chessGame.getWinningResult();
     }
+
+    public void exitGame() {
+        pieceDao.deleteAll();
+    }
 }

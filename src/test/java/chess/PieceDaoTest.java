@@ -23,7 +23,7 @@ class PieceDaoTest {
 
         Map<Position, Piece> boardMap = pieceDao.findAll();
 
-        assertThat(boardMap.entrySet().size()).isEqualTo(64);
+        assertThat(boardMap.size()).isEqualTo(64);
     }
 
     @Test
@@ -50,5 +50,18 @@ class PieceDaoTest {
         String pieceName = pieceDao.findByPosition("a2");
 
         assertThat(pieceName).isEqualTo("none-.");
+    }
+
+    @Test
+    @DisplayName("체스판의 말을 모두 삭제한다.")
+    void deleteAll() {
+        PieceDao pieceDao = new PieceDao();
+        Board board = BoardFactory.create();
+        pieceDao.init(board);
+
+        pieceDao.deleteAll();
+
+        Map<Position, Piece> boardMap = pieceDao.findAll();
+        assertThat(boardMap.size()).isZero();
     }
 }
