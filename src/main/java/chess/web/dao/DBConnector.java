@@ -10,8 +10,6 @@ public class DBConnector {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    private static final Connection connection = createConnection();
-
     private static void loadDriver() {
         try {
             Class.forName(JDBC_DRIVER);
@@ -20,7 +18,7 @@ public class DBConnector {
         }
     }
 
-    private static Connection createConnection(){
+    static Connection getConnection(){
         loadDriver();
         Connection connection = null;
 
@@ -31,9 +29,5 @@ public class DBConnector {
         }
 
         return  connection;
-    }
-
-    static Connection getConnection() {
-        return connection;
     }
 }

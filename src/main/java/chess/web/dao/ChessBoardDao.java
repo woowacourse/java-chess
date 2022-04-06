@@ -10,8 +10,8 @@ import java.sql.Statement;
 
 public class ChessBoardDao {
     public int save() {
-        try {
-            return saveChessBoard();
+        try (Connection connection = getConnection()) {
+            return saveChessBoard(connection);
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -19,8 +19,7 @@ public class ChessBoardDao {
         return 0;
     }
 
-    private int saveChessBoard() throws SQLException {
-        Connection connection = getConnection();
+    private int saveChessBoard(Connection connection) throws SQLException {
         String sql = "insert into chessboard values ()";
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
