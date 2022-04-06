@@ -18,7 +18,7 @@ const ORIGIN = 'http://localhost:8080';
 function commandRequest(command, actionAfterSuccess, moveCommand) {
     const url = makeUrlBy(command);
     fetch(`${ORIGIN}/game/command/${url}`, {
-        method: 'GET',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },

@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
 import chess.Controller.web.WebChessController;
@@ -27,7 +28,7 @@ public class WebApplication {
 
         get(Web.USER_HISTORY, WebChessController.findUserHistory);
 
-        get(Web.COMMAND_ACTION, WebChessController.runCommand);
+        put(Web.COMMAND_ACTION, WebChessController.runCommand);
 
     }
 
