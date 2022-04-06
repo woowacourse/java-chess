@@ -62,11 +62,13 @@ const moveClickHandler = async position => {
 
     if (source === "") {
         source = position;
+        document.getElementById(source).style.backgroundColor = 'yellow';
         return;
     }
 
     if (destination === "") {
         destination = position;
+        document.getElementById(source).style.backgroundColor = '';
         await movePiece(source, destination);
         source = "";
         destination = "";
@@ -119,14 +121,12 @@ async function updateChessBoardAndTurn(response) {
 
 async function checkFinished(response) {
     isEnd = response.end;
-    console.log("게임 상태 = " + isEnd);
     if (isEnd) {
         alert("게임 종료");
     }
 }
 
 async function updateScoreBoard(response) {
-    console.log(response);
     const whiteScore = response.whiteScore;
     const blackScore = response.blackScore;
     const winningTeam = response.winningTeam;
