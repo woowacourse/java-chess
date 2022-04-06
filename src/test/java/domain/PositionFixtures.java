@@ -38,6 +38,7 @@ public final class PositionFixtures {
     public static final Position D2 = Position.of(XPosition.D, YPosition.TWO);
     public static final Position D3 = Position.of(XPosition.D, YPosition.THREE);
     public static final Position D4 = Position.of(XPosition.D, YPosition.FOUR);
+    public static final Position D5 = Position.of(XPosition.D, YPosition.FIVE);
     public static final Position D6 = Position.of(XPosition.D, YPosition.SIX);
     public static final Position D7 = Position.of(XPosition.D, YPosition.SEVEN);
     public static final Position D8 = Position.of(XPosition.D, YPosition.EIGHT);
@@ -60,11 +61,13 @@ public final class PositionFixtures {
 
     public static final Position G1 = Position.of(XPosition.G, YPosition.ONE);
     public static final Position G2 = Position.of(XPosition.G, YPosition.TWO);
+    public static final Position G4 = Position.of(XPosition.G, YPosition.FOUR);
     public static final Position G7 = Position.of(XPosition.G, YPosition.SEVEN);
     public static final Position G8 = Position.of(XPosition.G, YPosition.EIGHT);
 
     public static final Position H1 = Position.of(XPosition.H, YPosition.ONE);
     public static final Position H2 = Position.of(XPosition.H, YPosition.TWO);
+    public static final Position H4 = Position.of(XPosition.H, YPosition.FOUR);
     public static final Position H7 = Position.of(XPosition.H, YPosition.SEVEN);
     public static final Position H8 = Position.of(XPosition.H, YPosition.EIGHT);
 

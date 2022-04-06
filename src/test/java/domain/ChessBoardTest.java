@@ -15,9 +15,11 @@ import chess.domain.piece.unit.Rook;
 import chess.domain.position.Position;
 import chess.domain.classification.Result;
 import java.util.stream.Stream;
+import org.eclipse.jetty.util.security.Credential.MD5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessBoardTest {
@@ -211,6 +213,64 @@ class ChessBoardTest {
 
     private static Stream<Position> attackPawnImpossiblePositions() {
         return Stream.of(A4, B3, B4, C4);
+    }
+
+    @ParameterizedTest
+    @MethodSource("attackRookPossiblePositions")
+    @DisplayName("Rook은 직선으로 공격할 수 있다.")
+    void checkRookAttack(Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(target, new Rook(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertDoesNotThrow(() -> chessBoard.move(source, target));
+    }
+
+    private static Stream<Position> attackRookPossiblePositions() {
+        return Stream.of(A4, D1, D8, E4);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveRookPossiblePositions")
+    @DisplayName("Rook 은 직선으로 이동할 수 있다.")
+    void checkRookMove(Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertDoesNotThrow(() -> chessBoard.move(source, target));
+    }
+
+    private static Stream<Position> moveRookPossiblePositions() {
+        return Stream.of(A4, D1, D8, H4);
+    }
+
+    @ParameterizedTest
+    @MethodSource("rookImpossiblePositions")
+    @DisplayName("Rook은 경로에 기물이 있다면 이동할 수 없다.")
+    void checkRookUnavailableMove(Position wayPoint, Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(wayPoint, new Pawn(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> rookImpossiblePositions() {
+        return Stream.of(
+                Arguments.of(B4, A4),
+                Arguments.of(D2, D1),
+                Arguments.of(D5, D8),
+                Arguments.of(G4, H4)
+        );
     }
 
     @Test

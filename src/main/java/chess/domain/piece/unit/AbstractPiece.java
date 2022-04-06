@@ -64,9 +64,15 @@ public abstract class AbstractPiece implements Piece {
                 .filter(p -> p.contains(target))
                 .findFirst()
                 .orElse(new ArrayList<>());
-        return positions.stream()
-                .filter(position -> !position.equals(target))
-                .collect(Collectors.toList());
+        return calculateRouteBeforeTarget(target, positions);
+    }
+
+    private List<Position> calculateRouteBeforeTarget(Position target, List<Position> positions) {
+        int targetIndex = positions.indexOf(target);
+        if (targetIndex > 0) {
+            return positions.subList(0, targetIndex);
+        }
+        return new ArrayList<>();
     }
 
     private Position createWayPoint(final Position source, final Direction direction) {
