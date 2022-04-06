@@ -26,7 +26,13 @@ public enum Column {
 
     public static List<Column> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.comparingInt(row -> row.value))
+            .sorted(Comparator.comparingInt(column -> column.value))
+            .collect(Collectors.toList());
+    }
+
+    public static List<Column> reversOrderedValues() {
+        return Arrays.stream(values())
+            .sorted(Comparator.<Column>comparingInt(column -> column.value).reversed())
             .collect(Collectors.toList());
     }
 
@@ -34,7 +40,14 @@ public enum Column {
         int start = Math.min(this.value, to.value);
         int end = Math.max(this.value, to.value);
 
-        return orderedValues().stream()
+        if (this.value < to.value) {
+            return getPath(orderedValues(), start, end);
+        }
+        return getPath(reversOrderedValues(), start, end);
+    }
+
+    private List<Column> getPath(List<Column> columns, int start, int end) {
+        return columns.stream()
             .filter(file -> start < file.value && file.value < end)
             .collect(Collectors.toList());
     }

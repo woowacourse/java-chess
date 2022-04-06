@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     private static void printChessBoard(Collection<Piece> pieces) {
-        for (Row row : Row.orderedValues()) {
+        for (Row row : Row.reversOrderedValues()) {
             printEachColumn(pieces, row);
         }
         System.out.println();
