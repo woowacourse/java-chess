@@ -76,7 +76,11 @@ public class ChessService {
         return chessGame.isEndInRunning();
     }
 
-    private boolean isEndInGameOff() {
+    public boolean isEndInGameOff() {
         return chessGame.isEndInGameOff();
+    }
+
+    public boolean isNotExistGame() {
+        return chessGame == null;
     }
 }

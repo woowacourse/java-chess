@@ -2,11 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chessboard using Pure CSS and HTML</title>
+
+    <style type="text/css">
+
+        .chessboard {
+            width: 640px;
+            height: 640px;
+            margin: 20px;
+            border: 25px solid #806253;
+        }
+
+        .black-cell {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #806253;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .white-cell {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #f5eedf;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .piece-image {
+            float: left;
+            width: 60px;
+            height: 60px;
+            font-size: 40px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+    </style>
+
 </head>
+
+
+<body>
 <br>
 <form action="/" method="get">
-    <input name="restart" type="submit" value="재시작">
+    <input type="submit" value="재시작">
 </form>
 <form action="/start" method="post">
     <input name="command" value="start" type="hidden">
@@ -16,7 +63,7 @@
 <br>
 <!--move-->
 <form action="/move" method="post">
-move a2 a3 형식으로 입력해주세요.
+    move a2 a3 형식으로 입력해주세요.
     <input name="command" value="move a2 a4" type="text">
     <input type="submit" value="말이동시키기"/>
 </form>
@@ -26,7 +73,10 @@ move a2 a3 형식으로 입력해주세요.
     <input name="end" type="submit" value="종료">
 </form>
 
-
+<p>게임 진행 상황: {{message}}</p>
+{{#if errorMessage }}
+{{errorMessage}}
+{{/if}}
 
 
 <!--정보 출력-->
@@ -36,113 +86,182 @@ move a2 a3 형식으로 입력해주세요.
 <p>White 팀 : {{white}}점</p>
 <p>Black 팀 : {{black}}점</p>
 <p>턴 : {{camp}}</p>
-<p>{{error}}</p>
-<p>{{gameResultMessage}}</p>
+{{#if error }}
+<p>에러: {{error}}</p>
+{{/if}}
+<p>현재까지 결과: {{gameResultMessage}}</p>
 <br>
 {{/status}}
 <!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
 
-<table>
-    <tbody>
-    {{#board}}
-    <tr>
-        <td class="white" id="">{{a2}} {{a3}} {{h8}}</td>
-    </tr>
-    {{/board}}
-    </tbody>
-</table>
+{{#board}}
+<div class="chessboard">
 
+    <!-- 1st -->
+    <div class="white-cell" id="a8"><img src="images/{{a8}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="b8"><img src="images/{{b8}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="c8"><img src="images/{{c8}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="d8"><img src="images/{{d8}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="e8"><img src="images/{{e8}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="f8"><img src="images/{{f8}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="g8"><img src="images/{{g8}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="h8"><img src="images/{{h8}}.svg" class="piece-image"/></div>
+    <!-- 2nd -->
+    <div class="black-cell" id="a7"><img src="images/{{a7}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="b7"><img src="images/{{b7}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="c7"><img src="images/{{c7}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="d7"><img src="images/{{d7}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="e7"><img src="images/{{e7}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="f7"><img src="images/{{f7}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="g7"><img src="images/{{g7}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="h7"><img src="images/{{h7}}.svg" class="piece-image"/></div>
+    <!-- 3th -->
+    <div class="white-cell" id="a6"><img src="images/{{a6}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="b6"><img src="images/{{b6}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="c6"><img src="images/{{c6}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="d6"><img src="images/{{d6}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="e6"><img src="images/{{e6}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="f6"><img src="images/{{f6}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="g6"><img src="images/{{g6}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="h6"><img src="images/{{h6}}.svg" class="piece-image"/></div>
+    <!-- 4st -->
+    <div class="black-cell" id="a5"><img src="images/{{a5}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="b5"><img src="images/{{b5}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="c5"><img src="images/{{c5}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="d5"><img src="images/{{d5}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="e5"><img src="images/{{e5}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="f5"><img src="images/{{f5}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="g5"><img src="images/{{g5}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="h5"><img src="images/{{h5}}.svg" class="piece-image"/></div>
+    <!-- 5th -->
+    <div class="white-cell" id="a4"><img src="images/{{a4}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="b4"><img src="images/{{b4}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="c4"><img src="images/{{c4}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="d4"><img src="images/{{d4}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="e4"><img src="images/{{e4}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="f4"><img src="images/{{f4}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="g4"><img src="images/{{g4}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="h4"><img src="images/{{h4}}.svg" class="piece-image"/></div>
+    <!-- 6th -->
+    <div class="black-cell" id="a3"><img src="images/{{a3}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="b3"><img src="images/{{b3}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="c3"><img src="images/{{c3}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="d3"><img src="images/{{d3}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="e3"><img src="images/{{e3}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="f3"><img src="images/{{f3}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="g3"><img src="images/{{g3}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="h3"><img src="images/{{h3}}.svg" class="piece-image"/></div>
+    <!-- 7th -->
+    <div class="white-cell" id="a2"><img src="images/{{a2}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="b2"><img src="images/{{b2}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="c2"><img src="images/{{c2}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="d2"><img src="images/{{d2}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="e2"><img src="images/{{e2}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="f2"><img src="images/{{f2}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="g2"><img src="images/{{g2}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="h2"><img src="images/{{h2}}.svg" class="piece-image"/></div>
+    <!-- 8th -->
+    <div class="black-cell" id="a1"><img src="images/{{a1}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="b1"><img src="images/{{b1}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="c1"><img src="images/{{c1}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="d1"><img src="images/{{d1}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="e1"><img src="images/{{e1}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="f1"><img src="images/{{f1}}.svg" class="piece-image"/></div>
+    <div class="black-cell" id="g1"><img src="images/{{g1}}.svg" class="piece-image"/></div>
+    <div class="white-cell" id="h1"><img src="images/{{h1}}.svg" class="piece-image"/></div>
+</div>
+{{/board}}
 
 <!--board 시작-->
 {{#board}}
 <table>
     <tbody>
     <tr>
-        <td class="white" id="a8">{{a8}}</td>
-        <td class="black" id="b8">{{b8}}</td>
-        <td class="white" id="c8">{{c8}}</td>
-        <td class="black" id="d8">{{d8}}</td>
-        <td class="white" id="e8">{{e8}}</td>
-        <td class="black" id="f8">{{f8}}</td>
-        <td class="white" id="g8">{{g8}}</td>
-        <td class="black" id="h8">{{h8}}</td>
+        <td class="white-cell" id="a8">{{a8}}</td>
+        <td class="black-cell" id="b8">{{b8}}</td>
+        <td class="white-cell" id="c8">{{c8}}</td>
+        <td class="black-cell" id="d8">{{d8}}</td>
+        <td class="white-cell" id="e8">{{e8}}</td>
+        <td class="black-cell" id="f8">{{f8}}</td>
+        <td class="white-cell" id="g8">{{g8}}</td>
+        <td class="black-cell" id="h8">{{h8}}</td>
         <th>8</th>
     </tr>
     <tr>
-        <td class="black" id="a7">{{a7}}</td>
-        <td class="white" id="b7">{{b7}}</td>
-        <td class="black" id="c7">{{c7}}</td>
-        <td class="white" id="d7">{{d7}}</td>
-        <td class="black" id="e7">{{e7}}</td>
-        <td class="white" id="f7">{{f7}}</td>
-        <td class="black" id="g7">{{g7}}</td>
-        <td class="white" id="h7">{{h7}}</td>
+        <td class="black-cell" id="a7">{{a7}}</td>
+        <td class="white-cell" id="b7">{{b7}}</td>
+        <td class="black-cell" id="c7">{{c7}}</td>
+        <td class="white-cell" id="d7">{{d7}}</td>
+        <td class="black-cell" id="e7">{{e7}}</td>
+        <td class="white-cell" id="f7">{{f7}}</td>
+        <td class="black-cell" id="g7">{{g7}}</td>
+        <td class="white-cell" id="h7">{{h7}}</td>
         <th>7</th>
     </tr>
     <tr>
-        <td class="white" id="a6">{{a6}}</td>
-        <td class="black" id="b6">{{b6}}</td>
-        <td class="white" id="c6">{{c6}}</td>
-        <td class="black" id="d6">{{d6}}</td>
-        <td class="white" id="e6">{{e6}}</td>
-        <td class="black" id="f6">{{f6}}</td>
-        <td class="white" id="g6">{{g6}}</td>
-        <td class="black" id="h6">{{h6}}</td>
+        <td class="white-cell" id="a6">{{a6}}</td>
+        <td class="black-cell" id="b6">{{b6}}</td>
+        <td class="white-cell" id="c6">{{c6}}</td>
+        <td class="black-cell" id="d6">{{d6}}</td>
+        <td class="white-cell" id="e6">{{e6}}</td>
+        <td class="black-cell" id="f6">{{f6}}</td>
+        <td class="white-cell" id="g6">{{g6}}</td>
+        <td class="black-cell" id="h6">{{h6}}</td>
         <th>6</th>
     </tr>
     <tr>
-        <td class="black" id="a5">{{a5}}</td>
-        <td class="white" id="b5">{{b5}}</td>
-        <td class="black" id="c5">{{c5}}</td>
-        <td class="white" id="d5">{{d5}}</td>
-        <td class="black" id="e5">{{e5}}</td>
-        <td class="white" id="f5">{{f5}}</td>
-        <td class="black" id="g5">{{g5}}</td>
-        <td class="white" id="h5">{{h5}}</td>
+        <td class="black-cell" id="a5">{{a5}}</td>
+        <td class="white-cell" id="b5">{{b5}}</td>
+        <td class="black-cell" id="c5">{{c5}}</td>
+        <td class="white-cell" id="d5">{{d5}}</td>
+        <td class="black-cell" id="e5">{{e5}}</td>
+        <td class="white-cell" id="f5">{{f5}}</td>
+        <td class="black-cell" id="g5">{{g5}}</td>
+        <td class="white-cell" id="h5">{{h5}}</td>
         <th>5</th>
     </tr>
     <tr>
-        <td class="white" id="a4">{{a4}}</td>
-        <td class="black" id="b4">{{b4}}</td>
-        <td class="white" id="c4">{{c4}}</td>
-        <td class="black" id="d4">{{d4}}</td>
-        <td class="white" id="e4">{{e4}}</td>
-        <td class="black" id="f4">{{f4}}</td>
-        <td class="white" id="g4">{{g4}}</td>
-        <td class="black" id="h4">{{h4}}</td>
+        <td class="white-cell" id="a4">{{a4}}</td>
+        <td class="black-cell" id="b4">{{b4}}</td>
+        <td class="white-cell" id="c4">{{c4}}</td>
+        <td class="black-cell" id="d4">{{d4}}</td>
+        <td class="white-cell" id="e4">{{e4}}</td>
+        <td class="black-cell" id="f4">{{f4}}</td>
+        <td class="white-cell" id="g4">{{g4}}</td>
+        <td class="black-cell" id="h4">{{h4}}</td>
         <th>4</th>
     </tr>
     <tr>
-        <td class="black" id="a3">{{a3}}</td>
-        <td class="white" id="b3">{{b3}}</td>
-        <td class="black" id="c3">{{c3}}</td>
-        <td class="white" id="d3">{{d3}}</td>
-        <td class="black" id="e3">{{e3}}</td>
-        <td class="white" id="f3">{{f3}}</td>
-        <td class="black" id="g3">{{g3}}</td>
-        <td class="white" id="h3">{{h3}}</td>
+        <td class="black-cell" id="a3">{{a3}}</td>
+        <td class="white-cell" id="b3">{{b3}}</td>
+        <td class="black-cell" id="c3">{{c3}}</td>
+        <td class="white-cell" id="d3">{{d3}}</td>
+        <td class="black-cell" id="e3">{{e3}}</td>
+        <td class="white-cell" id="f3">{{f3}}</td>
+        <td class="black-cell" id="g3">{{g3}}</td>
+        <td class="white-cell" id="h3">{{h3}}</td>
         <th>3</th>
     </tr>
     <tr>
-        <td class="white" id="a2">{{a2}}</td>
-        <td class="black" id="b2">{{b2}}</td>
-        <td class="white" id="c2">{{c2}}</td>
-        <td class="black" id="d2">{{d2}}</td>
-        <td class="white" id="e2">{{e2}}</td>
-        <td class="black" id="f2">{{f2}}</td>
-        <td class="white" id="g2">{{g2}}</td>
-        <td class="black" id="h2">{{h2}}</td>
+        <td class="white-cell" id="a2">{{a2}}</td>
+        <td class="black-cell" id="b2">{{b2}}</td>
+        <td class="white-cell" id="c2">{{c2}}</td>
+        <td class="black-cell" id="d2">{{d2}}</td>
+        <td class="white-cell" id="e2">{{e2}}</td>
+        <td class="black-cell" id="f2">{{f2}}</td>
+        <td class="white-cell" id="g2">{{g2}}</td>
+        <td class="black-cell" id="h2">{{h2}}</td>
         <th>2</th>
     </tr>
     <tr>
-        <td class="black" id="a1">{{a1}}</td>
-        <td class="white" id="b1">{{b1}}</td>
-        <td class="black" id="c1">{{c1}}</td>
-        <td class="white" id="d1">{{d1}}</td>
-        <td class="black" id="e1">{{e1}}</td>
-        <td class="white" id="f1">{{f1}}</td>
-        <td class="black" id="g1">{{g1}}</td>
-        <td class="white" id="h1">{{h1}}</td>
+        <td class="black-cell" id="a1">{{a1}}</td>
+        <td class="white-cell" id="b1">{{b1}}</td>
+        <td class="black-cell" id="c1">{{c1}}</td>
+        <td class="white-cell" id="d1">{{d1}}</td>
+        <td class="black-cell" id="e1">{{e1}}</td>
+        <td class="white-cell" id="f1">{{f1}}</td>
+        <td class="black-cell" id="g1">{{g1}}</td>
+        <td class="white-cell" id="h1">{{h1}}</td>
         <th>1</th>
     </tr>
     <tr class="column">

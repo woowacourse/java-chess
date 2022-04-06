@@ -31,13 +31,22 @@ public class WebController {
             chessService.init();
             return render(model, "index.html");
         });
+
         post("/:command", (req, res) -> {
+            if (chessService.isNotExistGame()) {
+                res.redirect("/");
+            }
             return render(executeAndGetModel(req), "index.html");
         });
     }
 
     private Map<String, Object> executeAndGetModel(final Request req) {
-        return chessService.executeCommand(req);
+        try {
+            return chessService.executeCommand(req);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+
+            return new HashMap<>(Map.of("errorMessage", e.getMessage()));
+        }
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

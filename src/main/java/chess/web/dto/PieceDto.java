@@ -13,7 +13,7 @@ public class PieceDto {
     public static PieceDto from(final Piece piece) {
         final String character = piece.getCharacter();
         if (piece.isNullPiece()) {
-            return new PieceDto(".");
+            return new PieceDto("null");
         }
         if (piece.isBlack()) {
             return new PieceDto("b_" + character);
