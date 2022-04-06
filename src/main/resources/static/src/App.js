@@ -30,7 +30,6 @@ function initBoard() {
     fetch('/api/restart')
         .then(res => res.json())
         .then(window.alert("game reset successfully!!!"))
-        .then(status.style.visibility = 'hidden')
         .then(imageSetting)
 }
 
@@ -42,7 +41,6 @@ start.addEventListener('click', function () {
         return
     }
     initBoard();
-    start.textContent = "START";
 })
 
 function getStatus(scoreResponse) {
