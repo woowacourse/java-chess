@@ -38,8 +38,8 @@ public class SquareDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, position.toString());
-            statement.setString(2, piece.getSymbol());
-            statement.setString(3, piece.getTeam());
+            statement.setString(2, piece.getTeam());
+            statement.setString(3, piece.getSymbol());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,11 +49,11 @@ public class SquareDao {
     public Map<String, String> find() {
         final Map<String, String> squares = new HashMap();
         final Connection connection = getConnection();
-        final String sql = "select position, team, symbol from square where id <= 64";
+        final String sql = "select position, team, symbol from square";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
-            while (!resultSet.next()) {
+            while (resultSet.next()) {
                 squares.put(resultSet.getString("position"),
                         resultSet.getString("team") + "_" + resultSet.getString("symbol"));
             }
@@ -62,5 +62,16 @@ public class SquareDao {
             e.printStackTrace();
         }
         return squares;
+    }
+
+    public void delete() {
+        final Connection connection = getConnection();
+        final String sql = "delete from square";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

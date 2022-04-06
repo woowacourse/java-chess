@@ -8,9 +8,8 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE `chess`.`square`
 (
-  `id` INT NOT NULL AUTO_INCREMENT,
   `position` VARCHAR(2) NOT NULL,
   `team` VARCHAR(10) NOT NULL,
   `symbol` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`id`)
-  );
+  PRIMARY KEY (`position`)
+);

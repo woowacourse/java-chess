@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
@@ -16,10 +17,10 @@ public class GameService {
         this.squareDao = new SquareDao();
     }
 
-    public Map<Position, Piece> loadBoard() {
+    public Map<Position, Piece> loadGameBoard() {
         String stateName = stateDao.find();
         Map<Position, Piece> board = createBoard();
-        State state = StateGenerator.generateFrom(stateName, board);
+        State state = StateGenerator.generateState(stateName, board);
         return state.getBoard();
     }
 
@@ -30,5 +31,12 @@ public class GameService {
             board.put(Position.from(position), Piece.getPiece(squares.get(position)));
         }
         return board;
+    }
+
+    public void startGame() {
+        stateDao.delete();
+        stateDao.save("whiteturn");
+        squareDao.delete();
+        squareDao.save(Board.init().getBoard());
     }
 }

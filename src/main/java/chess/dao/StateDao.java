@@ -49,4 +49,15 @@ public class StateDao {
         }
         return "";
     }
+
+    public void delete() {
+        final Connection connection = getConnection();
+        final String sql = "delete from state";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

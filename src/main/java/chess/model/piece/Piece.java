@@ -27,6 +27,7 @@ public abstract class Piece {
         cache.put("WHITE_BISHOP", new Bishop(WHITE));
         cache.put("WHITE_KNIGHT", new Knight(WHITE));
         cache.put("WHITE_PAWN", new Pawn(WHITE));
+        cache.put("NONE_NONE", new Blank());
     }
 
     public static Piece getPiece(String key) {

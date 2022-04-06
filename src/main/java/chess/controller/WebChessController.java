@@ -15,8 +15,14 @@ public class WebChessController {
 
     public void run() {
 
-        get("/", (req, res) -> new ModelAndView(gameService.loadBoard(), "board.html")
+        get("/", (req, res) -> new ModelAndView(gameService.loadGameBoard(), "board.html")
                 , new HandlebarsTemplateEngine());
+
+        get("/start", (req, res) -> {
+            gameService.startGame();
+            System.out.println("제이슨파일이예요!!! " + gson.toJson(gameService.loadGameBoard()));
+            return gson.toJson(gameService.loadGameBoard());
+        });
 
         exception(Exception.class, (exception, req, res) -> {
             res.status(400);

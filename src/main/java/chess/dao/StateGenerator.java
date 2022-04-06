@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class StateGenerator {
 
-    public static State generateFrom(String stateName, Map<Position, Piece> board) {
+    public static State generateState(String stateName, Map<Position, Piece> board) {
         if (stateName.equals("end")) {
             return new End(Board.from(board));
         }
