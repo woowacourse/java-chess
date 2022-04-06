@@ -29,6 +29,10 @@ public class Response {
         return new Response(chessGameId, chessGame, EMPTY);
     }
 
+    public static Response exception(final int chessGameId, final ChessGame chessGame, final String exceptionMessage) {
+        return new Response(chessGameId, chessGame, exceptionMessage);
+    }
+
     public void restart(final ChessGame chessGame) {
         this.chessGame = chessGame;
     }

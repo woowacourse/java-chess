@@ -30,6 +30,22 @@ public class PieceDao {
         return connection;
     }
 
+    public void save(final String position, final String symbol, final int chessGameId) {
+        connection = getConnection();
+        String sql = "INSERT INTO piece (position, symbol, chess_game_id) VALUES (?, ?, ?)";
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, position);
+            statement.setString(2, symbol);
+            statement.setInt(3, chessGameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
     public List<PieceEntity> findByChessGameId(final int chessGameId) {
         connection = getConnection();
         String sql = "SELECT id, position, symbol FROM piece WHERE chess_game_id = ?";
