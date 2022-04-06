@@ -4,6 +4,7 @@ import static chess.model.File.*;
 import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -122,6 +123,11 @@ public class ChessGameServiceTest {
         @Override
         public void deleteById(int gameId) {
             table.remove(gameId);
+        }
+
+        @Override
+        public Connection getConnection() {
+            return null;
         }
     }
 
