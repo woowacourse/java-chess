@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,8 +16,6 @@ public class BoardDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public BoardDto loadBoard() {
         final String sql = "SELECT board.position, board.piece, board.color "
@@ -58,21 +54,28 @@ public class BoardDao {
             String piece = resultSet.getString("piece");
             String color = resultSet.getString("color");
 
-            PreparedStatement moveStatement = connection.prepareStatement(overwriteSql);
-            moveStatement.setString(1, "1");
-            moveStatement.setString(2, commandDto.getTo());
-            moveStatement.setString(3, piece);
-            moveStatement.setString(4, color);
-
-            moveStatement.executeUpdate();
-
-            PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
-            deleteStatement.setString(1, commandDto.getFrom());
-            deleteStatement.setString(2, "1");
-            deleteStatement.executeUpdate();
+            executeMoveStatement(commandDto, overwriteSql, connection, piece, color);
+            executeDeleteStatement(commandDto, deleteSql, connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void executeDeleteStatement(CommandDto commandDto, String deleteSql, Connection connection) throws SQLException {
+        PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
+        deleteStatement.setString(1, commandDto.getFrom());
+        deleteStatement.setString(2, "1");
+        deleteStatement.executeUpdate();
+    }
+
+    private void executeMoveStatement(CommandDto commandDto, String overwriteSql, Connection connection, String piece,
+                           String color) throws SQLException {
+        PreparedStatement moveStatement = connection.prepareStatement(overwriteSql);
+        moveStatement.setString(1, "1");
+        moveStatement.setString(2, commandDto.getTo());
+        moveStatement.setString(3, piece);
+        moveStatement.setString(4, color);
+        moveStatement.executeUpdate();
     }
 
     public Connection getConnection() {
