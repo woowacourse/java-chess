@@ -22,14 +22,14 @@ public class WebController {
     private void ready() {
         get("/", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model);
         });
     }
 
     private void start(final ChessGame chessGame) {
         get("/start", ((req, res) -> {
             chessGame.start();
-            return render(chessGame.getAllPiecesByPosition(), "index.html");
+            return render(chessGame.getAllPiecesByPosition());
         }));
     }
 
@@ -37,7 +37,7 @@ public class WebController {
         post("/move", ((req, res) -> {
             chessGame.move(
                     req.queryParams("source"), req.queryParams("target"));
-            return render(chessGame.getAllPiecesByPosition(), "index.html");
+            return render(chessGame.getAllPiecesByPosition());
         }));
     }
 
@@ -52,11 +52,11 @@ public class WebController {
         get("/end", ((req, res) -> {
             final Map<String, Object> model = chessGame.getAllPiecesByPosition();
             chessGame.end();
-            return render(model, "index.html");
+            return render(model);
         }));
     }
 
-    private String render(final Map<String, Object> model, final String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private String render(final Map<String, Object> model) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
     }
 }
