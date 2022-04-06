@@ -31,7 +31,7 @@ public final class WebController {
 
         put("/move", (request, response) -> move(request));
 
-        exception(RuntimeException.class, (exception, request, response) -> exceptionHanding(exception, response));
+        exception(RuntimeException.class, (exception, request, response) -> handleException(exception, response));
     }
 
     private String start() {
@@ -50,7 +50,7 @@ public final class WebController {
         return chessGame.removedKing();
     }
 
-    private void exceptionHanding(final Exception exception, final Response response) {
+    private void handleException(final Exception exception, final Response response) {
         // 이런식으로 처리해도 되는지?
         response.status(500);
         response.body(gson.toJson(exception.getMessage()));

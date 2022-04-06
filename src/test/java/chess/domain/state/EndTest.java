@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FinishTest {
+public class EndTest {
 
     @DisplayName("점수 계산 기능")
     @ParameterizedTest
@@ -28,7 +28,7 @@ public class FinishTest {
                 Position.from("b1"), new Pawn(Color.WHITE),
                 Position.from("b2"), new Pawn(Color.WHITE)
         ));
-        final var state = new Finish(Color.BLACK, new Board(() -> value));
+        final var state = new End(Color.BLACK, new Board(() -> value));
 
         assertThat(state.score(color)).isEqualTo(expected);
     }

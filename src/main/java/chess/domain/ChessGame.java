@@ -18,10 +18,12 @@ public final class ChessGame {
 
     public void start() {
         state = state.start();
+        // initBoard db에 저장하기
     }
 
     public void end() {
-        state = state.exit();
+        state = state.end();
+        // db 보드 내역 삭제
     }
 
     public Map<Position, Piece> getBoard() {
@@ -33,6 +35,7 @@ public final class ChessGame {
         final Position to = Position.from(positions[TO]);
 
         state = state.move(from, to);
+        // db에 이동내역 저장하기
     }
 
     public Status status() {
@@ -43,8 +46,8 @@ public final class ChessGame {
         );
     }
 
-    public boolean isExit() {
-        return state.isExit();
+    public boolean isEnd() {
+        return state.isEnd();
     }
 
     public boolean removedKing() {

@@ -5,11 +5,12 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public final class Finish extends CalculableState {
+public final class End extends CalculableState {
 
+    private static final String END_MESSAGE = "게임이 끝났습니다";
     private final Color winnerColor;
 
-    public Finish(final Color winnerColor, final Board board) {
+    public End(final Color winnerColor, final Board board) {
         this.winnerColor = winnerColor;
         this.board = board;
     }
@@ -20,17 +21,22 @@ public final class Finish extends CalculableState {
     }
 
     @Override
-    public boolean isExit() {
-        return false;
+    public boolean isEnd() {
+        return true;
     }
 
     @Override
     public State move(Position from, Position to) {
-        throw new IllegalStateException("이번 게임은 끝났습니다.");
+        throw new IllegalStateException(END_MESSAGE);
     }
 
     @Override
     public Result getWinner() {
         return Result.from(winnerColor);
+    }
+
+    @Override
+    public State end() {
+        throw new IllegalStateException(END_MESSAGE);
     }
 }

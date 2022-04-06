@@ -67,7 +67,7 @@ public class RunningTest {
 
         final var state = new Running(Color.WHITE, new Board(() -> board));
 
-        assertThat(state.move(Position.from("e5"), Position.from("f6"))).isInstanceOf(Finish.class);
+        assertThat(state.move(Position.from("e5"), Position.from("f6"))).isInstanceOf(End.class);
     }
 
     @Test

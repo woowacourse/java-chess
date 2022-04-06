@@ -14,7 +14,7 @@ public final class Running extends CalculableState {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean isEnd() {
         return false;
     }
 
@@ -29,12 +29,17 @@ public final class Running extends CalculableState {
     }
 
     @Override
+    public State end() {
+        return new End(Color.EMPTY, board);
+    }
+
+    @Override
     public State move(final Position from, final Position to) {
         checkPosition(currentColor, from, to);
         board.move(from, to);
 
         if (board.removedKing()) {
-            return new Finish(currentColor, board);
+            return new End(currentColor, board);
         }
         return new Running(currentColor.next(), board);
     }

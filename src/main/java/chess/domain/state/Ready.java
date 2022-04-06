@@ -15,7 +15,7 @@ public final class Ready extends State {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean isEnd() {
         return false;
     }
 
@@ -31,6 +31,11 @@ public final class Ready extends State {
 
     @Override
     public Result getWinner() {
-        return Result.EMPTY;
+        throw new IllegalStateException(ERROR_MESSAGE);
+    }
+
+    @Override
+    public State end() {
+        throw new IllegalStateException(ERROR_MESSAGE);
     }
 }

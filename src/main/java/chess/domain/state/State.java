@@ -12,8 +12,8 @@ public abstract class State {
     protected Board board;
 
     public abstract State start();
-
-    public abstract boolean isExit();
+    // 자식 클래스에 대한 정보가 메서드에 담겨있다.
+    public abstract boolean isEnd();
 
     public abstract State move(final Position from, final Position to);
 
@@ -21,9 +21,7 @@ public abstract class State {
 
     public abstract Result getWinner();
 
-    public final State exit() {
-        return new Exit();
-    }
+    public abstract State end();
 
     public final Map<Position, Piece> getBoard() {
         return board.getValue();

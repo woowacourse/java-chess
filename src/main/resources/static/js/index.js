@@ -56,7 +56,9 @@ async function onClickEndButton () {
     const response = await fetch("/end");
     if (response.ok) {
         alert("게임이 종료됐습니다!");
+        return;
     }
+    alert(JSON.stringify(await response.json()));
 }
 
 async function onClickStatusButton () {
