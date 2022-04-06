@@ -31,7 +31,7 @@ public class ChessGameTest {
         pieces.put(Position.of(Column.A, Row.RANK_2), WHITE_PAWN); // 0.5
         pieces.put(Position.of(Column.B, Row.RANK_2), WHITE_PAWN); // 0.5
 
-        ChessGame chessGame = new ChessGame(pieces);
+        ChessGame chessGame = new ChessGame(pieces, PieceColor.WHITE);
         Map<PieceColor, Score> scoreByColor = chessGame.calculateScoreByColor();
 
         assertAll(
@@ -51,7 +51,7 @@ public class ChessGameTest {
         pieces.put(Position.of(Column.A, Row.RANK_2), WHITE_PAWN);
         pieces.put(Position.of(Column.B, Row.RANK_2), WHITE_PAWN);
 
-        ChessGame chessGame = new ChessGame(pieces);
+        ChessGame chessGame = new ChessGame(pieces, PieceColor.WHITE);
 
         assertThat(chessGame.isRunning()).isTrue();
     }
@@ -66,7 +66,7 @@ public class ChessGameTest {
         pieces.put(Position.of(Column.A, Row.RANK_2), WHITE_PAWN);
         pieces.put(Position.of(Column.B, Row.RANK_2), WHITE_PAWN);
 
-        ChessGame chessGame = new ChessGame(pieces);
+        ChessGame chessGame = new ChessGame(pieces, PieceColor.WHITE);
 
         assertThat(chessGame.isRunning()).isFalse();
     }

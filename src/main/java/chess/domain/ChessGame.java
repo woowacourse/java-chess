@@ -10,10 +10,11 @@ import java.util.Map;
 public final class ChessGame {
 
     private final Board board;
-    private PieceColor turnColor = PieceColor.WHITE;
+    private PieceColor turnColor;
 
-    public ChessGame(Map<Position, Piece> pieces) {
+    public ChessGame(Map<Position, Piece> pieces, PieceColor turnColor) {
         this.board = new Board(pieces);
+        this.turnColor = turnColor;
     }
 
     public void proceedWith(MoveCommand moveCommand) {

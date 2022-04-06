@@ -42,4 +42,12 @@ public class Piece {
     public String getSignature() {
         return color.correctSignature(type.getSignature());
     }
+
+    public PieceColor getColor() {
+        return color;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
 }

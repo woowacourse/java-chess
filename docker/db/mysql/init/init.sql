@@ -1,7 +1,13 @@
-CREATE TABLE piece
+create table turn
 (
-    position VARCHAR(5)  NOT NULL,
-    type     VARCHAR(10)  NOT NULL,
-    color    VARCHAR(20) NOT NULL,
-    PRIMARY KEY (position)
+    color varchar(20) not null,
+    primary key (color)
+);
+
+create table piece
+(
+    position varchar(5)  not null,
+    type     varchar(10) not null,
+    color    varchar(20) not null,
+    primary key (position)
 );

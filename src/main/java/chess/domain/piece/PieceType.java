@@ -24,4 +24,8 @@ public enum PieceType {
     public double getScore() {
         return score;
     }
+
+    public String getName() {
+        return name().toLowerCase();
+    }
 }

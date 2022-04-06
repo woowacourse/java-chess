@@ -8,6 +8,7 @@ public class WebApplication {
 
     public static void main(String[] args) {
         port(8080);
+
         new ChessController().run();
     }
 }

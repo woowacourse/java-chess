@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.command.MoveCommand;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
 import chess.dto.StatusDto;
 import chess.view.InputView;
@@ -27,7 +28,7 @@ public class Application {
     }
 
     private static void startChessGame() {
-        ChessGame chessGame = new ChessGame(PieceFactory.createChessPieces());
+        ChessGame chessGame = new ChessGame(PieceFactory.createChessPieces(), PieceColor.WHITE);
         OutputView.printBoard(chessGame.getPieces());
 
         while (chessGame.isRunning()) {

@@ -36,4 +36,8 @@ public enum PieceColor {
     }
 
     public abstract PieceColor enemyColor();
+
+    public String getName() {
+        return name().toLowerCase();
+    }
 }

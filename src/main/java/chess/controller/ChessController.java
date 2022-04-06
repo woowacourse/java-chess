@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.PieceDaoImpl;
 import chess.domain.ChessGame;
 import chess.domain.Score;
 import chess.domain.command.MoveCommand;
@@ -9,6 +10,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
 import chess.dto.ScoresDto;
+import chess.serviece.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
@@ -25,10 +27,12 @@ public class ChessController {
 
     private static final String STATIC_FILE_LOCATION = "/static";
 
+    private final ChessService chessService;
     private ChessGame game;
 
     public ChessController() {
-        game = new ChessGame(PieceFactory.createChessPieces());
+        this.chessService = new ChessService(new PieceDaoImpl());
+        this.game = new ChessGame(PieceFactory.createChessPieces(), PieceColor.WHITE);
     }
 
     public void run() {
@@ -37,7 +41,7 @@ public class ChessController {
 
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
-        get("/start", (req, res) -> gson.toJson(getPieces()));
+        get("/start", (req, res) -> gson.toJson(chessService.gameStart()));
 
         get("/restart", (req, res) -> gson.toJson(restartGame()));
 
@@ -54,8 +58,8 @@ public class ChessController {
         });
     }
 
-    private Object restartGame() {
-        game = new ChessGame(PieceFactory.createChessPieces());
+    private List<PieceDto> restartGame() {
+        game = new ChessGame(PieceFactory.createChessPieces(), PieceColor.WHITE);
         return getPieces();
     }
 
@@ -78,7 +82,7 @@ public class ChessController {
         Map<Position, Piece> pieces = game.getPieces();
         return pieces.entrySet()
                 .stream()
-                .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
+                .map(entry -> PieceDto.from(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
 
