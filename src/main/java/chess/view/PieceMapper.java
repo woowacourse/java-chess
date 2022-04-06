@@ -39,19 +39,19 @@ public final class PieceMapper {
     }
 
     public static Piece of(String pieceName, Color color) {
-        if ("Pawn".equals(pieceName)) {
+        if (Pawn.class.getSimpleName().equals(pieceName)) {
             return new Pawn(color);
         }
-        if ("Bishop".equals(pieceName)) {
+        if (Bishop.class.getSimpleName().equals(pieceName)) {
             return new Bishop(color);
         }
-        if ("Knight".equals(pieceName)) {
+        if (Knight.class.getSimpleName().equals(pieceName)) {
             return new Knight(color);
         }
-        if ("King".equals(pieceName)) {
+        if (King.class.getSimpleName().equals(pieceName)) {
             return new King(color);
         }
-        if ("Queen".equals(pieceName)) {
+        if (Queen.class.getSimpleName().equals(pieceName)) {
             return new Queen(color);
         }
         return new Rook(color);
