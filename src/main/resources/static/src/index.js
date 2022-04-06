@@ -50,6 +50,13 @@ function drawBoard(body) {
     })
 }
 
+function initBoard() {
+    const blocks = document.querySelectorAll('#chess-board tr td');
+    blocks.forEach(block => {
+        block.innerHTML = null;
+    })
+}
+
 function drawTurnBox() {
     const turnBox = document.getElementById("turn-box")
 
@@ -187,4 +194,11 @@ const deleteMovePosition = (position) => {
 
 const isMovePositionAllSelected = () => {
     return movePosition.source !== undefined && movePosition.target !== undefined;
+}
+
+const quit = () => {
+    changeButton("start!")
+    const turnBox = document.getElementById("turn-box")
+    turnBox.innerText = "아직 게임 시작을 하지 않았습니다."
+    initBoard();
 }

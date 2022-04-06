@@ -27,6 +27,7 @@ td[class*='click'] {
 }
 
 #game-info-section {
+    display: block;
     height: 100%;
     margin: auto;
 }
@@ -46,6 +47,18 @@ td[class*='click'] {
 #piece-image {
     width: 75px;
     height: 75px;
+}
+
+#quit {
+    display: block;
+    vertical-align: center;
+    width: 100px;
+    height: 50px;
+    background-color: antiquewhite;
+    border-color: dimgrey;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top: 50px;
 }
 
 #page {
