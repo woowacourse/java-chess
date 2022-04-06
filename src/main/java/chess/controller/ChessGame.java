@@ -32,7 +32,8 @@ public class ChessGame {
     private static final Map<String, Team> TEAM_CREATE_STRATEGY = Map.of("WHITE", WHITE, "BLACK", BLACK);
 
     public void start() {
-        if (board != null) {
+        final String gameState = pieceDao.getGameState();
+        if (board != null && !gameState.equals("nothing")) {
             throw new IllegalStateException("이미 진행중인 게임이 있습니다.");
         }
         initializeBoard();
