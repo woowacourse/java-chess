@@ -43,4 +43,8 @@ public abstract class Piece {
     public String getPiece() {
         return color.toString() + "_" + this.getClass().getSimpleName();
     }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

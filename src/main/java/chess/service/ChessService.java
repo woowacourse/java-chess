@@ -1,7 +1,9 @@
 package chess.service;
 
+import chess.StateConvertor;
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
+import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
@@ -26,12 +28,19 @@ public class ChessService {
     }
 
     public Map<String, Object> ready() {
-        chessGameDao.save(chessGame);
         int gameId = chessGameDao.findRecentGame();
-        for (String position : Position.values()) {
-            boardDao.save(position, gameId);
+        String state = chessGameDao.findById(gameId);
+        if (gameId != 0 && !isEnded(state)) {
+            Board board = new Board(boardDao.findGame(gameId));
+            chessGame = StateConvertor.of(board, state);
+            return board.toMap();
         }
+        chessGameDao.save(chessGame);
         return chessGame.getBoard().toMap();
+    }
+
+    private boolean isEnded(String state) {
+        return state.equals("terminate") || state.equals("complete");
     }
 
     public Map<String, Object> start() {
@@ -40,7 +49,7 @@ public class ChessService {
         int gameId = chessGameDao.findRecentGame();
         for (String position : board.keySet()) {
             Piece piece = (Piece) board.get(position);
-            boardDao.update(position, piece.getPiece(), piece.getColor().toString(), gameId);
+            boardDao.save(position, piece.getName(), piece.getColor().toString(), gameId);
         }
         chessGameDao.update(gameId, chessGame);
         return board;
@@ -50,9 +59,9 @@ public class ChessService {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
         Map<String, Object> board = chessGame.getBoard().toMap();
         int gameId = chessGameDao.findRecentGame();
-        boardDao.update(from, null, null, gameId);
+        boardDao.delete(from, gameId);
         Piece piece = (Piece) board.get(to);
-        boardDao.update(to, piece.getPiece(), piece.getColor().toString(), gameId);
+        boardDao.update(to, piece.getName(), piece.getColor().toString(), gameId);
         chessGameDao.update(gameId, chessGame);
         return board;
     }
