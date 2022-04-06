@@ -6,7 +6,10 @@
     <title>이브의 체스</title>
 </head>
 <body>
-{{team}} 팀 차례입니다.
+<table style="margin: auto">
+    <tr><td style="padding: 5px">{{team}} 팀 차례입니다.</td></tr>
+    <tr>
+        <td style="padding: 5px">
 <table class="chess-board">
     {{#board}}
     <tr>
@@ -18,8 +21,27 @@
     </tr>
     {{/board}}
 </table>
-<button onclick="statusHandler()">점수 확인</button>
-<button onclick="endGameHandler()">게임종료</button>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="padding: 5px">
+    <div class="button" onclick="statusHandler()">
+        <p class="btnText">점수 확인</p>
+        <div class="btnTwo">
+            <p class="btnText2">SCORE</p>
+        </div>
+    </div>
+
+    <div class="button" onclick="endGameHandler()">
+        <p class="btnText">게임 종료</p>
+        <div class="btnTwo">
+            <p class="btnText2">END</p>
+        </div>
+</div>
+        </td>
+    </tr>
+</table>
 </body>
 
 <script>
