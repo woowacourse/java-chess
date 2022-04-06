@@ -88,11 +88,11 @@ public class ChessService {
 //    }
 
     public ScoreDto getStatus(Long boardId) {
-        List<Piece> pieces = pieceDao.findAllByBoardId(boardId);
-        Pieces board = Pieces.from(pieces);
+        List<Piece> allByBoardId = pieceDao.findAllByBoardId(boardId);
+        Pieces pieces = Pieces.from(allByBoardId);
 
-        double blackScore = board.getTotalScore(Team.BLACK);
-        double whiteScore = board.getTotalScore(Team.WHITE);
+        double blackScore = pieces.getTotalScore(Team.BLACK);
+        double whiteScore = pieces.getTotalScore(Team.WHITE);
         return new ScoreDto(blackScore, whiteScore);
     }
 }
