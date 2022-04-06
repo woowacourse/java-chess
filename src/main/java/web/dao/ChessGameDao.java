@@ -2,8 +2,9 @@ package web.dao;
 
 import chess.Score;
 import chess.piece.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 import web.dto.ChessGameDto;
 import web.dto.GameStatus;
 
@@ -16,64 +17,40 @@ public class ChessGameDao {
     }
 
     public List<ChessGameDto> findAll() {
-        return jdbcTemplate.query("SELECT id, name FROM chess_game", rs -> {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            return new ChessGameDto(id, name);
-        });
+        return jdbcTemplate.query(
+                "SELECT id, name, status, current_color, black_score, white_score FROM chess_game",
+                this::createChessGameDto);
     }
 
-    public GameStatus findGameStatus(int id) {
-        return jdbcTemplate.queryForObject("SELECT status FROM chess_game WHERE id = ?",
-                rs -> GameStatus.valueOf(rs.getString("status")), id);
+    private ChessGameDto createChessGameDto(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        GameStatus status = GameStatus.valueOf(rs.getString("status"));
+        Color currentColor = Color.valueOf(rs.getString("current_color"));
+        Score blackScore = new Score(rs.getBigDecimal("black_score"));
+        Score whiteScore = new Score(rs.getBigDecimal("white_score"));
+        return new ChessGameDto(id, name, status, blackScore, whiteScore, currentColor);
     }
 
-    public void saveChessGame(String name, GameStatus status, Color color, Score blackScore, Score whiteScore) {
+    public ChessGameDto findById(int id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT id, name, status, current_color, black_score, white_score FROM chess_game WHERE id = ?",
+                this::createChessGameDto, id);
+    }
+
+    public void saveChessGame(String name, GameStatus status, Color currentColor, Score blackScore, Score whiteScore) {
         jdbcTemplate.update(
                 "INSERT INTO chess_game(name, status, current_color, black_score, white_score) VALUES(?, ?, ?, ?, ?)",
-                name, status.name(), color.name(),
+                name, status.name(), currentColor.name(),
                 blackScore.getValue().toPlainString(), whiteScore.getValue().toPlainString());
     }
 
-    public void updateChessGame(int id, GameStatus status, Color color, Score blackScore, Score whiteScore) {
+    public void updateChessGame(ChessGameDto chessGameDto) {
         jdbcTemplate.update(
                 "UPDATE chess_game SET status=?, current_color=?, black_score=?, white_score=? WHERE id = ?",
-                status.name(), color.name(), blackScore.getValue().toPlainString(),
-                whiteScore.getValue().toPlainString(), id);
-    }
-
-    public void updateGameStatus(int id, GameStatus status) {
-        jdbcTemplate.update("UPDATE chess_game SET status = ? WHERE id = ?", status.name(), id);
-    }
-
-    public Color findWinner(int id) {
-        return jdbcTemplate.queryForObject("SELECT winner FROM chess_game WHERE id = ?",
-                rs -> Color.valueOf(rs.getString("winner")), id);
-    }
-
-    public void updateWinner(int id, Color color) {
-        jdbcTemplate.update("UPDATE chess_game SET winner = ? WHERE id = ?", color.name(), id);
-    }
-
-    public Color findCurrentColor(int id) {
-        return jdbcTemplate.queryForObject("SELECT current_color FROM chess_game WHERE id = ?",
-                rs -> Color.valueOf(rs.getString("current_color")), id);
-    }
-
-    public void updateCurrentColor(int id, Color color) {
-        jdbcTemplate.update("UPDATE chess_game SET current_color = ? WHERE id = ?", color.name(), id);
-    }
-
-    public Score findScoreByColor(int id, Color color) {
-        String column = String.format("%s_score", color.name().toLowerCase(Locale.ENGLISH));
-        String sql = String.format("SELECT %s FROM chess_game WHERE id = ?", column);
-        return jdbcTemplate.queryForObject(sql, rs -> new Score(rs.getBigDecimal(column)), id);
-    }
-
-    public void updateScoreByColor(int id, Score score, Color color) {
-        String column = String.format("%s_score", color.name().toLowerCase(Locale.ENGLISH));
-        String sql = String.format("UPDATE chess_game SET %s = ? WHERE id = ?", column);
-        jdbcTemplate.update(sql, score.getValue().toPlainString(), id);
+                chessGameDto.getStatus(), chessGameDto.getCurrentColor(),
+                chessGameDto.getBlackScore().getValue().toPlainString(),
+                chessGameDto.getWhiteScore().getValue().toPlainString(), chessGameDto.getId());
     }
 
     public void deleteAll() {

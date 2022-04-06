@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/src/chess-game.css">
 </head>
 <script src="/src/chess-game.js"></script>
-<body onload="onloadBody('{{chess-game-id}}')">
+<body onload="onloadBody('{{chessGame.id}}')">
 <div class="message">
     {{#hasError}}
     <span>{{errorMessage}}</span>
@@ -107,9 +107,9 @@
     </div>
     <div>
         <div class="game-status">
-            <p>{{currentColor}} 차례</p>
-            <p>블랙 점수 : {{blackScore.value}}</p>
-            <p>화이트 점수 : {{whiteScore.value}}</p>
+            <p>{{chessGame.currentColor}} 차례</p>
+            <p>블랙 점수 : {{chessGame.blackScore.value}}</p>
+            <p>화이트 점수 : {{chessGame.whiteScore.value}}</p>
         </div>
         <br>
         <div class="back">

@@ -8,8 +8,7 @@ CREATE TABLE chess_game
     status        VARCHAR(10) NOT NULL,
     current_color CHAR(5)     NOT NULL,
     black_score   VARCHAR(10) NOT NULL,
-    white_score   VARCHAR(10) NOT NULL,
-    winner        VARCHAR(10)
+    white_score   VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE piece

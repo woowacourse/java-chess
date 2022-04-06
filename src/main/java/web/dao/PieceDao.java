@@ -66,10 +66,6 @@ public class PieceDao {
                 .update("DELETE FROM piece WHERE chess_game_id = ? and position = ?", chessGameId, position.toString());
     }
 
-    public void deletePieceByPosition(Position position) {
-        jdbcTemplate.update("DELETE FROM piece WHERE position = ?", position.toString());
-    }
-
     public void savePiece(int chessGameId, PieceDto pieceDto) {
         jdbcTemplate.update("INSERT INTO piece(chess_game_id, position, type, color) VALUES(?, ?, ?, ?)",
                 chessGameId, pieceDto.getPosition(), pieceDto.getType().name(), pieceDto.getColor().name());

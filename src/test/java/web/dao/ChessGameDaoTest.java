@@ -1,6 +1,7 @@
 package web.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.Score;
 import chess.piece.Color;
@@ -37,50 +38,38 @@ public class ChessGameDaoTest {
     }
 
     @Test
-    void findGameStatus() {
-        assertThat(chessGameDao.findGameStatus(getChessGameId())).isEqualTo(GameStatus.RUNNING);
+    void findById() {
+        ChessGameDto chessGameDto = chessGameDao.findById(getChessGameId());
+
+        assertAll(() -> {
+            assertThat(chessGameDto.getStatus()).isEqualTo(GameStatus.RUNNING);
+            assertThat(chessGameDto.getName()).isEqualTo("Chess Game");
+            assertThat(chessGameDto.getCurrentColor()).isEqualTo(Color.WHITE);
+            assertThat(chessGameDto.getBlackScore()).isEqualTo(new Score(new BigDecimal("10.0")));
+            assertThat(chessGameDto.getWhiteScore()).isEqualTo(new Score(new BigDecimal("15.0")));
+        });
+    }
+
+    @Test
+    void updateChessGame() {
+        ChessGameDto chessGameDto = chessGameDao.findById(getChessGameId());
+        ChessGameDto newChessGameDto = new ChessGameDto(
+                chessGameDto.getId(), chessGameDto.getName(), GameStatus.FINISHED,
+                new Score(new BigDecimal("20.0")), new Score(new BigDecimal("12.5")), Color.BLACK);
+        chessGameDao.updateChessGame(newChessGameDto);
+
+        ChessGameDto expect = chessGameDao.findById(getChessGameId());
+
+        assertAll(() -> {
+            assertThat(expect.getStatus()).isEqualTo(newChessGameDto.getStatus());
+            assertThat(expect.getCurrentColor()).isEqualTo(newChessGameDto.getCurrentColor());
+            assertThat(expect.getBlackScore()).isEqualTo(newChessGameDto.getBlackScore());
+            assertThat(expect.getWhiteScore()).isEqualTo(newChessGameDto.getWhiteScore());
+        });
     }
 
     private int getChessGameId() {
         List<ChessGameDto> chessGameDtos = chessGameDao.findAll();
         return chessGameDtos.get(0).getId();
-    }
-
-    @Test
-    void updateGameStatus() {
-        chessGameDao.updateGameStatus(getChessGameId(), GameStatus.RUNNING);
-
-        assertThat(chessGameDao.findGameStatus(getChessGameId())).isEqualTo(GameStatus.RUNNING);
-    }
-
-    @Test
-    void updateWinner() {
-        chessGameDao.updateWinner(getChessGameId(), Color.BLACK);
-
-        assertThat(chessGameDao.findWinner(getChessGameId())).isEqualTo(Color.BLACK);
-    }
-
-    @Test
-    void findCurrentColor() {
-        assertThat(chessGameDao.findCurrentColor(getChessGameId())).isEqualTo(Color.WHITE);
-    }
-
-    @Test
-    void updateCurrentColor() {
-        chessGameDao.updateCurrentColor(getChessGameId(), Color.BLACK);
-
-        assertThat(chessGameDao.findCurrentColor(getChessGameId())).isEqualTo(Color.BLACK);
-    }
-
-    @Test
-    void findScoreByColor() {
-        assertThat(chessGameDao.findScoreByColor(getChessGameId(), Color.BLACK)).isEqualTo(new Score(new BigDecimal("10.0")));
-        assertThat(chessGameDao.findScoreByColor(getChessGameId(), Color.WHITE)).isEqualTo(new Score(new BigDecimal("15.0")));
-    }
-
-    @Test
-    void updateScoreByColor() {
-        chessGameDao.updateScoreByColor(getChessGameId(), new Score(new BigDecimal("20.6")), Color.WHITE);
-        assertThat(chessGameDao.findScoreByColor(getChessGameId(), Color.WHITE)).isEqualTo(new Score(new BigDecimal("20.6")));
     }
 }
