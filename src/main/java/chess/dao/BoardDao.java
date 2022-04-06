@@ -81,4 +81,15 @@ public class BoardDao {
         }
         return new BoardDto(pieces);
     }
+
+    public void remove(int gameId) {
+        String sql = "delete from board where game_id = ?";
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

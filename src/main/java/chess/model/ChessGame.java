@@ -4,7 +4,6 @@ import chess.model.board.Board;
 import chess.model.board.BoardInitializer;
 import chess.model.board.Square;
 import chess.model.piece.King;
-import chess.model.status.Status;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -31,15 +30,15 @@ public class ChessGame {
         if (board.findPieceBySquare(from).isSameColor(turn)) {
             board.move(from, to);
             turn = turn.changeToOpposite();
-            endWhenKingDead();
+            changeStatusWhenKingDead();
             return;
         }
         throw new IllegalArgumentException(String.format("해당 기물을 움직일 권한이 없습니다. 현재 %s의 차례입니다.", turn.name()));
     }
 
-    private void endWhenKingDead() {
+    private void changeStatusWhenKingDead() {
         if (!board.aliveTwoKings()) {
-            status = status.changeStatus(GameCommand.END);
+            status = status.changeStatus(GameCommand.STATUS);
         }
     }
 
@@ -49,8 +48,8 @@ public class ChessGame {
                 .collect(Collectors.toMap(Function.identity(), color -> board.calculatePoint(color)));
     }
 
-    public boolean isRunning() {
-        return status.isRunning();
+    public boolean isRunningOrEmpty() {
+        return status.isRunningOrEmpty();
     }
 
     public Color findWinner() {

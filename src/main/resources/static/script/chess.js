@@ -23,7 +23,7 @@ function onClick(event) {
         return target.closest("td").id
     }
 
-    function postTwoCells(clickedCellCount) {
+    function postTwoCells() {
         if (squareIdList.length === 2) {
             makeAllCellsNotClicked()
             postForm('/move', squareIdList)

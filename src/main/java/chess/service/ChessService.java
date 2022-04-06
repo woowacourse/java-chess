@@ -13,23 +13,22 @@ import chess.model.board.ChessInitializer;
 import chess.model.board.Square;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceLetter;
-import chess.dao.RuntimeChessGameDao;
-import chess.model.status.Status;
+import chess.model.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-//todo
 public class ChessService {
-    private final RuntimeChessGameDao dao;
-    private BoardDao boardDao = new BoardDao();
-    private GameDao gameDao = new GameDao();
-    private int gameId = getGameIdFromDao();
+    private BoardDao boardDao;
+    private GameDao gameDao;
+    private int gameId;
 
-    public ChessService(RuntimeChessGameDao dao) {
-        this.dao = dao;
+    public ChessService(BoardDao boardDao, GameDao gameDao) {
+        this.boardDao = boardDao;
+        this.gameDao = gameDao;
+        this.gameId = getGameIdFromDao();
     }
 
     public void initGame() {
@@ -87,12 +86,13 @@ public class ChessService {
         updateGame(chessGame);
     }
 
-    public boolean isWaitingOrRunning() {
-        return getGameFromDao().isRunning();
+    public boolean isRunningOrEmpty() {
+        return getGameFromDao().isRunningOrEmpty();
     }
 
     public void endGame() {
-        gameDao.updateStatus(new StatusDto(Status.END.name()), gameId);
+        gameDao.updateStatus(new StatusDto(Status.EMPTY.name()), gameId);
+        boardDao.remove(gameId);
     }
 
     public GameResultDto getResult() {

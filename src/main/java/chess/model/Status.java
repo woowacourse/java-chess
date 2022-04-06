@@ -1,9 +1,7 @@
-package chess.model.status;
-
-import chess.model.GameCommand;
+package chess.model;
 
 public enum Status {
-    READY {
+    EMPTY {
         @Override
         public Status changeStatus(GameCommand gameCommand) {
             if (gameCommand.isMove() || gameCommand.isStatus()) {
@@ -12,23 +10,32 @@ public enum Status {
             if (gameCommand.isStart()) {
                 return PLAYING;
             }
-            return END;
+            return this;
         }
     },
 
     PLAYING {
         @Override
         public Status changeStatus(GameCommand gameCommand) {
-            if (gameCommand.isStatus() || gameCommand.isEnd()) {
-                return END;
+            if (gameCommand.isStatus()) {
+                return RESULT;
+            }
+            if (gameCommand.isEnd()) {
+                return EMPTY;
             }
             return this;
         }
     },
 
-    END {
+    RESULT {
         @Override
         public Status changeStatus(GameCommand gameCommand) {
+            if (gameCommand.isStart()) {
+                return PLAYING;
+            }
+            if (gameCommand.isEnd()) {
+                return EMPTY;
+            }
             if (gameCommand.isStatus()) {
                 return this;
             }
@@ -38,7 +45,7 @@ public enum Status {
 
     public abstract Status changeStatus(GameCommand gameCommand);
 
-    public boolean isRunning() {
-        return this.equals(PLAYING) || this.equals(READY);
+    public boolean isRunningOrEmpty() {
+        return this.equals(PLAYING) || this.equals(EMPTY);
     }
 }

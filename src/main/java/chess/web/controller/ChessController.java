@@ -22,7 +22,7 @@ public class ChessController {
     }
 
     public BoardDto getRunningBoard() {
-        if (service.isWaitingOrRunning()) {
+        if (service.isRunningOrEmpty()) {
             return service.getBoard();
         }
         return null;
@@ -36,7 +36,6 @@ public class ChessController {
     }
 
     public GameResultDto status() {
-        service.endGame();
         return service.getResult();
     }
 

@@ -21,12 +21,6 @@ public class GameDaoTest {
 //    }
 
     @Test
-    void saveTest() {
-        ChessGameDto dto = new ChessGameDto("ready", "white");
-        gameDao.save(dto);
-    }
-
-    @Test
     void update() {
         gameDao.update(new ChessGameDto("PLAYING", "WHITE"), 11);
     }

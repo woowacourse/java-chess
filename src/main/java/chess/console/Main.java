@@ -1,13 +1,14 @@
 package chess.console;
 
 import chess.console.controller.ChessController;
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.service.ChessService;
-import chess.dao.RuntimeChessGameDao;
 
 public class Main {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new ChessService(new RuntimeChessGameDao()));
+        ChessController chessController = new ChessController(new ChessService(new BoardDao(), new GameDao()));
         chessController.run();
     }
 }

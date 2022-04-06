@@ -5,7 +5,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.dao.RuntimeChessGameDao;
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.service.BoardDto;
 import chess.service.ChessService;
 import chess.service.GameResultDto;
@@ -23,11 +24,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
-        ChessController controller = new ChessController(new ChessService(new RuntimeChessGameDao()));
+        ChessController controller = new ChessController(new ChessService(new BoardDao(), new GameDao()));
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            res.redirect("/board");
+            return null;
         });
 
         get("/new-board", (req, res) ->
@@ -53,6 +54,7 @@ public class WebApplication {
 
         get("/status", (req, res) -> {
             GameResultDto status = controller.status();
+            controller.end();
             return render(new ModelAndView(status, "result.html"));
         });
 
@@ -64,16 +66,12 @@ public class WebApplication {
         });
 
         get("/game-end", (req, res) -> {
-           controller.end();
-           res.redirect("/board");
-           return null;
+            controller.end();
+            res.redirect("/board");
+            return null;
         });
 
         exception(RuntimeException.class, WebApplication::handle);
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     private static String render(ModelAndView modelAndView) {

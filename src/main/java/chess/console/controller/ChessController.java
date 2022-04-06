@@ -18,7 +18,7 @@ public final class ChessController {
     }
 
     public void run() {
-        while (service.isWaitingOrRunning()) {
+        while (service.isRunningOrEmpty()) {
             runUntilValid(this::executeByInput);
         }
     }
