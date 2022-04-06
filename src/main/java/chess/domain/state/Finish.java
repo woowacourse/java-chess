@@ -11,6 +11,7 @@ import java.util.Map;
 public class Finish implements State {
 
     private static final String EXCEPTION_MOVE_IMPOSSIBLE = "Finish 상태에서 움직일 수 없습니다.";
+    private static final String EXCEPTION_END = "종료된 게임입니다.";
 
     private final Chessboard chessboard;
 
@@ -30,7 +31,7 @@ public class Finish implements State {
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EXCEPTION_END);
     }
 
     @Override
@@ -55,6 +56,7 @@ public class Finish implements State {
 
     @Override
     public void loadTurn() {
+        throw new UnsupportedOperationException(EXCEPTION_TURN_LOAD);
     }
 
     @Override

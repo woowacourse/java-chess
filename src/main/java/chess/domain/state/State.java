@@ -11,6 +11,7 @@ import java.util.Map;
 public interface State {
 
     String INIT_TURN = "blank";
+    String EXCEPTION_TURN_LOAD = "Play 상태에서 turn을 load해주세요.";
 
     State start();
 

@@ -60,6 +60,7 @@ public class Ready implements State {
 
     @Override
     public void loadTurn() {
+        throw new UnsupportedOperationException(EXCEPTION_TURN_LOAD);
     }
 
     @Override
