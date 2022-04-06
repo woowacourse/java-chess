@@ -20,6 +20,7 @@ public class ChessGameTest {
     void setUp() {
         board = BoardFactory.createInitChessBoard();
         chessGame = new ChessGame(
+                "ChessGame",
                 board,
                 new GameSwitch(true),
                 new Turn(Team.WHITE)

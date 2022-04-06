@@ -1,15 +1,16 @@
-create table chess_game
+create table chess.chess_game
 (
-    id                 int         not null,
+    id                 int primary key auto_increment,
+    name               varchar(20) not null,
     is_on              bool        not null,
-    team_value_of_turn varchar(20) not null,
-    primary key (id)
+    team_value_of_turn varchar(20) not null
 );
 
 create table chess.board
 (
+    id               int primary key auto_increment,
+    name             varchar(20) not null,
     raw_position     varchar(2)  not null,
     piece_name       varchar(20) not null,
-    piece_team_value varchar(20) not null,
-    primary key (raw_position)
+    piece_team_value varchar(20) not null
 );

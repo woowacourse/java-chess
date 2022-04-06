@@ -11,26 +11,30 @@ import java.util.Map;
 
 public class ChessGame {
 
+    private final String name;
     private final Board board;
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
-    public ChessGame(final Board board, final GameSwitch gameSwitch, final Turn turn) {
+    public ChessGame(final String name, final Board board, final GameSwitch gameSwitch, final Turn turn) {
+        this.name = name;
         this.board = board;
         this.gameSwitch = gameSwitch;
         this.turn = turn;
     }
 
-    public static ChessGame createInit() {
+    public static ChessGame createInit(final String name) {
         return new ChessGame(
+                name,
                 BoardFactory.createInitChessBoard(),
                 new GameSwitch(true),
                 new Turn(Team.WHITE)
         );
     }
 
-    public static ChessGame createNotStart() {
+    public static ChessGame createNotStart(final String name) {
         return new ChessGame(
+                name,
                 new Board(new HashMap<>()),
                 new GameSwitch(false),
                 new Turn(Team.NONE)
@@ -88,6 +92,10 @@ public class ChessGame {
 
     public boolean isOn() {
         return gameSwitch.isOn();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Result generateResult() {
