@@ -20,6 +20,7 @@ public class ChessGame {
 
     private final Pieces chessmen;
     private Color turn = Color.BLACK;
+    private boolean forceEndFlag = false;
 
     private ChessGame(Pieces chessmen) {
         this.chessmen = chessmen;
@@ -88,7 +89,11 @@ public class ChessGame {
     }
 
     public boolean isEnd() {
-        return chessmen.hasLessThanTotalKingCount();
+        return chessmen.hasLessThanTotalKingCount() || forceEndFlag;
+    }
+
+    public void forceEnd() {
+        forceEndFlag = true;
     }
 
     public GameResultDto calculateGameResult() {

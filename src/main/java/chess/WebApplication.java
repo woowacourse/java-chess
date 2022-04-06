@@ -59,10 +59,6 @@ public class WebApplication {
 
             game.set(ChessGame.of(chessmenInitializer.init()));
 
-            if (game.get().isEnd()) {
-                res.redirect("/");
-            }
-
             res.redirect("/");
 
             return null;
@@ -70,7 +66,7 @@ public class WebApplication {
 
         get("/ui/end", (req, res) -> {
 
-            game.set(ChessGame.of(chessmenInitializer.init()));
+            game.get().forceEnd();
 
             res.redirect("/");
 
