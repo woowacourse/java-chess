@@ -3,17 +3,14 @@ package chess.service;
 import chess.dao.BoardDao;
 import chess.dao.PieceDao;
 import chess.dto.response.BoardResult;
+import chess.dto.response.ScoreResult;
 import chess.dto.response.Turn;
-import chess.game.Board;
-import chess.game.BoardInitializer;
-import chess.game.MoveCommand;
-import chess.game.Position;
+import chess.game.*;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.state.Moving;
 import chess.state.Status;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessService {
     private final BoardDao boardDao;
@@ -49,10 +46,9 @@ public class ChessService {
         return new BoardResult(boardId, findBoard, board.findWinColor());
     }
 
-    public Map<String, Double> getScore(final Long boardId) {
-        final Map<Color, Double> score = new Status(new Board(pieceDao.findAllByBoardId(boardId)), Color.NONE).score().getScore();
-        return score.keySet()
-                .stream()
-                .collect(Collectors.toMap(Enum::name, score::get));
+    public ScoreResult getScore(final Long boardId) {
+        final Board board = new Board(pieceDao.findAllByBoardId(boardId));
+        final Score score = new Status(board, Color.NONE).score();
+        return new ScoreResult(score.getScore());
     }
 }

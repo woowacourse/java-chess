@@ -42,5 +42,5 @@ async function scoreButton() {
 
     const response = await fetch("/score/" + boardId);
     const score = await response.json();
-    alert("블랙 : " + score.model.BLACK + ", 화이트 : " + score.model.WHITE);
+    alert("블랙 : " + score.model.score.BLACK + ", 화이트 : " + score.model.score.WHITE);
 }

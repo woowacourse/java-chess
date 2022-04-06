@@ -29,7 +29,7 @@ public class ChessController {
     }
 
     public ModelAndView move(final Request request, final Response response) {
-        final Long boardId = Long.valueOf(request.params("boardId"));
+        final Long boardId = getBoardId(request);
         final MoveRequest moveRequest = gson.fromJson(request.body(), MoveRequest.class);
         final String from = moveRequest.getFrom();
         final String to = moveRequest.getTo();
@@ -44,14 +44,18 @@ public class ChessController {
     }
 
     public ModelAndView game(final Request request, final Response response) {
-        final Long boardId = Long.valueOf(request.params("boardId"));
+        final Long boardId = getBoardId(request);
         final BoardResult boardResult = chessService.findBoardById(boardId);
         return new ModelAndView(boardResult, "game.html");
     }
 
     public ModelAndView score(final Request request, final Response response) {
-        final Long boardId = Long.valueOf(request.params("boardId"));
+        final Long boardId = getBoardId(request);
         return new ModelAndView(chessService.getScore(boardId), "game.html");
+    }
+
+    private Long getBoardId(final Request request) {
+        return Long.valueOf(request.params("boardId"));
     }
 }
 
