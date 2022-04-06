@@ -85,4 +85,18 @@ public class PieceDao {
             return preparedStatement;
         });
     }
+
+    public void updatePosition(Position originPosition, Position newPosition) {
+        String sql = "update piece set position_column = ?, position_row = ? "
+                + "where position_column = ? and position_row = ?";
+
+        jdbcContext.executeUpdate(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPosition.getColumn().name());
+            preparedStatement.setString(2, newPosition.getRow().name());
+            preparedStatement.setString(3, originPosition.getColumn().name());
+            preparedStatement.setString(4, originPosition.getRow().name());
+            return preparedStatement;
+        });
+    }
 }

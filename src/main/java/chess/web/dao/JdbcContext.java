@@ -14,6 +14,7 @@ public class JdbcContext {
              PreparedStatement preparedStatement = statementStrategy.makePreparedStatement(connection)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IllegalStateException("sql 실행 실패", e.getCause());
         }
     }
@@ -23,6 +24,7 @@ public class JdbcContext {
              PreparedStatement preparedStatement = statementStrategy.makePreparedStatement(connection)) {
             preparedStatement.executeBatch();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IllegalStateException("sql 실행 실패", e.getCause());
         }
     }
@@ -34,6 +36,7 @@ public class JdbcContext {
             ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IllegalStateException("sql 실행 실패", e.getCause());
         }
     }
