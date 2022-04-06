@@ -3,7 +3,6 @@ package chess.controller;
 import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.halt;
-import static spark.Spark.path;
 import static spark.Spark.post;
 
 import chess.service.ChessService;
@@ -49,46 +48,33 @@ public class ChessWebController {
             return chessService.startGame(req.queryParams("room")).toJson();
         });
 
-        before("/protected/*", (req, res) -> {
-            if (!roomService.isRoomExist(req.params(":roomName")) && !roomService.isRoomExist(
-                    req.queryParams("room"))) {
-                Map<String, Object> model = new HashMap<>();
-                model.put("roomExist", false);
-                final Gson gson = new Gson();
-                halt(401, gson.toJson(model));
-            }
+        get("/piece", (req, res) ->
+                chessService.findAllPiece(req.queryParams("room")).toJson());
+
+        get("/score", (req, res) ->
+                chessService.findScore(req.queryParams("room")).toJson());
+
+        get("/turn", (req, res) ->
+                roomService.findCurrentTurn(req.queryParams("room")).toJson());
+
+        get("/result", (req, res) ->
+                chessService.result(req.queryParams("room")).toJson());
+
+        post("/move", (req, res) -> {
+            final String[] splitBody = req.body().split(" ");
+            return chessService.move(
+                    req.queryParams("room"),
+                    splitBody[0],
+                    splitBody[1]
+            ).toJson();
         });
 
-        path("/protected", () -> {
+        post("/end", (req, res) ->
+                chessService.endGame(req.queryParams("room")).toJson());
 
-            get("/piece", (req, res) ->
-                    chessService.findAllPiece(req.queryParams("room")).toJson());
-
-            get("/score", (req, res) ->
-                    chessService.findScore(req.queryParams("room")).toJson());
-
-            get("/turn", (req, res) ->
-                    roomService.findCurrentTurn(req.queryParams("room")).toJson());
-
-            get("/result", (req, res) ->
-                    chessService.result(req.queryParams("room")).toJson());
-
-            post("/move", (req, res) -> {
-                final String[] splitBody = req.body().split(" ");
-                return chessService.move(
-                        req.queryParams("room"),
-                        splitBody[0],
-                        splitBody[1]
-                ).toJson();
-            });
-
-            post("/end", (req, res) ->
-                    chessService.endGame(req.queryParams("room")).toJson());
-
-            post("/exit", (req, res) -> {
-                roomService.deleteRoom(req.queryParams("room"));
-                return null;
-            });
+        post("/exit", (req, res) -> {
+            roomService.deleteRoom(req.queryParams("room"));
+            return null;
         });
     }
 

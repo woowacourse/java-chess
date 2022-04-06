@@ -6,6 +6,7 @@ import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
 import chess.dto.RoomStatusDto;
 import chess.view.JsonGenerator;
+import java.util.Objects;
 
 public class RoomService {
 
@@ -24,6 +25,7 @@ public class RoomService {
     }
 
     public void deleteRoom(final String roomName) {
+        checkRoomExist(roomName);
         final RoomStatusDto dto = roomDao.findStatusByName(roomName);
         if (dto.getGameStatus().isEnd()) {
             roomDao.delete(roomName);
@@ -33,6 +35,7 @@ public class RoomService {
     public JsonGenerator findCurrentTurn(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
         try {
+            checkRoomExist(roomName);
             final RoomDao roomDao = new RoomDao();
             final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
             result.addCurrentTurn(dto.getCurrentTurn());
@@ -40,5 +43,11 @@ public class RoomService {
             result.addError(e.getMessage());
         }
         return result;
+    }
+
+    private void checkRoomExist(final String roomName) {
+        if (!roomDao.isExistName(roomName)) {
+            throw new IllegalArgumentException("존재하지 않는 방 입니다.");
+        }
     }
 }

@@ -35,6 +35,7 @@ public class ChessService {
     public JsonGenerator findAllPiece(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
         try {
+            checkRoomExist(roomName);
             final Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName).stream()
                     .collect(Collectors.toMap(
                             ChessPieceDto::getPosition,
@@ -49,8 +50,9 @@ public class ChessService {
 
     public JsonGenerator startGame(final String roomName) {
         JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
+            checkRoomExist(roomName);
+            final ChessGame chessGame = findGameByRoomName(roomName);
             final StartResult startResult = chessGame.start();
             result.addAllPiece(startResult.getPieceByPosition());
             updateChessPiece(roomName, startResult.getPieceByPosition());
@@ -63,8 +65,9 @@ public class ChessService {
 
     public JsonGenerator move(final String roomName, String fromPosition, String toPosition) {
         JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
+            checkRoomExist(roomName);
+            final ChessGame chessGame = findGameByRoomName(roomName);
             final Position from = Position.from(fromPosition);
             final Position to = Position.from(toPosition);
 
@@ -87,8 +90,9 @@ public class ChessService {
 
     public JsonGenerator endGame(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
+            checkRoomExist(roomName);
+            final ChessGame chessGame = findGameByRoomName(roomName);
             final EndResult endResult = chessGame.end();
             final Score score = endResult.getScore();
             result.addScore(score);
@@ -101,8 +105,9 @@ public class ChessService {
 
     public JsonGenerator findScore(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
+            checkRoomExist(roomName);
+            final ChessGame chessGame = findGameByRoomName(roomName);
             final Score score = chessGame.calculateScore();
             result.addScore(score);
         } catch (IllegalArgumentException e) {
@@ -113,14 +118,21 @@ public class ChessService {
 
     public JsonGenerator result(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
-        final ChessGame chessGame = findGameByRoomName(roomName);
         try {
+            checkRoomExist(roomName);
+            final ChessGame chessGame = findGameByRoomName(roomName);
             final Color winColor = chessGame.findWinColor();
             result.addWinColor(winColor);
         } catch (IllegalArgumentException e) {
             result.addError(e.getMessage());
         }
         return result;
+    }
+
+    private void checkRoomExist(final String roomName) {
+        if (!roomDao.isExistName(roomName)) {
+            throw new IllegalArgumentException("존재하지 않는 방 입니다.");
+        }
     }
 
     private ChessGame findGameByRoomName(final String roomName) {
