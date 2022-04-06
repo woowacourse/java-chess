@@ -5,7 +5,11 @@ import chess.domain.piece.Piece;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
+import chess.domain.state.Black;
+import chess.domain.state.End;
+import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.domain.state.White;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +18,21 @@ public class BoardDto {
     private static final int BOARD_SIZE = 8;
     private static final String BOARD_BLANK_SYMBOL = ".";
 
-    private List<List<PieceDto>> cells;
+    private final List<List<PieceDto>> cells;
+    private final String turn;
 
-    private BoardDto(final List<List<PieceDto>> board) {
+    private BoardDto(final List<List<PieceDto>> board, final String turn) {
         this.cells = board;
+        this.turn = turn;
     }
 
     public static BoardDto of(final State state) {
         final Board board = state.board();
         final Map<Position, Piece> cells = board.cells();
         final List<List<PieceDto>> newBoard = mapBoardToListBoard(cells);
+        final String turn = decideTurn(state);
 
-        return new BoardDto(newBoard);
+        return new BoardDto(newBoard, turn);
     }
 
     private static List<List<PieceDto>> mapBoardToListBoard(final Map<Position, Piece> cells) {
@@ -71,7 +78,31 @@ public class BoardDto {
         return "white";
     }
 
+    private static String decideTurn(final State state) {
+        if(state instanceof White) {
+            return "white";
+        }
+
+        if(state instanceof Black) {
+            return "black";
+        }
+
+        if(state instanceof Ready) {
+            return "ready";
+        }
+
+        if(state instanceof End) {
+            return "end";
+        }
+
+        return null;
+    }
+
     public List<List<PieceDto>> getCells() {
         return cells;
+    }
+
+    public String getTurn() {
+        return turn;
     }
 }
