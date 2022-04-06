@@ -1,6 +1,9 @@
 
 CREATE TABLE chess_game (
     id int not null auto_increment,
+    state varchar(10) not null,
+    insert_datetime datetime,
+    update_datetime datetime,
     primary key(id)
 );
 
