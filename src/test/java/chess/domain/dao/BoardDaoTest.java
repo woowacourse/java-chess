@@ -27,13 +27,12 @@ class BoardDaoTest {
         boardDao = new BoardDao(connection);
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);
+        gameDao.save(ChessBoardFactory.initBoard());
     }
 
     @Test
     @DisplayName("체스 기물을 저장한다.")
     void save() {
-        //given
-        gameDao.save(ChessBoardFactory.initBoard());
         //when
         boardDao.save(1, "a1", "Pawn", "WHITE");
         //then
@@ -44,7 +43,6 @@ class BoardDaoTest {
     @DisplayName("가장 최근 게임의 기물 정보를 삭제한다.")
     void delete() throws SQLException {
         //given
-        gameDao.save(ChessBoardFactory.initBoard());
         boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
         boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
         //when
@@ -58,7 +56,6 @@ class BoardDaoTest {
     @DisplayName("게임 id로 기물을 찾는다.")
     void findByGameId() throws SQLException {
         //given
-        gameDao.save(ChessBoardFactory.initBoard());
         boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
         boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
         //when
