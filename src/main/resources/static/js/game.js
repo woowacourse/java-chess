@@ -55,19 +55,25 @@ function decideCellColor(column, row) {
   return darkCellColor;
 }
 
-function printTurn(res) {
-  turnInfo.innerText = `${turn[res.gameState]}의 턴입니다.`;
+function printTurn(data) {
+  score.innerText = null;
+  if (data.gameState === "WHITE_WIN" || data.gameState === "BLACK_WIN") {
+    turnInfo.innerText = `${turn[data.gameState]}의 승리입니다.`;
+    alert(`${turn[data.gameState]}의 승리입니다.`);
+    return;
+  }
+  turnInfo.innerText = `${turn[data.gameState]}의 턴입니다.`;
 }
 
 async function start() {
-  let res = await fetch("/api/start");
-  res = await res.json();
-  if (res.isOk) {
-    rendBoard(res.board.pieces);
-    printTurn(res);
+  const res = await fetch("/api/start");
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.message);
     return;
   }
-  alert(res.message);
+  rendBoard(data.board.pieces);
+  printTurn(data);
 }
 
 function rendBoard(pieces) {
@@ -96,18 +102,14 @@ function createPieceImage(position, pieceType) {
 
 async function move() {
   const res = await requestMove();
-  if (!res.isOk) {
-    alert(res.message);
+  const data = await res.json();
+  clearSelection();
+  if (!res.ok) {
+    alert(data.message);
     return;
   }
-  rendBoard(res.board.pieces);
-  if (res.gameState === "WHITE_WIN" || res.gameState === "BLACK_WIN") {
-    turnInfo.innerText = `${turn[res.gameState]}의 승리입니다.`;
-    score.innerText = null;
-    alert(`${turn[res.gameState]}의 승리입니다.`);
-    return;
-  }
-  printTurn(res);
+  rendBoard(data.board.pieces);
+  printTurn(data);
 }
 
 async function onclick(event) {
@@ -142,23 +144,16 @@ function highlightSelectedCell(cell) {
 }
 
 async function requestMove() {
-  try {
-    const res = await fetch("/api/move", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        start: firstSelected.getAttribute("id"),
-        target: secondSelected.getAttribute("id"),
-      }),
-    });
-    return await res.json();
-  } catch (err) {
-    alert(err);
-  } finally {
-    clearSelection();
-  }
+  return await fetch("/api/move", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      start: firstSelected.getAttribute("id"),
+      target: secondSelected.getAttribute("id"),
+    }),
+  });
 }
 
 function clearSelection() {
@@ -168,21 +163,22 @@ function clearSelection() {
 }
 
 async function getStatus() {
-  let res = await fetch("/api/status");
-  res = await res.json();
-  if (res.isOk) {
-    score.innerText = `백: ${res.whiteScore}점
-  흑: ${res.blackScore}점`;
+  const res = await fetch("/api/status");
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.message);
     return;
   }
-  alert(res.message);
+  score.innerText = `백: ${data.whiteScore}점
+  흑: ${data.blackScore}점`;
 }
 
 async function end() {
   const res = await fetch("/api/end");
-  if (res.ok) {
-    alert("게임을 종료합니다.");
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.message);
     return;
   }
-  alert(res.message);
+  alert("게임을 종료합니다.");
 }

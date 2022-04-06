@@ -8,7 +8,7 @@ public class JsonTransformer implements ResponseTransformer {
     private final Gson gson = new Gson();
 
     @Override
-    public String render(Object model) throws Exception {
+    public String render(Object model) {
         return gson.toJson(model);
     }
 }

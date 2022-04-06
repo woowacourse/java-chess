@@ -1,10 +1,12 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.JsonTransformer;
 import chess.controller.dto.request.MoveRequest;
+import chess.controller.dto.response.ErrorResponse;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -40,6 +42,11 @@ public class WebChessController {
         get("/api/status", (req, res) -> chessService.status(), jsonTransformer);
 
         get("/api/end", (req, res) -> chessService.end());
+
+        exception(IllegalArgumentException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(jsonTransformer.render(new ErrorResponse(exception.getMessage())));
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

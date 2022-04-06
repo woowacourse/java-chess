@@ -2,7 +2,7 @@ package chess.controller.dto.response;
 
 import chess.domain.Status;
 
-public class StatusResponse implements ChessGameResponse {
+public class StatusResponse {
 
     private final boolean isOk;
     private final String whiteScore;
