@@ -25,7 +25,7 @@ class PieceDaoTest {
         PieceDto pieceDto = new PieceDto("p", "a2", "white");
 
         pieceDao.save(new PieceDto("P", "a2", "black"));
-        pieceDao.update("a2", pieceDto);
+        pieceDao.update(pieceDto);
 
         assertThat(pieceDao.getPieceDtoByPosition("a2")).isEqualTo(pieceDto);
     }

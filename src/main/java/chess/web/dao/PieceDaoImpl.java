@@ -36,14 +36,14 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void update(String position, PieceDto pieceDto) {
+    public void update(PieceDto pieceDto) {
         final String sql = "update piece piece_type=?, position=?, color=? where piece=?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, pieceDto.getPieceType());
             statement.setString(2, pieceDto.getPosition());
             statement.setString(3, pieceDto.getColor());
-            statement.setString(4, position);
+            statement.setString(4, pieceDto.getPosition());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

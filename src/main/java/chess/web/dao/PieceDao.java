@@ -9,7 +9,7 @@ public interface PieceDao {
 
     void deleteAll();
 
-    void update(String position, PieceDto pieceDto);
+    void update(PieceDto pieceDto);
 
     List<PieceDto> selectAll();
 }

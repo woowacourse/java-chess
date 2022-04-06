@@ -16,8 +16,8 @@ public class PieceDaoForTest implements PieceDao {
     }
 
     @Override
-    public void update(String position, PieceDto pieceDto) {
-        pieces.computeIfPresent(position, (k, v) -> pieceDto);
+    public void update(PieceDto pieceDto) {
+        pieces.computeIfPresent(pieceDto.getPosition(), (k, v) -> pieceDto);
     }
 
     @Override
