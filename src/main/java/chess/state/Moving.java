@@ -16,6 +16,7 @@ public class Moving extends Running {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
         getBoard().movePiece(from, to, getColor());
+        reversColor();
     }
 
     @Override

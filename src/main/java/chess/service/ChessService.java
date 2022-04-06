@@ -46,7 +46,7 @@ public class ChessService {
     public BoardResult findBoardById(final Long boardId) {
         final Map<Position, Piece> findBoard = pieceDao.findAllByBoardId(boardId);
         final Board board = new Board(findBoard);
-        return new BoardResult(boardId, findBoard, board.findWinColor().reverse());
+        return new BoardResult(boardId, findBoard, board.findWinColor());
     }
 
     public Map<String, Double> getScore(final Long boardId) {
