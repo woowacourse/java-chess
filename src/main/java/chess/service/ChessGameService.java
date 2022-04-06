@@ -1,5 +1,7 @@
 package chess.service;
 
+import java.util.Map;
+
 import chess.EmblemMapper;
 import chess.dao.BoardDao;
 import chess.model.ChessGame;
@@ -19,5 +21,9 @@ public class ChessGameService {
 
     public void save() {
         boardDao.save(gameId, EmblemMapper.StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+    }
+
+    public Map<String, String> find() {
+        return boardDao.findById(gameId);
     }
 }

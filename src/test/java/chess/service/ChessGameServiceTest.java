@@ -1,5 +1,7 @@
 package chess.service;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,7 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.EmblemMapper;
 import chess.dao.BoardDao;
+import chess.model.Board;
+import chess.model.PieceArrangement.DefaultArrangement;
 
 public class ChessGameServiceTest {
 
@@ -22,8 +27,23 @@ public class ChessGameServiceTest {
     @Test
     @DisplayName("현재 체스판의 위치, 기물 정보를 저장한다.")
     void save() {
-        Assertions.assertThatCode(() -> chessGameService.save())
+        assertThatCode(() -> chessGameService.save())
             .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("저장된 체스판의 위치, 기물 정보를 불러온다.")
+    void find() {
+        //given
+        Board board = new Board(new DefaultArrangement());
+
+        //when
+        chessGameService.save();
+        Map<String, String> actual = chessGameService.find();
+        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static class fakeBoardDao implements BoardDao {
@@ -36,6 +56,11 @@ public class ChessGameServiceTest {
         @Override
         public void save(int gameId, Map<String, String> StringPieceMapByPiecesByPositions) {
             table.put(gameId, StringPieceMapByPiecesByPositions);
+        }
+
+        @Override
+        public Map<String, String> findById(int gameId) {
+            return table.get(gameId);
         }
     }
 }
