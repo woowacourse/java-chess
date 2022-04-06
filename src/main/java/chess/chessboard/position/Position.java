@@ -31,7 +31,7 @@ public final class Position {
     }
 
     public String getPosition() {
-        return rank.name() + file.name();
+        return String.valueOf(file.getName()) + rank.getName();
     }
 
     @Override

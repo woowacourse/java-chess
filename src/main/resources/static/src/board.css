@@ -1,0 +1,582 @@
+#chessBoard {
+    position: relative;
+    width: 800px;
+    height: 800px;
+}
+
+#a1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#a8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 47px;
+    width: 70px;
+    height: 100px;
+}
+
+#b1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#b8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 147px;
+    width: 70px;
+    height: 100px;
+}
+
+#c1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#c8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 237px;
+    width: 70px;
+    height: 100px;
+}
+
+#d1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#d8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 330px;
+    width: 70px;
+    height: 100px;
+}
+
+#e1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#e8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 430px;
+    width: 70px;
+    height: 100px;
+}
+
+#f1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#f8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 520px;
+    width: 70px;
+    height: 100px;
+}
+
+#g1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#g8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 620px;
+    width: 70px;
+    height: 100px;
+}
+
+#h1 {
+    position: absolute;
+    z-index: 1;
+    top: 675px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h2 {
+    position: absolute;
+    z-index: 1;
+    top: 580px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h3 {
+    position: absolute;
+    z-index: 1;
+    top: 485px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h4 {
+    position: absolute;
+    z-index: 1;
+    top: 390px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h5 {
+    position: absolute;
+    z-index: 1;
+    top: 295px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h6 {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h7 {
+    position: absolute;
+    z-index: 1;
+    top: 108px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+
+#h8 {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 715px;
+    width: 70px;
+    height: 100px;
+}
+

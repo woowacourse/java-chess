@@ -30,10 +30,6 @@ public enum Rank {
         return value + row >= ONE.value && value + row <= EIGHT.value;
     }
 
-    public Character getName() {
-        return this.name;
-    }
-
     public static Rank of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == otherValue)
@@ -46,5 +42,9 @@ public enum Rank {
                 .filter(rank -> rank.name == name)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
+    }
+
+    public Character getName() {
+        return this.name;
     }
 }
