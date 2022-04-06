@@ -35,7 +35,7 @@ public class WebController {
             return render(model, "/home.html");
         });
 
-        post("/home", (req, res) -> {
+        post("/save/room", (req, res) -> {
             String name = req.queryParams("name");
             chessService.saveRoom(name);
             res.redirect("/");
