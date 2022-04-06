@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.dto.PieceDto;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class ChessMap {
 
     private static final char BLANK = '.';
     private static final int CHESS_MAP_RANK_SIZE = 8;
-    private static final int PIECE_NAME_INDEX = 0;
 
     private final char[][] chessMap;
     private final boolean isRunning;
