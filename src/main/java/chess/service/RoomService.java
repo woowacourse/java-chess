@@ -5,44 +5,61 @@ import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
 import chess.dto.RoomStatusDto;
-import chess.view.JsonGenerator;
-import java.util.Objects;
+import com.google.gson.Gson;
+import java.util.HashMap;
+import java.util.Map;
+import spark.Request;
+import spark.Response;
 
 public class RoomService {
-
     private final RoomDao roomDao;
+
+    private final Gson gson;
 
     public RoomService() {
         this.roomDao = new RoomDao();
+        this.gson = new Gson();
     }
 
     public boolean isRoomExist(final String roomName) {
         return roomDao.isExistName(roomName);
     }
 
-    public void createRoom(final String roomName) {
+    public String createRoom(final Request req, final Response res) {
+        final String roomName = req.params(":name");
         roomDao.save(roomName, GameStatus.READY, Color.WHITE);
+        return null;
     }
 
-    public void deleteRoom(final String roomName) {
-        checkRoomExist(roomName);
-        final RoomStatusDto dto = roomDao.findStatusByName(roomName);
-        if (dto.getGameStatus().isEnd()) {
-            roomDao.delete(roomName);
-        }
-    }
-
-    public JsonGenerator findCurrentTurn(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
+    public String deleteRoom(final Request req, final Response res) {
         try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
-            final RoomDao roomDao = new RoomDao();
-            final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
-            result.addCurrentTurn(dto.getCurrentTurn());
+            final RoomStatusDto dto = roomDao.findStatusByName(roomName);
+            if (dto.getGameStatus().isEnd()) {
+                roomDao.delete(roomName);
+            }
+            return null;
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
+    }
+
+    public String findCurrentTurn(final Request req, final Response res) {
+        try {
+            final String roomName = req.params(":name");
+            checkRoomExist(roomName);
+            final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
+            return gson.toJson(dto);
+        } catch (IllegalArgumentException e) {
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
+        }
     }
 
     private void checkRoomExist(final String roomName) {

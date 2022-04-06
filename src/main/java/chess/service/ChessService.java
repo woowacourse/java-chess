@@ -12,75 +12,88 @@ import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
 import chess.dto.CurrentTurnDto;
+import chess.dto.MoveRequestDto;
 import chess.dto.RoomStatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
-import chess.view.JsonGenerator;
+import com.google.gson.Gson;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import spark.Request;
+import spark.Response;
 
 public class ChessService {
 
     private final ChessPieceDao chessPieceDao;
     private final RoomDao roomDao;
+    private final Gson gson;
 
     public ChessService() {
         this.chessPieceDao = new ChessPieceDao();
         this.roomDao = new RoomDao();
+        this.gson = new Gson();
     }
 
-    public JsonGenerator findAllPiece(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
+    public String findAllPiece(final Request req, final Response res) {
         try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
-            final Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName).stream()
-                    .collect(Collectors.toMap(
-                            ChessPieceDto::getPosition,
-                            ChessPieceDto::getChessPiece
-                    ));
-            result.addAllPiece(pieceByPosition);
+            final List<ChessPieceDto> allByRoomName = chessPieceDao.findAllByRoomName(roomName);
+            return gson.toJson(allByRoomName);
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
     }
 
-    public JsonGenerator startGame(final String roomName) {
-        JsonGenerator result = JsonGenerator.create();
+    public String initPiece(final Request req, final Response res) {
         try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
+
             final ChessGame chessGame = findGameByRoomName(roomName);
             final StartResult startResult = chessGame.start();
-            result.addAllPiece(startResult.getPieceByPosition());
+
             updateChessPiece(roomName, startResult.getPieceByPosition());
             updateRoomStatusTo(roomName, GameStatus.PLAYING);
+            return null;
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
     }
 
-    public JsonGenerator move(final String roomName, String fromPosition, String toPosition) {
-        JsonGenerator result = JsonGenerator.create();
+    public String move(final Request req, final Response res) {
         try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
+
             final ChessGame chessGame = findGameByRoomName(roomName);
-            final Position from = Position.from(fromPosition);
-            final Position to = Position.from(toPosition);
+
+            final MoveRequestDto requestDto = gson.fromJson(req.body(), MoveRequestDto.class);
+            final Position from = requestDto.getFrom();
+            final Position to = requestDto.getTo();
 
             final MoveResult moveResult = chessGame.move(from, to);
-            result.addAllPiece(moveResult.getPieceByPosition());
-            result.addKingDieResult(moveResult.isKingDie());
 
             updatePosition(roomName, from, to);
             updateRoom(roomName, moveResult.getGameStatus(), moveResult.getCurrentTurn());
+
+            return gson.toJson(moveResult);
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
     }
 
     private void updatePosition(final String roomName, final Position from, final Position to) {
@@ -88,45 +101,35 @@ public class ChessService {
         chessPieceDao.update(roomName, from, to);
     }
 
-    public JsonGenerator endGame(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
+    public String findScore(final Request req, final Response res) {
         try {
-            checkRoomExist(roomName);
-            final ChessGame chessGame = findGameByRoomName(roomName);
-            final EndResult endResult = chessGame.end();
-            final Score score = endResult.getScore();
-            result.addScore(score);
-            updateRoomStatusTo(roomName, GameStatus.END);
-        } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
-        }
-        return result;
-    }
-
-    public JsonGenerator findScore(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
-        try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final ChessGame chessGame = findGameByRoomName(roomName);
             final Score score = chessGame.calculateScore();
-            result.addScore(score);
+            return gson.toJson(score);
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
     }
 
-    public JsonGenerator result(final String roomName) {
-        final JsonGenerator result = JsonGenerator.create();
+    public String result(final Request req, final Response res) {
         try {
+            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final ChessGame chessGame = findGameByRoomName(roomName);
-            final Color winColor = chessGame.findWinColor();
-            result.addWinColor(winColor);
+            final EndResult result = chessGame.end();
+            updateRoomStatusTo(roomName, GameStatus.END);
+            return gson.toJson(result);
         } catch (IllegalArgumentException e) {
-            result.addError(e.getMessage());
+            res.status(404);
+            final Map<String, String> map = new HashMap<>();
+            map.put("error", e.getMessage());
+            return gson.toJson(map);
         }
-        return result;
     }
 
     private void checkRoomExist(final String roomName) {
