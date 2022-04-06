@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
 import chess.dto.GameInformationDto;
 
 public interface GameDao {

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.dto.ChessBoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;

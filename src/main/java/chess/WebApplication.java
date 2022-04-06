@@ -95,7 +95,6 @@ public class WebApplication {
         return null;
     }
 
-
     private static String doMoveCommand(Response res, ChessGame chessGame, ChessBoardPosition source, ChessBoardPosition target) {
         chessGame.move(source, target);
         if (chessGame.isGameEnd()) {

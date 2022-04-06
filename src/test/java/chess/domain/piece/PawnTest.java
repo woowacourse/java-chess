@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +36,7 @@ class PawnTest {
                 ChessBoardPosition.of(8, 2)
         );
     }
+
     @Test
     @DisplayName("블랙팀 pawn 초기위치에서 (0,-2)방향으로 이동할때 사이의 경로를 반환한다")
     void makePathTest() {
@@ -75,7 +75,6 @@ class PawnTest {
         ChessBoardPosition target = ChessBoardPosition.of(1, 4);
         assertThatThrownBy(() -> pawn.getPath(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
-
 
     @Test
     @DisplayName("화이트팀 pawn 초기위치에서 (0,2)방향으로 이동할때 사이의 경로를 반환한다")

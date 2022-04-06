@@ -1,12 +1,9 @@
 package chess.domain;
 
-import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChessGame {
     private ChessBoard chessBoard;
@@ -56,6 +53,5 @@ public class ChessGame {
     public void initFromDb(GameInformationDto gameInformationDto, ChessBoardDto chessBoardDto) {
         gameId = gameInformationDto.getId();
         chessBoard.initFromDb(gameInformationDto, chessBoardDto);
-
     }
 }

@@ -2,10 +2,6 @@ package chess.dao;
 
 import chess.domain.Team;
 import chess.dto.GameInformationDto;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JSpinner.ListEditor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
