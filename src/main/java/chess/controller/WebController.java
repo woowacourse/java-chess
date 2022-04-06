@@ -29,7 +29,7 @@ public final class WebController {
 
         get("/status", (request, response) -> gson.toJson(chessGame.status()));
 
-        post("/move", (request, response) -> move(request));
+        put("/move", (request, response) -> move(request));
 
         exception(RuntimeException.class, (exception, request, response) -> exceptionHanding(exception, response));
     }

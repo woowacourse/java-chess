@@ -93,7 +93,7 @@ async function onClickPiece (id) {
     removeSelected();
 
     const response = await fetch("/move", {
-                       method: "post",
+                       method: "put",
                        headers: {"Content-Type": "application/json"},
                        body: JSON.stringify({from: from, to: to})
                      });
