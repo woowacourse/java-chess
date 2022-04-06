@@ -1,10 +1,10 @@
 package chess.Controller.dto;
 
+import chess.domain.GameState;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -13,20 +13,16 @@ public class PiecesDto {
     private final List<PieceDto> pieces;
     private final String gameStatus;
 
-    private PiecesDto(final Board board) {
-        this(board.getPieces(), board.getGameState().toString().toLowerCase(Locale.ROOT));
-    }
-
-    private PiecesDto(final Map<Position, Piece> piecesStatus, final String gameStatus) {
+    private PiecesDto(final Map<Position, Piece> piecesStatus, final GameState gameStatus) {
         this.pieces = piecesStatus.entrySet()
                 .stream()
                 .map(entry -> PieceDto.fromEntity(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
-        this.gameStatus = gameStatus;
+        this.gameStatus = gameStatus.toString();
     }
 
     public static PiecesDto fromEntity(final Board board) {
-        return new PiecesDto(board);
+        return new PiecesDto(board.getPieces(), board.getGameState());
     }
 
     public List<PieceDto> getPieces() {

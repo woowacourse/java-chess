@@ -11,6 +11,7 @@ public class OutputView {
     private static final double KING_CAUGHT_AND_LOST = -1.0;
     private static final int BOARD_ROW_MAX_POSITION = 8;
     private static final int BOARD_ROW_MIN_POSITION = 1;
+    private static final int LOWER_CASE_A_ASCII = 97;
 
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -41,7 +42,7 @@ public class OutputView {
     }
 
     private static String rowNumberToString(final int rawRow, final int rawColumn) {
-        return ("" + (char) (97 + rawColumn - 1) + rawRow).toUpperCase(Locale.ROOT);
+        return ("" + (char) (LOWER_CASE_A_ASCII + rawColumn - 1) + rawRow).toUpperCase(Locale.ROOT);
     }
 
     private static String findPieceSymbol(final List<PieceDto> pieces, final String position) {

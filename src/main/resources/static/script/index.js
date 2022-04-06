@@ -117,7 +117,7 @@ function startGame() {
         credentials: 'include',
     }).then(response => response.json())
         .then(({game_status: gameStatus, pieces}) => {
-            if (gameStatus !== 'ready') {
+            if (gameStatus !== 'READY') {
                 arrangePieces(pieces);
             }
         })
