@@ -3,6 +3,7 @@ package chess.dto;
 import chess.domain.ChessBoardPosition;
 import chess.domain.piece.ChessPiece;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChessBoardDto {
     private Map<ChessBoardPosition, ChessPiece> mapInformation;
@@ -17,5 +18,9 @@ public class ChessBoardDto {
 
     public Map<ChessBoardPosition, ChessPiece> getMapInformation() {
         return mapInformation;
+    }
+
+    public boolean isEmpty() {
+        return mapInformation.isEmpty();
     }
 }
