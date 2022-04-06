@@ -17,7 +17,7 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean movable(Distance distance, Piece target) {
-        if(isFirstMove){
+        if (isFirstMove) {
             return isRightFirstMove(distance, target);
         }
 
@@ -25,7 +25,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isRightFirstMove(Distance distance, Piece target) {
-        if(isOpponent(target) && (INITIAL_MOVABLE_DISTANCES.contains(distance) || isDiagonalMove(distance, target))){
+        if (isOpponent(target) && (INITIAL_MOVABLE_DISTANCES.contains(distance) || isDiagonalMove(distance, target))) {
             isFirstMove = false;
             return true;
         }
@@ -33,7 +33,8 @@ public final class Pawn extends Piece {
     }
 
     private boolean isDiagonalMove(Distance distance, Piece target) {
-        return !target.matchType(PieceType.INVALID) && isOpponent(target) && distance.isDiagonal();
+        return !target.matchType(PieceType.INVALID) && isOpponent(target) && distance.isDiagonal()
+                && distance.isMoveOneSpace();
     }
 
     private boolean isForwardMove(Distance distance, Piece target) {
