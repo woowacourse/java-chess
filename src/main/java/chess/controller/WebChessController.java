@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static spark.Spark.delete;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -78,6 +79,11 @@ public class WebChessController {
 			model.put("games", gamesDto.getGames());
 			System.out.println(model);
 			return render(model, "load.html");
+		});
+
+		delete("/delete/:id", (req, res) -> {
+			chessService.delete(Integer.parseInt(req.params(":id")));
+			return req.params(":id");
 		});
 
 		handleException(gson, IllegalArgumentException.class);

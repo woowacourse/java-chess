@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>게임 불러오기</title>
+    <link rel="stylesheet" href="/css/chess.css"/>
 </head>
 <body>
-<div>
+<div class="select_board">
     <h2>게임들</h2>
     {{#games}}
-    <button onclick="loadGame({{id}})">{{name}}</button>
+    <div>
+        <button onclick="loadGame({{id}})">{{name}}</button>
+        <button style="color: red" onclick="deleteGame({{id}})">삭제</button>
+        <br>
+    </div>
     {{/games}}
 </div>
-<script src="/js/chess.js"></script>
 </body>
 </html>

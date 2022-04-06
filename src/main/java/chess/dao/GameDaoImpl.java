@@ -8,8 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class GameDaoImpl implements GameDao {
+
+	private static final String SAVE_ERROR = "해당 값을 저장할 수 없습니다.";
+	private static final String NOT_FOUND_ITEM_ERROR = "해당 키를 가진 데이터가 없습니다.";
 
 	private final Connection connection;
 
@@ -24,19 +28,18 @@ public class GameDaoImpl implements GameDao {
 	@Override
 	public int save(final String name, final String state) {
 		final String sql = "insert into game (name, command_log) values (?, ?)";
-		int insertId = -1;
 		try (final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, name);
 			statement.setString(2, state);
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next()) {
-				insertId = rs.getInt(1);
+				return rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return insertId;
+		throw new NoSuchElementException(SAVE_ERROR);
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class GameDaoImpl implements GameDao {
 			statement.setInt(1, gameId);
 			final ResultSet resultSet = statement.executeQuery();
 			if (!resultSet.next()) {
-				return null;
+				throw new NoSuchElementException(NOT_FOUND_ITEM_ERROR);
 			}
 			return new Game(
 					resultSet.getInt("id"),
@@ -68,7 +71,7 @@ public class GameDaoImpl implements GameDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		throw new NoSuchElementException(NOT_FOUND_ITEM_ERROR);
 	}
 
 	@Override
@@ -90,5 +93,16 @@ public class GameDaoImpl implements GameDao {
 			e.printStackTrace();
 		}
 		return games;
+	}
+
+	@Override
+	public void delete(final int gameId) {
+		final String sql = "delete from game where game.id = ?";
+		try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, gameId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

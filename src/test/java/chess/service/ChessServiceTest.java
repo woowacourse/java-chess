@@ -77,4 +77,13 @@ class ChessServiceTest {
 
 		assertThat(gamesDto.getGames().size()).isEqualTo(1);
 	}
+
+	@Test
+	void delete() {
+		chessService.start("name");
+		chessService.delete(1);
+		GamesDto gamesDto = chessService.findAll();
+
+		assertThat(gamesDto.getGames().size()).isEqualTo(0);
+	}
 }

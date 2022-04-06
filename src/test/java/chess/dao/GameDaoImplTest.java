@@ -1,54 +1,66 @@
 package chess.dao;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GameDaoImplTest {
 
-	@Test
-	void save() throws SQLException {
-		Connection connection = DatabaseConnection.getConnection();
-		connection.setAutoCommit(false);
-		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+	private GameDaoImpl gameDaoImpl;
+	private Connection connection;
 
-		assertDoesNotThrow(() -> gameDaoImpl.save("test", "start"));
+	@BeforeEach
+	void setUp() throws SQLException {
+		connection = DatabaseConnection.getConnection();
+		connection.setAutoCommit(false);
+		gameDaoImpl = new GameDaoImpl(connection);
+	}
+
+	@AfterEach
+	void rollback() throws SQLException {
 		connection.rollback();
 	}
 
 	@Test
-	void update() throws SQLException {
-		Connection connection = DatabaseConnection.getConnection();
-		connection.setAutoCommit(false);
-		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+	void save() {
+		assertDoesNotThrow(() -> gameDaoImpl.save("test", "start"));
+	}
+
+	@Test
+	void update() {
 		int gameId = gameDaoImpl.save("test", "start");
 
 		assertDoesNotThrow(() -> gameDaoImpl.update(gameId, "move a2 a3"));
-		connection.rollback();
 	}
 
 	@Test
-	void findById() throws SQLException {
-		Connection connection = DatabaseConnection.getConnection();
-		connection.setAutoCommit(false);
-		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+	void findById() {
 		int gameId = gameDaoImpl.save("test", "start");
 
 		assertThat(gameDaoImpl.findById(gameId).getCommandLog()).isEqualTo("start");
-		connection.rollback();
 	}
 
 	@Test
-	void findAll() throws SQLException {
-		Connection connection = DatabaseConnection.getConnection();
-		connection.setAutoCommit(false);
-		GameDaoImpl gameDaoImpl = new GameDaoImpl(connection);
+	void findAll() {
 		gameDaoImpl.save("test", "start");
 
 		assertThat(gameDaoImpl.findAll().isEmpty()).isFalse();
-		connection.rollback();
+	}
+
+	@Test
+	void delete() {
+		int gameId = gameDaoImpl.save("test", "start");
+		gameDaoImpl.delete(gameId);
+
+		assertThatThrownBy(() -> gameDaoImpl.findById(gameId))
+				.isInstanceOf(NoSuchElementException.class)
+				.hasMessageContaining("해당 키를 가진 데이터가 없습니다.");
 	}
 }

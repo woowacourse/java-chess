@@ -7,8 +7,25 @@ function openLoadGameWindowPop(url, title) {
         win.close();
         location.href = '/game/' + id;
     }
+
+    win.deleteGame = function (id) {
+        win.close();
+        fetch('/delete/' + id, {
+            method: 'DELETE',
+        }).then(handleErrors)
+            .catch(function (error) {
+                alert(error.message)
+            })
+    }
 }
 
 load.addEventListener('click', function () {
     openLoadGameWindowPop('/findGames', '게임 불러오기')
 })
+
+async function handleErrors(res) {
+    if (!res.ok) {
+        let error = await res.json();
+        throw Error(error["errorMessage"])
+    }
+}

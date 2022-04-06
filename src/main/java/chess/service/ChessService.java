@@ -74,4 +74,8 @@ public class ChessService {
 		List<Game> games = gameDao.findAll();
 		return GamesDto.of(games);
 	}
+
+	public void delete(int gameId) {
+		gameDao.delete(gameId);
+	}
 }

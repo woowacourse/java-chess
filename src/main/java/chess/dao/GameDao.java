@@ -13,4 +13,5 @@ public interface GameDao {
 
 	List<Game> findAll();
 
+	void delete(int gameId);
 }

@@ -39,4 +39,9 @@ public class FakeGameDao implements GameDao {
 	public List<Game> findAll() {
 		return new ArrayList<>(games.values());
 	}
+
+	@Override
+	public void delete(final int gameId) {
+		games.remove(gameId);
+	}
 }
