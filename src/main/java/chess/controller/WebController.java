@@ -47,7 +47,7 @@ public final class WebController {
     private boolean move(final Request request) {
         final var moveDto = gson.fromJson(request.body(), MoveDto.class);
         chessGame.move(new String[]{moveDto.getFrom(), moveDto.getTo()});
-        return chessGame.removedKing();
+        return chessGame.isRemovedKing();
     }
 
     private void handleException(final Exception exception, final Response response) {

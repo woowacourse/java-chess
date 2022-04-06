@@ -29,7 +29,7 @@ public final class Board {
         value.put(to, value.remove(from));
     }
 
-    public boolean removedKing() {
+    public boolean isRemovedKing() {
         final var kingCount = value.values().stream()
                 .filter(piece -> piece.getNotation() == Notation.KING)
                 .count();

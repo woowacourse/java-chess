@@ -50,7 +50,7 @@ public final class ChessGame {
         return state.isEnd();
     }
 
-    public boolean removedKing() {
-        return state.removedKing();
+    public boolean isRemovedKing() {
+        return state.isRemovedKing();
     }
 }

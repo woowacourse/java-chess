@@ -38,7 +38,7 @@ public final class Running extends CalculableState {
         checkPosition(currentColor, from, to);
         board.move(from, to);
 
-        if (board.removedKing()) {
+        if (board.isRemovedKing()) {
             return new End(currentColor, board);
         }
         return new Running(currentColor.next(), board);

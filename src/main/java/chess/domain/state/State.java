@@ -27,7 +27,7 @@ public abstract class State {
         return board.getValue();
     }
 
-    public final boolean removedKing() {
-        return board.removedKing();
+    public final boolean isRemovedKing() {
+        return board.isRemovedKing();
     }
 }
