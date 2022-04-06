@@ -33,7 +33,7 @@ class PlayerRepositoryTest {
                 Position.from("a1"), Rook.getInstance(),
                 Position.from("a2"), Pawn.getPawnByColor(Color.WHITE)
         ));
-        final Long playerId = playerRepository.save(player);
+        final Long playerId = playerRepository.save(player).getId();
         assertThat(playerId).isNotEqualTo(0L);
     }
 
@@ -45,7 +45,7 @@ class PlayerRepositoryTest {
                 Position.from("a1"), Rook.getInstance(),
                 Position.from("a2"), Pawn.getPawnByColor(Color.WHITE));
 
-        final Long playerId = playerRepository.save(Player.of(expectedColor, expectedPieces));
+        final Long playerId = playerRepository.save(Player.of(expectedColor, expectedPieces)).getId();
         final Player player = playerRepository.findById(playerId);
 
         assertAll(() -> {
@@ -60,7 +60,7 @@ class PlayerRepositoryTest {
         final Map<Position, Piece> pieces = Map.of(
                 Position.from("a1"), Rook.getInstance(),
                 Position.from("a2"), Pawn.getPawnByColor(Color.WHITE));
-        final Long playerId = playerRepository.save(Player.of(Color.WHITE, pieces));
+        final Long playerId = playerRepository.save(Player.of(Color.WHITE, pieces)).getId();
 
         final Map<Position, Piece> updatedPieces = Map.of(
                 Position.from("a5"), Rook.getInstance(),

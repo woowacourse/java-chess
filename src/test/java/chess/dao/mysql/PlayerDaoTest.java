@@ -43,6 +43,5 @@ class PlayerDaoTest {
 
         final PlayerDto updatedPlayerDto = playerDao.findById(id);
         assertThat(updatedPlayerDto.getPieces()).isEqualTo(expectedPieces);
-        System.out.println(updatedPlayerDto.getPieces());
     }
 }

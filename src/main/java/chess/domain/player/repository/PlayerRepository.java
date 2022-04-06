@@ -2,6 +2,7 @@ package chess.domain.player.repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,6 +14,7 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.player.Players;
 
 public class PlayerRepository {
 
@@ -22,11 +24,18 @@ public class PlayerRepository {
         this.playerDao = playerDao;
     }
 
-    public Long save(final Player player) {
+    public List<Player> savePlayers(final Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(this::save)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Player save(final Player player) {
         final Color color = player.getColor();
         final Map<Position, Piece> pieces = player.getPieces();
         final PlayerDto playerDto = new PlayerDto(player.getId(), color.getName(), convertPiecesToString(pieces));
-        return playerDao.save(playerDto);
+        return new Player(playerDao.save(playerDto), color, new HashMap<>(pieces));
     }
 
     public Player findById(final Long id) {
