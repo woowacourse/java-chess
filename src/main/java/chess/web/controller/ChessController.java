@@ -59,7 +59,7 @@ public class ChessController {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("result", gameService.getResultDto());
+            model.put("result", gameService.getFinalResultDto());
             return new Gson().toJson(model);
         });
     }

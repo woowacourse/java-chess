@@ -1,6 +1,5 @@
 package chess.web.dto;
 
-import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -10,14 +9,14 @@ public class PieceDto {
     private String color;
     private String role;
 
-    private PieceDto(Position position, Color color, String symbol) {
-        this.position = position.toString().toLowerCase();
-        this.color = color.name().toLowerCase();
+    public PieceDto(String position, String color, String symbol) {
+        this.position = position.toLowerCase();
+        this.color = color.toLowerCase();
         this.role = symbol.toLowerCase();
     }
 
     public static PieceDto from(Position position, Piece piece) {
-        return new PieceDto(position, piece.getColor(), piece.symbol());
+        return new PieceDto(position.toString(), piece.getColor().name(), piece.symbol());
     }
 
     public String getPosition() {

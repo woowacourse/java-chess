@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.web.dao.PieceDao;
 import chess.web.dto.CommendDto;
 import chess.web.dto.GameStateDto;
 import chess.web.dto.PieceDto;
@@ -17,10 +18,13 @@ import java.util.stream.Collectors;
 
 public class GameService {
 
+    private final PieceDao pieceDao = new PieceDao();
     private Board board;
 
     public void startNewGame() {
         board = new Board(new RegularRuleSetup());
+        pieceDao.deleteAll();
+        pieceDao.saveAll(board.getPieces());
     }
 
     public void move(CommendDto commendDto) {
