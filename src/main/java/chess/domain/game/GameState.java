@@ -2,11 +2,11 @@ package chess.domain.game;
 
 import java.util.Map;
 
-import chess.dto.Arguments;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Piece;
+import chess.dto.Arguments;
 
 public abstract class GameState {
 
@@ -25,6 +25,8 @@ public abstract class GameState {
     public abstract boolean isRunnable();
 
     public abstract GameState move(Arguments arguments);
+
+    public abstract String getState();
 
     public Map<Point, Piece> getPointPieces() {
         return board.getPointPieces();

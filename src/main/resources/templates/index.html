@@ -10,11 +10,19 @@
 <div id="app">
     <h1> 체스 게임 </h1>
     <section id="command">
-        <form action="/create" method="get" enctype="text/plain">
-            <input type="submit" value="create">
+        <form action="/create" method="get" id="create_form">
+            <label for="create_button" > 새 게임 시작하기 </label>
+            <input type="text" name="room_name" id="room_name"/>
+            <input type="submit" value="create" id="create_button">
+        </form>
+
+        <form action="/enter" method="get" enctype="text/plain">
+            <label for="game_id"> 방 이름  </label>
+            <input type="text" name="room_name" id="game_id">
+            <input type="submit" value="enter">
         </form>
     </section>
 </div>
-
+<script> setUpIndex(); </script>
 </body>
 </html>

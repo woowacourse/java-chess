@@ -2,8 +2,8 @@ package chess.domain.board;
 
 import java.util.List;
 
-import chess.dto.Arguments;
 import chess.domain.piece.move.Direction;
+import chess.dto.Arguments;
 
 public class Route {
 

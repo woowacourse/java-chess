@@ -9,6 +9,7 @@
 <body>
 <div id="app">
     <h1> 체스 게임 </h1>
+    {{color}}
     <section id="chess-ui">
         <table id="chess-board">
             <script>
@@ -21,23 +22,28 @@
         </table>
     </section>
     <section id="command">
-        <form action="/start" method="get" enctype="text/plain">
+
+        <form id="start_form" action="/start" method="get">
             <input type="submit" value="start">
         </form>
-        <form action="/end" method="get" enctype="text/plain">
-            <input type="submit" value="end">
-        </form>
-        <form id="move_form" action="/move" method="get">
+
+        <form id="move_form" action="/move" method="post">
             <label for="move_src"> 출발 </label>
             <input type="text" name="source" id="move_src">
             <label for="move_dest"> 출발 </label>
             <input type="text" name="destination" id="move_dest">
             <input type="submit" value="move">
         </form>
-        <form action="/status" method="get" enctype="text/plain">
+
+        <form id="status_form" action="/status" method="get">
             <input type="submit" value="status">
         </form>
+
+        <form id="end_form" action="/end" method="get" enctype="text/plain">
+            <input type="submit" value="end">
+        </form>
     </section>
+
     <section>
         {{#each score}}
         {{@key}}
@@ -45,6 +51,6 @@
         {{/each}}
     </section>
 </div>
-<!--<script>setUp();</script>-->
+<script>setUpMain();</script>
 </body>
 </html>

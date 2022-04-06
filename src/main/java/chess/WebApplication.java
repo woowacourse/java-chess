@@ -4,13 +4,14 @@ import static spark.Spark.*;
 
 import java.util.Map;
 
+import chess.config.ControllerConfig;
 import chess.controller.WebChessController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
     public static void main(String[] args) {
-        WebChessController controller = new WebChessController();
+        WebChessController controller = ControllerConfig.getWebController();
 
         staticFileLocation("/static");
         port(8081);
@@ -18,10 +19,12 @@ public class WebApplication {
         get("/", controller::index);
         get("/main", controller::main);
         get("/create", controller::create);
+        get("/enter", controller::enter);
         get("/start", controller::start);
         get("/end", controller::end);
-        get("/move", controller::move);
+        post("/move", controller::move);
         get("status", controller::status);
+        exception(Exception.class, controller::handleException);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

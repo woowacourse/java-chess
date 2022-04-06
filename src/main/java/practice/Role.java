@@ -1,4 +1,4 @@
-package chess.practice;
+package practice;
 
 public class Role {
 
