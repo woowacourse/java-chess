@@ -85,4 +85,8 @@ public class ChessService {
         chessDao.movePiece(commandDto);
         gameDao.changeTurn();
     }
+
+    public void endGame() {
+        chessGame.endGame();
+    }
 }
