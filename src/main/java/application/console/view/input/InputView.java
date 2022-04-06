@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import camp.nextstep.edu.missionutils.Console;
 import application.console.domain.CommandRequest;
+import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
 

@@ -2,8 +2,8 @@ package application.console.view.output;
 
 import java.util.Map;
 
-import application.console.domain.PositionRange;
 import application.console.domain.Position;
+import application.console.domain.PositionRange;
 
 public class OutputView {
 
