@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.Member;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

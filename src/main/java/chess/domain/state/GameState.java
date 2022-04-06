@@ -1,7 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.piece.Position;
 
 public interface GameState {

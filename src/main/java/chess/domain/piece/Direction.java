@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum Direction {
-    
+
     NORTH(0, 1),
     NORTHEAST(1, 1),
     EAST(1, 0),

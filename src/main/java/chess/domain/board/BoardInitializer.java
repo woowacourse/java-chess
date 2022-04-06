@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;

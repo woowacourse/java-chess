@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.domain.board.Rank;
-import chess.domain.piece.Piece;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;

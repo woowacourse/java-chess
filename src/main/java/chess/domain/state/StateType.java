@@ -10,8 +10,7 @@ public enum StateType {
     WHITE_TURN("whiteTurn"),
     BLACK_WIN("blackWin"),
     WHITE_WIN("whiteWin"),
-    TERMINATE("terminate")
-    ;
+    TERMINATE("terminate");
 
     private static final Map<String, Function<Board, GameState>> stateSupplier = new HashMap<>() {{
         put(StateType.BLACK_TURN.getName(), BlackTurn::new);

@@ -1,9 +1,8 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.state.GameState;
 import chess.domain.piece.Position;
-import java.util.Optional;
+import chess.domain.state.GameState;
 
 public class ChessGame {
     private Long id;

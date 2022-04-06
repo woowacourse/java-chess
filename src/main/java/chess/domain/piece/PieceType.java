@@ -7,8 +7,7 @@ public enum PieceType {
     BISHOP("bishop"),
     QUEEN("queen"),
     KING("king"),
-    BLANK("blank")
-    ;
+    BLANK("blank");
 
     private final String name;
 

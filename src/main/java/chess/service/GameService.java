@@ -23,7 +23,8 @@ public class GameService {
     public void createGame(Long whiteId, Long blackId) {
         Member white = memberDao.findById(whiteId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
         Member black = memberDao.findById(blackId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
-        gameDao.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard())), new Participant(white, black)));
+        gameDao.save(
+                new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard())), new Participant(white, black)));
     }
 
     public List<ChessGame> findPlayingGames() {

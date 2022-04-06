@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryMemberDao implements MemberDao {
-    private static Map<Long, Member> store = new ConcurrentHashMap<>();
+    private static final Map<Long, Member> store = new ConcurrentHashMap<>();
     private static int nextId = 1;
 
     @Override

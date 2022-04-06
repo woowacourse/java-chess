@@ -76,8 +76,8 @@ public class Position {
     }
 
     public String getPositionString() {
-        String alphabet = (char)(x + ASCII_ALPHABET) + "";
-        String number = (char)(y + ASCII_NUMBER) + "";
+        String alphabet = (char) (x + ASCII_ALPHABET) + "";
+        String number = (char) (y + ASCII_NUMBER) + "";
         return alphabet + number;
     }
 
