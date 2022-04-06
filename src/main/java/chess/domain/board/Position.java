@@ -55,6 +55,10 @@ public class Position {
         return Collections.unmodifiableCollection(POSITIONS.values());
     }
 
+    public String getName() {
+        return (char) ('a' + row) + String.valueOf(1 + column);
+    }
+
     public int getColumn() {
         return column;
     }

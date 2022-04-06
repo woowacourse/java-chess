@@ -12,9 +12,11 @@ public interface State {
 
     State move(Position from, Position to);
 
-    ChessBoard getChessBoard();
+    ChessBoard chessBoard();
 
-    Status getStatus();
+    Status status();
+
+    Turn turn();
 
     boolean isFinished();
 }

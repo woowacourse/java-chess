@@ -43,7 +43,7 @@ class FinishedTest {
     void validGetChessBoardToFinshed() {
         State state = new Finished(new ChessBoard(Map.of()));
 
-        assertThat(state.getChessBoard()).isInstanceOf(ChessBoard.class);
+        assertThat(state.chessBoard()).isInstanceOf(ChessBoard.class);
     }
 
     @Test
@@ -51,7 +51,7 @@ class FinishedTest {
     void validGetScoreToFinished() {
         State state = new Finished(new ChessBoard(ChessBoardFactory.initChessBoard()));
 
-        assertThat(state.getStatus()).isEqualTo(new Status(new Score(34.0), new Score(34.0), BLACK));
+        assertThat(state.status()).isEqualTo(new Status(new Score(34.0), new Score(34.0), BLACK));
     }
 
     @Test

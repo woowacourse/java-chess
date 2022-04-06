@@ -52,7 +52,7 @@ class RunningTest {
     void validateChessBoardToRunning() {
         final State state = new Running(new ChessBoard(ChessBoardFactory.initChessBoard()), Turn.WHITE);
 
-        assertThat(state.getChessBoard()).isInstanceOf(ChessBoard.class);
+        assertThat(state.chessBoard()).isInstanceOf(ChessBoard.class);
     }
 
     @Test
@@ -60,7 +60,7 @@ class RunningTest {
     void validGetScoreToRunning() {
         final State state = new Running(new ChessBoard(ChessBoardFactory.initChessBoard()), Turn.WHITE);
 
-        assertThat(state.getStatus()).isEqualTo(new Status(new Score(34.0), new Score(34.0), NONE));
+        assertThat(state.status()).isEqualTo(new Status(new Score(34.0), new Score(34.0), NONE));
     }
 
     @Test

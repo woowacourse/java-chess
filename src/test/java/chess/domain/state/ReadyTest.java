@@ -3,10 +3,6 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.state.Finished;
-import chess.domain.state.Ready;
-import chess.domain.state.Running;
-import chess.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +35,7 @@ class ReadyTest {
     void invalidGetChessBoardToReady() {
         State state = new Ready();
 
-        assertThatThrownBy(() -> state.getChessBoard())
+        assertThatThrownBy(() -> state.chessBoard())
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("상태가 Ready인 경우 체스판을 호출 할 수 없습니다.");
     }
@@ -49,7 +45,7 @@ class ReadyTest {
     void invalidGetScoreToReady() {
         State state = new Ready();
 
-        assertThatThrownBy(() -> state.getStatus())
+        assertThatThrownBy(() -> state.status())
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("상태가 Ready인 경우 상태를 호출 할 수 없습니다.");
     }

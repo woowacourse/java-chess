@@ -17,6 +17,13 @@ public enum Turn {
         return WHITE;
     }
 
+    public static Turn from(String turn) {
+        if (PieceColor.WHITE == PieceColor.valueOf(turn)) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public Turn change() {
         if (this == Turn.WHITE) {
             return BLACK;

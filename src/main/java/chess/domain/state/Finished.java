@@ -30,12 +30,12 @@ public class Finished implements State {
     }
 
     @Override
-    public ChessBoard getChessBoard() {
+    public ChessBoard chessBoard() {
         return chessBoard;
     }
 
     @Override
-    public Status getStatus() {
+    public Status status() {
         Score whiteScore = Score.calculateScore(chessBoard, PieceColor.WHITE);
         Score blackScore = Score.calculateScore(chessBoard, PieceColor.WHITE);
         PieceColor winnerColor = PieceColor.WHITE;
@@ -44,6 +44,11 @@ public class Finished implements State {
             winnerColor = PieceColor.BLACK;
         }
         return new Status(whiteScore, blackScore, winnerColor);
+    }
+
+    @Override
+    public Turn turn() {
+        throw new UnsupportedOperationException("이미 종료되었습니다.");
     }
 
     @Override

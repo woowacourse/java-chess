@@ -10,7 +10,7 @@ import chess.view.OutputView;
 public class ConsoleGameController {
 
     public void run() {
-        final ChessGame chessGame = new ChessGame(new Ready());
+        final ChessGame chessGame = new ChessGame(0L, new Ready());
         OutputView.printInitMessage();
 
         play(chessGame);

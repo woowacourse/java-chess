@@ -1,20 +1,18 @@
 package chess.domain;
 
-import java.util.function.Function;
-
 public enum PieceColor {
 
-    WHITE(String::toLowerCase),
-    BLACK(String::toUpperCase),
-    NONE(Function.identity());
+    WHITE("WHITE"),
+    BLACK("BLACK"),
+    NONE("NONE");
 
-    private final Function<String, String> caseConverter;
+    private String name;
 
-    PieceColor(Function<String, String> caseConverter) {
-        this.caseConverter = caseConverter;
+    PieceColor(String name) {
+        this.name = name;
     }
 
-    public String convertToCase(String value) {
-        return caseConverter.apply(value);
+    public String getName() {
+        return name;
     }
 }

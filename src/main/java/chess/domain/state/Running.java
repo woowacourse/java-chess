@@ -50,12 +50,12 @@ public class Running implements State {
     }
 
     @Override
-    public ChessBoard getChessBoard() {
+    public ChessBoard chessBoard() {
         return chessBoard;
     }
 
     @Override
-    public Status getStatus() {
+    public Status status() {
         Score whiteScore = Score.calculateScore(chessBoard, PieceColor.WHITE);
         Score blackScore = Score.calculateScore(chessBoard, PieceColor.BLACK);
         PieceColor winnerColor = PieceColor.NONE;
@@ -66,6 +66,11 @@ public class Running implements State {
             winnerColor = PieceColor.BLACK;
         }
         return new Status(whiteScore, blackScore, winnerColor);
+    }
+
+    @Override
+    public Turn turn() {
+        return turn;
     }
 
     @Override
