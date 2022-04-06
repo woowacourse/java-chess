@@ -37,4 +37,12 @@ class PieceDaoTest {
         assertThat(piece).isEqualTo(new Pawn(Color.WHITE));
     }
 
+    @Test
+    void deletePiece() {
+        Board board = Board.getInitializedInstance();
+        pieceDao.savePieces(board.getValue());
+        pieceDao.deletePiece(Position.of("a2"));
+
+        assertThat(pieceDao.findAll().size()).isEqualTo(31);
+    }
 }

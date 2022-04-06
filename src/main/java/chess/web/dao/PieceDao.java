@@ -31,17 +31,6 @@ public class PieceDao {
         });
     }
 
-    public void removeAll() {
-        String sql = "delete from piece";
-        jdbcContext.executeUpdate(connection -> connection.prepareStatement(sql));
-    }
-
-    public Map<Position, Piece> findAll() {
-        String sql = "select color, piece_type, position_column, position_row from piece";
-
-        return jdbcContext.queryForObject(connection -> connection.prepareStatement(sql), piecesMapper());
-    }
-
     public Piece findPieceByPosition(Position position) {
         String sql = "select color, piece_type from piece where position_column = ? and position_row = ?";
 
@@ -60,6 +49,16 @@ public class PieceDao {
         });
     }
 
+    public Map<Position, Piece> findAll() {
+        String sql = "select color, piece_type, position_column, position_row from piece";
+        return jdbcContext.queryForObject(connection -> connection.prepareStatement(sql), piecesMapper());
+    }
+
+    public void removeAll() {
+        String sql = "delete from piece";
+        jdbcContext.executeUpdate(connection -> connection.prepareStatement(sql));
+    }
+
     private RowMapper<Map<Position, Piece>> piecesMapper() {
         return resultSet -> {
             Map<Position, Piece> result = new HashMap<>();
@@ -74,5 +73,16 @@ public class PieceDao {
             }
             return result;
         };
+    }
+
+    public void deletePiece(Position position) {
+        String sql = "delete from piece where position_column = ? and position_row = ?";
+
+        jdbcContext.executeUpdate(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, position.getColumn().name());
+            preparedStatement.setString(2, position.getRow().name());
+            return preparedStatement;
+        });
     }
 }
