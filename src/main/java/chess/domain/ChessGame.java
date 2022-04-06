@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.InitialBoardGenerator;
 import chess.domain.position.Square;
 
 public final class ChessGame {
@@ -11,14 +10,13 @@ public final class ChessGame {
     private Board board;
     private GameTurn turn;
 
-    public ChessGame(BoardGenerator boardGenerator) {
-        this.board = new Board(boardGenerator);
+    public ChessGame() {
         this.turn = GameTurn.READY;
     }
 
-    public void startGame() {
-        board = new Board(new InitialBoardGenerator());
-        turn = GameTurn.WHITE;
+    public void startGame(BoardGenerator boardGenerator, GameTurn gameTurn) {
+        this.board = new Board(boardGenerator);
+        this.turn = gameTurn;
     }
 
     public void move(Square source, Square target) {
