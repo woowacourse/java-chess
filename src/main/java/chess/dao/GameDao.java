@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface GameDao {
 
-	int save(final String name, final String state);
+	int save(final Game game);
 
 	void update(final int gameId, final String state);
 

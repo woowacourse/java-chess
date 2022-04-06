@@ -36,11 +36,9 @@ public class WebChessController {
 			return render(model, "start.html");
 		});
 
-		post("/start", (req, res) -> {
-			GameDto gameDto = chessService.start(req.queryParams("name"));
-			Map<String, Object> model = new HashMap<>();
-			model.put("gameId", gameDto.getGameId());
-			return render(model, "chess.html");
+		get("/start/:name", (req, res) -> {
+			GameDto gameDto = chessService.start(req.params(":name"));
+			return gson.toJson(gameDto);
 		});
 
 		get("/game/:id", (req, res) -> {
@@ -77,7 +75,6 @@ public class WebChessController {
 			GamesDto gamesDto = chessService.findAll();
 			Map<String, Object> model = new HashMap<>();
 			model.put("games", gamesDto.getGames());
-			System.out.println(model);
 			return render(model, "load.html");
 		});
 
@@ -96,7 +93,6 @@ public class WebChessController {
 
 	private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
 		exception(exceptionClass, (e, req, res) -> {
-			System.out.println(e.getMessage());
 			res.status(400);
 			res.body(gson.toJson(new ErrorResponseDto(e.getMessage())));
 		});

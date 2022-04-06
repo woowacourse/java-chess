@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 public class GameDaoImpl implements GameDao {
 
 	private static final String SAVE_ERROR = "해당 값을 저장할 수 없습니다.";
+	private static final String NAME_DUPLICATION_ERROR = "게임 이름은 중복될 수 없습니다.";
 	private static final String NOT_FOUND_ITEM_ERROR = "해당 키를 가진 데이터가 없습니다.";
 
 	private final Connection connection;
@@ -26,18 +27,18 @@ public class GameDaoImpl implements GameDao {
 	}
 
 	@Override
-	public int save(final String name, final String state) {
+	public int save(final Game game) {
 		final String sql = "insert into game (name, command_log) values (?, ?)";
 		try (final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			statement.setString(1, name);
-			statement.setString(2, state);
+			statement.setString(1, game.getName());
+			statement.setString(2, game.getCommandLog());
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next()) {
 				return rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(NAME_DUPLICATION_ERROR);
 		}
 		throw new NoSuchElementException(SAVE_ERROR);
 	}

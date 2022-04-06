@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.game.Game;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
@@ -30,33 +31,39 @@ class GameDaoImplTest {
 
 	@Test
 	void save() {
-		assertDoesNotThrow(() -> gameDaoImpl.save("test", "start"));
+		Game game = new Game("test", "start");
+
+		assertDoesNotThrow(() -> gameDaoImpl.save(game));
 	}
 
 	@Test
 	void update() {
-		int gameId = gameDaoImpl.save("test", "start");
+		Game game = new Game("test", "start");
+		int gameId = gameDaoImpl.save(game);
 
 		assertDoesNotThrow(() -> gameDaoImpl.update(gameId, "move a2 a3"));
 	}
 
 	@Test
 	void findById() {
-		int gameId = gameDaoImpl.save("test", "start");
+		Game game = new Game("test", "start");
+		int gameId = gameDaoImpl.save(game);
 
 		assertThat(gameDaoImpl.findById(gameId).getCommandLog()).isEqualTo("start");
 	}
 
 	@Test
 	void findAll() {
-		gameDaoImpl.save("test", "start");
+		Game game = new Game("test", "start");
+		gameDaoImpl.save(game);
 
 		assertThat(gameDaoImpl.findAll().isEmpty()).isFalse();
 	}
 
 	@Test
 	void delete() {
-		int gameId = gameDaoImpl.save("test", "start");
+		Game game = new Game("test", "start");
+		int gameId = gameDaoImpl.save(game);
 		gameDaoImpl.delete(gameId);
 
 		assertThatThrownBy(() -> gameDaoImpl.findById(gameId))

@@ -10,14 +10,14 @@
     <h1>체스 게임</h1>
     <img src="/image/chess_logo.png" width="250px" height="250px">
     <br>
-    <form method="post" action="/start">
-        <label class="start_form" for="game_name_input">게임 이름</label>
+    <form id="start-form" onsubmit="return false;">
+        <label for="game-name-input">게임 이름</label>
         <br>
         <br>
-        <input class="start_form" id="game_name_input" name="name" type="text" value="">
+        <input id="game-name-input" name="name" type="text" value="">
         <br>
         <br>
-        <input class="start_form" type="submit" value="새로운 게임 시작하기">
+        <button id="send">새로운 게임 시작하기</button>
     </form>
     <br>
     <br>

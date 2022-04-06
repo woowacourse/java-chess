@@ -33,7 +33,8 @@ public class ChessService {
 		state = new Ready();
 		Board board = new Board(BoardFactory.initiate());
 		state = state.start(board);
-		int gameId = gameDao.save(name, Command.START.getCommand());
+		Game game = new Game(name, Command.START.getCommand());
+		int gameId = gameDao.save(game);
 		return GameDto.of(gameId, state.getBoard());
 	}
 

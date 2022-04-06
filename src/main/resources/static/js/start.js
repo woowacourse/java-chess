@@ -1,4 +1,5 @@
 const load = document.getElementById('load-button');
+const send = document.getElementById('send');
 
 function openLoadGameWindowPop(url, title) {
     var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
@@ -23,9 +24,30 @@ load.addEventListener('click', function () {
     openLoadGameWindowPop('/findGames', '게임 불러오기')
 })
 
+function loadChessPage(response) {
+    let gameId = response["gameId"];
+    location.href = '/game/' + gameId;
+}
+
+send.addEventListener("click", function () {
+    var name = document.getElementById("game-name-input");
+    if (name.value === '') {
+        alert("게임 이름은 빈칸일 수 없습니다.")
+        return;
+    }
+    fetch('/start/' + name.value,
+    ).then(handleErrors)
+        .then(res => res.json())
+        .then(res => loadChessPage(res))
+        .catch(function (error) {
+            alert(error.message)
+        });
+})
+
 async function handleErrors(res) {
     if (!res.ok) {
         let error = await res.json();
         throw Error(error["errorMessage"])
     }
+    return res;
 }

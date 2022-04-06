@@ -17,9 +17,9 @@ public class FakeGameDao implements GameDao {
 	}
 
 	@Override
-	public int save(final String name, final String state) {
+	public int save(final Game game) {
 		id++;
-		games.put(id, new Game(id, name, state));
+		games.put(id, new Game(id, game.getName(), game.getCommandLog()));
 		return id;
 	}
 
