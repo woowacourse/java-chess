@@ -21,12 +21,13 @@ public class GameDao {
 		this(DatabaseConnection.getConnection());
 	}
 
-	public int save(final String state) {
-		final String sql = "insert into game (command_log) values (?)";
+	public int save(final String name, final String state) {
+		final String sql = "insert into game (name, command_log) values (?, ?)";
 		int insertId = -1;
 		try {
 			final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, state);
+			statement.setString(1, name);
+			statement.setString(2, state);
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next()) {
@@ -67,14 +68,15 @@ public class GameDao {
 	}
 
 	public List<Game> findAll() {
-		final String sql = "select id from game";
+		final String sql = "select id, name from game";
 		final List<Game> games = new ArrayList<>();
 		try {
 			final PreparedStatement statement = connection.prepareStatement(sql);
 			final ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Game game = new Game(
-						resultSet.getInt("id")
+						resultSet.getInt("id"),
+						resultSet.getString("name")
 				);
 				games.add(game);
 			}

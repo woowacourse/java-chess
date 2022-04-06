@@ -27,11 +27,11 @@ public class ChessService {
 		this.state = state;
 	}
 
-	public GameDto start() {
+	public GameDto start(String name) {
 		state = new Ready();
 		Board board = new Board(BoardFactory.initiate());
 		state = state.start(board);
-		int gameId = gameDao.save("start");
+		int gameId = gameDao.save(name, "start");
 		return GameDto.of(gameId, state.getBoard());
 	}
 

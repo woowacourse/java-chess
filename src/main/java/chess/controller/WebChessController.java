@@ -30,14 +30,29 @@ public class WebChessController {
 
 	public void run() {
 		Gson gson = new Gson();
+
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
+			return render(model, "start.html");
+		});
+
+		get("/newGame", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			return render(model, "start.html");
+		});
+
+		post("/start", (req, res) -> {
+			GameDto gameDto = chessService.start(req.queryParams("name"));
+			Map<String, Object> model = new HashMap<>();
+			model.put("gameId", gameDto.getGameId());
 			return render(model, "chess.html");
 		});
 
-		get("/start", (req, res) -> {
-			GameDto gameDto = chessService.start();
-			return gson.toJson(gameDto);
+		get("/game/:id", (req, res) -> {
+			GameDto gameDto = chessService.load(Integer.parseInt(req.params(":id")));
+			Map<String, Object> model = new HashMap<>();
+			model.put("gameId", gameDto.getGameId());
+			return render(model, "chess.html");
 		});
 
 		get("/status", (req, res) -> {
@@ -76,10 +91,6 @@ public class WebChessController {
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-	}
-
-	private static String render2(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 

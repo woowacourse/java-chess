@@ -15,7 +15,7 @@ class GameDaoTest {
 		connection.setAutoCommit(false);
 		GameDao gameDao = new GameDao(connection);
 
-		assertDoesNotThrow(() -> gameDao.save("start\n"));
+		assertDoesNotThrow(() -> gameDao.save("test", "start"));
 		connection.rollback();
 	}
 
@@ -24,7 +24,7 @@ class GameDaoTest {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
 		GameDao gameDao = new GameDao(connection);
-		int gameId = gameDao.save("start\n");
+		int gameId = gameDao.save("test", "start");
 
 		assertDoesNotThrow(() -> gameDao.update(gameId, "move a2 a3"));
 		connection.rollback();
@@ -35,9 +35,9 @@ class GameDaoTest {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
 		GameDao gameDao = new GameDao(connection);
-		int gameId = gameDao.save("start\n");
+		int gameId = gameDao.save("test", "start");
 
-		assertThat(gameDao.findById(gameId)).isEqualTo("start\n");
+		assertThat(gameDao.findById(gameId)).isEqualTo("start");
 		connection.rollback();
 	}
 
@@ -46,7 +46,7 @@ class GameDaoTest {
 		Connection connection = DatabaseConnection.getConnection();
 		connection.setAutoCommit(false);
 		GameDao gameDao = new GameDao(connection);
-		gameDao.save("start\n");
+		gameDao.save("test", "start");
 
 		assertThat(gameDao.findAll().isEmpty()).isFalse();
 		connection.rollback();

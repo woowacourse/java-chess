@@ -1,26 +1,16 @@
-const start = document.getElementById('start-button');
 const status = document.getElementById('status-button');
 const end = document.getElementById('end-button');
-const load = document.getElementById('load-button');
+const back = document.getElementById('back-button');
 const board = document.querySelector("#board");
 
 let source = "";
 let target = "";
 var game = "";
 
-addBoardClickEvent();
+setBoard();
 
-start.addEventListener('click', function () {
-    fetch('/start')
-        .then(handleErrors)
-        .then(res => res.json())
-        .then(updatePieceContainer)
-        .catch(function (error) {
-            alert(error.message)
-        })
-})
-
-function addBoardClickEvent() {
+function setBoard() {
+    let id = document.getElementById("game_id").value;
     const divs = board.querySelectorAll("div");
 
     for (const div of divs) {
@@ -28,6 +18,13 @@ function addBoardClickEvent() {
             div.addEventListener("click", move);
         }
     }
+    fetch('/load/' + id)
+        .then(handleErrors)
+        .then(res => res.json())
+        .then(res => updatePieceContainer(res))
+        .catch(function (error) {
+            alert(error.message)
+        });
 }
 
 function move(event) {
@@ -126,26 +123,11 @@ end.addEventListener('click', function () {
         .catch(function (error) {
             alert(error.message)
         })
+    window.history.back();
 })
 
-function openWindowPop(url, name) {
-    var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
-    var win = window.open(url, name, options);
-    win.loadGame = function (id) {
-        console.log(id);
-        game = id;
-        fetch('/load/' + id)
-            .then(handleErrors)
-            .then(res => res.json())
-            .then(res => updatePieceContainer(res))
-            .catch(function (error) {
-                alert(error.message)
-            });
-    }
-}
-
-load.addEventListener('click', function () {
-    openWindowPop('/findGames', '게임 불러오기')
+back.addEventListener('click', function () {
+    window.history.back();
 })
 
 function alertWinner(winnerResponse) {

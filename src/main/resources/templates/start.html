@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임 시작하기</title>
+    <link rel="stylesheet" href="/css/chess.css"/>
+</head>
+<body>
+<div class="start_board">
+    <form method="post" action="/start">
+        <label class="start_form" for="game_name_input">게임 이름</label>
+        <input class="start_form" id="game_name_input" name="name" type="text" value="">
+        <input class="start_form" type="submit" value="새로운 게임 시작하기">
+    </form>
+    
+    <button id="load-button" type="button">게임 불러오기</button>
+
+</div>
+<script src="/js/start.js"></script>
+</body>
+</html>

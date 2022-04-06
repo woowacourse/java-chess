@@ -29,6 +29,10 @@ public class GameDto {
 		return piece.getTeam() + "/" + piece.getTeam() + "-" + piece.convertToString() + ".svg";
 	}
 
+	public int getGameId() {
+		return gameId;
+	}
+
 	public Map<String, Object> getBoard() {
 		return new HashMap<>(board);
 	}
