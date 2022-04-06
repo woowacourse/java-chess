@@ -11,13 +11,14 @@
     <div class="header center-object">
         <h1 class="main-message">초간단 체스게임♞</h1>
     </div>
-    <div id="board-div" class="center-object"></div>
-    <script>initBoard()</script>
-    {{#each board.pieces}}
-    <script>
-        fillSquare("{{@key}}", "{{this.type}}", "{{this.color}}")
-    </script>
-    {{/each}}
+    <div id="board-div" class="center-object">
+        <script>initBoard()</script>
+        {{#each this.pieces}}
+        <script>
+            fillSquare("{{@key}}", "{{this.type}}", "{{this.color}}")
+        </script>
+        {{/each}}
+    </div>
     </br>
     <div class="center-object board-buttons">
         <button class="button start-button">

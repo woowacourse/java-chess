@@ -67,7 +67,7 @@ function onClick(event) {
             location.href = "/board"
         }
         if (classList.contains('end-button')) {
-            location.href = '/'
+            location.href = '/game-end'
         }
     }
 }

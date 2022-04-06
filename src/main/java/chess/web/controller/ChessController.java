@@ -2,13 +2,15 @@ package chess.web.controller;
 
 import chess.service.BoardDto;
 import chess.service.ChessService;
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
+import chess.service.GameResultDto;
 
 public class ChessController {
+    private static final int VALUE_INDEX = 1;
+    private static final int TO_SQUARE_INDEX = 1;
+    private static final int FROM_SQUARE_INDEX = 0;
+    private static final String BODY_DELIMITER = "&";
+    private static final String KEY_VALUE_DELIMITER = "=";
+
     private final ChessService service;
 
     public ChessController(ChessService service) {
@@ -19,24 +21,25 @@ public class ChessController {
         service.initGame();
     }
 
-    public ModelAndView getBoard() {
-        Map<String, Object> model = new HashMap<>();
+    public BoardDto getRunningBoard() {
         if (service.isWaitingOrRunning()) {
-            model.put("board", service.getBoard());
-            return new ModelAndView(model, "board.html");
+            return service.getBoard();
         }
         return null;
     }
 
-    public void move(Request req, Response res) {
-        String body = req.body();
-        String[] keyValues = body.split("&");
-        String from = keyValues[0].split("=")[1];
-        String to = keyValues[1].split("=")[1];
+    public void move(String body) {
+        String[] keyValues = body.split(BODY_DELIMITER);
+        String from = keyValues[FROM_SQUARE_INDEX].split(KEY_VALUE_DELIMITER)[VALUE_INDEX];
+        String to = keyValues[TO_SQUARE_INDEX].split(KEY_VALUE_DELIMITER)[VALUE_INDEX];
         service.move(from, to);
     }
 
-    public ModelAndView status() {
-        return new ModelAndView(service.getResult(), "result.html");
+    public GameResultDto status() {
+        return service.getResult();
+    }
+
+    public void end() {
+        service.endGame();
     }
 }

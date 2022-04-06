@@ -6,7 +6,9 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.model.dao.RuntimeChessGameDao;
+import chess.service.BoardDto;
 import chess.service.ChessService;
+import chess.service.GameResultDto;
 import chess.web.controller.ChessController;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -19,7 +21,7 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
-    public static void main(String[] args) throws UnsupportedEncodingException {
+    public static void main(String[] args) {
         staticFileLocation("/static");
         ChessController controller = new ChessController(new ChessService(new RuntimeChessGameDao()));
 
@@ -36,27 +38,35 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
-            ModelAndView modelAndView = controller.getBoard();
-            if (modelAndView == null) {
+            BoardDto board = controller.getRunningBoard();
+            if (board == null) {
                 res.redirect("/status");
             }
-            return render(controller.getBoard());
+            return render(new ModelAndView(board, "board.html"));
         });
 
-        post("/move", (req, res) ->
-        {
-            controller.move(req, res);
+        post("/move", (req, res) -> {
+            controller.move(req.body());
             res.redirect("/board");
             return null;
         });
 
-        get("/status", (req, res) -> render(controller.status()));
+        get("/status", (req, res) -> {
+            GameResultDto status = controller.status();
+            return render(new ModelAndView(status, "result.html"));
+        });
 
         get("/exception", (req, res) -> {
             String exception = URLDecoder.decode(req.cookie("exception"), "UTF-8");
             Map<String, Object> model = new HashMap<>();
             model.put("exception", exception);
             return render(new ModelAndView(model, "exception.html"));
+        });
+
+        get("/game-end", (req, res) -> {
+           controller.end();
+           res.redirect("/");
+           return null;
         });
 
         exception(RuntimeException.class, WebApplication::handle);
