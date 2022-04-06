@@ -99,6 +99,7 @@ public class WebApplication {
         chessGame.move(source, target);
         if (chessGame.isGameEnd()) {
             deleteAllData(chessGame.getGameId(), new DbGameDao(), new DbBoardDao());
+            chessGame.initialze();
             return render(null, "../public/index.html");
         }
         saveDataToDb(chessGame, new DbGameDao(), new DbBoardDao());
@@ -106,9 +107,9 @@ public class WebApplication {
         return null;
     }
 
-    private static void deleteAllData(int gamdId, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        dbBoardDao.deleteAll(gamdId);
-        dbGameDao.deleteGameData(gamdId);
+    private static void deleteAllData(int gameId, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
+        dbBoardDao.deleteAll(gameId);
+        dbGameDao.deleteGameData(gameId);
     }
 
     private static void saveDataToDb(ChessGame chessGame, GameDao gameDao, BoardDao boardDao) {
