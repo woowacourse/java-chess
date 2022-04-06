@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -9,6 +10,7 @@ public class Pawn extends Piece {
     private static final int ONE_SQUARE = 1;
     private static final int DOUBLE_STEP = 2;
     private static final int SINGLE_STEP = 1;
+    private static final int PAWN_SCORE = 1;
 
     public Pawn(Color color, Position position) {
         super(color, position);
@@ -20,7 +22,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         if (!isForward(to)) {
             return false;
         }
@@ -56,8 +58,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return BigDecimal.ONE;
+    public double score() {
+        return PAWN_SCORE;
     }
 
     @Override

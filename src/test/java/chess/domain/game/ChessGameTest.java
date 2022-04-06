@@ -80,7 +80,7 @@ class ChessGameTest {
         chessGame.start();
         Score score = chessGame.score();
 
-        assertThat(score.getBlackScore()).isEqualTo(new BigDecimal("6.0"));
-        assertThat(score.getWhiteScore()).isEqualTo(new BigDecimal("10.0"));
+        assertThat(score.getBlackScore()).isEqualTo(6.0);
+        assertThat(score.getWhiteScore()).isEqualTo(10.0);
     }
 }

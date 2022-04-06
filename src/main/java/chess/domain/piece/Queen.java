@@ -2,11 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 public class Queen extends Piece {
 
-    private static final String QUEEN_SCORE = "9";
+    private static final int QUEEN_SCORE = 9;
 
     public Queen(Color color, Position position) {
         super(color, position);
@@ -18,13 +19,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         return getPosition().isDiagonalWay(to) || getPosition().isVerticalWay(to)
             || getPosition().isHorizontalWay(to);
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return new BigDecimal(QUEEN_SCORE);
+    public double score() {
+        return QUEEN_SCORE;
     }
 }

@@ -8,9 +8,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,25 +27,25 @@ public class BoardInitializer {
     }
 
     private static void setUpWithOutPawn() {
-        setUpWithOutPawnByColor(Color.WHITE, Rank.ONE);
-        setUpWithOutPawnByColor(Color.BLACK, Rank.EIGHT);
+        setUpWithOutPawnByColor(Color.WHITE, Row.ONE);
+        setUpWithOutPawnByColor(Color.BLACK, Row.EIGHT);
     }
 
-    private static void setUpWithOutPawnByColor(Color color, Rank rank) {
-        BASE_PIECES.add(new Rook(color, new Position(File.A, rank)));
-        BASE_PIECES.add(new Knight(color, new Position(File.B, rank)));
-        BASE_PIECES.add(new Bishop(color, new Position(File.C, rank)));
-        BASE_PIECES.add(new Queen(color, new Position(File.D, rank)));
-        BASE_PIECES.add(new King(color, new Position(File.E, rank)));
-        BASE_PIECES.add(new Bishop(color, new Position(File.F, rank)));
-        BASE_PIECES.add(new Knight(color, new Position(File.G, rank)));
-        BASE_PIECES.add(new Rook(color, new Position(File.H, rank)));
+    private static void setUpWithOutPawnByColor(Color color, Row row) {
+        BASE_PIECES.add(new Rook(color, new Position(Column.A, row)));
+        BASE_PIECES.add(new Knight(color, new Position(Column.B, row)));
+        BASE_PIECES.add(new Bishop(color, new Position(Column.C, row)));
+        BASE_PIECES.add(new Queen(color, new Position(Column.D, row)));
+        BASE_PIECES.add(new King(color, new Position(Column.E, row)));
+        BASE_PIECES.add(new Bishop(color, new Position(Column.F, row)));
+        BASE_PIECES.add(new Knight(color, new Position(Column.G, row)));
+        BASE_PIECES.add(new Rook(color, new Position(Column.H, row)));
     }
 
     private static void setUpPawn() {
-        for (File file : File.orderedValues()) {
-            BASE_PIECES.add(new Pawn(Color.WHITE, new Position(file, Rank.TWO)));
-            BASE_PIECES.add(new Pawn(Color.BLACK, new Position(file, Rank.SEVEN)));
+        for (Column column : Column.orderedValues()) {
+            BASE_PIECES.add(new Pawn(Color.WHITE, new Position(column, Row.TWO)));
+            BASE_PIECES.add(new Pawn(Color.BLACK, new Position(column, Row.SEVEN)));
         }
     }
 

@@ -3,7 +3,7 @@ package chess.domain.position;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public enum File {
+public enum Column {
 
     A(1),
     B(2),
@@ -16,21 +16,21 @@ public enum File {
 
     private final int value;
 
-    File(int value) {
+    Column(int value) {
         this.value = value;
     }
 
-    public int getDistance(File other) {
+    public int getDistance(Column other) {
         return Math.abs(this.value - other.value);
     }
 
-    public static List<File> orderedValues() {
+    public static List<Column> orderedValues() {
         return Arrays.stream(values())
             .sorted(Comparator.comparingInt(row -> row.value))
             .collect(Collectors.toList());
     }
 
-    public List<File> getPath(File to) {
+    public List<Column> getPath(Column to) {
         int start = Math.min(this.value, to.value);
         int end = Math.max(this.value, to.value);
 

@@ -1,9 +1,9 @@
 package chess.domain.state;
 
-import static chess.domain.position.File.B;
-import static chess.domain.position.File.E;
-import static chess.domain.position.Rank.FIVE;
-import static chess.domain.position.Rank.SIX;
+import static chess.domain.position.Column.B;
+import static chess.domain.position.Column.E;
+import static chess.domain.position.Row.FIVE;
+import static chess.domain.position.Row.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -85,8 +85,8 @@ class RunningTest {
         Score score = running.score();
 
         assertAll(()-> {
-            assertThat(score.getBlackScore()).isEqualTo(new BigDecimal("3.0"));
-            assertThat(score.getWhiteScore()).isEqualTo(new BigDecimal("7.5"));
+            assertThat(score.getBlackScore()).isEqualTo(3.0);
+            assertThat(score.getWhiteScore()).isEqualTo(7.5);
         });
     }
 

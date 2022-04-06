@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Rank {
+public enum Row {
 
     ONE(1),
     TWO(2),
@@ -18,34 +18,34 @@ public enum Rank {
 
     private final int value;
 
-    Rank(int value) {
+    Row(int value) {
         this.value = value;
     }
 
-    public static List<Rank> orderedValues() {
+    public static List<Row> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.<Rank>comparingInt(col -> col.value).reversed())
+            .sorted(Comparator.<Row>comparingInt(col -> col.value).reversed())
             .collect(Collectors.toList());
     }
 
-    public boolean isDownward(Rank destination) {
+    public boolean isDownward(Row destination) {
         return value > destination.value;
     }
 
-    public boolean isUpward(Rank destination) {
+    public boolean isUpward(Row destination) {
         return value < destination.value;
     }
 
-    public int getDistance(Rank rank) {
-        return Math.abs(this.value - rank.value);
+    public int getDistance(Row row) {
+        return Math.abs(this.value - row.value);
     }
 
-    public List<Rank> getPath(Rank to) {
+    public List<Row> getPath(Row to) {
         int start = Math.min(this.value, to.value);
         int end = Math.max(this.value, to.value);
 
         return orderedValues().stream()
-            .filter(rank -> start < rank.value && rank.value < end)
+            .filter(row -> start < row.value && row.value < end)
             .collect(Collectors.toList());
     }
 

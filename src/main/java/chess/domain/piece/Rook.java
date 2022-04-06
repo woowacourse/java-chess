@@ -2,11 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 public class Rook extends Piece {
 
-    private static final String ROOK_SCORE = "5";
+    private static final int ROOK_SCORE = 5;
 
     public Rook(Color color, Position position) {
         super(color, position);
@@ -18,12 +19,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         return getPosition().isVerticalWay(to) || getPosition().isHorizontalWay(to);
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return new BigDecimal(ROOK_SCORE);
+    public double score() {
+        return ROOK_SCORE;
     }
 }

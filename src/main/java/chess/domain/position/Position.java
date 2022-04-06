@@ -14,25 +14,25 @@ public class Position {
     public static final int ONE_SQUARE = 1;
     private static final Map<String, Position> CACHE = new HashMap<>();
 
-    private final File file;
-    private final Rank rank;
+    private final Column column;
+    private final Row row;
 
     static {
-        for (File file : File.orderedValues()) {
-            cacheByFile(file);
+        for (Column column : Column.orderedValues()) {
+            cacheByFile(column);
         }
     }
 
-    private static void cacheByFile(File file) {
-        for (Rank rank : Rank.values()) {
-            CACHE.put(file.name().toLowerCase(Locale.ROOT) + rank.getValue(),
-                new Position(file, rank));
+    private static void cacheByFile(Column column) {
+        for (Row row : Row.values()) {
+            CACHE.put(column.name().toLowerCase(Locale.ROOT) + row.getValue(),
+                new Position(column, row));
         }
     }
 
-    public Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    public Position(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     public static Position from(String key) {
@@ -43,11 +43,11 @@ public class Position {
     }
 
     public boolean isVerticalWay(Position other) {
-        return this.file == other.file;
+        return this.column == other.column;
     }
 
     public boolean isHorizontalWay(Position other) {
-        return this.rank == other.rank;
+        return this.row == other.row;
     }
 
     public boolean isDiagonalWay(Position other) {
@@ -59,23 +59,23 @@ public class Position {
     }
 
     public boolean isUpward(Position other) {
-        return rank.isUpward(other.rank);
+        return row.isUpward(other.row);
     }
 
     public boolean isDownward(Position other) {
-        return rank.isDownward(other.rank);
+        return row.isDownward(other.row);
     }
 
-    public boolean isSameRank(Rank rank) {
-        return this.rank == rank;
+    public boolean isSameRow(Row row) {
+        return this.row == row;
     }
 
     public int getVerticalDistance(Position other) {
-        return rank.getDistance(other.rank);
+        return row.getDistance(other.row);
     }
 
     public int getHorizontalDistance(Position other) {
-        return file.getDistance(other.file);
+        return column.getDistance(other.column);
     }
 
     public boolean hasLinearPath(Position to) {
@@ -96,24 +96,24 @@ public class Position {
     }
 
     private List<Position> getVerticalPath(Position to) {
-        return rank.getPath(to.rank).stream()
-            .map(rank -> new Position(file, rank))
+        return row.getPath(to.row).stream()
+            .map(row -> new Position(column, row))
             .collect(Collectors.toList());
     }
 
     private List<Position> getHorizontalPath(Position to) {
-        return file.getPath(to.file).stream()
-            .map(file -> new Position(file, rank))
+        return column.getPath(to.column).stream()
+            .map(file -> new Position(file, row))
             .collect(Collectors.toList());
     }
 
     private Collection<Position> getDiagonalPath(Position to) {
-        List<Rank> ranks = rank.getPath(to.rank);
-        List<File> files = file.getPath(to.file);
+        List<Row> rows = row.getPath(to.row);
+        List<Column> columns = column.getPath(to.column);
 
         Collection<Position> result = new ArrayList<>();
-        for (int i = 0; i < ranks.size(); i++) {
-            result.add(new Position(files.get(i), ranks.get(i)));
+        for (int i = 0; i < rows.size(); i++) {
+            result.add(new Position(columns.get(i), rows.get(i)));
         }
         return result;
     }
@@ -127,23 +127,23 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, row);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-            "row=" + file +
-            ", col=" + rank +
+            "row=" + column +
+            ", col=" + row +
             '}';
     }
 
-    public boolean isSameFile(File file) {
-        return this.file == file;
+    public boolean isSameFile(Column column) {
+        return this.column == column;
     }
 }
