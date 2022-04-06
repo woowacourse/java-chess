@@ -9,8 +9,8 @@ import chess.dto.ScoreDto;
 import chess.piece.Piece;
 import chess.utils.PieceGenerator;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessGameService {
@@ -59,11 +59,13 @@ public class ChessGameService {
     }
 
     private void setChessGameByDto(ChessGameDto dto) {
-        Map<Position, Piece> boards = dto.getPieces()
+        LinkedHashMap<Position, Piece> boards = dto.getPieces()
                 .stream()
                 .collect(Collectors.toMap(
                                 pieceDto -> new Position(pieceDto.getX(), pieceDto.getY()),
-                                pieceDto -> PieceGenerator.generate(pieceDto.getType(), pieceDto.getColor())
+                                pieceDto -> PieceGenerator.generate(pieceDto.getType(), pieceDto.getColor()),
+                                (key1, key2) -> key1,
+                                LinkedHashMap::new
                         )
                 );
 
