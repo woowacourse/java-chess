@@ -3,100 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
-    <style>
-        .chess-consoleBoard .white {
-            background: #eee;
-        }
 
-        .chess-consoleBoard .black {
-            background: #aaa;
-        }
-    </style>
-    <script>
-        let first = '';
-        let second = '';
-
-        function clicked(id) {
-            if (first !== '') {
-                second = id;
-            } else {
-                first = id;
-            }
-
-            if (first !== '' && second !== '') {
-                sendToServer(first, second);
-                first = '';
-                second = '';
-            }
-        }
-
-        function sendToServer(first, second) {
-            fetch('/move', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "text/plain",
-                },
-                body: "command=move " + first + " " + second
-            }).then((response) => {
-                    response.json().then(data => {
-                        if (data.status === 400) {
-                            alert(data.errorMessage);
-                        }
-                        if (data.finished === true) {
-                            alert("게임이 종료되었습니다.");
-                            document.location.href = '/restart'
-                            return;
-                        }
-                        location.reload();
-                    });
-                }
-            );
-        }
-
-        function checkStatus() {
-            fetch('/status', {
-                method: "GET",
-                headers: {
-                    "Content-Type": "text/plain",
-                }
-            }).then((response) => {
-                response.json().then(data => {
-                    document.getElementById("statusResult")
-                        .innerHTML = "검은말 : " + data.BLACK + "<br >"
-                        + "흰말 : " + data.WHITE + "<br >"
-                        + data.winner;
-                });
-            });
-        }
-
-    </script>
+    <link rel="stylesheet" href="/src/index.css">
+    <script type="text/javascript" src="/src/index.js"></script>
 </head>
 <body>
 <div align="center">
-    <h1>산체스</h1>
-    <table class="chess-consoleBoard" border="1">
-        {{#consoleBoard}}
+    <h1>♟산체스♟</h1>
+    {{#board}}
+    <h2> 방제: {{roomTitle}}</h2>
+    <input id="roomId" type="hidden" value={{roomId}}/>
+    <p>
+        {{blackMemberName}}
+    </p>
+
+    <table class="chess-board" border="1">
         {{#dto}}
         <tr>
             {{#this}}
             {{#this}}
             <td id={{position}} class="{{background}}" onclick="clicked(this.id)">
-                <img src="images/{{imagePath}}" style="width:7vw; height: 7vw;"/>
+                <img src="/images/{{imagePath}}" style="width:7vw; height: 7vw;"/>
             </td>
             {{/this}}
             {{/this}}
         </tr>
         {{/dto}}
-        {{/consoleBoard}}
     </table>
+    <p>
+        {{whiteMemberName}}
+    </p>
+    {{/board}}
 </div>
 <br/>
 <div align="center">
     <button id="btn" onclick="checkStatus()">status</button>
     <p id="statusResult">
-
     </p>
-    <form action="/end" method="POST">
+    <form action="/room/{{roomId}}/end" method="POST">
         <input type="submit" value="end"/>
     </form>
 </div>

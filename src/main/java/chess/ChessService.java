@@ -2,60 +2,109 @@ package chess;
 
 import chess.dao.BoardDao;
 import chess.dao.ConnectionManager;
+import chess.dao.PieceDao;
+import chess.dao.SquareDao;
 import chess.domain.Board;
-import chess.model.piece.Bishop;
+import chess.dto.BoardDto;
+import chess.dto.BoardsDto;
+import chess.dto.RoomDto;
+import chess.model.Initializer;
 import chess.model.piece.Color;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
+import chess.model.piece.Empty;
 import chess.model.piece.Piece;
-import chess.model.piece.Queen;
-import chess.model.piece.Rook;
-import chess.model.square.File;
-import chess.model.square.Rank;
 import chess.model.square.Square;
-import chess.model.status.Ready;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessService {
 
     private final BoardDao boardDao;
-
+    private final SquareDao squareDao;
+    private final PieceDao pieceDao;
 
     public ChessService() {
         this.boardDao = new BoardDao(new ConnectionManager());
+        this.squareDao = new SquareDao(new ConnectionManager());
+        this.pieceDao = new PieceDao(new ConnectionManager());
     }
-//
-//    public Board init() {
-//        final List<File> files = Arrays.asList(File.values());
-//
-//        initMajorPieces(Color.WHITE, Rank.ONE, files);
-//        initMajorPieces(Color.BLACK, Rank.EIGHT, files);
-//        initPawns(Color.WHITE, Rank.TWO, files);
-//        initPawns(Color.BLACK, Rank.SEVEN, files);
-//        initEmpty();
-//    }
-//
-//
-//    private void initMajorPieces(Color color, Rank rank, List<File> files) {
-//        List<Piece> majorPiecesLineup = majorPiecesLineup(color);
-//        for (int i = 0; i < majorPiecesLineup.size(); i++) {
-//
-//            board.put(Square.of(files.get(i), rank), majorPiecesLineup.get(i));
-//        }
-//    }
-//
-//    private List<Piece> majorPiecesLineup(final Color color) {
-//        return List.of(
-//                new Rook(color),
-//                new Knight(color),
-//                new Bishop(color),
-//                new Queen(color),
-//                new King(color),
-//                new Bishop(color),
-//                new Knight(color),
-//                new Rook(color)
-//        );
-//    }
+
+    public Board init(Board board) {
+        return boardDao.init(board, Initializer.initialize());
+    }
+
+    public BoardsDto getBoards() {
+        List<RoomDto> boardsDto = new ArrayList<>();
+        List<Board> boards = boardDao.findAll();
+        for (Board board : boards) {
+            boardsDto.add(
+                    new RoomDto(board.getId(), board.getTitle(), board.getMembers().get(0), board.getMembers().get(1)));
+        }
+        return new BoardsDto(boardsDto);
+    }
+
+    public BoardDto getBoard(int roomId) {
+        final Board board = boardDao.getById(roomId);
+        final Map<Square, Piece> allPositionsAndPieces = squareDao.findAllSquaresAndPieces(roomId);
+//        Map<String, Piece> pieces = mapPositionToString(allPositionsAndPieces);
+        return BoardDto.of(allPositionsAndPieces, board.getTitle(), board.getMembers().get(0),
+                board.getMembers().get(1));
+    }
+
+    private Map<String, Piece> mapPositionToString(Map<Square, Piece> allPositionsAndPieces) {
+        return allPositionsAndPieces.keySet().stream()
+                .collect(Collectors.toMap(
+                        position -> position.getRank().value() + position.getFile().name(),
+                        allPositionsAndPieces::get));
+    }
+
+    public void move(String source, String target, int boardId) {
+        Square sourceSquare = squareDao.getBySquareAndBoardId(Square.fromString(source), boardId);
+        Square targetSquare = squareDao.getBySquareAndBoardId(Square.fromString(target), boardId);
+        Piece piece = pieceDao.findBySquareId(sourceSquare.getId());
+        checkMovable(sourceSquare, targetSquare, piece, boardId);
+        pieceDao.deletePieceBySquareId(targetSquare.getId());
+        pieceDao.updatePieceSquareId(sourceSquare.getId(), targetSquare.getId());
+        pieceDao.save(new Empty(), sourceSquare.getId());
+    }
+
+    private void checkMovable(Square sourceSquare, Square targetSquare, Piece piece, int boardId) {
+        Piece targetPiece = pieceDao.findBySquareId(targetSquare.getId());
+        if (!piece.movable(targetPiece, sourceSquare, targetSquare)) {
+            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        }
+        List<Square> route = piece.getRoute(sourceSquare, targetSquare);
+
+        if (piece.isPawn() && !route.isEmpty() && !piece.isNotAlly(targetPiece)) {
+            throw new IllegalArgumentException("같은 팀이 있는 곳으로 갈 수 없습니다.");
+        }
+
+        checkMoveWithoutObstacle(route, boardId, piece, targetPiece);
+    }
+
+    private void checkMoveWithoutObstacle(List<Square> route, int boardId, Piece sourcePiece, Piece targetPiece) {
+        List<Square> realSquares = squareDao.getPaths(route, boardId);
+        for (Square square : realSquares) {
+            Piece piece = pieceDao.findBySquareId(square.getId());
+            if (piece.equals(targetPiece) && sourcePiece.isNotAlly(targetPiece)) {
+                return;
+            }
+            if (piece.isNotEmpty()) {
+                throw new IllegalArgumentException("경로 중 기물이 있습니다.");
+            }
+        }
+    }
+
+    public boolean isEnd(int boardId) {
+        long kingCount = pieceDao.getAllPiecesByBoardId(boardId).stream()
+                .filter(Piece::isKing)
+                .count();
+
+        System.out.println(kingCount);
+        if(kingCount != 2) {
+            boardDao.deleteById(boardId);
+        }
+        return kingCount != 2;
+    }
 }

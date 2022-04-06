@@ -20,11 +20,19 @@ public class Board {
         this(0, title, new ArrayList<>());
     }
 
+    public Board(String title, List<Member> members) {
+        this(0, title, members);
+    }
+
     public int getId() {
         return id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public List<Member> getMembers() {
+        return members;
     }
 }

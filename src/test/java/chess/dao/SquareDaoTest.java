@@ -43,7 +43,7 @@ class SquareDaoTest {
 
     @Test
     void getBySquareTest() {
-        final Square square = dao.getBySquare(new Square(File.A, Rank.TWO, boardId));
+        final Square square = dao.getBySquareAndBoardId(new Square(File.A, Rank.TWO), boardId);
         assertAll(
                 () -> assertThat(square.getFile()).isEqualTo(File.A),
                 () -> assertThat(square.getRank()).isEqualTo(Rank.TWO)
@@ -58,7 +58,7 @@ class SquareDaoTest {
 
     @Test
     void getSquareIdBySquare() {
-        int squareId = dao.getSquareIdBySquare(new Square(File.A, Rank.TWO, boardId));
+        int squareId = dao.getSquareIdBySquare(new Square(File.A, Rank.TWO), boardId);
         assertThat(squareId).isEqualTo(square.getId());
     }
 

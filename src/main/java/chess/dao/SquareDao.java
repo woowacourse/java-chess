@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SquareDao {
@@ -39,9 +41,9 @@ public class SquareDao {
         });
     }
 
-    public Square getBySquare(Square square) {
+    public Square getBySquareAndBoardId(Square square, int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final ResultSet resultSet = findSquare(square.getFile(), square.getRank(), square.getBoardId(), connection);
+            final ResultSet resultSet = findSquare(square.getFile(), square.getRank(), boardId, connection);
             return new Square(
                     resultSet.getInt("id"),
                     File.findFile(resultSet.getInt("square_file")),
@@ -83,8 +85,8 @@ public class SquareDao {
         });
     }
 
-    public int getSquareIdBySquare(Square square) {
-        return getBySquare(square).getId();
+    public int getSquareIdBySquare(Square square, int boardId) {
+        return getBySquareAndBoardId(square, boardId).getId();
     }
 
 //    public List<square> getPaths(List<square> squares, int roomId) {
@@ -116,15 +118,23 @@ public class SquareDao {
 
     private Piece makePiece(ResultSet resultSet) throws SQLException {
         return PieceType.getPiece(resultSet.getString("type"),
-                resultSet.getInt("id"),
+                resultSet.getInt("pi_id"),
                 Color.findColor(resultSet.getString("color")),
                 resultSet.getInt("square_id"));
     }
 
     private Square makeSquare(ResultSet resultSet) throws SQLException {
-        return new Square(resultSet.getInt("id"),
+        return new Square(resultSet.getInt("po_id"),
                 File.findFile(resultSet.getInt("square_file")),
                 Rank.findRank(resultSet.getInt("square_rank")),
                 resultSet.getInt("board_id"));
+    }
+
+    public List<Square> getPaths(List<Square> squares, int roomId) {
+        List<Square> realSquares = new ArrayList<>();
+        for (Square square : squares) {
+            realSquares.add(getBySquareAndBoardId(square, roomId));
+        }
+        return realSquares;
     }
 }

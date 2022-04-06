@@ -1,12 +1,9 @@
 package chess.dao;
 
 import chess.Member;
-import chess.Role;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,5 +31,26 @@ public class MemberDao {
             }
             return members;
         });
+    }
+
+    public Member save(String name, int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "insert into member(name, board_id) values(?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, boardId);
+            preparedStatement.executeUpdate();
+            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (!generatedKeys.next()) {
+                throw new IllegalArgumentException("저장에 실패하였습니다.");
+            }
+            return new Member(generatedKeys.getInt(1), name, boardId);
+        });
+    }
+
+    public void saveAll(List<Member> members, int boardId) {
+        for (Member member : members) {
+            save(member.getName(), boardId);
+        }
     }
 }

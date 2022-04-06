@@ -2,6 +2,8 @@ package chess.model.piece;
 
 import chess.model.ConsoleBoard;
 import chess.model.square.Square;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class PointMovingPiece extends Piece {
 
@@ -23,9 +25,13 @@ public abstract class PointMovingPiece extends Piece {
                 .anyMatch(direction -> source.findLocation(direction, target));
     }
 
-    @Override
     public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
         Piece targetPiece = consoleBoard.get(target);
         return isNotAlly(targetPiece);
+    }
+
+    @Override
+    public List<Square> getRoute(Square source, Square target) {
+        return Collections.emptyList();
     }
 }

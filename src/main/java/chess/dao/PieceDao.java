@@ -17,14 +17,14 @@ public class PieceDao {
         this.connectionManager = connectionManager;
     }
 
-    public Piece save(Piece piece) {
+    public Piece save(Piece piece, int squareId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "insert into piece (type, color, square_id) values (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, piece.name());
             preparedStatement.setString(2, piece.color().name());
-            preparedStatement.setInt(3, piece.getSquareId());
+            preparedStatement.setInt(3, squareId);
             preparedStatement.executeUpdate();
             final ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (!resultSet.next()) {
@@ -40,7 +40,7 @@ public class PieceDao {
 
     public Piece findBySquareId(int squareId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select * from piece where Square_id=?";
+            final String sql = "select * from piece where square_id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, squareId);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -52,7 +52,7 @@ public class PieceDao {
                     resultSet.getString("type"),
                     resultSet.getInt("id"),
                     Color.findColor(resultSet.getString("color")),
-                    resultSet.getInt("Square_id"));
+                    resultSet.getInt("square_id"));
         });
     }
 

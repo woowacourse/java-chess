@@ -30,7 +30,7 @@ class PieceDaoTest {
         this.boardId = board.getId();
         final Square square = squareDao.save(new Square(File.A, Rank.TWO, board.getId()));
         this.squareId = square.getId();
-        this.piece = dao.save(new Pawn(Color.WHITE, squareId));
+        this.piece = dao.save(new Pawn(Color.WHITE), squareId);
     }
 
     @AfterEach
@@ -40,7 +40,7 @@ class PieceDaoTest {
 
     @Test
     void saveTest() {
-        final Piece piece = dao.save(new Pawn(Color.WHITE, squareId));
+        final Piece piece = dao.save(new Pawn(Color.WHITE), squareId);
         assertAll(
                 () -> assertThat(piece.name()).isEqualTo("p"),
                 () -> assertThat(piece.color()).isEqualTo(Color.WHITE),

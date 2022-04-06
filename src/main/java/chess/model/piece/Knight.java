@@ -21,7 +21,7 @@ public class Knight extends PointMovingPiece {
 
     @Override
     public String name() {
-        return PieceType.k.name();
+        return PieceType.n.name();
     }
 
     @Override

@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.ConsoleBoard;
 import chess.model.square.Square;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,18 +24,18 @@ public abstract class LinearMovingPiece extends Piece {
 
     @Override
     public boolean movable(Square source, Square target) {
-        Optional<List<Square>> route = getRoute(source, target);
-        return route.isPresent();
+        List<Square> route = getRoute(source, target);
+        return !route.isEmpty();
     }
 
     @Override
     public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
         Piece targetPiece = consoleBoard.get(target);
-        Optional<List<Square>> route = getRoute(source, target);
+        List<Square> route = getRoute(source, target);
         if (route.isEmpty()) {
             return false;
         }
-        return checkEachSquare(consoleBoard, targetPiece, route.get());
+        return checkEachSquare(consoleBoard, targetPiece, route);
     }
 
     private boolean checkEachSquare(ConsoleBoard consoleBoard, Piece targetPiece, List<Square> route) {
@@ -50,10 +51,11 @@ public abstract class LinearMovingPiece extends Piece {
         return false;
     }
 
-    private Optional<List<Square>> getRoute(Square source, Square target) {
+    public List<Square> getRoute(Square source, Square target) {
         return getDirection().stream()
                 .map(direction -> source.findRoad(direction, LINEAR_MOVING_PIECE_MAX_DISTANCE))
                 .filter(squares -> squares.contains(target))
-                .findFirst();
+                .findFirst()
+                .orElseGet(Collections::emptyList);
     }
 }

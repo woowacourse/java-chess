@@ -35,6 +35,10 @@ public abstract class Piece {
 
     abstract boolean movable(Square source, Square target);
 
+    public boolean movable(Piece targetPiece, Square source, Square target) {
+        return movable(source, target);
+    }
+
     public boolean isNotAlly(Piece target) {
         return this.color != target.color();
     }
@@ -61,11 +65,41 @@ public abstract class Piece {
 
     public abstract boolean canMoveWithoutObstacle(ConsoleBoard board, Square source, Square target);
 
+    public abstract List<Square> getRoute(Square source, Square target);
+
     public int getId() {
         return id;
     }
 
     public int getSquareId() {
         return squareId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Piece piece = (Piece) o;
+
+        if (id != piece.id) {
+            return false;
+        }
+        if (squareId != piece.squareId) {
+            return false;
+        }
+        return color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + squareId;
+        return result;
     }
 }

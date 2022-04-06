@@ -6,6 +6,10 @@ public class Member {
     private String name;
     private int boardId;
 
+    public Member(String name) {
+        this(0, name, 0);
+    }
+
     public Member(String name, int boardId) {
         this(0, name, boardId);
     }

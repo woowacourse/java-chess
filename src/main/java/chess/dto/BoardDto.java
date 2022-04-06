@@ -1,5 +1,6 @@
 package chess.dto;
 
+import chess.Member;
 import chess.model.ConsoleBoard;
 import chess.model.piece.Piece;
 import chess.model.square.File;
@@ -9,35 +10,87 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class BoardDto {
 
     private final List<List<PieceDto>> dto;
+    private final String roomTitle;
+    private final String whiteMemberName;
+    private final String blackMemberName;
 
-    private BoardDto(List<List<PieceDto>> dto) {
+    private BoardDto(List<List<PieceDto>> dto, String roomTitle, String whiteMemberName,
+                     String blackMemberName) {
         this.dto = dto;
+        this.roomTitle = roomTitle;
+        this.whiteMemberName = whiteMemberName;
+        this.blackMemberName = blackMemberName;
     }
 
-    public static BoardDto of(ConsoleBoard consoleBoard) {
+//    public static BoardDto of(Map<Square, Piece> pieces, String roomName, Member whiteMember, Member blackMember) {
+//        List<List<PieceDto>> boardSymbols = new ArrayList<>();
+//        List<Rank> ranks = Arrays.asList(Rank.values());
+//        Collections.reverse(ranks);
+//        for (Rank rank : ranks) {
+//            boardSymbols.add(makeLine(pieces, rank.value()));
+//        }
+//        return new BoardDto(boardSymbols, roomName, whiteMember.getName(), blackMember.getName());
+//    }
+
+//    private static List<PieceDto> makeLine(Map<Square, Piece> pieces, Integer row) {
+//        List<PieceDto> symbols = new ArrayList<>();
+//        for (File column : File.values()) {
+//            symbols.add(PieceDto.of(findByKey(pieces, row, column), column.name() + row, background(row, column)));
+//        }
+//        return symbols;
+//    }
+//
+//    private static String background(Integer row, File column) {
+//        if ((column.value() + row) % 2 == 0) {
+//            return "black";
+//        }
+//        return "white";
+//    }
+
+//    private static String findByKey(Map<String, Piece> pieces, Integer row, File file) {
+//        if (pieces.containsKey(row + file.name())) {
+//            return pieces.get(row + file.name()).symbol();
+//        }
+//        return Symbol.BLANK.value();
+//    }
+
+    public static BoardDto of(Map<Square, Piece> pieces, String roomName, Member whiteMember, Member blackMember) {
         List<List<PieceDto>> boardDto = new ArrayList<>();
         List<Rank> ranks = Arrays.asList(Rank.values());
         Collections.reverse(ranks);
         for (Rank rank : ranks) {
-            boardDto.add(makeLineByFile(consoleBoard, rank));
+            boardDto.add(makeLineByFile(pieces, rank));
         }
-        return new BoardDto(boardDto);
+        return new BoardDto(boardDto, roomName, whiteMember.getName(), blackMember.getName());
+    }
+
+    private static List<PieceDto> makeLineByFile(Map<Square, Piece> pieces, Rank rank) {
+        List<PieceDto> tempLine = new ArrayList<>();
+        for (File file : File.values()) {
+            Piece piece = pieces.get(Square.of(file, rank));
+            tempLine.add(PieceDto.of(piece, file, rank));
+        }
+        return tempLine;
     }
 
     public List<List<PieceDto>> getDto() {
         return dto;
     }
 
-    private static List<PieceDto> makeLineByFile(ConsoleBoard consoleBoard, Rank rank) {
-        List<PieceDto> tempLine = new ArrayList<>();
-        for (File file : File.values()) {
-            Piece piece = consoleBoard.get(Square.of(file, rank));
-            tempLine.add(PieceDto.of(piece, file, rank));
-        }
-        return tempLine;
+    public String getRoomTitle() {
+        return roomTitle;
+    }
+
+    public String getWhiteMemberName() {
+        return whiteMemberName;
+    }
+
+    public String getBlackMemberName() {
+        return blackMemberName;
     }
 }

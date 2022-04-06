@@ -1,10 +1,10 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+import chess.ChessService;
 import chess.domain.Board;
-import java.util.ArrayList;
+import chess.model.Initializer;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 class BoardDaoTest {
 
     private final BoardDao dao = new BoardDao(new ConnectionManager());
+    private final ChessService chessService = new ChessService();
 
     @AfterEach
     void setDown() {
@@ -45,5 +46,12 @@ class BoardDaoTest {
         final Board board2 = dao.save(new Board("왕허접만"));
         final List<Board> boards = dao.findAll();
         assertThat(boards.size()).isEqualTo(2);
+    }
+
+    @Test
+    void initBoard() {
+        final Board edenFightingBoard = new Board( "에덴파이팅");
+        Board board = dao.init(edenFightingBoard, Initializer.initialize());
+        assertThat(board.getTitle()).isEqualTo("에덴파이팅");
     }
 }

@@ -37,6 +37,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    public List<Square> getRoute(Square source, Square target) {
+        return null;
+    }
+
+    @Override
     public boolean isNotEmpty() {
         return false;
     }

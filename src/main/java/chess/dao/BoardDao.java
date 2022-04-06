@@ -1,11 +1,15 @@
 package chess.dao;
 
 import chess.domain.Board;
+import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
+import chess.model.square.Square;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BoardDao {
 
@@ -83,6 +87,22 @@ public class BoardDao {
                 );
             }
             return boards;
+        });
+    }
+
+    public Board init(Board board, Map<Square, Piece> startingPieces) {
+        return connectionManager.executeQuery(connection -> {
+            final Board savedBoard = save(board);
+            final SquareDao squareDao = new SquareDao(connectionManager);
+            final PieceDao pieceDao = new PieceDao(connectionManager);
+            final MemberDao memberDao = new MemberDao(connectionManager);
+            squareDao.saveAllSquare(savedBoard.getId());
+            for (Square square : startingPieces.keySet()) {
+                int squareId = squareDao.getSquareIdBySquare(square, savedBoard.getId());
+                pieceDao.save(startingPieces.get(square), squareId);
+            }
+            memberDao.saveAll(board.getMembers(), savedBoard.getId());
+            return savedBoard;
         });
     }
 }
