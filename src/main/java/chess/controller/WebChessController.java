@@ -54,7 +54,7 @@ public class WebChessController {
         get("/result", (req, res) -> {
             chessService.end();
             Map<String, Object> model = new HashMap<>();
-            model.put("now", chessService.status());
+            model.put("status", chessService.status());
             model.put("board", chessService.getCurrentBoard());
             model.put("winner", chessService.findWinner());
             return render(model, "game.html");
@@ -104,7 +104,8 @@ public class WebChessController {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             if (chessService.isPlaying()) {
-                model.put("now", chessService.status());
+                model.put("play", true);
+                model.put("status", chessService.status());
                 model.put("board", chessService.getCurrentBoard());
                 return render(model, "game.html");
             }

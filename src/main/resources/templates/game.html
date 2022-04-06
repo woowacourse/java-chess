@@ -189,14 +189,17 @@
         <button type="submit">Reset</button>
     </form>
     {{/winner}}
+
+    {{#status}}
     <table>
         <th>백팀</th>
         <th>흑팀</th>
         <tr>
-            <td>{{now.WHITE}}</td>
-            <td>{{now.BLACK}}</td>
+            <td>{{status.WHITE}}</td>
+            <td>{{status.BLACK}}</td>
         </tr>
     </table>
+    {{/status}}
 </div>
 </body>
 
