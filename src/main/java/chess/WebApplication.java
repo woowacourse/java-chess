@@ -26,6 +26,7 @@ public class WebApplication {
         move(service);
         status(service);
         save(service);
+        init(service);
         end();
     }
 
@@ -88,6 +89,14 @@ public class WebApplication {
             service.save();
             model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
             return render(model, "game.html");
+        });
+    }
+
+    private static void init(ChessGameService service) {
+        post("/init", (req, res) -> {
+            service.delete();
+            service.init(new Turn(), new DefaultArrangement());
+            return render(Map.of(), "index.html");
         });
     }
 
