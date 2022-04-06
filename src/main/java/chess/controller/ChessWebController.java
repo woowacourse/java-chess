@@ -41,6 +41,7 @@ public class ChessWebController {
 
         get("/start", (req, res) -> {
             chessGame.startGame(strategy);
+            chessGame.checkGameStatus();
             return gson.toJson(GameStatusDto.of(chessGame));
         });
 
@@ -49,6 +50,7 @@ public class ChessWebController {
                 checkReady();
                 MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
                 chessGame.move(new Position(moveDto.getFrom()), new Position(moveDto.getTo()));
+                chessGame.checkGameStatus();
                 return gson.toJson(GameStatusDto.of(chessGame));
             } catch (Exception e) {
                 return gson.toJson(new ErrorDto(e.getMessage()));

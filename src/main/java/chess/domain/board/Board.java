@@ -4,6 +4,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class Board {
     }
 
     public Position findKingPosition(Team team) {
+        OutputView.printBoard(board);
         return board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSameTeam(team) && entry.getValue().isKing())

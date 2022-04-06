@@ -36,13 +36,12 @@ public class ChessGame {
         fromPiece.movable(from, to, toPiece);
         validatePath(from, to, fromPiece.findDirection(from, to));
 
-        tryMove(from, to, fromPiece, toPiece);
+        tryMove(from, to, fromPiece);
     }
 
-    private void tryMove(Position from, Position to, Piece fromPiece, Piece toPiece) {
-        if (isFailMove(from, to, fromPiece)) {
-            doRollBack(from, to, fromPiece, toPiece);
-        }
+    private void tryMove(Position from, Position to, Piece fromPiece) {
+        board.move(to, fromPiece);
+        board.remove(from);
         turn = turn.change();
     }
 
@@ -55,18 +54,6 @@ public class ChessGame {
             }
             current = current.move(direction);
         }
-    }
-
-    private boolean isFailMove(Position from, Position to, Piece fromPiece) {
-        board.move(to, fromPiece);
-        board.remove(from);
-        return isCheck();
-    }
-
-    private void doRollBack(Position from, Position to, Piece fromPiece, Piece toPiece) {
-        board.move(to, toPiece);
-        board.move(from, fromPiece);
-        throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
     }
 
     private void validateNowTurn(Piece piece) {
@@ -105,8 +92,10 @@ public class ChessGame {
         }
         try {
             Position kingPosition = board.findKingPosition(turn);
+            board.findKingPosition(turn.change());
             return cannotMoveKing(board.takePieceByPosition(kingPosition), kingPosition);
         } catch (IllegalArgumentException e) {
+            gameStatus = CHECK_MATE;
             return true;
         }
     }

@@ -43,7 +43,7 @@ function putPiece(eachDiv, board, value) {
 function tryMove(e) {
     if (from === "") {
         from = e
-        document.getElementById(from).style.backgroundColor = 'yellow'
+        document.getElementById(from).style.backgroundColor = 'white'
         return;
     }
 
@@ -72,6 +72,10 @@ async function movePiece(from, to) {
         .then(res => {
             if (res.board == undefined) {
                 throw new Error(res.message)
+            }
+            if (res.gameStatus == "CHECK_MATE") {
+                status = res.gameStatus
+                return endGame();
             } else {
                 status = res.gameStatus
                 drawAfterBoard(res.board)
@@ -122,10 +126,14 @@ async function endGame() {
     } else {
         let score = await fetch("/end")
         score = await score.json()
-        alert(score.message)
+        if (status == "END") {
+            alert("게임을 종료합니다.\n" + score.message);
+        }
+        if (status == "CHECK_MATE") {
+            alert("승부가 결정되었습니다!!.\n" + score.message);
+        }
 
         status = "";
-
         window.location.replace("/");
     }
 }
