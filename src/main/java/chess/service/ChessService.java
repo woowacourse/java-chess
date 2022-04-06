@@ -24,7 +24,7 @@ public class ChessService {
     private BoardDao boardDao = new BoardDao();
 
     public void start() throws SQLException {
-        if(isNotSaved() && chessBoard == null){
+        if(isNotSaved()){
             chessBoard = ChessBoardFactory.initBoard();
             chessBoard.start();
             return;

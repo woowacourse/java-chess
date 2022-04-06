@@ -70,6 +70,7 @@ public class WebChessController {
             if (chessService.isEnd()) {
                 res.redirect("/result");
             }
+            model.put("play",true);
             model.put("board", chessService.getCurrentBoard());
             return render(model, "game.html");
         });

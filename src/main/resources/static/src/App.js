@@ -32,7 +32,6 @@ function move(source, target) {
             }
             location.replace("/play")
         });
-
 }
 
 function reinitialize() {

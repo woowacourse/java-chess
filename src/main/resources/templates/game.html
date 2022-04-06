@@ -9,6 +9,7 @@
 
 <body>
     <script type="text/javascript" src="/src/App.js"></script>
+    {{^play}}
     <div class="button">
         <form id="start" method="post" action="/start">
             <button name="start" type="submit">
@@ -16,7 +17,8 @@
             </button>
         </form>
     </div>
-
+    {{/play}}
+    {{#play}}
     <div class="button">
         <form id="status" method="get" action="/status">
             <button name="status" type="submit">
@@ -40,6 +42,8 @@
             </button>
         </form>
     </div>
+
+    {{/play}}
     <div class="chess_board">
         <div class="block white" id="a8" onclick = selectBlock(this)><img src="/images/{{board.a8}}.png" onerror="this.style.display = 'none'"/></div>
         <div class="block black" id="b8" onclick = selectBlock(this)><img src="/images/{{board.b8}}.png" onerror="this.style.display = 'none'"/></div>
@@ -116,6 +120,10 @@
     <div class="status">
         {{#winner}}
             {{winner}}가 승리하였습니다.
+            재시작을 원하시면 다음 버튼을 눌러주세요.
+            <form id="restart" method="get" action="/end">
+                <button type="submit">Reset</button>
+            </form>
         {{/winner}}
         <table>
             <th>백팀</th>
