@@ -1,3 +1,34 @@
+.black_board {
+    background-color: #8C5829;
+    border-collapse: collapse;
+    width: 80px;
+    height: 80px;
+}
+
+.white_board {
+    background-color: rgb(188, 145, 62);
+    border-collapse: collapse;
+    width: 80px;
+    height: 80px;
+}
+
+.black_board:hover {
+    background-color: #9f9f9f;
+}
+
+.white_board:hover {
+    background-color: #9f9f9f;
+}
+
+.table_board {
+    border-collapse: collapse;
+    display: inline-block;
+}
+
 body {
-    background-image: url('../img/chessBackground.jpeg');
+    background-image: url('../img/wood.svg');
+}
+
+#gameInformation {
+    display: inline-block;
 }

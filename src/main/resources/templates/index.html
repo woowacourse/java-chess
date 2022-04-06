@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="css/chessBoard.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
 <body>
@@ -93,11 +93,13 @@
     </tr>
 </table>
 
-<button onclick="getScore()">점수 조회</button>
-<p id="turn"></p>
-<p id="whiteScore"></p>
-<p id="blackScore"></p>
-<button onclick="reset()">게임 다시 시작하기</button>
+<div class="gameInformation">
+    <button onclick="getScore()" id="score">점수 조회</button>
+    <p id="turn"></p>
+    <p id="whiteScore"></p>
+    <p id="blackScore"></p>
+    <button onclick="reset()">게임 다시 시작하기</button>
+</div>
 </body>
 <script src="js/setBoard.js"></script>
 <script src="js/move.js"></script>

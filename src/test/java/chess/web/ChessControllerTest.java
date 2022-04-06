@@ -1,5 +1,6 @@
 package chess.web;
 
+import chess.dao.BoardDao;
 import chess.dao.RoomDao;
 import org.junit.jupiter.api.Test;
 
@@ -19,5 +20,11 @@ class ChessControllerTest {
         RoomDao roomDao = new RoomDao();
         Map<String, String> room = roomDao.findById(1);
         assertThat(room == null).isTrue();
+    }
+
+    @Test
+    void delete() {
+        BoardDao boardDao = new BoardDao();
+        boardDao.delete();
     }
 }

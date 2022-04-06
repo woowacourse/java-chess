@@ -36,6 +36,7 @@ public class ChessService {
     private GameState getGameState(int roomId) {
         Map<String, String> room = roomDao.findById(roomId);
         if (room == null) {
+            deleteAll(roomId);
             return createGameState(roomId);
         }
         return getGameState(room);
@@ -64,7 +65,6 @@ public class ChessService {
     public GameStateDTO move(MoveDTO moveDTO, int roomId) {
         String source = moveDTO.getSource();
         String destination = moveDTO.getDestination();
-        gameState = gameState.move(source, destination);
 
         updateMove(roomId, source, destination);
 
@@ -75,10 +75,14 @@ public class ChessService {
     private void updateMove(int roomId, String source, String destination) {
         Map<Position, Piece> board = gameState.getBoard();
         Piece sourcePiece = board.get(Position.from(source));
+
+        gameState = gameState.move(source, destination);
+
         boardDao.updatePosition(source, Blank.SYMBOL);
         boardDao.updatePosition(destination, sourcePiece.getSymbol());
+
         if (!gameState.isRunning()) {
-            roomDao.delete(roomId);
+            deleteAll(roomId);
             return;
         }
         roomDao.updateStatus(gameState.getTeam().getValue(), roomId);
@@ -90,6 +94,7 @@ public class ChessService {
     }
 
     public List<PieceDTO> resetBoard(int roomId) {
+        deleteAll(roomId);
         gameState = createGameState(roomId);
         Map<String, String> board = getBoardPieces();
         return board.entrySet()
@@ -106,5 +111,10 @@ public class ChessService {
             board.put(position.getPositionToString(), piece.getSymbol());
         }
         return board;
+    }
+
+    private void deleteAll(int roomId) {
+        boardDao.delete();
+        roomDao.delete(roomId);
     }
 }

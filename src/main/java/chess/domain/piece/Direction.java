@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 
@@ -45,6 +46,13 @@ public enum Direction {
     public static Direction find(int rowDifference, int colDifference, List<Direction> directions) {
         return directions.stream()
                 .filter(direction -> direction.predicate.test(rowDifference, colDifference))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
+    }
+
+    public static Direction findDirection(int rowDifference, int colDifference, List<Direction> directions) {
+        return directions.stream()
+                .filter(direction -> direction.xDegree == colDifference && direction.yDegree == rowDifference)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
     }

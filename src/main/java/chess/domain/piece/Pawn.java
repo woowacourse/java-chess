@@ -36,7 +36,12 @@ public class Pawn extends Piece {
     protected Direction findDirection(Position source, Position destination) {
         int colDifference = destination.getColDifference(source.getCol());
         int rowDifference = destination.getRowDifference(source.getRow());
+        validateDirection(source, colDifference, rowDifference);
         return Direction.find(rowDifference, colDifference, getDirections(source));
+    }
+
+    private void validateDirection(Position source, int colDifference, int rowDifference) {
+        Direction.findDirection(rowDifference, colDifference, getDirections(source));
     }
 
     @Override
@@ -44,14 +49,14 @@ public class Pawn extends Piece {
         return null;
     }
 
-    private List<Direction> getDirections(Position source) {
+    protected List<Direction> getDirections(Position source) {
         if (isFirstTurn(source) && isBlackTeam()) {
             return Arrays.asList(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.SOUTH_TWO_STEP);
         }
         if (isBlackTeam()) {
             return Arrays.asList(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST);
         }
-        if (isFirstTurn(source)) {
+        if (isFirstTurn(source) && !isBlackTeam()) {
             return Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST, Direction.NORTH_TWO_STEP);
         }
         return Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST);
@@ -65,11 +70,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<Position> getPath(Position destination, Direction direction, Position position) {
+    protected List<Position> getPath(Position destination, Direction direction, Position source) {
         List<Position> positions = new ArrayList<>();
-        while (!destination.matchPosition(position)) {
-            position = position.plusDirection(direction);
-            positions.add(position);
+        while (!source.matchPosition(destination)) {
+            source = source.plusDirection(direction);
+            positions.add(source);
         }
         return positions;
     }
