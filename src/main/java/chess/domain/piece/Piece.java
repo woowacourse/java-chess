@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Objects;
+
 import chess.domain.piece.generator.InitPieceGenerator;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
@@ -62,5 +64,21 @@ public abstract class Piece {
 
     public boolean isSameName(String type) {
         return this.type.equals(type);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Piece))
+            return false;
+        Piece piece = (Piece)o;
+        return piece.getScore() == getScore() && getColor() == piece.getColor()
+            && getType().equals(piece.getType());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getScore(), getType());
     }
 }
