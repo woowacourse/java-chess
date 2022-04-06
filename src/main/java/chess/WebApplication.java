@@ -1,20 +1,21 @@
 package chess;
 
-import static spark.Spark.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import chess.domain.board.ChessBoard;
+import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.factory.RegularBoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
-import chess.dto.response.InitBoardResponse;
+import chess.dto.response.BoardResponse;
+import chess.turndecider.AlternatingGameFlow;
+import chess.turndecider.GameFlow;
 import com.google.gson.Gson;
-import lecture.pobi.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.*;
 
 public class WebApplication {
 
@@ -23,28 +24,29 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
 
+        BoardFactory boardFactory = RegularBoardFactory.getInstance();
+        GameFlow gameFlow = new AlternatingGameFlow();
+        ChessBoard chessBoard = new ChessBoard(boardFactory.create(), gameFlow);
+
         get("/", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
         Map<Position, Piece> initBoard = RegularBoardFactory.getInstance().create();
-        InitBoardResponse initBoardResponse = InitBoardResponse.from(initBoard);
+        BoardResponse initBoardResponse = BoardResponse.from(initBoard);
 
-        get("/board", "application/json", (req, res) -> {
-            return initBoardResponse;
-        }, gson::toJson);
+        get("/board", "application/json", (req, res) -> initBoardResponse, gson::toJson);
 
-/*
-        Map<String, String> routes = new HashMap<>();
         post("/move", (req, res) -> {
-
             Position from = Position.of(req.queryParams("from"));
             Position to = Position.of(req.queryParams("to"));
+            chessBoard.movePiece(from, to);
 
-            return null;
-        });
-*/
+            Map<Position, Piece> movedBoard = chessBoard.getBoard();
+            return BoardResponse.from(movedBoard);
+
+        }, gson::toJson);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

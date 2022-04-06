@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InitBoardResponse {
+public class BoardResponse {
 
     private List<Map<String, String>> board;
 
-    public InitBoardResponse(List<Map<String, String>> board) {
+    public BoardResponse(List<Map<String, String>> board) {
         this.board = board;
     }
 
-    public static InitBoardResponse from(Map<Position, Piece> board) {
+    public static BoardResponse from(Map<Position, Piece> board) {
 
         final List<Map<String, String>> boardResponse = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class InitBoardResponse {
             boardResponse.add(keyValue);
         }
 
-        return new InitBoardResponse(boardResponse);
+        return new BoardResponse(boardResponse);
     }
 
     private static Map<String, String> getPiecePositionResponse(Position position, Piece piece) {

@@ -29,6 +29,10 @@
         initChessBoard();
         // placeChessPieces();
         initChessPieces();
+        // movePiece();
+        $("button#move").click(function(){
+            movePiece();
+        });
     });
 
     function initChessPieces() {
@@ -90,43 +94,39 @@
         $('#chess-board td#' + position).append(`<img src="images/${pieceImage}.png" />`);
     }
 
-    function placeChessPieces() {
-        $('#chess-board td#A1').append('<img src="images/BlackRook.png" />');
-        $('#chess-board td#B1').append('<img src="images/BlackKnight.png" />');
-        $('#chess-board td#C1').append('<img src="images/BlackBishop.png" />');
-        $('#chess-board td#D1').append('<img src="images/BlackKing.png" />');
-        $('#chess-board td#E1').append('<img src="images/BlackQueen.png" />');
-        $('#chess-board td#F1').append('<img src="images/BlackBishop.png" />');
-        $('#chess-board td#G1').append('<img src="images/BlackKnight.png" />');
-        $('#chess-board td#H1').append('<img src="images/BlackRook.png" />');
+    function movePiece() {
+        $.ajax({ 
+            url: "/move",
+            data: { 
+                from: $('input[name="from"]').val(),
+                to: $('input[name="to"]').val()
+            },
+            method: "POST",
+            dataType: "json"
+        })
+        .done(function(json) {
+            
+            debugger;
+            $('#chess-board').children().remove();
+            
+            initChessBoard();
 
-        $('#chess-board td#A2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#B2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#C2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#D2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#E2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#F2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#G2').append('<img src="images/BlackPawn.png" />');
-        $('#chess-board td#H2').append('<img src="images/BlackPawn.png" />');
+            for(let element of json.board) {
+                let team = element['team'];
+                let piece = element['piece'];
+                let position = element['position'].toUpperCase();
+                let pieceImage = team + piece; // blackPawn
 
-        $('#chess-board td#A8').append('<img src="images/WhiteRook.png" />');
-        $('#chess-board td#B8').append('<img src="images/WhiteKnight.png" />');
-        $('#chess-board td#C8').append('<img src="images/WhiteBishop.png" />');
-        $('#chess-board td#D8').append('<img src="images/WhiteKing.png" />');
-        $('#chess-board td#E8').append('<img src="images/WhiteQueen.png" />');
-        $('#chess-board td#F8').append('<img src="images/WhiteBishop.png" />');
-        $('#chess-board td#G8').append('<img src="images/WhiteKnight.png" />');
-        $('#chess-board td#H8').append('<img src="images/WhiteRook.png" />');
-
-        $('#chess-board td#A7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#B7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#C7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#D7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#E7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#F7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#G7').append('<img src="images/WhitePawn.png" />');
-        $('#chess-board td#H7').append('<img src="images/WhitePawn.png" />');
+                if(team !== 'empty') {
+                    placeChessPiece(position, pieceImage);
+                }
+            }
+        })
+        .fail(function(xhr, status, errorThrown) {
+            debugger;
+        })
     }
+
 </script>
 
 <body>
@@ -134,11 +134,9 @@
   </table>
 
   현재 팀: 
-  <form action="/move" method="post">
-      움직일 위치 : <input type="text" name="from" /> <input type="text" name="to" />
-      <br />
-      <input type="submit" value="움직이기" />
-</form>
+  움직일 위치 : <input type="text" name="from" /> <input type="text" name="to" />
+  <br />
+  <button id="move">움직이기</button>
   
 </body>
 </html>
