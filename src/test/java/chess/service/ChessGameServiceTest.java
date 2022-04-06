@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
@@ -168,6 +169,11 @@ public class ChessGameServiceTest {
         @Override
         public int getId() {
             return 0;
+        }
+
+        @Override
+        public List<String> findById(int id) {
+            return List.of();
         }
     }
 }

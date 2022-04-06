@@ -3,6 +3,7 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,5 +48,18 @@ public class GameDaoImplTest {
     void deleteById() {
         gameDao.save();
         gameDao.deleteById(gameDao.getId());
+    }
+
+    @Test
+    @DisplayName("DB에 id가 존재하는지 검증한다.")
+    void findById() {
+        //when
+        int id = gameDao.getId();
+        gameDao.save();
+
+        List<String> actual = gameDao.findById(id);
+        List<String> expected = List.of("white", "black");
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 }

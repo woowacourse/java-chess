@@ -8,6 +8,7 @@ import chess.dao.GameDao;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
+import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 
@@ -41,5 +42,9 @@ public class ChessGameService {
 
     public void init(Turn turn, PieceArrangement pieceArrangement) {
         this.chessGame = new ChessGame(turn, pieceArrangement);
+    }
+
+    public PieceColor getTurnColor() {
+        return chessGame.getTurnColor();
     }
 }
