@@ -46,11 +46,10 @@ class ChessServiceTest {
     }
 
     @Test
-    @DisplayName("piece들이 없는 board를 만든 후, initBoard호출하면 piece들까지 초기화된다.")
+    @DisplayName("64개의 말들이 초기화된다.")
     void initBoard() {
-        Long saveId = boardDao.save();
-
-        Board initBoard = chessService.initBoard(saveId);
+        Long boardId = boardDao.save();
+        Board initBoard = chessService.initBoard(boardId);
         Pieces pieces = initBoard.getPieces();
         assertThat(pieces.getPieces().size()).isEqualTo(64);
     }
