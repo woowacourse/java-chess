@@ -92,4 +92,8 @@ public class RoomDao {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.executeUpdate();
     }
+
+    public void deleteById(int roomId) {
+
+    }
 }

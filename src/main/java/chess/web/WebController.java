@@ -41,6 +41,13 @@ public class WebController {
             return null;
         });
 
+        post("/:id/delete", (req, res) -> {
+            int roomId = Integer.parseInt(req.params("id"));
+            chessService.deleteRoom(roomId);
+            res.redirect("/");
+            return null;
+        });
+
         get("/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int roomId = Integer.parseInt(req.params("id"));

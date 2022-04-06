@@ -12,5 +12,5 @@ create table piece (
     imagePath   varchar (30) not null,
     roomId      int not null,
     primary key (id),
-    foreign key (roomId) references room (id) on delete restrict
+    foreign key (roomId) references room (id) on delete cascade
 );

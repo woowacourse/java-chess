@@ -7,3 +7,12 @@
     border-radius: 5px;
     background: rgb(204, 204, 204);
 }
+
+.room-data {
+    display: block;
+    font-size: 0;
+}
+
+.room-form {
+    display: inline-block;
+}

@@ -8,9 +8,13 @@
 <body>
     <h1>현재 열린 방</h1>
     {{#rooms}}
-    <div>
-        <form action="/{{number}}">
+    <div class="room-data">
+        <form action="/{{number}}" class="room-form">
             <input type="submit" value="{{name}}" class="room">
+        </form>
+        <form action="/{{number}}/delete" method="post" class="room-form"
+        >
+            <input type="submit" value="방 삭제" class="room">
         </form>
     </div>
     {{/rooms}}

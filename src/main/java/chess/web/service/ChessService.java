@@ -78,4 +78,8 @@ public class ChessService {
     public List<RoomDto> findAllRoom() throws SQLException {
         return roomDao.findAll();
     }
+
+    public void deleteRoom(int roomId) throws SQLException {
+        roomDao.remove(roomId);
+    }
 }
