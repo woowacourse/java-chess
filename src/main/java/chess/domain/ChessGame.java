@@ -104,6 +104,7 @@ public class ChessGame {
         List<Position> kingPaths = king.findMovablePosition(kingPosition);
 
         for (Position to : kingPaths) {
+            System.out.println(to);
             if (!hasCheckKing(to)) {
                 return false;
             }

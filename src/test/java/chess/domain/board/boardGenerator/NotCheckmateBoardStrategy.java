@@ -18,6 +18,7 @@ public class NotCheckmateBoardStrategy implements BoardGenerationStrategy {
 
     @Override
     public Map<Position, Piece> create() {
+        board.put(new Position(Column.A, Row.ONE), new King(Team.BLACK));
         board.put(new Position(Column.D, Row.EIGHT), new King(Team.WHITE));
         board.put(new Position(Column.D, Row.SIX), new Rook(Team.BLACK));
         board.put(new Position(Column.E, Row.SIX), new Queen(Team.BLACK));

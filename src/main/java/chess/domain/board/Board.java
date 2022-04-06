@@ -44,7 +44,6 @@ public class Board {
     }
 
     public Position findKingPosition(Team team) {
-        OutputView.printBoard(board);
         return board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSameTeam(team) && entry.getValue().isKing())
