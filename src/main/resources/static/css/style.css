@@ -10,6 +10,10 @@ body {
   font-style: normal;
 }
 
+.hidden {
+  display: none !important;
+}
+
 #contents {
   background: white;
   width: 100vmin;

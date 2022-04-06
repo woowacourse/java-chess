@@ -20,7 +20,10 @@ public class FakeGameDao implements GameDao {
 
     @Override
     public Optional<GameState> load(long id) {
-        return Optional.of(games.get(id));
+        if (games.containsKey(id)) {
+            return Optional.of(games.get(id));
+        }
+        return Optional.empty();
     }
 
     @Override

@@ -36,7 +36,11 @@ public class FakePieceDao implements PieceDao {
 
     @Override
     public Optional<Piece> find(long gameId, Position position) {
-        return Optional.of(pieces.getOrDefault(gameId, new HashMap<>()).get(position));
+        Map<Position, Piece> piecesInGame = pieces.getOrDefault(gameId, new HashMap<>());
+        if (piecesInGame.containsKey(position)) {
+            return Optional.of(piecesInGame.get(position));
+        }
+        return Optional.empty();
     }
 
     @Override

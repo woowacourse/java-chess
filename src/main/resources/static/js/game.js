@@ -3,6 +3,7 @@ const rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
 const section = document.getElementById("chess-section");
 const startButton = document.getElementById("start-button");
+const restartButton = document.getElementById("restart-button");
 const turnInfo = document.getElementById("turn-info");
 const statusButton = document.getElementById("status-button");
 const score = document.getElementById("score");
@@ -29,6 +30,7 @@ window.onload = async function () {
     section.appendChild(row);
   }
   startButton.addEventListener("click", start);
+  restartButton.addEventListener("click", restart);
   statusButton.addEventListener("click", getStatus);
   endButton.addEventListener("click", end);
 
@@ -38,16 +40,28 @@ window.onload = async function () {
     alert(data.message);
     return;
   }
-  createOrLoad(data);
+  load(data);
 }
 
-function createOrLoad(data) {
+function load(data) {
   if (data.gameState === "READY") {
     turnInfo.innerText = "게임을 시작해주세요.";
     return;
   }
   rendBoard(data.board.pieces);
   printTurn(data);
+  startButton.classList.add("hidden");
+  restartButton.classList.remove("hidden");
+}
+
+function rendBoard(pieces) {
+  clearBoard();
+  pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType, piece.color));
+}
+
+function clearBoard() {
+  const cells = document.querySelectorAll("div.cell");
+  cells.forEach(cell => removePiece(cell));
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -91,16 +105,21 @@ async function start() {
   }
   rendBoard(data.board.pieces);
   printTurn(data);
+  startButton.classList.add("hidden");
+  restartButton.classList.remove("hidden");
 }
 
-function rendBoard(pieces) {
+async function restart() {
+  const res = await fetch("/api/restart");
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.message);
+    return;
+  }
   clearBoard();
-  pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType, piece.color));
-}
-
-function clearBoard() {
-  const cells = document.querySelectorAll("div.cell");
-  cells.forEach(cell => removePiece(cell));
+  turnInfo.innerText = "게임을 시작해주세요.";
+  startButton.classList.remove("hidden");
+  restartButton.classList.add("hidden");
 }
 
 function removePiece(cell) {

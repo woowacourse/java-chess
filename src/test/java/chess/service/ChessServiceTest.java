@@ -28,4 +28,14 @@ class ChessServiceTest {
 
         assertThat(chessGameResponse.getGameState()).isEqualTo(GameState.READY);
     }
+
+    @DisplayName("재시작 요청이 들어오면 게임을 새로 생성한다.")
+    @Test
+    void restart_Game() {
+        chessService.createOrLoadGame();
+
+        ChessGameResponse chessGameResponse = chessService.restartGame();
+
+        assertThat(chessGameResponse.getGameState()).isEqualTo(GameState.READY);
+    }
 }

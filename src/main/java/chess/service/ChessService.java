@@ -54,11 +54,17 @@ public class ChessService {
         return new ChessGameResponse(chessGame);
     }
 
-    public ChessGameResponse createGame() {
+    private ChessGameResponse createGame() {
         this.chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
         gameDao.save(1);
         saveBoard(1, chessGame.getBoard());
         return new ChessGameResponse(chessGame);
+    }
+
+    public ChessGameResponse restartGame() {
+        pieceDao.deleteAll(1);
+        gameDao.delete(1);
+        return createGame();
     }
 
     public void saveBoard(long gameId, Map<Position, Piece> board) {

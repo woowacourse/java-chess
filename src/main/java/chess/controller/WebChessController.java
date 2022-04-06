@@ -39,6 +39,8 @@ public class WebChessController {
 
         get("/api/start", (req, res) -> chessService.startGame(), jsonTransformer);
 
+        get("/api/restart", (req, res) -> chessService.restartGame(), jsonTransformer);
+
         post("/api/move", (req, res) -> {
             MoveRequest moveRequest = new Gson().fromJson(req.body(), MoveRequest.class);
             return chessService.move(moveRequest);
