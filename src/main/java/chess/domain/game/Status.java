@@ -1,11 +1,11 @@
 package chess.domain.game;
 
-import console.controller.Request;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.dto.Response;
 import chess.dto.ScoreResponse;
+import console.controller.Request;
 
 import java.util.List;
 
