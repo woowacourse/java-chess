@@ -1,4 +1,4 @@
-package chess.db.dao;
+package chess.dao;
 
 import static chess.util.DatabaseUtil.getConnection;
 
@@ -17,6 +17,14 @@ public class CommandBuilder {
     public CommandBuilder(String sql) {
         try {
             this.statement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public CommandBuilder(String sql, int retrieveOption) {
+        try {
+            this.statement = connection.prepareStatement(sql, retrieveOption);
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
@@ -41,9 +49,18 @@ public class CommandBuilder {
         }
     }
 
-    public void execute() {
-        try(connection) {
+    public void executeAndClose() {
+        try (connection) {
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public ResultReader executeAndGetGeneratedKeys() {
+        try {
+            statement.executeUpdate();
+            return new ResultReader(statement.getGeneratedKeys(), connection);
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }

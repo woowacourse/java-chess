@@ -1,4 +1,4 @@
-package chess.db.dao;
+package chess.dao;
 
 import static chess.util.DatabaseUtil.getConnection;
 
@@ -40,9 +40,10 @@ public class QueryBuilder {
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
-    public QueryReader execute() {
+
+    public ResultReader execute() {
         try {
-            return new QueryReader(statement.executeQuery(), connection);
+            return new ResultReader(statement.executeQuery(), connection);
         } catch (SQLException e) {
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }

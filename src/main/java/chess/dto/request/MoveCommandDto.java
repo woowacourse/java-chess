@@ -1,9 +1,10 @@
 package chess.dto.request;
 
 import chess.domain.board.position.Position;
-import java.util.List;
 
 public class MoveCommandDto {
+
+    private static final String DESCRIPTION_DELIMITER = " ";
 
     private final Position source;
     private final Position target;
@@ -11,6 +12,12 @@ public class MoveCommandDto {
     public MoveCommandDto(String source, String target) {
         this.source = Position.of(source);
         this.target = Position.of(target);
+    }
+
+    public MoveCommandDto(String description) {
+        String[] positions = description.split(DESCRIPTION_DELIMITER);
+        this.source = Position.of(positions[0]);
+        this.target = Position.of(positions[1]);
     }
 
     public Position getSource() {
@@ -21,7 +28,10 @@ public class MoveCommandDto {
         return target;
     }
 
-    public List<Position> getPositions() {
-        return List.of(source, target);
+    public String toDescription() {
+        String sourceKey = source.toKey();
+        String targetKey = target.toKey();
+
+        return sourceKey + DESCRIPTION_DELIMITER + targetKey;
     }
 }

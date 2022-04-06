@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.db.entity.FullGameEntity;
 import chess.dto.request.MoveCommandDto;
 import chess.dto.response.board.ConsoleBoardViewDto;
 import chess.dto.response.board.WebBoardViewDto;
@@ -16,8 +15,6 @@ public interface Game {
     GameResult getResult();
 
     GameState getState();
-
-    FullGameEntity toEntityOf(int id);
 
     ConsoleBoardViewDto toConsoleView();
 
