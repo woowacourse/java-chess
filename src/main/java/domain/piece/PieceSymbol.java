@@ -26,4 +26,7 @@ public enum PieceSymbol {
         }
         return symbol.toLowerCase();
     }
+    public String symbol(){
+        return symbol;
+    }
 }

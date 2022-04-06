@@ -1,5 +1,7 @@
 package controller;
 
+import domain.PieceGenerator;
+import domain.Player;
 import domain.Status;
 import domain.chessgame.ChessBoard;
 import domain.chessgame.ChessGame;
@@ -10,6 +12,7 @@ import domain.dto.PieceDto;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import utils.ChessBoardGenerator;
 
@@ -18,6 +21,7 @@ public class WebChessController {
     private ChessGame chessGame;
     private ChessGameDao chessGameDao;
     private PieceDao pieceDao;
+
     public WebChessController() {
         chessGameDao = new ChessGameDao();
         pieceDao = new PieceDao();
@@ -34,7 +38,7 @@ public class WebChessController {
         for (Position position : board.keySet()) {
             model.put(position.getPosition(), board.get(position).symbolByPlayer());
         }
-        model.put("player",chessGame.getCurrentPlayer());
+        model.put("player", chessGame.getCurrentPlayer());
         return model;
     }
 
@@ -56,19 +60,43 @@ public class WebChessController {
         return chessGame.isFinished();
     }
 
-    public void save(String gameName){
+    public void save(String gameName) {
         String player = chessGame.getCurrentPlayer().name();
         ChessGameDto chessGameDto = new ChessGameDto(gameName, player);
-        System.out.println(chessGameDto.getName()+", "+chessGameDto.getPlayer());
         chessGameDao.save(chessGameDto);
         for (Position position : chessGame.getChessBoard().getBoard().keySet()) {
             String positionSymbol = position.getPosition();
             Piece piece = chessGame.getChessBoard().findPiece(position);
-            String type = piece.symbolByPlayer();
+            String type = piece.symbol();
             String piecePlayer = piece.getPlayer().name();
             PieceDto pieceDto = new PieceDto(gameName, positionSymbol, type, piecePlayer);
             pieceDao.save(pieceDto);
         }
+    }
 
+    public void load(String gameName) {
+//        System.out.println("Load 명령어 진입");
+//        ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
+        List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
+        System.out.println("가지고온 PieceList 사이즈 " +pieceDtoList.size());
+        Map<Position, Piece> board = new HashMap<>();
+        for (PieceDto pieceDto : pieceDtoList) {
+            String[] position = pieceDto.getPosition().split("");
+            String piecePlayer = pieceDto.getPlayer();
+            String type = pieceDto.getType();
+            Position piecePosition  = Position.of(position[0], position[1]);
+            Player player = Player.valueOf(piecePlayer);
+            System.out.println("Player = " + player);
+            System.out.println("type = " + type);
+            Piece piece = PieceGenerator.of(type).generate(player);
+            System.out.println(piecePosition+","+piece);
+            board.put(piecePosition, piece);
+        }
+        ChessBoard chessBoard = new ChessBoard(board);
+        changeBoard(chessBoard);
+    }
+
+    public void changeBoard(ChessBoard chessBoard){
+        chessGame = new ChessGame(chessBoard);
     }
 }

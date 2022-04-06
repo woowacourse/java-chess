@@ -56,10 +56,17 @@ public class WebApplication {
             res.redirect("/play");
             return null;
         });
+
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            System.out.println(req.queryParams("gameName"));
             webChessController.save(req.queryParams("gameName"));
+            res.redirect("/play");
+            return null;
+        });
+
+        post("/load", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            webChessController.load(req.queryParams("gameName"));
             res.redirect("/play");
             return null;
         });

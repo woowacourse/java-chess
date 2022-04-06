@@ -27,7 +27,7 @@ public class PieceDaoTest {
     @Test
     void findByGameName(){
         PieceDao pieceDao = new PieceDao();
-        List<PieceDto> pieces = pieceDao.findByGameName("first Game");
-        assertThat(pieces.size()).isEqualTo(1);
+        List<PieceDto> pieces = pieceDao.findByGameName("mygame");
+        assertThat(pieces.size()).isEqualTo(64);
     }
 }
