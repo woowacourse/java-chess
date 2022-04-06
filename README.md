@@ -132,6 +132,8 @@ end
 #### API 명세
 - [x] GET /
   - 체스 게임 home
+- [x] GET /chess
+  - 체스 게임 페이지
 - [x] GET /start
   - 체스 게임 시작
 - [x] POST /move
@@ -140,7 +142,8 @@ end
   - 해당 게임 종료
 - [x] GET /status
   - 점수 확인
-  
+- [x] GET /save
+  - 게임 저장
 #### UI 기능
 - [x] 체스 보드의 칸을 클릭해 source, target position 선택 가능
 - [x] status 버튼을 클릭하면 점수를 볼 수 있음
