@@ -33,7 +33,7 @@ public enum File {
 
     public static File of(String name) {
         return Arrays.stream(File.values())
-            .filter(file -> file.name.equals(name))
+            .filter(file -> file.name().equals(name.toUpperCase()))
             .findFirst()
             .get();
     }
@@ -44,5 +44,9 @@ public enum File {
         }
 
         return File.of(value + next);
+    }
+
+    public String getName() {
+        return name;
     }
 }

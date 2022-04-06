@@ -20,7 +20,19 @@ public class ChessBoard {
     public static final int DUPLICATION_COUNT_STANDARD = 2;
     public static final double DUPLICATED_PAWN_SCORE = 0.5;
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    private Map<Position, Piece> board;
+
+    public ChessBoard() {
+        this.board = new HashMap<>();
+    }
+
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
+    public static ChessBoard of(Map<Position, Piece> board) {
+        return new ChessBoard(board);
+    }
 
     public void move(Position source, Position target) {
         validateExist(source);

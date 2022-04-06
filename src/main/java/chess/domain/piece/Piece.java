@@ -60,4 +60,9 @@ public abstract class Piece {
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return name + "_" + color;
+    }
 }
