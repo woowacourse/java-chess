@@ -19,4 +19,6 @@ public interface State {
     Board getBoard();
 
 	boolean isFinished();
+
+    String getState();
 }

@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<h1 id="title"> Chess Game</h1>
+<h1 id="title">{{id}} Chess Game</h1>
 
 <div class="right">
     <form action="/start" method="get">
@@ -16,6 +16,7 @@
 
     <form action="/end" method="get">
         <button>종료</button>
+        <input type="hidden" name="id" value="{{id}}">
     </form>
 
     <br>
@@ -31,6 +32,7 @@
             출발지<input type="text" name="from">
             <br>
             목적지<input type="text" name="to">
+            <input type="hidden" name="id" value="{{id}}">
         </div>
         <input type="submit" value="이동">
     </form>

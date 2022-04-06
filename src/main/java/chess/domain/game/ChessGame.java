@@ -61,4 +61,8 @@ public class ChessGame {
 	public Map<Coordinate, Piece> getValue() {
 		return state.getValue();
 	}
+
+    public State getState() {
+        return state;
+    }
 }

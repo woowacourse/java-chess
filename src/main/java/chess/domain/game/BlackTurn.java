@@ -54,4 +54,9 @@ public class BlackTurn implements State {
 	public boolean isFinished() {
 		return false;
 	}
+
+    @Override
+    public String getState() {
+        return "BlackTurn";
+    }
 }

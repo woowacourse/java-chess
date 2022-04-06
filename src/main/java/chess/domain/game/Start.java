@@ -43,4 +43,9 @@ public class Start implements State {
 	public boolean isFinished() {
 		return false;
 	}
+
+    @Override
+    public String getState() {
+        return "Start";
+    }
 }

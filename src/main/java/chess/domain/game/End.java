@@ -43,4 +43,9 @@ public class End implements State {
 	public boolean isFinished() {
 		return true;
 	}
+
+    @Override
+    public String getState() {
+        return "End";
+    }
 }
