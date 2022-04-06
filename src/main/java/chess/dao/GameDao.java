@@ -47,11 +47,7 @@ public class GameDao {
 
         try (   Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(changeTurnSql)) {
-            for(int i = 0; i< 30; i++) {
-                System.out.println("#####################");
-            }
             TurnDto currentTurn = getTurn();
-            System.out.println(currentTurn.getTurn());
             statement.setString(1, PieceColor.getOpposite(currentTurn.getTurn()));
             statement.setString(2, "1");
             int resultSet = statement.executeUpdate();
