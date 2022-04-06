@@ -46,7 +46,7 @@ public class ChessGameDto {
         return turn;
     }
 
-    public static String convertState(State state) {
+    private static String convertState(State state) {
         if (state.isPlaying()) {
             return "Play";
         }

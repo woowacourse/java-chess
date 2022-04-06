@@ -5,14 +5,13 @@ import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
 import chess.dao.ChessboardDao;
 import chess.dto.ChessGameDto;
-import chess.dto.PieceDto;
 import chess.dto.ScoreDto;
 import chess.piece.Piece;
 import chess.utils.PieceGenerator;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessGameService {
     private final ChessboardDao dao = new ChessboardDao();
@@ -20,8 +19,7 @@ public class ChessGameService {
 
     public void init() {
         if (dao.isDataExist()) {
-            ChessGameDto dto = dao.load();
-            setChessGameByDto(dto);
+            setChessGameByDto(dao.load());
             return;
         }
         chessGame = new ChessGame();
@@ -61,11 +59,14 @@ public class ChessGameService {
     }
 
     private void setChessGameByDto(ChessGameDto dto) {
-        Map<Position, Piece> boards = new LinkedHashMap<>();
-        for (PieceDto pieceDto : dto.getPieces()) {
-            boards.put(new Position(pieceDto.getX(), pieceDto.getY()),
-                    PieceGenerator.generate(pieceDto.getType(), pieceDto.getColor()));
-        }
+        Map<Position, Piece> boards = dto.getPieces()
+                .stream()
+                .collect(Collectors.toMap(
+                                pieceDto -> new Position(pieceDto.getX(), pieceDto.getY()),
+                                pieceDto -> PieceGenerator.generate(pieceDto.getType(), pieceDto.getColor())
+                        )
+                );
+
         chessGame = new ChessGame(dto.getState(), dto.getTurn(), boards);
     }
 
