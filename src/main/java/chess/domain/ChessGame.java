@@ -49,4 +49,8 @@ public class ChessGame {
     public void load(Map<Position, Piece> board, Color turn) {
         this.state = this.state.load(board, turn);
     }
+
+    public Color getTurn() {
+        return state.getTurn();
+    }
 }

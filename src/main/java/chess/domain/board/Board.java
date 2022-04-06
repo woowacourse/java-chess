@@ -20,16 +20,16 @@ public final class Board {
 
     private final Map<Position, Piece> piecesByPosition;
 
-    private Color currentTurnColor;
+    private Color turn;
 
     public Board() {
         this.piecesByPosition = BoardInitializer.createBoard();
-        this.currentTurnColor = Color.WHITE;
+        this.turn = Color.WHITE;
     }
 
     public Board(Map<Position,Piece> pieces, Color turn) {
         this.piecesByPosition = pieces;
-        this.currentTurnColor = turn;
+        this.turn = turn;
     }
 
     public void move(Position beforePosition, Position afterPosition) {
@@ -50,7 +50,7 @@ public final class Board {
     }
 
     private void flipTurnToOpponent() {
-        currentTurnColor = currentTurnColor.opponentColor();
+        turn = turn.opponentColor();
     }
 
     private void validateMovable(Position beforePosition, Position afterPosition, Piece piece) {
@@ -70,7 +70,7 @@ public final class Board {
     }
 
     private boolean isInvalidTurn(final Piece piece) {
-        return !piece.isSameColor(currentTurnColor);
+        return !piece.isSameColor(turn);
     }
 
     private boolean existObstacle(final Position beforePosition, final Position afterPosition, final Piece piece) {
@@ -120,5 +120,9 @@ public final class Board {
     public boolean hasWhiteKingCaptured() {
         return collectKing().stream()
                 .allMatch(Piece::isBlack);
+    }
+
+    public Color getTurn() {
+        return turn;
     }
 }

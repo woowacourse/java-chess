@@ -1,4 +1,4 @@
-package service;
+package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,13 +1,12 @@
-package service;
+package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.Color;
+import chess.domain.Winner;
 import chess.domain.board.Position;
 import chess.domain.dao.BoardDao;
 import chess.domain.dao.PieceDao;
-import chess.domain.piece.Piece;
 import chess.dto.ChessBoardDto;
-import java.util.Map;
 
 public class ChessGameService {
 
@@ -29,12 +28,40 @@ public class ChessGameService {
         chessGame.start();
     }
 
-    public void save(Map<Position, Piece> pieces, Color turn) {
+    public void save(Color turn) {
         final int boardId = boardDao.save(turn);
-        pieceDao.save(pieces, boardId);
+        pieceDao.save(chessGame.getBoard().getPiecesByPosition(), boardId);
     }
 
     public ChessBoardDto getBoard() {
         return ChessBoardDto.from(chessGame.getBoard().getPiecesByPosition());
+    }
+
+    public void move(Position source, Position target) {
+        chessGame.move(source, target);
+    }
+
+    public boolean isRunning() {
+        return chessGame.isRunning();
+    }
+
+    public double statusOfWhite() {
+        return chessGame.statusOfWhite();
+    }
+
+    public double statusOfBlack() {
+        return chessGame.statusOfBlack();
+    }
+
+    public void end() {
+        chessGame.end();
+    }
+
+    public Winner findWinner() {
+        return chessGame.findWinner();
+    }
+
+    public Color getTurn() {
+        return chessGame.getTurn();
     }
 }

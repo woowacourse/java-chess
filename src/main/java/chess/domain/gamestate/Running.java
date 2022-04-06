@@ -65,4 +65,9 @@ public class Running implements State {
     public Board getBoard() {
         return this.board;
     }
+
+    @Override
+    public Color getTurn() {
+        return board.getTurn();
+    }
 }

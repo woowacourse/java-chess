@@ -26,4 +26,6 @@ public interface State {
     Winner findWinner();
 
     State load(Map<Position, Piece> board, Color turn);
+
+    Color getTurn();
 }
