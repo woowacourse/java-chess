@@ -39,6 +39,11 @@
 ## 🚀 5단계 - 웹 UI 적용
 
 - [x] DB를 적용한다.
+  - [x] `/start` - 게임을 시작하기 위해서 `chessGame`과 `piece`의 초기값을 저장한다.
+  - [x] `/move` - 이동한 값을 DB에 update한다.
+  - [x] `/turn` - 현재 게임의 turn에 대한 값을 가져온다.
+  - [x] `/status` - 현재 게임의 점수값을 가져온다.
+  - [x] `/end` - 게임이 끝나면 `chessGame`과 `piece`의 값을 삭제한다.
 
 
 <br><br>
