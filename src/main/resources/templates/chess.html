@@ -20,12 +20,20 @@
             {{error}}
         </div>
 
+        <div>
+            BLACK SCORE {{blackScore}}
+        </div>
+
         <div class="chess-ui">
             {{#pieces}}
             <div class="box" id="{{position}}" onclick="fill(this.id)">
                 <img src="/images/{{notation}}-{{color}}.png"/>
             </div>
             {{/pieces}}
+        </div>
+
+        <div>
+            WHITE SCORE {{whiteScore}}
         </div>
 
         <form id="move-form" action="/move" method="get" enctype="text/plain">

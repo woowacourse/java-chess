@@ -1,8 +1,9 @@
 package chess.web.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.Result;
 import chess.dao.ChessService;
+import chess.domain.ChessGame;
+import chess.domain.Color;
+import chess.domain.Result;
 import chess.web.dto.BoardResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +27,13 @@ public class ChessWebController {
         }
 
         Map<String, Object> model = new HashMap<>();
-        model.put("pieces", new BoardResponse(chessGame.board()).getValue());
-
         if (chessGame.isFinished()) {
             Result result = chessGame.result();
             model.put("result", result.name());
             return new ModelAndView(model, "result.html");
         }
+
+        model.putAll(generateModel(chessGame));
 
         return new ModelAndView(model, "chess.html");
     }
@@ -61,9 +62,18 @@ public class ChessWebController {
 
         Map<String, Object> model = new HashMap<>();
         model.put("error", errorMessage);
-        model.put("pieces", new BoardResponse(chessGame.board()).getValue());
+        model.putAll(generateModel(chessGame));
 
         response.body(render(model, "chess.html"));
+    }
+
+    private Map<String, Object> generateModel(ChessGame chessGame) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("pieces", new BoardResponse(chessGame.board()).getValue());
+        model.put("whiteScore", chessGame.score(Color.WHITE));
+        model.put("blackScore", chessGame.score(Color.BLACK));
+
+        return model;
     }
 
     public String render(Map<String, Object> model, String templatePath) {
