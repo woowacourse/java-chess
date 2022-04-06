@@ -12,7 +12,7 @@ import java.util.List;
 
 public final class MovementDAO {
 
-    public int addMoveCommand(Movement movement) throws SQLException {
+    public int addMoveCommand(final Movement movement) throws SQLException {
         String query = "INSERT INTO movement (game_id, source_position, target_position, turn)"
                 + "SELECT ?, ?, ?, ?"
                 + "FROM DUAL "
@@ -32,10 +32,10 @@ public final class MovementDAO {
         } catch (SQLException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-        return 0;
+        return 1;
     }
 
-    public List<Movement> findMovementByGameId(String gameId) throws SQLException {
+    public List<Movement> findMovementByGameId(final String gameId) throws SQLException {
         Connection connection = DBConnectionUtils.getConnection();
         String query = "SELECT * FROM CHESS_GAME cg JOIN MOVEMENT m on cg.id = m.game_id WHERE cg.is_end=false AND cg.id=(?) ORDER BY m.created_at";
         List<Movement> movements = new ArrayList<>();
@@ -43,7 +43,7 @@ public final class MovementDAO {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, gameId);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 String source = rs.getString("m.source_position");
                 String target = rs.getString("m.target_position");
                 movements.add(new Movement(Position.of(source), Position.of(target)));

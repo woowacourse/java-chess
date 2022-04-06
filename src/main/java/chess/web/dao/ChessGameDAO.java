@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ChessGameDAO {
 
-    public String addGame(ChessGame chessGame) throws SQLException {
+    public String addGame(final ChessGame chessGame) throws SQLException {
         String query = "INSERT INTO CHESS_GAME (name) VALUES (?)";
         Connection connection = DBConnectionUtils.getConnection();
         String gameId = null;
@@ -49,7 +49,7 @@ public class ChessGameDAO {
         return chessGameDTOs;
     }
 
-    public ChessGameDTO findGameById(String gameId) {
+    public ChessGameDTO findGameById(final String gameId) {
         String query = "SELECT * FROM CHESS_GAME WHERE ID = ? AND IS_END = FALSE ORDER BY created_at";
         Connection connection = DBConnectionUtils.getConnection();
 
@@ -65,7 +65,7 @@ public class ChessGameDAO {
         return null;
     }
 
-    public void updateGameEnd(String gameId) throws SQLException {
+    public void updateGameEnd(final String gameId) throws SQLException {
         String query = "UPDATE chess_game SET is_end = true WHERE id = ?";
         final Connection connection = DBConnectionUtils.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);

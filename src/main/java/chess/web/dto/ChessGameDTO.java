@@ -2,10 +2,10 @@ package chess.web.dto;
 
 public class ChessGameDTO {
 
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
 
-    public ChessGameDTO(String id, String name) {
+    public ChessGameDTO(final String id, final String name) {
         this.id = id;
         this.name = name;
     }

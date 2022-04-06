@@ -5,13 +5,12 @@ import chess.domain.position.Position;
 
 public final class Movement {
 
-    private String moveId;
     private String gameId;
     private final Position source;
     private final Position target;
     private Team team;
 
-    public Movement(Position source, Position target) {
+    public Movement(final Position source, final Position target) {
         this.source = source;
         this.target = target;
     }
@@ -20,7 +19,7 @@ public final class Movement {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(final String gameId) {
         this.gameId = gameId;
     }
 
@@ -30,14 +29,6 @@ public final class Movement {
 
     public String getTarget() {
         return target.toString();
-    }
-
-    public String getMoveId() {
-        return moveId;
-    }
-
-    public void setMoveId(String moveId) {
-        this.moveId = moveId;
     }
 
     public Team getTeam() {

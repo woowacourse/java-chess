@@ -12,7 +12,7 @@ public class ChessGame {
     private boolean isEnd;
     private ChessBoard chessBoard;
 
-    public ChessGame(BoardGenerator boardGenerator) {
+    public ChessGame(final BoardGenerator boardGenerator) {
         this.chessBoard = new ChessBoard(boardGenerator);
     }
 
@@ -25,15 +25,11 @@ public class ChessGame {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public boolean isEnd() {
-        return isEnd;
-    }
-
-    public void setEnd(boolean end) {
+    public void setEnd(final boolean end) {
         isEnd = end;
     }
 
@@ -41,11 +37,11 @@ public class ChessGame {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
-    public void execute(Movement movement) {
+    public void execute(final Movement movement) {
         chessBoard.move(
                 Position.of(movement.getSource()),
                 Position.of(movement.getTarget())

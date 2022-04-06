@@ -34,7 +34,7 @@ public final class DBConnectionUtils {
         }
     }
 
-    public static void closeConnection(Connection connection) {
+    public static void closeConnection(final Connection connection) {
         try {
             closeConnect(connection);
         } catch (SQLException e) {
@@ -42,8 +42,8 @@ public final class DBConnectionUtils {
         }
     }
 
-    private static void closeConnect(Connection connection) throws SQLException {
-        if (connection != null){
+    private static void closeConnect(final Connection connection) throws SQLException {
+        if (connection != null) {
             connection.close();
         }
     }

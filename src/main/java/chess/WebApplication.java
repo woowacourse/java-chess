@@ -18,7 +18,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-public class WebApplication {
+public final class WebApplication {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
@@ -33,13 +33,13 @@ public class WebApplication {
             return Render.renderHtml(model, "/lobby.html");
         });
 
-        post("/chess/new", (req, res) ->{
+        post("/chess/new", (req, res) -> {
             String gameId = CHESS_SERVICE.addChessGame(req.queryParams("gameName"));
             res.redirect("/chess/game/" + gameId);
             return res;
         });
 
-        get("/chess/game/:id", (req, res) ->{
+        get("/chess/game/:id", (req, res) -> {
             ChessGameDTO chessGameDTO = CHESS_GAME_DAO.findGameById(req.params(":id"));
             return Render.renderGame(chessGameDTO);
         });
