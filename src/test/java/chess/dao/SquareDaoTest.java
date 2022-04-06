@@ -2,7 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.board.Board;
 import chess.model.position.Position;
 import java.sql.Connection;
 import java.util.Map;
@@ -15,13 +14,6 @@ class SquareDaoTest {
         final SquareDao squareDao = new SquareDao();
         final Connection connection = squareDao.getConnection();
         assertThat(connection).isNotNull();
-    }
-
-    @Test
-    void save() {
-        final SquareDao squareDao = new SquareDao();
-        squareDao.delete();
-        squareDao.save(Board.init().getBoard());
     }
 
     @Test

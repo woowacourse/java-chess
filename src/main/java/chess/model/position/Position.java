@@ -79,8 +79,7 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    @Override
-    public String toString() {
+    public String getKey() {
         return file.nameOfFile() + rank.nameOfRank();
     }
 }

@@ -26,20 +26,25 @@ public class SquareDao {
         return connection;
     }
 
-    public void save(Map<Position, Piece> squares) {
-        for (Position position : squares.keySet()) {
-            saveOf(position, squares.get(position));
-        }
-    }
-
-    private void saveOf(Position position, Piece piece) {
+    public void save(Position position, Piece piece) {
         final Connection connection = getConnection();
         final String sql = "insert into square (position, team, symbol) values (?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position.toString());
+            statement.setString(1, position.getKey());
             statement.setString(2, piece.getTeam());
             statement.setString(3, piece.getSymbol());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete() {
+        final Connection connection = getConnection();
+        final String sql = "delete from square";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,17 +67,6 @@ public class SquareDao {
             e.printStackTrace();
         }
         return squares;
-    }
-
-    public void delete() {
-        final Connection connection = getConnection();
-        final String sql = "delete from square";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update(String source, String target) {

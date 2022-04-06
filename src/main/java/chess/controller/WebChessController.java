@@ -21,23 +21,8 @@ public class WebChessController {
         get("/", (req, res) -> new ModelAndView(new HashMap<>(), "board.html")
                 , new HandlebarsTemplateEngine());
 
-        get("/start", (req, res) -> {
-            gameService.startGame();
-            return gson.toJson(gameService.loadGameBoard());
-        });
+        get("/start", (req, res) -> gson.toJson(gameService.startGame()));
 
-        get("/end", (req, res) -> {
-            gameService.endGame();
-            return gson.toJson(gameService.loadGameBoard());
-        });
-
-        get("/load", (req, res) -> gson.toJson(gameService.loadGameBoard()));
-
-        post("/move", (req, res) -> {
-            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            gameService.moveGamePiece(moveDto.getCommand());
-            return gameService.loadGameBoard();
-        });
 
         exception(Exception.class, (exception, req, res) -> {
             res.status(400);

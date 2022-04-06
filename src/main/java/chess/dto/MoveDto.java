@@ -1,10 +1,6 @@
 package chess.dto;
 
-import java.util.List;
-
 public class MoveDto {
-
-    private static final String MOVE_COMMAND = "move";
 
     private final String source;
     private final String target;
@@ -14,7 +10,11 @@ public class MoveDto {
         this.target = target;
     }
 
-    public List<String> getCommand() {
-        return List.of(MOVE_COMMAND, source, target);
+    public String getSource() {
+        return source;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }

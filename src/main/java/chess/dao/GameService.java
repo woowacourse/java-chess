@@ -1,55 +1,45 @@
 package chess.dao;
 
+import chess.dto.BoardDto;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
-import chess.model.state.State;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameService {
 
-    private final StateDao stateDao;
     private final SquareDao squareDao;
+    private final TurnDao turnDao;
 
     public GameService() {
-        this.stateDao = new StateDao();
         this.squareDao = new SquareDao();
+        this.turnDao = new TurnDao();
     }
 
-    public Map<Position, Piece> loadGameBoard() {
-        String stateName = stateDao.find();
-        Map<Position, Piece> board = createBoardFrom(squareDao.find());
-        State state = StateGenerator.generateState(stateName, board);
-        return state.getBoard();
+    public BoardDto startGame() {
+        deleteData();
+        fromBoard(Board.init().getBoard());
+        Board board = toBoard(squareDao.find());
+        turnDao.save("white");
+        return BoardDto.from(board.getBoard());
     }
 
-    private Map<Position, Piece> createBoardFrom(final Map<String, String> squares) {
+    private void deleteData() {
+        squareDao.delete();
+        turnDao.delete();
+    }
+
+    private void fromBoard(Map<Position, Piece> board) {
+        board.keySet()
+                .forEach(position -> squareDao.save(position, board.get(position)));
+    }
+
+    private Board toBoard(Map<String, String> squares) {
         Map<Position, Piece> board = new HashMap<>();
-        for (String position : squares.keySet()) {
-            board.put(Position.from(position), Piece.getPiece(squares.get(position)));
+        for (String key : squares.keySet()) {
+            board.put(Position.from(key), Piece.getPiece(squares.get(key)));
         }
-        return board;
-    }
-
-    public void startGame() {
-        stateDao.delete();
-        stateDao.save("whiteturn");
-        squareDao.delete();
-        squareDao.save(Board.init().getBoard());
-    }
-
-    public void endGame() {
-        stateDao.delete();
-        squareDao.delete();
-    }
-
-    public void moveGamePiece(List<String> command) {
-        String stateName = stateDao.find();
-        Map<Position, Piece> board = createBoardFrom(squareDao.find());
-        State state = StateGenerator.generateState(stateName, board);
-        state = state.proceed(command);
-        squareDao.update(command.get(1), command.get(2));
+        return Board.from(board);
     }
 }

@@ -28,17 +28,17 @@ async function loadChess() {
     putPieceInSquare(board);
 }
 
-function putPieceInSquare(board) {
-   for (key in board)  {
-      let position = document.getElementById(key);
-      if (position.hasChildNodes()) {
-        position.removeChild(position.firstChild);
-      }
-      const img = document.createElement("img");
-      img.src = "images/" + board[key].symbol + "_" + board[key].team +".png";
-      img.className = "piece-img"
-      position.appendChild(img);
-   }
+async function putPieceInSquare(board) {
+    Object.keys(board.values).forEach(function (key) {
+        let position = document.getElementById(key);
+         if (position.hasChildNodes()) {
+              position.removeChild(position.firstChild);
+         }
+         const img = document.createElement("img");
+         img.src = "images/" + board.values[key] + ".png";
+         img.className = "piece-img"
+         position.appendChild(img);
+    })
 }
 
 function removePieceInSquare(board) {
