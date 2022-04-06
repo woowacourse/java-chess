@@ -24,7 +24,7 @@ public class BishopTest {
         assertThat(bishop.canMove(d1, g4)).isTrue();
     }
 
-    @DisplayName("비숍은 앞으로 움직일 수 있다.")
+    @DisplayName("비숍은 앞으로 움직일 수 없다.")
     @Test
     void move_d1_d6() {
         //given
@@ -34,7 +34,7 @@ public class BishopTest {
         assertThat(bishop.canMove(d1, d6)).isFalse();
     }
 
-    @DisplayName("비숍은 뒤로 움직일 수 있다.")
+    @DisplayName("비숍은 뒤로 움직일 수 없다.")
     @Test
     void move_d6_d1() {
         //given
@@ -44,7 +44,7 @@ public class BishopTest {
         assertThat(bishop.canMove(d6, d1)).isFalse();
     }
 
-    @DisplayName("비숍은 우로 움직일 수 있다.")
+    @DisplayName("비숍은 우로 움직일 수 없다.")
     @Test
     void move_d1_e1() {
         //given
@@ -54,7 +54,7 @@ public class BishopTest {
         assertThat(bishop.canMove(d1, e1)).isFalse();
     }
 
-    @DisplayName("비숍은 좌로 움직일 수 있다.")
+    @DisplayName("비숍은 좌로 움직일 수 없다.")
     @Test
     void move_e1_d1() {
         //given
@@ -64,7 +64,7 @@ public class BishopTest {
         assertThat(bishop.canMove(e1, d1)).isFalse();
     }
 
-    @DisplayName("비숍은 직선이 아닌 방향으로는 움직일 수 없다.")
+    @DisplayName("비숍은 대각선이 아닌 방향으로는 움직일 수 없다.")
     @Test
     void move_d1_f2() {
         //given
