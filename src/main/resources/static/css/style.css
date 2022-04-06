@@ -31,13 +31,8 @@ body {
 }
 
 .black {
-    background-color: chocolate;
+    background-color: burlywood;
 }
-
-.blue {
-    background-color: cornflowerblue;
-}
-
 
 .b {
     background-image: url("../img/white-bishop.png");
