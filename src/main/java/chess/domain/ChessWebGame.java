@@ -49,7 +49,6 @@ public class ChessWebGame {
         final Player currentPlayer = getCurrentPlayer();
         final Player opponentPlayer = getOpponentPlayer();
         validateMovable(currentPlayer, currentPosition, destinationPosition);
-        changeTurn();
         if (opponentPlayer.hasPiece(destinationPosition)) {
             currentPlayer.capture(currentPosition, destinationPosition);
             opponentPlayer.remove(destinationPosition);

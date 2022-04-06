@@ -53,10 +53,10 @@ public class ChessService {
         final TurnDto turnDto = turnDao.findTurn();
 
         chessWebGame.move(currentPosition, destinationPosition);
+        chessWebGame.changeTurn();
         pieceDao.removePieceByCaptured(moveDto);
         pieceDao.updatePiece(moveDto);
         turnDao.updateTurn(turnDto.getTurn());
-
         return chessWebGame.createMap();
     }
 }
