@@ -1,7 +1,7 @@
 const boardUrl = '/board';
 const moveUrl = `/move`;
 const scoreUrl = `/score`;
-const newGamemUrl = '/new';
+const newGamemUrl = '/';
 const isFinishedUrl = '/isFinished';
 let selected = '';
 let from;
@@ -22,10 +22,9 @@ const initialize = () => {
     setupScores();
 
     document.getElementById("newGame").addEventListener('click', (event) => {
-        fetch(newGamemUrl)
-            .then(res => res.json())
-            .then(json => location.reload());
+        location.href = newGamemUrl;
     });
+    document.getElementById('start').play();
 }
 
 const setupPieceToSquare = (square, pieceName) => {
@@ -92,7 +91,7 @@ const processMove = (selectedSquare) => {
             removePieceFromSquare(document.getElementById(moveResult.from));
             setupPieceToSquare(document.getElementById(moveResult.to), moveResult.piece);
             setupScores();
-            document.getElementById('audio').play();
+            document.getElementById('move').play();
             gameOverProcess();
         })
 
@@ -129,6 +128,7 @@ const gameOverProcess = () => {
             if (result) {
                 document.querySelector('h2').innerHTML = 'GAME OVER';
                 document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
+                document.getElementById('finish').play();
             }
         })
 }

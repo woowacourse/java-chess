@@ -25,7 +25,6 @@ public class WebApplication {
 
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", WebViewMapper.parse(BOARD.getBoard()));
             return render(model, "index.html");
         });
 
@@ -44,13 +43,13 @@ public class WebApplication {
         get("/score", (request, response) -> BOARD.getScore()
                 , new JsonTransformer());
 
-        get("/new", (request, response) -> {
-                    BOARD = BoardFactory.newInstance();
-                    return WebViewMapper.parse(BOARD.getBoard());
-                }
-                , new JsonTransformer());
-
         get("/isFinished", ((request, response) -> BOARD.isFinished()), new JsonTransformer());
+
+        get("/game/:gameId", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("board", WebViewMapper.parse(BOARD.getBoard()));
+            return render(model, "game.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
