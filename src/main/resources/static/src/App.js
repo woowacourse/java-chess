@@ -44,8 +44,8 @@ start.addEventListener('click', function () {
 })
 
 function getStatus(scoreResponse) {
-    const blackScore = scoreResponse["blackTeam"];
-    const whiteScore = scoreResponse["whiteTeam"];
+    const blackScore = scoreResponse["blackTeamScore"];
+    const whiteScore = scoreResponse["whiteTeamScore"];
 
     window.alert("블랙팀 점수 :" + blackScore + ", 하얀팀 점수 : "+ whiteScore);
 }
