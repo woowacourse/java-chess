@@ -51,8 +51,6 @@ public class GameDaoImpl implements GameDao {
 
     private Optional<GameState> getGame(ResultSet rs) throws SQLException {
         if (rs.next()) {
-            // TODO: PieceDao 완성 후 Piece 조회해서 게임 조합하는 기능 필요
-
             return Optional.of(GameState.valueOf(rs.getString("state")));
         }
         return Optional.empty();
