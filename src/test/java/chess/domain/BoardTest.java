@@ -100,7 +100,6 @@ public class BoardTest {
                 .hasMessage("target 위치에 자신의 기물이 있습니다.");
     }
 
-
     @Test
     @DisplayName("기물이 이동할 수 없는 행마법인 경우")
     void choiceInvalidMovement() {
