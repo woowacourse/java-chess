@@ -72,4 +72,21 @@ public class ChessGameDao {
             e.printStackTrace();
         }
     }
+
+    public String findById(int id) {
+        final Connection connection = getConnection();
+        final String sql = "select state from game where id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return resultSet.getString("state");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
