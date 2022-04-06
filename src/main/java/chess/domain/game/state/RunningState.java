@@ -21,6 +21,11 @@ public abstract class RunningState implements GameState {
         return true;
     }
 
+    @Override
+    public final FinishedState end() {
+        return new FinishedState(players, color);
+    }
+
     public abstract boolean isMovable();
 
     public abstract boolean isPromotable();
@@ -32,5 +37,10 @@ public abstract class RunningState implements GameState {
     @Override
     public final Players getPlayers() {
         return players;
+    }
+
+    @Override
+    public final Color getColor() {
+        return color;
     }
 }
