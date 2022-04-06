@@ -1,11 +1,11 @@
 package chess.domain.game;
 
-import static chess.domain.board.piece.PieceType.KING;
-
 import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
+import chess.domain.board.piece.PieceType;
 import chess.domain.board.position.Position;
 import chess.domain.event.MoveCommand;
+import chess.domain.game.statistics.GameResult;
 
 abstract class Running extends Started {
 
@@ -25,7 +25,7 @@ abstract class Running extends Started {
     }
 
     private Game moveResult() {
-        if (board.countByType(KING) < ONGOING_GAME_KING_COUNT) {
+        if (board.countByType(PieceType.KING) < ONGOING_GAME_KING_COUNT) {
             return new GameOver(board);
         }
         return continueGame();

@@ -2,6 +2,8 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.event.MoveCommand;
+import chess.domain.game.statistics.GameResult;
+import chess.domain.game.statistics.GameState;
 
 final class GameOver extends Started {
 

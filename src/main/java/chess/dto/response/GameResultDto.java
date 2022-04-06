@@ -1,7 +1,7 @@
 package chess.dto.response;
 
 import chess.domain.game.Game;
-import chess.domain.game.GameResult;
+import chess.domain.game.statistics.GameResult;
 
 public class GameResultDto {
 

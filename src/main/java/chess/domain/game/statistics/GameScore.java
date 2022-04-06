@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.statistics;
 
 import java.util.Objects;
 

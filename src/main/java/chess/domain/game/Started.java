@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.statistics.GameState;
 import chess.dto.response.GameDataDto;
 import chess.dto.response.GameDto;
 import chess.dto.response.board.ConsoleBoardViewDto;

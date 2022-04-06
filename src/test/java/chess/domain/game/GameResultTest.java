@@ -12,6 +12,7 @@ import chess.domain.board.piece.Color;
 import chess.domain.board.piece.NonPawn;
 import chess.domain.board.piece.Pawn;
 import chess.domain.board.position.Position;
+import chess.domain.game.statistics.GameResult;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 

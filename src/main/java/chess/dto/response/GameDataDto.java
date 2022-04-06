@@ -1,6 +1,6 @@
 package chess.dto.response;
 
-import chess.domain.game.GameState;
+import chess.domain.game.statistics.GameState;
 
 public class GameDataDto {
 

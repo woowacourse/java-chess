@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.statistics;
 
 public enum GameState {
 
