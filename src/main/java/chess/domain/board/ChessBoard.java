@@ -1,10 +1,10 @@
 package chess.domain.board;
 
 import java.util.Map;
-import chess.domain.piece.Blank;
-import chess.domain.piece.MovePath;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.Blank;
+import chess.domain.MovePath;
+import chess.domain.Piece;
+import chess.domain.PieceColor;
 
 public class ChessBoard {
 

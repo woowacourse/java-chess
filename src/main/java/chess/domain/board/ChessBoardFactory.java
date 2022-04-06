@@ -2,15 +2,15 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.Bishop;
+import chess.domain.Blank;
+import chess.domain.King;
+import chess.domain.Knight;
+import chess.domain.Pawn;
+import chess.domain.Piece;
+import chess.domain.PieceColor;
+import chess.domain.Queen;
+import chess.domain.Rook;
 
 public class ChessBoardFactory {
 

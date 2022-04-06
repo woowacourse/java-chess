@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import chess.domain.piece.PieceColor;
+import chess.domain.PieceColor;
 
 public enum Turn {
     WHITE(PieceColor.WHITE),
