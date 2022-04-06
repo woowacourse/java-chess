@@ -8,8 +8,10 @@ import chess.dto.RoomStatusDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class RoomService {
     private final RoomDao roomDao;
@@ -21,8 +23,19 @@ public class RoomService {
         this.gson = new Gson();
     }
 
-    public boolean isRoomExist(final String roomName) {
-        return roomDao.isExistName(roomName);
+    public String findPage(final Request req, final Response res) {
+        Map<String, Object> model = new HashMap<>();
+
+        final boolean roomExist = roomDao.isExistName(req.params(":name"));
+        if (!roomExist) {
+            res.status(404);
+            return render(model, "index.html");
+        }
+        return render(model, "board.html");
+    }
+
+    private String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     public String createRoom(final Request req, final Response res) {

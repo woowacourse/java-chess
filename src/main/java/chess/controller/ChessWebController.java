@@ -23,28 +23,16 @@ public class ChessWebController {
         roomService = new RoomService();
     }
 
-    private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
     public void run() {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return new HandlebarsTemplateEngine().render(
+                    new ModelAndView(model, "index.html"));
         });
 
         path("/rooms", () -> {
-            get("/:name", (req, res) -> {
-                Map<String, Object> model = new HashMap<>();
-
-                final boolean roomExist = roomService.isRoomExist(req.params(":name"));
-                if (!roomExist) {
-                    res.status(404);
-                    return render(model, "index.html");
-                }
-                return render(model, "board.html");
-            });
+            get("/:name", roomService::findPage);
 
             post("/:name", roomService::createRoom);
 
