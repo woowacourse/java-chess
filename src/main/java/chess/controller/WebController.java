@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import chess.Command;
+import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
+import chess.dao.DBConnectorGenerator;
 import chess.domain.ChessGame;
 import chess.domain.Status;
 import chess.domain.piece.Piece;
@@ -23,18 +26,23 @@ public class WebController {
     private static final String ERROR_GAME_NOT_START_YET = "[ERROR]게임부터 시작하지지?!";
     private static final String ERROR_GAME_IS_OVER = "[ERROR] 지금은 못 움직여!";
     private static final String ERROR_GAME_IS_NOT_END = "[ERROR]아직 게임 안끝났어!";
-    private static final String RESULT_FORMAT = "%s : %.1f점%n";
 
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
+    public static final int BOARD_ID = 1;
 
     private ChessGame game;
+    private ChessGameDao chessGameDao = new ChessGameDao();
 
     public void run() {
         port(8080);
         staticFileLocation("/templates");
         get("/", (req, res) -> {
+            game = chessGameDao.findById(BOARD_ID, DBConnectorGenerator.getConnection());
             Map<String, Object> model = new HashMap<>();
+            if (game != null) {
+                packBoardInfo(model);
+            }
             return render(model, "index.html");
         });
 
@@ -70,19 +78,23 @@ public class WebController {
         Command command = commands.getKey();
         if (command == Command.START) {
             start(model);
+            save();
         }
 
         if (command == Command.MOVE) {
             move(commands, model);
+            update();
         }
 
         if (command == Command.END) {
             model.put("exit", true);
+            remove();
             game = null;
         }
 
         if (command == Command.STATUS) {
             status(model);
+            remove();
         }
     }
 
@@ -127,6 +139,23 @@ public class WebController {
         if (game == null) {
             throw new IllegalArgumentException(ERROR_GAME_NOT_START_YET);
         }
+    }
+
+    private void save() {
+        chessGameDao.save(game, BOARD_ID, DBConnectorGenerator.getConnection());
+        System.out.println("????");
+        new BoardDao().save(game.getBoard(), BOARD_ID, DBConnectorGenerator.getConnection());
+    }
+
+    private void update() {
+        chessGameDao.update(game, BOARD_ID, DBConnectorGenerator.getConnection());
+        BoardDao boardDao = new BoardDao();
+        boardDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
+        boardDao.save(game.getBoard(), BOARD_ID, DBConnectorGenerator.getConnection());
+    }
+
+    private void remove() {
+        chessGameDao.remove(BOARD_ID, DBConnectorGenerator.getConnection());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

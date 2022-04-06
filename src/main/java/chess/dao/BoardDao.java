@@ -1,7 +1,6 @@
 package chess.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,51 +19,15 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class BoardDao {
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-    private int piece_id;
-
-    public BoardDao() {
-        piece_id = 1;
-    }
-
-    private Connection getConnection() {
-        loadDriver();
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (Exception throwables) {
-            throwables.printStackTrace();
-        }
-
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void save(Map<Square, Piece> board, int board_id) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (piece_id, board_id, type, team, square) values (?,?,?,?,?)";
+    public void save(Map<Square, Piece> board, int board_id, Connection connection) {
+        final String sql = "insert into piece (board_id, type, team, square) values (?,?,?,?)";
         PreparedStatement statement = null;
         try {
-            removeBoard(board_id, connection, statement);
             List<Map.Entry<Square, Piece>> pieces = board.entrySet().stream()
                 .filter(entry -> !entry.getValue().isNone())
                 .collect(Collectors.toList());
-            statement = connection.prepareStatement(sql);
             for (Map.Entry<Square, Piece> entry : pieces) {
+                statement = connection.prepareStatement(sql);
                 Square square = entry.getKey();
                 Piece piece = entry.getValue();
                 setStatement(board_id, statement, square, piece);
@@ -84,22 +47,36 @@ public class BoardDao {
 
     private void setStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
         SQLException {
-        statement.setInt(1, piece_id++);
-        statement.setInt(2, board_id);
-        statement.setString(3, piece.getType());
-        statement.setString(4, piece.getColor());
-        statement.setString(5, square.getName());
+        statement.setInt(1, board_id);
+        statement.setString(2, piece.getType());
+        statement.setString(3, piece.getColor());
+        statement.setString(4, square.getName());
     }
 
-    private void removeBoard(int board_id, Connection connection, PreparedStatement statement) throws SQLException {
+    public void remove(int board_id, Connection connection) {
         final String sql = "delete from piece where board_id = ?";
-        statement = connection.prepareStatement(sql);
-        statement.executeUpdate();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, board_id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        close(connection, statement);
     }
 
-    public Board find(int board_id) {
-        final Connection connection = getConnection();
-        final String sql = "select piece_id, board_id, type, team, square from piece where board_id = ?";
+    private void close(Connection connection, PreparedStatement statement) {
+        try {
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Board find(int board_id, Connection connection) {
+        final String sql = "select board_id, type, team, square from piece where board_id = ?";
         final Map<Square, Piece> board = new HashMap<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -122,6 +99,11 @@ public class BoardDao {
             e.printStackTrace();
         }
 
+        close(connection, statement, resultSet);
+        return new Board(board);
+    }
+
+    private void close(Connection connection, PreparedStatement statement, ResultSet resultSet) {
         try {
             resultSet.close();
             statement.close();
@@ -129,6 +111,5 @@ public class BoardDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Board(board);
     }
 }
