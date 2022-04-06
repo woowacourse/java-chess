@@ -192,8 +192,8 @@
         <div class="draw_text" id="draw">DRAW!</div>
     </div>
     <div class="inner_score">
-        <div class="score" id="white"></div>
-        <div class="score" id="black"></div>
+        <div class="score" id="whiteScore"></div>
+        <div class="score" id="blackScore"></div>
     </div>
     <div class="inner_score">
         <button class="ui-button" id="start" onclick="exitRoom()">나가기</button>
@@ -205,125 +205,126 @@
 </div>
 
 <script>
-    let fromTo = "";
+    let from = "";
+    let to = "";
     let roomName = "{{roomName}}";
 
+    fetchPieces();
+    fetchScores();
+    fetchTurn();
+
     chessBoard.addEventListener("click", ({target: {id}}) => {
-        fromTo = fromTo + id + " ";
-        if (fromTo.length === 6) {
+        if (from === "") {
+            from = id;
+        } else if (to === "") {
+            to = id;
             move();
-            fromTo = "";
+            from = "";
+            to = "";
         }
     })
 
-    async function exitRoom() {
-        await fetch(`/protected/exit?room=${roomName}`, {method: "POST"});
-        window.location.href = "/";
-    }
+    function move() {
+        const pathName = window.location.pathname;
+        clearBoard();
 
-    async function move() {
-        const response = await fetch(`/protected/move?room=${roomName}`, {method: "POST", body: fromTo});
-        const json = response.json();
-        await removeElement();
-        drawBoard(json);
-        fetchPiece();
-        fetchScore();
+        fetch(`${pathName}/pieces`, {
+            method: "PUT",
+            body: `{\"from\": ${from}, \"to\": ${to}}`
+        })
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                }
+            });
+
+        fetchPieces();
+        fetchScores();
         fetchTurn();
     }
 
     async function end() {
-        const response = await fetch(`/protected/end?room=${roomName}`, {method: "POST"});
-        const json = response.json();
-        drawBoard(json);
-        await fetchResult();
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/result`)
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                    return;
+                }
+                let winColor = "";
+                if (dto.score.whiteScore > dto.score.blackScore) {
+                    winColor = "white";
+                } else if (dto.score.whiteScore < dto.score.blackScore) {
+                    winColor = "black";
+                } else {
+                    winColor = "draw";
+                }
+                let element = document.getElementById(winColor);
+                if (winColor !== "draw") {
+                    element = document.getElementById(winColor + "_win");
+                }
+                element.style.visibility = "visible";
+            })
     }
 
-    async function fetchPiece() {
-        const data = await fetch(`/protected/piece?room=${roomName}`);
-        const json = data.json();
-        drawBoard(json);
+    function exitRoom() {
+        const pathName = window.location.pathname;
+        window.location.href = "/";
+        fetch(`${pathName}`, {method: "DELETE"})
     }
 
-    async function fetchScore() {
-        const data = await fetch(`/protected/score?room=${roomName}`);
-        data.json().then(res => Object.keys(res).forEach(function (value) {
-            const element = document.getElementById(value);
-            if (value === "error") {
-                element.innerText = `${res[value]}`;
-            } else {
-                element.innerText = `${value} 점수 : ${res[value]}`;
-            }
-        }));
+    function fetchPieces() {
+        const pathName = window.location.pathname;
+        clearBoard();
+
+        fetch(`${pathName}/pieces`)
+            .then(res => res.json())
+            .then(dtos => dtos.forEach(dto => {
+                const element = document.getElementById(dto.position);
+                element.innerHTML = `<img src=/images/${dto.pieceType}_${dto.color.toLocaleLowerCase()}.png id=${dto.position} alt="piece" height="80px" width="80px" style="padding: 5px"/>`;
+            }));
     }
 
-    async function fetchTurn() {
-        const data = await fetch(`/protected/turn?room=${roomName}`);
-        data.json().then(res => Object.keys(res).forEach(function (value) {
-            if (value === "error") {
-                const element = document.getElementById(value);
-                element.innerText = `${res[value]}`;
-            } else {
+
+    function fetchScores() {
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/scores`)
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                    return;
+                }
+                document.getElementById('whiteScore').innerText = `WHITE 점수 : ${dto.whiteScore}`;
+                document.getElementById('blackScore').innerText = `BLACK 점수 : ${dto.blackScore}`;
+            })
+    }
+
+    function fetchTurn() {
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/turn`)
+            .then(res => res.json())
+            .then(res => {
                 const turns = document.getElementById("turn");
                 for (let i = 0; i < 2; i++) {
                     turns.children[i].style.boxShadow = "none";
                 }
-                const currentTurn = document.getElementById(res[value] + "_turn");
+                const currentTurn = document.getElementById(res.currentTurn.toLowerCase() + "_turn");
                 currentTurn.style.boxShadow = "0 0 10px 2px darkred";
-            }
-        }))
+            });
     }
 
-    async function fetchResult() {
-        const data = await fetch(`/protected/result?room=${roomName}`);
-        data.json().then(res => Object.keys(res).forEach(function (value) {
-            const winColor = res[value];
-            let element = document.getElementById(winColor);
-            if (winColor !== "draw") {
-                element = document.getElementById(winColor + "_win");
-            }
-            element.style.visibility = "visible";
-        }))
-    }
-
-    function removeElement() {
-        document.getElementById("error").innerText = "";
+    function clearBoard() {
         const chessBoard = document.getElementById("chessBoard");
         for (let i = 0; i < chessBoard.children.length; i++) {
             chessBoard.children[i].innerHTML = `<div id=${chessBoard.children[i].id}></div>`
         }
     }
-
-    function drawBoard(data) {
-        data.then(res => Object.keys(res).forEach(function (value) {
-            if (value === "isKingDie") {
-                if (res[value] === true)
-                    fetchResult();
-                return;
-            }
-            const element = document.getElementById(value);
-            if (value === "white" || value === "black") {
-                element.innerText = `${value} 점수 : ${res[value]}`;
-            } else if (value === "error") {
-                element.innerText = `${res[value]}`;
-            } else {
-                element.innerHTML = `<img src=${res[value]} id=${value} alt="piece" height="80px" width="80px" style="padding: 5px"/>`;
-            }
-        }));
-    }
-
-    function checkRoomExist() {
-        const roomExist = "{{roomExist}}"
-        if (roomExist === "false") {
-            window.location.href = "/";
-        }
-        if (/^\s*$/.test(roomName) === false) {
-            fetchPiece();
-            fetchScore();
-            fetchTurn();
-        }
-    }
-
-    checkRoomExist();
 
 </script>
 
