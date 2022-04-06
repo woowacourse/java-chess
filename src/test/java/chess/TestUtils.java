@@ -1,4 +1,4 @@
-package chess.domain;
+package chess;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,13 +15,13 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class TestUtils {
-    static final Piece WHITE_QUEEN = new Queen(Color.WHITE);
-    static final Piece BLACK_QUEEN = new Queen(Color.BLACK);
-    static final Piece WHITE_BISHOP = new Bishop(Color.WHITE);
-    static final Piece WHITE_PAWN = new Pawn(Color.WHITE);
-    static final Piece WHITE_ROOK = new Rook(Color.WHITE);
+    public static final Piece WHITE_QUEEN = new Queen(Color.WHITE);
+    public static final Piece BLACK_QUEEN = new Queen(Color.BLACK);
+    public static final Piece WHITE_BISHOP = new Bishop(Color.WHITE);
+    public static final Piece WHITE_PAWN = new Pawn(Color.WHITE);
+    public static final Piece WHITE_ROOK = new Rook(Color.WHITE);
 
-    static Map<Square, Piece> createBlankBoard() {
+    public static Map<Square, Piece> createBlankBoard() {
         Map<Square, Piece> board = new LinkedHashMap<>();
         for (Rank rank : Rank.values()) {
             createRow(board, rank);

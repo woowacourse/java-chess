@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.TestUtils.*;
+import static chess.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
