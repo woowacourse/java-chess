@@ -28,6 +28,11 @@ public class MemoryMemberDao implements MemberDao {
         return new ArrayList<>(store.values());
     }
 
+    @Override
+    public void deleteById(Long id) {
+        store.remove(id);
+    }
+
     void deleteAll() {
         store.clear();
     }

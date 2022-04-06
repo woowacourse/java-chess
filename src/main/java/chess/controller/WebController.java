@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
@@ -50,6 +51,7 @@ public class WebController {
         post("/move/:gameId", this::movePiece);
         post("/terminate/:gameId", this::terminateGame);
         post("/game", this::createGame);
+        delete("/member/:memberId", this::deleteMember);
     }
 
     private String renderHome(Request req, Response res) {
@@ -146,6 +148,12 @@ public class WebController {
         Long whiteId = Long.valueOf(ids[0]);
         Long blackId = Long.valueOf(ids[1]);
         gameService.createGame(whiteId, blackId);
+        return "OK";
+    }
+
+    private String deleteMember(Request req, Response res) {
+        Long memberId = Long.valueOf(req.params("memberId"));
+        memberService.deleteMember(memberId);
         return "OK";
     }
 }

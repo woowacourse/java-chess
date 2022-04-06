@@ -20,7 +20,8 @@
       <div class="card-body">
         <h5 class="card-title">{{name}} </h5>
         <h6 class="card-subtitle mb-2 text-muted">id: {{id}} </h6>
-        <a type="button" class="btn btn-info" href="/history/{{id}}">게임 기록</a>
+        <button type="button" class="btn btn-info" onclick="location.href = '/history/{{id}}'">게임 기록</button>
+        <button id="{{id}}" type="button" class="btn btn-danger" onclick="deleteMember(this)">멤버 삭제</button>
       </div>
     </div>
   {{/members}}
@@ -55,11 +56,24 @@
       if (response.ok) {
         alert("멤버 추가 성공!");
         location.reload();
+        return;
       }
-      if (!response.ok) {
-        alert(response.statusText);
-      }
+      alert(response.statusText);
     });
+  }
+
+  const deleteMember = (target) => {
+    let memberId = target.id;
+    fetch(`/member/${memberId}`, {
+      method: "DELETE"
+    }).then(response => {
+      if (response.ok) {
+        alert("멤버 삭제 성공");
+        location.reload();
+        return;
+      }
+      alert(response.statusText);
+    })
   }
 </script>
 

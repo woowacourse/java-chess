@@ -52,4 +52,14 @@ public class DatabaseMemberDao implements MemberDao {
             return members;
         });
     }
+
+    @Override
+    public void deleteById(Long id) {
+        final String sql = "delete from Member where id = ?";
+        executor.delete(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            return statement;
+        });
+    }
 }

@@ -19,4 +19,8 @@ public class MemberService {
     public void addMember(String memberName) {
         memberDao.save(new Member(memberName));
     }
+
+    public void deleteMember(Long memberId) {
+        memberDao.deleteById(memberId);
+    }
 }
