@@ -20,7 +20,7 @@ public class Knight extends RangedPiece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     private static final int POSSIBLE_DISTANCE = 2;
 
-    public Knight(final Color color) {
+    public Knight(Color color) {
         super(PieceType.KNIGHT, color);
     }
 
@@ -29,20 +29,20 @@ public class Knight extends RangedPiece {
         return false;
     }
 
-    protected void validateDirection(final Direction direction) {
+    protected void validateDirection(Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(Piece.INVALID_DIRECTION);
         }
     }
 
     @Override
-    protected void validateRange(final int columnDifference, final int rowDifference) {
+    protected void validateRange(int columnDifference, int rowDifference) {
         if (isInvalidRange(columnDifference, rowDifference)) {
             throw new IllegalArgumentException(Piece.INVALID_POSITION);
         }
     }
 
-    private boolean isInvalidRange(final int columnDifference, final int rowDifference) {
+    private boolean isInvalidRange(int columnDifference, int rowDifference) {
         return Math.abs(columnDifference) > POSSIBLE_DISTANCE || Math.abs(rowDifference) > POSSIBLE_DISTANCE;
     }
 }

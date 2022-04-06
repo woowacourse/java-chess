@@ -12,12 +12,12 @@ public enum PieceType {
     private final String symbol;
     private final double score;
 
-    PieceType(final String symbol, final double score) {
+    PieceType(String symbol, double score) {
         this.symbol = symbol;
         this.score = score;
     }
 
-    public double calculateScore(final int count) {
+    public double calculateScore(int count) {
         return score * count;
     }
 

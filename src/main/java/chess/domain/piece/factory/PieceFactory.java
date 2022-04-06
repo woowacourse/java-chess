@@ -28,7 +28,7 @@ public class PieceFactory {
     private PieceFactory() {
     }
 
-    public static Piece createPiece(final PieceType pieceType, final Color color) {
+    public static Piece createPiece(PieceType pieceType, Color color) {
         return factory.get(pieceType).apply(color);
     }
 }

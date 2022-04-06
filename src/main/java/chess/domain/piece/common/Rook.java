@@ -14,7 +14,7 @@ public class Rook extends CommonPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E);
 
-    public Rook(final Color color) {
+    public Rook(Color color) {
         super(PieceType.ROOK, color);
     }
 
@@ -24,7 +24,7 @@ public class Rook extends CommonPiece {
     }
 
     @Override
-    protected void validateDirection(final Direction direction) {
+    protected void validateDirection(Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

@@ -16,18 +16,18 @@ public enum Column {
 
     private final int value;
 
-    Column(final int value) {
+    Column(int value) {
         this.value = value;
     }
 
-    public static Column from(final int value) {
+    public static Column from(int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
-    public static Column from(final String name) {
+    public static Column from(String name) {
         try {
             return Column.valueOf(name.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
@@ -35,11 +35,11 @@ public enum Column {
         }
     }
 
-    public int calculateDifference(final Column target) {
+    public int calculateDifference(Column target) {
         return this.value - target.value;
     }
 
-    public Column move(final int columnDifference) {
+    public Column move(int columnDifference) {
         return from(value + columnDifference);
     }
 }

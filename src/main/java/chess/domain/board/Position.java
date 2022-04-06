@@ -4,24 +4,24 @@ import chess.domain.piece.Direction;
 import java.util.Objects;
 
 public class Position {
-    
+
     private final Column column;
     private final Row row;
 
-    public Position(final Column column, final Row row) {
+    public Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
 
-    public int calculateRowDifference(final Position target) {
+    public int calculateRowDifference(Position target) {
         return row.calculateDifference(target.row);
     }
 
-    public int calculateColumnDifference(final Position target) {
+    public int calculateColumnDifference(Position target) {
         return column.calculateDifference(target.column);
     }
 
-    public Position move(final Direction direction) {
+    public Position move(Direction direction) {
         return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
     }
 
@@ -34,7 +34,7 @@ public class Position {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (!(o instanceof Position)) {
             return false;
         }
