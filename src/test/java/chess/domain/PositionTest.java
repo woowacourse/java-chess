@@ -3,7 +3,6 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +31,7 @@ public class PositionTest {
     @ValueSource(strings = {"i1", "a9", "i9"})
     void isNotExistPosition(String value) {
         assertThatThrownBy(() -> Position.valueOf(value))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 해당 포지션은 체스 보드에 존재하지 않습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 포지션은 체스 보드에 존재하지 않습니다.");
     }
 }

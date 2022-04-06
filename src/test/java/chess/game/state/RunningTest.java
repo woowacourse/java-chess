@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.Position;
-import chess.domain.game.state.End;
+import chess.domain.Rank;
 import chess.domain.game.state.ChessGame;
+import chess.domain.game.state.End;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
 import chess.domain.piece.Color;

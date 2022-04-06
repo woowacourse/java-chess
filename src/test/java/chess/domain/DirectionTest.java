@@ -14,28 +14,28 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("providePositionDirection")
     @DisplayName("출발 Position에서 목적지 Position으로 가는 방향을 반환하여 확인한다.")
-    void checkDirection(Position fromPosition,Position toPosition,Direction direction) {
-        assertThat(Direction.giveDirection(fromPosition,toPosition)).isEqualTo(direction);
+    void checkDirection(Position fromPosition, Position toPosition, Direction direction) {
+        assertThat(Direction.giveDirection(fromPosition, toPosition)).isEqualTo(direction);
     }
 
     private static Stream<Arguments> providePositionDirection() {
         return Stream.of(
-            Arguments.of(Position.valueOf(File.A, Rank.ONE),
-                Position.valueOf(File.B, Rank.ONE), Direction.RIGHT),
-            Arguments.of(Position.valueOf(File.B, Rank.ONE),
-                Position.valueOf(File.A, Rank.ONE), Direction.LEFT),
-            Arguments.of(Position.valueOf(File.A, Rank.ONE),
-                Position.valueOf(File.A, Rank.TWO), Direction.UP),
-            Arguments.of(Position.valueOf(File.A, Rank.TWO),
-                Position.valueOf(File.A, Rank.ONE), Direction.DOWN),
-            Arguments.of(Position.valueOf(File.A, Rank.ONE),
-                Position.valueOf(File.B, Rank.TWO), Direction.RIGHTUP),
-            Arguments.of(Position.valueOf(File.A, Rank.TWO),
-                Position.valueOf(File.B, Rank.ONE), Direction.RIGHTDOWN),
-            Arguments.of(Position.valueOf(File.B, Rank.ONE),
-                Position.valueOf(File.A, Rank.TWO), Direction.LEFTUP),
-            Arguments.of(Position.valueOf(File.B, Rank.TWO),
-                Position.valueOf(File.A, Rank.ONE), Direction.LEFTDOWN));
+                Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                        Position.valueOf(File.B, Rank.ONE), Direction.RIGHT),
+                Arguments.of(Position.valueOf(File.B, Rank.ONE),
+                        Position.valueOf(File.A, Rank.ONE), Direction.LEFT),
+                Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                        Position.valueOf(File.A, Rank.TWO), Direction.UP),
+                Arguments.of(Position.valueOf(File.A, Rank.TWO),
+                        Position.valueOf(File.A, Rank.ONE), Direction.DOWN),
+                Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                        Position.valueOf(File.B, Rank.TWO), Direction.RIGHTUP),
+                Arguments.of(Position.valueOf(File.A, Rank.TWO),
+                        Position.valueOf(File.B, Rank.ONE), Direction.RIGHTDOWN),
+                Arguments.of(Position.valueOf(File.B, Rank.ONE),
+                        Position.valueOf(File.A, Rank.TWO), Direction.LEFTUP),
+                Arguments.of(Position.valueOf(File.B, Rank.TWO),
+                        Position.valueOf(File.A, Rank.ONE), Direction.LEFTDOWN));
     }
 
     @Test
