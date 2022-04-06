@@ -14,7 +14,7 @@ class UserDaoTest {
     @DisplayName("디비에 연결되야 한다.")
     void connection() {
         final UserDao userDao = new UserDao();
-        final Connection connection = userDao.getConnection();
+        final Connection connection = CommonDao.getConnection();
         assertThat(connection).isNotNull();
     }
 
@@ -23,7 +23,7 @@ class UserDaoTest {
     void create_User_Record() {
         final UserDao userDao = new UserDao();
         assertThatNoException().isThrownBy(
-                () -> userDao.createUser("test2", 2)
+                () -> userDao.createUser("test300", 32)
         );
     }
 
@@ -32,7 +32,7 @@ class UserDaoTest {
     void get_User() {
         final UserDao userDao = new UserDao();
 //        final UserDto userDto = userDao.getUser("test");
-        assertThat(userDao.getUser("test")).isEqualTo(1);
+        assertThat(userDao.getUser("test300")).isEqualTo(158);
     }
 
 }

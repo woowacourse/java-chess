@@ -15,7 +15,7 @@ class BoardDaoTest {
     @DisplayName("디비에 연결되야 한다.")
     void connection() {
         final BoardDao boardDao = new BoardDao();
-        final Connection connection = boardDao.getConnection();
+        final Connection connection = CommonDao.getConnection();
         assertThat(connection).isNotNull();
     }
 

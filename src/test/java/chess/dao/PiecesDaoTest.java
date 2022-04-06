@@ -14,7 +14,7 @@ class PiecesDaoTest {
     @DisplayName("디비에 연결되야 한다.")
     void connection() {
         final PiecesDao piecesDao = new PiecesDao();
-        final Connection connection = piecesDao.getConnection();
+        final Connection connection = CommonDao.getConnection();
         assertThat(connection).isNotNull();
     }
 
