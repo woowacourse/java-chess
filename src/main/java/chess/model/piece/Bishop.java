@@ -5,16 +5,23 @@ import java.util.List;
 
 public class Bishop extends LinearMovingPiece {
 
-    private static final String NAME = "b";
     private static final double POINT = 3;
 
     public Bishop(Color color) {
         super(color);
     }
 
+    public Bishop(Color color, int squareId) {
+        super(color, squareId);
+    }
+
+    public Bishop(int id, Color color, int squareId) {
+        super(id, color, squareId);
+    }
+
     @Override
     public String name() {
-        return NAME;
+        return PieceType.b.name();
     }
 
     @Override

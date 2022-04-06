@@ -6,12 +6,20 @@ import chess.model.square.Square;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class PawnMovingPiece extends AbstractPiece {
+public abstract class PawnMovingPiece extends Piece {
 
     private static final int PAWN_FIRST_LINE_MAX_DISTANCE = 2;
 
     protected PawnMovingPiece(Color color) {
         super(color);
+    }
+
+    protected PawnMovingPiece(Color color, int squareId) {
+        super(0, color, squareId);
+    }
+
+    protected PawnMovingPiece(int id, Color color, int squareId) {
+        super(id, color, squareId);
     }
 
     @Override

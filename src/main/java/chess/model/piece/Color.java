@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Color {
@@ -15,5 +16,12 @@ public enum Color {
 
     public boolean isBlack() {
         return this.equals(BLACK);
+    }
+
+    public static Color findColor(String name) {
+        return Arrays.stream(values())
+                .filter(color -> color.name().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

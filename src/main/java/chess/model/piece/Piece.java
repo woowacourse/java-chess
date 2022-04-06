@@ -1,27 +1,71 @@
 package chess.model.piece;
 
 import chess.model.ConsoleBoard;
+import chess.model.square.Direction;
 import chess.model.square.Square;
+import java.util.List;
 
-public interface Piece {
+public abstract class Piece {
 
-    boolean isBlack();
+    private final int id;
+    protected final Color color;
+    private final int squareId;
 
-    String name();
+    protected Piece(int id, Color color, int squareId) {
+        this.id = id;
+        this.color = color;
+        this.squareId = squareId;
+    }
 
-    boolean movable(ConsoleBoard consoleBoard, Square source, Square target);
+    public Piece(Color color, int squareId) {
+        this(0, color, squareId);
+    }
 
-    boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target);
+    protected Piece(Color color) {
+        this(0, color, 0);
+    }
 
-    double getPoint();
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
 
-    boolean isPawn();
+    public boolean movable(ConsoleBoard consoleBoard, Square source, Square target) {
+        return movable(source, target);
+    }
 
-    boolean isKing();
+    abstract boolean movable(Square source, Square target);
 
-    boolean isSameColor(Color color);
+    public boolean isNotAlly(Piece target) {
+        return this.color != target.color();
+    }
 
-    Color color();
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
+    }
 
-    boolean isNotEmpty();
+    public Color color() {
+        return color;
+    }
+
+    public abstract boolean isNotEmpty();
+
+    abstract List<Direction> getDirection();
+
+    public abstract double getPoint();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract String name();
+
+    public abstract boolean canMoveWithoutObstacle(ConsoleBoard board, Square source, Square target);
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSquareId() {
+        return squareId;
+    }
 }

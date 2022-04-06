@@ -4,9 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Board;
+import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,5 +60,14 @@ class SquareDaoTest {
     void getSquareIdBySquare() {
         int squareId = dao.getSquareIdBySquare(new Square(File.A, Rank.TWO, boardId));
         assertThat(squareId).isEqualTo(square.getId());
+    }
+
+    @Test
+    void findAllSquaresAndPieces() {
+        Map<Square, Piece> all = dao.findAllSquaresAndPieces(boardId);
+
+        for (Square Square : all.keySet()) {
+            assertThat(all.get(Square).name()).isEqualTo("p");
+        }
     }
 }

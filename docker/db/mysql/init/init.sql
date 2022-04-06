@@ -17,8 +17,8 @@ create table square
 create table piece
 (
     id        int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    type      int(10) NOT NULL,
-    color     int(10) NOT NULL,
+    type      varchar(10) NOT NULL,
+    color     varchar(10) NOT NULL,
     square_id int(10) NOT NULL,
     foreign key (square_id) references square (id)
         on delete cascade

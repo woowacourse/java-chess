@@ -1,5 +1,8 @@
 package chess.dao;
 
+import chess.model.piece.Color;
+import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
@@ -8,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SquareDao {
 
@@ -20,7 +25,8 @@ public class SquareDao {
     public Square save(Square square) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "insert into square (square_file, square_rank, board_id) values (?, ?, ?)";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, square.getFile().value());
             preparedStatement.setInt(2, square.getRank().value());
             preparedStatement.setInt(3, square.getBoardId());
@@ -81,30 +87,44 @@ public class SquareDao {
         return getBySquare(square).getId();
     }
 
-//    public List<Position> getPaths(List<Position> positions, int roomId) {
-//        List<Position> realPositions = new ArrayList<>();
-//        for (Position position : positions) {
-//            realPositions.add(getByColumnAndRowAndBoardId(position.getColumn(), position.getRow(), roomId));
+//    public List<square> getPaths(List<square> squares, int roomId) {
+//        List<square> realsquares = new ArrayList<>();
+//        for (square square : squares) {
+//            realsquares.add(getByFileAndRankAndBoardId(square.getFile(), square.getRank(), roomId));
 //        }
-//        return realPositions;
+//        return realsquares;
 //    }
 
-//    public Map<Position, Piece> findAllPositionsAndPieces(int boardId) {
-//        return connectionManager.executeQuery(connection -> {
-//            final String sql = "select po.id as po_id, po.position_column, po.position_row, po.board_id, " +
-//                    "pi.id as pi_id, pi.type, pi.color, pi.position_id " +
-//                    "from position po " +
-//                    "inner join piece pi on po.id = pi.position_id " +
-//                    "where board_id=?";
-//
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setInt(1, boardId);
-//            final ResultSet resultSet = preparedStatement.executeQuery();
-//            Map<Position, Piece> existPiecesWithPosition = new HashMap<>();
-//            while (resultSet.next()) {
-//                existPiecesWithPosition.put(makePosition(resultSet), makePiece(resultSet));
-//            }
-//            return existPiecesWithPosition;
-//        });
-//    }
+    public Map<Square, Piece> findAllSquaresAndPieces(int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "select po.id as po_id, po.square_file, po.square_rank, po.board_id, " +
+                    "pi.id as pi_id, pi.type, pi.color, pi.square_id " +
+                    "from square po " +
+                    "inner join piece pi on po.id = pi.square_id " +
+                    "where board_id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, boardId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            Map<Square, Piece> existPiecesWithSquare = new HashMap<>();
+            while (resultSet.next()) {
+                existPiecesWithSquare.put(makeSquare(resultSet), makePiece(resultSet));
+            }
+            return existPiecesWithSquare;
+        });
+    }
+
+    private Piece makePiece(ResultSet resultSet) throws SQLException {
+        return PieceType.getPiece(resultSet.getString("type"),
+                resultSet.getInt("id"),
+                Color.findColor(resultSet.getString("color")),
+                resultSet.getInt("square_id"));
+    }
+
+    private Square makeSquare(ResultSet resultSet) throws SQLException {
+        return new Square(resultSet.getInt("id"),
+                File.findFile(resultSet.getInt("square_file")),
+                Rank.findRank(resultSet.getInt("square_rank")),
+                resultSet.getInt("board_id"));
+    }
 }

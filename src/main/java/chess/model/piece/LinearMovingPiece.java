@@ -5,12 +5,20 @@ import chess.model.square.Square;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class LinearMovingPiece extends AbstractPiece {
+public abstract class LinearMovingPiece extends Piece {
 
     private static final int LINEAR_MOVING_PIECE_MAX_DISTANCE = 7;
 
     protected LinearMovingPiece(Color color) {
         super(color);
+    }
+
+    protected LinearMovingPiece(Color color, int squareId) {
+        super(0, color, squareId);
+    }
+
+    public LinearMovingPiece(int id, Color color, int squareId) {
+        super(id, color, squareId);
     }
 
     @Override
