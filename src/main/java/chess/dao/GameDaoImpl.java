@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.Game;
-import chess.model.Turn;
 
 public class GameDaoImpl implements GameDao {
 

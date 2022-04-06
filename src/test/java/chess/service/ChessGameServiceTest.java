@@ -120,7 +120,7 @@ public class ChessGameServiceTest {
         //when
         chessGameService.move(Position.of("a2"), Position.of("a4"));
         chessGameService.save();
-        String actual = chessGameService.getTurnColor();
+        String actual = chessGameService.loadTurnColor();
 
         //then
         assertThat(actual).isEqualTo(PieceColor.BLACK.toString());

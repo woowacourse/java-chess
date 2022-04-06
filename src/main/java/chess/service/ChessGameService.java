@@ -57,11 +57,15 @@ public class ChessGameService {
             new SavedPieceArrangement(find()));
     }
 
-    public String getTurnColor() {
+    public String loadTurnColor() {
         if (Objects.isNull(gameDao.findTurnById(gameDao.getId()))) {
             return chessGame.getTurnColor().toString();
         }
         return gameDao.findTurnById(gameDao.getId());
+    }
+
+    public String getTurnColor() {
+        return chessGame.getTurnColor().toString();
     }
 
     public Map<Position, Piece> getPiecesByPositions() {
