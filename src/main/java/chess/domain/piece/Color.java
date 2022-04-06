@@ -18,6 +18,16 @@ public enum Color {
         return BLACK;
     }
 
+    public static Color getColor(String name) {
+        if (BLACK.name == name) {
+            return BLACK;
+        }
+        if (WHITE.name == name) {
+            return WHITE;
+        }
+        return NONE;
+    }
+
     public String getName() {
         return name;
     }

@@ -18,7 +18,7 @@ public abstract class Piece {
     }
 
     public static Piece from(File file, Rank rank) {
-        return PieceGenerator.generatePiece(file, rank);
+        return InitPieceGenerator.generatePiece(file, rank);
     }
 
     abstract public String getEmoji();
@@ -57,5 +57,9 @@ public abstract class Piece {
 
     public String getType() {
         return type;
+    }
+
+    public boolean isSameName(String type) {
+        return this.type == type;
     }
 }
