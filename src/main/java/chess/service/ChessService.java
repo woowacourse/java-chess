@@ -20,18 +20,18 @@ public class ChessService {
     private final BoardDao boardDao;
 
     public ChessService() {
-        chessGame = new Ready();
         chessGameDao = new ChessGameDao();
-        chessGameDao.save(chessGame);
         boardDao = new BoardDao();
-        saveEmpty();
+        chessGame = new Ready();
     }
 
-    public void saveEmpty() {
+    public Map<String, Object> ready() {
+        chessGameDao.save(chessGame);
         int gameId = chessGameDao.findRecentGame();
         for (String position : Position.values()) {
             boardDao.save(position, gameId);
         }
+        return chessGame.getBoard().toMap();
     }
 
     public Map<String, Object> start() {

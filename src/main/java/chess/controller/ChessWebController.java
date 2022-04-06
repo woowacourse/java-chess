@@ -27,7 +27,7 @@ public class ChessWebController {
 
     private void renderReady() {
         get("/", (req, res) -> {
-            return render(chessService.showBoard(), "chess.html");
+            return render(chessService.ready(), "chess.html");
         });
     }
 
