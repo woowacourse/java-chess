@@ -95,7 +95,7 @@
 </div>
 </body>
 <script>
-    window.addEventListener('DOMContentLoaded', function(){ createChessBoard(); });
+    window.onload = function(){createChessBoard();};
 
     let positions;
 
@@ -136,6 +136,9 @@
 
         const $chessboard = document.getElementById("chessboard");
         $chessboard.innerHTML = html;
+
+        document.getElementById("source").value = ""
+        document.getElementById("target").value = ""
     }
 
     function convertPieceNameToHtmlEntity(positions) {
@@ -162,7 +165,6 @@
     }
 
     function movePiece(position) {
-
         let source = document.getElementById("source").value
         if (!source) {
             if (!positions.hasOwnProperty(position)) {
