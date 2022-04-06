@@ -68,6 +68,7 @@ public class RunningState implements GameState {
         return players.isPlayerAbleToPromotePawn(color);
     }
 
+    @Override
     public final Map<Color, Double> getPlayerScores(final ScoreCalculator scoreCalculator) {
         return players.calculatePlayerScores(scoreCalculator);
     }

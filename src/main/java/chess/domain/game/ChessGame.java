@@ -59,8 +59,7 @@ public class ChessGame {
     }
 
     public Map<Color, Double> getPlayerScores() {
-        final RunningState runningState = convertToRunningState(gameState);
-        return runningState.getPlayerScores(new ScoreCalculator());
+        return gameState.getPlayerScores(new ScoreCalculator());
     }
 
     public void end() {

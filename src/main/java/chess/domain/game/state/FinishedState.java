@@ -1,6 +1,9 @@
 package chess.domain.game.state;
 
+import java.util.Map;
+
 import chess.domain.Color;
+import chess.domain.game.ScoreCalculator;
 import chess.domain.player.Players;
 
 public final class FinishedState implements GameState {
@@ -21,6 +24,11 @@ public final class FinishedState implements GameState {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public Map<Color, Double> getPlayerScores(final ScoreCalculator scoreCalculator) {
+        return players.calculatePlayerScores(scoreCalculator);
     }
 
     @Override
