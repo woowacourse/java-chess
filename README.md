@@ -103,5 +103,7 @@
 
 ## 5단계 - db 연동
 ### 필수 요구사항
-- [ ] board table
-  - board id/ position/ piece
+- [x] piece table
+  - piece id/ position/ piece name
+- [x] turn table
+  - turn id/ turn name
