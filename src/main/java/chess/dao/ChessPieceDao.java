@@ -1,9 +1,12 @@
 package chess.dao;
 
+import static chess.dao.util.StatementUtil.setAllParameter;
+import static chess.dao.util.StatementUtil.setParameter;
+
+import chess.dao.util.ConnectionGenerator;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
-import chess.dto.ChessPieceMapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,10 +50,9 @@ public class ChessPieceDao {
         final String sql = "DELETE FROM chess_piece WHERE room_name = ? AND position = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
-            statement.setString(2, position.getValue());
+            setParameter(statement, roomName, position.getValue());
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +66,7 @@ public class ChessPieceDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,17 +83,7 @@ public class ChessPieceDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            int count = 1;
-            for (final Entry<Position, ChessPiece> entry : pieceByPosition.entrySet()) {
-                final Position position = entry.getKey();
-                final ChessPiece chessPiece = entry.getValue();
-
-                statement.setString(count++, roomName);
-                statement.setString(count++, position.getValue());
-                statement.setString(count++, ChessPieceMapper.toPieceType(chessPiece));
-                statement.setString(count++, chessPiece.color().getValue());
-            }
-
+            setAllParameter(roomName, pieceByPosition, statement);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,10 +97,7 @@ public class ChessPieceDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, to.getValue());
-            statement.setString(2, roomName);
-            statement.setString(3, from.getValue());
-
+            setParameter(statement, to.getValue(), roomName, from.getValue());
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

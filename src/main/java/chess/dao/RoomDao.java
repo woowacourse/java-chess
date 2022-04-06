@@ -1,5 +1,8 @@
 package chess.dao;
 
+import static chess.dao.util.StatementUtil.setParameter;
+
+import chess.dao.util.ConnectionGenerator;
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
@@ -17,9 +20,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
-            statement.setString(2, gameStatus.getValue());
-            statement.setString(3, currentTurn.getValue());
+            setParameter(statement, roomName, gameStatus.getValue(), currentTurn.getValue());
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,7 +34,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
                 return resultSet.next();
@@ -50,7 +51,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
@@ -73,7 +74,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
@@ -96,7 +97,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, roomName);
+            setParameter(statement, roomName);
 
             return statement.executeUpdate();
         } catch (SQLException e) {
@@ -111,10 +112,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, gameStatus.getValue());
-            statement.setString(2, currentTurn.getValue());
-            statement.setString(3, roomName);
-
+            setParameter(statement, gameStatus.getValue(), currentTurn.getValue(), roomName);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,9 +126,7 @@ public class RoomDao {
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, gameStatus.getValue());
-            statement.setString(2, roomName);
-
+            setParameter(statement, gameStatus.getValue(), roomName);
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ public class ConnectionGenerator {
     private ConnectionGenerator() {
     }
 
-    static Connection getConnection() {
+    public static Connection getConnection() {
         final String url = "jdbc:mysql://localhost:3306/chess";
         final String userName = "root";
         final String password = "root";
