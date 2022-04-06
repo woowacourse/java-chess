@@ -30,7 +30,7 @@ public class BoardDao {
                 .collect(Collectors.toList());
             for (Map.Entry<Square, Piece> entry : pieces) {
                 statement = connection.prepareStatement(sql);
-                setStatement(board_id, statement, entry.getKey(), entry.getValue());
+                setInsertStatement(board_id, statement, entry.getKey(), entry.getValue());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class BoardDao {
         DBConnector.closeDB(connection, statement);
     }
 
-    private void setStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
+    private void setInsertStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
         SQLException {
         statement.setInt(1, piece_id++);
         statement.setInt(2, board_id);
