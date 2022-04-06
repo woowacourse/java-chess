@@ -1,4 +1,4 @@
-package chess.game;
+package game;
 
 import chess.chessboard.Board;
 import chess.chessboard.position.File;
@@ -6,9 +6,6 @@ import chess.chessboard.position.Position;
 import chess.chessboard.position.Rank;
 
 import java.util.HashMap;
-
-import static chess.game.Player.BLACK;
-import static chess.game.Player.WHITE;
 
 public final class Score {
 
@@ -23,8 +20,8 @@ public final class Score {
     }
 
     public void calculateScore(final Board board) {
-        scores.put(WHITE, calculateScore(board, WHITE));
-        scores.put(BLACK, calculateScore(board, BLACK));
+        scores.put(Player.WHITE, calculateScore(board, Player.WHITE));
+        scores.put(Player.BLACK, calculateScore(board, Player.BLACK));
     }
 
     private double calculateScore(final Board board, final Player player) {

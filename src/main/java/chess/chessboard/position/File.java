@@ -42,4 +42,8 @@ public enum File {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
     }
+
+    public Character getName() {
+        return this.name;
+    }
 }

@@ -1,8 +1,8 @@
 package chess.state;
 
 import chess.chessboard.Board;
-import chess.game.Player;
-import chess.game.Score;
+import game.Player;
+import game.Score;
 
 import java.util.HashMap;
 

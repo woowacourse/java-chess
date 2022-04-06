@@ -3,7 +3,7 @@ package chess.piece;
 import chess.chessboard.Board;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Rank;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ public class KingTest {
     @CsvSource(value = {"SIX,D", "FOUR,D", "FIVE,C", "FIVE,E", "SIX,E", "FOUR,E", "SIX,C", "FOUR,C"})
     void canMove_true(Rank rank, File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece king = new King(Player.BLACK, "K");
+        final Piece king = new King(Player.BLACK, Symbol.KING);
         final boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();

@@ -1,7 +1,7 @@
 package chess.piece;
 
 import chess.chessboard.position.Direction;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class Knight extends Piece {
 
     private static final double SCORE = 2.5;
 
-    public Knight(final Player player, final String symbol) {
+    public Knight(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

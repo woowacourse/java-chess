@@ -3,13 +3,15 @@ package chess.piece;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Position;
 import chess.chessboard.position.Rank;
+import game.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static chess.chessboard.position.File.*;
 import static chess.chessboard.position.Rank.*;
-import static chess.game.Player.*;
+import static game.Player.*;
+import static chess.piece.Symbol.*;
 
 public class PieceFactory {
 
@@ -29,35 +31,32 @@ public class PieceFactory {
     
     private static void createBlankIn(final Rank rank) {
         for (File file : File.values()) {
-            INITIAL_BOARD.put(Position.of(rank, file), new Blank(NONE, "."));
+            INITIAL_BOARD.put(Position.of(rank, file), new Blank(NONE, BLANK));
         }
     }
 
     private static void createBlackPieces() {
-        INITIAL_BOARD.put(Position.of(EIGHT, A), new Rook(BLACK, "R"));
-        INITIAL_BOARD.put(Position.of(EIGHT, B), new Knight(BLACK, "N"));
-        INITIAL_BOARD.put(Position.of(EIGHT, C), new Bishop(BLACK, "B"));
-        INITIAL_BOARD.put(Position.of(EIGHT, D), new Queen(BLACK, "Q"));
-        INITIAL_BOARD.put(Position.of(EIGHT, E), new King(BLACK, "K"));
-        INITIAL_BOARD.put(Position.of(EIGHT, F), new Bishop(BLACK, "B"));
-        INITIAL_BOARD.put(Position.of(EIGHT, G), new Knight(BLACK, "N"));
-        INITIAL_BOARD.put(Position.of(EIGHT, H), new Rook(BLACK, "R"));
+        createPieces(EIGHT, BLACK);
         for (final File file : File.values()) {
-            INITIAL_BOARD.put(Position.of(SEVEN, file), new Pawn(BLACK, "P"));
+            INITIAL_BOARD.put(Position.of(SEVEN, file), new Pawn(BLACK, PAWN));
         }
     }
 
     private static void createWhitePieces() {
-        INITIAL_BOARD.put(Position.of(ONE, A), new Rook(WHITE, "r"));
-        INITIAL_BOARD.put(Position.of(ONE, B), new Knight(WHITE, "n"));
-        INITIAL_BOARD.put(Position.of(ONE, C), new Bishop(WHITE, "b"));
-        INITIAL_BOARD.put(Position.of(ONE, D), new Queen(WHITE, "q"));
-        INITIAL_BOARD.put(Position.of(ONE, E), new King(WHITE, "k"));
-        INITIAL_BOARD.put(Position.of(ONE, F), new Bishop(WHITE, "b"));
-        INITIAL_BOARD.put(Position.of(ONE, G), new Knight(WHITE, "n"));
-        INITIAL_BOARD.put(Position.of(ONE, H), new Rook(WHITE, "r"));
+        createPieces(ONE, WHITE);
         for (final File file : File.values()) {
-            INITIAL_BOARD.put(Position.of(TWO, file), new Pawn(WHITE, "p"));
+            INITIAL_BOARD.put(Position.of(TWO, file), new Pawn(WHITE, PAWN));
         }
+    }
+
+    private static void createPieces(Rank rank, Player player) {
+        INITIAL_BOARD.put(Position.of(rank, A), new Rook(player, ROOK));
+        INITIAL_BOARD.put(Position.of(rank, B), new Knight(player, KNIGHT));
+        INITIAL_BOARD.put(Position.of(rank, C), new Bishop(player, BISHOP));
+        INITIAL_BOARD.put(Position.of(rank, D), new Queen(player, QUEEN));
+        INITIAL_BOARD.put(Position.of(rank, E), new King(player, KING));
+        INITIAL_BOARD.put(Position.of(rank, F), new Bishop(player, BISHOP));
+        INITIAL_BOARD.put(Position.of(rank, G), new Knight(player, KNIGHT));
+        INITIAL_BOARD.put(Position.of(rank, H), new Rook(player, ROOK));
     }
 }

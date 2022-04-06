@@ -1,7 +1,7 @@
 package chess.state;
 
 import chess.chessboard.Board;
-import chess.game.Player;
+import game.Player;
 
 import static chess.state.Command.*;
 
@@ -12,7 +12,7 @@ public final class Start extends Running {
     }
 
     public static State initState(final String command) {
-        if (!END.isUserInput(command)) {
+        if (!START.isUserInput(command)) {
             throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않았습니다.");
         }
         return new Start(new Board());

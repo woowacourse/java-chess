@@ -1,7 +1,7 @@
 package chess.state;
 
 import chess.chessboard.Board;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.List;

@@ -1,16 +1,12 @@
 package chess.chessboard;
 
-import chess.chessboard.position.File;
 import chess.chessboard.position.Position;
-import chess.chessboard.position.Rank;
-import chess.game.Player;
+import game.Player;
 import chess.piece.*;
 
 import java.util.*;
 
-import static chess.chessboard.position.File.*;
-import static chess.game.Player.*;
-import static chess.chessboard.position.Rank.*;
+import static game.Player.*;
 
 public final class Board {
 
@@ -29,7 +25,7 @@ public final class Board {
         checkNoneInSource(piece);
         checkMovable(source, target, piece);
         board.put(target, board.get(source));
-        board.put(source, new Blank(NONE, "."));
+        board.put(source, new Blank(NONE, Symbol.BLANK));
     }
 
     private void checkMovable(final Position source, final Position target, final Piece piece) {

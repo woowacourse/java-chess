@@ -18,6 +18,6 @@ public enum Command {
     }
 
     public boolean startsWith(final String command) {
-        return userInput.startsWith(command);
+        return command.startsWith(userInput);
     }
 }

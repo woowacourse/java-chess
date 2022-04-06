@@ -1,13 +1,13 @@
 package chess.piece;
 
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.Map;
 
 public final class Blank extends Piece {
 
-    public Blank(final Player player, final String symbol) {
+    public Blank(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 
@@ -19,5 +19,10 @@ public final class Blank extends Piece {
     @Override
     public double addTo(final double score) {
         return score;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
     }
 }

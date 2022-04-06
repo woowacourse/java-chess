@@ -1,21 +1,21 @@
 package chess.piece;
 
 import chess.chessboard.position.Direction;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static chess.chessboard.position.Direction.*;
-import static chess.game.Player.BLACK;
-import static chess.game.Player.NONE;
+import static game.Player.BLACK;
+import static game.Player.NONE;
 
 public final class Pawn extends Piece {
 
     private static final double SCORE = 1;
 
-    public Pawn(final Player player, final String symbol) {
+    public Pawn(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

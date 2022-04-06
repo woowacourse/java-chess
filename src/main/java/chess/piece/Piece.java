@@ -1,7 +1,7 @@
 package chess.piece;
 
 import chess.chessboard.position.Direction;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.List;
@@ -10,16 +10,20 @@ import java.util.Map;
 public abstract class Piece {
 
     protected final Player player;
-    private final String symbol;
+    private final Symbol symbol;
 
 
-    protected Piece(final Player player, final String symbol) {
+    protected Piece(final Player player, final Symbol symbol) {
         this.player = player;
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public Character getSymbol() {
+        return symbol.getSymbol(player);
+    }
+
+    public String getImageName() {
+        return symbol.getImageName(player);
     }
 
     public boolean isSame(final Player player) {
@@ -43,6 +47,10 @@ public abstract class Piece {
     public abstract double addTo(final double score);
 
     public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isBlank() {
         return false;
     }
 }

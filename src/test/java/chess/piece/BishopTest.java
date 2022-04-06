@@ -3,7 +3,7 @@ package chess.piece;
 import chess.chessboard.Board;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Rank;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ class BishopTest {
     @CsvSource(value = {"SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
     void canMove_false(final Rank rank, final File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece bishop = new Bishop(Player.BLACK, "B");
+        final Piece bishop = new Bishop(Player.BLACK, Symbol.BISHOP);
         boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isFalse();
@@ -39,7 +39,7 @@ class BishopTest {
     @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B"})
     void canMove_true(final Rank rank, final File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece bishop = new Bishop(Player.BLACK, "B");
+        final Piece bishop = new Bishop(Player.BLACK, Symbol.BISHOP);
         boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();

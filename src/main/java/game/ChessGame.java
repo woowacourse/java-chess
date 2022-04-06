@@ -1,4 +1,4 @@
-package chess.game;
+package game;
 
 import chess.state.Start;
 import chess.state.State;

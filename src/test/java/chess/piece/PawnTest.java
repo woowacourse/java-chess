@@ -3,7 +3,7 @@ package chess.piece;
 import chess.chessboard.Board;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Rank;
-import chess.game.Player;
+import game.Player;
 import chess.chessboard.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ class PawnTest {
     @Test
     void canMove_one_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), chessBoard);
 
         assertThat(actual).isFalse();
@@ -60,7 +60,7 @@ class PawnTest {
     @Test
     void canMove_two_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), chessBoard);
 
         assertThat(actual).isFalse();
@@ -70,7 +70,7 @@ class PawnTest {
     @Test
     void canMove_side_true() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), chessBoard);
 
         assertThat(actual).isTrue();
@@ -80,7 +80,7 @@ class PawnTest {
     @Test
     void canMove_side_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), chessBoard);
 
         assertThat(actual).isFalse();
