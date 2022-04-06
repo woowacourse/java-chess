@@ -6,6 +6,12 @@
 
 > Console
 
+### 프로그램 실행 방법 🏃
+
+`ConsoleApplication`을 실행해 주세요!
+
+---
+
 - [x] 명령 입력
     - `start`, `end`, `status`, `move` 명령 가능
     - 게임을 시작(`start`) 하지 않으면 `move` 불가
@@ -26,15 +32,57 @@
 
 > Web
 
-| Method |      Url      |    Description    |
-|--------|---------------|-------------------|
-|GET     |/piece         | 존재하는 모든 기물    |
-|GET     |/score         | 점수               |
-|GET     |/result        | 게임 결과           |
-|GET     |/turn          | 현재 턴의 색        |
-|POST    |/command/start | 게임 시작           |
-|POST    |/command/move  | 기물 이동           |
-|POST    |/command/end   | 게임 종료           |
+### 프로그램 실행 방법 🏃
+
+1. docker, docker-compose를 설치해주세요. (DB를 도커로 띄웁니다 🐳)
+2. 프로젝트의 `docker/db/mysql` 안에 `data` 디랙토리가 있다면 삭제해주세요!
+
+   (`data` 디랙토리가 있으면 테이블 생성 쿼리가 실행되지 않아요)
+3. 로컬에서 `3306`포트가 사용중인지 체크해주세요.
+
+   만약 `3306`포트가 사용중 이라면 `docker-compose.yml`파일에 `ports`를 변경해주세요.
+
+    ```dockerfile
+   # AS-IS
+       ports:
+      - "3306:3306"
+   
+   # TO-BE
+       ports:
+      - "13306:3306"
+   # OR
+       ports:
+      - "23306:3306"
+   ```
+
+
+4. 터미널을 켠 후, 아래 명령어를 실행해서 DB를 도커로 띄웁니다! 🐳
+
+```shell
+cd docker
+docker-compose -p chess -up
+```
+
+5. `WebApplication`을 실행한 후, [http://localhost:4567](http://localhost:4567)로 접속합니다 🤗
+6. 프로그램을 종료했다면 아래 명령어로 도커 컨테이너를 내려주세요 👋
+```shell
+docker-compose -p chess down
+```
+
+---
+
+| Method |           Url           |         Description         |
+|--------|-------------------------|-----------------------------|
+|GET     |/                        |메인 페이지                     |
+|GET     |/rooms/{name}            |이름이 {name}인 방 조회          |
+|POST    |/rooms/{name}            |새로운 방 생성                  |
+|DELETE  |/rooms/{name}            |방 삭제                        |
+|GET     |/rooms/{name}/pieces     |{name} 방이 소유한 모든 기물 조회  |
+|POST    |/rooms/{name}/pieces     |{name} 방의 기물 등록           |
+|PUT     |/rooms/{name}/pieces     |{name} 방의 기물 위치 변경       |
+|GET     |/rooms/{name}/scores     |{name} 방의 점수 조회           |
+|GET     |/rooms/{name}/turn       |{name} 방 현재 턴 조회          |
+|GET     |/rooms/{name}/result     |{name} 방의 result 조회        |
 
 ## Wiki 📚
 
