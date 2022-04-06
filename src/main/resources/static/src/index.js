@@ -201,4 +201,9 @@ const quit = () => {
     const turnBox = document.getElementById("turn-box")
     turnBox.innerText = "아직 게임 시작을 하지 않았습니다."
     initBoard();
+
+    fetch(`/exit`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+    }).catch(error => alert("게임 정보를 삭제하는데 문제가 발생했습니다."));
 }

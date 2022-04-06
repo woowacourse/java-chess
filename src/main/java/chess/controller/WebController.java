@@ -55,9 +55,11 @@ public class WebController {
             return gson.toJson(result);
         });
 
-//        post("/exit", (req, res) -> {
-//
-//        })
+        post("/exit", (req, res) -> {
+            chessService.exitGame();
+
+            return gson.toJson(gson.serializeNulls());
+        });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
