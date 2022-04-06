@@ -342,29 +342,25 @@
             <input type="text" name="target" placeholder="Target Position">
             <input type="submit" value="MOVE">
         </form>
-        {{#result}}
         <div class="status">
             <p>{{turn.now.value}} 턴</p>
+            {{#result}}
             <p>BLACK 팀 점수 : {{blackScore}}</p>
             <p>WHITE 팀 점수 : {{whiteScore}}</p>
             <p>승리 팀 : {{winningTeam.value}} ({{winningTeam.winningType}})</p>
+            {{/result}}
         </div>
-        {{/result}}
-        <br/>
-        <form class="start" action="/load">
-            <input type="submit" value="START">
-        </form>
-        <br/>
-        <form class="save" method="post" action="/save">
-            <input type="submit" value="SAVE">
-        </form>
-        <br/>
         <form class="load" action="/load">
-            <input type="submit" value="LOAD">
+            <p class="info">📣 저장된 게임을 불러옵니다.</p>
+            <input type="submit" value="LOAD GAME">
         </form>
-        <br/>
+        <form class="save" method="post" action="/save">
+            <p class="info">💾 게임을 저장힙니다.</p>
+            <input type="submit" value="SAVE GAME">
+        </form>
         <form class="reset" method="post" action="/reset">
-            <input type="submit" value="RESET">
+            <p class="info">🧨 체스 게임을 리셋합니다.</p>
+            <input type="submit" value="RESET GAME">
         </form>
     </section>
 </div>

@@ -40,3 +40,14 @@ img {
   background-color: aliceblue;
   border-style: outset;
 }
+
+.load, .save, .reset {
+  text-align: center;
+}
+
+.info {
+  background-color: beige;
+  padding: 3px;
+  margin-left: 70px;
+  margin-right: 70px;
+}
