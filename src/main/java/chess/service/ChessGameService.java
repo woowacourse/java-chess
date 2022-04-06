@@ -6,6 +6,7 @@ import chess.EmblemMapper;
 import chess.dao.BoardDao;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.PieceArrangement.PieceArrangement;
 import chess.model.Position;
 import chess.model.Turn;
 
@@ -34,5 +35,9 @@ public class ChessGameService {
 
     public void delete() {
         boardDao.deleteById(gameId);
+    }
+
+    public void init(Turn turn, PieceArrangement pieceArrangement) {
+        this.chessGame = new ChessGame(turn, pieceArrangement);
     }
 }

@@ -1,7 +1,10 @@
 package chess.service;
 
+import static chess.model.File.*;
+import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,7 +16,13 @@ import chess.EmblemMapper;
 import chess.dao.BoardDao;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.PieceArrangement.PieceArrangement;
+import chess.model.PieceColor;
 import chess.model.Position;
+import chess.model.Turn;
+import chess.model.piece.King;
+import chess.model.piece.Piece;
+import chess.model.piece.Rook;
 
 public class ChessGameServiceTest {
 
@@ -78,6 +87,21 @@ public class ChessGameServiceTest {
         assertThat(actual).isNull();
     }
 
+    @Test
+    @DisplayName("체스 게임 초기화 기능을 검증한다.")
+    void init() {
+        //given
+        Board board = new Board(new testPieceArrangement());
+        //when
+        chessGameService.init(new Turn(), new testPieceArrangement());
+        chessGameService.save();
+        Map<String, String> actual = chessGameService.find();
+        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
     private static class fakeBoardDao implements BoardDao {
         private final Map<Integer, Map<String, String>> table;
 
@@ -98,6 +122,17 @@ public class ChessGameServiceTest {
         @Override
         public void deleteById(int gameId) {
             table.remove(gameId);
+        }
+    }
+
+    public static class testPieceArrangement implements PieceArrangement {
+
+        @Override
+        public Map<Position, Piece> apply() {
+            Map<Position, Piece> result = new HashMap<>();
+            result.put(Position.of(A, TWO), Rook.colorOf(PieceColor.WHITE));
+            result.put(Position.of(A, THREE), King.colorOf(PieceColor.BLACK));
+            return result;
         }
     }
 }
