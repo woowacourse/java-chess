@@ -12,78 +12,54 @@ import static spark.Spark.*;
 
 public class WebChessController {
 
-    ChessGameService service = new ChessGameService();
+    private static final String CHESS_GAME_URL = "chessGame.html";
+    private static final String START_URL = "start.html";
+
+    private final ChessGameService service = new ChessGameService();
 
     public void run() {
         staticFileLocation("/templates");
 
-        get("/", (req, res) ->
-                new HandlebarsTemplateEngine().render(new ModelAndView(Map.of(), "start.html"))
+        get("/", (req, res) -> render(Map.of(), START_URL));
+
+        get("/game", (req, res) -> executeCommand(service::init));
+
+        get("/start", (req, res) -> executeCommand(service::start));
+
+        get("/end", (req, res) -> executeCommand(service::end));
+
+        get("/restart", (req, res) -> executeCommand(service::restart));
+
+        get("/save", (req, res) -> executeCommand(service::save));
+
+        get("/status", (req, res) -> status());
+
+        post("/move", (req, res) -> executeCommand(
+                () -> service.move(req.queryParams("from"), req.queryParams("to")))
         );
-
-        get("/game", (req, res) -> {
-            service.init();
-            return render(generateResponse());
-        });
-
-        get("/start", (req, res) -> {
-            try {
-                service.start();
-                return render(generateResponse());
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
-
-        get("/end", (req, res) -> {
-            try {
-                service.end();
-                return render(generateResponse());
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
-
-        get("/restart", (req, res) -> {
-            try {
-                service.restart();
-                return render(generateResponse());
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
-
-        get("/save", (req, res) -> {
-            try {
-                service.save();
-                return render(generateResponse());
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
-
-        get("/status", (req, res) -> {
-            try {
-                ScoreDto score = service.status();
-                return render(generateResponse(score));
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
-
-        post("/move", (req, res) -> {
-            try {
-                service.move(req.queryParams("from"), req.queryParams("to"));
-                return render(generateResponse());
-            } catch (RuntimeException e) {
-                return render(generateResponse(e.getMessage()));
-            }
-        });
 
     }
 
-    private String render(Map<String, Object> response) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(response, "chessGame.html"));
+    private String executeCommand(Runnable command) {
+        try {
+            command.run();
+            return render(generateResponse(), CHESS_GAME_URL);
+        } catch (RuntimeException e) {
+            return render(generateResponse(e.getMessage()), CHESS_GAME_URL);
+        }
+    }
+
+    private String status() {
+        try {
+            ScoreDto score = service.status();
+            return render(generateResponse(score), CHESS_GAME_URL);
+        } catch (RuntimeException e) {
+            return render(generateResponse(e.getMessage()), CHESS_GAME_URL);
+        }
+    }
+
+    private String render(Map<String, Object> response, String url) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(response, url));
     }
 
     private Map<String, Object> generateResponse() {
