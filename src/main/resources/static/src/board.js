@@ -13,7 +13,6 @@ async function startChess() {
     }
     let board = await fetch("/start");
     board = await board.json();
-    console.log(board);
     putPieceInSquare(board);
 }
 
@@ -26,13 +25,11 @@ async function endChess() {
 async function loadChess() {
     let board = await fetch("/load");
     board = await board.json();
-    console.log(board);
     putPieceInSquare(board);
 }
 
 function putPieceInSquare(board) {
    for (key in board)  {
-      console.log(key);
       let position = document.getElementById(key);
       if (position.hasChildNodes()) {
         position.removeChild(position.firstChild);

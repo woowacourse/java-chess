@@ -74,4 +74,17 @@ public class SquareDao {
             e.printStackTrace();
         }
     }
+
+    public void update(String source, String target) {
+        final Connection connection = getConnection();
+        final String sql = "update square set position = ? where position ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, target);
+            statement.setString(2, source);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

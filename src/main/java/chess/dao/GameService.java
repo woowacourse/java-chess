@@ -5,6 +5,7 @@ import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameService {
@@ -19,14 +20,13 @@ public class GameService {
 
     public Map<Position, Piece> loadGameBoard() {
         String stateName = stateDao.find();
-        Map<Position, Piece> board = createBoard();
+        Map<Position, Piece> board = createBoardFrom(squareDao.find());
         State state = StateGenerator.generateState(stateName, board);
         return state.getBoard();
     }
 
-    private Map<Position, Piece> createBoard() {
+    private Map<Position, Piece> createBoardFrom(final Map<String, String> squares) {
         Map<Position, Piece> board = new HashMap<>();
-        Map<String, String> squares = squareDao.find();
         for (String position : squares.keySet()) {
             board.put(Position.from(position), Piece.getPiece(squares.get(position)));
         }
@@ -43,5 +43,13 @@ public class GameService {
     public void endGame() {
         stateDao.delete();
         squareDao.delete();
+    }
+
+    public void moveGamePiece(List<String> command) {
+        String stateName = stateDao.find();
+        Map<Position, Piece> board = createBoardFrom(squareDao.find());
+        State state = StateGenerator.generateState(stateName, board);
+        state = state.proceed(command);
+        squareDao.update(command.get(1), command.get(2));
     }
 }

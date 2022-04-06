@@ -14,7 +14,7 @@ public class MoveDto {
         this.target = target;
     }
 
-    public List<String> getOptions() {
+    public List<String> getCommand() {
         return List.of(MOVE_COMMAND, source, target);
     }
 }

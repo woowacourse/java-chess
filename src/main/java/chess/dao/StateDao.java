@@ -60,4 +60,15 @@ public class StateDao {
             e.printStackTrace();
         }
     }
+
+    public void update(String newName) {
+        final Connection connection = getConnection();
+        final String sql = "update state name = (?)";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
