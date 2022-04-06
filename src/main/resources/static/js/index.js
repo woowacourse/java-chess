@@ -19,13 +19,6 @@ function onClickButton ({target: {id}}) {
     }
 }
 
-async function onClickEndButton () {
-    const response = await fetch("/end");
-    if (response.ok) {
-        alert("게임이 종료됐습니다!");
-    }
-}
-
 async function onClickStartButton () {
     const response = await fetch("/start");
     const data = await response.json();
@@ -46,12 +39,6 @@ function initBoard (data) {
     });
 }
 
-async function onClickStatusButton () {
-    const response = await fetch("/status");
-    const data = await response.json();
-    alert(JSON.stringify(data, null, 2));
-}
-
 function removeAllPiece () {
     chessBoard.querySelectorAll(".piece").forEach(e => e.remove());
 }
@@ -63,6 +50,19 @@ function createPieceImage ({color, name}) {
     image.height = 90;
     image.classList.add("piece");
     return image;
+}
+
+async function onClickEndButton () {
+    const response = await fetch("/end");
+    if (response.ok) {
+        alert("게임이 종료됐습니다!");
+    }
+}
+
+async function onClickStatusButton () {
+    const response = await fetch("/status");
+    const data = await response.json();
+    alert(JSON.stringify(data, null, 2));
 }
 
 function onClickBoard ({target: {classList, id, parentNode}}) {
@@ -89,13 +89,14 @@ function hasSecondSelected () {
 async function onClickPiece (id) {
     const from = chessBoard.querySelector(".first-selected").parentNode.id;
     const to = getSecondSelectedId(id);
+
     removeSelected();
+
     const response = await fetch("/move", {
                        method: "post",
                        headers: {"Content-Type": "application/json"},
                        body: JSON.stringify({from: from, to: to})
                      });
-
     if (response.ok) {
         movePiece(from, to);
         const isRemovedKing = await response.json();
@@ -104,6 +105,7 @@ async function onClickPiece (id) {
         }
         return;
     }
+
     const errorMessage = await response.json();
     alert(JSON.stringify(errorMessage));
 }
@@ -115,6 +117,11 @@ function getSecondSelectedId (id) {
     return id;
 }
 
+function removeSelected () {
+    chessBoard.querySelector(".first-selected").classList.remove("first-selected");
+    chessBoard.querySelector(".second-selected").classList.remove("second-selected");
+}
+
 function movePiece (from, to) {
     const fromPiece = document.getElementById(from).firstElementChild;
     const toPiece = document.getElementById(to).firstElementChild;
@@ -123,9 +130,4 @@ function movePiece (from, to) {
     }
     fromPiece.remove();
     document.getElementById(to).appendChild(fromPiece);
-}
-
-function removeSelected () {
-    chessBoard.querySelector(".first-selected").classList.remove("first-selected");
-    chessBoard.querySelector(".second-selected").classList.remove("second-selected");
 }
