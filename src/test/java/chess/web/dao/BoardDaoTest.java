@@ -26,7 +26,7 @@ class BoardDaoTest {
     }
 
     @Test
-    @DisplayName("board id에 따라 현재 턴이 누구인지 알려주는 테스트")
+    @DisplayName("save 된 board의 Turn이 Turn.init()을 가질 때, 그 board의 id에 따라 현재 턴이 누구인지 알려주는 테스트")
     void findTurnById() {
         //when
         Turn turn = boardDao.findTurnById(boardId).get();
@@ -56,7 +56,7 @@ class BoardDaoTest {
     }
 
     @Test
-    @DisplayName("현재 board판만 있고 piece들은 없으므로 empty가 나와야 한다.")
+    @DisplayName("현재 board판만 있고 piece들은 없으므로 size가 0이어야 한다.")
     void findById() {
         Board board = boardDao.findById(boardId).get();
         assertThat(board.getPieces().getPieces().size()).isEqualTo(0);
