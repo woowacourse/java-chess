@@ -20,7 +20,7 @@ class SquareDaoTest {
     @Test
     void save() {
         final SquareDao squareDao = new SquareDao();
-        squareDao.save(new Board().getSquares());
+        squareDao.save(Board.init().getBoard());
     }
 
     @Test

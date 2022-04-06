@@ -39,8 +39,4 @@ public enum Command {
     public boolean isStatus() {
         return this.name.equals("status");
     }
-
-    public boolean isNone() {
-        return this.name.equals("");
-    }
 }

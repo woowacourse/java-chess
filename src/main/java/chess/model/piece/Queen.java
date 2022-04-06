@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Queen extends Piece {
 
-    private final String symbol = "queen";
+    private final String symbol = "QUEEN";
     private final MoveStrategy moveStrategy;
 
     public Queen(final Team team) {

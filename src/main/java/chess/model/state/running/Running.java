@@ -35,11 +35,6 @@ public abstract class Running implements State {
     }
 
     @Override
-    public Map<String, String> getSquares() {
-        return board.getSquares();
-    }
-
-    @Override
     public Map<Team, Double> getScore() {
         throw new IllegalArgumentException("[ERROR] 아직 게임이 종료되지 않아 점수를 확인 할 수 없습니다.");
     }

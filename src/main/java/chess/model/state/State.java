@@ -16,8 +16,6 @@ public interface State {
 
     Map<Position, Piece> getBoard();
 
-    Map<String, String> getSquares();
-
     Map<Team, Double> getScore();
 
     Team getWinner();

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    private final String symbol = "pawn";
+    private final String symbol = "PAWN";
     private final PawnMove pawnMove;
 
     public Pawn(final Team team) {

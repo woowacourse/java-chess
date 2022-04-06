@@ -20,7 +20,7 @@ class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"SEVEN,D", "ONE,D"})
     void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece rook = new Rook(BLACK);
         boolean actual = rook.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 
@@ -31,7 +31,7 @@ class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"FOUR,H", "FOUR,A", "TWO,D", "SIX,D"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece rook = new Rook(BLACK);
         boolean actual = rook.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 

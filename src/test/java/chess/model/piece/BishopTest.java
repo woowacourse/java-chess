@@ -20,7 +20,7 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"SEVEN,F", "SEVEN,C", "ONE,A", "ONE,G"})
     void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece bishop = new Bishop(BLACK);
         boolean actual = bishop.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 
@@ -31,7 +31,7 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece bishop = new Bishop(BLACK);
         boolean actual = bishop.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 

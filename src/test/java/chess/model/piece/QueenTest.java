@@ -20,7 +20,7 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"SEVEN,D", "ONE,D", "SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
     void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece queen = new Queen(BLACK);
         boolean actual = queen.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 
@@ -31,7 +31,7 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B", "FOUR,H", "FOUR,A", "TWO,D", "SIX,D"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece queen = new Queen(BLACK);
         boolean actual = queen.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 

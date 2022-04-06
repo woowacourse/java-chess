@@ -16,8 +16,16 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board() {
-        this.board = BoardCreator.create();
+    private Board(final Map<Position, Piece> board) {
+        this.board = new HashMap<>(board);
+    }
+
+    public static Board init() {
+        return new Board(BoardCreator.create());
+    }
+
+    public static Board from(final Map<Position, Piece> board) {
+        return new Board(board);
     }
 
     public void checkSameTeam(Team team, Position source) {
@@ -54,13 +62,5 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
-    }
-
-    public Map<String, String> getSquares() {
-        Map<String, String> squares = new HashMap<>();
-        for (Position position : this.board.keySet()) {
-            squares.put(position.toString(), this.board.get(position).getSymbol());
-        }
-        return squares;
     }
 }

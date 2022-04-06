@@ -15,7 +15,7 @@ public final class Ready implements State {
     private final Board board;
 
     public Ready() {
-        this.board = new Board();
+        this.board = Board.init();
     }
 
     @Override
@@ -39,11 +39,6 @@ public final class Ready implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        return new HashMap<>();
-    }
-
-    @Override
-    public Map<String, String> getSquares() {
         return new HashMap<>();
     }
 

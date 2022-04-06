@@ -1,13 +1,37 @@
 package chess.model.piece;
 
+import static chess.model.Team.BLACK;
 import static chess.model.Team.NONE;
+import static chess.model.Team.WHITE;
 
 import chess.model.Team;
 import chess.model.position.Position;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
+
+    private final static Map<String, Piece> cache = new HashMap<>();
+
+    static {
+        cache.put("BLACK_KING", new King(BLACK));
+        cache.put("BLACK_QUEEN", new Queen(BLACK));
+        cache.put("BLACK_ROOK", new Rook(BLACK));
+        cache.put("BLACK_BISHOP", new Bishop(BLACK));
+        cache.put("BLACK_KNIGHT", new Knight(BLACK));
+        cache.put("BLACK_PAWN", new Pawn(BLACK));
+        cache.put("WHITE_KING", new King(WHITE));
+        cache.put("WHITE_QUEEN", new Queen(WHITE));
+        cache.put("WHITE_ROOK", new Rook(WHITE));
+        cache.put("WHITE_BISHOP", new Bishop(WHITE));
+        cache.put("WHITE_KNIGHT", new Knight(WHITE));
+        cache.put("WHITE_PAWN", new Pawn(WHITE));
+    }
+
+    public static Piece getPiece(String key) {
+        return cache.get(key);
+    }
 
     protected final Team team;
 

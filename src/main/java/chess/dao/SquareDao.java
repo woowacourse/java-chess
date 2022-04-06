@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.model.piece.Piece;
+import chess.model.position.Position;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,19 +26,20 @@ public class SquareDao {
         return connection;
     }
 
-    public void save(Map<String, String> squares) {
-        for (String position : squares.keySet()) {
+    public void save(Map<Position, Piece> squares) {
+        for (Position position : squares.keySet()) {
             saveOf(position, squares.get(position));
         }
     }
 
-    private void saveOf(String position, String piece) {
+    private void saveOf(Position position, Piece piece) {
         final Connection connection = getConnection();
-        final String sql = "insert into square (position, piece) values (?,?)";
+        final String sql = "insert into square (position, team, symbol) values (?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setString(2, piece);
+            statement.setString(1, position.toString());
+            statement.setString(2, piece.getSymbol());
+            statement.setString(3, piece.getTeam());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,12 +49,13 @@ public class SquareDao {
     public Map<String, String> find() {
         final Map<String, String> squares = new HashMap();
         final Connection connection = getConnection();
-        final String sql = "select position, piece from square where id <= 64";
+        final String sql = "select position, team, symbol from square where id <= 64";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
             while (!resultSet.next()) {
-                squares.put(resultSet.getString("position"), resultSet.getString("piece"));
+                squares.put(resultSet.getString("position"),
+                        resultSet.getString("team") + "_" + resultSet.getString("symbol"));
             }
             return squares;
         } catch (SQLException e) {

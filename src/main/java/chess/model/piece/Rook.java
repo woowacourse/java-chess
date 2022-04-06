@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Rook extends Piece {
 
-    private final String symbol = "rook";
+    private final String symbol = "ROOK";
     private final MoveStrategy moveStrategy;
 
     public Rook(Team team) {

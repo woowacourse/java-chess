@@ -23,7 +23,7 @@ public class KingTest {
     @ParameterizedTest()
     @CsvSource(value = {"SEVEN,E", "EIGHT,D", "EIGHT,C", "EIGHT,F", "SEVEN,D", "SEVEN,F"})
     void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece king = board.get(Position.of(EIGHT, E));
         boolean actual = king.canMove(Position.of(EIGHT, E), Position.of(rank, file), board);
 
@@ -34,7 +34,7 @@ public class KingTest {
     @ParameterizedTest()
     @CsvSource(value = {"SEVEN,E", "SEVEN,D", "SEVEN,C"})
     void canMove_false_2(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece king = new King(BLACK);
         boolean actual = king.canMove(Position.of(SIX, E), Position.of(rank, file), board);
 
@@ -45,7 +45,7 @@ public class KingTest {
     @ParameterizedTest()
     @CsvSource(value = {"SIX,D", "FOUR,D", "FIVE,C", "FIVE,E", "SIX,E", "FOUR,E", "SIX,C", "FOUR,C"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
+        Map<Position, Piece> board = Board.init().getBoard();
         Piece king = new King(BLACK);
         boolean actual = king.canMove(Position.of(FIVE, D), Position.of(rank, file), board);
 

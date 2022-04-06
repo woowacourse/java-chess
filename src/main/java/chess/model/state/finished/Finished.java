@@ -29,7 +29,7 @@ public abstract class Finished implements State {
     public State proceed(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isStart()) {
-            return new WhiteTurn(new Board());
+            return new WhiteTurn(Board.init());
         }
         throw new IllegalArgumentException("[ERROR] 게임을 재시작 하기위한 명령어를 입력해주세요.");
     }
@@ -37,10 +37,5 @@ public abstract class Finished implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         return new HashMap<>();
-    }
-
-    @Override
-    public Map<String, String> getSquares() {
-        return board.getSquares();
     }
 }

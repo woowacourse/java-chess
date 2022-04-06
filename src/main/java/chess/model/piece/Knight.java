@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Knight extends Piece {
 
-    private final String symbol = "knight";
+    private final String symbol = "KNIGHT";
     private final MoveStrategy moveStrategy;
 
     public Knight(final Team team) {

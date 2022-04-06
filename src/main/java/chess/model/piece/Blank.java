@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Blank extends Piece {
 
-    private final String symbol = "none";
+    private final String symbol = "NONE";
 
     public Blank() {
         super(NONE);

@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
-    private final String symbol = "bishop";
+    private final String symbol = "BISHOP";
     private final MoveStrategy moveStrategy;
 
     public Bishop(final Team team) {
