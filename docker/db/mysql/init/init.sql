@@ -11,7 +11,7 @@ create table board
     position varchar(10) not null,
     piece varchar(20),
     color varchar(20),
-    primary key (game_id, position)
+    primary key (game_id, position, piece, color)
 );
 
 insert into game (id, turn) values ('1', 'WHITE');
