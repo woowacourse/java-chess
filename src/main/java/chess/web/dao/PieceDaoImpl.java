@@ -69,8 +69,5 @@ public class PieceDaoImpl implements PieceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
-
 }

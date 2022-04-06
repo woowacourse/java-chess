@@ -19,6 +19,7 @@ public class ChessWebController {
 
     private final ChessService chessService;
     private static final Gson gson = new Gson();
+
     public ChessWebController(ChessService chessService) {
         this.chessService = chessService;
     }

@@ -29,7 +29,7 @@ class BoardDaoTest {
     }
 
     @Test
-    @DisplayName("현재 턴이 black으로 업데이트히면 DB에 반영이 되는지 테스트")
+    @DisplayName("현재 턴을 black으로 업데이트하면 DB에 반영이 되는지 테스트")
     void updateTurnById() {
         //when
         boardDao.updateTurnById(boardId, "black");
