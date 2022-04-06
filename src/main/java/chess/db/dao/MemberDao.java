@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db.dao;
 
 import chess.Member;
 import chess.Role;

@@ -1,6 +1,7 @@
-package chess.dao;
+package chess.db.dao;
 
 import chess.domain.ChessGame;
+import chess.db.entity.ChessGameEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,22 @@ class ChessGameDaoTest {
         Connection connectionRollback = chessGameDao.getConnection();
 
         connectionRollback.setAutoCommit(false);
-        chessGameDao.save(new ChessGame());
+        int chessGameId = chessGameDao.save(new ChessGame());
+        connectionRollback.rollback();
+    }
+
+    @Test
+    @DisplayName("게임 호출")
+    void findWithRollback() throws SQLException {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        Connection connectionRollback = chessGameDao.getConnection();
+
+        connectionRollback.setAutoCommit(false);
+        int chessGameId = chessGameDao.save(new ChessGame());
+
+        ChessGameEntity chessGameEntity = chessGameDao.find(1);
+        assertThat(chessGameEntity.getId()).isEqualTo(1);
+
         connectionRollback.rollback();
     }
 }

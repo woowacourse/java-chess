@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db.dao;
 
 import chess.Member;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberDaoTest {
 

@@ -38,6 +38,14 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
+    public static Piece getPiece(final String symbol) {
+        return Arrays.stream(PieceSymbol.values())
+                .filter(pieceSymbol -> pieceSymbol.symbol.equals(symbol))
+                .map(pieceSymbol -> pieceSymbol.piece)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 정보입니다."));
+    }
+
     public static String getSymbol(final Piece other) {
         return Arrays.stream(PieceSymbol.values())
                 .filter(pieceSymbol -> pieceSymbol.piece.equals(other))

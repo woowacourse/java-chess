@@ -13,7 +13,15 @@ public class ChessGame {
     private static final int FROM = 1;
     private static final int TO = 2;
 
-    private State state = new Ready();
+    private State state;
+
+    public ChessGame() {
+        this(new Ready());
+    }
+
+    public ChessGame(final State state) {
+        this.state = state;
+    }
 
     public void start() {
         state = state.start();

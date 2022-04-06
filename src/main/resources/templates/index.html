@@ -101,6 +101,7 @@
         </div>
         <div id="command-wrap">
             <form id="command-form" action="/move" method="post">
+                <input type="hidden" id="chessGameId" name="chessGameId" value={{chessGameId}} />
                 <input type="text" id="command" name="command" autocomplete="off" autofocus required />
                 <input type="submit" value="실행" />
             </form>

@@ -15,16 +15,22 @@ public class Response {
     private static final String STATUS_EMOJI = "\uD83C\uDFC6";
     private static final String STATUS_FORMAT = STATUS_EMOJI + " 검은색 : %.1f점, 흰색 : %.1f점 " + STATUS_EMOJI;
 
-    private final ChessGame chessGame;
+    private int chessGameId;
+    private ChessGame chessGame;
     private String exceptionMessage;
 
-    private Response(final ChessGame chessGame, final String exceptionMessage) {
+    private Response(final int chessGameId, final ChessGame chessGame, final String exceptionMessage) {
+        this.chessGameId = chessGameId;
         this.chessGame = chessGame;
         this.exceptionMessage = exceptionMessage;
     }
 
-    public static Response init(final ChessGame chessGame) {
-        return new Response(chessGame, EMPTY);
+    public static Response init(final int chessGameId, final ChessGame chessGame) {
+        return new Response(chessGameId, chessGame, EMPTY);
+    }
+
+    public void restart(final ChessGame chessGame) {
+        this.chessGame = chessGame;
     }
 
     public void success() {
@@ -33,6 +39,10 @@ public class Response {
 
     public void exception(final String exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
+    }
+
+    public int getChessGameId() {
+        return chessGameId;
     }
 
     public Map<String, String> getBoard() {

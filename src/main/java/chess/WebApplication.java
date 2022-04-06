@@ -1,7 +1,8 @@
 package chess;
 
 import chess.controller.Command;
-import chess.dao.ChessGameDao;
+import chess.db.ChessGameRepository;
+import chess.db.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.web.Response;
 import spark.ModelAndView;
@@ -17,31 +18,40 @@ public class WebApplication {
         port(8081);
         staticFileLocation("/static");
 
-        ChessGame chessGame = new ChessGame();
-        Command.execute("start", chessGame);
-        Response response = Response.init(chessGame);
-        ChessGameDao chessGameDao = new ChessGameDao();
-
+        ChessGameRepository repository = new ChessGameRepository();
+//        Response response = null;
+//        ChessGameDao chessGameDao = new ChessGameDao();
         get("/", (req, res) -> {
-            chessGameDao.save(chessGame);
+            ChessGame chessGame = new ChessGame();
+            Command.execute("start", chessGame);
+
+            int chessGameId = repository.save(chessGame);
+
+            Response response = Response.init(chessGameId, chessGame);
             return render(response, "index.html");
         });
 
-        get("/temp", (req, res) -> {
-            return render(response, "index.html");
-        });
-
-        post("/move", (req, res) -> {
-            try {
-                String commands = getCommands(req.body());
-                Command.execute(commands, chessGame);
-                response.success();
-            } catch (Exception exception) {
-                response.exception(exception.getMessage());
-            }
-            res.redirect("/temp"); // TODO: chessGameID 로 수정 ex) /1
-            return null;
-        });
+//        get("/temp", (req, res) -> {
+//            return render(response, "index.html");
+//        });
+//
+//        get("/:id", (req, res) -> {
+//            int chessGameId = Integer.parseInt(req.params("id"));
+//            response.restart(repository.find(chessGameId));
+//            return render(response, "index.html");
+//        });
+//
+//        post("/move", (req, res) -> {
+//            try {
+//                String commands = getCommands(req.body());
+//                Command.execute(commands, chessGame);
+//                response.success();
+//            } catch (Exception exception) {
+//                response.exception(exception.getMessage());
+//            }
+//            res.redirect("/temp"); // TODO: chessGameID 로 수정 ex) /1
+//            return null;
+//        });
     }
 
     private static String render(final Response response, final String templatePath) {

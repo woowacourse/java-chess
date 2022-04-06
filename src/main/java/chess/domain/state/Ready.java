@@ -13,7 +13,7 @@ public class Ready extends State {
         this(new Board(new BoardInitializer()));
     }
 
-    Ready(final Board board) {
+    public Ready(final Board board) {
         this.board = board;
     }
 

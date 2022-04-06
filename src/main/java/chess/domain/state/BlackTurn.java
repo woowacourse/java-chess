@@ -8,7 +8,7 @@ public class BlackTurn extends Running {
 
     private static final Color color = Color.BLACK;
 
-    BlackTurn(final Board board) {
+    public BlackTurn(final Board board) {
         super(board);
     }
 

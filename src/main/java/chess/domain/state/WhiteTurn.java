@@ -8,7 +8,7 @@ public class WhiteTurn extends Running {
 
     private static final Color color = Color.WHITE;
 
-    WhiteTurn(final Board board) {
+    public WhiteTurn(final Board board) {
         super(board);
     }
 

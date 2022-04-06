@@ -1,15 +1,16 @@
-package chess.dao;
+package chess.db.dao;
 
-import chess.domain.ChessGame;
-import chess.dto.ChessGameDto;
+import chess.db.entity.PieceEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChessGameDao {
+public class PieceDao {
 
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
@@ -29,19 +30,29 @@ public class ChessGameDao {
         return connection;
     }
 
-    public void save(final ChessGame chessGame) {
-        ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
+    public List<PieceEntity> findByChessGameId(final int chessGameId) {
         connection = getConnection();
-        String sql = "INSERT INTO chess_game (state, insert_datetime, update_datetime) VALUES (?, now(), now())";
+        String sql = "SELECT id, position, symbol FROM piece WHERE chess_game_id = ?";
         try {
             statement = connection.prepareStatement(sql);
-            statement.setString(1, chessGameDto.getState());
-            statement.executeUpdate();
+            statement.setInt(1, chessGameId);
+            resultSet = statement.executeQuery();
+
+            List<PieceEntity> pieces = new ArrayList<>();
+            while (resultSet.next()) {
+                pieces.add(new PieceEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("position"),
+                        resultSet.getString("symbol")
+                ));
+            }
+            return pieces;
         } catch (SQLException exception) {
             exception.printStackTrace();
         } finally {
             close();
         }
+        return null;
     }
 
     private void close() {
