@@ -7,7 +7,7 @@ public class EmptyPiece extends Piece {
     private static final double SCORE = 0;
 
     public EmptyPiece() {
-        super(Team.NONE, Name.NONE);
+        super(Team.NONE, Name.EMPTY);
     }
 
     @Override

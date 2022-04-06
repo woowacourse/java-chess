@@ -24,8 +24,6 @@ public class Board {
     }
 
     public void initializeBoard() {
-        initializeEmptyBoard();
-
         initializePiece(Rank.ONE, Team.WHITE);
         initializePiece(Rank.EIGHT, Team.BLACK);
 
@@ -129,6 +127,6 @@ public class Board {
     public Map<String, Piece> toMap() {
         return chessBoard.entrySet()
                 .stream()
-                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
+                .collect(Collectors.toMap(m -> m.getKey().getLocationString(), Map.Entry::getValue));
     }
 }

@@ -50,8 +50,7 @@ public class Location {
         return Location.of(file, rank);
     }
 
-    @Override
-    public String toString() {
+    public String getLocationString() {
         return file.toString() + rank.toString();
     }
 }

@@ -55,4 +55,9 @@ public class End implements State {
     public State getNextState(Piece piece) {
         throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
+
+    @Override
+    public String getName() {
+        return "end";
+    }
 }

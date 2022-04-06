@@ -101,11 +101,7 @@
     </section>
     <section>
         <h2>점수 확인</h2>
-        <form method="get" action="/status">
-            <input type="button"
-                   onclick= score()
-                   value="점수 계산">
-        </form>
+        <input type="button" onclick=score() value="점수 계산">
         <script>
             function score() {
                 fetch('/status')
@@ -113,6 +109,12 @@
                     .then(data => alert(`${data.team} : ${data.score}점`))
             }
         </script>
+    </section>
+    <section>
+        <form method="get" action="/end">
+            <br/>
+            <input type="submit" value="게임 종료">
+        </form>
     </section>
 </div>
 </body>

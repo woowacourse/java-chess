@@ -14,6 +14,7 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
         ChessGame chessGame = new ChessGame();
+        WebChessService webChessService = new WebChessService();
 
         get("/", (req, res) -> {
             return new ModelAndView(chessGame.toMap(), "index.html");
@@ -21,6 +22,7 @@ public class WebApplication {
 
         get("/start", (req, res) -> {
             chessGame.start();
+            webChessService.initializeGame(chessGame.getState());
             res.redirect("/");
             return null;
         });
@@ -36,6 +38,12 @@ public class WebApplication {
         get("/status", (req, res) -> {
             return chessGame.status();
         }, new JsonTransformer());
+
+        get("/end", (req, res) ->{
+            chessGame.end();
+            res.redirect("/");
+            return null;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

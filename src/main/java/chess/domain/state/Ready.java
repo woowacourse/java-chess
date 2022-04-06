@@ -51,4 +51,9 @@ public class Ready implements State {
     public State getNextState(Piece piece) {
         throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
     }
+
+    @Override
+    public String getName() {
+        return "ready";
+    }
 }

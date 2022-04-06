@@ -24,4 +24,6 @@ public interface State {
     Team getTeam();
 
     State getNextState(Piece piece);
+
+    String getName();
 }

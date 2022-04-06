@@ -57,4 +57,8 @@ public class ChessGame {
         Board board = state.getBoard();
         return board.toMap();
     }
+
+    public State getState() {
+        return state;
+    }
 }

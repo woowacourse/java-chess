@@ -20,6 +20,11 @@ public class Black extends Running {
     }
 
     @Override
+    public String getName() {
+        return "black";
+    }
+
+    @Override
     public TeamScore getScore() {
         double score = getBoard().computeTotalScore(Team.BLACK);
         return new TeamScore(Team.BLACK, score);
