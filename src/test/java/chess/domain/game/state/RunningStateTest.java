@@ -1,6 +1,7 @@
 package chess.domain.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,14 +18,14 @@ import chess.domain.player.Player;
 import chess.domain.player.PlayerFactory;
 import chess.domain.player.Players;
 
-class MoveStateTest {
+class RunningStateTest {
 
-    private MoveState gameState;
+    private RunningState gameState;
 
     @BeforeEach
     void setUp() {
         final Players players = Players.initialize(PlayerFactory.getInstance());
-        gameState = new MoveState(players, Color.WHITE);
+        gameState = new RunningState(players, Color.WHITE);
     }
 
     @DisplayName("킹이 하나 남아있다면 FinishedState 상태를 반환해야 한다.")
@@ -38,30 +39,30 @@ class MoveStateTest {
                         Position.from("d8"), King.getInstance())))
         );
 
-        final MoveState gameState = new MoveState(players, Color.WHITE);
+        final RunningState gameState = new RunningState(players, Color.WHITE);
         final Position source = Position.from("c7");
         final Position target = Position.from("d8");
-        assertThat(gameState.run(source, target)).isInstanceOf(FinishedState.class);
+        assertThat(gameState.move(source, target)).isInstanceOf(FinishedState.class);
     }
 
-    @DisplayName("프로모션이 가능하다면 PromotionState 상태를 반환해야 한다.")
+    @DisplayName("프로모션이 가능한 상태에서는 기물을 움직일 수 없어야 한다.")
     @Test
     void runToPromotableState() {
         final Players players = new Players(
                 Player.of(Color.WHITE, new HashMap<>(Map.of(
-                        Position.from("a7"), Pawn.getWhitePawn(),
+                        Position.from("a8"), Pawn.getWhitePawn(),
                         Position.from("d1"), King.getInstance()))),
                 Player.of(Color.BLACK, new HashMap<>(Map.of(
                         Position.from("d8"), King.getInstance())))
         );
 
-        final MoveState gameState = new MoveState(players, Color.WHITE);
-        final Position source = Position.from("a7");
-        final Position target = Position.from("a8");
-        assertThat(gameState.run(source, target)).isInstanceOf(PromotionState.class);
+        final RunningState gameState = new RunningState(players, Color.WHITE);
+        assertThatThrownBy(() -> gameState.move(Position.from("a7"), Position.from("a8")))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("프로모션을 진행해야 합니다.");
     }
 
-    @DisplayName("일반적인 상황에서는 MoveState 상태를 반환해야 한다.")
+    @DisplayName("일반적인 상황에서는 RunningState 상태를 반환해야 한다.")
     @Test
     void runToMoveState() {
         final Players players = new Players(
@@ -71,10 +72,10 @@ class MoveStateTest {
                         Position.from("d8"), King.getInstance())))
         );
 
-        final MoveState gameState = new MoveState(players, Color.WHITE);
+        final RunningState gameState = new RunningState(players, Color.WHITE);
         final Position source = Position.from("d1");
         final Position target = Position.from("d2");
-        assertThat(gameState.run(source, target)).isInstanceOf(MoveState.class);
+        assertThat(gameState.move(source, target)).isInstanceOf(RunningState.class);
     }
 
     @DisplayName("실행 상태임을 나타낼 수 있어야 한다.")

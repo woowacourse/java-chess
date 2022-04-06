@@ -4,12 +4,8 @@ import java.util.Map;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.game.command.MoveCommand;
-import chess.domain.game.command.PromotionCommand;
 import chess.domain.game.state.FinishedState;
 import chess.domain.game.state.GameState;
-import chess.domain.game.state.MoveState;
-import chess.domain.game.state.PromotionState;
 import chess.domain.game.state.RunningState;
 import chess.domain.player.Players;
 
@@ -36,14 +32,14 @@ public class ChessGame {
             return new ChessGame(id, new FinishedState(players, currentTurnColor));
         }
         if (players.isPlayerAbleToPromotePawn(currentTurnColor.reverse())) {
-            return new ChessGame(id, new PromotionState(players, currentTurnColor.reverse()));
+            return new ChessGame(id, new RunningState(players, currentTurnColor.reverse()));
         }
-        return new ChessGame(id, new MoveState(players, currentTurnColor));
+        return new ChessGame(id, new RunningState(players, currentTurnColor));
     }
 
     public void start() {
         validateGameAvailableToStart();
-        gameState = MoveState.createFirstTurnRunning();
+        gameState = RunningState.createFirstTurnRunning();
     }
 
     private void validateGameAvailableToStart() {
@@ -54,14 +50,12 @@ public class ChessGame {
 
     public void movePiece(final Position source, final Position target) {
         final RunningState runningState = convertToRunningState(gameState);
-        final MoveCommand moveCommand = MoveCommand.of(runningState, source, target);
-        gameState = moveCommand.execute();
+        gameState = runningState.move(source, target);
     }
 
     public void promotePiece(final String pieceName) {
         final RunningState runningState = convertToRunningState(gameState);
-        final PromotionCommand promotionCommand = PromotionCommand.of(runningState, pieceName);
-        gameState = promotionCommand.execute();
+        gameState = runningState.promotion(pieceName);
     }
 
     public Map<Color, Double> getPlayerScores() {
