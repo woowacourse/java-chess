@@ -6,7 +6,7 @@ import chess.domain.board.MoveResult;
 import chess.dto.ScoreDto;
 
 public abstract class Playing implements ChessGameState {
-    private final Board board;
+    protected final Board board;
 
     Playing(Board board) {
         this.board = board;
@@ -27,22 +27,12 @@ public abstract class Playing implements ChessGameState {
         return board.move(from, to, color);
     }
 
-    ChessGameState getMoveResult(MoveResult result, MoveResult blackResult, Color color) {
-        if (result == MoveResult.ENDED) {
-            return new Finished(color);
-        }
-
-        if (result == blackResult) {
-            return new BlackPlaying(board);
-        }
-        return new WhitePlaying(board);
-    }
+    abstract ChessGameState checkMoveResult(MoveResult result);
 
     @Override
     public Board getBoard() {
         return board;
     }
-
 
     @Override
     public Color getWinner() {
