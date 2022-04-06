@@ -12,7 +12,7 @@ public final class Ready implements ChessGame {
     private final Board board;
 
     public Ready() {
-       board = BoardFactory.getEmptyBoard();
+        board = BoardFactory.getEmptyBoard();
     }
 
     @Override
