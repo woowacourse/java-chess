@@ -21,7 +21,7 @@ public class PiecesDao {
 
     public Map<Position, Piece> getPieces(final int boardId) {
         final Connection connection = CommonDao.getConnection();
-        final String sql = "SELECT ps.position, p.symbol, p.score, p.color, p.image_url FROM pieces AS ps\n"
+        final String sql = "SELECT ps.position, p.symbol, p.color, p.image_url FROM pieces AS ps\n"
                 + "    LEFT JOIN piece p on ps.piece_id = p.id\n"
                 + "WHERE board_id=?;";
         try {
