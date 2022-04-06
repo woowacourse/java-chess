@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.strategy.ContinuousMovingStrategy;
+import chess.domain.strategy.MovingStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,11 @@ public class Bishop extends ChessPiece {
     private static final double SCORE = 3.0;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static final MovingStrategy bishopMovingStrategy = new ContinuousMovingStrategy(
+            List.of(ChessBoardPosition.ofDirection(EAST, NORTH),
+                    ChessBoardPosition.ofDirection(EAST, SOUTH),
+                    ChessBoardPosition.ofDirection(WEST, NORTH),
+                    ChessBoardPosition.ofDirection(WEST, SOUTH)));
 
     static {
         blackTeamInitialPosition.put(ChessBoardPosition.of(LEFT_COLUMN, BLACK_TEAM_ROW), new Bishop(Team.BLACK));
@@ -28,11 +34,11 @@ public class Bishop extends ChessPiece {
     }
 
     Bishop(Team team) {
-        super(team, SCORE, new ContinuousMovingStrategy(
-                List.of(ChessBoardPosition.ofDirection(EAST, NORTH),
-                        ChessBoardPosition.ofDirection(EAST, SOUTH),
-                        ChessBoardPosition.ofDirection(WEST, NORTH),
-                        ChessBoardPosition.ofDirection(WEST, SOUTH))));
+        super(team, SCORE, bishopMovingStrategy);
+    }
+
+    public static Bishop of(Team team) {
+        return new Bishop(team);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

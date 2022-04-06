@@ -11,13 +11,10 @@ public class PawnMovingStrategy implements MovingStrategy {
     private final List<ChessBoardPosition> killMovement;
     private final List<ChessBoardPosition> initialPosition;
 
-    public PawnMovingStrategy(List<ChessBoardPosition> blackTeamAbleMovement,
-                              List<ChessBoardPosition> whiteTeamAbleMovement,
+    public PawnMovingStrategy(List<ChessBoardPosition> ableMovement,
                               List<ChessBoardPosition> killMovement,
                               List<ChessBoardPosition> initialPosition) {
-        this.ableMovement = new ArrayList<>();
-        ableMovement.addAll(blackTeamAbleMovement);
-        ableMovement.addAll(whiteTeamAbleMovement);
+        this.ableMovement = ableMovement;
         this.killMovement = killMovement;
         this.initialPosition = initialPosition;
     }

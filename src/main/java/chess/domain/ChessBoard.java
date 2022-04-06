@@ -49,8 +49,8 @@ public class ChessBoard {
         addChessPieces(mapInformation, King.create(team));
     }
 
-    private static void addChessPieces(
-            Map<ChessBoardPosition, ChessPiece> mapInformation, Map<ChessBoardPosition, ChessPiece> chessPieces) {
+    private static void addChessPieces(Map<ChessBoardPosition, ChessPiece> mapInformation,
+                                       Map<ChessBoardPosition, ChessPiece> chessPieces) {
         mapInformation.putAll(chessPieces);
     }
 
