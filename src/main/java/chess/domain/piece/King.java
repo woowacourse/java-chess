@@ -17,7 +17,14 @@ public class King extends Piece {
     @Override
     public List<Position> findPath(Position source, Position destination) {
         findDirection(source, destination);
+        validateDirection(source, destination);
         return List.of();
+    }
+
+    private void validateDirection(Position source, Position destination) {
+        int colDifference = destination.getColDifference(source.getCol());
+        int rowDifference = destination.getRowDifference(source.getRow());
+        Direction.findDirection(rowDifference, colDifference, getDirections());
     }
 
     @Override
