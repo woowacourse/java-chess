@@ -1,5 +1,12 @@
 # java-chess
 
+### Docker 실행 가이드
+
+```
+docker 실행   docker-compose -p chess up -d
+docker 접속   docker exec -it chess-db-1 bash
+docker 종료   docker-compose -p chess down
+```
 
 ### 콘솔에서의 게임 진행
 
