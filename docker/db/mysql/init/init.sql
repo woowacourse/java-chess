@@ -1,7 +1,9 @@
-create table turn
+create table game
 (
-    color varchar(20) not null,
-    primary key (color)
+    game_id int         not null auto_increment,
+    turn    varchar(20) not null,
+    status    varchar(20) not null,
+    primary key (game_id)
 );
 
 create table piece

@@ -46,4 +46,8 @@ public final class ChessGame {
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
+
+    public PieceColor getTurnColor() {
+        return turnColor;
+    }
 }

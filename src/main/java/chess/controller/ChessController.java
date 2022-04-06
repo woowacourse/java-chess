@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.GameDaoImpl;
 import chess.dao.PieceDaoImpl;
 import chess.domain.ChessGame;
 import chess.domain.Score;
@@ -31,7 +32,7 @@ public class ChessController {
     private ChessGame game;
 
     public ChessController() {
-        this.chessService = new ChessService(new PieceDaoImpl());
+        this.chessService = new ChessService(new PieceDaoImpl(), new GameDaoImpl());
         this.game = new ChessGame(PieceFactory.createChessPieces(), PieceColor.WHITE);
     }
 
@@ -41,11 +42,13 @@ public class ChessController {
 
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
-        get("/start", (req, res) -> gson.toJson(chessService.gameStart()));
+        get("/start", (req, res) -> gson.toJson(chessService.initializeGame()));
+
+        get("/chess", (req, res) -> gson.toJson(chessService.getChess()));
 
         get("/restart", (req, res) -> gson.toJson(restartGame()));
 
-        post("/move", (req, res) -> gson.toJson(movePieces(req)));
+        post("/move", (req, res) -> gson.toJson(chessService.movePiece(parseToMoveCommand(req))));
 
         get("/status", (req, res) -> gson.toJson(getStatus()));
 
@@ -84,6 +87,12 @@ public class ChessController {
                 .stream()
                 .map(entry -> PieceDto.from(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    private MoveCommand parseToMoveCommand(Request request) {
+        String source = request.queryParams("source");
+        String target = request.queryParams("target");
+        return MoveCommand.of(source, target);
     }
 
     private String movePieces(Request req) {

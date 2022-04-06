@@ -1,18 +1,49 @@
+window.onload = function () {
+    getChess();
+};
+
+function getChess() {
+    $.ajax({
+        url: "/chess",
+        type: 'get',
+        success(data) {
+            let obj = JSON.parse(data);
+            setButton(obj.status);
+            setPieces(obj.pieces);
+        }
+    });
+}
+
+function setButton(status) {
+    if (status === "playing") {
+        document.getElementById("board_div").className = "selectable";
+        document.getElementById("status_btn").hidden = false;
+        document.getElementById("end_btn").hidden = false;
+        document.getElementById("restart_btn").hidden = true;
+        document.getElementById("start_btn").hidden = true;
+        return;
+    }
+    document.getElementById("board_div").className = "non_selectable";
+    document.getElementById("status_btn").hidden = true;
+    document.getElementById("end_btn").hidden = true;
+    document.getElementById("restart_btn").hidden = true;
+    document.getElementById("start_btn").hidden = false;
+}
+
+function setPieces(pieces) {
+    $.each(pieces, function (idx, piece) {
+        setPiece(piece.position, piece.color, piece.type);
+    });
+}
+
 function start() {
     $.ajax({
         url: "/start",
         type: 'get',
         success(data) {
-            document.getElementById("board_div").className = "selectable";
-            document.getElementById("start_btn").hidden = true;
-            document.getElementById("restart_btn").hidden = false;
-            document.getElementById("status_btn").hidden = false;
-            document.getElementById("end_btn").hidden = false;
-
-            let pieces = JSON.parse(data);
-            $.each(pieces, function (idx, piece) {
-                setPiece(piece.position, piece.color, piece.type);
-            });
+            let obj = JSON.parse(data);
+            setButton(obj.status);
+            setPieces(obj.pieces);
         }
     });
 }
