@@ -24,6 +24,7 @@ public class ChessWebController {
         get("/update", this::update);
         get("/result", this::result);
         get("/restart", this::restart);
+        exception(Exception.class, this::handleException);
     }
 
     private String start(Request request, Response response) {
@@ -74,6 +75,11 @@ public class ChessWebController {
         chessService.deleteCurrentGame();
         response.redirect("/");
         return null;
+    }
+
+    private void handleException(Exception exception, Request request, Response response) {
+        response.status(400);
+        response.body(exception.getMessage());
     }
 
     private String render(Object model, String templatePath) {
