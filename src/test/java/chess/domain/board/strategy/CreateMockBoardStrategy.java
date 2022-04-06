@@ -1,9 +1,8 @@
 package chess.domain.board.strategy;
 
-import java.util.Map;
-
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class CreateMockBoardStrategy implements CreateBoardStrategy {
     private final Map<Position, Piece> pieces;

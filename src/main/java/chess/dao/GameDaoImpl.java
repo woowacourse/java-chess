@@ -1,12 +1,13 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
 import chess.domain.GameState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+
+;
 
 public class GameDaoImpl implements GameDao {
 
@@ -30,7 +31,7 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public Optional<ChessGame> load(long id) {
+    public Optional<GameState> load(long id) {
         try (Connection connection = connectionSetup.getConnection();
              PreparedStatement pstmt = createLoadPreparedStatement(connection, id);
              ResultSet rs = pstmt.executeQuery()) {
@@ -48,10 +49,11 @@ public class GameDaoImpl implements GameDao {
         return pstmt;
     }
 
-    private Optional<ChessGame> getGame(ResultSet rs) throws SQLException {
+    private Optional<GameState> getGame(ResultSet rs) throws SQLException {
         if (rs.next()) {
-            return Optional.of(new ChessGame(null, GameState.valueOf(rs.getString("state"))));
             // TODO: PieceDao 완성 후 Piece 조회해서 게임 조합하는 기능 필요
+
+            return Optional.of(GameState.valueOf(rs.getString("state")));
         }
         return Optional.empty();
     }

@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.controller.dto.response.PieceResponse;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -17,6 +18,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class PieceDaoImpl implements PieceDao {
+
+    private static final int ROW_INDEX = 0;
+    private static final int COLUMN_INDEX = 1;
 
     private final ConnectionSetup connectionSetup;
 
@@ -46,11 +50,11 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public List<Piece> findAll(long gameId) {
+    public List<PieceResponse> findAll(long gameId) {
         try (Connection connection = connectionSetup.getConnection();
              PreparedStatement pstmt = createFindAllPreparedStatement(connection, gameId);
              ResultSet rs = pstmt.executeQuery()) {
-            return getPieces(rs);
+            return getAll(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return Collections.emptyList();
@@ -65,14 +69,23 @@ public class PieceDaoImpl implements PieceDao {
         return pstmt;
     }
 
-    private List<Piece> getPieces(ResultSet rs) throws SQLException {
-        List<Piece> pieces = new ArrayList<>();
+    private List<PieceResponse> getAll(ResultSet rs) throws SQLException {
+        List<PieceResponse> pieces = new ArrayList<>();
         while (rs.next()) {
+            Position position = parseStringToPosition(rs.getString("position"));
             PieceType pieceType = PieceType.valueOf(rs.getString("piece_type"));
             Color color = Color.valueOf(rs.getString("color"));
-            pieces.add(pieceType.createPiece(color));
+            Piece piece = pieceType.createPiece(color);
+            pieces.add(new PieceResponse(position, piece));
         }
         return pieces;
+    }
+
+    private Position parseStringToPosition(final String rawPosition) {
+        final String[] separatedPosition = rawPosition.split("");
+        final Column column = Column.from(separatedPosition[ROW_INDEX]);
+        final Row row = Row.from(separatedPosition[COLUMN_INDEX]);
+        return new Position(column, row);
     }
 
     @Override

@@ -12,4 +12,12 @@ public class ChessGameResponse {
         this.board = new BoardResponse(chessGame.getBoard());
         this.gameState = chessGame.getGameState();
     }
+
+    public BoardResponse getBoard() {
+        return board;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
 }

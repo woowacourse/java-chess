@@ -7,6 +7,9 @@ import static spark.Spark.post;
 import chess.JsonTransformer;
 import chess.controller.dto.request.MoveRequest;
 import chess.controller.dto.response.ErrorResponse;
+import chess.dao.DBConnectionSetup;
+import chess.dao.GameDaoImpl;
+import chess.dao.PieceDaoImpl;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -16,7 +19,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final ChessService chessService = new ChessService();
+    private final ChessService chessService = new ChessService(new GameDaoImpl(new DBConnectionSetup()),
+            new PieceDaoImpl(new DBConnectionSetup()));
 
     public void run() {
         final JsonTransformer jsonTransformer = new JsonTransformer();
@@ -28,9 +32,10 @@ public class WebChessController {
 
         get("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessService.createGame();
             return render(model, "game.html");
         });
+
+        get("/api/load", (req, res) -> chessService.createOrLoadGame(), jsonTransformer);
 
         get("/api/start", (req, res) -> chessService.startGame(), jsonTransformer);
 

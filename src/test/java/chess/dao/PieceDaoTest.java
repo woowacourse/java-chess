@@ -5,6 +5,7 @@ import static chess.domain.CachedPosition.a3;
 import static chess.domain.CachedPosition.b2;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.controller.dto.response.PieceResponse;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -45,7 +46,7 @@ public class PieceDaoTest {
         pieceDao.save(1, a2, new Pawn(Color.WHITE));
         pieceDao.save(1, b2, new Pawn(Color.WHITE));
 
-        List<Piece> pieces = pieceDao.findAll(1);
+        List<PieceResponse> pieces = pieceDao.findAll(1);
 
         assertThat(pieces.size()).isEqualTo(2);
     }
@@ -92,7 +93,7 @@ public class PieceDaoTest {
     void deleteAll() {
         pieceDao.deleteAll(1);
 
-        List<Piece> pieces = pieceDao.findAll(1);
+        List<PieceResponse> pieces = pieceDao.findAll(1);
 
         assertThat(pieces).isEmpty();
     }

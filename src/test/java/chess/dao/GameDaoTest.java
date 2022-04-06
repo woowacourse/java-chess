@@ -2,7 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.ChessGame;
 import chess.domain.GameState;
 import com.mysql.cj.exceptions.AssertionFailedException;
 import java.util.Optional;
@@ -30,10 +29,10 @@ public class GameDaoTest {
     void load() {
         gameDao.save(1);
 
-        Optional<ChessGame> chessGameOptional = gameDao.load(1);
-        ChessGame actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
+        Optional<GameState> chessGameOptional = gameDao.load(1);
+        GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
-        assertThat(actual.getGameState()).isEqualTo(GameState.READY);
+        assertThat(actual).isEqualTo(GameState.READY);
     }
 
     @DisplayName("게임 정보 업데이트 테스트")
@@ -42,10 +41,10 @@ public class GameDaoTest {
         gameDao.save(1);
         gameDao.updateState(1, GameState.WHITE_RUNNING);
 
-        Optional<ChessGame> chessGameOptional = gameDao.load(1);
-        ChessGame actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
+        Optional<GameState> chessGameOptional = gameDao.load(1);
+        GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
-        assertThat(actual.getGameState()).isEqualTo(GameState.WHITE_RUNNING);
+        assertThat(actual).isEqualTo(GameState.WHITE_RUNNING);
     }
 
     @DisplayName("게임 삭제 테스트")

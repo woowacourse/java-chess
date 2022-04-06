@@ -21,7 +21,7 @@ const darkCellColor = "#8977ad";
 let firstSelected;
 let secondSelected;
 
-window.onload = function () {
+window.onload = async function () {
   for (let i = 0; i < 8; i++) {
     const row = document.createElement("div");
     row.classList.add("row");
@@ -31,6 +31,23 @@ window.onload = function () {
   startButton.addEventListener("click", start);
   statusButton.addEventListener("click", getStatus);
   endButton.addEventListener("click", end);
+
+  const res = await fetch("/api/load");
+  const data = await res.json();
+  if (!res.ok) {
+    alert(data.message);
+    return;
+  }
+  createOrLoad(data);
+}
+
+function createOrLoad(data) {
+  if (data.gameState === "READY") {
+    turnInfo.innerText = "게임을 시작해주세요.";
+    return;
+  }
+  rendBoard(data.board.pieces);
+  printTurn(data);
 }
 
 function makeRow(rowDiv, rowIndex) {
@@ -78,7 +95,7 @@ async function start() {
 
 function rendBoard(pieces) {
   clearBoard();
-  pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType));
+  pieces.forEach(piece => createPieceImage(piece.position, piece.pieceType, piece.color));
 }
 
 function clearBoard() {
@@ -92,11 +109,11 @@ function removePiece(cell) {
   }
 }
 
-function createPieceImage(position, pieceType) {
+function createPieceImage(position, pieceType, color) {
   const cell = document.getElementById(position);
   const piece = document.createElement("img");
   piece.classList.add("piece-image");
-  piece.src = `/images/${pieceType}.png`
+  piece.src = `/images/${pieceType}${color}.png`
   cell.appendChild(piece);
 }
 
