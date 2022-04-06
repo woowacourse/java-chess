@@ -2,19 +2,16 @@ package chess.domain;
 
 import chess.domain.move.MoveChecker;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.StatusDto;
-import java.util.Map;
 
 public class ChessGame {
 
     private Color turn;
     private final Board board;
 
-    public ChessGame() {
-        this.turn = Color.WHITE;
-        this.board = Board.create();
+    public ChessGame(final Color turn, final Board board) {
+        this.turn = turn;
+        this.board = board;
     }
 
     public boolean move(Position from, Position to) {
@@ -41,15 +38,7 @@ public class ChessGame {
         return turn.getName();
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
-    }
-
-    public StatusDto getStatus() {
-        Score whiteScore = new Score(board, Color.WHITE);
-        Score blackScore = new Score(board, Color.BLACK);
-        Result whiteResult = Result.decide(whiteScore, blackScore);
-        Result blackResult = Result.decide(blackScore, whiteScore);
-        return new StatusDto(whiteScore.getValue(), blackScore.getValue(), whiteResult.getName(), blackResult.getName());
+    public Board getBoard() {
+        return board;
     }
 }
