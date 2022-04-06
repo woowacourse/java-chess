@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameSwitch;
@@ -21,7 +22,11 @@ public class WebController {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final BoardDao boardDao = new BoardDao();
-    private ChessGame chessGame = chessGameDao.load(boardDao.load());
+    private ChessGame chessGame = new ChessGame(
+            new Board(new HashMap<>()),
+            new GameSwitch(false),
+            new Turn(Team.NONE)
+    );
 
     public void run() {
         staticFileLocation("/static");

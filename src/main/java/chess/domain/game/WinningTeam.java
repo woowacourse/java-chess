@@ -23,6 +23,10 @@ public class WinningTeam {
             winTeam = teamOfDeadKing.oppositeTeam();
             winType = WIN_BY_KING_DEAD;
         }
+        if (blackScore == 0 && whiteScore == 0) {
+            winTeam = Team.NONE;
+            winType = "";
+        }
         this.value = winTeam.getValue();
         this.winningType = winType;
     }

@@ -342,20 +342,25 @@
             <input type="text" name="target" placeholder="Target Position">
             <input type="submit" value="MOVE">
         </form>
+        {{#result}}
         <div class="status">
             <p>{{turn.now.value}} 턴</p>
-            {{#result}}
             <p>BLACK 팀 점수 : {{blackScore}}</p>
             <p>WHITE 팀 점수 : {{whiteScore}}</p>
             <p>승리 팀 : {{winningTeam.value}} ({{winningTeam.winningType}})</p>
-            {{/result}}
         </div>
+        {{/result}}
+        <br/>
+        <form class="start" action="/load">
+            <input type="submit" value="START">
+        </form>
+        <br/>
         <form class="save" method="post" action="/save">
-            <input type="submit" value="SAVE GAME">
+            <input type="submit" value="SAVE">
         </form>
         <br/>
         <form class="load" action="/load">
-            <input type="submit" value="LOAD GAME">
+            <input type="submit" value="LOAD">
         </form>
         <br/>
         <form class="reset" method="post" action="/reset">
