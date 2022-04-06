@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.sql.Connection;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +24,12 @@ public class BoardDaoImplTest {
     void setUp() {
         gameDao = new GameDaoImpl(new Game("white", "black"));
         boardDao = new BoardDaoImpl();
+    }
+
+
+    @AfterEach
+    void tearDown() {
+        gameDao.deleteById(gameDao.getId());
     }
 
     @Test
@@ -53,6 +59,7 @@ public class BoardDaoImplTest {
     void deleteById() {
         //given
         Board board = new Board(new DefaultArrangement());
+        gameDao.save();
         boardDao.save(gameDao.getId(),
             EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues()));
 
@@ -60,7 +67,7 @@ public class BoardDaoImplTest {
         boardDao.deleteById(gameDao.getId());
 
         //then
-        assertThat(boardDao.findById(gameDao.getId())).isNull();
+        assertThat(boardDao.findById(gameDao.getId())).isEmpty();
     }
 
 

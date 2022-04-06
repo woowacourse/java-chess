@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.sql.Connection;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ public class GameDaoImplTest {
     @BeforeEach
     void setUp() {
         gameDao = new GameDaoImpl(new Game("white", "black"));
+    }
+
+    @AfterEach
+    void tearDown() {
+        gameDao.deleteById(gameDao.getId());
     }
 
     @Test
