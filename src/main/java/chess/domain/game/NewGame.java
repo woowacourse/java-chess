@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.db.entity.FullGameEntity;
 import chess.domain.board.Board;
 import chess.dto.request.MoveCommandDto;
 import chess.dto.response.board.ConsoleBoardViewDto;
@@ -29,11 +28,6 @@ public final class NewGame implements Game {
 
     @Override
     public GameState getState() {
-        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
-    }
-
-    @Override
-    public FullGameEntity toEntityOf(int id) {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 

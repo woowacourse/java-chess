@@ -1,6 +1,5 @@
 package chess.domain.board.piece;
 
-import chess.db.entity.PieceEntity;
 import chess.domain.board.position.Position;
 import java.util.Objects;
 
@@ -15,8 +14,8 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public static Piece of(Color color, PieceType type){
-        if(type == PieceType.PAWN){
+    public static Piece of(Color color, PieceType type) {
+        if (type == PieceType.PAWN) {
             return new Pawn(color);
         }
         return new NonPawn(color, type);
@@ -39,10 +38,6 @@ public abstract class Piece {
 
     public final boolean hasTypeOf(PieceType type) {
         return this.type == type;
-    }
-
-    public final PieceEntity toEntityAt(Position position) {
-        return new PieceEntity(position, type, color);
     }
 
     public final double toScore() {

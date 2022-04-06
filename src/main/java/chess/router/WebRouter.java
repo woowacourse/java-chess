@@ -4,9 +4,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.controller.WebController;
-import chess.dto.response.SearchResultDto;
 import chess.dto.request.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
+import chess.dto.response.SearchResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

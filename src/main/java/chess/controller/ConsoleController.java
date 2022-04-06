@@ -5,8 +5,8 @@ import static chess.view.OutputView.print;
 import chess.domain.game.Game;
 import chess.domain.game.GameResult;
 import chess.domain.game.NewGame;
-import chess.dto.response.board.ConsoleBoardViewDto;
 import chess.dto.request.MoveCommandDto;
+import chess.dto.response.board.ConsoleBoardViewDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 

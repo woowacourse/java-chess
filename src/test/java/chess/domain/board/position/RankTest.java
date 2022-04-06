@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class RankTest {
                 Rank.EIGHT, Rank.SEVEN, Rank.SIX, Rank.FIVE,
                 Rank.FOUR, Rank.THREE, Rank.TWO, Rank.ONE);
 
-        assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 
     @Nested

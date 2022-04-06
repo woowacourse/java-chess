@@ -2,8 +2,8 @@ package chess.domain.game;
 
 import static chess.domain.board.piece.Color.WHITE;
 
-import chess.domain.board.piece.Color;
 import chess.domain.board.Board;
+import chess.domain.board.piece.Color;
 import java.util.Objects;
 
 final class WhiteTurn extends Running {

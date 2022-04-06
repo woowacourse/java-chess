@@ -21,11 +21,11 @@ public class PieceDisplayUtil {
 
     private static class PieceDisplayMap {
 
-        static final String BLACK_DISPLAY_FORMATS = "♙♘♗♖♕♔";
-        static final String WHITE_DISPLAY_FORMATS = "♟♞♝♜♛♚";
+        static final String[] BLACK_DISPLAY_FORMATS = "♙♘♗♖♕♔".split("");
+        static final String[] WHITE_DISPLAY_FORMATS = "♟♞♝♜♛♚".split("");
         static final String EMPTY_DISPLAY_FORMAT = ".";
 
-        static final String COLORLESS_DISPLAY_FORMATS = "♟♞♝♜♛♚";
+        static final String[] COLORLESS_DISPLAY_FORMATS = "♟♞♝♜♛♚".split("");
         static final String WEB_EMPTY_DISPLAY_FORMAT = "";
 
         static final Map<Piece, String> displayMap;
@@ -51,8 +51,7 @@ public class PieceDisplayUtil {
             return colorlessDisplayMap;
         }
 
-        static void putEachPiece(String displayFormat, Map<Piece, String> displayMap, Color color) {
-            String[] displayFormats = displayFormat.split("");
+        static void putEachPiece(String[] displayFormats, Map<Piece, String> displayMap, Color color) {
             PieceType[] pieceTypes = PieceType.values();
             for (int idx = 0; idx < pieceTypes.length; idx++ ){
                 Piece piece = Piece.of(color, pieceTypes[idx]);
