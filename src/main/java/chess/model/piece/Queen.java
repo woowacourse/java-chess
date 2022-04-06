@@ -4,8 +4,6 @@ import chess.model.Team;
 import chess.model.position.Direction;
 import chess.model.strategy.UnlimitedMoveStrategy;
 
-import java.util.List;
-
 public class Queen extends Piece {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";

@@ -4,8 +4,6 @@ import chess.model.Team;
 import chess.model.position.Direction;
 import chess.model.strategy.UnlimitedMoveStrategy;
 
-import java.util.List;
-
 public class Rook extends Piece {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";

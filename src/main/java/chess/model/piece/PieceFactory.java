@@ -27,7 +27,6 @@ public class PieceFactory {
         whitePieces.add(new Empty());
     }
 
-
     public static Piece create(String name) {
         String[] array = name.split("-");
         String teamName = array[0];
@@ -43,6 +42,5 @@ public class PieceFactory {
                 .filter(piece -> pieceName.equals(piece.getName().toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 조건의 기물이 존재하지 않습니다."));
-
     }
 }

@@ -15,9 +15,9 @@ import chess.model.position.Position;
 import java.util.Map;
 
 public class ChessService {
-    private ChessGame chessGame;
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
+    private ChessGame chessGame;
 
     public ChessService() {
         this.pieceDao = new PieceDao();
@@ -59,7 +59,7 @@ public class ChessService {
             String originalSourcePiece = pieceDao.findByPosition(moveDto.getSource());
             pieceDao.updateByPosition(moveDto.getTarget(), originalSourcePiece);
             pieceDao.updateByPosition(moveDto.getSource(), "none-.");
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
         turnDao.update(turn.change().getThisTurn());

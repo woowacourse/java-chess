@@ -1,16 +1,8 @@
 package chess;
 
-import chess.model.Turn;
-import chess.model.board.Board;
-import chess.model.board.BoardFactory;
-import chess.model.dao.PieceDao;
 import chess.model.dao.TurnDao;
-import chess.model.piece.Piece;
-import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

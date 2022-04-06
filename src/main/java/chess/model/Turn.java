@@ -17,8 +17,7 @@ public class Turn {
     public static Turn from(String team) {
         if ("black".equalsIgnoreCase(team)) {
             return TURN_BLACK;
-        }
-        else if ("white".equalsIgnoreCase(team)) {
+        } else if ("white".equalsIgnoreCase(team)) {
             return TURN_WHITE;
         }
         return TURN_NONE;

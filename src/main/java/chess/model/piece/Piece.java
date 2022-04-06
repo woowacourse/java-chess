@@ -9,7 +9,6 @@ import chess.model.strategy.MoveStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {

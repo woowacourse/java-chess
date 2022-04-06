@@ -2,7 +2,6 @@ package chess.model.dto;
 
 import chess.model.Turn;
 import chess.model.board.Board;
-import chess.model.position.Position;
 
 import java.util.Map;
 import java.util.stream.Collectors;
