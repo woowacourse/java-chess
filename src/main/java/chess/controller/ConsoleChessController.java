@@ -7,7 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessController {
+public class ConsoleChessController {
 
     public static final int COMMAND_INDEX = 0;
 
@@ -31,7 +31,7 @@ public class ChessController {
     }
 
     private void execute(ChessGame chessGame, Function function, List<String> commands) {
-        if (!function.isStatus()) {
+        if (function.isNotStatus()) {
             function.doFunction(chessGame, commands);
             OutputView.printBoard(chessGame.getBoard().getValue());
             return;
