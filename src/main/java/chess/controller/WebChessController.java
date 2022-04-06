@@ -28,6 +28,8 @@ public class WebChessController {
             return gson.toJson(gameService.loadGameBoard());
         });
 
+        get("/load", (req, res) -> gson.toJson(gameService.loadGameBoard()));
+
         exception(Exception.class, (exception, req, res) -> {
             res.status(400);
             res.body(exception.getMessage());

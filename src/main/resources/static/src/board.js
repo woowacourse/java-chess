@@ -23,6 +23,13 @@ async function endChess() {
     removePieceInSquare(board);
 }
 
+async function loadChess() {
+    let board = await fetch("/load");
+    board = await board.json();
+    console.log(board);
+    putPieceInSquare(board);
+}
+
 function putPieceInSquare(board) {
    for (key in board)  {
       console.log(key);
@@ -108,4 +115,8 @@ button.addEventListener("click", function () {
 status_button.addEventListener("click", function () {
     button.innerText = "Start";
     printResult();
+});
+
+load_button.addEventListener("click", function () {
+    loadChess()
 });
