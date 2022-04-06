@@ -1,18 +1,15 @@
 let $chessBoard = document.querySelector(".chessBoard");
-const startButton = document.querySelector(".start");
 const statusButton = document.querySelector(".status");
 const endButton = document.querySelector(".end");
 let gameFinished = false;
-
-initChessBoard();
+const gameId = window.location.pathname.split("/")[2];
+console.log(URL);
 
 $chessBoard.addEventListener("click", clickPosition);
-startButton.addEventListener("click", start);
 statusButton.addEventListener("click", status);
 endButton.addEventListener("click", end);
-//ondragstart, onmousemove
 
-function initChessBoard() {
+window.onload = async function initChessBoard() {
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement("div");
         chessBoardRow.setAttribute("class", "chessRow");
@@ -31,6 +28,8 @@ function initChessBoard() {
         }
         $chessBoard.appendChild(chessBoardRow);
     }
+    await syncBoard();
+    await changeTurn();
 }
 
 function initChessBoardColor(row, column) {
@@ -51,85 +50,68 @@ function initPiecePosition(row, column) {
         7: "1",
     };
     const columnTable = {
-        0: "0",
-        1: "1",
-        2: "2",
-        3: "3",
-        4: "4",
-        5: "5",
-        6: "6",
-        7: "7",
+        0: "1",
+        1: "2",
+        2: "3",
+        3: "4",
+        4: "5",
+        5: "6",
+        6: "7",
+        7: "8",
     };
-    return columnTable[column]+rowTable[row];
-}
-
-function start() {
-    fetch("/start", {
-        method: 'GET',
-        header: {
-            'Content-Type': 'application/json'
-        }
-    }).then(function () {
-        alert("chess game을 시작하겠습니다!");
-        gameFinished = false;
-        const turnMessage = document.querySelector(".currentTurn");
-        turnMessage.textContent = " Current Turn :";
-        removeChessImage()
-        syncBoard();
-        changeTurn();
-    });
-}
-
-function initChessImg() {
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            let cell = document.getElementById(String(initPiecePosition(i, j)));
-            if (cell.firstChild) {
-                cell.firstChild.remove();
-            }
-        }
-    }
-    syncBoard();
+    return columnTable[column] + rowTable[row];
 }
 
 async function syncBoard() {
-    const board = await fetch("/board", {
-        method: 'GET',
+    console.log("syncBoard 시작");
+    console.log(gameId);
+    const data = {
+        gameId: gameId
+    };
+    await fetch("/board", {
+        method: 'POST',
         header: {
             'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        return res.json();
-    });
-    const positions = Object.keys(board);
-    const pieces = Object.values(board);
+        },
+        body: JSON.stringify(data)
+    }).then(res => res.json())
+        .then(res => {
+            console.log(res);
+            const positions = Object.keys(res);
+            const pieces = Object.values(res);
 
-    const cells = document.querySelectorAll(".chessColumn");
-    for (let i = 0; i < cells.length; i++) {
-        if (cells[i].getElementsByTagName("img")[0]) {
-            cells[i].getElementsByTagName("img")[0].remove();
-        }
-    }
+            const cells = document.querySelectorAll(".chessColumn");
+            for (let i = 0; i < cells.length; i++) {
+                if (cells[i].getElementsByTagName("img")[0]) {
+                    cells[i].getElementsByTagName("img")[0].remove();
+                }
+            }
 
-    for (let i = 0; i < positions.length; i++) {
-        const position = document.getElementById(positions[i]);
-        const piece = document.createElement("img");
+            for (let i = 0; i < positions.length; i++) {
+                const position = document.getElementById(positions[i]);
+                const piece = document.createElement("img");
 
-        if (pieces[i] === ".") {
-            continue;
-        }
+                if (pieces[i] === ".") {
+                    continue;
+                }
 
-        piece.src = "/image/" + pieces[i] + ".png";
-        position.appendChild(piece);
-    }
+                piece.src = "/image/" + pieces[i] + ".png";
+                position.appendChild(piece);
+            }
+            }
+        )
 }
 
 async function changeTurn() {
+    const data = {
+        gameId: gameId
+    };
     const turn = await fetch("/turn", {
-        method: 'GET',
+        method: 'POST',
         header: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(data)
     }).then(res => {
         return res.json();
     });
@@ -137,7 +119,7 @@ async function changeTurn() {
     turnMessage.textContent = turn;
 }
 
-function clickPosition(event) {
+async function clickPosition(event) {
     if (gameFinished) {
         return;
     }
@@ -145,7 +127,7 @@ function clickPosition(event) {
     for (let i = 0; i < positions.length; i++) {
         if (positions[i].classList.contains("clicked")) {
             positions[i].classList.remove("clicked");
-            move(positions[i].id, event.target.closest("div").id);
+            await move(positions[i].id, event.target.closest("div").id);
             return;
         }
     }
@@ -157,6 +139,7 @@ function clickPosition(event) {
 
 async function move(from, to) {
     const data = {
+        gameId: gameId,
         from: from,
         to: to
     };
@@ -178,6 +161,7 @@ async function move(from, to) {
             gameFinished = true;
             document.querySelector(".currentTurn").textContent = " Winner :";
             alert(obj.turn + " 승리!");
+            removeChessImage();
             return;
         }
         if (obj.code === "200") {
@@ -188,7 +172,7 @@ async function move(from, to) {
 }
 
 
-function changeImg(fromPosition, toPosition) {
+async function changeImg(fromPosition, toPosition) {
     const from = document.getElementById(fromPosition);
     const to = document.getElementById(toPosition);
     const piece = from.getElementsByTagName("img")[0];//형태는 리스트인데 하나만 있음
@@ -199,11 +183,15 @@ function changeImg(fromPosition, toPosition) {
 }
 
 function status() {
+    const data = {
+        gameId: gameId
+    };
     fetch("/status", {
-        method: 'GET',
+        method: 'POST',
         header: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(data)
     }).then(res => {
         return res.json();
     }).then(obj => {
@@ -215,13 +203,23 @@ function status() {
 }
 
 function end() {
+    if (gameFinished===true){
+        alert("chess game이 이미 종료되었습니다!");
+        return;
+    }
+    const data = {
+        gameId: gameId
+    };
     fetch("/end", {
-        method: 'GET',
+        method: 'POST',
         header: {
             'Content-Type': 'application/json'
-        }
-    }).then(function (){
-        alert("chess game이 종료되었습니다.\n다시 시작하려면 start를 눌러주세요!");
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        return res.json();
+    }).then(function () {
+        alert("chess game이 종료되었습니다.");
         gameFinished = true;
         removeChessImage();
     })
