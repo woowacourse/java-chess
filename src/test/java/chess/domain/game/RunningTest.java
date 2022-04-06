@@ -8,7 +8,7 @@ import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.NonPawn;
 import chess.domain.board.position.Position;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 import chess.util.BoardMapGeneratorUtil;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +23,9 @@ class RunningTest {
     private static final Position WHITE_KING_POSITION = Position.of("e1");
     private static final Position NON_KILL_MOVED_POSITION = Position.of("d3");
 
-    private static final MoveCommandDto NON_KILL_MOVE = new MoveCommandDto("d1", "d3");
-    private static final MoveCommandDto KILL_BLACK_KING_MOVE = new MoveCommandDto("d1", "d8");
-    private static final MoveCommandDto KILL_BLACK_QUEEN_MOVE = new MoveCommandDto("d1", "a1");
+    private static final MoveCommand NON_KILL_MOVE = new MoveCommand("d1", "d3");
+    private static final MoveCommand KILL_BLACK_KING_MOVE = new MoveCommand("d1", "d8");
+    private static final MoveCommand KILL_BLACK_QUEEN_MOVE = new MoveCommand("d1", "a1");
 
     private Game game;
 

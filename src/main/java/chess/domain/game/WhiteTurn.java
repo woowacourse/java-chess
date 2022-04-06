@@ -9,7 +9,7 @@ import java.util.Objects;
 final class WhiteTurn extends Running {
 
     WhiteTurn(Board board) {
-        super(board, GameState.WHITE_TURN);
+        super(board);
     }
 
     @Override
@@ -20,6 +20,11 @@ final class WhiteTurn extends Running {
     @Override
     protected Game continueGame() {
         return new BlackTurn(board);
+    }
+
+    @Override
+    protected GameState getState() {
+        return GameState.WHITE_TURN;
     }
 
     @Override

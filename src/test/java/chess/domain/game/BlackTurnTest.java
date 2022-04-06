@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 import chess.util.BoardMapGeneratorUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 class BlackTurnTest {
 
-    private static final MoveCommandDto VALID_BLACK_MOVE = new MoveCommandDto( "a7", "a6");
-    private static final MoveCommandDto VALID_WHITE_MOVE = new MoveCommandDto("a2", "a3");
+    private static final MoveCommand VALID_BLACK_MOVE = new MoveCommand( "a7", "a6");
+    private static final MoveCommand VALID_WHITE_MOVE = new MoveCommand("a2", "a3");
 
     private Game game;
 

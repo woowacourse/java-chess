@@ -1,18 +1,18 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 
 final class GameOver extends Started {
 
     private static final String GAME_NOT_RUNNING_EXCEPTION_MESSAGE = "이미 종료된 게임입니다.";
 
     GameOver(Board board) {
-        super(board, GameState.OVER);
+        super(board);
     }
 
     @Override
-    public Game moveChessmen(MoveCommandDto moveCommand) {
+    public Game moveChessmen(MoveCommand moveCommand) {
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
     }
 
@@ -24,6 +24,11 @@ final class GameOver extends Started {
     @Override
     public GameResult getResult() {
         return new GameResult(board.toMap());
+    }
+
+    @Override
+    protected GameState getState() {
+        return GameState.OVER;
     }
 
     @Override

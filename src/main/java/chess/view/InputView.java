@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.OutputView.print;
 
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 import java.util.Scanner;
 
 public class InputView {
@@ -46,7 +46,7 @@ public class InputView {
         }
     }
 
-    public MoveCommandDto requestValidMoveInput() {
+    public MoveCommand requestValidMoveInput() {
         try {
             return requestMoveInput();
         } catch (IllegalArgumentException e) {
@@ -55,11 +55,11 @@ public class InputView {
         return requestValidMoveInput();
     }
 
-    private MoveCommandDto requestMoveInput() {
+    private MoveCommand requestMoveInput() {
         String[] input = readConsoleInput().split(COMMAND_INPUT_DELIMITER);
         validateMoveInput(input);
 
-        return new MoveCommandDto(input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
+        return new MoveCommand(input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
     }
 
     private void validateMoveInput(String[] input) {

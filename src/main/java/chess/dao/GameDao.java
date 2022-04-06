@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.game.Game;
 import java.sql.Statement;
 
 public class GameDao {
@@ -12,7 +11,7 @@ public class GameDao {
     }
 
     public int saveAndGetGeneratedId() {
-        final String sql = String.format("INSERT INTO %s (state) VALUES (?)", table);
+        final String sql = addTable("INSERT INTO %s (state) VALUES (?)");
 
         return new CommandBuilder(sql, Statement.RETURN_GENERATED_KEYS)
                 .setString(GameState.RUNNING)
@@ -20,15 +19,15 @@ public class GameDao {
                 .readFirstColumnAndClose();
     }
 
-    public void finishGame(int gameId, Game game) {
-        final String sql = String.format("UPDATE %s SET state = ? WHERE id = ?", table);
+    public void finishGame(int gameId) {
+        final String sql = addTable("UPDATE %s SET state = ? WHERE id = ?");
         new CommandBuilder(sql).setString(GameState.OVER)
                 .setInt(gameId)
                 .executeAndClose();
     }
 
     public boolean checkById(int gameId) {
-        final String sql = String.format("SELECT COUNT(*) FROM %s WHERE id = ?", table);
+        final String sql = addTable("SELECT COUNT(*) FROM %s WHERE id = ?");
 
         int existingGameCount = new QueryBuilder(sql).setInt(gameId)
                 .execute()
@@ -38,17 +37,21 @@ public class GameDao {
     }
 
     public int countAll() {
-        final String sql = "SELECT COUNT(*) FROM " + table;
+        final String sql = addTable("SELECT COUNT(*) FROM %s");
 
         return new QueryBuilder(sql).execute()
                 .readFirstColumnAndClose();
     }
 
     public int countByState(GameState state) {
-        final String sql = String.format("SELECT COUNT(*) FROM %s WHERE state = ?", table);
+        final String sql = addTable("SELECT COUNT(*) FROM %s WHERE state = ?");
 
         return new QueryBuilder(sql).setString(state)
                 .execute()
                 .readFirstColumnAndClose();
+    }
+
+    private String addTable(String sql) {
+        return String.format(sql, table);
     }
 }

@@ -1,17 +1,17 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.dto.response.GameDataDto;
+import chess.dto.response.GameDto;
 import chess.dto.response.board.ConsoleBoardViewDto;
 import chess.dto.response.board.WebBoardViewDto;
 
 public abstract class Started implements Game {
 
     protected final Board board;
-    private final GameState state;
 
-    protected Started(Board board, GameState state) {
+    protected Started(Board board) {
         this.board = board;
-        this.state = state;
     }
 
     @Override
@@ -20,17 +20,14 @@ public abstract class Started implements Game {
     }
 
     @Override
-    public final GameState getState() {
-        return state;
-    }
-
-    @Override
     public final ConsoleBoardViewDto toConsoleView() {
         return new ConsoleBoardViewDto(board);
     }
 
     @Override
-    public WebBoardViewDto toBoardWebView() {
-        return new WebBoardViewDto(board);
+    public GameDto toDtoOf(int gameId) {
+        return new GameDto(new GameDataDto(gameId, getState()), new WebBoardViewDto(board));
     }
+
+    protected abstract GameState getState();
 }

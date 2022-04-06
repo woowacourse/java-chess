@@ -1,20 +1,20 @@
-package chess.dto.request;
+package chess.domain.event;
 
 import chess.domain.board.position.Position;
 
-public class MoveCommandDto {
+public class MoveCommand {
 
     private static final String DESCRIPTION_DELIMITER = " ";
 
     private final Position source;
     private final Position target;
 
-    public MoveCommandDto(String source, String target) {
+    public MoveCommand(String source, String target) {
         this.source = Position.of(source);
         this.target = Position.of(target);
     }
 
-    public MoveCommandDto(String description) {
+    public MoveCommand(String description) {
         String[] positions = description.split(DESCRIPTION_DELIMITER);
         this.source = Position.of(positions[0]);
         this.target = Position.of(positions[1]);

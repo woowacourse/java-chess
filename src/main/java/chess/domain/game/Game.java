@@ -1,22 +1,20 @@
 package chess.domain.game;
 
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
+import chess.dto.response.GameDto;
 import chess.dto.response.board.ConsoleBoardViewDto;
-import chess.dto.response.board.WebBoardViewDto;
 
 public interface Game {
 
     Game init();
 
-    Game moveChessmen(MoveCommandDto moveCommand);
+    Game moveChessmen(MoveCommand moveCommand);
 
     boolean isEnd();
 
     GameResult getResult();
 
-    GameState getState();
+    GameDto toDtoOf(int gameId);
 
     ConsoleBoardViewDto toConsoleView();
-
-    WebBoardViewDto toBoardWebView();
 }

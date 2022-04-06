@@ -5,7 +5,7 @@ import static chess.view.OutputView.print;
 import chess.domain.game.Game;
 import chess.domain.game.GameResult;
 import chess.domain.game.NewGame;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 import chess.dto.response.board.ConsoleBoardViewDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -35,7 +35,7 @@ public class ConsoleController {
 
     private Game moveChessmen(Game game) {
         try {
-            MoveCommandDto validMoveInput = inputView.requestValidMoveInput();
+            MoveCommand validMoveInput = inputView.requestValidMoveInput();
             game = game.moveChessmen(validMoveInput);
             printBoardDisplay(game);
             return game;

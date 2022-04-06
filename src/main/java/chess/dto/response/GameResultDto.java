@@ -9,7 +9,7 @@ public class GameResultDto {
     private final GameResult result;
 
     public GameResultDto(int gameId, Game game){
-        this.gameInfo = new GameDto(gameId, game);
+        this.gameInfo = game.toDtoOf(gameId);
         this.result =game.getResult();
     }
 

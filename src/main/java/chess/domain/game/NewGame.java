@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
+import chess.dto.response.GameDto;
 import chess.dto.response.board.ConsoleBoardViewDto;
-import chess.dto.response.board.WebBoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {
@@ -17,7 +17,7 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public Game moveChessmen(MoveCommandDto dto) {
+    public Game moveChessmen(MoveCommand dto) {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
@@ -27,22 +27,17 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public GameState getState() {
-        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
-    }
-
-    @Override
     public GameResult getResult() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public ConsoleBoardViewDto toConsoleView() {
+    public GameDto toDtoOf(int gameId) {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public WebBoardViewDto toBoardWebView() {
+    public ConsoleBoardViewDto toConsoleView() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 }

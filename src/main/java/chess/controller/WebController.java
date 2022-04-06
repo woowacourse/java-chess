@@ -6,7 +6,7 @@ import chess.dao.GameState;
 import chess.domain.event.Event;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
-import chess.dto.request.MoveCommandDto;
+import chess.domain.event.MoveCommand;
 import chess.dto.request.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.GameCountDto;
@@ -52,24 +52,24 @@ public class WebController {
 
     public GameDto findGame(int gameId) {
         Game game = currentSnapShotOf(gameId);
-        return new GameDto(gameId, game);
+        return game.toDtoOf(gameId);
     }
 
     public GameDto playGame(PlayGameRequestDto request) {
         int gameId = request.getGameId();
-        MoveCommandDto moveCommand = request.getMoveCommand();
+        MoveCommand moveCommand = request.getMoveCommand();
 
         Game game = currentSnapShotOf(gameId);
         game = game.moveChessmen(moveCommand);
 
         eventDao.saveMove(gameId, moveCommand);
         updateGameState(gameId, game);
-        return new GameDto(gameId, game);
+        return game.toDtoOf(gameId);
     }
 
     private void updateGameState(int gameId, Game game) {
         if (game.isEnd()) {
-            gameDao.finishGame(gameId, game);
+            gameDao.finishGame(gameId);
         }
     }
 
