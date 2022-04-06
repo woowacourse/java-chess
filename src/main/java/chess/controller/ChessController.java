@@ -50,7 +50,7 @@ public class ChessController {
 
         post("/move", (req, res) -> gson.toJson(chessService.movePiece(parseToMoveCommand(req))));
 
-        get("/status", (req, res) -> gson.toJson(getStatus()));
+        get("/score", (req, res) -> gson.toJson(chessService.getScore()));
 
         post("/end", (req, res) -> gson.toJson(finishGame()));
 
@@ -93,14 +93,5 @@ public class ChessController {
         String source = request.queryParams("source");
         String target = request.queryParams("target");
         return MoveCommand.of(source, target);
-    }
-
-    private String movePieces(Request req) {
-        String source = req.queryParams("source");
-        String target = req.queryParams("target");
-        System.out.println("move command : " + source + "->" + target);
-        MoveCommand moveCommand = MoveCommand.of(source, target);
-        game.proceedWith(moveCommand);
-        return "Success to move pieces";
     }
 }

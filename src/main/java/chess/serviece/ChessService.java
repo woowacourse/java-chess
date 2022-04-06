@@ -3,6 +3,7 @@ package chess.serviece;
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
@@ -11,6 +12,7 @@ import chess.domain.position.Position;
 import chess.dto.ChessResponseDto;
 import chess.dto.GameDto;
 import chess.dto.PieceDto;
+import chess.dto.ScoresDto;
 
 import java.util.List;
 import java.util.Map;
@@ -67,5 +69,11 @@ public class ChessService {
                 .map(PieceDto::toPieceEntry)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return new ChessGame(pieces, PieceColor.find(gameDto.getTurn()));
+    }
+
+    public ScoresDto getScore() {
+        ChessGame game = getGame();
+        Map<PieceColor, Score> scoresByColor = game.calculateScoreByColor();
+        return ScoresDto.of(scoresByColor);
     }
 }

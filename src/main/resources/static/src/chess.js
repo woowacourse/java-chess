@@ -98,20 +98,20 @@ function move(position) {
     positions = []
 }
 
-function showStatus() {
+function showScore() {
     $.ajax({
-        url: "/status",
+        url: "/score",
         type: 'get',
         success(data) {
-            let status = JSON.parse(data);
+            let score = JSON.parse(data);
             var message = "";
-            $.each(status.scores, function (idx, score) {
+            $.each(score.scores, function (idx, score) {
                 message += score.name + " : " + score.score + "점\n";
             });
-            if (status.winnerName === "") {
+            if (score.winnerName === "") {
                 message += "동점입니다.";
             } else {
-                message += status.winnerName + " 진영이 이기고 있습니다.";
+                message += score.winnerName + " 진영이 이기고 있습니다.";
             }
             alert(message);
         }
