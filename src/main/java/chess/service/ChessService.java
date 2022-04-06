@@ -1,17 +1,17 @@
 package chess.service;
 
-import static chess.web.dto.PieceType.BISHOP_BLACK;
-import static chess.web.dto.PieceType.BISHOP_WHITE;
-import static chess.web.dto.PieceType.KING_BLACK;
-import static chess.web.dto.PieceType.KING_WHITE;
-import static chess.web.dto.PieceType.KNIGHT_BLACK;
-import static chess.web.dto.PieceType.KNIGHT_WHITE;
-import static chess.web.dto.PieceType.PAWN_BLACK;
-import static chess.web.dto.PieceType.PAWN_WHITE;
-import static chess.web.dto.PieceType.QUEEN_BLACK;
-import static chess.web.dto.PieceType.QUEEN_WHITE;
-import static chess.web.dto.PieceType.ROOK_BLACK;
-import static chess.web.dto.PieceType.ROOK_WHITE;
+import static chess.domain.piece.PieceType.BISHOP_BLACK;
+import static chess.domain.piece.PieceType.BISHOP_WHITE;
+import static chess.domain.piece.PieceType.KING_BLACK;
+import static chess.domain.piece.PieceType.KING_WHITE;
+import static chess.domain.piece.PieceType.KNIGHT_BLACK;
+import static chess.domain.piece.PieceType.KNIGHT_WHITE;
+import static chess.domain.piece.PieceType.PAWN_BLACK;
+import static chess.domain.piece.PieceType.PAWN_WHITE;
+import static chess.domain.piece.PieceType.QUEEN_BLACK;
+import static chess.domain.piece.PieceType.QUEEN_WHITE;
+import static chess.domain.piece.PieceType.ROOK_BLACK;
+import static chess.domain.piece.PieceType.ROOK_WHITE;
 
 import chess.dao.PieceDao;
 import chess.dao.TurnDao;
@@ -21,7 +21,7 @@ import chess.domain.generator.EmptyBoardGenerator;
 import chess.domain.state.State;
 import chess.domain.state.StateType;
 import chess.web.dto.PieceDto;
-import chess.web.dto.PieceType;
+import chess.domain.piece.PieceType;
 import chess.web.dto.TurnDto;
 import java.util.List;
 

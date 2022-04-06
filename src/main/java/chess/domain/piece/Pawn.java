@@ -30,10 +30,13 @@ public class Pawn extends Piece {
             new PawnCaptureMovingStrategy(List.of(TOP_LEFT, TOP_RIGHT))
     );
 
+    private static final String NOTATION = "P";
+    private static final double SCORE = 1;
+
     private final List<MovingStrategy> movingStrategies;
 
     public Pawn(Color color) {
-        super(PieceType.PAWN, color);
+        super(color);
         if (color.isBlack()) {
             this.movingStrategies = BLACK_STRATEGIES;
             return;
@@ -50,5 +53,25 @@ public class Pawn extends Piece {
         if (!canMove) {
             throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public String getNotation() {
+        return color.parse(NOTATION);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

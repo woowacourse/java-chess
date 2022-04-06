@@ -1,5 +1,6 @@
 package chess.web.dto;
 
+import chess.domain.piece.PieceType;
 import java.util.Objects;
 
 public class PieceDto {

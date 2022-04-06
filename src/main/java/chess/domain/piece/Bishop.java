@@ -17,9 +17,11 @@ public class Bishop extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
     private static final MovingStrategy MOVING_STRATEGY = new LinearMovingStrategy(DIRECTIONS);
+    private static final String NOTATION = "B";
+    private static final double SCORE = 3;
 
     public Bishop(Color color) {
-        super(PieceType.BISHOP, color);
+        super(color);
     }
 
     @Override
@@ -29,5 +31,25 @@ public class Bishop extends Piece {
         }
 
         throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public String getNotation() {
+        return color.parse(NOTATION);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

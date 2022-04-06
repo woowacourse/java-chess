@@ -18,9 +18,11 @@ public class Rook extends Piece {
     private static final List<Direction> DIRECTIONS = List.of(RIGHT, LEFT, TOP, BOTTOM);
 
     private static final MovingStrategy MOVING_STRATEGY = new LinearMovingStrategy(DIRECTIONS);
+    private static final String NOTATION = "R";
+    private static final double SCORE = 5;
 
     public Rook(Color color) {
-        super(PieceType.ROOK, color);
+        super(color);
     }
 
     @Override
@@ -30,5 +32,25 @@ public class Rook extends Piece {
         }
 
         throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public String getNotation() {
+        return color.parse(NOTATION);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

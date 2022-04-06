@@ -9,9 +9,11 @@ import chess.domain.position.Position;
 public class King extends Piece {
 
     private static final MovingStrategy MOVING_STRATEGY = new LengthBasedMovingStrategy(distance -> distance <= 2);
+    private static final String NOTATION = "K";
+    private static final double SCORE = 0;
 
     public King(Color color) {
-        super(PieceType.KING, color);
+        super(color);
     }
 
     @Override
@@ -21,5 +23,25 @@ public class King extends Piece {
         }
 
         throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public String getNotation() {
+        return color.parse(NOTATION);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

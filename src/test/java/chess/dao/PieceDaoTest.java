@@ -1,22 +1,22 @@
 package chess.dao;
 
-import static chess.web.dto.PieceType.BISHOP_BLACK;
-import static chess.web.dto.PieceType.BISHOP_WHITE;
-import static chess.web.dto.PieceType.KING_BLACK;
-import static chess.web.dto.PieceType.KING_WHITE;
-import static chess.web.dto.PieceType.KNIGHT_BLACK;
-import static chess.web.dto.PieceType.KNIGHT_WHITE;
-import static chess.web.dto.PieceType.PAWN_BLACK;
-import static chess.web.dto.PieceType.PAWN_WHITE;
-import static chess.web.dto.PieceType.QUEEN_BLACK;
-import static chess.web.dto.PieceType.QUEEN_WHITE;
-import static chess.web.dto.PieceType.ROOK_BLACK;
-import static chess.web.dto.PieceType.ROOK_WHITE;
+import static chess.domain.piece.PieceType.BISHOP_BLACK;
+import static chess.domain.piece.PieceType.BISHOP_WHITE;
+import static chess.domain.piece.PieceType.KING_BLACK;
+import static chess.domain.piece.PieceType.KING_WHITE;
+import static chess.domain.piece.PieceType.KNIGHT_BLACK;
+import static chess.domain.piece.PieceType.KNIGHT_WHITE;
+import static chess.domain.piece.PieceType.PAWN_BLACK;
+import static chess.domain.piece.PieceType.PAWN_WHITE;
+import static chess.domain.piece.PieceType.QUEEN_BLACK;
+import static chess.domain.piece.PieceType.QUEEN_WHITE;
+import static chess.domain.piece.PieceType.ROOK_BLACK;
+import static chess.domain.piece.PieceType.ROOK_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.web.dto.PieceDto;
-import chess.web.dto.PieceType;
+import chess.domain.piece.PieceType;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
@@ -31,6 +31,7 @@ class PieceDaoTest {
     @BeforeEach
     void setUp() {
         pieceDao = new PieceDaoImpl();
+        pieceDao.removeAll();
     }
 
     @DisplayName("기물을 저장한다.")

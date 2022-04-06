@@ -6,11 +6,9 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
 
-    private final PieceType pieceType;
-    private final Color color;
+    protected final Color color;
 
-    protected Piece(PieceType pieceType, Color color) {
-        this.pieceType = pieceType;
+    protected Piece(Color color) {
         this.color = color;
     }
 
@@ -28,19 +26,15 @@ public abstract class Piece {
         return false;
     }
 
-    public String getNotation() {
-        return pieceType.getNotation(color);
-    }
+    public abstract boolean isKing();
 
-    public double getScore() {
-        return pieceType.getScore();
-    }
+    public abstract boolean isPawn();
+
+    public abstract String getNotation();
+
+    public abstract double getScore();
 
     public String getColor() {
         return color.getValue();
-    }
-
-    public boolean isSamePieceType(PieceType pieceType) {
-        return this.pieceType == pieceType;
     }
 }
