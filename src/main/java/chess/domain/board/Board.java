@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Notation;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -30,7 +31,7 @@ public final class Board {
 
     public boolean removedKing() {
         final var kingCount = value.values().stream()
-                .filter(Piece::isKing)
+                .filter(piece -> piece.getNotation() == Notation.KING)
                 .count();
         return kingCount != INIT_KING_COUNT;
     }

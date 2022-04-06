@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Notation;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -22,7 +23,7 @@ public abstract class CalculableState extends State {
     private double getScore(final Map.Entry<Position, Piece> entry) {
         final Piece piece = entry.getValue();
 
-        if (piece.isPawn()) {
+        if (piece.getNotation() == Notation.PAWN) {
             return calculatePawnScore(entry);
         }
         return piece.getScore();
