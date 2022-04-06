@@ -42,12 +42,12 @@ public class ChessService {
             pieceDao.save(pieceDto);
         }
 
-        turnDao.save(new TurnDto("white turn"));
+        turnDao.save(new TurnDto(StateType.WHITE_TURN));
     }
 
     public ChessGame getChessGame() {
         ChessBoard chessBoard = generateChessBoard();
-        TurnDto lastTurn = turnDao.findLastTurn();
+        TurnDto lastTurn = getLastTurn();
 
         State state = generateState(lastTurn, chessBoard);
 
@@ -55,15 +55,19 @@ public class ChessService {
     }
 
     public void move(String source, String target) {
-        State state = generateState(turnDao.findLastTurn(), generateChessBoard());
+        State state = generateState(getLastTurn(), generateChessBoard());
 
         ChessGame chessGame = new ChessGame(state);
         chessGame.move(source, target);
 
         shift(source, target);
 
-        StateType stateType = chessGame.getStateType();
-        turnDao.save(new TurnDto(stateType.getValue()));
+        turnDao.save(new TurnDto(chessGame.getStateType()));
+    }
+
+    private TurnDto getLastTurn() {
+        return turnDao.findLastTurn()
+                .orElseThrow(() -> new IllegalArgumentException("턴 정보가 존재하지 않습니다."));
     }
 
     private void shift(String source, String target) {
@@ -81,7 +85,7 @@ public class ChessService {
     }
 
     private State generateState(TurnDto lastTurn, ChessBoard chessBoard) {
-        StateType stateType = StateType.of(lastTurn.getTurn());
+        StateType stateType = lastTurn.getTurn();
         return stateType.parseState(chessBoard);
     }
 
