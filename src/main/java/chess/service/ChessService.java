@@ -49,7 +49,7 @@ public class ChessService {
         int gameId = chessGameDao.findRecentGame();
         for (String position : board.keySet()) {
             Piece piece = (Piece) board.get(position);
-            boardDao.save(position, piece.getName(), piece.getColor().toString(), gameId);
+            boardDao.save(position, piece.getName(), piece.getColorValue(), gameId);
         }
         chessGameDao.update(gameId, chessGame);
         return board;
@@ -61,7 +61,7 @@ public class ChessService {
         int gameId = chessGameDao.findRecentGame();
         boardDao.delete(from, gameId);
         Piece piece = (Piece) board.get(to);
-        boardDao.update(to, piece.getName(), piece.getColor().toString(), gameId);
+        boardDao.update(to, piece.getName(), piece.getColorValue(), gameId);
         chessGameDao.update(gameId, chessGame);
         return board;
     }

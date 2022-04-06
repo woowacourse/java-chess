@@ -24,338 +24,332 @@
         </form>
             {{#this}}
             <span>White 점수 : {{WHITE}} Black 점수 : {{BLACK}}</span>
-            {{/this}}
         <form action="/terminate" method="get">
             <button>End</button>
-            {{#this}}
             <span>{{end}}</span>
-            {{/this}}
         </form>
-        {{#this}}
         <span>{{error}}</span>
-        {{/this}}
     </section>
 
     <section class="chess-ui">
-        {{#this}}
         <div class="black-square">
             {{#a8}}
-            <img src="images/{{a8.piece}}.png"/>
+            <img src="images/{{a8.colorValue}}_{{a8.name}}.png"/>
             {{/a8}}
         </div>
         <div class="white-square">
             {{#b8}}
-            <img src="images/{{b8.piece}}.png"/>
+            <img src="images/{{b8.colorValue}}_{{b8.name}}.png"/>
             {{/b8}}
         </div>
         <div class="black-square">
             {{#c8}}
-            <img src="images/{{c8.piece}}.png"/>
+            <img src="images/{{c8.colorValue}}_{{c8.name}}.png"/>
             {{/c8}}
         </div>
         <div class="white-square">
             {{#d8}}
-            <img src="images/{{d8.piece}}.png"/>
+            <img src="images/{{d8.colorValue}}_{{d8.name}}.png"/>
             {{/d8}}
         </div>
         <div class="black-square">
             {{#e8}}
-            <img src="images/{{e8.piece}}.png"/>
+            <img src="images/{{e8.colorValue}}_{{e8.name}}.png"/>
             {{/e8}}
         </div>
         <div class="white-square">
             {{#f8}}
-            <img src="images/{{f8.piece}}.png"/>
+            <img src="images/{{f8.colorValue}}_{{f8.name}}.png"/>
             {{/f8}}
         </div>
         <div class="black-square">
             {{#g8}}
-            <img src="images/{{g8.piece}}.png"/>
+            <img src="images/{{g8.colorValue}}_{{g8.name}}.png"/>
             {{/g8}}
         </div>
         <div class="white-square">
             {{#h8}}
-            <img src="images/{{h8.piece}}.png"/>
+            <img src="images/{{h8.colorValue}}_{{h8.name}}.png"/>
             {{/h8}}
         </div>
         <div class="white-square">
             {{#a7}}
-            <img src="images/{{a7.piece}}.png"/>
+            <img src="images/{{a7.colorValue}}_{{a7.name}}.png"/>
             {{/a7}}
         </div>
         <div class="black-square">
             {{#b7}}
-            <img src="images/{{b7.piece}}.png"/>
+            <img src="images/{{b7.colorValue}}_{{b7.name}}.png"/>
             {{/b7}}
         </div>
         <div class="white-square">
             {{#c7}}
-            <img src="images/{{c7.piece}}.png"/>
+            <img src="images/{{c7.colorValue}}_{{c7.name}}.png"/>
             {{/c7}}
         </div>
         <div class="black-square">
             {{#d7}}
-            <img src="images/{{d7.piece}}.png"/>
+            <img src="images/{{d7.colorValue}}_{{d7.name}}.png"/>
             {{/d7}}
         </div>
         <div class="white-square">
             {{#e7}}
-            <img src="images/{{e7.piece}}.png"/>
+            <img src="images/{{e7.colorValue}}_{{e7.name}}.png"/>
             {{/e7}}
         </div>
         <div class="black-square">
             {{#f7}}
-            <img src="images/{{f7.piece}}.png"/>
+            <img src="images/{{f7.colorValue}}_{{f7.name}}.png"/>
             {{/f7}}
         </div>
         <div class="white-square">
             {{#g7}}
-            <img src="images/{{g7.piece}}.png"/>
+            <img src="images/{{g7.colorValue}}_{{g7.name}}.png"/>
             {{/g7}}
         </div>
         <div class="black-square">
             {{#h7}}
-            <img src="images/{{h7.piece}}.png"/>
+            <img src="images/{{h7.colorValue}}_{{h7.name}}.png"/>
             {{/h7}}
         </div>
         <div class="black-square">
             {{#a6}}
-            <img src="images/{{a6.piece}}.png"/>
+            <img src="images/{{a6.colorValue}}_{{a6.name}}.png"/>
             {{/a6}}
         </div>
         <div class="white-square">
             {{#b6}}
-            <img src="images/{{b6.piece}}.png"/>
+            <img src="images/{{b6.colorValue}}_{{b6.name}}.png"/>
             {{/b6}}
         </div>
         <div class="black-square">
             {{#c6}}
-            <img src="images/{{c6.piece}}.png"/>
+            <img src="images/{{c6.colorValue}}_{{c6.name}}.png"/>
             {{/c6}}
         </div>
         <div class="white-square">
             {{#d6}}
-            <img src="images/{{d6.piece}}.png"/>
+            <img src="images/{{d6.colorValue}}_{{d6.name}}.png"/>
             {{/d6}}
         </div>
         <div class="black-square">
             {{#e6}}
-            <img src="images/{{e6.piece}}.png"/>
+            <img src="images/{{e6.colorValue}}_{{e6.name}}.png"/>
             {{/e6}}
         </div>
         <div class="white-square">
             {{#f6}}
-            <img src="images/{{f6.piece}}.png"/>
+            <img src="images/{{f6.colorValue}}_{{f6.name}}.png"/>
             {{/f6}}
         </div>
         <div class="black-square">
             {{#g6}}
-            <img src="images/{{g6.piece}}.png"/>
+            <img src="images/{{g6.colorValue}}_{{g6.name}}.png"/>
             {{/g6}}
         </div>
         <div class="white-square">
             {{#h6}}
-            <img src="images/{{h6.piece}}.png"/>
+            <img src="images/{{h6.colorValue}}_{{h6.name}}.png"/>
             {{/h6}}
         </div>
         <div class="white-square">
             {{#a5}}
-            <img src="images/{{a5.piece}}.png"/>
+            <img src="images/{{a5.colorValue}}_{{a5.name}}.png"/>
             {{/a5}}
         </div>
         <div class="black-square">
             {{#b5}}
-            <img src="images/{{b5.piece}}.png"/>
+            <img src="images/{{b5.colorValue}}_{{b5.name}}.png"/>
             {{/b5}}
         </div>
         <div class="white-square">
             {{#c5}}
-            <img src="images/{{c5.piece}}.png"/>
+            <img src="images/{{c5.colorValue}}_{{c5.name}}.png"/>
             {{/c5}}
         </div>
         <div class="black-square">
             {{#d5}}
-            <img src="images/{{d5.piece}}.png"/>
+            <img src="images/{{d5.colorValue}}_{{d5.name}}.png"/>
             {{/d5}}
         </div>
         <div class="white-square">
             {{#e5}}
-            <img src="images/{{e5.piece}}.png"/>
+            <img src="images/{{e5.colorValue}}_{{e5.name}}.png"/>
             {{/e5}}
         </div>
         <div class="black-square">
             {{#f5}}
-            <img src="images/{{f5.piece}}.png"/>
+            <img src="images/{{f5.colorValue}}_{{f5.name}}.png"/>
             {{/f5}}
         </div>
         <div class="white-square">
             {{#g5}}
-            <img src="images/{{g5.piece}}.png"/>
+            <img src="images/{{g5.colorValue}}_{{g5.name}}.png"/>
             {{/g5}}
         </div>
         <div class="black-square">
             {{#h5}}
-            <img src="images/{{h5.piece}}.png"/>
+            <img src="images/{{h5.colorValue}}_{{h5.name}}.png"/>
             {{/h5}}
         </div>
         <div class="black-square">
             {{#a4}}
-            <img src="images/{{a4.piece}}.png"/>
+            <img src="images/{{a4.colorValue}}_{{a4.name}}.png"/>
             {{/a4}}
         </div>
         <div class="white-square">
             {{#b4}}
-            <img src="images/{{b4.piece}}.png"/>
+            <img src="images/{{b4.colorValue}}_{{b4.name}}.png"/>
             {{/b4}}
         </div>
         <div class="black-square">
             {{#c4}}
-            <img src="images/{{c4.piece}}.png"/>
+            <img src="images/{{c4.colorValue}}_{{c4.name}}.png"/>
             {{/c4}}
         </div>
         <div class="white-square">
             {{#d4}}
-            <img src="images/{{d4.piece}}.png"/>
+            <img src="images/{{d4.colorValue}}_{{d4.name}}.png"/>
             {{/d4}}
         </div>
         <div class="black-square">
             {{#e4}}
-            <img src="images/{{e4.piece}}.png"/>
+            <img src="images/{{e4.colorValue}}_{{e4.name}}.png"/>
             {{/e4}}
         </div>
         <div class="white-square">
             {{#f4}}
-            <img src="images/{{f4.piece}}.png"/>
+            <img src="images/{{f4.colorValue}}_{{f4.name}}.png"/>
             {{/f4}}
         </div>
         <div class="black-square">
             {{#g4}}
-            <img src="images/{{g4.piece}}.png"/>
+            <img src="images/{{g4.colorValue}}_{{g4.name}}.png"/>
             {{/g4}}
         </div>
         <div class="white-square">
             {{#h4}}
-            <img src="images/{{h4.piece}}.png"/>
+            <img src="images/{{h4.colorValue}}_{{h4.name}}.png"/>
             {{/h4}}
         </div>
         <div class="white-square">
             {{#a3}}
-            <img src="images/{{a3.piece}}.png"/>
+            <img src="images/{{a3.colorValue}}_{{a3.name}}.png"/>
             {{/a3}}
         </div>
         <div class="black-square">
             {{#b3}}
-            <img src="images/{{b3.piece}}.png"/>
+            <img src="images/{{b3.colorValue}}_{{b3.name}}.png"/>
             {{/b3}}
         </div>
         <div class="white-square">
             {{#c3}}
-            <img src="images/{{c3.piece}}.png"/>
+            <img src="images/{{c3.colorValue}}_{{c3.name}}.png"/>
             {{/c3}}
         </div>
         <div class="black-square">
             {{#d3}}
-            <img src="images/{{d3.piece}}.png"/>
+            <img src="images/{{d3.colorValue}}_{{d3.name}}.png"/>
             {{/d3}}
         </div>
         <div class="white-square">
             {{#e3}}
-            <img src="images/{{e3.piece}}.png"/>
+            <img src="images/{{e3.colorValue}}_{{e3.name}}.png"/>
             {{/e3}}
         </div>
         <div class="black-square">
             {{#f3}}
-            <img src="images/{{f3.piece}}.png"/>
+            <img src="images/{{f3.colorValue}}_{{f3.name}}.png"/>
             {{/f3}}
         </div>
         <div class="white-square">
             {{#g3}}
-            <img src="images/{{g3.piece}}.png"/>
+            <img src="images/{{g3.colorValue}}_{{g3.name}}.png"/>
             {{/g3}}
         </div>
         <div class="black-square">
             {{#h3}}
-            <img src="images/{{h3.piece}}.png"/>
+            <img src="images/{{h3.colorValue}}_{{h3.name}}.png"/>
             {{/h3}}
         </div>
         <div class="black-square">
             {{#a2}}
-            <img src="images/{{a2.piece}}.png"/>
+            <img src="images/{{a2.colorValue}}_{{a2.name}}.png"/>
             {{/a2}}
         </div>
         <div class="white-square">
             {{#b2}}
-            <img src="images/{{b2.piece}}.png"/>
+            <img src="images/{{b2.colorValue}}_{{b2.name}}.png"/>
             {{/b2}}
         </div>
         <div class="black-square">
             {{#c2}}
-            <img src="images/{{c2.piece}}.png"/>
+            <img src="images/{{c2.colorValue}}_{{c2.name}}.png"/>
             {{/c2}}
         </div>
         <div class="white-square">
             {{#d2}}
-            <img src="images/{{d2.piece}}.png"/>
+            <img src="images/{{d2.colorValue}}_{{d2.name}}.png"/>
             {{/d2}}
         </div>
         <div class="black-square">
             {{#e2}}
-            <img src="images/{{e2.piece}}.png"/>
+            <img src="images/{{e2.colorValue}}_{{e2.name}}.png"/>
             {{/e2}}
         </div>
         <div class="white-square">
             {{#f2}}
-            <img src="images/{{f2.piece}}.png"/>
+            <img src="images/{{f2.colorValue}}_{{f2.name}}.png"/>
             {{/f2}}
         </div>
         <div class="black-square">
             {{#g2}}
-            <img src="images/{{g2.piece}}.png"/>
+            <img src="images/{{g2.colorValue}}_{{g2.name}}.png"/>
             {{/g2}}
         </div>
         <div class="white-square">
             {{#h2}}
-            <img src="images/{{h2.piece}}.png"/>
+            <img src="images/{{h2.colorValue}}_{{h2.name}}.png"/>
             {{/h2}}
         </div>
         <div class="white-square">
             {{#a1}}
-            <img src="images/{{a1.piece}}.png"/>
+            <img src="images/{{a1.colorValue}}_{{a1.name}}.png"/>
             {{/a1}}
         </div>
         <div class="black-square">
             {{#b1}}
-            <img src="images/{{b1.piece}}.png"/>
+            <img src="images/{{b1.colorValue}}_{{b1.name}}.png"/>
             {{/b1}}
         </div>
         <div class="white-square">
             {{#c1}}
-            <img src="images/{{c1.piece}}.png"/>
+            <img src="images/{{c1.colorValue}}_{{c1.name}}.png"/>
             {{/c1}}
         </div>
         <div class="black-square">
             {{#d1}}
-            <img src="images/{{d1.piece}}.png"/>
+            <img src="images/{{d1.colorValue}}_{{d1.name}}.png"/>
             {{/d1}}
         </div>
         <div class="white-square">
             {{#e1}}
-            <img src="images/{{e1.piece}}.png"/>
+            <img src="images/{{e1.colorValue}}_{{e1.name}}.png"/>
             {{/e1}}
         </div>
         <div class="black-square">
             {{#f1}}
-            <img src="images/{{f1.piece}}.png"/>
+            <img src="images/{{f1.colorValue}}_{{f1.name}}.png"/>
             {{/f1}}
         </div>
         <div class="white-square">
             {{#g1}}
-            <img src="images/{{g1.piece}}.png"/>
+            <img src="images/{{g1.colorValue}}_{{g1.name}}.png"/>
             {{/g1}}
         </div>
         <div class="black-square">
             {{#h1}}
-            <img src="images/{{h1.piece}}.png"/>
+            <img src="images/{{h1.colorValue}}_{{h1.name}}.png"/>
             {{/h1}}
         </div>
         {{/this}}

@@ -40,8 +40,8 @@ public abstract class Piece {
         return color;
     }
 
-    public String getPiece() {
-        return color.toString() + "_" + this.getClass().getSimpleName();
+    public String getColorValue() {
+        return color.toString();
     }
 
     public String getName() {
