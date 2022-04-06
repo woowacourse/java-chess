@@ -1,51 +1,29 @@
-/*.chess-ui {*/
-/*  width: 640px;*/
-/*  border: 4px solid slategrey;*/
-/*  display: grid;*/
-/*  grid-template-columns: repeat(8, 80px);*/
-/*  grid-template-rows: repeat(8, 80px);*/
-/*}*/
-
-/*.white-square {*/
-/*  background-color: slategrey;*/
-/*  color: white;*/
-/*}*/
-
-/*.white-square.selected {*/
-/*  background-color: rosybrown;*/
-/*}*/
-
-/*.black-square {*/
-/*  background-color: white;*/
-/*  color: slategrey;*/
-/*}*/
-
-/*.black-square.selected {*/
-/*  background-color: rosybrown;*/
-/*}*/
-
-/*.white-piece {*/
-/*  color: aqua;*/
-/*}*/
-
-/*img {*/
-/*  display : block;*/
-/*  margin: 8%;*/
-/*  width: 85%;*/
-/*}*/
-
-
-
 
 
 .chess-ui {
+  float: left;
   width: 640px;
+
+
   /*border: 4px solid #A97155;*/
   border: 4px solid #C48F27;
   display: grid;
   grid-template-columns: repeat(8, 80px);
   grid-template-rows: repeat(8, 80px);
 }
+
+.chess-status {
+  float: left;
+  width: 320px;
+  height: 640px;
+  margin-left: 0.1%;
+  border: 4px solid #C48F27;
+  background-color: #FFEDC9;
+}
+
+
+
+
 
 .white-square {
   /*background-color: #A97155;*/
@@ -77,6 +55,16 @@ img {
   -webkit-user-drag: none;
   margin: 8%;
   width: 85%;
+}
+
+button {
+  margin: 1%;
+  width: 100px;
+  height: 50px;
+
+  color: sienna;
+  background-color: antiquewhite;
+  border-color: unset;
 }
 
 

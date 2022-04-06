@@ -10,25 +10,6 @@
 <div id="app">
   <h1>♟️ 체스 게임 ♟</h1>
 
-  <div class="start">
-    <form action="/ui/start" method="get">
-      <button type="submit" formmethod="GET">start!</button>
-    </form>
-  </div>
-
-  <div class="end">
-    <form action="/ui/end" method="get">
-      <button type="submit" formmethod="GET">end!</button>
-    </form>
-  </div>
-
-    <div class="status" id="status">
-      <button id="btn">status</button>
-      <label>
-        현재 상태:
-      </label>
-    </div>
-
   <section class="chess-ui">
     {{#this}}
 
@@ -368,20 +349,32 @@
     </div>
     {{/this}}
   </section>
-  <section>
-    <h2>체스 form</h2>
 
-    <form enctype="text/plain" action="/move" method="post">
-      <label for="name">위치</label>
-      <input type="text" name="command" id="name" value="a1,a2">
-      <input type="submit" value="제출">
-    </form>
+  <div class="chess-status">
 
-  </section>
+    <div class="start">
+      <form action="/ui/start" method="get">
+        <button type="submit" formmethod="GET">start</button>
+      </form>
+    </div>
 
+    <div class="end">
+      <form action="/ui/end" method="get">
+        <button type="submit" formmethod="GET">end</button>
+      </form>
+    </div>
+
+    <div class="status" id="status">
+      <button id="btn">status</button>
+      <br>
+      <label>
+        현재 상태: 승자: <a class="winner-name">없음</a> , 백색팀: <a class="white-score">??</a>점, 흑색팀: <a class="black-score">??</a>점
+      </label>
+    </div>
+  </div>
 
 </div>
-<div id="main"></div>
+
 </body>
 
 <script>
@@ -392,11 +385,19 @@
   buttonElement.addEventListener('click', function (event) {
     fetch("ui/status")
     .then((res) => res.json())
-    .then((json) => JSON.stringify(json.result))
+    // .then((json) => json.result)
+    // .then((json) => JSON.stringify(json.result))
     .then((json) => {
-          let statusDiv = document.getElementById('status');
-          let html = json
-          statusDiv.append(html);
+          let winnerName = document.getElementsByClassName("winner-name")[0];
+          let whiteScore = document.getElementsByClassName("white-score")[0];
+          let blackScore = document.getElementsByClassName("black-score")[0];
+
+          winnerName.innerText = json.result.winner;
+          whiteScore.innerText = json.result.whiteScore;
+        blackScore.innerText = json.result.blackScore;
+        statusDiv.textContent = JSON.stringify(json.result);
+
+          // statusDiv.append(html);
         }
     )
   })
