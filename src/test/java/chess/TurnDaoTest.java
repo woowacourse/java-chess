@@ -27,6 +27,16 @@ class TurnDaoTest {
     }
 
     @Test
+    @DisplayName("턴이 존재하지 않는 경우 무엇을 반환하는지 확인")
+    void getTurn() {
+        TurnDao turnDao = new TurnDao();
+
+        String turn = turnDao.findOne();
+
+        assertThat(turn).isEqualToIgnoringCase("");
+    }
+
+    @Test
     @DisplayName("턴이 update 되는지 확인한다")
     void update() {
         TurnDao turnDao = new TurnDao();

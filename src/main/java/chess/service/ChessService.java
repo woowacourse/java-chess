@@ -9,7 +9,10 @@ import chess.model.dao.PieceDao;
 import chess.model.dao.TurnDao;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
+import chess.model.piece.Piece;
 import chess.model.position.Position;
+
+import java.util.Map;
 
 public class ChessService {
     private ChessGame chessGame;
@@ -22,12 +25,29 @@ public class ChessService {
     }
 
     public WebBoardDto start() {
-        Board board = BoardFactory.create();
-        pieceDao.init(board);
-        turnDao.init();
+        Board board = initBoard();
+        initTurn();
         chessGame = new ChessGame(board);
 
         return WebBoardDto.from(board);
+    }
+
+    private Board initBoard() {
+        Map<Position, Piece> board = pieceDao.findAll();
+
+        if (board.size() == 0) {
+            pieceDao.init(BoardFactory.create());
+        }
+
+        return new Board(pieceDao.findAll());
+    }
+
+    private void initTurn() {
+        String turn = turnDao.findOne();
+
+        if (turn.equals("")) {
+            turnDao.init();
+        }
     }
 
     public WebBoardDto move(MoveDto moveDto) {

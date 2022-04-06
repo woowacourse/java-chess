@@ -47,7 +47,7 @@ public class PieceDao {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String pieceResult = resultSet.getString("piece");
+                String pieceResult = resultSet.getString("name");
                 Piece piece = PieceFactory.create(pieceResult);
                 String positionResult = resultSet.getString("position");
                 Position position = Position.from(positionResult);
