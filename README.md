@@ -113,17 +113,11 @@
   - [x] 두 번째 클릭 : target position
 - [x] 현재 점수와 턴을 출력한다.
 - [x] 체스 게임방을 생성할 수 있다.
-### 로비 - 방만들기
-![img.png](READMEImages/img.png)
-
-### 게임 - 마우스 클릭으로 진행
-![img_1.png](READMEImages/img_1.png)
-
 ### 1. 로비 - 방만들기
-<p align="center"><img src="https://user-images.githubusercontent.com/57438644/162075633-6edb26b9-dfd3-4880-9230-f55c5da91972.png" height="700px" width="700px"></p>
+<p align="center"><img src=READMEImages/function_1.png height="700px" width="700px"></p>
 
 ### 2. 게임 - 마우스 클릭으로 진행
-<p align="center"><img src="https://user-images.githubusercontent.com/57438644/162075847-6021f635-08b4-49d6-9c1a-b14b86fb0d3b.png" height="700px" width="1000px"></p>
+<p align="center"><img src=READMEImages/function_2.png height="700px" width="1000px"></p>
 
 
 # 5단계 - DB 적용
