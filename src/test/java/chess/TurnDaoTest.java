@@ -47,4 +47,14 @@ class TurnDaoTest {
 
         assertThat(turn).isEqualToIgnoringCase("black");
     }
+
+    @Test
+    @DisplayName("저장된 턴을 모두 삭제한다.")
+    void deleteAll() {
+        TurnDao turnDao = new TurnDao();
+        turnDao.init();
+        turnDao.deleteAll();
+
+        assertThat(turnDao.findOne()).isEqualToIgnoringCase("");
+    }
 }

@@ -53,4 +53,14 @@ public class TurnDao {
             throwables.printStackTrace();
         }
     }
+
+    public void deleteAll() {
+        String query = "DELETE FROM turns";
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

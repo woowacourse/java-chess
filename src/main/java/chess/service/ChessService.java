@@ -84,5 +84,6 @@ public class ChessService {
 
     public void exitGame() {
         pieceDao.deleteAll();
+        turnDao.deleteAll();
     }
 }
