@@ -13,7 +13,7 @@ import chess.model.piece.Piece;
 import chess.model.piece.PieceLetter;
 import chess.model.status.End;
 import chess.model.status.Playing;
-import chess.model.dao.RuntimeChessGameDao;
+import chess.dao.RuntimeChessGameDao;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

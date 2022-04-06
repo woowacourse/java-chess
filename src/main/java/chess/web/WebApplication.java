@@ -5,7 +5,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.model.dao.RuntimeChessGameDao;
+import chess.dao.RuntimeChessGameDao;
 import chess.service.BoardDto;
 import chess.service.ChessService;
 import chess.service.GameResultDto;

@@ -2,7 +2,7 @@ package chess.console;
 
 import chess.console.controller.ChessController;
 import chess.service.ChessService;
-import chess.model.dao.RuntimeChessGameDao;
+import chess.dao.RuntimeChessGameDao;
 
 public class Main {
 

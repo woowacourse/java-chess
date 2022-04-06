@@ -3,11 +3,10 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Color;
-import chess.model.dao.PieceDao;
+import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.pawn.Pawn;
 import java.sql.Connection;
-import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PieceDaoTest {
 
     private PieceDao pieceDao;
+
     @BeforeEach
     void setUp() {
         pieceDao = new PieceDao();
@@ -34,5 +34,13 @@ class PieceDaoTest {
         Piece piece = pieceDao.findById(id);
         assertThat(piece.getClass().getSimpleName()).contains(pieceType);
         assertThat(piece.isBlack()).isEqualTo(isBlack);
+    }
+
+    @Test
+    void findIdByPiece() {
+        Piece blackPawn = Pawn.of(Color.BLACK);
+        Piece empty = new Empty();
+        assertThat(pieceDao.findIdByPiece(blackPawn)).isEqualTo(1);
+        assertThat(pieceDao.findIdByPiece(empty)).isEqualTo(13);
     }
 }

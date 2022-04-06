@@ -1,4 +1,4 @@
-package chess.model.dao;
+package chess.dao;
 
 import chess.model.Color;
 import chess.model.piece.Bishop;
@@ -6,6 +6,7 @@ import chess.model.piece.Empty;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceLetter;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 import chess.model.piece.pawn.Pawn;
@@ -85,5 +86,25 @@ public class PieceDao {
             return new Bishop(color);
         }
         return new Empty();
+    }
+
+    public int findIdByPiece(Piece piece) {
+        Connection connection = getConnection();
+        final String sql = "select id from piece where type = ? and color = ?";
+        String pieceType = PieceLetter.getName(piece);
+        String colorName = piece.getColor().name().toLowerCase();
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, pieceType);
+            statement.setString(2, colorName);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return 0;
+            }
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
