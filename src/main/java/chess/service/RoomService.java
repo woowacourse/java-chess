@@ -9,18 +9,21 @@ import chess.view.JsonGenerator;
 
 public class RoomService {
 
+    private final RoomDao roomDao;
+
+    public RoomService() {
+        this.roomDao = new RoomDao();
+    }
+
     public boolean isRoomExist(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
         return roomDao.isExistName(roomName);
     }
 
     public void createRoom(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
         roomDao.save(roomName, GameStatus.READY, Color.WHITE);
     }
 
     public void deleteRoom(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
         final RoomStatusDto dto = roomDao.findStatusByName(roomName);
         if (dto.getGameStatus().isEnd()) {
             roomDao.delete(roomName);

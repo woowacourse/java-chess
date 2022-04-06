@@ -24,11 +24,18 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private final ChessPieceDao chessPieceDao;
+    private final RoomDao roomDao;
+
+    public ChessService() {
+        this.chessPieceDao = new ChessPieceDao();
+        this.roomDao = new RoomDao();
+    }
+
     public JsonGenerator findAllPiece(final String roomName) {
         final JsonGenerator result = JsonGenerator.create();
         try {
-            final ChessPieceDao dao = new ChessPieceDao();
-            final Map<Position, ChessPiece> pieceByPosition = dao.findAllByRoomName(roomName).stream()
+            final Map<Position, ChessPiece> pieceByPosition = chessPieceDao.findAllByRoomName(roomName).stream()
                     .collect(Collectors.toMap(
                             ChessPieceDto::getPosition,
                             ChessPieceDto::getChessPiece
@@ -74,7 +81,6 @@ public class ChessService {
     }
 
     private void updatePosition(final String roomName, final Position from, final Position to) {
-        final ChessPieceDao chessPieceDao = new ChessPieceDao();
         chessPieceDao.deleteByPosition(roomName, to);
         chessPieceDao.update(roomName, from, to);
     }
@@ -126,7 +132,6 @@ public class ChessService {
     }
 
     private Map<Position, ChessPiece> initAllPiece(final String roomName) {
-        final ChessPieceDao chessPieceDao = new ChessPieceDao();
         final List<ChessPieceDto> dtos = chessPieceDao.findAllByRoomName(roomName);
         if (dtos.isEmpty()) {
             return ChessBoardFactory.createInitPieceByPosition();
@@ -138,7 +143,6 @@ public class ChessService {
     }
 
     private Color initCurrentTurn(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
         final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
         if (Objects.isNull(dto)) {
             return Color.WHITE;
@@ -147,7 +151,6 @@ public class ChessService {
     }
 
     private GameStatus initGameStatus(final String roomName) {
-        final RoomDao roomDao = new RoomDao();
         final RoomStatusDto dto = roomDao.findStatusByName(roomName);
         if (Objects.isNull(dto)) {
             return GameStatus.READY;
@@ -156,18 +159,15 @@ public class ChessService {
     }
 
     private void updateChessPiece(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
-        final ChessPieceDao chessPieceDao = new ChessPieceDao();
         chessPieceDao.deleteAllByRoomName(roomName);
         chessPieceDao.saveAll(roomName, pieceByPosition);
     }
 
     private void updateRoom(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
-        final RoomDao roomDao = new RoomDao();
         roomDao.update(roomName, gameStatus, currentTurn);
     }
 
     private void updateRoomStatusTo(final String roomName, final GameStatus gameStatus) {
-        final RoomDao roomDao = new RoomDao();
         roomDao.updateStatusTo(roomName, gameStatus);
     }
 }
