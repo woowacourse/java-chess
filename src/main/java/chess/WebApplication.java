@@ -1,10 +1,7 @@
 package chess;
 
-import chess.domain.game.BoardInitializer;
 import chess.domain.game.ChessController;
-import chess.domain.game.GameService;
 import chess.view.ResponseDto;
-import chess.view.BoardDto;
 import chess.view.StatusDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -31,7 +28,6 @@ public class WebApplication {
         });
 
         post("/make-room", (req, res) -> {
-            System.out.println(req.body().strip());
             final List<String> createRoomInput = Arrays.stream(req.body().strip().split("\n"))
                     .map(s -> s.split("=")[1])
                     .collect(Collectors.toList());
@@ -39,7 +35,6 @@ public class WebApplication {
             res.redirect("/room/" + roomId);
             return null;
         });
-
 
         get("/room/:roomId", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

@@ -49,31 +49,6 @@ public class PositionDao {
         });
     }
 
-    public void saveAllPosition(int boardId) {
-        connectionManager.executeQuery(connection -> {
-            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            for (Column column : Column.values()) {
-                for (Row row : Row.values()) {
-                    preparedStatement.setInt(1, column.value());
-                    preparedStatement.setInt(2, row.value());
-                    preparedStatement.setInt(3, boardId);
-                    preparedStatement.addBatch();
-                    preparedStatement.clearParameters();
-                }
-            }
-            preparedStatement.executeBatch();
-            return null;
-        });
-    }
-
-    public int getPositionIdByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
-        return connectionManager.executeQuery(connection -> {
-            final ResultSet resultSet = findPosition(column, row, boardId, connection);
-            return resultSet.getInt("id");
-        });
-    }
-
     private ResultSet findPosition(Column column, Row row, int boardId, Connection connection) throws SQLException {
         final String sql = "select np.id, np.position_column, np.position_row, np.board_id " +
                 "from position as np " +
@@ -87,6 +62,27 @@ public class PositionDao {
             throw new IllegalArgumentException("위치가 존재하지 않습니다.");
         }
         return resultSet;
+    }
+
+    public int saveAllPosition(int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            for (Column column : Column.values()) {
+                for (Row row : Row.values()) {
+                    preparedStatement.setInt(1, column.value());
+                    preparedStatement.setInt(2, row.value());
+                    preparedStatement.setInt(3, boardId);
+                    preparedStatement.addBatch();
+                    preparedStatement.clearParameters();
+                }
+            }
+            return preparedStatement.executeBatch().length;
+        });
+    }
+
+    public int getPositionIdByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
+        return getByColumnAndRowAndBoardId(column, row, boardId).getId();
     }
 
     public Map<Position, Piece> findAllPositionsAndPieces(int boardId) {
@@ -123,14 +119,6 @@ public class PositionDao {
                 Symbol.findSymbol(resultSet.getString("type")).type(),
                 resultSet.getInt("position_id")
         );
-    }
-
-    public int deleteAll() {
-        return connectionManager.executeQuery(connection -> {
-            String sql = "delete from position";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            return preparedStatement.executeUpdate();
-        });
     }
 
     public List<Position> getPaths(List<Position> positions, int roomId) {

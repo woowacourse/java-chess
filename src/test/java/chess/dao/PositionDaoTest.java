@@ -23,14 +23,13 @@ class PositionDaoTest {
     private final BoardDao boardDao = new BoardDao(new ChessConnectionManager());
     private final PieceDao pieceDao = new PieceDao(new ChessConnectionManager());
     private int boardId;
-    private Position Position;
 
     @BeforeEach
     void setup() {
         final Board board = boardDao.save(new Board("코린파이팅"));
         this.boardId = board.getId();
-        Position Position = dao.save(new Position(Column.A, Row.TWO, boardId));
-        final Piece piece = pieceDao.save(new Piece(Color.WHITE, new Pawn(), Position.getId()));
+        Position position = dao.save(new Position(Column.A, Row.TWO, boardId));
+        final Piece piece = pieceDao.save(new Piece(Color.WHITE, new Pawn(), position.getId()));
     }
 
     @AfterEach
@@ -60,8 +59,14 @@ class PositionDaoTest {
     void findAllPositionsAndPieces() {
         Map<Position, Piece> all = dao.findAllPositionsAndPieces(boardId);
 
-        for(Position position : all.keySet()) {
+        for (Position position : all.keySet()) {
             assertThat(all.get(position).getType()).isInstanceOf(Pawn.class);
         }
+    }
+
+    @Test
+    void saveAllPositionTest() {
+        final int savedRecords = dao.saveAllPosition(boardId);
+        assertThat(savedRecords).isEqualTo(64);
     }
 }

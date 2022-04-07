@@ -11,6 +11,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -67,5 +69,11 @@ class PieceDaoTest {
     void deletePieceByPositionId() {
         int affectedRows = dao.deletePieceByPositionId(positionId);
         assertThat(affectedRows).isEqualTo(1);
+    }
+
+    @Test
+    void getAllPiecesTest() {
+        final List<Piece> pieces = dao.getAllPiecesByBoardId(boardId);
+        assertThat(pieces.size()).isEqualTo(1);
     }
 }
