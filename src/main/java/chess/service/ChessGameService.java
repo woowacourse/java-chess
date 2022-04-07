@@ -27,11 +27,11 @@ public class ChessGameService {
 
 	public ChessGame updateGame(Command command, String name) {
 		ChessGame updatedGame = findGame(name).execute(command);
-		gameRepository.updateStateOfGame(updatedGame);
 		try {
-			gameRepository.updatePositionOfPiece(
-				updatedGame, command.getFromPosition(), command.getToPosition());
-		} catch (IllegalStateException ignored) {}
+			gameRepository.updateGame(updatedGame, command);
+		} catch (IllegalStateException ignored) {
+
+		}
 		return updatedGame;
 	}
 

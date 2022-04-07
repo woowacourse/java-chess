@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import chess.domain.ChessGame;
-import chess.domain.position.Position;
+import chess.domain.command.Command;
 import chess.repository.GameRepository;
 
 public class MemoryChessGameRepository implements GameRepository {
@@ -25,7 +25,7 @@ public class MemoryChessGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void updatePositionOfPiece(ChessGame game, Position from, Position to) {
+	public void updateGame(ChessGame game, Command command) {
 		database.put(game.getName(), game);
 	}
 
@@ -37,10 +37,5 @@ public class MemoryChessGameRepository implements GameRepository {
 	@Override
 	public List<String> findAllNames() {
 		return new ArrayList<>(database.keySet());
-	}
-
-	@Override
-	public void updateStateOfGame(ChessGame game) {
-		database.put(game.getName(), game);
 	}
 }

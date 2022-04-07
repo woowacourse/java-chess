@@ -16,6 +16,7 @@ import chess.domain.command.Move;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.state.Finished;
 import chess.domain.state.Ready;
 import chess.domain.state.RunningBlackTurn;
 
@@ -81,10 +82,10 @@ class ChessGameRepositoryTest {
 		ChessGame updatedGame = newGame.execute(
 			new Move(new Position(1, 1), new Position(2, 2)));
 
-		gameRepository.updatePositionOfPiece(updatedGame, new Position(1, 1), new Position(2, 2));
+		gameRepository.updateGame(updatedGame, new Move(new Position(1, 1), new Position(2, 2)));
 
 		gameRepository.findByName(TEST_NAME)
 			.ifPresent(game -> assertThat(game.getState())
-				.isInstanceOf(RunningBlackTurn.class));
+				.isInstanceOf(Finished.class));
 	}
 }

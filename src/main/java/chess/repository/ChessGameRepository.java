@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import chess.converter.StringToStateConverter;
 import chess.domain.ChessGame;
+import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
@@ -40,16 +41,18 @@ public class ChessGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void updateStateOfGame(ChessGame game) {
+	public void updateGame(ChessGame game, Command command) {
 		chessGameDao.updateState(game);
+		try {
+			updatePositionOfPiece(game, command.getFromPosition(), command.getToPosition());
+		} catch (IllegalStateException ignored) {
+		}
 	}
 
-	@Override
-	public void updatePositionOfPiece(ChessGame game, Position from, Position to) {
+	private void updatePositionOfPiece(ChessGame game, Position from, Position to) {
 		String gameName = game.getName();
 		pieceDao.deleteByPosition(to, gameName);
 		Piece piece = game.getPieceByPosition(to);
-
 		pieceDao.updatePositionOfPiece(piece, from, to, gameName);
 	}
 
