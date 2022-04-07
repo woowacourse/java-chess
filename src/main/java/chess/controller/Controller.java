@@ -14,12 +14,12 @@ import java.util.Map;
 
 public class Controller {
     private static final BoardDao boardDao = new BoardDao();
+    private static final RenderService service = new RenderService();
     private static final String GAME_EXIT_ERROR_MESSAGE = "이미 게임이 종료되었습니다";
 
     public void run() {
         staticFiles.location("/static");
         final Map<String, Object> model = new HashMap<>();
-        RenderService service = new RenderService();
         get("/", (req, res) -> service.renderStart(model));
         post("/start", (req, res) -> {
             String name = req.queryParams("name");
