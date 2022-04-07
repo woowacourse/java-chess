@@ -3,7 +3,6 @@ package chess.model.state.finished;
 import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.board.result.GameResult;
-import chess.model.piece.Piece;
 import java.util.Map;
 
 public final class Status extends Finished {

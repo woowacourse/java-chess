@@ -89,7 +89,7 @@ async function printResult() {
     const winner = document.createElement("div");
     const newStart = document.createElement("div");
     whiteScore.innerHTML = "화이트 점수 : " + board.score.WHITE;
-    blackScore.innerHTML = "블랙 점수 : " + board.score.WHITE;
+    blackScore.innerHTML = "블랙 점수 : " + board.score.BLACK;
     winner.innerHTML = "승자 : " + board.winner;
     newStart.innerHTML = "게임이 종료 되었습니다. 재시작 하려면 Start 버튼을 눌러주세요.";
     session.appendChild(whiteScore);

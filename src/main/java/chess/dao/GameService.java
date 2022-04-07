@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.BoardDto;
+import chess.dto.ResultDto;
 import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
@@ -44,6 +45,11 @@ public class GameService {
 
         Board movedBoard = toBoard(squareDao.find());
         return BoardDto.from(movedBoard.getBoard());
+    }
+
+    public ResultDto status() {
+        Board board = toBoard(squareDao.find());
+        return new ResultDto(board.getScore(), board.getWinner());
     }
 
     public BoardDto load() {
