@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 public enum Team {
 
     WHITE("white", (score, otherScore) -> score >= otherScore),
-    BLACK("black", (score, otherScore) -> score <= otherScore);
+    BLACK("black", (score, otherScore) -> score <= otherScore),
+    NONE("", (score, otherScore) -> false);
 
     private final String value;
     private final BiPredicate<Double, Double> winnerCondition;

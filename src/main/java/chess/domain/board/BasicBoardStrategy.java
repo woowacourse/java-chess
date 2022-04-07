@@ -14,6 +14,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BasicBoardStrategy implements BoardGenerationStrategy {
     private final Map<Position, Piece> board = new HashMap<>();
@@ -55,5 +56,11 @@ public class BasicBoardStrategy implements BoardGenerationStrategy {
         for (Column column : Column.values()) {
             board.put(new Position(column, row), piece);
         }
+    }
+
+    public static Map<String, String> toMap(Map<Position, Piece> board) {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), m -> m.getValue().toString()));
     }
 }

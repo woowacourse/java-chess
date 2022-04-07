@@ -7,10 +7,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.ChessGame;
 import chess.domain.board.BasicBoardStrategy;
 
-import chess.domain.board.boardGenerator.CheckmateBoardStrategy;
-import chess.domain.board.boardGenerator.NotCheckmateBoardStrategy;
-import chess.domain.board.boardGenerator.TestBoardStrategy;
-import chess.domain.board.boardGenerator.WhiteCheckBoardStrategy;
+import chess.board.boardGenerator.CheckmateBoardStrategy;
+import chess.board.boardGenerator.NotCheckmateBoardStrategy;
+import chess.board.boardGenerator.TestBoardStrategy;
+import chess.board.boardGenerator.WhiteCheckBoardStrategy;
 import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Team;

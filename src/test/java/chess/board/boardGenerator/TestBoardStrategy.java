@@ -1,4 +1,4 @@
-package chess.domain.board.boardGenerator;
+package chess.board.boardGenerator;
 
 import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.piece.Piece;
