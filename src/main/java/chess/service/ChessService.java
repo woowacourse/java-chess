@@ -4,7 +4,6 @@ import chess.dao.BoardDao;
 import chess.dao.DbBoardDao;
 import chess.dao.DbPieceDao;
 import chess.dao.PieceDao;
-import chess.dto.BoardDto;
 import chess.game.Board;
 import chess.game.Game;
 import chess.piece.Piece;
@@ -19,21 +18,12 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    // 유저가 새로운 게임 시작 -> db에 데이터들 insert
-    // 유저가 움직인다. -> db에서 데이터들 가져온다 -> (게임,보드) 객체로 만든다 -> 비즈니스 로직이 돌아간다 -> db에 다시 update or insert
-    // board, piece가 나눠져있다. 하나의 테이블로 관리하면 조금 쉬
-
     private final BoardDao boardDao;
     private final PieceDao pieceDao;
-    private boolean isRunning;
-
-    // 1. game을 제거한다.
-//    private Game game;
 
     public ChessService() {
         this.boardDao = new DbBoardDao();
         this.pieceDao = new DbPieceDao();
-        this.isRunning = true;
     }
 
     private void updateBoard(final int boardId, final Color turn) {
@@ -45,7 +35,6 @@ public class ChessService {
         pieceDao.saveAll(boardId, board);
     }
 
-    // 2. game을 조회하지 않고 board를 가져오도록 한다.
     public Map<Position, Piece> getBoard() {
         final int boardId = boardDao.findLastlyUsedBoard();
         return pieceDao.findAllByBoardId(boardId);
@@ -58,17 +47,20 @@ public class ChessService {
             return;
         }
 
-        isRunning = true;
         boardDao.save(game.getTurn());
         final int boardId = boardDao.findLastlyUsedBoard();
         pieceDao.saveAll(boardId, game.getBoard().getValue());
     }
 
-    public BoardDto findBoardById(final int boardId) {
-        final Map<Position, Piece> pieces = pieceDao.findAllByBoardId(boardId);
-        final Board board = Board.of(pieces);
+    public void restartGame() {
+        final int boardId = boardDao.findLastlyUsedBoard();
+        pieceDao.deleteAllById(boardId);
+        boardDao.deleteById(boardId);
 
-        return BoardDto.toDto(board);
+        Game game = new Game(Ready.start(Command.START));
+        boardDao.save(game.getTurn());
+        final int newBoardId = boardDao.findLastlyUsedBoard();
+        pieceDao.saveAll(newBoardId, game.getBoard().getValue());
     }
 
     public Map<Color, Double> getResult() {
@@ -97,16 +89,16 @@ public class ChessService {
         final Color turn = boardDao.findTurnById(boardId);
         final Game game = new Game(new Running(pieces, turn));
         game.run(splitInput.get(0), splitInput);
-
-        if (!game.isRunning()) {
-            isRunning = false;
-        }
-
         save(boardId, game);
     }
 
     public boolean isRunning() {
-        return isRunning;
+        final int boardId = boardDao.findLastlyUsedBoard();
+        final Map<Position, Piece> pieces = pieceDao.findAllByBoardId(boardId);
+        final Color turn = boardDao.findTurnById(boardId);
+        final Game game = new Game(new Running(pieces, turn));
+
+        return !game.isFinished();
     }
 
     private void save(final int boardId, final Game game) {

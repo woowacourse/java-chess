@@ -95,4 +95,8 @@ public class Game {
     public Color getTurn() {
         return state.getTurn();
     }
+
+    public boolean isFinished() {
+        return state.isGameEnd();
+    }
 }

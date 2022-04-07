@@ -13,4 +13,6 @@ public interface BoardDao {
     int findLastlyUsedBoard();
 
     void updateById(int boardId, Color turn);
+
+    void deleteById(int boardId);
 }

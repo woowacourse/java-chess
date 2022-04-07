@@ -50,6 +50,19 @@ public class DbBoardDao implements BoardDao {
     }
 
     @Override
+    public void deleteById(final int boardId) {
+        final String sql = "delete from board where id = ?";
+
+        try (Connection connection = DbConnector.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, boardId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public int save(final Color color) {
         final String sql = "insert into board (turn) values (?)";
         try (Connection connection = DbConnector.getConnection()) {
