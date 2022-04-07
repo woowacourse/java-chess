@@ -31,7 +31,7 @@ public class ChessService {
     }
 
     public void init() throws SQLException {
-        if (pieceDao.load() == null) {
+        if (pieceDao.load().isEmpty()) {
             pieceDao.removeAll();
             saveChessBoard();
         }

@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +34,6 @@ public class PieceDaoImpl implements PieceDao {
         PreparedStatement pstmt = con.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         try (con; pstmt; rs) {
-            if (!rs.next()) {
-                return null;
-            }
-
             List<Piece> newPiece = new ArrayList<>();
             while (rs.next()) {
                 String name = rs.getString("piece_name");
