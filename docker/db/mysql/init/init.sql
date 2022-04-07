@@ -2,7 +2,7 @@
 
 create table board (
     position varchar(10) not null,
-    name varchar(20) not null,
+    name varchar(40) not null,
     primary key(position)
 );
 
