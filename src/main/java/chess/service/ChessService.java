@@ -29,7 +29,7 @@ public class ChessService {
         return String.valueOf(gameId);
     }
 
-    public Map<String, String> getCurrentBoard(final Long gameId) {
+    public Map<String, String> getBoard(final Long gameId) {
         final Map<Position, Piece> board = boardDao.findById(gameId).getBoard();
         Map<String, String> boardDto = new LinkedHashMap<>();
         for (Entry<Position, Piece> positionPieceEntry : board.entrySet()) {
@@ -38,7 +38,7 @@ public class ChessService {
         return boardDto;
     }
 
-    public String getCurrentTurn(final Long gameId) {
+    public String getTurn(final Long gameId) {
         return chessGameDao.findTurnById(gameId).getName();
     }
 
@@ -50,7 +50,7 @@ public class ChessService {
         try {
             boolean movable = chessGame.move(Position.create(from), Position.create(to));
             updateBoardDao(gameId, chessGame.getBoard(), from, to);
-            return checkFinished(chessGame, gameId, movable);
+            return checkFinished(chessGame.getTurn(), gameId, movable);
         } catch (IllegalStateException | IllegalArgumentException e) {
             return new ResponseDto("400", e.getMessage(), chessGame.getTurn());
         }
@@ -61,13 +61,13 @@ public class ChessService {
         boardDao.updateNameByGameIdAndPosition(gameId, to, board.findPiece(Position.create(to)).getName());
     }
 
-    private ResponseDto checkFinished(final ChessGame chessGame, final Long gameId, final boolean movable) {
+    private ResponseDto checkFinished(final String turn, final Long gameId, final boolean movable) {
         if (!movable) {
             end(gameId);
-            return new ResponseDto("300", "끝", chessGame.getTurn());
+            return new ResponseDto("300", "끝", turn);
         }
-        chessGameDao.updateTurnById(gameId, chessGame.getTurn());
-        return new ResponseDto("200", "성공", chessGame.getTurn());
+        chessGameDao.updateTurnById(gameId, turn);
+        return new ResponseDto("200", "성공", turn);
     }
 
     public StatusDto status(final Long gameId) {

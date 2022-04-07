@@ -33,12 +33,12 @@ public class ChessController {
 
         post("/board", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
-            return chessService.getCurrentBoard(gameDto.getGameId());
+            return chessService.getBoard(gameDto.getGameId());
         }, jsonTransformer);
 
         post("/turn", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
-            return chessService.getCurrentTurn(gameDto.getGameId());
+            return chessService.getTurn(gameDto.getGameId());
         }, jsonTransformer);
 
         post("/move", (req, res) -> {
