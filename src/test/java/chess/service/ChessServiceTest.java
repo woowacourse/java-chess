@@ -8,7 +8,6 @@ import chess.dao.GameDao;
 import chess.dao.GameState;
 import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
-import chess.domain.event.MoveCommand;
 import chess.domain.event.MoveEvent;
 import chess.domain.game.NewGame;
 import chess.dto.CreateGameDto;
@@ -87,7 +86,7 @@ class ChessServiceTest {
 
     @Test
     void playGame_메서드는_이동_명령에_따라_이동시킨_후_그_결과를_반환한다() {
-        GameDto actual = service.playGame(1, new MoveCommand("a7", "a5"));
+        GameDto actual = service.playGame(1, new MoveEvent("a7 a5"));
 
         GameDto expected = new NewGame().play(new InitEvent())
                 .play(new MoveEvent("e2 e4"))
@@ -101,7 +100,7 @@ class ChessServiceTest {
 
     @Test
     void playGame_메서드는_이동_명령에_따라_이동시키며_게임이_종료된_경우_OVER로_상태를_변경한다() {
-        service.playGame(2, new MoveCommand("b5", "e8"));
+        service.playGame(2, new MoveEvent("b5 e8"));
 
         GameCountDto actual = service.countGames();
         GameCountDto expected = new GameCountDto(3, 2 - 1);
@@ -120,7 +119,8 @@ class ChessServiceTest {
     void findGameResult_메서드는_종료된_게임의_승자_및_점수_정보를_계산하여_반환한다() {
         GameResultDto actual = service.findGameResult(3);
 
-        GameResultDto expected = new GameResultDto(3, new NewGame().play(new InitEvent())
+        GameResultDto expected = new GameResultDto(3, new NewGame()
+                .play(new InitEvent())
                 .play(new MoveEvent("e2 e4"))
                 .play(new MoveEvent("d7 d5"))
                 .play(new MoveEvent("f1 b5"))
@@ -193,14 +193,12 @@ class ChessServiceTest {
             return List.of();
         }
 
-        public void saveMove(int gameId, MoveCommand moveCommand) {
-            Event newEvent = new MoveEvent(moveCommand.toDescription());
-
+        public void save(int gameId, Event event) {
             if (repository.containsKey(gameId)) {
-                repository.get(gameId).add(newEvent);
+                repository.get(gameId).add(event);
                 return;
             }
-            repository.put(gameId, new ArrayList<>(List.of(newEvent)));
+            repository.put(gameId, new ArrayList<>(List.of(event)));
         }
     }
 }

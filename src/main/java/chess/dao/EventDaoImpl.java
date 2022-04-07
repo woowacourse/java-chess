@@ -1,8 +1,6 @@
 package chess.dao;
 
 import chess.domain.event.Event;
-import chess.domain.event.EventType;
-import chess.domain.event.MoveCommand;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +37,12 @@ public class EventDaoImpl implements EventDao {
         return pieces;
     }
 
-    public void saveMove(int gameId, MoveCommand moveCommand) {
+    public void save(int gameId, Event event) {
         final String sql = addTable("INSERT INTO %s (game_id, type, description) VALUES (?, ?, ?)");
 
         new StatementExecutor(sql).setInt(gameId)
-                .setString(EventType.MOVE)
-                .setString(moveCommand.toDescription())
+                .setString(event.getType())
+                .setString(event.getDescription())
                 .executeCommand();
     }
 

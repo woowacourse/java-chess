@@ -15,4 +15,8 @@ public abstract class Event {
     public abstract boolean isMove();
 
     public abstract MoveCommand toMoveCommand();
+
+    public abstract EventType getType();
+
+    public abstract String getDescription();
 }

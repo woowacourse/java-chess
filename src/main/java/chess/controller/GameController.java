@@ -6,6 +6,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.domain.event.MoveCommand;
+import chess.domain.event.MoveEvent;
 import chess.dto.GameDto;
 import chess.service.ChessService;
 import spark.Request;
@@ -33,6 +34,6 @@ public class GameController {
         String body = request.body();
         MoveCommand moveCommand = MoveCommand.ofJson(body);
 
-        return chessService.playGame(gameId, moveCommand);
+        return chessService.playGame(gameId, new MoveEvent(moveCommand));
     }
 }

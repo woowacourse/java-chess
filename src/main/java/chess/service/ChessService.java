@@ -7,8 +7,6 @@ import chess.dao.GameDaoImpl;
 import chess.dao.GameState;
 import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
-import chess.domain.event.MoveCommand;
-import chess.domain.event.MoveEvent;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
 import chess.dto.CreateGameDto;
@@ -58,10 +56,10 @@ public class ChessService {
         return game.toDtoOf(gameId);
     }
 
-    public GameDto playGame(int gameId, MoveCommand moveCommand) {
-        Game game = currentSnapShotOf(gameId).play(new MoveEvent(moveCommand));
+    public GameDto playGame(int gameId, Event moveEvent) {
+        Game game = currentSnapShotOf(gameId).play(moveEvent);
 
-        eventDao.saveMove(gameId, moveCommand);
+        eventDao.save(gameId, moveEvent);
         updateGameState(gameId, game);
         return game.toDtoOf(gameId);
     }

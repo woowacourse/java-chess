@@ -26,6 +26,14 @@ public final class MoveEvent extends Event {
         return moveCommand;
     }
 
+    public EventType getType() {
+        return EventType.MOVE;
+    }
+
+    public String getDescription() {
+        return moveCommand.toDescription();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
