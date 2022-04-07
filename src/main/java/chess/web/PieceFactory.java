@@ -28,12 +28,12 @@ public class PieceFactory {
         CACHE.put("white_q", new Piece(Color.WHITE, new Queen()));
         CACHE.put("white_k", new Piece(Color.WHITE, new King()));
 
-        CACHE.put("black_p", new Piece(Color.WHITE, new Pawn()));
-        CACHE.put("black_n", new Piece(Color.WHITE, new Knight()));
-        CACHE.put("black_b", new Piece(Color.WHITE, new Bishop()));
-        CACHE.put("black_r", new Piece(Color.WHITE, new Rook()));
-        CACHE.put("black_q", new Piece(Color.WHITE, new Queen()));
-        CACHE.put("black_k", new Piece(Color.WHITE, new King()));
+        CACHE.put("black_p", new Piece(Color.BLACK, new Pawn()));
+        CACHE.put("black_n", new Piece(Color.BLACK, new Knight()));
+        CACHE.put("black_b", new Piece(Color.BLACK, new Bishop()));
+        CACHE.put("black_r", new Piece(Color.BLACK, new Rook()));
+        CACHE.put("black_q", new Piece(Color.BLACK, new Queen()));
+        CACHE.put("black_k", new Piece(Color.BLACK, new King()));
     }
 
     public static Piece build(PieceDto pieceDto) {
