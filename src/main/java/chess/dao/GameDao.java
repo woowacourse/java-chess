@@ -19,24 +19,24 @@ public class GameDao {
     public int saveAndGetGeneratedId() {
         final String sql = addTable("INSERT INTO %s (state) VALUES (?)");
 
-        return new CommandBuilder(sql, Statement.RETURN_GENERATED_KEYS)
+        return new StatementExecutor(sql, Statement.RETURN_GENERATED_KEYS)
                 .setString(GameState.RUNNING)
-                .executeAndGetGeneratedKeys()
+                .executeCommandAndGetGeneratedKeys()
                 .readFirstColumnAndClose();
     }
 
     public void finishGame(int gameId) {
         final String sql = addTable("UPDATE %s SET state = ? WHERE id = ?");
-        new CommandBuilder(sql).setString(GameState.OVER)
+        new StatementExecutor(sql).setString(GameState.OVER)
                 .setInt(gameId)
-                .executeAndClose();
+                .executeCommandAndClose();
     }
 
     public boolean checkById(int gameId) {
         final String sql = addTable("SELECT COUNT(*) FROM %s WHERE id = ?");
 
-        int existingGameCount = new QueryBuilder(sql).setInt(gameId)
-                .execute()
+        int existingGameCount = new StatementExecutor(sql).setInt(gameId)
+                .executeQuery()
                 .readFirstColumnAndClose();
 
         return existingGameCount > 0;
@@ -45,15 +45,15 @@ public class GameDao {
     public int countAll() {
         final String sql = addTable("SELECT COUNT(*) FROM %s");
 
-        return new QueryBuilder(sql).execute()
+        return new StatementExecutor(sql).executeQuery()
                 .readFirstColumnAndClose();
     }
 
     public int countByState(GameState state) {
         final String sql = addTable("SELECT COUNT(*) FROM %s WHERE state = ?");
 
-        return new QueryBuilder(sql).setString(state)
-                .execute()
+        return new StatementExecutor(sql).setString(state)
+                .executeQuery()
                 .readFirstColumnAndClose();
     }
 

@@ -22,8 +22,8 @@ public class EventDao {
 
     public List<Event> findAllByGameId(int gameId) {
         final String sql = addTable("SELECT type, description FROM %s WHERE game_id = ?");
-        final ResultReader reader = new QueryBuilder(sql).setInt(gameId)
-                .execute();
+        final ResultReader reader = new StatementExecutor(sql).setInt(gameId)
+                .executeQuery();
 
         try (reader) {
             return readAllEvents(reader);
@@ -44,10 +44,10 @@ public class EventDao {
     public void saveMove(int gameId, MoveCommand moveCommand) {
         final String sql = addTable("INSERT INTO %s (game_id, type, description) VALUES (?, ?, ?)");
 
-        new CommandBuilder(sql).setInt(gameId)
+        new StatementExecutor(sql).setInt(gameId)
                 .setString(EventType.MOVE)
                 .setString(moveCommand.toDescription())
-                .executeAndClose();
+                .executeCommandAndClose();
     }
 
     private String addTable(String sql) {

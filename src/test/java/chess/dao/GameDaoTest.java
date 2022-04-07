@@ -56,8 +56,8 @@ class GameDaoTest {
     void finishGame_메서드로_게임의_상태를_OVER로_변경가능() {
         dao.finishGame(1);
 
-        ResultReader reader = new QueryBuilder(String.format("SELECT state FROM %s WHERE id = %d", TEST_TABLE, 1))
-                .execute();
+        ResultReader reader = new StatementExecutor(String.format("SELECT state FROM %s WHERE id = %d", TEST_TABLE, 1))
+                .executeQuery();
         String actual = reader.nextRow()
                 .readStringAt("state");
 
