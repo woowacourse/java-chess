@@ -15,6 +15,7 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 }
 
 java {
