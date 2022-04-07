@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,17 +22,13 @@ import org.junit.jupiter.api.Test;
 class BoardDaoTest {
 
     private BoardDao boardDao;
-    private Connection connection;
+    private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
-        connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        boardDao = new BoardDaoImpl(connection);
+        Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
+        dataSource = new TestDataSource(connection);
+        boardDao = new BoardDaoImpl(dataSource);
     }
 
     @Test
@@ -65,7 +62,11 @@ class BoardDaoTest {
 
         Map<String, String> expected = ChessDto.of(new Board(BoardFactory.initialize())).getBoard();
         assertThat(boardDao.getBoard()).isEqualTo(expected);
-        connection.rollback();
+    }
+
+    @AfterEach
+    void tearDown() {
+        boardDao.updateBatchPositions(JdbcTestFixture.getTestBoard());
     }
 
 }

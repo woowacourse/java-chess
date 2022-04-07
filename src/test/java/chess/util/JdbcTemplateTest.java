@@ -12,7 +12,7 @@ class JdbcTemplateTest {
     @Test
     @DisplayName("Connection 확인")
     void getConnection() throws SQLException {
-        Connection connection = JdbcTemplate.getConnection();
+        Connection connection = JdbcTemplate.getConnection(JdbcTemplate.URL);
         assertThat(connection).isNotNull();
         connection.close();
     }

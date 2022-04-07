@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.util.JdbcTemplate;
 import chess.util.JdbcTestFixture;
 import java.sql.Connection;
-import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,12 +17,8 @@ class TurnDaoTest {
     @BeforeEach
     void setUp() {
         Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        turnDao = new TurnDaoImpl(connection);
+        TestDataSource datasource = new TestDataSource(connection);
+        turnDao = new TurnDaoImpl(datasource);
     }
 
     @Test
@@ -41,10 +36,6 @@ class TurnDaoTest {
 
     @AfterEach
     void teardown() {
-        try (Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL)) {
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        turnDao.updateTurn("white", "black");
     }
 }

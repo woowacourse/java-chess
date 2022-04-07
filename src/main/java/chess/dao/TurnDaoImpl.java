@@ -13,19 +13,15 @@ public class TurnDaoImpl implements TurnDao {
     private static final int CURRENT_TURN_COLUMN = 1;
     private static final int PREVIOUS_TURN_COLUMN = 2;
 
-    private final Connection connection;
+    private final DataSource dataSource;
 
-    public TurnDaoImpl() {
-        this(JdbcTemplate.getConnection());
-    }
-
-    public TurnDaoImpl(Connection connection) {
-        this.connection = connection;
+    public TurnDaoImpl(final DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public String getCurrentTurn() {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("select * from turn");
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement("select * from turn");
              ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 return resultSet.getString(CURRENT_TURN_COLUMN);
@@ -33,18 +29,22 @@ public class TurnDaoImpl implements TurnDao {
             throw new SqlSelectException(SqlSelectException.MESSAGE);
         } catch (SQLException e) {
             throw new SqlSelectException(SqlSelectException.MESSAGE, e);
+        } finally {
+            dataSource.close();
         }
     }
 
     @Override
     public void updateTurn(final String currentTurn, final String previousTurn) {
         String sql = "update turn set team = ? where team = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(sql)) {
             preparedStatement.setString(CURRENT_TURN_COLUMN, currentTurn);
             preparedStatement.setString(PREVIOUS_TURN_COLUMN, previousTurn);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE, e);
+        } finally {
+            dataSource.close();
         }
     }
 }
