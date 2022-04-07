@@ -50,17 +50,16 @@ public abstract class Piece {
 
     private static class PieceCache {
 
-        static final int TOTAL_PIECES_COUNT = 12;
+        static final int CACHE_CAPACITY = PieceType.values().length;
 
-        static Map<String, Piece> cache = new HashMap<>(TOTAL_PIECES_COUNT);
+        static Map<PieceType, Piece> whitePieceCache = new HashMap<>(CACHE_CAPACITY);
+        static Map<PieceType, Piece> blackPieceCache = new HashMap<>(CACHE_CAPACITY);
 
-        static Piece getCache(Color color, PieceType type) {
-            String key = toKey(color, type);
-            return cache.computeIfAbsent(key, (__) -> initCacheOf(color, type));
-        }
-
-        static String toKey(Color color, PieceType type) {
-            return color + " " + type;
+        static Piece getCache(Color color, PieceType pieceType) {
+            if (color == Color.WHITE) {
+                return whitePieceCache.computeIfAbsent(pieceType, (type) -> initCacheOf(color, type));
+            }
+            return blackPieceCache.computeIfAbsent(pieceType, (type) -> initCacheOf(color, type));
         }
 
         static Piece initCacheOf(Color color, PieceType type) {

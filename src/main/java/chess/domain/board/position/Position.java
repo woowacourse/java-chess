@@ -76,18 +76,18 @@ public class Position {
 
     private static class PositionCache {
 
-        static final int TOTAL_POSITIONS_COUNT = 64;
+        static final int CACHE_CAPACITY = File.values().length * Rank.values().length;
         static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
 
         static final int FILE_KEY_IDX = 0;
         static final int RANK_KEY_IDX = 1;
         static final Pattern VALID_POSITION_PATTERN = Pattern.compile("([abcdefgh][12345678])");
 
-        static Map<String, Position> cache = new HashMap<>(TOTAL_POSITIONS_COUNT);
+        static Map<String, Position> cache = new HashMap<>(CACHE_CAPACITY);
 
         static Position getCache(File file, Rank rank) {
             String key = toKey(file, rank);
-            return cache.computeIfAbsent(key, (__) -> new Position(file, rank));
+            return cache.computeIfAbsent(key, (unused) -> new Position(file, rank));
         }
 
         static Position getCache(String positionKey) {
