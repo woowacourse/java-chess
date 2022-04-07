@@ -3,13 +3,15 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
 import java.util.function.ObjDoubleConsumer;
 
 public abstract class Running extends State {
 
-    Running(final Board board) {
+    Running(final Board board, final StateType stateType) {
         this.board = board;
+        this.stateType = stateType;
     }
 
     protected void checkValidPosition(final Position from, final Position to, final Color color) {

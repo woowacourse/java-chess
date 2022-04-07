@@ -3,6 +3,7 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
 import java.util.Map;
 import java.util.function.ObjDoubleConsumer;
@@ -10,6 +11,7 @@ import java.util.function.ObjDoubleConsumer;
 public abstract class State {
 
     protected Board board;
+    protected StateType stateType;
 
     public abstract State start();
 
@@ -23,7 +25,11 @@ public abstract class State {
 
     public abstract boolean isEnded();
 
-    public final Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board.toMap();
+    }
+
+    public StateType getStateType() {
+        return this.stateType;
     }
 }

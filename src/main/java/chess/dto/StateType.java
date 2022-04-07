@@ -44,4 +44,8 @@ public enum StateType {
                 .generate
                 .apply(board);
     }
+
+    public static String getType(final State state) {
+        return state.getStateType().type;
+    }
 }

@@ -15,6 +15,6 @@ public class ChessGameDto {
     }
 
     public String getState() {
-        return chessGame.getState().getClass().getSimpleName();
+        return StateType.getType(chessGame.getState());
     }
 }
