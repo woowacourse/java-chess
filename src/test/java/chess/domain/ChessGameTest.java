@@ -21,13 +21,18 @@ import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
 
+    static int id = 1;
+    static String gameId = "0";
+
     ChessmenInitializer chessmenInitializer;
     ChessGame chessGame;
+
 
     @BeforeEach
     void setup_chessGame() {
         chessmenInitializer = new ChessmenInitializer();
-        chessGame = ChessGame.of(chessmenInitializer.init());
+        gameId = String.valueOf(++id);
+        chessGame = ChessGame.of(chessmenInitializer.init(), gameId);
     }
 
     @DisplayName("체스말이 이동할 수 있는 위치면 이동에 성공한다.")
@@ -137,7 +142,7 @@ public class ChessGameTest {
     @DisplayName("King이 한 개라도 죽으면 게임은 끝난다.")
     @Test
     void isEnd_true() {
-        chessGame = ChessGame.of(new Pieces(List.of(new King(WHITE, Position.of("e1")))));
+        chessGame = ChessGame.of(new Pieces(List.of(new King(WHITE, Position.of("e1")))), gameId + "something");
 
         boolean actual = chessGame.isEnd();
 

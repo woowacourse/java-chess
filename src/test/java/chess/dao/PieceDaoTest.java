@@ -17,10 +17,11 @@ public class PieceDaoTest {
     void save() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
         assertThatCode(() ->
-            pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), id))
+            pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId))
             .doesNotThrowAnyException();
     }
 
@@ -32,10 +33,11 @@ public class PieceDaoTest {
         final List<Piece> pieces = chessmenInitializer.init().getPieces();
 
         final GameDao gameDao = new GameDao();
-        String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
         assertThatCode(() ->
-            pieceDao.saveAll(pieces, id))
+            pieceDao.saveAll(pieces, gameId))
             .doesNotThrowAnyException();
     }
 
@@ -43,12 +45,13 @@ public class PieceDaoTest {
     void deleteByPosition() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), id);
+        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
         assertThatCode(() ->
-            pieceDao.deleteByPosition("a7", id))
+            pieceDao.deleteByPosition("a7", gameId))
             .doesNotThrowAnyException();
     }
 
@@ -56,10 +59,11 @@ public class PieceDaoTest {
     void deleteByPosition_if_not_exist() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
         assertThatCode(() ->
-            pieceDao.deleteByPosition("d5", id))
+            pieceDao.deleteByPosition("d5", gameId))
             .doesNotThrowAnyException();
     }
 
@@ -67,11 +71,13 @@ public class PieceDaoTest {
     void deleteAll() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
-        pieceDao.deleteAll(id);
 
-        final List<Piece> pieces = pieceDao.findAll(id).getPieces();
+        pieceDao.deleteAll(gameId);
+
+        final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
 
         assertThat(pieces.size()).isEqualTo(0);
     }
@@ -80,24 +86,26 @@ public class PieceDaoTest {
     void updateByPosition() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), id);
+        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
-        pieceDao.updateByPosition("a7", "a6", id);
+        pieceDao.updateByPosition("a7", "a6", gameId);
 
-        assertThat(pieceDao.findByPosition("a6", id).getName()).isEqualTo("pawn");
+        assertThat(pieceDao.findByPosition("a6", gameId).getName()).isEqualTo("pawn");
     }
 
     @Test
     void findAll() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), id);
+        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
-        final List<Piece> pieces = pieceDao.findAll(id).getPieces();
+        final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
 
         assertThat(pieces.size()).isNotEqualTo(0);
     }
@@ -106,11 +114,12 @@ public class PieceDaoTest {
     void findByPosition() {
         final PieceDao pieceDao = new PieceDao();
         final GameDao gameDao = new GameDao();
-        final String id = gameDao.create();
+        final String gameId = "123";
+        gameDao.create(gameId);
 
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), id);
+        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
-        final Piece piece = pieceDao.findByPosition("a7", id);
+        final Piece piece = pieceDao.findByPosition("a7", gameId);
 
         assertThat(piece.getPosition().getPosition()).isEqualTo("a7");
     }

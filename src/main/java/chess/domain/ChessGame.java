@@ -21,22 +21,37 @@ public class ChessGame {
     private static final String PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE = "가는 길목에 다른 말이 있어 이동할 수 없습니다.";
     private static final String GAME_END_EXCEPTION_MESSAGE = "게임이 끝난 후에는 경기를 더 진행할 수 없습니다.";
 
-    private boolean forceEndFlag = false;
+
     private final PieceDao pieceDao = new PieceDao();
     private final GameDao gameDao = new GameDao();
 
+    private boolean forceEndFlag;
     private String gameId;
 
-    private ChessGame(Pieces chessmen) {
-        gameId = gameDao.create();
+    private ChessGame(String gameId) {
+        if (gameDao.findById(gameId)) {
+            forceEndFlag = gameDao.findForceEndFlagById(gameId);
+            this.gameId = gameId;
+            return;
+        }
+        new ChessGame(new Pieces(List.of()), gameId);
+    }
+
+    private ChessGame(Pieces chessmen, String gameId) {
+        forceEndFlag = gameDao.create(gameId);
+        this.gameId = gameId;
         pieceDao.saveAll(chessmen.getPieces(), gameId);
     }
 
     private ChessGame() {
     }
 
-    public static ChessGame of(Pieces chessmen) {
-        return new ChessGame(chessmen);
+    public static ChessGame createOrGet(String gameId) {
+        return new ChessGame(gameId);
+    }
+
+    public static ChessGame of(Pieces chessmen, String gameId) {
+        return new ChessGame(chessmen, gameId);
     }
 
     public static ChessGame of() {
@@ -119,10 +134,11 @@ public class ChessGame {
 
     public boolean isEnd() {
         Pieces chessmen = pieceDao.findAll(gameId);
-        return chessmen.hasLessThanTotalKingCount() || forceEndFlag;
+        return forceEndFlag || chessmen.hasLessThanTotalKingCount();
     }
 
-    public void forceEnd() {
+    public void forceEnd(String gameId) {
+        gameDao.updateForceEndFlagById(gameId);
         forceEndFlag = true;
     }
 
@@ -137,7 +153,7 @@ public class ChessGame {
         return new GameResultDto(winner, whiteScore, blackScore);
     }
 
-    public BoardMapDto toBoard() {
+    public BoardMapDto toBoard(String gameId) {
         Pieces chessmen = pieceDao.findAll(gameId);
         Map<String, Object> model = new HashMap<>();
 
@@ -157,8 +173,9 @@ public class ChessGame {
         return pieceDao.findAll(gameId);
     }
 
-    public void clean() {
+    public void clean(String gameId) {
         pieceDao.deleteAll(gameId);
+        gameDao.deleteById(gameId);
     }
 
     @Override

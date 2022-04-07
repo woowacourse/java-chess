@@ -10,6 +10,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.ChessmenInitializer;
 import chess.dto.MovePositionCommandDto;
 import chess.web.util.JsonTransformer;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
@@ -26,16 +27,30 @@ public class WebApplication {
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         AtomicReference<ChessGame> game = new AtomicReference<>(ChessGame.of());
+        AtomicReference<String> gameId = new AtomicReference<>("");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = game.get().toBoard().getBoardMap();
+            Map<String, Object> model = new HashMap<>();
 
+            return render(model, "index2.html");
+        });
+
+        get("/game", (req, res) -> {
+            gameId.set(req.queryParams("game"));
+            game.set(ChessGame.createOrGet(String.valueOf(gameId)));
+
+            Map<String, Object> model = game.get().toBoard(String.valueOf(gameId)).getBoardMap();
 
             return render(model, "index.html");
         });
 
+        get("/game/progress", (req, res) -> {
+            Map<String, Object> model = game.get().toBoard(String.valueOf(gameId)).getBoardMap();
 
-        post("/move", (req, res) -> {
+            return render(model, "index.html");
+        });
+
+        post("/game/move", (req, res) -> {
             JSONObject jObject = new JSONObject(req.body());
 
             String from = jObject.getString("from");
@@ -43,30 +58,30 @@ public class WebApplication {
 
             game.get().moveChessmen(new MovePositionCommandDto(from, to));
 
-            res.redirect("/");
+            res.redirect("/game/progress");
 
             return null;
         });
 
-        get("/start", (req, res) -> {
-            game.get().clean();
+        get("/game/start", (req, res) -> {
+            game.get().clean(String.valueOf(gameId));
 
-            game.set(ChessGame.of(chessmenInitializer.init()));
+            game.set(ChessGame.of(chessmenInitializer.init(), String.valueOf(gameId)));
 
-            res.redirect("/");
-
-            return null;
-        });
-
-        get("/end", (req, res) -> {
-            game.get().forceEnd();
-
-            res.redirect("/");
+            res.redirect("/game/progress");
 
             return null;
         });
 
-        get("/status", (req, res) -> {
+        get("/game/end", (req, res) -> {
+            game.get().forceEnd(String.valueOf(gameId));
+
+            res.redirect("/game/progress");
+
+            return null;
+        });
+
+        get("/game/status", (req, res) -> {
             res.type("application/json");
             JsonTransformer jsonTransformer = new JsonTransformer();
 

@@ -14,4 +14,11 @@ public class BoardMapDto {
     public Map<String, Object> getBoardMap() {
         return boardMap;
     }
+
+    @Override
+    public String toString() {
+        return "BoardMapDto{" +
+            "boardMap=" + boardMap.toString() +
+            '}';
+    }
 }

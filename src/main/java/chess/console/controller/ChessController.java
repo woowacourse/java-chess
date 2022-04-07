@@ -33,7 +33,8 @@ public class ChessController {
         OutputView.printChessGameInitInstruction();
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
-        ChessGame game = ChessGame.of(chessmenInitializer.init());
+
+        ChessGame game = ChessGame.of(chessmenInitializer.init(), "1234");
 
         OutputView.printBoard(new BoardView(new ChessGameDto(game)));
 
