@@ -121,7 +121,7 @@ public class WebChessController {
         get("/result", (req, res) -> {
             chessService.end();
             Map<String, Object> model = new HashMap<>();
-            model.put("play",true);
+            model.put("play", true);
             model.put("status", chessService.status());
             model.put("board", chessService.currentBoardForUI());
             model.put("winner", chessService.findWinner());

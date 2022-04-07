@@ -63,11 +63,11 @@ public class BoardDao {
         List<PieceDto> pieces = new ArrayList<>();
         while (result.next()) {
             pieces.add(
-                new PieceDto(
-                    result.getInt("game_id"),
-                    result.getString("position"),
-                    result.getString("piece"),
-                    result.getString("color")));
+                    new PieceDto(
+                            result.getInt("game_id"),
+                            result.getString("position"),
+                            result.getString("piece"),
+                            result.getString("color")));
         }
         return pieces;
     }

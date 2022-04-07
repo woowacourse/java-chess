@@ -2,7 +2,6 @@ package chess.domain.dao;
 
 import chess.domain.dto.PieceDto;
 import chess.domain.game.board.ChessBoardFactory;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardDaoTest {

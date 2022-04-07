@@ -194,7 +194,7 @@ public class ChessBoard {
         return currentTurn.toOpposite();
     }
 
-    public void changeStatus(GameStatus status){
+    public void changeStatus(GameStatus status) {
         gameStatus = status;
     }
 

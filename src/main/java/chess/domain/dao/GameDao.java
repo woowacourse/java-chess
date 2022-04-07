@@ -39,7 +39,7 @@ public class GameDao {
     }
 
     private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) {
-        try{
+        try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, ++gameId);
             statement.setBoolean(2, chessBoard.compareStatus(Status.PLAYING));
@@ -53,7 +53,7 @@ public class GameDao {
 
     public int findLastGameId() {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
-        try{
+        try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet result = statement.executeQuery();
             if (!result.next()) {
@@ -61,7 +61,7 @@ public class GameDao {
             }
             return result.getInt("id");
         } catch (SQLException throwables) {
-           logger.error(throwables.getMessage());
+            logger.error(throwables.getMessage());
         }
         return UNEXPECTED_ERROR_VALUE;
     }

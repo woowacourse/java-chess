@@ -7,12 +7,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ColorTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"BLACK:BLACK","WHITE:WHITE"}, delimiter = ':')
+    @CsvSource(value = {"BLACK:BLACK", "WHITE:WHITE"}, delimiter = ':')
     @DisplayName("String으로 들어온 색깔을 찾는다.")
     void from(String colorString, Color expected) {
         //when
@@ -28,7 +27,7 @@ class ColorTest {
         String colorString = "ORANGE";
         //then
         assertThatThrownBy(() -> Color.from(colorString))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("존재하지 않는 색깔입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 색깔입니다.");
     }
 }

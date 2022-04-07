@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private static final int EMPTY = 0;
-    private ChessBoard chessBoard = null;
     private final GameDao gameDao = new GameDao();
     private final BoardDao boardDao = new BoardDao();
+    private ChessBoard chessBoard = null;
 
     public void start() {
         if (isNotSaved()) {
@@ -36,7 +36,7 @@ public class ChessService {
         loadLastGame();
     }
 
-    private boolean isNotSaved(){
+    private boolean isNotSaved() {
         return gameDao.findLastGameId() == EMPTY;
     }
 

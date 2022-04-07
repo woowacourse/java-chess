@@ -34,7 +34,7 @@ class ChessBoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a7:P","a8:R"}, delimiter = ':')
+    @CsvSource(value = {"a7:P", "a8:R"}, delimiter = ':')
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     void findPiece(String position, String expected) {
         Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
