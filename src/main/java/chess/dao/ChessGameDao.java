@@ -72,9 +72,6 @@ public class ChessGameDao {
             final PreparedStatement piecesStatement = connection.prepareStatement(selectPiecesSql);
             piecesStatement.setString(1, gameID);
             final ResultSet resultPiecesSet = piecesStatement.executeQuery();
-            if (!resultPiecesSet.next()) {
-                throw new IllegalArgumentException("헉.. 저장 안한거 아냐? 그런 게임은 없어!");
-            }
             while (resultPiecesSet.next()) {
                 String position = resultPiecesSet.getString("position");
                 String type = resultPiecesSet.getString("type");
@@ -84,9 +81,9 @@ public class ChessGameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // if (board.isEmpty()) {
-        //     throw new IllegalArgumentException("헉.. 저장 안한거 아냐? 그런 게임은 없어!");
-        // }
+        if (board.isEmpty()) {
+            throw new IllegalArgumentException("헉.. 저장 안한거 아냐? 그런 게임은 없어!");
+        }
         final String selectGameSql = "select turn from chessGame where gameID = ?";
         String turn = null;
         try {
