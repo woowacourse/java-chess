@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -70,15 +69,19 @@ public class WebController {
             res.redirect(String.format("/result/%d", gameId));
         }
         Map<String, Object> model = new HashMap<>();
+        model.put("turn", chessGame.getTurn());
+        model.put("ranks", makeRanksDTO(chessGame));
+        model.put("gameId", gameId);
+        return render(model, "play.html");
+    }
+
+    private List<RankDTO> makeRanksDTO(ChessGame chessGame) {
         Board board = chessGame.getBoard();
         List<RankDTO> ranks = new ArrayList<>();
         for (int i = 8; i > 0; i--) {
             ranks.add(RankDTO.toDTO(board.getRank(i - 1), i));
         }
-        model.put("turn", chessGame.getTurn());
-        model.put("ranks", ranks);
-        model.put("gameId", gameId);
-        return render(model, "play.html");
+        return ranks;
     }
 
     private String renderGameResult(Request req, Response res) {
@@ -93,10 +96,7 @@ public class WebController {
 
     private String renderMemberHistory(Request req, Response res) {
         Long memberId = Long.valueOf(req.params("memberId"));
-        List<ChessGame> games = gameService.findHistorysByMemberId(memberId);
-        List<GameResultDTO> history = games.stream()
-                .map(game -> GameResultDTO.toResultDTO(game, memberId))
-                .collect(Collectors.toList());
+        List<GameResultDTO> history = gameService.findHistorysByMemberId(memberId);
         Map<String, Object> model = new HashMap<>();
         model.put("history", history);
         return render(model, "history.html");
@@ -129,11 +129,8 @@ public class WebController {
     private String movePiece(Request req, Response res) {
         Long gameId = Long.valueOf(req.params("gameId"));
         String[] positions = req.body().split(",");
-        if (gameService.move(gameId, positions[0], positions[1])) {
-            return "OK";
-        }
-        res.status(400);
-        return "FAIL";
+        gameService.move(gameId, positions[0], positions[1]);
+        return "OK";
     }
 
     private String terminateGame(Request req, Response res) {

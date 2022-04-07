@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,11 +13,6 @@ public class Pawn extends Piece {
 
     private boolean isFirstTurn;
 
-    private Pawn(Position position, String signature) {
-        super(position, signature);
-        this.isFirstTurn = true;
-    }
-
     private Pawn(Position position, String signature, boolean isFirstTurn) {
         super(position, signature);
         this.isFirstTurn = isFirstTurn;
@@ -28,6 +24,16 @@ public class Pawn extends Piece {
 
     public static Pawn createBlack(Position position, boolean isFirstTurn) {
         return new Pawn(position, BLACK_SIGNATURE, isFirstTurn);
+    }
+
+    public static Pawn create(Team team, Position position, boolean isFirstTurn) {
+        if (team == Team.BLANK || team == null) {
+            throw new IllegalArgumentException("기물은 팀이 있어야 합니다.");
+        }
+        if (team == Team.BLACK) {
+            return createBlack(position, isFirstTurn);
+        }
+        return createWhite(position, isFirstTurn);
     }
 
     @Override

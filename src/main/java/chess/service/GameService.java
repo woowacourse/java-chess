@@ -8,6 +8,7 @@ import chess.domain.Participant;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
+import chess.dto.GameResultDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +41,59 @@ public class GameService {
                 .orElseThrow(() -> new RuntimeException("찾는 게임이 존재하지 않습니다."));
     }
 
-    public List<ChessGame> findHistorysByMemberId(Long memberId) {
-        return gameDao.findHistorysByMemberId(memberId);
+    public List<GameResultDTO> findHistorysByMemberId(Long memberId) {
+        List<ChessGame> games = gameDao.findHistorysByMemberId(memberId);
+        return games.stream()
+                .map(game -> toGameResultDTO(game, memberId))
+                .collect(Collectors.toList());
+    }
+
+    private GameResultDTO toGameResultDTO(ChessGame game, Long memberId) {
+        String winResult = findWinResult(game, memberId);
+        String enemyName = findEnemyName(game, memberId);
+        String team = findTeam(game, memberId);
+        double myScore = findMyScore(game, memberId);
+        double enemyScore = findEnemyScore(game, memberId);
+        return new GameResultDTO(winResult, enemyName, team, myScore, enemyScore);
+    }
+
+    private static String findWinResult(ChessGame game, Long memberId) {
+        if (game.isTerminated()) {
+            return "강제종료";
+        }
+        Long winnerId = game.getWinnerId().orElseThrow(() -> new RuntimeException("승자 로직 체크"));
+        if (winnerId.equals(memberId)) {
+            return "승";
+        }
+        return "패";
+    }
+
+    private static String findEnemyName(ChessGame game, Long memberId) {
+        if (game.getParticipant().getBlackId().equals(memberId)) {
+            return game.getParticipant().getWhiteName();
+        }
+        return game.getParticipant().getBlackName();
+    }
+
+    private static String findTeam(ChessGame game, Long memberId) {
+        if (game.getParticipant().getBlackId().equals(memberId)) {
+            return "흑";
+        }
+        return "백";
+    }
+
+    private static double findMyScore(ChessGame game, Long memberId) {
+        if (game.getParticipant().getBlackId().equals(memberId)) {
+            return game.getBlackScore();
+        }
+        return game.getWhiteScore();
+    }
+
+    private static double findEnemyScore(ChessGame game, Long memberId) {
+        if (game.getParticipant().getBlackId().equals(memberId)) {
+            return game.getWhiteScore();
+        }
+        return game.getBlackScore();
     }
 
 
@@ -49,16 +101,10 @@ public class GameService {
         gameDao.update(chessGame);
     }
 
-    public boolean move(Long gameId, String start, String target) {
+    public void move(Long gameId, String start, String target) {
         ChessGame chessGame = findByGameId(gameId);
-        try {
-            chessGame.move(start, target);
-            update(chessGame);
-            return true;
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return false;
-        }
+        chessGame.move(start, target);
+        update(chessGame);
     }
 
     public void terminate(Long gameId) {

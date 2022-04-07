@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import java.util.List;
 
 public class Rook extends SlidingPiece {
@@ -18,6 +19,16 @@ public class Rook extends SlidingPiece {
 
     public static Rook createBlack(Position position) {
         return new Rook(position, BLACK_SIGNATURE);
+    }
+
+    public static Rook create(Team team, Position position) {
+        if (team == Team.BLANK || team == null) {
+            throw new IllegalArgumentException("기물은 팀이 있어야 합니다.");
+        }
+        if (team == Team.BLACK) {
+            return createBlack(position);
+        }
+        return createWhite(position);
     }
 
     @Override

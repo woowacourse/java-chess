@@ -158,9 +158,7 @@ public class DatabaseGameDao implements GameDao {
     private Map<Integer, Rank> makeRanks(ResultSet resultSet) throws SQLException {
         Map<Integer, List<Piece>> rankValues = loadRankValues(resultSet);
         Map<Integer, Rank> ranks = new HashMap<>();
-        for (Entry<Integer, List<Piece>> pieces : rankValues.entrySet()) {
-            ranks.put(pieces.getKey(), new Rank(pieces.getValue()));
-        }
+        rankValues.forEach((key, value) -> ranks.put(key, new Rank(value)));
         return ranks;
     }
 
@@ -203,7 +201,7 @@ public class DatabaseGameDao implements GameDao {
             statement.setInt(1, lineNumber);
             statement.setInt(2, piece.getPosition().getX());
             statement.setInt(3, piece.getPosition().getY());
-            statement.setString(4, piece.getTeam().getName());
+            statement.setString(4, piece.getTeam().name());
             statement.setString(5, piece.getType().getName());
             statement.setBoolean(6, piece.isFirstTurn());
             statement.setLong(7, gameId);

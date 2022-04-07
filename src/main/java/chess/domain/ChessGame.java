@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.piece.Position;
 import chess.domain.state.GameState;
+import java.util.Optional;
 
 public class ChessGame {
     private Long id;
@@ -34,9 +35,9 @@ public class ChessGame {
 
     public String getTurn() {
         if (state.isBlackTurn()) {
-            return "흑팀";
+            return Team.BLACK.name();
         }
-        return "백팀";
+        return Team.WHITE.name();
     }
 
     public void terminate() {
@@ -67,14 +68,14 @@ public class ChessGame {
         return state.calculateBlackScore();
     }
 
-    public Long getWinnerId() {
+    public Optional<Long> getWinnerId() {
         if (isTerminated()) {
-            return null;
+            return Optional.empty();
         }
         if (state.isBlackWin()) {
-            return participant.getBlackId();
+            return Optional.of(participant.getBlackId());
         }
-        return participant.getWhiteId();
+        return Optional.of(participant.getWhiteId());
     }
 
     public boolean isTerminated() {
@@ -100,9 +101,5 @@ public class ChessGame {
 
     public Long getBlackId() {
         return participant.getBlackId();
-    }
-
-    public void participate(Member white, Member black) {
-        this.participant = new Participant(white, black);
     }
 }

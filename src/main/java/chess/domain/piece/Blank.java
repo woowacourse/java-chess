@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
+
 public class Blank extends Piece {
 
     private static final String SIGNATURE = "·";

@@ -25,19 +25,18 @@ public class DatabaseMemberDao implements MemberDao {
     @Override
     public Optional<Member> findById(Long id) {
         final String sql = "select id, name from Member where id = ?";
-        Member member = executor.select(connection -> {
+        return executor.select(connection -> {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
             return statement;
         }, this::serializeMember);
-        return Optional.ofNullable(member);
     }
 
-    private Member serializeMember(ResultSet resultSet) throws SQLException {
+    private Optional<Member> serializeMember(ResultSet resultSet) throws SQLException {
         if (!resultSet.next()) {
-            return null;
+            return Optional.empty();
         }
-        return new Member(resultSet.getLong("id"), resultSet.getString("name"));
+        return Optional.of(new Member(resultSet.getLong("id"), resultSet.getString("name")));
     }
 
     @Override
