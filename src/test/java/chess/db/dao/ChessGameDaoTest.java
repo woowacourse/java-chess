@@ -49,4 +49,19 @@ class ChessGameDaoTest {
 
         connectionRollback.rollback();
     }
+
+    @Test
+    @DisplayName("피스 이동")
+    void moveWithRollback() throws SQLException {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        Connection connectionRollback = dbConnector.getConnection();
+
+        connectionRollback.setAutoCommit(false);
+        int chessGameId = chessGameDao.save(new ChessGame());
+
+        assertThatCode(() -> chessGameDao.move(chessGameId, "nextState"))
+                .doesNotThrowAnyException();
+
+        connectionRollback.rollback();
+    }
 }
