@@ -8,7 +8,6 @@ public class WebApplication {
 
     public static void main(String[] args) {
         staticFileLocation("/static");
-//        port(8080);
 
         WebChessController webChessController = new WebChessController();
         webChessController.run();
