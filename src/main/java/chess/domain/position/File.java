@@ -15,6 +15,9 @@ public enum File {
 
     public static final int FILES_TOTAL_SIZE = 8;
 
+    public static final String INVALID_FILE_EXCEPTION_MESSAGE = "유효하지 않은 파일입니다. (파일은 a~h까지 입력 가능합니다.)";
+    public static final String INVALID_FILE_INDEX_EXCEPTION_MESSAGE = "유효하지 않은 파일 인덱스입니다. (파일 인덱스는  0~7까지 입력 가능합니다.)";
+
     private final String rawFile;
     private final int fileIdx;
 
@@ -27,14 +30,14 @@ public enum File {
         return Arrays.stream(values())
             .filter(file -> file.rawFile.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 파일입니다. (파일은 a~h까지 입력 가능합니다.)"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_EXCEPTION_MESSAGE));
     }
 
     public static File of(int valueIdx) {
         return Arrays.stream(values())
             .filter(file -> file.fileIdx == valueIdx)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 파일 인덱스입니다. (파일 인덱스는  0~7까지 입력 가능합니다.)"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_INDEX_EXCEPTION_MESSAGE));
     }
 
     public boolean hasSameFileIdx(File another) {

@@ -4,8 +4,6 @@ import chess.domain.position.Position;
 
 public class PieceFactory {
 
-//    private static final Map<String, Piece> pieceFactory = new HashMap<>();
-
     public static Piece of(String type, String color, String position) {
         if (type.equals("pawn")) {
             return new Pawn(Color.of(color), Position.of(position));

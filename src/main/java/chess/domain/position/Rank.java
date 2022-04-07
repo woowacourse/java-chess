@@ -15,6 +15,9 @@ public enum Rank {
 
     public static final int RANKS_TOTAL_SIZE = 8;
 
+    public static final String INVALID_RANK_EXCEPTION_MESSAGE = "유효하지 않은 랭크니다. (랭크는 1~8까지 입력 가능합니다.)";
+    public static final String INVALID_RANK_INDEX_EXCEPTION_MESSAGE = "유효하지 않은 랭크 인덱스입니다. (랭크 인덱스는  0~7까지 입력 가능합니다.)";
+
     private final String rawRank;
     private final int rankIdx;
 
@@ -27,14 +30,14 @@ public enum Rank {
         return Arrays.stream(values())
             .filter(rank -> rank.rawRank.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크니다. (랭크는 1~8까지 입력 가능합니다.)"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_EXCEPTION_MESSAGE));
     }
 
     public static Rank of(int valueIdx) {
         return Arrays.stream(values())
             .filter(rank -> rank.rankIdx == valueIdx)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크 인덱스입니다. (랭크 인덱스는  0~7까지 입력 가능합니다.)"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_INDEX_EXCEPTION_MESSAGE));
     }
 
     public int rawDifference(Rank targetRank) {
