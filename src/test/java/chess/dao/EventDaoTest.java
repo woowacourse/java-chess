@@ -18,9 +18,9 @@ class EventDaoTest {
 
     private static final String TEST_TABLE = "event_test";
     private static final List<String> SETUP_TEST_DB_SQL = List.of(
-            String.format("INSERT INTO %s (game_id, state, description) VALUES (1, 'MOVE', 'a2 a4')", TEST_TABLE),
-            String.format("INSERT INTO %s (game_id, state, description) VALUES (1, 'MOVE', 'a7 a5')", TEST_TABLE),
-            String.format("INSERT INTO %s (game_id, state, description) VALUES (2, 'MOVE', 'a2 a3')", TEST_TABLE));
+            String.format("INSERT INTO %s (game_id, type, description) VALUES (1, 'MOVE', 'a2 a4')", TEST_TABLE),
+            String.format("INSERT INTO %s (game_id, type, description) VALUES (1, 'MOVE', 'a7 a5')", TEST_TABLE),
+            String.format("INSERT INTO %s (game_id, type, description) VALUES (2, 'MOVE', 'a2 a3')", TEST_TABLE));
 
     private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE);
 

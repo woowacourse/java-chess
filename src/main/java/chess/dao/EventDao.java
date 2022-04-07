@@ -26,7 +26,7 @@ public class EventDao {
 
     private List<Event> readAllEvents(ResultReader reader) {
         List<Event> pieces = new ArrayList<>();
-        while (reader.nextRow()) {
+        while (reader.hasNextRow()) {
             String eventType = reader.readStringAt("type");
             String description = reader.readStringAt("description");
             Event event = new Event(EventType.valueOf(eventType), description);

@@ -58,8 +58,8 @@ class GameDaoTest {
 
         ResultReader reader = new QueryBuilder(String.format("SELECT state FROM %s WHERE id = %d", TEST_TABLE, 1))
                 .execute();
-        String actual = reader.readStringAt("state");
-        reader.close();
+        String actual = reader.nextRow()
+                .readStringAt("state");
 
         assertThat(actual).isEqualTo("OVER");
     }

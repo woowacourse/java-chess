@@ -1,5 +1,7 @@
 package chess.domain.event;
 
+import java.util.Objects;
+
 public class Event {
 
     private final EventType type;
@@ -15,5 +17,28 @@ public class Event {
             throw new UnsupportedOperationException("이동 이벤트가 아닙니다.");
         }
         return new MoveCommand(description);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Event event = (Event) o;
+        return type == event.type
+                && Objects.equals(description, event.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" + "type=" + type + ", description='" + description + '\'' + '}';
     }
 }

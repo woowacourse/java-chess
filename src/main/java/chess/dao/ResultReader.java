@@ -16,9 +16,18 @@ public class ResultReader implements AutoCloseable {
         this.connection = connection;
     }
 
-    public boolean nextRow() {
+    public boolean hasNextRow() {
         try {
             return resultSet.next();
+        } catch (SQLException e) {
+            throw new IllegalStateException(READ_RESULT_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public ResultReader nextRow() {
+        try {
+            resultSet.next();
+            return this;
         } catch (SQLException e) {
             throw new IllegalStateException(READ_RESULT_EXCEPTION_MESSAGE);
         }
@@ -28,6 +37,7 @@ public class ResultReader implements AutoCloseable {
         try {
             return resultSet.getString(columnLabel);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IllegalStateException(READ_RESULT_EXCEPTION_MESSAGE);
         }
     }
