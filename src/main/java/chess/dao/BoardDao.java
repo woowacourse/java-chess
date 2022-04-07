@@ -95,8 +95,9 @@ public class BoardDao {
     }
 
     public ChessGameDto findByName(String name) {
-        try (Connection c = getConnection()) {
-            return new ChessGameDto(name, new ChessGame(getTurn(name, c), new Board(getSquares(name, c))));
+        try (Connection connection = getConnection()) {
+            return new ChessGameDto(name,
+                    new ChessGame(getTurn(name, connection), new Board(getSquares(name, connection))));
         } catch (SQLException e) {
             e.printStackTrace();
         }

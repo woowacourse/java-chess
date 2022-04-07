@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
-import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Controller {
@@ -36,14 +35,14 @@ public class Controller {
         get("/", (req, res) -> getStartObject());
         post("/start", (req, res) -> {
             initGame(req.queryParams("name"));
-            return getObject();
+            return renderGame();
         });
         post("/command", (req, res) -> {
             go(req.queryParams("command"));
             saveToDB();
-            return getObject();
+            return renderGame();
         });
-        post("/end", (req, res) -> getEndObject());
+        post("/end", (req, res) -> renderEnd());
     }
 
     private void initGame(String name) {
@@ -85,14 +84,14 @@ public class Controller {
         return render(model, "index.html");
     }
 
-    private Object getObject() {
+    private Object renderGame() {
         updateTurn();
         updatePieces();
         updateScore();
         return render(model, "chessGame.html");
     }
 
-    private Object getEndObject() {
+    private Object renderEnd() {
         updateScore();
         updateWinner();
         boardDao.delete((String) model.get("name"));
