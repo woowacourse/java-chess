@@ -86,7 +86,7 @@
 - [x] ChessGame의 경우 Controller의 상태로 두기 보다는
     - 요청 때 마다 BoardDao에서 꺼내와서 동작하는게 조금 더 자연스러워 보입니다.
 - [x] 포지션 toString() 결과는 어디서 사용하나요? 혹시 view에서 사용하는건 아니죠?
-- [ ] 렌더링 하는 부분을 컨트롤러 객체에서 분리하여 위임
+- [x] 렌더링 하는 부분을 컨트롤러 객체에서 분리하여 위임
 - [ ] 재사용되는 객체의 상태는 재사용되어도 되는 값만 상태로 두고
     - 재사용 되면 안되는 값은 특정 메서드 내의 로컬 변수로 사용
     - Controller 객체는 WebApplication 이 실행될 때 한번 생성되고 계속 재사용되는 객체
@@ -95,7 +95,6 @@
 
 ### TODO
 
-- [ ] Controller 줄수 줄이기
-- [ ] InjectStrategy 안의 stringPieceMap 위치 고민하기 -> getter 대신 piece 가져오게 변경하기
-- [ ] Json 변환용 메서드 위치를 도메인 바깥으로 이동하기
+- [x] Controller 줄수 줄이기
+- [x] InjectStrategy 안의 stringPieceMap 위치 고민하기 -> getter 대신 piece 가져오게 변경하기
 
