@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class SquareDao {
 
+    private static final int SQUARE_NUMBER = 64;
     private final Connection connection;
 
     public SquareDao(Connection connection) {
@@ -33,7 +34,7 @@ public class SquareDao {
             }
 
             int[] ints = statement.executeBatch();
-            if (ints.length == 64) {
+            if (ints.length == SQUARE_NUMBER) {
                 return true;
             }
         } catch (SQLException e) {
