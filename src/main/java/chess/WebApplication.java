@@ -16,7 +16,9 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -49,21 +51,20 @@ public class WebApplication {
             return render(model, "open_game.html");
         });
 
-        // redirect.post("/fromPath", "/toPath", Redirect.Status.SEE_OTHER);
+        Map<String, User> inGameUser = new HashMap();
+
         post("/game", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
 
-            User firstUser = new User(
-                    req.queryParams("first-user-id"),
-                    req.queryParams("first-user-name")
-            );
-            userService.save(firstUser);
+            User whitePlayer = new User(req.queryParams("white-player-id"), req.queryParams("white-player-name"));
+            User blackPlayer = new User(req.queryParams("black-player-id"), req.queryParams("black-player-name"));
 
-            User secondUser = new User(
-                    req.queryParams("second-user-id"),
-                    req.queryParams("second-user-name")
-            );
-            userService.save(secondUser);
+            userService.merge(whitePlayer);
+            userService.merge(blackPlayer);
+
+            inGameUser.clear();
+            inGameUser.put("whiteUser", whitePlayer);
+            inGameUser.put("blackUser", blackPlayer);
 
             return render(model, "game.html");
         });
@@ -72,6 +73,8 @@ public class WebApplication {
         BoardResponse initBoardResponse = BoardResponse.from(initBoard);
 
         get("/board", "application/json", (req, res) -> initBoardResponse, gson::toJson);
+
+        get("/users", (req, res) -> inGameUser, gson::toJson);
 
         post("/move", (req, res) -> {
             Position from = Position.of(req.queryParams("from"));

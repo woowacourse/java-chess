@@ -72,7 +72,7 @@ public class DbUserDao extends Dao implements UserDao {
     }
 
     @Override
-    public void updateById(User user) {
+    public void update(User user) {
         final Connection connection = getConnection();
         final String sql = "update users set user_name = ? where user_id = ?";
         final PreparedStatement statement;

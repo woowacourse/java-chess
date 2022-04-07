@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.domain.user.User;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +51,7 @@ class DbUserDaoTest {
         String id = "philz";
         User user = new User(id, "성우");
         userDao.save(user);
-        userDao.updateById(new User(id, "필즈쿤"));
+        userDao.update(new User(id, "필즈쿤"));
         User findUser = userDao.findById(id);
         assertThat(findUser.getName()).isEqualTo("필즈쿤");
     }

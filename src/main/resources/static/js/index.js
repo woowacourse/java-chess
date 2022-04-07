@@ -4,13 +4,19 @@ const REVERSE_RANKS = RANKS.reverse();
 
 $(document).ready(function(){
     initChessBoard();
-    // placeChessPieces();
     initChessPieces();
-    // movePiece();
-    $("button#move").click(function(){
-        movePiece();
-    });
+    initUsers();
+    triggerEvents();
 });
+
+function initChessBoard() {
+    for (let r = 0 ; r < REVERSE_RANKS.length ; r++) {
+    addChessBoardRow();
+    for (let f = 0; f < FILES.length ; f++) {
+            addChessBoardSquare(r, f);
+        }
+    }
+}
 
 function initChessPieces() {
     $.ajax({ 
@@ -31,17 +37,33 @@ function initChessPieces() {
         }
     })
     .fail(function(xhr, status, errorThrown) {
-        debugger;
+        alert('error !');
     })
 }
 
-function initChessBoard() {
-    for (let r = 0 ; r < REVERSE_RANKS.length ; r++) {
-    addChessBoardRow();
-    for (let f = 0; f < FILES.length ; f++) {
-        addChessBoardSquare(r, f);
-        }
-    }
+function initUsers() {
+    $.ajax({ 
+        url: "/users",
+        method: "GET",
+        dataType: "json"
+    })
+    .done(function(json) {
+
+        $('#white-player-id').text(json['whiteUser']['id']);
+        $('#white-player-name').text(json['whiteUser']['name']);
+        
+        $('#black-player-id').text(json['blackUser']['id']);
+        $('#black-player-name').text(json['blackUser']['name']);
+    })
+    .fail(function(xhr, status, errorThrown) {
+        alert('error !');
+    })
+}
+
+function triggerEvents() {
+    $("button#move").click(function(){
+        movePiece();
+    });
 }
 
 function addChessBoardRow() {
@@ -58,7 +80,7 @@ function addChessBoardSquare(r, f) {
 
 function getColor(r, f) {
     if(isEven(r, f)) {
-    return "#AD8B73";
+        return "#AD8B73";
     }
     return "#CEAB93";
 }
@@ -83,9 +105,7 @@ function movePiece() {
     })
     .done(function(json) {
         
-        debugger;
-        $('#chess-board').children().remove();
-        
+        clearChessBoard();
         initChessBoard();
 
         for(let element of json.board) {
@@ -100,6 +120,10 @@ function movePiece() {
         }
     })
     .fail(function(xhr, status, errorThrown) {
-        debugger;
+        alert('error !');
     })
+}
+
+function clearChessBoard() {
+    $('#chess-board').children().remove();
 }
