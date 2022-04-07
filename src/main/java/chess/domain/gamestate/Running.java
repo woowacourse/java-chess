@@ -56,7 +56,10 @@ public class Running implements State {
         checkValidBeforePiece(positions.before());
         checkValidBeforePieceTurn(positions.before());
         checkObstaclesFromBeforeToAfterPosition(positions);
-        //추가 검증 : 폰(isPawn)의 경우 다이고날 움직임이라면 -> afterPosition에   타겟이 있는 경우여야한다(notBlankPosition) 라면, 대각선움직임이어야한다.
+        checkValidPawnMove(positions);
+    }
+
+    private void checkValidPawnMove(final Positions positions) {
         if (board.isPawn(positions.before()) && positions.isDiagonalMove()) {
             checkPawnValidCapturing(positions);
         }

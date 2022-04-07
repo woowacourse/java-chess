@@ -6,6 +6,8 @@ import chess.web.dao.board.BoardDao;
 import chess.web.dao.camp.CampDao;
 import chess.web.dao.member.MemberDaoImpl;
 import chess.web.dto.BoardDto;
+import chess.web.dto.MoveReqDto;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -28,25 +30,32 @@ public class ChessService {
     }
 
     public Map<String, Object> executeCommand(final Request req) {
-        final String command = req.queryParams("command");
+        String command = req.queryParams("command");
+        if (command == null) {
+            final MoveReqDto moveReqDto = new Gson().fromJson(
+                req.body(), MoveReqDto.class
+            );
+            command = moveReqDto.getCommand();
+        }
         System.err.println("front에서 받은 command = " + command);
         final WebGameCommand webgameCommand = WebGameCommand.from(command);
         return webgameCommand.execute(command, chessGame, getModelToState());
     }
 
-    private Supplier getModelToState() {
+    public Supplier getModelToState() {
         final HashMap<String, Object> model = new HashMap<>();
         return () -> {
             if (chessGame.isRunning()) {
 //                OutputView.printBoard(getBoardDto());
                 System.err.println("게임이 진행중입니다. 현재 데이터를 받아와요");
-                model.put("meesage", "게임이 진행중 입니다.");
+                model.put("message", "게임이 진행중 입니다.");
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
 
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
                 model.put("status", chessGame.calculateStatus());
+                System.err.println("모델갓다주기 직전인데, game.html은 없데이트가 안되는 듯싶넹.");
                 return model;
             }
 //            if (isStatusInRunning()) {
@@ -63,7 +72,7 @@ public class ChessService {
 //            if (isEndInGameOff()) {
 //
 //            }
-            return null;
+            return model;
         };
     }
 

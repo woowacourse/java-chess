@@ -21,7 +21,7 @@ public final class End implements WebCommandGenerator {
 
         returnModelToState.get();
 
-        chessGame.ready();
+//        chessGame.ready();
         // 게임은 ready로 돌리고 render는 다시 index.html로 돌아가도록 해보자.
         return null;
     }

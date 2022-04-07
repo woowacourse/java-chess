@@ -31,7 +31,8 @@ public enum WebGameCommand {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_MESSAGE));
     }
 
-    public Map<String, Object> execute(final String command, final ChessGame chessGame,
+    public Map<String, Object> execute(final String command,
+                                       final ChessGame chessGame,
                                        final Supplier returnModelToState) {
         final WebCommandGenerator webGameCommand = commandGenerator.get();
         return webGameCommand.execute(command, chessGame, returnModelToState);

@@ -70,8 +70,9 @@
 </form>
 
 <p>게임 진행 상황: {{message}}</p>
-{{#if errorMessage }}
-{{errorMessage}}
+
+{{#if hasError }}
+<p>에러메세지: {{errorMessage}}</p>
 {{/if}}
 
 

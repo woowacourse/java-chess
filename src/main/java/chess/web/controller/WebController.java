@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
@@ -32,21 +33,51 @@ public class WebController {
         });
 
         post("/:command", (req, res) -> {
-            if (chessService.isNotExistGame()) {
-                res.redirect("/");
-            }
-            if (chessService.isEndInGameOff()) {
-                render(executeAndGetModel(req), "index.html");
-            }
-            return render(executeAndGetModel(req), "game.html");
+            checkGameState(req, res);
+            return render(executeAndGetModel(req, res), "game.html");
+        });
+
+        get("/game", (req, res) -> {
+            return render(redirectAndGetModel(req, res), "game.html");
         });
     }
 
-    private Map<String, Object> executeAndGetModel(final Request req) {
+    private Map<String, Object> redirectAndGetModel(final Request req, final Response res) {
+        //현재 게임 정보를 얻어와서 그쪽으로 보낸다.
+        //get으로 갈 것이니, 정보를 넘긴다. -> execute안에서 getModelToState() Supplier를 실행시켜 각 상태별 정보를 model로 받았는데
+        // -> 여기서 호출하도록 pubic으로 바꿔서 정보를 받아온다.
+        // - >session에 담긴 정보를 빼서 모델에 넣어줘야함..
+        final Map<String, Object> currentModel = (Map<String, Object>) chessService.getModelToState().get();
+        if (req.session().attribute("errorFlash") != null) {
+            currentModel.putAll(req.session().attribute("errorFlash"));
+            req.session().removeAttribute("errorFlash");
+            return currentModel;
+        }
+        return currentModel;
+    }
+
+    private void checkGameState(final Request req, final Response res) {
+        if (chessService.isNotExistGame()) {
+            res.redirect("/");
+        }
+        if (chessService.isEndInGameOff()) {
+            render(executeAndGetModel(req, res), "index.html");
+        }
+    }
+
+    private Map<String, Object> executeAndGetModel(final Request req, final Response res) {
         try {
             return chessService.executeCommand(req);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            return new HashMap<>(Map.of("errorMessage", e.getMessage()));
+            Map<String, Object> error = new HashMap<>();
+            error.put("hasError", true);
+            error.put("errorMessage", e.getMessage());
+            req.session().attribute("errorFlash", error);
+//            req.session().attribute("errorMessage", e.getMessage()); // map형태로 넣어야한다.
+//            res.redirect("/chess-game?chess-game-id=" + chessGameId);
+            System.err.println("에러나서 /game으로 redirect중");
+            res.redirect("/game"); // get으로 갈듯? get()을 만들고 거기에 모델정보도 같이 담아서 보내야한다.
+            return null;
         }
     }
 
