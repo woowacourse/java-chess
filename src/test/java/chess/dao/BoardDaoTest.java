@@ -26,8 +26,7 @@ class BoardDaoTest {
 
     @BeforeEach
     void setUp() {
-        Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
-        dataSource = new TestDataSource(connection);
+        dataSource = new TestDataSource();
         boardDao = new BoardDaoImpl(dataSource);
     }
 

@@ -4,20 +4,23 @@ import chess.util.JdbcTemplate;
 import chess.util.SqlConnectionException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
-public class DataSourceImpl implements DataSource{
+public class DataSourceImpl implements DataSource {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/chess?autoReconnect=true";
 
     private Connection connection;
 
-    public DataSourceImpl(final Connection connection) {
-        this.connection = connection;
+    public DataSourceImpl() {
+        connection = JdbcTemplate.getConnection(URL);
     }
 
     @Override
     public Connection getConnection() {
         try {
-            if (connection.isClosed()) {
-                connection = JdbcTemplate.getConnection(JdbcTemplate.URL);
+            if (Objects.isNull(connection) || connection.isClosed()) {
+                connection = JdbcTemplate.getConnection(URL);
             }
         } catch (SQLException e) {
             throw new SqlConnectionException(SqlConnectionException.MESSAGE, e);

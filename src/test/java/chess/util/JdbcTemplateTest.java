@@ -2,6 +2,8 @@ package chess.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.DataSourceImpl;
+import chess.dao.TestDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +14,7 @@ class JdbcTemplateTest {
     @Test
     @DisplayName("Connection 확인")
     void getConnection() throws SQLException {
-        Connection connection = JdbcTemplate.getConnection(JdbcTemplate.URL);
+        Connection connection = new DataSourceImpl().getConnection();
         assertThat(connection).isNotNull();
         connection.close();
     }
@@ -20,7 +22,7 @@ class JdbcTemplateTest {
     @Test
     @DisplayName("dev Connection 확인")
     void getConnectionTest() {
-        Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
+        Connection connection = new TestDataSource().getConnection();
         assertThat(connection).isNotNull();
     }
 

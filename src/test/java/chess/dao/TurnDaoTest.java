@@ -16,8 +16,7 @@ class TurnDaoTest {
 
     @BeforeEach
     void setUp() {
-        Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
-        TestDataSource datasource = new TestDataSource(connection);
+        TestDataSource datasource = new TestDataSource();
         turnDao = new TurnDaoImpl(datasource);
     }
 

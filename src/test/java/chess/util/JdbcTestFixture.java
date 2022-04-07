@@ -12,8 +12,6 @@ import java.util.Map;
 
 public class JdbcTestFixture {
 
-    public static String DEV_URL = "jdbc:mysql://localhost:3306/chess_dev?autoReconnect=true";
-
     public static Map<String, String> getMovedTestBoard() {
         Map<Position, Piece> board = BoardFactory.initialize();
         board.put(Position.valueOf("a2"), new Blank());
