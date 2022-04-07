@@ -1,11 +1,3 @@
-.setting_board {
-    background-image: url("/image/wood.svg");
-    width: 100%;
-    height: 500px;
-    text-align: center;
-    padding: 10%;
-}
-
 .select_board {
     background-image: url("/image/wood.svg");
     width: 100%;
@@ -20,6 +12,20 @@
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+.setting_background {
+    background-image: url("/image/wood.svg");
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.setting_board {
+    margin: auto;
+    width: 600px;
 }
 
 .board {
