@@ -2,13 +2,21 @@ package chess.dao;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
+import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
+import chess.domain.state.BlackTurn;
+import chess.domain.state.Finish;
 import chess.domain.state.GameState;
+import chess.domain.state.WhiteTurn;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -52,14 +60,14 @@ public class ChessDao {
         }
     }
 
-    private int findChessGameId() {
+    public Integer findChessGameId() {
         final Connection connection = getConnection();
         final String sql = "select id from chessgame";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new NoSuchElementException(DATA_NOT_EXISTS_EXCEPTION);
+                return null;
             }
             return resultSet.getInt(TABLE_ID);
         } catch (SQLException e) {
@@ -163,4 +171,42 @@ public class ChessDao {
             e.printStackTrace();
         }
     }
+
+    public String findChessGameState() {
+        final Connection connection = getConnection();
+        final String sql = "select state from chessgame";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return resultSet.getString("state");
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
+        }
+    }
+
+    public Map<String, List<String>> getChessBoard() {
+        final Connection connection = getConnection();
+        final String sql = "select board_row, board_column, name, team "
+                + "from chessboard join chesspiece on chessboard.chesspiece_id = chesspiece_id";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            Map<String, List<String>> board = new HashMap<>();
+            while (resultSet.next()) {
+                int row = resultSet.getInt("board_row");
+                String column = resultSet.getString("board_column");
+                String chessPieceName = resultSet.getString("name");
+                String team = resultSet.getString("team");
+                board.put(column + row, List.of(chessPieceName, team));
+            }
+            return board;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
+        }
+    }
+
+
 }

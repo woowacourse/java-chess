@@ -32,8 +32,8 @@ public class WebChessController {
     private GameState gameState;
 
     public WebChessController() {
-        this.gameState = new Ready();
         this.chessService = new ChessService();
+        this.gameState = chessService.findState();
     }
 
     public void run() {

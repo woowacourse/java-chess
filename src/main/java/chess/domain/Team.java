@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Team {
     BLACK,
     WHITE,
