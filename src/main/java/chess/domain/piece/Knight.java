@@ -55,4 +55,13 @@ public class Knight extends Piece {
     public boolean isKnight() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        String name = "knight";
+        if (isBlack()) {
+            return name + "_black";
+        }
+        return name + "_white";
+    }
 }

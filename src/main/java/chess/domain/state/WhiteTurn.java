@@ -32,4 +32,14 @@ public final class WhiteTurn extends Playing {
     public String findTurn() {
         return "백";
     }
+
+    @Override
+    public String getState() {
+        return "white_turn";
+    }
+
+    @Override
+    public String getStateName() {
+        return "백팀 차례";
+    }
 }

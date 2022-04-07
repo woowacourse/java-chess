@@ -12,4 +12,14 @@ public final class BlackWin extends End {
     public Winner findWinner() {
         return Winner.BLACK;
     }
+
+    @Override
+    public String getState() {
+        return "black_win";
+    }
+
+    @Override
+    public String getStateName() {
+        return "흑팀 승리";
+    }
 }

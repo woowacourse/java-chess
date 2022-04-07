@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Command;
+import chess.domain.board.Command;
 import java.util.List;
 import java.util.Scanner;
 

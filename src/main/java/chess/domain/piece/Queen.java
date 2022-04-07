@@ -29,4 +29,13 @@ public class Queen extends SlidingPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String getName() {
+        String name = "queen";
+        if (isBlack()) {
+            return name + "_black";
+        }
+        return name + "_white";
+    }
 }

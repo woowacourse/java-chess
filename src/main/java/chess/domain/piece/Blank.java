@@ -22,4 +22,9 @@ public class Blank extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String getName() {
+        return "blank";
+    }
 }

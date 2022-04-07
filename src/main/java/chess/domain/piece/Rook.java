@@ -29,4 +29,13 @@ public class Rook extends SlidingPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String getName() {
+        String name = "rook";
+        if (isBlack()) {
+            return name + "_black";
+        }
+        return name + "_white";
+    }
 }
