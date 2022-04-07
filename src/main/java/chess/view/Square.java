@@ -5,7 +5,7 @@ public class Square {
     private final String symbol;
     private final String position;
 
-    public Square(String symbol, String position) {
+    public Square(final String symbol, final String position) {
         this.symbol = symbol;
         this.position = position;
     }

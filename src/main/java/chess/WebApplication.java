@@ -1,10 +1,6 @@
 package chess;
 
 import chess.game.WebChessGame;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.Map;
 
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
@@ -16,9 +12,5 @@ public class WebApplication {
         port(8080);
         WebChessGame webChessGame = new WebChessGame();
         webChessGame.run();
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

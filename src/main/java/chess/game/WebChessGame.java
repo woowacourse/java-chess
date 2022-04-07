@@ -42,7 +42,7 @@ public class WebChessGame {
     }
 
     private String result() {
-        Map<String, Object> model = new HashMap<>();
+        final Map<String, Object> model = new HashMap<>();
         model.put("squares", showChessBoard(state.getBoard()));
         state = state.proceed("status");
         Status status = (Status) state;
@@ -52,11 +52,11 @@ public class WebChessGame {
         return render(model, "status.html");
     }
 
-    private String playerName(Player player) {
+    private String playerName(final Player player) {
         return player.getName();
     }
 
-    private State proceed(String command, Map<String, Object> model) {
+    private State proceed(final String command, final Map<String, Object> model) {
         try {
             model.put("message", "실행한 명령어: " + command);
             return state.proceed(command);
@@ -66,9 +66,9 @@ public class WebChessGame {
         }
     }
 
-    private String gameStart(CommandDao commandDao) {
+    private String gameStart(final CommandDao commandDao) {
         commandDao.init();
-        Map<String, Object> model = new HashMap<>();
+        final Map<String, Object> model = new HashMap<>();
         state = Start.initState("start");
         model.put("squares", showChessBoard(state.getBoard()));
         model.put("player", "White");
@@ -76,22 +76,22 @@ public class WebChessGame {
         return render(model, "game.html");
     }
 
-    private List<Square> showChessBoard(Map<Position, Piece> board) {
-        List<Square> squares = new ArrayList<>();
-        for(Position position : board.keySet()) {
+    private List<Square> showChessBoard(final Map<Position, Piece> board) {
+        final List<Square> squares = new ArrayList<>();
+        for(final Position position : board.keySet()) {
             addPiece(position, board.get(position), squares);
         }
         return squares;
     }
 
-    private void addPiece(Position position, Piece piece, List<Square> squares) {
+    private void addPiece(final Position position, final Piece piece, final List<Square> squares) {
         if (!piece.isBlank()) {
             squares.add(new Square(piece.getImageName(), position.getPosition()));
         }
     }
 
     private String gameProceed(Request req, CommandDao commandDao) {
-        Map<String, Object> model = new HashMap<>();
+        final Map<String, Object> model = new HashMap<>();
         model.put("player", playerName(state.getPlayer()));
         commandDao.save(req.queryParams("command"));
         model.put("commands", commandDao.findAll());
@@ -104,8 +104,8 @@ public class WebChessGame {
     }
 
     private String reload(CommandDao commandDao) {
-        List<String> commands = commandDao.findAll();
-        Map<String, Object> model = new HashMap<>();
+        final List<String> commands = commandDao.findAll();
+        final Map<String, Object> model = new HashMap<>();
         state = Start.initState("start");
         model.put("commands", commandDao.findAll());
         for (String command : commands) {
