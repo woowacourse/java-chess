@@ -70,6 +70,6 @@ class GameDaoImplTest {
 
 		assertThatThrownBy(() -> gameDaoImpl.findById(gameId))
 				.isInstanceOf(NoSuchElementException.class)
-				.hasMessageContaining("해당 키를 가진 데이터가 없습니다.");
+				.hasMessageContaining("해당 게임 id를 가진 데이터가 없습니다.");
 	}
 }

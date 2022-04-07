@@ -16,7 +16,7 @@ public class GameDaoImpl implements GameDao {
 
 	private static final String SAVE_ERROR = "해당 값을 저장할 수 없습니다.";
 	private static final String NAME_DUPLICATION_ERROR = "게임 이름은 중복될 수 없습니다.";
-	private static final String NOT_FOUND_ITEM_ERROR = "해당 키를 가진 데이터가 없습니다.";
+	private static final String NOT_FOUND_ITEM_ERROR = "해당 게임 id를 가진 데이터가 없습니다.";
 
 	private final Connection connection;
 
