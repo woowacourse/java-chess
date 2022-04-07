@@ -11,47 +11,44 @@ import chess.console.view.OutputView;
 
 public class ConsoleApplication {
 
-    private int userId;
-
     public static void main(String[] args) {
-        final ConsoleApplication chess = new ConsoleApplication();
-        chess.startGame();
+        startGame();
     }
 
-    private void startGame() {
+    private static void startGame() {
         final String userName = InputView.inputName();
         final ChessController chess = new ChessController();
-        userId = chess.initGame(userName);
+        final int userId = chess.initGame(userName);
         StateDto state = chess.getCurrentStatus(userId);
         if (!isReady(state)) {
             OutputView.printBoard(chess.getCurrentBoardState(userId));
         }
         OutputView.printStartMessage();
         while (!isEnd(state)) {
-            repeatTurn(chess);
+            repeatTurn(chess, userId);
             state = chess.getCurrentStatus(userId);
         }
         chess.finishGame(userId);
     }
 
-    private boolean isReady(final StateDto stateDto) {
+    private static boolean isReady(final StateDto stateDto) {
         return stateDto.getState().equals("READY");
     }
 
-    private boolean isEnd(final StateDto stateDto) {
+    private static boolean isEnd(final StateDto stateDto) {
         return stateDto.getState().equals("END");
     }
 
-    private void repeatTurn(final ChessController chess) {
+    private static void repeatTurn(final ChessController chess, final int userId) {
         try {
-            operateOnce(chess);
+            operateOnce(chess, userId);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            repeatTurn(chess);
+            repeatTurn(chess, userId);
         }
     }
 
-    private void operateOnce(final ChessController chessController) {
+    private static void operateOnce(final ChessController chessController, final int userId) {
         final ParsedCommand parsedCommand = new ParsedCommand(InputView.input());
         if (isCommandRelatedToScore(parsedCommand)) {
             final ScoreDto scoreDto = chessController.doActionAboutScore(parsedCommand, userId);
@@ -62,7 +59,7 @@ public class ConsoleApplication {
         OutputView.printBoard(piecesDto);
     }
 
-    private boolean isCommandRelatedToScore(final ParsedCommand parsedCommand) {
+    private static boolean isCommandRelatedToScore(final ParsedCommand parsedCommand) {
         final Command command = parsedCommand.getCommand();
         return command == Command.END || command == Command.STATUS;
     }
