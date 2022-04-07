@@ -6,6 +6,7 @@
     <title>체스</title>
 </head>
 <body>
+<p>{{name}} 방</p>
 
 <h1>체스왕 헌치</h1>
 <p>점수</p>
@@ -24,9 +25,11 @@ move a2(움직일 말) a3(이동 위치) 형식으로 입력해주세요.
 
 <form action="/command" method="post">
     <input name="command" type="text">
+    <input name="name" type="hidden" value={{name}}>
     <input type="submit" value="커멘드 입력"/>
 </form>
 <form action="/end" method="post">
+    <input name="name" type="hidden" value={{name}}>
     <input name="end" type="submit" value="end">
 </form>
 

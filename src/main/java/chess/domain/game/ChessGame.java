@@ -71,7 +71,7 @@ public final class ChessGame {
     }
 
     private boolean isTurn(Position position) {
-        return board.isSameColor(position, turn);
+        return board.isTurn(position, turn);
     }
 
     public Map<Team, Double> getScoreOfTeams() {

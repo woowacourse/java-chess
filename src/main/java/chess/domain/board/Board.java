@@ -40,7 +40,7 @@ public final class Board {
         squares.replace(from, new EmptyPiece());
     }
 
-    public boolean isSameColor(Position position, Team team) {
+    public boolean isTurn(Position position, Team team) {
         return findByPosition(position).getTeam() == team;
     }
 
@@ -53,14 +53,14 @@ public final class Board {
 
     private double getInitScore(Team team) {
         return squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team))
+                .filter(entry -> isTurn(entry.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
     }
 
     private double getPawnMinusScore(Team team) {
         List<Column> pawnsColumns = squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team) && entry.getValue().getName() == Name.PAWN)
+                .filter(entry -> isTurn(entry.getKey(), team) && entry.getValue().getName() == Name.PAWN)
                 .map(entry -> entry.getKey().getColumn())
                 .collect(Collectors.toList());
 
