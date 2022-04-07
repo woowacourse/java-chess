@@ -2,6 +2,7 @@ package chess.dao;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
@@ -10,6 +11,7 @@ import chess.domain.board.CustomBoardGenerator;
 import chess.domain.board.Point;
 import chess.domain.board.Route;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class JdbcBoardDao implements BoardDao {
 
@@ -18,7 +20,7 @@ public class JdbcBoardDao implements BoardDao {
         JdbcConnector connector = JdbcConnector.query(
             "insert into board (horizontal_index, vertical_index, piece_type, piece_color, room_name)"
                 + " values (?, ?, ?, ?, ?)");
-
+        pointPieces = ignoreEmpty(pointPieces);
         for (Map.Entry<Point, Piece> entry : pointPieces.entrySet()) {
             Point point = entry.getKey();
             Piece piece = entry.getValue();
@@ -28,6 +30,13 @@ public class JdbcBoardDao implements BoardDao {
                 .batch();
         }
         connector.executeBatch();
+    }
+
+    private Map<Point, Piece> ignoreEmpty(Map<Point, Piece> pointPieces) {
+        return pointPieces.entrySet()
+            .stream()
+            .filter(entry -> !entry.getValue().isSameType(PieceType.EMPTY))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override

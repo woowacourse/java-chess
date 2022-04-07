@@ -1,19 +1,14 @@
 package chess.service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.dao.GameStateGenerator;
 import chess.domain.board.Board;
-import chess.domain.board.Point;
 import chess.domain.board.Route;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.dto.Arguments;
 
 public class GameService {
@@ -33,14 +28,7 @@ public class GameService {
 
         GameState state = new Ready();
         gameDao.saveGame(state.getState(), state.getColor(), roomName);
-        boardDao.saveBoard(ignoreEmpty(state.getPointPieces()), roomName);
-    }
-
-    private Map<Point, Piece> ignoreEmpty(Map<Point, Piece> pointPieces) {
-        return pointPieces.entrySet()
-            .stream()
-            .filter(entry -> !entry.getValue().isSameType(PieceType.EMPTY))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        boardDao.saveBoard(state.getPointPieces(), roomName);
     }
 
     public void startGame(String roomName) {
