@@ -17,10 +17,10 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("한 컬럼의 점수를 계산한다.")
     void calculateOneColumn() {
-        List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK));
+        List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK), new Pawn(Color.BLACK));
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
-        assertThat(score).isEqualTo(5.5);
+        assertThat(score).isEqualTo(6.5);
     }
 
     @Test

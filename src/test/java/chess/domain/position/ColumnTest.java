@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -43,7 +44,7 @@ public class ColumnTest {
                 .hasMessage("해당 인덱스의 열은 존재하지 않습니다.");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"-1,C", "1,E"})
     @DisplayName("이동 후 Column을 반환한다.")
     void move(int moveValue, Column expected) {
@@ -51,12 +52,20 @@ public class ColumnTest {
         Assertions.assertThat(move).isEqualTo(expected);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"A,-1", "H,1"})
     @DisplayName("이동할 수 없는 Column일 경우, 예외를 발생한다.")
     void moveThrowException(Column column, int moveValue) {
         assertThatThrownBy(() -> column.move(moveValue))
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("범위를 벗어났습니다.");
+    }
+
+    @Test
+    @DisplayName("두 컬럼 사이의 value 차이를 구한다.")
+    void calculateDifference() {
+        Column source = Column.of(5);
+        Column target = Column.of(3);
+        assertThat(Column.calculateDifference(source, target)).isEqualTo(2);
     }
 }

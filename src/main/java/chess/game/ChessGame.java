@@ -1,16 +1,18 @@
-package chess;
+package chess.game;
 
 import chess.domain.ChessBoard;
-import chess.domain.ScoreCalculator;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
+import chess.domain.ScoreCalculator;
 import chess.domain.piece.Color;
-import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.generator.PiecesGenerator;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.ResultView;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -23,32 +25,34 @@ public class ChessGame {
 
     public void playGame() {
         ResultView.printStartMessage();
-        GameCommand gameCommand;
         do {
-            gameCommand = requestCommand();
-        } while (!gameCommand.isSameCommandType(CommandType.END));
+            requestCommand();
+        } while (!turn.isEmpty());
     }
 
-    private GameCommand requestCommand() {
+    private void requestCommand() {
         try {
             GameCommand gameCommand = new GameCommand(InputView.inputCommand());
             playGameByCommand(gameCommand);
-            return gameCommand;
         } catch (RuntimeException exception) {
             ResultView.printReplay(exception.getMessage());
-            return requestCommand();
+            requestCommand();
         }
     }
 
-    private void playGameByCommand(GameCommand gameCommand) {
-        if (gameCommand.isSameCommandType(CommandType.END)) {
+    public void playGameByCommand(GameCommand gameCommand) {
+        if (isEndCommand(gameCommand)) {
+            turn = Color.EMPTY;
             return;
         }
         startGame(gameCommand);
-        validateInitBoard();
-        validateEndChessBoard();
+        validateForStatusAndMove();
         showStatus(gameCommand);
         move(gameCommand);
+    }
+
+    private boolean isEndCommand(GameCommand gameCommand) {
+        return gameCommand.isSameCommandType(CommandType.END);
     }
 
     private void startGame(GameCommand gameCommand) {
@@ -62,6 +66,11 @@ public class ChessGame {
         chessBoard = new ChessBoard(piecesGenerator);
         turn = Color.WHITE;
         ResultView.printChessBoard(chessBoard.getPieces());
+    }
+
+    private void validateForStatusAndMove() {
+        validateInitBoard();
+        validateEndChessBoard();
     }
 
     private void validateInitBoard() {
@@ -104,16 +113,28 @@ public class ChessGame {
         validatePlayerTurn(gameCommand);
         chessBoard.move(gameCommand);
         ResultView.printChessBoard(chessBoard.getPieces());
+        doEnd();
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        turn = turn.getReverseColor();
+    }
+
+    private void doEnd() {
         if (chessBoard.isEnd()) {
             ResultView.printWinner(turn);
             turn = Color.EMPTY;
         }
-        turn = turn.getReverseColor();
     }
 
     private void validatePlayerTurn(GameCommand gameCommand) {
-        if (chessBoard.getColor(gameCommand.getFromPosition()) != turn) {
+        if (chessBoard.getPositionColor(gameCommand.getFromPosition()) != turn) {
             throw new IllegalArgumentException("당신의 차례가 아닙니다.");
         }
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard.getPieces();
     }
 }

@@ -2,47 +2,55 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.EnumMap;
+import chess.domain.position.Row;
 import java.util.List;
-import java.util.Map;
 
 public class Pawn extends Piece {
 
-    public static final List<Position> BLACK_INIT_LOCATIONS = List.of(
-            Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),
-            Position.of("e7"), Position.of("f7"), Position.of("g7"), Position.of("h7"));
-    public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
-            Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
-            Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
+    public static final Row BLACK_INIT_ROW = Row.SEVEN;
+    public static final Row WHITE_INIT_ROW = Row.TWO;
 
-    private static final int PAWN_POINT = 1;
+    private static final int STRAIGHT_DIRECTION_INDEX = 0;
+    private static final int DIAGONAL_DIRECTION_START_INDEX = 1;
 
     public Pawn(Color color) {
-        super(color, PieceName.PAWN);
+        super(color, PieceType.PAWN);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        Map<Direction, List<Position>> movable = new EnumMap<>(Direction.class);
-        movable.put(Direction.pawnDirection(color), new ArrayList<>());
-        putMovablePositions(movable, position);
-        return movable;
+    public boolean canMove(Position fromPosition, Position toPosition) {
+        Direction directionByPositions = Direction.getDirectionByPositions(fromPosition, toPosition);
+        List<Direction> movableDirections = getMovableDirections();
+
+        if (directionByPositions.isSameDirection(getStraightDirection(movableDirections))) {
+            return checkFirstMove(fromPosition, toPosition);
+        }
+        if (directionByPositions.isInDirections(getDiagonalDirections(movableDirections))) {
+            return directionByPositions.isSameWithDistanceAndDirection(fromPosition, toPosition);
+        }
+        return false;
     }
 
-    private void putMovablePositions(Map<Direction, List<Position>> movable, Position position) {
-        Position nextPosition = position.toDirection(Direction.pawnDirection(color));
-        if (!hasMovablePosition(position, nextPosition)) {
-            return;
-        }
-        movable.get(Direction.pawnDirection(color)).add(nextPosition);
-        if (isFirstMove(position)) {
-            putMovablePositions(movable, nextPosition);
-        }
+    @Override
+    protected List<Direction> getMovableDirections() {
+        return Direction.pawnDirection(color);
     }
 
-    private boolean hasMovablePosition(Position position, Position nextPosition) {
-        return nextPosition != position;
+    private Direction getStraightDirection(List<Direction> movableDirections) {
+        return movableDirections.get(STRAIGHT_DIRECTION_INDEX);
+    }
+
+    private boolean checkFirstMove(Position fromPosition, Position toPosition) {
+        int distance = Math.abs(fromPosition.getRowDifferenceWithTarget(toPosition));
+        if (isFirstMove(fromPosition)) {
+            return distance <= 2;
+        }
+        return distance == 1;
+    }
+
+    private List<Direction> getDiagonalDirections(List<Direction> movableDirections) {
+        return movableDirections.subList(DIAGONAL_DIRECTION_START_INDEX,
+                movableDirections.size());
     }
 
     private boolean isFirstMove(Position position) {
@@ -50,15 +58,10 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackFirstMovePawn(Position position) {
-        return color == Color.BLACK && BLACK_INIT_LOCATIONS.contains(position);
+        return color.isBlack() && position.isInRow(BLACK_INIT_ROW);
     }
 
     private boolean isWhiteFirstMovePawn(Position position) {
-        return color == Color.WHITE && WHITE_INIT_LOCATIONS.contains(position);
-    }
-
-    @Override
-    public double getPoint() {
-        return PAWN_POINT;
+        return color.isWhite() && position.isInRow(WHITE_INIT_ROW);
     }
 }

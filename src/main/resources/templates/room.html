@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="chess-header">🏛ROMA CHESS🏛</h1>
+    <div class="container">
+        <div class="chess-button-container">
+            <div id="chess-status"></div>
+            <div id="turn-status"></div>
+            <button class="chess-btn" onclick="start()">새 게임</button>
+            <button class="chess-btn" onclick="load()">불러오기</button>
+            <button class="chess-btn" onclick="end()">그만하기</button>
+        </div>
+        <div class="chess-board">
+            <div></div>
+            <div class="column-header">a</div>
+            <div class="column-header">b</div>
+            <div class="column-header">c</div>
+            <div class="column-header">d</div>
+            <div class="column-header">e</div>
+            <div class="column-header">f</div>
+            <div class="column-header">g</div>
+            <div class="column-header">h</div>
+            <div></div>
+
+            <div class="row-header">8</div>
+            <div id="a8" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="b8" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="c8" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="d8" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="e8" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="f8" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="g8" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="h8" class="black-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">8</div>
+
+            <div class="row-header">7</div>
+            <div id="a7" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="b7" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="c7" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="d7" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="e7" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="f7" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="g7" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="h7" class="white-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">7</div>
+
+            <div class="row-header">6</div>
+            <div id="a6" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="b6" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="c6" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="d6" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="e6" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="f6" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="g6" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="h6" class="black-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">6</div>
+
+            <div class="row-header">5</div>
+            <div id="a5" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="b5" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="c5" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="d5" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="e5" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="f5" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="g5" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="h5" class="white-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">5</div>
+
+            <div class="row-header">4</div>
+            <div id="a4" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="b4" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="c4" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="d4" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="e4" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="f4" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="g4" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="h4" class="black-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">4</div>
+
+            <div class="row-header">3</div>
+            <div id="a3" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="b3" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="c3" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="d3" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="e3" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="f3" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="g3" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="h3" class="white-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">3</div>
+
+            <div class="row-header">2</div>
+            <div id="a2" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="b2" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="c2" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="d2" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="e2" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="f2" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="g2" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="h2" class="black-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">2</div>
+
+            <div class="row-header">1</div>
+            <div id="a1" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="b1" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="c1" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="d1" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="e1" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="f1" class="white-square" onclick="selectPiece(this)"></div>
+            <div id="g1" class="black-square" onclick="selectPiece(this)"></div>
+            <div id="h1" class="white-square" onclick="selectPiece(this)"></div>
+            <div class="row-header">1</div>
+
+            <div></div>
+            <div class="column-header">a</div>
+            <div class="column-header">b</div>
+            <div class="column-header">c</div>
+            <div class="column-header">d</div>
+            <div class="column-header">e</div>
+            <div class="column-header">f</div>
+            <div class="column-header">g</div>
+            <div class="column-header">h</div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/script.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
@@ -39,77 +39,38 @@ public class ChessBoard {
     }
 
     public void move(GameCommand gameCommand) {
-        Position from = gameCommand.getFromPosition();
-        Position to = gameCommand.getToPosition();
-        Piece piece = selectPiece(from);
-        Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
-        checkMovable(to, finalMovablePositions);
-        movePiece(from, to, piece);
+        Position fromPosition = gameCommand.getFromPosition();
+        Position toPosition = gameCommand.getToPosition();
+        MoveChecker moveChecker = new MoveChecker();
+        Direction direction = Direction.getDirectionByPositions(fromPosition, toPosition);
+
+        checkMovable(fromPosition, toPosition, direction, moveChecker);
+        checkRouteNotBlock(fromPosition, toPosition, direction, moveChecker);
+        movePiece(fromPosition, toPosition, selectPiece(fromPosition));
     }
 
-    private void checkMovable(Position to, List<Position> finalMovablePositions) {
-        if (!finalMovablePositions.contains(to)) {
-            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
+    private void checkMovable(Position fromPosition, Position toPosition,
+                              Direction direction, MoveChecker moveChecker) {
+        Piece fromPiece = selectPiece(fromPosition);
+        Piece toPiece = selectPiece(toPosition);
+
+        moveChecker.checkTargetEnemyOrEmpty(fromPiece, toPiece);
+        moveChecker.checkMovableDirection(fromPosition, toPosition, fromPiece);
+        moveChecker.checkPawnMove(fromPiece, toPiece, direction);
+    }
+
+    private void checkRouteNotBlock(Position fromPosition, Position toPosition,
+                                    Direction direction, MoveChecker moveChecker) {
+        for (Position nextPosition = fromPosition.toDirection(direction);
+             nextPosition != toPosition;
+             nextPosition = nextPosition.toDirection(direction)) {
+            moveChecker.checkEmpty(selectPiece(nextPosition));
         }
     }
 
     private void movePiece(Position from, Position to, Piece piece) {
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
-    }
-
-    public List<Position> generateMovablePositionsWithBlock(Position nowPosition, Piece piece,
-                                                            Map<Direction, List<Position>> movablePositions) {
-        List<Position> result = new ArrayList<>();
-        for (Map.Entry<Direction, List<Position>> entry : movablePositions.entrySet()) {
-            addMovablePositionsWithBlock(piece, result, entry.getValue());
-        }
-
-        if (piece.isSamePieceName(PieceName.PAWN)) {
-            addDiagonalMoveForPawn(nowPosition, piece, result);
-        }
-        return Collections.unmodifiableList(result);
-    }
-
-    private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
-        if (!positions.isEmpty()) {
-            int cutIndex = getCutIndex(piece, positions);
-            result.addAll(positions.subList(0, cutIndex));
-        }
-    }
-
-    private int getCutIndex(Piece nowPiece, List<Position> positions) {
-        int cutIndex = 0;
-        while (isInRangeAndEmptyPosition(positions, cutIndex)) {
-            cutIndex++;
-        }
-        Piece target = selectPiece(positions.get(cutIndex));
-        if (isBlockedByTargetPiece(nowPiece, target)) {
-            return cutIndex;
-        }
-        return cutIndex + 1;
-    }
-
-    private boolean isInRangeAndEmptyPosition(List<Position> positions, int cutIndex) {
-        return cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty();
-    }
-
-    private boolean isBlockedByTargetPiece(Piece nowPiece, Piece target) {
-        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceName.PAWN) && !target.isEmpty());
-    }
-
-    private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
-        Direction direction = Direction.pawnDirection(piece.getColor());
-        List<Direction> diagonalDirections = direction.getDiagonal();
-
-        List<Position> targetPositions = diagonalDirections.stream()
-                .map(nowPosition::toDirection)
-                .filter(targetPosition -> !selectPiece(targetPosition).isSameColor(piece)
-                        && !selectPiece(targetPosition).isEmpty())
-                .collect(Collectors.toList());
-
-        result.addAll(targetPositions);
     }
 
     public List<Piece> getPiecesOnColumn(Column column, Color color) {
@@ -132,12 +93,12 @@ public class ChessBoard {
 
     public boolean isEnd() {
         long kingCount = pieces.values().stream()
-                .filter(p -> p.isSamePieceName(PieceName.KING))
+                .filter(p -> p.isSamePieceType(PieceType.KING))
                 .count();
         return kingCount != RUNNING_KING_COUNT;
     }
 
-    public Color getColor(Position position) {
+    public Color getPositionColor(Position position) {
         return selectPiece(position).getColor();
     }
 

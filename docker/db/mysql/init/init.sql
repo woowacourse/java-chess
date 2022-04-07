@@ -1,14 +1,18 @@
-create table member
+create table room
 (
-    id   varchar(10) not null,
-    name varchar(20) not null,
-    primary key (id)
+    id bigint not null auto_increment,
+    name varchar(255) not null,
+    turn varchar(10) not null,
+    primary key (id),
+    constraint uniqueName unique (name)
 );
 
-create table role
+create table square
 (
-    user_id varchar(10) not null,
-    role    varchar(10) not null,
-    primary key (user_id),
-    foreign key (user_id) references member (id)
+    id bigint not null auto_increment,
+    position varchar(5) not null,
+    piece varchar(20) not null,
+    room_id bigint not null,
+    primary key (id),
+    foreign key (room_id) references room (id)
 );

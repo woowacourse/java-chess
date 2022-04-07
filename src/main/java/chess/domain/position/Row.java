@@ -40,6 +40,10 @@ public enum Row {
         return reverse;
     }
 
+    public static int calculateDifference(Row source, Row target) {
+        return source.value - target.value;
+    }
+
     public Row move(int value) {
         int indexAfterMove = this.value + value;
         if (indexAfterMove > MAX_ROW || indexAfterMove < MIN_ROW) {
@@ -48,7 +52,7 @@ public enum Row {
         return of(indexAfterMove);
     }
 
-    public String getValue() {
-        return Integer.toString(this.value);
+    public int getValue() {
+        return value;
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -57,7 +58,7 @@ public class PieceTest {
                     .doesNotThrowAnyException();
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
         @CsvSource(value = {"BLACK, true", "WHITE, false"})
         @DisplayName("말끼리 서로 같은 편인지 확인한다.")
         void isSameColor(Color color, boolean expected) {
@@ -65,5 +66,20 @@ public class PieceTest {
             King king = new King(color);
             assertThat(rook.isSameColor(king)).isEqualTo(expected);
         }
+    }
+
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+    @CsvSource(value = {"WHITE, p", "BLACK, P"})
+    @DisplayName("색깔에 맞는 symbol을 반환한다.")
+    void getSymbol(Color color, String expected) {
+        Piece piece = new Pawn(color);
+        assertThat(piece.getSymbol()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("색이 Empty 확인한다.")
+    void isEmpty() {
+        Piece piece = EmptyPiece.getInstance();
+        assertThat(piece.isEmpty()).isTrue();
     }
 }

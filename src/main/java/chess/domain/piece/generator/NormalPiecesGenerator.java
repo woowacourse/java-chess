@@ -8,6 +8,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,12 +69,9 @@ public class NormalPiecesGenerator implements PiecesGenerator {
     }
 
     private static void createPawn() {
-        for (Position position : Pawn.BLACK_INIT_LOCATIONS) {
-            pieces.put(position, new Pawn(Color.BLACK));
-        }
-
-        for (Position position : Pawn.WHITE_INIT_LOCATIONS) {
-            pieces.put(position, new Pawn(Color.WHITE));
+        for (Column column : Column.values()) {
+            pieces.put(Position.of(column, Pawn.BLACK_INIT_ROW), new Pawn(Color.BLACK));
+            pieces.put(Position.of(column, Pawn.WHITE_INIT_ROW), new Pawn(Color.WHITE));
         }
     }
 

@@ -4,36 +4,23 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public abstract class Piece {
 
-    protected final PieceName name;
+    protected final PieceType type;
     protected final Color color;
 
-    protected Piece(Color color, PieceName name) {
+    protected Piece(Color color, PieceType type) {
         this.color = color;
-        this.name = name;
+        this.type = type;
     }
 
-    public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
+    public abstract boolean canMove(Position fromPostion, Position toPosition);
 
-    public abstract double getPoint();
-
-    public String getName() {
-        String symbol = name.getSymbol();
-        if (color == Color.WHITE) {
-            return symbol.toLowerCase(Locale.ROOT);
-        }
-        return symbol;
-    }
-
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
+    protected abstract List<Direction> getMovableDirections();
 
     public boolean isEmpty() {
-        return color == Color.EMPTY;
+        return color.isEmpty();
     }
 
     public boolean isSameColor(Color color) {
@@ -44,11 +31,30 @@ public abstract class Piece {
         return color == otherPiece.color;
     }
 
-    public boolean isSamePieceName(PieceName pieceName) {
-        return this.name == pieceName;
+    public boolean isSamePieceType(PieceType pieceType) {
+        return this.type == pieceType;
+    }
+
+    public String getSymbol() {
+        String symbol = type.getSymbol();
+        if (color.isWhite()) {
+            return symbol.toLowerCase(Locale.ROOT);
+        }
+        return symbol;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    public String convertToString() {
+        if (isEmpty()) {
+            return "empty";
+        }
+        return String.format("%s_%s", color.name().toLowerCase(), type.name().toLowerCase());
+    }
+
+    public double getPoint() {
+        return type.getPoint();
     }
 }
