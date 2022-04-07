@@ -8,7 +8,6 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessmenInitializer;
-import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
 import chess.web.util.JsonTransformer;
 import java.util.Map;
@@ -31,20 +30,12 @@ public class WebApplication {
         get("/", (req, res) -> {
             Map<String, Object> model = game.get().toBoard().getBoardMap();
 
+
             return render(model, "index.html");
         });
 
+
         post("/move", (req, res) -> {
-            String[] request = req.body().split("=");
-            CommandDto commandDto = new CommandDto(request[1]);
-
-            game.get().moveChessmen(new MovePositionCommandDto(commandDto.getFullCommand()));
-
-            res.redirect("/");
-            return null;
-        });
-
-        post("/ui/move", (req, res) -> {
             JSONObject jObject = new JSONObject(req.body());
 
             String from = jObject.getString("from");
@@ -57,7 +48,7 @@ public class WebApplication {
             return null;
         });
 
-        get("/ui/start", (req, res) -> {
+        get("/start", (req, res) -> {
             game.get().clean();
 
             game.set(ChessGame.of(chessmenInitializer.init()));
@@ -67,8 +58,7 @@ public class WebApplication {
             return null;
         });
 
-        get("/ui/end", (req, res) -> {
-
+        get("/end", (req, res) -> {
             game.get().forceEnd();
 
             res.redirect("/");
@@ -76,7 +66,7 @@ public class WebApplication {
             return null;
         });
 
-        get("ui/status", (req, res) -> {
+        get("/status", (req, res) -> {
             res.type("application/json");
             JsonTransformer jsonTransformer = new JsonTransformer();
 

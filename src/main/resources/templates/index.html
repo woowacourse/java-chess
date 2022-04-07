@@ -353,13 +353,13 @@
   <div class="chess-status">
 
     <div class="start">
-      <form action="/ui/start" method="get">
+      <form action="/start" method="get">
         <button type="submit" formmethod="GET">start</button>
       </form>
     </div>
 
     <div class="end">
-      <form action="/ui/end" method="get">
+      <form action="/end" method="get">
         <button type="submit" formmethod="GET">end</button>
       </form>
     </div>
@@ -383,10 +383,8 @@
   const buttonElement = document.getElementById('btn');
 
   buttonElement.addEventListener('click', function (event) {
-    fetch("ui/status")
+    fetch("/status")
     .then((res) => res.json())
-    // .then((json) => json.result)
-    // .then((json) => JSON.stringify(json.result))
     .then((json) => {
           let winnerName = document.getElementsByClassName("winner-name")[0];
           let whiteScore = document.getElementsByClassName("white-score")[0];
@@ -395,9 +393,6 @@
           winnerName.innerText = json.result.winner;
           whiteScore.innerText = json.result.whiteScore;
         blackScore.innerText = json.result.blackScore;
-        statusDiv.textContent = JSON.stringify(json.result);
-
-          // statusDiv.append(html);
         }
     )
   })
@@ -413,7 +408,7 @@
 
     toInput = findTagId(event);
 
-    fetch("/ui/move", {
+    fetch("/move", {
       method: "POST",
       redirect: 'follow',
       headers: {
