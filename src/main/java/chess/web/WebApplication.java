@@ -2,6 +2,7 @@ package chess.web;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
@@ -24,6 +25,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
+        port(8080);
         ChessController controller = new ChessController(new ChessService(new BoardDao(), new GameDao()));
 
         get("/", (req, res) -> {
