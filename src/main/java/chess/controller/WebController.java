@@ -39,7 +39,7 @@ public class WebController {
             try {
                 ChessGameDao chessGameDao = new ChessGameDao();
                 chessGameDao.getConnection();
-                chessGameDao.find(gameID, chessGame);
+                chessGameDao.loadAndStartGame(gameID, chessGame);
 
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 model.putAll(boardDto.getBoard());
