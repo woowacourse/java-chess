@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
+
 public abstract class Piece {
 
     protected Position position;
@@ -49,5 +51,21 @@ public abstract class Piece {
 
     public void updatePosition(Position position) {
         this.position = position;
+    }
+
+    public Team getTeam() {
+        if (isBlank()) {
+            return Team.BLANK;
+        }
+        if (isBlack()) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
+    abstract public PieceType getType();
+
+    public boolean isFirstTurn() {
+        return false;
     }
 }

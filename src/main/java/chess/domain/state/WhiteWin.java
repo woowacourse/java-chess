@@ -12,4 +12,9 @@ public final class WhiteWin extends End {
     public Winner findWinner() {
         return Winner.WHITE;
     }
+
+    @Override
+    public StateType getType() {
+        return StateType.WHITE_WIN;
+    }
 }

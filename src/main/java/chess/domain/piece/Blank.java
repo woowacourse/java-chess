@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
+
 public class Blank extends Piece {
 
     private static final String SIGNATURE = "·";
@@ -21,5 +23,10 @@ public class Blank extends Piece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.BLANK;
     }
 }

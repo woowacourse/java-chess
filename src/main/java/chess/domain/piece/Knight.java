@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,16 @@ public class Knight extends Piece {
 
     public static Knight createBlack(Position position) {
         return new Knight(position, BLACK_SIGNATURE);
+    }
+
+    public static Knight create(Team team, Position position) {
+        if (team == Team.BLANK || team == null) {
+            throw new IllegalArgumentException("기물은 팀이 있어야 합니다.");
+        }
+        if (team == Team.BLACK) {
+            return createBlack(position);
+        }
+        return createWhite(position);
     }
 
     @Override
@@ -48,5 +59,10 @@ public class Knight extends Piece {
     @Override
     public boolean isKnight() {
         return true;
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KNIGHT;
     }
 }

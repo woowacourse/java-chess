@@ -68,7 +68,7 @@ public class Board {
 
     private void updateBoard(Piece selectedPiece, Piece targetPiece) {
         updatePiece(targetPiece.getPosition(), selectedPiece);
-        updatePiece(selectedPiece.getPosition(), new Blank(targetPiece.getPosition()));
+        updatePiece(selectedPiece.getPosition(), new Blank(selectedPiece.getPosition()));
         selectedPiece.updatePosition(targetPiece.getPosition());
     }
 

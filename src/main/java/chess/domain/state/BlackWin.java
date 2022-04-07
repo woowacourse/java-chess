@@ -12,4 +12,14 @@ public final class BlackWin extends End {
     public Winner findWinner() {
         return Winner.BLACK;
     }
+
+    @Override
+    public boolean isBlackWin() {
+        return true;
+    }
+
+    @Override
+    public StateType getType() {
+        return StateType.BLACK_WIN;
+    }
 }

@@ -1,7 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 
 public abstract class GameStarted implements GameState {
 
@@ -22,12 +21,17 @@ public abstract class GameStarted implements GameState {
     }
 
     @Override
-    public Rank getRank(int rankLine) {
-        return board.getRank(rankLine);
+    public Board getBoard() {
+        return board;
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public boolean isBlackWin() {
+        return false;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return false;
     }
 }

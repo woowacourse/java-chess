@@ -12,4 +12,9 @@ public final class WhiteTurn extends Playing {
     public boolean isBlackTurn() {
         return false;
     }
+
+    @Override
+    public StateType getType() {
+        return StateType.WHITE_TURN;
+    }
 }
