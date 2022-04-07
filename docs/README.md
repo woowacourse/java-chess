@@ -1,5 +1,43 @@
 # 체스 - 웹, DB
 
+
+## 체스 웹 실행 방법
+``` shell
+# 도커 실행
+docker exec -it chess_db_1 bash
+```
+
+``` mysql
+# mysql 접속
+mysql -u root -proot
+
+# 체스 테이터베이스 사용
+use chess
+
+# 테이블 생성
+CREATE table board
+(
+    id   int         not null auto_increment primary key,
+    turn varchar(10) not null
+);
+
+CREATE table piece
+(
+    id       int         not null auto_increment primary key,
+    position varchar(2)  not null,
+    board_id int         not null,
+    name     varchar(10) not null,
+    color    varchar(10) not null,
+    foreign key (board_id) references board (id)
+);
+
+```
+
+``` java
+WebApplication.class     main 메서드 실행
+localhost/8081 접속
+```
+
 ## 1단계 - 체스판 초기화
 
 ### 입력
