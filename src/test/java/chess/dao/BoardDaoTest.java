@@ -17,19 +17,12 @@ class BoardDaoTest {
 
     @BeforeEach
     void beforeEach() {
-        connection = new BoardDaoImpl().getConnection();
+        connection = JdbcTemplateUtil.getConnection();
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    void connection() {
-        BoardDaoImpl boardDao = new BoardDaoImpl();
-        Connection connection = boardDao.getConnection();
-        assertThat(connection).isNotNull();
     }
 
     @Test

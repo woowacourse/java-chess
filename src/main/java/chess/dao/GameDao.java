@@ -7,7 +7,5 @@ public interface GameDao {
 
     TurnDto getTurn();
 
-    Connection getConnection();
-
     void changeTurn();
 }

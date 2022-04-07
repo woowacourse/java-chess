@@ -12,15 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardDaoImpl implements BoardDao{
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
 
     public BoardDto loadBoard() {
         final String sql = "SELECT board.position, board.piece, board.color "
                 + "FROM board INNER JOIN game ON board.game_id = game.id WHERE game_id = '1'";
         Map<String, List<String>> board = new HashMap<>();
-        try (   Connection connection = getConnection();
+        try (   Connection connection = JdbcTemplateUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -43,7 +40,7 @@ public class BoardDaoImpl implements BoardDao{
 
         String deleteSql = "DELETE FROM board WHERE position = ? AND game_id = ?";
 
-        try (   Connection connection = getConnection();
+        try (   Connection connection = JdbcTemplateUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(selectSql)) {
             statement.setString(1, commandDto.getFrom());
             ResultSet resultSet = statement.executeQuery();
@@ -80,15 +77,5 @@ public class BoardDaoImpl implements BoardDao{
         moveStatement.setString(3, piece);
         moveStatement.setString(4, color);
         moveStatement.executeUpdate();
-    }
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 }
