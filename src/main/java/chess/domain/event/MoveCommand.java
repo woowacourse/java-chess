@@ -1,6 +1,7 @@
 package chess.domain.event;
 
 import chess.domain.board.position.Position;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,5 +53,28 @@ public class MoveCommand {
         String targetKey = target.toKey();
 
         return sourceKey + DESCRIPTION_DELIMITER + targetKey;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MoveCommand that = (MoveCommand) o;
+        return Objects.equals(source, that.source)
+                && Objects.equals(target, that.target);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, target);
+    }
+
+    @Override
+    public String toString() {
+        return "MoveCommand{" + "source=" + source + ", target=" + target + '}';
     }
 }

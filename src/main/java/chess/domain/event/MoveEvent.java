@@ -4,10 +4,14 @@ import java.util.Objects;
 
 public final class MoveEvent extends Event {
 
-    private final String description;
+    private final MoveCommand moveCommand;
+
+    public MoveEvent(MoveCommand moveCommand) {
+        this.moveCommand = moveCommand;
+    }
 
     public MoveEvent(String description) {
-        this.description = description;
+        this.moveCommand = MoveCommand.ofEventDescription(description);
     }
 
     public boolean isInit() {
@@ -19,7 +23,7 @@ public final class MoveEvent extends Event {
     }
 
     public MoveCommand toMoveCommand() {
-        return MoveCommand.ofEventDescription(description);
+        return moveCommand;
     }
 
     @Override
@@ -31,16 +35,16 @@ public final class MoveEvent extends Event {
             return false;
         }
         MoveEvent moveEvent = (MoveEvent) o;
-        return Objects.equals(description, moveEvent.description);
+        return Objects.equals(moveCommand, moveEvent.moveCommand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description);
+        return Objects.hash(moveCommand);
     }
 
     @Override
     public String toString() {
-        return "MoveEvent{" + "description='" + description + '\'' + '}';
+        return "MoveEvent{" + "description='" + moveCommand + '\'' + '}';
     }
 }

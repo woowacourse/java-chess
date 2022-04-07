@@ -5,7 +5,7 @@ public abstract class Event {
     public static Event of(String type, String description) {
         EventType eventType = EventType.valueOf(type);
         if (eventType == EventType.MOVE) {
-            return ofMove(description);
+            return new MoveEvent(description);
         }
         return new InitEvent();
     }
