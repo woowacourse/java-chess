@@ -3,6 +3,7 @@ package chess.dto;
 import chess.dto.board.RowDto;
 import chess.dto.board.WebBoardViewDto;
 import java.util.List;
+import java.util.Objects;
 
 public class GameDto {
 
@@ -20,5 +21,28 @@ public class GameDto {
 
     public List<RowDto> getBoard() {
         return board.toDisplay();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GameDto gameDto = (GameDto) o;
+        return Objects.equals(game, gameDto.game)
+                && Objects.equals(board, gameDto.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(game, board);
+    }
+
+    @Override
+    public String toString() {
+        return "GameDto{" + "game=" + game + ", board=" + board + '}';
     }
 }

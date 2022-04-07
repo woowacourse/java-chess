@@ -8,6 +8,7 @@ import chess.domain.board.position.Rank;
 import chess.util.PieceDisplayUtil;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RowDto {
@@ -32,6 +33,28 @@ public class RowDto {
 
     public List<SquareDto> getSquares() {
         return squares;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RowDto rowDto = (RowDto) o;
+        return Objects.equals(squares, rowDto.squares);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(squares);
+    }
+
+    @Override
+    public String toString() {
+        return "RowDto{" + "squares=" + squares + '}';
     }
 
     private static class SquareDto {
@@ -70,6 +93,29 @@ public class RowDto {
 
         public String getColor() {
             return textColor;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            SquareDto squareDto = (SquareDto) o;
+            return Objects.equals(pieceDisplay, squareDto.pieceDisplay)
+                    && Objects.equals(textColor, squareDto.textColor);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(pieceDisplay, textColor);
+        }
+
+        @Override
+        public String toString() {
+            return "SquareDto{" + "pieceDisplay='" + pieceDisplay + '\'' + ", textColor='" + textColor + '\'' + '}';
         }
     }
 }
