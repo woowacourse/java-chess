@@ -57,11 +57,14 @@ public class WebController {
     }
 
     private void checkGameState(final Request req, final Response res) {
+        // 시작안누르고 /start로 바로 가는 경우 -> index.html 시작화면으로
         if (chessService.isNotExistGame()) {
             res.redirect("/");
         }
+        // 게임이 종료된 상태에서 종료 누르기 -> index.html로 보내기
         if (chessService.isEndInGameOff()) {
-            render(executeAndGetModel(req, res), "index.html");
+            res.redirect("/");
+//            render(executeAndGetModel(req, res), "index.html");
         }
     }
 

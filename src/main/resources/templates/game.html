@@ -5,8 +5,19 @@
     <link rel="stylesheet" href="/css/main.css">
     <script defer src="/js/main.js"></script>
     <!--    <script src="../static/js/chess.js"></script>-->
-    <title>체스</title>
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <style type="text/css">
+        * {
+            font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+        }
+
+        .message {
+            /*font-size: 2rem;*/
+            font-weight: bold;
+            color: #ff3333;
+            /*margin-bottom: 0.8rem;*/
+        }
 
         .chessboard {
             width: 640px;
@@ -48,6 +59,10 @@
         }
 
     </style>
+
+
+    <title>체스</title>
+
 </head>
 
 <body>
@@ -55,28 +70,21 @@
 </script>
 <br>
 <h1>Game .html</h1>
-<form action="/start" method="post">
-    <input name="command" value="start" type="hidden">
-    <input id="start-form" name="start" type="submit" value="시작하기">
-</form>
 
-<br>
-<!--move-->
-<form action="/move" method="post">
-    move a2 a3 형식으로 입력해주세요.
-    <input name="command" value="move a2 a4" type="text">
-    <input type="submit" value="말이동시키기"/>
-</form>
-<!--end-->
+{{#isRunning }}
 <form action="/end" method="post">
     <input name="command" value="end" type="hidden">
     <input name="end" type="submit" value="종료">
 </form>
+{{else}}
+<form action="/start" method="post">
+    <input name="command" value="start" type="hidden">
+    <input id="start-form" name="start" type="submit" value="시작하기">
+</form>
+{{/isRunning}}
 
-<p>게임 진행 상황: {{message}}</p>
-{{#if errorMessage }}
-{{errorMessage}}
-{{/if}}
+
+<p>포돌이 알리미: {{#if hasError }} <strong class="message">{{errorMessage}}</strong>> {{else}} {{message}} {{/if}}</p>
 
 
 <!--정보 출력-->
@@ -85,12 +93,8 @@
 <p>점수</p>
 <p>White 팀 : {{white}}점</p>
 <p>Black 팀 : {{black}}점</p>
-<p>턴 : {{camp}}</p>
-{{#if error }}
-<p>에러: {{error}}</p>
-{{/if}}
-<p>현재까지 결과: {{gameResultMessage}}</p>
-<br>
+
+<p>턴 : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}}</strong> {{/isRunning}} </p>
 {{/status}}
 <!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
 

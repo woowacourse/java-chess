@@ -47,10 +47,12 @@ public class ChessService {
         return () -> {
             if (chessGame.isRunning()) {
 //                OutputView.printBoard(getBoardDto());
-                System.err.println("게임이 진행중입니다. 현재 데이터를 받아와요");
                 model.put("message", "게임이 진행중 입니다.");
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
+
+                //시작 <-> 종료 표기를 위한 게임 진행상태도 같이 전달
+                model.put("isRunning", true);
 
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
@@ -64,9 +66,14 @@ public class ChessService {
             if (isEndInRunning()) {
 //                OutputView.printFinalStatus(calculateStatus());
                 model.put("message", "현재 게임이 종료되었습니다.");
-                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
                 model.put("status", chessGame.calculateStatus());
+                model.put("isRunning", false);
+
+//                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+                chessGame.ready();
+                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+
                 return model;
             }
 //            if (isEndInGameOff()) {
