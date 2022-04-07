@@ -19,10 +19,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
     private static final int PORT_NUMBER = 8080;
+    private static final int BAD_REQUEST = 400;
     private static final String VIEW = "index.html";
-    private static final String CHESS_BOARD_KEY = "chessboard";
     private static final String SOURCE_POSITION_PARAMETER_KEY = "from";
     private static final String TARGET_POSITION_PARAMETER_KEY = "to";
+    private static final String CHESS_BOARD_KEY = "chessboard";
     private static final String FINISH_MESSAGE_KEY = "finishMessage";
     private static final String STATUS_KEY = "status";
 
@@ -67,23 +68,35 @@ public class WebChessController {
             return new ModelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
 
+        get("/status", (req, res) -> {
+            gameState = gameState.status();
+            Map<String, Object> model = new HashMap<>();
+            model.put(CHESS_BOARD_KEY, getChessBoard());
+            model.put(STATUS_KEY, getStatus());
+            return new ModelAndView(model, VIEW);
+        }, new HandlebarsTemplateEngine());
+
         exception(Exception.class, (exception, request, response) -> {
-            response.status(400);
+            response.status(BAD_REQUEST);
             response.body(exception.getMessage());
         });
-    }
-
-    private Map<String, Object> getFinishStatus() {
-        Map<String, Object> finishStatus = new HashMap<>();
-        ChessBoard chessBoard = gameState.getChessBoard();
-        Team winner = gameState.findWinner();
-        finishStatus.put(STATUS_KEY, ChessStatusDto.of(chessBoard, winner));
-        finishStatus.put(FINISH_MESSAGE_KEY, true);
-        return finishStatus;
     }
 
     private ChessBoardDto getChessBoard() {
         ChessBoard chessBoard = gameState.getChessBoard();
         return ChessBoardDto.of(chessBoard);
+    }
+
+    private Map<String, Object> getFinishStatus() {
+        Map<String, Object> finishStatus = new HashMap<>();
+        finishStatus.put(STATUS_KEY, getStatus());
+        finishStatus.put(FINISH_MESSAGE_KEY, true);
+        return finishStatus;
+    }
+
+    private ChessStatusDto getStatus() {
+        ChessBoard chessBoard = gameState.getChessBoard();
+        Team winner = gameState.findWinner();
+        return ChessStatusDto.of(chessBoard, winner);
     }
 }

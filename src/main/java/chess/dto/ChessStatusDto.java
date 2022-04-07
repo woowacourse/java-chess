@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessStatusDto {
+    private static final String BLACK_TEAM_NAME = "BLACK";
+    private static final String WHITE_TEAM_NAME = "WHITE";
+
     private final Map<String, Double> teamScore;
     private final String winner;
 
@@ -19,9 +22,9 @@ public class ChessStatusDto {
     public static ChessStatusDto of(ChessBoard chessBoard, Team winner) {
         Map<String, Double> teamScore = new HashMap<>();
         double blackScore = chessBoard.calculateScore(BLACK);
-        teamScore.put("흑팀", blackScore);
+        teamScore.put(BLACK_TEAM_NAME, blackScore);
         double whiteScore = chessBoard.calculateScore(WHITE);
-        teamScore.put("백팀", whiteScore);
+        teamScore.put(WHITE_TEAM_NAME, whiteScore);
         return new ChessStatusDto(teamScore, winner.name());
     }
 
