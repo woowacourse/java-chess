@@ -1,6 +1,8 @@
 package chess.domain.dao;
 
 import chess.domain.dto.PieceDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,10 +10,11 @@ import java.util.List;
 
 public class BoardDao {
 
-    private static final int EMPTY = 0;
+    private static final int EMPTY_RESULT = 0;
     private final Connection connection;
-    private int id = 0;
+    private int boardId = 0;
     private Connector connector = new Connector();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public BoardDao() {
         connection = connector.makeConnection();
@@ -28,13 +31,13 @@ public class BoardDao {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error(throwables.getMessage());
         }
     }
 
     private PreparedStatement makeSaveStatement(int gameId, String position, String piece, String color, String sql) throws SQLException {
         final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, ++id);
+        statement.setInt(1, ++boardId);
         statement.setInt(2, gameId);
         statement.setString(3, position);
         statement.setString(4, piece);
@@ -50,7 +53,7 @@ public class BoardDao {
             final ResultSet result = statement.executeQuery();
             return makePieceList(result);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error(throwables.getMessage());
         }
         return null;
     }
@@ -85,6 +88,6 @@ public class BoardDao {
     }
 
     private boolean isSavedGameExist(int gameId) {
-        return gameId == EMPTY;
+        return gameId == EMPTY_RESULT;
     }
 }
