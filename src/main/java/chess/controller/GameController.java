@@ -58,21 +58,21 @@ public class GameController {
 
     public ModelAndView result(final Request request, final Response response) {
         final Map<Color, Double> result = chessService.getResult();
-        final Color winningColor = chessService.getWinnerColor();
+        final Color winnerColor = chessService.getWinnerColor();
         Map<String, Object> model = new HashMap<>();
 
-        model.put("result", new ResultDto(result, winningColor));
+        model.put("result", new ResultDto(result, winnerColor));
 
         return new ModelAndView(model, "result.html");
-    }
-
-    public boolean isRunning() {
-        return chessService.isRunning();
     }
 
     public ModelAndView restart(final Request request, final Response response) {
         chessService.restartGame();
         response.redirect("/chess");
         return null;
+    }
+
+    public boolean isRunning() {
+        return chessService.isRunning();
     }
 }
