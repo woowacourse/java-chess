@@ -4,18 +4,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.state.Turn;
 import chess.testutil.H2Connection;
-import org.junit.jupiter.api.BeforeEach;
+import java.sql.Connection;
+import java.sql.SQLException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TurnDaoImplTest {
 
-    private TurnDao turnDao;
+    private static TurnDao turnDao;
+    private static Connection connection;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void beforeAll() throws SQLException {
         H2Connection.setUpTable();
-        turnDao = new TurnDaoImpl(H2Connection.getConnection());
+        connection = H2Connection.getConnection();
+        connection.setAutoCommit(false);
+        turnDao = new TurnDaoImpl(connection);
+    }
+
+    @AfterEach
+    void afterEach() throws SQLException {
+        connection.rollback();
     }
 
     @Test

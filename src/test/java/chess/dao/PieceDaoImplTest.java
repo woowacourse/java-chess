@@ -10,16 +10,34 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.pawn.Pawn;
 import chess.testutil.H2Connection;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoImplTest {
 
-    private PieceDao pieceDao;
+    private static PieceDao pieceDao;
+    private static Connection connection;
     private Position position;
     private Piece pawn;
+
+    @BeforeAll
+    static void beforeAll() throws SQLException {
+        H2Connection.setUpTable();
+        connection = H2Connection.getConnection();
+        connection.setAutoCommit(false);
+        pieceDao = new PieceDaoImpl(connection);
+    }
+
+    @AfterEach
+    void afterEach() throws SQLException {
+        connection.rollback();
+    }
 
     @BeforeEach
     void setUp() {
