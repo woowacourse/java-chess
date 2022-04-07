@@ -26,7 +26,7 @@ public class ChessService {
     private final BoardDao boardDao;
     private final GameDao gameDao;
 
-    public ChessService(BoardDao boardDao, GameDaoImpl gameDao) {
+    public ChessService(BoardDao boardDao, GameDao gameDao) {
         this.gameDao = gameDao;
         this.boardDao = boardDao;
         this.chessGame = new ChessGame();
