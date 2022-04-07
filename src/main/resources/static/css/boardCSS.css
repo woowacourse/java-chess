@@ -4,6 +4,7 @@
     display: grid;
     border: 3px solid brown;
     grid-template-rows: repeat(8, 80px);
+    margin: auto;
 }
 
 .rank {
@@ -35,4 +36,23 @@ img {
     display: block;
     text-align: center;
     font-size: 10px;
+}
+
+#command {
+    margin: auto;
+    text-align: center;
+}
+
+input {
+    border-radius: 5px;;
+}
+
+.locationInput {
+    background-color: lightsteelblue;
+}
+
+.location {
+    display: inline;
+    background-color: honeydew;
+    border: black 3px;
 }
