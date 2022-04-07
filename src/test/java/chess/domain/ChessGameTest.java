@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
 
-    static int id = 1;
-    static String gameId = "0";
+    static int id = 10000;
+    static String gameId = "9999";
 
     ChessmenInitializer chessmenInitializer;
     ChessGame chessGame;

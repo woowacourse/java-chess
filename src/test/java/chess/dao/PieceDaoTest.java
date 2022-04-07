@@ -9,15 +9,24 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PieceDaoTest {
 
+    final PieceDao pieceDao = new PieceDao();
+    final GameDao gameDao = new GameDao();
+
+    static int id = 1000;
+    String gameId = "999";
+
+    @BeforeEach
+    void setup_chessGame() {
+        gameId = String.valueOf(++id);
+    }
+
     @Test
     void save() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
 
         assertThatCode(() ->
@@ -27,13 +36,9 @@ public class PieceDaoTest {
 
     @Test
     void saveAll() {
-        final PieceDao pieceDao = new PieceDao();
-
         final ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         final List<Piece> pieces = chessmenInitializer.init().getPieces();
 
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
 
         assertThatCode(() ->
@@ -43,9 +48,6 @@ public class PieceDaoTest {
 
     @Test
     void deleteByPosition() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
 
         pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
@@ -57,9 +59,6 @@ public class PieceDaoTest {
 
     @Test
     void deleteByPosition_if_not_exist() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
 
         assertThatCode(() ->
@@ -69,12 +68,7 @@ public class PieceDaoTest {
 
     @Test
     void deleteAll() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
-
-
         pieceDao.deleteAll(gameId);
 
         final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
@@ -84,11 +78,7 @@ public class PieceDaoTest {
 
     @Test
     void updateByPosition() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
-
         pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
         pieceDao.updateByPosition("a7", "a6", gameId);
@@ -98,11 +88,7 @@ public class PieceDaoTest {
 
     @Test
     void findAll() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
-
         pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
         final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
@@ -112,11 +98,7 @@ public class PieceDaoTest {
 
     @Test
     void findByPosition() {
-        final PieceDao pieceDao = new PieceDao();
-        final GameDao gameDao = new GameDao();
-        final String gameId = "123";
         gameDao.create(gameId);
-
         pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
         final Piece piece = pieceDao.findByPosition("a7", gameId);
