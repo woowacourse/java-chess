@@ -3,6 +3,7 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.domain.ChessBoard;
+import chess.domain.state.BlackTurn;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
@@ -40,5 +41,30 @@ class ChessDaoTest {
         ChessDao chessDao = new ChessDao();
 
         assertThatNoException().isThrownBy(chessDao::deleteGameState);
+    }
+
+    @Test
+    @DisplayName("DB에 저장된 체스 피스를 제거한다.")
+    void deleteChessPieceByPosition() {
+        ChessDao chessDao = new ChessDao();
+
+        assertThatNoException().isThrownBy(() -> chessDao.deleteChessPieceByPosition(2, 'b'));
+    }
+
+    @Test
+    @DisplayName("DB에 저장된 체스 피스의 위치를 업데이트한다.")
+    void updateChessBoard() {
+        ChessDao chessDao = new ChessDao();
+
+        assertThatNoException().isThrownBy(() -> chessDao.updateChessBoard(2, 'a', 4, 'a'));
+    }
+
+    @Test
+    @DisplayName("DB에 저장된 체스 게임의 상태를 업데이트한다.")
+    void updateGameState() {
+        GameState gameState = new BlackTurn(ChessBoard.create());
+        ChessDao chessDao = new ChessDao();
+
+        assertThatNoException().isThrownBy(() -> chessDao.updateGameState(gameState));
     }
 }

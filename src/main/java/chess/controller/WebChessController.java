@@ -68,12 +68,15 @@ public class WebChessController {
             ChessBoardPosition sourcePosition = ChessBoardPosition.from(req.queryParams(SOURCE_POSITION_PARAMETER_KEY));
             ChessBoardPosition targetPosition = ChessBoardPosition.from(req.queryParams(TARGET_POSITION_PARAMETER_KEY));
             gameState = gameState.move(sourcePosition, targetPosition);
+            chessService.updateChessBoard(sourcePosition, targetPosition);
+
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
             if (gameState.isFinished()) {
                 model.putAll(getFinishStatus());
                 gameState = new Ready();
             }
+            chessService.updateChessGame(gameState);
             return new ModelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
 

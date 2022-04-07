@@ -121,4 +121,46 @@ public class ChessDao {
             e.printStackTrace();
         }
     }
+
+    public void updateChessBoard(int sourcePositionRow, char sourcePositionColumn,
+                                 int targetPositionRow, char targetPositionColumn) {
+        final Connection connection = getConnection();
+        final String sql = "update chessboard set board_row = ?, board_column = ? "
+                + "where board_row=? and board_column = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, targetPositionRow);
+            statement.setString(2, String.valueOf(targetPositionColumn));
+            statement.setInt(3, sourcePositionRow);
+            statement.setString(4, String.valueOf(sourcePositionColumn));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteChessPieceByPosition(int row, char column) {
+        final Connection connection = getConnection();
+        final String sql = "delete from chessboard where board_row= ? and board_column = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, row);
+            statement.setString(2, String.valueOf(column));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateGameState(GameState gameState) {
+        final Connection connection = getConnection();
+        final String sql = "update chessgame set state = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, gameState.getClass().getSimpleName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
