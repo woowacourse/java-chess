@@ -12,6 +12,10 @@ public class Event {
         this.description = description;
     }
 
+    public Event(String type, String description) {
+        this(EventType.valueOf(type), description);
+    }
+
     public MoveCommand toMoveCommand() {
         if (type != EventType.MOVE) {
             throw new UnsupportedOperationException("이동 이벤트가 아닙니다.");
