@@ -96,7 +96,8 @@ public class Board {
             removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
         }
         pieces.set(pieces.indexOf(sourcePiece), movedPiece);
-        return new Board(pieces, currentTurnTeamColor.nextTurn());
+        currentTurnTeamColor = currentTurnTeamColor.nextTurn();
+        return new Board(pieces, currentTurnTeamColor);
     }
 
     public Piece findPieceInPosition(final Position position) {
