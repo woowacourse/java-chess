@@ -4,7 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.db.BoardDAO;
-import chess.db.StatusDAO;
+import chess.db.StateDAO;
 import chess.domain.command.Command;
 import chess.domain.command.CommandConverter;
 import chess.domain.piece.Color;
@@ -24,17 +24,17 @@ public class WebChessController {
 
     private final BoardDTO boardDTO = BoardDTO.buildModel();
     private BoardDAO boardDAO;
-    private StatusDAO statusDAO;
+    private StateDAO stateDAO;
 
-    private State getState(StatusDAO statusDAO, BoardDAO boardDAO) {
-        Color color = statusDAO.findColor();
+    private State getState(StateDAO stateDAO, BoardDAO boardDAO) {
+        Color color = stateDAO.findColor();
         Map<Position, Piece> pieces = boardDAO.findAllPieces();
         return State.create(pieces, color);
     }
 
     public void inputGameID() {
         get("/", (req, res) ->
-                        new ModelAndView(Map.of("users", new StatusDAO().findAllUsers()), "index.html"),
+                        new ModelAndView(Map.of("users", new StateDAO().findAllUsers()), "index.html"),
                 new HandlebarsTemplateEngine());
     }
 
@@ -50,10 +50,10 @@ public class WebChessController {
     }
 
     private ModelAndView searchSavedGame(String roomId) {
-        statusDAO = new StatusDAO(roomId);
+        stateDAO = new StateDAO(roomId);
         boardDAO = new BoardDAO(roomId);
-        if (statusDAO.isSaved()) {
-            State now = getState(statusDAO, boardDAO);
+        if (stateDAO.isSaved()) {
+            State now = getState(stateDAO, boardDAO);
             boardDTO.update(now.getBoard());
             return loadFromSave(now);
         }
@@ -82,8 +82,8 @@ public class WebChessController {
         State next = now.proceed(CommandConverter.convertCommand(RequestParser.from(req.body()).getCommand()));
         boardDTO.update(next.getBoard());
         if (next.isRunning()) {
-            statusDAO.initializeID();
-            statusDAO.initializeColor();
+            stateDAO.initializeID();
+            stateDAO.initializeColor();
             boardDAO.initializePieces(next);
             return new ModelAndView(boardDTO.getData(), "white.html");
         }
@@ -92,7 +92,7 @@ public class WebChessController {
 
     public void runTurn() {
         post("/move", (req, res) -> {
-            State now = getState(statusDAO, boardDAO);
+            State now = getState(stateDAO, boardDAO);
             try {
                 Command command = CommandConverter.convertCommand(RequestParser.from(req.body()).getCommand());
                 return executeOneTurn(res, command);
@@ -103,7 +103,7 @@ public class WebChessController {
     }
 
     private ModelAndView executeOneTurn(Response res, Command command) {
-        State now = getState(statusDAO, boardDAO);
+        State now = getState(stateDAO, boardDAO);
         State next = now.proceed(command);
         if (next.isFinished()) {
             boardDTO.update(next.getBoard());
@@ -124,10 +124,10 @@ public class WebChessController {
         boardDTO.update(next.getBoard());
         movePieceIntoDB(next, command);
         if (!next.isWhite()) {
-            statusDAO.convertColor(Color.BLACK);
+            stateDAO.convertColor(Color.BLACK);
             return new ModelAndView(boardDTO.getData(), "black.html");
         }
-        statusDAO.convertColor(Color.WHITE);
+        stateDAO.convertColor(Color.WHITE);
         return new ModelAndView(boardDTO.getData(), "white.html");
     }
 
@@ -149,7 +149,7 @@ public class WebChessController {
 
     public void backwardToMove() {
         post("/backwardToMove", (req, res) -> {
-            State now = getState(statusDAO, boardDAO);
+            State now = getState(stateDAO, boardDAO);
             if (now.isWhite()) {
                 return new ModelAndView(boardDTO.getData(), "white.html");
             }
@@ -159,7 +159,7 @@ public class WebChessController {
 
     public void backwardToReady() {
         post("/backwardToReady", (req, res) ->
-                new ModelAndView(boardDTO.getData(), "new_game.html"),
+                        new ModelAndView(boardDTO.getData(), "new_game.html"),
                 new HandlebarsTemplateEngine());
     }
 
@@ -182,7 +182,7 @@ public class WebChessController {
     }
 
     private ModelAndView killGame(Response res) {
-        statusDAO.terminateDB();
+        stateDAO.terminateDB();
         res.redirect("/finished");
         return null;
     }

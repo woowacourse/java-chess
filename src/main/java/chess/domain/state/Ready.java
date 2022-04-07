@@ -31,9 +31,4 @@ public class Ready extends State {
         }
         return new Finished(board.getPieces());
     }
-
-    @Override
-    public boolean isReady() {
-        return true;
-    }
 }

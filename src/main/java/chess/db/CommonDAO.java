@@ -15,24 +15,23 @@ public class CommonDAO {
         this.roomId = roomId;
     }
 
-    protected CommonDAO() {}
+    protected CommonDAO() {
+    }
 
     protected Connection getConnection() {
         loadDriver();
         try {
             return DriverManager.getConnection(URL, "user", "password");
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return null;
     }
 
     private void loadDriver() {
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }

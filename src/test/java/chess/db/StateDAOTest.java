@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-public class StatusDAOTest {
+public class StateDAOTest {
 
     private static final FakeStatusDAO fakeStatusDAO = new FakeStatusDAO();
 

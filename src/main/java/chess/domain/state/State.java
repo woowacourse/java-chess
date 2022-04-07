@@ -43,10 +43,6 @@ public abstract class State {
         return false;
     }
 
-    public boolean isReady() {
-        return false;
-    }
-
     public boolean isWhite() {
         throw new IllegalStateException(CANNOT_GET_COLOR);
     }

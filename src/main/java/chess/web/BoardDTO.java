@@ -11,7 +11,8 @@ public class BoardDTO {
 
     private Map<String, Element> data;
 
-    private BoardDTO() {}
+    private BoardDTO() {
+    }
 
     public static BoardDTO buildModel() {
         return new BoardDTO();

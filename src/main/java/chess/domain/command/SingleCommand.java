@@ -9,6 +9,8 @@ public enum SingleCommand implements Command {
     END,
     STATUS;
 
+    private static final String CANNOT_HAVE_POSITION = "현재 토큰에서는 위치 정보를 불러올 수 없습니다.";
+
     @Override
     public boolean isStart() {
         return this == START;
@@ -26,11 +28,11 @@ public enum SingleCommand implements Command {
 
     @Override
     public Position getFromPosition() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANNOT_HAVE_POSITION);
     }
 
     @Override
     public Position getToPosition() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANNOT_HAVE_POSITION);
     }
 }

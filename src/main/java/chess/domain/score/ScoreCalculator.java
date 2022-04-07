@@ -34,15 +34,13 @@ public class ScoreCalculator {
 
     private static double calculatePawnScore(Map<Position, Piece> pieces, int nowColumn, Color color) {
         double count = pieces.keySet().stream()
-                .filter(each -> each.isSameColumn(nowColumn) && pieces.get(each).isPawn() && pieces.get(each).isSameColor(color))
+                .filter(each -> each.isSameColumn(nowColumn) && pieces.get(each).isPawn() && pieces.get(each)
+                        .isSameColor(color))
                 .mapToDouble(each -> pieces.get(each).getScore())
                 .sum();
         if (count > 1) {
             return count * 0.5;
         }
-        if (count == 1) {
-            return count;
-        }
-        return 0.0;
+        return count;
     }
 }

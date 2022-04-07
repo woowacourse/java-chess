@@ -35,8 +35,7 @@ public class BoardDAO extends CommonDAO {
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_SQL);
             setStrings(statement, List.of(roomId));
             return getPieces(pieces, statement);
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
         }
@@ -57,8 +56,7 @@ public class BoardDAO extends CommonDAO {
             PreparedStatement statement = connection.prepareStatement(INSERT_ONE_PIECE_SQL);
             setStrings(statement, List.of(position.getPosition(), piece.getName(), piece.getColor(), roomId));
             statement.executeUpdate();
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
@@ -68,8 +66,7 @@ public class BoardDAO extends CommonDAO {
             PreparedStatement statement = connection.prepareStatement(DELETE_ONE_PIECE_SQL);
             setStrings(statement, List.of(position.getPosition(), roomId));
             statement.executeUpdate();
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
