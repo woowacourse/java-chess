@@ -30,7 +30,7 @@ public class End implements GameState {
 
     @Override
     public Team findWinner() {
-        throw new IllegalArgumentException(END_INVALID_OPERATION_EXCEPTION);
+        throw new UnsupportedOperationException(END_INVALID_OPERATION_EXCEPTION);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class End implements GameState {
 
     @Override
     public ChessBoard getChessBoard() {
-        throw new IllegalArgumentException(END_INVALID_OPERATION_EXCEPTION);
+        throw new UnsupportedOperationException(END_INVALID_OPERATION_EXCEPTION);
     }
 }
