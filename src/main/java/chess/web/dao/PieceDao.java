@@ -43,7 +43,7 @@ public class PieceDao {
             return preparedStatement;
         }, resultSet -> {
             if (resultSet.next()) {
-                return PieceFactory.generate(
+                return PieceFactory.generatePieceWith(
                         resultSet.getString("piece_type"),
                         Color.valueOf(resultSet.getString("color")));
             }
@@ -69,7 +69,7 @@ public class PieceDao {
                         new Position(
                                 Column.valueOf(resultSet.getString("position_column")),
                                 Row.valueOf(resultSet.getString("position_row"))),
-                        PieceFactory.generate(
+                        PieceFactory.generatePieceWith(
                                 resultSet.getString("piece_type"),
                                 Color.valueOf(resultSet.getString("color"))));
             }
