@@ -85,4 +85,16 @@ public class GameDao {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public void delete(int id) {
+        final String sql = "delete from game where id = (?)";
+
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 }
