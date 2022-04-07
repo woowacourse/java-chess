@@ -6,7 +6,6 @@ public class BoardMapDto {
 
     private final Map<String, Object> boardMap;
 
-
     public BoardMapDto(Map<String, Object> boardMap) {
         this.boardMap = boardMap;
     }
@@ -21,4 +20,5 @@ public class BoardMapDto {
             "boardMap=" + boardMap.toString() +
             '}';
     }
+
 }

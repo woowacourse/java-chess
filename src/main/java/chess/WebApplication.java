@@ -19,15 +19,15 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
 
-
     public static void main(String[] args) {
-        port(8082);
-
-        staticFiles.location("/static");
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         AtomicReference<ChessGame> game = new AtomicReference<>(ChessGame.of());
         AtomicReference<String> gameId = new AtomicReference<>("");
+
+        port(8082);
+
+        staticFiles.location("/static");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -102,6 +102,7 @@ public class WebApplication {
             response.status(400);
             response.body(exception.getMessage());
         });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

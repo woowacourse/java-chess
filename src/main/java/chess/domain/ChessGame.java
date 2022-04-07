@@ -21,7 +21,6 @@ public class ChessGame {
     private static final String PIECE_OCCUPIED_IN_PATH_EXCEPTION_MESSAGE = "가는 길목에 다른 말이 있어 이동할 수 없습니다.";
     private static final String GAME_END_EXCEPTION_MESSAGE = "게임이 끝난 후에는 경기를 더 진행할 수 없습니다.";
 
-
     private final PieceDao pieceDao = new PieceDao();
     private final GameDao gameDao = new GameDao();
 
