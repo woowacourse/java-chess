@@ -54,8 +54,10 @@ img {
 }
 
 button {
+  font-size: 25px;
+
   margin: 1%;
-  width: 100px;
+  width: 150px;
   height: 50px;
 
   color: sienna;

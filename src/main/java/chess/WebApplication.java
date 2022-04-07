@@ -90,6 +90,14 @@ public class WebApplication {
             return jsonTransformer.render(model);
         });
 
+        get("/game/exit", (req, res) -> {
+            game.get().clean(String.valueOf(gameId));
+
+            res.redirect("/");
+
+            return null;
+        });
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             response.body(exception.getMessage());
