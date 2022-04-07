@@ -13,6 +13,7 @@ public final class Pawn extends Piece {
     private static final String WHITE_NAME = "p";
     private static final double SCORE = 1D;
     private static final double DUPLICATED_PAWN_SCORE = 0.5D;
+    private static final String TYPE = "pawn";
 
     public Pawn(Position position, Team team) {
         super(position, team);
@@ -54,7 +55,7 @@ public final class Pawn extends Piece {
 
     @Override
     public String getType() {
-        return "pawn";
+        return TYPE;
     }
 
     @Override

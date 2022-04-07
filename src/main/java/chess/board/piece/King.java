@@ -10,6 +10,7 @@ public final class King extends Piece {
     private static final String BLACK_NAME = "K";
     private static final String WHITE_NAME = "k";
     private static final double SCORE = 0D;
+    private static final String TYPE = "king";
 
     public King(Position position, Team team) {
         super(position, team);
@@ -45,7 +46,7 @@ public final class King extends Piece {
 
     @Override
     public String getType() {
-        return "king";
+        return TYPE;
     }
 
     @Override

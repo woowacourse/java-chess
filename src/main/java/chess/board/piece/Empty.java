@@ -9,6 +9,7 @@ public final class Empty extends Piece {
 
     private static final String NAME = ".";
     private static final double SCORE = 0D;
+    private static final String TYPE = "empty";
 
     public Empty(Position position) {
         super(position, Team.NONE);
@@ -30,7 +31,7 @@ public final class Empty extends Piece {
 
     @Override
     public String getType() {
-        return "empty";
+        return TYPE;
     }
 
     @Override

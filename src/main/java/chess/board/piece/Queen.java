@@ -11,6 +11,7 @@ public final class Queen extends Piece implements HorizontalAndVerticalMovable, 
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;
+    private static final String TYPE = "queen";
 
     public Queen(Position position, Team team) {
         super(position, team);
@@ -36,7 +37,7 @@ public final class Queen extends Piece implements HorizontalAndVerticalMovable, 
 
     @Override
     public String getType() {
-        return "queen";
+        return TYPE;
     }
 
     @Override

@@ -11,6 +11,7 @@ public final class Bishop extends Piece implements DiagonalMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;
+    private static final String TYPE = "bishop";
 
     public Bishop(Position position, Team team) {
         super(position, team);
@@ -40,7 +41,7 @@ public final class Bishop extends Piece implements DiagonalMovable {
 
     @Override
     public String getType() {
-        return "bishop";
+        return TYPE;
     }
 
     @Override

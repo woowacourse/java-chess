@@ -10,6 +10,7 @@ public final class Knight extends Piece {
     private static final String BLACK_NAME = "N";
     private static final String WHITE_NAME = "n";
     private static final double SCORE = 2.5D;
+    private static final String TYPE = "knight";
 
     public Knight(Position position, Team team) {
         super(position, team);
@@ -35,7 +36,7 @@ public final class Knight extends Piece {
 
     @Override
     public String getType() {
-        return "knight";
+        return TYPE;
     }
 
     @Override

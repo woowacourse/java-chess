@@ -11,6 +11,7 @@ public final class Rook extends Piece implements HorizontalAndVerticalMovable {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
     private static final double SCORE = 5D;
+    private static final String TYPE = "rook";
 
     public Rook(Position position, Team team) {
         super(position, team);
@@ -36,7 +37,7 @@ public final class Rook extends Piece implements HorizontalAndVerticalMovable {
 
     @Override
     public String getType() {
-        return "rook";
+        return TYPE;
     }
 
     @Override
