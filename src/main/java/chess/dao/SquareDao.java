@@ -3,7 +3,6 @@ package chess.dao;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,22 +11,13 @@ import java.util.Map;
 
 public class SquareDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
+    private final Connection connection;
 
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public SquareDao() {
+        this.connection = ConnectionManager.getConnection();
     }
 
     public void save(Position position, Piece piece) {
-        final Connection connection = getConnection();
         final String sql = "insert into square (position, team, symbol) values (?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -42,7 +32,6 @@ public class SquareDao {
 
     public Map<String, String> find() {
         final Map<String, String> squares = new HashMap();
-        final Connection connection = getConnection();
         final String sql = "select position, team, symbol from square";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -59,7 +48,6 @@ public class SquareDao {
     }
 
     public void delete() {
-        final Connection connection = getConnection();
         final String sql = "delete from square";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -70,7 +58,6 @@ public class SquareDao {
     }
 
     public void update(String position, Piece piece) {
-        final Connection connection = getConnection();
         final String sql = "update square set team = ?, symbol = ? where position = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
