@@ -134,29 +134,30 @@
     - [x] 킹 : 0점
 - [x] 점수를 계산한다
     - [x] 같은 세로줄에 같은 색의 폰이 있는 경우, 폰은 0.5점이다.
-    
 
 <br>
 
 ### DB 설계도
 
 ```mysql
+
 CREATE TABLE chess_game
 (
     game_id    INT        NOT NULL AUTO_INCREMENT,
-    game_state VARCHAR(8) NOT NULL,
-    board_id   INT        NOT NULL,
-    game_turn  VARCHAR(5) NOT NULL,
-
-    PRIMARY KEY (game_id),
-    FOREIGN KEY (board_id) REFERENCES chess_game (game_id)
+    game_state VARCHAR(10) NOT NULL,
+    game_turn  VARCHAR(30) NOT NULL,
+    
+    PRIMARY KEY (game_id)
 );
 
 CREATE TABLE chess_board
 (
-    board_id     INT         NOT NULL AUTO_INCREMENT,
-    board_pieces VARCHAR(64) NOT NULL,
-
+    board_id       INT       NOT NULL AUTO_INCREMENT,
+    game_id        INT        NOT NULL,
+    board_position VARCHAR(10) NOT NULL,
+    board_piece    VARCHAR(10) NOT NULL,
+    board_color    VARCHAR(10) NOT NULL,
+    
     PRIMARY KEY (board_id)
-)
+);
 ```
