@@ -3,6 +3,7 @@ package chess.domain.player;
 import chess.domain.Position;
 import chess.domain.generator.Generator;
 import chess.domain.piece.Piece;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

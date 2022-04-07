@@ -28,28 +28,28 @@ public class BlackGenerator implements Generator {
     private List<Piece> createPawn() {
         final List<Piece> pawns = new ArrayList<>();
         for (int i = 0; i < PAWN_COUNT_PER_PLAYER; i++) {
-            pawns.add(new Pawn(new Position(7, (char) ('a' + i))));
+            pawns.add(new Pawn(Position.of(7, (char) ('a' + i))));
         }
         return pawns;
     }
 
     private List<Piece> createRook() {
-        return List.of(new Rook(new Position(8, 'a')), new Rook(new Position(8, 'h')));
+        return List.of(new Rook(Position.of(8, 'a')), new Rook(Position.of(8, 'h')));
     }
 
     private List<Piece> createKnight() {
-        return List.of(new Knight(new Position(8, 'b')), new Knight(new Position(8, 'g')));
+        return List.of(new Knight(Position.of(8, 'b')), new Knight(Position.of(8, 'g')));
     }
 
     private List<Piece> createBishop() {
-        return List.of(new Bishop(new Position(8, 'c')), new Bishop(new Position(8, 'f')));
+        return List.of(new Bishop(Position.of(8, 'c')), new Bishop(Position.of(8, 'f')));
     }
 
     private Piece createQueen() {
-        return new Queen(new Position(8, 'd'));
+        return new Queen(Position.of(8, 'd'));
     }
 
     private Piece createKing() {
-        return new King(new Position(8, 'e'));
+        return new King(Position.of(8, 'e'));
     }
 }

@@ -1,10 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>케이의 체스</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
-<body>
-Hello World!!
+<body onload="initChessBoard()">
+<div id="main">
+    <div class="chess-board-margin">
+        <div class="chess-board" id="chess-board">
+            <div class="board-black-square" id="a8"></div>
+            <div class="board-white-square" id="b8"></div>
+            <div class="board-black-square" id="c8"></div>
+            <div class="board-white-square" id="d8"></div>
+            <div class="board-black-square" id="e8"></div>
+            <div class="board-white-square" id="f8"></div>
+            <div class="board-black-square" id="g8"></div>
+            <div class="board-white-square" id="h8"></div>
+
+
+            <div class="board-white-square" id="a7"></div>
+            <div class="board-black-square" id="b7"></div>
+            <div class="board-white-square" id="c7"></div>
+            <div class="board-black-square" id="d7"></div>
+            <div class="board-white-square" id="e7"></div>
+            <div class="board-black-square" id="f7"></div>
+            <div class="board-white-square" id="g7"></div>
+            <div class="board-black-square" id="h7"></div>
+
+            <div class="board-black-square" id="a6"></div>
+            <div class="board-white-square" id="b6"></div>
+            <div class="board-black-square" id="c6"></div>
+            <div class="board-white-square" id="d6"></div>
+            <div class="board-black-square" id="e6"></div>
+            <div class="board-white-square" id="f6"></div>
+            <div class="board-black-square" id="g6"></div>
+            <div class="board-white-square" id="h6"></div>
+
+
+            <div class="board-white-square" id="a5"></div>
+            <div class="board-black-square" id="b5"></div>
+            <div class="board-white-square" id="c5"></div>
+            <div class="board-black-square" id="d5"></div>
+            <div class="board-white-square" id="e5"></div>
+            <div class="board-black-square" id="f5"></div>
+            <div class="board-white-square" id="g5"></div>
+            <div class="board-black-square" id="h5"></div>
+
+            <div class="board-black-square" id="a4"></div>
+            <div class="board-white-square" id="b4"></div>
+            <div class="board-black-square" id="c4"></div>
+            <div class="board-white-square" id="d4"></div>
+            <div class="board-black-square" id="e4"></div>
+            <div class="board-white-square" id="f4"></div>
+            <div class="board-black-square" id="g4"></div>
+            <div class="board-white-square" id="h4"></div>
+
+
+            <div class="board-white-square" id="a3"></div>
+            <div class="board-black-square" id="b3"></div>
+            <div class="board-white-square" id="c3"></div>
+            <div class="board-black-square" id="d3"></div>
+            <div class="board-white-square" id="e3"></div>
+            <div class="board-black-square" id="f3"></div>
+            <div class="board-white-square" id="g3"></div>
+            <div class="board-black-square" id="h3"></div>
+
+            <div class="board-black-square" id="a2"></div>
+            <div class="board-white-square" id="b2"></div>
+            <div class="board-black-square" id="c2"></div>
+            <div class="board-white-square" id="d2"></div>
+            <div class="board-black-square" id="e2"></div>
+            <div class="board-white-square" id="f2"></div>
+            <div class="board-black-square" id="g2"></div>
+            <div class="board-white-square" id="h2"></div>
+
+            <div class="board-white-square" id="a1"></div>
+            <div class="board-black-square" id="b1"></div>
+            <div class="board-white-square" id="c1"></div>
+            <div class="board-black-square" id="d1"></div>
+            <div class="board-white-square" id="e1"></div>
+            <div class="board-black-square" id="f1"></div>
+            <div class="board-white-square" id="g1"></div>
+            <div class="board-black-square" id="h1"></div>
+        </div>
+    </div>
+    <div class="chess-menu" id="chess-menu">
+        <div class="message-info" id="message-info">
+            Welcome to K-Chess
+        </div>
+        <button class="btn" id="start" onclick="restartChess()">새로하기</button>
+        <button class="btn" id="save" onclick="load()">이어하기</button>
+        <button class="btn" id="status" onclick="showStatus()">현재 점수 보기</button>
+        <button class="btn" id="end" onclick="showResult()">끝내기</button>
+    </div>
+</div>
+<script src="js/index.js"></script>
 </body>
 </html>
