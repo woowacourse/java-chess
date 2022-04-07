@@ -1,6 +1,7 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.state.Turn;
 import chess.testutil.H2Connection;
@@ -46,11 +47,14 @@ class TurnDaoTest {
         Turn nextTurn = Turn.WHITE_TURN;
 
         // when
-        turnDao.updateTurn(currentTurn, nextTurn);
+        int result = turnDao.updateTurn(currentTurn, nextTurn);
         Turn changedTurn = turnDao.findCurrentTurn()
                 .orElseThrow(() -> new RuntimeException("변경된 현재 턴이 존재하지 않는다."));
 
         // then
-        assertThat(changedTurn).isEqualTo(Turn.WHITE_TURN);
+        assertAll(
+                () -> assertThat(result).isEqualTo(1),
+                () -> assertThat(changedTurn).isEqualTo(Turn.WHITE_TURN)
+        );
     }
 }

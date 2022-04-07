@@ -12,19 +12,19 @@ public class JdbcTemplate {
         this.connection = connection;
     }
 
-    public void executeUpdate(PreparedStatementCreator creator) {
+    public int executeUpdate(PreparedStatementCreator creator) {
         try (PreparedStatement pstmt = creator.excute(connection)) {
 
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         } catch (SQLException exception) {
             throw new RuntimeException(exception.getMessage());
         }
     }
 
-    public void executeBatch(PreparedStatementCreator creator) {
+    public int[] executeBatch(PreparedStatementCreator creator) {
         try (PreparedStatement pstmt = creator.excute(connection)) {
 
-            pstmt.executeBatch();
+            return pstmt.executeBatch();
         } catch (SQLException exception) {
             throw new RuntimeException(exception.getMessage());
         }

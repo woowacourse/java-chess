@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.single.King;
 import chess.testutil.H2Connection;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -51,13 +52,15 @@ class PieceDaoTest {
     @DisplayName("piece를 저장하고 저장 확인")
     void saveAndFindPiece() {
         // when
-        pieceDao.savePieces(Map.of(position, pawn));
-        Piece result = pieceDao.findAllPieces().get(position);
+        int[] result = pieceDao.savePieces(Map.of(position, pawn,
+                Position.of('a', '2'), new Piece(WHITE, new King())));
+        Piece piece = pieceDao.findAllPieces().get(position);
 
         // then
         assertAll(
-                () -> assertThat(result.color()).isEqualTo(WHITE),
-                () -> assertThat(result.name()).isEqualTo("pawn")
+                () -> assertThat(result).hasSize(2),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(piece.name()).isEqualTo("pawn")
         );
     }
 
@@ -65,13 +68,14 @@ class PieceDaoTest {
     @DisplayName("저장한 piece를 삭제")
     void saveAndDelecePiece() {
         // given
-        pieceDao.savePieces(Map.of(position, pawn));
+        pieceDao.savePieces(Map.of(position, pawn,
+                Position.of('a', '2'), new Piece(WHITE, new King())));
 
         // when
-        pieceDao.deletePiece(position);
+        int result = pieceDao.deletePiece(position);
 
         // then
-        assertThat(pieceDao.findAllPieces()).isEmpty();
+        assertThat(result).isEqualTo(1);
     }
 
     @Test
@@ -82,13 +86,14 @@ class PieceDaoTest {
         Position movePosition = Position.of('a', '2');
 
         // when
-        pieceDao.updatePiecePosition(position, movePosition);
-        Piece result = pieceDao.findAllPieces().get(movePosition);
+        int result = pieceDao.updatePiecePosition(position, movePosition);
+        Piece piece = pieceDao.findAllPieces().get(movePosition);
 
         // then
         assertAll(
-                () -> assertThat(result.color()).isEqualTo(WHITE),
-                () -> assertThat(result.name()).isEqualTo("pawn")
+                () -> assertThat(result).isEqualTo(1),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(piece.name()).isEqualTo("pawn")
         );
     }
 
@@ -100,13 +105,14 @@ class PieceDaoTest {
         Piece changePiece = new Piece(WHITE, new Queen());
 
         // when
-        pieceDao.updatePiece(position, changePiece);
-        Piece result = pieceDao.findAllPieces().get(position);
+        int result = pieceDao.updatePiece(position, changePiece);
+        Piece piece = pieceDao.findAllPieces().get(position);
 
         // then
         assertAll(
-                () -> assertThat(result.color()).isEqualTo(WHITE),
-                () -> assertThat(result.name()).isEqualTo("queen")
+                () -> assertThat(result).isEqualTo(1),
+                () -> assertThat(piece.color()).isEqualTo(WHITE),
+                () -> assertThat(piece.name()).isEqualTo("queen")
         );
     }
 
@@ -117,9 +123,9 @@ class PieceDaoTest {
         pieceDao.savePieces(PieceFactory.createNewChessBoard());
 
         // when
-        pieceDao.deleteAllPiece();
+        int result = pieceDao.deleteAllPiece();
 
         // then
-        assertThat(pieceDao.findAllPieces()).isEmpty();
+        assertThat(result).isEqualTo(32);
     }
 }

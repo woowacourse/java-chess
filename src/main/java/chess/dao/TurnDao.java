@@ -35,10 +35,10 @@ public class TurnDao {
         return Optional.empty();
     }
 
-    public void updateTurn(Turn currentTurn, Turn turn) {
+    public int updateTurn(Turn currentTurn, Turn turn) {
         final String query = "update chess_game set turn = ? where turn = ?";
 
-        jdbcTemplate.executeUpdate(connection -> {
+        return jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, turn.name());
             pstmt.setString(2, currentTurn.name());

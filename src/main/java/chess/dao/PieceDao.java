@@ -46,10 +46,10 @@ public class PieceDao {
         return pieces;
     }
 
-    public void savePieces(Map<Position, Piece> chessBoard) {
+    public int[] savePieces(Map<Position, Piece> chessBoard) {
         final String query = "insert into piece (type, color, position_col, position_row) values (?, ?, ?, ?)";
 
-        jdbcTemplate.executeBatch(connection -> {
+        return jdbcTemplate.executeBatch(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             for (Position position : chessBoard.keySet()) {
                 Piece piece = chessBoard.get(position);
@@ -63,10 +63,10 @@ public class PieceDao {
         });
     }
 
-    public void updatePiecePosition(Position position, Position movePosition) {
+    public int updatePiecePosition(Position position, Position movePosition) {
         final String query = "update piece set position_col = ?, position_row = ? "
                 + "where position_col = ? and position_row = ?";
-        jdbcTemplate.executeUpdate(connection -> {
+        return jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.valueOf(movePosition.column()));
             pstmt.setString(2, String.valueOf(movePosition.row()));
@@ -76,11 +76,11 @@ public class PieceDao {
         });
     }
 
-    public void updatePiece(Position position, Piece changePiece) {
+    public int updatePiece(Position position, Piece changePiece) {
         final String query = "update piece set type = ? "
                 + "where position_col = ? and position_row = ?";
 
-        jdbcTemplate.executeUpdate(connection -> {
+        return jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, changePiece.name());
             pstmt.setString(2, String.valueOf(position.column()));
@@ -89,10 +89,10 @@ public class PieceDao {
         });
     }
 
-    public void deletePiece(Position position) {
+    public int deletePiece(Position position) {
         final String query = "delete from piece where position_col = ? and position_row = ?";
 
-        jdbcTemplate.executeUpdate(connection -> {
+        return jdbcTemplate.executeUpdate(connection -> {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.valueOf(position.column()));
             pstmt.setString(2, String.valueOf(position.row()));
@@ -100,9 +100,9 @@ public class PieceDao {
         });
     }
 
-    public void deleteAllPiece() {
+    public int deleteAllPiece() {
         final String query = "delete from piece";
 
-        jdbcTemplate.executeUpdate(connection -> connection.prepareStatement(query));
+        return jdbcTemplate.executeUpdate(connection -> connection.prepareStatement(query));
     }
 }
