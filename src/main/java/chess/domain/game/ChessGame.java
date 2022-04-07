@@ -5,10 +5,13 @@ import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.piece.attribute.Team;
+import chess.dto.CommandDto;
+import chess.view.Command;
 import java.util.Map;
 
 public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
+    private static final String INVALID_COMMEND_MESSAGE = "move 만 입력할 수 있습니다.";
 
     private Board board;
     private boolean isFinished = false;
@@ -27,6 +30,23 @@ public final class ChessGame {
         this.turn = Team.WHITE;
         this.isFinished = false;
         this.board = new Board(new InitBoardStrategy().create());
+    }
+
+    public void clone(ChessGame other) {
+        this.turn = other.turn;
+        this.isFinished = other.isFinished;
+        this.board = other.board;
+    }
+
+    public void execute(CommandDto commandDto) {
+        if (isFinished) {
+            return;
+        }
+        if (commandDto.getCommand() == Command.MOVE) {
+            play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
+            return;
+        }
+        throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
     public void play(Position from, Position to) {

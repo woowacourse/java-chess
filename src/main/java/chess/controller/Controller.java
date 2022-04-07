@@ -7,9 +7,6 @@ import static spark.Spark.staticFiles;
 import chess.dao.BoardDao;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
-import chess.domain.game.state.Play;
-import chess.domain.game.state.State;
-import chess.domain.game.state.attribute.StateType;
 import chess.domain.piece.attribute.Team;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
@@ -22,67 +19,62 @@ public class Controller {
     private static final String DRAW_MESSAGE = "무승부";
     private static final String END_MESSAGE = "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.";
     private static final String EMPTY = "";
-    private final Map<String, Object> model = new HashMap<>();
-    private final BoardDao boardDao = new BoardDao();
-    private ChessGame chessGame = new ChessGame(new InitBoardStrategy());
-    private State state = new Play(chessGame);
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
 
     public void run() {
         staticFiles.location("/static");
-        get("/", (req, res) -> getStartObject());
+        final Map<String, Object> model = new HashMap<>();
+        final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
+
+        get("/", (req, res) -> renderStart(model, chessGame));
         post("/start", (req, res) -> {
-            initGame(req.queryParams("name"));
-            return renderGame(chessGame);
+            chessGame.clone(initGame(model, req.queryParams("name")));
+            return renderGame(model, chessGame);
         });
         post("/command", (req, res) -> {
-            go(req.queryParams("command"));
-            saveToDB();
-            return renderGame(chessGame);
+            chessGame.clone(go(model, chessGame, req.queryParams("command")));
+            saveToDB(model, chessGame);
+            return renderGame(model, chessGame);
         });
-        post("/end", (req, res) -> renderEnd(chessGame));
+        post("/end", (req, res) -> renderEnd(model, chessGame));
     }
 
-    private void initGame(String name) {
+    private ChessGame initGame(Map<String, Object> model, String name) {
         model.put("name", name);
         model.put("error", EMPTY);
 
-        boardDao.create(new ChessGameDto(name, new ChessGame(new InitBoardStrategy())));
-        chessGame = boardDao.findByName(name).getChessGame();
-        System.out.println(chessGame);
-        state = new Play(chessGame);
+        new BoardDao().create(new ChessGameDto(name, new ChessGame(new InitBoardStrategy())));
+        return new BoardDao().findByName(name).getChessGame();
     }
 
-    private void go(String input) {
+    private ChessGame go(Map<String, Object> model, ChessGame chessGame, String input) {
         try {
-            state = state.execute(new CommandDto(input));
+            chessGame.execute(new CommandDto(input));
             model.put("error", EMPTY);
-            model.put("result", getResult());
+            model.put("result", getResult(chessGame));
+            return chessGame;
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
+        return chessGame;
     }
 
-    private String getResult() {
-        if (state.getType() != StateType.PLAY) {
+    private String getResult(ChessGame chessGame) {
+        if (chessGame.isFinished()) {
             return END_MESSAGE;
         }
         return EMPTY;
     }
 
-    private void saveToDB() {
-        boardDao.save(new ChessGameDto((String) model.get("name"), chessGame));
+    private void saveToDB(Map<String, Object> model, ChessGame chessGame) {
+        new BoardDao().save(new ChessGameDto((String) model.get("name"), chessGame));
     }
 
-    private Object getStartObject() {
+    private Object renderStart(Map<String, Object> model, ChessGame chessGame) {
         chessGame.reset();
         return render(model, "index.html");
     }
 
-    private Object renderGame(ChessGame chessGame) {
+    private Object renderGame(Map<String, Object> model, ChessGame chessGame) {
         Map<Team, Double> scores = chessGame.getScoreOfTeams();
         model.put("whiteScore", scores.get(Team.WHITE));
         model.put("blackScore", scores.get(Team.BLACK));
@@ -92,13 +84,13 @@ public class Controller {
         return render(model, "chessGame.html");
     }
 
-    private Object renderEnd(ChessGame chessGame) {
+    private Object renderEnd(Map<String, Object> model, ChessGame chessGame) {
         Map<Team, Double> scores = chessGame.getScoreOfTeams();
         model.put("whiteScore", scores.get(Team.WHITE));
         model.put("blackScore", scores.get(Team.BLACK));
         model.put("winner", getWinner(chessGame));
 
-        boardDao.delete((String) model.get("name"));
+        new BoardDao().delete((String) model.get("name"));
 
         return render(model, "end.html");
     }
@@ -109,5 +101,9 @@ public class Controller {
             return DRAW_MESSAGE;
         }
         return winner.name();
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
