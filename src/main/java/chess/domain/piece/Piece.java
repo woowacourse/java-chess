@@ -34,7 +34,7 @@ public abstract class Piece {
 
     public abstract double getScore();
 
-    public String getColor() {
-        return color.getValue();
+    public Color getColor() {
+        return color;
     }
 }
