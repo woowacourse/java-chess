@@ -22,24 +22,19 @@ public class WebApplication {
         get("/", (req, res) -> {
             ChessGame chessGame = new ChessGame();
             Command.execute("start", chessGame);
-
             int chessGameId = repository.save(chessGame);
 
-            Response response = Response.init(chessGameId, chessGame);
-            return render(response, "index.html");
+            res.redirect("/chess-game/" + chessGameId);
+            return null;
         });
 
-//        get("/temp", (req, res) -> {
-//            return render(response, "index.html");
-//        });
-//
-        get("/:id", (req, res) -> {
+        get("/chess-game/:id", (req, res) -> {
             int chessGameId = Integer.parseInt(req.params("id"));
             Response response = Response.init(chessGameId, repository.find(chessGameId));
             return render(response, "index.html");
         });
 
-        post("/move", (req, res) -> {
+        post("/chess-game/:id/move", (req, res) -> {
             Response response;
             String[] request = req.body().split("&");
             int chessGameId = getChessGameId(request[0]);

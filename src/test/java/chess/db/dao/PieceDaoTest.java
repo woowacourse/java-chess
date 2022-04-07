@@ -17,15 +17,4 @@ class PieceDaoTest {
 
         assertThat(connection).isNotNull();
     }
-
-//    @Test
-//    @DisplayName("피스 정보 저장")
-//    void saveWithRollback() throws SQLException {
-//        PieceDao pieceDao = new PieceDao();
-//        Connection connectionRollback = pieceDao.getConnection();
-//
-//        connectionRollback.setAutoCommit(false);
-//        pieceDao.save();
-//        connectionRollback.rollback();
-//    }
 }
