@@ -20,11 +20,7 @@ public class BoardDto {
 
     private static void addPositionOfColumn(List<String> positions, Column column) {
         for (Rank rank : Rank.values()) {
-            positions.add(getPositionString(column, rank));
+            positions.add(new PositionDto(column, rank).get());
         }
-    }
-
-    private static String getPositionString(Column column, Rank rank) {
-        return column.name() + rank.getNumber();
     }
 }

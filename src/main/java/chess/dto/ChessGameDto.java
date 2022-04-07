@@ -43,7 +43,7 @@ public class ChessGameDto {
     public Set<Entry<String, String>> getSquaresOfDB() {
         Map<String, String> squaresDB = new HashMap<>();
         chessGame.getBoard().getSquares().forEach((position, piece) ->
-                squaresDB.put(position.toString(),
+                squaresDB.put(new PositionDto(position).get(),
                         piece.getName().getValue(piece.getTeam()))
         );
         return squaresDB.entrySet();
