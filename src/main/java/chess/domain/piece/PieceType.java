@@ -26,9 +26,9 @@ public enum PieceType {
 
     public static PieceType from(String notation) {
         return Arrays.stream(values())
-                .filter(pieceType -> pieceType.notation.equals(notation))
+                .filter(pieceType -> pieceType.notation.equals(notation.toUpperCase()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
 
     public Piece newPiece(Color color) {
