@@ -1,9 +1,8 @@
 package chess.dao;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.dto.BoardDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,22 +14,17 @@ public class BoardDao {
 
     private final Connection connection = ConnectionManager.getConnection();
 
-    public void save(final ChessGame chessGame) {
-        delete(chessGame.getName());
-        saveBoard(chessGame);
-    }
-
-    private void saveBoard(final ChessGame chessGame) {
+    public void save(final String name, final BoardDto boardDto) {
         String insertSql = "insert into board (name, position_column_value, position_row_value, piece_name, piece_team_value) values (?, ?, ?, ?, ?)";
-        Map<Position, Piece> currentBoard = chessGame.getCurrentBoard();
+        Map<Position, Piece> board = boardDto.getBoard();
         try {
             PreparedStatement insertStatement = connection.prepareStatement(insertSql);
-            for (Position position : currentBoard.keySet()) {
-                insertStatement.setString(1, chessGame.getName());
+            for (Position position : board.keySet()) {
+                insertStatement.setString(1, name);
                 insertStatement.setString(2, String.valueOf(position.getColumn().getValue()));
                 insertStatement.setInt(3, position.getRow().getValue());
-                insertStatement.setString(4, currentBoard.get(position).getName());
-                insertStatement.setString(5, currentBoard.get(position).getTeam().getValue());
+                insertStatement.setString(4, board.get(position).getName());
+                insertStatement.setString(5, board.get(position).getTeam().getValue());
                 insertStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -49,7 +43,7 @@ public class BoardDao {
         }
     }
 
-    public Board load(final String name) {
+    public BoardDto load(final String name) {
         String selectSql = "select * from board where name=?";
         Map<Position, Piece> board = new HashMap<>();
         try {
@@ -61,7 +55,7 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Board(board);
+        return new BoardDto(board);
     }
 
     private void putPositionAndPiece(final Map<Position, Piece> board, final ResultSet resultSet) throws SQLException {

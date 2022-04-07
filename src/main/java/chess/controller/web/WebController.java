@@ -5,8 +5,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.dao.ChessGameDao;
 import chess.domain.game.ChessGame;
+import chess.dto.ChessGameExceptBoardDto;
+import chess.service.ChessGameService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -14,52 +15,50 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
-
     public void run() {
         staticFileLocation("/static");
-        ChessGameDao chessGameDao = new ChessGameDao();
-        getIndexPage(chessGameDao);
-        createChessGame(chessGameDao);
-        deleteChessGame(chessGameDao);
-        getChessGamePage(chessGameDao);
-        movePiece(chessGameDao);
-        resetChessGame(chessGameDao);
+        ChessGameService chessGameService = new ChessGameService();
+        getIndexPage(chessGameService);
+        createChessGame(chessGameService);
+        deleteChessGame(chessGameService);
+        getChessGamePage(chessGameService);
+        movePiece(chessGameService);
+        resetChessGame(chessGameService);
         getException();
     }
 
-    private void getIndexPage(final ChessGameDao chessGameDao) {
+    private void getIndexPage(final ChessGameService chessGameService) {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("chess_games", chessGameDao.loadAll());
+            model.put("chess_games", chessGameService.loadAllChessGames());
             return new ModelAndView(model, "index.html");
         }, new HandlebarsTemplateEngine());
     }
 
-    private void createChessGame(final ChessGameDao chessGameDao) {
+    private void createChessGame(final ChessGameService chessGameService) {
         post("/create_chess_game", (req, res) -> {
             String name = req.queryParams("name");
-            chessGameDao.save(ChessGame.createBasic(name));
+            chessGameService.createChessGame(name);
             res.redirect("/game/" + name);
             return null;
         });
     }
 
-    private void deleteChessGame(final ChessGameDao chessGameDao) {
+    private void deleteChessGame(final ChessGameService chessGameService) {
         post("/delete/:name", (req, res) -> {
             String name = req.params(":name");
-            chessGameDao.delete(name);
+            chessGameService.deleteChessGame(name);
             res.redirect("/");
             return null;
         });
     }
 
-    private void getChessGamePage(final ChessGameDao chessGameDao) {
+    private void getChessGamePage(final ChessGameService chessGameService) {
         get("/game/:name", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGame chessGame = chessGameDao.load(req.params("name"));
-            model.put("chess_game_name", req.params("name"));
+            String name = req.params(":name");
+            ChessGame chessGame = chessGameService.loadChessGame(name);
+            model.put("chess_game_name", name);
             model.putAll(chessGame.getCurrentBoardByRawPosition());
             model.put("turn", chessGame.getTurn());
             model.put("result", chessGame.generateResult());
@@ -67,26 +66,21 @@ public class WebController {
         }, new HandlebarsTemplateEngine());
     }
 
-    private void movePiece(final ChessGameDao chessGameDao) {
+    private void movePiece(final ChessGameService chessGameService) {
         post("/move/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
-            ChessGame loadedChessGame = chessGameDao.load(chessGameName);
             String rawSource = req.queryParams("source").trim().toLowerCase();
             String rawTarget = req.queryParams("target").trim().toLowerCase();
-            loadedChessGame.move(
-                    rawSource.charAt(COLUMN_INDEX), Character.getNumericValue(rawSource.charAt(ROW_INDEX)),
-                    rawTarget.charAt(COLUMN_INDEX), Character.getNumericValue(rawTarget.charAt(ROW_INDEX))
-            );
-            chessGameDao.save(loadedChessGame);
+            chessGameService.movePiece(chessGameName, rawSource, rawTarget);
             res.redirect("/game/" + chessGameName);
             return null;
         });
     }
 
-    private void resetChessGame(final ChessGameDao chessGameDao) {
+    private void resetChessGame(final ChessGameService chessGameService) {
         post("/reset/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
-            chessGameDao.save(ChessGame.createBasic(chessGameName));
+            chessGameService.createChessGame(chessGameName);
             res.redirect("/game/" + chessGameName);
             return null;
         });
