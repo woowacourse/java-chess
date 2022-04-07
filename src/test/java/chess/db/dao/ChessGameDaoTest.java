@@ -9,10 +9,20 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChessGameDaoTest {
 
     private final DBConnector dbConnector = new DBConnector();
+
+    @Test
+    @DisplayName("게임 개수 호출")
+    void count() {
+        ChessGameDao chessGameDao = new ChessGameDao();
+
+        assertThatCode(chessGameDao::count)
+                .doesNotThrowAnyException();
+    }
 
     @Test
     @DisplayName("게임 시작")
