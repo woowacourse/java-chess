@@ -5,6 +5,8 @@ const statusButton = document.getElementById("statusButton")
 let from = "";
 let to = "";
 let currentRoomName = "";
+const horizontalId = ["a", "b", "c", "d", "e", "f", "g", "h"]
+const verticalId = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 newGameButton.addEventListener("click", async function () {
     let board = newGame();
@@ -85,6 +87,7 @@ async function getStatus() {
 async function finish() {
     await fetch("/finish");
     alert("방을 유지한채 게임이 종료되었습니다.");
+    removeAllPieces();
 }
 
 async function deleteAndFinish() {
@@ -98,6 +101,18 @@ async function deleteAndFinish() {
         }),
     })
     alert("방이 삭제됐습니다.");
+    removeAllPieces();
+}
+
+function removeAllPieces() {
+    for (const horizontal of horizontalId) {
+        for (const vertical of verticalId) {
+            let pointId = document.getElementById(horizontal+vertical);
+            if (pointId.hasChildNodes()) {
+                pointId.removeChild(pointId.firstChild);
+            }
+        }
+    }
 }
 
 async function initializeBoard(board) {
