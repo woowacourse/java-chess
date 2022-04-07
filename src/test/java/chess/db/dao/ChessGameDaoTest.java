@@ -12,20 +12,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessGameDaoTest {
 
-    @Test
-    @DisplayName("연결 확인")
-    void connection() {
-        ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connection = chessGameDao.getConnection();
-
-        assertThat(connection).isNotNull();
-    }
+    private final DBConnector dbConnector = new DBConnector();
 
     @Test
     @DisplayName("게임 시작")
     void saveWithRollback() throws SQLException {
         ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connectionRollback = chessGameDao.getConnection();
+        Connection connectionRollback = dbConnector.getConnection();
 
         connectionRollback.setAutoCommit(false);
         int chessGameId = chessGameDao.save(new ChessGame());
@@ -36,7 +29,7 @@ class ChessGameDaoTest {
     @DisplayName("게임 호출")
     void findWithRollback() throws SQLException {
         ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connectionRollback = chessGameDao.getConnection();
+        Connection connectionRollback = dbConnector.getConnection();
 
         connectionRollback.setAutoCommit(false);
         int chessGameId = chessGameDao.save(new ChessGame());

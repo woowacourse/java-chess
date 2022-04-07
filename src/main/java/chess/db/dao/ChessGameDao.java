@@ -5,33 +5,19 @@ import chess.dto.ChessGameDto;
 import chess.db.entity.ChessGameEntity;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    private static Connection connection = null;
-    private static PreparedStatement statement = null;
-    private static ResultSet resultSet = null;
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
+    private final DBConnector dbConnector = new DBConnector();
+    private Connection connection = null;
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     public int count() {
-        connection = getConnection();
+        connection = dbConnector.getConnection();
         String sql = "SELECT id FROM chess_game ORDER BY id DESC LIMIT 1";
         try {
             statement = connection.prepareStatement(sql);
@@ -50,8 +36,8 @@ public class ChessGameDao {
 
     public int save(final ChessGame chessGame) {
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
-        connection = getConnection();
-        String sql = "INSERT INTO chess_game (state) VALUES (?)";
+        connection = dbConnector.getConnection();
+        String sql = "INSERT INTO chess_game (state, insert_datetime, update_datetime) VALUES (?, now(), now())";
         try {
             statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getState());
@@ -65,7 +51,7 @@ public class ChessGameDao {
     }
 
     public ChessGameEntity find(final int id) {
-        connection = getConnection();
+        connection = dbConnector.getConnection();
         String sql = "SELECT id, state FROM chess_game WHERE id = ?";
         try {
             statement = connection.prepareStatement(sql);
@@ -87,7 +73,7 @@ public class ChessGameDao {
     }
 
     public void move(final int chessGameId, final String nextState) {
-        connection = getConnection();
+        connection = dbConnector.getConnection();
         String sql = "UPDATE chess_game SET state = ? WHERE id = ?";
         try {
             statement = connection.prepareStatement(sql);
@@ -101,13 +87,31 @@ public class ChessGameDao {
         }
     }
 
-    private void close() {
+    public void close() {
         try {
-            resultSet.close();
-            statement.close();
-            connection.close();
+            closeResultSet();
+            closeStatement();
+            closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void closeResultSet() throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+    }
+
+    private void closeStatement() throws SQLException {
+        if (statement != null) {
+            statement.close();
+        }
+    }
+
+    private void closeConnection() throws SQLException {
+        if (connection != null) {
+            connection.close();
         }
     }
 }
