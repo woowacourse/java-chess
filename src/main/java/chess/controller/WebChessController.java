@@ -31,7 +31,6 @@ public class WebChessController {
         });
 
         get("/game", (req, res) -> {
-            System.err.println(req.url());
             res.redirect("/game/" + req.queryParams("gameId"));
             return null;
         });
