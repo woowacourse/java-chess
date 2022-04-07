@@ -48,12 +48,13 @@ public final class ChessGame {
         final Position to = Position.from(positions[TO]);
 
         state = state.move(from, to);
-        pieceDao.move(from, to);
-        gameDao.updateTurn(state.getCurrentColor());
         if (isEnd()) {
             pieceDao.deleteAllPiece();
             gameDao.initTurn();
+            return;
         }
+        pieceDao.updatePiece(from, to);
+        gameDao.updateTurn(state.getCurrentColor());
     }
 
     public Status status() {
@@ -77,10 +78,10 @@ public final class ChessGame {
         state = new Running(Color.from(gameDao.findCurrentColor()), convertToBoard(boardData));
     }
 
-    private Board convertToBoard (final Map<String, List<String>> boardData) {
+    private Board convertToBoard(final Map<String, List<String>> boardData) {
         final Map<Position, Piece> board = new HashMap<>();
         for (final Map.Entry<String, List<String>> entry : boardData.entrySet()) {
-            board.put(Position.from(entry.getKey()), PieceFactory.of(entry.getValue().get(PIECE_NAME_INDEX),entry.getValue().get(PIECE_COLOR_INDEX)));
+            board.put(Position.from(entry.getKey()), PieceFactory.of(entry.getValue().get(PIECE_NAME_INDEX), entry.getValue().get(PIECE_COLOR_INDEX)));
         }
         return new Board(() -> board);
     }
