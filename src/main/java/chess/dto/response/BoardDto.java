@@ -5,11 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -50,37 +46,6 @@ public class BoardDto {
         }
 
         return new BoardDto(value);
-    }
-
-    // TODO: 뷰의 책임임
-    public List<List<String>> getPieceImages() {
-        List<List<String>> pieceImages = new ArrayList<>();
-
-        List<YAxis> yAxes = Arrays.asList(YAxis.values());
-        Collections.reverse(yAxes);
-
-        for (YAxis yAxis : yAxes) {
-            List<String> row = new ArrayList<>();
-
-            for (XAxis xAxis : XAxis.values()) {
-                Position position = Position.of(xAxis, yAxis);
-                PositionDto positionDto = PositionDto.from(position);
-
-                PieceDto pieceDto = value.get(positionDto);
-
-                if (!Objects.isNull(pieceDto)) {
-                    row.add(pieceDto.getPieceType().name() + "_" + pieceDto.getPieceColor().name());
-                }
-
-                if (Objects.isNull(pieceDto)) {
-                    row.add(null);
-                }
-            }
-
-            pieceImages.add(row);
-        }
-
-        return pieceImages;
     }
 
     public Board toBoard() {
