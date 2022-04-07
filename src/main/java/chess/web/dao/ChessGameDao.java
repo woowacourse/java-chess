@@ -75,8 +75,7 @@ public class ChessGameDao {
     private ChessGame findChessGame(String gameName) throws SQLException {
         Connection connection = getConnection();
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, PIECE\n"
-                + "where CHESSGAME.game_name = PIECE.game_name \n"
-                + "AND CHESSGAME.game_name = ?;";
+                + "where CHESSGAME.game_name = PIECE.game_name AND CHESSGAME.game_name = ?;";
         PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         try (connection; statement) {
@@ -97,12 +96,14 @@ public class ChessGameDao {
     }
 
     private String getTurn(ResultSet resultSet) throws SQLException {
-        resultSet.first();
+        resultSet.beforeFirst();
         resultSet.next();
         return resultSet.getString("turn");
     }
 
     private Map<Position, Piece> makeCells(ResultSet resultSet) throws SQLException {
+        resultSet.beforeFirst();
+
         Map<Position, Piece> cells = new HashMap<>();
 
         while (resultSet.next()) {

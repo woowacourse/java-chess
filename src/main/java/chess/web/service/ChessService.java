@@ -69,7 +69,7 @@ public class ChessService {
 
         ChessGame chessGame = chessGameDao.findByName(gameName);
 
-        if (chessGame == null) {
+        if (chessGame != null) {
             updateChessGame(chessGameDto);
             return;
         }
