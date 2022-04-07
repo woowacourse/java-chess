@@ -29,4 +29,11 @@ public enum Color {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public static Color findByValue(String value) {
+        if (value.equals("black")) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
 }

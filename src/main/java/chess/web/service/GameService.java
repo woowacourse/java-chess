@@ -6,6 +6,8 @@ import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.web.PieceFactory;
+import chess.web.dao.BoardDao;
 import chess.web.dao.PieceDao;
 import chess.web.dto.CommendDto;
 import chess.web.dto.GameStateDto;
@@ -20,12 +22,14 @@ import java.util.stream.Collectors;
 public class GameService {
 
     private final PieceDao pieceDao = new PieceDao();
+    private final BoardDao boardDao = new BoardDao();
     private Board board;
 
     public void startNewGame() {
         board = new Board(new RegularRuleSetup());
         pieceDao.deleteAll();
         pieceDao.saveAll(board.getPieces());
+        boardDao.save(getGameStateDto());
     }
 
     public void move(CommendDto commendDto) {
@@ -33,6 +37,9 @@ public class GameService {
         String target = commendDto.getTarget();
 
         board.move(source, target);
+
+        boardDao.update(getGameStateDto());
+
         Piece pickedPiece = board.findPiece(Position.of(target)).get();
         PieceDto pickedPieceDto = PieceDto.from(Position.of(target), pickedPiece);
 
@@ -45,6 +52,15 @@ public class GameService {
         }
 
         pieceDao.saveOne(pickedPieceDto);
+    }
+
+    public void loadBoard() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieceDao.findAll().stream()
+                .forEach(pieceDto -> pieces.put(Position.of(pieceDto.getPosition()), PieceFactory.build(pieceDto)));
+        board = new Board(() -> pieces);
+        Color color = boardDao.find();
+        board.loadTurn(color);
     }
 
     public ResultDto getFinalResultDto() {
@@ -71,5 +87,4 @@ public class GameService {
                 .map(position -> PieceDto.from(position, pieces.get(position)))
                 .collect(Collectors.toList());
     }
-
 }

@@ -37,6 +37,14 @@ public class ChessController {
             return new Gson().toJson(model);
         });
 
+        get("/load", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            gameService.loadBoard();
+            model.put("state", gameService.getGameStateDto());
+            model.put("pieces", gameService.getPieceDtos());
+            return new Gson().toJson(model);
+        });
+
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             CommendDto commendDto = new Gson().fromJson(req.body(), CommendDto.class);

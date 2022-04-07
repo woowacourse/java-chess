@@ -110,7 +110,7 @@ public class PieceDao {
 
     public void updateOne(String position, PieceDto pieceDto) {
         final Connection connection = getConnection();
-        final String sql = "update piece set color = ?, role = ?, where position = ?";
+        final String sql = "update piece set color = ?, role = ? where position = ?";
         try (final PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setString(1, pieceDto.getColor());
             statement.setString(2, pieceDto.getRole());

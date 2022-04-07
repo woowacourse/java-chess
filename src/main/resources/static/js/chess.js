@@ -167,6 +167,23 @@ function fetchNewChess() {
         })
 }
 
+function fetchLoadChess() {
+    fetch('http://localhost:8080/load', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            resetScores();
+            toggleTurn(res.state);
+            initPieces(res.pieces);
+        })
+}
+
+
 function fetchMove(source, target) {
     fetch('http://localhost:8080/move', {
         method: 'POST',

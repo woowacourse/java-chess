@@ -68,6 +68,12 @@ public final class Board {
         return pieces.findPiece(position);
     }
 
+    public void loadTurn(Color color) {
+        if (turn != color) {
+            turn = Color.opposite(turn);
+        }
+    }
+
     private void validatePositionsNotEquals(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException(ERROR_SOURCE_AND_TARGET_SAME);
