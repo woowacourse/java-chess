@@ -19,6 +19,13 @@ public enum Team {
         this.winnerCondition = condition;
     }
 
+    public static Team of(String value) {
+        return Arrays.stream(values())
+                .filter(team -> team.value.equals(value))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 팀이 없습니다."));
+    }
+
     public static List<Team> findWinner(double white, double black) {
         return Arrays.stream(values())
                 .filter(team -> team.winnerCondition.test(white, black))
@@ -30,6 +37,10 @@ public enum Team {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public boolean isNone() {
+        return this == NONE;
     }
 
     @Override

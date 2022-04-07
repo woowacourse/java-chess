@@ -1,8 +1,8 @@
 package chess.controller.menu;
 
 import chess.controller.ChessController;
-import chess.domain.board.BasicBoardStrategy;
-import chess.domain.board.BoardGenerationStrategy;
+import chess.domain.board.strategy.BasicBoardStrategy;
+import chess.domain.board.strategy.BoardGenerationStrategy;
 
 public class Start implements Menu {
 

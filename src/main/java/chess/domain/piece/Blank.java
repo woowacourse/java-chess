@@ -13,6 +13,11 @@ public class Blank extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "blank";
     }

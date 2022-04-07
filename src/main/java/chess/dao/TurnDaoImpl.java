@@ -1,5 +1,8 @@
 package chess.dao;
 
+import static chess.dao.GameStatusDaoImpl.*;
+
+import chess.domain.piece.Team;
 import chess.util.JdbcConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +15,10 @@ public class TurnDaoImpl implements TurnDao {
 
     @Override
     public void update(String nowTurn, String nextTurn) {
-        String sql = "update turn set turn = ? where turn = ?";
+        String sql = "update turn set team = ? where team = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, nextTurn);
-            preparedStatement.setString(2, nowTurn);
+            preparedStatement.setString(PARAMETER_FIRST_INDEX, nextTurn);
+            preparedStatement.setString(PARAMETER_SECOND_INDEX, nowTurn);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -30,21 +33,25 @@ public class TurnDaoImpl implements TurnDao {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
-            return resultSet.getString("turn");
+            if (resultSet.next()) {
+                return resultSet.getString("team");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     @Override
     public void reset() {
         removeAll("turn");
-        final String sql = "insert into turn value white";
+        final String sql = "insert into turn (team) values (?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeQuery();
+            statement.setString(PARAMETER_FIRST_INDEX, Team.WHITE.toString());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -54,7 +61,8 @@ public class TurnDaoImpl implements TurnDao {
     public void removeAll(String name) {
         String sql = "truncate table " + name;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

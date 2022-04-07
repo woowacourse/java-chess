@@ -1,6 +1,6 @@
 package chess.board.boardGenerator;
 
-import chess.domain.board.BoardGenerationStrategy;
+import chess.domain.board.strategy.BoardGenerationStrategy;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;

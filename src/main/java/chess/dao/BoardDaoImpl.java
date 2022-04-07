@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static chess.dao.GameStatusDaoImpl.*;
+
 import chess.util.JdbcConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BoardDaoImpl implements BoardDao {
 
@@ -16,8 +19,8 @@ public class BoardDaoImpl implements BoardDao {
     public void update(String position, String piece) {
         String sql = "update board set piece = ? where position = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, piece);
-            preparedStatement.setString(2, position);
+            preparedStatement.setString(PARAMETER_FIRST_INDEX, piece);
+            preparedStatement.setString(PARAMETER_SECOND_INDEX, position);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -25,7 +28,6 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
-    @Override
     public Map<String, String> getBoard() {
         final String sql = "select * from board";
 
@@ -46,10 +48,28 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public void reset(final Map<String, String> board) {
+        removeAll("board");
+
+        final String sql = "insert into board (position, piece) values (?,?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            for (Entry<String, String> boardEntry : board.entrySet()) {
+                preparedStatement.setString(PARAMETER_FIRST_INDEX, boardEntry.getKey());
+                preparedStatement.setString(PARAMETER_SECOND_INDEX, boardEntry.getValue());
+                preparedStatement.executeUpdate();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void removeAll(String name) {
         String sql = "truncate table " + name;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

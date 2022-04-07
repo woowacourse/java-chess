@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessGame;
-import chess.domain.board.BasicBoardStrategy;
+import chess.domain.board.strategy.BasicBoardStrategy;
 
 import chess.board.boardGenerator.CheckmateBoardStrategy;
 import chess.board.boardGenerator.NotCheckmateBoardStrategy;

@@ -6,7 +6,7 @@ import static chess.domain.GameStatus.PLAYING;
 import static chess.domain.GameStatus.READY;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardGenerationStrategy;
+import chess.domain.board.strategy.BoardGenerationStrategy;
 import chess.domain.board.Result;
 import chess.domain.piece.Direction;
 import chess.domain.piece.King;
@@ -19,9 +19,21 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private Team turn = Team.WHITE;
-    private GameStatus gameStatus = READY;
-    private final Board board = new Board();
+    private Team turn;
+    private GameStatus gameStatus;
+    private final Board board;
+
+    public ChessGame() {
+        gameStatus = READY;
+        turn = Team.WHITE;
+        board = new Board();
+    }
+
+    public ChessGame(Team turn, GameStatus gameStatus, Board board) {
+        this.turn = turn;
+        this.gameStatus = gameStatus;
+        this.board = board;
+    }
 
     public void startGame(BoardGenerationStrategy strategy) {
         gameStatus = PLAYING;
@@ -31,10 +43,10 @@ public class ChessGame {
     public void move(Position from, Position to) {
         Piece fromPiece = board.takePieceByPosition(from);
         Piece toPiece = board.takePieceByPosition(to);
-
         validateNowTurn(fromPiece);
         fromPiece.movable(from, to, toPiece);
         validatePath(from, to, fromPiece.findDirection(from, to));
+
 
         tryMove(from, to, fromPiece);
     }
@@ -49,7 +61,7 @@ public class ChessGame {
         Position current = from.move(direction);
 
         while (!current.equals(to)) {
-            if (board.takePieceByPosition(current) != null) {
+            if (!board.takePieceByPosition(current).isBlank()) {
                 throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
             }
             current = current.move(direction);
@@ -128,6 +140,10 @@ public class ChessGame {
         Result result = new Result(getBoard());
         board.removeBoard();
         return result;
+    }
+
+    public Piece takePieceByPosition(Position position) {
+        return board.takePieceByPosition(position);
     }
 
     public Map<String, String> toMap() {

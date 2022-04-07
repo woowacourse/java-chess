@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.GameStatus;
-import chess.domain.board.BoardGenerationStrategy;
+import chess.domain.board.strategy.BoardGenerationStrategy;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 

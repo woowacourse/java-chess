@@ -1,15 +1,14 @@
 package chess;
 
 import chess.controller.ChessWebController;
-import chess.domain.ChessGame;
-import chess.domain.board.BasicBoardStrategy;
+import chess.domain.board.strategy.WebBasicBoardStrategy;
 
 public class WebApplication {
 
-    private static final ChessWebController controller = new ChessWebController(new ChessGame());
+    private static final ChessWebController controller = new ChessWebController(new ChessGameService());
 
     public static void main(final String... args) {
-        controller.start(new BasicBoardStrategy());
+        controller.start(new WebBasicBoardStrategy());
     }
 }
 

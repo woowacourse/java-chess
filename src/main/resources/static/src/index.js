@@ -7,11 +7,7 @@ let to = ""
 let status = ""
 
 start.addEventListener('click', async function () {
-    if (status == "") {
-        startAndDraw()
-    } else {
-        alert("게임이 종료되지 않았습니다.")
-    }
+    startAndDraw()
 })
 
 async function startAndDraw() {
@@ -34,10 +30,12 @@ function putPiece(eachDiv, board, value) {
     if (eachDiv.hasChildNodes()) {
         eachDiv.removeChild(eachDiv.firstChild)
     }
-    const img = document.createElement("img")
-    img.classList.add('img-style')
-    img.src = "/images/piece/" + board[value] + ".png"
-    eachDiv.appendChild(img)
+    if (board[value] != "blank") {
+        const img = document.createElement("img")
+        img.classList.add('img-style')
+        img.src = "/images/piece/" + board[value] + ".png"
+        eachDiv.appendChild(img)
+    }
 }
 
 function tryMove(e) {
