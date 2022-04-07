@@ -15,7 +15,7 @@ class PieceCacheTest {
     void of() {
         //given
         List<Piece> actual = List.of(PieceCache.of("P"), PieceCache.of("p"),
-        PieceCache.of("K"));
+            PieceCache.of("K"));
 
         //when
         List<Piece> expected = List.of(Pawn.colorOf(PieceColor.BLACK), Pawn.colorOf(PieceColor.WHITE),

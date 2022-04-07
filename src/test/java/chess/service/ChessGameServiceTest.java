@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.MappingUtil;
 import chess.Game;
+import chess.MappingUtil;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.model.Board;
@@ -196,7 +196,6 @@ public class ChessGameServiceTest {
     void getScore() {
         assertThat(chessGameService.getScore()).isEqualTo(38.0);
     }
-
 
     private static class fakeBoardDao implements BoardDao {
         private final Map<Integer, Map<String, String>> table;

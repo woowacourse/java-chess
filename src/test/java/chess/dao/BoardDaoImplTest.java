@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.MappingUtil;
 import chess.Game;
+import chess.MappingUtil;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
 
