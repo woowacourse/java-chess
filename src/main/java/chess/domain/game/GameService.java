@@ -1,6 +1,9 @@
 package chess.domain.game;
 
-import chess.dao.*;
+import chess.dao.BoardDao;
+import chess.dao.ChessConnectionManager;
+import chess.dao.PieceDao;
+import chess.dao.PositionDao;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Column;

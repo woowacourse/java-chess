@@ -3,10 +3,11 @@ package chess.domain.game;
 import chess.dao.Member;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
-import chess.machine.Command;
 import chess.dto.BoardDto;
 import chess.dto.ResponseDto;
 import chess.dto.StatusDto;
+import chess.mapper.Command;
+import org.eclipse.jetty.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ChessController {
         if (Command.isMove(command)) {
             return getResponseDto(roomId, command);
         }
-        return new ResponseDto(400, "잘못된 명령어 입니다.", gameService.isEnd(roomId));
+        return new ResponseDto(HttpStatus.BAD_REQUEST_400, "잘못된 명령어 입니다.", gameService.isEnd(roomId));
     }
 
     public StatusDto status(int roomId) {
@@ -44,9 +45,9 @@ public class ChessController {
         try {
             movePiece(roomId, Arrays.asList(command.split(MOVE_DELIMITER)));
         } catch (IllegalArgumentException e) {
-            return new ResponseDto(400, e.getMessage(), gameService.isEnd(roomId));
+            return new ResponseDto(HttpStatus.BAD_REQUEST_400, e.getMessage(), gameService.isEnd(roomId));
         }
-        return new ResponseDto(200, "", gameService.isEnd(roomId));
+        return new ResponseDto(HttpStatus.OK_200, "", gameService.isEnd(roomId));
     }
 
     private void movePiece(int roomId, final List<String> commands) {

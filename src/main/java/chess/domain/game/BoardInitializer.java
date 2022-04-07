@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.pieces.Piece;
 import chess.domain.pieces.*;
 import chess.domain.position.Column;
 import chess.domain.position.Position;

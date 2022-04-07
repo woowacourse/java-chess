@@ -1,4 +1,4 @@
-package chess.machine;
+package chess.mapper;
 
 public enum Result {
 

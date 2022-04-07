@@ -1,4 +1,4 @@
-package chess.machine;
+package chess.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;

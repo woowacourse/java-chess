@@ -1,13 +1,10 @@
 package chess.domain.game;
 
-import chess.dao.*;
+import chess.dao.Member;
 import chess.domain.pieces.Color;
-import chess.domain.pieces.Piece;
-import chess.domain.position.Direction;
-import chess.domain.position.Position;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Board {
 
