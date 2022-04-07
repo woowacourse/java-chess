@@ -5,6 +5,7 @@ import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
 import chess.dto.RoomStatusDto;
+import chess.service.util.ResponseUtil;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,14 +25,13 @@ public class RoomService {
     }
 
     public String findPage(final Request req, final Response res) {
-        Map<String, Object> model = new HashMap<>();
 
         final boolean roomExist = roomDao.isExistName(req.params(":name"));
         if (!roomExist) {
             res.status(404);
-            return render(model, "index.html");
+            return render(new HashMap<>(), "index.html");
         }
-        return render(model, "board.html");
+        return render(new HashMap<>(), "board.html");
     }
 
     private String render(Map<String, Object> model, String templatePath) {
@@ -55,9 +55,7 @@ public class RoomService {
             return null;
         } catch (IllegalArgumentException e) {
             res.status(400);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
@@ -69,9 +67,7 @@ public class RoomService {
             return gson.toJson(dto);
         } catch (IllegalArgumentException e) {
             res.status(400);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 

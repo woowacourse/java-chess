@@ -17,8 +17,8 @@ import chess.dto.RoomStatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
+import chess.service.util.ResponseUtil;
 import com.google.gson.Gson;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -46,9 +46,7 @@ public class ChessService {
             return gson.toJson(allByRoomName);
         } catch (IllegalArgumentException e) {
             res.status(404);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
@@ -65,9 +63,7 @@ public class ChessService {
             return null;
         } catch (IllegalArgumentException e) {
             res.status(404);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
@@ -90,9 +86,7 @@ public class ChessService {
             return gson.toJson(moveResult);
         } catch (IllegalArgumentException e) {
             res.status(400);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
@@ -110,9 +104,7 @@ public class ChessService {
             return gson.toJson(score);
         } catch (IllegalArgumentException e) {
             res.status(400);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
@@ -126,9 +118,7 @@ public class ChessService {
             return gson.toJson(result);
         } catch (IllegalArgumentException e) {
             res.status(400);
-            final Map<String, String> map = new HashMap<>();
-            map.put("error", e.getMessage());
-            return gson.toJson(map);
+            return ResponseUtil.toErrorResponse(e.getMessage());
         }
     }
 
