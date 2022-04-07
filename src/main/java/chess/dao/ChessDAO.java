@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ChessDAO {
 
@@ -27,9 +28,8 @@ public class ChessDAO {
             statement.setString(1, team);
             statement.executeUpdate();
 
-            int gameId = getLastInsertKey(connection);
+            int gameId = getLastInsertKey();
             savePieces(board.getBoard(), gameId);
-
             return gameId;
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -37,10 +37,11 @@ public class ChessDAO {
         }
     }
 
-    private int getLastInsertKey(Connection connection) {
-        String sql = "select last_insert_id() from Game";
+    public int getLastInsertKey() {
+        String sql = "select game_id from Game order by game_id DESC limit 1";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet lastInsertKey = statement.executeQuery();
             if (lastInsertKey.next()) {
                 return lastInsertKey.getInt(1);
@@ -49,7 +50,7 @@ public class ChessDAO {
             exception.printStackTrace();
             throw new RuntimeException(exception);
         }
-        throw new RuntimeException("데이터를 찾지 못했습니다.");
+        throw new NoSuchElementException("Game 테이블에 데이터가 존재하지 않습니다.");
     }
 
     private void savePieces(Map<Row, Rank> board, int gameId) {
@@ -83,15 +84,19 @@ public class ChessDAO {
 
     public Board findBoardByGameId(int gameId) {
         try (Connection connection = databaseConnector.getConnection()) {
-            Map<Row, Rank> ranks = new HashMap<>();
-            for (Row row : Row.values()) {
-                ranks.put(row, findRankByRow(row.getValue(), gameId, connection));
-            }
-            return new Board(ranks);
+            return new Board(createRanks(gameId, connection));
         } catch (SQLException exception) {
             exception.printStackTrace();
             throw new RuntimeException(exception);
         }
+    }
+
+    private Map<Row, Rank> createRanks(int gameId, Connection connection) {
+        Map<Row, Rank> ranks = new HashMap<>();
+        for (Row row : Row.values()) {
+            ranks.put(row, findRankByRow(row.getValue(), gameId, connection));
+        }
+        return ranks;
     }
 
     private Rank findRankByRow(int row, int gameId, Connection connection) {
@@ -102,21 +107,24 @@ public class ChessDAO {
             statement.setInt(1, row);
             statement.setInt(2, gameId);
             ResultSet resultSet = statement.executeQuery();
-
-            EnumMap<Column, Piece> rank = new EnumMap<>(Column.class);
-            while (resultSet.next()) {
-                rank.put(Column.find(resultSet.getString("position_column")),
-                        PieceFactory.of(
-                                resultSet.getString("piece_type"),
-                                resultSet.getString("position_column"),
-                                resultSet.getInt("position_row"),
-                                resultSet.getString("team")));
-            }
-            return new Rank(rank);
+            return new Rank(createPiecesByResult(resultSet));
         } catch (SQLException exception) {
             exception.printStackTrace();
             throw new RuntimeException(exception);
         }
+    }
+
+    private EnumMap<Column, Piece> createPiecesByResult(ResultSet resultSet) throws SQLException {
+        EnumMap<Column, Piece> rank = new EnumMap<>(Column.class);
+        while (resultSet.next()) {
+            rank.put(Column.find(resultSet.getString("position_column")),
+                    PieceFactory.of(
+                            resultSet.getString("piece_type"),
+                            resultSet.getString("position_column"),
+                            resultSet.getInt("position_row"),
+                            resultSet.getString("team")));
+        }
+        return rank;
     }
 
     public Piece findPieceByPosition(Position position, int gameId) {

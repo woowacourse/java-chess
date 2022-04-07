@@ -14,6 +14,7 @@ import chess.dto.RankDTO;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -23,7 +24,11 @@ public class ChessService {
 
     public ChessService(ChessDAO chessDAO) {
         this.chessDAO = chessDAO;
-        gameId = createNewChessGame();
+        try {
+            gameId = chessDAO.getLastInsertKey();
+        } catch (NoSuchElementException exception) {
+            gameId = createNewChessGame();
+        }
     }
 
     private int createNewChessGame() {
