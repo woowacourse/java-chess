@@ -26,12 +26,6 @@ class GameDaoTest {
     }
 
     @Test
-    @DisplayName("DB 연결을 확인한다.")
-    void connection() {
-        assertThat(connector.makeConnection(Connector.DEV_DB_URL)).isNotNull();
-    }
-
-    @Test
     @DisplayName("게임을 저장한다.")
     void save() {
         int actual = gameDao.save(ChessBoardFactory.initBoard());
