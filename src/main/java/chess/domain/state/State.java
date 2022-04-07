@@ -12,6 +12,7 @@ public abstract class State {
     protected Board board;
 
     public abstract State start();
+  
     // 자식 클래스에 대한 정보가 메서드에 담겨있다.
     public abstract boolean isEnd();
 
