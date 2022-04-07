@@ -149,11 +149,11 @@ public class PawnTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("폰의 name은 Pawn이다.")
+    @DisplayName("폰의 name은 pawn이다.")
     @Test
     void getName() {
         String actual = new Pawn(Color.BLACK, Position.of("a1")).getName();
-        String expected = "Pawn";
+        String expected = "pawn";
 
         assertThat(actual).isEqualTo(expected);
     }

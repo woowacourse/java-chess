@@ -1,4 +1,4 @@
-package chess.console.controller;
+package chess.controller;
 
 import static chess.console.consoleview.InputView.requestMoveOrEndOrStatusInput;
 import static chess.console.consoleview.InputView.requestStartOrEndInput;
@@ -13,7 +13,7 @@ import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
 import chess.console.consoleview.boardview.BoardView;
 
-public class ChessController {
+public class ConsoleChessController {
 
     private boolean playerWantToEndStatus = false;
 

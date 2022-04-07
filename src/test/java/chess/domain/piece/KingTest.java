@@ -63,11 +63,11 @@ public class KingTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹의 name은 King")
+    @DisplayName("킹의 name은 king")
     @Test
     void getName() {
         String actual = new King(Color.BLACK, Position.of("a1")).getName();
-        String expected = "King";
+        String expected = "king";
 
         assertThat(actual).isEqualTo(expected);
     }

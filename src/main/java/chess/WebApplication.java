@@ -1,4 +1,4 @@
-package chess.web;
+package chess;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -32,7 +32,7 @@ public class WebApplication {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            return render(model, "index2.html");
+            return render(model, "index.html");
         });
 
         get("/game", (req, res) -> {
@@ -41,13 +41,13 @@ public class WebApplication {
 
             Map<String, Object> model = game.get().toBoard(String.valueOf(gameId)).getBoardMap();
 
-            return render(model, "index.html");
+            return render(model, "game.html");
         });
 
         get("/game/progress", (req, res) -> {
             Map<String, Object> model = game.get().toBoard(String.valueOf(gameId)).getBoardMap();
 
-            return render(model, "index.html");
+            return render(model, "game.html");
         });
 
         post("/game/move", (req, res) -> {

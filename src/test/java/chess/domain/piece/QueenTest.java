@@ -74,11 +74,11 @@ public class QueenTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("퀸의 name은 Queen이다.")
+    @DisplayName("퀸의 name은 queen이다.")
     @Test
     void getName() {
         String actual = new Queen(Color.BLACK, Position.of("a1")).getName();
-        String expected = "Queen";
+        String expected = "queen";
 
         assertThat(actual).isEqualTo(expected);
     }
