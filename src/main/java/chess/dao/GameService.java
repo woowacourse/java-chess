@@ -27,19 +27,13 @@ public class GameService {
     }
 
     public BoardDto end() {
-        Board board = toBoard(squareDao.find());
         deleteData();
-        return BoardDto.from(board.getBoard());
-    }
-
-    public BoardDto load() {
         Board board = toBoard(squareDao.find());
         return BoardDto.from(board.getBoard());
     }
 
     public BoardDto move(String source, String target) {
         String nowTurn = turnDao.find();
-        System.out.println(nowTurn);
         Board board = movePieceInBoard(source, target, nowTurn);
 
         squareDao.update(source, board.getBoard().get(Position.from(source)));
@@ -50,6 +44,11 @@ public class GameService {
 
         Board movedBoard = toBoard(squareDao.find());
         return BoardDto.from(movedBoard.getBoard());
+    }
+
+    public BoardDto load() {
+        Board board = toBoard(squareDao.find());
+        return BoardDto.from(board.getBoard());
     }
 
     private Board movePieceInBoard(String source, String target, String turn) {
