@@ -161,6 +161,7 @@ function restart() {
     turnMessage.textContent = " 현재 턴 :";
     initPieceImg();
     changeTurn();
+    score();
   });
 }
 
