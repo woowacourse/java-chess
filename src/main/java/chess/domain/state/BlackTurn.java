@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
@@ -23,10 +22,5 @@ public class BlackTurn extends Running {
         }
 
         return new WhiteTurn(chessBoard);
-    }
-
-    @Override
-    public StateType getStateType() {
-        return StateType.BLACK_TURN;
     }
 }

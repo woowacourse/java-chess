@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Result;
 import chess.domain.generator.InitBoardGenerator;
@@ -34,11 +33,6 @@ public class Ready extends Started {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public StateType getStateType() {
-        return StateType.READY;
     }
 
     @Override

@@ -16,7 +16,7 @@ import static chess.dao.dto.PieceType.ROOK_WHITE;
 import chess.dao.dto.PieceDto;
 import chess.dao.dto.TurnDto;
 import chess.domain.ChessBoard;
-import chess.domain.ChessGame;
+import chess.domain.state.ChessGame;
 import chess.domain.generator.EmptyBoardGenerator;
 import chess.dao.dto.PieceType;
 import chess.domain.state.State;

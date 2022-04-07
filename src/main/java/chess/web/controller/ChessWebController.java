@@ -1,7 +1,7 @@
 package chess.web.controller;
 
 import chess.dao.ChessService;
-import chess.domain.ChessGame;
+import chess.domain.state.ChessGame;
 import chess.domain.Color;
 import chess.domain.Result;
 import chess.web.dto.BoardResponse;

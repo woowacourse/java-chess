@@ -4,7 +4,7 @@ package chess.console.controller;
 import chess.console.dto.CommandRequest;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
-import chess.domain.ChessGame;
+import chess.domain.state.ChessGame;
 import chess.domain.Color;
 import chess.domain.state.Ready;
 

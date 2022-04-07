@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Result;
 
@@ -15,8 +14,6 @@ public interface State {
     boolean isStarted();
 
     boolean isFinished();
-
-    StateType getStateType();
 
     Result winner();
 

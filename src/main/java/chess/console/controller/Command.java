@@ -2,7 +2,7 @@ package chess.console.controller;
 
 import chess.console.view.OutputView;
 import chess.domain.Board;
-import chess.domain.ChessGame;
+import chess.domain.state.ChessGame;
 import chess.domain.Color;
 import java.util.Arrays;
 import java.util.List;

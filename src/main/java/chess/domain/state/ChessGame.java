@@ -1,6 +1,9 @@
-package chess.domain;
+package chess.domain.state;
 
-import chess.domain.state.State;
+import chess.domain.Board;
+import chess.domain.ChessBoard;
+import chess.domain.Color;
+import chess.domain.Result;
 
 public class ChessGame {
 
