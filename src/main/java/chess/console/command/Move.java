@@ -20,8 +20,13 @@ public final class Move implements Command {
 
     @Override
     public void execute(GameManager gameManager) {
+        if (gameManager.isFinished()) {
+            OutputView.printResult(gameManager.getStatus().getResult());
+            return;
+        }
+
         gameManager.move(source, destination);
-        OutputView.printBoard(gameManager);
+        OutputView.printBoard(gameManager.getBoard());
     }
 
     @Override

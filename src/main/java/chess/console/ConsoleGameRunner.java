@@ -16,6 +16,7 @@ public final class ConsoleGameRunner {
 
         while (!currentCommand.isEnd()) {
             if (gameManager.isFinished()) {
+                currentCommand.execute(gameManager);
                 break;
             }
             currentCommand = inputCommandAndExecute(gameManager);

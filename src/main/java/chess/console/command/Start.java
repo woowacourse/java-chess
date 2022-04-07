@@ -7,7 +7,7 @@ public final class Start implements Command {
 
     @Override
     public void execute(GameManager gameManager) {
-        OutputView.printBoard(gameManager);
+        OutputView.printBoard(gameManager.getBoard());
     }
 
     @Override

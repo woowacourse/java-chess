@@ -1,6 +1,5 @@
 package chess.console.view;
 
-import chess.domain.GameManager;
 import chess.domain.board.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -33,10 +32,22 @@ public class OutputView {
         System.out.println("블랙 진영의 점수는 " + status.getBlackScore() + "입니다.");
         System.out.println("화이트 진영의 점수는 " + status.getWhiteScore() + "입니다.");
 
-        printWinner(status.getResult());
+        printCurrentWinner(status.getResult());
     }
 
-    private static void printWinner(Result result) {
+    public static void printResult(Result result) {
+        if (result.equals(Result.BLACK_WIN)) {
+            System.out.println("블랙 진영이 이겼습니다.");
+        }
+        if (result.equals(Result.WHITE_WIN)) {
+            System.out.println("화이트 진영이 이겼습니다.");
+        }
+        if (result.equals(Result.DRAW)) {
+            System.out.println("무승부입니다.");
+        }
+    }
+
+    private static void printCurrentWinner(Result result) {
         if (result.equals(Result.BLACK_WIN)) {
             System.out.println("블랙 진영이 이기고 있습니다.");
         }
@@ -46,13 +57,5 @@ public class OutputView {
         if (result.equals(Result.DRAW)) {
             System.out.println("무승부입니다.");
         }
-    }
-
-    public static void printBoard(GameManager gameManager) {
-        printBoard(gameManager.getBoard());
-    }
-
-    public static void printStatus(GameManager gameManager) {
-        printStatus(gameManager.getStatus());
     }
 }
