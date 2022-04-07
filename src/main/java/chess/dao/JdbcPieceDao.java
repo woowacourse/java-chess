@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PieceDaoImpl implements PieceDao {
+public class JdbcPieceDao implements PieceDao {
 
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";

@@ -6,8 +6,8 @@ import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
 import chess.dao.ChessService;
-import chess.dao.PieceDaoImpl;
-import chess.dao.TurnDaoImpl;
+import chess.dao.JdbcPieceDao;
+import chess.dao.JdbcTurnDao;
 import chess.web.controller.ChessWebController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,7 +20,7 @@ public class WebApplication {
         staticFileLocation("/static");
 
         ChessWebController chessWebController = new ChessWebController(
-                new ChessService(new PieceDaoImpl(), new TurnDaoImpl()));
+                new ChessService(new JdbcPieceDao(), new JdbcTurnDao()));
 
         get("/", chessWebController::index, HANDLEBARS_TEMPLATE_ENGINE);
         get("/start", chessWebController::create, HANDLEBARS_TEMPLATE_ENGINE);

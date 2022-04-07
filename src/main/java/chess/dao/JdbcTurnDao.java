@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class TurnDaoImpl implements TurnDao {
+public class JdbcTurnDao implements TurnDao {
 
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
