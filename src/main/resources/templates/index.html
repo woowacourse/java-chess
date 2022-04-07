@@ -36,9 +36,9 @@
             <form enctype="text/plain" action="/status" method="get">
                 <input type="submit" value="확인하기">
             </form>
-            {{#endMessage}}
+            {{#finishMessage}}
             <p>GAME OVER - KING DIED</p>
-            {{/endMessage}}
+            {{/finishMessage}}
             {{#status}}
             <p>BLACK: {{teamScore.BLACK}}  WHITE: {{teamScore.WHITE}} </p>
             <p>우승 팀: {{winner}}</p>
