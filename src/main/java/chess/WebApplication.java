@@ -74,6 +74,15 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            if (req.session().attribute("WINNER_MESSAGE") != null) {
+                model.putAll(req.session().attribute("WINNER_MESSAGE"));
+                req.session().removeAttribute("WINNER_MESSAGE");
+            }
+            return render(model, "end.html");
+        });
+
         post("/move", (req, res) -> {
             ChessBoardDao chessBoardDao = new ChessBoardDao();
             PlayerDao playerDao = new PlayerDao();
@@ -126,15 +135,6 @@ public class WebApplication {
             request.session().attribute("ERROR_MESSAGE", error);
 
             response.redirect("/play");
-        });
-
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            if (req.session().attribute("WINNER_MESSAGE") != null) {
-                model.putAll(req.session().attribute("WINNER_MESSAGE"));
-                req.session().removeAttribute("WINNER_MESSAGE");
-            }
-            return render(model, "end.html");
         });
     }
 
