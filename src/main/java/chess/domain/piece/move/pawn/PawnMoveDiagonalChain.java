@@ -27,6 +27,6 @@ public class PawnMoveDiagonalChain extends PawnMoveChain {
     }
 
     private boolean isToPoint(int horizontal, int vertical) {
-        return vertical == 1 && horizontal == 1;
+        return vertical == 1 && Math.abs(horizontal) == 1;
     }
 }

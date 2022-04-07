@@ -1,4 +1,32 @@
 # java-chess
+![](chessGame.png)
+
+# 환경 구축
+## 1. Docker MySql 설치
+`/docker` 디렉터리에 이동하여 터미널에 `docker-compose -p chess up -d` 명령어를 입력하여 도커에 프로젝트 db설치 및 실행한다.
+
+## 2. MySql 터미널 접속하기
+`docker exec -it chess_db_1 bash` 를 통해 docker안에 있는 db 터미널 접속한다.
+
+## 3. DB테이블 생성하기
+아래의 DDL을 사용하여 DB에 테이블을 생성한다.
+### 테이블을 만들 때 사용한 DDL
+```sql
+create table game (
+    room_name varchar(10) not null,
+    turn_color varchar(10) not null,
+    primary key (room_name)
+);
+
+create table pieces (
+    room_name varchar(255) not null,
+    position varchar(2) not null,
+    piece_type varchar(20) not null,
+    piece_color varchar(20) not null,
+    foreign key(room_name) references game (room_name)
+    on delete cascade
+);
+```
 
 ## 기능 구현 목록
 ### 1단계
@@ -46,6 +74,20 @@
   - [x] Queen은 9점이다.
   - [x] King은 0점이다.
 
+### 4단계
+- [x] `/` url 접속시 체스 보드 페이지가 나와야 한다.
+- [x] `/start` url 접속시 보드에 말이 생기며 게임이 시작되어야 한다.
+- [x] `/move` url 접속시 말을 이동시켜야 한다.
+- [x] `/status` url 접속시 현재 게임 통계 점수가 나와야 한다.
+- [x] `/finish` url 접속시 게임이 종료되어야 한다.
+- [x] 모든 응답/요청은 json으로 정보를 전달한다.
+
+### 5단계
+- [x] 웹 서버를 재시작하더라도 이전 게임을 다시 시작할 수 있어야 한다.
+- [x] 게임 방을 생성하여 게임을 한다.
+- [x] 게임 방을 검색하여 이전 게임을 이어서 한다.
+- [x] 게임 종료시 방을 삭제할지 선택후, 삭제할 수 있다.
+
 ## 프로그래밍 요구사항
 - [x] 자바 코드 컨벤션을 지키면서 프로그래밍했는가?
 - [x] 한 메서드에 오직 한 단계의 들여쓰기(indent)만 허용했는가?
@@ -58,6 +100,7 @@
 - [x] 코드 한 줄에 점(.)을 하나만 허용했는가? (디미터의 법칙)
 - [x] 메소드가 한가지 일만 담당하도록 구현했는가?
 - [x] 클래스를 작게 유지하기 위해 노력했는가?
+- [x] 4,5 단계 구현을 할 때 도메인의 변경을 최소화해야 한다.
 
 
 ## 우아한테크코스 코드리뷰

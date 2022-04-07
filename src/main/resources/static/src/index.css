@@ -1,0 +1,128 @@
+.horizontal-vertical-center {
+  margin-top: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.chess-ui {
+  width: 800px;
+  height: 800px;
+  display: flex;
+}
+
+.chess-board {
+  width: 640px;
+  height: 640px;
+}
+
+.chess-row {
+  height: 80px;
+  width: 640px;
+  display: flex;
+}
+
+.white-square {
+  width: 80px;
+  height: 80px;
+  background-color: #efe7cf;
+}
+
+.white-square.selected {
+  background-color: rosybrown;
+}
+
+.black-square {
+  width: 80px;
+  height: 80px;
+  background-color: #3b3535;
+}
+
+.black-square.selected {
+  background-color: rosybrown;
+}
+
+.chess-control {
+  padding: 10px 30px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.remote-button {
+  display: flex;
+}
+
+.w-btn-outline {
+  width: 140px;
+  position: relative;
+  padding: 12px 20px;
+  margin: 7px 5px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.w-btn-outline:hover {
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.w-btn-outline:active {
+  transform: scale(1.5);
+}
+
+.w-btn-gray-outline {
+  border: 3px solid #a3a1a1;
+  color: #6e6e6e;
+}
+
+.w-btn-gray-outline:hover {
+  background-color: #a3a1a1;
+  color: #e3dede;
+}
+
+.w-btn-outline2 {
+  width: 160px;
+  height: 50px;
+  position: relative;
+  padding: 5px 8px;
+  margin: 10px 5px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.w-btn-outline2:hover {
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.w-btn-outline2:active {
+  transform: scale(1.2);
+}
+
+.input-box {
+  width: 120px;
+  height: 30px;
+  position: relative;
+  padding: 5px 8px;
+  margin: 7px 3px;
+  border-radius: 15px;
+  font-size: 10px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}

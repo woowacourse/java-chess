@@ -64,4 +64,12 @@ class PointTest {
 
         assertThat(next).isEqualTo(Point.of("b2"));
     }
+
+    @Test
+    @DisplayName("Point의 체스판 id를 올바르게 반환한다.")
+    void toPointId() {
+        Point point = Point.of("a1");
+
+        assertThat(point.convertPointToId()).isEqualTo("a1");
+    }
 }

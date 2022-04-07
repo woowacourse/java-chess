@@ -122,7 +122,7 @@ class PawnTest {
         Point from = Point.of("a5");
         Point to = Point.of("b4");
         Board board = BoardFixtures.create(
-                Map.of(Point.of(2, 4), new Rook(Color.WHITE)));
+                Map.of(Point.of("b4"), new Rook(Color.WHITE)));
 
         assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();

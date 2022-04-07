@@ -55,6 +55,10 @@ public class Point {
         return horizontal.isInRangeNext(dx) && vertical.isInRangeNext(dy);
     }
 
+    public String convertPointToId() {
+        return horizontal.changeHorizontalId() + vertical.changeVerticalId();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,7 +3,9 @@ package chess.domain.piece;
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public enum PieceType {
 
@@ -21,6 +23,13 @@ public enum PieceType {
 
     PieceType(double score) {
         this.score = score;
+    }
+
+    public static PieceType convertTypeByString(String type) {
+        return Arrays.stream(values())
+                .filter(value -> value.toString().equals(type))
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public double getScore() {
