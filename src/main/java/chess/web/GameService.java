@@ -38,10 +38,11 @@ public class GameService {
     public ChessDto load() {
         gameManager = new GameManager();
         Map<Position, Piece> value = pieceDao.findAll();
-        if (value.isEmpty()) {
+        Turn currentTurn = turnDao.findCurrentTurn();
+        if (value.isEmpty() || currentTurn == Turn.END) {
             throw new IllegalArgumentException("이전에 저장된 게임이 없습니다");
         }
-        Turn currentTurn = turnDao.findCurrentTurn();
+
         gameManager.load(new Board(value), currentTurn);
         return ChessDto.from(gameManager);
     }

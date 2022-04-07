@@ -43,7 +43,11 @@ const loadLastGame = async () => {
         .then(value => {
             updateChessBoardAndTurn(value)
             isEnd = false;
-        });
+        }).catch(response => {
+        if (!response.ok) {
+            alert("저장된 게임이 존재하지 않습니다")
+        }
+    });
 
     (await requestScore())
         .json()
