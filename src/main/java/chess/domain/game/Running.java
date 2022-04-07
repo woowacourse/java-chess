@@ -4,15 +4,25 @@ import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.PieceType;
 import chess.domain.board.position.Position;
+import chess.domain.event.Event;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.statistics.GameResult;
 
 abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
+    private static final String NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE = "아직 구현되지 않은 기능입니다.";
 
     Running(Board board) {
         super(board);
+    }
+
+    @Override
+    public Game play(Event event) {
+        if (event.isMove()) {
+            return moveChessmen(event.toMoveCommand());
+        }
+        throw new UnsupportedOperationException(NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE);
     }
 
     @Override
