@@ -5,9 +5,6 @@ import chess.domain.piece.Piece;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
-import chess.domain.state.Black;
-import chess.domain.state.End;
-import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.domain.state.White;
 import java.util.ArrayList;
@@ -79,23 +76,11 @@ public class BoardDto {
     }
 
     private static String decideTurn(final State state) {
-        if(state instanceof White) {
+        if (state instanceof White) {
             return "white";
         }
 
-        if(state instanceof Black) {
-            return "black";
-        }
-
-        if(state instanceof Ready) {
-            return "ready";
-        }
-
-        if(state instanceof End) {
-            return "end";
-        }
-
-        return null;
+        return "black";
     }
 
     public List<List<PieceDto>> getCells() {
