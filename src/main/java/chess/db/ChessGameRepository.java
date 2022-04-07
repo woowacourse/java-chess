@@ -33,7 +33,7 @@ public class ChessGameRepository {
     }
 
     public void move(final int chessGameId, final ChessGame chessGame) {
-        String nextState = StateType.move(chessGameDao.find(chessGameId).getState());
+        String nextState = StateType.getType(chessGame.getState());
         chessGameDao.move(chessGameId, nextState);
 
         movePieces(chessGame, chessGameId);

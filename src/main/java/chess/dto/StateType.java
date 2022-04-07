@@ -26,16 +26,6 @@ public enum StateType {
         this.generate = generate;
     }
 
-    public static String move(final String now) {
-        if (now.equals(WHITE_TURN.type)) {
-            return BLACK_TURN.type;
-        }
-        if (now.equals(BLACK_TURN.type)) {
-            return WHITE_TURN.type;
-        }
-        return now;
-    }
-
     public static State getState(final String type, final Board board) {
         return Arrays.stream(StateType.values())
                 .filter(stateType -> stateType.type.equals(type))
