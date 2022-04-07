@@ -20,7 +20,7 @@ function onClickButton ({target: {id}}) {
 }
 
 async function onClickStartButton () {
-    const isRestart = confirm("이전 게임을 불러오시겠습니까?");
+    const isRestart = confirm("이전 게임을 불러오겠습니까?");
     const response = await getStartFetch(isRestart);
     const data = await response.json();
 
