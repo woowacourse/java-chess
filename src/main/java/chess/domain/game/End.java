@@ -34,8 +34,18 @@ public class End implements State {
 		return board.getValue();
 	}
 
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
 	@Override
 	public boolean isFinished() {
 		return true;
 	}
+
+    @Override
+    public String getState() {
+        return "End";
+    }
 }

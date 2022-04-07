@@ -45,8 +45,18 @@ public class WhiteTurn implements State {
 		return board.getValue();
 	}
 
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
 	@Override
 	public boolean isFinished() {
 		return false;
 	}
+
+    @Override
+    public String getState() {
+        return "WhiteTurn";
+    }
 }
