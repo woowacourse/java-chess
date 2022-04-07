@@ -10,6 +10,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.state.Ready;
 import java.math.BigDecimal;
 import java.util.List;
@@ -59,7 +60,7 @@ class ChessGameTest {
     @DisplayName("승자를 정상적으로 가져오는지 확인")
     void winner() {
         ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
-            List.of(new King(Color.WHITE, Position.from("a1"))))));
+            List.of(new King(Color.WHITE, Positions.from("a1"))))));
 
         chessGame.start();
         chessGame.execute(Command.from("move a1 a2"));
@@ -71,11 +72,11 @@ class ChessGameTest {
     @DisplayName("점수를 정상적으로 가져오는지 확인")
     void score() {
         ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
-            List.of(new Rook(Color.WHITE, Position.from("e5")),
-                new Knight(Color.WHITE, Position.from("e6")),
-                new Knight(Color.WHITE, Position.from("e7")),
-                new Bishop(Color.BLACK, Position.from("a7")),
-                new Bishop(Color.BLACK, Position.from("a8"))))));
+            List.of(new Rook(Color.WHITE, Positions.from("e5")),
+                new Knight(Color.WHITE, Positions.from("e6")),
+                new Knight(Color.WHITE, Positions.from("e7")),
+                new Bishop(Color.BLACK, Positions.from("a7")),
+                new Bishop(Color.BLACK, Positions.from("a8"))))));
 
         chessGame.start();
         Score score = chessGame.score();

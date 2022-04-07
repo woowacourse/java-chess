@@ -16,7 +16,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
-import java.math.BigDecimal;
+import chess.domain.position.Positions;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +40,7 @@ class RunningTest {
     @Test
     @DisplayName("기물을 움직여도 Running 상태인지 확인")
     void movePieceAfterRunningState() {
-        assertThat(running.move(Position.from("d2"), Position.from("d4")))
+        assertThat(running.move(Positions.from("d2"), Positions.from("d4")))
             .isInstanceOf(Running.class);
     }
 
@@ -48,11 +48,11 @@ class RunningTest {
     @DisplayName("왕을 잡을 경우 GameEnd상태로 변화")
     void killOfKingAfterGameEndState() {
         Running running = new Running(
-            new ChessBoard(List.of(new King(Color.BLACK, Position.from("e8")),
-                new Rook(Color.WHITE, Position.from("e1")),
-                new King(Color.WHITE, Position.from("f1")))), Color.WHITE);
+            new ChessBoard(List.of(new King(Color.BLACK, Positions.from("e8")),
+                new Rook(Color.WHITE, Positions.from("e1")),
+                new King(Color.WHITE, Positions.from("f1")))), Color.WHITE);
 
-        assertThat(running.move(Position.from("e1"), Position.from("e8"))).isInstanceOf(
+        assertThat(running.move(Positions.from("e1"), Positions.from("e8"))).isInstanceOf(
             GameEnd.class);
     }
 
@@ -78,9 +78,9 @@ class RunningTest {
     @DisplayName("점수 계산이 정확한지 확인")
     void score() {
         Running running = new Running(new ChessBoard(
-            List.of(new Rook(Color.WHITE, Position.from("e5")),
-                new Knight(Color.WHITE, Position.from("e6")),
-                new Bishop(Color.BLACK, Position.from("a7")))), Color.WHITE);
+            List.of(new Rook(Color.WHITE, Positions.from("e5")),
+                new Knight(Color.WHITE, Positions.from("e6")),
+                new Bishop(Color.BLACK, Positions.from("a7")))), Color.WHITE);
 
         Score score = running.score();
 

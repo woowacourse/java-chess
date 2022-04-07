@@ -2,44 +2,20 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
 
     public static final int ONE_SQUARE = 1;
-    private static final Map<String, Position> CACHE = new HashMap<>();
 
     private final Column column;
     private final Row row;
 
-    static {
-        for (Column column : Column.orderedValues()) {
-            cacheByFile(column);
-        }
-    }
-
-    private static void cacheByFile(Column column) {
-        for (Row row : Row.values()) {
-            CACHE.put(column.name().toLowerCase(Locale.ROOT) + row.getValue(),
-                new Position(column, row));
-        }
-    }
-
     public Position(Column column, Row row) {
         this.column = column;
         this.row = row;
-    }
-
-    public static Position from(String key) {
-        if (!CACHE.containsKey(key.toLowerCase(Locale.ROOT))) {
-            throw new IllegalArgumentException("체스 보드 position의 범위를 넘어갑니다.");
-        }
-        return CACHE.get(key.toLowerCase(Locale.ROOT));
     }
 
     public boolean isVerticalWay(Position other) {
@@ -118,6 +94,10 @@ public class Position {
         return result;
     }
 
+    public boolean isSameFile(Column column) {
+        return this.column == column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -138,9 +118,5 @@ public class Position {
     @Override
     public String toString() {
         return column.name() + row.getValue();
-    }
-
-    public boolean isSameFile(Column column) {
-        return this.column == column;
     }
 }
