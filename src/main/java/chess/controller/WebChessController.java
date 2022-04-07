@@ -68,7 +68,7 @@ public class WebChessController {
             if (chessService.checkStatus(Status.END)) {
                 chessService.end();
             }
-            return convertToJson(moveResponse.toString());
+            return convertToJson(moveResponse.convertToString());
         });
     }
 

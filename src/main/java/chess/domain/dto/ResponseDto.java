@@ -9,8 +9,7 @@ public class ResponseDto {
         this.message = message;
     }
 
-    @Override
-    public String toString() {
+    public String convertToString() {
         return "{" +
                 "status=" + status +
                 ", message='" + message + '\'' +
