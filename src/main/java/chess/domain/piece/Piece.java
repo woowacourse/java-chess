@@ -2,9 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Column;
 import chess.domain.position.Position;
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {

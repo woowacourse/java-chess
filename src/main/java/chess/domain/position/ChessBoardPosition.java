@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Positions {
+public class ChessBoardPosition {
 
     private static final Map<String, Position> CACHE = new HashMap<>();
 

@@ -4,7 +4,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
-import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class Score {

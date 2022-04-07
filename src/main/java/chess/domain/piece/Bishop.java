@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 
 public class Bishop extends Piece {
 

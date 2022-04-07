@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.position.Position;
-import chess.domain.position.Positions;
+import chess.domain.position.ChessBoardPosition;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +34,7 @@ class ReadyTest {
     @Test
     @DisplayName("move 메서드 호출 시 예외 발생")
     void throwExcetipnCallMove() {
-        assertThatThrownBy(() -> ready.move(Positions.from("e5"), Positions.from("e6")))
+        assertThatThrownBy(() -> ready.move(ChessBoardPosition.from("e5"), ChessBoardPosition.from("e6")))
             .isInstanceOf(UnsupportedOperationException.class);
     }
 

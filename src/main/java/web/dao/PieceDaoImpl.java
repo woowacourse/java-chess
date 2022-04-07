@@ -10,7 +10,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import chess.domain.piece.Symbol;
-import chess.domain.position.Positions;
+import chess.domain.position.ChessBoardPosition;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +41,7 @@ public class PieceDaoImpl implements PieceDao {
             while (rs.next()) {
                 String name = rs.getString("piece_name");
                 String positionValue = rs.getString("position");
-                Position position = Positions.from(positionValue);
+                Position position = ChessBoardPosition.from(positionValue);
                 newPiece.add(daoToPiece(name, position));
             }
             return newPiece;
@@ -173,7 +173,7 @@ public class PieceDaoImpl implements PieceDao {
         try (con; pstmt; rs) {
             Map<Position, Piece> result = new HashMap<>();
             while (rs.next()) {
-                Position position = Positions.from(rs.getString("position"));
+                Position position = ChessBoardPosition.from(rs.getString("position"));
                 result.put(position, daoToPiece(rs.getString("piece_name"), position));
             }
             return result;

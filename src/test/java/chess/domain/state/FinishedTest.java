@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
-import chess.domain.position.Positions;
+import chess.domain.position.ChessBoardPosition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class FinishedTest {
     @Test
     @DisplayName("move 메서드 호출 시 예외 발생")
     void throwExceptionCallMove() {
-        assertThatThrownBy(() -> finished.move(Positions.from("a1"), Positions.from("a2")))
+        assertThatThrownBy(() -> finished.move(ChessBoardPosition.from("a1"), ChessBoardPosition.from("a2")))
             .isInstanceOf(UnsupportedOperationException.class);
     }
 
