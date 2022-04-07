@@ -34,7 +34,7 @@ public class Board {
     public void move(final MoveCommand moveCommand, Color color) {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
-        final Piece piece = getIfExist(from)
+        final Piece piece = Optional.ofNullable(value.get(from))
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
         validateSameTeam(from, to);
         validateColor(piece, color);
@@ -56,13 +56,6 @@ public class Board {
         score.put(BLACK, calculateScore(BLACK));
         score.put(WHITE, calculateScore(WHITE));
         return score;
-    }
-
-    private Optional<Piece> getIfExist(Position from) {
-        if (!value.containsKey(from)) {
-            return Optional.empty();
-        }
-        return Optional.of(value.get(from));
     }
 
     private void validateSameTeam(final Position from, final Position to) {
@@ -165,11 +158,5 @@ public class Board {
         return "Board{" +
                 "value=" + value +
                 '}';
-    }
-
-    public Map<String, Piece> toMap() {
-        return value.entrySet()
-                .stream()
-                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }
