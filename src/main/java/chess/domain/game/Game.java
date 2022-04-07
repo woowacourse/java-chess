@@ -8,20 +8,19 @@ public class Game {
 	private final String name;
 	private final String commandLog;
 
-	public Game(final int id, final String name, final String commandLog) {
-		this.id = id;
-		this.name = name;
-		this.commandLog = commandLog;
-		validateName();
-	}
-
 	public Game(final String name, final String commandLog) {
+		validateName(name);
 		this.name = name;
 		this.commandLog = commandLog;
-		validateName();
+
 	}
 
-	private void validateName() {
+	public Game(final int id, final String name, final String commandLog) {
+		this(name, commandLog);
+		this.id = id;
+	}
+
+	private void validateName(final String name) {
 		if (name.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_NAME_ERROR);
 		}
