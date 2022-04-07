@@ -39,10 +39,9 @@ public class ChessGameDao {
     }
 
     public void save(String gameId, ChessGame chessGame) {
-        final Connection connection = getConnection();
-        final String sql = "insert into chessGame (gameID, turn) values (?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "insert into chessGame (gameID, turn) values (?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameId);
             statement.setString(2, chessGame.getTurn().name());
             statement.executeUpdate();
@@ -52,10 +51,9 @@ public class ChessGameDao {
     }
 
     public void updateTurn(String gameId, ChessGame chessGame) {
-        final Connection connection = getConnection();
-        final String sql = "update chessGame set turn = ? where gameID = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "update chessGame set turn = ? where gameID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chessGame.getTurn().name());
             statement.setString(2, gameId);
             statement.executeUpdate();
@@ -65,13 +63,11 @@ public class ChessGameDao {
     }
 
     public void find(String gameID, ChessGame chessGame) {
-        final Connection connection = getConnection();
-        final String selectPiecesSql = "select position, type, color from piece where gameID = ?";
+        String selectPiecesSql = "select position, type, color from piece where gameID = ?";
         Map<Square, Piece> board = new HashMap<>();
-        try {
-            final PreparedStatement piecesStatement = connection.prepareStatement(selectPiecesSql);
-            piecesStatement.setString(1, gameID);
-            final ResultSet resultPiecesSet = piecesStatement.executeQuery();
+        try (Connection connection = getConnection();
+             PreparedStatement piecesStatement = getPreparedStatement(gameID, selectPiecesSql, connection);
+             ResultSet resultPiecesSet = piecesStatement.executeQuery()) {
             while (resultPiecesSet.next()) {
                 String position = resultPiecesSet.getString("position");
                 String type = resultPiecesSet.getString("type");
@@ -84,12 +80,11 @@ public class ChessGameDao {
         if (board.isEmpty()) {
             throw new IllegalArgumentException("헉.. 저장 안한거 아냐? 그런 게임은 없어!");
         }
-        final String selectGameSql = "select turn from chessGame where gameID = ?";
+        String selectGameSql = "select turn from chessGame where gameID = ?";
         String turn = null;
-        try {
-            final PreparedStatement gameStatement = connection.prepareStatement(selectGameSql);
-            gameStatement.setString(1, gameID);
-            final ResultSet resultGameSet = gameStatement.executeQuery();
+        try (Connection connection = getConnection();
+             PreparedStatement gameStatement = getPreparedStatement(gameID, selectGameSql, connection);
+             ResultSet resultGameSet = gameStatement.executeQuery()) {
             if (!resultGameSet.next()) {
                 return;
             }
@@ -98,5 +93,12 @@ public class ChessGameDao {
             e.printStackTrace();
         }
         chessGame.startGame(new SavedBoardGenerator(board), GameTurn.find(turn));
+    }
+
+    private PreparedStatement getPreparedStatement(String gameID, String selectPiecesSql, Connection connection) throws
+            SQLException {
+        PreparedStatement piecesStatement = connection.prepareStatement(selectPiecesSql);
+        piecesStatement.setString(1, gameID);
+        return piecesStatement;
     }
 }

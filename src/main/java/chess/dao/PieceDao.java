@@ -35,10 +35,9 @@ public class PieceDao {
     }
 
     public void insertPieces(String gameID) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (position, type, color, gameID) values (?, ?, ?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "insert into piece (position, type, color, gameID) values (?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Column column : Column.values()) {
                 for (Row row : Row.values()) {
                     statement.setString(1, new Square(column, row).getName());
@@ -54,10 +53,9 @@ public class PieceDao {
     }
 
     public void deleteByPosition(Square target) {
-        final Connection connection = getConnection();
         final String sql = "delete from piece where position = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, target.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -66,10 +64,9 @@ public class PieceDao {
     }
 
     public void updatePosition(Square source, Square target) {
-        final Connection connection = getConnection();
-        final String sql = "update piece set position = ? where position = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "update piece set position = ? where position = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, target.getName());
             statement.setString(2, source.getName());
             statement.executeUpdate();
@@ -79,10 +76,9 @@ public class PieceDao {
     }
 
     public void deleteAll(String gameID) {
-        final Connection connection = getConnection();
-        final String sql = "delete from piece where gameID = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "delete from piece where gameID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameID);
             statement.executeUpdate();
         } catch (SQLException e) {
