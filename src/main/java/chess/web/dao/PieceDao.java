@@ -13,25 +13,17 @@ import java.util.Map;
 
 public class PieceDao {
     public void save(ChessGameDto chessGameDto) {
-        try {
-            savePieces(chessGameDto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void savePieces(ChessGameDto chessGameDto) throws SQLException {
-        Connection connection = getConnection();
         String sql = "insert into piece (type, team, `rank`, file, game_name) values (?, ?, ?, ?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        ChessBoardDto chessBoard = chessGameDto.getChessBoard();
-        String gameName = chessGameDto.getGameName();
+            ChessBoardDto chessBoard = chessGameDto.getChessBoard();
+            String gameName = chessGameDto.getGameName();
 
-        Map<PositionDto, PieceDto> cells = chessBoard.getCells();
+            Map<PositionDto, PieceDto> cells = chessBoard.getCells();
 
-        try (connection; statement) {
             updateCells(gameName, cells, statement);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,21 +42,12 @@ public class PieceDao {
     }
 
     public void delete(ChessGameDto chessGameDto) {
-        try {
-            deletePieces(chessGameDto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void deletePieces(ChessGameDto chessGameDto) throws SQLException {
-        Connection connection = getConnection();
         String sql = "delete from piece where game_name = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        String gameName = chessGameDto.getGameName();
+            String gameName = chessGameDto.getGameName();
 
-        try (connection; statement) {
             statement.setString(1, gameName);
             statement.executeUpdate();
         } catch (SQLException e) {

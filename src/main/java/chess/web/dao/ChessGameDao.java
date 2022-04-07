@@ -19,19 +19,10 @@ import java.util.Map;
 public class ChessGameDao {
 
     public void save(ChessGameDto chessGameDto) {
-        try {
-            saveChessGame(chessGameDto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveChessGame(ChessGameDto chessGameDto) throws SQLException {
-        Connection connection = getConnection();
         String sql = "insert into chessgame (game_name, turn) values (?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
+        try(Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try (connection; statement) {
             statement.setString(1, chessGameDto.getGameName());
             statement.setString(2, chessGameDto.getTurn());
             statement.executeUpdate();
@@ -41,19 +32,10 @@ public class ChessGameDao {
     }
 
     public void update(ChessGameDto chessGameDto) {
-        try {
-            updateChessGame(chessGameDto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updateChessGame(ChessGameDto chessGameDto) throws SQLException {
-        Connection connection = getConnection();
         String sql = "update chessgame set turn = ? where game_name = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try (connection; statement){
             statement.setString(1, chessGameDto.getTurn());
             statement.setString(2, chessGameDto.getGameName());
             statement.executeUpdate();
@@ -63,24 +45,12 @@ public class ChessGameDao {
     }
 
     public ChessGame findByName(String gameName) {
-        try {
-            return findChessGame(gameName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private ChessGame findChessGame(String gameName) throws SQLException {
-        Connection connection = getConnection();
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, PIECE\n"
                 + "where CHESSGAME.game_name = PIECE.game_name AND CHESSGAME.game_name = ?;";
-        PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
 
-        try (connection; statement) {
             statement.setString(1, gameName);
-
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
@@ -130,19 +100,11 @@ public class ChessGameDao {
     }
 
     public void remove(String gameName) {
-        try {
-            removeByGameName(gameName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void removeByGameName(String gameName) throws SQLException {
-        Connection connection = getConnection();
         String sql = "delete from chessgame where game_name = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
 
-        try (connection; statement) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
             statement.setString(1, gameName);
             statement.executeUpdate();
         } catch (SQLException e) {
