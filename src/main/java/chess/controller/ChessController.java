@@ -1,11 +1,12 @@
-package chess;
+package chess.controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.service.ChessService;
+import chess.JsonTransformer;
 import chess.dto.GameDto;
 import chess.dto.MoveDto;
-import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -13,10 +14,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
-    final ChessService chessService = new ChessService();
-    final JsonTransformer jsonTransformer = new JsonTransformer();
-
     public void run() {
+
+        final ChessService chessService = new ChessService();
+        final JsonTransformer jsonTransformer = new JsonTransformer();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "game.html");

@@ -14,18 +14,14 @@ public class ChessGame {
         this.board = board;
     }
 
-    public boolean move(Position from, Position to) {
+    public boolean move(final Position from, final Position to) {
         final MoveChecker moveChecker = new MoveChecker(board, turn);
         moveChecker.checkMovable(from, to);
 
         if (moveChecker.isCheckmate(to)) {
-            return checkmate();
+            return false;
         }
         return movePiece(from, to);
-    }
-
-    private boolean checkmate() {
-        return false;
     }
 
     private boolean movePiece(final Position from, final Position to) {

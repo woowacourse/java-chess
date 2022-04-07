@@ -3,6 +3,8 @@ package chess;
 import static spark.Spark.port;
 import static spark.Spark.staticFiles;
 
+import chess.controller.ChessController;
+
 public class WebApplication {
 
     public static void main(String[] args) {

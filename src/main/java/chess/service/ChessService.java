@@ -5,8 +5,8 @@ import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Result;
 import chess.domain.Score;
-import chess.domain.dao.BoardDao;
-import chess.domain.dao.ChessGameDao;
+import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
@@ -24,13 +24,13 @@ public class ChessService {
     private final BoardDao boardDao = new BoardDao();
 
     public String start() {
-        Long gameId = chessGameDao.save(Color.WHITE);
+        final Long gameId = chessGameDao.save(Color.WHITE);
         boardDao.saveAll(gameId, Board.create());
         return String.valueOf(gameId);
     }
 
     public Map<String, String> getCurrentBoard(final Long gameId) {
-        Map<Position, Piece> board = boardDao.findById(gameId).getBoard();
+        final Map<Position, Piece> board = boardDao.findById(gameId).getBoard();
         Map<String, String> boardDto = new LinkedHashMap<>();
         for (Entry<Position, Piece> positionPieceEntry : board.entrySet()) {
             boardDto.put(positionPieceEntry.getKey().getPosition(), positionPieceEntry.getValue().getName());
@@ -43,10 +43,10 @@ public class ChessService {
     }
 
     public ResponseDto move(final MoveDto moveDto) {
-        Long gameId = moveDto.getGameId();
-        final ChessGame chessGame = new ChessGame(chessGameDao.findTurnById(gameId), boardDao.findById(gameId));
+        final Long gameId = moveDto.getGameId();
         final String from = moveDto.getFrom();
         final String to = moveDto.getTo();
+        ChessGame chessGame = new ChessGame(chessGameDao.findTurnById(gameId), boardDao.findById(gameId));
         try {
             boolean movable = chessGame.move(Position.create(from), Position.create(to));
             updateBoardDao(gameId, chessGame.getBoard(), from, to);
@@ -57,8 +57,8 @@ public class ChessService {
     }
 
     private void updateBoardDao(final Long gameId, final Board board, final String from, final String to) {
-        boardDao.updatePosition(gameId, from, new EmptyPiece().getName());
-        boardDao.updatePosition(gameId, to, board.findPiece(Position.create(to)).getName());
+        boardDao.updateNameByGameIdAndPosition(gameId, from, new EmptyPiece().getName());
+        boardDao.updateNameByGameIdAndPosition(gameId, to, board.findPiece(Position.create(to)).getName());
     }
 
     private ResponseDto checkFinished(final ChessGame chessGame, final Long gameId, final boolean movable) {
@@ -66,7 +66,7 @@ public class ChessService {
             end(gameId);
             return new ResponseDto("300", "끝", chessGame.getTurn());
         }
-        chessGameDao.updateTurn(gameId, chessGame.getTurn());
+        chessGameDao.updateTurnById(gameId, chessGame.getTurn());
         return new ResponseDto("200", "성공", chessGame.getTurn());
     }
 
