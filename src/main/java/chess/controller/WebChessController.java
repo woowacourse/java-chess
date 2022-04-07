@@ -86,6 +86,7 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             service.save();
             model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
+            model.put("color", service.getTurnColor());
             return render(model, "game.html");
         });
     }
