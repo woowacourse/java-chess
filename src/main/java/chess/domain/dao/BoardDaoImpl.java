@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setString(4, pieceDto.getColor());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
@@ -84,7 +84,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setString(4, position);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 }
