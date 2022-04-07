@@ -122,7 +122,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void deletePiece(String position)  {
+    public void deletePiece(String position) {
         String query = "delete from pieces where position = ?";
         Connection con = DBConnectionSetUp.getConnection();
 
