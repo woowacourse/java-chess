@@ -2,33 +2,38 @@ package chess.web.dto;
 
 import chess.domain.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 public class PieceDto {
 
-    private final String pieceType;
-    private final String position;
-    private final String color;
-
-    public PieceDto(Piece piece, Position position, Color color) {
-        this(piece.getNotation(), position.getNotation(), color.getName());
-    }
+    private final PieceType pieceType;
+    private final Position position;
+    private final Color color;
 
     public PieceDto(String pieceType, String position, String color) {
-        this.pieceType = pieceType;
+        this(PieceType.from(pieceType).newPiece(Color.from(color)), new Position(position));
+    }
+
+    public PieceDto(Piece piece, Position position) {
+        this(piece, position, piece.getColor());
+    }
+
+    private PieceDto(Piece piece, Position position, Color color) {
+        this.pieceType = piece.getPieceType();
         this.position = position;
         this.color = color;
     }
 
     public String getPieceType() {
-        return pieceType;
+        return pieceType.getNotation(Color.BLACK);
     }
 
     public String getPosition() {
-        return position;
+        return position.getNotation();
     }
 
     public String getColor() {
-        return color;
+        return color.getName();
     }
 }
