@@ -14,6 +14,7 @@ import chess.dto.response.ChessGameDto;
 import chess.dto.response.PieceColorDto;
 import chess.dto.response.ScoreResultDto;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 public class ChessService {
     private final GameDao gameDao;
@@ -82,13 +83,13 @@ public class ChessService {
         return ScoreResultDto.from(generateChessGame(gameId));
     }
 
-    // TODO: null 을 반환하면 안됨
-    public PieceColorDto getWinColor(String gameId) {
+    public Optional<PieceColorDto> getWinColor(String gameId) {
         ChessGame chessGame = generateChessGame(gameId);
         if (!chessGame.isEnd()) {
-            return null;
+            return Optional.empty();
         }
-        return PieceColorDto.from(chessGame.getWinColor());
+
+        return Optional.of(PieceColorDto.from(chessGame.getWinColor()));
     }
 
     private ChessGame generateChessGame(String gameId) {

@@ -30,24 +30,22 @@ const fetchWinner = async () => {
     return fetchAsGet("/winner");
 }
 
-function move(from, to) {
-    fetch("/move", {
+const move = async (from, to) => {
+    await fetch("/move", {
         method: "POST",
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/json"
         },
-        body: `from=${from}&to=${to}`
-    }).then(() => {
-        render();
+        body: JSON.stringify({from, to})
     });
+    await render();
 }
 
-function initialize() {
-    fetch("/initialize", {
+const initialize = async () => {
+    await fetch("/initialize", {
         method: "POST"
-    }).then(() => {
-        render();
-    });
+    })
+    await render();
 }
 
 const renderBoard = async () => {

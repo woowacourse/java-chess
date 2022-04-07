@@ -4,26 +4,26 @@ import chess.domain.piece.PieceColor;
 
 public class ChessGameDto {
     private final String gameId;
-    private final PieceColorDto pieceColorDto;
+    private final PieceColorDto currentTurn;
 
-    public ChessGameDto(String gameId, PieceColorDto pieceColorDto) {
+    public ChessGameDto(String gameId, PieceColorDto currentTurn) {
         this.gameId = gameId;
-        this.pieceColorDto = pieceColorDto;
+        this.currentTurn = currentTurn;
     }
 
     public static ChessGameDto from(String gameId, String turn) {
-        return new ChessGameDto(gameId, PieceColorDto.from(turn)); // TODO: null 위험 존재
+        return new ChessGameDto(gameId, PieceColorDto.from(turn));
     }
 
     public PieceColor getCurrentTurnAsPieceColor() {
-        return pieceColorDto.toPieceColor();
+        return currentTurn.toPieceColor();
     }
 
     @Override
     public String toString() {
         return "GameDto{" +
                 "gameId='" + gameId + '\'' +
-                ", currentTurnDto=" + pieceColorDto +
+                ", currentTurnDto=" + currentTurn +
                 '}';
     }
 }
