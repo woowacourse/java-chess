@@ -30,8 +30,9 @@ public class PieceDao {
         List<Piece> pieces = new ArrayList<>();
 
         try (Connection connection = dbManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            pieces = convertPieces(statement.executeQuery());
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            pieces = convertPieces(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
