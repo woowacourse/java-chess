@@ -53,18 +53,20 @@ public class ChessService {
             throw new IllegalArgumentException("[ERROR] 존재하는 게임이 없습니다.");
         }
         List<PieceDto> allPieces = boardDao.findAllPiecesByRoomName(gameDto.getRoomName());
-        Map<Point, Piece> pointPieces = new HashMap<>();
-        createBoard(pointPieces, allPieces);
+        Map<Point, Piece> pointPieces = new HashMap<>(createBoard(allPieces));
+
         return new Game(new Board(pointPieces), Color.convertColorByString(findGame.getTurnColor()));
     }
 
-    public void createBoard(Map<Point, Piece> pointPieces, List<PieceDto> allPieces) {
+    public Map<Point, Piece> createBoard(List<PieceDto> allPieces) {
+        Map<Point, Piece> pointPieces = new HashMap<>();
         for (PieceDto piece : allPieces) {
             pointPieces.put(Point.of(piece.getPosition()), PieceConverter.convert(piece.getPieceType(), piece.getPieceColor()));
         }
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
             addEmptyPiecesEachLine(pointPieces, i);
         }
+        return pointPieces;
     }
 
     private void addEmptyPiecesEachLine(Map<Point, Piece> pointPieces, int i) {
