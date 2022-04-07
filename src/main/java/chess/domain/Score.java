@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Score {
 
+    public static final double SAME_COLUMN_PAWN_SCORE = 0.5;
+    private static final int PAWN_HALF_SCORE_BOUND = 2;
     private final double totalScore;
 
     private Score(double totalScore) {
@@ -43,8 +45,8 @@ public class Score {
     }
 
     private static double calculateScoreWithPawnCount(double totalScore, int pawnCount) {
-        if (pawnCount > 1) {
-            totalScore -= pawnCount * 0.5;
+        if (pawnCount >= PAWN_HALF_SCORE_BOUND) {
+            totalScore -= pawnCount * SAME_COLUMN_PAWN_SCORE;
         }
         return totalScore;
     }

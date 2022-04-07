@@ -33,7 +33,7 @@ class PawnTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"d4", "b4", "b5", "c5", "d5"})
-    @DisplayName("White 팀의 Pawn이 뒤 또는 옆으로 이동하려는 경우 예외 발생 테스트")
+    @DisplayName("Black 팀의 Pawn이 뒤 또는 옆으로 이동하려는 경우 예외 발생 테스트")
     void validateIsPossibleByBlackTeam(String input) {
         Pawn pawn = new Pawn(Team.BLACK, Position.from("c4"));
         Assertions.assertThatThrownBy(() -> {

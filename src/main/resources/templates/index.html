@@ -2,9 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="/css/Chess.css">
+    <title>이브의 체스</title>
 </head>
 <body>
-Hello World!!
+<table style="margin: auto">
+    <tr><td style="padding: 5px">{{team}} 팀 차례입니다.</td></tr>
+    <tr>
+        <td style="padding: 5px">
+<table class="chess-board">
+    {{#board}}
+    <tr>
+        {{#rank}}
+        <td id="">
+            <img src="/images/{{team}}_{{name}}.png" id="{{column}}{{row}}" class="chess-piece-img" onclick="pieceClickHandler(this)">
+        </td>
+        {{/rank}}
+    </tr>
+    {{/board}}
+</table>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="padding: 5px">
+    <div class="button" onclick="statusHandler()">
+        <p class="btnText">점수 확인</p>
+        <div class="btnTwo">
+            <p class="btnText2">SCORE</p>
+        </div>
+    </div>
+
+    <div class="button" onclick="endGameHandler()">
+        <p class="btnText">게임 종료</p>
+        <div class="btnTwo">
+            <p class="btnText2">END</p>
+        </div>
+</div>
+        </td>
+    </tr>
+</table>
 </body>
+
+<script>
+    let isClicked = false;
+    let srcPosition;
+
+    function pieceClickHandler(piece) {
+        if (isClicked === false) {
+          isClicked = true;
+          srcPosition = piece.id;
+          return;
+        }
+
+        fetch("/move", {
+            method : "post",
+            body : `${srcPosition}//${piece.id}`
+        }).then(async response => {
+            if (!response.ok) {
+                alert("해당 위치로 말이 움직일 수 없습니다.");
+                return;
+            }
+            let moveResult = await response.text();
+            if (moveResult !== "kingAlive") {
+                alert("[게임 종료] Winner : " + moveResult + " Team");
+                location.href = "/";
+                return;
+            }
+            location.reload();
+        });
+
+        isClicked = false;
+    }
+
+    function statusHandler() {
+        fetch("/status", {
+            method : "get"
+        }).then(async response => {
+            let score = await response.text();
+            let scores = score.split("//");
+            alert("White : " + scores[0] + "\nBlack : " + scores[1]);
+        });
+    }
+
+    function endGameHandler() {
+        alert("게임이 종료되었습니다. 초기 화면으로 돌아갑니다.");
+        location.href = "/end";
+    }
+</script>
+
 </html>

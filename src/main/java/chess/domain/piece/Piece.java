@@ -14,13 +14,25 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public abstract double getScore();
-
-    public abstract List<Position> findPath(Position destination);
-
     public String getName() {
         return this.getClass().getSimpleName();
     }
+
+    public String getTeamName() {
+        return team.name();
+    }
+
+    public char getColValue() {
+        return position.getCol().getValue();
+    }
+
+    public int getRowValue() {
+        return position.getRow().getValue();
+    }
+
+    public abstract double getScore();
+
+    public abstract List<Position> findPath(Position destination);
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Column {
     A('a'),
@@ -23,6 +24,10 @@ public enum Column {
                 .filter(i -> i.value == input)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Column 값 입니다."));
+    }
+
+    public static Column find(String input) {
+        return valueOf(input.toUpperCase(Locale.ROOT));
     }
 
     public int getDifference(Column col) {
