@@ -47,7 +47,7 @@ class RoomDaoTest {
     @Test
     @DisplayName("Room을 새로 생성한다.")
     void save() {
-        Room room = new Room();
+        Room room = new Room("hi");
         assertThat(roomDao.save(room)).isTrue();
     }
 

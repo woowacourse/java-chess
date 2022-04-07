@@ -19,10 +19,11 @@ public class RoomDao {
     }
 
     public boolean save(Room room) {
-        String sql = "insert into room (turn) values (?)";
+        String sql = "insert into room (turn, name) values (?, ?)";
         boolean isSave = false;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, room.getTurn());
+            statement.setString(2, room.getName());
             if (statement.executeUpdate() == 1) {
                 isSave = true;
             }
@@ -30,6 +31,24 @@ public class RoomDao {
             throw new InsertQueryException();
         }
         return isSave;
+    }
+
+    public Optional<Room> findByName(String name) {
+        String sql = "select * from room r where name = ?";
+        Room room = null;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                room = new Room(resultSet.getLong("id"),
+                        resultSet.getString("turn"),
+                        resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            throw new SelectQueryException();
+        }
+
+        return Optional.ofNullable(room);
     }
 
     public Optional<Room> findById(long id) {
@@ -40,7 +59,8 @@ public class RoomDao {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 room = new Room(resultSet.getLong("id"),
-                        resultSet.getString("turn"));
+                        resultSet.getString("turn"),
+                        resultSet.getString("name"));
             }
         } catch (SQLException e) {
             throw new SelectQueryException();
@@ -49,7 +69,7 @@ public class RoomDao {
         return Optional.ofNullable(room);
     }
 
-    public void update(long id, String turn){
+    public void update(long id, String turn) {
         String sql = "update room set turn = ? where id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, turn);

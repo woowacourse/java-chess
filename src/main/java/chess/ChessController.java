@@ -17,7 +17,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class ChessController {
 
     public static final int STATUS_BAD_REQUEST = 400;
-    public static final int FIXED_ROOM_ID = 1;
 
     private final ChessService chessService;
     private final Gson gson;
@@ -29,24 +28,32 @@ public class ChessController {
 
     public void run() {
         get("/", (req, res) -> {
-            return render(new HashMap<>(), "index.html");
+            return render(new HashMap<>(), "roby.html");
+        });
+
+        get("/room", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = req.queryParams("name");
+            chessService.createRoom(name);
+            model.put("name", name);
+            return render(model, "room.html");
         });
 
         get("/start", (req, res) -> {
-            return gson.toJson(chessService.startNewGame(FIXED_ROOM_ID));
+            return gson.toJson(chessService.startNewGame(req.queryParams("name")));
         });
 
         get("/load", (req, res) -> {
-            return gson.toJson(chessService.load(FIXED_ROOM_ID));
+            return gson.toJson(chessService.load(req.queryParams("name")));
         });
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            return gson.toJson(chessService.move(FIXED_ROOM_ID, moveDto));
+            return gson.toJson(chessService.move(req.queryParams("name"), moveDto));
         });
 
         get("/status", (req, res) -> {
-            return gson.toJson(chessService.status(FIXED_ROOM_ID));
+            return gson.toJson(chessService.status(req.queryParams("name")));
         });
 
         exception(IllegalStateException.class, (e, req, res) -> {

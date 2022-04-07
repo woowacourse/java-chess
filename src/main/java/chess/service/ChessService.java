@@ -37,35 +37,35 @@ public class ChessService {
         this.squareDao = squareDao;
     }
 
-    public BoardDto startNewGame(long roomId) {
-        Room room = roomDao.findById(roomId)
+    public BoardDto startNewGame(String roomName) {
+        Room room = roomDao.findByName(roomName)
                 .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
 
         WebChessGame webChessGame = new WebChessGame();
         webChessGame.start();
-        squareDao.removeAll(roomId);
+        squareDao.removeAll(room.getId());
         Map<Position, Piece> board = webChessGame.getBoard();
         List<Square> squares = convertBoardToSquares(board);
-        squareDao.saveAll(squares, roomId);
-        roomDao.update(roomId, webChessGame.getTurn());
+        squareDao.saveAll(squares, room.getId());
+        roomDao.update(room.getId(), webChessGame.getTurn());
         return BoardDto.of(board, webChessGame.getTurn());
     }
 
-    public BoardDto load(long roomId) {
-        Room room = roomDao.findById(roomId)
+    public BoardDto load(String roomName) {
+        Room room = roomDao.findByName(roomName)
                 .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
-        ChessBoard chessBoard = loadChessBoard(roomId);
+        ChessBoard chessBoard = loadChessBoard(room.getId());
 
         return BoardDto.of(chessBoard.getPieces(), room.getTurn());
     }
 
-    public BoardDto move(long roomId, MoveDto moveDto) {
-        Room room = roomDao.findById(roomId)
+    public BoardDto move(String roomName, MoveDto moveDto) {
+        Room room = roomDao.findByName(roomName)
                 .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
-        WebChessGame webChessGame = WebChessGame.of(loadChessBoard(roomId), room.getTurn());
+        WebChessGame webChessGame = WebChessGame.of(loadChessBoard(room.getId()), room.getTurn());
         webChessGame.move(moveDto.getFrom(), moveDto.getTo());
-        roomDao.update(roomId, webChessGame.getTurn());
-        updateMovement(roomId, moveDto);
+        roomDao.update(room.getId(), webChessGame.getTurn());
+        updateMovement(room.getId(), moveDto);
 
         return BoardDto.of(webChessGame.getBoard(), webChessGame.getTurn());
     }
@@ -98,12 +98,20 @@ public class ChessService {
         return new ChessBoard(() -> board);
     }
 
-    public Status status(long roomId) {
-        Room room = roomDao.findById(roomId)
+    public Status status(String name) {
+        Room room = roomDao.findByName(name)
                 .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
-        ChessBoard chessBoard = loadChessBoard(roomId);
+        ChessBoard chessBoard = loadChessBoard(room.getId());
         WebChessGame webChessGame = WebChessGame.of(chessBoard, room.getTurn());
 
         return webChessGame.status();
+    }
+
+    public void createRoom(String name) {
+        Room room = roomDao.findByName(name).orElse(null);
+        if (room == null) {
+            Room newRoom = new Room(name);
+            roomDao.save(newRoom);
+        }
     }
 }

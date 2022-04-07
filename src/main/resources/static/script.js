@@ -1,10 +1,18 @@
 let from = "";
 let turn = "";
 let isStart = false;
+let roomName = getParameterByName("name");
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    const regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 async function start() {
     let pieces;
-    await fetch("/start")
+    await fetch("/start?name=" + roomName)
         .then(res => res.json())
         .then(data => pieces = data)
     turn = pieces.turn;
@@ -15,9 +23,15 @@ async function start() {
 
 async function load() {
     let pieces;
-    await fetch("/load")
-        .then(res => res.json())
-        .then(data => pieces = data)
+    let response = await fetch("/load?name=" + roomName);
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        alert("[ERROR] " + errorMessage.message);
+        return;
+    }
+
+    pieces = await response.json();
 
     turn = pieces.turn;
     if (turn === "empty") {
@@ -53,7 +67,7 @@ function end() {
 
 async function printStatus() {
     let stat;
-    await fetch("/status")
+    await fetch("/status?name=" + roomName)
         .then(res => res.json())
         .then(data => stat = data)
     let status = document.getElementById("chess-status");
@@ -115,7 +129,7 @@ async function selectPiece(pieceDiv) {
 
 async function move(fromPosition, toPosition) {
     from = "";
-    let response = await fetch("/move", {
+    let response = await fetch("/move?name=" + roomName, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
