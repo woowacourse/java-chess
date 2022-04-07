@@ -1,7 +1,7 @@
-const startButton = document.querySelector(".button");
+const button = document.querySelector(".button");
 const chessBoard = document.querySelector("table");
 
-startButton.addEventListener("click", onClickButton);
+button.addEventListener("click", onClickButton);
 chessBoard.addEventListener("click", onClickBoard);
 
 function onClickButton ({target: {id}}) {
@@ -20,7 +20,8 @@ function onClickButton ({target: {id}}) {
 }
 
 async function onClickStartButton () {
-    const response = await fetch("/start");
+    const isRestart = confirm("이전 게임을 불러오시겠습니까?");
+    const response = await getStartFetch(isRestart);
     const data = await response.json();
 
     if (response.ok) {
@@ -29,6 +30,13 @@ async function onClickStartButton () {
     }
 
     alert(JSON.stringify(data));
+}
+
+async function getStartFetch (isRestart) {
+    if (isRestart) {
+        return await fetch("/restart");
+    }
+    return await fetch("/start");
 }
 
 function initBoard (data) {

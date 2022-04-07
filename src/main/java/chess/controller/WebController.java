@@ -25,6 +25,8 @@ public final class WebController {
 
         get("/start", (request, response) -> start());
 
+        get("/restart", (request, response) -> restart());
+
         get("/end", (request, response) -> end());
 
         get("/status", (request, response) -> gson.toJson(chessGame.status()));
@@ -36,6 +38,11 @@ public final class WebController {
 
     private String start() {
         chessGame.start();
+        return gson.toJson(new BoardDto(chessGame));
+    }
+
+    private String restart() {
+        chessGame.restart();
         return gson.toJson(new BoardDto(chessGame));
     }
 
