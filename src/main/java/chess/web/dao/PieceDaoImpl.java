@@ -23,7 +23,7 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void save(PieceDto pieceDto) {
-        final String sql = "insert into piece (piece_type, position, color) values (?, ?, ?, ?)";
+        final String sql = "insert into piece (piece_type, position, color) values (?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, pieceDto.getPieceType());
@@ -37,7 +37,7 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void update(PieceDto pieceDto) {
-        final String sql = "update piece piece_type=?, position=?, color=? where piece=?";
+        final String sql = "update piece set piece_type=?, position=?, color=? where position=?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, pieceDto.getPieceType());

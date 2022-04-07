@@ -33,7 +33,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void update(StateType stateType) {
-        final String sql = "update board state=? where state=?";
+        final String sql = "update board set state=?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, stateType.getNotation());
