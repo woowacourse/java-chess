@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,10 +61,10 @@ public class Command {
     }
 
     public Position from() {
-        return Position.from(commandArguments.get(POSITION_FROM));
+        return Positions.from(commandArguments.get(POSITION_FROM));
     }
 
     public Position to() {
-        return Position.from(commandArguments.get(POSITION_TO));
+        return Positions.from(commandArguments.get(POSITION_TO));
     }
 }

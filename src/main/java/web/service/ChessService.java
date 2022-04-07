@@ -7,6 +7,7 @@ import chess.domain.game.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.state.Ready;
 import chess.domain.piece.Symbol;
 import java.sql.SQLException;
@@ -81,7 +82,7 @@ public class ChessService {
     }
 
     private void checkPossibleToDeletePiece(String to, ChessBoard chessBoard) throws SQLException {
-        if (chessBoard.getBoard().get(Position.from(to)) != null) {
+        if (chessBoard.getBoard().get(Positions.from(to)) != null) {
             pieceDao.deletePiece(to);
         }
     }
@@ -90,7 +91,7 @@ public class ChessService {
         ChessBoard chessBoard = chessGame.chessBoard();
         Map<Position, Piece> board = chessBoard.getBoard();
 
-        pieceDao.savePiece(to, board.get(Position.from(to)));
+        pieceDao.savePiece(to, board.get(Positions.from(to)));
         pieceDao.deletePiece(from);
     }
 
