@@ -22,7 +22,6 @@ public class OutputView {
             + "> 게임 시작 : start" + NEW_LINE
             + "> 게임 종료 : end" + NEW_LINE
             + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final String EMPTY_PIECE_NOTATION = ".";
 
     public static void printCommandGuide() {
         System.out.println(COMMAND_GUIDE_MESSAGE);
@@ -43,15 +42,16 @@ public class OutputView {
         for (XAxis xAxis : XAxis.values()) {
             PositionDto positionDto = PositionDto.from(Position.of(xAxis, yAxis));
             PieceDto pieceDto = value.get(positionDto);
-            System.out.print(getPieceNotation(pieceDto));
+            System.out.print(getPieceText(pieceDto));
         }
     }
 
-    private static String getPieceNotation(PieceDto pieceDto) {
-        if (!Objects.isNull(pieceDto)) {
-            return pieceDto.getConsoleText();
+    private static String getPieceText(PieceDto pieceDto) {
+        if (Objects.isNull(pieceDto)) {
+            return PieceConsoleText.emptyText();
         }
-        return EMPTY_PIECE_NOTATION;
+
+        return PieceConsoleText.from(pieceDto).getText(pieceDto.getPieceColor());
     }
 
     public static void printCurrentTurn(TurnDto turnDto) {

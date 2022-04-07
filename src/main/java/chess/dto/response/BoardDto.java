@@ -52,6 +52,7 @@ public class BoardDto {
         return new BoardDto(value);
     }
 
+    // TODO: 뷰의 책임임
     public List<List<String>> getPieceImages() {
         List<List<String>> pieceImages = new ArrayList<>();
 
@@ -68,7 +69,7 @@ public class BoardDto {
                 PieceDto pieceDto = value.get(positionDto);
 
                 if (!Objects.isNull(pieceDto)) {
-                    row.add(pieceDto.getImageName());
+                    row.add(pieceDto.getPieceType().name() + "_" + pieceDto.getPieceColor().name());
                 }
 
                 if (Objects.isNull(pieceDto)) {

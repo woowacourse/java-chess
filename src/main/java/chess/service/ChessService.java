@@ -48,21 +48,17 @@ public class ChessService {
 
     public void movePiece(UpdatePiecePositionDto updatePiecePositionDto) {
         String gameId = updatePiecePositionDto.getGameId();
+
         ChessGame chessGame = generateChessGame(gameId);
         chessGame.movePiece(updatePiecePositionDto.getFrom(), updatePiecePositionDto.getTo());
 
         updateGameTurn(gameId, chessGame);
-
-        boardDao.deletePiece(DeletePieceDto.of(gameId, updatePiecePositionDto.getTo().getXAxis(),
-                updatePiecePositionDto.getTo().getYAxis()));
-        boardDao.updatePiecePosition(updatePiecePositionDto);
+        updatePiecePosition(updatePiecePositionDto, gameId);
     }
 
-    private ChessGame generateChessGame(String gameId) {
-        BoardDto boardDto = boardDao.getBoard(gameId);
-        ChessGameDto chessGameDto = gameDao.getGame(gameId);
-
-        return ChessGame.of(boardDto.toBoard(), chessGameDto.getCurrentTurnAsPieceColor());
+    private void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, String gameId) {
+        boardDao.deletePiece(DeletePieceDto.of(gameId, updatePiecePositionDto.getTo()));
+        boardDao.updatePiecePosition(updatePiecePositionDto);
     }
 
     private void updateGameTurn(String gameId, ChessGame chessGame) {
@@ -86,11 +82,19 @@ public class ChessService {
         return TurnDto.from(generateChessGame(gameId));
     }
 
+    // TODO: null 을 반환하면 안됨
     public TurnDto getWinColor(String gameId) {
         ChessGame chessGame = generateChessGame(gameId);
         if (!chessGame.isEnd()) {
             return null;
         }
         return TurnDto.from(chessGame.getWinColor());
+    }
+
+    private ChessGame generateChessGame(String gameId) {
+        BoardDto boardDto = boardDao.getBoard(gameId);
+        ChessGameDto chessGameDto = gameDao.getGame(gameId);
+
+        return ChessGame.of(boardDto.toBoard(), chessGameDto.getCurrentTurnAsPieceColor());
     }
 }
