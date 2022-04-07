@@ -61,7 +61,7 @@ public class BoardDto {
     }
 
     public Map<PositionDto, PieceDto> getValue() {
-        return value;
+        return Map.copyOf(value);
     }
 
     @Override
