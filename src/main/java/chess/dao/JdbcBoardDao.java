@@ -42,7 +42,7 @@ public class JdbcBoardDao implements BoardDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return new Turn(resultSet.getString("color"));
+            return new Turn(resultSet.getString("turn"));
         } catch (final SQLException e) {
             logger.warn(e.getMessage());
         }

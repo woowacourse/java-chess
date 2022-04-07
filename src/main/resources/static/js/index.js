@@ -18,8 +18,8 @@ async function move() {
     });
 
     if ((await response).status === 400) {
-        let newVar = await response.json();
-        alert(newVar.model.message);
+        let error = await response.json();
+        alert(error.model.message);
     }
     if (response.redirected) {
         window.location.href = response.url;
