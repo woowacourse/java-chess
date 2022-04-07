@@ -1,18 +1,13 @@
 package chess.service;
 
+import chess.StatusCode;
 import chess.dao.RoomDao;
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
+import chess.dto.ErrorResponseDto;
 import chess.dto.RoomStatusDto;
-import chess.service.util.ResponseUtil;
 import com.google.gson.Gson;
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class RoomService {
     private final RoomDao roomDao;
@@ -24,50 +19,39 @@ public class RoomService {
         this.gson = new Gson();
     }
 
-    public String findPage(final Request req, final Response res) {
-
-        final boolean roomExist = roomDao.isExistName(req.params(":name"));
-        if (!roomExist) {
-            res.status(404);
-            return render(new HashMap<>(), "index.html");
-        }
-        return render(new HashMap<>(), "board.html");
+    public boolean isExistRoom(final String roomName) {
+        return roomDao.isExistName(roomName);
     }
 
-    private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    public String createRoom(final Request req, final Response res) {
-        final String roomName = req.params(":name");
+    public String createRoom(final String roomName) {
         roomDao.save(roomName, GameStatus.READY, Color.WHITE);
         return null;
     }
 
-    public String deleteRoom(final Request req, final Response res) {
+    public String deleteRoom(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
+
             final RoomStatusDto dto = roomDao.findStatusByName(roomName);
             if (dto.getGameStatus().isEnd()) {
                 roomDao.delete(roomName);
             }
+
             return null;
         } catch (IllegalArgumentException e) {
-            res.status(400);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
+            return gson.toJson(dto);
         }
     }
 
-    public String findCurrentTurn(final Request req, final Response res) {
+    public String findCurrentTurn(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
             return gson.toJson(dto);
         } catch (IllegalArgumentException e) {
-            res.status(400);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
+            return gson.toJson(dto);
         }
     }
 

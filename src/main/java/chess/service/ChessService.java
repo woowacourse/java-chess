@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.StatusCode;
 import chess.dao.ChessPieceDao;
 import chess.dao.RoomDao;
 import chess.domain.ChessGame;
@@ -12,19 +13,17 @@ import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
 import chess.dto.CurrentTurnDto;
+import chess.dto.ErrorResponseDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.RoomStatusDto;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
-import chess.service.util.ResponseUtil;
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import spark.Request;
-import spark.Response;
 
 public class ChessService {
 
@@ -38,55 +37,48 @@ public class ChessService {
         this.gson = new Gson();
     }
 
-    public String findAllPiece(final Request req, final Response res) {
+    public String findAllPiece(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final List<ChessPieceDto> allByRoomName = chessPieceDao.findAllByRoomName(roomName);
             return gson.toJson(allByRoomName);
         } catch (IllegalArgumentException e) {
-            res.status(404);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.NOT_FOUND);
+            return gson.toJson(dto);
         }
     }
 
-    public String initPiece(final Request req, final Response res) {
+    public String initPiece(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
-
             final ChessGame chessGame = findGameByRoomName(roomName);
-            final StartResult startResult = chessGame.start();
 
+            final StartResult startResult = chessGame.start();
             updateChessPiece(roomName, startResult.getPieceByPosition());
             updateRoomStatusTo(roomName, GameStatus.PLAYING);
+
             return null;
         } catch (IllegalArgumentException e) {
-            res.status(404);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.NOT_FOUND);
+            return gson.toJson(dto);
         }
     }
 
-    public String move(final Request req, final Response res) {
+    public String move(final String roomName, MoveRequestDto requestDto) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
-
             final ChessGame chessGame = findGameByRoomName(roomName);
-
-            final MoveRequestDto requestDto = gson.fromJson(req.body(), MoveRequestDto.class);
             final Position from = requestDto.getFrom();
             final Position to = requestDto.getTo();
 
             final MoveResult moveResult = chessGame.move(from, to);
-
             updatePosition(roomName, from, to);
             updateRoom(roomName, moveResult.getGameStatus(), moveResult.getCurrentTurn());
 
             return gson.toJson(moveResult);
         } catch (IllegalArgumentException e) {
-            res.status(400);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
+            return gson.toJson(dto);
         }
     }
 
@@ -95,30 +87,32 @@ public class ChessService {
         chessPieceDao.update(roomName, from, to);
     }
 
-    public String findScore(final Request req, final Response res) {
+    public String findScore(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final ChessGame chessGame = findGameByRoomName(roomName);
+
             final Score score = chessGame.calculateScore();
+
             return gson.toJson(score);
         } catch (IllegalArgumentException e) {
-            res.status(400);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
+            return gson.toJson(dto);
         }
     }
 
-    public String result(final Request req, final Response res) {
+    public String result(final String roomName) {
         try {
-            final String roomName = req.params(":name");
             checkRoomExist(roomName);
             final ChessGame chessGame = findGameByRoomName(roomName);
+
             final EndResult result = chessGame.end();
             updateRoomStatusTo(roomName, GameStatus.END);
+
             return gson.toJson(result);
         } catch (IllegalArgumentException e) {
-            res.status(400);
-            return ResponseUtil.toErrorResponse(e.getMessage());
+            final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
+            return gson.toJson(dto);
         }
     }
 
