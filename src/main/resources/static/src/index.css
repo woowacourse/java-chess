@@ -1,0 +1,9 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.lobby {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

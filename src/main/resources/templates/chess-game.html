@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/chess-game.css">
+</head>
+<script src="/src/chess-game.js"></script>
+<body onload="onloadBody('{{chessGame.id}}')">
+<div class="message">
+    {{#hasError}}
+    <span>{{errorMessage}}</span>
+    {{/hasError}}
+    {{#isFinished}}
+    <p>{{winner}} 승리!</p>
+    {{/isFinished}}
+</div>
+<div class="board">
+    <div>
+        <table id="chessBoard">
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+        </table>
+        {{#pieces}}
+        <script>
+            addPiece("{{position.file}}{{position.rank}}", "{{type}}", "{{color}}");
+        </script>
+        {{/pieces}}
+    </div>
+    <div>
+        <div class="game-status">
+            <p>{{chessGame.currentColor}} 차례</p>
+            <p>블랙 점수 : {{chessGame.blackScore.value}}</p>
+            <p>화이트 점수 : {{chessGame.whiteScore.value}}</p>
+        </div>
+        <br>
+        <div class="back">
+            <input type="button" value="로비로 돌아가기" onclick="location.href='/'"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

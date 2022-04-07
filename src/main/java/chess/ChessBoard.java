@@ -2,8 +2,8 @@ package chess;
 
 import chess.piece.Color;
 import chess.piece.King;
-import chess.piece.movementcondition.MovementCondition;
 import chess.piece.Piece;
+import chess.piece.movementcondition.MovementCondition;
 import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +92,10 @@ public class ChessBoard {
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
     }
 
     public Score getScore(Color color) {
