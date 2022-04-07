@@ -6,7 +6,7 @@ import chess.domain.game.Game;
 import chess.domain.game.statistics.GameResult;
 import chess.domain.game.NewGame;
 import chess.domain.event.MoveCommand;
-import chess.dto.response.board.ConsoleBoardViewDto;
+import chess.dto.board.ConsoleBoardViewDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 

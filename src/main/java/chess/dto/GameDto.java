@@ -1,7 +1,7 @@
-package chess.dto.response;
+package chess.dto;
 
-import chess.dto.response.board.RowDto;
-import chess.dto.response.board.WebBoardViewDto;
+import chess.dto.board.RowDto;
+import chess.dto.board.WebBoardViewDto;
 import java.util.List;
 
 public class GameDto {

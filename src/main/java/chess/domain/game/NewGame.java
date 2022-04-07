@@ -3,8 +3,8 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.statistics.GameResult;
-import chess.dto.response.GameDto;
-import chess.dto.response.board.ConsoleBoardViewDto;
+import chess.dto.GameDto;
+import chess.dto.board.ConsoleBoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {

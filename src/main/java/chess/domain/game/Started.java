@@ -2,10 +2,10 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.game.statistics.GameState;
-import chess.dto.response.GameDataDto;
-import chess.dto.response.GameDto;
-import chess.dto.response.board.ConsoleBoardViewDto;
-import chess.dto.response.board.WebBoardViewDto;
+import chess.dto.GameDataDto;
+import chess.dto.GameDto;
+import chess.dto.board.ConsoleBoardViewDto;
+import chess.dto.board.WebBoardViewDto;
 
 public abstract class Started implements Game {
 

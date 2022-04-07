@@ -1,4 +1,4 @@
-package chess.dto.response;
+package chess.dto;
 
 public class CreateGameDto {
 

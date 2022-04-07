@@ -4,8 +4,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.controller.WebController;
-import chess.dto.response.CreateGameDto;
-import chess.dto.response.SearchResultDto;
+import chess.dto.CreateGameDto;
+import chess.dto.SearchResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

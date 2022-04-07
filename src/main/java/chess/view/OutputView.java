@@ -5,7 +5,7 @@ import static chess.domain.board.piece.Color.WHITE;
 
 import chess.domain.board.piece.Color;
 import chess.domain.game.statistics.GameResult;
-import chess.dto.response.board.ConsoleBoardViewDto;
+import chess.dto.board.ConsoleBoardViewDto;
 
 public class OutputView {
 

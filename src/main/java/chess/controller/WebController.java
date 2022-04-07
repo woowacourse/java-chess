@@ -3,11 +3,11 @@ package chess.controller;
 import static java.lang.Integer.parseInt;
 
 import chess.domain.event.MoveCommand;
-import chess.dto.response.CreateGameDto;
-import chess.dto.response.GameCountDto;
-import chess.dto.response.GameDto;
-import chess.dto.response.GameResultDto;
-import chess.dto.response.SearchResultDto;
+import chess.dto.CreateGameDto;
+import chess.dto.GameCountDto;
+import chess.dto.GameDto;
+import chess.dto.GameResultDto;
+import chess.dto.SearchResultDto;
 import chess.service.ChessService;
 import spark.Request;
 

@@ -7,11 +7,11 @@ import chess.domain.event.Event;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
-import chess.dto.response.CreateGameDto;
-import chess.dto.response.GameCountDto;
-import chess.dto.response.GameDto;
-import chess.dto.response.GameResultDto;
-import chess.dto.response.SearchResultDto;
+import chess.dto.CreateGameDto;
+import chess.dto.GameCountDto;
+import chess.dto.GameDto;
+import chess.dto.GameResultDto;
+import chess.dto.SearchResultDto;
 import java.util.List;
 
 public class ChessService {
