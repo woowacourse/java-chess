@@ -25,13 +25,13 @@ public class GameService {
     private final PieceDao pieceDao = new PieceDao();
     private final BoardDao boardDao = new BoardDao();
 
-    public int startNewGame(int userId) {
+    public Map<String, Object> startNewGame(int userId) {
         board = new Board(new RegularRuleSetup());
         boardDao.save(userId, getGameStateDto());
         int boardId = boardDao.getBoardIdByPlayer(userId);
         deletePreviousGame(boardId);
         saveNewGame(userId, boardId);
-        return boardId;
+        return gameStateAndPieces(boardId);
     }
 
     public void move(int boardId, CommendDto commendDto) {
@@ -44,14 +44,14 @@ public class GameService {
         updateMovedPieceToTarget(boardId, target);
     }
 
-    public int loadGame(int playerId) {
+    public Map<String, Object> loadGame(int playerId) {
         Map<Position, Piece> pieces = new HashMap<>();
         int boardId = boardDao.getBoardIdByPlayer(playerId);
         pieceDao.findAll(boardId).stream()
                 .forEach(pieceDto -> pieces.put(Position.of(pieceDto.getPosition()), PieceFactory.build(pieceDto)));
         board = new Board(() -> pieces);
         board.loadTurn(boardDao.find());
-        return boardId;
+        return gameStateAndPieces(boardId);
     }
 
     private void updateMovedPieceToTarget(int boardId, String target) {
@@ -74,8 +74,9 @@ public class GameService {
         boardDao.update(boardId, getGameStateDto());
     }
 
-    public Map<String, Object> gameStateAndPieces() {
+    public Map<String, Object> gameStateAndPieces(int boardId) {
         Map<String, Object> data = new HashMap<>();
+        data.put("boardId", boardId);
         data.put("state", getGameStateDto());
         data.put("pieces", getPieceDtos());
         return data;

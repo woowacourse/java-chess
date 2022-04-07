@@ -32,27 +32,17 @@ public class ChessController {
             return render(model, "login.html");
         });
 
-        post("/login", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            String name = req.queryParams("name");
-            model.put("player", playerService.login(name));
-            return render(model, "index.html");
-        });
+        post("/login", (req, res) ->
+                render(playerService.login(req.queryParams("name")), "index.html")
+        );
 
-        get("/start", (req, res) -> {
-            int boardId = gameService.startNewGame(Integer.parseInt(req.queryParams("playerId")));
-            Map<String, Object> data = gameService.gameStateAndPieces();
-            data.put("boardId", boardId);
-            return gson.toJson(data);
-        });
+        get("/start", (req, res) ->
+                gson.toJson(gameService.startNewGame(Integer.parseInt(req.queryParams("playerId"))))
+        );
 
-        get("/load", (req, res) -> {
-            int playerId = Integer.parseInt(req.queryParams("playerId"));
-            int boardId = gameService.loadGame(playerId);
-            Map<String, Object> data = gameService.gameStateAndPieces();
-            data.put("boardId", boardId);
-            return gson.toJson(data);
-        });
+        get("/load", (req, res) ->
+                gson.toJson(gameService.loadGame(Integer.parseInt(req.queryParams("playerId"))))
+        );
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -64,7 +54,7 @@ public class ChessController {
                 res.status(400);
                 model.put("message", e.getMessage());
             }
-            model.putAll(gameService.gameStateAndPieces());
+            model.putAll(gameService.gameStateAndPieces(boardId));
             return gson.toJson(model);
         });
 
