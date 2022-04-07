@@ -73,11 +73,29 @@ public class PieceDao {
 
     private void close() {
         try {
-            resultSet.close();
-            statement.close();
-            connection.close();
+            closeResultSet();
+            closeStatement();
+            closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void closeResultSet() throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+    }
+
+    private void closeStatement() throws SQLException {
+        if (statement != null) {
+            statement.close();
+        }
+    }
+
+    private void closeConnection() throws SQLException {
+        if (connection != null) {
+            connection.close();
         }
     }
 }
