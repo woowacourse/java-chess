@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.domain.state.StateType;
 
@@ -8,8 +7,8 @@ public class ChessGame {
 
     private State state;
 
-    public ChessGame() {
-        this.state = new Ready();
+    public ChessGame(State state) {
+        this.state = state;
     }
 
     public void start() {
