@@ -78,6 +78,13 @@ class ChessServiceTest {
     }
 
     @Test
+    void findGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
+        assertThatThrownBy(() -> service.findGame(999999))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("아직 생성되지 않은 게임입니다.");
+    }
+
+    @Test
     void playGame_메서드는_이동_명령에_따라_이동시킨_후_그_결과를_반환한다() {
         GameDto actual = service.playGame(1, new MoveCommand("a7", "a5"));
 
@@ -99,6 +106,13 @@ class ChessServiceTest {
         GameCountDto expected = new GameCountDto(3, 2 - 1);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void playGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
+        assertThatThrownBy(() -> service.findGame(999999))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("아직 생성되지 않은 게임입니다.");
     }
 
     @Test

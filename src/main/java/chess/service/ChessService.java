@@ -18,6 +18,7 @@ import java.util.List;
 
 public class ChessService {
 
+    private static final String GAME_NOT_CREATED_EXCEPTION_MESSAGE = "아직 생성되지 않은 게임입니다.";
     private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 게임 결과가 산출되지 않았습니다.";
 
     private final static ChessService instance = new ChessService(GameDaoImpl.ofProd(), EventDaoImpl.ofProd());
@@ -76,12 +77,20 @@ public class ChessService {
     }
 
     private Game currentSnapShotOf(int gameId) {
+        validateGameExistence(gameId);
         List<Event> events = eventDao.findAllByGameId(gameId);
         Game game = new NewGame().init();
         for (Event event : events) {
             game = game.moveChessmen(event.toMoveCommand());
         }
         return game;
+    }
+
+    // TODO: implement INIT event for checking initialization
+    private void validateGameExistence(int gameId) {
+        if (!gameDao.checkById(gameId)) {
+            throw new IllegalArgumentException(GAME_NOT_CREATED_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validateGameOver(Game game) {
