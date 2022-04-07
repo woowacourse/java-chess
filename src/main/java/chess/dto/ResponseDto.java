@@ -1,4 +1,4 @@
-package chess.view;
+package chess.dto;
 
 public class ResponseDto {
 

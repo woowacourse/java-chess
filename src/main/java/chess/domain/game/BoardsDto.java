@@ -1,5 +1,7 @@
 package chess.domain.game;
 
+import chess.dto.RoomDto;
+
 import java.util.List;
 
 public class BoardsDto {

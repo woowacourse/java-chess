@@ -1,8 +1,8 @@
 package chess;
 
 import chess.domain.game.ChessController;
-import chess.view.ResponseDto;
-import chess.view.StatusDto;
+import chess.dto.ResponseDto;
+import chess.dto.StatusDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

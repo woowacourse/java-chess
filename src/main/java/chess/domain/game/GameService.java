@@ -6,8 +6,9 @@ import chess.domain.pieces.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.view.BoardDto;
-import chess.view.StatusDto;
+import chess.dto.BoardDto;
+import chess.dto.RoomDto;
+import chess.dto.StatusDto;
 
 import java.util.*;
 import java.util.stream.Collectors;

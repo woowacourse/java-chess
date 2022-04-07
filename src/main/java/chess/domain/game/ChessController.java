@@ -2,16 +2,14 @@ package chess.domain.game;
 
 import chess.dao.Member;
 import chess.domain.pieces.Color;
-import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.machine.Command;
-import chess.view.BoardDto;
-import chess.view.ResponseDto;
-import chess.view.StatusDto;
+import chess.dto.BoardDto;
+import chess.dto.ResponseDto;
+import chess.dto.StatusDto;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class ChessController {
 

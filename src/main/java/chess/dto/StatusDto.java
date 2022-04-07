@@ -1,7 +1,4 @@
-package chess.view;
-
-import chess.domain.game.GameService;
-import chess.domain.pieces.Color;
+package chess.dto;
 
 import java.util.*;
 import java.util.stream.Collectors;
