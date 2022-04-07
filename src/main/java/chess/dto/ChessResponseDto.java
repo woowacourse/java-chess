@@ -11,19 +11,13 @@ import java.util.Map;
 
 public class ChessResponseDto {
 
-    private final String code;
-    private final String message;
+    private final String status;
     private final String state;
     private final String turn;
     private final Map<String, String> board;
 
     public ChessResponseDto(final ChessGame chessGame) {
-        this("success", "", chessGame);
-    }
-
-    public ChessResponseDto(final String code, final String message, final ChessGame chessGame) {
-        this.code = code;
-        this.message = message;
+        this.status = "success";
         this.state = createState(chessGame.getState());
         this.turn = chessGame.getTurn().getName();
         this.board = createBoard(chessGame.getBoard().getBoard());
@@ -46,25 +40,5 @@ public class ChessResponseDto {
             strings.put(position.getName(), piece.getType().getName() + "_" + piece.getColor().getName());
         }
         return strings;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getTurn() {
-        return turn;
-    }
-
-    public Map<String, String> getBoard() {
-        return board;
     }
 }

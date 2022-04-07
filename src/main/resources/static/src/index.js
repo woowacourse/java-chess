@@ -14,7 +14,7 @@ async function sendStart() {
     await fetch("/start")
         .then(response => response.json())
         .then(data => {
-            if (data.code === "success") {
+            if (data.status === "success") {
                 loadStateAndBoard(data);
             } else {
                 alert(data.message);
@@ -26,7 +26,7 @@ async function sendEnd() {
     await fetch("/end")
         .then(response => response.json())
         .then(data => {
-            if (data.code === "success") {
+            if (data.status === "success") {
                 loadStateAndBoard(data);
             } else {
                 alert(data.message);
@@ -38,7 +38,7 @@ async function sendStatus() {
     await fetch("/status")
         .then(response => response.json())
         .then(data => {
-            if (data.code === "success") {
+            if (data.status === "success") {
                 alert(data.myTurn + " : " + data.myScore + "점\n"
                     + data.opponentTurn + " : " + data.opponentScore + "점\n"
                     + "당신(" + data.myTurn + ")은 " + data.result + "입니다.");
@@ -72,10 +72,11 @@ async function sendMove() {
         body: JSON.stringify({
             source: source,
             target: target
-        })})
+        })
+    })
         .then(response => response.json())
         .then(data => {
-            if (data.code === "success") {
+            if (data.status === "success") {
                 loadStateAndBoard(data);
             } else {
                 alert(data.message);

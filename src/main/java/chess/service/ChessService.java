@@ -91,18 +91,10 @@ public class ChessService {
         return new ChessResponseDto(chessGame);
     }
 
-    public ChessResponseDto createErrorChessResponseDto(final String message) {
-        return new ChessResponseDto("error", message, new ChessGame(new Ready(), new Board(new BasicBoardFactory())));
-    }
-
     public StatusResponseDto createStatusResponseDto(final ChessGame chessGame) {
         final Score myScore = chessGame.calculateMyScore();
         final Score opponentScore = chessGame.calculateOpponentScore();
         return new StatusResponseDto(chessGame, myScore.getValue(), opponentScore.getValue(),
                 myScore.decideResult(opponentScore).getName());
-    }
-
-    public StatusResponseDto creatErrorStatusResponseDto(final String message) {
-        return new StatusResponseDto("error", message, new ChessGame(new Ready(), new Board(new BasicBoardFactory())));
     }
 }
