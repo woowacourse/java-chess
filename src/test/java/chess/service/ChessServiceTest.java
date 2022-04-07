@@ -80,8 +80,8 @@ class ChessServiceTest {
     @Test
     void findGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
         assertThatThrownBy(() -> service.findGame(999999))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("아직 생성되지 않은 게임입니다.");
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("아직 시작되지 않은 게임입니다.");
     }
 
     @Test
@@ -111,8 +111,8 @@ class ChessServiceTest {
     @Test
     void playGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
         assertThatThrownBy(() -> service.findGame(999999))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("아직 생성되지 않은 게임입니다.");
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("아직 시작되지 않은 게임입니다.");
     }
 
     @Test
@@ -176,14 +176,14 @@ class ChessServiceTest {
     private static class EventDaoStub implements EventDao {
 
         final Map<Integer, List<Event>> repository = new HashMap<>() {{
-            put(1, new ArrayList<>(List.of(
-                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"), new MoveEvent("f1 b5"))));
-            put(2, new ArrayList<>(List.of(
+            put(1, new ArrayList<>(List.of(new InitEvent(), new MoveEvent("e2 e4"),
+                    new MoveEvent("d7 d5"), new MoveEvent("f1 b5"))));
+            put(2, new ArrayList<>(List.of(new InitEvent(),
                     new MoveEvent("e2 e4"), new MoveEvent("d7 d5"),
                     new MoveEvent("f1 b5"), new MoveEvent("a7 a5"))));
-            put(3, new ArrayList<>(List.of(
-                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"),
-                    new MoveEvent("f1 b5"), new MoveEvent("a7 a5"), new MoveEvent("b5 e8"))));
+            put(3, new ArrayList<>(List.of(new InitEvent(), new MoveEvent("e2 e4"),
+                    new MoveEvent("d7 d5"), new MoveEvent("f1 b5"),
+                    new MoveEvent("a7 a5"), new MoveEvent("b5 e8"))));
         }};
 
         public List<Event> findAllByGameId(int gameId) {
