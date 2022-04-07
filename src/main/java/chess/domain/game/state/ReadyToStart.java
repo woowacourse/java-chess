@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.game.score.ScoreResult;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 
 public class ReadyToStart implements GameState {
@@ -24,6 +25,11 @@ public class ReadyToStart implements GameState {
     @Override
     public Board getBoard() {
         throw new IllegalStateException("게임중이 아니므로 체스판이 아직 생성되지 않았습니다.");
+    }
+
+    @Override
+    public PieceColor getWinColor() {
+        throw new IllegalStateException("게임중이 아니므로 승자를 가져올 수 없습니다.");
     }
 
     @Override

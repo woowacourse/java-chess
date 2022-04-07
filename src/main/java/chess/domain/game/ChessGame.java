@@ -45,8 +45,17 @@ public class ChessGame {
         return state.isWhiteTurn();
     }
 
+    public boolean isEnd() {
+        Board board = getBoard();
+        return !board.hasKing(PieceColor.BLACK) || !board.hasKing(PieceColor.WHITE);
+    }
+
     public Board getBoard() {
         return state.getBoard();
+    }
+
+    public PieceColor getWinColor() {
+        return state.getWinColor();
     }
 
     @Override

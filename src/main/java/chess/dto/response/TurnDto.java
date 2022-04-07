@@ -3,24 +3,28 @@ package chess.dto.response;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceColor;
 
-public class CurrentTurnDto {
+public class TurnDto {
 
     private final Turn turn;
 
-    private CurrentTurnDto(Turn turn) {
+    private TurnDto(Turn turn) {
         this.turn = turn;
     }
 
-    public static CurrentTurnDto from(ChessGame chessGame) {
+    public static TurnDto from(ChessGame chessGame) {
         if (chessGame.isWhiteTurn()) {
-            return new CurrentTurnDto(Turn.WHITE);
+            return new TurnDto(Turn.WHITE);
         }
 
-        return new CurrentTurnDto(Turn.BLACK);
+        return new TurnDto(Turn.BLACK);
     }
 
-    public static CurrentTurnDto from(String turn) {
-        return new CurrentTurnDto(Turn.valueOf(turn));
+    public static TurnDto from(String turn) {
+        return new TurnDto(Turn.valueOf(turn));
+    }
+
+    public static TurnDto from(PieceColor pieceColor) {
+        return new TurnDto(Turn.valueOf(pieceColor.name()));
     }
 
     public String getDisplayName() {

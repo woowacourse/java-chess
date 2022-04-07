@@ -4,10 +4,10 @@ import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 import chess.dto.response.BoardDto;
-import chess.dto.response.CurrentTurnDto;
 import chess.dto.response.PieceDto;
 import chess.dto.response.PositionDto;
 import chess.dto.response.ScoreResultDto;
+import chess.dto.response.TurnDto;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,8 +54,8 @@ public class OutputView {
         return EMPTY_PIECE_NOTATION;
     }
 
-    public static void printCurrentTurn(CurrentTurnDto currentTurnDto) {
-        System.out.println(currentTurnDto.getDisplayName() + "의 차례입니다.");
+    public static void printCurrentTurn(TurnDto turnDto) {
+        System.out.println(turnDto.getDisplayName() + "의 차례입니다.");
     }
 
     public static void printScore(ScoreResultDto scoreResultDto) {

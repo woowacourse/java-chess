@@ -4,8 +4,8 @@ import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.request.ConsoleCommandDto;
 import chess.dto.response.BoardDto;
-import chess.dto.response.CurrentTurnDto;
 import chess.dto.response.ScoreResultDto;
+import chess.dto.response.TurnDto;
 import chess.view.console.InputView;
 import chess.view.console.OutputView;
 
@@ -64,7 +64,7 @@ public class ConsoleController {
     }
 
     private void printCurrentTurn(ChessGame chessGame) {
-        OutputView.printCurrentTurn(CurrentTurnDto.from(chessGame));
+        OutputView.printCurrentTurn(TurnDto.from(chessGame));
     }
 
     private void executeStatus(ChessGame chessGame) {

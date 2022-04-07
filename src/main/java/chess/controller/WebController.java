@@ -35,6 +35,7 @@ public class WebController {
         model.put("board", chessService.getBoard(GAME_ID).getPieceImages());
         model.put("score", chessService.getScore(GAME_ID));
         model.put("turn", chessService.getCurrentTurn(GAME_ID));
+        model.put("winColor", chessService.getWinColor(GAME_ID));
 
         return render(model);
     }

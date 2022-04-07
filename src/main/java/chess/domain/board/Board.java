@@ -154,7 +154,6 @@ public class Board {
         return !Objects.isNull(otherPiece) && otherPiece.isSameColorAs(piece);
     }
 
-
     public int getDuplicatedPawnCountByXAxis(PieceColor pieceColor, XAxis xAxis) {
         List<Position> positions = Position.getPositionsByXAxis(xAxis);
         int count = countPawnByPositions(pieceColor, positions);
@@ -179,6 +178,12 @@ public class Board {
                 .stream()
                 .filter(piece -> piece.isSameColorAs(pieceColor))
                 .collect(Collectors.toSet());
+    }
+
+    public boolean hasKing(PieceColor pieceColor) {
+        return findPiecesByPieceColor(pieceColor)
+                .stream()
+                .anyMatch(Piece::isKing);
     }
 
     public Map<Position, Piece> getValue() {
