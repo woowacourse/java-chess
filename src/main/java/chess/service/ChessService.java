@@ -8,6 +8,7 @@ import chess.domain.dto.ResponseDto;
 import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
+import chess.domain.game.status.Playing;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Type;
 import chess.domain.position.Position;
@@ -62,12 +63,13 @@ public class ChessService {
 
     private void loadLastGame() throws SQLException {
         HashMap<Position, ChessPiece> board = new HashMap<>();
-        for (PieceDto pieceDto : boardDao.findByGameId(gameDao.findLastGameId())) {
+        int lastGameId = gameDao.findLastGameId();
+        for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
             ChessPiece piece = makePiece(pieceDto);
             board.put(new Position(pieceDto.getPosition()), piece);
         }
-        GameDto game = gameDao.findById(gameDao.findLastGameId());
-        chessBoard = new ChessBoard(board, game.getStatus(), game.getTurn());
+        GameDto game = gameDao.findById(lastGameId);
+        chessBoard = new ChessBoard(board, new Playing(), game.getTurn());
     }
 
     private ChessPiece makePiece(PieceDto pieceDto) {
