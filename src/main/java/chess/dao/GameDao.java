@@ -22,14 +22,14 @@ public class GameDao {
         return new StatementExecutor(sql, Statement.RETURN_GENERATED_KEYS)
                 .setString(GameState.RUNNING)
                 .executeCommandAndGetGeneratedKeys()
-                .readFirstColumnAndClose();
+                .readFirstColumn();
     }
 
     public void finishGame(int gameId) {
         final String sql = addTable("UPDATE %s SET state = ? WHERE id = ?");
         new StatementExecutor(sql).setString(GameState.OVER)
                 .setInt(gameId)
-                .executeCommandAndClose();
+                .executeCommand();
     }
 
     public boolean checkById(int gameId) {
@@ -37,7 +37,7 @@ public class GameDao {
 
         int existingGameCount = new StatementExecutor(sql).setInt(gameId)
                 .executeQuery()
-                .readFirstColumnAndClose();
+                .readFirstColumn();
 
         return existingGameCount > 0;
     }
@@ -46,7 +46,7 @@ public class GameDao {
         final String sql = addTable("SELECT COUNT(*) FROM %s");
 
         return new StatementExecutor(sql).executeQuery()
-                .readFirstColumnAndClose();
+                .readFirstColumn();
     }
 
     public int countByState(GameState state) {
@@ -54,7 +54,7 @@ public class GameDao {
 
         return new StatementExecutor(sql).setString(state)
                 .executeQuery()
-                .readFirstColumnAndClose();
+                .readFirstColumn();
     }
 
     private String addTable(String sql) {

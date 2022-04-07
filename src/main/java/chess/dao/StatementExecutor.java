@@ -1,7 +1,5 @@
 package chess.dao;
 
-import static chess.util.DatabaseUtil.getConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,12 +10,12 @@ public class StatementExecutor {
     private static final String QUERY_EXCEPTION_MESSAGE = "데이터 조회 작업에 실패하였습니다.";
     private static final String COMMAND_EXCEPTION_MESSAGE = "데이터 변경 작업에 실패하였습니다.";
 
-    private final Connection connection = getConnection();
     private final PreparedStatement statement;
     private int parameterIndex = 1;
 
     public StatementExecutor(String sql) {
         try {
+            final Connection connection = ConnectionManager.getConnection();
             this.statement = connection.prepareStatement(sql);
         } catch (SQLException e) {
             throw new IllegalStateException(SQL_INIT_EXCEPTION_MESSAGE);
@@ -26,6 +24,7 @@ public class StatementExecutor {
 
     public StatementExecutor(String sql, int retrieveOption) {
         try {
+            final Connection connection = ConnectionManager.getConnection();
             this.statement = connection.prepareStatement(sql, retrieveOption);
         } catch (SQLException e) {
             throw new IllegalStateException(SQL_INIT_EXCEPTION_MESSAGE);
@@ -53,14 +52,14 @@ public class StatementExecutor {
 
     public ResultReader executeQuery() {
         try {
-            return new ResultReader(statement.executeQuery(), connection);
+            return new ResultReader(statement.executeQuery());
         } catch (SQLException e) {
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
 
-    public void executeCommandAndClose() {
-        try (connection) {
+    public void executeCommand() {
+        try {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
@@ -70,7 +69,7 @@ public class StatementExecutor {
     public ResultReader executeCommandAndGetGeneratedKeys() {
         try {
             statement.executeUpdate();
-            return new ResultReader(statement.getGeneratedKeys(), connection);
+            return new ResultReader(statement.getGeneratedKeys());
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }

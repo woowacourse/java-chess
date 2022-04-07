@@ -25,9 +25,7 @@ public class EventDao {
         final ResultReader reader = new StatementExecutor(sql).setInt(gameId)
                 .executeQuery();
 
-        try (reader) {
-            return readAllEvents(reader);
-        }
+        return readAllEvents(reader);
     }
 
     private List<Event> readAllEvents(ResultReader reader) {
@@ -47,7 +45,7 @@ public class EventDao {
         new StatementExecutor(sql).setInt(gameId)
                 .setString(EventType.MOVE)
                 .setString(moveCommand.toDescription())
-                .executeCommandAndClose();
+                .executeCommand();
     }
 
     private String addTable(String sql) {
