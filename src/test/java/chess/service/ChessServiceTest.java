@@ -7,7 +7,6 @@ import chess.dao.EventDao;
 import chess.dao.GameDao;
 import chess.dao.GameState;
 import chess.domain.event.Event;
-import chess.domain.event.EventType;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.NewGame;
 import chess.dto.CreateGameDto;
@@ -176,20 +175,13 @@ class ChessServiceTest {
 
         final Map<Integer, List<Event>> repository = new HashMap<>() {{
             put(1, new ArrayList<>(List.of(
-                    new Event(EventType.MOVE, "e2 e4"),
-                    new Event(EventType.MOVE, "d7 d5"),
-                    new Event(EventType.MOVE, "f1 b5"))));
+                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"), Event.ofMove("f1 b5"))));
             put(2, new ArrayList<>(List.of(
-                    new Event(EventType.MOVE, "e2 e4"),
-                    new Event(EventType.MOVE, "d7 d5"),
-                    new Event(EventType.MOVE, "f1 b5"),
-                    new Event(EventType.MOVE, "a7 a5"))));
+                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"),
+                    Event.ofMove("f1 b5"), Event.ofMove("a7 a5"))));
             put(3, new ArrayList<>(List.of(
-                    new Event(EventType.MOVE, "e2 e4"),
-                    new Event(EventType.MOVE, "d7 d5"),
-                    new Event(EventType.MOVE, "f1 b5"),
-                    new Event(EventType.MOVE, "a7 a5"),
-                    new Event(EventType.MOVE, "b5 e8"))));
+                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"),
+                    Event.ofMove("f1 b5"), Event.ofMove("a7 a5"), Event.ofMove("b5 e8"))));
         }};
 
         public List<Event> findAllByGameId(int gameId) {
@@ -200,7 +192,7 @@ class ChessServiceTest {
         }
 
         public void saveMove(int gameId, MoveCommand moveCommand) {
-            Event newEvent = new Event(EventType.MOVE, moveCommand.toDescription());
+            Event newEvent = Event.ofMove(moveCommand.toDescription());
 
             if (repository.containsKey(gameId)) {
                 repository.get(gameId).add(newEvent);

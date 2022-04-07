@@ -7,13 +7,25 @@ public class Event {
     private final EventType type;
     private final String description;
 
-    public Event(EventType type, String description) {
+    private Event(EventType type, String description) {
         this.type = type;
         this.description = description;
     }
 
-    public Event(String type, String description) {
-        this(EventType.valueOf(type), description);
+    public static Event of(String type, String description) {
+        return new Event(EventType.valueOf(type), description);
+    }
+
+    public static Event ofMove(String description) {
+        return new Event(EventType.MOVE, description);
+    }
+
+    public boolean isInit() {
+        return type == EventType.INIT;
+    }
+
+    public boolean isMove() {
+        return type == EventType.MOVE;
     }
 
     public MoveCommand toMoveCommand() {

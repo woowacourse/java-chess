@@ -33,7 +33,7 @@ public class EventDaoImpl implements EventDao {
         while (reader.hasNextRow()) {
             String eventType = reader.readStringAt("type");
             String description = reader.readStringAt("description");
-            Event event = new Event(eventType, description);
+            Event event = Event.of(eventType, description);
             pieces.add(event);
         }
         return pieces;
