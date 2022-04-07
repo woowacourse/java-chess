@@ -3,6 +3,8 @@ const body = document.getElementsByTagName('body')[0]
 body.addEventListener('click', onClick)
 let squareIdList = [];
 
+const GAME_NAME = 'game';
+
 function onClick(event) {
     let target = event.target;
     console.log(target.tagName + '클릭됨')
@@ -26,7 +28,7 @@ function onClick(event) {
     function postTwoCells() {
         if (squareIdList.length === 2) {
             makeAllCellsNotClicked()
-            postForm('/move/game', squareIdList)
+            postForm('/move/' + GAME_NAME, squareIdList)
         }
     }
 
@@ -37,37 +39,45 @@ function onClick(event) {
     }
 
     function postForm(url, elements) {
-        let form = document.createElement('form')
-        form.setAttribute('method', 'post')
-        form.setAttribute('action', url)
-        document.characterSet = 'utf-8'
-        let toInput = document.createElement('input')
-        toInput.type = 'hidden'
-        toInput.name = 'to'
-        toInput.value = elements.pop()
-        let fromInput = document.createElement('input')
-        fromInput.type = 'hidden'
-        fromInput.name = 'from'
-        fromInput.value = elements.pop()
+        let form = makeForm();
+        let toInput = makeHiddenInput('to');
+        let fromInput = makeHiddenInput('from');
+
         form.appendChild(fromInput);
         form.appendChild(toInput);
         document.body.appendChild(form)
         form.submit()
+
+        function makeForm() {
+            let form = document.createElement('form')
+            form.setAttribute('method', 'post')
+            form.setAttribute('action', url)
+            document.characterSet = 'utf-8'
+            return form;
+        }
+
+        function makeHiddenInput(name) {
+            let toInput = document.createElement('input')
+            toInput.type = 'hidden'
+            toInput.name = name
+            toInput.value = elements.pop()
+            return toInput;
+        }
     }
 
     function onButtonClick() {
         const classList = target.classList
         if (classList.contains('start-button')) {
-            location.href = "/new-board/game"
+            location.href = "/new-board/" + GAME_NAME
         }
         if (classList.contains('status-button')) {
-            location.href = "/status/game"
+            location.href = "/status/" + GAME_NAME
         }
         if (classList.contains('board-button')) {
-            location.href = "/board/game"
+            location.href = "/board/" + GAME_NAME
         }
         if (classList.contains('end-button')) {
-            location.href = '/game-end/game'
+            location.href = '/game-end/' + GAME_NAME
         }
     }
 }
