@@ -10,7 +10,9 @@ import chess.dto.request.CreatePieceDto;
 import chess.dto.request.DeletePieceDto;
 import chess.dto.request.UpdatePiecePositionDto;
 import chess.dto.response.BoardDto;
+import chess.dto.response.CurrentTurnDto;
 import chess.dto.response.GameDto;
+import chess.dto.response.ScoreResultDto;
 import java.util.Map.Entry;
 
 public class ChessService {
@@ -44,21 +46,9 @@ public class ChessService {
         }
     }
 
-    public GameDto getGame(String gameId) {
-        GameDto gameDto = gameDao.getGame(gameId);
-        BoardDto boardDto = boardDao.getBoard(gameId);
-        gameDto.setBoardDto(boardDto);
-
-        return gameDto;
-    }
-
-    public BoardDto getBoard(String gameId) {
-        return boardDao.getBoard(gameId);
-    }
-
     public void movePiece(UpdatePiecePositionDto updatePiecePositionDto) {
         String gameId = updatePiecePositionDto.getGameId();
-        ChessGame chessGame = getGame(gameId).toChessGame();
+        ChessGame chessGame = generateChessGame(gameId);
         chessGame.movePiece(updatePiecePositionDto.getFrom(), updatePiecePositionDto.getTo());
 
         updateGameTurn(gameId, chessGame);
@@ -66,6 +56,13 @@ public class ChessService {
         boardDao.deletePiece(DeletePieceDto.of(gameId, updatePiecePositionDto.getTo().getXAxis(),
                 updatePiecePositionDto.getTo().getYAxis()));
         boardDao.updatePiecePosition(updatePiecePositionDto);
+    }
+
+    private ChessGame generateChessGame(String gameId) {
+        BoardDto boardDto = boardDao.getBoard(gameId);
+        GameDto gameDto = gameDao.getGame(gameId);
+
+        return ChessGame.of(boardDto.toBoard(), gameDto.getCurrentTurnAsPieceColor());
     }
 
     private void updateGameTurn(String gameId, ChessGame chessGame) {
@@ -77,4 +74,15 @@ public class ChessService {
         gameDao.updateTurnToBlack(gameId);
     }
 
+    public BoardDto getBoard(String gameId) {
+        return boardDao.getBoard(gameId);
+    }
+
+    public ScoreResultDto getScore(String gameId) {
+        return ScoreResultDto.from(generateChessGame(gameId));
+    }
+
+    public CurrentTurnDto getCurrentTurn(String gameId) {
+        return CurrentTurnDto.from(generateChessGame(gameId));
+    }
 }
