@@ -83,7 +83,7 @@ class PieceDaoTest {
     }
 
     @Test
-    @DisplayName("정상적으로 기물이 삭제되는지 확인")
+    @DisplayName("기물 삭제시 해당 위치에 기물이 존재하지 않으면 예외 발생")
     void throwExceptionDeletePieceNotFound() {
         assertThatThrownBy(() -> pieceDao.deletePiece("D2"))
             .isInstanceOf(IllegalArgumentException.class)
