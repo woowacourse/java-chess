@@ -1,6 +1,6 @@
 package chess;
 
-import chess.web.controller.ChessController;
+import chess.web.ChessController;
 
 public class WebApplication {
     public static void main(String[] args) {

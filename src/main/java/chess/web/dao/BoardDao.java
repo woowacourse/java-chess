@@ -2,13 +2,11 @@ package chess.web.dao;
 
 import chess.domain.Color;
 import chess.web.dto.GameStateDto;
-import chess.web.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class BoardDao {
 
@@ -51,7 +49,7 @@ public class BoardDao {
     public Color find() {
         final Connection connection = getConnection();
         final String sql = "select * from board where id = ?";
-        try (final PreparedStatement statement = connection.prepareStatement(sql)){
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, 1);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
