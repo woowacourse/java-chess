@@ -36,6 +36,10 @@ public enum Command {
         printBoard(chessGame);
     }
 
+    public static void start(final ChessGame chessGame) {
+        execute(START.command, chessGame);
+    }
+
     private static void operate(final ChessGame chessGame, final String[] commands) {
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))
