@@ -20,10 +20,11 @@ class BoardDaoTest {
     private Connection connection;
     private BoardDao boardDao;
     private GameDao gameDao;
+    private Connector connector = new Connector();
 
     @BeforeEach
     void set() throws SQLException {
-        connection = Connector.makeConnection();
+        connection = connector.makeConnection();
         boardDao = new BoardDao(connection);
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);

@@ -11,9 +11,10 @@ public class BoardDao {
     private static final int EMPTY = 0;
     private final Connection connection;
     private int id = 0;
+    private Connector connector = new Connector();
 
     public BoardDao() {
-        connection = Connector.makeConnection();
+        connection = connector.makeConnection();
     }
 
     BoardDao(final Connection connection) {

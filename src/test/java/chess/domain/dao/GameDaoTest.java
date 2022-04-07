@@ -16,10 +16,11 @@ class GameDaoTest {
 
     private Connection connection;
     private GameDao gameDao;
+    private Connector connector = new Connector();
 
     @BeforeEach
     void set() throws SQLException {
-        connection = Connector.makeConnection();
+        connection = connector.makeConnection();
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);
     }
@@ -27,7 +28,7 @@ class GameDaoTest {
     @Test
     @DisplayName("DB 연결을 확인한다.")
     void connection() {
-        assertThat(Connector.makeConnection()).isNotNull();
+        assertThat(connector.makeConnection()).isNotNull();
     }
 
     @Test

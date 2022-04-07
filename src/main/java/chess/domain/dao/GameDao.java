@@ -11,9 +11,10 @@ public class GameDao {
     private static final int EMPTY = 0;
     private final Connection connection;
     private int id = 0;
+    private Connector connector = new Connector();
 
     public GameDao() {
-        connection = Connector.makeConnection();
+        connection = connector.makeConnection();
     }
 
     public GameDao(final Connection connection) {
