@@ -7,6 +7,7 @@ import chess.domain.Knight;
 import chess.domain.Pawn;
 import chess.domain.Piece;
 import chess.domain.PieceColor;
+import chess.domain.Queen;
 import chess.domain.Rook;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
@@ -111,7 +112,6 @@ public class ChessService {
     public ChessGame move(ChessGame chessGame, String source, String target) {
         final Position from = Position.valueOf(source);
         final Position to = Position.valueOf(target);
-
         final Long gameId = chessGame.getId();
 
         chessGame.move(from, to);
@@ -120,6 +120,14 @@ public class ChessService {
         boardDao.updateByPosition(gameId, to.getName(), new PieceDto(chessGame.board().findByPiece(to)));
         gameDao.updateByGame(GameDto.of(gameId, chessGame.getState(), chessGame.turn().name()));
 
+        return chessGame;
+    }
+
+    public ChessGame end(ChessGame chessGame) {
+        chessGame.end();
+        final Long gameId = chessGame.getId();
+
+        gameDao.updateByGame(GameDto.of(gameId, new Finished(chessGame.board()), PieceColor.NONE.getName()));
         return chessGame;
     }
 }
