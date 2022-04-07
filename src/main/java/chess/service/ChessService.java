@@ -36,11 +36,9 @@ public class ChessService {
         final Moving moving = new Moving(new Board(pieceDao.findAllByBoardId(boardId)), color);
         moving.move(new MoveCommand(Position.of(from), Position.of(to)));
         final Board board = moving.getBoard();
-        final Piece piece = board.findPiece(Position.of(to));
-
-        pieceDao.deleteByPositionAndBoardId(from, boardId);
-        pieceDao.save(boardId, to, piece);
         boardDao.update(boardId, color.reverse());
+        pieceDao.deleteByBoardId(boardId);
+        pieceDao.saveAll(boardId, board.getValue());
     }
 
     public BoardResult findBoardById(final Long boardId) {

@@ -18,22 +18,6 @@ public class JdbcPieceDao implements PieceDao {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void save(final Long boardId, final String position, final Piece piece) {
-        final Connection connection = getConnection();
-        final String sql = "insert into piece (id, position, board_id, name, color) values (NULL, ?, ?, ?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setLong(2, boardId);
-            statement.setString(3, piece.getName().name());
-            statement.setString(4, piece.getColor().name());
-            statement.executeUpdate();
-        } catch (final SQLException e) {
-            logger.warn(e.getMessage());
-        }
-    }
-
-    @Override
     public void saveAll(final Long boardId, final Map<Position, Piece> pieces) {
         final Connection connection = getConnection();
         final String sql = "insert into piece (id, position, board_id, name, color) values (NULL, ?, ?, ?, ?)";
@@ -59,14 +43,13 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteByPositionAndBoardId(final String position, final Long boardId) {
+    public void deleteByBoardId(final Long boardId) {
         final Connection connection = getConnection();
-        final String sql = "delete from piece where position = (?) and board_id = (?)";
+        final String sql = "delete from piece where board_id = (?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setLong(2, boardId);
-            statement.executeUpdate();
+            statement.setLong(1, boardId);
+            statement.execute();
         } catch (final SQLException e) {
             logger.warn(e.getMessage());
         }
@@ -75,7 +58,7 @@ public class JdbcPieceDao implements PieceDao {
     private void saveBoard(final Long boardId, final Map<Position, Piece> board, final PreparedStatement statement) throws SQLException {
         for (final Map.Entry<Position, Piece> entry : board.entrySet()) {
             final Position position = entry.getKey();
-            statement.setString(1, position.getColumn().name() + position.getRow().getValue());
+            statement.setString(1, getPositionName(position));
             statement.setLong(2, boardId);
             statement.setString(3, entry.getValue().getName().name());
             statement.setString(4, entry.getValue().getColor().name());
@@ -101,6 +84,10 @@ public class JdbcPieceDao implements PieceDao {
 
     private Position getPosition(final ResultSet resultSet) throws SQLException {
         return Position.of(resultSet.getString("position"));
+    }
+
+    private String getPositionName(final Position position) {
+        return position.getColumn().name().toLowerCase() + position.getRow().getValue();
     }
 
     private Connection getConnection() {
