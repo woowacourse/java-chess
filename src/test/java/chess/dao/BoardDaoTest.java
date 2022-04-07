@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +42,11 @@ class BoardDaoTest {
         Map<String, List<String>> board = boardDto.getBoard();
         List<String> pieceAndColor = board.get("a3");
         assertThat(pieceAndColor.get(0)).isNotNull();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        BoardDaoImpl boardDao = new BoardDaoImpl();
+        boardDao.movePiece(new CommandDto("a3 a2"));
     }
 }
