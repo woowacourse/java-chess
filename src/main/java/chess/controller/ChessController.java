@@ -4,10 +4,11 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dao.BoardDaoImpl;
+import chess.dao.TurnDaoImpl;
 import chess.dto.ErrorResponseDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
-import chess.service.DependencyFactory;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,8 @@ public class ChessController {
 
     private final ChessService chessService;
 
-    public ChessController() {
-        chessService = DependencyFactory.chessService();
+    public ChessController(final ChessService chessService) {
+        this.chessService = chessService;
     }
 
     private static String render (Map<String, Object> model, String templatePath) {
