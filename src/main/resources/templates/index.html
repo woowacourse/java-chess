@@ -12,6 +12,14 @@
 <div id="app">
     <h1>♟️체스</h1>
 
+    <section class="error">
+        <div>
+            {{#hasError}}
+            <h1>{{errorMessage}}</h1>
+            {{/hasError}}
+        </div>
+    </section>
+
     <table>
         <thead>
         <tr>

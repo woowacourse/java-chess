@@ -65,6 +65,12 @@ public class WebApplication {
             Player player = playerDao.findAll();
             model.put("turn", player.name());
 
+            //에러메시지 세션
+            if (req.session().attribute("ERROR_MESSAGE") != null) {
+                model.putAll(req.session().attribute("ERROR_MESSAGE"));
+                req.session().removeAttribute("ERROR_MESSAGE");
+            }
+
             return render(model, "index.html");
         });
 
@@ -101,9 +107,20 @@ public class WebApplication {
             return null;
         });
 
+        //예외가 터질 때
         exception(Exception.class, (exception, request, response) -> {
-            response.status(400);
-            response.body(exception.getMessage());
+
+            Map<String, Object> error = new HashMap<>();
+            error.put("hasError", true);
+            error.put("errorMessage", exception.getMessage());
+            request.session().attribute("ERROR_MESSAGE", error);
+
+            response.redirect("/play");
+
+
+//            response.status(400);
+//            response.body(exception.getMessage());
+
         });
     }
 
