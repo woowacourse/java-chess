@@ -17,7 +17,7 @@ public class WebController {
     private static final String REQ_BODY_EQUALS = ":|=";
     private static final String EMPTY = "";
     private static final int VALUE = 1;
-    private static final String CHESS_TEMPLATE_PATH = "index.html";
+    private static final String CHESS_TEMPLATE_PATH = "chessGame.html";
 
     private final ChessGameRepository repository = new ChessGameRepository();
 
@@ -56,15 +56,13 @@ public class WebController {
 
     private Response move(final String body, final int chessGameId) {
         ChessGame chessGame = getChessGame(chessGameId);
-        Response response;
         try {
             Command.execute(getCommands(body), chessGame);
             repository.move(chessGameId, chessGame);
-            response = Response.init(chessGameId, chessGame);
+            return Response.init(chessGameId, chessGame);
         } catch (Exception exception) {
-            response = Response.exception(chessGameId, chessGame, exception.getMessage());
+            return Response.exception(chessGameId, chessGame, exception.getMessage());
         }
-        return response;
     }
 
     private ChessGame getChessGame(final int chessGameId) {
