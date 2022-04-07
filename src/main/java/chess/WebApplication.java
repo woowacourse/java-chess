@@ -1,5 +1,6 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
@@ -31,13 +32,17 @@ public class WebApplication {
 
         get("/play", (req, res) -> {
             Map<String, Object> model = webChessController.modelBoard();
+            String player = webChessController.currentPlayer().name().toLowerCase();
+            model.put("player", player);
             return render(model, "chess.html");
         });
+
         get("/play/:gameName", (req, res) -> {
             Map<String, Object> model = webChessController.modelBoard();
             model.put("gameName", req.params(":gameName"));
             return render(model, "chess.html");
         });
+
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             webChessController.start();
@@ -85,6 +90,11 @@ public class WebApplication {
             webChessController.load(req.queryParams("gameName"));
             res.redirect("/play/" + req.queryParams("gameName"));
             return null;
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(500);
+            response.body(exception.getMessage());
         });
     }
 

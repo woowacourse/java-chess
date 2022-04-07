@@ -14,7 +14,7 @@ public enum PieceGenerator {
     KING("K") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new King(player);
@@ -23,7 +23,7 @@ public enum PieceGenerator {
     QUEEN("Q") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new Queen(player);
@@ -32,7 +32,7 @@ public enum PieceGenerator {
     BISHOP("B") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new Bishop(player);
@@ -41,7 +41,7 @@ public enum PieceGenerator {
     KNIGHT("N") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new Knight(player);
@@ -50,7 +50,7 @@ public enum PieceGenerator {
     ROOK("R") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new Rook(player);
@@ -59,7 +59,7 @@ public enum PieceGenerator {
     PAWN("P") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
+            if (player == Player.NULL) {
                 return new Blank();
             }
             return new Pawn(player);
@@ -68,9 +68,6 @@ public enum PieceGenerator {
     NULL(".") {
         @Override
         public Piece generate(Player player) {
-            if(player == Player.NULL){
-                return new Blank();
-            }
             return new Blank();
         }
     };

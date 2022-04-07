@@ -23,3 +23,14 @@ td{
 .move-box{
   text-align:center;
 }
+
+.menu-title{
+  padding : 5px;
+  background-color:#b58865;
+  border : 1px solid #b58865;
+}
+
+.menu-box{
+  background-color:#f0d9b7;
+  border : 1px solid #b58865;
+}

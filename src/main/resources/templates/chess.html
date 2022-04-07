@@ -12,29 +12,38 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7">
-      <div class="row button-box">
-        <div class="col-md-4 button start-button">
-          <form action="/start" method="get">
-            <input class="btn btn-default" type="submit" value="Start"/>
-          </form>
+        <div class="menu-title">
+          현재 Player
         </div>
-        <div class="col-md-4 button end-button">
-          <form action="/end" method="get">
-            <input class="btn btn-danger" type="submit" value="End"/>
-          </form>
-        </div>
-        <div class="col-md-4 button status-button">
-          <form action="/status" method="get">
-            <input class="btn btn-success" type="submit" value="Status"/>
+      <div class="menu-box">{{player}}</div>
+      <div class="menu-title">
+        체스 이동
+      </div>
+      <div class="move-box menu-box">
+        <div class="row">
+          <form action="/move" method="post">
+            <div class="col-md-4">
+              <label for="source">출발 위치</label>
+              <input class="form-control" type="text" name="source" id="source"/>
+            </div>
+            <div class="col-md-4">
+              <label for="target">도착 위치</label>
+              <input class="form-control" type="text" name="target" id="target"/>
+            </div>
+            <div class="col-md-4">
+              <input class="btn" type="submit" value="Move"/>
+            </div>
           </form>
         </div>
       </div>
     </div>
     <div class="col-md-5">
-      <div class="status-box">
+      <div class="menu-title">
+        게임 결과
+        <span>{{winner}}</span>
+      </div>
+      <div class="status-box menu-box">
         <div>
-          <label>게임 현황</label>
-          <span>{{winner}}</span>
           <br/>
           <label>White 점수</label>
           <span>{{whiteScore}}</span>
@@ -47,15 +56,6 @@
   </div>
   <div class="row">
     <div class="col-md-7">
-      <div class="move-box">
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="target"/>
-          <input type="submit" value="Move"/>
-        </form>
-      </div>
       <div class="chessboard-box">
         <table>
           <tbody>
@@ -144,39 +144,42 @@
       </div>
     </div>
     <div class="col-md-5">
-      <div class="black-player-box">
-        <div>Black</div>
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="black-source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="black-target"/>
-          <input type="submit" value="Move"/>
-        </form>
-        <div>
-          <label>Black 점수</label>
-          <span>{{blackScore}}</span>
+      <div class="row menu-title">
+        <div class="col-md-4 ">
+          게임 메뉴
         </div>
       </div>
-      <div class="white-player-box">
-        <div>Black</div>
-        <form action="/move" method="post">
-          <label>출발 위치</label>
-          <input type="text" name="source" id="white-source"/>
-          <label>도착 위치</label>
-          <input type="text" name="target" id="white-target"/>
-          <input type="submit" value="Move"/>
-        </form>
-        <div>
-          <label>White 점수</label>
-          <span>{{whiteScore}}</span>
+      <div class="row button-box menu-box">
+        <div class="col-md-4 button start-button">
+          <form action="/start" method="get">
+            <input class="btn btn-default" type="submit" value="Start"/>
+          </form>
+        </div>
+        <div class="col-md-4 button end-button">
+          <form action="/end" method="get">
+            <input class="btn btn-danger" type="submit" value="End"/>
+          </form>
+        </div>
+        <div class="col-md-4 button status-button">
+          <form action="/status" method="get">
+            <input class="btn btn-success" type="submit" value="Status"/>
+          </form>
         </div>
       </div>
-      <div class="save-button-box">
+      <div class="row menu-title">
+        <div class="col-md-4 ">
+          게임 저장
+        </div>
+      </div>
+      <div class="row save-button-box menu-box">
         <form action="/save" method="post">
-          <label>게임 저장 이름</label>
-          <input type="text" name="gameName" id="gameName" value="{{gameName}}"/>
+          <div class="col-md-3"><label for="gameName">게임 이름</label></div>
+          <div class="col-md-5">
+          <input class="form-control" type="text" name="gameName" id="gameName" value="{{gameName}}"/>
+          </div>
+            <div class="col-md-4">
           <input type="submit" value="Save"/>
+            </div>
         </form>
       </div>
     </div>

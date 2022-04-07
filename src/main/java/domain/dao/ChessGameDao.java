@@ -84,6 +84,7 @@ public class ChessGameDao {
             throw new RuntimeException(e);
         }
     }
+
     public void delete(String gameName) {
         final Connection connection = getConnection();
         final String sql = "delete from game where name = ?";

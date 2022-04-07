@@ -67,9 +67,8 @@ public class WebChessController {
         for (Position position : chessGame.getChessBoard().getBoard().keySet()) {
             String positionSymbol = position.getPosition();
             Piece piece = chessGame.getChessBoard().findPiece(position);
-            String type = piece.symbol();
             String piecePlayer = piece.getPlayer().name();
-            PieceDto pieceDto = new PieceDto(gameName, positionSymbol, type, piecePlayer);
+            PieceDto pieceDto = new PieceDto(gameName, positionSymbol, piece.symbol(), piecePlayer);
             pieceDao.save(pieceDto);
         }
     }
@@ -77,25 +76,25 @@ public class WebChessController {
     public void load(String gameName) {
         ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
         List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
-        System.out.println("가지고온 PieceList 사이즈 " +pieceDtoList.size());
-        Map<Position, Piece> board = new HashMap<>();
-        for (PieceDto pieceDto : pieceDtoList) {
-            String[] position = pieceDto.getPosition().split("");
-            String piecePlayer = pieceDto.getPlayer();
-            String type = pieceDto.getType();
-            Position piecePosition  = Position.of(position[0], position[1]);
-            Player player = Player.valueOf(piecePlayer);
-            System.out.println("Player = " + player);
-            System.out.println("type = " + type);
-            Piece piece = PieceGenerator.of(type).generate(player);
-            System.out.println(piecePosition+","+piece);
-            board.put(piecePosition, piece);
-        }
+        Map<Position, Piece> board = createBoard(pieceDtoList);
         ChessBoard chessBoard = new ChessBoard(board);
         changeBoard(Player.valueOf(chessGameDto.getPlayer()), chessBoard);
     }
 
-    public void changeBoard(Player player, ChessBoard chessBoard){
+    public Map<Position, Piece> createBoard(List<PieceDto> pieceDtoList) {
+        Map<Position, Piece> board = new HashMap<>();
+        for (PieceDto pieceDto : pieceDtoList) {
+            String[] position = pieceDto.getPosition().split("");
+            String piecePlayer = pieceDto.getPlayer();
+            Position piecePosition = Position.of(position[0], position[1]);
+            Piece piece = PieceGenerator.of(pieceDto.getType())
+                .generate(Player.valueOf(piecePlayer));
+            board.put(piecePosition, piece);
+        }
+        return board;
+    }
+
+    public void changeBoard(Player player, ChessBoard chessBoard) {
         chessGame = new ChessGame(chessBoard, player);
     }
 
@@ -110,5 +109,9 @@ public class WebChessController {
     public void delete(String gameName) {
         pieceDao.delete(gameName);
         chessGameDao.delete(gameName);
+    }
+
+    public Player currentPlayer() {
+        return chessGame.getCurrentPlayer();
     }
 }
