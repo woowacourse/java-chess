@@ -61,7 +61,7 @@ public class GameService {
         if (game.isTerminated()) {
             return "강제종료";
         }
-        Long winnerId = game.getWinnerId().orElseThrow(() -> new RuntimeException("승자 로직 체크"));
+        Long winnerId = game.getWinnerId();
         if (winnerId.equals(memberId)) {
             return "승";
         }

@@ -68,14 +68,14 @@ public class ChessGame {
         return state.calculateBlackScore();
     }
 
-    public Optional<Long> getWinnerId() {
+    public Long getWinnerId() {
         if (isTerminated()) {
-            return Optional.empty();
+            throw new IllegalStateException("강제종료시엔 승자의 ID를 얻을 수 없습니다.");
         }
         if (state.isBlackWin()) {
-            return Optional.of(participant.getBlackId());
+            return participant.getBlackId();
         }
-        return Optional.of(participant.getWhiteId());
+        return participant.getWhiteId();
     }
 
     public boolean isTerminated() {
