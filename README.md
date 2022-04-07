@@ -105,7 +105,7 @@
 
 - [x] db 설계하기 board, turn
 - [x] table 구현 board, turn
-- [ ] dao 구현
+- [x] dao 구현
     - [x] `board` 전체 조회
     - [x] `board` 업데이트
     - [x] `board` 초기화
@@ -116,9 +116,22 @@
     - [x] `gameStatus` 업데이트
     - [x] `gameStatus` 리셋
 - [x] dao 테스트
-- [ ] 전체 동작 확인
+- [x] 전체 동작 확인
 
 ## 페어 프로그래밍 룰
 
 - 타이머는 10분으로 한다.
 - 쉬는 시간은 1시간 30분 마다 10분씩 가진다.
+
+## WebApplication 작동 방법 설명
+
+웹 어플리케인션은 도커와 , mysql 을 사용하여 작동합니다.
+
+- `첫번째로` [docker 를 실행시켜 주세요.](https://www.docker.com/products/docker-desktop/)
+- `두번째로` IDE - terminal or 로컬 terminal 에서  `cd docker` 로 들어와 주세요.
+- `세번째로` docker exec -it chess-db-1 bash 명령어로 도커의 체스를 시작 시켜주세요.
+- `네번째로`  mysql -u root -proot 아이디와 비밀번호를 입력해주세요.
+- `그 이후로 ` docker/db/mysql/init/init.sql 에 있는 `sql 문을 복사해서 터미널에서 실행시켜주세요.`
+
+그럼 준비 완료 입니다 !!
+

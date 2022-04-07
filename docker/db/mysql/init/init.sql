@@ -1,3 +1,7 @@
+/**
+  최초 실행할 때 한번 import 해주세요!
+ */
+
 create table board
 (
     position varchar(10) not null,
