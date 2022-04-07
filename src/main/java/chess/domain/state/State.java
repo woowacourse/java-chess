@@ -16,4 +16,6 @@ public interface State {
     Result winner();
 
     ChessBoard chessBoard();
+
+    StateType getStateType();
 }

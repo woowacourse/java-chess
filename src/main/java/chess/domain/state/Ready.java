@@ -37,4 +37,9 @@ public class Ready extends Started {
     public Result winner() {
         throw new UnsupportedOperationException(ERROR_MESSAGE_GAME_NOT_START);
     }
+
+    @Override
+    public StateType getStateType() {
+        return StateType.READY;
+    }
 }

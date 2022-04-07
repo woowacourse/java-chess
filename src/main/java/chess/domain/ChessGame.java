@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.domain.state.StateType;
 
 public class ChessGame {
 
@@ -39,5 +40,9 @@ public class ChessGame {
     public Board board() {
         ChessBoard chessBoard = state.chessBoard();
         return chessBoard.getBoard();
+    }
+
+    public StateType getStateType() {
+        return state.getStateType();
     }
 }
