@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.dao.JdbcBoardDao;
+import chess.dao.JdbcPieceDao;
 import chess.dto.request.MoveRequest;
 import chess.dto.response.BoardResult;
 import chess.dto.response.ErrorResponse;
@@ -16,7 +18,7 @@ public class ChessController {
 
     public ChessController() {
         gson = new Gson();
-        chessService = new ChessService();
+        chessService = new ChessService(new JdbcBoardDao(), new JdbcPieceDao());
     }
 
     public ModelAndView home(final Request request, final Response response) {

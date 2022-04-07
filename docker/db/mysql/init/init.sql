@@ -1,7 +1,7 @@
 CREATE table board
 (
-    id    int         not null auto_increment primary key,
-    color varchar(10) not null
+    id   int         not null auto_increment primary key,
+    turn varchar(10) not null
 );
 
 CREATE table piece

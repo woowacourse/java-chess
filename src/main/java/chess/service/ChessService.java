@@ -9,6 +9,8 @@ import chess.game.*;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.state.Moving;
+import chess.state.Ready;
+import chess.state.State;
 import chess.state.Status;
 import java.util.Map;
 
@@ -16,14 +18,15 @@ public class ChessService {
     private final BoardDao boardDao;
     private final PieceDao pieceDao;
 
-    public ChessService() {
-        this.boardDao = new BoardDao();
-        this.pieceDao = new PieceDao();
+    public ChessService(final BoardDao boardDao, final PieceDao pieceDao) {
+        this.boardDao = boardDao;
+        this.pieceDao = pieceDao;
     }
 
     public Long initBoard() {
-        final Long boardId = boardDao.save(Color.WHITE);
-        pieceDao.saveAll(boardId, BoardInitializer.getBoard());
+        final State state = Ready.start(Command.START);
+        final Long boardId = boardDao.save(state.getColor());
+        pieceDao.saveAll(boardId, state.getBoard().getValue());
         return boardId;
     }
 
