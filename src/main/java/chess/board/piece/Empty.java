@@ -14,6 +14,10 @@ public final class Empty extends Piece {
         super(position, Team.NONE);
     }
 
+    public Empty(Position position, Team team) {
+        super(position, team);
+    }
+
     @Override
     public boolean isMovableRange(Position position) {
         return false;
