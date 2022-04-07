@@ -9,7 +9,7 @@ create table game (
     primary key (room_name)
 );
 
-create table board (
+create table pieces (
     room_name varchar(255) not null,
     position varchar(2) not null,
     piece_type varchar(20) not null,

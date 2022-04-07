@@ -15,7 +15,7 @@ public class BoardDao {
 
     public void save(PieceDto pieceDto) {
         final Connection connection = getConnection();
-        final String sql = "insert into board (room_name, position, piece_type, piece_color) " +
+        final String sql = "insert into pieces (room_name, position, piece_type, piece_color) " +
                 "value (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class BoardDao {
     public PieceDto findByRoomNameAndPosition(String roomName, String position) {
         final Connection connection = getConnection();
         final String sql = "select room_name, position, piece_type, piece_color " +
-                "from board " +
+                "from pieces " +
                 "where room_name=? and position=?";
 
         try {
@@ -54,7 +54,7 @@ public class BoardDao {
     public List<PieceDto> findAllPiecesByRoomName(String roomName) {
         final Connection connection = getConnection();
         final String sql = "select room_name, position, piece_type, piece_color " +
-                "from board " +
+                "from pieces " +
                 "where room_name=?";
 
         try {
@@ -75,7 +75,7 @@ public class BoardDao {
 
     public void update(String roomName, String previousPosition, String newPosition) {
         final Connection connection = getConnection();
-        final String sql = "update board " +
+        final String sql = "update pieces " +
                 "set position=? " +
                 "where room_name=? and position=?";
 
@@ -92,7 +92,7 @@ public class BoardDao {
 
     public void deleteByRoomNameAndPosition(String roomName, String position) {
         final Connection connection = getConnection();
-        final String sql = "delete from board " +
+        final String sql = "delete from pieces " +
                 "where room_name=? and position=?";
 
         try {
