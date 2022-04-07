@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.game.Game;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +41,9 @@ class GameDaoImplTest {
 	void update() {
 		Game game = new Game("test", "start");
 		int gameId = gameDaoImpl.save(game);
+		Game newGame = new Game(gameId, List.of("move", "a2", "a3"));
 
-		assertDoesNotThrow(() -> gameDaoImpl.update(gameId, "move a2 a3"));
+		assertDoesNotThrow(() -> gameDaoImpl.update(newGame));
 	}
 
 	@Test

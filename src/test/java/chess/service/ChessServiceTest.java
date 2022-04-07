@@ -20,7 +20,7 @@ class ChessServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		chessService = new ChessService(new FakeGameDao());
+		chessService = new ChessService(new MockGameDao());
 	}
 
 	@Test

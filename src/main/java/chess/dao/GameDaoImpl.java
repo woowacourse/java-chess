@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static chess.domain.game.Game.LOG_DELIMITER;
+
 import chess.domain.game.Game;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,11 +46,12 @@ public class GameDaoImpl implements GameDao {
 	}
 
 	@Override
-	public void update(final int gameId, final String state) {
-		final String sql = "update game set command_log = concat(command_log, '\n', ?) where game.id = ?";
+	public void update(final Game game) {
+		final String sql = "update game set command_log = concat(command_log, ?, ?) where game.id = ?";
 		try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setString(1, state);
-			statement.setInt(2, gameId);
+			statement.setString(1, LOG_DELIMITER);
+			statement.setString(2, game.getCommandLog());
+			statement.setInt(3, game.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

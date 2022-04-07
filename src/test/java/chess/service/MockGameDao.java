@@ -1,5 +1,7 @@
 package chess.service;
 
+import static chess.domain.game.Game.LOG_DELIMITER;
+
 import chess.dao.GameDao;
 import chess.domain.game.Game;
 import java.util.ArrayList;
@@ -7,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FakeGameDao implements GameDao {
+public class MockGameDao implements GameDao {
 
 	private final Map<Integer, Game> games;
 	private int id = 0;
 
-	public FakeGameDao() {
+	public MockGameDao() {
 		this.games = new HashMap<>();
 	}
 
@@ -24,10 +26,11 @@ public class FakeGameDao implements GameDao {
 	}
 
 	@Override
-	public void update(final int gameId, final String state) {
-		Game game = games.get(gameId);
-		String newLog = String.join("\n", game.getCommandLog() + state);
-		games.put(gameId, new Game(gameId, game.getName(), newLog));
+	public void update(final Game newGame) {
+		int gameId = newGame.getId();
+		Game oldGame = games.get(gameId);
+		String newLog = String.join(LOG_DELIMITER, oldGame.getCommandLog() + newGame.getCommandLog());
+		games.put(gameId, new Game(gameId, oldGame.getName(), newLog));
 	}
 
 	@Override

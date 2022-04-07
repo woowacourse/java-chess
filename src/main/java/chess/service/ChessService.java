@@ -14,13 +14,9 @@ import chess.dto.response.GameDto;
 import chess.dto.response.GamesDto;
 import chess.dto.response.StatusDto;
 import chess.dto.response.WinnerDto;
-import java.util.Arrays;
 import java.util.List;
 
 public class ChessService {
-
-	private static final String COMMAND_DELIMITER = " ";
-	private static final String LOG_DELIMITER = "\n";
 
 	private final GameDao gameDao;
 	private State state;
@@ -45,16 +41,17 @@ public class ChessService {
 
 	public GameDto move(int gameId, Position source, Position target) {
 		state = state.move(source, target);
-		String command = String.join(COMMAND_DELIMITER,
-				List.of(Command.MOVE.getCommand(), source.convertPositionToString(), target.convertPositionToString())
-		);
-		gameDao.update(gameId, command);
+		List<String> commands = List.of(Command.MOVE.getCommand(), source.convertPositionToString(),
+				target.convertPositionToString());
+		Game game = new Game(gameId, commands);
+		gameDao.update(game);
 		return GameDto.of(gameId, state.getBoard());
 	}
 
 	public WinnerDto end(int gameId) {
 		state = state.finish();
-		gameDao.update(gameId, Command.END.getCommand());
+		Game game = new Game(gameId, List.of(Command.END.getCommand()));
+		gameDao.update(game);
 		Team winner = state.judgeWinner();
 		return WinnerDto.of(winner.getValue());
 	}
@@ -62,9 +59,8 @@ public class ChessService {
 	public GameDto load(int gameId) {
 		state = new Ready();
 		Game game = gameDao.findById(gameId);
-		String[] commandLogs = game.getCommandLog().split(LOG_DELIMITER);
-		for (String log : commandLogs) {
-			List<String> inputCommand = Arrays.asList(log.split(COMMAND_DELIMITER));
+		for (String commandLog : game.parseLog()) {
+			List<String> inputCommand = Game.parseCommand(commandLog);
 			Command command = Command.of(inputCommand);
 			state = command.apply(state, inputCommand);
 		}

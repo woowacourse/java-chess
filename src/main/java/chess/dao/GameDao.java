@@ -7,7 +7,7 @@ public interface GameDao {
 
 	int save(final Game game);
 
-	void update(final int gameId, final String state);
+	void update(final Game game);
 
 	Game findById(final int gameId);
 
