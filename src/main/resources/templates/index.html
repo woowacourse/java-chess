@@ -54,6 +54,14 @@
                 body: "a2,a3"
             });
         }
+
+        function initialize() {
+            fetch("/initialize", {
+                method: "POST"
+            }).then(() => {
+                window.location.reload();
+            });
+        }
     </script>
 </head>
 <body>
@@ -95,6 +103,8 @@
     승자 {{winColor.displayName}}
     {{/if}}
 </div>
+
+<button onClick="initialize()"> 게임 재시작</button>
 
 </body>
 </html>

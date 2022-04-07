@@ -28,6 +28,7 @@ public class WebController {
     public void run() {
         get("/", (req, res) -> showBoard());
         post("/move", (req, res) -> movePiece(req));
+        post("/initialize", (req, res) -> initialize());
     }
 
     private String showBoard() {
@@ -57,6 +58,16 @@ public class WebController {
             return e.getMessage();
         }
 
+        return "success";
+    }
+
+    // TODO: Exception 으로 catch 하면 안됨
+    private String initialize() {
+        try {
+            chessService.initializeGame(GAME_ID);
+        } catch (Exception e) {
+            return "fail";
+        }
         return "success";
     }
 
