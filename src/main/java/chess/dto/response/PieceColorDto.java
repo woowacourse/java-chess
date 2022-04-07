@@ -32,14 +32,12 @@ public class PieceColorDto {
     }
 
     public PieceColor toPieceColor() {
-        System.out.println("turn : " + turn);
         return PieceColor.valueOf(turn.name());
     }
 
     public boolean isWhiteTurn() {
         return turn.equals(Turn.WHITE);
     }
-
 
     // TODO: 뷰로 분리
     enum Turn {

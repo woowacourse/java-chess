@@ -59,7 +59,6 @@ public class BoardDao extends Dao {
             preparedStatement.setString(5, createPieceDto.getPieceColorName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
             throw new DatabaseException();
         }
     }
@@ -89,7 +88,6 @@ public class BoardDao extends Dao {
             preparedStatement.setString(2, updatePiecePositionDto.getToYAxisValueAsString());
             preparedStatement.setString(3, updatePiecePositionDto.getFromXAxisValueAsString());
             preparedStatement.setString(4, updatePiecePositionDto.getFromYAxisValueAsString());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException();

@@ -23,7 +23,6 @@ public class GameDao extends Dao {
             resultSet.next();
             return ChessGameDto.from(gameId, resultSet.getString("turn"));
         } catch (SQLException e) {
-            System.out.println(e);
             throw new DatabaseException();
         }
     }
@@ -48,7 +47,6 @@ public class GameDao extends Dao {
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
             throw new DatabaseException();
         }
     }
