@@ -1,4 +1,4 @@
-package chess.view.console;
+package chess.consoleview;
 
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;

@@ -1,13 +1,13 @@
 package chess.controller;
 
+import chess.consoleview.InputView;
+import chess.consoleview.OutputView;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.request.ConsoleCommandDto;
 import chess.dto.response.BoardDto;
 import chess.dto.response.PieceColorDto;
 import chess.dto.response.ScoreResultDto;
-import chess.view.console.InputView;
-import chess.view.console.OutputView;
 
 public class ConsoleController {
 
