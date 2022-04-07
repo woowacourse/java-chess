@@ -1,6 +1,7 @@
 package chess.web.dao;
 
 import chess.domain.state.Turn;
+import chess.util.JdbcContext;
 import java.sql.PreparedStatement;
 
 public class TurnDao {

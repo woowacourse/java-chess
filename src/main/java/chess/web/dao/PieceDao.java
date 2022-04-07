@@ -6,6 +6,8 @@ import chess.domain.board.PieceFactory;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.util.JdbcContext;
+import chess.util.RowMapper;
 import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;

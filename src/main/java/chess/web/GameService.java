@@ -1,6 +1,6 @@
 package chess.web;
 
-import chess.GameManager;
+import chess.domain.GameManager;
 import chess.domain.board.Board;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
@@ -36,7 +36,7 @@ public class GameService {
     }
 
     public ChessDto load() {
-        gameManager = new GameManager();;
+        gameManager = new GameManager();
         Map<Position, Piece> value = pieceDao.findAll();
         if (value.isEmpty()) {
             throw new IllegalArgumentException("이전에 저장된 게임이 없습니다");

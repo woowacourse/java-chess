@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

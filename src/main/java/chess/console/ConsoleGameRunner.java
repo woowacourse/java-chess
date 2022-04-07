@@ -1,10 +1,10 @@
 package chess.console;
 
-import chess.GameManager;
 import chess.console.command.Command;
 import chess.console.command.CommandFactory;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
+import chess.domain.GameManager;
 
 public final class ConsoleGameRunner {
 

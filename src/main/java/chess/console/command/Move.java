@@ -1,7 +1,7 @@
 package chess.console.command;
 
-import chess.GameManager;
 import chess.console.view.OutputView;
+import chess.domain.GameManager;
 
 public final class Move implements Command {
 

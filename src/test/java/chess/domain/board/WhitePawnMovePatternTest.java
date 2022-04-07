@@ -1,12 +1,12 @@
 package chess.domain.board;
 
-import chess.domain.position.Position;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.movePattern.AbstractPawnMovePattern;
 import chess.domain.board.movePattern.WhitePawnMovePattern;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class WhitePawnMovePatternTest {
 

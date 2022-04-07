@@ -1,8 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.movePattern.AbstractStraightMovePattern;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.board.movePattern.AbstractStraightMovePattern;
 import java.util.List;
 
 public final class Rook extends Piece {

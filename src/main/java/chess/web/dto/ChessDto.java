@@ -1,6 +1,6 @@
 package chess.web.dto;
 
-import chess.GameManager;
+import chess.domain.GameManager;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;

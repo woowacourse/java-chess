@@ -1,8 +1,8 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.domain.board.Color;
+import chess.domain.position.Position;
 
 final class BlackTurn extends Running {
 

@@ -367,7 +367,6 @@ class BoardTest {
         value.put(Position.of("f3"), obstacle);
         Board board = new Board(value);
 
-
         assertThatThrownBy(() -> board.move(src, dest, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
@@ -424,7 +423,6 @@ class BoardTest {
         value.put(src, bishop);
         value.put(Position.of("f5"), obstacle);
         Board board = new Board(value);
-
 
         assertThatThrownBy(() -> board.move(src, dest, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -1,12 +1,12 @@
 package chess.console.view;
 
-import chess.GameManager;
+import chess.domain.GameManager;
+import chess.domain.board.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Result;
 import chess.domain.position.Row;
 import chess.domain.position.StatusResult;
-import chess.domain.board.Piece;
 import java.util.Map;
 
 public class OutputView {

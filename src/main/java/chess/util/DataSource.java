@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ public class DataSource {
     private static final String PASSWORD = "password";
 
     public Connection getConnection() {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {

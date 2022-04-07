@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class TurnDaoTest {
 
     TurnDao turnDao = new TurnDao();
-    
+
     @AfterEach
     void tearDown() {
         turnDao.updateTurn(turnDao.findCurrentTurn(), Turn.WHITE_TURN);

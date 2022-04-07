@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

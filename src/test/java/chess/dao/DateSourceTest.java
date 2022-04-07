@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.web.dao.DataSource;
+import chess.util.DataSource;
 import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 
