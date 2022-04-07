@@ -1,6 +1,9 @@
 package chess.dao;
 
 import chess.entity.Room;
+import chess.exception.InsertQueryException;
+import chess.exception.SelectQueryException;
+import chess.exception.UpdateQueryException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +26,7 @@ public class RoomDao {
                 isSave = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("room을 저장하지 못했습니다.");
+            throw new InsertQueryException();
         }
         return isSave;
     }
@@ -40,8 +42,7 @@ public class RoomDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+            throw new SelectQueryException();
         }
     }
 
@@ -52,8 +53,7 @@ public class RoomDao {
             statement.setLong(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+            throw new UpdateQueryException();
         }
     }
 }

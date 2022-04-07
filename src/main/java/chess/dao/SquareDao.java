@@ -1,6 +1,10 @@
 package chess.dao;
 
 import chess.entity.Square;
+import chess.exception.DeleteQueryException;
+import chess.exception.InsertQueryException;
+import chess.exception.SelectQueryException;
+import chess.exception.UpdateQueryException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,8 +36,7 @@ public class SquareDao {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("sqaure를 저장하지 못했습니다.");
+            throw new InsertQueryException();
         }
         return false;
     }
@@ -52,8 +55,7 @@ public class SquareDao {
             }
             return result;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(" 입니다.");
+            throw new SelectQueryException();
         }
     }
 
@@ -71,8 +73,7 @@ public class SquareDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+            throw new SelectQueryException();
         }
     }
 
@@ -84,8 +85,7 @@ public class SquareDao {
             statement.setString(3, position);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+            throw new UpdateQueryException();
         }
     }
 
@@ -95,8 +95,7 @@ public class SquareDao {
             statement.setLong(1, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("존재하지 않는 ID 입니다.");
+            throw new DeleteQueryException();
         }
     }
 }
