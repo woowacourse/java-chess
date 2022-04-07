@@ -27,10 +27,10 @@ public enum Team {
         return name;
     }
 
-    public static Team of(String teamInput) {
+    public static Team of(String teamName) {
         return Arrays.stream(Team.values())
-                .filter(team -> team.name.equalsIgnoreCase(teamInput))
+                .filter(team -> team.name.equalsIgnoreCase(teamName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("없는 팀입니다."));
     }
 }

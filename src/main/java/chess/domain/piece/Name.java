@@ -11,23 +11,23 @@ public enum Name {
     KING("k"),
     NONE(".");
 
-    private final String name;
+    private final String value;
 
-    Name(String name) {
-        this.name = name;
+    Name(String value) {
+        this.value = value;
     }
 
     public String getName(Team team) {
         if (team.isBlack()) {
-            return name.toUpperCase();
+            return value.toUpperCase();
         }
-        return name.toLowerCase();
+        return value.toLowerCase();
     }
 
-    public static Name of(String n) {
+    public static Name of(String value) {
         return Arrays.stream(Name.values())
-                .filter(name -> name.name.equalsIgnoreCase(n))
+                .filter(name -> name.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("없는 기물입니다."));
     }
 }

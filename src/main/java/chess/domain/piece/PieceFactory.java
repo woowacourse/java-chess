@@ -1,35 +1,37 @@
 package chess.domain.piece;
 
-public class PieceFactory {
+import java.util.Arrays;
+import java.util.function.Function;
 
-    public static Piece of(String teamInput, String nameInput) {
-        Team team = Team.of(teamInput);
-        Name name = Name.of(nameInput);
+public enum PieceFactory {
 
-        if (name == Name.PAWN) {
-            return new Pawn(team);
-        }
+    PAWN(Name.PAWN, team -> new Pawn(team)),
+    QUEEN(Name.QUEEN, team -> new Queen(team)),
+    KING(Name.KING, team -> new King(team)),
+    BISHOP(Name.BISHOP, team -> new Bishop(team)),
+    ROOK(Name.ROOK, team -> new Rook(team)),
+    KNIGHT(Name.KNIGHT, team -> new Knight(team)),
+    EMPTY(Name.NONE, team -> new EmptyPiece());
 
-        if (name == Name.QUEEN) {
-            return new Queen(team);
-        }
 
-        if (name == Name.KING) {
-            return new King(team);
-        }
+    private final Name name;
+    private final Function<Team, Piece> function;
 
-        if (name == Name.BISHOP) {
-            return new Bishop(team);
-        }
+    PieceFactory(Name name, Function<Team, Piece> function) {
+        this.name = name;
+        this.function = function;
+    }
 
-        if (name == Name.ROOK) {
-            return new Rook(team);
-        }
 
-        if (name == Name.KNIGHT) {
-            return new Knight(team);
-        }
+    public static Piece of(String teamName, String PieceType) {
+        Team team = Team.of(teamName);
+        Name name = Name.of(PieceType);
 
-        return new EmptyPiece();
+        PieceFactory pieceFactory = Arrays.stream(PieceFactory.values())
+                .filter(piece -> piece.name == name)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("없는 기물입니다."));
+
+        return pieceFactory.function.apply(team);
     }
 }
