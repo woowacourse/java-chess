@@ -12,7 +12,7 @@ public enum Result {
         this.value = value;
     }
 
-    public static Result from(double currentPlayerScore, double opponentPlayerScore,
+    public static Result from(final double currentPlayerScore, final double opponentPlayerScore,
             boolean hasKingCurrentPlayer, boolean hasKingOpponentPlayer) {
         if (hasKingCurrentPlayer && hasKingOpponentPlayer) {
             return calculateScore(currentPlayerScore, opponentPlayerScore);
@@ -26,7 +26,7 @@ public enum Result {
         throw new IllegalArgumentException("올바르지 않은 결과입니다.");
     }
 
-    private static Result calculateScore(double currentPlayerScore, double opponentPlayerScore) {
+    private static Result calculateScore(final double currentPlayerScore, final double opponentPlayerScore) {
         if (currentPlayerScore > opponentPlayerScore) {
             return WIN;
         }

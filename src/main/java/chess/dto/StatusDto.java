@@ -17,7 +17,7 @@ public class StatusDto {
         this.blackPlayerResult = blackPlayerResult;
     }
 
-    public static StatusDto of(GameResult whitePlayer, GameResult blackPlayer) {
+    public static StatusDto of(final GameResult whitePlayer, final GameResult blackPlayer) {
         final double whitePlayerScore = whitePlayer.getPlayerScore();
         final double blackPlayerScore = blackPlayer.getPlayerScore();
         final String whitePlayerResult = whitePlayer.getPlayerResult();
