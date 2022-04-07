@@ -19,44 +19,52 @@ import java.util.Map;
 public class ChessGameDao {
 
     public void save(ChessGameDto chessGameDto) {
-        try (Connection connection = getConnection()) {
-            saveChessGame(connection, chessGameDto);
+        try {
+            saveChessGame(chessGameDto);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveChessGame(Connection connection, ChessGameDto chessGameDto) throws SQLException {
+    private void saveChessGame(ChessGameDto chessGameDto) throws SQLException {
+        Connection connection = getConnection();
         String sql = "insert into chessgame (game_name, turn) values (?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        statement.setString(1, chessGameDto.getGameName());
-        statement.setString(2, chessGameDto.getTurn());
-
-        statement.executeUpdate();
-    }
-
-    public void update(ChessGameDto chessGameDto) {
-        try (Connection connection = getConnection()) {
-            updateChessGame(connection, chessGameDto);
+        try (connection; statement) {
+            statement.setString(1, chessGameDto.getGameName());
+            statement.setString(2, chessGameDto.getTurn());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateChessGame(Connection connection, ChessGameDto chessGameDto) throws SQLException {
+    public void update(ChessGameDto chessGameDto) {
+        try {
+            updateChessGame(chessGameDto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateChessGame(ChessGameDto chessGameDto) throws SQLException {
+        Connection connection = getConnection();
         String sql = "update chessgame set turn = ? where game_name = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        statement.setString(1, chessGameDto.getTurn());
-        statement.setString(2, chessGameDto.getGameName());
-
-        statement.executeUpdate();
+        try (connection; statement){
+            statement.setString(1, chessGameDto.getTurn());
+            statement.setString(2, chessGameDto.getGameName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ChessGame findByName(String gameName) {
-        try (Connection connection = getConnection()) {
-            return findChessGame(connection, gameName);
+        try {
+            return findChessGame(gameName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,25 +72,28 @@ public class ChessGameDao {
         return null;
     }
 
-    private ChessGame findChessGame(Connection connection, String gameName) throws SQLException {
+    private ChessGame findChessGame(String gameName) throws SQLException {
+        Connection connection = getConnection();
         String sql = "select CHESSGAME.turn, CHESSGAME.game_name, PIECE.type, PIECE.team, PIECE.`rank`, PIECE.file from CHESSGAME, PIECE\n"
                 + "where CHESSGAME.game_name = PIECE.game_name \n"
                 + "AND CHESSGAME.game_name = ?;";
-
         PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-        statement.setString(1, gameName);
+        try (connection; statement) {
+            statement.setString(1, gameName);
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        if (!resultSet.isBeforeFirst()) {
-            return null;
+            if (!resultSet.isBeforeFirst()) {
+                return null;
+            }
+
+            return new ChessGame(getTurn(resultSet), gameName, makeCells(resultSet));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        Map<Position, Piece> cells = makeCells(resultSet);
-        String turn = getTurn(resultSet);
-
-        return new ChessGame(turn, gameName, cells);
+        return null;
     }
 
     private String getTurn(ResultSet resultSet) throws SQLException {
@@ -96,9 +107,7 @@ public class ChessGameDao {
 
         while (resultSet.next()) {
             Position position = makePosition(resultSet);
-
             Piece piece = makePiece(resultSet);
-
             cells.put(position, piece);
         }
 
@@ -120,18 +129,23 @@ public class ChessGameDao {
     }
 
     public void remove(String gameName) {
-        try (Connection connection = getConnection()) {
-            removeByGameName(connection, gameName);
+        try {
+            removeByGameName(gameName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void removeByGameName(Connection connection, String gameName) throws SQLException {
+    private void removeByGameName(String gameName) throws SQLException {
+        Connection connection = getConnection();
         String sql = "delete from chessgame where game_name = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, gameName);
 
-        statement.executeUpdate();
+        try (connection; statement) {
+            statement.setString(1, gameName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
