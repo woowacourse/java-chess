@@ -5,7 +5,6 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 
 public class PieceDto {
-
     private final PieceType pieceType;
     private final PieceColor pieceColor;
 

@@ -1,5 +1,6 @@
 package chess.consoleview;
 
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -22,6 +23,9 @@ public class OutputView {
             + "> 게임 시작 : start" + NEW_LINE
             + "> 게임 종료 : end" + NEW_LINE
             + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+
+    private static final String WHITE_DISPLAY_NAME = "백";
+    private static final String BLACK_DISPLAY_NAME = "흑";
 
     public static void printCommandGuide() {
         System.out.println(COMMAND_GUIDE_MESSAGE);
@@ -55,13 +59,20 @@ public class OutputView {
     }
 
     public static void printCurrentTurn(PieceColorDto pieceColorDto) {
-        System.out.println(pieceColorDto.getDisplayName() + "의 차례입니다.");
+        String colorName = getColorDisplayNameFromPieceColorDto(pieceColorDto);
+        System.out.printf("%s의 차례입니다.%n", colorName);
+    }
+
+    private static String getColorDisplayNameFromPieceColorDto(PieceColorDto pieceColorDto) {
+        if (pieceColorDto.getPieceColor().equals(PieceColor.WHITE)) {
+            return WHITE_DISPLAY_NAME;
+        }
+        return BLACK_DISPLAY_NAME;
     }
 
     public static void printScore(ScoreResultDto scoreResultDto) {
-        // TODO: 상수로 분리
-        System.out.println("흰색팀 점수 : " + scoreResultDto.getWhiteScore());
-        System.out.println("검정색팀 점수 : " + scoreResultDto.getBlackScore());
+        System.out.printf("흰색팀 점수 : %f%n", scoreResultDto.getWhiteScore());
+        System.out.printf("검정색팀 점수 : %f%n", scoreResultDto.getBlackScore());
     }
 
     public static void printException(Exception exception) {

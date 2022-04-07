@@ -16,14 +16,14 @@ public class ChessGameDto {
     }
 
     public PieceColor getCurrentTurnAsPieceColor() {
-        return currentTurn.toPieceColor();
+        return currentTurn.getPieceColor();
     }
 
     @Override
     public String toString() {
-        return "GameDto{" +
+        return "ChessGameDto{" +
                 "gameId='" + gameId + '\'' +
-                ", currentTurnDto=" + currentTurn +
+                ", currentTurn=" + currentTurn +
                 '}';
     }
 }
