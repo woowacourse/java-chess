@@ -1,0 +1,29 @@
+.chess-game {
+  margin: 0 auto;
+  display: table;
+}
+
+.chess-board {
+  width: 800px;
+  height: 800px;
+}
+
+.chess-board-row {
+  display: table-row;
+}
+
+.piece-cell {
+  width: 100px;
+  height: 100px;
+  font-size: 80px;
+  display: table-cell;
+  text-align: center;
+}
+
+.white {
+  background-color: #FDF6EC;
+}
+
+.black {
+  background-color: #B7CADB;
+}
