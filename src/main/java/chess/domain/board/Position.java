@@ -1,18 +1,20 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
 
     static {
-        for (int column = 0; column < 8; column++) {
+        for (int column = 7; column >= 0; column--) {
             for (int row = 0; row < 8; row++) {
                 POSITIONS.put(getKey(row, column), new Position(row, column));
             }
@@ -73,6 +75,10 @@ public class Position {
 
     public boolean isSameColumn(Position position) {
         return this.column == position.column || this.row == position.row;
+    }
+
+    public static List<Position> getPositions() {
+        return new ArrayList<>(POSITIONS.values());
     }
 
     @Override

@@ -91,7 +91,7 @@ public class ChessService {
             return new Bishop(PieceColor.valueOf(board_color), position);
         }
         if (board_piece.equals("q")) {
-            return new Pawn(PieceColor.valueOf(board_color), position);
+            return new Queen(PieceColor.valueOf(board_color), position);
         }
         if (board_piece.equals("k")) {
             return new King(PieceColor.valueOf(board_color), position);

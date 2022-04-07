@@ -62,7 +62,7 @@ public class Running implements State {
         if (whiteScore.isOverScore(blackScore)) {
             winnerColor = PieceColor.WHITE;
         }
-        if (blackScore.isOverScore(blackScore)) {
+        if (blackScore.isOverScore(whiteScore)) {
             winnerColor = PieceColor.BLACK;
         }
         return new Status(whiteScore, blackScore, winnerColor);
