@@ -23,6 +23,8 @@ public class ChessService {
     private static final int ROW_INDEX = 0;
     private static final int COLUMN_INDEX = 1;
 
+    private static final String NOT_HAVE_GAME = "해당하는 게임이 없습니다.";
+
     private final GameDao gameDao;
     private final PieceDao pieceDao;
 
@@ -57,7 +59,7 @@ public class ChessService {
 
     private ChessGame getChessGame(long gameId) {
         if (!chessGames.containsKey(gameId)) {
-            throw new IllegalArgumentException("해당하는 게임이 없습니다.");
+            throw new IllegalArgumentException(NOT_HAVE_GAME);
         }
         return chessGames.get(gameId);
     }

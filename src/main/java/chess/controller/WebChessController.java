@@ -19,6 +19,10 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
+    private static final int ILLEGAL_REQUEST_CODE = 400;
+    private static final String GAME_ID_PARAM = "gameId";
+    private static final String ILLEGAL_GAME_ID = "잘못된 게임 ID 입력입니다.";
+
     private final ChessService chessService = new ChessService(new GameDaoImpl(new DBConnectionSetup()),
             new PieceDaoImpl(new DBConnectionSetup()));
 
@@ -31,7 +35,7 @@ public class WebChessController {
         });
 
         get("/game", (req, res) -> {
-            res.redirect("/game/" + req.queryParams("gameId"));
+            res.redirect("/game/" + req.queryParams(GAME_ID_PARAM));
             return null;
         });
 
@@ -40,27 +44,28 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
-        get("/api/load/:gameId", (req, res) -> chessService.createOrLoadGame(parseGameId(req.params("gameId"))),
+        get("/api/load/:gameId", (req, res) -> chessService.createOrLoadGame(parseGameId(req.params(GAME_ID_PARAM))),
                 jsonTransformer);
 
-        get("/api/start/:gameId", (req, res) -> chessService.startGame(parseGameId(req.params("gameId"))),
+        get("/api/start/:gameId", (req, res) -> chessService.startGame(parseGameId(req.params(GAME_ID_PARAM))),
                 jsonTransformer);
 
-        get("/api/restart/:gameId", (req, res) -> chessService.restartGame(parseGameId(req.params("gameId"))),
+        get("/api/restart/:gameId", (req, res) -> chessService.restartGame(parseGameId(req.params(GAME_ID_PARAM))),
                 jsonTransformer);
 
         post("/api/move/:gameId", (req, res) -> {
             MoveRequest moveRequest = new Gson().fromJson(req.body(), MoveRequest.class);
-            return chessService.move(parseGameId(req.params("gameId")), moveRequest);
+            return chessService.move(parseGameId(req.params(GAME_ID_PARAM)), moveRequest);
         }, jsonTransformer);
 
-        get("/api/status/:gameId", (req, res) -> chessService.status(parseGameId(req.params("gameId"))),
+        get("/api/status/:gameId", (req, res) -> chessService.status(parseGameId(req.params(GAME_ID_PARAM))),
                 jsonTransformer);
 
-        get("/api/end/:gameId", (req, res) -> chessService.end(parseGameId(req.params("gameId"))), jsonTransformer);
+        get("/api/end/:gameId", (req, res) -> chessService.end(parseGameId(req.params(GAME_ID_PARAM))),
+                jsonTransformer);
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
-            response.status(400);
+            response.status(ILLEGAL_REQUEST_CODE);
             response.body(jsonTransformer.render(new ErrorResponse(exception.getMessage())));
         });
     }
@@ -73,7 +78,7 @@ public class WebChessController {
         try {
             return Long.parseLong(idString);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("잘못된 주소 입력입니다.");
+            throw new IllegalArgumentException(ILLEGAL_GAME_ID);
         }
     }
 }
