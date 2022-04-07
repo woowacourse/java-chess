@@ -8,13 +8,24 @@ public class ChessGameDto {
 
     private final ChessBoardDto chessBoard;
     private final String gameName;
-    private State state;
+    private String turn;
 
-    public ChessGameDto(ChessGame chessGame) {
-        this.gameName = chessGame.getGameName();
+    private ChessGameDto(ChessBoardDto chessBoardDto, String gameName, String turn) {
+        this.chessBoard = chessBoardDto;
+        this.gameName = gameName;
+        this.turn = turn;
+    }
+
+    public static ChessGameDto from(ChessGame chessGame) {
         ChessBoard chessBoard = chessGame.getChessBoard();
-        this.chessBoard = ChessBoardDto.from(chessBoard.getCells());
-        this.state = chessGame.getState();
+        ChessBoardDto chessBoardDto = ChessBoardDto.from(chessBoard.getCells());
+
+        String gameName = chessGame.getGameName();
+
+        State state = chessGame.getState();
+        String turn = state.getTurn();
+
+        return new ChessGameDto(chessBoardDto, gameName, turn);
     }
 
     public String getGameName() {
@@ -22,7 +33,7 @@ public class ChessGameDto {
     }
 
     public String getTurn() {
-        return state.getTurn();
+        return turn;
     }
 
     public ChessBoardDto getChessBoard() {

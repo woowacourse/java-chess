@@ -40,7 +40,7 @@ class ChessGameDaoTest {
         ChessGame chessGame = new ChessGame("test");
         chessGame.progress(Command.from("start"));
 
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         //when & then
         int chessBoardId = chessBoardDao.save();
@@ -52,7 +52,7 @@ class ChessGameDaoTest {
     public void update() {
         //given
         ChessGame chessGame = new ChessGame("test");
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         int savedId = chessBoardDao.save();
         pieceDao.save(savedId, chessGameDto);
@@ -60,7 +60,7 @@ class ChessGameDaoTest {
 
         //when
         chessGame.progress(Command.from("start"));
-        chessGameDto = new ChessGameDto(chessGame);
+        chessGameDto = ChessGameDto.from(chessGame);
 
         chessGameDao.update(chessGameDto, savedId);
 

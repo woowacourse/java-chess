@@ -66,7 +66,7 @@ public class ChessService {
     }
 
     public void save() {
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         String gameName = chessGameDto.getGameName();
 

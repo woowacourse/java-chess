@@ -22,7 +22,7 @@ class PieceDaoTest {
     public void save() {
         //given
         ChessGame chessGame = new ChessGame("test");
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         //when
         int savedId = chessBoardDao.save();
