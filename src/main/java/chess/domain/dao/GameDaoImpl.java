@@ -61,6 +61,25 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
+    public Game findGameByMaxId() {
+        final String sql = "SELECT * FROM chess_game WHERE game_id IN (SELECT MAX(game_id) FROM chess_game)";
+
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet rs = statement.executeQuery(sql);
+            if (!rs.next()) {
+                return null;
+            }
+            return new Game(
+                    rs.getLong("game_id"),
+                    rs.getString("game_state"),
+                    rs.getString("game_turn"));
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public void updateByGame(GameDto gameDto) {
         final String sql = "UPDATE chess_game SET game_state = ?, game_turn = ? WHERE game_id = ?";
         try {
@@ -70,7 +89,7 @@ public class GameDaoImpl implements GameDao {
             statement.setLong(3, gameDto.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 }

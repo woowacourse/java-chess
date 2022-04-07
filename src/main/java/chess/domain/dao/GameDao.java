@@ -11,4 +11,5 @@ public interface GameDao {
 
     void updateByGame(GameDto of);
 
+    Game findGameByMaxId();
 }
