@@ -33,11 +33,8 @@ public class ChessGameService {
     }
 
     public BoardDto move(Response res, MoveDto moveDto) {
-        Color turn = chessGameDao.findByName("chess")
-                .orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."))
-                .getValue();
-        Map<Position, Piece> boardInfo = pieceDao.findAllByGameName("chess");
-        Board board = BoardFactory.createBoardBy(boardInfo);
+        Color turn = getTurn();
+        Board board = BoardFactory.createBoardBy(pieceDao.findAllByGameName("chess"));
 
         MoveResult moveResult = board.move(moveDto.getFrom(), moveDto.getTo(), turn);
         BoardDto updateBoard = BoardDto.from(board);
@@ -52,8 +49,14 @@ public class ChessGameService {
         return updateBoard;
     }
 
+    private Color getTurn() {
+        return chessGameDao.findByName("chess")
+                .orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."))
+                .getValue();
+    }
+
     public ColorDto turn() {
-        return chessGameDao.findByName("chess").orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."));
+        return ColorDto.from(getTurn());
     }
 
     public ScoreDto status() {
@@ -63,9 +66,7 @@ public class ChessGameService {
     }
 
     public Color end() {
-        Color winnerColor = chessGameDao.findByName("chess")
-                .orElseThrow(() -> new IllegalArgumentException("체스 게임 명이 올바르지 않습니다."))
-                .getValue();
+        Color winnerColor = getTurn();
         pieceDao.deleteByGameName("chess");
         chessGameDao.deleteByName("chess");
         return winnerColor;
