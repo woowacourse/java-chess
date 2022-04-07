@@ -8,49 +8,46 @@
 </head>
 <body>
 <div id="app">
-    <h1> 체스 게임 </h1>
-    {{color}}
-    <section id="chess-ui">
-        <table id="chess-board">
-            <script>
-                loadBoardBackground();
-                {{#each board}}
-                drawPiece({{@key.horizontal}}, {{@key.vertical}}, '{{this.type}}', '{{this.color}}');
-                {{/each}}
-            </script>
+    <div id="main-container">
+        <h1> 체스 게임 </h1>
 
-        </table>
-    </section>
-    <section id="command">
+        <section id="chess-ui">
+            <table id="chess-board">
+                <script>
+                    loadBoardBackground();
+                    {{#each board}}
+                    drawPiece({{@key.horizontal}}, {{@key.vertical}}, '{{this.type}}', '{{this.color}}');
+                    {{/each}}
+                </script>
 
-        <form id="start_form" action="/start" method="get">
-            <input type="submit" value="start">
-        </form>
+            </table>
+        </section>
+        <section id="main-command">
+            <h3 id="turn">
+                <script> drawTurn('{{color}}'); </script>
+            </h3>
+            <form id="start_form" action="/start" method="get" class="main-form">
+                <input type="submit" value="start" class="button">
+            </form>
 
-        <form id="move_form" action="/move" method="post">
-            <label for="move_src"> 출발 </label>
-            <input type="text" name="source" id="move_src">
-            <label for="move_dest"> 출발 </label>
-            <input type="text" name="destination" id="move_dest">
-            <input type="submit" value="move">
-        </form>
+            <form id="status_form" action="/status" method="get" class="main-form">
+                <input type="submit" value="status" class="button">
+            </form>
 
-        <form id="status_form" action="/status" method="get">
-            <input type="submit" value="status">
-        </form>
+            <form id="end_form" action="/end" method="get" class="main-form">
+                <input type="submit" value="end" class="button">
+            </form>
+        </section>
 
-        <form id="end_form" action="/end" method="get" enctype="text/plain">
-            <input type="submit" value="end">
-        </form>
-    </section>
+        <section>
+            {{#each score}}
+            {{@key}}
+            {{this}}
+            {{/each}}
+        </section>
+    </div>
 
-    <section>
-        {{#each score}}
-        {{@key}}
-        {{this}}
-        {{/each}}
-    </section>
 </div>
-<script>setUpMain();</script>
+<script>setUpMain('{{state}}');</script>
 </body>
 </html>

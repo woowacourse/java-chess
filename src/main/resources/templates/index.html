@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <title> 체스 게임 </title>
     <link rel="stylesheet" href="/src/index.css">
+<!--    <link rel="stylesheet" href="../static/src/index.css">-->
     <script src="/src/index.js"></script>
 </head>
 <body>
 <div id="app">
-    <h1> 체스 게임 </h1>
-    <section id="command">
-        <form action="/create" method="get" id="create_form">
-            <label for="create_button" > 새 게임 시작하기 </label>
-            <input type="text" name="room_name" id="room_name"/>
-            <input type="submit" value="create" id="create_button">
-        </form>
 
-        <form action="/enter" method="get" enctype="text/plain">
-            <label for="game_id"> 방 이름  </label>
-            <input type="text" name="room_name" id="game_id">
-            <input type="submit" value="enter">
+    <section id="index-container">
+        <h1> 체스 게임 </h1>
+        <form action="/create" method="get" id="create_form">
+            <input type="text" name="room_name" id="room_name" class="input"/>
+            <input type="submit" value="시작하기" id="create_button" class="button">
+        </form>
+        <br/>
+        <form action="/enter" method="get" id="enter_form">
+            <input type="text" name="room_name" id="game_id" class="input">
+            <input type="submit" value="이어하기" class="button">
         </form>
     </section>
 </div>

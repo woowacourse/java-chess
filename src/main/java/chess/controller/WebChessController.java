@@ -32,8 +32,10 @@ public class WebChessController {
         String roomName = request.queryParams("room_name");
         GameState state = gameService.readGameState(roomName);
 
-        return render(Map.of("board", state.getPointPieces(),
-            "color", state.getColor()), "game.html");
+        return render(Map.of(
+            "board", state.getPointPieces(),
+            "color", state.getColor(),
+            "state", state.getState()), "game.html");
     }
 
     public String create(Request request, Response response) {
@@ -44,8 +46,7 @@ public class WebChessController {
 
     public String enter(Request request, Response response) {
         String roomName = request.queryParams("room_name");
-        response.redirect("/main?room_name=" + roomName);
-        return null;
+        return GSON.toJson(Map.of("url", "/main?room_name=" + roomName));
     }
 
     public String start(Request request, Response response) {
@@ -69,7 +70,8 @@ public class WebChessController {
         );
         return GSON.toJson(Map.of(
             "board", BoardResponse.of(state.getPointPieces()),
-            "color", state.getColor())
+            "color", state.getColor(),
+            "state", state.getState())
         );
     }
 
