@@ -9,6 +9,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import web.dao.PieceDao;
 import web.dao.GameDao;
+import web.exception.DBConnectException;
 import web.service.ChessService;
 
 import java.util.HashMap;
@@ -39,8 +40,11 @@ public class ChessWebController {
             try {
                 GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 return gson.toJson(service.startNewGame(gameDto));
-            } catch (RuntimeException e) {
+            } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (RuntimeException e) {
+                res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -49,8 +53,11 @@ public class ChessWebController {
             try {
                 GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 return gson.toJson(service.resumeGame(gameDto));
-            } catch (RuntimeException e) {
+            } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (RuntimeException e) {
+                res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -59,8 +66,11 @@ public class ChessWebController {
             try {
                 MoveInfoDto moveInfo = gson.fromJson(req.body(), MoveInfoDto.class);
                 return gson.toJson(service.move(moveInfo));
-            } catch (RuntimeException e) {
+            } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (RuntimeException e) {
+                res.status(404);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -69,8 +79,11 @@ public class ChessWebController {
             try {
                 GameInfoDto gameInfoDto = new GameInfoDto(req.params(":roomName"));
                 return gson.toJson(service.status(gameInfoDto));
-            } catch (RuntimeException e) {
+            } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (RuntimeException e) {
+                res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -83,8 +96,11 @@ public class ChessWebController {
             try {
                 GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 service.deleteAndFinish(gameDto);
-            } catch (RuntimeException e) {
+            } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (RuntimeException e) {
+                res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
             return null;

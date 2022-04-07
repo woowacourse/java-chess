@@ -1,5 +1,7 @@
 package web.dao;
 
+import web.exception.DBConnectException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ public class DBConnector {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IllegalStateException("[ERROR] DB 연결이 실패했습니다.");
+            throw new DBConnectException();
         }
         return connection;
     }
