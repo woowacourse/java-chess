@@ -28,7 +28,7 @@ class ChessServiceTest {
     }
 
     @Test
-    @DisplayName("초기 보드판에서 a2->a3로 이동하면 처음 a2에 있던 piece는 이동 후, a3에 있는 piece와 같다.")
+    @DisplayName("초기 보드판에서 from에서 to로 이동하면 처음 from에 있던 piece는 이동 후, to에 있는 piece와 같다.")
     void move() {
         Board board = boardDao.findById(boardId).get();
         String from = "a2";
