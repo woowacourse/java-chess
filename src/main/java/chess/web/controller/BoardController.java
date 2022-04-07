@@ -1,13 +1,13 @@
 package chess.web.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
 import chess.web.dao.PieceDao;
 import chess.web.dao.TeamColorDao;
 import chess.web.dto.PieceDto;
 import chess.web.dto.PiecesDto;
+import chess.web.dto.PositionDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +40,8 @@ public class BoardController {
 
     public String move(Request request, Response response) {
         Board board = getBoard();
-        RequestBody requestBody = RequestBody.of(request.body());
-        Position from = Position.from(requestBody.get("from"));
-        Position to = Position.from(requestBody.get("to"));
-        board.movePiece(from, to);
+        PositionDto positionDto = PositionDto.of(request.body());
+        board.movePiece(positionDto.get("from"), positionDto.get("to"));
         isCheckmate(response, board);
         pieceDao.updatePieces(board);
         teamColorDao.update(board.getCurrentTurnTeamColor());
