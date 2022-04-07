@@ -50,20 +50,20 @@ public class BoardDao {
         }
     }
 
-    private PreparedStatement getStatement(Connection connection, String sql, List<String> datas) throws SQLException {
+    private PreparedStatement getStatement(Connection connection, String sql, List<String> data) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
-        for (int i = 0; i < datas.size(); i++) {
-            statement.setString(i + 1, datas.get(i));
+        for (int i = 0; i < data.size(); i++) {
+            statement.setString(i + 1, data.get(i));
         }
         return statement;
     }
 
-    private void executeQuery(String sql, List<String> datas, Connection connection) throws SQLException {
-        getStatement(connection, sql, datas).executeUpdate();
+    private void executeQuery(String sql, List<String> data, Connection connection) throws SQLException {
+        getStatement(connection, sql, data).executeUpdate();
     }
 
-    private ResultSet getResultSet(String sql, List<String> datas, Connection connection) throws SQLException {
-        return getStatement(connection, sql, datas).executeQuery();
+    private ResultSet getResultSet(String sql, List<String> data, Connection connection) throws SQLException {
+        return getStatement(connection, sql, data).executeQuery();
     }
 
     public void create(final ChessGameDto game) {
