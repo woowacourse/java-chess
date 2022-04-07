@@ -2,6 +2,7 @@ package chess.domain.board.piece;
 
 import chess.domain.board.position.Position;
 import chess.util.PositionUtil;
+import java.util.function.BiPredicate;
 
 public enum PieceType {
 
@@ -19,16 +20,16 @@ public enum PieceType {
 
     private static final String NON_PAWN_ONLY_EXCEPTION_MESSAGE = "폰의 이동 로직은 별도로 구현해야 합니다.";
 
-    private final RouteChecker routeChecker;
+    private final BiPredicate<Position, Position> routeChecker;
     private final double score;
 
-    PieceType(RouteChecker routeChecker, double score ) {
+    PieceType(BiPredicate<Position, Position> routeChecker, double score ) {
         this.routeChecker = routeChecker;
         this.score = score;
     }
 
     public boolean isMovable(Position from, Position to) {
-        return routeChecker.checkMovable(from, to);
+        return routeChecker.test(from, to);
     }
 
     private static boolean isPawnMovable(Position from, Position to) {
@@ -57,11 +58,5 @@ public enum PieceType {
 
     public double getScore() {
         return score;
-    }
-
-    @FunctionalInterface
-    private interface RouteChecker {
-
-        boolean checkMovable(Position from, Position to);
     }
 }
