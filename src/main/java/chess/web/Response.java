@@ -42,11 +42,8 @@ public class Response {
     }
 
     public String getStatus() {
-        if (chessGame.isEnded()) {
-            Map<Color, Double> statuses = StatusDto.from(chessGame.getBoard()).getStatus();
-            return String.format(STATUS_FORMAT,  statuses.get(Color.BLACK),  statuses.get(Color.WHITE));
-        }
-        return EMPTY;
+        Map<Color, Double> statuses = StatusDto.from(chessGame.getBoard()).getStatus();
+        return String.format(STATUS_FORMAT,  statuses.get(Color.BLACK),  statuses.get(Color.WHITE));
     }
 
     public String getExceptionMessage() {
