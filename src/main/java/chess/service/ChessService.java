@@ -21,6 +21,15 @@ public class ChessService {
     private final GameDao gameDao = GameDao.ofProd();
     private final EventDao eventDao = EventDao.ofProd();
 
+    private final static ChessService instance = new ChessService();
+
+    private ChessService() {
+    }
+
+    public static ChessService getInstance() {
+        return instance;
+    }
+
     public GameCountDto countGames() {
         int totalCount = gameDao.countAll();
         int runningCount = gameDao.countByState(GameState.RUNNING);
