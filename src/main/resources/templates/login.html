@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <form action="http://localhost:8080/login" method="post">
-        <input type="text" id="name" name="name" placeholder="닉네임">
-        <button type="submit">입장</button>
-    </form>
+    <div class="login-container">
+        <div class="login-title-wrap">
+            <img src="images/white_q.png" class="icon-image">
+            <img src="images/white_n.png" class="icon-image">
+            <img src="images/white_p.png" class="icon-image">
+            <h2 class="login-title">Welcome Chess</h2>
+            <img src="images/black_k.png" class="icon-image">
+        </div>
+        <form action="http://localhost:8080/login" method="post">
+            <input type="text" id="name" name="name" placeholder="닉네임">
+            <button type="submit">입장</button>
+        </form>
+    </div>
 </body>
 </html>
