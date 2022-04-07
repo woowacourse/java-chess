@@ -12,7 +12,8 @@ import java.util.List;
 
 public final class Bishop extends MultipleMovePiece {
 
-    private static final String BISHOP_NAME = "B";
+    private static final String BISHOP_INITIAL_NAME = "B";
+    private static final String BISHOP_NAME = "bishop";
     private static final double BISHOP_SCORE = 3;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
@@ -22,7 +23,7 @@ public final class Bishop extends MultipleMovePiece {
 
     @Override
     public String convertedName(Color color) {
-        return color.convertToCase(BISHOP_NAME);
+        return color.convertToCase(BISHOP_INITIAL_NAME);
     }
 
     @Override
@@ -38,5 +39,10 @@ public final class Bishop extends MultipleMovePiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return BISHOP_NAME;
     }
 }

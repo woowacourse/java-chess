@@ -11,6 +11,9 @@ public class Position {
     private static final char MIN_ROW = '1';
     private static final char MAX_ROW = '8';
 
+    private static final char WHITE_PAWN_INITIAL_ROW = '2';
+    private static final char BLACK_PAWN_INiTIAL_ROW = '7';
+
     private static final int POSITION_FORMAT_LENGTH = 2;
 
     private static final List<Position> CACHE = createCache();
@@ -95,8 +98,26 @@ public class Position {
         return isColumnInRange((char) (column + columnAmount)) && isRowInRange((char) (row + rowAmount));
     }
 
-    public boolean isPromotionPosition() {
-        return row == MIN_ROW || row == MAX_ROW;
+    public boolean isPromotionPosition(Color color) {
+        if (color.isWhite()) {
+            return row == MAX_ROW;
+        }
+        return row == MIN_ROW;
+    }
+
+    public boolean isInitialPawnPosition(Color color) {
+        if (color.isWhite()) {
+            return row == WHITE_PAWN_INITIAL_ROW;
+        }
+        return row == BLACK_PAWN_INiTIAL_ROW;
+    }
+
+    public char column() {
+        return column;
+    }
+
+    public char row() {
+        return row;
     }
 
     @Override

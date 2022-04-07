@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.domain.Color.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -84,10 +85,10 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,1,true", "b,2,false", "h,8,true"})
+    @CsvSource(value = {"a,1,true", "h,8,false"})
     @DisplayName("프로모션 위치인지 확인")
     void isPromotionPosition(char column, char row, boolean expected) {
         Position position = Position.of(column, row);
-        assertThat(position.isPromotionPosition()).isEqualTo(expected);
+        assertThat(position.isPromotionPosition(BLACK)).isEqualTo(expected);
     }
 }

@@ -12,8 +12,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.multiple.Bishop;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.multiple.Rook;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.single.King;
 import chess.domain.piece.single.Knight;
 import java.util.HashMap;
@@ -75,8 +74,8 @@ class ChessBoardTest {
         Position position = Position.of('a', '1');
         Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                position, createWhitePiece(new WhitePawn()),
-                target, createWhitePiece(new WhitePawn())
+                position, createWhitePiece(new Pawn(WHITE)),
+                target, createWhitePiece(new Pawn(WHITE))
         ));
 
         assertThatThrownBy(() -> chessBoard.movePiece(position, target, WHITE))
@@ -87,7 +86,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("프로모션이 불가능할 때 예외발생")
     void promotionExceptionByStatus() {
-        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a', '2'), createWhitePiece(new WhitePawn())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a', '2'), createWhitePiece(new Pawn(WHITE))));
         assertThatThrownBy(() -> chessBoard.promotion(PromotionPiece.QUEEN, WHITE))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("프로모션 프로모션 가능한 기물이 없습니다.");
@@ -97,7 +96,7 @@ class ChessBoardTest {
     @DisplayName("프로모션 진행")
     void promotion() {
         Position position = Position.of('a', '8');
-        ChessBoard chessBoard = new ChessBoard(Map.of(position, createWhitePiece(new WhitePawn())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, createWhitePiece(new Pawn(WHITE))));
         chessBoard.promotion(PromotionPiece.QUEEN, WHITE);
     }
 
@@ -137,14 +136,14 @@ class ChessBoardTest {
     @DisplayName("각 플레이어의 점수 반환")
     void calcualteScoreStaus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                Position.of('a', '2'), createWhitePiece(new WhitePawn()),
-                Position.of('a', '3'), createWhitePiece(new WhitePawn()),
-                Position.of('c', '3'), createWhitePiece(new WhitePawn()),
+                Position.of('a', '2'), createWhitePiece(new Pawn(WHITE)),
+                Position.of('a', '3'), createWhitePiece(new Pawn(WHITE)),
+                Position.of('c', '3'), createWhitePiece(new Pawn(WHITE)),
                 Position.of('b', '1'), createWhitePiece(new Knight()),
                 Position.of('d', '1'), createWhitePiece(new Queen()),
                 Position.of('e', '1'), createWhitePiece(new King()),
 
-                Position.of('a', '7'), createBlackPiece(new BlackPawn()),
+                Position.of('a', '7'), createBlackPiece(new Pawn(BLACK)),
                 Position.of('c', '8'), createBlackPiece(new Bishop()),
                 Position.of('h', '8'), createBlackPiece(new Rook()),
                 Position.of('e', '8'), createBlackPiece(new King())
@@ -176,7 +175,7 @@ class ChessBoardTest {
     @CsvSource(value = {"a,8,WHITE,true", "a,7,WHITE,false", "a,8,BLACK,false"})
     @DisplayName("프로모션 상태 여부 확인")
     void isPromotionStatus(char column, char row, Color color, boolean expected) {
-        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of(column, row), createWhitePiece(new WhitePawn())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of(column, row), createWhitePiece(new Pawn(WHITE))));
         assertThat(chessBoard.isPromotionStatus(color)).isEqualTo(expected);
     }
 

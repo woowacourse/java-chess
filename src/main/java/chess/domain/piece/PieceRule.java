@@ -15,4 +15,6 @@ public interface PieceRule {
     boolean isPawn();
 
     boolean isKing();
+
+    String name();
 }
