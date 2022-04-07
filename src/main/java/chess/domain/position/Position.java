@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import static chess.domain.position.direction.DirectionUtil.*;
+import static chess.domain.position.direction.DirectionUtil.isInVerticalRange;
 
 import java.util.Arrays;
 import java.util.List;
