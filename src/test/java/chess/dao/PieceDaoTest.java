@@ -1,10 +1,14 @@
 package chess.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.Color;
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
-import java.util.Map.Entry;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,23 +31,28 @@ class PieceDaoTest {
     @Test
     @DisplayName("이름으로 탐색 확인")
     void findByName() {
+        dao.save(BoardFactory.createBoard().getValue());
         Map<Position, Piece> chess = dao.findAllByGameName("chess");
-
-        for (Entry<Position, Piece> positionPieceEntry : chess.entrySet()) {
-            System.out.println(positionPieceEntry.getKey().toString() + positionPieceEntry.getValue().toString());
-        }
+        assertThat(chess).containsAllEntriesOf(BoardFactory.createBoard().getValue());
     }
 
     @Test
-    @DisplayName("이름으로 탐색 확인")
+    @DisplayName("피스 정상 이동 확인")
     void movePiece() {
-//        dao.movePiece();
-//
-//        Map<Position, Piece> chess = dao.findAllByGameName("chess");
-//
-//        for (Entry<Position, Piece> positionPieceEntry : chess.entrySet()) {
-//            System.out.println(positionPieceEntry.getKey().toString() + positionPieceEntry.getValue().toString());
-//        }
+        //given
+        Board board = BoardFactory.createBoard();
+        board.move("b2", "b4", Color.WHITE);
+
+        //when
+        dao.movePiece(board.getValue(), "chess");
+        Map<Position, Piece> chess = dao.findAllByGameName("chess");
+
+        //then
+        assertThat(chess).containsAllEntriesOf(board.getValue());
     }
 
+    @AfterEach
+    void delete(){
+        dao.deleteByGameName("chess");
+    }
 }
