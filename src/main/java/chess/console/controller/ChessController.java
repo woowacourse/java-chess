@@ -12,7 +12,7 @@ public final class ChessController {
     private static final int TO_INDEX = 1;
 
     private final ChessService service;
-    private final String gameName = "gameName";
+    private final String gameName = "game";
 
     public ChessController(ChessService service) {
         this.service = service;
