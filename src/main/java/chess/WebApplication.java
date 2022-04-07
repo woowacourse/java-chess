@@ -1,16 +1,15 @@
 package chess;
 
 import chess.controller.Command;
-import chess.dao.BoardDao;
 import chess.dao.DbBoardDao;
 import chess.dao.DbGameDao;
-import chess.dao.GameDao;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
+import chess.service.DbService;
 import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
 import chess.webview.RowName;
@@ -51,20 +50,21 @@ public class WebApplication {
         port(8082);
         staticFiles.location("/public");
         ChessGame chessGame = ChessGame.create(GAME_ID);
+        DbService dbService = DbService.create(new DbGameDao(), new DbBoardDao());
 
         get("/applicationCommand", (req, res) -> {
             Command command = Command.of(req.queryParams("command"));
-            doApplicationCommand(res, chessGame, command);
+            doApplicationCommand(res, chessGame, dbService, command);
             return null;
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(getChessBoardInformation(chessGame.getGameId(), new DbBoardDao())), "board.html");
+            return render(makeBoardModel(dbService.getChessBoardInformation(chessGame.getGameId())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
             List<String> inputs = divideInGameCommandInput(req.queryParams("command"));
-            return doInGameCommand(res, chessGame, inputs);
+            return doInGameCommand(res, chessGame, dbService, inputs);
         });
 
         get("/status", (req, res) -> {
@@ -79,69 +79,49 @@ public class WebApplication {
         });
     }
 
-    private static ChessBoardDto getChessBoardInformation(int gameId, BoardDao boardDao) {
-        ChessBoardDto mapInfo = boardDao.findAll(gameId);
-        return mapInfo;
-    }
-
-    private static String doInGameCommand(Response res, ChessGame chessGame, List<String> inputs) {
+    private static String doInGameCommand(Response res, ChessGame chessGame, DbService dbService, List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (Command.MOVE.equals(command)) {
             ChessBoardPosition source = coordinateToChessBoardPosition(inputs.get(SOURCE_INDEX));
             ChessBoardPosition target = coordinateToChessBoardPosition(inputs.get(TARGET_INDEX));
-            return doMoveCommand(res, chessGame, source, target);
+            return doMoveCommand(res, chessGame, dbService, source, target);
         }
         res.redirect("/status");
         return null;
     }
 
-    private static String doMoveCommand(Response res, ChessGame chessGame, ChessBoardPosition source, ChessBoardPosition target) {
+    private static String doMoveCommand(Response res, ChessGame chessGame, DbService dbService, ChessBoardPosition source, ChessBoardPosition target) {
         chessGame.move(source, target);
         if (chessGame.isGameEnd()) {
-            deleteAllData(chessGame.getGameId(), new DbGameDao(), new DbBoardDao());
+            dbService.deleteAllData(chessGame.getGameId());
             chessGame.initialze();
             return render(null, "../public/index.html");
         }
-        saveDataToDb(chessGame, new DbGameDao(), new DbBoardDao());
+        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
         res.redirect("/board");
         return null;
     }
 
-    private static void deleteAllData(int gameId, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        dbBoardDao.deleteAll(gameId);
-        dbGameDao.deleteGameData(gameId);
-    }
-
-    private static void saveDataToDb(ChessGame chessGame, GameDao gameDao, BoardDao boardDao) {
-        gameDao.updateGameData(chessGame.getGameId(), GameInformationDto.of(chessGame.getGameId(), chessGame.getTurn()));
-        boardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
-    }
-
-    private static void doApplicationCommand(Response res, ChessGame chessGame, Command command) {
+    private static void doApplicationCommand(Response res, ChessGame chessGame, DbService dbService, Command command) {
         if (Command.START.equals(command)) {
-            doStartCommand(res, chessGame);
+            doStartCommand(res, chessGame, dbService);
             return;
         }
         stop();
     }
 
-    private static void doStartCommand(Response res, ChessGame chessGame) {
-        loadData(chessGame, new DbGameDao(), new DbBoardDao());
+    private static void doStartCommand(Response res, ChessGame chessGame, DbService dbService) {
+        setChessGameForStart(chessGame, dbService);
         res.redirect("/board");
     }
 
-    private static void loadData(ChessGame chessGame, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        GameInformationDto gameInformationDto = dbGameDao.getGameData(chessGame.getGameId());
+    private static void setChessGameForStart(ChessGame chessGame, DbService dbService) {
+        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(chessGame.getGameId());
         if (gameInformationDto == null) {
-            saveInitData(chessGame, dbGameDao, dbBoardDao);
+            dbService.saveInitData(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
             return;
         }
-        chessGame.initFromDb(gameInformationDto, dbBoardDao.findAll(chessGame.getGameId()));
-    }
-
-    private static void saveInitData(ChessGame chessGame, DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        dbGameDao.saveGame(GameInformationDto.of(chessGame.getGameId(), chessGame.getTurn()));
-        dbBoardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
+        chessGame.initFromDb(gameInformationDto, dbService.getChessBoardInformation(chessGame.getGameId()));
     }
 
     private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
