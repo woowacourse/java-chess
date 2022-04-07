@@ -1,5 +1,6 @@
-package chess.dao;
+package chess.dao.fake;
 
+import chess.dao.BoardDao;
 import chess.domain.board.BasicBoardStrategy;
 import java.util.HashMap;
 import java.util.Map;

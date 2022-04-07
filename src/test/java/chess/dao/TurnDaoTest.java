@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.fake.FakeTurnDao;
 import chess.domain.piece.Team;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

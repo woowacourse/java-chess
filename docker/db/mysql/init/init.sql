@@ -11,5 +11,14 @@ create table turn
     primary key (team)
 );
 
+
+create table game_status
+(
+    value varchar(10) not null,
+    primary key (value)
+);
+
+
 insert into turn (team) value ("white");
 
+insert into game_status (value) value ("READY");

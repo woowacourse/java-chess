@@ -2,6 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.fake.FakeBoardDao;
 import chess.domain.board.BasicBoardStrategy;
 import chess.domain.board.Board;
 import chess.domain.piece.Blank;

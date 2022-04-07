@@ -1,4 +1,6 @@
-package chess.dao;
+package chess.dao.fake;
+
+import chess.dao.TurnDao;
 
 public class FakeTurnDao implements TurnDao {
 
