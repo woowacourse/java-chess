@@ -22,11 +22,11 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다."));
     }
 
-    public boolean isNotStartType() {
+    public boolean isMove() {
         return this == MOVE;
     }
 
-    public boolean isNotProgressType() {
+    public boolean isStart() {
         return this == START;
     }
 }

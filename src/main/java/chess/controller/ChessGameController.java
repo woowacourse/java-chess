@@ -29,7 +29,7 @@ public class ChessGameController {
     }
 
     private void validateInitialCommand(final Command command) {
-        if (command.isNotStartType()) {
+        if (command.isMove()) {
             throw new IllegalArgumentException("[ERROR] 게임이 아직 시작되지 않았습니다.");
         }
     }
@@ -52,7 +52,7 @@ public class ChessGameController {
     }
 
     private void validateInvalidProgressCommand(final Command command) {
-        if (command.isNotProgressType()) {
+        if (command.isStart()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }
     }
