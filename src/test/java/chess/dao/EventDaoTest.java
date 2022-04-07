@@ -1,13 +1,10 @@
 package chess.dao;
 
-import static chess.util.DatabaseUtil.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.event.Event;
 import chess.domain.event.EventType;
 import chess.domain.event.MoveCommand;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +14,8 @@ import org.junit.jupiter.api.Test;
 class EventDaoTest {
 
     private static final String TEST_TABLE = "event_test";
-    private static final List<String> SETUP_TEST_DB_SQL = List.of(
-            String.format("INSERT INTO %s (game_id, type, description) VALUES (1, 'MOVE', 'a2 a4')", TEST_TABLE),
-            String.format("INSERT INTO %s (game_id, type, description) VALUES (1, 'MOVE', 'a7 a5')", TEST_TABLE),
-            String.format("INSERT INTO %s (game_id, type, description) VALUES (2, 'MOVE', 'a2 a3')", TEST_TABLE));
+    private static final String SETUP_TEST_DB_SQL = String.format("INSERT INTO %s (game_id, type, description) "
+                    + "VALUES (1, 'MOVE', 'a2 a4'), (1, 'MOVE', 'a7 a5'), (2, 'MOVE', 'a2 a3')", TEST_TABLE);
 
     private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE);
 
@@ -29,24 +24,12 @@ class EventDaoTest {
     @BeforeEach
     void setUp() {
         cleanUp();
-        try (final Connection connection = getConnection()) {
-            for (String sql : SETUP_TEST_DB_SQL) {
-                connection.prepareStatement(sql)
-                        .executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new StatementExecutor(SETUP_TEST_DB_SQL).executeCommand();
     }
 
     @AfterEach
     void cleanUp() {
-        try (final Connection connection = getConnection()) {
-            connection.prepareStatement(CLEANSE_TEST_DB_SQL)
-                    .executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new StatementExecutor(CLEANSE_TEST_DB_SQL).executeCommand();
     }
 
     @Test

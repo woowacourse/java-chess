@@ -1,11 +1,7 @@
 package chess.dao;
 
-import static chess.util.DatabaseUtil.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +10,8 @@ import org.junit.jupiter.api.Test;
 class GameDaoTest {
 
     private static final String TEST_TABLE = "game_test";
-    private static final List<String> SETUP_TEST_DB_SQL = List.of(
-            String.format("INSERT INTO %s (id, state) VALUES (1, 'RUNNING')", TEST_TABLE),
-            String.format("INSERT INTO %s (id, state) VALUES (2, 'OVER')", TEST_TABLE));
+    private static final String SETUP_TEST_DB_SQL = String.format(
+            "INSERT INTO %s (id, state) VALUES (1, 'RUNNING'), (2, 'OVER')", TEST_TABLE);
 
     private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE);
 
@@ -25,24 +20,12 @@ class GameDaoTest {
     @BeforeEach
     void setUp() {
         cleanUp();
-        try (final Connection connection = getConnection()) {
-            for (String sql : SETUP_TEST_DB_SQL) {
-                connection.prepareStatement(sql)
-                        .executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new StatementExecutor(SETUP_TEST_DB_SQL).executeCommand();
     }
 
     @AfterEach
     void cleanUp() {
-        try (final Connection connection = getConnection()) {
-            connection.prepareStatement(CLEANSE_TEST_DB_SQL)
-                    .executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new StatementExecutor(CLEANSE_TEST_DB_SQL).executeCommand();
     }
 
     @Test
