@@ -25,6 +25,7 @@ public final class ChessGame {
 
     private final PieceDao pieceDao = new PieceDao();
     private final GameDao gameDao = new GameDao();
+
     private State state = new Ready();
 
     public void start() {
@@ -35,6 +36,7 @@ public final class ChessGame {
 
     public void end() {
         state = state.end();
+
     }
 
     public Map<Position, Piece> getBoard() {
