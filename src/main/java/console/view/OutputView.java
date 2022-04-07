@@ -67,4 +67,12 @@ public class OutputView {
     public static void printEnterCommand() {
         System.out.print(System.lineSeparator() + "명령을 입력해주세요: ");
     }
+
+    public static void printUnavailableExceptStart() {
+        System.out.println("[ERROR] 게임이 아직 실행되지 않았습니다.");
+    }
+
+    public static void printAlreadyStarted() {
+        System.out.println("[ERROR] 이미 게임이 실행되었습니다.");
+    }
 }

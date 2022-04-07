@@ -63,16 +63,4 @@ class CommandTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> Command.find(input));
     }
-
-    @Test
-    @DisplayName("execute 명령 실행시 변경된 상태를 반환한다.")
-    void returnChangedState() {
-        List<Point> ignored = new ArrayList<>();
-        GameState state = new Ready();
-        Command command = Command.START;
-
-        GameState executed = command.execute(state, ignored);
-
-        assertThat(executed).isInstanceOf(Running.class);
-    }
 }
