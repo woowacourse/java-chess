@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.boardstrategy.InitBoardStrategy;
+import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
 import chess.dto.CommandDto;
 import chess.view.Command;
@@ -13,8 +14,7 @@ public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
     private static final String INVALID_COMMEND_MESSAGE = "move 만 입력할 수 있습니다.";
 
-    private Board board;
-    private boolean isFinished = false;
+    private final Board board;
     private Team turn = Team.WHITE;
 
     public ChessGame(Team turn, Board board) {
@@ -26,20 +26,8 @@ public final class ChessGame {
         this.board = new Board(boardStrategy.create());
     }
 
-    public void reset() {
-        this.turn = Team.WHITE;
-        this.isFinished = false;
-        this.board = new Board(new InitBoardStrategy().create());
-    }
-
-    public void clone(ChessGame other) {
-        this.turn = other.turn;
-        this.isFinished = other.isFinished;
-        this.board = other.board;
-    }
-
     public void execute(CommandDto commandDto) {
-        if (isFinished) {
+        if (isFinished()) {
             return;
         }
         if (commandDto.getCommand() == Command.MOVE) {
@@ -54,7 +42,6 @@ public final class ChessGame {
         boolean isCheckmate = isCheckmate(to);
         board.move(from, to);
         if (isCheckmate) {
-            isFinished = true;
             return;
         }
         turn = turn.changeTeam();
@@ -79,7 +66,7 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
-        if (!isFinished) {
+        if (!isFinished()) {
             return getWinnerByScore();
         }
         return getTurn();
@@ -100,7 +87,7 @@ public final class ChessGame {
     }
 
     public boolean isFinished() {
-        return isFinished;
+        return !(board.isKingExist(Team.BLACK) && board.isKingExist(Team.WHITE));
     }
 
     public Board getBoard() {

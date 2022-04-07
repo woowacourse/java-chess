@@ -78,6 +78,11 @@ public final class Board {
                 .count();
     }
 
+    public boolean isKingExist(Team team) {
+        return squares.values().stream()
+                .anyMatch(piece -> piece.getName() == Name.KING && piece.getTeam() == team);
+    }
+
     public Map<Position, Piece> getSquares() {
         return new HashMap<>(squares);
     }

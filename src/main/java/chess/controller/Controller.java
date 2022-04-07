@@ -13,9 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    private static final String EMPTY = "";
-
     private static final BoardDao boardDao = new BoardDao();
+    private static final String GAME_EXIT_ERROR_MESSAGE = "이미 게임이 종료되었습니다";
 
     public void run() {
         staticFiles.location("/static");
@@ -24,26 +23,29 @@ public class Controller {
         get("/", (req, res) -> service.renderStart(model));
         post("/start", (req, res) -> {
             String name = req.queryParams("name");
-            model.put("name", name);
-            service.initWeb(model, name);
-            return service.renderGame(model, createGameFromDB(name));
+            create(name);
+            service.setInitWeb(model, name);
+            service.setPlayWeb(model, findGameByDB(name));
+            return service.renderGame(model);
         });
         post("/command", (req, res) -> {
             String name = req.queryParams("name");
-            model.put("name", name);
+            service.setInitWeb(model, name);
             save(name, go(model, findGameByDB(name), req.queryParams("command")));
-            return service.renderGame(model, findGameByDB(name));
+            service.setPlayWeb(model, findGameByDB(name));
+            return service.renderGame(model);
         });
         post("/end", (req, res) -> {
             String name = req.queryParams("name");
-            model.put("name", name);
-            return service.renderEnd(model, findGameByDB(name));
+            service.setInitWeb(model, name);
+            service.setEndWeb(model, findGameByDB(name));
+            boardDao.delete(name);
+            return service.renderEnd(model);
         });
     }
 
-    private ChessGame createGameFromDB(String name) {
+    private void create(String name) {
         boardDao.create(new ChessGameDto(name, new ChessGame(new InitBoardStrategy())));
-        return findGameByDB(name);
     }
 
     private ChessGame findGameByDB(String name) {
@@ -52,13 +54,20 @@ public class Controller {
 
     private ChessGame go(Map<String, Object> model, ChessGame chessGame, String input) {
         try {
+            validateFinished(chessGame);
             chessGame.execute(new CommandDto(input));
-            model.put("error", EMPTY);
+            model.put("result", new RenderService().getResult(chessGame));
             return chessGame;
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
         return chessGame;
+    }
+
+    private void validateFinished(ChessGame chessGame) {
+        if (chessGame.isFinished()) {
+            throw new IllegalArgumentException(GAME_EXIT_ERROR_MESSAGE);
+        }
     }
 
     private void save(String name, ChessGame chessGame) {

@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.dao.BoardDao;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.attribute.Team;
 import chess.dto.ChessGameDto;
@@ -17,38 +16,19 @@ public class RenderService {
         return render(model, "index.html");
     }
 
-    public Object renderGame(Map<String, Object> model, ChessGame chessGame) {
-        Map<Team, Double> scores = chessGame.getScoreOfTeams();
-        model.put("whiteScore", scores.get(Team.WHITE));
-        model.put("blackScore", scores.get(Team.BLACK));
-        model.put("turn", chessGame.getTurn());
-        model.put("pieces", new ChessGameDto(chessGame).getBoardWeb());
-        model.put("result", getResult(chessGame));
-
+    public Object renderGame(Map<String, Object> model) {
         return render(model, "chessGame.html");
     }
 
-    public Object renderEnd(Map<String, Object> model, ChessGame chessGame) {
-        Map<Team, Double> scores = chessGame.getScoreOfTeams();
-        model.put("whiteScore", scores.get(Team.WHITE));
-        model.put("blackScore", scores.get(Team.BLACK));
-        model.put("winner", getWinner(chessGame));
-
-        new BoardDao().delete((String) model.get("name"));
-
+    public Object renderEnd(Map<String, Object> model) {
         return render(model, "end.html");
-    }
-
-    public void initWeb(Map<String, Object> model, String name) {
-        model.put("name", name);
-        model.put("error", EMPTY);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private String getResult(ChessGame chessGame) {
+    public String getResult(ChessGame chessGame) {
         if (chessGame.isFinished()) {
             return END_MESSAGE;
         }
@@ -61,5 +41,25 @@ public class RenderService {
             return DRAW_MESSAGE;
         }
         return winner.name();
+    }
+
+    public void setInitWeb(Map<String, Object> model, String name) {
+        model.put("name", name);
+        model.put("error", EMPTY);
+    }
+
+    public void setPlayWeb(Map<String, Object> model, ChessGame chessGame) {
+        Map<Team, Double> scores = chessGame.getScoreOfTeams();
+        model.put("whiteScore", scores.get(Team.WHITE));
+        model.put("blackScore", scores.get(Team.BLACK));
+        model.put("turn", chessGame.getTurn());
+        model.put("pieces", new ChessGameDto(chessGame).getBoardWeb());
+    }
+
+    public void setEndWeb(Map<String, Object> model, ChessGame chessGame) {
+        Map<Team, Double> scores = chessGame.getScoreOfTeams();
+        model.put("whiteScore", scores.get(Team.WHITE));
+        model.put("blackScore", scores.get(Team.BLACK));
+        model.put("winner", getWinner(chessGame));
     }
 }
