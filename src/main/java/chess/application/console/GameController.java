@@ -16,12 +16,12 @@ public class GameController {
 
     public Map<Position, Piece> start() {
         chessGame.start();
-        return chessGame.getBoard().getSquares();
+        return chessGame.getBoardSquares();
     }
 
     public Map<Position, Piece> move(Position sourcePosition, Position targetPosition) {
         chessGame.move(sourcePosition, targetPosition);
-        return chessGame.getBoard().getSquares();
+        return chessGame.getBoardSquares();
     }
 
     public Map<Camp, Score> status() {
@@ -41,6 +41,6 @@ public class GameController {
     }
 
     public Map<Position, Piece> getBoard() {
-        return chessGame.getBoard().getSquares();
+        return chessGame.getBoardSquares();
     }
 }

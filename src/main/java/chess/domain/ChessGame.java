@@ -35,8 +35,8 @@ public class ChessGame {
         return this.state.isFinished();
     }
 
-    public Board getBoard() {
-        return this.state.getBoard();
+    public Map<Position, Piece> getBoardSquares() {
+        return this.state.getBoard().getSquares();
     }
 
     public Map<Camp, Score> getScores() {

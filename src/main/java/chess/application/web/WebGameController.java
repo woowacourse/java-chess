@@ -58,7 +58,7 @@ public class WebGameController {
     }
 
     public Map<String, Object> modelPlayingBoard() {
-        Map<Position, Piece> board = chessGame.getBoard().getSquares();
+        Map<Position, Piece> board = chessGame.getBoardSquares();
         Map<String, Object> model = board.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().toString(),
@@ -116,7 +116,7 @@ public class WebGameController {
 
     public void save() throws SQLException {
         gameDao.saveTo(DATABASE_NAME);
-        boardDao.saveTo(DATABASE_NAME, chessGame.getBoard().getSquares());
+        boardDao.saveTo(DATABASE_NAME, chessGame.getBoardSquares());
     }
 
     public Map<String, Object> end() {
@@ -141,6 +141,6 @@ public class WebGameController {
     }
 
     public Map<Position, Piece> getBoard() {
-        return chessGame.getBoard().getSquares();
+        return chessGame.getBoardSquares();
     }
 }
