@@ -58,8 +58,8 @@ public class PieceDaoTest {
     void find() {
         pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
 
-        Optional<Piece> pieceOptional = pieceDao.find(testGameId, a2);
-        Piece actual = pieceOptional.orElseThrow(() -> new AssertionFailedException("해당하는 기물이 없습니다."));
+        Optional<Piece> maybePiece = pieceDao.find(testGameId, a2);
+        Piece actual = maybePiece.orElseThrow(() -> new AssertionFailedException("해당하는 기물이 없습니다."));
 
         assertThat(actual).isEqualTo(new Pawn(Color.WHITE));
     }
@@ -85,9 +85,9 @@ public class PieceDaoTest {
         pieceDao.save(testGameId, a2, new Pawn(Color.WHITE));
 
         pieceDao.delete(testGameId, a2);
-        Optional<Piece> pieceOptional = pieceDao.find(1, a2);
+        Optional<Piece> maybePiece = pieceDao.find(1, a2);
 
-        assertThat(pieceOptional.isPresent()).isFalse();
+        assertThat(maybePiece.isPresent()).isFalse();
     }
 
     @DisplayName("게임의 전체 기물 삭제 테스트")

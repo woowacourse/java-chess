@@ -33,8 +33,8 @@ public class GameDaoTest {
     void load() {
         gameDao.save(testGameId);
 
-        Optional<GameState> chessGameOptional = gameDao.load(testGameId);
-        GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
+        Optional<GameState> maybeGameState = gameDao.load(testGameId);
+        GameState actual = maybeGameState.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
         assertThat(actual).isEqualTo(GameState.READY);
     }
@@ -45,8 +45,8 @@ public class GameDaoTest {
         gameDao.save(testGameId);
         gameDao.updateState(testGameId, GameState.WHITE_RUNNING);
 
-        Optional<GameState> chessGameOptional = gameDao.load(testGameId);
-        GameState actual = chessGameOptional.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
+        Optional<GameState> maybeGameState = gameDao.load(testGameId);
+        GameState actual = maybeGameState.orElseThrow(() -> new AssertionFailedException("데이터가 없습니다."));
 
         assertThat(actual).isEqualTo(GameState.WHITE_RUNNING);
     }

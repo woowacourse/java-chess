@@ -41,11 +41,11 @@ public class ChessService {
     }
 
     public ChessGameResponse loadGame(long gameId) {
-        Optional<GameState> gameStateOptional = gameDao.load(gameId);
-        if (gameStateOptional.isEmpty()) {
+        Optional<GameState> maybeGameState = gameDao.load(gameId);
+        if (maybeGameState.isEmpty()) {
             return createGame(gameId);
         }
-        GameState gameState = gameStateOptional.get();
+        GameState gameState = maybeGameState.get();
         Map<Position, Piece> pieces = new HashMap<>();
         for (PieceResponse pieceResponse : pieceDao.findAll(gameId)) {
             Position position = parseStringToPosition(pieceResponse.getPosition());
