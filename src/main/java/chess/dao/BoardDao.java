@@ -30,6 +30,7 @@ public class BoardDao {
     private static final String SQUARES_UPDATE_SQL = "update squares set piece = ? where board_name = ? AND position = ?";
     private static final String SQUARES_DELETE_SQL = "DELETE FROM squares WHERE board_name = ?";
     private static final String BOARD_DELETE_SQL = "DELETE FROM board WHERE name = ?";
+    private static final String DB_NOT_FOUND_ERROR_MESSAGE = "해당 이름의 데이터가 DB에 없습니다.";
 
     public Connection getConnection() {
         loadDriver();
@@ -99,7 +100,7 @@ public class BoardDao {
             return new ChessGameDto(name,
                     new ChessGame(getTurn(name, connection), new Board(getSquares(name, connection))));
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(DB_NOT_FOUND_ERROR_MESSAGE);
         }
         return null;
     }

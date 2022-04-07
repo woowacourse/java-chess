@@ -32,6 +32,7 @@ class BoardDaoTest {
     @Test
     void findByName() {
         final BoardDao boardDao = new BoardDao();
+        boardDao.create(new ChessGameDto("hunch", new ChessGame(new InitBoardStrategy())));
         final ChessGameDto boardDaoByName = boardDao.findByName("hunch");
         assertThat(boardDaoByName.getName()).isEqualTo("hunch");
     }

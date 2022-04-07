@@ -12,6 +12,10 @@ public class RenderService {
     private static final String END_MESSAGE = "게임 종료. 결과를 확인하려면 end 버튼을 클릭하세요.";
     private static final String EMPTY = "";
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public Object renderStart(Map<String, Object> model) {
         return render(model, "index.html");
     }
@@ -22,10 +26,6 @@ public class RenderService {
 
     public Object renderEnd(Map<String, Object> model) {
         return render(model, "end.html");
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     public String getResult(ChessGame chessGame) {

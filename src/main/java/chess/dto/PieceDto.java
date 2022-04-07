@@ -1,8 +1,5 @@
 package chess.dto;
 
-import chess.domain.board.position.Column;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -13,9 +10,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PieceDto {
@@ -65,6 +60,10 @@ public class PieceDto {
         this.emoji = setPiece();
     }
 
+    public static Piece getPiece(String position) {
+        return DB_CACHE.get(position);
+    }
+
     private String setPiece() {
         if (piece.getTeam() == Team.BLACK) {
             return BLACK_WEB_CACHE.get(piece.getName());
@@ -74,9 +73,5 @@ public class PieceDto {
 
     public String getEmoji() {
         return emoji;
-    }
-
-    public static Piece getPiece(String position) {
-        return DB_CACHE.get(position);
     }
 }

@@ -3,8 +3,6 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
-import chess.domain.boardstrategy.InitBoardStrategy;
-import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
 import chess.dto.CommandDto;
 import chess.view.Command;
