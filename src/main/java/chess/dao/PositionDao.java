@@ -69,16 +69,20 @@ public class PositionDao {
             final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             for (Column column : Column.values()) {
-                for (Row row : Row.values()) {
-                    preparedStatement.setInt(1, column.value());
-                    preparedStatement.setInt(2, row.value());
-                    preparedStatement.setInt(3, boardId);
-                    preparedStatement.addBatch();
-                    preparedStatement.clearParameters();
-                }
+                saveColumnLine(boardId, preparedStatement, column);
             }
             return preparedStatement.executeBatch().length;
         });
+    }
+
+    private void saveColumnLine(int boardId, PreparedStatement preparedStatement, Column column) throws SQLException {
+        for (Row row : Row.values()) {
+            preparedStatement.setInt(1, column.value());
+            preparedStatement.setInt(2, row.value());
+            preparedStatement.setInt(3, boardId);
+            preparedStatement.addBatch();
+            preparedStatement.clearParameters();
+        }
     }
 
     public int getPositionIdByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
