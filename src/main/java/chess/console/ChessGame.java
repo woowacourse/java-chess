@@ -1,12 +1,12 @@
-package chess.game;
+package chess.console;
 
-import static chess.game.CommandType.END;
-import static chess.game.CommandType.START;
-import static chess.view.output.OutputView.printCurrentBoard;
-import static chess.view.output.OutputView.printStartMessage;
+import static chess.console.CommandType.END;
+import static chess.console.CommandType.START;
+import static chess.console.view.output.OutputView.printCurrentBoard;
+import static chess.console.view.output.OutputView.printStartMessage;
 
+import chess.console.view.input.InputView;
 import chess.domain.board.Board;
-import chess.view.input.InputView;
 import java.util.List;
 
 public class ChessGame {

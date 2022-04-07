@@ -1,4 +1,4 @@
-package chess.game;
+package chess.console;
 
 public class Application {
 

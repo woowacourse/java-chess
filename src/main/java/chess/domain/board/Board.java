@@ -23,7 +23,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.vo.TeamColor;
-import chess.game.TotalScore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

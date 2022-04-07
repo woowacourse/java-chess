@@ -1,6 +1,6 @@
-package chess.game;
+package chess.console;
 
-import static chess.view.output.OutputView.printScore;
+import static chess.console.view.output.OutputView.printScore;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
