@@ -2,15 +2,18 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.dto.PieceSymbol;
 
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
+    private final PieceSymbol pieceSymbol;
 
-    protected Piece(final Color color) {
+    protected Piece(final Color color, final PieceSymbol pieceSymbol) {
         this.color = color;
+        this.pieceSymbol = pieceSymbol;
     }
 
     public abstract void checkMovingRange(final Board board, final Position from, final Position to);
@@ -33,8 +36,16 @@ public abstract class Piece {
         return isSameColor(color) && !isPawn();
     }
 
+    public boolean isSamePieceSymbol(final PieceSymbol pieceSymbol) {
+        return this.pieceSymbol == pieceSymbol;
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    public PieceSymbol getPieceSymbol() {
+        return pieceSymbol;
     }
 
     @Override

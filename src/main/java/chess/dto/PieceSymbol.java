@@ -1,56 +1,52 @@
 package chess.dto;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.Pieces;
 
 import java.util.Arrays;
 
 public enum PieceSymbol {
 
-    BLACK_PAWN(new Pawn(Color.BLACK), "♟"),
-    BLACK_ROOK(new Rook(Color.BLACK), "♜"),
-    BLACK_KNIGHT(new Knight(Color.BLACK), "♞"),
-    BLACK_BISHOP(new Bishop(Color.BLACK), "♝"),
-    BLACK_QUEEN(new Queen(Color.BLACK), "♛"),
-    BLACK_KING(new King(Color.BLACK), "♚"),
+    BLACK_PAWN("♟"),
+    BLACK_ROOK("♜"),
+    BLACK_KNIGHT("♞"),
+    BLACK_BISHOP("♝"),
+    BLACK_QUEEN("♛"),
+    BLACK_KING("♚"),
 
-    WHITE_PAWN(new Pawn(Color.WHITE), "♙"),
-    WHITE_ROOK(new Rook(Color.WHITE), "♖"),
-    WHITE_KNIGHT(new Knight(Color.WHITE), "♘"),
-    WHITE_BISHOP(new Bishop(Color.WHITE), "♗"),
-    WHITE_QUEEN(new Queen(Color.WHITE), "♕"),
-    WHITE_KING(new King(Color.WHITE), "♔"),
+    WHITE_PAWN("♙"),
+    WHITE_ROOK("♖"),
+    WHITE_KNIGHT("♘"),
+    WHITE_BISHOP("♗"),
+    WHITE_QUEEN("♕"),
+    WHITE_KING("♔"),
     ;
 
     public static final String NONE_PIECE_SYMBOL = ".";
 
-    private final Piece piece;
     private final String symbol;
 
-    PieceSymbol(final Piece piece, final String symbol) {
-        this.piece = piece;
+    PieceSymbol(final String symbol) {
         this.symbol = symbol;
     }
 
     public static Piece getPiece(final String symbol) {
-        return Arrays.stream(PieceSymbol.values())
-                .filter(pieceSymbol -> pieceSymbol.symbol.equals(symbol))
-                .map(pieceSymbol -> pieceSymbol.piece)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 정보입니다."));
+        Pieces pieces = new Pieces();
+        return pieces.getPiece(getPieceSymbol(symbol));
     }
 
     public static String getSymbol(final Piece other) {
+        if (other == null) {
+            return NONE_PIECE_SYMBOL;
+        }
+        PieceSymbol pieceSymbol = other.getPieceSymbol();
+        return pieceSymbol.symbol;
+    }
+
+    private static PieceSymbol getPieceSymbol(final String symbol) {
         return Arrays.stream(PieceSymbol.values())
-                .filter(pieceSymbol -> pieceSymbol.piece.equals(other))
-                .map(pieceSymbol -> pieceSymbol.symbol)
+                .filter(pieceSymbol -> pieceSymbol.symbol.equals(symbol))
                 .findFirst()
-                .orElse(NONE_PIECE_SYMBOL);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 심볼 정보입니다."));
     }
 }

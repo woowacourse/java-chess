@@ -3,16 +3,24 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.PieceSymbol;
 
 import java.util.Objects;
 
 public class Rook extends Piece {
 
     public Rook(final Color color) {
-        super(color);
+        super(color, getPieceSymbol(color));
     }
 
-    public static boolean isRookMoving(final Position from, final Position to) {
+    private static PieceSymbol getPieceSymbol(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceSymbol.BLACK_ROOK;
+        }
+        return PieceSymbol.WHITE_ROOK;
+    }
+
+    public boolean isRookMoving(final Position from, final Position to) {
         return Direction.isVertical(from, to) || Direction.isHorizontal(from, to);
     }
 

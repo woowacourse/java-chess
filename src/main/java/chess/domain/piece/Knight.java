@@ -3,16 +3,24 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.PieceSymbol;
 
 import java.util.Objects;
 
 public class Knight extends Piece {
 
     public Knight(final Color color) {
-        super(color);
+        super(color, getPieceSymbol(color));
     }
 
-    private static boolean isKnightMoving(final Position from, final Position to) {
+    private static PieceSymbol getPieceSymbol(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceSymbol.BLACK_KNIGHT;
+        }
+        return PieceSymbol.WHITE_KNIGHT;
+    }
+
+    private boolean isKnightMoving(final Position from, final Position to) {
         Direction direction = Direction.getDirection(from, to);
 
         return Direction.knightStep().contains(direction);

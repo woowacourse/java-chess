@@ -19,8 +19,6 @@ public enum PieceScore {
     WHITE_KING(new King(Color.WHITE), 0),
     ;
 
-    private static final double NONE_PIECE_SCORE = 0.0;
-
     private final Piece piece;
     private final double score;
 
@@ -34,6 +32,6 @@ public enum PieceScore {
                 .filter(pieceScore -> pieceScore.piece.equals(other))
                 .map(pieceScore -> pieceScore.score)
                 .findFirst()
-                .orElse(NONE_PIECE_SCORE);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 정보입니다."));
     }
 }

@@ -3,16 +3,24 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.PieceSymbol;
 
 import java.util.Objects;
 
 public class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(color);
+        super(color, getPieceSymbol(color));
     }
 
-    private static boolean isBishopMoving(final Position from, final Position to) {
+    private static PieceSymbol getPieceSymbol(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceSymbol.BLACK_BISHOP;
+        }
+        return PieceSymbol.WHITE_BISHOP;
+    }
+
+    private boolean isBishopMoving(final Position from, final Position to) {
         return Direction.isDiagonal(from, to);
     }
 
