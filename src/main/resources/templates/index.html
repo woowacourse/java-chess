@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>루키의 체스</title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="/src/index.js"></script>
 </head>
 <body>
-Hello World!!
+<div id="app">
+    <div class="app-box">
+        <button id="startBtn" onclick="requestStart()">START</button>
+        <button id="endBtn" onclick="requestEnd()">END</button>
+        <button id="statusBtn" onclick="sendStatus()">STATUS</button>
+        <span>현재 상태 :</span><span class="state"></span>
+    </div>
+    <br/>
+    <section class="chessBox"></section>
+</div>
+<script src="/src/index.js"></script>
 </body>
 </html>
