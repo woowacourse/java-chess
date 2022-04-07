@@ -6,11 +6,11 @@ import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
-import chess.dto.CreatePieceDto;
-import chess.dto.DeletePieceDto;
-import chess.dto.GameDto;
-import chess.dto.UpdatePiecePositionDto;
+import chess.dto.request.CreatePieceDto;
+import chess.dto.request.DeletePieceDto;
+import chess.dto.request.UpdatePiecePositionDto;
+import chess.dto.response.BoardDto;
+import chess.dto.response.GameDto;
 import java.util.Map.Entry;
 
 public class ChessService {

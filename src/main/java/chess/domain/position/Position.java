@@ -21,6 +21,13 @@ public class Position {
         return Cache.findByXAxisAndYAxis(xAxis, yAxis);
     }
 
+    public static Position of(int xAxisValue, int yAxisValue) {
+        XAxis xAxis = XAxis.getByValue(xAxisValue);
+        YAxis yAxis = YAxis.getByValue(yAxisValue);
+
+        return of(xAxis, yAxis);
+    }
+
     public static Position of(String xAxisValue, String yAxisValue) {
         XAxis xAxis = XAxis.getByValue(xAxisValue);
         YAxis yAxis = YAxis.getByValue(yAxisValue);

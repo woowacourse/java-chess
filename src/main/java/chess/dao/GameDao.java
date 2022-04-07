@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.GameDto;
+import chess.dto.response.GameDto;
 import chess.exception.DatabaseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,10 +2,10 @@ package chess.controller;
 
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
-import chess.dto.ConsoleCommandDto;
-import chess.dto.CurrentTurnDto;
-import chess.dto.ScoreResultDto;
+import chess.dto.request.ConsoleCommandDto;
+import chess.dto.response.BoardDto;
+import chess.dto.response.CurrentTurnDto;
+import chess.dto.response.ScoreResultDto;
 import chess.view.console.InputView;
 import chess.view.console.OutputView;
 

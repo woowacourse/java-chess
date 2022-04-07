@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.response;
 
 import chess.domain.game.ChessGame;
 import chess.domain.game.score.ScoreResult;

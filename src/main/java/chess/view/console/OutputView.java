@@ -1,11 +1,18 @@
 package chess.view.console;
 
-import chess.dto.BoardDto;
-import chess.dto.CurrentTurnDto;
-import chess.dto.PieceDto;
-import chess.dto.ScoreResultDto;
+import chess.domain.position.Position;
+import chess.domain.position.XAxis;
+import chess.domain.position.YAxis;
+import chess.dto.response.BoardDto;
+import chess.dto.response.CurrentTurnDto;
+import chess.dto.response.PieceDto;
+import chess.dto.response.PositionDto;
+import chess.dto.response.ScoreResultDto;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.Objects;
 
 public class OutputView {
 
@@ -22,19 +29,29 @@ public class OutputView {
     }
 
     public static void printBoard(BoardDto boardDto) {
-        for (List<Optional<PieceDto>> row : boardDto.getValue()) {
-            printRowOfBoard(row);
+        Map<PositionDto, PieceDto> value = boardDto.getValue();
+        List<YAxis> yAxes = Arrays.asList(YAxis.values());
+        Collections.reverse(yAxes);
+
+        for (YAxis yAxis : yAxes) {
+            printRowOfBoard(value, yAxis);
+            System.out.println();
         }
     }
 
-    private static void printRowOfBoard(List<Optional<PieceDto>> row) {
-        for (Optional<PieceDto> pieceDto : row) {
-            String notation = pieceDto.map(PieceDto::getConsoleText)
-                    .orElse(EMPTY_PIECE_NOTATION);
-            System.out.print(notation);
+    private static void printRowOfBoard(Map<PositionDto, PieceDto> value, YAxis yAxis) {
+        for (XAxis xAxis : XAxis.values()) {
+            PositionDto positionDto = PositionDto.from(Position.of(xAxis, yAxis));
+            PieceDto pieceDto = value.get(positionDto);
+            System.out.print(getPieceNotation(pieceDto));
         }
+    }
 
-        System.out.println();
+    private static String getPieceNotation(PieceDto pieceDto) {
+        if (!Objects.isNull(pieceDto)) {
+            return pieceDto.getConsoleText();
+        }
+        return EMPTY_PIECE_NOTATION;
     }
 
     public static void printCurrentTurn(CurrentTurnDto currentTurnDto) {
