@@ -40,7 +40,7 @@ public class BoardDao {
         try (connection; stmt) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            throw new SQLException("체스 보드를 삭제할 수 없습니다.");
+            throw new SQLException("CANNOT DELETE BOARD ERROR");
         }
     }
 
@@ -59,7 +59,7 @@ public class BoardDao {
                 chessBoard.put(position, piece);
             }
         } catch (SQLException e) {
-            throw new SQLException("체스 보드를 가져올 수 없습니다.");
+            throw new SQLException("CANNOT LOAD BOARD ERROR");
         }
         return chessBoard;
     }
@@ -73,7 +73,7 @@ public class BoardDao {
         try (connection; stmt; rs) {
             return rs.next();
         } catch (SQLException e) {
-            throw new SQLException("체스 보드 존재여부를 찾을 수 없습니다.");
+            throw new SQLException("CANNOT FIND BOARD EXISTENCE");
         }
     }
 

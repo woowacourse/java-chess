@@ -41,7 +41,7 @@ public class WebChessController {
 
     public ResponseDto move(RequestDto requestDto) {
         if (!playing) {
-            throw new IllegalStateException("게임을 실행할 수 없습니다.");
+            throw new IllegalStateException("게임이 실행중이 아닙니다.");
         }
 
         board.movePieceIfValid(turn, requestDto.getFrom(), requestDto.getTo());
