@@ -1,6 +1,6 @@
 CREATE TABLE game
 (
-    game_id int         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    game_id int         NOT NULL PRIMARY KEY,
     state   varchar(20) NOT NULL
 );
 
