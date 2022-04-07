@@ -15,9 +15,9 @@ public class Response {
     private static final String STATUS_EMOJI = "\uD83C\uDFC6";
     private static final String STATUS_FORMAT = STATUS_EMOJI + " 검은색 : %.1f점, 흰색 : %.1f점 " + STATUS_EMOJI;
 
-    private int chessGameId;
-    private ChessGame chessGame;
-    private String exceptionMessage;
+    private final int chessGameId;
+    private final ChessGame chessGame;
+    private final String exceptionMessage;
 
     private Response(final int chessGameId, final ChessGame chessGame, final String exceptionMessage) {
         this.chessGameId = chessGameId;
@@ -31,18 +31,6 @@ public class Response {
 
     public static Response exception(final int chessGameId, final ChessGame chessGame, final String exceptionMessage) {
         return new Response(chessGameId, chessGame, exceptionMessage);
-    }
-
-    public void restart(final ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
-
-    public void success() {
-        this.exceptionMessage = EMPTY;
-    }
-
-    public void exception(final String exceptionMessage) {
-        this.exceptionMessage = exceptionMessage;
     }
 
     public int getChessGameId() {
