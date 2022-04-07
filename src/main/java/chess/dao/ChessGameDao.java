@@ -1,4 +1,4 @@
-package chess.domain.dao;
+package chess.dao;
 
 import chess.domain.piece.Color;
 import java.sql.Connection;
@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ChessGameDao {
+
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
@@ -34,7 +35,9 @@ public class ChessGameDao {
             if (!generatedKeys.next()) {
                 return null;
             }
-            return generatedKeys.getLong(1);
+            long gameId = generatedKeys.getLong(1);
+            connection.close();
+            return gameId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,7 +54,9 @@ public class ChessGameDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return Color.from(resultSet.getString("turn"));
+            Color turn = Color.from(resultSet.getString("turn"));
+            connection.close();
+            return turn;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,12 +70,13 @@ public class ChessGameDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateTurn(final Long id, final String turn) {
+    public void updateTurnById(final Long id, final String turn) {
         final Connection connection = getConnection();
         final String sql = "update chessGame set turn = ? where id = ?";
         try {
@@ -78,6 +84,7 @@ public class ChessGameDao {
             statement.setString(1, turn);
             statement.setLong(2, id);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

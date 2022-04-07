@@ -1,4 +1,4 @@
-package chess.domain.dao;
+package chess.dao;
 
 import chess.domain.Board;
 import chess.domain.piece.Piece;
@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BoardDao {
+
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
@@ -37,6 +38,7 @@ public class BoardDao {
             statement.setString(2, position);
             statement.setLong(3, gameId);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,6 +65,7 @@ public class BoardDao {
                 String name = resultSet.getString("name");
                 board.put(Position.create(position), Pieces.find(name));
             }
+            connection.close();
             return new Board(board);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,12 +80,13 @@ public class BoardDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, gameId);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updatePosition(final Long gameId, final String position, final String name) {
+    public void updateNameByGameIdAndPosition(final Long gameId, final String position, final String name) {
         final Connection connection = getConnection();
         final String sql = "update board set name = ? where gameId = ? and position = ?";
         try {
@@ -91,6 +95,7 @@ public class BoardDao {
             statement.setLong(2, gameId);
             statement.setString(3, position);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
