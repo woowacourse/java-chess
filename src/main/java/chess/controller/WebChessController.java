@@ -12,6 +12,7 @@ import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.dto.ChessStatusDto;
 import chess.dto.web.ChessBoardDto;
+import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -27,11 +28,15 @@ public class WebChessController {
     private static final String FINISH_MESSAGE_KEY = "finishMessage";
     private static final String STATUS_KEY = "status";
 
+    private final ChessService chessService;
     private GameState gameState;
 
-    public void run() {
-        gameState = new Ready();
+    public WebChessController() {
+        this.gameState = new Ready();
+        this.chessService = new ChessService();
+    }
 
+    public void run() {
         port(PORT_NUMBER);
         staticFileLocation("/static");
 
@@ -43,6 +48,8 @@ public class WebChessController {
 
         get("/start", (req, res) -> {
             gameState = gameState.start();
+            chessService.create(gameState);
+
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
             return new ModelAndView(model, VIEW);
