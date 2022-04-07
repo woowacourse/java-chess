@@ -9,8 +9,8 @@ import chess.domain.position.UnitDirection;
 
 public final class Pawn extends MovingUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";
-    private static final String WHITE_PAWN = "♟";
-    private static final String BLACK_PAWN = "♙";
+    private static final String WHITE_PAWN = "♙";
+    private static final String BLACK_PAWN = "♟";
     private static final List<UnitDirection> MOVABLE_DIRECTIONS;
     private static final List<UnitDirection> ATTACK_DIRECTIONS = List.of(EN, WN);
     private static final List<UnitDirection> START_DIRECTIONS = List.of(NN);
