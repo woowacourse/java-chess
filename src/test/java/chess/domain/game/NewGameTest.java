@@ -1,17 +1,20 @@
 package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.event.Event;
+import chess.domain.event.InitEvent;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class NewGameTest {
 
     @Test
-    void init_메서드_실행시_백색_턴을_반환() {
+    void play_메서드에_INIT_이벤트_전달시_백색_턴을_반환() {
         Game game = new NewGame();
 
-        Game actual = game.init();
+        Game actual = game.play(new InitEvent());
 
         assertThat(actual).isInstanceOf(WhiteTurn.class);
     }

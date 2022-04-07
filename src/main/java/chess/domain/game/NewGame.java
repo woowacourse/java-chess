@@ -22,12 +22,6 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public Game init() {
-        Board board = new Board(BoardMapGeneratorUtil.initFullChessBoard());
-        return new WhiteTurn(board);
-    }
-
-    @Override
     public Game moveChessmen(MoveCommand dto) {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }

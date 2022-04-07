@@ -7,6 +7,7 @@ import chess.dao.EventDao;
 import chess.dao.GameDao;
 import chess.dao.GameState;
 import chess.domain.event.Event;
+import chess.domain.event.InitEvent;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.NewGame;
 import chess.dto.CreateGameDto;
@@ -67,7 +68,7 @@ class ChessServiceTest {
     void findGame_메서드는_현재_게임의_상태와_체스말_정보를_반환한다() {
         GameDto actual = service.findGame(1);
 
-        GameDto expected = new NewGame().init()
+        GameDto expected = new NewGame().play(new InitEvent())
                 .moveChessmen(new MoveCommand("e2", "e4"))
                 .moveChessmen(new MoveCommand("d7", "d5"))
                 .moveChessmen(new MoveCommand("f1", "b5"))
@@ -87,7 +88,7 @@ class ChessServiceTest {
     void playGame_메서드는_이동_명령에_따라_이동시킨_후_그_결과를_반환한다() {
         GameDto actual = service.playGame(1, new MoveCommand("a7", "a5"));
 
-        GameDto expected = new NewGame().init()
+        GameDto expected = new NewGame().play(new InitEvent())
                 .moveChessmen(new MoveCommand("e2", "e4"))
                 .moveChessmen(new MoveCommand("d7", "d5"))
                 .moveChessmen(new MoveCommand("f1", "b5"))
@@ -118,7 +119,7 @@ class ChessServiceTest {
     void findGameResult_메서드는_종료된_게임의_승자_및_점수_정보를_계산하여_반환한다() {
         GameResultDto actual = service.findGameResult(3);
 
-        GameResultDto expected = new GameResultDto(3, new NewGame().init()
+        GameResultDto expected = new GameResultDto(3, new NewGame().play(new InitEvent())
                 .moveChessmen(new MoveCommand("e2", "e4"))
                 .moveChessmen(new MoveCommand("d7", "d5"))
                 .moveChessmen(new MoveCommand("f1", "b5"))

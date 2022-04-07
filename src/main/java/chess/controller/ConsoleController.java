@@ -2,6 +2,7 @@ package chess.controller;
 
 import static chess.view.OutputView.print;
 
+import chess.domain.event.InitEvent;
 import chess.domain.game.Game;
 import chess.domain.game.statistics.GameResult;
 import chess.domain.game.NewGame;
@@ -22,7 +23,7 @@ public class ConsoleController {
         if (!inputView.requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new NewGame().init();
+        return new NewGame().play(new InitEvent());
     }
 
     public Game playGame(Game game) {

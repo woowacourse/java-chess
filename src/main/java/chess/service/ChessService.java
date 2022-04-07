@@ -6,6 +6,7 @@ import chess.dao.GameDao;
 import chess.dao.GameDaoImpl;
 import chess.dao.GameState;
 import chess.domain.event.Event;
+import chess.domain.event.InitEvent;
 import chess.domain.event.MoveCommand;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
@@ -79,7 +80,7 @@ public class ChessService {
     private Game currentSnapShotOf(int gameId) {
         validateGameExistence(gameId);
         List<Event> events = eventDao.findAllByGameId(gameId);
-        Game game = new NewGame().init();
+        Game game = new NewGame().play(new InitEvent());
         for (Event event : events) {
             game = game.moveChessmen(event.toMoveCommand());
         }

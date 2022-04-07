@@ -10,8 +10,6 @@ public interface Game {
 
     Game play(Event event);
 
-    Game init();
-
     Game moveChessmen(MoveCommand moveCommand);
 
     boolean isEnd();

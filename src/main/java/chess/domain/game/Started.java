@@ -16,11 +16,6 @@ public abstract class Started implements Game {
     }
 
     @Override
-    public final Game init() {
-        return new NewGame().init();
-    }
-
-    @Override
     public final ConsoleBoardViewDto toConsoleView() {
         return new ConsoleBoardViewDto(board);
     }
