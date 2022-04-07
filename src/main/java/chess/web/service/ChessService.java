@@ -14,13 +14,13 @@ public class ChessService {
 
     private final ChessGameDao chessGameDao;
     private final ChessBoardDao chessBoardDao;
-    private final PieceDao pieceDAO;
+    private final PieceDao pieceDao;
     private ChessGame chessGame;
 
     public ChessService() {
         this.chessGameDao = new ChessGameDao();
         this.chessBoardDao = new ChessBoardDao();
-        this.pieceDAO = new PieceDao();
+        this.pieceDao = new PieceDao();
     }
 
     public List<String> getCurrentChessBoard() {
@@ -82,12 +82,12 @@ public class ChessService {
 
     private void updateChessGame(ChessGameDto chessGameDto, int chessboardId) {
         chessGameDao.update(chessGameDto, chessboardId);
-        pieceDAO.update(chessboardId, chessGameDto);
+        pieceDao.update(chessboardId, chessGameDto);
     }
 
     private void saveChessGame(ChessGameDto chessGameDto) {
         int savedId = chessBoardDao.save();
-        pieceDAO.save(savedId, chessGameDto);
+        pieceDao.save(savedId, chessGameDto);
         chessGameDao.save(chessGameDto, savedId);
     }
 
