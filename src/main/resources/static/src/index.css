@@ -2,9 +2,6 @@
 .chess-ui {
   float: left;
   width: 640px;
-
-
-  /*border: 4px solid #A97155;*/
   border: 4px solid #C48F27;
   display: grid;
   grid-template-columns: repeat(8, 80px);
@@ -22,9 +19,7 @@
 
 
 .white-square {
-  /*background-color: #A97155;*/
   background-color: #C48F27;
-  /*color: #E4D1B9;*/
   color: #FFEDC9;
 }
 
@@ -33,7 +28,6 @@
 }
 
 .black-square {
-  /*background-color: #E4D1B9;*/
   background-color: #FFEDC9;
   color: #C48F27;
 }
@@ -55,11 +49,9 @@ img {
 
 button {
   font-size: 25px;
-
   margin: 1%;
   width: 150px;
   height: 50px;
-
   color: sienna;
   background-color: antiquewhite;
   border-color: unset;
@@ -73,5 +65,3 @@ button {
   border: 4px solid #C48F27;
   background-color: #FFEDC9;
 }
-
-
