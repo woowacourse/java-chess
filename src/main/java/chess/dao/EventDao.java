@@ -1,8 +1,8 @@
 package chess.dao;
 
-import chess.domain.event.MoveCommand;
 import chess.domain.event.Event;
 import chess.domain.event.EventType;
+import chess.domain.event.MoveCommand;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +12,6 @@ public class EventDao {
 
     public EventDao(String table) {
         this.table = table;
-    }
-
-    public void saveMove(int gameId, MoveCommand moveCommand) {
-        final String sql = addTable("INSERT INTO %s (game_id, type, description) VALUES (?, ?, ?)");
-
-        new CommandBuilder(sql).setInt(gameId)
-                .setString(EventType.MOVE)
-                .setString(moveCommand.toDescription())
-                .executeAndClose();
     }
 
     public List<Event> findAllByGameId(int gameId) {
@@ -42,6 +33,15 @@ public class EventDao {
             pieces.add(event);
         }
         return pieces;
+    }
+
+    public void saveMove(int gameId, MoveCommand moveCommand) {
+        final String sql = addTable("INSERT INTO %s (game_id, type, description) VALUES (?, ?, ?)");
+
+        new CommandBuilder(sql).setInt(gameId)
+                .setString(EventType.MOVE)
+                .setString(moveCommand.toDescription())
+                .executeAndClose();
     }
 
     private String addTable(String sql) {
