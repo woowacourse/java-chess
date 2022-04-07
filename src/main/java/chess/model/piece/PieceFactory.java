@@ -2,7 +2,7 @@ package chess.model.piece;
 
 import chess.model.Color;
 import chess.model.piece.pawn.Pawn;
-import chess.service.PieceDto;
+import chess.service.dto.PieceDto;
 
 public class PieceFactory {
     public static Piece create(PieceDto dto) {

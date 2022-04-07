@@ -4,9 +4,9 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.service.BoardDto;
+import chess.service.dto.BoardDto;
 import chess.service.ChessService;
-import chess.service.GameResultDto;
+import chess.service.dto.GameResultDto;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -17,7 +17,7 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class ChessController {
+public class WebChessController {
     private static final int VALUE_INDEX = 1;
     private static final int TO_SQUARE_INDEX = 1;
     private static final int FROM_SQUARE_INDEX = 0;
@@ -34,7 +34,7 @@ public class ChessController {
 
     private final ChessService service;
 
-    public ChessController(ChessService service) {
+    public WebChessController(ChessService service) {
         this.service = service;
     }
 

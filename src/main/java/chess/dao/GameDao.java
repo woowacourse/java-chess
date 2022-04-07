@@ -1,11 +1,12 @@
 package chess.dao;
 
-import chess.service.ChessGameDto;
-import chess.service.StatusDto;
+import chess.service.dto.ChessGameDto;
+import chess.service.dto.StatusDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class GameDao {
 
@@ -13,9 +14,8 @@ public class GameDao {
         String sql = "update game set status = ?, turn = ? where name = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, dto.getStatus());
-            statement.setString(2, dto.getTurn());
-            statement.setString(3, dto.getName());
+            JdbcUtil.setStringsToStatement(statement,
+                    Map.of(1, dto.getStatus(), 2, dto.getTurn(), 3, dto.getName()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -27,24 +27,28 @@ public class GameDao {
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return new ChessGameDto(resultSet.getString("name"), resultSet.getString("status"),
-                    resultSet.getString("turn"));
+            return getChessGameDto(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    private ChessGameDto getChessGameDto(ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            return null;
+        }
+        String name = resultSet.getString("name");
+        String status = resultSet.getString("status");
+        String turn = resultSet.getString("turn");
+        return new ChessGameDto(name, status, turn);
+    }
+
     public void updateStatus(StatusDto statusDto, String name) {
         String sql = "update game set status = ? where name = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, statusDto.getStatus());
-            statement.setString(2, name);
+            JdbcUtil.setStringsToStatement(statement, Map.of(1, statusDto.getStatus(), 2, name));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -2,9 +2,12 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class JdbcUtil {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -30,21 +33,9 @@ public class JdbcUtil {
         }
     }
 
-    public static void close(Statement stmt, Connection conn){
-        try {
-            stmt.close();
-            conn.close();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }
-    public static void close(ResultSet rs, Statement stmt, Connection conn){
-        try {
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public static void setStringsToStatement(PreparedStatement statement, Map<Integer, String> params) throws SQLException {
+        for (Entry<Integer, String> param : params.entrySet()) {
+            statement.setString(param.getKey(), param.getValue());
         }
     }
 }

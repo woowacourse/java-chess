@@ -8,7 +8,7 @@ import chess.model.piece.Piece;
 import chess.model.piece.PieceFactory;
 import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
-import chess.service.BoardDto;
+import chess.service.dto.BoardDto;
 import java.util.Map;
 
 public final class Board {

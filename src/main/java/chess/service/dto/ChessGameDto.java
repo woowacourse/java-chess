@@ -1,4 +1,4 @@
-package chess.service;
+package chess.service.dto;
 
 public class ChessGameDto {
     private String name;

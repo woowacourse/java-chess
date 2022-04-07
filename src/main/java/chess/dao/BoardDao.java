@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.service.BoardDto;
-import chess.service.PieceDto;
+import chess.service.dto.BoardDto;
+import chess.service.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,12 +23,10 @@ public class BoardDao {
                 + "values (?, ?, ?, ?) on duplicate key update piece_type = ?, piece_color =?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, pieceDto.getType());
-            statement.setString(2, pieceDto.getColor());
-            statement.setString(3, square);
-            statement.setString(4, gameName);
-            statement.setString(5, pieceDto.getType());
-            statement.setString(6, pieceDto.getColor());
+            String type = pieceDto.getType();
+            String color = pieceDto.getColor();
+            JdbcUtil.setStringsToStatement(statement, Map.of(1, type, 2, color, 3, square,
+                    4, gameName, 5, type, 6, color));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,30 +39,30 @@ public class BoardDao {
                 + "            , piece_color = (select b.piece_color from\n"
                 + "            (select piece_color from board where square = ? and game_name = ?) b)\n"
                 + "            where square = ? and game_name = ?";
-        String removeSql = "update board set piece_color = 'nothing', piece_type = 'empty' "
-                + "where square = ? and game_name = ?;";
-        try(Connection connection = JdbcUtil.getConnection();
-        PreparedStatement moveStatement = connection.prepareStatement(moveSql);
-        PreparedStatement removeStatement = connection.prepareStatement(removeSql)) {
-            moveStatement.setString(1, squareFrom);
-            moveStatement.setString(2, gameName);
-            moveStatement.setString(3, squareFrom);
-            moveStatement.setString(4, gameName);
-            moveStatement.setString(5, squareTo);
-            moveStatement.setString(6, gameName);
-            removeStatement.setString(1, squareFrom);
-            removeStatement.setString(2, gameName);
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement moveStatement = connection.prepareStatement(moveSql)) {
+            JdbcUtil.setStringsToStatement(moveStatement,
+                    Map.of(1, squareFrom, 2, gameName, 3, squareFrom, 4, gameName, 5, squareTo, 6, gameName));
             moveStatement.executeUpdate();
-            removeStatement.executeUpdate();
+            removePieceFrom(connection, squareFrom, gameName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    private void removePieceFrom(Connection connection, String squareFrom, String gameName) throws SQLException {
+        String removeSql = "update board set piece_color = 'nothing', piece_type = 'empty' "
+                + "where square = ? and game_name = ?;";
+        PreparedStatement removeStatement = connection.prepareStatement(removeSql);
+        JdbcUtil.setStringsToStatement(removeStatement, Map.of(1, squareFrom, 2, gameName));
+        removeStatement.executeUpdate();
+        removeStatement.close();
+    }
+
     public BoardDto getBoardByGameId(String gameName) {
         String sql = "select piece_type, piece_color, square from board where game_name = ?";
-        try(Connection connection = JdbcUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameName);
             ResultSet resultSet = statement.executeQuery();
             return getBoardDtoFromResultSet(resultSet);
@@ -73,7 +71,7 @@ public class BoardDao {
         }
     }
 
-    private BoardDto getBoardDtoFromResultSet(ResultSet resultSet) throws SQLException{
+    private BoardDto getBoardDtoFromResultSet(ResultSet resultSet) throws SQLException {
         Map<String, PieceDto> pieces = new HashMap<>();
         while (resultSet.next()) {
             String color = resultSet.getString("piece_color");
