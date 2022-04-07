@@ -1,4 +1,4 @@
-package chess.Controller.web;
+package chess.service;
 
 import chess.Controller.ChessController;
 import chess.Controller.command.Command;
@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Route;
 
-public class WebChessController {
+public class WebChessService {
 
     public static final Route renderMainPage = (req, res) -> {
         Map<String, Object> model = new HashMap<>();

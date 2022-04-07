@@ -7,7 +7,7 @@ import static spark.Spark.port;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
-import chess.Controller.web.WebChessController;
+import chess.service.WebChessService;
 import chess.util.path.Web;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,11 +28,11 @@ public class WebApplication {
             staticFileLocation("/static");
         }
 
-        get(Web.MAIN_PAGE, WebChessController.renderMainPage);
+        get(Web.MAIN_PAGE, WebChessService.renderMainPage);
 
-        get(Web.USER_HISTORY, WebChessController.findUserHistory);
+        get(Web.USER_HISTORY, WebChessService.findUserHistory);
 
-        put(Web.COMMAND_ACTION, WebChessController.runCommand);
+        put(Web.COMMAND_ACTION, WebChessService.runCommand);
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
             final Map<String, String> error = new HashMap<>();
