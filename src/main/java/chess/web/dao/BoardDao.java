@@ -9,4 +9,6 @@ public interface BoardDao {
     void update(StateType stateType);
 
     StateType selectState();
+
+    void deleteAll();
 }

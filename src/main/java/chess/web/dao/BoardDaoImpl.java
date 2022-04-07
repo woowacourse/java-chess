@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public StateType selectState() {
-        final String sql = "select state from board";
+        final String sql = "select state from board order by id desc limit 1";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
@@ -57,9 +57,20 @@ public class BoardDaoImpl implements BoardDao {
 
     private StateType toBoardState(ResultSet resultSet) throws SQLException {
         if (!resultSet.next()) {
-            throw new SQLException();
+            return null;
         }
         return StateType.from(resultSet.getString("state"));
+    }
+
+    @Override
+    public void deleteAll() {
+        final String sql = "delete from board";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Connection getConnection() {

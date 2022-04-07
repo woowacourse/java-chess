@@ -17,7 +17,15 @@ public class BoardDaoForTest implements BoardDao {
         this.boardDto = new BoardDto(stateType);
     }
 
+    @Override
+    public void deleteAll() {
+        boardDto = null;
+    }
+
     public StateType selectState() {
+        if (boardDto == null) {
+            return null;
+        }
         return boardDto.getStateType();
     }
 }

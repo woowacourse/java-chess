@@ -38,4 +38,15 @@ class BoardDaoTest {
 
         assertThat(boardDao.selectState()).isEqualTo(StateType.READY);
     }
+
+    @DisplayName("보드를 전부 삭제한다.")
+    @Test
+    void 보드를_전부_삭제한다() {
+        final BoardDaoForTest boardDao = new BoardDaoForTest();
+
+        boardDao.save(StateType.READY);
+        boardDao.deleteAll();
+
+        assertThat(boardDao.selectState()).isNull();
+    }
 }
