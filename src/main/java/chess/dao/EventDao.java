@@ -8,10 +8,16 @@ import java.util.List;
 
 public class EventDao {
 
+    private static final String PROD_TABLE_NAME = "event";
+
     private final String table;
 
-    public EventDao(String table) {
+    EventDao(String table) {
         this.table = table;
+    }
+
+    public static EventDao ofProd() {
+        return new EventDao(PROD_TABLE_NAME);
     }
 
     public List<Event> findAllByGameId(int gameId) {

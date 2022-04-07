@@ -19,11 +19,8 @@ public class WebController {
 
     private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 게임 결과가 산출되지 않았습니다.";
 
-    private static final String GAME_TABLE_NAME = "game";
-    private static final String EVENT_TABLE_NAME = "event";
-
-    private final GameDao gameDao = new GameDao(GAME_TABLE_NAME);
-    private final EventDao eventDao = new EventDao(EVENT_TABLE_NAME);
+    private final GameDao gameDao = GameDao.ofProd();
+    private final EventDao eventDao = EventDao.ofProd();
 
     private Game currentSnapShotOf(int gameId) {
         List<Event> events = eventDao.findAllByGameId(gameId);

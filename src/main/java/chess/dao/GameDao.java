@@ -4,10 +4,16 @@ import java.sql.Statement;
 
 public class GameDao {
 
+    private static final String PROD_TABLE_NAME = "game";
+
     private final String table;
 
-    public GameDao(String table) {
+    GameDao(String table) {
         this.table = table;
+    }
+
+    public static GameDao ofProd() {
+        return new GameDao(PROD_TABLE_NAME);
     }
 
     public int saveAndGetGeneratedId() {
