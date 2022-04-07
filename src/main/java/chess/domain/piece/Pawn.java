@@ -33,9 +33,11 @@ public class Pawn extends Piece {
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
         validateSteps(destination);
         if (isBlackTeam()) {
-            return getPath(destination, Direction.SOUTH);
+            Direction direction = findDirection(destination, Direction.blackPawnDirection(isFirstTurn()));
+            return getPath(destination, direction);
         }
-        return getPath(destination, Direction.NORTH);
+        Direction direction = findDirection(destination, Direction.whitePawnDirection(isFirstTurn()));
+        return getPath(destination, direction);
     }
 
     private void validateSteps(Position destination) {
@@ -45,6 +47,13 @@ public class Pawn extends Piece {
         if ((!isFirstTurn() && rowDiff > 1) || rowDiff > 2 || colDiff > 1) {
             throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
         }
+    }
+
+    private Direction findDirection(Position destination, List<Direction> directions)
+            throws IllegalArgumentException {
+        int colDiff = destination.getColDifference(position);
+        int rowDiff = destination.getRowDifference(position);
+        return Direction.findMatchDirection(colDiff, rowDiff, directions);
     }
 
     private List<Position> getPath(Position destination, Direction direction) {
