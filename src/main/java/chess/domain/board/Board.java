@@ -91,8 +91,9 @@ public final class Board {
             .allMatch(Piece::isBlack);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return new TreeMap<>(board);
+    public boolean isPawn(final Position position) {
+        final Piece piece = board.get(position);
+        return piece.getPieceProperty() == PieceProperty.PAWN;
     }
 
     public boolean isKingChecked(final Camp camp) {
@@ -171,9 +172,8 @@ public final class Board {
         return positions.containsAll(flattedMovableKingPositions);
     }
 
-    public boolean isPawn(final Position position) {
-        final Piece piece = board.get(position);
-        return piece.getPieceProperty() == PieceProperty.PAWN;
+    public Map<Position, Piece> getBoard() {
+        return new TreeMap<>(board);
     }
 }
 

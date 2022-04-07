@@ -17,6 +17,7 @@ public class Running implements State {
     private static final String CANT_MOVE_WHEN_OBSTACLE_IN_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
     private static final String CANT_READY_WHEN_NOT_RUNNING = "게임 종료가 아닐때는 시작상태로 돌아갈 수 없습니다.";
     private static final String PAWN_CANT_MOVE_DIAGONAL_WHEN_BLANK = "폰이 대각선으로 움직이는 경우, 타겟이 있을 때만 가능합니다.";
+    private static final String PAWN_CANT_MOVE_LINEAR_WHEN_TARGET_PIECE_EXIST = "폰이 앞으로 움직이는 경우, 타겟이 없을 때만 가능합니다.";
 
     private final Board board;
     private final Camp camp;
@@ -63,11 +64,20 @@ public class Running implements State {
         if (board.isPawn(positions.before()) && positions.isDiagonalMove()) {
             checkPawnValidCapturing(positions);
         }
+        if (board.isPawn(positions.before()) && !positions.isDiagonalMove()) {
+            checkPawnValidMoving(positions);
+        }
     }
 
     private void checkPawnValidCapturing(final Positions positions) {
         if (board.isBlankPosition(positions.after())) {
             throw new IllegalStateException(PAWN_CANT_MOVE_DIAGONAL_WHEN_BLANK);
+        }
+    }
+
+    private void checkPawnValidMoving(final Positions positions) {
+        if (!board.isBlankPosition(positions.after())) {
+            throw new IllegalStateException(PAWN_CANT_MOVE_LINEAR_WHEN_TARGET_PIECE_EXIST);
         }
     }
 
