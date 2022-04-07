@@ -22,9 +22,10 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    private static final int EMPTY = 0;
+    private static final int EMPTY_RESULT = 0;
     private final GameDao gameDao = new GameDao();
     private final BoardDao boardDao = new BoardDao();
+
     private ChessBoard chessBoard = null;
 
     public void start() {
