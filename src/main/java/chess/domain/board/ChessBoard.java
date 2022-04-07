@@ -23,11 +23,18 @@ public class ChessBoard {
         final Piece sourcePiece = findByPiece(from);
         final Piece targetPiece = findByPiece(to);
 
+        validateSameColor(sourcePiece, targetPiece);
         MovePath movePath = sourcePiece.findByMovePath(targetPiece);
         validatePath(movePath);
 
         sourcePiece.move(to);
         updateBoard(from, to);
+    }
+
+    private void validateSameColor(Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isSameColor(targetPiece.getPieceColor())) {
+            throw new IllegalArgumentException("목적지에 같은 팀의 기물이 존재합니다.");
+        }
     }
 
     public Piece findByPiece(Position position) {
