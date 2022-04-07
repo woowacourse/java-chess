@@ -18,7 +18,7 @@ class BoardDaoTest {
     @BeforeEach
     void init() {
         boardDao = new FakeBoardDao();
-        boardDao.remoteAll("board");
+        boardDao.removeAll("board");
     }
 
     @Test

@@ -46,7 +46,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void remoteAll(String name) {
+    public void removeAll(String name) {
         String sql = "truncate table " + name;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

@@ -8,5 +8,5 @@ public interface BoardDao {
 
     Map<String, String> getBoard();
 
-    void remoteAll(String name);
+    void removeAll(String name);
 }

@@ -5,3 +5,11 @@ create table board
     primary key (position)
 );
 
+create table turn
+(
+    team varchar(10) not null,
+    primary key (team)
+);
+
+insert into turn (team) value ("white");
+

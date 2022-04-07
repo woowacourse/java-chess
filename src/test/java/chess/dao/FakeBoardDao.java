@@ -19,7 +19,7 @@ public class FakeBoardDao implements BoardDao {
     }
 
     @Override
-    public void remoteAll(String name) {
+    public void removeAll(String name) {
         board.clear();
         board.putAll(BasicBoardStrategy.toMap(new BasicBoardStrategy().create()));
     }
