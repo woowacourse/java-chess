@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-public class DbBoardDao implements BoardDao {
+public class DbBoardDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -46,7 +46,6 @@ public class DbBoardDao implements BoardDao {
         }
     }
 
-    @Override
     public void updateAll(int gameId, ChessBoardDto chessBoardDto) {
         deleteAll(gameId);
         saveAll(gameId, chessBoardDto.getMapInformation());
@@ -87,7 +86,6 @@ public class DbBoardDao implements BoardDao {
         }
     }
 
-    @Override
     public ChessBoardDto findAll(int gameId) {
         Map<ChessBoardPosition, ChessPiece> mapInfo = new HashMap<>();
         final Connection connection = getConnection();

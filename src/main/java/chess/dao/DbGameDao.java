@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DbGameDao implements GameDao {
+public class DbGameDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -44,7 +44,6 @@ public class DbGameDao implements GameDao {
         }
     }
 
-    @Override
     public void saveGame(GameInformationDto gameInformationDto) {
         final Connection connection = getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
@@ -59,7 +58,6 @@ public class DbGameDao implements GameDao {
         }
     }
 
-    @Override
     public GameInformationDto getGameData(int gameId) {
         final Connection connection = getConnection();
         final String sql = "select * from game where id = ?";
@@ -78,7 +76,6 @@ public class DbGameDao implements GameDao {
         }
     }
 
-    @Override
     public void updateGameData(int gameId, GameInformationDto gameInformationDto) {
         final Connection connection = getConnection();
         final String sql = "update game set turn = ? where id = ?";
@@ -93,7 +90,6 @@ public class DbGameDao implements GameDao {
         }
     }
 
-    @Override
     public void deleteGameData(int gameId) {
         final Connection connection = getConnection();
         final String sql = "delete from game where id = ?";
