@@ -1,26 +1,26 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.List;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
-public class Bishop extends Piece {
+public class Queen extends Piece {
 
-    public Bishop(PieceColor pieceColor, Position position) {
-        super(PieceType.BISHOP, pieceColor, position);
+    public Queen(PieceColor pieceColor, Position position) {
+        super(PieceType.QUEEN, pieceColor, position);
     }
 
     @Override
     public Direction findByDirection(Position from, Position to) {
-        final int colum = to.getColumn() - from.getColumn();
+        final int column = to.getColumn() - from.getColumn();
         final int row = to.getRow() - from.getRow();
 
-        return Direction.ofDiagonal(colum, row);
+        return Direction.ofAll(column, row);
     }
 
     @Override
     protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
-        return Direction.DIAGONAL_DIRECTION;
+        return Direction.EVERY_DIRECTION;
     }
 
     @Override

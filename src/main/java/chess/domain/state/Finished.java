@@ -4,7 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Score;
 import chess.domain.game.Status;
-import chess.domain.PieceColor;
+import chess.domain.piece.PieceColor;
 
 public class Finished implements State {
 

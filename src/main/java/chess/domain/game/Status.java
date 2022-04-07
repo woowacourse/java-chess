@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import java.util.Objects;
-import chess.domain.PieceColor;
+import chess.domain.piece.PieceColor;
 
 public class Status {
     private final Score whiteScore;

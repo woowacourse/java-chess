@@ -1,9 +1,7 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Iterator;
 import java.util.Objects;
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
 
 public class MovePath implements Iterator<Position> {
 

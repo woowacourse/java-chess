@@ -3,8 +3,8 @@ package chess.controller.web;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.PieceColor;
-import chess.domain.board.MovableDto;
+import chess.domain.piece.PieceColor;
+import chess.domain.dto.MovableDto;
 import chess.domain.dto.ResponseDto;
 import chess.domain.dto.ResponseStatusDto;
 import chess.domain.game.ChessGame;

@@ -11,11 +11,7 @@ import static chess.domain.board.Direction.SOUTH_EAST;
 import static chess.domain.board.Direction.SOUTH_WEST;
 import static chess.domain.board.Direction.WEST;
 
-import chess.domain.Blank;
-import chess.domain.MovePath;
-import chess.domain.PieceColor;
-import chess.domain.Piece;
-import chess.domain.Queen;
+import chess.domain.board.MovePath;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package chess.domain.dto;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 public class PieceDto {
 

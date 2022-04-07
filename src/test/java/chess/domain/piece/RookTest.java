@@ -7,11 +7,7 @@ import static chess.domain.board.Direction.NORTH;
 import static chess.domain.board.Direction.SOUTH;
 import static chess.domain.board.Direction.WEST;
 
-import chess.domain.Blank;
-import chess.domain.MovePath;
-import chess.domain.Piece;
-import chess.domain.PieceColor;
-import chess.domain.Rook;
+import chess.domain.board.MovePath;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

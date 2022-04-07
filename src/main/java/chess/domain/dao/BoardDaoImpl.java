@@ -3,7 +3,7 @@ package chess.domain.dao;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.entity.Board;
-import chess.domain.util.DbConnection;
+import chess.util.DbConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

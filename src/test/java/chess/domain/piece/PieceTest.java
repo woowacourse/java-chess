@@ -2,9 +2,6 @@ package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.PieceColor;
-import chess.domain.PieceType;
-import chess.domain.Piece;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

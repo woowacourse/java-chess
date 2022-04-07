@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static chess.domain.PieceColor.NONE;
+import static chess.domain.piece.PieceColor.NONE;
 
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

@@ -4,8 +4,8 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Score;
 import chess.domain.game.Status;
-import chess.domain.Piece;
-import chess.domain.PieceColor;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 
 public class Running implements State {
 

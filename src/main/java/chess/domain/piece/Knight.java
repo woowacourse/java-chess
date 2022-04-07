@@ -1,13 +1,13 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.List;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
-public class Queen extends Piece {
+public class Knight extends Piece {
 
-    public Queen(PieceColor pieceColor, Position position) {
-        super(PieceType.QUEEN, pieceColor, position);
+    public Knight(PieceColor pieceColor, Position position) {
+        super(PieceType.KNIGHT, pieceColor, position);
     }
 
     @Override
@@ -15,12 +15,12 @@ public class Queen extends Piece {
         final int column = to.getColumn() - from.getColumn();
         final int row = to.getRow() - from.getRow();
 
-        return Direction.ofAll(column, row);
+        return Direction.of(column, row);
     }
 
     @Override
     protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
-        return Direction.EVERY_DIRECTION;
+        return Direction.KNIGHT_DIRECTION;
     }
 
     @Override

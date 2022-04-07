@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Objects;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.Piece;
-import chess.domain.PieceColor;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 
 public class Score {
 

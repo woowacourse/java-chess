@@ -1,12 +1,12 @@
 package chess.view;
 
-import static chess.domain.PieceColor.BLACK;
+import static chess.domain.piece.PieceColor.BLACK;
 
 import java.util.Map;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Status;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String SEPARATOR = System.lineSeparator();

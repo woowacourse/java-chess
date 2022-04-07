@@ -1,7 +1,8 @@
-package chess.domain.util;
+package chess.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.util.DbConnection;
 import java.sql.Connection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
