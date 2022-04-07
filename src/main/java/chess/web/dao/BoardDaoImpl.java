@@ -1,6 +1,6 @@
 package chess.web.dao;
 
-import chess.web.dto.BoardDto;
+import chess.domain.state.StateType;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,11 +20,11 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void save(BoardDto boardDto) {
+    public void save(StateType stateType) {
         final String sql = "insert into board (state) values (?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, boardDto.getState());
+            statement.setString(1, stateType.getNotation());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,11 +32,11 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public void update(BoardDto boardDto) {
+    public void update(StateType stateType) {
         final String sql = "update board state=? where state=?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, boardDto.getState());
+            statement.setString(1, stateType.getNotation());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public String selectState() {
+    public StateType selectState() {
         final String sql = "select state from board";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -55,11 +55,11 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
-    private String toBoardState(ResultSet resultSet) throws SQLException {
+    private StateType toBoardState(ResultSet resultSet) throws SQLException {
         if (!resultSet.next()) {
             throw new SQLException();
         }
-        return resultSet.getString("state");
+        return StateType.from(resultSet.getString("state"));
     }
 
     private Connection getConnection() {

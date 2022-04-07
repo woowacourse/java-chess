@@ -1,22 +1,23 @@
 package chess.web.dao;
 
+import chess.domain.state.StateType;
 import chess.web.dto.BoardDto;
 
 public class BoardDaoForTest implements BoardDao {
 
-    private BoardDto boards = null;
+    private BoardDto boardDto = null;
 
     @Override
-    public void save(BoardDto boardDto) {
-        boards = boardDto;
+    public void save(StateType stateType) {
+        this.boardDto = new BoardDto(stateType);
     }
 
     @Override
-    public void update(BoardDto boardDto) {
-        boards = boardDto;
+    public void update(StateType stateType) {
+        this.boardDto = new BoardDto(stateType);
     }
 
-    public String selectState() {
-        return boards.getState();
+    public StateType selectState() {
+        return boardDto.getStateType();
     }
 }

@@ -3,15 +3,16 @@ package chess.web.dto;
 import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.state.StateType;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
 
-    private final String state;
+    private final StateType stateType;
 
-    public BoardDto(String state) {
-        this.state = state;
+    public BoardDto(StateType stateType) {
+        this.stateType = stateType;
     }
 
     public static List<PieceDto> newInstance(Board board) {
@@ -21,7 +22,7 @@ public class BoardDto {
             for (int fileIndex = 0; fileIndex < 8; fileIndex++) {
                 Position position = new Position(fileIndex, rankIndex);
                 Piece piece = board.findPiece(position);
-                PieceDto pieceDto = new PieceDto(piece, position, piece.getColor());
+                PieceDto pieceDto = new PieceDto(piece, position);
                 pieces.add(pieceDto);
             }
         }
@@ -29,7 +30,7 @@ public class BoardDto {
         return pieces;
     }
 
-    public String getState() {
-        return state;
+    public StateType getStateType() {
+        return stateType;
     }
 }

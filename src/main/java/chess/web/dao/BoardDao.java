@@ -1,12 +1,12 @@
 package chess.web.dao;
 
-import chess.web.dto.BoardDto;
+import chess.domain.state.StateType;
 
 public interface BoardDao {
 
-    void save(BoardDto boardDto);
+    void save(StateType stateType);
 
-    void update(BoardDto boardDto);
+    void update(StateType stateType);
 
-    String selectState();
+    StateType selectState();
 }
