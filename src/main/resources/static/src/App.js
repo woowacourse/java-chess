@@ -34,7 +34,7 @@ function initBoard() {
 }
 
 start.addEventListener('click', function () {
-    if (start.textContent == "START") {
+    if (start.textContent === "START") {
         loadBoard();
         move();
         start.textContent = "RESTART";
@@ -86,7 +86,7 @@ function turnSetting(response) {
         document.querySelector("#view-type").textContent = "현재 턴 :ㅤ"
     }
 
-    if (response["turn"] == 'white') {
+    if (response["turn"] === "white") {
         currentTurn = "하얀색"
     } else {
         currentTurn = "검정색"
@@ -106,19 +106,19 @@ function initPosition() {
 function eventMove(event) {
     const turn = boardInfo["turn"];
     if (boardInfo["isFinish"] === true) {
-        window.alert("게임이 종료되었습니다. END 또는 STATUS만 눌러주세요.");
+        window.alert("게임이 종료되었습니다. RESTART 또는 STATUS만 눌러주세요.");
         return;
     }
     if (isChoiced === false) {
         fromTarget = event.target;
         const position = fromTarget.id
 
-        if (pieces[position] == ".") {
+        if (pieces[position] === ".") {
             window.alert("기물을 선택하세요!");
             return
         }
-        if (turn == "white" && pieces[position] != pieces[position].toLowerCase() ||
-            turn == "black" && pieces[position] != pieces[position].toUpperCase()) {
+        if (turn === "white" && pieces[position] !== pieces[position].toLowerCase() ||
+            turn === "black" && pieces[position] !== pieces[position].toUpperCase()) {
             window.alert("자신의 기물을 선택하세요!");
             return;
         }
@@ -130,9 +130,9 @@ function eventMove(event) {
         toTarget = event.target
         isChoiced = false;
     }
-    if (toTarget.id != "") {
+    if (toTarget.id !== "") {
         fromTarget.style.backgroundColor = "";
-        if (fromTarget.id == toTarget.id) {
+        if (fromTarget.id === toTarget.id) {
             initPosition();
             return;
         }
