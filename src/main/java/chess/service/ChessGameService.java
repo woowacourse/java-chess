@@ -21,8 +21,8 @@ public class ChessGameService {
     public ChessMap initializeChessGame() {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
+        chessGameDao.initializeChessGame(whitePlayer, blackPlayer);
         chessGame = new ChessGame(whitePlayer, blackPlayer);
-        chessGameDao.initializeChessGame(whitePlayer.findAll(), blackPlayer.findAll());
         return chessGame.createMap();
     }
 }

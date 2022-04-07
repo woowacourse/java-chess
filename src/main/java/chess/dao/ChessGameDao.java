@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Piece;
+import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.utils.SQLConnection;
 import java.sql.Connection;
@@ -10,13 +11,14 @@ import java.util.List;
 
 public class ChessGameDao {
 
-    public void initializeChessGame(List<Piece> whitePlayerPieces, List<Piece> blackPlayerPieces) {
+    public void initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
         resetPieces();
-        savePieces(whitePlayerPieces, blackPlayerPieces);
+        savePieces(whitePlayer);
+        savePieces(blackPlayer);
         updateTurn("WHITE");
     }
 
-    private void resetPieces() {
+    public void resetPieces() {
         final Connection connection = SQLConnection.getConnection();
         final String sql = "delete from piece";
         try {
@@ -27,45 +29,34 @@ public class ChessGameDao {
         }
     }
 
-    private void savePieces(List<Piece> whitePlayerPieces, List<Piece> blackPlayerPieces) {
+    private void savePieces(final Player player) {
         final Connection connection = SQLConnection.getConnection();
         final String sql = "insert into piece (position, name, team) values (?, ?, ?)";
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            saveWhitePiece(whitePlayerPieces, preparedStatement);
-            saveBlackPiece(blackPlayerPieces, preparedStatement);
+            final List<Piece> pieces = player.findAll();
+            savePiece(player, preparedStatement, pieces);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveWhitePiece(List<Piece> whitePlayerPieces, PreparedStatement preparedStatement)
-            throws SQLException {
-        for (Piece piece : whitePlayerPieces) {
-            final Position position = piece.getPosition();
-            preparedStatement.setString(1, toPositionStringValue(position));
-            preparedStatement.setString(2, String.valueOf(Character.toLowerCase(piece.getName())));
-            preparedStatement.setString(3, "WHITE");
-        }
-        preparedStatement.executeUpdate();
-    }
-
-    private void saveBlackPiece(List<Piece> blackPlayerPieces, PreparedStatement preparedStatement)
-            throws SQLException {
-        for (Piece piece : blackPlayerPieces) {
-            final Position position = piece.getPosition();
-            preparedStatement.setString(1, toPositionStringValue(position));
+    private void savePiece(Player player, PreparedStatement preparedStatement, List<Piece> pieces) throws SQLException {
+        for (Piece piece : pieces) {
+            preparedStatement.setString(1, toPositionString(piece.getPosition()));
             preparedStatement.setString(2, String.valueOf(piece.getName()));
-            preparedStatement.setString(3, "BLACK");
+            preparedStatement.setString(3, player.getTeamName());
         }
         preparedStatement.executeUpdate();
     }
 
-    private String toPositionStringValue(Position position) {
-        return String.valueOf(position.getFile().getValue() + position.getRank().getValue());
+    private String toPositionString(final Position position) {
+        final char file = position.getFile().getValue();
+        final int rank = position.getRank().getValue();
+        return String.valueOf(file + rank);
     }
 
-    private void updateTurn(String turn) {
+    private void updateTurn(final String turn) {
         final Connection connection = SQLConnection.getConnection();
         final String sql = "insert into chess_game (turn) values (?)";
         try {
