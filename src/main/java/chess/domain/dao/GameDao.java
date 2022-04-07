@@ -18,7 +18,7 @@ public class GameDao {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public GameDao() {
-        connection = connector.makeConnection();
+        connection = connector.makeConnection(Connector.PROD_DB_URL);
     }
 
     public GameDao(final Connection connection) {

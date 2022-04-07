@@ -8,9 +8,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connector {
-    private static final String URL = "jdbc:mysql://localhost:13306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
+    public static final String PROD_DB_URL = "jdbc:mysql://localhost:13306/chess";
+    public static final String DEV_DB_URL = "jdbc:mysql://localhost:13306/dev_chess";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private void loadDriver() {
@@ -21,10 +22,10 @@ public class Connector {
         }
     }
 
-    public Connection makeConnection() {
+    public Connection makeConnection(String url) {
         loadDriver();
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(url, USER, PASSWORD);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }

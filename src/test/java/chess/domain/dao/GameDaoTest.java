@@ -20,7 +20,7 @@ class GameDaoTest {
 
     @BeforeEach
     void set() throws SQLException {
-        connection = connector.makeConnection();
+        connection = connector.makeConnection(Connector.DEV_DB_URL);
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);
     }
@@ -28,7 +28,7 @@ class GameDaoTest {
     @Test
     @DisplayName("DB 연결을 확인한다.")
     void connection() {
-        assertThat(connector.makeConnection()).isNotNull();
+        assertThat(connector.makeConnection(Connector.DEV_DB_URL)).isNotNull();
     }
 
     @Test

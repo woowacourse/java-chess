@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BoardDao {
 
     private static final int EMPTY_RESULT = 0;
@@ -17,7 +18,7 @@ public class BoardDao {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public BoardDao() {
-        connection = connector.makeConnection();
+        connection = connector.makeConnection(Connector.PROD_DB_URL);
     }
 
     BoardDao(final Connection connection) {

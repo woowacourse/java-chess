@@ -24,7 +24,7 @@ class BoardDaoTest {
 
     @BeforeEach
     void set() throws SQLException {
-        connection = connector.makeConnection();
+        connection = connector.makeConnection(Connector.DEV_DB_URL);
         boardDao = new BoardDao(connection);
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);
