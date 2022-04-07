@@ -29,8 +29,8 @@ public class GameService {
         board = new Board(new RegularRuleSetup());
         boardDao.save(userId, getGameStateDto());
         int boardId = boardDao.getBoardIdByPlayer(userId);
-        deletePreviousGame(boardId);
-        saveNewGame(userId, boardId);
+        deletePreviousPieces(boardId);
+        saveNewPieces(boardId);
         return gameStateAndPieces(boardId);
     }
 
@@ -50,7 +50,7 @@ public class GameService {
         pieceDao.findAll(boardId).stream()
                 .forEach(pieceDto -> pieces.put(Position.of(pieceDto.getPosition()), PieceFactory.build(pieceDto)));
         board = new Board(() -> pieces);
-        board.loadTurn(boardDao.find());
+        board.loadTurn(boardDao.getTurn(boardId));
         return gameStateAndPieces(boardId);
     }
 
@@ -94,11 +94,11 @@ public class GameService {
         return data;
     }
 
-    private void saveNewGame(int userId, int boardId) {
+    private void saveNewPieces(int boardId) {
         pieceDao.saveAll(boardId, board.getPieces());
     }
 
-    private void deletePreviousGame(int boardId) {
+    private void deletePreviousPieces(int boardId) {
         Optional<PieceDto> piece = pieceDao.findOne(boardId, "a1");
         if (!piece.isEmpty()) {
             pieceDao.deleteAll(boardId);

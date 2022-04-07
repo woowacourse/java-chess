@@ -25,13 +25,13 @@ public class BoardDao {
         }
     }
 
-    public Color find() {
+    public Color getTurn(int boardId) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "select * from board where id = ?";
+        final String sql = "select turn from board where id = ?";
         Color color = Color.WHITE;
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, 1);
+            statement.setInt(1, boardId);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 color = Color.findByValue(resultSet.getString("turn"));
