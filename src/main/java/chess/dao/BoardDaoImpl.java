@@ -29,7 +29,6 @@ public class BoardDaoImpl implements BoardDao {
             while (resultSet.next()) {
                 board.put(resultSet.getString("position"), resultSet.getString("piece"));
             }
-            dataSource.close();
             return board;
         } catch (SQLException e) {
             throw new SqlSelectException(SqlSelectException.MESSAGE, e);

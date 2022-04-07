@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class TestDataSource implements DataSource {
 
-    private static String DEV_URL = "jdbc:mysql://localhost:3306/chess_dev?autoReconnect=true";
+    private static final String DEV_URL = "jdbc:mysql://localhost:3306/chess_dev?autoReconnect=true";
 
     private Connection connection;
 

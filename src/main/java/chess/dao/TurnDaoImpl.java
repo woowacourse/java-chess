@@ -1,9 +1,7 @@
 package chess.dao;
 
-import chess.util.JdbcTemplate;
 import chess.util.SqlSelectException;
 import chess.util.SqlUpdateException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

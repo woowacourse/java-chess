@@ -1,7 +1,7 @@
 package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.FakeBoardDao;
 import chess.dao.FakeTurnDao;

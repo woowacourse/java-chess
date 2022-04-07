@@ -1,9 +1,7 @@
 package chess.service;
 
 import chess.dao.BoardDao;
-import chess.dao.BoardDaoImpl;
 import chess.dao.TurnDao;
-import chess.dao.TurnDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.PieceFactory;
