@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ChessGameDto {
     private final String name;
@@ -38,13 +40,13 @@ public class ChessGameDto {
         return result;
     }
 
-    public Map<String, String> getSquaresOfDB() {
+    public Set<Entry<String, String>> getSquaresOfDB() {
         Map<String, String> squaresDB = new HashMap<>();
         chessGame.getBoard().getSquares().forEach((position, piece) ->
                 squaresDB.put(position.toString(),
                         piece.getName().getValue(piece.getTeam()))
         );
-        return squaresDB;
+        return squaresDB.entrySet();
     }
 
     private void addPiecesDtoRank(List<PieceDto> result, Map<Position, Piece> squares, Rank rank) {
@@ -66,7 +68,8 @@ public class ChessGameDto {
         return chessGame.getTurn().name();
     }
 
-    public Piece findPiece(Position position) {
-        return getSquares().get(position);
+    public String findPiece(String position) {
+        Piece piece = getSquares().get(Position.from(position));
+        return piece.getName().getValue(piece.getTeam());
     }
 }

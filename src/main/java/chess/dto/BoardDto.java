@@ -35,17 +35,17 @@ public class BoardDto {
         return result + System.lineSeparator();
     }
 
-    public static List<Position> getAblePositions() {
-        List<Position> positions = new ArrayList<>();
+    public static List<String> getAblePositions() {
+        List<String> positions = new ArrayList<>();
         for (Column column : Column.values()) {
             addPositionOfColumn(positions, column);
         }
         return positions;
     }
 
-    private static void addPositionOfColumn(List<Position> positions, Column column) {
+    private static void addPositionOfColumn(List<String> positions, Column column) {
         for (Rank rank : Rank.values()) {
-            positions.add(new Position(column, rank));
+            positions.add(column.name() + rank.getNumber());
         }
     }
 }
