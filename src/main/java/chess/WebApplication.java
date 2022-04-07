@@ -29,6 +29,28 @@ public class WebApplication {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "start.html");
+        });
+
+        get("/start", (req, res) -> {
+            ChessBoardDao chessBoardDao = new ChessBoardDao();
+            PlayerDao playerDao = new PlayerDao();
+
+            ChessGame chessGame = new ChessGame();
+            chessGame.start();
+
+            //전부 지우고 다시 채운다.
+            chessBoardDao.deleteAll();
+            chessBoardDao.save(chessGame.getBoard());
+            playerDao.deleteAll();
+            playerDao.save(Color.of(chessGame.getTurn()));
+
+            res.redirect("/play");
+            return null;
+        });
+
+        get("/play", (req, res) -> {
             ChessBoardDao chessBoardDao = new ChessBoardDao();
             PlayerDao playerDao = new PlayerDao();
             chessBoardDao.findAll();
@@ -75,24 +97,7 @@ public class WebApplication {
             playerDao.deleteAll();
             playerDao.save(Color.of(chessGame.getTurn()));
 
-            res.redirect("/");
-            return null;
-        });
-
-        get("/start", (req, res) -> {
-            ChessBoardDao chessBoardDao = new ChessBoardDao();
-            PlayerDao playerDao = new PlayerDao();
-
-            ChessGame chessGame = new ChessGame();
-            chessGame.start();
-
-            //전부 지우고 다시 채운다.
-            chessBoardDao.deleteAll();
-            chessBoardDao.save(chessGame.getBoard());
-            playerDao.deleteAll();
-            playerDao.save(Color.of(chessGame.getTurn()));
-
-            res.redirect("/");
+            res.redirect("/play");
             return null;
         });
 
