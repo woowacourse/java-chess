@@ -8,7 +8,8 @@ import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.position.Position;
-import chess.domain.event.MoveCommand;
+import chess.domain.event.Event;
+import chess.domain.event.MoveEvent;
 import chess.util.BoardMapGeneratorUtil;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +24,9 @@ class RunningTest {
     private static final Position WHITE_KING_POSITION = Position.of("e1");
     private static final Position NON_KILL_MOVED_POSITION = Position.of("d3");
 
-    private static final MoveCommand NON_KILL_MOVE = new MoveCommand("d1", "d3");
-    private static final MoveCommand KILL_BLACK_KING_MOVE = new MoveCommand("d1", "d8");
-    private static final MoveCommand KILL_BLACK_QUEEN_MOVE = new MoveCommand("d1", "a1");
+    private static final Event NON_KILL_MOVE = new MoveEvent("d1 d3");
+    private static final Event KILL_BLACK_KING_MOVE = new MoveEvent("d1 d8");
+    private static final Event KILL_BLACK_QUEEN_MOVE = new MoveEvent("d1 a1");
 
     private Game game;
 
@@ -41,7 +42,7 @@ class RunningTest {
 
     @Test
     void 체스말_이동() {
-        Game actual = game.moveChessmen(NON_KILL_MOVE);
+        Game actual = game.play(NON_KILL_MOVE);
 
         Game expected = new BlackTurn(new Board(new HashMap<>() {{
             put(BLACK_KING_POSITION, Piece.of(Color.BLACK, KING));
@@ -55,7 +56,7 @@ class RunningTest {
 
     @Test
     void 체스말로_다른_체스말_공격() {
-        Game actual = game.moveChessmen(KILL_BLACK_QUEEN_MOVE);
+        Game actual = game.play(KILL_BLACK_QUEEN_MOVE);
 
         Game expected = new BlackTurn(new Board(new HashMap<>() {{
             put(BLACK_KING_POSITION, Piece.of(Color.BLACK, KING));
@@ -75,7 +76,7 @@ class RunningTest {
 
     @Test
     void 체스말_이동_후_킹이_여전히_2개면_게임진행() {
-        Game afterMove = game.moveChessmen(KILL_BLACK_QUEEN_MOVE);
+        Game afterMove = game.play(KILL_BLACK_QUEEN_MOVE);
 
         boolean actual = afterMove.isEnd();
 
@@ -85,7 +86,7 @@ class RunningTest {
 
     @Test
     void 체스말_이동_후_킹이_2개_미만이면_게임종료() {
-        Game killedKingGame = game.moveChessmen(KILL_BLACK_KING_MOVE);
+        Game killedKingGame = game.play(KILL_BLACK_KING_MOVE);
 
         boolean actual = killedKingGame.isEnd();
 

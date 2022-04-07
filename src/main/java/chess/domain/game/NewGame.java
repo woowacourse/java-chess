@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.event.Event;
-import chess.domain.event.MoveCommand;
 import chess.domain.game.statistics.GameResult;
 import chess.dto.GameDto;
 import chess.dto.board.ConsoleBoardViewDto;
@@ -19,11 +18,6 @@ public final class NewGame implements Game {
         }
         Board board = new Board(BoardMapGeneratorUtil.initFullChessBoard());
         return new WhiteTurn(board);
-    }
-
-    @Override
-    public Game moveChessmen(MoveCommand dto) {
-        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override

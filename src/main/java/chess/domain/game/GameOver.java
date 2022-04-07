@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.event.Event;
-import chess.domain.event.MoveCommand;
 import chess.domain.game.statistics.GameResult;
 import chess.domain.game.statistics.GameState;
 
@@ -16,11 +15,6 @@ final class GameOver extends Started {
 
     @Override
     public Game play(Event event) {
-        throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
-    }
-
-    @Override
-    public Game moveChessmen(MoveCommand moveCommand) {
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
     }
 

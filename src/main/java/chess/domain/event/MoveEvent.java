@@ -6,7 +6,7 @@ public final class MoveEvent extends Event {
 
     private final MoveCommand moveCommand;
 
-    private MoveEvent(MoveCommand moveCommand) {
+    public MoveEvent(MoveCommand moveCommand) {
         this.moveCommand = moveCommand;
     }
 

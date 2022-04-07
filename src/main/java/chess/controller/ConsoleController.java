@@ -2,11 +2,12 @@ package chess.controller;
 
 import static chess.view.OutputView.print;
 
+import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
+import chess.domain.event.MoveEvent;
 import chess.domain.game.Game;
-import chess.domain.game.statistics.GameResult;
 import chess.domain.game.NewGame;
-import chess.domain.event.MoveCommand;
+import chess.domain.game.statistics.GameResult;
 import chess.dto.board.ConsoleBoardViewDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -36,8 +37,8 @@ public class ConsoleController {
 
     private Game moveChessmen(Game game) {
         try {
-            MoveCommand validMoveInput = inputView.requestValidMoveInput();
-            game = game.moveChessmen(validMoveInput);
+            Event moveEvent = new MoveEvent(inputView.requestValidMoveInput());
+            game = game.play(moveEvent);
             printBoardDisplay(game);
             return game;
         } catch (IllegalArgumentException e) {

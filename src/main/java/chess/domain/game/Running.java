@@ -25,8 +25,7 @@ abstract class Running extends Started {
         throw new UnsupportedOperationException(NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE);
     }
 
-    @Override
-    public final Game moveChessmen(MoveCommand moveCommand) {
+    private Game moveChessmen(MoveCommand moveCommand) {
         Position from = moveCommand.getSource();
         Position to = moveCommand.getTarget();
 
