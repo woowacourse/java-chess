@@ -82,15 +82,15 @@ public class ChessService {
         return Color.from(pieceDto.getColor());
     }
 
-    public String move(String source, String target) {
+    public ResponseDto move(String source, String target) {
         try {
             if (chessBoard.compareStatus(Status.PLAYING)) {
                 chessBoard.move(new Position(source), new Position(target));
             }
         } catch (IllegalArgumentException e) {
-            return new ResponseDto(500, e.getMessage()).toString();
+            return new ResponseDto(500, e.getMessage());
         }
-        return new ResponseDto(200, null).toString();
+        return new ResponseDto(200, null);
     }
 
     public Map<String, Double> status() {

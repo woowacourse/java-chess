@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.dto.ResponseDto;
 import chess.domain.game.Status;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -62,14 +63,26 @@ public class WebChessController {
 
     private void move() {
         post("/move", (req, res) -> {
-            Gson gson = new GsonBuilder().create();
-            JsonObject request = gson.fromJson(req.body(), JsonObject.class);
-            String move = chessService.move(request.get("source").getAsString(), request.get("target").getAsString());
+            JsonObject request = convertToJson(req.body());
+            ResponseDto moveResponse = chessService.move(getSource(request), getTarget(request));
             if (chessService.checkStatus(Status.END)) {
                 chessService.end();
             }
-            return gson.fromJson(move, JsonObject.class);
+            return convertToJson(moveResponse.toString());
         });
+    }
+
+    private JsonObject convertToJson(String input) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(input, JsonObject.class);
+    }
+
+    private String getTarget(JsonObject request) {
+        return request.get("target").getAsString();
+    }
+
+    private String getSource(JsonObject request) {
+        return request.get("source").getAsString();
     }
 
     private void status() {
