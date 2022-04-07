@@ -1,20 +1,21 @@
 package chess.model;
 
-import chess.console.controller.ChessController;
+import chess.console.controller.ConsoleChessController;
 import chess.console.controller.GameCommandRequest;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 public enum GameCommand {
-    START("start", ChessController::start),
-    END("end", ChessController::end),
-    MOVE("move", ChessController::move),
-    STATUS("status", ChessController::status);
+    START("start", ConsoleChessController::start),
+    END("end", ConsoleChessController::end),
+    MOVE("move", ConsoleChessController::move),
+    STATUS("status", ConsoleChessController::status);
 
     private final String commandLine;
-    private final BiConsumer<ChessController, GameCommandRequest> requestBiConsumer;
+    private final BiConsumer<ConsoleChessController, GameCommandRequest> requestBiConsumer;
 
-    GameCommand(final String commandLine, final BiConsumer<ChessController, GameCommandRequest> requestBiConsumer) {
+    GameCommand(final String commandLine,
+                final BiConsumer<ConsoleChessController, GameCommandRequest> requestBiConsumer) {
         this.commandLine = commandLine;
         this.requestBiConsumer = requestBiConsumer;
     }
@@ -42,7 +43,7 @@ public enum GameCommand {
         return this.equals(END);
     }
 
-    public void executeRequest(ChessController controller, GameCommandRequest request) {
+    public void executeRequest(ConsoleChessController controller, GameCommandRequest request) {
         this.requestBiConsumer.accept(controller, request);
     }
 }

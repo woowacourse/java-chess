@@ -1,12 +1,12 @@
 package chess.console.controller;
 
-import chess.model.GameCommand;
-import chess.service.ChessService;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
+import chess.model.GameCommand;
+import chess.service.ChessService;
 import java.util.List;
 
-public final class ChessController {
+public final class ConsoleChessController {
 
     private static final int FROM_INDEX = 0;
     private static final int TO_INDEX = 1;
@@ -14,7 +14,7 @@ public final class ChessController {
     private final ChessService service;
     private final String gameName = "game";
 
-    public ChessController(ChessService service) {
+    public ConsoleChessController(ChessService service) {
         this.service = service;
     }
 

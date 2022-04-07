@@ -3,9 +3,7 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -33,7 +31,8 @@ public class JdbcUtil {
         }
     }
 
-    public static void setStringsToStatement(PreparedStatement statement, Map<Integer, String> params) throws SQLException {
+    public static void setStringsToStatement(PreparedStatement statement, Map<Integer, String> params)
+            throws SQLException {
         for (Entry<Integer, String> param : params.entrySet()) {
             statement.setString(param.getKey(), param.getValue());
         }

@@ -1,6 +1,6 @@
 package chess.console;
 
-import chess.console.controller.ChessController;
+import chess.console.controller.ConsoleChessController;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.service.ChessService;
@@ -8,7 +8,8 @@ import chess.service.ChessService;
 public class Main {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new ChessService(new BoardDao(), new GameDao()));
-        chessController.run();
+        ConsoleChessController consoleChessController = new ConsoleChessController(
+                new ChessService(new BoardDao(), new GameDao()));
+        consoleChessController.run();
     }
 }

@@ -4,8 +4,8 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.service.dto.BoardDto;
 import chess.service.ChessService;
+import chess.service.dto.BoardDto;
 import chess.service.dto.GameResultDto;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -24,13 +24,15 @@ public class WebChessController {
     private static final String BODY_DELIMITER = "&";
     private static final String KEY_VALUE_DELIMITER = "=";
     private static final String GAME_ID = "game";
-    private static final String GAME_NAME = ":" + GAME_ID + "Name";
+    private static final String GAME_NAME_KEY = ":gameName";
     private static final String OK = "OK";
     private static final String MESSAGE = ":message";
     private static final String ENCODING = "UTF-8";
     private static final String BOARD_PATH = "/board/";
     private static final String EXCEPTION_PATH = "/exception/";
     private static final String FAIL = "FAIL";
+    private static final int SERVER_ERROR = 500;
+    private static final int SUCCESS = 200;
 
     private final ChessService service;
 
@@ -40,12 +42,12 @@ public class WebChessController {
 
     public void run() {
         get("/", this::redirectToBoard);
-        get("/new-board/" + GAME_NAME, this::requestInit);
-        get("/board/" + GAME_NAME, this::renderBoard);
-        post("/move/" + GAME_NAME, this::requestMove);
-        get("/status/" + GAME_NAME, this::renderStatus);
+        get("/new-board/" + GAME_NAME_KEY, this::requestInit);
+        get("/board/" + GAME_NAME_KEY, this::renderBoard);
+        post("/move/" + GAME_NAME_KEY, this::requestMove);
+        get("/status/" + GAME_NAME_KEY, this::renderStatus);
         get("/exception/" + MESSAGE, this::renderException);
-        get("/game-end/" + GAME_NAME, this::requestEndGame);
+        get("/game-end/" + GAME_NAME_KEY, this::requestEndGame);
         exception(RuntimeException.class, this::handle);
     }
 
@@ -55,7 +57,7 @@ public class WebChessController {
     }
 
     private String renderBoard(Request req, Response res) {
-        String gameName = req.params(GAME_NAME);
+        String gameName = req.params(GAME_NAME_KEY);
         BoardDto board = getRunningBoard(gameName);
         if (board == null) {
             res.redirect("/status/" + gameName);
@@ -68,15 +70,15 @@ public class WebChessController {
     }
 
     private String requestMove(Request req, Response res) {
-        String gameName = req.params(GAME_NAME);
+        String gameName = req.params(GAME_NAME_KEY);
         move(gameName, req.body());
         res.redirect(BOARD_PATH + gameName);
         return OK;
     }
 
     private String renderStatus(Request req, Response res) {
-        GameResultDto status = status(req.params(GAME_NAME));
-        end(req.params(GAME_NAME));
+        GameResultDto status = status(req.params(GAME_NAME_KEY));
+        end(req.params(GAME_NAME_KEY));
         return render(new ModelAndView(status, "result.html"));
     }
 
@@ -87,14 +89,14 @@ public class WebChessController {
             model.put("exception", exception);
             return render(new ModelAndView(model, "exception.html"));
         } catch (UnsupportedEncodingException e) {
-            res.status(500);
+            res.status(SERVER_ERROR);
             return FAIL;
         }
     }
 
     private String requestEndGame(Request req, Response res) {
-        end(req.params(GAME_NAME));
-        res.redirect(BOARD_PATH + req.params(GAME_NAME));
+        end(req.params(GAME_NAME_KEY));
+        res.redirect(BOARD_PATH + req.params(GAME_NAME_KEY));
         return OK;
     }
 
@@ -102,7 +104,7 @@ public class WebChessController {
         try {
             res.redirect(EXCEPTION_PATH + URLEncoder.encode(exception.getMessage(), ENCODING));
         } catch (UnsupportedEncodingException e) {
-            res.status(500);
+            res.status(SERVER_ERROR);
         }
     }
 
@@ -133,9 +135,9 @@ public class WebChessController {
     }
 
     private String requestInit(Request req, Response res) {
-        String gameName = req.params(GAME_NAME);
+        String gameName = req.params(GAME_NAME_KEY);
         initGame(gameName);
-        res.status(200);
+        res.status(SUCCESS);
         res.redirect(BOARD_PATH + gameName);
         return OK;
     }

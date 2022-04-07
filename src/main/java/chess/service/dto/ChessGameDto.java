@@ -1,9 +1,9 @@
 package chess.service.dto;
 
 public class ChessGameDto {
-    private String name;
     private final String status;
     private final String turn;
+    private String name;
 
     public ChessGameDto(String status, String turn) {
         this.status = status;
