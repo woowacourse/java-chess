@@ -20,7 +20,7 @@ public class ChessGameDao {
 
     public void save(ChessGameDto chessGameDto) {
         String sql = "insert into chessgame (game_name, turn) values (?, ?)";
-        try(Connection connection = getConnection();
+        try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, chessGameDto.getGameName());
