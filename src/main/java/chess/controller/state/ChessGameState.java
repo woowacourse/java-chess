@@ -1,13 +1,18 @@
 package chess.controller.state;
 
+import chess.domain.board.Board;
+import chess.dto.ScoreDto;
+
 public interface ChessGameState {
     ChessGameState start();
 
     ChessGameState move(String from, String to);
 
-    ChessGameState status();
+    ScoreDto status();
 
     ChessGameState end();
+
+    Board getBoard();
 
     boolean isEnded();
 }

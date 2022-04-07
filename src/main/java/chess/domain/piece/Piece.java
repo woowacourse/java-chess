@@ -27,6 +27,11 @@ public abstract class Piece {
         return this.pieceType == pieceType;
     }
 
+    @Override
+    public String toString() {
+        String value = color + "-" + pieceType;
+        return value.toLowerCase();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -15,17 +15,17 @@ public enum Score {
     ;
 
     private final Predicate<Piece> piecePredicate;
-    private final double score;
+    private final double value;
 
-    Score(Predicate<Piece> piecePredicate, double score) {
+    Score(Predicate<Piece> piecePredicate, double value) {
         this.piecePredicate = piecePredicate;
-        this.score = score;
+        this.value = value;
     }
 
     public static double from(Piece piece) {
         return Arrays.stream(values())
                 .filter(score -> score.piecePredicate.test(piece))
-                .mapToDouble(score -> score.score)
+                .mapToDouble(score -> score.value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 기물입니다."));
     }

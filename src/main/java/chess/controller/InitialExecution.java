@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum InitialExecution {
-    START("start", () -> new ChessController().start()),
+    START("start", () -> new ChessConsoleController().start()),
     END("end", () -> System.out.println("프로그램을 종료합니다.")),
     ;
 

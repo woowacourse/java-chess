@@ -12,6 +12,23 @@ public class BlackPlaying extends Playing {
     @Override
     public ChessGameState move(String from, String to) {
         MoveResult result = movePiece(from, to, Color.BLACK);
-        return getMoveResult(result, MoveResult.FAIL);
+        return checkMoveResult(result);
+    }
+
+    @Override
+    ChessGameState checkMoveResult(MoveResult result) {
+        if (result == MoveResult.ENDED) {
+            return new Finished();
+        }
+
+        if (result == MoveResult.FAIL) {
+            return new BlackPlaying(board);
+        }
+        return new WhitePlaying(board);
+    }
+
+    @Override
+    public ChessGameState end() {
+        return new Finished();
     }
 }

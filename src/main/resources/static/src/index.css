@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons {
+    margin: 20px 0;
+}
+
+.info {
+    font-size: 1.3em;
+    margin: 10px 0;
+}
+
+.chess-board {
+    height: 50%;
+    width: 45%;
+}
+
+.board-rank {
+    display: flex;
+}
+
+.board-square {
+    width: calc(100% / 8);
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.board-square.white-box {
+    background: #FFFFFF;
+}
+
+.board-square.black-box {
+    background: #cbcbcb;
+}

@@ -9,12 +9,12 @@ import java.util.Map;
 public class BoardDto {
     private final Map<Position, Piece> board;
 
-    public BoardDto(Map<Position, Piece> board) {
+    private BoardDto(Map<Position, Piece> board) {
         this.board = board;
     }
 
     public static BoardDto from(Board board) {
-        return new BoardDto(board.getBoard());
+        return new BoardDto(board.getValue());
     }
 
     public Map<Position, Piece> getBoard() {

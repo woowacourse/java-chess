@@ -72,4 +72,8 @@ public enum File {
     public int calculateDistance(File targetFile) {
         return order - targetFile.order;
     }
+
+    public String getValue() {
+        return value.toLowerCase();
+    }
 }

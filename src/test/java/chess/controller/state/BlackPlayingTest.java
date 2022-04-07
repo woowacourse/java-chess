@@ -28,16 +28,6 @@ class BlackPlayingTest {
     }
 
     @Test
-    @DisplayName("status시 본인의 클래스를 return 한다.")
-    void blackPlayingStatus() {
-        //given & when
-        ChessGameState stateAfterStatus = blackPlaying.status();
-
-        //then
-        assertThat(stateAfterStatus).isExactlyInstanceOf(BlackPlaying.class);
-    }
-
-    @Test
     @DisplayName("move가 실패하였을 시 본인의 클래스를 return 한다.")
     void blackPlayingMoveFail() {
         //given & when

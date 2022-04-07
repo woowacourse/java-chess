@@ -12,7 +12,23 @@ public class WhitePlaying extends Playing {
     @Override
     public ChessGameState move(String from, String to) {
         MoveResult result = movePiece(from, to, Color.WHITE);
+        return checkMoveResult(result);
+    }
 
-        return getMoveResult(result, MoveResult.SUCCESS);
+    @Override
+    ChessGameState checkMoveResult(MoveResult result) {
+        if (result == MoveResult.ENDED) {
+            return new Finished();
+        }
+
+        if (result == MoveResult.SUCCESS) {
+            return new BlackPlaying(board);
+        }
+        return new WhitePlaying(board);
+    }
+
+    @Override
+    public ChessGameState end() {
+        return new Finished();
     }
 }

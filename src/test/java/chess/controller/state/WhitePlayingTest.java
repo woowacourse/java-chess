@@ -27,15 +27,6 @@ class WhitePlayingTest {
         assertThat(stateAfterStart).isExactlyInstanceOf(WhitePlaying.class);
     }
 
-    @Test
-    @DisplayName("status시 본인의 클래스를 return 한다.")
-    void whitePlayingStatus() {
-        //given & when
-        ChessGameState stateAfterStatus = whitePlaying.status();
-
-        //then
-        assertThat(stateAfterStatus).isExactlyInstanceOf(WhitePlaying.class);
-    }
 
     @Test
     @DisplayName("move가 실패하였을 시 본인의 클래스를 return 한다.")
@@ -52,7 +43,7 @@ class WhitePlayingTest {
     @DisplayName("move가 성공하였을 시 BlackPlaying을 return 한다.")
     void whitePlayingMoveSuccess() {
         //given & when
-        ChessGameState stateAfterMove = whitePlaying.move("b2", "b4");
+        ChessGameState stateAfterMove = whitePlaying.move("b2", "b3");
 
         //then
         assertThat(stateAfterMove).isExactlyInstanceOf(BlackPlaying.class);

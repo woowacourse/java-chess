@@ -21,18 +21,18 @@ public class Board {
     private static final double PAWN_SUBTRACT_UNIT = 0.5;
     private static final double DEFAULT_SCORE = 0D;
 
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> value;
 
     Board(Map<Position, Piece> board) {
-        this.board = new LinkedHashMap<>(board);
+        this.value = new LinkedHashMap<>(board);
     }
 
     public MoveResult move(String from, String to, Color color) {
         Position fromPosition = Position.of(from);
         Position toPosition = Position.of(to);
 
-        Piece pieceAtFrom = board.get(fromPosition);
-        Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
+        Piece pieceAtFrom = value.get(fromPosition);
+        Piece pieceAtTo = value.getOrDefault(toPosition, InvalidPiece.getInstance());
 
         if (!pieceAtFrom.matchColor(color) || isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
             return MoveResult.FAIL;
@@ -62,12 +62,12 @@ public class Board {
         List<Position> positionsOnTheWay = fromPosition.getPositionBetween(toPosition);
 
         return positionsOnTheWay.stream()
-                .anyMatch(board::containsKey);
+                .anyMatch(value::containsKey);
     }
 
     private void movePiece(Position from, Position to, Piece pieceAtFrom) {
-        board.put(to, pieceAtFrom);
-        board.remove(from);
+        value.put(to, pieceAtFrom);
+        value.remove(from);
     }
 
     private MoveResult getMoveResult(Piece pieceAtTo) {
@@ -88,7 +88,7 @@ public class Board {
     }
 
     private List<Position> getPawnPositionsByColor(Predicate<Piece> condition) {
-        return board.entrySet()
+        return value.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().matchType(PieceType.PAWN))
                 .filter(entry -> condition.test(entry.getValue()))
@@ -126,7 +126,7 @@ public class Board {
     }
 
     private Map<Color, Double> getChessScoreWithoutPawn() {
-        Map<Boolean, Double> scoreKeyByBoolean = board.values()
+        Map<Boolean, Double> scoreKeyByBoolean = value.values()
                 .stream()
                 .filter(piece -> !piece.matchType(PieceType.PAWN))
                 .collect(groupingBy(piece -> piece.matchColor(Color.WHITE), summingDouble(Score::from)));
@@ -141,7 +141,7 @@ public class Board {
         return score;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return new LinkedHashMap<>(board);
+    public Map<Position, Piece> getValue() {
+        return new LinkedHashMap<>(value);
     }
 }
