@@ -37,8 +37,8 @@ public class PiecesDao {
             return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
-        return null;
     }
 
     private Piece createPiece(final ResultSet resultSet) throws SQLException {

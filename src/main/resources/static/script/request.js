@@ -49,13 +49,14 @@ export function startGame() {
             'Content-Type': 'application/json',
         },
         credentials: 'include',
-    }).then(response => response.json())
+    }).then(errorHandling)
+        .then(response => response.json())
         .then(({game_status: gameStatus, pieces}) => {
             if (gameStatus !== GAME_STATUS.READY) {
                 arrangePieces(pieces);
                 changeTurn(getTurn(gameStatus));
             }
         })
-        .catch(err => err);
+        .catch(err => alert(err.message));
 }
 

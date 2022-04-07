@@ -12,7 +12,11 @@ import chess.console.view.OutputView;
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        startGame();
+        try {
+            startGame();
+        } catch (Exception e) {
+            OutputView.printErrorMessage("현재 실행할 수 없는 명령입니다.");
+        }
     }
 
     private static void startGame() {

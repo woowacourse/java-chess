@@ -27,8 +27,8 @@ public class BoardDao {
             return CommonDao.findId(sql, statementMaker, "id");
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
-        return CommonDao.FAILED;
     }
 
     public GameState getGameStatus(final int userId) {
@@ -45,8 +45,8 @@ public class BoardDao {
             return GameState.valueOf(gameStateName);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
-        return null;
     }
 
     public void changeGameStatus(final String gameStatus, final int boardId) {

@@ -15,29 +15,29 @@ public class CommonDao {
     private static final String PASSWORD = "password";
 
     static Connection getConnection() {
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
-        return connection;
     }
 
     static void UpdateOrDelete(final String sql, StatementMaker<PreparedStatement> statementConsumer) {
-        final Connection connection = getConnection();
         try {
+            final Connection connection = getConnection();
             final PreparedStatement statement = connection.prepareStatement(sql);
             statementConsumer.makeStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
     }
 
     static int findId(final String sql, final StatementMaker<PreparedStatement> statementMaker,
                       final String columnLabel) {
-        final Connection connection = getConnection();
         try {
+            final Connection connection = getConnection();
             final PreparedStatement statement = connection.prepareStatement(sql);
             statementMaker.makeStatement(statement);
             final ResultSet resultSet = statement.executeQuery();
@@ -47,8 +47,8 @@ public class CommonDao {
             return resultSet.getInt(columnLabel);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
         }
-        return FAILED;
     }
 
 }

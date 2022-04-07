@@ -33,12 +33,7 @@ public class WebChessController {
     public static final Route runCommand = (req, res) -> {
         final int userId = req.session().attribute("user-id");
         final ParsedCommand parsedCommand = parseRequestToCommand(req);
-        try {
-            return doCommandAction(userId, parsedCommand);
-        } catch (IllegalArgumentException exception) {
-            res.status(400);
-            return JsonParser.errorToJson(exception.getMessage());
-        }
+        return doCommandAction(userId, parsedCommand);
     };
 
     private static ParsedCommand parseRequestToCommand(final Request req) {
