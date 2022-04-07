@@ -11,7 +11,7 @@ function openLoadGameWindowPop(url, title) {
 
     win.deleteGame = function (id) {
         win.close();
-        fetch('/delete/' + id, {
+        fetch('/game/' + id, {
             method: 'DELETE',
         }).then(handleErrors)
             .catch(function (error) {
@@ -21,7 +21,7 @@ function openLoadGameWindowPop(url, title) {
 }
 
 load.addEventListener('click', function () {
-    openLoadGameWindowPop('/findGames', '게임 불러오기')
+    openLoadGameWindowPop('/games', '게임 불러오기')
 })
 
 function loadChessPage(response) {

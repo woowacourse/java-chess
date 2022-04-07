@@ -22,23 +22,18 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
+	private final Gson gson;
 	private final ChessService chessService;
 
 	public WebChessController() {
+		this.gson = new Gson();
 		this.chessService = new ChessService(new GameDaoImpl());
 	}
 
 	public void run() {
-		Gson gson = new Gson();
-
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			return render(model, "start.html");
-		});
-
-		get("/start/:name", (req, res) -> {
-			GameDto gameDto = chessService.start(req.params(":name"));
-			return gson.toJson(gameDto);
 		});
 
 		get("/game/:id", (req, res) -> {
@@ -46,6 +41,18 @@ public class WebChessController {
 			Map<String, Object> model = new HashMap<>();
 			model.put("gameId", gameDto.getGameId());
 			return render(model, "chess.html");
+		});
+
+		get("/games", (req, res) -> {
+			GamesDto gamesDto = chessService.findAll();
+			Map<String, Object> model = new HashMap<>();
+			model.put("games", gamesDto.getGames());
+			return render(model, "load.html");
+		});
+
+		get("/start/:name", (req, res) -> {
+			GameDto gameDto = chessService.start(req.params(":name"));
+			return gson.toJson(gameDto);
 		});
 
 		get("/status", (req, res) -> {
@@ -71,27 +78,20 @@ public class WebChessController {
 			return gson.toJson(gameDto);
 		});
 
-		get("/findGames", (req, res) -> {
-			GamesDto gamesDto = chessService.findAll();
-			Map<String, Object> model = new HashMap<>();
-			model.put("games", gamesDto.getGames());
-			return render(model, "load.html");
-		});
-
-		delete("/delete/:id", (req, res) -> {
+		delete("/game/:id", (req, res) -> {
 			chessService.delete(Integer.parseInt(req.params(":id")));
 			return req.params(":id");
 		});
 
-		handleException(gson, IllegalArgumentException.class);
-		handleException(gson, IllegalStateException.class);
+		handleException(IllegalArgumentException.class);
+		handleException(IllegalStateException.class);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 
-	private void handleException(Gson gson, Class<? extends RuntimeException> exceptionClass) {
+	private void handleException(Class<? extends RuntimeException> exceptionClass) {
 		exception(exceptionClass, (e, req, res) -> {
 			res.status(400);
 			res.body(gson.toJson(new ErrorDto(e.getMessage())));
