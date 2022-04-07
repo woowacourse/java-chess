@@ -56,7 +56,7 @@ public class WebChessController {
                 res.redirect("/result");
             }
             model.put("play", true);
-            model.put("board", chessService.getCurrentBoard());
+            model.put("board", chessService.currentBoardForUI());
             return render(model, "game.html");
         });
     }
@@ -91,7 +91,7 @@ public class WebChessController {
             if (chessService.checkStatus(Status.PLAYING)) {
                 model.put("play", true);
                 model.put("status", chessService.status());
-                model.put("board", chessService.getCurrentBoard());
+                model.put("board", chessService.currentBoardForUI());
                 return render(model, "game.html");
             }
             res.redirect("/end");
@@ -123,7 +123,7 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             model.put("play",true);
             model.put("status", chessService.status());
-            model.put("board", chessService.getCurrentBoard());
+            model.put("board", chessService.currentBoardForUI());
             model.put("winner", chessService.findWinner());
             return render(model, "game.html");
         });

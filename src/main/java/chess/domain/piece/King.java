@@ -44,7 +44,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public String toString() {
+    public String convertToImageName() {
         return (getColor().name() + "-king").toLowerCase();
     }
 }

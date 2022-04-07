@@ -14,8 +14,6 @@ import chess.domain.game.status.Playing;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Type;
 import chess.domain.position.Position;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -97,7 +95,7 @@ public class ChessService {
 
     public Map<String, Double> status() {
         return chessBoard.calculateScore().entrySet().stream()
-                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
+                .collect(Collectors.toMap(m -> m.getKey().name(), Map.Entry::getValue));
     }
 
     public void end() throws SQLException {
@@ -110,8 +108,8 @@ public class ChessService {
         return chessBoard.decideWinner().name();
     }
 
-    public Map<String, ChessPiece> getCurrentBoard() {
-        return chessBoard.convertToMap();
+    public Map<String, String> currentBoardForUI() {
+        return chessBoard.convertToImageName();
     }
 
     public boolean checkStatus(Status status) {

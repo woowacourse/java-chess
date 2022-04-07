@@ -23,6 +23,8 @@ public abstract class ChessPiece {
 
     public abstract double getScore();
 
+    public abstract String convertToImageName();
+
     public boolean isSameColorPiece(ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }

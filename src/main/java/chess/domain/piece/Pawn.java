@@ -113,7 +113,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public String toString() {
+    public String convertToImageName() {
         return (getColor().name() + "-pawn").toLowerCase();
     }
 }

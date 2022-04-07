@@ -39,7 +39,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public String toString() {
+    public String convertToImageName() {
         return (getColor().name() + "-bishop").toLowerCase();
     }
 }

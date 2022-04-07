@@ -184,6 +184,12 @@ public class ChessBoard {
                 .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue()));
     }
 
+    public Map<String, String> convertToImageName() {
+        return chessBoard.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().getValue(), m -> m.getValue().convertToImageName()));
+    }
+
     public Color decideWinner() {
         return currentTurn.toOpposite();
     }

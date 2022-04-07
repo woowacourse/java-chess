@@ -49,7 +49,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public String toString() {
+    public String convertToImageName() {
         return (getColor().name() + "-knight").toLowerCase();
     }
 }
