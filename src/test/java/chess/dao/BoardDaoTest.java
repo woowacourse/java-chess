@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
@@ -9,6 +11,7 @@ import chess.domain.position.YAxis;
 import chess.dto.request.CreatePieceDto;
 import chess.dto.request.DeletePieceDto;
 import chess.dto.request.UpdatePiecePositionDto;
+import chess.dto.response.BoardDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,16 +36,14 @@ class BoardDaoTest {
         gameDao.createGame(GAME_ID);
     }
 
-    @DisplayName("getBoard")
+    @DisplayName("getBoard 는 BoardDto 를 반환한다.")
     @Test
     void getBoard() {
-        boardDao.createPiece(
-                CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
-        boardDao.createPiece(
-                CreatePieceDto.of(GAME_ID, Position.of(XAxis.B, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
-        boardDao.createPiece(
-                CreatePieceDto.of(GAME_ID, Position.of(XAxis.C, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
-        boardDao.getBoard(GAME_ID);
+        // given & when
+        BoardDto board = boardDao.getBoard(GAME_ID);
+
+        // then
+        assertThat(board).isInstanceOf(BoardDto.class);
     }
 
     @DisplayName("CreatePieceDto를 전달받아 board 테이블에 기물을 생성한다.")
@@ -60,7 +61,7 @@ class BoardDaoTest {
     @Test
     void deletePiece() {
         // given
-        DeletePieceDto deletePieceDto = DeletePieceDto.of(GAME_ID, X_AXIS, Y_AXIS);
+        DeletePieceDto deletePieceDto = DeletePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS));
         boardDao.createPiece(
                 CreatePieceDto.of(GAME_ID, Position.of(X_AXIS, Y_AXIS), new Piece(PIECE_TYPE, PIECE_COLOR)));
 
