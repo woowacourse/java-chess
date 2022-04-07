@@ -1,0 +1,40 @@
+#wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.column:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    z-index: 999;
+}
+
+.row:nth-child(2n) > .column:nth-child(2n - 1) {
+    background-color: #C4A082;
+}
+
+.row:nth-child(2n) > .column:nth-child(2n) {
+    background-color: #F3E1C3;
+}
+
+.row:nth-child(2n + 1) > .column:nth-child(2n - 1) {
+    background-color: #F3E1C3;
+}
+
+.row:nth-child(2n + 1) > .column:nth-child(2n) {
+    background-color: #C4A082;
+}

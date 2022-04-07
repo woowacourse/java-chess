@@ -3,28 +3,28 @@ package chess.dto.response;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceColor;
 
-public class TurnDto {
+public class PieceColorDto {
 
     private final Turn turn;
 
-    private TurnDto(Turn turn) {
+    private PieceColorDto(Turn turn) {
         this.turn = turn;
     }
 
-    public static TurnDto from(ChessGame chessGame) {
+    public static PieceColorDto from(ChessGame chessGame) {
         if (chessGame.isWhiteTurn()) {
-            return new TurnDto(Turn.WHITE);
+            return new PieceColorDto(Turn.WHITE);
         }
 
-        return new TurnDto(Turn.BLACK);
+        return new PieceColorDto(Turn.BLACK);
     }
 
-    public static TurnDto from(String turn) {
-        return new TurnDto(Turn.valueOf(turn));
+    public static PieceColorDto from(String turn) {
+        return new PieceColorDto(Turn.valueOf(turn));
     }
 
-    public static TurnDto from(PieceColor pieceColor) {
-        return new TurnDto(Turn.valueOf(pieceColor.name()));
+    public static PieceColorDto from(PieceColor pieceColor) {
+        return new PieceColorDto(Turn.valueOf(pieceColor.name()));
     }
 
     public String getDisplayName() {
@@ -36,6 +36,12 @@ public class TurnDto {
         return PieceColor.valueOf(turn.name());
     }
 
+    public boolean isWhiteTurn() {
+        return turn.equals(Turn.WHITE);
+    }
+
+
+    // TODO: 뷰로 분리
     enum Turn {
         WHITE("백"),
         BLACK("흑");

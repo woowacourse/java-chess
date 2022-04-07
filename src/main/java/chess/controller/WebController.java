@@ -7,16 +7,24 @@ import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.domain.position.Position;
 import chess.dto.request.UpdatePiecePositionDto;
+import chess.dto.response.BoardDto;
+import chess.dto.response.PieceColorDto;
+import chess.dto.response.PieceDto;
+import chess.dto.response.PositionDto;
+import chess.dto.response.ScoreResultDto;
 import chess.service.ChessService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
-import spark.ModelAndView;
+import java.util.Map.Entry;
+import java.util.Objects;
 import spark.Request;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-    private static final String HTML_PATH = "index.html";
+    private final static Gson GSON = new Gson();
+
     private static final String GAME_ID = "game-id"; // TODO: 여러 게임 방 기능 구현시 제거
 
     private final ChessService chessService;
@@ -26,19 +34,32 @@ public class WebController {
     }
 
     public void run() {
-        get("/", (req, res) -> showBoard());
+        get("/board", (req, res) -> getBoard());
+        get("/turn", (req, res) -> getTurn());
+        get("/score", (req, res) -> getScore());
+        get("/winner", (req, res) -> getWinner());
         post("/move", (req, res) -> movePiece(req));
         post("/initialize", (req, res) -> initialize());
     }
 
-    private String showBoard() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("board", chessService.getBoard(GAME_ID).getPieceImages());
-        model.put("score", chessService.getScore(GAME_ID));
-        model.put("turn", chessService.getCurrentTurn(GAME_ID));
-        model.put("winColor", chessService.getWinColor(GAME_ID));
+    private String getBoard() {
+        BoardDto boardDto = chessService.getBoardDto(GAME_ID);
+        return boardDtoToJson(boardDto);
+    }
 
-        return render(model);
+    private String getTurn() {
+        PieceColorDto pieceColorDto = chessService.getCurrentTurn(GAME_ID);
+        return pieceColorDtoToJson(pieceColorDto);
+    }
+
+    private String getScore() {
+        ScoreResultDto scoreResultDto = chessService.getScore(GAME_ID);
+        return scoreResultDtoToJson(scoreResultDto);
+    }
+
+    private String getWinner() {
+        PieceColorDto pieceColorDto = chessService.getWinColor(GAME_ID);
+        return pieceColorDtoToJson(pieceColorDto);
     }
 
     private String movePiece(Request req) {
@@ -71,8 +92,41 @@ public class WebController {
         return "success";
     }
 
-    private String render(Map<String, Object> model) {
-        ModelAndView modelAndView = new ModelAndView(model, HTML_PATH);
-        return new HandlebarsTemplateEngine().render(modelAndView);
+    private String boardDtoToJson(BoardDto boardDto) {
+        Map<String, String> coordinateAndPiece = new HashMap<>();
+        for (Entry<PositionDto, PieceDto> entrySet : boardDto.getValue().entrySet()) {
+            String coordinate = entrySet.getKey().toPosition().toCoordinate();
+            String piece = entrySet.getValue().getPieceType().name() + "_" + entrySet.getValue().getPieceColor().name();
+
+            coordinateAndPiece.put(coordinate, piece);
+        }
+
+        return GSON.toJson(coordinateAndPiece);
+    }
+
+    // TODO: null 처리 개선
+    private String pieceColorDtoToJson(PieceColorDto pieceColorDto) {
+        JsonObject jsonObject = new JsonObject();
+
+        if (Objects.isNull(pieceColorDto)) {
+            jsonObject.addProperty("pieceColor", "null");
+            return GSON.toJson(jsonObject);
+        }
+
+        if (pieceColorDto.isWhiteTurn()) {
+            jsonObject.addProperty("pieceColor", "WHITE");
+            return GSON.toJson(jsonObject);
+        }
+
+        jsonObject.addProperty("pieceColor", "BLACK");
+        return GSON.toJson(jsonObject);
+    }
+
+    private String scoreResultDtoToJson(ScoreResultDto scoreResultDto) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("white", scoreResultDto.getWhiteScore());
+        jsonObject.addProperty("black", scoreResultDto.getBlackScore());
+
+        return GSON.toJson(jsonObject);
     }
 }

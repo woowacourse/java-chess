@@ -11,8 +11,8 @@ import chess.dto.request.DeletePieceDto;
 import chess.dto.request.UpdatePiecePositionDto;
 import chess.dto.response.BoardDto;
 import chess.dto.response.ChessGameDto;
+import chess.dto.response.PieceColorDto;
 import chess.dto.response.ScoreResultDto;
-import chess.dto.response.TurnDto;
 import java.util.Map.Entry;
 
 public class ChessService {
@@ -70,25 +70,25 @@ public class ChessService {
         gameDao.updateTurnToBlack(gameId);
     }
 
-    public BoardDto getBoard(String gameId) {
+    public BoardDto getBoardDto(String gameId) {
         return boardDao.getBoard(gameId);
+    }
+
+    public PieceColorDto getCurrentTurn(String gameId) {
+        return PieceColorDto.from(generateChessGame(gameId));
     }
 
     public ScoreResultDto getScore(String gameId) {
         return ScoreResultDto.from(generateChessGame(gameId));
     }
 
-    public TurnDto getCurrentTurn(String gameId) {
-        return TurnDto.from(generateChessGame(gameId));
-    }
-
     // TODO: null 을 반환하면 안됨
-    public TurnDto getWinColor(String gameId) {
+    public PieceColorDto getWinColor(String gameId) {
         ChessGame chessGame = generateChessGame(gameId);
         if (!chessGame.isEnd()) {
             return null;
         }
-        return TurnDto.from(chessGame.getWinColor());
+        return PieceColorDto.from(chessGame.getWinColor());
     }
 
     private ChessGame generateChessGame(String gameId) {

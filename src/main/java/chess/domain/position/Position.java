@@ -120,6 +120,10 @@ public class Position {
         return Position.of(xAxis1, yAxis1);
     }
 
+    public String toCoordinate() {
+        return xAxis.name().toLowerCase(Locale.ROOT) + yAxis.getValue();
+    }
+
     @Override
     public String toString() {
         return "Position{" +
