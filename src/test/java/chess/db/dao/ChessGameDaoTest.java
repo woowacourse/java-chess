@@ -5,15 +5,10 @@ import chess.db.entity.ChessGameEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChessGameDaoTest {
-
-    private final DBConnector dbConnector = new DBConnector();
 
     @Test
     @DisplayName("게임 개수 호출")
@@ -26,42 +21,34 @@ class ChessGameDaoTest {
 
     @Test
     @DisplayName("게임 시작")
-    void saveWithRollback() throws SQLException {
+    void saveWithRollback() {
         ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connectionRollback = dbConnector.getConnection();
 
-        connectionRollback.setAutoCommit(false);
         int chessGameId = chessGameDao.save(new ChessGame());
-        connectionRollback.rollback();
+        chessGameDao.delete(chessGameId);
     }
 
     @Test
     @DisplayName("게임 호출")
-    void findWithRollback() throws SQLException {
+    void findWithRollback() {
         ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connectionRollback = dbConnector.getConnection();
-
-        connectionRollback.setAutoCommit(false);
         int chessGameId = chessGameDao.save(new ChessGame());
 
         ChessGameEntity chessGameEntity = chessGameDao.find(1);
         assertThat(chessGameEntity.getId()).isEqualTo(1);
 
-        connectionRollback.rollback();
+        chessGameDao.delete(chessGameId);
     }
 
     @Test
-    @DisplayName("피스 이동")
-    void moveWithRollback() throws SQLException {
+    @DisplayName("피스 이동 시 체스 게임 상태 정보 수정")
+    void moveWithRollback() {
         ChessGameDao chessGameDao = new ChessGameDao();
-        Connection connectionRollback = dbConnector.getConnection();
-
-        connectionRollback.setAutoCommit(false);
         int chessGameId = chessGameDao.save(new ChessGame());
 
         assertThatCode(() -> chessGameDao.move(chessGameId, "nextState"))
                 .doesNotThrowAnyException();
 
-        connectionRollback.rollback();
+        chessGameDao.delete(chessGameId);
     }
 }

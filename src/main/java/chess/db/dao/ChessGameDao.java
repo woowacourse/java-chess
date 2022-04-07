@@ -37,7 +37,7 @@ public class ChessGameDao {
     public int save(final ChessGame chessGame) {
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
         connection = dbConnector.getConnection();
-        String sql = "INSERT INTO chess_game (state, insert_datetime, update_datetime) VALUES (?, now(), now())";
+        String sql = "INSERT INTO chess_game (state) VALUES (?)";
         try {
             statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getState());
@@ -87,7 +87,21 @@ public class ChessGameDao {
         }
     }
 
-    public void close() {
+    public void delete(final int chessGameId) {
+        connection = dbConnector.getConnection();
+        String sql = "DELETE FROM chess_game WHERE id = ?";
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, chessGameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
+    private void close() {
         try {
             closeResultSet();
             closeStatement();
