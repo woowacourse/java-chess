@@ -2,20 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
     <link rel="stylesheet" href="/css/chess.css">
-    <script defer src="/js/chess.js"></script>
+    <link
+            href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+            rel="stylesheet" type='text/css'>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <title>포돌이 체스에 오신 것을 환영합니다.</title>
 </head>
 
 <body>
+<header>
+    <div class="inner">
+        <div class="head-container">
+            <div class="head-brand">
+                <a href="/">포돌이 체스</a>
+            </div>
+            <div class="head-start">
+                <a href="/game">시작하기</a>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <section>
+        <div class="inner">
+            <div class="skill-container">
+                <div class="skill">
+                    <i class="fa-solid fa-play skill-icon play-style"></i>
+                    <div class="skill-title">
+                        <div class="skill-name">방 목록보기</div>
+                        <div class="skill-usage">Select</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <i class="fa-solid fa-play skill-icon play-style"></i>
+                    <div class="skill-title">
+                        <div class="skill-name">방 생성하기</div>
+                        <div class="skill-usage">Create</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <i class="fa-solid fa-play skill-icon play-style"></i>
+                    <div class="skill-title">
+                        <div class="skill-name">기록보기</div>
+                        <div class="skill-usage">History</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h3>포돌이 체스를 시작해주세요.</h3>
+</section>
+<footer></footer>
 
-<form action="/start" method="post">
-    <input name="command" value="start" type="hidden">
-    <input id="start-form" name="start" type="submit" value="시작하기">
-</form>
-
+<script src="/js/chess.js"></script>
 </body>
 </html>

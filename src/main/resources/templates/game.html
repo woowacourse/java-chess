@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/chess.css">
-    <script defer src="/js/chess.js"></script>
+    <link rel="stylesheet" href="/css/game.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <title>포돌이 체스</title>
 
@@ -27,7 +26,7 @@
 {{/isRunning}}
 
 
-<p>포돌이 알리미:
+<p>🔊 포돌이 알리미:
     {{#if hasError }}
     <strong class="message"> {{errorMessage}} </strong>
     {{else}}
@@ -35,18 +34,11 @@
     {{/if}}
 </p>
 
-<!--정보 출력-->
-<!--StatusScore to #status (white, black, gameResultMessage by getter) 시작-->
 {{#status}}
-<p>점수</p>
-<p>White 팀 : {{white}}점</p>
-<p>Black 팀 : {{black}}점</p>
-
-<p>턴 : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}} </strong> {{/isRunning}} </p>
+<p>💯 점수: White({{white}}) | Black({{black}})</p>
+<p>✔ TURN : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}} </strong> {{/isRunning}} </p>
 {{/status}}
-<!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
 {{#board}}
-
 <div class="chessboard">
     <!-- 1st -->
     <div class="cell white-cell"><img id="a8" src="img/{{a8}}.svg" class="piece-image"/></div>
@@ -123,7 +115,7 @@
 </div>
 {{/board}}
 
+
+<script src="/js/chess.js"></script>
 </body>
-
-
 </html>
