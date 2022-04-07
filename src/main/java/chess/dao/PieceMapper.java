@@ -1,6 +1,7 @@
-package chess.domain.piece;
+package chess.dao;
 
 import chess.domain.Team;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
 import java.util.function.Function;

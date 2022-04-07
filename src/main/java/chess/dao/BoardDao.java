@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceMapper;
 
 import java.sql.*;
 import java.util.HashMap;

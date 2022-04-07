@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.dao.PieceMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

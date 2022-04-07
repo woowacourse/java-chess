@@ -1,4 +1,6 @@
-package chess.domain.state.turn;
+package chess.dao;
+
+import chess.domain.state.turn.*;
 
 import java.util.Arrays;
 import java.util.function.Supplier;

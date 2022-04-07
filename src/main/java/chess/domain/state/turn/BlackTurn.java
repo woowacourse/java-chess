@@ -4,7 +4,7 @@ import chess.domain.Team;
 
 public final class BlackTurn extends Running {
 
-    BlackTurn() {
+    public BlackTurn() {
         super(Team.BLACK);
     }
 

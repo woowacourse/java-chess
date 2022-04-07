@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.state.turn.State;
-import chess.domain.state.turn.TurnMapper;
 
 import java.sql.*;
 
