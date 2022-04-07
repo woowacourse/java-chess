@@ -17,6 +17,7 @@ import chess.dto.ChessResponseDto;
 import chess.dto.GameDto;
 import chess.dto.PieceDto;
 import chess.dto.StatusResponseDto;
+import java.util.List;
 import java.util.Objects;
 
 public class ChessService {
@@ -29,14 +30,24 @@ public class ChessService {
         this.boardDao = new BoardDao();
     }
 
-    public ChessGame load() {
-        final GameDto gameDto = gameDao.findByMaxId();
-        final BoardDto boardDto = boardDao.findByGameId(gameDto.getId());
+    public ChessGame load(final String id) {
+        final GameDto gameDto = gameDao.findById(id);
 
+        if (gameDto == null) {
+            return createNewGame(id);
+        }
+
+        final BoardDto boardDto = boardDao.findByGameId(id);
         final Board board = boardDto.toBoard();
         final State state = createState(gameDto.getState(), gameDto.getTurn(), board);
-
         return new ChessGame(state, board);
+    }
+
+    private ChessGame createNewGame(final String id) {
+        ChessGame chessGame = new ChessGame(new Ready(), new Board(new BasicBoardFactory()));
+        gameDao.save(GameDto.of(id, chessGame));
+        boardDao.save(BoardDto.of(id, chessGame.getBoard()));
+        return chessGame;
     }
 
     private State createState(final String state, final String turn, final Board board) {
@@ -49,33 +60,30 @@ public class ChessService {
         return new Ended();
     }
 
-    public ChessGame start(ChessGame chessGame) {
+    public ChessGame start(final String id, ChessGame chessGame) {
         if (!chessGame.isNotEnded()) {
             chessGame = new ChessGame(new Ready(), new Board(new BasicBoardFactory()));
+            boardDao.deleteByGameId(id);
         }
 
         chessGame.start();
-
-        gameDao.save(GameDto.of(chessGame));
-        final Integer id = gameDao.findMaxId();
+        gameDao.updateById(GameDto.of(id, chessGame));
         boardDao.save(BoardDto.of(id, chessGame.getBoard()));
         return chessGame;
     }
 
-    public ChessGame end(final ChessGame chessGame) {
+    public ChessGame end(final String id, final ChessGame chessGame) {
         chessGame.end();
 
-        final Integer id = gameDao.findMaxId();
         gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
         return chessGame;
     }
 
-    public ChessGame move(final ChessGame chessGame, final String source, final String target) {
+    public ChessGame move(final String id, final ChessGame chessGame, final String source, final String target) {
         final Position from = Position.from(source);
         final Position to = Position.from(target);
         chessGame.move(from, to);
 
-        final Integer id = gameDao.findMaxId();
         boardDao.updateOnePosition(id, from.getName(), new PieceDto(chessGame.getBoard().getBoard().get(from)));
         boardDao.updateOnePosition(id, to.getName(), new PieceDto(chessGame.getBoard().getBoard().get(to)));
         gameDao.updateById(GameDto.of(id, chessGame.getState(), chessGame.getState().getTurn()));
@@ -96,5 +104,9 @@ public class ChessService {
         final Score opponentScore = chessGame.calculateOpponentScore();
         return new StatusResponseDto(chessGame, myScore.getValue(), opponentScore.getValue(),
                 myScore.decideResult(opponentScore).getName());
+    }
+
+    public List<GameDto> loadGames() {
+        return gameDao.findAll();
     }
 }

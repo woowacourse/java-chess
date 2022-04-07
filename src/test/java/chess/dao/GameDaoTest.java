@@ -25,33 +25,28 @@ public class GameDaoTest {
     @Test
     @DisplayName("데이터베이스에 게임 정보를 저장한다.")
     void save() throws SQLException {
-        gameDao.save(new GameDto("Started", "black"));
+        gameDao.save(new GameDto("테스트 게임", "Started", "black"));
+        GameDto game = gameDao.findById("테스트 게임");
+
+        assertThat(game.getState()).isEqualTo("Started");
         connection.rollback();
     }
 
     @Test
     @DisplayName("데이터베이스에서 아이디를 이용해 게임 정보를 불러온다.")
     void findById() {
-        GameDto game = gameDao.findById(7);
+        GameDto game = gameDao.findById("First Game");
 
-        assertThat(game.getState()).isEqualTo("Ended");
+        assertThat(game.getState()).isEqualTo("Started");
     }
 
     @Test
     @DisplayName("데이터베이스에서 게임의 상태, 턴 정보를 업데이트한다.")
     void updateById() throws SQLException {
-        GameDto gameDto = new GameDto(7, "Started", "white");
+        GameDto gameDto = new GameDto("First Game", "Started", "black");
         gameDao.updateById(gameDto);
 
-        assertThat(gameDao.findById(7).getState()).isEqualTo("Started");
+        assertThat(gameDao.findById("First Game").getTurn()).isEqualTo("black");
         connection.rollback();
-    }
-
-    @Test
-    @DisplayName("데이터베이스에서 가장 최근에 저장 된 게임 정보를 불러온다.")
-    void findByMaxId() {
-        GameDto game = gameDao.findByMaxId();
-
-        assertThat(game.getTurn()).isEqualTo("black");
     }
 }

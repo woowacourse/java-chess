@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>체스 미션</title>
     <link rel="icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="/src/basic.css">
     <script src = "/src/index.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div class="main">
         <h1>엘리의 체스 게임</h1>
+        <div>게임 이름 : <span class="id">{{id}}</span></div>
+        <br/>
         <div class="menu">
             <span class="state"></span>
             <button id="startBtn" onclick="sendStart()">Start</button>
@@ -19,6 +21,6 @@
         <br/>
         <section class="chess-ui"></section>
     </div>
-    <script src = "/src/index.js"></script>
+    <script src = "/src/game.js"></script>
 </body>
 </html>

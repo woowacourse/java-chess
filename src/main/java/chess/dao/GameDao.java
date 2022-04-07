@@ -6,7 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameDao {
 
@@ -21,28 +22,47 @@ public class GameDao {
     }
 
     public void save(final GameDto game) {
-        final String sql = "INSERT INTO game (state, turn) values (?, ?)";
+        final String sql = "INSERT INTO game (id, state, turn) values (?, ?, ?)";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, game.getState());
-            statement.setString(2, game.getTurn());
+            statement.setString(1, game.getId());
+            statement.setString(2, game.getState());
+            statement.setString(3, game.getTurn());
             statement.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public GameDto findById(final int id) {
+    public GameDto findById(final String id) {
         final String sql = "SELECT * FROM game WHERE id = ?";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+            statement.setString(1, id);
             final ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
                 return null;
             }
-            return new GameDto(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getString("turn"));
+            return new GameDto(resultSet.getString("id"), resultSet.getString("state"), resultSet.getString("turn"));
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<GameDto> findAll() {
+        final String sql = "SELECT * FROM game";
+
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            final ResultSet resultSet = statement.executeQuery();
+            final List<GameDto> games = new ArrayList<>();
+
+            while (resultSet.next()) {
+                games.add(new GameDto(resultSet.getString("id"), resultSet.getString("state"),
+                        resultSet.getString("turn")));
+            }
+            return games;
         } catch (final SQLException e) {
             e.printStackTrace();
         }
@@ -55,42 +75,10 @@ public class GameDao {
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameDto.getState());
             statement.setString(2, gameDto.getTurn());
-            statement.setInt(3, gameDto.getId());
+            statement.setString(3, gameDto.getId());
             statement.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public GameDto findByMaxId() {
-        final String sql = "SELECT * FROM game WHERE id IN (SELECT MAX(id) FROM game)";
-
-        try (final Statement statement = connection.createStatement();) {
-            final ResultSet resultSet = statement.executeQuery(sql);
-
-            if (!resultSet.next()) {
-                return null;
-            }
-            return new GameDto(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getString("turn"));
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Integer findMaxId() {
-        final String sql = "SELECT MAX(id) AS id FROM game";
-
-        try (final Statement statement = connection.createStatement()) {
-            final ResultSet resultSet = statement.executeQuery(sql);
-
-            if (!resultSet.next()) {
-                return null;
-            }
-            return resultSet.getInt("id");
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

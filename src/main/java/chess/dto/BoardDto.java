@@ -10,15 +10,15 @@ import java.util.Map;
 
 public class BoardDto {
 
-    private final Integer gameId;
+    private final String gameId;
     private final Map<String, PieceDto> board;
 
-    public BoardDto(final Integer gameId, final Map<String, PieceDto> board) {
+    public BoardDto(final String gameId, final Map<String, PieceDto> board) {
         this.gameId = gameId;
         this.board = board;
     }
 
-    public static BoardDto of(final Integer gameId, final Board board) {
+    public static BoardDto of(final String gameId, final Board board) {
         return new BoardDto(gameId, createBoard(board.getBoard()));
     }
 
@@ -46,7 +46,7 @@ public class BoardDto {
         return new Board(new CustomBoardFactory(pieces));
     }
 
-    public Integer getGameId() {
+    public String getGameId() {
         return gameId;
     }
 

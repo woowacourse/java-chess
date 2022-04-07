@@ -31,9 +31,9 @@ public class BoardDao {
         }
     }
 
-    public void savePiece(final String sql, final Integer gameId, final String position, final PieceDto piece) {
+    public void savePiece(final String sql, final String gameId, final String position, final PieceDto piece) {
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, gameId);
+            statement.setString(1, gameId);
             statement.setString(2, position);
             statement.setString(3, piece.getType());
             statement.setString(4, piece.getColor());
@@ -43,11 +43,22 @@ public class BoardDao {
         }
     }
 
-    public void updateOnePosition(final Integer gameId, final String position, final PieceDto piece) {
+    public void deleteByGameId(final String gameId) {
+        final String sql = "DELETE FROM board WHERE game_id = ?";
+
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, gameId);
+            statement.execute();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateOnePosition(final String gameId, final String position, final PieceDto piece) {
         final String sql = "INSERT INTO board (game_id, position, type, color) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE type = ?, color = ?";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, gameId);
+            statement.setString(1, gameId);
             statement.setString(2, position);
             statement.setString(3, piece.getType());
             statement.setString(4, piece.getColor());
@@ -59,11 +70,11 @@ public class BoardDao {
         }
     }
 
-    public BoardDto findByGameId(final Integer gameId) {
+    public BoardDto findByGameId(final String gameId) {
         final String sql = "SELECT * FROM board WHERE game_id = ?";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, gameId);
+            statement.setString(1, gameId);
 
             final ResultSet resultSet = statement.executeQuery();
             final Map<String, PieceDto> board = new HashMap<>();

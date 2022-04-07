@@ -1,8 +1,23 @@
 let source = "";
 let target = "";
+let information = null;
+let id = null;
 
-window.onload = function () {
-    fetch("/load")
+window.onload = async function () {
+    id = document.getElementsByClassName('id')[0].textContent;
+    await sendLoad();
+}
+
+async function sendLoad() {
+    fetch("/load", {
+        method: 'POST',
+            headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            id : id
+        })
+    })
         .then(response => response.json())
         .then(data => {
             initializePosition(data.board);
@@ -11,7 +26,15 @@ window.onload = function () {
 }
 
 async function sendStart() {
-    await fetch("/start")
+    await fetch("/start", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            id : id
+        })
+    })
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
@@ -23,7 +46,15 @@ async function sendStart() {
 }
 
 async function sendEnd() {
-    await fetch("/end")
+    await fetch("/end", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            id : id
+        })
+    })
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
@@ -35,7 +66,15 @@ async function sendEnd() {
 }
 
 async function sendStatus() {
-    await fetch("/status")
+    await fetch("/status", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            id : id
+        })
+    })
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
@@ -70,6 +109,7 @@ async function sendMove() {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({
+            id: id,
             source: source,
             target: target
         })

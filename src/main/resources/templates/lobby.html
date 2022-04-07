@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 미션</title>
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/src/basic.css">
+</head>
+<body>
+    <h1>엘리의 체스 게임</h1>
+    <form action="/game" method="get">
+        게임 이름 : <input type="text" name="id"/>
+        <input type="submit" value="게임 입장"/>
+    </form>
+    <br/>
+    <ul class="game-list"></ul>
+    <section class="chess-ui"></section>
+
+    <script src = "/src/lobby.js"></script>
+</body>
+</html>
