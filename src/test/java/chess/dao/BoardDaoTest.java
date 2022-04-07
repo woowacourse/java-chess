@@ -2,8 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import java.sql.Connection;
@@ -19,7 +17,7 @@ class BoardDaoTest {
 
     @BeforeEach
     void beforeEach() {
-        connection = new BoardDao().getConnection();
+        connection = new BoardDaoImpl().getConnection();
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -29,21 +27,21 @@ class BoardDaoTest {
 
     @Test
     void connection() {
-        BoardDao boardDao = new BoardDao();
+        BoardDaoImpl boardDao = new BoardDaoImpl();
         Connection connection = boardDao.getConnection();
         assertThat(connection).isNotNull();
     }
 
     @Test
     void loadBoard() {
-        BoardDao boardDao = new BoardDao();
+        BoardDaoImpl boardDao = new BoardDaoImpl();
         BoardDto boardDto = boardDao.loadBoard();
         assertThat(boardDto.getBoard()).isNotNull();
     }
 
     @Test
     void movePiece() {
-        BoardDao boardDao = new BoardDao();
+        BoardDaoImpl boardDao = new BoardDaoImpl();
         boardDao.movePiece(new CommandDto("a2 a3"));
 
         BoardDto boardDto = boardDao.loadBoard();

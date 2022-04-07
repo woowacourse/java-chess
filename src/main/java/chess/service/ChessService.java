@@ -2,19 +2,14 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.dao.GameDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.running.RunningBlack;
 import chess.domain.game.state.running.RunningWhite;
 import chess.domain.piece.AbstractPiece;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
@@ -28,17 +23,17 @@ import java.util.Map;
 public class ChessService {
 
     private final ChessGame chessGame;
-    private final BoardDao chessDao;
+    private final BoardDao boardDao;
     private final GameDao gameDao;
 
-    public ChessService() {
-        this.gameDao = new GameDao();
-        this.chessDao = new BoardDao();
+    public ChessService(BoardDao boardDao, GameDaoImpl gameDao) {
+        this.gameDao = gameDao;
+        this.boardDao = boardDao;
         this.chessGame = new ChessGame();
     }
 
     public GameDto getGame() {
-        BoardDto boardDto = chessDao.loadBoard();
+        BoardDto boardDto = boardDao.loadBoard();
         TurnDto turnDto = gameDao.getTurn();
 
         if (PieceColor.BLACK.name().equals(turnDto.getTurn())) {
@@ -67,7 +62,7 @@ public class ChessService {
         Position from = Position.from(commandDto.getFrom());
         Position to = Position.from(commandDto.getTo());
         chessGame.movePiece(from, to);
-        chessDao.movePiece(commandDto);
+        boardDao.movePiece(commandDto);
         gameDao.changeTurn();
     }
 

@@ -10,21 +10,21 @@ class GameDaoTest {
 
     @Test
     void connection() {
-        GameDao gameDao = new GameDao();
+        GameDaoImpl gameDao = new GameDaoImpl();
         Connection connection = gameDao.getConnection();
         assertThat(connection).isNotNull();
     }
 
     @Test
     void getTurn() {
-        GameDao gameDao = new GameDao();
+        GameDaoImpl gameDao = new GameDaoImpl();
         TurnDto turnDto = gameDao.getTurn();
         assertThat(turnDto.getTurn()).isEqualTo("WHITE");
     }
 
     @Test
     void changeTurn() {
-        GameDao gameDao = new GameDao();
+        GameDaoImpl gameDao = new GameDaoImpl();
         TurnDto beforeTurnDto = gameDao.getTurn();
 
         gameDao.changeTurn();
