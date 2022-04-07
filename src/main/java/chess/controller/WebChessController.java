@@ -40,6 +40,13 @@ public class WebChessController {
             return new ModelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
 
+        get("/end", (req, res) -> {
+            gameState = new Ready();
+            Map<String, Object> model = new HashMap<>();
+            model.put(CHESS_BOARD_KEY, getChessBoard());
+            return new ModelAndView(model, VIEW);
+        }, new HandlebarsTemplateEngine());
+
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
             response.body(exception.getMessage());
