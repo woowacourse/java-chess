@@ -1,5 +1,7 @@
 package chess.board;
 
+import java.util.Arrays;
+
 public enum Team {
     BLACK(-1),
     WHITE(1),
@@ -13,26 +15,14 @@ public enum Team {
     }
 
     public static Team from(String name) {
-        if ("black".equals(name)) {
-            return Team.BLACK;
-        }
-        if ("white".equals(name)) {
-            return Team.WHITE;
-        }
-        return Team.NONE;
+        return Arrays.stream(values())
+                .filter(team -> team.value().equals(name))
+                .findFirst()
+                .orElse(Team.NONE);
     }
 
     public String value() {
-        if (this.equals(Team.BLACK)) {
-            return "black";
-        }
-        if (this.equals(Team.WHITE)) {
-            return "white";
-        }
-        if (this.equals(Team.NONE)) {
-            return "none";
-        }
-        throw new IllegalStateException("[ERROR] 알맞은 값이 없습니다.");
+        return this.name().toLowerCase();
     }
 
     public boolean isOpposingTeam(Team team) {
