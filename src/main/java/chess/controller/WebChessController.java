@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
@@ -38,6 +39,11 @@ public class WebChessController {
             model.put(CHESS_BOARD_KEY, getChessBoard());
             return new ModelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
+
+        exception(Exception.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
+        });
     }
 
     private ChessBoardDto getChessBoard() {
