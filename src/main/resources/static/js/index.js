@@ -6,6 +6,7 @@ $(document).ready(function(){
     initChessBoard();
     initChessPieces();
     initUsers();
+    currentTeam();
     triggerEvents();
 });
 
@@ -104,10 +105,9 @@ function movePiece() {
         dataType: "json"
     })
     .done(function(json) {
-        
         clearChessBoard();
         initChessBoard();
-
+        currentTeam();
         for(let element of json.board) {
             let team = element['team'];
             let piece = element['piece'];
@@ -126,4 +126,19 @@ function movePiece() {
 
 function clearChessBoard() {
     $('#chess-board').children().remove();
+}
+
+function currentTeam() {
+    $.ajax({ 
+        url: "/current-team",
+        method: "POST",
+        dataType: "json"
+    })
+    .done(function(json) {
+        debugger;
+        $('#current-team').text(json);
+    })
+    .fail(function(xhr, status, errorThrown) {
+        alert('error !');
+    })
 }

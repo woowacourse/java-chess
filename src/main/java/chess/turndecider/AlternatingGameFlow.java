@@ -28,7 +28,7 @@ public class AlternatingGameFlow implements GameFlow {
     }
 
     @Override
-    public String currentStateName() {
-        return currentState.getName();
+    public State currentState() {
+        return currentState;
     }
 }

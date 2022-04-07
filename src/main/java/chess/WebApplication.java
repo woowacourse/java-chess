@@ -9,6 +9,7 @@ import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.user.User;
 import chess.dto.response.BoardResponse;
+import chess.dto.response.StateResponse;
 import chess.service.UserService;
 import chess.turndecider.AlternatingGameFlow;
 import chess.turndecider.GameFlow;
@@ -16,9 +17,7 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -84,6 +83,10 @@ public class WebApplication {
             Map<Position, Piece> movedBoard = chessBoard.getBoard();
             return BoardResponse.from(movedBoard);
 
+        }, gson::toJson);
+
+        post("/current-team", (req, res) -> {
+           return chessBoard.currentState().getName();
         }, gson::toJson);
     }
 

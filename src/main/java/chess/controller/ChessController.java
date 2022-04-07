@@ -37,7 +37,7 @@ public class ChessController {
             }
 
             if (request.getCommand().isStatus()) {
-                OutputView.printCurrentTeamScore(chessBoard.currentStateName(), chessBoard.calculateScore());
+                OutputView.printCurrentTeamScore(chessBoard.currentState().getName(), chessBoard.calculateScore());
                 continue;
             }
 

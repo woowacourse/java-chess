@@ -9,6 +9,8 @@ import chess.domain.board.position.Rank;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
+import chess.turndecider.state.State;
+
 import java.util.Arrays;
 import java.util.Map;
 
@@ -122,8 +124,8 @@ public class ChessBoard {
                 ).count();
     }
 
-    public String currentStateName() {
-        return gameFlow.currentStateName();
+    public State currentState() {
+        return gameFlow.currentState();
     }
 
     public Map<Position, Piece> getBoard() {

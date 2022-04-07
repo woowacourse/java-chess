@@ -1,6 +1,7 @@
 package chess.turndecider;
 
 import chess.domain.piece.Piece;
+import chess.turndecider.state.State;
 
 public interface GameFlow {
 
@@ -10,5 +11,5 @@ public interface GameFlow {
 
     boolean isRunning();
 
-    String currentStateName();
+    State currentState();
 }
