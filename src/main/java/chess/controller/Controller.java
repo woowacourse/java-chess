@@ -36,14 +36,14 @@ public class Controller {
         get("/", (req, res) -> getStartObject());
         post("/start", (req, res) -> {
             initGame(req.queryParams("name"));
-            return renderGame();
+            return renderGame(chessGame);
         });
         post("/command", (req, res) -> {
             go(req.queryParams("command"));
             saveToDB();
-            return renderGame();
+            return renderGame(chessGame);
         });
-        post("/end", (req, res) -> renderEnd());
+        post("/end", (req, res) -> renderEnd(chessGame));
     }
 
     private void initGame(String name) {
@@ -82,7 +82,7 @@ public class Controller {
         return render(model, "index.html");
     }
 
-    private Object renderGame() {
+    private Object renderGame(ChessGame chessGame) {
         Map<Team, Double> scores = chessGame.getScoreOfTeams();
         model.put("whiteScore", scores.get(Team.WHITE));
         model.put("blackScore", scores.get(Team.BLACK));
@@ -92,18 +92,18 @@ public class Controller {
         return render(model, "chessGame.html");
     }
 
-    private Object renderEnd() {
+    private Object renderEnd(ChessGame chessGame) {
         Map<Team, Double> scores = chessGame.getScoreOfTeams();
         model.put("whiteScore", scores.get(Team.WHITE));
         model.put("blackScore", scores.get(Team.BLACK));
-        model.put("winner", getWinner());
+        model.put("winner", getWinner(chessGame));
 
         boardDao.delete((String) model.get("name"));
 
         return render(model, "end.html");
     }
 
-    private String getWinner() {
+    private String getWinner(ChessGame chessGame) {
         Team winner = chessGame.getWinner();
         if (winner == Team.NONE) {
             return DRAW_MESSAGE;
