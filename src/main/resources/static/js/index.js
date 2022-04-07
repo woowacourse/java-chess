@@ -1,8 +1,11 @@
 async function startGame() {
   const startButton = document.getElementById("start-btn");
   const endButton = document.getElementById("end-btn");
+  const statusButton = document.getElementById("status-btn");
+
   startButton.disabled = true;
   endButton.disabled = false;
+  statusButton.disabled = false;
   const chessMap = await createChessMap();
   setChessMap(chessMap);
 }
@@ -47,4 +50,18 @@ function toPieceImageName(mapValue) {
     ["k", "white-king"]
   ]);
   return imageNames.get(mapValue);
+}
+
+async function findStatus() {
+  const status = await fetch("/status")
+  .then((response) => response.json());
+
+  const whitePlayerScore = status.whitePlayerScore;
+  const blackPlayerScore = status.blackPlayerScore;
+  const whitePlayerResult = status.whitePlayerResult;
+  const blackPlayerResult = status.blackPlayerResult;
+
+  alert("[White 팀] 점수 : " + whitePlayerScore + ", 결과 : " + whitePlayerResult
+      + "\n[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
+      + blackPlayerResult);
 }

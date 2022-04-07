@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
@@ -24,6 +25,10 @@ public class WebChessGameController {
 
         get("/start", (request, response) -> {
             return gson.toJson(chessGameService.initializeChessGame().getChessMap());
+        });
+
+        get("/status", (request, response) -> {
+            return gson.toJson(chessGameService.findStatus());
         });
     }
 
