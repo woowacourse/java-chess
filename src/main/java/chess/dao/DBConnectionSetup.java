@@ -9,7 +9,7 @@ public class DBConnectionSetup implements ConnectionSetup {
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     @Override
     public Connection getConnection() {
