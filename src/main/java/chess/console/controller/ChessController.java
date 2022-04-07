@@ -13,6 +13,7 @@ public final class ChessController {
 
     private final ChessService service;
     private final String gameName = "gameName";
+
     public ChessController(ChessService service) {
         this.service = service;
     }
