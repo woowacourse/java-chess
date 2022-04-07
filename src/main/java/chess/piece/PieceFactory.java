@@ -3,14 +3,14 @@ package chess.piece;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Position;
 import chess.chessboard.position.Rank;
-import game.Player;
+import chess.game.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static chess.chessboard.position.File.*;
 import static chess.chessboard.position.Rank.*;
-import static game.Player.*;
+import static chess.game.Player.*;
 import static chess.piece.Symbol.*;
 
 public class PieceFactory {

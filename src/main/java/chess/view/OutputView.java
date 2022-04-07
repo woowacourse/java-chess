@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.chessboard.position.File;
-import game.Player;
+import chess.game.Player;
 import chess.chessboard.position.Position;
 import chess.chessboard.position.Rank;
 import chess.piece.Piece;

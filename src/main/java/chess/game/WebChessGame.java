@@ -1,4 +1,4 @@
-package game;
+package chess.game;
 
 import chess.chessboard.position.Position;
 import chess.dao.CommandDao;

@@ -1,6 +1,6 @@
 package chess.piece;
 
-import game.Player;
+import chess.game.Player;
 
 public enum Symbol {
 

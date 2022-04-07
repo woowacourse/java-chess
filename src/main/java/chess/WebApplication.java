@@ -1,6 +1,6 @@
 package chess;
 
-import game.WebChessGame;
+import chess.game.WebChessGame;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

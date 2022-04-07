@@ -3,7 +3,7 @@ package chess.piece;
 import chess.chessboard.Board;
 import chess.chessboard.position.File;
 import chess.chessboard.position.Rank;
-import game.Player;
+import chess.game.Player;
 import chess.chessboard.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

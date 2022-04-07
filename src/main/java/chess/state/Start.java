@@ -1,7 +1,7 @@
 package chess.state;
 
 import chess.chessboard.Board;
-import game.Player;
+import chess.game.Player;
 
 import static chess.state.Command.*;
 

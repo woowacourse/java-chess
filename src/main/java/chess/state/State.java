@@ -2,7 +2,7 @@ package chess.state;
 
 import chess.chessboard.position.Position;
 import chess.piece.Piece;
-import game.Player;
+import chess.game.Player;
 
 import java.util.Map;
 

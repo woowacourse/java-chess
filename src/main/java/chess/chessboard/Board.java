@@ -1,12 +1,12 @@
 package chess.chessboard;
 
 import chess.chessboard.position.Position;
-import game.Player;
+import chess.game.Player;
 import chess.piece.*;
 
 import java.util.*;
 
-import static game.Player.*;
+import static chess.game.Player.*;
 
 public final class Board {
 

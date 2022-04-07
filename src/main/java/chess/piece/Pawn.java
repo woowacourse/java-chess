@@ -1,15 +1,15 @@
 package chess.piece;
 
 import chess.chessboard.position.Direction;
-import game.Player;
+import chess.game.Player;
 import chess.chessboard.position.Position;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static chess.chessboard.position.Direction.*;
-import static game.Player.BLACK;
-import static game.Player.NONE;
+import static chess.game.Player.BLACK;
+import static chess.game.Player.NONE;
 
 public final class Pawn extends Piece {
 
