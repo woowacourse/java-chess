@@ -21,14 +21,14 @@ class ChessServiceTest {
     public void load() {
         final ChessService chessService = new ChessService();
 
-        assertDoesNotThrow(() -> chessService.load(1L));
+        assertDoesNotThrow(() -> chessService.load());
     }
 
     @Test
     @DisplayName("체스 게임의 말을 움직일 수 있다.")
     public void move() {
         final ChessService chessService = new ChessService();
-        final ChessGame chessGame = chessService.load(1L);
+        final ChessGame chessGame = chessService.load();
 
         assertDoesNotThrow(() -> chessService.move(chessGame, "a2", "a4"));
     }

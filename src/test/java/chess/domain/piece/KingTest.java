@@ -70,21 +70,21 @@ class KingTest {
     static Stream<Arguments> validFindMovePathToTargetPieceFromTheSourcePieceOfKing() {
         return Stream.of(
                 Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("a3"), new Blank(Position.valueOf("a3")), NORTH),
+                        Position.valueOf("a1"), Position.valueOf("a2"), new Blank(Position.valueOf("a2")), NORTH),
                 Arguments.of(
-                        Position.valueOf("a3"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), SOUTH),
+                        Position.valueOf("a3"), Position.valueOf("a2"), new Blank(Position.valueOf("a2")), SOUTH),
                 Arguments.of(
-                        Position.valueOf("a1"), Position.valueOf("c1"), new Blank(Position.valueOf("c1")), EAST),
+                        Position.valueOf("a1"), Position.valueOf("b1"), new Blank(Position.valueOf("b1")), EAST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), WEST),
+                        Position.valueOf("c1"), Position.valueOf("b1"), new Blank(Position.valueOf("b1")), WEST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("e3"), new Blank(Position.valueOf("e3")), NORTH_EAST),
+                        Position.valueOf("c1"), Position.valueOf("d2"), new Blank(Position.valueOf("d2")), NORTH_EAST),
                 Arguments.of(
-                        Position.valueOf("c1"), Position.valueOf("a3"), new Blank(Position.valueOf("a3")), NORTH_WEST),
+                        Position.valueOf("c1"), Position.valueOf("b2"), new Blank(Position.valueOf("b2")), NORTH_WEST),
                 Arguments.of(
-                        Position.valueOf("c3"), Position.valueOf("a1"), new Blank(Position.valueOf("a1")), SOUTH_WEST),
+                        Position.valueOf("c3"), Position.valueOf("b2"), new Blank(Position.valueOf("b2")), SOUTH_WEST),
                 Arguments.of(
-                        Position.valueOf("c3"), Position.valueOf("e1"), new Blank(Position.valueOf("e1")), SOUTH_EAST)
+                        Position.valueOf("c3"), Position.valueOf("d2"), new Blank(Position.valueOf("d2")), SOUTH_EAST)
         );
     }
 
@@ -96,7 +96,7 @@ class KingTest {
 
         assertThatThrownBy(() -> king.findByMovePath(targetPiece))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("직선 또는 대각선 방향이 아닙니다.");
+                .hasMessage("해당 방향으로 기물이 움직일 수 없습니다.");
     }
 
     static Stream<Arguments> invalidFindMovePathToTargetPieceFromTheSourcePieceOfKing() {
