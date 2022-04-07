@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.controller.WebController;
-import chess.dto.request.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.SearchResultDto;
 import spark.ModelAndView;
@@ -33,28 +32,18 @@ public class WebRouter {
         get(SEARCH_ROUTE, (req, res) -> render(controller.countGames(), "search.html"));
         post(SEARCH_ROUTE, (req, res) -> {
             res.type(JSON_CONTENT_TYPE);
-            int gameId = Integer.parseInt(req.queryParams("game_id"));
-            SearchResultDto searchResult = controller.searchGame(gameId);
+            SearchResultDto searchResult = controller.searchGame(req);
             return searchResult.toJson();
         });
     }
 
     public void initGameRouterHandler() {
-        get(GAME_ROUTE, (req, res) -> {
-            int gameId = Integer.parseInt(req.params("id")); // TODO: handle exception on non int input
-            return render(controller.findGame(gameId), "game.html");
-        });
-        post(GAME_ROUTE, (req, res) -> {
-            PlayGameRequestDto request = new PlayGameRequestDto(req.params("id"), req.body());
-            return render(controller.playGame(request), "game.html");
-        });
+        get(GAME_ROUTE, (req, res) -> render(controller.findGame(req), "game.html"));
+        post(GAME_ROUTE, (req, res) -> render(controller.playGame(req), "game.html"));
     }
 
     public void initResultRouterHandler() {
-        get(RESULT_ROUTE, (req, res) -> {
-            int gameId = Integer.parseInt(req.params("id"));
-            return render(controller.findGameResult(gameId), "result.html");
-        });
+        get(RESULT_ROUTE, (req, res) -> render(controller.findGameResult(req), "result.html"));
     }
 
     private static String render(Object model, String templatePath) {
