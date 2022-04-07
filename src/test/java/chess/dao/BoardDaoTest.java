@@ -12,18 +12,19 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class PieceDaoTest {
+public class BoardDaoTest {
 
     private BoardDao pieceDao = new BoardDao();
 
     @BeforeEach
     public void before() {
-        pieceDao.removeAll();
+        pieceDao.removeAllPieces();
     }
 
     @Test
     public void saveTest() {
         Board board = new Board(new BoardBuilder());
+
         assertDoesNotThrow(() -> pieceDao.saveAllPieces(board.getBoard()));
     }
 
@@ -32,6 +33,7 @@ public class PieceDaoTest {
         Board board = new Board(new BoardBuilder());
         pieceDao.saveAllPieces(board.getBoard());
         Map<Position, Piece> pieces = pieceDao.loadAllPieces();
+
         assertThat(pieces.values().size()).isEqualTo(64);
     }
 }

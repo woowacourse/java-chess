@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PieceDao {
+public class BoardDao {
 
     public Map<Position, Piece> loadAllPieces() {
         final String sql = "select position, name from board";
@@ -35,11 +35,11 @@ public class PieceDao {
 
     public void saveAllPieces(Map<Position, Piece> pieces) {
         for (Map.Entry<Position, Piece> piece : pieces.entrySet()) {
-            saveEachPiece(piece);
+            insertPiece(piece.getKey(), piece.getValue());
         }
     }
 
-    public void removeAll() {
+    public void removeAllPieces() {
         final String deleteSql = "delete from board";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteSql);){
@@ -49,12 +49,12 @@ public class PieceDao {
         }
     }
 
-    private void saveEachPiece(Map.Entry<Position, Piece> piece) {
+    public void insertPiece(Position position, Piece piece) {
         final String insertSql = "insert into board(position, name) values (?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSql);) {
-            preparedStatement.setString(1, piece.getKey().toString());
-            preparedStatement.setString(2, piece.getValue().getName());
+            preparedStatement.setString(1, position.toString());
+            preparedStatement.setString(2, piece.getName());
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
@@ -62,7 +62,7 @@ public class PieceDao {
     }
 
     public boolean isExist() {
-        final String sql = "select * from board limit 1";
+        final String sql = "select * from board";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery();) {
@@ -72,12 +72,11 @@ public class PieceDao {
         }
     }
 
-    public void updatePiece(Position position, Piece piece) {
-        final String sql = "update board set piece=? where position=?";
+    public void deleteByPosition(Position position) {
+        final String sql = "delete from board where position=?";
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             preparedStatement.setString(1, position.toString());
-            preparedStatement.setString(2, piece.toString());
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());

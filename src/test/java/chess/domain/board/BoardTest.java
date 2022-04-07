@@ -25,6 +25,7 @@ class BoardTest {
 		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(4, 4);
 		Position target = Position.of(5, 5);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치에 기물이 없습니다.");
@@ -35,6 +36,7 @@ class BoardTest {
 		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 5);
 		Position target = Position.of(1, 4);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
@@ -45,6 +47,7 @@ class BoardTest {
 		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 3);
 		Position target = Position.of(3, 5);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치로 기물을 옮길 수 없습니다.");
@@ -55,6 +58,7 @@ class BoardTest {
 		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 2);
 		Position target = Position.of(3, 3);
+
 		assertDoesNotThrow(() -> board.move(source, target));
 	}
 

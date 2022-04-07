@@ -1,9 +1,15 @@
 package chess.controller;
 
+import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
+import chess.domain.ChessGame;
 import chess.domain.Team;
+import chess.domain.board.Position;
 import chess.domain.result.StatusResult;
+import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.net.URLDecoder;
@@ -13,49 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static spark.Spark.*;
-
 public class WebController {
 
-    private final ChessController chessController = new ChessController();
+    private final ChessService chessService = new ChessService(new ChessGameDao(), new BoardDao());
 
-    public void run() {
-        staticFileLocation("/static");
-
-        get("/", (req, res) -> {
-            Map<String, Object> model = setModel();
-            return render(model, "index.html");
-        });
-
-        post("/move", (req, res) -> {
-            processMove(req);
-            res.redirect("/");
-            return null;
-        });
-
-        post("/start", (req, res) -> {
-            chessController.start();
-            res.redirect("/");
-            return null;
-        });
-
-        post("/load", (req, res) -> {
-           chessController.load();
-           res.redirect("/");
-           return null;
-        });
-
-        post("/save", (req, res) -> {
-            chessController.save();
-            res.redirect("/");
-            return null;
-        });
-
-        exception(Exception.class, (exception, request, response) -> {
-            Map<String, Object> model = setModel();
-            model.put("error", exception.getMessage());
-            response.body(render(model, "index.html"));
-        });
+    public String boardPage(Request request, Response response) {
+        Map<String, Object> model = setModel();
+        return render(model, "index.html");
     }
 
     private Map<String, Object> setModel() {
@@ -69,25 +39,25 @@ public class WebController {
     }
 
     private void addScoreInformation(Map<String, Object> model) {
-        if (chessController.isPlaying()) {
-            StatusResult statusResult = chessController.processStatus();
+        if (chessService.isPlaying()) {
+            StatusResult statusResult = chessService.processStatus();
             model.put("blackscore", statusResult.getBlackScore());
             model.put("whitescore", statusResult.getWhiteScore());
         }
     }
 
     private void addBoardInformation(Map<String, Object> model) {
-        model.put("pieces", chessController.getCurrentImages());
+        model.put("pieces", chessService.getCurrentImages());
     }
 
     private void addTurnInformation(Map<String, Object> model) {
-        if (!chessController.getCurrentTeam().isNeutrality(Team.NEUTRALITY)) {
-            model.put("team", chessController.getCurrentTeam());
+        if (!chessService.getCurrentTeam().isNeutrality(Team.NEUTRALITY)) {
+            model.put("team", chessService.getCurrentTeam());
         }
     }
 
     private void addPlayingInformation(Map<String, Object> model) {
-        if (chessController.isPlaying()) {
+        if (chessService.isPlaying()) {
             model.put("start", true);
             return;
         }
@@ -95,11 +65,17 @@ public class WebController {
     }
 
     private void addFinish(Map<String, Object> model) {
-        if (chessController.isFinish()) {
+        if (chessService.isFinish()) {
             model.put("finish", true);
             return;
         }
         model.put("finish", false);
+    }
+
+    public String move(Request request, Response response) {
+        processMove(request);
+        response.redirect("/");
+        return null;
     }
 
     private void processMove(Request request) {
@@ -107,7 +83,19 @@ public class WebController {
         Map<String, String> map = parameterToMap(parameters);
         String rawSource = map.get("source").trim();
         String rawTarget = map.get("target").trim();
-        chessController.processMove(rawSource, rawTarget);
+        chessService.processMove(Position.of(rawSource), Position.of(rawTarget));
+    }
+
+    public String start(Request request, Response response) {
+        chessService.start();
+        response.redirect("/");
+        return null;
+    }
+
+    public <T extends Exception> void boardPageWithException(T exception, Request request, Response response) {
+        Map<String, Object> model = setModel();
+        model.put("error", exception.getMessage());
+        response.body(render(model, "index.html"));
     }
 
     private Map<String, String> parameterToMap(String[] parameters) {

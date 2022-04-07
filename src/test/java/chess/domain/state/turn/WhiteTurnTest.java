@@ -13,6 +13,7 @@ class WhiteTurnTest {
 	@Test
 	void isFinished() {
 		State state = new WhiteTurn();
+
 		assertThat(state.isFinished()).isFalse();
 	}
 
@@ -26,6 +27,7 @@ class WhiteTurnTest {
 	@Test
 	void playWhiteCatchKing() {
 		State state = new WhiteTurn();
+
 		assertThat(state.play(new King(Team.BLACK))).isInstanceOf(WhiteWin.class);
 	}
 }

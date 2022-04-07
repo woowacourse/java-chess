@@ -1,6 +1,7 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.ConsoleController;
+import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class Application {
 
-	private static final ChessController chessController = new ChessController();
+	private static final ConsoleController consoleController = new ConsoleController();
 	private static final int COMMAND_INDEX = 0;
 	private static final int SOURCE_INDEX = 1;
 	private static final int TARGET_INDEX = 2;
@@ -28,8 +29,11 @@ public class Application {
 
 	public static void main(String[] args) {
 		InputView.printCommandGuide();
-		while(!chessController.isFinish()) {
+		while(!consoleController.isFinish() && !consoleController.isKingDeath()) {
 			processCommand();
+		}
+		if (consoleController.isKingDeath()) {
+			OutputView.printWinner(consoleController.getCurrentWinner());
 		}
 	}
 
@@ -44,18 +48,18 @@ public class Application {
 	}
 
 	private static void start() {
-		OutputView.printBoard(chessController.start());
+		OutputView.printBoard(consoleController.start());
 	}
 
 	private static void end() {
-		OutputView.printWinner(chessController.end());
+		consoleController.end();
 	}
 
 	private static void move(String source, String target) {
-		OutputView.printBoard(chessController.processMove(source, target));
+		OutputView.printBoard(consoleController.processMove(source, target));
 	}
 
 	private static void executeStatus() {
-		OutputView.printScore(chessController.processStatus());
+		OutputView.printScore(consoleController.processStatus());
 	}
 }

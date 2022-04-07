@@ -1,23 +1,20 @@
 package chess;
 
-import chess.controller.ChessController;
 import chess.controller.WebController;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
+
 public class WebApplication {
+    private static final WebController webController = new WebController();
 
     public static void main(String[] args) {
-        WebController webController = new WebController();
-        webController.run();
+        staticFileLocation("/static");
+
+        get("/", webController::boardPage);
+        post("/move", webController::move);
+        post("/start", webController::start);
+
+        exception(Exception.class, webController::boardPageWithException);
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class BoardDaoTest {
+public class ChessGameDaoTest {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
@@ -27,6 +27,7 @@ public class BoardDaoTest {
     public void saveAndLoadTest() {
         chessGameDao.saveState(new WhiteTurn());
         State state = chessGameDao.loadState();
+
         assertThat(state.getTeam()).isEqualTo(Team.WHITE);
     }
 }

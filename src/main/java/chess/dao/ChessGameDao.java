@@ -5,7 +5,7 @@ import chess.domain.state.turn.TurnMapper;
 
 import java.sql.*;
 
-public class BoardDao {
+public class ChessGameDao {
 
     public State loadState() {
         final String sql = "select state from chessgame";
@@ -24,8 +24,7 @@ public class BoardDao {
             throw new IllegalStateException("[ERROR] 저장된 정보가 없습니다.");
         }
 
-        String state = resultSet.getString(1);
-        return state;
+        return resultSet.getString(1);
     }
 
     public void saveState(State state) {

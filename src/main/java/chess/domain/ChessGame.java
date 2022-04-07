@@ -9,23 +9,29 @@ import chess.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.state.command.Ready;
 import chess.domain.state.command.State;
+
 import chess.domain.result.StatusResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ConsoleController {
+public class ChessGame {
 
     private State state;
     private Board board;
 
-    public ConsoleController() {
+    public ChessGame() {
         state = new Ready();
         board = new Board(new BoardBuilder());
     }
 
-    public Map<Position, Piece> start() {
+    public ChessGame(Board board) {
+        state = new Playing();
+        this.board = board;
+    }
+
+    public void start() {
         if (board.isFinish()) {
             state = state.execute(Command.END);
         }
@@ -34,21 +40,17 @@ public class ConsoleController {
             state = new Ready();
         }
         state = state.execute(Command.START);
-        return board.getBoard();
     }
 
-    public Team end() {
+    public void end() {
         state = state.execute(Command.END);
-        Team winner = board.getCurrentWinner().getTeam();
-        return winner;
     }
 
-    public Map<Position, Piece> processMove(String rawSource, String rawTarget) {
+    public void processMove(String rawSource, String rawTarget) {
         state = state.execute(Command.MOVE);
         Position source = Position.of(rawSource);
         Position target = Position.of(rawTarget);
         board.move(source, target);
-        return board.getBoard();
     }
 
     public StatusResult processStatus() {
@@ -70,10 +72,15 @@ public class ConsoleController {
         return boardDtos;
     }
 
-    public Team getCurrentTeam() {
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
+    }
+
+    public Team getCurrentTurnTeam() {
         if (state.isReady() || state.isFinish()) {
             return Team.NEUTRALITY;
         }
+
         return board.getCurrentTurnTeam();
     }
 
@@ -81,20 +88,30 @@ public class ConsoleController {
         return !state.isReady() && !isFinish();
     }
 
-    public boolean isFinish() { return board.isFinish(); }
+    public boolean isFinish() { return state.isFinish() || isKingDeath(); }
 
-    public void load() {
-        board = new Board(pieceDao.loadAllPieces(), boardDao.loadState());
-        if (board.isFinish()) {
-            state = new Finish();
-        }
-        state = new Playing();
+    public boolean isKingDeath() {
+        return board.isFinish();
     }
 
-    public void save() {
-        boardDao.removeAll();
-        boardDao.saveState(board.getState());
-        pieceDao.removeAll();
-        pieceDao.saveAllPieces(board.getBoard());
+    public void load(Map<Position, Piece> pieces, chess.domain.state.turn.State state) {
+        this.board = new Board(pieces, state);
+        if (board.isFinish()) {
+            this.state = new Finish();
+            return;
+        }
+        this.state = new Playing();
+    }
+
+    public void move(Position source, Position target) {
+        this.board.move(source, target);
+    }
+
+    public Team getCurrentWinner() {
+        return board.getCurrentWinner().getTeam();
+    }
+
+    public chess.domain.state.turn.State getState() {
+        return board.getState();
     }
 }

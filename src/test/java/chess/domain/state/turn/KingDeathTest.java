@@ -14,6 +14,7 @@ class KingDeathTest {
 	void isFinished() {
 		State state = new WhiteTurn();
 		State kingDeath = state.play(new King(Team.BLACK));
+
 		assertThat(kingDeath.isFinished()).isTrue();
 	}
 
@@ -21,6 +22,7 @@ class KingDeathTest {
 	void play() {
 		State state = new WhiteTurn();
 		State kingDeath = state.play(new King(Team.BLACK));
+
 		assertThatThrownBy(() -> kingDeath.play(new Pawn(Team.WHITE)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("현재는 게임을 진행할 수 없습니다.");

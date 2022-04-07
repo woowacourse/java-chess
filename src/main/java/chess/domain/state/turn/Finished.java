@@ -27,4 +27,5 @@ public abstract class Finished implements State {
     public final Team getTeam() {
         return winner;
     }
+
 }
