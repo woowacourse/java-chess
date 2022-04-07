@@ -10,7 +10,7 @@ import chess.dto.request.CreatePieceDto;
 import chess.dto.request.DeletePieceDto;
 import chess.dto.request.UpdatePiecePositionDto;
 import chess.dto.response.BoardDto;
-import chess.dto.response.GameDto;
+import chess.dto.response.ChessGameDto;
 import chess.dto.response.ScoreResultDto;
 import chess.dto.response.TurnDto;
 import java.util.Map.Entry;
@@ -60,9 +60,9 @@ public class ChessService {
 
     private ChessGame generateChessGame(String gameId) {
         BoardDto boardDto = boardDao.getBoard(gameId);
-        GameDto gameDto = gameDao.getGame(gameId);
+        ChessGameDto chessGameDto = gameDao.getGame(gameId);
 
-        return ChessGame.of(boardDto.toBoard(), gameDto.getCurrentTurnAsPieceColor());
+        return ChessGame.of(boardDto.toBoard(), chessGameDto.getCurrentTurnAsPieceColor());
     }
 
     private void updateGameTurn(String gameId, ChessGame chessGame) {

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.response.GameDto;
+import chess.dto.response.ChessGameDto;
 import chess.exception.DatabaseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ public class GameDao extends Dao {
     private static final String WHITE_TURN = "WHITE";
     private static final String BLACK_TURN = "BLACK";
 
-    public GameDto getGame(String gameId) {
+    public ChessGameDto getGame(String gameId) {
         String query = String.format("SELECT turn FROM %s WHERE id = ?", TABLE_NAME);
 
         try {
@@ -21,7 +21,7 @@ public class GameDao extends Dao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             resultSet.next();
-            return GameDto.from(gameId, resultSet.getString("turn"));
+            return ChessGameDto.from(gameId, resultSet.getString("turn"));
         } catch (SQLException e) {
             System.out.println(e);
             throw new DatabaseException();
