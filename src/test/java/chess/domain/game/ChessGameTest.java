@@ -28,6 +28,24 @@ public class ChessGameTest {
     }
 
     @Test
+    @DisplayName("게임이 종료된 상태면 기물을 이동시킬 수 없다.")
+    void validateGamSwitch() {
+        chessGame.turnOff();
+
+        assertThatThrownBy(() -> chessGame.move('a', 3, 'a', 4))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임이 종료되어 기물을 이동시킬 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("체스 기물을 이동시킬 때 기물이 없는 빈칸을 선택하면 예외를 발생시킨다.")
+    void validateBlank() {
+        assertThatThrownBy(() -> chessGame.move('a', 3, 'a', 4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 체스 기물이 아닌 빈칸을 선택하였습니다.");
+    }
+
+    @Test
     @DisplayName("본인 턴이 아닌경우 에러를 발생한다.")
     void validateTurn() {
         assertThatThrownBy(() -> chessGame.move('a', 7, 'a', 6))

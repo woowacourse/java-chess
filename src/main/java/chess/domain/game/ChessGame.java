@@ -88,16 +88,16 @@ public class ChessGame {
         return new Result(getCurrentBoard(), board.searchTeamOfDeadKing());
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Map<Position, Piece> getCurrentBoard() {
         return board.getBoard();
     }
 
     public Map<String, Piece> getCurrentBoardByRawPosition() {
         return board.getBoardByRawPosition();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Turn getTurn() {
