@@ -32,7 +32,7 @@ public class ChessController {
             return render(model, "login.html");
         });
 
-        post("/login", (req, res) ->
+        post("/board", (req, res) ->
                 render(playerService.login(req.queryParams("name")), "index.html")
         );
 
