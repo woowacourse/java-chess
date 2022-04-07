@@ -30,10 +30,10 @@ public class ChessController {
         try {
             List<String> input = requestCommandInput();
             Command command = Command.of(input);
-            gameState = gameState.execute(command, input);
+            gameState = command.execute(gameState, input);
             displayCommandResult(command, gameState);
             return gameState;
-        } catch (IllegalArgumentException exception) {
+        } catch (RuntimeException exception) {
             printExceptionMessage(exception.getMessage());
             return executeCommand(gameState);
         }
