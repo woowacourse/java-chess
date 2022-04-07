@@ -10,6 +10,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import web.dao.PieceDao;
 import web.dao.GameDao;
 import web.exception.DBConnectException;
+import web.exception.QueryException;
 import web.service.ChessService;
 
 import java.util.HashMap;
@@ -43,6 +44,9 @@ public class ChessWebController {
             } catch (DBConnectException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (QueryException e) {
+                res.status(424);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
             } catch (RuntimeException e) {
                 res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
@@ -55,6 +59,9 @@ public class ChessWebController {
                 return gson.toJson(service.resumeGame(gameDto));
             } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (QueryException e) {
+                res.status(424);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             } catch (RuntimeException e) {
                 res.status(406);
@@ -69,8 +76,11 @@ public class ChessWebController {
             } catch (DBConnectException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (QueryException e) {
+                res.status(424);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
             } catch (RuntimeException e) {
-                res.status(404);
+                res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -81,6 +91,9 @@ public class ChessWebController {
                 return gson.toJson(service.status(gameInfoDto));
             } catch (DBConnectException e) {
                 res.status(503);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (QueryException e) {
+                res.status(424);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             } catch (RuntimeException e) {
                 res.status(406);
@@ -99,6 +112,9 @@ public class ChessWebController {
             } catch (DBConnectException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            } catch (QueryException e) {
+                    res.status(424);
+                    return gson.toJson(new ErrorMessageDto(e.getMessage()));
             } catch (RuntimeException e) {
                 res.status(406);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));

@@ -1,6 +1,7 @@
 package web.dao;
 
 import web.dto.PieceDto;
+import web.exception.QueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,6 +27,7 @@ public class PieceDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 
@@ -47,8 +49,8 @@ public class PieceDao {
                     result.getString("piece_type"), result.getString("piece_color"));
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
-        return null;
     }
 
     public List<PieceDto> findAllPiecesByRoomName(String roomName) {
@@ -69,8 +71,8 @@ public class PieceDao {
             return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
-        return null;
     }
 
     public void update(String roomName, String previousPosition, String newPosition) {
@@ -87,6 +89,7 @@ public class PieceDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 
@@ -102,6 +105,7 @@ public class PieceDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 }

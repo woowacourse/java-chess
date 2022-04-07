@@ -1,6 +1,7 @@
 package web.dao;
 
 import web.dto.GameInfoDto;
+import web.exception.QueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,7 @@ public class GameDao {
                 throw new IllegalArgumentException("[ERROR] 중복된 이름의 게임이 존재합니다.");
             }
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 
@@ -42,8 +44,8 @@ public class GameDao {
             return new GameInfoDto(result.getString("room_name"), result.getString("turn_color"));
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
-        return null;
     }
 
     public void update(GameInfoDto gameDto) {
@@ -58,6 +60,7 @@ public class GameDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 
@@ -71,6 +74,7 @@ public class GameDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new QueryException();
         }
     }
 }
