@@ -25,12 +25,14 @@ public abstract class Play implements GameState {
     @Override
     public GameState execute(Command command, List<String> input) {
         isExecutable(command);
+        if (command.isEnd()) {
+            return new End();
+        }
         if (command.isStatus()) {
             return this;
         }
-        ChessBoardPosition sourcePosition = ChessBoardPosition.from(input.get(SOURCE_POSITION_INDEX));
-        ChessBoardPosition targetPosition = ChessBoardPosition.from(input.get(TARGET_POSITION_INDEX));
-        move(sourcePosition, targetPosition);
+        move(ChessBoardPosition.from(input.get(SOURCE_POSITION_INDEX)),
+                ChessBoardPosition.from(input.get(TARGET_POSITION_INDEX)));
         if (chessBoard.isKingDead()) {
             return new Finish(chessBoard);
         }
@@ -38,7 +40,7 @@ public abstract class Play implements GameState {
     }
 
     private void isExecutable(Command command) {
-        if (command.isStart() || command.isEnd()) {
+        if (command.isStart()) {
             throw new IllegalArgumentException(INVALID_COMMAND_EXCEPTION);
         }
     }
