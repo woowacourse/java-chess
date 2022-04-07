@@ -31,11 +31,11 @@ public class Board {
     }
 
     public Team searchTeamOfDeadKing() {
-        List<Piece> kings = board.values().stream()
+        List<Piece> aliveKings = board.values().stream()
                 .filter(Piece::isKing)
                 .collect(Collectors.toList());
-        if (kings.size() == 1) {
-            return kings.get(0).getTeam().oppositeTeam();
+        if (aliveKings.size() == 1) {
+            return aliveKings.get(0).getTeam().oppositeTeam();
         }
         return Team.NONE;
     }

@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Team;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,5 +39,13 @@ public class BoardTest {
     void getPiece() {
         Board board = BoardFactory.createInitChessBoard();
         assertThat(board.getPiece(Position.valueOf('a', 8))).isEqualTo(new Rook(Team.BLACK));
+    }
+
+    @Test
+    @DisplayName("왕이 죽은 Team 을 반환한다.")
+    void searchTeamOfDeadKing() {
+        board.movePiece(Position.valueOf('e', 1), Position.valueOf('e', 8));
+
+        assertThat(board.searchTeamOfDeadKing()).isEqualTo(Team.BLACK);
     }
 }
