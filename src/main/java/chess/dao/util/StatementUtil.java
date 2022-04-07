@@ -16,15 +16,15 @@ public class StatementUtil {
     public static void setAllParameter(final String roomName,
                                        final Map<Position, ChessPiece> pieceByPosition,
                                        final PreparedStatement statement) throws SQLException {
+        int index = 1;
         for (final Entry<Position, ChessPiece> entry : pieceByPosition.entrySet()) {
             final Position position = entry.getKey();
             final ChessPiece chessPiece = entry.getValue();
 
-            StatementUtil.setParameter(statement,
-                    roomName,
-                    position.getValue(),
-                    ChessPieceMapper.toPieceType(chessPiece),
-                    chessPiece.color().getValue());
+            statement.setString(index++, roomName);
+            statement.setString(index++, position.getValue());
+            statement.setString(index++, ChessPieceMapper.toPieceType(chessPiece));
+            statement.setString(index++, chessPiece.color().getValue());
         }
     }
 
