@@ -77,19 +77,10 @@ public class ChessService {
         boardDao.updateTurnById(boardId, Turn.init().getTeam().value());
         return board;
     }
-// 나중에 방 생성하고 게임 만들 때, 이용
-//    public Board createGame() {
-//        Long boardId = boardDao.save();
-//        Pieces pieces = Pieces.createInit();
-//        Board board = Board.create(pieces, Turn.init());
-//
-//        pieceDao.save(pieces.getPieces(), boardId);
-//        return board;
-//    }
 
     public ScoreDto getStatus(Long boardId) {
-        List<Piece> allByBoardId = pieceDao.findAllByBoardId(boardId);
-        Pieces pieces = Pieces.from(allByBoardId);
+        List<Piece> found = pieceDao.findAllByBoardId(boardId);
+        Pieces pieces = Pieces.from(found);
 
         double blackScore = pieces.getTotalScore(Team.BLACK);
         double whiteScore = pieces.getTotalScore(Team.WHITE);
