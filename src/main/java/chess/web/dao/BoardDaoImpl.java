@@ -27,7 +27,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setString(1, stateType.getNotation());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 상태를 저장할 수 없습니다.");
         }
     }
 
@@ -39,7 +39,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setString(1, stateType.getNotation());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 상태를 수정할 수 없습니다.");
         }
     }
 
@@ -51,7 +51,7 @@ public class BoardDaoImpl implements BoardDao {
             final ResultSet resultSet = statement.executeQuery();
             return toBoardState(resultSet);
         } catch (SQLException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("상태를 가져올 수 없습니다.");
         }
     }
 
@@ -69,7 +69,7 @@ public class BoardDaoImpl implements BoardDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 기물을 삭제할 수 없습니다.");
         }
     }
 
@@ -78,7 +78,7 @@ public class BoardDaoImpl implements BoardDao {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("DB에 연결할 수 없습니다.");
         }
         return connection;
     }

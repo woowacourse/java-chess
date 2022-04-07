@@ -31,7 +31,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.setString(3, pieceDto.getColor());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 기물을 저장할 수 없습니다.");
         }
     }
 
@@ -46,7 +46,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.setString(4, pieceDto.getPosition());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 기물을 수정할 수 없습니다.");
         }
     }
 
@@ -58,7 +58,7 @@ public class PieceDaoImpl implements PieceDao {
             final ResultSet resultSet = statement.executeQuery();
             return toPieceDtos(resultSet);
         } catch (SQLException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("기물을 가져올 수 없습니다.");
         }
     }
 
@@ -81,7 +81,7 @@ public class PieceDaoImpl implements PieceDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("해당 기물을 삭제할 수 없습니다.");
         }
     }
 
@@ -90,7 +90,7 @@ public class PieceDaoImpl implements PieceDao {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("DB에 연결할 수 없습니다.");
         }
         return connection;
     }
