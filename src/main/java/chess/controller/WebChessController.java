@@ -17,6 +17,10 @@ public class WebChessController {
 
     private final ChessService chessService = new ChessService(new ChessDAO());
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public void run() {
         staticFiles.location("/static");
 
@@ -67,9 +71,5 @@ public class WebChessController {
             res.redirect("/");
             return null;
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

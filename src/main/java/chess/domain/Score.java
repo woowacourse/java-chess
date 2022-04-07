@@ -7,9 +7,8 @@ import java.util.Map;
 
 public class Score {
 
-    private static final int PAWN_HALF_SCORE_BOUND = 2;
     public static final double SAME_COLUMN_PAWN_SCORE = 0.5;
-
+    private static final int PAWN_HALF_SCORE_BOUND = 2;
     private final double totalScore;
 
     private Score(double totalScore) {

@@ -1,7 +1,5 @@
 package chess.dto;
 
-import java.util.Locale;
-
 public class PieceDTO {
 
     private final String name;
