@@ -26,7 +26,7 @@ public class GameDao {
         final String sql = "insert into game (state) values (?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, gameState.getTurn());
+            statement.setString(1, gameState.getState());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,6 +28,6 @@ class GameDaoTest {
         final GameDao gameDao = new GameDao();
         GameState gameState = gameDao.findState(new Board(BoardInitializer.initBoard()));
 
-        assertThat(gameState.getTurn()).isEqualTo("흑팀 차례");
+        assertThat(gameState.getState()).isEqualTo("흑팀 차례");
     }
 }

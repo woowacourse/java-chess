@@ -12,19 +12,19 @@ public abstract class GameStarted implements GameState {
     }
 
     public static GameState of(Board board, String turn) {
-        if (turn.equals("백팀 차례")) {
+        if (turn.equals("white_turn")) {
             return new WhiteTurn(board);
         }
-        if (turn.equals("흑팀 차례")) {
+        if (turn.equals("black_turn")) {
             return new BlackTurn(board);
         }
-        if (turn.equals("백팀 승리")) {
+        if (turn.equals("white_win")) {
             return new WhiteWin(board);
         }
-        if (turn.equals("흑팀 승리")) {
+        if (turn.equals("black_win")) {
             return new BlackWin(board);
         }
-        if (turn.equals("종료")) {
+        if (turn.equals("terminated")) {
             return new Terminate(board);
         }
         throw new IllegalStateException("존재하지 않는 상태입니다.");
@@ -38,7 +38,7 @@ public abstract class GameStarted implements GameState {
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = board.toMap();
-        map.put("turn", getTurn());
+        map.put("turn", getStateName());
         return map;
     }
 }

@@ -14,7 +14,12 @@ public final class Terminate extends End {
     }
 
     @Override
-    public String getTurn() {
+    public String getState() {
+        return "terminated";
+    }
+
+    @Override
+    public String getStateName() {
         return "종료";
     }
 }

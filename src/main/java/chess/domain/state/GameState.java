@@ -18,7 +18,9 @@ public interface GameState {
 
     Board getBoard();
 
-    String getTurn();
+    String getState();
+
+    String getStateName();
 
     Map<String, Object> toMap();
 }

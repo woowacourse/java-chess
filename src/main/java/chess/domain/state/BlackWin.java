@@ -14,7 +14,12 @@ public final class BlackWin extends End {
     }
 
     @Override
-    public String getTurn() {
+    public String getState() {
+        return "black_win";
+    }
+
+    @Override
+    public String getStateName() {
         return "흑팀 승리";
     }
 }

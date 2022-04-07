@@ -14,7 +14,12 @@ public final class WhiteWin extends End {
     }
 
     @Override
-    public String getTurn() {
+    public String getState() {
+        return "white_win";
+    }
+
+    @Override
+    public String getStateName() {
         return "백팀 승리";
     }
 }
