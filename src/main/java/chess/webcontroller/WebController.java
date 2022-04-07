@@ -24,19 +24,18 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-	private static final String MAIN_PAGE = "index.html";
-	private static final String GAME_PAGE = "game.html";
+	private static final int PORT_NUMBER = 8081;
 	private static final String FILE_LOCATION = "/static";
 
-	private static final int PORT_NUMBER = 8081;
-
-	private static final String MAIN_URL = "/";
-	private static final String NEW_GAME_URL = "/new_game";
-	private static final String START_URL = "/start";
-	private static final String MOVE_URL = "/move";
-	private static final String DELETE_URL = "/delete";
+	private static final String MAIN_PAGE = "index.html";
+	private static final String GAME_PAGE = "game.html";
 
 	private static final String SLASH = "/";
+	private static final String NEW_GAME_URL = "new_game";
+	private static final String START_URL = "start";
+	private static final String MOVE_URL = "move";
+	private static final String DELETE_URL = "delete";
+
 	private static final String PATH_VARIABLE_NAME = ":name";
 	private static final String NAMES = "names";
 	private static final String NAME = "name";
@@ -63,7 +62,7 @@ public class WebController {
 	}
 
 	private void showMain(Map<String, Object> model) {
-		get(MAIN_URL, (req, res) -> {
+		get(SLASH, (req, res) -> {
 			List<NameResponseDto> nameDtos = gameService.findAllGames().stream()
 				.map(NameResponseDto::new)
 				.collect(Collectors.toList());
@@ -93,7 +92,7 @@ public class WebController {
 	}
 
 	private void continueGame(Map<String, Object> model) {
-		get(SLASH + PATH_VARIABLE_NAME, (request, response) -> {
+		get(PATH_VARIABLE_NAME, (request, response) -> {
 			ChessGame findGame = gameService.findGame(request.params(PATH_VARIABLE_NAME));
 			if (findGame.isReady()) {
 				fillModelEmptyBoard(model, findGame);
@@ -115,7 +114,7 @@ public class WebController {
 			ChessGame updatedGame = gameService.updateGame(command, request.params(PATH_VARIABLE_NAME));
 
 			if (updatedGame.isFinished()) {
-				response.redirect(MAIN_URL);
+				response.redirect(SLASH);
 				return null;
 			}
 
@@ -127,7 +126,7 @@ public class WebController {
 	private void deleteGame() {
 		post(DELETE_URL + SLASH + PATH_VARIABLE_NAME, (request, response) -> {
 			gameService.deleteGame(request.params(PATH_VARIABLE_NAME));
-			response.redirect(MAIN_URL);
+			response.redirect(SLASH);
 			return null;
 		});
 	}
