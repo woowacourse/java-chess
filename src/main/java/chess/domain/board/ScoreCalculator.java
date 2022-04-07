@@ -5,35 +5,39 @@ import chess.domain.Winner;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ScoreCalculator {
 
-    private final Map<Position, Piece> board;
+    private static final ScoreCalculator instance = new ScoreCalculator();
 
-    public ScoreCalculator(Map<Position, Piece> board) {
-        this.board = board;
+    private ScoreCalculator() {
     }
 
-    public double calculateBlackScore() {
-        return calculateScore(Team.BLACK);
+    public static ScoreCalculator of() {
+        return instance;
     }
 
-    public double calculateWhiteScore() {
-        return calculateScore(Team.WHITE);
+    public double calculateBlackScore(Map<Position, Piece> board) {
+        return calculateScore(board, Team.BLACK);
     }
 
-    public Winner calculateWinner() {
-        double blackScore = calculateBlackScore();
-        double whiteScore = calculateWhiteScore();
+    public double calculateWhiteScore(Map<Position, Piece> board) {
+        return calculateScore(board, Team.WHITE);
+    }
+
+    public Winner calculateWinner(Map<Position, Piece> board) {
+        double blackScore = calculateBlackScore(board);
+        double whiteScore = calculateWhiteScore(board);
         return Winner.find(blackScore, whiteScore);
     }
 
-    private double calculateScore(Team team) {
+    private double calculateScore(Map<Position, Piece> board, Team team) {
         double score = 0;
         for (int column = 1; column <= 8; column++) {
-            List<Piece> columnPieces = findColumnPieces(team, column);
+            List<Piece> columnPieces = findColumnPieces(board, team, column);
             score += calculateColumnScore(columnPieces);
         }
         return score;
@@ -58,7 +62,7 @@ public class ScoreCalculator {
         return sum;
     }
 
-    private List<Piece> findColumnPieces(Team team, final int column) {
+    private List<Piece> findColumnPieces(Map<Position, Piece> board, Team team, final int column) {
         List<Piece> pieces = new ArrayList<>();
         for (int row = 1; row <= 8; row++) {
             Position position = Position.of(row, column);

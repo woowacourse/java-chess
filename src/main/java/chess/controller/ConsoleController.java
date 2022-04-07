@@ -3,7 +3,6 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.board.Position;
-import chess.domain.board.ScoreCalculator;
 import chess.domain.piece.Piece;
 import chess.domain.result.StatusResult;
 

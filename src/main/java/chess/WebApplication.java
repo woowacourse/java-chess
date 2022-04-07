@@ -4,7 +4,6 @@ import chess.controller.WebController;
 
 import static spark.Spark.*;
 
-
 public class WebApplication {
     private static final WebController webController = new WebController();
 

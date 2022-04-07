@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
-import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.board.Position;
 import chess.domain.result.StatusResult;

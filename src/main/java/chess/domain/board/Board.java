@@ -14,7 +14,6 @@ public class Board {
     private static final String BLOCK_ERROR = "해당 위치로 기물을 옮길 수 없습니다.";
     private static final String BOARD_RANGE_ERROR = "체스 판의 범위를 벗어 났습니다.";
     private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
-    private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
     private static final String CATCH_SAME_TEAM_EXCEPTION = "같은 팀의 기물을 잡을 수 없습니다.";
     private static final String INVALID_ORDER_ERROR = "[ERROR] 알맞는 순서가 아닙니다.";
 
@@ -98,11 +97,11 @@ public class Board {
     }
 
     public double calculateScore(Team team) {
-        ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
+        ScoreCalculator calculator = ScoreCalculator.of();
         if (team.isBlack()) {
-            return calculator.calculateBlackScore();
+            return calculator.calculateBlackScore(new HashMap<>(board));
         }
-        return calculator.calculateWhiteScore();
+        return calculator.calculateWhiteScore(new HashMap<>(board));
     }
 
     public boolean isBlank(Position position) {
@@ -113,16 +112,9 @@ public class Board {
         return new HashMap<>(board);
     }
 
-    public Team getFinalWinner() {
-        if (state.isFinished()) {
-            return state.getTeam();
-        }
-        throw new IllegalArgumentException(NOT_FINISHED_ERROR);
-    }
-
     public Winner getCurrentWinner() {
-        ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
-        return calculator.calculateWinner();
+        ScoreCalculator calculator = ScoreCalculator.of();
+        return calculator.calculateWinner(new HashMap<>(board));
     }
 
     public Team getCurrentTurnTeam() {
