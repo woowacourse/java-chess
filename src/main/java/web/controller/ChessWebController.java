@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import web.dao.BoardDao;
+import web.dao.PieceDao;
 import web.dao.GameDao;
 import web.service.ChessService;
 
@@ -23,7 +23,7 @@ public class ChessWebController {
     private final Gson gson = new GsonBuilder().create();
 
     public ChessWebController() {
-        this.service = new ChessService(new BoardDao(), new GameDao());
+        this.service = new ChessService(new PieceDao(), new GameDao());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

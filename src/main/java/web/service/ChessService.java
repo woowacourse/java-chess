@@ -6,7 +6,7 @@ import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 import chess.domain.game.Game;
 import chess.domain.piece.*;
-import web.dao.BoardDao;
+import web.dao.PieceDao;
 import web.dao.GameDao;
 import web.dto.*;
 
@@ -16,10 +16,10 @@ import java.util.Map;
 
 public class ChessService {
 
-    private final BoardDao boardDao;
+    private final PieceDao boardDao;
     private final GameDao gameDao;
 
-    public ChessService(BoardDao boardDao, GameDao gameDao) {
+    public ChessService(PieceDao boardDao, GameDao gameDao) {
         this.boardDao = boardDao;
         this.gameDao = gameDao;
     }

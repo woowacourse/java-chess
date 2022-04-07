@@ -11,7 +11,7 @@ import java.util.List;
 
 import static web.dao.DBConnector.getConnection;
 
-public class BoardDao {
+public class PieceDao {
 
     public void save(PieceDto pieceDto) {
         final Connection connection = getConnection();

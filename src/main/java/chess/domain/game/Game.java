@@ -9,7 +9,7 @@ import console.controller.Request;
 import java.util.List;
 import java.util.Map;
 
-public class  Game {
+public class Game {
 
     private final Board board;
     private Color turnColor;

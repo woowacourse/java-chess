@@ -17,13 +17,13 @@ class BoardDaoTest {
     private final PieceDto pieceDto = new PieceDto(ROOM_NAME, POSITION, "pawn", "WHITE");
     private final PieceDto pieceDto2 = new PieceDto(ROOM_NAME, "a2", "pawn", "WHITE");
     private GameDao gameDao;
-    private BoardDao boardDao;
+    private PieceDao boardDao;
 
     @BeforeEach
     void beforeEach() {
         gameDao = new GameDao();
         gameDao.save(new GameInfoDto(ROOM_NAME));
-        boardDao = new BoardDao();
+        boardDao = new PieceDao();
     }
 
     @Test
