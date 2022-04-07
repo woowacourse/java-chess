@@ -65,3 +65,28 @@ async function findStatus() {
       + "\n[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
       + blackPlayerResult);
 }
+
+async function finishGame() {
+  const startButton = document.getElementById("start-btn");
+  const statusButton = document.getElementById("status-btn");
+  const endButton = document.getElementById("end-btn");
+
+  startButton.disabled = false;
+  statusButton.disabled = true;
+  endButton.disabled = true;
+
+  const status = await fetch("/end")
+  .then((response) => response.json());
+
+  const whitePlayerScore = status.whitePlayerScore;
+  const blackPlayerScore = status.blackPlayerScore;
+  const whitePlayerResult = status.whitePlayerResult;
+  const blackPlayerResult = status.blackPlayerResult;
+
+  alert("게임이 종료되었습니다.");
+  alert("[White 팀] 점수 : " + whitePlayerScore + ", 결과 : " + whitePlayerResult
+      + "\n[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
+      + blackPlayerResult);
+
+  window.location.href = "/";
+}

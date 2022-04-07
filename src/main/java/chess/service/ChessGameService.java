@@ -35,4 +35,10 @@ public class ChessGameService {
         final GameResult blackPlayerResult = gameResult.get(1);
         return StatusDto.of(whitePlayerResult, blackPlayerResult);
     }
+
+    public StatusDto finishGame() {
+        final StatusDto status = findStatus();
+        chessGameDao.resetPieces();
+        return status;
+    }
 }

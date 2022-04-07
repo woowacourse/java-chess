@@ -30,6 +30,10 @@ public class WebChessGameController {
         get("/status", (request, response) -> {
             return gson.toJson(chessGameService.findStatus());
         });
+
+        get("/end", (request, response) -> {
+            return gson.toJson(chessGameService.finishGame());
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
