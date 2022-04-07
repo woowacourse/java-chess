@@ -107,20 +107,34 @@ public class WebApplication {
             return null;
         });
 
-        //예외가 터질 때
         exception(Exception.class, (exception, request, response) -> {
+            String errorMessage = exception.getMessage();
+            if (errorMessage.equals("이미 종료된 게임입니다.")) {
+                PlayerDao playerDao = new PlayerDao();
+                Map<String, Object> winner = new HashMap<>();
+                winner.put("hasWinner", true);
+                winner.put("winnerMessage", "게임이 종료되었습니다. 새 게임을 시작해주세요!!!");
+                request.session().attribute("WINNER_MESSAGE", winner);
+
+                response.redirect("/end");
+                return;
+            }
 
             Map<String, Object> error = new HashMap<>();
             error.put("hasError", true);
-            error.put("errorMessage", exception.getMessage());
+            error.put("errorMessage", errorMessage);
             request.session().attribute("ERROR_MESSAGE", error);
 
             response.redirect("/play");
+        });
 
-
-//            response.status(400);
-//            response.body(exception.getMessage());
-
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            if (req.session().attribute("WINNER_MESSAGE") != null) {
+                model.putAll(req.session().attribute("WINNER_MESSAGE"));
+                req.session().removeAttribute("WINNER_MESSAGE");
+            }
+            return render(model, "end.html");
         });
     }
 
