@@ -19,14 +19,16 @@ public class BoardDao {
     }
 
     public void insert(PieceDto pieceDto, String square, int gameId) {
-        String sql = "replace into board (piece_type, piece_color, square, game_id)\n"
-                + "values (?, ?, ?, ?)";
+        String sql = "insert into board (piece_type, piece_color, square, game_id)\n"
+                + "values (?, ?, ?, ?) on duplicate key update piece_type = ?, piece_color =?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, pieceDto.getType());
             statement.setString(2, pieceDto.getColor());
             statement.setString(3, square);
             statement.setInt(4, gameId);
+            statement.setString(5, pieceDto.getType());
+            statement.setString(6, pieceDto.getColor());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
