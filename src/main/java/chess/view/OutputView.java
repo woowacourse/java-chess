@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.ChessBoardPosition;
-import chess.dto.ChessBoardDto;
+import chess.dto.console.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import java.util.Map;
 import java.util.Map.Entry;

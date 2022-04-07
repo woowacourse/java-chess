@@ -11,7 +11,7 @@ import chess.domain.Command;
 import chess.domain.Team;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
-import chess.dto.ChessBoardDto;
+import chess.dto.console.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import java.util.List;
 
