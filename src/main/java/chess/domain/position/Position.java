@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import chess.converter.File;
+import chess.converter.Rank;
+
 public class Position {
 
 	public static final int MIN = 1;
@@ -58,6 +61,14 @@ public class Position {
 		return this.column == column;
 	}
 
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -71,5 +82,10 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(row, column);
+	}
+
+	@Override
+	public String toString() {
+		return File.from(column).getName() + Rank.from(row).getName();
 	}
 }

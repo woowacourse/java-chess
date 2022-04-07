@@ -11,13 +11,8 @@ public class RunningWhiteTurn extends Running {
 
 	private static final Color COLOR = Color.WHITE;
 
-	RunningWhiteTurn(Map<Position, Piece> pieces) {
+	public RunningWhiteTurn(Map<Position, Piece> pieces) {
 		super(pieces);
-	}
-
-	@Override
-	public GameState proceed(Command command) {
-		return executeMovingPiece(command, COLOR);
 	}
 
 	@Override
@@ -28,5 +23,10 @@ public class RunningWhiteTurn extends Running {
 	@Override
 	public Color getColor() {
 		return COLOR;
+	}
+
+	@Override
+	public String toString() {
+		return "RUNNING_WHITE";
 	}
 }

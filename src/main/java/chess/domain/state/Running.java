@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -19,20 +19,18 @@ public abstract class Running extends GameState {
 	}
 
 	@Override
-	public abstract GameState proceed(Command command);
-
-	protected GameState executeMovingPiece(Command command, Color color) {
+	public GameState proceed(Command command) {
 		if (!command.isMove()) {
 			return checkFinished(command);
 		}
-		validateMoveOpponent(command, color.getOpponent());
+		validateMoveOpponent(command, getColor().getOpponent());
 		board.movePiece(command.getFromPosition(), command.getToPosition());
-		return checkKingExist(color.getOpponent());
+		return checkKingExist(getColor().getOpponent());
 	}
 
 	protected GameState checkFinished(Command command) {
 		if (command.isStart()) {
-			throw new IllegalStateException(CANNOT_START_AGAIN);
+			throw new IllegalArgumentException(CANNOT_START_AGAIN);
 		}
 		if (command.isStatus()) {
 			return this;
@@ -42,7 +40,7 @@ public abstract class Running extends GameState {
 
 	protected void validateMoveOpponent(Command command, Color color) {
 		if (board.isSameColor(command.getFromPosition(), color)) {
-			throw new IllegalStateException(CANNOT_MOVE_OPPONENT_PIECE);
+			throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
 		}
 	}
 
@@ -63,6 +61,11 @@ public abstract class Running extends GameState {
 	@Override
 	public boolean isRunning() {
 		return true;
+	}
+
+	@Override
+	public boolean isReady() {
+		return false;
 	}
 
 	@Override

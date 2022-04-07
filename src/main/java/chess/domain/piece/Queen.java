@@ -28,7 +28,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public Direction checkMovableRange(Position from, Position to) {
+	public Direction getMovableDirection(Position from, Position to) {
 		return directionStrategy.find(from, to);
 	}
 
@@ -45,5 +45,10 @@ public class Queen extends Piece {
 	@Override
 	public double getScore() {
 		return QUEEN_SCORE;
+	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "QUEEN";
 	}
 }

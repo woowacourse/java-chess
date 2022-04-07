@@ -18,7 +18,7 @@ class BishopTest {
 	@CsvSource(value = {"5:5", "3:3", "7:7", "1:1", "2:2", "6:6", "8:8"}, delimiter = ':')
 	@DisplayName("Bishop이 이동 가능한 범위의 방향을 검증한다.")
 	void moveBishop(int row, int column) {
-		Direction direction = bishop.checkMovableRange(
+		Direction direction = bishop.getMovableDirection(
 			new Position(4, 4),
 			new Position(row, column));
 		assertThat(direction).isInstanceOf(DiagonalDirection.class);
@@ -28,7 +28,7 @@ class BishopTest {
 	@CsvSource(value = {"5:4", "2:3", "1:8", "5:6"}, delimiter = ':')
 	@DisplayName("Bishop은 기울기 1인 지점이 아니면 갈 수 없다.")
 	void moveBishopException(int row, int column) {
-		assertThatThrownBy(() -> bishop.checkMovableRange(
+		assertThatThrownBy(() -> bishop.getMovableDirection(
 			new Position(4, 4), new Position(row, column)))
 			.isInstanceOf(IllegalArgumentException.class);
 	}

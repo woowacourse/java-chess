@@ -1,4 +1,4 @@
-package chess.controller.converter;
+package chess.converter;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,9 +26,16 @@ public enum Rank {
 		this.row = row;
 	}
 
-	static Rank from(String name) {
+	public static Rank from(String name) {
 		return Arrays.stream(values())
 			.filter(rank -> rank.name.equals(name))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_INPUT));
+	}
+
+	public static Rank from(int row) {
+		return Arrays.stream(values())
+			.filter(rank -> rank.row == row)
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_INPUT));
 	}

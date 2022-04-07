@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Color;
@@ -26,4 +26,10 @@ public abstract class GameState {
 	public Map<Position, Piece> getBoard() {
 		return board.getPieces();
 	}
+
+	public Piece getByPosition(Position position) {
+		return board.getPieceByPosition(position);
+	}
+
+	public abstract boolean isReady();
 }

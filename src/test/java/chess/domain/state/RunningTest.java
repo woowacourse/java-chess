@@ -18,7 +18,7 @@ public class RunningTest {
 		GameState state = new Ready(new HashMap<>())
 			.proceed(new Start());
 		assertThatThrownBy(() -> state.proceed(new Start()))
-			.isInstanceOf(IllegalStateException.class);
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test

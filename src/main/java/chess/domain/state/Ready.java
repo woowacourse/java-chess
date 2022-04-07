@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -22,13 +22,13 @@ public class Ready extends GameState {
 	@Override
 	public GameState proceed(Command command) {
 		if (command.isMove()) {
-			throw new IllegalStateException(CANNOT_MOVE);
+			throw new IllegalArgumentException(CANNOT_MOVE);
 		}
 		if (command.isStart()) {
 			return new RunningWhiteTurn(board.getPieces());
 		}
 		if (command.isStatus()) {
-			throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+			throw new IllegalArgumentException(CANNOT_GENERATE_SCORE);
 		}
 		return new Finished(board.getPieces());
 	}
@@ -49,7 +49,17 @@ public class Ready extends GameState {
 	}
 
 	@Override
+	public boolean isReady() {
+		return true;
+	}
+
+	@Override
 	public Color getColor() {
 		throw new UnsupportedOperationException(CANNOT_GET_COLOR);
+	}
+
+	@Override
+	public String toString() {
+		return "READY";
 	}
 }

@@ -20,7 +20,7 @@ public class ReadyTest {
 		GameState state = new Ready(new HashMap<>());
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(1, 1), new Position(2, 2)))
-		).isInstanceOf(IllegalStateException.class);
+		).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test

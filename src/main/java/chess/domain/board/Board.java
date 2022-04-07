@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -36,28 +35,28 @@ public class Board {
 	}
 
 	public boolean isSameColor(Position position, Color color) {
-		return checkPositionEmpty(position).isSameColor(color);
+		return getPieceByPosition(position).isSameColor(color);
 	}
 
-	public Optional<Piece> findPiece(Position position) {
+	public Optional<Piece> findPieceByPosition(Position position) {
 		return Optional.ofNullable(pieces.get(position));
 	}
 
 	public void movePiece(Position from, Position to) {
-		Piece fromPiece = checkPositionEmpty(from);
-		Direction direction = fromPiece.checkMovableRange(from, to);
-		searchPiece(from, to, direction);
+		Piece fromPiece = getPieceByPosition(from);
+		Direction direction = fromPiece.getMovableDirection(from, to);
 		validateMovableToTarget(from, to, fromPiece);
+		validatePassable(from, to, direction);
 
 		move(from, to, fromPiece);
 	}
 
-	private Piece checkPositionEmpty(Position from) {
-		return findPiece(from)
+	public Piece getPieceByPosition(Position from) {
+		return findPieceByPosition(from)
 			.orElseThrow(() -> new NoSuchElementException(NO_PIECE));
 	}
 
-	private void searchPiece(Position from, Position to, Direction direction) {
+	private void validatePassable(Position from, Position to, Direction direction) {
 		Position step = from.convert(new UnitPosition(0, 0));
 		while (!step.equals(to)) {
 			step = step.convert(direction.getUnitPosition());
@@ -66,13 +65,13 @@ public class Board {
 	}
 
 	private void validateExistPiece(Position to, Position step) {
-		if (findPiece(step).isPresent() && !step.equals(to)) {
+		if (findPieceByPosition(step).isPresent() && !step.equals(to)) {
 			throw new IllegalArgumentException(PIECE_BLOCK);
 		}
 	}
 
 	private void validateMovableToTarget(Position from, Position to, Piece fromPiece) {
-		Optional<Piece> nullablePiece = findPiece(to);
+		Optional<Piece> nullablePiece = findPieceByPosition(to);
 		if (nullablePiece.isPresent() && !fromPiece.isMovable(from, to, nullablePiece.get())) {
 			throw new IllegalArgumentException(INVALID_MOVE);
 		}

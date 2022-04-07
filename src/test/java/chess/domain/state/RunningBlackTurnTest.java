@@ -47,7 +47,7 @@ public class RunningBlackTurnTest {
 
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(6, 2), new Position(5, 2))))
-			.isInstanceOf(IllegalStateException.class);
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
