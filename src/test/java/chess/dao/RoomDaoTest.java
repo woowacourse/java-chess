@@ -40,7 +40,7 @@ class RoomDaoTest {
     @Test
     @DisplayName("ID로 Room을 가져온다.")
     void findById() {
-        Room room = roomDao.findById(1);
+        Room room = roomDao.findById(1).get();
         assertThat(room.getTurn()).isEqualTo("white");
     }
 
@@ -55,6 +55,6 @@ class RoomDaoTest {
     @DisplayName("Room을 업데이트한다.")
     void update() {
         roomDao.update(1, "black");
-        assertThat(roomDao.findById(1).getTurn()).isEqualTo("black");
+        assertThat(roomDao.findById(1).get().getTurn()).isEqualTo("black");
     }
 }

@@ -64,7 +64,7 @@ class SquareDaoTest {
 
         squareDao.saveAll(squares, 1);
 
-        Square square = squareDao.findByRoomIdAndPosition(1, "a1");
+        Square square = squareDao.findByRoomIdAndPosition(1, "a1").get();
         assertThat(square.getPiece()).isEqualTo("white_rook");
     }
 
@@ -79,7 +79,7 @@ class SquareDaoTest {
         squareDao.saveAll(squares, 1);
 
         squareDao.update(1, "a2", "empty");
-        Square square = squareDao.findByRoomIdAndPosition(1, "a2");
+        Square square = squareDao.findByRoomIdAndPosition(1, "a2").get();
         assertThat(square.getPiece()).isEqualTo("empty");
     }
 }

@@ -20,6 +20,10 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private static final String NO_ROOM_MESSAGE = "해당 ID와 일치하는 Room이 존재하지 않습니다.";
+    private static final String NO_SQUARE_MESSAGE = "해당 방, 위치에 존재하는 Square가 없습니다.";
+    public static final String NO_SQUARES_MESSAGE = "해당 ID에 체스게임이 초기화되지 않았습니다.";
+
     private final RoomDao roomDao;
     private final SquareDao squareDao;
 
@@ -34,6 +38,9 @@ public class ChessService {
     }
 
     public BoardDto startNewGame(long roomId) {
+        Room room = roomDao.findById(roomId)
+                .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
+
         WebChessGame webChessGame = new WebChessGame();
         webChessGame.start();
         squareDao.removeAll(roomId);
@@ -41,19 +48,20 @@ public class ChessService {
         List<Square> squares = convertBoardToSquares(board);
         squareDao.saveAll(squares, roomId);
         roomDao.update(roomId, webChessGame.getTurn());
-
         return BoardDto.of(board, webChessGame.getTurn());
     }
 
     public BoardDto load(long roomId) {
-        Room room = roomDao.findById(roomId);
+        Room room = roomDao.findById(roomId)
+                .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
         ChessBoard chessBoard = loadChessBoard(roomId);
 
         return BoardDto.of(chessBoard.getPieces(), room.getTurn());
     }
 
     public BoardDto move(long roomId, MoveDto moveDto) {
-        Room room = roomDao.findById(roomId);
+        Room room = roomDao.findById(roomId)
+                .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
         WebChessGame webChessGame = WebChessGame.of(loadChessBoard(roomId), room.getTurn());
         webChessGame.move(moveDto.getFrom(), moveDto.getTo());
         roomDao.update(roomId, webChessGame.getTurn());
@@ -63,7 +71,9 @@ public class ChessService {
     }
 
     private void updateMovement(long roomId, MoveDto moveDto) {
-        String fromPiece = squareDao.findByRoomIdAndPosition(roomId, moveDto.getFrom()).getPiece();
+        String fromPiece = squareDao.findByRoomIdAndPosition(roomId, moveDto.getFrom())
+                .orElseThrow(() -> new IllegalStateException(NO_SQUARE_MESSAGE))
+                .getPiece();
         squareDao.update(roomId, moveDto.getFrom(), "empty");
         squareDao.update(roomId, moveDto.getTo(), fromPiece);
     }
@@ -76,6 +86,9 @@ public class ChessService {
 
     private ChessBoard loadChessBoard(long roomId) {
         List<Square> squares = squareDao.findByRoomId(roomId);
+        if (squares.isEmpty()) {
+            throw new IllegalStateException(NO_SQUARES_MESSAGE);
+        }
         Map<Position, Piece> board = new HashMap<>();
         for (Square square : squares) {
             Position position = Position.of(square.getPosition());
@@ -86,7 +99,8 @@ public class ChessService {
     }
 
     public Status status(long roomId) {
-        Room room = roomDao.findById(roomId);
+        Room room = roomDao.findById(roomId)
+                .orElseThrow(() -> new IllegalStateException(NO_ROOM_MESSAGE));
         ChessBoard chessBoard = loadChessBoard(roomId);
         WebChessGame webChessGame = WebChessGame.of(chessBoard, room.getTurn());
 

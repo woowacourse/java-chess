@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class RoomDao {
 
@@ -31,19 +32,21 @@ public class RoomDao {
         return isSave;
     }
 
-    public Room findById(long id) {
+    public Optional<Room> findById(long id) {
         String sql = "select * from room r where id = ?";
+        Room room = null;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new Room(resultSet.getLong("id"),
+                room = new Room(resultSet.getLong("id"),
                         resultSet.getString("turn"));
             }
-            return null;
         } catch (SQLException e) {
             throw new SelectQueryException();
         }
+
+        return Optional.ofNullable(room);
     }
 
     public void update(long id, String turn){

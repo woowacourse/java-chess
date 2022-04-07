@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SquareDao {
 
@@ -59,22 +60,24 @@ public class SquareDao {
         }
     }
 
-    public Square findByRoomIdAndPosition(long roomId, String position) {
+    public Optional<Square> findByRoomIdAndPosition(long roomId, String position) {
         String sql = "select id, piece from square where room_id = ? and position = ?";
+        Square square = null;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, roomId);
             statement.setString(2, position);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new Square(resultSet.getLong("id"),
+                square = new Square(resultSet.getLong("id"),
                         roomId,
                         position,
                         resultSet.getString("piece"));
             }
-            return null;
         } catch (SQLException e) {
             throw new SelectQueryException();
         }
+
+        return Optional.ofNullable(square);
     }
 
     public void update(long roomId, String position, String piece) {
