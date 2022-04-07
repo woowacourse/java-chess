@@ -14,19 +14,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.EmblemMapper;
+import chess.MappingUtil;
 import chess.Game;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceArrangement.PieceArrangement;
+import chess.model.PieceArrangement.SavedPieceArrangement;
 import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.model.piece.King;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceCache;
 import chess.model.piece.Rook;
 
 public class ChessGameServiceTest {
@@ -61,7 +65,7 @@ public class ChessGameServiceTest {
         //when
         chessGameService.save();
         Map<String, String> actual = chessGameService.find();
-        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+        Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -81,7 +85,7 @@ public class ChessGameServiceTest {
         Map<String, String> actual = chessGameService.find();
         board.move(source, target);
 
-        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+        Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -108,15 +112,15 @@ public class ChessGameServiceTest {
         chessGameService.init(new Turn(), new testPieceArrangement());
         chessGameService.save();
         Map<String, String> actual = chessGameService.find();
-        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+        Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());
 
         //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("저장된 Turn에 맞는 색을 꺼내온다.")
-    void findTurnById() {
+    @DisplayName("저장된 Turn에 맞는 색을 꺼내온다.(존재)")
+    void loadTurnColor() {
         //when
         chessGameService.move(Position.of("a2"), Position.of("a4"));
         chessGameService.save();
@@ -125,6 +129,74 @@ public class ChessGameServiceTest {
         //then
         assertThat(actual).isEqualTo(PieceColor.BLACK.toString());
     }
+
+    @Test
+    @DisplayName("저장된 Turn에 맞는 색을 꺼내온다.(값 없음)")
+    void loadTurnColor_notSaved() {
+        //when
+        String actual = chessGameService.loadTurnColor();
+
+        //then
+        assertThat(actual).isEqualTo(PieceColor.WHITE.toString());
+    }
+
+    @Test
+    @DisplayName("저장된 Turn에 맞는 색을 꺼내온다.(존재)")
+    void getTurnColor() {
+        //when
+        chessGameService.move(Position.of("a2"), Position.of("a4"));
+        chessGameService.save();
+        String actual = chessGameService.getTurnColor();
+
+        //then
+        assertThat(actual).isEqualTo(PieceColor.BLACK.toString());
+    }
+
+    @Test
+    @DisplayName("저장된 Position과 Piece를 불러온다.")
+    void getPiecesByPositions() {
+        //given
+        Map<Position, Piece> expected = Map.of(Position.of("a2"), PieceCache.of("b"),
+            Position.of("a4"), PieceCache.of("B"));
+
+        PieceArrangement pieceArrangement = new SavedPieceArrangement(
+            MappingUtil.StringPieceMapByPiecesByPositions(expected));
+
+        chessGameService.init(new Turn(), pieceArrangement);
+
+        //when
+        Map<Position, Piece> actual = chessGameService.getPiecesByPositions();
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"K:true", "P:false"}, delimiter = ':')
+    @DisplayName("게임이 끝났는지 아닌지 반환하는 값을 검증한다.")
+    void isFinished(String emblem, boolean expected) {
+        //given
+        Map<Position, Piece> testArrangement = Map.of(Position.of("a2"), PieceCache.of("r"),
+            Position.of("a4"), PieceCache.of(emblem));
+
+        PieceArrangement pieceArrangement = new SavedPieceArrangement(
+            MappingUtil.StringPieceMapByPiecesByPositions(testArrangement));
+
+        chessGameService.init(new Turn(), pieceArrangement);
+
+        //when
+        chessGameService.move(Position.of("a2"), Position.of("a4"));
+
+        //then
+        assertThat(chessGameService.isFinished()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("반환한 점수 값을 검증한다.")
+    void getScore() {
+        assertThat(chessGameService.getScore()).isEqualTo(38.0);
+    }
+
 
     private static class fakeBoardDao implements BoardDao {
         private final Map<Integer, Map<String, String>> table;
@@ -202,7 +274,10 @@ public class ChessGameServiceTest {
 
         @Override
         public String findTurnById(int id) {
-            return table.get(game.getId()).get(2);
+            if (table.containsKey(game.getId())) {
+                return table.get(game.getId()).get(2);
+            }
+            return "WHITE";
         }
 
         @Override

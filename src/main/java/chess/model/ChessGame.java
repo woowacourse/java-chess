@@ -11,7 +11,7 @@ public class ChessGame {
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
 
     private final Turn turn;
-    private Board board;
+    private final Board board;
 
     public ChessGame(Turn turn, PieceArrangement pieceArrangement) {
         this.board = new Board(pieceArrangement);
@@ -51,10 +51,6 @@ public class ChessGame {
         if (board.isTargetKing(target)) {
             turn.finish();
         }
-    }
-
-    public void init(PieceArrangement pieceArrangement) {
-        this.board = new Board(pieceArrangement);
     }
 
     public double getScore() {

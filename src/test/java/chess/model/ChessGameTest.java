@@ -59,6 +59,13 @@ public class ChessGameTest {
         assertThat(score).isEqualTo(38.0);
     }
 
+    @Test
+    @DisplayName("ChessGame의 현재 턴 색을 불러온다.")
+    void getTurnColor() {
+        ChessGame chessGame = new ChessGame(new Turn(PieceColor.BLACK), new DefaultArrangement());
+        assertThat(chessGame.getTurnColor()).isEqualTo(PieceColor.BLACK);
+    }
+
     public static class kingCaptureTestInitializer implements PieceArrangement {
 
         @Override

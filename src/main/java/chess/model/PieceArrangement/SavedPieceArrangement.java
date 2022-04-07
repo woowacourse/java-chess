@@ -3,7 +3,7 @@ package chess.model.PieceArrangement;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.EmblemMapper;
+import chess.MappingUtil;
 import chess.model.Position;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceCache;
@@ -22,7 +22,7 @@ public class SavedPieceArrangement implements PieceArrangement {
             if (entry.getValue().equals("empty")) {
                 continue;
             }
-            result.put(Position.of(entry.getKey()), PieceCache.of(EmblemMapper.emblemFrom(entry.getValue())));
+            result.put(Position.of(entry.getKey()), PieceCache.of(MappingUtil.emblemFrom(entry.getValue())));
         }
         return result;
     }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.EmblemMapper;
+import chess.MappingUtil;
 import chess.Game;
 import chess.model.Board;
 import chess.model.PieceArrangement.DefaultArrangement;
@@ -49,7 +49,7 @@ public class BoardDaoImplTest {
         gameDao.save();
 
         assertThatCode(() -> boardDao.save(gameDao.getId(),
-            EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues())))
+            MappingUtil.StringPieceMapByPiecesByPositions(board.getValues())))
             .doesNotThrowAnyException();
     }
 
@@ -60,7 +60,7 @@ public class BoardDaoImplTest {
         Board board = new Board(new DefaultArrangement());
         gameDao.save();
         boardDao.save(gameDao.getId(),
-            EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues()));
+            MappingUtil.StringPieceMapByPiecesByPositions(board.getValues()));
 
         //when
         boardDao.deleteById(gameDao.getId());
@@ -78,7 +78,7 @@ public class BoardDaoImplTest {
         int gameId = gameDao.getId();
 
         Board board = new Board(new DefaultArrangement());
-        Map<String, String> expected = EmblemMapper.StringPieceMapByPiecesByPositions(board.getValues());
+        Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());
 
         //when
         boardDao.save(gameId, expected);

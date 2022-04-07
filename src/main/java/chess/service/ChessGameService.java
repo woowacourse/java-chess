@@ -3,7 +3,7 @@ package chess.service;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.EmblemMapper;
+import chess.MappingUtil;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.model.ChessGame;
@@ -31,7 +31,7 @@ public class ChessGameService {
 
     public void save() {
         gameDao.save();
-        boardDao.save(gameDao.getId(), EmblemMapper.StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+        boardDao.save(gameDao.getId(), MappingUtil.StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
     }
 
     public Map<String, String> find() {

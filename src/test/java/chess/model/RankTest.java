@@ -13,6 +13,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RankTest {
 
     @Test
+    @DisplayName("of 정적 팩토리 메서드 검증")
+    void of() {
+        assertThat(Rank.of("3")).isEqualTo(THREE);
+    }
+
+    @Test
     @DisplayName("역순 정렬 테스트")
     void test() {
         List<Rank> reverseValues = Rank.reverseValues();
