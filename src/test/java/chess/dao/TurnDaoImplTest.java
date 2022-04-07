@@ -6,27 +6,27 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class TurnDaoTest {
+class TurnDaoImplTest {
 
     @DisplayName("데이터가 저장되는지 확인한다.")
     @Test()
     void save() {
-        TurnDao turnDao = new TurnDao();
-        turnDao.delete();
-        turnDao.save("white");
+        TurnDaoImpl turnDaoImpl = new TurnDaoImpl();
+        turnDaoImpl.delete();
+        turnDaoImpl.save("white");
 
-        assertThat(turnDao.find()).isEqualTo("white");
+        assertThat(turnDaoImpl.find()).isEqualTo("white");
     }
 
     @DisplayName("데이터가 삭제되는지 확인한다.")
     @Test()
     void delete() {
-        TurnDao turnDao = new TurnDao();
-        turnDao.delete();
-        turnDao.save("white");
-        turnDao.delete();
+        TurnDaoImpl turnDaoImpl = new TurnDaoImpl();
+        turnDaoImpl.delete();
+        turnDaoImpl.save("white");
+        turnDaoImpl.delete();
 
-        assertThatThrownBy(turnDao::find)
+        assertThatThrownBy(turnDaoImpl::find)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 일치하는 데이터가 없습니다.");
     }
@@ -34,11 +34,11 @@ class TurnDaoTest {
     @DisplayName("데이터가 최신화 되는지 확인한다.")
     @Test()
     void update() {
-        TurnDao turnDao = new TurnDao();
-        turnDao.delete();
-        turnDao.save("white");
-        turnDao.update("white", "black");
+        TurnDaoImpl turnDaoImpl = new TurnDaoImpl();
+        turnDaoImpl.delete();
+        turnDaoImpl.save("white");
+        turnDaoImpl.update("white", "black");
 
-        assertThat(turnDao.find()).isEqualTo("black");
+        assertThat(turnDaoImpl.find()).isEqualTo("black");
     }
 }

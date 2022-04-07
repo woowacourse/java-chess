@@ -5,8 +5,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.dao.GameService;
-import chess.dao.SquareDao;
-import chess.dao.TurnDao;
+import chess.dao.SquareDaoImpl;
+import chess.dao.TurnDaoImpl;
 import chess.dto.MoveDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final GameService gameService = new GameService(new SquareDao(), new TurnDao());
+    private final GameService gameService = new GameService(new SquareDaoImpl(), new TurnDaoImpl());
     private final Gson gson = new Gson();
 
     public void run() {

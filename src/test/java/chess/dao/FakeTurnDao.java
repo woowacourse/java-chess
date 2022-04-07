@@ -1,6 +1,6 @@
 package chess.dao;
 
-public class FakeTurnDao implements TurnDaoInterface {
+public class FakeTurnDao implements TurnDao {
 
     private String team;
 

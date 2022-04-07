@@ -5,7 +5,7 @@ import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FakeSquareDao implements SquareDaoInterface {
+public class FakeSquareDao implements SquareDao {
 
     private Map<String, String> values = new HashMap<>();
 

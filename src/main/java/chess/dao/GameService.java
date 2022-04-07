@@ -11,10 +11,10 @@ import java.util.Map;
 
 public class GameService {
 
-    private final SquareDaoInterface squareDao;
-    private final TurnDaoInterface turnDao;
+    private final SquareDao squareDao;
+    private final TurnDao turnDao;
 
-    public GameService(final SquareDaoInterface squareDao, final TurnDaoInterface turnDao) {
+    public GameService(final SquareDao squareDao, final TurnDao turnDao) {
         this.squareDao = squareDao;
         this.turnDao = turnDao;
     }
