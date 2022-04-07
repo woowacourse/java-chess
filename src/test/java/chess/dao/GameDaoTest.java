@@ -15,7 +15,7 @@ class GameDaoTest {
 
     private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE);
 
-    private final GameDao dao = new GameDao(TEST_TABLE);
+    private final GameDao dao = new GameDaoImpl(TEST_TABLE);
 
     @BeforeEach
     void setUp() {
