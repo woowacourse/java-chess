@@ -23,7 +23,7 @@ public class WebChessController {
             new PieceDaoImpl(new DBConnectionSetup()));
 
     public void run() {
-        final JsonTransformer jsonTransformer = new JsonTransformer();
+        JsonTransformer jsonTransformer = JsonTransformer.getInstance();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
