@@ -1,6 +1,6 @@
 package web.dao;
 
-import web.dto.GameDto;
+import web.dto.GameInfoDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import static web.dao.DBConnector.getConnection;
 
 public class GameDao {
 
-    public void save(GameDto gameDto) {
+    public void save(GameInfoDto gameDto) {
         final Connection connection = getConnection();
         final String sql = "insert into game (room_name, turn_color) value (?, ?)";
 
@@ -28,7 +28,7 @@ public class GameDao {
         }
     }
 
-    public GameDto findByRoomName(String roomName) {
+    public GameInfoDto findByRoomName(String roomName) {
         final Connection connection = getConnection();
         final String sql = "select room_name, turn_color " +
                 "from game where room_name=?";
@@ -39,14 +39,14 @@ public class GameDao {
             if (!result.next()) {
                 return null;
             }
-            return new GameDto(result.getString("room_name"), result.getString("turn_color"));
+            return new GameInfoDto(result.getString("room_name"), result.getString("turn_color"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void update(GameDto gameDto) {
+    public void update(GameInfoDto gameDto) {
         final Connection connection = getConnection();
         final String sql = "update game " +
                 "set turn_color=? " +

@@ -70,7 +70,7 @@ async function resumeGame() {
 }
 
 async function getStatus() {
-    let status = await fetch("/status")
+    let status = await fetch("/status/" + currentRoomName)
         .then(handleErrors)
         .catch(function (error) {
             alert(error.message);

@@ -1,7 +1,7 @@
 package web.controller;
 
 import web.dto.ErrorMessageDto;
-import web.dto.GameDto;
+import web.dto.GameInfoDto;
 import web.dto.MoveInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,13 +33,12 @@ public class ChessWebController {
         Gson gson = new GsonBuilder().create();
 
         get("/", (req, res) -> {
-            this.service = new ChessService(new BoardDao(), new GameDao());
             return render(new HashMap<>(), "index.html");
         });
 
         post("/start/newGame", (req, res) -> {
             try {
-                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 return gson.toJson(service.startNewGame(gameDto));
             } catch (RuntimeException e) {
                 res.status(503);
@@ -49,7 +48,7 @@ public class ChessWebController {
 
         post("/start/resumeGame", (req, res) -> {
             try {
-                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 return gson.toJson(service.resumeGame(gameDto));
             } catch (RuntimeException e) {
                 res.status(503);
@@ -67,9 +66,10 @@ public class ChessWebController {
             }
         });
 
-        get("/status", (req, res) -> {
+        get("/status/:roomName", (req, res) -> {
             try {
-                return gson.toJson(service.status());
+                GameInfoDto gameInfoDto = new GameInfoDto(req.params(":roomName"));
+                return gson.toJson(service.status(gameInfoDto));
             } catch (RuntimeException e) {
                 res.status(503);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
@@ -77,18 +77,12 @@ public class ChessWebController {
         });
 
         get("/finish", (req, res) -> {
-            try {
-                service.finish();
-            } catch (RuntimeException e) {
-                res.status(503);
-                return gson.toJson(new ErrorMessageDto(e.getMessage()));
-            }
-            return null;
+            return render(new HashMap<>(), "index.html");
         });
 
         post("/finish", (req, res) -> {
             try {
-                GameDto gameDto = gson.fromJson(req.body(), GameDto.class);
+                GameInfoDto gameDto = gson.fromJson(req.body(), GameInfoDto.class);
                 service.deleteAndFinish(gameDto);
             } catch (RuntimeException e) {
                 res.status(503);

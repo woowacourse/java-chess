@@ -1,6 +1,6 @@
 package web.dao;
 
-import web.dto.GameDto;
+import web.dto.GameInfoDto;
 import web.dto.PieceDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ class BoardDaoTest {
     @BeforeEach
     void beforeEach() {
         gameDao = new GameDao();
-        gameDao.save(new GameDto(ROOM_NAME));
+        gameDao.save(new GameInfoDto(ROOM_NAME));
         boardDao = new BoardDao();
     }
 

@@ -4,11 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
-import chess.domain.game.GameState;
-import chess.domain.game.Ready;
+import chess.domain.game.Game;
 import chess.domain.piece.*;
-import chess.request.BoardAndTurnInfo;
-import chess.request.ScoreResponse;
 import web.dao.BoardDao;
 import web.dao.GameDao;
 import web.dto.*;
@@ -19,45 +16,46 @@ import java.util.Map;
 
 public class ChessService {
 
-    private GameState gameState;
     private final BoardDao boardDao;
     private final GameDao gameDao;
 
     public ChessService(BoardDao boardDao, GameDao gameDao) {
-        this.gameState = new Ready();
         this.boardDao = boardDao;
         this.gameDao = gameDao;
     }
 
-    public WebBoardDto startNewGame(GameDto gameDto) {
+    public WebBoardDto startNewGame(GameInfoDto gameDto) {
         gameDao.save(gameDto);
-        gameState = this.gameState.start(new Board(InitialBoardGenerator.generate()), Color.WHITE);
+        Game game = new Game(new Board(InitialBoardGenerator.generate()), Color.WHITE);
 
-        BoardAndTurnInfo response = (BoardAndTurnInfo) gameState.getResponse();
-        Map<Point, Piece> responseBoard = response.getBoard();
-        for (Point point : responseBoard.keySet()) {
-            savePiece(gameDto, responseBoard, point);
+        Map<Point, Piece> pointPieces = game.getPointPieces();
+        for (Point point : pointPieces.keySet()) {
+            savePiece(gameDto, pointPieces, point);
         }
-        return new WebBoardDto(response, true);
+        return new WebBoardDto(game.getPointPieces(), game.getTurnColor(), game.isRunnable());
     }
 
-    private void savePiece(GameDto gameDto, Map<Point, Piece> responseBoard, Point point) {
+    private void savePiece(GameInfoDto gameDto, Map<Point, Piece> responseBoard, Point point) {
         if (!responseBoard.get(point).isSameType(PieceType.EMPTY)) {
             boardDao.save(new PieceDto(gameDto.getRoomName(), point.convertPointToId(),
                     responseBoard.get(point).getPieceType(), responseBoard.get(point).getPieceColor()));
         }
     }
 
-    public WebBoardDto resumeGame(GameDto gameDto) {
-        GameDto findGame = gameDao.findByRoomName(gameDto.getRoomName());
+    public WebBoardDto resumeGame(GameInfoDto gameDto) {
+        Game game = findGame(gameDto);
+        return new WebBoardDto(game.getPointPieces(), game.getTurnColor(), game.isRunnable());
+    }
+
+    public Game findGame(GameDto gameDto) {
+        GameInfoDto findGame = gameDao.findByRoomName(gameDto.getRoomName());
         if (findGame == null) {
             throw new IllegalArgumentException("[ERROR] 존재하는 게임이 없습니다.");
         }
         List<PieceDto> allPieces = boardDao.findAllPiecesByRoomName(gameDto.getRoomName());
         Map<Point, Piece> pointPieces = new HashMap<>();
         createBoard(pointPieces, allPieces);
-        gameState = gameState.start(new Board(pointPieces), Color.convertColorByString(findGame.getTurnColor()));
-        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), gameState.isRunnable());
+        return new Game(new Board(pointPieces), Color.convertColorByString(findGame.getTurnColor()));
     }
 
     public void createBoard(Map<Point, Piece> pointPieces, List<PieceDto> allPieces) {
@@ -79,33 +77,21 @@ public class ChessService {
     }
 
     public WebBoardDto move(MoveInfoDto moveInfo) {
-        gameState = gameState.move(List.of(Point.of(moveInfo.getFrom()), Point.of(moveInfo.getTo())));
+        Game game = findGame(moveInfo);
+        game.move(List.of(Point.of(moveInfo.getFrom()), Point.of(moveInfo.getTo())));
         boardDao.deleteByRoomNameAndPosition(moveInfo.getRoomName(), moveInfo.getTo());
         boardDao.update(moveInfo.getRoomName(), moveInfo.getFrom(), moveInfo.getTo());
-        return new WebBoardDto((BoardAndTurnInfo) gameState.getResponse(), gameState.isRunnable());
+        gameDao.update(new GameInfoDto(moveInfo.getRoomName(), game.getTurnColor()));
+        return new WebBoardDto(game.getPointPieces(), game.getTurnColor(), game.isRunnable());
     }
 
-    public WebStatusDto status() {
-        gameState = gameState.status();
-        ScoreResponse response = (ScoreResponse) gameState.getResponse();
-        if (response.getWhiteScore() > response.getBlackScore()) {
-            return new WebStatusDto(response.getWhiteScore(),
-                    response.getBlackScore(), Color.WHITE.toString());
-        }
-        if (response.getWhiteScore() < response.getBlackScore()) {
-            return new WebStatusDto(response.getWhiteScore(),
-                    response.getBlackScore(), Color.BLACK.toString());
-        }
-        return new WebStatusDto(response.getWhiteScore(),
-                response.getBlackScore(), "DRAW");
+    public WebStatusDto status(GameInfoDto gameInfoDto) {
+        Game game = findGame(gameInfoDto);
+        return new WebStatusDto(game.calculateScore().get(Color.WHITE),
+                game.calculateScore().get(Color.BLACK));
     }
 
-    public void finish() {
-        gameState = gameState.finish();
-    }
-
-    public void deleteAndFinish(GameDto gameDto) {
-        gameState = gameState.finish();
+    public void deleteAndFinish(GameInfoDto gameDto) {
         gameDao.delete(gameDto.getRoomName());
     }
 }

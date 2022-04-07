@@ -1,6 +1,6 @@
 package web.dto;
 
-public class MoveInfoDto {
+public class MoveInfoDto implements GameDto{
 
     private final String roomName;
     private final String from;
@@ -12,6 +12,7 @@ public class MoveInfoDto {
         this.to = to;
     }
 
+    @Override
     public String getRoomName() {
         return roomName;
     }
