@@ -1,6 +1,6 @@
 create table chess_game
 (
-    turn  varchar(5) not null;
+    turn varchar(5) not null
 );
 
 insert into chess_game (turn) value ("WHITE");
