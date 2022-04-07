@@ -80,7 +80,7 @@ public class BoardDao extends Dao {
 
     public void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto) {
         String query = String.format(
-                "UPDATE %s SET x_axis = ?, y_axis = ? WHERE x_axis = ? AND y_axis = ?", TABLE_NAME);
+                "UPDATE %s SET x_axis = ?, y_axis = ? WHERE x_axis = ? AND y_axis = ? AND game_id = ?", TABLE_NAME);
 
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
@@ -88,6 +88,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(2, updatePiecePositionDto.getToYAxisValueAsString());
             preparedStatement.setString(3, updatePiecePositionDto.getFromXAxisValueAsString());
             preparedStatement.setString(4, updatePiecePositionDto.getFromYAxisValueAsString());
+            preparedStatement.setString(5, updatePiecePositionDto.getGameId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException();
