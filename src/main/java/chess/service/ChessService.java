@@ -29,16 +29,17 @@ public class ChessService {
     private ChessBoard chessBoard = null;
 
     public void start() {
-        if (isNotSaved()) {
+        int lastGameId = gameDao.findLastGameId();
+        if (isNotSaved(lastGameId)) {
             chessBoard = ChessBoardFactory.initBoard();
             chessBoard.changeStatus(new Playing());
             return;
         }
-        loadLastGame();
+        loadLastGame(lastGameId);
     }
 
-    private boolean isNotSaved() {
-        return gameDao.findLastGameId() == EMPTY;
+    private boolean isNotSaved(int lastGameId) {
+        return lastGameId == EMPTY_RESULT;
     }
 
     public void save() {
@@ -64,9 +65,8 @@ public class ChessService {
         return entry.getValue().getColor().name();
     }
 
-    private void loadLastGame() {
+    private void loadLastGame(int lastGameId) {
         HashMap<Position, ChessPiece> board = new HashMap<>();
-        int lastGameId = gameDao.findLastGameId();
         for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
             ChessPiece piece = makePiece(pieceDto);
             board.put(new Position(pieceDto.getPosition()), piece);
