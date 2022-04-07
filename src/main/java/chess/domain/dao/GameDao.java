@@ -13,7 +13,7 @@ public class GameDao {
     private int id = 0;
 
     public GameDao() {
-        connection = Connector.getConnection();
+        connection = Connector.makeConnection();
     }
 
     public GameDao(final Connection connection) {
@@ -25,6 +25,7 @@ public class GameDao {
         try {
             final PreparedStatement statement = makeSaveStatements(chessBoard, sql);
             statement.executeUpdate();
+            statement.close();
             return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -77,6 +78,7 @@ public class GameDao {
             int id = findLastGameId();
             statement.setInt(1, id);
             statement.executeUpdate();
+            statement.close();
             return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -13,7 +13,7 @@ public class BoardDao {
     private int id = 0;
 
     public BoardDao() {
-        connection = Connector.getConnection();
+        connection = Connector.makeConnection();
     }
 
     BoardDao(final Connection connection) {
@@ -25,6 +25,7 @@ public class BoardDao {
         try {
             final PreparedStatement statement = makeSaveStatement(gameId, position, piece, color, sql);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -76,6 +77,7 @@ public class BoardDao {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

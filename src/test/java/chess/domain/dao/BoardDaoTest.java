@@ -23,7 +23,7 @@ class BoardDaoTest {
 
     @BeforeEach
     void set() throws SQLException {
-        connection = Connector.getConnection();
+        connection = Connector.makeConnection();
         boardDao = new BoardDao(connection);
         gameDao = new GameDao(connection);
         connection.setAutoCommit(false);
@@ -71,5 +71,6 @@ class BoardDaoTest {
     @AfterEach
     void end() throws SQLException {
         connection.rollback();
+        connection.close();
     }
 }
