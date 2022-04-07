@@ -1,6 +1,6 @@
 package chess.controller;
 
-import static chess.EmblemMapper.*;
+import static chess.MappingUtil.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;

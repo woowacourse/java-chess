@@ -11,7 +11,7 @@ import chess.model.Position;
 import chess.model.Rank;
 import chess.model.piece.Piece;
 
-public class EmblemMapper {
+public class MappingUtil {
     private static final Map<String, String> emblemToFullNameTable = new HashMap<>();
 
     static {
