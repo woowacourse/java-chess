@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.domain.dto.GameDto;
+import chess.dto.GameDto;
 import chess.domain.entity.Game;
 import chess.util.DbConnection;
 import java.sql.Connection;

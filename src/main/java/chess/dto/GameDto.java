@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import chess.domain.game.ChessGame;
 import chess.domain.state.Ready;

@@ -4,9 +4,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.domain.piece.PieceColor;
-import chess.domain.dto.MovableDto;
-import chess.domain.dto.ResponseDto;
-import chess.domain.dto.ResponseStatusDto;
+import chess.dto.MovableDto;
+import chess.dto.ResponseDto;
+import chess.dto.ResponseStatusDto;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Status;
 import chess.service.ChessService;
