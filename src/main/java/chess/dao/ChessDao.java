@@ -43,11 +43,27 @@ public class ChessDao {
         }
     }
 
-    public void saveChessBoard(int chessGameId, ChessBoard chessBoard) {
+    public void saveChessBoard(ChessBoard chessBoard) {
+        int chessGameId = findChessGameId();
         Map<ChessBoardPosition, ChessPiece> board = chessBoard.getBoard();
         for (Entry<ChessBoardPosition, ChessPiece> boardBlock : board.entrySet()) {
             int chessPieceId = findChessPieceId(boardBlock.getValue());
             saveChessBoardPosition(boardBlock.getKey(), chessPieceId, chessGameId);
+        }
+    }
+
+    private int findChessGameId() {
+        final Connection connection = getConnection();
+        final String sql = "select id from chessgame";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                throw new NoSuchElementException(DATA_NOT_EXISTS_EXCEPTION);
+            }
+            return resultSet.getInt(TABLE_ID);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
         }
     }
 
@@ -78,6 +94,28 @@ public class ChessDao {
             statement.setString(2, String.valueOf(chessBoardPosition.getColumn()));
             statement.setInt(3, chessPieceId);
             statement.setInt(4, chessGameId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteChessBoard() {
+        final Connection connection = getConnection();
+        final String sql = "delete from chessboard";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteGameState() {
+        final Connection connection = getConnection();
+        final String sql = "delete from chessgame";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

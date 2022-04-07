@@ -10,8 +10,13 @@ public class ChessService {
         this.chessDao = new ChessDao();
     }
 
-    public void create(GameState gameState) {
-        int chessGameId = chessDao.saveGameState(gameState);
-        chessDao.saveChessBoard(chessGameId, gameState.getChessBoard());
+    public void createChessGame(GameState gameState) {
+        chessDao.saveGameState(gameState);
+        chessDao.saveChessBoard(gameState.getChessBoard());
+    }
+
+    public void deleteChessGame() {
+        chessDao.deleteChessBoard();
+        chessDao.deleteGameState();
     }
 }

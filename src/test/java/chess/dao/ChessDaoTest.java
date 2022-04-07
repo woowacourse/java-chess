@@ -23,6 +23,22 @@ class ChessDaoTest {
     void saveChessBoard() {
         ChessDao chessDao = new ChessDao();
 
-        assertThatNoException().isThrownBy(() -> chessDao.saveChessBoard(2, ChessBoard.create()));
+        assertThatNoException().isThrownBy(() -> chessDao.saveChessBoard(ChessBoard.create()));
+    }
+
+    @Test
+    @DisplayName("체스 보드의 모든 체스 피스를 DB에서 제거한다.")
+    void deleteChessBoard() {
+        ChessDao chessDao = new ChessDao();
+
+        assertThatNoException().isThrownBy(chessDao::deleteChessBoard);
+    }
+
+    @Test
+    @DisplayName("체스 게임의 상태를 DB에서 제거한다.")
+    void deleteGameState() {
+        ChessDao chessDao = new ChessDao();
+
+        assertThatNoException().isThrownBy(chessDao::deleteGameState);
     }
 }

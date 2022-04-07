@@ -48,7 +48,7 @@ public class WebChessController {
 
         get("/start", (req, res) -> {
             gameState = gameState.start();
-            chessService.create(gameState);
+            chessService.createChessGame(gameState);
 
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
@@ -57,6 +57,8 @@ public class WebChessController {
 
         get("/end", (req, res) -> {
             gameState = new Ready();
+            chessService.deleteChessGame();
+
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
             return new ModelAndView(model, VIEW);
