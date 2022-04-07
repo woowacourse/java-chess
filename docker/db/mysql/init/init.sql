@@ -9,7 +9,5 @@ create table piece
 create table teamColor
 (
     currentTurn varchar(10) not null,
-    primary key (teamColor)
+    primary key (currentTurn)
 );
-
-insert into teamColor (currentTurn) values 'WHITE';
