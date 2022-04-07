@@ -1,14 +1,12 @@
-create table member
-(
-    id   varchar(10) not null,
-    name varchar(20) not null,
-    primary key (id)
+CREATE TABLE game (
+	game_id INT PRIMARY KEY NOT NULL,
+	current_turn VARCHAR(10) DEFAULT'white'
 );
-
-create table role
-(
-    user_id varchar(10) not null,
-    role varchar(10) not null,
-    primary key (user_id),
-    foreign key (user_id) references member (id)
+CREATE TABLE piece (
+	piece_id INT PRIMARY KEY AUTO_INCREMENT,
+    game_id INT NOT NULL,
+    piece_name VARCHAR(10) NOT NULL,
+    piece_color VARCHAR(10) NOT NULL,
+    position VARCHAR(2) NOT NULL,
+	FOREIGN KEY (game_id) REFERENCES game(game_id)
 );
