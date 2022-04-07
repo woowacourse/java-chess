@@ -35,7 +35,16 @@ send.addEventListener("click", function () {
         alert("게임 이름은 빈칸일 수 없습니다.")
         return;
     }
-    fetch('/start/' + name.value,
+    const request = {
+        name: name.value,
+    }
+    fetch('/start', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request)
+        }
     ).then(handleErrors)
         .then(res => res.json())
         .then(res => loadChessPage(res))

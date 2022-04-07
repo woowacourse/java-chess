@@ -7,6 +7,7 @@ import static spark.Spark.post;
 
 import chess.dao.GameDaoImpl;
 import chess.domain.board.Position;
+import chess.dto.request.GameNameDto;
 import chess.dto.request.MoveDto;
 import chess.dto.response.ErrorDto;
 import chess.dto.response.GameDto;
@@ -50,8 +51,9 @@ public class WebChessController {
 			return render(model, "load.html");
 		});
 
-		get("/start/:name", (req, res) -> {
-			GameDto gameDto = chessService.start(req.params(":name"));
+		post("/start", (req, res) -> {
+			GameNameDto gameNameDto = gson.fromJson(req.body(), GameNameDto.class);
+			GameDto gameDto = chessService.start(gameNameDto.getName());
 			return gson.toJson(gameDto);
 		});
 
