@@ -30,6 +30,8 @@ public class WebGameController {
     private static final String REGEX_VALUE = "=";
     private static final String REGEX_DATA = "&";
 
+    private static final String DATABASE_NAME = "chess";
+
     private static final int INDEX_KEY = 0;
     private static final int INDEX_VALUE = 1;
     private static final int INDEX_COLUMN = 0;
@@ -68,13 +70,13 @@ public class WebGameController {
     }
 
     public void load() throws SQLException {
-        Map<String, PieceDto> rawBoard = boardDao.load();
+        Map<String, PieceDto> rawBoard = boardDao.loadFrom(DATABASE_NAME);
         Map<Position, Piece> board = rawBoard.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> parsePosition(entry.getKey()),
                         entry -> parsePiece(entry.getValue())
                 ));
-        chessGame.load(board, gameDao.isWhiteTurn());
+        chessGame.load(board, gameDao.isWhiteTurnIn(DATABASE_NAME));
     }
 
     private Piece parsePiece(PieceDto piece) {
@@ -113,8 +115,8 @@ public class WebGameController {
     }
 
     public void save() throws SQLException {
-        gameDao.save();
-        boardDao.save(chessGame.getBoard().getSquares());
+        gameDao.saveTo(DATABASE_NAME);
+        boardDao.saveTo(DATABASE_NAME, chessGame.getBoard().getSquares());
     }
 
     public Map<String, Object> end() {

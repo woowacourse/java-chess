@@ -8,7 +8,7 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: chess
+      MYSQL_MULTIPLE_DATABASES: chess,chess_test
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       TZ: Asia/Seoul

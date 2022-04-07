@@ -9,9 +9,9 @@ import java.sql.Statement;
 
 public class GameDao {
 
-    public void save() throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
-        final String sql = chooseSaveSql();
+    public void saveTo(String databaseName) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+        final String sql = chooseSaveSql(databaseName);
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setBoolean(1, Camp.BLACK.isNotTurn());
@@ -19,16 +19,16 @@ public class GameDao {
         DatabaseConnector.close(connection, statement);
     }
 
-    private String chooseSaveSql() throws SQLException {
+    private String chooseSaveSql(String databaseName) throws SQLException {
         String sql = "insert into game (no, white_turn) values (0,?)";
-        if (isGameExist()) {
+        if (isGameExistIn(databaseName)) {
             sql = "update game set white_turn = ?";
         }
         return sql;
     }
 
-    private boolean isGameExist() throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
+    private boolean isGameExistIn(String databaseName) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
         final String sql = "select no from game";
 
         Statement statement = connection.createStatement();
@@ -38,8 +38,8 @@ public class GameDao {
         return gameExist;
     }
 
-    public boolean isWhiteTurn() throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
+    public boolean isWhiteTurnIn(String databaseName) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
         final String sql = "select white_turn from game";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);

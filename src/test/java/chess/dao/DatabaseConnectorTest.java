@@ -10,6 +10,6 @@ public class DatabaseConnectorTest {
     @DisplayName("chess DB에 연결한다.")
     @Test
     void getConnection() {
-        assertThatNoException().isThrownBy(DatabaseConnector::getConnection);
+        assertThatNoException().isThrownBy(() -> DatabaseConnector.getConnectionWith("chess"));
     }
 }

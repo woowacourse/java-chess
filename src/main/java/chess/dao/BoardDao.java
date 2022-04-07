@@ -15,9 +15,9 @@ import java.util.TreeMap;
 
 public class BoardDao {
 
-    public void save(Map<Position, Piece> board) throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
-        final String sql = chooseSaveSql();
+    public void saveTo(String databaseName, Map<Position, Piece> board) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+        final String sql = chooseSaveSql(databaseName);
 
         PreparedStatement statement = connection.prepareStatement(sql);
         for (Entry<Position, Piece> entry : board.entrySet()) {
@@ -26,9 +26,9 @@ public class BoardDao {
         DatabaseConnector.close(connection, statement);
     }
 
-    private String chooseSaveSql() throws SQLException {
+    private String chooseSaveSql(String databaseName) throws SQLException {
         String sql = "insert into piece (no, game_no, type, white, position) values (0, 1, ?, ?, ?)";
-        if (isBoardExist()) {
+        if (isBoardExistIn(databaseName)) {
             sql = "update piece set type = ?, white = ? where position = ?";
         }
         return sql;
@@ -42,8 +42,8 @@ public class BoardDao {
         statement.execute();
     }
 
-    private boolean isBoardExist() throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
+    private boolean isBoardExistIn(String databaseName) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
         final String sql = "select no from piece";
 
         Statement statement = connection.createStatement();
@@ -53,8 +53,8 @@ public class BoardDao {
         return boardExist;
     }
 
-    public Map<String, PieceDto> load() throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
+    public Map<String, PieceDto> loadFrom(String databaseName) throws SQLException {
+        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
         final String sql = "select type, white, position from piece";
 
         Map<String, PieceDto> board = new TreeMap<>();

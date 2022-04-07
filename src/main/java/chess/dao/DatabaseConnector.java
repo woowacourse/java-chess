@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnector {
-    private static final String URL = "jdbc:mysql://localhost:3307/chess";
+    private static final String URL = "jdbc:mysql://localhost:3307/";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    static Connection getConnectionWith(String databaseName) throws SQLException {
+        return DriverManager.getConnection(URL + databaseName, USER, PASSWORD);
     }
 
     static void close(Connection connection, PreparedStatement statement) {
