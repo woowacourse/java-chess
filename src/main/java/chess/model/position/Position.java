@@ -53,13 +53,13 @@ public class Position implements Comparable<Position> {
         return Position.of(nextFile, nextRank);
     }
 
-    public boolean isLastFile() {
-        return file.equals(File.H);
-    }
-
     public boolean isInitPawn(Direction direction) {
         return (direction == Direction.N && rank == Rank.TWO)
                 || (direction == Direction.S && rank == Rank.SEVEN);
+    }
+
+    public boolean isLastFile() {
+        return file.equals(File.H);
     }
 
     public String getPosition() {

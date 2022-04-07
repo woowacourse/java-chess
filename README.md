@@ -6,6 +6,7 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
 ## 1단계
 
 ### 입력

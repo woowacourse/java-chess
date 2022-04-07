@@ -4,6 +4,9 @@ public class Turn {
     private static final Turn TURN_BLACK = new Turn(Team.BLACK);
     private static final Turn TURN_WHITE = new Turn(Team.WHITE);
     private static final Turn TURN_NONE = new Turn(Team.NONE);
+    private static final String BLACK = "black";
+    private static final String WHITE = "white";
+
     private final Team team;
 
     public Turn(Team team) {
@@ -15,9 +18,9 @@ public class Turn {
     }
 
     public static Turn from(String team) {
-        if ("black".equalsIgnoreCase(team)) {
+        if (BLACK.equalsIgnoreCase(team)) {
             return TURN_BLACK;
-        } else if ("white".equalsIgnoreCase(team)) {
+        } else if (WHITE.equalsIgnoreCase(team)) {
             return TURN_WHITE;
         }
         return TURN_NONE;
