@@ -21,7 +21,7 @@ import static spark.Spark.staticFiles;
 public class WebApplication {
 
     public static void main(String[] args) {
-        port(8081);
+        port(8082);
         staticFiles.location("/static");
 
         final Board initBoard = new BoardInitializer().init();
@@ -78,6 +78,12 @@ public class WebApplication {
 
         post("/save", (req, res) -> {
             webChessGame.save();
+            res.redirect("/start");
+            return null;
+        });
+
+        post("/find", (req, res) -> {
+            webChessGame.findRecentBoard();
             res.redirect("/start");
             return null;
         });

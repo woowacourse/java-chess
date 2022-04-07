@@ -27,6 +27,8 @@
             <button>점수</button>
         </form>
 
+        <br />
+
         <div class="score">
             {{#each score}}
             <h1> {{@key}} : {{this}} </h1>
@@ -36,6 +38,14 @@
         <form action="/save" method="post">
             <button onclick="alert('게임이 저장되었습니다.')"> 게임저장 </button>
         </form>
+
+        <br />
+
+        <form action="/find" method="post">
+            <button onclick="alert('가장 최근 게임을 불러옵니다.')"> 최신 게임 불러오기 </button>
+        </form>
+
+        <br />
 
         <form action="/end" method="get">
             <button> 게임종료 </button>
