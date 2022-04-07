@@ -38,7 +38,7 @@ public final class PieceDao {
         statement.executeBatch();
     }
 
-    public void move(final Position from, final Position to) {
+    public void updatePiece(final Position from, final Position to) {
         try {
             delete(to);
             update(from, to);
