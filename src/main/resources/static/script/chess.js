@@ -26,7 +26,7 @@ function onClick(event) {
     function postTwoCells() {
         if (squareIdList.length === 2) {
             makeAllCellsNotClicked()
-            postForm('/move', squareIdList)
+            postForm('/move/game', squareIdList)
         }
     }
 
@@ -58,16 +58,16 @@ function onClick(event) {
     function onButtonClick() {
         const classList = target.classList
         if (classList.contains('start-button')) {
-            location.href = "/new-board"
+            location.href = "/new-board/game"
         }
         if (classList.contains('status-button')) {
-            location.href = "/status"
+            location.href = "/status/game"
         }
         if (classList.contains('board-button')) {
-            location.href = "/board"
+            location.href = "/board/game"
         }
         if (classList.contains('end-button')) {
-            location.href = '/game-end'
+            location.href = '/game-end/game'
         }
     }
 }

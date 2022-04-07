@@ -12,7 +12,7 @@ public final class ChessController {
     private static final int TO_INDEX = 1;
 
     private final ChessService service;
-
+    private final String gameName = "gameName";
     public ChessController(ChessService service) {
         this.service = service;
     }
@@ -20,7 +20,7 @@ public final class ChessController {
     public void run() {
         do {
             runUntilValid(this::executeByInput);
-        } while (service.isRunning());
+        } while (service.isRunning(gameName));
     }
 
     private void runUntilValid(Runnable runner) {
@@ -48,23 +48,23 @@ public final class ChessController {
 
     public void start(GameCommandRequest request) {
         OutputView.startGame();
-        service.initGame();
-        OutputView.printBoard(service.getAllPieceLetter());
+        service.initGame(gameName);
+        OutputView.printBoard(service.getAllPieceLetter(gameName));
     }
 
     public void move(GameCommandRequest request) {
         List<String> body = request.getBody();
-        service.move(body.get(FROM_INDEX), body.get(TO_INDEX));
-        OutputView.printBoard(service.getAllPieceLetter());
+        service.move(gameName, body.get(FROM_INDEX), body.get(TO_INDEX));
+        OutputView.printBoard(service.getAllPieceLetter(gameName));
     }
 
     public void status(GameCommandRequest request) {
-        OutputView.printWinner(service.getResult());
+        OutputView.printWinner(service.getResult(gameName));
         this.end(request);
     }
 
     public void end(GameCommandRequest request) {
-        service.endGame();
+        service.endGame(gameName);
         OutputView.printEndMessage();
     }
 }

@@ -22,7 +22,7 @@ public class GameDaoTest {
 
     @Test
     void update() {
-        gameDao.update(new ChessGameDto("PLAYING", "WHITE"), 11);
+        gameDao.update(new ChessGameDto("game","PLAYING", "WHITE"));
     }
 
 //    @Test

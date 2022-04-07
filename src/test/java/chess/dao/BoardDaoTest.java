@@ -19,7 +19,7 @@ class BoardDaoTest {
         PieceDto firstPiece = new PieceDto("pawn", "black");
         Map<String, PieceDto> board = Map.of("a1", firstPiece);
         BoardDto boardDto = new BoardDto(board);
-        boardDao.initBoard(boardDto, 11);
+        boardDao.initBoard(boardDto, "game");
     }
 
     @Test

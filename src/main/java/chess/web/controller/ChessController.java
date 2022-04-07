@@ -17,29 +17,29 @@ public class ChessController {
         this.service = service;
     }
 
-    public void initGame() {
-        service.initGame();
+    public void initGame(String gameName) {
+        service.initGame(gameName);
     }
 
-    public BoardDto getRunningBoard() {
-        if (service.isRunning() || service.isGameEmpty()) {
-            return service.getBoard();
+    public BoardDto getRunningBoard(String gameName) {
+        if (service.isRunning(gameName) || service.isGameEmpty(gameName)) {
+            return service.getBoard(gameName);
         }
         return null;
     }
 
-    public void move(String body) {
+    public void move(String gameName, String body) {
         String[] keyValues = body.split(BODY_DELIMITER);
         String from = keyValues[FROM_SQUARE_INDEX].split(KEY_VALUE_DELIMITER)[VALUE_INDEX];
         String to = keyValues[TO_SQUARE_INDEX].split(KEY_VALUE_DELIMITER)[VALUE_INDEX];
-        service.move(from, to);
+        service.move(gameName, from, to);
     }
 
-    public GameResultDto status() {
-        return service.getResult();
+    public GameResultDto status(String gameName) {
+        return service.getResult(gameName);
     }
 
-    public void end() {
-        service.endGame();
+    public void end(String gameName) {
+        service.endGame(gameName);
     }
 }

@@ -55,6 +55,9 @@ public final class Board {
 
     private MoveType getMoveType(Piece sourcePiece, Square targetSquare) {
         Piece targetPiece = findPieceBySquare(targetSquare);
+        if (targetPiece.isAlly(sourcePiece)) {
+            throw new IllegalArgumentException("동료를 공격할 수 없습니다.");
+        }
         return MoveType.of(sourcePiece.isEnemy(targetPiece));
     }
 

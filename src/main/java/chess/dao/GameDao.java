@@ -9,13 +9,13 @@ import java.sql.SQLException;
 
 public class GameDao {
 
-    public void update(ChessGameDto dto, int gameId) {
-        String sql = "update game set status = ?, turn = ? where id = ?";
+    public void update(ChessGameDto dto) {
+        String sql = "update game set status = ?, turn = ? where name = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, dto.getStatus());
             statement.setString(2, dto.getTurn());
-            statement.setInt(3, gameId);
+            statement.setString(3, dto.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -23,7 +23,7 @@ public class GameDao {
     }
 
     public ChessGameDto findByName(String name) {
-        String sql = "select id, status, turn from game where name = ?";
+        String sql = "select name, status, turn from game where name = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
@@ -31,7 +31,7 @@ public class GameDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return new ChessGameDto(resultSet.getInt("id"), resultSet.getString("status"),
+            return new ChessGameDto(resultSet.getString("name"), resultSet.getString("status"),
                     resultSet.getString("turn"));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,12 +39,12 @@ public class GameDao {
         }
     }
 
-    public void updateStatus(StatusDto statusDto, int gameId) {
-        String sql = "update game set status = ? where id = ?";
+    public void updateStatus(StatusDto statusDto, String name) {
+        String sql = "update game set status = ? where name = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, statusDto.getStatus());
-            statement.setInt(2, gameId);
+            statement.setString(2, name);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -29,47 +29,49 @@ public class WebApplication {
         ChessController controller = new ChessController(new ChessService(new BoardDao(), new GameDao()));
 
         get("/", (req, res) -> {
-            res.redirect("/board");
+            res.redirect("/board/game");
             return null;
         });
 
-        get("/new-board", (req, res) ->
+        get("/new-board/:gameName", (req, res) ->
         {
-            controller.initGame();
-            res.redirect("/board");
+            String gameName = req.params(":gameName");
+            controller.initGame(gameName);
+            res.redirect("/board/"+gameName);
             return null;
         });
 
-        get("/board", (req, res) -> {
-            BoardDto board = controller.getRunningBoard();
+        get("/board/:gameName", (req, res) -> {
+            BoardDto board = controller.getRunningBoard(req.params(":gameName"));
             if (board == null) {
                 res.redirect("/status");
             }
             return render(new ModelAndView(board, "board.html"));
         });
 
-        post("/move", (req, res) -> {
-            controller.move(req.body());
-            res.redirect("/board");
+        post("/move/:gameName", (req, res) -> {
+            String gameName = req.params(":gameName");
+            controller.move(gameName, req.body());
+            res.redirect("/board/" + gameName);
             return null;
         });
 
-        get("/status", (req, res) -> {
-            GameResultDto status = controller.status();
-            controller.end();
+        get("/status/:gameName", (req, res) -> {
+            GameResultDto status = controller.status(req.params(":gameName"));
+            controller.end(req.params(":gameName"));
             return render(new ModelAndView(status, "result.html"));
         });
 
-        get("/exception", (req, res) -> {
-            String exception = URLDecoder.decode(req.cookie("exception"), "UTF-8");
+        get("/exception/:message", (req, res) -> {
+            String exception = URLDecoder.decode(req.params(":message"), "UTF-8");
             Map<String, Object> model = new HashMap<>();
             model.put("exception", exception);
             return render(new ModelAndView(model, "exception.html"));
         });
 
-        get("/game-end", (req, res) -> {
-            controller.end();
-            res.redirect("/board");
+        get("/game-end/:gameName", (req, res) -> {
+            controller.end(req.params(":gameName"));
+            res.redirect("/board/" + req.params(":gameName"));
             return null;
         });
 
@@ -82,10 +84,9 @@ public class WebApplication {
 
     private static void handle(RuntimeException exception, Request request, Response response) {
         try {
-            response.cookie("exception", URLEncoder.encode(exception.getMessage(), "UTF-8"));
+            response.redirect("/exception/" + URLEncoder.encode(exception.getMessage(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        response.redirect("/exception");
     }
 }
