@@ -101,13 +101,17 @@
 - [x] get end 구현
 - [x] 예외 발생 시 alter 로 보여주기
 
-## 5단계 docker - mysqlfh
+## 5단계 docker - mysql 
 
-- [] db 설계하기
-- [] table 구현
-- [] dao 구현
-- [] dao 테스트
-- [] 전체 동작 확인
+- [x] db 설계하기 board, turn
+- [x] table 구현 board, turn
+- [ ] dao 구현
+    - [x] `board` 전체 조회
+    - [x] `board` 업데이트
+    - [ ] `turn` 조회
+    - [ ] `turn` 업데이트
+- [ ] dao 테스트
+- [ ] 전체 동작 확인
 
 ## 페어 프로그래밍 룰
 
