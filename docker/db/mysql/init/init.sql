@@ -1,13 +1,12 @@
-create table member
-(
-    id varchar(10) not null,
-    name varchar(20) not null,
-    primary key (id)
+CREATE TABLE board (
+name VARCHAR(100) NOT NULL primary key,
+turn VARCHAR(10) NOT NULL
 );
 
-create table role(
-    user_id varchar (10) not null,
-    role varchar (10) not null,
-    primary key (user_id),
-    foreign  key (user_id) references member (id)
+CREATE TABLE squares (
+board_name VARCHAR(100) NOT NULL,
+foreign key(board_name) references board(name),
+position VARCHAR(5) NOT NULL,
+piece VARCHAR(10) NOT NULL
 );
+

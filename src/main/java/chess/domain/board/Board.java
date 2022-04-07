@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public final class Board {
-    private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
+    private static final MoveValidator validator = new MoveValidator();
 
     private final Map<Position, Piece> squares;
 
@@ -31,40 +31,8 @@ public final class Board {
     }
 
     public void move(Position from, Position to) {
-        validateMove(from, to);
+        validator.validateMove(squares, from, to);
         replace(from, to, squares.get(from));
-    }
-
-    private void validateMove(Position from, Position to) {
-        checkNotSameTeam(from, to);
-        checkCanMove(from, to);
-        checkRoute(from, to);
-    }
-
-    private void checkNotSameTeam(Position from, Position to) {
-        if (squares.get(from).isSameTeam(squares.get(to))) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void checkCanMove(Position from, Position to) {
-        if (!squares.get(from).canMove(squares.get(to), from, to)
-                && squares.get(to).getName() != Name.NONE) {
-            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-        }
-    }
-
-    private void checkRoute(Position from, Position to) {
-        List<Position> route = findByPosition(from).calculateRoute(from, to);
-        for (Position position : route) {
-            checkIsPiece(position);
-        }
-    }
-
-    private void checkIsPiece(Position position) {
-        if (findByPosition(position).getName() != Name.NONE) {
-            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-        }
     }
 
     private void replace(Position from, Position to, Piece sourceAbstractPiece) {
@@ -72,7 +40,7 @@ public final class Board {
         squares.replace(from, new EmptyPiece());
     }
 
-    public boolean isSameColor(Position position, Team team) {
+    public boolean isTurn(Position position, Team team) {
         return findByPosition(position).getTeam() == team;
     }
 
@@ -85,14 +53,14 @@ public final class Board {
 
     private double getInitScore(Team team) {
         return squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team))
+                .filter(entry -> isTurn(entry.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
     }
 
     private double getPawnMinusScore(Team team) {
         List<Column> pawnsColumns = squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team) && entry.getValue().getName() == Name.PAWN)
+                .filter(entry -> isTurn(entry.getKey(), team) && entry.getValue().getName() == Name.PAWN)
                 .map(entry -> entry.getKey().getColumn())
                 .collect(Collectors.toList());
 
@@ -108,6 +76,11 @@ public final class Board {
                         && entry.getValue().getName() == Name.PAWN
                         && entry.getValue().isSameTeamOrEmpty(team))
                 .count();
+    }
+
+    public boolean isKingExist(Team team) {
+        return squares.values().stream()
+                .anyMatch(piece -> piece.getName() == Name.KING && piece.getTeam() == team);
     }
 
     public Map<Position, Piece> getSquares() {

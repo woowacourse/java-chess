@@ -1,48 +1,76 @@
 package chess.controller;
 
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.staticFiles;
+
+import chess.dao.BoardDao;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
-import chess.domain.game.state.Init;
-import chess.domain.game.state.State;
-import chess.domain.game.state.attribute.StateType;
-import chess.dto.BoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
-import chess.view.InputView;
-import chess.view.OutputView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Controller {
+    private static final BoardDao boardDao = new BoardDao();
+    private static final RenderService service = new RenderService();
+    private static final String GAME_EXIT_ERROR_MESSAGE = "이미 게임이 종료되었습니다";
+
     public void run() {
-        OutputView.printInitMessage();
-        ChessGame chessGame = new ChessGame(new InitBoardStrategy());
-        play(new Init(chessGame), chessGame);
+        staticFiles.location("/static");
+        final Map<String, Object> model = new HashMap<>();
+        get("/", (req, res) -> service.renderStart(model));
+        post("/start", (req, res) -> {
+            String name = req.queryParams("name");
+            create(name);
+            service.setInitWeb(model, name);
+            service.setPlayWeb(model, findGameByDB(name));
+            return service.renderGame(model);
+        });
+        post("/command", (req, res) -> {
+            String name = req.queryParams("name");
+            service.setInitWeb(model, name);
+            save(name, go(model, findGameByDB(name), req.queryParams("command")));
+            service.setPlayWeb(model, findGameByDB(name));
+            return service.renderGame(model);
+        });
+        post("/end", (req, res) -> {
+            String name = req.queryParams("name");
+            service.setInitWeb(model, name);
+            service.setEndWeb(model, findGameByDB(name));
+            boardDao.delete(name);
+            return service.renderEnd(model);
+        });
     }
 
-    private void play(State state, ChessGame chessGame) {
-        while (state.getType() != StateType.END) {
-            printPlayingChessBoard(state, chessGame);
-            printStatus(state, chessGame);
-            state = go(state, InputView.inputCommend());
-        }
+    private void create(String name) {
+        boardDao.create(new ChessGameDto(name, new ChessGame(new InitBoardStrategy())));
     }
 
-    private void printPlayingChessBoard(State state, ChessGame chessGame) {
-        if (state.getType() == StateType.PLAY) {
-            OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
-        }
+    private ChessGame findGameByDB(String name) {
+        return boardDao.findByName(name).getChessGame();
     }
 
-    private void printStatus(State state, ChessGame chessGame) {
-        if (state.getType() == StateType.STATUS) {
-            OutputView.printStatus(chessGame.getScoreOfTeams(), chessGame.getWinner());
-        }
-    }
-
-    private State go(State state, String input) {
+    private ChessGame go(Map<String, Object> model, ChessGame chessGame, String input) {
         try {
-            return state.execute(new CommandDto(input));
+            validateFinished(chessGame);
+            chessGame.execute(new CommandDto(input));
+            model.put("result", new RenderService().getResult(chessGame));
+            return chessGame;
         } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return state;
+            model.put("error", e.getMessage());
         }
+        return chessGame;
+    }
+
+    private void validateFinished(ChessGame chessGame) {
+        if (chessGame.isFinished()) {
+            throw new IllegalArgumentException(GAME_EXIT_ERROR_MESSAGE);
+        }
+    }
+
+    private void save(String name, ChessGame chessGame) {
+        boardDao.save(new ChessGameDto(name, chessGame));
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public final class Position {
+public class Position {
     private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
     private static final int ATTRIBUTE_SIZE = 2;
 
@@ -81,15 +81,11 @@ public final class Position {
         return Objects.hash(column, rank);
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + column +
-                ", rank=" + rank +
-                '}';
-    }
-
     public Column getColumn() {
         return column;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

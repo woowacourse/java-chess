@@ -1,0 +1,32 @@
+body {
+    align-self: center;
+    align-items: center;
+    align-content: center;
+}
+
+table, th {
+    text-align: center;
+    font-size: 50px;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+}
+
+th {
+    font-size: 20px;
+}
+
+.black {
+    background: #b12eff;
+}
+
+.white {
+    background: #ffbc54;
+}
+
+.file {
+    font-size: 20px;
+}
+

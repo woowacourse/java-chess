@@ -4,16 +4,19 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.piece.attribute.Team;
+import chess.dto.CommandDto;
+import chess.view.Command;
 import java.util.Map;
 
 public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
+    private static final String INVALID_COMMEND_MESSAGE = "move 만 입력할 수 있습니다.";
 
     private final Board board;
-    private boolean isFinished = false;
     private Team turn = Team.WHITE;
 
-    public ChessGame(Board board) {
+    public ChessGame(Team turn, Board board) {
+        this.turn = turn;
         this.board = board;
     }
 
@@ -21,12 +24,22 @@ public final class ChessGame {
         this.board = new Board(boardStrategy.create());
     }
 
+    public void execute(CommandDto commandDto) {
+        if (isFinished()) {
+            return;
+        }
+        if (commandDto.getCommand() == Command.MOVE) {
+            play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
+            return;
+        }
+        throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
+    }
+
     public void play(Position from, Position to) {
         validateTurn(from);
         boolean isCheckmate = isCheckmate(to);
         board.move(from, to);
         if (isCheckmate) {
-            isFinished = true;
             return;
         }
         turn = turn.changeTeam();
@@ -43,7 +56,7 @@ public final class ChessGame {
     }
 
     private boolean isTurn(Position position) {
-        return board.isSameColor(position, turn);
+        return board.isTurn(position, turn);
     }
 
     public Map<Team, Double> getScoreOfTeams() {
@@ -51,9 +64,13 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
-        if (isFinished) {
+        if (!isFinished()) {
             return getWinnerByScore();
         }
+        return getTurn();
+    }
+
+    public Team getTurn() {
         return turn;
     }
 
@@ -68,7 +85,7 @@ public final class ChessGame {
     }
 
     public boolean isFinished() {
-        return isFinished;
+        return !(board.isKingExist(Team.BLACK) && board.isKingExist(Team.WHITE));
     }
 
     public Board getBoard() {

@@ -63,6 +63,4 @@ public class InjectBoardStrategy implements BoardStrategy {
     public Map<Position, Piece> create() {
         return positionPieceMap;
     }
-
-
 }

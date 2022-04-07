@@ -17,8 +17,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Team;
-import chess.dto.BoardDto;
-import chess.view.OutputView;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -94,7 +92,6 @@ class BoardTest {
                 new Position(Column.A, Rank.TWO),
                 new Position(Column.A, Rank.FOUR)
         );
-
         board.move(
                 new Position(Column.B, Rank.SEVEN),
                 new Position(Column.B, Rank.FIVE)
@@ -103,7 +100,6 @@ class BoardTest {
                 new Position(Column.A, Rank.FOUR),
                 new Position(Column.B, Rank.FIVE)
         );
-        OutputView.printChessBoard(new BoardDto(board));
 
         Map<Team, Double> colorsTotalScore = board.getScoreOfTeams();
 
@@ -111,6 +107,5 @@ class BoardTest {
                 () -> assertThat(colorsTotalScore.get(Team.BLACK)).isEqualTo(37),
                 () -> assertThat(colorsTotalScore.get(Team.WHITE)).isEqualTo(37)
         );
-
     }
 }
