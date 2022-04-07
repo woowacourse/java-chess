@@ -31,7 +31,7 @@ public final class Pawn extends NotNullPiece {
 
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(beforePosition, afterPosition)) {
+        if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
@@ -39,30 +39,23 @@ public final class Pawn extends NotNullPiece {
 
     @Override
     public void move(final Positions positions, final Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(positions)) {
+        if (!canMove(positions)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
     }
 
     @Override
-    public boolean checkCanMoveByDistance(Position beforePosition, Position afterPosition) {
-        return checkCanMoveByDistance(new Positions(beforePosition, afterPosition));
-    }
-
-    private boolean isFirstMove(final Position beforePosition) {
-        if (isSameCampWith(Camp.WHITE)) {
-            return beforePosition.isSameRow(WHITE_PAWN_INITIAL_ROW);
-        }
-        return beforePosition.isSameRow(BLACK_PAWN_INITIAL_ROW);
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        return canMove(new Positions(beforePosition, afterPosition));
     }
 
     @Override
-    public boolean checkCanMoveByDistance(final Positions positions) {
+    public boolean canMove(final Positions positions) {
         int rowDirectedDistance = positions.calculateDirectedRowDistance();
         int columnDistance = positions.calculateColumnDistance();
 
-        if (columnDistance == Math.abs(rowDirectedDistance)) {
+        if (isDiagonalMove(rowDirectedDistance, columnDistance)) {
             return canCapture(positions);
         }
 
@@ -75,18 +68,29 @@ public final class Pawn extends NotNullPiece {
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
     }
 
-    @Override
-    public List<UnitDirectVector> getPossibleDirections() {
-        if (getCamp() == Camp.BLACK) {
-            return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
-        }
-        return List.of(TOP, TOP_LEFT, TOP_RIGHT);
+    private boolean isDiagonalMove(final int rowDirectedDistance, final int columnDistance) {
+        return columnDistance == Math.abs(rowDirectedDistance);
     }
 
     private boolean canCapture(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateDirectedRowDistance();
         return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
+    }
+
+    private boolean isFirstMove(final Position beforePosition) {
+        if (isSameCampWith(Camp.WHITE)) {
+            return beforePosition.isSameRow(WHITE_PAWN_INITIAL_ROW);
+        }
+        return beforePosition.isSameRow(BLACK_PAWN_INITIAL_ROW);
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        if (getCamp() == Camp.BLACK) {
+            return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
+        }
+        return List.of(TOP, TOP_LEFT, TOP_RIGHT);
     }
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {

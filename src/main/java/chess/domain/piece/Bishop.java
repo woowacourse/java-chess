@@ -25,7 +25,7 @@ public final class Bishop extends NotNullPiece {
     public void move(Position beforePosition,
                      Position afterPosition,
                      Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(beforePosition, afterPosition)) {
+        if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
@@ -34,14 +34,14 @@ public final class Bishop extends NotNullPiece {
     @Override
     public void move(final Positions positions,
                      final Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(positions)) {
+        if (!canMove(positions)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
     }
 
     @Override
-    public boolean checkCanMoveByDistance(final Positions positions) {
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateRowDistance();
         return columnDistance == rowDistance;
@@ -58,7 +58,7 @@ public final class Bishop extends NotNullPiece {
     }
 
     @Override
-    public boolean checkCanMoveByDistance(Position beforePosition, Position afterPosition) {
-        return checkCanMoveByDistance(new Positions(beforePosition, afterPosition));
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        return canMove(new Positions(beforePosition, afterPosition));
     }
 }

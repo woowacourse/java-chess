@@ -16,6 +16,7 @@ public class Running implements State {
     private static final String TURN_OPPOSITE_CAMP = "상대 진영의 차례입니다.";
     private static final String CANT_MOVE_WHEN_OBSTACLE_IN_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
     private static final String CANT_READY_WHEN_NOT_RUNNING = "게임 종료가 아닐때는 시작상태로 돌아갈 수 없습니다.";
+    private static final String PAWN_CANT_MOVE_DIAGONAL_WHEN_BLANK = "폰이 대각선으로 움직이는 경우, 타겟이 있을 때만 가능합니다.";
 
     private final Board board;
     private final Camp camp;
@@ -35,6 +36,11 @@ public class Running implements State {
     }
 
     @Override
+    public State move(final Position before, final Position after) {
+        return move(new Positions(List.of(before, after)));
+    }
+
+    @Override
     public State move(final Positions positions) {
         checkValidPosition(positions);
         board.moveIfValidPiece(positions);
@@ -46,15 +52,20 @@ public class Running implements State {
         return new Running(board, switchCamp());
     }
 
-    @Override
-    public State move(final Position before, final Position after) {
-        return move(new Positions(List.of(before, after)));
-    }
-
     private void checkValidPosition(final Positions positions) {
         checkValidBeforePiece(positions.before());
         checkValidBeforePieceTurn(positions.before());
         checkObstaclesFromBeforeToAfterPosition(positions);
+        //추가 검증 : 폰(isPawn)의 경우 다이고날 움직임이라면 -> afterPosition에   타겟이 있는 경우여야한다(notBlankPosition) 라면, 대각선움직임이어야한다.
+        if (board.isPawn(positions.before()) && positions.isDiagonalMove()) {
+            checkPawnValidCapturing(positions);
+        }
+    }
+
+    private void checkPawnValidCapturing(final Positions positions) {
+        if (board.isBlankPosition(positions.after())) {
+            throw new IllegalStateException(PAWN_CANT_MOVE_DIAGONAL_WHEN_BLANK);
+        }
     }
 
     private void checkValidBeforePiece(final Position position) {

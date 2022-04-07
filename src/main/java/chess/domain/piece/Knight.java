@@ -29,7 +29,7 @@ public final class Knight extends NotNullPiece {
 
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(beforePosition, afterPosition)) {
+        if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
@@ -38,14 +38,14 @@ public final class Knight extends NotNullPiece {
     @Override
     public void move(final Positions positions,
                      final Consumer<Piece> movePiece) {
-        if (!checkCanMoveByDistance(positions)) {
+        if (!canMove(positions)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
     }
 
     @Override
-    public boolean checkCanMoveByDistance(Position beforePosition, Position afterPosition) {
+    public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         if (rowDistance == FIRST_MOVABLE_DISTANCE && columnDistance == SECOND_MOVABLE_DISTANCE) {
@@ -55,7 +55,7 @@ public final class Knight extends NotNullPiece {
     }
 
     @Override
-    public boolean checkCanMoveByDistance(final Positions positions) {
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateRowDistance();
         if (rowDistance == FIRST_MOVABLE_DISTANCE && columnDistance == SECOND_MOVABLE_DISTANCE) {

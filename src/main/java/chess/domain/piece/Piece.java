@@ -32,9 +32,9 @@ public abstract class Piece {
     public abstract void move(final Positions positions,
                               final Consumer<Piece> movePiece);
 
-    public abstract boolean checkCanMoveByDistance(Position beforePosition, Position afterPosition);
+    public abstract boolean canMove(Position beforePosition, Position afterPosition);
 
-    public abstract boolean checkCanMoveByDistance(Positions positions);
+    public abstract boolean canMove(Positions positions);
 
     public abstract boolean isNullPiece();
 
@@ -78,7 +78,7 @@ public abstract class Piece {
 
                 if (isNullPieceInitToNextPosition(isNullPiece, position, nextPosition) &&
                     isNullPiece.test(nextPosition) &&
-                    checkCanMoveByDistance(position, nextPosition)
+                    canMove(position, nextPosition)
                 ) {
                     validNextPositions.add(nextPosition);
                     currentPosition = nextPosition;

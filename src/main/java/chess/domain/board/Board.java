@@ -143,7 +143,7 @@ public final class Board {
         final Position oppositePosition = oppositeEntry.getKey();
         final Positions fromOppositeTokingPositions = new Positions(oppositePosition, kingPosition);
 
-        return oppositePiece.checkCanMoveByDistance(fromOppositeTokingPositions)
+        return oppositePiece.canMove(fromOppositeTokingPositions)
             && isNullPieceFromOppositeToKing(fromOppositeTokingPositions);
     }
 
@@ -169,6 +169,11 @@ public final class Board {
         final List<Position> flattedMovableKingPositions = movableKingPositions.values().stream().flatMap(List::stream)
             .collect(Collectors.toList());
         return positions.containsAll(flattedMovableKingPositions);
+    }
+
+    public boolean isPawn(final Position position) {
+        final Piece piece = board.get(position);
+        return piece.getPieceProperty() == PieceProperty.PAWN;
     }
 }
 

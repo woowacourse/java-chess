@@ -52,4 +52,10 @@ public class Positions {
     public int calculateDirectedColumnDistance() {
         return before().columnDirectedDistance(after());
     }
+
+    public boolean isDiagonalMove() {
+        int rowDirectedDistance = calculateDirectedRowDistance();
+        int columnDistance = calculateColumnDistance();
+        return columnDistance == Math.abs(rowDirectedDistance);
+    }
 }

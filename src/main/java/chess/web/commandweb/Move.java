@@ -13,7 +13,6 @@ public final class Move implements WebCommandGenerator {
         final Positions movePositions = Positions.from(command);
 
         System.err.println("move 커맨드가 req된 것을 확인.");
-        System.err.println("move 커맨드가 req된 것을 확인.");
 
         chessGame.move(movePositions);
 
