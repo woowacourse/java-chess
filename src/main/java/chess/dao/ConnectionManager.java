@@ -9,6 +9,7 @@ public final class ConnectionManager {
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
+    private static final String MYSQL_CJ_JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public <T> T executeQuery(ConnectionMapper<T> connectionMapper) {
         try (final Connection connection = getConnection()) {
@@ -31,7 +32,7 @@ public final class ConnectionManager {
 
     private void loadDriver() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(MYSQL_CJ_JDBC_DRIVER);
         } catch (final Exception e) {
             e.printStackTrace();
         }

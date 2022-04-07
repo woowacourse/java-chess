@@ -89,14 +89,6 @@ public class SquareDao {
         return getBySquareAndBoardId(square, boardId).getId();
     }
 
-//    public List<square> getPaths(List<square> squares, int roomId) {
-//        List<square> realsquares = new ArrayList<>();
-//        for (square square : squares) {
-//            realsquares.add(getByFileAndRankAndBoardId(square.getFile(), square.getRank(), roomId));
-//        }
-//        return realsquares;
-//    }
-
     public Map<Square, Piece> findAllSquaresAndPieces(int boardId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "select po.id as po_id, po.square_file, po.square_rank, po.board_id, " +

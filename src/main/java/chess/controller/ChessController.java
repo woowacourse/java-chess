@@ -8,6 +8,7 @@ import chess.dto.BoardsDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
 import java.util.List;
+import org.eclipse.jetty.http.HttpStatus;
 
 public class ChessController {
 
@@ -25,9 +26,9 @@ public class ChessController {
         try {
             chessService.move(source, target, boardId);
         } catch (IllegalArgumentException e) {
-            return ResponseDto.of(400, e.getMessage(), chessService.isEnd(boardId));
+            return ResponseDto.of(HttpStatus.BAD_REQUEST_400, e.getMessage(), chessService.isEnd(boardId));
         }
-        return ResponseDto.of(200, null, chessService.isEnd(boardId));
+        return ResponseDto.of(HttpStatus.OK_200, null, chessService.isEnd(boardId));
     }
 
     public ScoreDto score(int roomId) {

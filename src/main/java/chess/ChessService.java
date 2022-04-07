@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private static final int PROPER_KING_COUNT = 2;
     private final BoardDao boardDao;
     private final SquareDao squareDao;
     private final PieceDao pieceDao;
@@ -52,13 +53,6 @@ public class ChessService {
         final Map<Square, Piece> allPositionsAndPieces = squareDao.findAllSquaresAndPieces(roomId);
         return BoardDto.of(allPositionsAndPieces, board.getTitle(), board.getMembers().get(0),
                 board.getMembers().get(1));
-    }
-
-    private Map<String, Piece> mapPositionToString(Map<Square, Piece> allPositionsAndPieces) {
-        return allPositionsAndPieces.keySet().stream()
-                .collect(Collectors.toMap(
-                        position -> position.getRank().value() + position.getFile().name(),
-                        allPositionsAndPieces::get));
     }
 
     public void move(String source, String target, int boardId) {
@@ -103,10 +97,10 @@ public class ChessService {
                 .filter(Piece::isKing)
                 .count();
 
-        if(kingCount != 2) {
+        if(kingCount != PROPER_KING_COUNT) {
             boardDao.deleteById(boardId);
         }
-        return kingCount != 2;
+        return kingCount != PROPER_KING_COUNT;
     }
 
     public ScoreDto status(int roomId) {

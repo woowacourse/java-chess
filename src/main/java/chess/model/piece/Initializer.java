@@ -1,14 +1,5 @@
 package chess.model.piece;
 
-import chess.model.piece.Bishop;
-import chess.model.piece.Color;
-import chess.model.piece.Empty;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
-import chess.model.piece.Pawn;
-import chess.model.piece.Piece;
-import chess.model.piece.Queen;
-import chess.model.piece.Rook;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;

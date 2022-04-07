@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.Member;
-import chess.model.ConsoleBoard;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
@@ -26,38 +25,6 @@ public class BoardDto {
         this.whiteMemberName = whiteMemberName;
         this.blackMemberName = blackMemberName;
     }
-
-//    public static BoardDto of(Map<Square, Piece> pieces, String roomName, Member whiteMember, Member blackMember) {
-//        List<List<PieceDto>> boardSymbols = new ArrayList<>();
-//        List<Rank> ranks = Arrays.asList(Rank.values());
-//        Collections.reverse(ranks);
-//        for (Rank rank : ranks) {
-//            boardSymbols.add(makeLine(pieces, rank.value()));
-//        }
-//        return new BoardDto(boardSymbols, roomName, whiteMember.getName(), blackMember.getName());
-//    }
-
-//    private static List<PieceDto> makeLine(Map<Square, Piece> pieces, Integer row) {
-//        List<PieceDto> symbols = new ArrayList<>();
-//        for (File column : File.values()) {
-//            symbols.add(PieceDto.of(findByKey(pieces, row, column), column.name() + row, background(row, column)));
-//        }
-//        return symbols;
-//    }
-//
-//    private static String background(Integer row, File column) {
-//        if ((column.value() + row) % 2 == 0) {
-//            return "black";
-//        }
-//        return "white";
-//    }
-
-//    private static String findByKey(Map<String, Piece> pieces, Integer row, File file) {
-//        if (pieces.containsKey(row + file.name())) {
-//            return pieces.get(row + file.name()).symbol();
-//        }
-//        return Symbol.BLANK.value();
-//    }
 
     public static BoardDto of(Map<Square, Piece> pieces, String roomName, Member whiteMember, Member blackMember) {
         List<List<PieceDto>> boardDto = new ArrayList<>();
