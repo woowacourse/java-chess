@@ -51,7 +51,7 @@ public class ChessGameDao {
     public int save(final ChessGame chessGame) {
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
         connection = getConnection();
-        String sql = "INSERT INTO chess_game (state, insert_datetime, update_datetime) VALUES (?, now(), now())";
+        String sql = "INSERT INTO chess_game (state) VALUES (?)";
         try {
             statement = connection.prepareStatement(sql);
             statement.setString(1, chessGameDto.getState());
@@ -88,7 +88,7 @@ public class ChessGameDao {
 
     public void move(final int chessGameId, final String nextState) {
         connection = getConnection();
-        String sql = "UPDATE chess_game SET state = ?, update_datetime = now() WHERE id = ?";
+        String sql = "UPDATE chess_game SET state = ? WHERE id = ?";
         try {
             statement = connection.prepareStatement(sql);
             statement.setString(1, nextState);
