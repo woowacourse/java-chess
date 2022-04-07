@@ -1,22 +1,31 @@
 package chess;
 
-import spark.ModelAndView;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
+
+import chess.dao.ChessService;
+import chess.dao.JdbcPieceDao;
+import chess.dao.JdbcTurnDao;
+import chess.web.controller.ChessWebController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
-
 public class WebApplication {
-    public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+
+    public static void main(String[] args) {
+        port(8080);
+        staticFileLocation("/static");
+
+        ChessWebController chessWebController = new ChessWebController(
+                new ChessService(new JdbcPieceDao(), new JdbcTurnDao()));
+
+        get("/", chessWebController::index, HANDLEBARS_TEMPLATE_ENGINE);
+        get("/start", chessWebController::create, HANDLEBARS_TEMPLATE_ENGINE);
+        get("/move", chessWebController::move, HANDLEBARS_TEMPLATE_ENGINE);
+
+        exception(Exception.class, chessWebController::exceptionHandle);
     }
 }

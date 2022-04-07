@@ -14,6 +14,10 @@ public class ChessBoard {
         this.board = new Board(boardGenerator.generate());
     }
 
+    public void fill(String position, Piece piece) {
+        board.fill(new Position(position), piece);
+    }
+
     public void move(String sourceInput, String targetInput) {
         Position source = new Position(sourceInput);
         Position target = new Position(targetInput);

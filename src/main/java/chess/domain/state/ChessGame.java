@@ -1,16 +1,16 @@
-package chess.domain;
+package chess.domain.state;
 
-import chess.domain.piece.Piece;
-import chess.domain.state.Ready;
-import chess.domain.state.State;
-import java.util.List;
+import chess.domain.Board;
+import chess.domain.ChessBoard;
+import chess.domain.Color;
+import chess.domain.Result;
 
 public class ChessGame {
 
     private State state;
 
-    public ChessGame() {
-        this.state = new Ready();
+    public ChessGame(State state) {
+        this.state = state;
     }
 
     public void start() {
@@ -25,8 +25,16 @@ public class ChessGame {
         state = state.move(source, target);
     }
 
+    public boolean isStarted() {
+        return state.isStarted();
+    }
+
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public State getState() {
+        return state;
     }
 
     public double score(Color color) {
@@ -38,9 +46,8 @@ public class ChessGame {
         return state.winner();
     }
 
-    public List<List<Piece>> board() {
+    public Board board() {
         ChessBoard chessBoard = state.chessBoard();
-        Board board = chessBoard.getBoard();
-        return board.getValue();
+        return chessBoard.getBoard();
     }
 }

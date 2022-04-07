@@ -5,7 +5,7 @@ import chess.domain.Result;
 
 public class BlackWin extends Finished {
 
-    protected BlackWin(ChessBoard chessBoard) {
+    public BlackWin(ChessBoard chessBoard) {
         super(chessBoard);
     }
 

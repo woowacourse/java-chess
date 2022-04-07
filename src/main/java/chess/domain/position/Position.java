@@ -11,7 +11,7 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    private Position(int fileIndex, int rankIndex) {
+    public Position(int fileIndex, int rankIndex) {
         this.file = File.of(fileIndex);
         this.rank = Rank.of(rankIndex);
     }
@@ -43,6 +43,10 @@ public class Position {
 
     private int square(int value) {
         return value * value;
+    }
+
+    public String getNotation() {
+        return file.getNotation() + rank.getNotation();
     }
 
     public int getFileIndex() {

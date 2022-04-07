@@ -1,8 +1,9 @@
-package chess.controller;
+package chess.console.controller;
 
-import chess.domain.ChessGame;
+import chess.console.view.OutputView;
+import chess.domain.Board;
+import chess.domain.state.ChessGame;
 import chess.domain.Color;
-import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -11,7 +12,8 @@ public enum Command {
 
     START("start", (chessGame, arguments) -> {
         chessGame.start();
-        OutputView.printChessBoard(chessGame.board());
+        Board board = chessGame.board();
+        OutputView.printChessBoard(board.getValue());
     }),
 
     END("end", (chessGame, arguments) -> {
@@ -20,7 +22,8 @@ public enum Command {
 
     MOVE("move", (chessGame, arguments) -> {
         chessGame.move(arguments.get(0), arguments.get(1));
-        OutputView.printChessBoard(chessGame.board());
+        Board board = chessGame.board();
+        OutputView.printChessBoard(board.getValue());
     }),
 
     STATUS("status", (chessGame, arguments) -> {

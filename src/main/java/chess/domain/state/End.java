@@ -6,8 +6,8 @@ import chess.domain.Result;
 
 public class End extends Finished {
 
-    protected End(ChessBoard chessBoard) {
-      super(chessBoard);
+    public End(ChessBoard chessBoard) {
+        super(chessBoard);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class PawnDefaultMovingStrategy implements MovingStrategy {
         Direction direction = Direction.of(source, target);
         double distance = Math.sqrt(source.calculateDistance(target));
 
-        return direction == direction && canMoveOnePosition(board, distance, source);
+        return this.direction == direction && canMoveOnePosition(board, distance, source);
     }
 
     private boolean canMoveOnePosition(Board board, double distance, Position source) {

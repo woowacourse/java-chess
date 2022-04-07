@@ -1,0 +1,86 @@
+body {
+    background-color: #5d5d5d;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+section {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.start-button {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid white;
+    background-color: white;
+}
+
+a {
+    color: #441a03;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+.error-message {
+    text-align: center;
+    font-weight: bold;
+    color: darkred;
+}
+
+.score {
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.chess-ui {
+    display: grid;
+    padding: 30px;
+    width: 800px;
+    margin: 0 auto;
+    grid-template-columns: repeat(8, 100px);
+    grid-template-rows: repeat(8, 100px);
+    grid-auto-flow: row;
+    background-color: #441a03;
+}
+
+.box:hover {
+    background-color: #c29e8a !important;
+}
+
+form {
+    padding: 30px;
+    margin: 0 auto;
+    width: 800px;
+    text-align: center;
+}
+
+.text-input {
+    padding: 20px;
+}
+
+.submit-input {
+    padding: 20px;
+}
+
+img {
+    width: 80%;
+    padding: 10%;
+    margin: 0 auto;
+}
+
+.box:nth-child(-2n + 8),
+.box:nth-child(8) ~ .box:nth-child(-2n + 15),
+.box:nth-child(16) ~ .box:nth-child(-2n + 24),
+.box:nth-child(23) ~ .box:nth-child(-2n + 31),
+.box:nth-child(32) ~ .box:nth-child(-2n + 40),
+.box:nth-child(39) ~ .box:nth-child(-2n + 47),
+.box:nth-child(48) ~ .box:nth-child(-2n + 56),
+.box:nth-child(55) ~ .box:nth-child(-2n + 63) {
+    background-color: #b5915f;
+}

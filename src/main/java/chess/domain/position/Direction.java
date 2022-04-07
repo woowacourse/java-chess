@@ -12,8 +12,7 @@ public enum Direction {
     TOP_LEFT(-1, -1, true),
     BOTTOM_RIGHT(1, 1, true),
     BOTTOM_LEFT(1, -1, true),
-    NONE(0, 0, false)
-    ;
+    NONE(0, 0, false);
 
     private final int row;
     private final int col;
@@ -30,8 +29,9 @@ public enum Direction {
         int colWeight = calculateWeight(source.getFileIndex() - target.getFileIndex());
 
         return Arrays.stream(values())
-                .filter(direction -> direction.row == rowWeight && direction.col == colWeight
-                        && direction.isDiagonal == isDiagonal(source, target))
+                .filter(direction -> direction.row == rowWeight)
+                .filter(direction -> direction.col == colWeight)
+                .filter(direction -> direction.isDiagonal ==isDiagonal(source, target))
                 .findFirst()
                 .orElse(NONE);
     }

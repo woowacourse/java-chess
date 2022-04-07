@@ -10,8 +10,7 @@ public enum Rank {
     FIVE("5", 3),
     SIX("6", 2),
     SEVEN("7", 1),
-    EIGHT("8", 0)
-    ;
+    EIGHT("8", 0);
 
     private final String notation;
     private final int index;
@@ -33,6 +32,10 @@ public enum Rank {
                 .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
+    }
+
+    public String getNotation() {
+        return notation;
     }
 
     public int getIndex() {

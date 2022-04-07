@@ -10,8 +10,7 @@ public enum File {
     E("e", 4),
     F("f", 5),
     G("g", 6),
-    H("h", 7)
-    ;
+    H("h", 7);
 
     private final String notation;
     private final int index;
@@ -33,6 +32,10 @@ public enum File {
                 .filter(file -> file.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
+    }
+
+    public String getNotation() {
+        return notation;
     }
 
     public int getIndex() {

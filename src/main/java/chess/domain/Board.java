@@ -2,8 +2,8 @@ package chess.domain;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,12 +16,17 @@ public class Board {
     private final List<List<Piece>> value;
 
     public Board(List<List<Piece>> value) {
-        this.value = value;
+        this.value = new ArrayList<>(value);
+    }
+
+    public void fill(Position position, Piece piece) {
+        value.get(position.getRankIndex()).set(position.getFileIndex(), piece);
     }
 
     public void shift(Position source, Position target) {
+        Piece sourcePiece = findPiece(source);
         value.get(source.getRankIndex()).set(source.getFileIndex(), new EmptyPiece());
-        value.get(target.getRankIndex()).set(target.getFileIndex(), findPiece(source));
+        value.get(target.getRankIndex()).set(target.getFileIndex(), sourcePiece);
     }
 
     public Piece findPiece(Position source) {
@@ -60,7 +65,7 @@ public class Board {
     }
 
     private int calculatePawnCount(Piece piece, Color color) {
-        if (piece.isSamePieceType(PieceType.PAWN) && piece.isSameColor(color)) {
+        if (piece.isPawn() && piece.isSameColor(color)) {
             return 1;
         }
 
@@ -70,7 +75,7 @@ public class Board {
     public long calculateKingCount() {
         return value.stream()
                 .flatMap(List::stream)
-                .filter(piece -> piece.isSamePieceType(PieceType.KING))
+                .filter(Piece::isKing)
                 .count();
     }
 

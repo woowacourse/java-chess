@@ -11,6 +11,8 @@ public interface State {
 
     State move(String source, String target);
 
+    boolean isStarted();
+
     boolean isFinished();
 
     Result winner();
