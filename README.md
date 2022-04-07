@@ -80,11 +80,21 @@
 
 ### api 명세
 
-- `get`, `/` : `index.html`을 부르면서 처음 페이지를 불러옵니다.
-- `get`, `/api/load` : 현재 진행 중인 게임을 불러옵니다.
-- `get`, `/api/restart` : 게임을 재시작합니다. 체스판과 체스 기물들이 초기화되어서 생성됩니다.
+| METHOD |            URL |              description               |
+|:-------|---------------:|:--------------------------------------:|
+| GET    |            `/` |   `index.html`을 부르면서 처음 페이지를 불러옵니다.    |
+| GET    |    `/api/load` |          현재 진행 중인 게임을 불러옵니다.           |  
+| GET    | `/api/restart` | 게임을 재시작합니다. 체스판과 체스 기물들이 초기화되어서 생성됩니다. |  
 
 위 api들은 `boardDto`를 통해서 아래의 json형태로 보내줍니다.
+
+###  Response Body
+| name     | type                |
+|----------|---------------------|
+| turn     | String              | 
+| board    | Map<String, String> | 
+| isFinish | boolean             | 
+
 ```json
 {
   turn: "white",
@@ -98,28 +108,68 @@
 }
 ```
 
-- `get`, `/api/status` : 현재 게임의 점수를 보여줍니다.
+| METHOD |           URL |    description    |
+|:-------|--------------:|:-----------------:|
+| GET    | `/api/status` | 현재 게임의 점수를 보여줍니다. |
 
 위 api는 아래의 json형태로 보내줍니다.
+
+### Response Body
+
+| name           | type   | 
+|----------------|--------|
+| blackTeamScore | double |
+| whiteTeamScore | double |
+
 ```json
 {
-  blackTeam : 38.0,
-  whiteTeam : 38.0
+  blackTeamScore: 38.0,
+  whiteTeamScore: 38.0
 }
-    
+
 ```
 
-- `post`, `/api/move` : 체스 기물들을 from에서 to로 움직입니다.
+| METHOD |         URL |        description         |
+|:-------|------------:|:--------------------------:|
+| POST   | `/api/move` | 체스 기물들을 from에서 to로 움직입니다.  |
 
- 위 api는 아래와 같은 형태로 `from`위치와 `to`위치를 json형태로 보내주고 통신합니다.
+위 api는 아래와 같은 형태로 `from`위치와 `to`위치를 json형태로 보내주고 통신합니다.
+
+### Request Body
+
+| name | type | 
+| ------| ------|
+| from | String |
+| to | String |
+
 ```json
 POST
 {
   "from": "a2",
-  "to" : "a4"
+  "to": "a4"
 }
 ```
 
+### Response Body
+
+| name | type |
+| ------|------|
+| turn    | String | 
+| board | Map<String, String> | 
+| isFinish | boolean | 
+
+```json
+{
+  turn: "white",
+  board: {
+    "a2": "pawn",
+    ...
+    (position: piece)
+    ...
+  },
+  isFinish: true
+}
+```
 
 
 

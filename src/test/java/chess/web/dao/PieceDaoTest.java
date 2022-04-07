@@ -34,13 +34,14 @@ class PieceDaoTest {
     @Test
     @DisplayName("king과 black으로 타입과 팀을 바꾸면 db에 저장되고 다시 불러왔을 떄, 타입과 팀이 king과 black으로 나온다.")
     void updatePieceByPosition() {
-
         Piece piece = pieces.getPieces().get(0);
         String newType = "king";
         String newTeam = "black";
+
         pieceDao.updatePieceByPositionAndBoardId(newType, newTeam, piece.getPosition().name(), boardId);
         List<Piece> updatedPieces = pieceDao.findAllByBoardId(boardId);
         Piece updatedPiece = updatedPieces.get(0);
+
         assertThat(updatedPiece.getType()).isEqualTo(newType);
         assertThat(updatedPiece.getTeam().value()).isEqualTo(newTeam);
     }
