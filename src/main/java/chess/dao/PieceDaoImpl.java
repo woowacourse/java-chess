@@ -1,7 +1,7 @@
 package chess.dao;
 
 import chess.dao.dto.PieceDto;
-import chess.domain.piece.PieceType;
+import chess.dao.dto.PieceType;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

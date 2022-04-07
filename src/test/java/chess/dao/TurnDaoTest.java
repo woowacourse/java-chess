@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.state.StateType;
+import chess.dao.dto.StateType;
 import chess.dao.dto.TurnDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

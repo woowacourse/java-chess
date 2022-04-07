@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.state.State;
-import chess.domain.state.StateType;
+import chess.dao.dto.StateType;
 
 public class ChessGame {
 

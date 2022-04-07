@@ -1,11 +1,12 @@
 package chess.domain.state;
 
+import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Result;
 
 public class WhiteWin extends Finished {
 
-    protected WhiteWin(ChessBoard chessBoard) {
+    public WhiteWin(ChessBoard chessBoard) {
         super(chessBoard);
     }
 

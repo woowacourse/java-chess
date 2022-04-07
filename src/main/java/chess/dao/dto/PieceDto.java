@@ -1,6 +1,5 @@
 package chess.dao.dto;
 
-import chess.domain.piece.PieceType;
 import java.util.Objects;
 
 public class PieceDto {

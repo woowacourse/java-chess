@@ -1,22 +1,22 @@
 package chess.dao;
 
-import static chess.domain.piece.PieceType.BISHOP_BLACK;
-import static chess.domain.piece.PieceType.BISHOP_WHITE;
-import static chess.domain.piece.PieceType.KING_BLACK;
-import static chess.domain.piece.PieceType.KING_WHITE;
-import static chess.domain.piece.PieceType.KNIGHT_BLACK;
-import static chess.domain.piece.PieceType.KNIGHT_WHITE;
-import static chess.domain.piece.PieceType.PAWN_BLACK;
-import static chess.domain.piece.PieceType.PAWN_WHITE;
-import static chess.domain.piece.PieceType.QUEEN_BLACK;
-import static chess.domain.piece.PieceType.QUEEN_WHITE;
-import static chess.domain.piece.PieceType.ROOK_BLACK;
-import static chess.domain.piece.PieceType.ROOK_WHITE;
+import static chess.dao.dto.PieceType.BISHOP_BLACK;
+import static chess.dao.dto.PieceType.BISHOP_WHITE;
+import static chess.dao.dto.PieceType.KING_BLACK;
+import static chess.dao.dto.PieceType.KING_WHITE;
+import static chess.dao.dto.PieceType.KNIGHT_BLACK;
+import static chess.dao.dto.PieceType.KNIGHT_WHITE;
+import static chess.dao.dto.PieceType.PAWN_BLACK;
+import static chess.dao.dto.PieceType.PAWN_WHITE;
+import static chess.dao.dto.PieceType.QUEEN_BLACK;
+import static chess.dao.dto.PieceType.QUEEN_WHITE;
+import static chess.dao.dto.PieceType.ROOK_BLACK;
+import static chess.dao.dto.PieceType.ROOK_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.dao.dto.PieceDto;
-import chess.domain.piece.PieceType;
+import chess.dao.dto.PieceType;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;

@@ -1,6 +1,5 @@
 package chess.dao.dto;
 
-import chess.domain.state.StateType;
 import java.util.Objects;
 
 public class TurnDto {

@@ -1,11 +1,12 @@
 package chess.domain.state;
 
+import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
 public class WhiteTurn extends Running {
 
-    protected WhiteTurn(ChessBoard chessBoard) {
+    public WhiteTurn(ChessBoard chessBoard) {
         super(chessBoard);
     }
 

@@ -1,11 +1,12 @@
 package chess.domain.state;
 
+import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Result;
 
 public class BlackWin extends Finished {
 
-    protected BlackWin(ChessBoard chessBoard) {
+    public BlackWin(ChessBoard chessBoard) {
         super(chessBoard);
     }
 

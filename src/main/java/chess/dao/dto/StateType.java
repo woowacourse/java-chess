@@ -1,17 +1,24 @@
-package chess.domain.state;
+package chess.dao.dto;
 
 import chess.domain.ChessBoard;
+import chess.domain.state.BlackTurn;
+import chess.domain.state.BlackWin;
+import chess.domain.state.End;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
+import chess.domain.state.WhiteTurn;
+import chess.domain.state.WhiteWin;
 import java.util.Arrays;
 import java.util.function.Function;
 
 public enum StateType {
 
     READY("ready", chessBoard -> new Ready()),
-    WHITE_TURN("white turn", chessBoard -> new WhiteTurn(chessBoard)),
-    BLACK_TURN("black turn", chessBoard -> new BlackTurn(chessBoard)),
-    WHITE_WIN("white win", chessBoard -> new WhiteWin(chessBoard)),
-    BLACK_WIN("black win", chessBoard -> new BlackWin(chessBoard)),
-    END("end", chessBoard -> new End(chessBoard));
+    WHITE_TURN("white turn", WhiteTurn::new),
+    BLACK_TURN("black turn", BlackTurn::new),
+    WHITE_WIN("white win", WhiteWin::new),
+    BLACK_WIN("black win", BlackWin::new),
+    END("end", End::new);
 
     private final String value;
     private final Function<ChessBoard, State> function;

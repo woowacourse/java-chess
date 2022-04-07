@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.state.StateType;
+import chess.dao.dto.StateType;
 import chess.dao.dto.TurnDto;
 import java.sql.Connection;
 import java.sql.DriverManager;

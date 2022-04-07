@@ -1,12 +1,13 @@
 package chess.domain.state;
 
+import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Result;
 
 public class End extends Finished {
 
-    protected End(ChessBoard chessBoard) {
+    public End(ChessBoard chessBoard) {
         super(chessBoard);
     }
 

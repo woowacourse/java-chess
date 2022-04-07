@@ -1,11 +1,12 @@
 package chess.domain.state;
 
+import chess.dao.dto.StateType;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
 public class BlackTurn extends Running {
 
-    protected BlackTurn(ChessBoard chessBoard) {
+    public BlackTurn(ChessBoard chessBoard) {
         super(chessBoard);
     }
 
