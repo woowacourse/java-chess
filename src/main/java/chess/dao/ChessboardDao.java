@@ -20,7 +20,6 @@ public class ChessboardDao {
 
     public boolean isDataExist() {
         final String sql = "SELECT count(*) AS result FROM gameInfos";
-
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
@@ -45,15 +44,25 @@ public class ChessboardDao {
 
     private List<PieceDto> loadPieces() {
         final String sql = "SELECT * FROM pieces ORDER BY x ASC, y ASC";
-        List<PieceDto> pieces = new ArrayList<>();
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery(sql);
+            return convertToPieceDto(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    private List<PieceDto> convertToPieceDto(ResultSet resultSet) {
+        List<PieceDto> pieces = new ArrayList<>();
+        try {
             while (resultSet.next()) {
                 pieces.add(new PieceDto(
-                        resultSet.getString("color")
-                        , resultSet.getString("type")
-                        , resultSet.getInt("x")
-                        , resultSet.getInt("y")));
+                        resultSet.getString("color"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("x"),
+                        resultSet.getInt("y")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
