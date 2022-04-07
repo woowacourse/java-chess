@@ -14,6 +14,8 @@ import chess.domain.game.status.Playing;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Type;
 import chess.domain.position.Position;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -26,14 +28,19 @@ public class ChessService {
     private ChessBoard chessBoard = null;
     private final GameDao gameDao = new GameDao();
     private final BoardDao boardDao = new BoardDao();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void start() throws SQLException {
-        if (isNotSaved()) {
-            chessBoard = ChessBoardFactory.initBoard();
-            chessBoard.changeStatus(new Playing());
-            return;
+    public void start() {
+        try {
+            if (isNotSaved()) {
+                chessBoard = ChessBoardFactory.initBoard();
+                chessBoard.changeStatus(new Playing());
+                return;
+            }
+            loadLastGame();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
         }
-        loadLastGame();
     }
 
     private boolean isNotSaved() throws SQLException {
@@ -63,15 +70,19 @@ public class ChessService {
         return entry.getValue().getColor().name();
     }
 
-    private void loadLastGame() throws SQLException {
-        HashMap<Position, ChessPiece> board = new HashMap<>();
-        int lastGameId = gameDao.findLastGameId();
-        for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
-            ChessPiece piece = makePiece(pieceDto);
-            board.put(new Position(pieceDto.getPosition()), piece);
+    private void loadLastGame() {
+        try{
+            HashMap<Position, ChessPiece> board = new HashMap<>();
+            int lastGameId = gameDao.findLastGameId();
+            for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
+                ChessPiece piece = makePiece(pieceDto);
+                board.put(new Position(pieceDto.getPosition()), piece);
+            }
+            GameDto game = gameDao.findById(lastGameId);
+            chessBoard = new ChessBoard(board, new Playing(), game.getTurn());
+        } catch (SQLException e){
+            logger.error(e.getMessage());
         }
-        GameDto game = gameDao.findById(lastGameId);
-        chessBoard = new ChessBoard(board, new Playing(), game.getTurn());
     }
 
     private ChessPiece makePiece(PieceDto pieceDto) {
@@ -112,7 +123,7 @@ public class ChessService {
         return chessBoard.convertToMap();
     }
 
-    public boolean checkStatus(Status status){
+    public boolean checkStatus(Status status) {
         return chessBoard.compareStatus(status);
     }
 }
