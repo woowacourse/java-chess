@@ -29,17 +29,18 @@ function showStatusButton() {
 function initBoard() {
     fetch('/api/restart')
         .then(res => res.json())
-        .then(window.alert("성공적으로 게임이 재시작되었습니다!"))
         .then(imageSetting)
 }
 
 start.addEventListener('click', function () {
     if (start.textContent === "START") {
+        initBoard();
         loadBoard();
         move();
         start.textContent = "RESTART";
         return
     }
+    window.alert("성공적으로 게임이 재시작되었습니다!")
     initBoard();
 })
 
@@ -47,10 +48,10 @@ function getStatus(scoreResponse) {
     const blackScore = scoreResponse["blackTeamScore"];
     const whiteScore = scoreResponse["whiteTeamScore"];
 
-    window.alert("블랙팀 점수 :" + blackScore + ", 하얀팀 점수 : "+ whiteScore);
+    window.alert("블랙팀 점수 :" + blackScore + ", 하얀팀 점수 : " + whiteScore);
 }
 
-status.addEventListener('click', function (){
+status.addEventListener('click', function () {
     fetch('/api/status')
         .then(res => res.json())
         .then(getStatus)
@@ -82,7 +83,7 @@ function turnSetting(response) {
     if (response["isFinish"] === true) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
         return;
-    }else{
+    } else {
         document.querySelector("#view-type").textContent = "현재 턴 :ㅤ"
     }
 
