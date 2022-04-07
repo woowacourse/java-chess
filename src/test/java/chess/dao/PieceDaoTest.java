@@ -100,7 +100,7 @@ class PieceDaoTest {
     }
 
     @AfterEach
-    void cleanUp() {
+    void tearDown() {
         pieceDao.removeAll();
     }
 

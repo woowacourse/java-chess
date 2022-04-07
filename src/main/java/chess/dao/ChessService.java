@@ -64,7 +64,8 @@ public class ChessService {
 
         shift(source, target);
 
-        turnDao.save(new TurnDto(chessGame.getStateType()));
+        StateType stateType = StateType.of(chessGame.getState());
+        turnDao.save(new TurnDto(stateType));
     }
 
     private TurnDto getLastTurn() {

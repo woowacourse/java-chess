@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.state.State;
-import chess.dao.dto.StateType;
 
 public class ChessGame {
 
@@ -31,8 +30,8 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public StateType getStateType() {
-        return state.getStateType();
+    public State getState() {
+        return state;
     }
 
     public double score(Color color) {

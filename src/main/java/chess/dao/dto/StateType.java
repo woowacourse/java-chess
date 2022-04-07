@@ -13,24 +13,33 @@ import java.util.function.Function;
 
 public enum StateType {
 
-    READY("ready", chessBoard -> new Ready()),
-    WHITE_TURN("white turn", WhiteTurn::new),
-    BLACK_TURN("black turn", BlackTurn::new),
-    WHITE_WIN("white win", WhiteWin::new),
-    BLACK_WIN("black win", BlackWin::new),
-    END("end", End::new);
+    READY("ready", Ready.class, chessBoard -> new Ready()),
+    WHITE_TURN("white turn", WhiteTurn.class, WhiteTurn::new),
+    BLACK_TURN("black turn", BlackTurn.class, BlackTurn::new),
+    WHITE_WIN("white win", WhiteWin.class, WhiteWin::new),
+    BLACK_WIN("black win", BlackWin.class, BlackWin::new),
+    END("end", End.class, End::new);
 
     private final String type;
+    private final Class<? extends State> stateClass;
     private final Function<ChessBoard, State> function;
 
-    StateType(String value, Function<ChessBoard, State> function) {
-        this.type = value;
+    StateType(String type, Class<? extends State> stateClass, Function<ChessBoard, State> function) {
+        this.type = type;
+        this.stateClass = stateClass;
         this.function = function;
     }
 
     public static StateType of(String value) {
         return Arrays.stream(values())
                 .filter(stateGenerator -> stateGenerator.getType().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태입니다."));
+    }
+
+    public static StateType of(State state) {
+        return Arrays.stream(values())
+                .filter(stateType -> stateType.stateClass == state.getClass())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태입니다."));
     }
