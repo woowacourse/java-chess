@@ -29,6 +29,11 @@ public class Ready extends Started {
     }
 
     @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

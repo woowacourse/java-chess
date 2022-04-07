@@ -25,6 +25,11 @@ public abstract class Finished extends Started {
     }
 
     @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
     public final boolean isFinished() {
         return true;
     }

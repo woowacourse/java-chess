@@ -23,6 +23,10 @@ public class ChessGame {
         state = state.move(source, target);
     }
 
+    public boolean isRunning() {
+        return state.isRunning();
+    }
+
     public boolean isFinished() {
         return state.isFinished();
     }
