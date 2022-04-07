@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.dao.ChessDAO;
+import chess.dao.DatabaseChessDAO;
 import chess.domain.Board;
 import chess.domain.Rank;
 import chess.domain.Score;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    private final ChessDAO chessDAO;
+    private final DatabaseChessDAO chessDAO;
     private int gameId;
 
-    public ChessService(ChessDAO chessDAO) {
+    public ChessService(DatabaseChessDAO chessDAO) {
         this.chessDAO = chessDAO;
         try {
             gameId = chessDAO.getLastInsertKey();

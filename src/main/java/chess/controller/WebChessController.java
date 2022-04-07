@@ -4,7 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.dao.ChessDAO;
+import chess.dao.DatabaseChessDAO;
 import chess.dto.RankDTO;
 import chess.service.ChessService;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final ChessService chessService = new ChessService(new ChessDAO());
+    private final ChessService chessService = new ChessService(new DatabaseChessDAO());
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

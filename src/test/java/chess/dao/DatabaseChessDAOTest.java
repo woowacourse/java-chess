@@ -9,16 +9,9 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
-class ChessDAOTest {
+class DatabaseChessDAOTest {
 
-    ChessDAO chessDAO = new ChessDAO();
-
-    @Test
-    void saveBoard() {
-        int gameId = chessDAO.saveGame(new Board(), Team.WHITE.name());
-        System.out.println(gameId);
-        assertThat(gameId).isNotEqualTo(0);
-    }
+    DatabaseChessDAO chessDAO = new DatabaseChessDAO();
 
     @Test
     void findBoardByGameId() {

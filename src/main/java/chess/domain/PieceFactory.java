@@ -1,6 +1,5 @@
-package chess.dao;
+package chess.domain;
 
-import chess.domain.Team;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;

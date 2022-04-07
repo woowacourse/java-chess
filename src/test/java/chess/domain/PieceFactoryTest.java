@@ -1,6 +1,5 @@
-package chess.dao;
+package chess.domain;
 
-import chess.domain.Team;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;

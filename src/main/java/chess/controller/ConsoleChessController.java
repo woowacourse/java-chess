@@ -7,7 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessController {
+public class ConsoleChessController {
 
     public void play() {
         OutputView.printStartMessage();
