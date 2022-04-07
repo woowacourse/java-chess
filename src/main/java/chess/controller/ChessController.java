@@ -7,6 +7,7 @@ import static spark.Spark.post;
 import chess.dto.ErrorResponseDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
+import chess.service.DependencyFactory;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class ChessController {
     private final ChessService chessService;
 
     public ChessController() {
-        chessService = new ChessService();
+        chessService = DependencyFactory.chessService();
     }
 
     private static String render (Map<String, Object> model, String templatePath) {

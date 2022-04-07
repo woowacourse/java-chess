@@ -29,10 +29,6 @@ public class ChessService {
         this.turnDao = turnDao;
     }
 
-    public ChessService() {
-        this(new BoardDaoImpl(), new TurnDaoImpl());
-    }
-
     public ChessDto initializeGame() {
         Board board = toBoard(boardDao.getBoard());
         Team team = Team.of(turnDao.getCurrentTurn());
