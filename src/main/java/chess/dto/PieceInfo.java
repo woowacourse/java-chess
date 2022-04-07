@@ -7,27 +7,29 @@ import java.util.Arrays;
 
 public enum PieceInfo {
 
-    BLACK_PAWN("♟"),
-    BLACK_ROOK("♜"),
-    BLACK_KNIGHT("♞"),
-    BLACK_BISHOP("♝"),
-    BLACK_QUEEN("♛"),
-    BLACK_KING("♚"),
+    BLACK_PAWN("♟", 1),
+    BLACK_ROOK("♜", 5),
+    BLACK_KNIGHT("♞", 2.5),
+    BLACK_BISHOP("♝", 3),
+    BLACK_QUEEN("♛", 9),
+    BLACK_KING("♚", 0),
 
-    WHITE_PAWN("♙"),
-    WHITE_ROOK("♖"),
-    WHITE_KNIGHT("♘"),
-    WHITE_BISHOP("♗"),
-    WHITE_QUEEN("♕"),
-    WHITE_KING("♔"),
+    WHITE_PAWN("♙", 1),
+    WHITE_ROOK("♖", 5),
+    WHITE_KNIGHT("♘", 2.5),
+    WHITE_BISHOP("♗", 3),
+    WHITE_QUEEN("♕", 9),
+    WHITE_KING("♔", 0),
     ;
 
     public static final String NONE_PIECE_SYMBOL = ".";
 
     private final String symbol;
+    private final double score;
 
-    PieceInfo(final String symbol) {
+    PieceInfo(final String symbol, final double score) {
         this.symbol = symbol;
+        this.score = score;
     }
 
     public static Piece getPiece(final String symbol) {
@@ -41,6 +43,11 @@ public enum PieceInfo {
         }
         PieceInfo pieceInfo = other.getPieceInfo();
         return pieceInfo.symbol;
+    }
+
+    public static double getScore(final Piece other) {
+        PieceInfo pieceInfo = other.getPieceInfo();
+        return pieceInfo.score;
     }
 
     private static PieceInfo getPieceInfo(final String symbol) {

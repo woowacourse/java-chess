@@ -1,9 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceScore;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.PieceInfo;
 
 import java.util.Map;
 import java.util.function.ObjDoubleConsumer;
@@ -47,9 +47,9 @@ public class Status {
     private double getPawnScore(final Position position, final Piece pawn, final Color color) {
         long pawnCountInXAxis = getPawnCountInXAxis(position, color);
         if (pawnCountInXAxis > MINIMUM_PAWN_COUNT) {
-            return PieceScore.getScore(pawn) / DIVIDED;
+            return PieceInfo.getScore(pawn) / DIVIDED;
         }
-        return PieceScore.getScore(pawn);
+        return PieceInfo.getScore(pawn);
     }
 
     private long getPawnCountInXAxis(final Position position, final Color color) {
@@ -64,7 +64,7 @@ public class Status {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.values().stream()
                 .filter(piece -> piece.isSameColorWithoutPawn(color))
-                .map(PieceScore::getScore)
+                .map(PieceInfo::getScore)
                 .reduce(0.0, Double::sum);
     }
 }
