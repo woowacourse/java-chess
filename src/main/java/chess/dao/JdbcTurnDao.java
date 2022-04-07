@@ -23,7 +23,7 @@ public class JdbcTurnDao implements TurnDao {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             StateType stateType = turnDto.getTurn();
-            statement.setString(1, stateType.getValue());
+            statement.setString(1, stateType.getType());
 
             statement.executeUpdate();
         } catch (SQLException e) {

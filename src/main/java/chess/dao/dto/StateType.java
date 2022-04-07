@@ -20,17 +20,17 @@ public enum StateType {
     BLACK_WIN("black win", BlackWin::new),
     END("end", End::new);
 
-    private final String value;
+    private final String type;
     private final Function<ChessBoard, State> function;
 
     StateType(String value, Function<ChessBoard, State> function) {
-        this.value = value;
+        this.type = value;
         this.function = function;
     }
 
     public static StateType of(String value) {
         return Arrays.stream(values())
-                .filter(stateGenerator -> stateGenerator.getValue().equals(value))
+                .filter(stateGenerator -> stateGenerator.getType().equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태입니다."));
     }
@@ -39,7 +39,7 @@ public enum StateType {
         return function.apply(chessBoard);
     }
 
-    public String getValue() {
-        return value;
+    public String getType() {
+        return type;
     }
 }
