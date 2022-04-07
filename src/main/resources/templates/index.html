@@ -49,9 +49,17 @@
 
     <script>
         function move() {
+            const from = document.getElementById("from").value;
+            const to = document.getElementById("to").value;
+
             fetch("/move", {
                 method: "POST",
-                body: "a2,a3"
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `from=${from}&to=${to}`
+            }).then(() => {
+                window.location.reload();
             });
         }
 
@@ -87,9 +95,9 @@
 </div>
 
 <form action="/move" method="POST">
-    <input name="from"/>
-    <input name="to"/>
-    <button type="submit">이동</button>
+    <input id="from" placeholder="FROM"/>
+    <input id="to" placeholder="TO"/>
+    <button onclick="move()" type="button">이동</button>
 </form>
 
 <div>
