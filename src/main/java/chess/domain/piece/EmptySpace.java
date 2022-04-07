@@ -15,8 +15,7 @@ public class EmptySpace extends Piece {
     }
 
     @Override
-    public List<Position> calculatePathToValidate(Position current, Position target,
-                                                  Piece targetPiece) {
+    public List<Position> calculatePathToValidate(Position current, Position target, Piece targetPiece) {
         throw new UnsupportedOperationException();
     }
 

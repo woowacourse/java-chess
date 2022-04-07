@@ -34,7 +34,7 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public boolean hasSameColor(Piece piece) {
+    public boolean hasSameColor(final Piece piece) {
         return piece.isSameColor(color);
     }
 
@@ -42,8 +42,12 @@ public abstract class Piece {
         return pieceType;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (!(o instanceof Piece)) {
             return false;
         }

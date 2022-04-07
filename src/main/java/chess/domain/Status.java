@@ -10,12 +10,12 @@ public class Status {
     private final double whiteScore;
     private final double blackScore;
 
-    public Status(final Board board) {
+    public Status(Board board) {
         whiteScore = calculateScore(board, Color.WHITE);
         blackScore = calculateScore(board, Color.BLACK);
     }
 
-    private double calculateScore(final Board board, final Color color) {
+    private double calculateScore(Board board, Color color) {
         if (board.isKingCaught(color)) {
             return TERMINATE_GAME;
         }

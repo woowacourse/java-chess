@@ -17,6 +17,11 @@ public class ChessGame {
         this.gameState = GameState.READY;
     }
 
+    public ChessGame(Board board, GameState gameState) {
+        this.board = board;
+        this.gameState = gameState;
+    }
+
     public void start() {
         if (gameState.isRunning() || gameState.isFinished()) {
             throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
@@ -29,7 +34,21 @@ public class ChessGame {
             throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
         }
         board.move(start, target, gameState.color());
+        if (board.isKingCaught(gameState.color().getOpposite())) {
+            gameState = changeStateWhenKingCaught(gameState);
+            return;
+        }
         gameState = gameState.changeTurn();
+    }
+
+    private GameState changeStateWhenKingCaught(GameState gameState) {
+        if (gameState == GameState.WHITE_RUNNING) {
+            return GameState.WHITE_WIN;
+        }
+        if (gameState == GameState.BLACK_RUNNING) {
+            return GameState.BLACK_WIN;
+        }
+        return gameState;
     }
 
     public void end() {
@@ -37,7 +56,10 @@ public class ChessGame {
     }
 
     public Status createStatus() {
-        return new Status(board);
+        if (gameState.isRunning() || gameState.isFinished()) {
+            return new Status(board);
+        }
+        throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
     }
 
     public boolean isFinished() {
@@ -46,5 +68,9 @@ public class ChessGame {
 
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

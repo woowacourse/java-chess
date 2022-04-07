@@ -18,7 +18,7 @@ public class Queen extends CommonPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E, NE, SE, SW, NW);
 
-    public Queen(final Color color) {
+    public Queen(Color color) {
         super(PieceType.QUEEN, color);
     }
 
@@ -28,7 +28,7 @@ public class Queen extends CommonPiece {
     }
 
     @Override
-    protected void validateDirection(final Direction direction) {
+    protected void validateDirection(Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

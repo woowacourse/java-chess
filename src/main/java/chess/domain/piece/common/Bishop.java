@@ -14,7 +14,7 @@ public class Bishop extends CommonPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(NE, SE, SW, NW);
 
-    public Bishop(final Color color) {
+    public Bishop(Color color) {
         super(PieceType.BISHOP, color);
     }
 
@@ -24,7 +24,7 @@ public class Bishop extends CommonPiece {
     }
 
     @Override
-    protected void validateDirection(final Direction direction) {
+    protected void validateDirection(Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

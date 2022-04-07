@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="UTF-8">
+  <title>chess</title>
+  <link href="/css/style.css" rel="stylesheet">
+  <script defer src="/js/index.js"></script>
 </head>
 <body>
-Hello World!!
+<div>
+  <div id="contents">
+    <div id="title-bar">
+      Chess With Me
+    </div>
+    <div class="explanation">
+      Input the game number!
+    </div>
+    <form method="get" id="game-id-form" action="/game">
+      <label>
+        <input type="text" name="gameId"/>
+      </label>
+      <input type="submit" class="submit button" value="submit">
+    </form>
+    <div class="explanation">
+      or...
+    </div>
+    <div id="buttons">
+      <div id="random-start-button" class="button">start random game</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

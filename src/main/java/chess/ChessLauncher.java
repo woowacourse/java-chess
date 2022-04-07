@@ -18,7 +18,7 @@ public class ChessLauncher {
         }
     }
 
-    private void proceed(final ChessGame chessGame) {
+    private void proceed(ChessGame chessGame) {
         try {
             Command command = CommandFactory.find(InputView.input());
             command.execute(chessGame);

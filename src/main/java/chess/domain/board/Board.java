@@ -23,13 +23,13 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(final CreateBoardStrategy strategy) {
+    public Board(CreateBoardStrategy strategy) {
         board = new HashMap<>(strategy.createPieces());
     }
 
-    public Piece move(final Position start, final Position target, final Color currentColor) {
-        final Piece movingPiece = getPiece(start);
-        final Piece targetPiece = getPiece(target);
+    public Piece move(Position start, Position target, Color currentColor) {
+        Piece movingPiece = getPiece(start);
+        Piece targetPiece = getPiece(target);
         validatePieceExistIn(movingPiece, currentColor);
         validateMoving(start, target);
         board.put(target, movingPiece);
@@ -37,7 +37,7 @@ public class Board {
         return targetPiece;
     }
 
-    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
+    private void validatePieceExistIn(Piece movingPiece, Color color) {
         if (movingPiece.isEmpty()) {
             throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
         }
@@ -46,9 +46,9 @@ public class Board {
         }
     }
 
-    private void validateMoving(final Position start, final Position target) {
-        final Piece movingPiece = getPiece(start);
-        final Piece targetPiece = getPiece(target);
+    private void validateMoving(Position start, Position target) {
+        Piece movingPiece = getPiece(start);
+        Piece targetPiece = getPiece(target);
         validatePath(movingPiece.calculatePathToValidate(start, target, targetPiece));
     }
 
@@ -56,13 +56,13 @@ public class Board {
         pathToValidate.forEach(this::validateEmpty);
     }
 
-    private void validateEmpty(final Position current) {
+    private void validateEmpty(Position current) {
         if (!getPiece(current).isEmpty()) {
             throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
         }
     }
 
-    private Piece getPiece(final Position position) {
+    private Piece getPiece(Position position) {
         return board.getOrDefault(position, new EmptySpace());
     }
 
@@ -73,28 +73,28 @@ public class Board {
         return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
     }
 
-    public int countPiece(final PieceType pieceType, final Color color) {
+    public int countPiece(PieceType pieceType, Color color) {
         return (int) board.values()
                 .stream()
                 .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
                 .count();
     }
 
-    private int countDeductedPawns(final Color color) {
+    private int countDeductedPawns(Color color) {
         return (int) board.entrySet()
                 .stream()
                 .filter(entry -> isPawnWithAnotherPawnInSameColumn(entry.getKey(), entry.getValue(), color))
                 .count();
     }
 
-    private boolean isPawnWithAnotherPawnInSameColumn(final Position current, final Piece piece, final Color color) {
+    private boolean isPawnWithAnotherPawnInSameColumn(Position current, Piece piece, Color color) {
         if (!piece.isSamePiece(PAWN) || !piece.isSameColor(color)) {
             return false;
         }
         return hasAnotherPawnInSameColumn(current, piece);
     }
 
-    private boolean hasAnotherPawnInSameColumn(final Position current, final Piece piece) {
+    private boolean hasAnotherPawnInSameColumn(Position current, Piece piece) {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(current.getColumn(), row))
                 .anyMatch(position -> !current.equals(position) && getPiece(position).equals(piece));

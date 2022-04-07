@@ -24,12 +24,12 @@ public enum Direction {
     private final int column;
     private final int row;
 
-    Direction(final int column, final int row) {
+    Direction(int column, int row) {
         this.column = column;
         this.row = row;
     }
 
-    public static Direction calculate(final int columnDifference, final int rowDifference) {
+    public static Direction calculate(int columnDifference, int rowDifference) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> isSameAngle(direction, columnDifference, rowDifference))
                 .findFirst()

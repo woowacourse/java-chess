@@ -31,20 +31,20 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
     @Override
     public Map<Position, Piece> createPieces() {
-        final Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, Piece> pieces = new HashMap<>();
         pieces.putAll(createPawns());
         pieces.putAll(createPiecesWithoutPawn());
         return pieces;
     }
 
     private Map<Position, Piece> createPawns() {
-        final Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, Piece> pieces = new HashMap<>();
         pieces.putAll(fillRowWith(Row.SECOND, Color.WHITE));
         pieces.putAll(fillRowWith(Row.SEVENTH, Color.BLACK));
         return pieces;
     }
 
-    private Map<Position, Piece> fillRowWith(final Row row, final Color color) {
+    private Map<Position, Piece> fillRowWith(Row row, Color color) {
         return Arrays.stream(Column.values())
                 .map(column -> new Position(column, row))
                 .collect(Collectors.toMap(Function.identity(), p -> new Pawn(color)));
@@ -57,7 +57,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
         return pieces;
     }
 
-    private Map<Position, Piece> createLineOf(final Row row, final Color color) {
+    private Map<Position, Piece> createLineOf(Row row, Color color) {
         int columnIndex = 1;
         Map<Position, Piece> line = new HashMap<>();
         for (PieceType pieceType : lineOrder) {

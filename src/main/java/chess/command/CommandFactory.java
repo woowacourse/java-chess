@@ -29,7 +29,7 @@ public class CommandFactory {
     private CommandFactory() {
     }
 
-    public static Command find(final String commandString) {
+    public static Command find(String commandString) {
         final List<String> args = Arrays.asList(commandString
                 .split(COMMAND_DISTRIBUTOR, -1));
         if (args.size() != 1 && args.size() != MOVE_COMMAND_SIZE) {
@@ -38,7 +38,7 @@ public class CommandFactory {
         return create(args.get(COMMAND_INDEX), args.subList(MOVE_ARGUMENT_START_INDEX, args.size()));
     }
 
-    private static Command create(final String command, final List<String> moveArgs) {
+    public static Command create(String command, List<String> moveArgs) {
         if (commands.containsKey(command)) {
             return commands.get(command);
         }
@@ -48,22 +48,22 @@ public class CommandFactory {
         throw new IllegalArgumentException(INVALID_COMMAND_INPUT);
     }
 
-    private static Command createMove(final List<String> moveArgs) {
+    private static Command createMove(List<String> moveArgs) {
         if (moveArgs.size() != MOVE_ARGUMENTS_SIZE) {
             throw new IllegalArgumentException(INVALID_MOVING_ARGUMENTS);
         }
-        final Position start = parseStringToPosition(moveArgs.get(START_POSITION_INDEX));
-        final Position target = parseStringToPosition(moveArgs.get(TARGET_POSITION_INDEX));
+        Position start = parseStringToPosition(moveArgs.get(START_POSITION_INDEX));
+        Position target = parseStringToPosition(moveArgs.get(TARGET_POSITION_INDEX));
         return new Move(start, target);
     }
 
-    private static Position parseStringToPosition(final String rawPosition) {
+    private static Position parseStringToPosition(String rawPosition) {
         if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
             throw new IllegalArgumentException(INVALID_MOVING_ARGUMENTS);
         }
-        final String[] separatedPosition = rawPosition.split("");
-        final Column column = Column.from(separatedPosition[ROW_INDEX]);
-        final Row row = Row.from(separatedPosition[COLUMN_INDEX]);
+        String[] separatedPosition = rawPosition.split("");
+        Column column = Column.from(separatedPosition[ROW_INDEX]);
+        Row row = Row.from(separatedPosition[COLUMN_INDEX]);
         return new Position(column, row);
     }
 }

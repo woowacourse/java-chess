@@ -19,8 +19,7 @@ public abstract class CommonPiece extends Piece {
         return false;
     }
 
-    public List<Position> calculatePathToValidate(final Position current, final Position target,
-                                                  final Piece targetPiece) {
+    public List<Position> calculatePathToValidate(Position current, Position target, Piece targetPiece) {
         Direction direction = findValidDirection(current, target);
         List<Position> path = new ArrayList<>();
         Position moved = current.move(direction);
@@ -35,10 +34,10 @@ public abstract class CommonPiece extends Piece {
     }
 
     @Override
-    protected Direction findValidDirection(final Position current, final Position target) {
-        final int columnDifference = target.calculateColumnDifference(current);
-        final int rowDifference = target.calculateRowDifference(current);
-        final Direction direction = Direction.calculate(columnDifference, rowDifference);
+    protected Direction findValidDirection(Position current, Position target) {
+        int columnDifference = target.calculateColumnDifference(current);
+        int rowDifference = target.calculateRowDifference(current);
+        Direction direction = Direction.calculate(columnDifference, rowDifference);
         validateDirection(direction);
         return direction;
     }
