@@ -34,7 +34,8 @@ public class ChessApplication {
             final List<String> createRoomInput = Arrays.stream(req.body().strip().split("\n"))
                     .map(s -> s.split("=")[1])
                     .collect(Collectors.toList());
-            final int roomId = chessController.startGame(createRoomInput.get(0), createRoomInput.get(1), createRoomInput.get(2));
+            final int roomId = chessController.startGame(createRoomInput.get(0), createRoomInput.get(1),
+                    createRoomInput.get(2));
             res.redirect("/room/" + roomId);
             return null;
         });
@@ -53,27 +54,16 @@ public class ChessApplication {
             return response.toString();
         });
 
-        get("/restart", (req, res) -> {
-            chessController.reStartGame();
-            res.redirect("/");
-            return null;
-        });
-
-        get("/status", (req, res) -> {
-            final ScoreDto scoreDto = chessController.score();
+        get("/room/:roomId/status", (req, res) -> {
+            final ScoreDto scoreDto = chessController.score(Integer.parseInt(req.params(":roomId")));
             return scoreDto.toString();
         });
 
-        post("/move", (req, res) -> {
-            final String[] split = req.body().strip().split("=")[1].split(" ");
-            ResponseDto response = chessController.move(split[1], split[2]);
-            return response.toString();
-        });
-
-        post("/end", (req, res) -> {
+        post("/room/:roomId/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("result", chessController.score());
-            chessController.reStartGame();
+            final int roomId = Integer.parseInt(req.params(":roomId"));
+            model.put("result", chessController.score(roomId));
+            chessController.end(roomId);
             return render(model, "result.html");
         });
     }

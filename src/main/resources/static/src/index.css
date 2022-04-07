@@ -1,8 +1,8 @@
 
-.chess-consoleBoard .white {
+.chess-board .white {
     background: #eee;
 }
 
-.chess-consoleBoard .black {
+.chess-board .black {
     background: #aaa;
 }

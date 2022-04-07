@@ -8,12 +8,16 @@ import chess.domain.Board;
 import chess.dto.BoardDto;
 import chess.dto.BoardsDto;
 import chess.dto.RoomDto;
+import chess.dto.ScoreDto;
+import chess.dto.StatusDto;
 import chess.model.Initializer;
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.square.File;
 import chess.model.square.Square;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -107,4 +111,43 @@ public class ChessService {
         }
         return kingCount != 2;
     }
+
+    public ScoreDto status(int roomId) {
+        Map<String, Double> statusDto = Color.getPlayerColors().stream()
+                .collect(Collectors.toMap(Enum::name, color -> calculateScore(roomId, color)));
+        return ScoreDto.of(statusDto);
+    }
+
+    public double calculateScore(int roomId, final Color color) {
+        return calculateDefaultScore(roomId, color) - 0.5 * countPawnsOnSameColumns(roomId, color);
+    }
+
+    private double calculateDefaultScore(int roomId, Color color) {
+        return existPieces(roomId)
+                .stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getPoint)
+                .sum();
+    }
+
+    public List<Piece> existPieces(int roomId) {
+        return pieceDao.getAllPiecesByBoardId(roomId);
+    }
+
+    private int countPawnsOnSameColumns(int roomId, final Color color) {
+        return Arrays.stream(File.values())
+                .mapToInt(file -> pieceDao.countPawnsOnSameColumn(roomId, file, color))
+                .filter(count -> count > 1)
+                .sum();
+    }
+
+    public void end(int roomId) {
+        boardDao.deleteById(roomId);
+    }
+//
+//    public ScoreResult calculateScore(int roomId) {
+//
+//        Map<Square, Piece> board = board
+//            return ScoreResult.of(board);
+//    }
 }

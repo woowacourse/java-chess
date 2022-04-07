@@ -3,6 +3,7 @@ package chess.dao;
 import chess.model.piece.Color;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
+import chess.model.square.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -34,7 +35,7 @@ public class PieceDao {
                     piece.name(),
                     resultSet.getInt(1),
                     piece.color(),
-                    piece.getSquareId());
+                    squareId);
         });
     }
 
@@ -46,7 +47,6 @@ public class PieceDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("기물을 찾지 못했습니다.");
-
             }
             return PieceType.getPiece(
                     resultSet.getString("type"),
@@ -97,6 +97,24 @@ public class PieceDao {
                         ));
             }
             return pieces;
+        });
+    }
+
+    public int countPawnsOnSameColumn(int roomId, File column, Color color) {
+        return connectionManager.executeQuery(connection -> {
+            final String sql = "select count(*) as total_count from piece pi " +
+                    "join square s on pi.square_id = s.id " +
+                    "where s.square_file=? and s.board_id=? and pi.type='p' and pi.color=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, column.value());
+            preparedStatement.setInt(2, roomId);
+            preparedStatement.setString(3, color.name());
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new IllegalArgumentException("쿼리가 잘못됐습니다.");
+            }
+
+            return resultSet.getInt("total_count");
         });
     }
 }
