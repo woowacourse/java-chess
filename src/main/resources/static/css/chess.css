@@ -3,17 +3,13 @@
 }
 
 .message {
-    /*font-size: 2rem;*/
     font-weight: bold;
     color: #ff5b5b;
-    /*margin-bottom: 0.8rem;*/
 }
 
 .check {
-    /*font-size: 2rem;*/
     font-weight: bold;
     color: #2a4cfd;
-    /*margin-bottom: 0.8rem;*/
 }
 
 .chessboard {

@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import spark.Request;
 
 public class ChessService {
+
     private final BoardDao boardDao;
     private final CampDao campDao;
     private final MemberDaoImpl memberDao;
@@ -30,34 +31,29 @@ public class ChessService {
     }
 
     public Map<String, Object> executeCommand(final Request req) {
-        String command = req.queryParams("command");
-        if (command == null) {
-            final MoveReqDto moveReqDto = new Gson().fromJson(
-                req.body(), MoveReqDto.class
-            );
-            command = moveReqDto.getCommand();
-        }
-        System.err.println("front에서 받은 command = " + command);
+        String command = extractCommandFrom(req);
         final WebGameCommand webgameCommand = WebGameCommand.from(command);
         return webgameCommand.execute(command, chessGame, getModelToState());
+    }
+
+    private String extractCommandFrom(final Request req) {
+        String command = req.queryParams("command");
+        if (command == null) {
+            final Gson gson = new Gson();
+            final MoveReqDto moveReqDto = gson.fromJson(req.body(), MoveReqDto.class);
+            command = moveReqDto.getCommand();
+        }
+        return command;
     }
 
     public Supplier<Map<String, Object>> getModelToState() {
         final HashMap<String, Object> model = new HashMap<>();
         return () -> {
             if (chessGame.isRunning()) {
-//                OutputView.printBoard(getBoardDto());
-                //check, check메이트와 message를 같이 쓴다 -> 없는 경우만 알려주자.
-                if (model.get("message") == null || model.get("message").equals("")) {
-                    model.put("message", "게임이 진행중 입니다.");
-                }
+                setCurrentStateToModelMessage(model);
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
 
-                //시작 <-> 종료 표기를 위한 게임 진행상태도 같이 전달
-                if (model.get("isRunning") == null || model.get("isRunning").equals("")) {
-                    model.put("isRunning", true);
-                }
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
                 model.put("status", chessGame.calculateStatus());
@@ -68,13 +64,10 @@ public class ChessService {
 //                OutputView.printStatus(calculateStatus());
 //            }
             if (isEndInRunning()) {
-//                OutputView.printFinalStatus(calculateStatus());
                 model.put("message", "현재 게임이 종료되었습니다.");
                 model.put("camp", chessGame.getCamp());
                 model.put("status", chessGame.calculateStatus());
                 model.put("isRunning", false);
-
-//                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 chessGame.ready();
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
 
@@ -87,11 +80,15 @@ public class ChessService {
         };
     }
 
-    private boolean isStatusInRunning() {
-        if (isEndInGameOff()) {
-            return false;
+    private void setCurrentStateToModelMessage(final HashMap<String, Object> model) {
+        // WebCommand에서 move 로직 실행 후 -> 체크, 체크메이트 등 별 message가 들어있지 않으면, 진행 중 메세지를 입력함.
+        if (model.get("message") == null || model.get("message").equals("")) {
+            model.put("message", "게임이 진행중 입니다.");
         }
-        return chessGame.isStatusInRunning();
+        // WebCommand에서 move 로직 실행 후 -> 체크메이트 등 에 대한 표기를 안했을 때 <-> 종료 표기를 위한 게임 진행상태도 같이 전달
+        if (model.get("isRunning") == null || model.get("isRunning").equals("")) {
+            model.put("isRunning", true);
+        }
     }
 
     private boolean isEndInRunning() {

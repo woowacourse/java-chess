@@ -38,11 +38,21 @@ public class WebController {
         });
 
         get("/game", (req, res) -> {
-            return render(redirectAndGetModel(req, res), "game.html");
+            return render(redirectAndGetModel(req), "game.html");
         });
     }
 
-    private Map<String, Object> redirectAndGetModel(final Request req, final Response res) {
+    private Map<String, Object> executeAndGetModel(final Request req, final Response res) {
+        try {
+            return chessService.executeCommand(req);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            addErrorFlashToSessionForRedirect(req, e);
+            res.redirect("/game");
+            return null;
+        }
+    }
+
+    private Map<String, Object> redirectAndGetModel(final Request req) {
         final Map<String, Object> currentModel = chessService.getModelToState().get();
         if (req.session().attribute("errorFlash") != null) {
             currentModel.putAll(req.session().attribute("errorFlash"));
@@ -53,34 +63,22 @@ public class WebController {
     }
 
     private void checkGameState(final Request req, final Response res) {
-        // 시작안누르고 /start로 바로 가는 경우 -> index.html 시작화면으로
+        // index.html에서 시작을 안누르고  바로 game.html으로 진입하는 경우를 처리
         if (chessService.isNotExistGame()) {
             res.redirect("/");
         }
-        // 게임이 종료된 상태에서 종료 누르기 -> index.html로 보내기
+
+        // game.html에서 명령어(종료버튼)입력시 내부게임종료상태로 확인되면 -> 바로 index.html로 redirect
         if (chessService.isEndInGameOff()) {
             res.redirect("/");
-//            render(executeAndGetModel(req, res), "index.html");
         }
-
-        //
-
     }
 
-    private Map<String, Object> executeAndGetModel(final Request req, final Response res) {
-        try {
-            return chessService.executeCommand(req);
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("hasError", true);
-            error.put("errorMessage", e.getMessage());
-            req.session().attribute("errorFlash", error);
-//            req.session().attribute("errorMessage", e.getMessage()); // map형태로 넣어야한다.
-//            res.redirect("/chess-game?chess-game-id=" + chessGameId);
-            System.err.println("에러나서 /game으로 redirect중");
-            res.redirect("/game"); // get으로 갈듯? get()을 만들고 거기에 모델정보도 같이 담아서 보내야한다.
-            return null;
-        }
+    private void addErrorFlashToSessionForRedirect(final Request req, final RuntimeException e) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("hasError", true);
+        error.put("errorMessage", e.getMessage());
+        req.session().attribute("errorFlash", error);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
