@@ -12,6 +12,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
@@ -56,24 +57,7 @@ public class ChessService {
             List<String> strings = rawBoard.get(key);
             String piece = strings.get(0);
             String color = strings.get(1);
-            if ("PAWN".equals(piece)) {
-                board.put(position, new Pawn(PieceColor.getPieceColor(color)));
-            }
-            if ("ROOK".equals(piece)) {
-                board.put(position, new Rook(PieceColor.getPieceColor(color)));
-            }
-            if ("KNIGHT".equals(piece)) {
-                board.put(position, new Knight(PieceColor.getPieceColor(color)));
-            }
-            if ("BISHOP".equals(piece)) {
-                board.put(position, new Bishop(PieceColor.getPieceColor(color)));
-            }
-            if ("KING".equals(piece)) {
-                board.put(position, new King(PieceColor.getPieceColor(color)));
-            }
-            if ("QUEEN".equals(piece)) {
-                board.put(position, new Queen(PieceColor.getPieceColor(color)));
-            }
+            board.put(position, PieceFactory.getPiece(color + piece));
         }
         return new Board(board);
     }
