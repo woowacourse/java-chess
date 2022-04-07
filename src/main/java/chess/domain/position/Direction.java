@@ -29,8 +29,9 @@ public enum Direction {
         int colWeight = calculateWeight(source.getFileIndex() - target.getFileIndex());
 
         return Arrays.stream(values())
-                .filter(direction -> direction.row == rowWeight && direction.col == colWeight
-                        && direction.isDiagonal == isDiagonal(source, target))
+                .filter(direction -> direction.row == rowWeight)
+                .filter(direction -> direction.col == colWeight)
+                .filter(direction -> direction.isDiagonal ==isDiagonal(source, target))
                 .findFirst()
                 .orElse(NONE);
     }
