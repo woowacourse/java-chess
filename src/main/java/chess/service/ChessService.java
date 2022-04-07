@@ -21,6 +21,7 @@ import chess.domain.dto.PieceDto;
 import chess.domain.entity.Board;
 import chess.domain.entity.Game;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Status;
 import chess.domain.state.Finished;
 import chess.domain.state.Ready;
 import chess.domain.state.Running;
@@ -121,6 +122,10 @@ public class ChessService {
         gameDao.updateByGame(GameDto.of(gameId, chessGame.getState(), chessGame.turn().name()));
 
         return chessGame;
+    }
+
+    public Status status(ChessGame chessGame) {
+        return chessGame.status();
     }
 
     public ChessGame end(ChessGame chessGame) {
