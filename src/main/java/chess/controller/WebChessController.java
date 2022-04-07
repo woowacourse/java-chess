@@ -34,7 +34,7 @@ public class WebChessController {
 
     public void inputGameID() {
         get("/", (req, res) ->
-                        new ModelAndView(boardDTO.getData(), "index.html"),
+                        new ModelAndView(Map.of("users", new StatusDAO().findAllUsers()), "index.html"),
                 new HandlebarsTemplateEngine());
     }
 

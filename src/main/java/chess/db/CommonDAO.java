@@ -9,11 +9,13 @@ import java.util.List;
 public class CommonDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
 
-    protected final String roomId;
+    protected String roomId;
 
     protected CommonDAO(String roomId) {
         this.roomId = roomId;
     }
+
+    protected CommonDAO() {}
 
     protected Connection getConnection() {
         loadDriver();

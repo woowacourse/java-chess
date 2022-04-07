@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatusDAO extends CommonDAO {
@@ -12,6 +13,7 @@ public class StatusDAO extends CommonDAO {
     private static final String FIND_COLOR_SQL = "select color from state where roomID = ?";
     private static final String CONVERT_COLOR_SQL = "update state set color = ? where roomID = ?";
     private static final String CHECK_SAVE_SQL = "select id from room where id = ?";
+    private static final String FIND_ALL_USERS_SQL = "select id from room";
     private static final String TERMINATE_GAME_SQL = "delete from room where id = ?";
     private static final String INITIALIZE_ID_SQL = "insert into room values (?)";
     private static final String INITIALIZE_COLOR_SQL = "insert into state values (?, ?)";
@@ -19,6 +21,10 @@ public class StatusDAO extends CommonDAO {
     public StatusDAO(String roomId) {
         super(roomId);
     }
+
+    public StatusDAO() {
+        super();
+    };
 
     public Color findColor() {
         try (Connection connection = getConnection()) {
@@ -95,5 +101,25 @@ public class StatusDAO extends CommonDAO {
         catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public String findAllUsers() {
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS_SQL);
+            ResultSet resultSet = statement.executeQuery();
+            return getIds(resultSet);
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    private String getIds(ResultSet resultSet) throws SQLException {
+        List<String> ids = new ArrayList<>();
+        while (resultSet.next()) {
+            ids.add(resultSet.getString("id"));
+        }
+        return String.join(", ", ids);
     }
 }
