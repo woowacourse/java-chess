@@ -2,14 +2,8 @@ package chess.dao;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
-import chess.domain.state.BlackTurn;
-import chess.domain.state.Finish;
 import chess.domain.state.GameState;
-import chess.domain.state.WhiteTurn;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -190,7 +184,7 @@ public class ChessDao {
     public Map<String, List<String>> getChessBoard() {
         final Connection connection = getConnection();
         final String sql = "select board_row, board_column, name, team "
-                + "from chessboard join chesspiece on chessboard.chesspiece_id = chesspiece_id";
+                + "from chessboard join chesspiece on chessboard.chesspiece_id = chesspiece.id";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
