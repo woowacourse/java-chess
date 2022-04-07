@@ -25,6 +25,10 @@ public abstract class State {
         return new Running(board, color);
     }
 
+    public static State create(Map<Position, Piece> board) {
+        return new Ready(board);
+    }
+
     public abstract State proceed(Command command);
 
     public boolean isFinished() {
