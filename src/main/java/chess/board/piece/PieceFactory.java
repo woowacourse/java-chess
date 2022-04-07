@@ -17,8 +17,6 @@ public enum PieceFactory {
     EMPTY(Empty::new),
     ;
     private final BiFunction<Position, Team, Piece> function;
-    private static final String EMPTY_TEAM = "none";
-    private static final String EMPTY_TYPE = "empty";
 
     PieceFactory(BiFunction<Position, Team, Piece> function) {
         this.function = function;
@@ -35,13 +33,4 @@ public enum PieceFactory {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못입력되었습니다."));
     }
-
-    public static String getEmptyTeam() {
-        return EMPTY_TEAM;
-    }
-
-    public static String getEmptyType() {
-        return EMPTY_TYPE;
-    }
-
 }

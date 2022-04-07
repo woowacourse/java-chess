@@ -5,7 +5,6 @@ import chess.board.Team;
 import chess.board.Turn;
 import chess.board.piece.Empty;
 import chess.board.piece.Piece;
-import chess.board.piece.PieceFactory;
 import chess.board.piece.Pieces;
 import chess.board.piece.position.Position;
 import chess.web.dao.BoardDao;
