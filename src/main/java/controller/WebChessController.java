@@ -18,6 +18,7 @@ import utils.ChessBoardGenerator;
 
 public class WebChessController {
 
+    private static final String SPLIT_REGEX = "";
     private ChessGame chessGame;
     private ChessGameDao chessGameDao;
     private PieceDao pieceDao;
@@ -52,8 +53,8 @@ public class WebChessController {
     }
 
     public boolean move(String source, String target) {
-        String[] sources = source.split("");
-        String[] targets = target.split("");
+        String[] sources = source.split(SPLIT_REGEX);
+        String[] targets = target.split(SPLIT_REGEX);
         Position sourcePosition = Position.of(sources[0], sources[1]);
         Position targetPosition = Position.of(targets[0], targets[1]);
         chessGame.move(sourcePosition, targetPosition);
@@ -84,7 +85,7 @@ public class WebChessController {
     public Map<Position, Piece> createBoard(List<PieceDto> pieceDtoList) {
         Map<Position, Piece> board = new HashMap<>();
         for (PieceDto pieceDto : pieceDtoList) {
-            String[] position = pieceDto.getPosition().split("");
+            String[] position = pieceDto.getPosition().split(SPLIT_REGEX);
             String piecePlayer = pieceDto.getPlayer();
             Position piecePosition = Position.of(position[0], position[1]);
             Piece piece = PieceGenerator.of(pieceDto.getType())
@@ -94,12 +95,12 @@ public class WebChessController {
         return board;
     }
 
-    public void changeBoard(Player player, ChessBoard chessBoard) {
-        chessGame = new ChessGame(chessBoard, player);
-    }
-
     public List<String> findAllGameName() {
         return chessGameDao.findAllName();
+    }
+
+    private void changeBoard(Player player, ChessBoard chessBoard) {
+        chessGame = new ChessGame(chessBoard, player);
     }
 
     public ChessGameDto findByGameName(String gameName) {

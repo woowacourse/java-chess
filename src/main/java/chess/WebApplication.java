@@ -25,11 +25,6 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
-        get("/test", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "chess.html");
-        });
-
         get("/play", (req, res) -> {
             Map<String, Object> model = webChessController.modelBoard();
             String player = webChessController.currentPlayer().name().toLowerCase();
