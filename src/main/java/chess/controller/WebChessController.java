@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.game.Status;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +51,7 @@ public class WebChessController {
     private void play() {
         get("/play", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (chessService.isEnd()) {
+            if (chessService.checkStatus(Status.END)) {
                 res.redirect("/result");
             }
             model.put("play", true);
@@ -64,7 +65,7 @@ public class WebChessController {
             Gson gson = new GsonBuilder().create();
             JsonObject request = gson.fromJson(req.body(), JsonObject.class);
             String move = chessService.move(request.get("source").getAsString(), request.get("target").getAsString());
-            if (chessService.isEnd()) {
+            if (chessService.checkStatus(Status.END)) {
                 chessService.end();
             }
             return gson.fromJson(move, JsonObject.class);
@@ -74,7 +75,7 @@ public class WebChessController {
     private void status() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (chessService.isPlaying()) {
+            if (chessService.checkStatus(Status.PLAYING)) {
                 model.put("play", true);
                 model.put("status", chessService.status());
                 model.put("board", chessService.getCurrentBoard());
@@ -87,7 +88,7 @@ public class WebChessController {
 
     private void save() {
         post("/save", (req, res) -> {
-            if (chessService.isPlaying()) {
+            if (chessService.checkStatus(Status.PLAYING)) {
                 chessService.save();
             }
             res.redirect("/play");
@@ -107,6 +108,7 @@ public class WebChessController {
         get("/result", (req, res) -> {
             chessService.end();
             Map<String, Object> model = new HashMap<>();
+            model.put("play",true);
             model.put("status", chessService.status());
             model.put("board", chessService.getCurrentBoard());
             model.put("winner", chessService.findWinner());

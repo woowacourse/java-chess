@@ -1,7 +1,9 @@
 package chess.controller;
 
+import chess.domain.game.Status;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
+import chess.domain.game.status.Playing;
 import chess.domain.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
@@ -15,7 +17,7 @@ public class ChessController {
     }
 
     private void playTurn(ChessBoard chessBoard) {
-        if (chessBoard.isEnd()) {
+        if (chessBoard.compareStatus(Status.END)) {
             OutputView.printResult(chessBoard.calculateScore(), chessBoard.decideWinner());
             return;
         }
@@ -41,7 +43,7 @@ public class ChessController {
     private void runStartCommand(ChessBoard chessBoard) {
         try {
             checkBeforeStart(chessBoard);
-            chessBoard.start();
+            chessBoard.changeStatus(new Playing());
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
@@ -49,7 +51,7 @@ public class ChessController {
     }
 
     private void checkBeforeStart(ChessBoard chessBoard) {
-        if (chessBoard.isPlaying()) {
+        if (chessBoard.compareStatus(Status.PLAYING)) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
         }
     }
@@ -88,7 +90,7 @@ public class ChessController {
     }
 
     private void checkBeforePlaying(ChessBoard chessBoard) {
-        if (chessBoard.isReady()) {
+        if (chessBoard.compareStatus(Status.READY)) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }

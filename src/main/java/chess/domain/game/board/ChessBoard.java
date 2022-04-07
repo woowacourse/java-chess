@@ -1,8 +1,11 @@
 package chess.domain.game.board;
 
 import chess.domain.game.Color;
-import chess.domain.game.GameStatus;
 import chess.domain.game.Score;
+import chess.domain.game.Status;
+import chess.domain.game.status.End;
+import chess.domain.game.status.GameStatus;
+import chess.domain.game.status.Ready;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.position.Direction;
@@ -18,13 +21,13 @@ public class ChessBoard {
 
     private final Map<Position, ChessPiece> chessBoard;
     private Color currentTurn = Color.WHITE;
-    private GameStatus gameStatus = GameStatus.READY;
+    private chess.domain.game.status.GameStatus gameStatus = new Ready();
 
     public ChessBoard(Map<Position, ChessPiece> board) {
         this.chessBoard = board;
     }
 
-    public ChessBoard(HashMap<Position, ChessPiece> board, GameStatus status, Color turn) {
+    public ChessBoard(HashMap<Position, ChessPiece> board, chess.domain.game.status.GameStatus status, Color turn) {
         this.chessBoard = board;
         this.currentTurn = turn;
         this.gameStatus = status;
@@ -136,7 +139,7 @@ public class ChessBoard {
     private void checkMate(Position target) {
         ChessPiece pieceOfTo = chessBoard.get(target);
         if (pieceOfTo != null && pieceOfTo.isKing()) {
-            gameStatus = GameStatus.END;
+            gameStatus = new End();
         }
     }
 
@@ -185,27 +188,15 @@ public class ChessBoard {
         return currentTurn.toOpposite();
     }
 
-    public boolean isReady() {
-        return gameStatus.isReady();
-    }
-
-    public boolean isEnd() {
-        return gameStatus.isEnd();
-    }
-
-    public boolean isPlaying() {
-        return gameStatus.isPlaying();
-    }
-
-    public void start() {
-        gameStatus = GameStatus.PLAYING;
-    }
-
-    public void end() {
-        gameStatus = GameStatus.END;
+    public void changeStatus(GameStatus status){
+        gameStatus = status;
     }
 
     public Color getCurrentTurn() {
         return currentTurn;
+    }
+
+    public boolean compareStatus(Status status) {
+        return gameStatus.checkStatus() == status;
     }
 }

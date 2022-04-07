@@ -6,8 +6,10 @@ import chess.domain.dto.GameDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.ResponseDto;
 import chess.domain.game.Color;
+import chess.domain.game.Status;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.game.board.ChessBoardFactory;
+import chess.domain.game.status.End;
 import chess.domain.game.status.Playing;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Type;
@@ -28,7 +30,7 @@ public class ChessService {
     public void start() throws SQLException {
         if (isNotSaved()) {
             chessBoard = ChessBoardFactory.initBoard();
-            chessBoard.start();
+            chessBoard.changeStatus(new Playing());
             return;
         }
         loadLastGame();
@@ -82,7 +84,7 @@ public class ChessService {
 
     public String move(String source, String target) {
         try {
-            if (chessBoard.isPlaying()) {
+            if (chessBoard.compareStatus(Status.PLAYING)) {
                 chessBoard.move(new Position(source), new Position(target));
             }
         } catch (IllegalArgumentException e) {
@@ -97,7 +99,7 @@ public class ChessService {
     }
 
     public void end() throws SQLException {
-        chessBoard.end();
+        chessBoard.changeStatus(new End());
         boardDao.delete(gameDao.findLastGameId());
         gameDao.delete();
     }
@@ -110,11 +112,7 @@ public class ChessService {
         return chessBoard.convertToMap();
     }
 
-    public boolean isPlaying() {
-        return chessBoard.isPlaying();
-    }
-
-    public boolean isEnd() {
-        return chessBoard.isEnd();
+    public boolean checkStatus(Status status){
+        return chessBoard.compareStatus(status);
     }
 }

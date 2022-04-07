@@ -1,7 +1,7 @@
 package chess.domain.dto;
 
 import chess.domain.game.Color;
-import chess.domain.game.GameStatus;
+import chess.domain.game.Status;
 
 public class GameDto {
     private final int id;
@@ -18,11 +18,11 @@ public class GameDto {
         return id;
     }
 
-    public GameStatus getStatus() {
+    public Status getStatus() {
         if (status) {
-            return GameStatus.PLAYING;
+            return Status.PLAYING;
         }
-        return GameStatus.END;
+        return Status.END;
     }
 
     public Color getTurn() {
