@@ -3,13 +3,9 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceGenerator;
+import chess.domain.piece.InitialPositionPieceGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Row;
 import chess.domain.position.Square;
@@ -38,18 +34,18 @@ public class PieceDao {
         }
     }
 
-    public void insertPieces() {
+    public void insertPieces(String gameID) {
         final Connection connection = getConnection();
-        final String sql = "insert into piece (position, type, color) values (?, ?, ?)";
+        final String sql = "insert into piece (position, type, color, gameID) values (?, ?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             for (Column column : Column.values()) {
                 for (Row row : Row.values()) {
-                    if (!PieceGenerator.generatePiece(column, row).isNone()) {
-                        statement.setString(1, new Square(column, row).getName());
-                        statement.setString(2, PieceGenerator.getType(column, row).name());
-                        statement.setString(3, PieceGenerator.getColor(row).name());
-                    }
+                    statement.setString(1, new Square(column, row).getName());
+                    statement.setString(2, InitialPositionPieceGenerator.getType(column, row).name());
+                    statement.setString(3, InitialPositionPieceGenerator.getColor(row).name());
+                    statement.setString(4, gameID);
+                    statement.executeUpdate();
                 }
             }
         } catch (SQLException e) {
@@ -63,6 +59,7 @@ public class PieceDao {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, target.getName());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,27 +72,21 @@ public class PieceDao {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, target.getName());
             statement.setString(2, source.getName());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Piece> findAll() {
+    public void deleteAll(String gameID) {
         final Connection connection = getConnection();
-        final String sql = "select * from piece";
-        List<Piece> pieces = new ArrayList<>();
+        final String sql = "delete from piece where gameID = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String position = resultSet.getString("position");
-                Column column = Column.find(position.charAt(0));
-                Row row = Row.find(position.charAt(1));
-                pieces.add(PieceGenerator.generatePiece(column, row));
-            }
+            statement.setString(1, gameID);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return pieces;
     }
 }

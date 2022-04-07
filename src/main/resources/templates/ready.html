@@ -6,11 +6,15 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <form action="/ingame" method="get">
-        <input type="submit" value="START" class="btn" id="start">
-    </form>
-    <div>
-        <h2>click to start!</h2>
-    </div>
+<div id="welcomeMessage">
+    CLICK TO START! 😆
+</div>
+<form action="/ingame" method="get" class="textBoxWrapper">
+    GAME ID : <input type="text" name="gameID" class="gameIDBox"/>
+    <input type="submit" value="START" class="btn" id="start">
+</form>
+<form action="/findgame" method="get">
+    <input type="submit" value="CONTINUE" class="btn" id="continue">
+</form>
 </body>
 </html>
