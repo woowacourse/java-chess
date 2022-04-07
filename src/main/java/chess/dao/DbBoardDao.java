@@ -63,7 +63,7 @@ public class DbBoardDao implements BoardDao {
     }
 
     @Override
-    public int save(final Color color) {
+    public void save(final Color color) {
         final String sql = "insert into board (turn) values (?)";
         try (Connection connection = DbConnector.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -72,11 +72,9 @@ public class DbBoardDao implements BoardDao {
 
             ResultSet resultSet = statement.getGeneratedKeys();
             validateResultSet(resultSet);
-            return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
     @Override

@@ -4,7 +4,7 @@ import chess.piece.detail.Color;
 
 public interface BoardDao {
 
-    int save(final Color color);
+    void save(final Color color);
 
     Color findTurnById(final int id);
 
