@@ -18,7 +18,7 @@ public final class Play implements State {
     public State execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.MOVE) {
             chessGame.play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
-            return playOrResult(chessGame);
+            return playOrEnd(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
@@ -27,7 +27,7 @@ public final class Play implements State {
         return StateType.PLAY;
     }
 
-    private State playOrResult(ChessGame chessGame) {
+    private State playOrEnd(ChessGame chessGame) {
         if (chessGame.isFinished()) {
             return new End();
         }
