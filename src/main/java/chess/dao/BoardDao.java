@@ -11,6 +11,7 @@ import chess.dto.request.DeletePieceDto;
 import chess.dto.request.UpdatePiecePositionDto;
 import chess.dto.response.BoardDto;
 import chess.exception.DatabaseException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +25,8 @@ public class BoardDao extends Dao {
         String query = String.format("SELECT x_axis, y_axis, piece_type, piece_color FROM %s WHERE game_id = ?",
                 TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -50,8 +51,8 @@ public class BoardDao extends Dao {
                 "INSERT INTO %s(game_id, x_axis, y_axis, piece_type, piece_color) VALUES(?, ?, ?, ?, ?)",
                 TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, createPieceDto.getGameId());
             preparedStatement.setString(2, createPieceDto.getXAxisValueAsString());
             preparedStatement.setString(3, createPieceDto.getYAxisValueAsString());
@@ -67,8 +68,8 @@ public class BoardDao extends Dao {
         String query = String.format(
                 "DELETE FROM %s WHERE game_id = ? AND x_axis = ? AND y_axis = ?", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, deletePieceDto.getGameId());
             preparedStatement.setString(2, deletePieceDto.getXAxisValueAsString());
             preparedStatement.setString(3, deletePieceDto.getYAxisValueAsString());
@@ -82,8 +83,8 @@ public class BoardDao extends Dao {
         String query = String.format(
                 "UPDATE %s SET x_axis = ?, y_axis = ? WHERE x_axis = ? AND y_axis = ? AND game_id = ?", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, updatePiecePositionDto.getToXAxisValueAsString());
             preparedStatement.setString(2, updatePiecePositionDto.getToYAxisValueAsString());
             preparedStatement.setString(3, updatePiecePositionDto.getFromXAxisValueAsString());

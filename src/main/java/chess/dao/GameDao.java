@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.dto.response.ChessGameDto;
 import chess.exception.DatabaseException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,8 @@ public class GameDao extends Dao {
     public ChessGameDto getGame(String gameId) {
         String query = String.format("SELECT turn FROM %s WHERE id = ?", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -30,8 +31,8 @@ public class GameDao extends Dao {
     public void createGame(String gameId) {
         String query = String.format("INSERT INTO %s VALUES (?, 'WHITE')", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -42,8 +43,8 @@ public class GameDao extends Dao {
     public void deleteGame(String gameId) {
         String query = String.format("DELETE FROM %s WHERE id = ?", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -62,8 +63,8 @@ public class GameDao extends Dao {
     private void updateTurn(String gameId, String turn) {
         String query = String.format("UPDATE %s SET turn = ? WHERE id = ?", TABLE_NAME);
 
-        try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, turn);
             preparedStatement.setString(2, gameId);
             preparedStatement.executeUpdate();
