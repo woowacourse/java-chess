@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -48,9 +47,8 @@ public class BoardDao {
                 PreparedStatement statement = connection.prepareStatement(selectSql)) {
             statement.setString(1, commandDto.getFrom());
             ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                throw new IllegalStateException();
-            }
+            validateResultSetNotEmpty(resultSet);
+
             String piece = resultSet.getString("piece");
             String color = resultSet.getString("color");
 
@@ -58,6 +56,12 @@ public class BoardDao {
             executeDeleteStatement(commandDto, deleteSql, connection);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void validateResultSetNotEmpty(ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            throw new IllegalStateException();
         }
     }
 
