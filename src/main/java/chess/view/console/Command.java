@@ -1,6 +1,10 @@
 package chess.view.console;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Command {
 
@@ -15,11 +19,13 @@ public enum Command {
         this.value = value;
     }
 
+    private static Map<String, Command> CACHE =
+            Arrays.stream(values()).collect(Collectors.toMap(Command::getValue, Function.identity()));
+
     public static Command of(final String value) {
-        return Arrays.stream(values())
-                .filter(gameSwitch -> gameSwitch.value.equalsIgnoreCase(value))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다."));
+        return Optional
+                .ofNullable(CACHE.get(value))
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 Command 입니다."));
     }
 
     public String getValue() {

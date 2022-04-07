@@ -1,6 +1,10 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Row {
 
@@ -19,10 +23,12 @@ public enum Row {
         this.value = value;
     }
 
+    private static Map<Integer, Row> CACHE =
+            Arrays.stream(values()).collect(Collectors.toMap(Row::getValue, Function.identity()));
+
     private static Row of(final int value) {
-        return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findFirst()
+        return Optional
+                .ofNullable(CACHE.get(value))
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 Row 입니다."));
     }
 

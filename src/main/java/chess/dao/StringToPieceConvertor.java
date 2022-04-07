@@ -10,7 +10,10 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum StringToPieceConvertor {
 
@@ -30,11 +33,11 @@ public enum StringToPieceConvertor {
         this.convertPiece = convertPiece;
     }
 
+    private static Map<String, StringToPieceConvertor> CACHE =
+            Arrays.stream(values()).collect(Collectors.toMap(it -> it.name, Function.identity()));
+
     public static Piece convert(final String name, String teamValue) {
-        return Arrays.stream(values())
-                .filter(it -> it.name.equals(name))
-                .map(it -> it.convertPiece.apply(teamValue))
-                .findFirst()
+        return Optional.ofNullable(CACHE.get(name).convertPiece.apply(teamValue))
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Piece 입니다."));
     }
 }

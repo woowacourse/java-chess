@@ -1,6 +1,10 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Column {
 
@@ -19,15 +23,17 @@ public enum Column {
         this.value = value;
     }
 
-    private static Column of(final int value) {
-        return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findFirst()
+    private static Map<Character, Column> CACHE =
+            Arrays.stream(values()).collect(Collectors.toMap(Column::getValue, Function.identity()));
+
+    private static Column of(final char value) {
+        return Optional
+                .ofNullable(CACHE.get(value))
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 Column 입니다."));
     }
 
     public Column move(final int horizon) {
-        return of(this.value + horizon);
+        return of((char) (this.value + horizon));
     }
 
     public int subtractValue(final Column column) {
