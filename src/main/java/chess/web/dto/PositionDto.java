@@ -5,23 +5,30 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public class PositionDto {
-    private final Rank rank;
-    private final File file;
+    private final int rank;
+    private final char file;
 
-    public PositionDto(Position position) {
-        this.rank = position.getRank();
-        this.file = position.getFile();
+    public PositionDto(int rank, char file) {
+        this.rank = rank;
+        this.file = file;
+    }
+
+    public static PositionDto from(Position position) {
+        Rank rank = position.getRank();
+        File file = position.getFile();
+
+        return new PositionDto(rank.getRank(), file.getFile());
     }
 
     public int getRank() {
-        return rank.getRank();
+        return rank;
     }
 
     public String getFile() {
-        return String.valueOf(file.getFile());
+        return String.valueOf(file);
     }
 
     public String getPosition() {
-        return String.valueOf(file.getFile())+rank.getRank();
+        return String.valueOf(file)+rank;
     }
 }

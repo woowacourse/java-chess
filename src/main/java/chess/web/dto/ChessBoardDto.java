@@ -25,7 +25,7 @@ public class ChessBoardDto {
     }
 
     private static void changeToDto(Map<PositionDto, PieceDto> chessBoardDto, Position position, Piece piece) {
-        PositionDto positionDto = new PositionDto(position);
+        PositionDto positionDto = PositionDto.from(position);
         PieceDto pieceDto = new PieceDto(piece);
 
         chessBoardDto.put(positionDto, pieceDto);
