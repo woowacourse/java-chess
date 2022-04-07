@@ -1,6 +1,4 @@
-package chess;
-
-import chess.console.ChessGame;
+package chess.console;
 
 public class ConsoleApplication {
     public static void main(String[] args) {

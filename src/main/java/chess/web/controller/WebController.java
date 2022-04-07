@@ -43,11 +43,7 @@ public class WebController {
     }
 
     private Map<String, Object> redirectAndGetModel(final Request req, final Response res) {
-        //현재 게임 정보를 얻어와서 그쪽으로 보낸다.
-        //get으로 갈 것이니, 정보를 넘긴다. -> execute안에서 getModelToState() Supplier를 실행시켜 각 상태별 정보를 model로 받았는데
-        // -> 여기서 호출하도록 pubic으로 바꿔서 정보를 받아온다.
-        // - >session에 담긴 정보를 빼서 모델에 넣어줘야함..
-        final Map<String, Object> currentModel = (Map<String, Object>) chessService.getModelToState().get();
+        final Map<String, Object> currentModel = chessService.getModelToState().get();
         if (req.session().attribute("errorFlash") != null) {
             currentModel.putAll(req.session().attribute("errorFlash"));
             req.session().removeAttribute("errorFlash");
@@ -66,6 +62,9 @@ public class WebController {
             res.redirect("/");
 //            render(executeAndGetModel(req, res), "index.html");
         }
+
+        //
+
     }
 
     private Map<String, Object> executeAndGetModel(final Request req, final Response res) {

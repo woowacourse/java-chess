@@ -2,74 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/main.css">
-    <script defer src="/js/main.js"></script>
-    <!--    <script src="../static/js/chess.js"></script>-->
-
+    <link rel="stylesheet" href="/css/chess.css">
+    <script defer src="/js/chess.js"></script>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <style type="text/css">
-        * {
-            font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-        }
-
-        .message {
-            /*font-size: 2rem;*/
-            font-weight: bold;
-            color: #ff3333;
-            /*margin-bottom: 0.8rem;*/
-        }
-
-        .chessboard {
-            width: 640px;
-            height: 640px;
-            margin: 20px;
-            border: 25px solid #806253;
-        }
-
-        .cell {
-            float: left;
-            width: 80px;
-            height: 80px;
-            font-size: 50px;
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .black-cell {
-            background-color: #806253;
-        }
-
-        .white-cell {
-            background-color: #f5eedf;
-            font-size: 50px;
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .piece-image {
-            /*float: left;*/
-            width: 60px;
-            height: 60px;
-            /*font-size: 40px;*/
-            text-align: center;
-            /*display: table-cell;*/
-            vertical-align: middle;
-        }
-
-    </style>
-
-
-    <title>체스</title>
+    <title>포돌이 체스</title>
 
 </head>
 
 <body>
 
 </script>
-<br>
-<h1>Game .html</h1>
+<h3>포돌이 체스 방에 오신 것을 환영합니다.</h3>
 
 {{#isRunning }}
 <form action="/end" method="post">
@@ -84,8 +27,13 @@
 {{/isRunning}}
 
 
-<p>포돌이 알리미: {{#if hasError }} <strong class="message">{{errorMessage}}</strong>> {{else}} {{message}} {{/if}}</p>
-
+<p>포돌이 알리미:
+    {{#if hasError }}
+    <strong class="message"> {{errorMessage}} </strong>
+    {{else}}
+    <strong class="check">{{message}}</strong>
+    {{/if}}
+</p>
 
 <!--정보 출력-->
 <!--StatusScore to #status (white, black, gameResultMessage by getter) 시작-->
@@ -94,12 +42,11 @@
 <p>White 팀 : {{white}}점</p>
 <p>Black 팀 : {{black}}점</p>
 
-<p>턴 : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}}</strong> {{/isRunning}} </p>
+<p>턴 : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}} </strong> {{/isRunning}} </p>
 {{/status}}
 <!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
-
-
 {{#board}}
+
 <div class="chessboard">
     <!-- 1st -->
     <div class="cell white-cell"><img id="a8" src="img/{{a8}}.svg" class="piece-image"/></div>

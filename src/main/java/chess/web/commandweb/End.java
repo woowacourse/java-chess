@@ -8,7 +8,7 @@ public final class End implements WebCommandGenerator {
     @Override
     public Map<String, Object> execute(final String command,
                                        final ChessGame chessGame,
-                                       final Supplier returnModelToState) {
+                                       final Supplier<Map<String, Object>> returnModelToState) {
 
         if (!chessGame.isRunning()) {
             chessGame.gameSwitchOff();
@@ -20,7 +20,7 @@ public final class End implements WebCommandGenerator {
         chessGame.end();
 
         returnModelToState.get();
-
+//
 //        chessGame.ready();
         // 게임은 ready로 돌리고 render는 다시 index.html로 돌아가도록 해보자.
         return null;

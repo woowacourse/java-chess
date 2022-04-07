@@ -107,14 +107,16 @@ public final class Board {
 
     public List<Position> getKingCheckmatedPositions(final Camp camp) {
         final SortedMap<UnitDirectVector, List<Position>> movableKingPositions = findMovableKingPositionsBy(camp);
+        final List<Position> flattedMovableKingPositions = movableKingPositions.values()
+            .stream()
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
 
         final List<Entry<Position, Piece>> oppositeEntry = board.entrySet()
             .stream()
             .filter(it -> it.getValue().isSameCampWith(camp.switchCamp()))
             .collect(Collectors.toList());
 
-        final List<Position> flattedMovableKingPositions = movableKingPositions.values().stream().flatMap(List::stream)
-            .collect(Collectors.toList());
 
         return flattedMovableKingPositions.stream()
             .filter(position -> oppositeEntry.stream()
@@ -144,6 +146,19 @@ public final class Board {
         final Position oppositePosition = oppositeEntry.getKey();
         final Positions fromOppositeTokingPositions = new Positions(oppositePosition, kingPosition);
 
+        // 추가1) pawn은 직선은 제외시킨다.(대각선의 position만 검사) canMove는 거리만 판단하고 board에서 기물이냐(capture)/빈칸이냐에 따라서 canMove canCapute하는데
+        // -> 여기서는 무조건 capture의 상황이므로 대각선 폰이면서 && 대각선만 검사 canMove검사 대상이 된다..
+        if (oppositePiece.getPieceProperty() == PieceProperty.PAWN ) {
+            return fromOppositeTokingPositions.isDiagonalMove() && oppositePiece.canMove(fromOppositeTokingPositions);
+
+        }
+
+        // 추가2) knight의경우 장애물 검증은 빼고 물어본다.
+        if (oppositePiece.getPieceProperty() == PieceProperty.KNIGHT ) {
+            return oppositePiece.canMove(fromOppositeTokingPositions);
+        }
+
+        // 그외 piece들
         return oppositePiece.canMove(fromOppositeTokingPositions)
             && isNullPieceFromOppositeToKing(fromOppositeTokingPositions);
     }

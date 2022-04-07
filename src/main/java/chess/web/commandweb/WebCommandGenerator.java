@@ -7,5 +7,5 @@ import java.util.function.Supplier;
 public interface WebCommandGenerator {
     Map<String, Object> execute(final String command,
                                 final ChessGame chessGame,
-                                final Supplier returnModelToState);
+                                final Supplier<Map<String, Object>> returnModelToState);
 }

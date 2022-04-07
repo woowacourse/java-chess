@@ -33,7 +33,7 @@ public enum WebGameCommand {
 
     public Map<String, Object> execute(final String command,
                                        final ChessGame chessGame,
-                                       final Supplier returnModelToState) {
+                                       final Supplier<Map<String, Object>> returnModelToState) {
         final WebCommandGenerator webGameCommand = commandGenerator.get();
         return webGameCommand.execute(command, chessGame, returnModelToState);
     }

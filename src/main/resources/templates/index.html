@@ -2,161 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>포돌이 체스</title>
-    <style type="text/css">
-
-        .chessboard {
-            width: 640px;
-            height: 640px;
-            margin: 20px;
-            border: 25px solid #806253;
-        }
-
-        .cell {
-            float: left;
-            width: 80px;
-            height: 80px;
-            font-size: 50px;
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .black-cell {
-            background-color: #806253;
-        }
-
-        .white-cell {
-            background-color: #f5eedf;
-            font-size: 50px;
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .piece-image {
-            /*float: left;*/
-            width: 60px;
-            height: 60px;
-            /*font-size: 40px;*/
-            text-align: center;
-            /*display: table-cell;*/
-            vertical-align: middle;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/chess.css">
+    <script defer src="/js/chess.js"></script>
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <title>포돌이 체스에 오신 것을 환영합니다.</title>
 </head>
 
 <body>
-<br>
+
+<h3>포돌이 체스를 시작해주세요.</h3>
 
 <form action="/start" method="post">
     <input name="command" value="start" type="hidden">
     <input id="start-form" name="start" type="submit" value="시작하기">
 </form>
-
-
-<p>포돌이 알리미: {{#if hasError }} {{errorMessage}} {{else}} {{message}} {{/if}} </p>
-
-<!--정보 출력-->
-<!--StatusScore to #status (white, black, gameResultMessage by getter) 시작-->
-{{#status}}
-<p>점수</p>
-<p>White 팀 : {{white}}점</p>
-<p>Black 팀 : {{black}}점</p>
-<p>턴 : {{camp}}</p>
-{{#if error }}
-<p>에러: {{error}}</p>
-{{/if}}
-<p>결과: {{gameResultMessage}}</p>
-<br>
-{{/status}}
-<!--StatusScore to /status (white, black, gameResultMessage by getter) 끝-->
-
-{{#board}}
-<div class="chessboard">
-    <!-- 1st -->
-    <div class="cell white-cell" id="a8"><img src="img/{{a8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell black-cell" id="b8"><img src="img/{{b8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell white-cell" id="c8"><img src="img/{{c8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell black-cell" id="d8"><img src="img/{{d8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell white-cell" id="e8"><img src="img/{{e8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell black-cell" id="f8"><img src="img/{{f8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell white-cell" id="g8"><img src="img/{{g8}}.svg" class="piece-image"/>
-    </div>
-    <div class="cell black-cell" id="h8"><img src="img/{{h8}}.svg" class="piece-image"/>
-    </div>
-    <!-- 2nd -->
-    <div class="cell black-cell" id="a7"><img src="img/{{a7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="b7"><img src="img/{{b7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="c7"><img src="img/{{c7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="d7"><img src="img/{{d7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="e7"><img src="img/{{e7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="f7"><img src="img/{{f7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="g7"><img src="img/{{g7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="h7"><img src="img/{{h7}}.svg" class="piece-image"/></div>
-    <!-- 3th -->
-    <div class="cell white-cell" id="a6"><img src="img/{{a6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="b6"><img src="img/{{b6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="c6"><img src="img/{{c6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="d6"><img src="img/{{d6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="e6"><img src="img/{{e6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="f6"><img src="img/{{f6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="g6"><img src="img/{{g6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="h6"><img src="img/{{h6}}.svg" class="piece-image"/></div>
-    <!-- 4st -->
-    <div class="cell black-cell" id="a5"><img src="img/{{a5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="b5"><img src="img/{{b5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="c5"><img src="img/{{c5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="d5"><img src="img/{{d5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="e5"><img src="img/{{e5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="f5"><img src="img/{{f5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="g5"><img src="img/{{g5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="h5"><img src="img/{{h5}}.svg" class="piece-image"/></div>
-    <!-- 5th -->
-    <div class="cell white-cell" id="a4"><img src="img/{{a4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="b4"><img src="img/{{b4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="c4"><img src="img/{{c4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="d4"><img src="img/{{d4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="e4"><img src="img/{{e4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="f4"><img src="img/{{f4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="g4"><img src="img/{{g4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="h4"><img src="img/{{h4}}.svg" class="piece-image"/></div>
-    <!-- 6th -->
-    <div class="cell black-cell" id="a3"><img src="img/{{a3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="b3"><img src="img/{{b3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="c3"><img src="img/{{c3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="d3"><img src="img/{{d3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="e3"><img src="img/{{e3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="f3"><img src="img/{{f3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="g3"><img src="img/{{g3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="h3"><img src="img/{{h3}}.svg" class="piece-image"/></div>
-    <!-- 7th -->
-    <div class="cell white-cell" id="a2"><img src="img/{{a2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="b2"><img src="img/{{b2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="c2"><img src="img/{{c2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="d2"><img src="img/{{d2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="e2"><img src="img/{{e2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="f2"><img src="img/{{f2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="g2"><img src="img/{{g2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="h2"><img src="img/{{h2}}.svg" class="piece-image"/></div>
-    <!-- 8th -->
-    <div class="cell black-cell" id="a1"><img src="img/{{a1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="b1"><img src="img/{{b1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="c1"><img src="img/{{c1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="d1"><img src="img/{{d1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="e1"><img src="img/{{e1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="f1"><img src="img/{{f1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell" id="g1"><img src="img/{{g1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell" id="h1"><img src="img/{{h1}}.svg" class="piece-image"/></div>
-</div>
-{{/board}}
 
 <script src="/static.js/chess.js"></script>
 </body>

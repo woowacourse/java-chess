@@ -1,0 +1,53 @@
+* {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
+.message {
+    /*font-size: 2rem;*/
+    font-weight: bold;
+    color: #ff5b5b;
+    /*margin-bottom: 0.8rem;*/
+}
+
+.check {
+    /*font-size: 2rem;*/
+    font-weight: bold;
+    color: #2a4cfd;
+    /*margin-bottom: 0.8rem;*/
+}
+
+.chessboard {
+    width: 640px;
+    height: 640px;
+    margin: 20px;
+    border: 25px solid #806253;
+}
+
+.cell {
+    float: left;
+    width: 80px;
+    height: 80px;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.black-cell {
+    background-color: #806253;
+}
+
+.white-cell {
+    background-color: #f5eedf;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.piece-image {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+}

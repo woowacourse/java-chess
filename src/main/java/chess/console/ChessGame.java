@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
-
     private State state;
+
     public GameSwitch gameSwitch = GameSwitch.ON;
 
     public ChessGame() {
@@ -48,21 +48,37 @@ public class ChessGame {
 
         final List<Position> kingCheckmatedPositions = state.getKingCheckmatedPositions();
         if (isAnyKingCheckmated(kingCheckmatedPositions)) {
-            checkAllKingCheckMated(kingCheckmatedPositions);
+            isAllKingCheckMated(kingCheckmatedPositions);
         }
     }
 
-    private boolean isAnyKingCheckmated(final List<Position> positions) {
+    public boolean isAnyKingCheckmated(final List<Position> positions) {
         return positions.size() > 0;
     }
 
-    private void checkAllKingCheckMated(final List<Position> positions) {
+    public void isAllKingCheckMated(final List<Position> positions) {
         if (isAllKingCheckmated(positions)) {
             OutputView.printALLKingCheckmatedMessage();
             gameSwitchOff();
+
             return;
         }
         OutputView.printKingCheckmatedMessage(positions);
+    }
+
+    public boolean isAllKingCheckMated(final List<Position> positions,
+                                       final Map<String, Object> model) {
+        if (isAllKingCheckmated(positions)) {
+//            OutputView.printALLKingCheckmatedMessage();
+            System.err.println("킹이 체크 메이트를 빠져나올 구멍이 없데요");
+//            model.put("isKingCheckmated", true);
+//            model.put("message", "현재 턴의 킹 체크메이트 게임을 종료합니다.");
+//            model.put("isRunning", false);
+            gameSwitchOff();
+            return true;
+        }
+        return false;
+//        OutputView.printKingCheckmatedMessage(positions);
     }
 
     private boolean isAllKingCheckmated(final List<Position> positions) {
@@ -149,5 +165,9 @@ public class ChessGame {
 
     public Camp getCamp() {
         return state.getCamp();
+    }
+
+    public List<Position> findKingCheckMatedPosition() {
+        return state.getKingCheckmatedPositions();
     }
 }

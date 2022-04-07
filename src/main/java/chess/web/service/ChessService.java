@@ -42,18 +42,22 @@ public class ChessService {
         return webgameCommand.execute(command, chessGame, getModelToState());
     }
 
-    public Supplier getModelToState() {
+    public Supplier<Map<String, Object>> getModelToState() {
         final HashMap<String, Object> model = new HashMap<>();
         return () -> {
             if (chessGame.isRunning()) {
 //                OutputView.printBoard(getBoardDto());
-                model.put("message", "게임이 진행중 입니다.");
+                //check, check메이트와 message를 같이 쓴다 -> 없는 경우만 알려주자.
+                if (model.get("message") == null || model.get("message").equals("")) {
+                    model.put("message", "게임이 진행중 입니다.");
+                }
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
                 model.put("camp", chessGame.getCamp());
 
                 //시작 <-> 종료 표기를 위한 게임 진행상태도 같이 전달
-                model.put("isRunning", true);
-
+                if (model.get("isRunning") == null || model.get("isRunning").equals("")) {
+                    model.put("isRunning", true);
+                }
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
                 model.put("status", chessGame.calculateStatus());
