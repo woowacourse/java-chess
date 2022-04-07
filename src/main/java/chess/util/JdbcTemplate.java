@@ -12,15 +12,7 @@ public class JdbcTemplate {
     private static final String PASSWORD = "root";
 
     public static Connection getConnection() {
-        Connection conn = null;
-        try {
-            Class.forName(SQL_DRIVER);
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new SqlConnectionException();
-        }
-        return conn;
+        return getConnection(URL);
     }
 
     public static Connection getConnection(final String url) {
