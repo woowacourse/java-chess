@@ -30,9 +30,9 @@ public class TurnDaoImpl implements TurnDao {
             if (resultSet.next()) {
                 return resultSet.getString(CURRENT_TURN_COLUMN);
             }
-            throw new SqlSelectException();
+            throw new SqlSelectException(SqlSelectException.MESSAGE);
         } catch (SQLException e) {
-            throw new SqlSelectException();
+            throw new SqlSelectException(SqlSelectException.MESSAGE, e);
         }
     }
 
@@ -44,7 +44,7 @@ public class TurnDaoImpl implements TurnDao {
             preparedStatement.setString(PREVIOUS_TURN_COLUMN, previousTurn);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE);
+            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE, e);
         }
     }
 }

@@ -37,7 +37,7 @@ public class BoardDaoImpl implements BoardDao {
             }
             return board;
         } catch (SQLException e) {
-            throw new SqlSelectException();
+            throw new SqlSelectException(SqlSelectException.MESSAGE, e);
         }
     }
 
@@ -49,7 +49,7 @@ public class BoardDaoImpl implements BoardDao {
             preparedStatement.setString(POSITION_COLUMN, position);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE);
+            throw new SqlUpdateException(SqlUpdateException.SINGLE_UPDATE_FAILURE_MESSAGE, e);
         }
     }
 
@@ -66,7 +66,7 @@ public class BoardDaoImpl implements BoardDao {
             }
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            throw new SqlUpdateException(SqlUpdateException.MULTIPLE_UPDATE_FAILURE_MESSAGE);
+            throw new SqlUpdateException(SqlUpdateException.MULTIPLE_UPDATE_FAILURE_MESSAGE, e);
         }
     }
 }
