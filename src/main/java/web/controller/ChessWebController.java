@@ -19,7 +19,8 @@ import static spark.Spark.post;
 
 public class ChessWebController {
 
-    private ChessService service;
+    private final ChessService service;
+    private final Gson gson = new GsonBuilder().create();
 
     public ChessWebController() {
         this.service = new ChessService(new BoardDao(), new GameDao());
@@ -30,8 +31,6 @@ public class ChessWebController {
     }
 
     public void run() {
-        Gson gson = new GsonBuilder().create();
-
         get("/", (req, res) -> {
             return render(new HashMap<>(), "index.html");
         });
