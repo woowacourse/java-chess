@@ -27,8 +27,6 @@ public class WebController {
 
         get("/", (request, response) -> render(model, "/ready.html"));
 
-        get("/savegame", ((request, response) -> render(model, "/savegame.html")));
-
         get("/findgame", ((request, response) -> {
             model.put("gameRoom", "어디로 들어가려구??");
             return render(model, "/findgame.html");
