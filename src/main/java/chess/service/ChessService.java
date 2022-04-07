@@ -28,22 +28,17 @@ public class ChessService {
     private ChessBoard chessBoard = null;
     private final GameDao gameDao = new GameDao();
     private final BoardDao boardDao = new BoardDao();
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void start() {
-        try {
-            if (isNotSaved()) {
-                chessBoard = ChessBoardFactory.initBoard();
-                chessBoard.changeStatus(new Playing());
-                return;
-            }
-            loadLastGame();
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
+        if (isNotSaved()) {
+            chessBoard = ChessBoardFactory.initBoard();
+            chessBoard.changeStatus(new Playing());
+            return;
         }
+        loadLastGame();
     }
 
-    private boolean isNotSaved() throws SQLException {
+    private boolean isNotSaved(){
         return gameDao.findLastGameId() == EMPTY;
     }
 
@@ -71,18 +66,14 @@ public class ChessService {
     }
 
     private void loadLastGame() {
-        try{
-            HashMap<Position, ChessPiece> board = new HashMap<>();
-            int lastGameId = gameDao.findLastGameId();
-            for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
-                ChessPiece piece = makePiece(pieceDto);
-                board.put(new Position(pieceDto.getPosition()), piece);
-            }
-            GameDto game = gameDao.findById(lastGameId);
-            chessBoard = new ChessBoard(board, new Playing(), game.getTurn());
-        } catch (SQLException e){
-            logger.error(e.getMessage());
+        HashMap<Position, ChessPiece> board = new HashMap<>();
+        int lastGameId = gameDao.findLastGameId();
+        for (PieceDto pieceDto : boardDao.findByGameId(lastGameId)) {
+            ChessPiece piece = makePiece(pieceDto);
+            board.put(new Position(pieceDto.getPosition()), piece);
         }
+        GameDto game = gameDao.findById(lastGameId);
+        chessBoard = new ChessBoard(board, new Playing(), game.getTurn());
     }
 
     private ChessPiece makePiece(PieceDto pieceDto) {

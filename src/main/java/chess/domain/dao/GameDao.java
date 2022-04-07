@@ -38,22 +38,32 @@ public class GameDao {
         return UNEXPECTED_ERROR_VALUE;
     }
 
-    private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) throws SQLException {
-        final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, ++gameId);
-        statement.setBoolean(2, chessBoard.compareStatus(Status.PLAYING));
-        statement.setString(3, chessBoard.getCurrentTurn().name());
-        return statement;
+    private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) {
+        try{
+            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, ++gameId);
+            statement.setBoolean(2, chessBoard.compareStatus(Status.PLAYING));
+            statement.setString(3, chessBoard.getCurrentTurn().name());
+            return statement;
+        } catch (SQLException throwables) {
+            logger.error(throwables.getMessage());
+        }
+        return null;
     }
 
-    public int findLastGameId() throws SQLException {
+    public int findLastGameId() {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
-        final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ResultSet result = statement.executeQuery();
-        if (!result.next()) {
-            return EMPTY_RESULT;
+        try{
+            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet result = statement.executeQuery();
+            if (!result.next()) {
+                return EMPTY_RESULT;
+            }
+            return result.getInt("id");
+        } catch (SQLException throwables) {
+           logger.error(throwables.getMessage());
         }
-        return result.getInt("id");
+        return UNEXPECTED_ERROR_VALUE;
     }
 
     public GameDto findById(int id) {
