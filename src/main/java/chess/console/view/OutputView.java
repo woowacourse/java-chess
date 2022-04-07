@@ -1,19 +1,26 @@
 package chess.console.view;
 
-import chess.domain.board.Board;
 import chess.domain.Color;
-import chess.domain.piece.Piece;
 import chess.domain.Result;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-
 import java.util.Map;
 import java.util.Optional;
 
 public final class OutputView {
 
     private OutputView() {
+    }
+
+    public static void announceStart() {
+        System.out.println("체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start" +
+                "\n> 게임 종료 : end" +
+                "\n> 말 이동 : move source위치 target위치 - 예. move a2 a3" +
+                "\n> 진행 상황 출력 : status");
     }
 
     public static void printBoard(final Board board) {

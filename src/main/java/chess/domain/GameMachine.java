@@ -9,7 +9,7 @@ import chess.console.view.OutputView;
 public final class GameMachine {
 
     public void run() {
-        InputView.announceStart();
+        OutputView.announceStart();
         Board board = null;
         Commands commands;
         do {
