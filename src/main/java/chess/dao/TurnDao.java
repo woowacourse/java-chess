@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TurnDao {
+public class TurnDao implements TurnDaoInterface{
 
     private final Connection connection;
 
@@ -24,16 +24,6 @@ public class TurnDao {
         }
     }
 
-    public void delete() {
-        final String sql = "delete from turn";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String find() {
         final String sql = "select team from turn";
         try {
@@ -45,6 +35,16 @@ public class TurnDao {
             e.printStackTrace();
         }
         throw new IllegalArgumentException("[ERROR] 일치하는 데이터가 없습니다.");
+    }
+
+    public void delete() {
+        final String sql = "delete from turn";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(String nowTurn, String nextTurn) {

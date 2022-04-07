@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SquareDao {
+public class SquareDao implements SquareDaoInterface {
 
     private final Connection connection;
 
