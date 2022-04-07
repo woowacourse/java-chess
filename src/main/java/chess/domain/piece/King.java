@@ -22,12 +22,17 @@ public class King extends Piece {
     }
 
     @Override
+    public double score() {
+        return KING_SCORE;
+    }
+
+    @Override
     public boolean isKing() {
         return true;
     }
 
     @Override
-    public double score() {
-        return KING_SCORE;
+    public boolean isPawn() {
+        return false;
     }
 }

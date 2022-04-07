@@ -80,14 +80,6 @@ public abstract class Piece {
         return position.isSameFile(column);
     }
 
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -117,4 +109,8 @@ public abstract class Piece {
     protected abstract boolean isPossibleMovement(Position to, Collection<Piece> pieces);
 
     public abstract double score();
+
+    public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 }
