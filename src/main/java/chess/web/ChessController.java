@@ -5,6 +5,8 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 import chess.web.dto.CommendDto;
+import chess.web.service.GameService;
+import chess.web.service.PlayerService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class ChessController {
 
     private Gson gson = new Gson();
     private GameService gameService = new GameService();
+    private PlayerService playerService = new PlayerService();
 
     public ChessController() {
         port(8080);
@@ -26,24 +29,37 @@ public class ChessController {
     public void run() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            return render(model, "login.html");
+        });
+
+        post("/login", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = req.queryParams("name");
+            model.put("player", playerService.login(name));
             return render(model, "index.html");
         });
 
         get("/start", (req, res) -> {
-            gameService.startNewGame();
-            return gson.toJson(gameService.gameStateAndPieces());
+            int boardId = gameService.startNewGame(Integer.parseInt(req.queryParams("playerId")));
+            Map<String, Object> data = gameService.gameStateAndPieces();
+            data.put("boardId", boardId);
+            return gson.toJson(data);
         });
 
         get("/load", (req, res) -> {
-            gameService.loadGame();
-            return gson.toJson(gameService.gameStateAndPieces());
+            int playerId = Integer.parseInt(req.queryParams("playerId"));
+            int boardId = gameService.loadGame(playerId);
+            Map<String, Object> data = gameService.gameStateAndPieces();
+            data.put("boardId", boardId);
+            return gson.toJson(data);
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            int boardId = Integer.parseInt(req.queryParams("boardId"));
             CommendDto commendDto = gson.fromJson(req.body(), CommendDto.class);
             try {
-                gameService.move(commendDto);
+                gameService.move(boardId, commendDto);
             } catch (Exception e) {
                 res.status(400);
                 model.put("message", e.getMessage());

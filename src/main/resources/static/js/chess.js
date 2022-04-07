@@ -147,13 +147,19 @@ function resetScores() {
     document.getElementById('black-score').innerHTML = '-점';
 }
 
+function setBoardId(id) {
+    document.getElementById("board-id").value = id;
+
+}
+
 window.onload = async function () {
     let piecesContainer = document.getElementById('pieces-container');
     await initBlocks(piecesContainer);
 }
 
 function fetchNewChess() {
-    fetch('http://localhost:8080/start', {
+    let playerId = document.getElementById("player-id").value;
+    fetch('http://localhost:8080/start?playerId=' + playerId, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -161,6 +167,7 @@ function fetchNewChess() {
     })
         .then(res => res.json())
         .then(res => {
+            setBoardId(res.boardId);
             resetScores();
             toggleTurn(res.state);
             initPieces(res.pieces);
@@ -168,7 +175,8 @@ function fetchNewChess() {
 }
 
 function fetchLoadChess() {
-    fetch('http://localhost:8080/load', {
+    let playerId = document.getElementById("player-id").value;
+    fetch('http://localhost:8080/load?playerId=' + playerId, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -176,7 +184,7 @@ function fetchLoadChess() {
     })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
+            setBoardId(res.boardId);
             resetScores();
             toggleTurn(res.state);
             initPieces(res.pieces);
@@ -185,7 +193,8 @@ function fetchLoadChess() {
 
 
 function fetchMove(source, target) {
-    fetch('http://localhost:8080/move', {
+    let boardId = document.getElementById("board-id").value;
+    fetch('http://localhost:8080/move?boardId=' + boardId, {
         method: 'POST',
         body: JSON.stringify({
             source: source,

@@ -16,13 +16,14 @@ import java.util.Optional;
 
 public class PieceDao {
 
-    public void saveOne(PieceDto pieceDto) {
+    public void saveOne(int boardId, PieceDto pieceDto) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "insert into piece (position , color, role) values (?, ?, ?)";
+        final String sql = "insert into piece (board_id, position , color, role) values (?, ?, ?, ?)";
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, pieceDto.getPosition());
-            statement.setString(2, pieceDto.getColor());
-            statement.setString(3, pieceDto.getRole());
+            statement.setInt(1, boardId);
+            statement.setString(2, pieceDto.getPosition());
+            statement.setString(3, pieceDto.getColor());
+            statement.setString(4, pieceDto.getRole());
             statement.execute();
             closeResources(statement, connection);
         } catch (SQLException e) {
@@ -30,15 +31,16 @@ public class PieceDao {
         }
     }
 
-    public void saveAll(Map<Position, Piece> pieces) {
+    public void saveAll(int boardId, Map<Position, Piece> pieces) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "insert into piece (position, color, role) values (?, ?, ?)";
+        final String sql = "insert into piece (board_id, position, color, role) values (?, ?, ?, ?)";
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Position position : pieces.keySet()) {
                 PieceDto piece = PieceDto.from(position, pieces.get(position));
-                statement.setString(1, piece.getPosition());
-                statement.setString(2, piece.getColor());
-                statement.setString(3, piece.getRole());
+                statement.setInt(1, boardId);
+                statement.setString(2, piece.getPosition());
+                statement.setString(3, piece.getColor());
+                statement.setString(4, piece.getRole());
                 statement.addBatch();
                 statement.clearParameters();
             }
@@ -49,12 +51,13 @@ public class PieceDao {
         }
     }
 
-    public Optional<PieceDto> findOne(String position) {
+    public Optional<PieceDto> findOne(int boardId, String position) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "select * from piece where position = ?";
+        final String sql = "select * from piece where board_id = ? and position = ?";
         Optional<PieceDto> pieceDto = Optional.ofNullable(null);
         try (final PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setString(1, position);
+            statement.setInt(1, boardId);
+            statement.setString(2, position);
             final ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 pieceDto = Optional.of(new PieceDto(resultSet.getString("position"),
@@ -68,11 +71,12 @@ public class PieceDao {
         return pieceDto;
     }
 
-    public List<PieceDto> findAll() {
+    public List<PieceDto> findAll(int boardId) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "select * from piece";
+        final String sql = "select * from piece where board_id = ?";
         List<PieceDto> pieceDtos = new ArrayList<>();
         try (final PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setInt(1, boardId);
             final ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 pieceDtos.add(new PieceDto(
@@ -88,13 +92,14 @@ public class PieceDao {
         return pieceDtos;
     }
 
-    public void updateOne(String position, PieceDto pieceDto) {
+    public void updateOne(int boardId, String position, PieceDto pieceDto) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "update piece set color = ?, role = ? where position = ?";
+        final String sql = "update piece set color = ?, role = ? where board_id = ? and position = ?";
         try (final PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setString(1, pieceDto.getColor());
             statement.setString(2, pieceDto.getRole());
-            statement.setString(3, position);
+            statement.setInt(3, boardId);
+            statement.setString(4, position);
             statement.execute();
             closeResources(statement, connection);
         } catch (SQLException e) {
@@ -102,11 +107,12 @@ public class PieceDao {
         }
     }
 
-    public void deleteOne(String position) {
+    public void deleteOne(int boardId, String position) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "delete from piece where position = ?";
-        try (final PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setString(1, position);
+        final String sql = "delete from piece where board_id = ? and position = ?";
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, boardId);
+            statement.setString(2, position);
             statement.execute();
             closeResources(statement, connection);
         } catch (SQLException e) {
@@ -114,11 +120,12 @@ public class PieceDao {
         }
     }
 
-    public void deleteAll() {
+    public void deleteAll(int boardId) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "delete from piece";
-        try (final Statement statement = connection.createStatement();) {
-            statement.execute(sql);
+        final String sql = "delete from piece where board_id = ?";
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, boardId);
+            statement.executeUpdate();
             closeResources(statement, connection);
         } catch (SQLException e) {
             e.printStackTrace();

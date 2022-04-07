@@ -11,12 +11,12 @@ import java.sql.Statement;
 
 public class BoardDao {
 
-    public void save(GameStateDto gameStateDto) {
+    public void save(int userId, GameStateDto gameStateDto) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "insert into board (id, turn) values (?, ?)";
+        final String sql = "insert into board (player_id, turn) values (?, ?)";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, 1);
+            statement.setInt(1, userId);
             statement.setString(2, gameStateDto.getTurn());
             statement.execute();
             closeResources(statement, connection);
@@ -44,12 +44,31 @@ public class BoardDao {
         return color;
     }
 
-    public void update(GameStateDto gameStateDto) {
+    public int getBoardIdByPlayer(int plyerId) {
         final Connection connection = DBConnector.getConnection();
-        final String sql = "update board set turn = ? where id = 1";
+        final String sql = "select id from board where player_id = ?";
+        int id = 0;
+
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, plyerId);
+            final ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+            closeResources(resultSet, statement, connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public void update(int boardId, GameStateDto gameStateDto) {
+        final Connection connection = DBConnector.getConnection();
+        final String sql = "update board set turn = ? where id = ?";
 
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameStateDto.getTurn());
+            statement.setInt(2, boardId);
             statement.execute();
             closeResources(statement, connection);
         } catch (SQLException e) {
