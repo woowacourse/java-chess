@@ -10,7 +10,7 @@ public class Position {
     private static final List<Position> cachedPositions;
 
     private static final int NOT_MOVE = 0;
-    private static final int TWO_DISTANCE= 2;
+    private static final int TWO_DISTANCE = 2;
 
     static {
         cachedPositions = Arrays.stream(Column.values())
@@ -36,7 +36,7 @@ public class Position {
 
     public static Position of(final String position) {
         return cachedPositions.stream()
-                .filter(cachedPositions -> isExist(position, cachedPositions))
+                .filter(cachedPositions -> isExist(position.toLowerCase(), cachedPositions))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
     }
@@ -78,6 +78,14 @@ public class Position {
 
     public boolean isNotColumnMove(final Position to) {
         return this.column.distance(to.column) == NOT_MOVE;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 
     @Override

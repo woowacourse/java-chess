@@ -1,4 +1,4 @@
-package chess.status;
+package chess.state;
 
 import chess.game.Board;
 import chess.game.BoardInitializer;
@@ -13,7 +13,7 @@ public final class Ready {
     public static State start(final Command command) {
         if (command.isStart()) {
             final Board board = new Board(BoardInitializer.getBoard());
-            return new Move(board, Color.WHITE);
+            return new Moving(board, Color.WHITE);
         }
         if (command.isEnd()) {
             return new Finished();

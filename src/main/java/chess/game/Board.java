@@ -17,6 +17,7 @@ public class Board {
 
     public void movePiece(final Position from, final Position to, final Color color) {
         final Piece piece = findPiece(from);
+        validateFinished();
         validateColor(piece, color);
         validateSameTeam(from, to);
         validatePieceBlock(from, to);
@@ -32,7 +33,22 @@ public class Board {
         return countKingPiece() == DEAD_KING_COUNT;
     }
 
-    private Piece findPiece(final Position position) {
+    public Color findWinColor() {
+        if (!isKingDead()) {
+            return Color.NONE;
+        }
+        return findKingColor();
+    }
+
+    private Color findKingColor() {
+        return value.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .map(piece -> piece.getColor().reverse())
+                .orElse(Color.NONE);
+    }
+
+    public Piece findPiece(final Position position) {
         if (!value.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }
@@ -52,6 +68,12 @@ public class Board {
         return (int) value.values().stream()
                 .filter(Piece::isKing)
                 .count();
+    }
+
+    private void validateFinished() {
+        if (isKingDead()) {
+            throw new IllegalArgumentException("게임이 종료되었습니다.");
+        }
     }
 
     private void validateColor(final Piece piece, final Color color) {

@@ -3,7 +3,7 @@ package chess.game;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.dto.CommandRequest;
-import chess.status.Ready;
+import chess.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

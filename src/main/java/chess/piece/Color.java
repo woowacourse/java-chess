@@ -17,4 +17,8 @@ public enum Color {
         }
         return BLACK;
     }
+
+    public boolean isNone() {
+        return this == NONE;
+    }
 }

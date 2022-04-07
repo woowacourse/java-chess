@@ -1,5 +1,43 @@
 # 체스 - 웹, DB
 
+
+## 체스 웹 실행 방법
+``` shell
+# 도커 실행
+docker exec -it chess_db_1 bash
+```
+
+``` mysql
+# mysql 접속
+mysql -u root -proot
+
+# 체스 테이터베이스 사용
+use chess
+
+# 테이블 생성
+CREATE table board
+(
+    id   int         not null auto_increment primary key,
+    turn varchar(10) not null
+);
+
+CREATE table piece
+(
+    id       int         not null auto_increment primary key,
+    position varchar(2)  not null,
+    board_id int         not null,
+    name     varchar(10) not null,
+    color    varchar(10) not null,
+    foreign key (board_id) references board (id)
+);
+
+```
+
+``` java
+WebApplication.class     main 메서드 실행
+localhost/8081 접속
+```
+
 ## 1단계 - 체스판 초기화
 
 ### 입력
@@ -52,3 +90,11 @@
 - [x] 각 말의 점수는 queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
 - [x] pawn의 기본 점수는 1점이지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
 - [x] 한 번에 한 쪽의 점수만을 계산해야 한다.
+
+## 4단계 - 웹 UI 적용
+- [x] 체스판 UI를 생성한다.
+- [x] 체스말을 초기위치에 위치시킨다.
+- [x] start 버튼으로 게임을 시작한다.
+- [x] 점수 확인 버튼을 누르면 점수를 안내한다.  
+- [x] Move 명령을 받아 체스말을 이동시킨다.
+- [x] 예외 발생시 안내 메시지를 출력한다.

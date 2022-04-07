@@ -1,4 +1,4 @@
-package chess.status;
+package chess.state;
 
 import chess.game.Board;
 import chess.game.Command;
@@ -29,7 +29,7 @@ public abstract class Running implements State {
         if (command.isStatus()) {
             return new Status(board, color);
         }
-        return new Move(board, color);
+        return new Moving(board, color);
     }
 
     @Override

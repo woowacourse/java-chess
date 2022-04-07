@@ -4,7 +4,7 @@ import static chess.piece.Color.NONE;
 
 import chess.dto.CommandRequest;
 import chess.piece.Color;
-import chess.status.State;
+import chess.state.State;
 import java.util.Collections;
 import java.util.Map;
 
