@@ -27,7 +27,7 @@ public enum File {
 
     public static File from(final String name) {
         return Arrays.stream(File.values())
-                .filter(file -> file.name.equals(name))
+                .filter(file -> file.name.equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
