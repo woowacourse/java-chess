@@ -10,10 +10,6 @@ public abstract class Event {
         return new InitEvent();
     }
 
-    public static Event ofMove(String description) {
-        return new MoveEvent(description);
-    }
-
     public abstract boolean isInit();
 
     public abstract boolean isMove();

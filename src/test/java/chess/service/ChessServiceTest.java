@@ -9,6 +9,7 @@ import chess.dao.GameState;
 import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
 import chess.domain.event.MoveCommand;
+import chess.domain.event.MoveEvent;
 import chess.domain.game.NewGame;
 import chess.dto.CreateGameDto;
 import chess.dto.GameCountDto;
@@ -69,9 +70,9 @@ class ChessServiceTest {
         GameDto actual = service.findGame(1);
 
         GameDto expected = new NewGame().play(new InitEvent())
-                .moveChessmen(new MoveCommand("e2", "e4"))
-                .moveChessmen(new MoveCommand("d7", "d5"))
-                .moveChessmen(new MoveCommand("f1", "b5"))
+                .play(new MoveEvent("e2 e4"))
+                .play(new MoveEvent("d7 d5"))
+                .play(new MoveEvent("f1 b5"))
                 .toDtoOf(1);
 
         assertThat(actual).isEqualTo(expected);
@@ -89,10 +90,10 @@ class ChessServiceTest {
         GameDto actual = service.playGame(1, new MoveCommand("a7", "a5"));
 
         GameDto expected = new NewGame().play(new InitEvent())
-                .moveChessmen(new MoveCommand("e2", "e4"))
-                .moveChessmen(new MoveCommand("d7", "d5"))
-                .moveChessmen(new MoveCommand("f1", "b5"))
-                .moveChessmen(new MoveCommand("a7", "a5"))
+                .play(new MoveEvent("e2 e4"))
+                .play(new MoveEvent("d7 d5"))
+                .play(new MoveEvent("f1 b5"))
+                .play(new MoveEvent("a7 a5"))
                 .toDtoOf(1);
 
         assertThat(actual).isEqualTo(expected);
@@ -120,11 +121,11 @@ class ChessServiceTest {
         GameResultDto actual = service.findGameResult(3);
 
         GameResultDto expected = new GameResultDto(3, new NewGame().play(new InitEvent())
-                .moveChessmen(new MoveCommand("e2", "e4"))
-                .moveChessmen(new MoveCommand("d7", "d5"))
-                .moveChessmen(new MoveCommand("f1", "b5"))
-                .moveChessmen(new MoveCommand("a7", "a5"))
-                .moveChessmen(new MoveCommand("b5", "e8")));
+                .play(new MoveEvent("e2 e4"))
+                .play(new MoveEvent("d7 d5"))
+                .play(new MoveEvent("f1 b5"))
+                .play(new MoveEvent("a7 a5"))
+                .play(new MoveEvent("b5 e8")));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -176,13 +177,13 @@ class ChessServiceTest {
 
         final Map<Integer, List<Event>> repository = new HashMap<>() {{
             put(1, new ArrayList<>(List.of(
-                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"), Event.ofMove("f1 b5"))));
+                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"), new MoveEvent("f1 b5"))));
             put(2, new ArrayList<>(List.of(
-                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"),
-                    Event.ofMove("f1 b5"), Event.ofMove("a7 a5"))));
+                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"),
+                    new MoveEvent("f1 b5"), new MoveEvent("a7 a5"))));
             put(3, new ArrayList<>(List.of(
-                    Event.ofMove("e2 e4"), Event.ofMove("d7 d5"),
-                    Event.ofMove("f1 b5"), Event.ofMove("a7 a5"), Event.ofMove("b5 e8"))));
+                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"),
+                    new MoveEvent("f1 b5"), new MoveEvent("a7 a5"), new MoveEvent("b5 e8"))));
         }};
 
         public List<Event> findAllByGameId(int gameId) {
@@ -193,7 +194,7 @@ class ChessServiceTest {
         }
 
         public void saveMove(int gameId, MoveCommand moveCommand) {
-            Event newEvent = Event.ofMove(moveCommand.toDescription());
+            Event newEvent = new MoveEvent(moveCommand.toDescription());
 
             if (repository.containsKey(gameId)) {
                 repository.get(gameId).add(newEvent);

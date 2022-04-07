@@ -6,12 +6,12 @@ public final class MoveEvent extends Event {
 
     private final MoveCommand moveCommand;
 
-    public MoveEvent(MoveCommand moveCommand) {
+    private MoveEvent(MoveCommand moveCommand) {
         this.moveCommand = moveCommand;
     }
 
     public MoveEvent(String description) {
-        this.moveCommand = MoveCommand.ofEventDescription(description);
+        this(MoveCommand.ofEventDescription(description));
     }
 
     public boolean isInit() {
