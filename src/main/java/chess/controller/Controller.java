@@ -15,7 +15,7 @@ import java.util.Map;
 public class Controller {
     private static final String EMPTY = "";
 
-    private final BoardDao boardDao = new BoardDao();
+    private static final BoardDao boardDao = new BoardDao();
 
     public void run() {
         staticFiles.location("/static");
