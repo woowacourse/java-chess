@@ -26,7 +26,7 @@ class BoardDaoTest {
     }
 
     @Test
-    @DisplayName("save 된 board의 Turn이 Turn.init()을 가질 때, 그 board의 id에 따라 현재 턴이 누구인지 알려주는 테스트")
+    @DisplayName("처음 저장된 board가 초기화된 Turn과 동일한지 테스트")
     void findTurnById() {
         //when
         Turn turn = boardDao.findTurnById(boardId).get();
