@@ -2,9 +2,9 @@ package chess;
 
 public class Member {
 
-    private int id;
-    private String name;
-    private int boardId;
+    private final int id;
+    private final String name;
+    private final int boardId;
 
     public Member(String name) {
         this(0, name, 0);

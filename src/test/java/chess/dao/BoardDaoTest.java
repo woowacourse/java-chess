@@ -3,8 +3,8 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.ChessService;
-import chess.domain.Board;
-import chess.model.Initializer;
+import chess.model.Board;
+import chess.model.piece.Initializer;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

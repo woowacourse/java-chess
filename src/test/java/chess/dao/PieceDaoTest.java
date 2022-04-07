@@ -3,7 +3,7 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.domain.Board;
+import chess.model.Board;
 import chess.model.piece.Color;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;

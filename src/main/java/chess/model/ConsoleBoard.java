@@ -16,7 +16,6 @@ import chess.model.status.End;
 import chess.model.status.Ready;
 import chess.model.status.Running;
 import chess.model.status.Status;
-import chess.model.util.ScoreResult;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

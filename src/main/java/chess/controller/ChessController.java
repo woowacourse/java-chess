@@ -2,13 +2,11 @@ package chess.controller;
 
 import chess.ChessService;
 import chess.Member;
-import chess.domain.Board;
+import chess.model.Board;
 import chess.dto.BoardDto;
 import chess.dto.BoardsDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
-import chess.model.ConsoleBoard;
-import chess.model.piece.Color;
 import java.util.List;
 
 public class ChessController {

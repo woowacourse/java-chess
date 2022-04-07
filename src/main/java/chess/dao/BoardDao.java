@@ -1,8 +1,7 @@
 package chess.dao;
 
-import chess.domain.Board;
+import chess.model.Board;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceType;
 import chess.model.square.Square;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

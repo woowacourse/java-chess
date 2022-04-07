@@ -8,7 +8,6 @@ import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
-import chess.model.util.ScoreResult;
 import org.junit.jupiter.api.Test;
 
 public class ConsoleBoardTest {

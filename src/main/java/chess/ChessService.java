@@ -4,13 +4,12 @@ import chess.dao.BoardDao;
 import chess.dao.ConnectionManager;
 import chess.dao.PieceDao;
 import chess.dao.SquareDao;
-import chess.domain.Board;
+import chess.model.Board;
 import chess.dto.BoardDto;
 import chess.dto.BoardsDto;
 import chess.dto.RoomDto;
 import chess.dto.ScoreDto;
-import chess.dto.StatusDto;
-import chess.model.Initializer;
+import chess.model.piece.Initializer;
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
@@ -51,7 +50,6 @@ public class ChessService {
     public BoardDto getBoard(int roomId) {
         final Board board = boardDao.getById(roomId);
         final Map<Square, Piece> allPositionsAndPieces = squareDao.findAllSquaresAndPieces(roomId);
-//        Map<String, Piece> pieces = mapPositionToString(allPositionsAndPieces);
         return BoardDto.of(allPositionsAndPieces, board.getTitle(), board.getMembers().get(0),
                 board.getMembers().get(1));
     }
@@ -105,7 +103,6 @@ public class ChessService {
                 .filter(Piece::isKing)
                 .count();
 
-        System.out.println(kingCount);
         if(kingCount != 2) {
             boardDao.deleteById(boardId);
         }
@@ -144,10 +141,4 @@ public class ChessService {
     public void end(int roomId) {
         boardDao.deleteById(roomId);
     }
-//
-//    public ScoreResult calculateScore(int roomId) {
-//
-//        Map<Square, Piece> board = board
-//            return ScoreResult.of(board);
-//    }
 }
