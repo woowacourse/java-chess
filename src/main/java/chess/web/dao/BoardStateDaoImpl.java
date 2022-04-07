@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BoardDaoImpl implements BoardDao {
+public class BoardStateDaoImpl implements BoardStateDao {
 
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
@@ -15,7 +15,7 @@ public class BoardDaoImpl implements BoardDao {
 
     private final Connection connection;
 
-    public BoardDaoImpl() {
+    public BoardStateDaoImpl() {
         connection = getConnection();
     }
 

@@ -7,7 +7,7 @@ import static spark.Spark.staticFileLocation;
 import chess.domain.ChessGame;
 import chess.domain.state.Ready;
 import chess.web.controller.WebChessController;
-import chess.web.dao.BoardDaoImpl;
+import chess.web.dao.BoardStateDaoImpl;
 import chess.web.dao.PieceDaoImpl;
 import java.util.Map;
 import spark.ModelAndView;
@@ -18,7 +18,7 @@ public class WebApplication {
         staticFileLocation("/static");
 
         WebChessController webChessController =
-                new WebChessController(new ChessGame(new Ready()), new BoardDaoImpl(), new PieceDaoImpl());
+                new WebChessController(new ChessGame(new Ready()), new BoardStateDaoImpl(), new PieceDaoImpl());
 
         get("/", (req, res) -> {
             if (webChessController.isNotRunning()) {

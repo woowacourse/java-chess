@@ -2,11 +2,11 @@ package chess.web.dto;
 
 import chess.domain.state.StateType;
 
-public class BoardDto {
+public class BoardStateDto {
 
     private final StateType stateType;
 
-    public BoardDto(StateType stateType) {
+    public BoardStateDto(StateType stateType) {
         this.stateType = stateType;
     }
 

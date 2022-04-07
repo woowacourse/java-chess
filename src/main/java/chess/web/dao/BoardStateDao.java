@@ -2,7 +2,7 @@ package chess.web.dao;
 
 import chess.domain.state.StateType;
 
-public interface BoardDao {
+public interface BoardStateDao {
 
     void save(StateType stateType);
 

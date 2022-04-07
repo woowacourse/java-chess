@@ -10,7 +10,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.state.State;
 import chess.domain.state.StateType;
-import chess.web.dao.BoardDao;
+import chess.web.dao.BoardStateDao;
 import chess.web.dao.PieceDao;
 import chess.web.dto.PieceDto;
 import java.util.HashMap;
@@ -24,20 +24,20 @@ public class WebChessController {
     private static final int BOARD_START_INDEX = 0;
     private static final int BOARD_END_INDEX = 7;
 
-    private final BoardDao boardDao;
+    private final BoardStateDao boardStateDao;
     private final PieceDao pieceDao;
     private ChessGame chessGame;
 
-    public WebChessController(ChessGame chessGame, BoardDao boardDao, PieceDao pieceDao) {
+    public WebChessController(ChessGame chessGame, BoardStateDao boardStateDao, PieceDao pieceDao) {
         this.chessGame = chessGame;
-        this.boardDao = boardDao;
+        this.boardStateDao = boardStateDao;
         this.pieceDao = pieceDao;
     }
 
     public Map<String, Object> indexModel() {
         List<PieceDto> pieceDtos = pieceDao.selectAll();
         Board board = getBoardFromDtos(pieceDtos);
-        State state = boardDao.selectState().newState(new ChessBoard(board));
+        State state = boardStateDao.selectState().newState(new ChessBoard(board));
         chessGame = new ChessGame(state);
 
         Map<String, Object> model = new HashMap<>();
@@ -68,7 +68,7 @@ public class WebChessController {
     }
 
     private void updateChessGame(Position source, Position target) {
-        boardDao.update(chessGame.getStateType());
+        boardStateDao.update(chessGame.getStateType());
         pieceDao.update(new PieceDto(chessGame.board().findPiece(target), target));
         pieceDao.update(new PieceDto(chessGame.board().findPiece(source), source));
     }
@@ -79,7 +79,7 @@ public class WebChessController {
         Board board = chessGame.board();
         initChessBoard(board);
 
-        boardDao.save(chessGame.getStateType());
+        boardStateDao.save(chessGame.getStateType());
     }
 
     private void initChessBoard(Board board) {
@@ -114,7 +114,7 @@ public class WebChessController {
     }
 
     private void deleteChessGame() {
-        boardDao.deleteAll();
+        boardStateDao.deleteAll();
         pieceDao.deleteAll();
     }
 
@@ -129,6 +129,6 @@ public class WebChessController {
 
     public boolean isNotRunning() {
         return !chessGame.isRunning()
-                && (boardDao.selectState() != StateType.BLACK_TURN && boardDao.selectState() != StateType.WHITE_TURN);
+                && (boardStateDao.selectState() != StateType.BLACK_TURN && boardStateDao.selectState() != StateType.WHITE_TURN);
     }
 }
