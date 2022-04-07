@@ -14,7 +14,7 @@ class FinishedTest {
 
     @BeforeEach
     void init() {
-        finished = new Finished(Color.EMPTY);
+        finished = new Finished();
     }
 
     @Test

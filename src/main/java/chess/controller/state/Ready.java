@@ -1,6 +1,5 @@
 package chess.controller.state;
 
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.dto.ScoreDto;
@@ -25,16 +24,11 @@ public class Ready implements ChessGameState {
 
     @Override
     public ChessGameState end() {
-        return new Finished(Color.EMPTY);
+        return new Finished();
     }
 
     @Override
     public Board getBoard() {
-        throw new IllegalStateException("게임 시작 전에는 start 또는 end만 가능합니다.");
-    }
-
-    @Override
-    public Color getWinner() {
         throw new IllegalStateException("게임 시작 전에는 start 또는 end만 가능합니다.");
     }
 

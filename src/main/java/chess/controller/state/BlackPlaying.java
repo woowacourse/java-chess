@@ -18,7 +18,7 @@ public class BlackPlaying extends Playing {
     @Override
     ChessGameState checkMoveResult(MoveResult result) {
         if (result == MoveResult.ENDED) {
-            return new Finished(Color.BLACK);
+            return new Finished();
         }
 
         if (result == MoveResult.FAIL) {
@@ -29,6 +29,6 @@ public class BlackPlaying extends Playing {
 
     @Override
     public ChessGameState end() {
-        return new Finished(Color.EMPTY);
+        return new Finished();
     }
 }

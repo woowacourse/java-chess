@@ -35,11 +35,6 @@ public abstract class Playing implements ChessGameState {
     }
 
     @Override
-    public Color getWinner() {
-        throw new IllegalStateException("게임 실행 중에는 승자를 가져올 수 없습니다.");
-    }
-
-    @Override
     public boolean isEnded() {
         return false;
     }
