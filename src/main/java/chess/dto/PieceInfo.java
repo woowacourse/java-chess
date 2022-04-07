@@ -5,7 +5,7 @@ import chess.domain.piece.Pieces;
 
 import java.util.Arrays;
 
-public enum PieceSymbol {
+public enum PieceInfo {
 
     BLACK_PAWN("♟"),
     BLACK_ROOK("♜"),
@@ -26,26 +26,26 @@ public enum PieceSymbol {
 
     private final String symbol;
 
-    PieceSymbol(final String symbol) {
+    PieceInfo(final String symbol) {
         this.symbol = symbol;
     }
 
     public static Piece getPiece(final String symbol) {
         Pieces pieces = new Pieces();
-        return pieces.getPiece(getPieceSymbol(symbol));
+        return pieces.getPiece(getPieceInfo(symbol));
     }
 
     public static String getSymbol(final Piece other) {
         if (other == null) {
             return NONE_PIECE_SYMBOL;
         }
-        PieceSymbol pieceSymbol = other.getPieceSymbol();
-        return pieceSymbol.symbol;
+        PieceInfo pieceInfo = other.getPieceInfo();
+        return pieceInfo.symbol;
     }
 
-    private static PieceSymbol getPieceSymbol(final String symbol) {
-        return Arrays.stream(PieceSymbol.values())
-                .filter(pieceSymbol -> pieceSymbol.symbol.equals(symbol))
+    private static PieceInfo getPieceInfo(final String symbol) {
+        return Arrays.stream(PieceInfo.values())
+                .filter(pieceInfo -> pieceInfo.symbol.equals(symbol))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 심볼 정보입니다."));
     }

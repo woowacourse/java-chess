@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.dto.PieceSymbol;
+import chess.dto.PieceInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,9 @@ public class Pieces {
         pieces.add(new King(color));
     }
 
-    public Piece getPiece(final PieceSymbol pieceSymbol) {
+    public Piece getPiece(final PieceInfo pieceInfo) {
         return pieces.stream()
-                .filter(piece -> piece.isSamePieceSymbol(pieceSymbol))
+                .filter(piece -> piece.isSamePieceInfo(pieceInfo))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 피스 심볼 정보입니다."));
     }

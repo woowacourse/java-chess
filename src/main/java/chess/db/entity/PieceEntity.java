@@ -2,7 +2,7 @@ package chess.db.entity;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.PieceSymbol;
+import chess.dto.PieceInfo;
 
 public class PieceEntity {
 
@@ -21,6 +21,6 @@ public class PieceEntity {
     }
 
     public Piece getPiece() {
-        return PieceSymbol.getPiece(symbol);
+        return PieceInfo.getPiece(symbol);
     }
 }

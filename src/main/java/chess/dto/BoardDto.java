@@ -19,13 +19,13 @@ public class BoardDto {
     public static BoardDto from(final Map<Position, Piece> board) {
         Map<String, String> boardMap = new HashMap<>();
         for (Entry<Position, Piece> entry : board.entrySet()) {
-            boardMap.put(entry.getKey().getPosition(), PieceSymbol.getSymbol(entry.getValue()));
+            boardMap.put(entry.getKey().getPosition(), PieceInfo.getSymbol(entry.getValue()));
         }
         return new BoardDto(boardMap);
     }
 
     public String getSymbol(final String position) {
-        return board.getOrDefault(position, PieceSymbol.NONE_PIECE_SYMBOL);
+        return board.getOrDefault(position, PieceInfo.NONE_PIECE_SYMBOL);
     }
 
     public Map<String, String> getBoard() {

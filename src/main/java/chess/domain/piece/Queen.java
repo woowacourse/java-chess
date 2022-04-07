@@ -3,21 +3,21 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.dto.PieceSymbol;
+import chess.dto.PieceInfo;
 
 import java.util.Objects;
 
 public class Queen extends Piece {
 
     public Queen(final Color color) {
-        super(color, getPieceSymbol(color));
+        super(color, getPieceInfo(color));
     }
 
-    private static PieceSymbol getPieceSymbol(final Color color) {
+    private static PieceInfo getPieceInfo(final Color color) {
         if (color == Color.BLACK) {
-            return PieceSymbol.BLACK_QUEEN;
+            return PieceInfo.BLACK_QUEEN;
         }
-        return PieceSymbol.WHITE_QUEEN;
+        return PieceInfo.WHITE_QUEEN;
     }
 
     private boolean isQueenMoving(final Position from, final Position to) {
