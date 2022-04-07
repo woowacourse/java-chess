@@ -24,16 +24,19 @@ public class Controller {
         get("/", (req, res) -> service.renderStart(model));
         post("/start", (req, res) -> {
             String name = req.queryParams("name");
+            model.put("name", name);
             service.initWeb(model, name);
             return service.renderGame(model, createGameFromDB(name));
         });
         post("/command", (req, res) -> {
             String name = req.queryParams("name");
+            model.put("name", name);
             save(name, go(model, findGameByDB(name), req.queryParams("command")));
             return service.renderGame(model, findGameByDB(name));
         });
         post("/end", (req, res) -> {
             String name = req.queryParams("name");
+            model.put("name", name);
             return service.renderEnd(model, findGameByDB(name));
         });
     }
