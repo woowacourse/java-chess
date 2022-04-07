@@ -80,12 +80,9 @@ public final class Board {
         }
     }
 
-    private Piece pickPiece(Position source) {
-        Optional<Piece> piece = findPiece(source);
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
-        }
-        return piece.get();
+    private Piece pickPiece(Position position) {
+        Optional<Piece> piece = findPiece(position);
+        return piece.orElseThrow(() -> new IllegalArgumentException(ERROR_PIECE_NOT_EXIST));
     }
 
     private void validateTargetNotSameColor(Position target, Piece piece) {
