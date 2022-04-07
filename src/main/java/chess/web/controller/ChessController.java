@@ -36,7 +36,6 @@ public class ChessController {
             Map<String, Object> model = new HashMap<>();
 
             String gameName = request.queryParams("game_name");
-
             List<String> chessBoard = chessService.findByName(gameName);
 
             model.put("chessboard", chessBoard);
