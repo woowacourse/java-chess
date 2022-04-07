@@ -16,6 +16,7 @@ public class DBConnector {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new IllegalStateException("[ERROR] DB 연결이 실패했습니다.");
         }
         return connection;
     }
