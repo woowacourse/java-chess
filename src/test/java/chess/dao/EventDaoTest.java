@@ -61,7 +61,7 @@ class EventDaoTest {
 
     @Test
     void saveMove_메서드는_새로운_이벤트를_저장한다() {
-        dao.saveMove(1, new MoveCommand("b2 b4"));
+        dao.saveMove(1, MoveCommand.ofEventDescription("b2 b4"));
 
         List<Event> actual = dao.findAllByGameId(1);
 

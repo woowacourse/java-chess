@@ -16,7 +16,7 @@ public class Event {
         if (type != EventType.MOVE) {
             throw new UnsupportedOperationException("이동 이벤트가 아닙니다.");
         }
-        return new MoveCommand(description);
+        return MoveCommand.ofEventDescription(description);
     }
 
     @Override
