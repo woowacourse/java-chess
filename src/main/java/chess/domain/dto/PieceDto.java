@@ -7,7 +7,6 @@ public class PieceDto {
     private final String piece;
     private final String color;
 
-
     public PieceDto(int gameId, String position, String piece, String color) {
         this.gameId = gameId;
         this.position = position;
