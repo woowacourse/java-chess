@@ -98,7 +98,7 @@ public class WebChessController {
 
     public Map<String, Object> getWinnerModel() {
         endChessGame();
-        initEmptyChess();
+        deleteChessGame();
 
         Map<String, Object> model = new HashMap<>();
         model.put("black-score", chessGame.score(Color.WHITE));
@@ -113,8 +113,8 @@ public class WebChessController {
         }
     }
 
-    private void initEmptyChess() {
-        boardDao.update(StateType.READY);
+    private void deleteChessGame() {
+        boardDao.deleteAll();
         pieceDao.deleteAll();
     }
 
@@ -127,7 +127,8 @@ public class WebChessController {
         return model;
     }
 
-    public boolean isReady() {
-        return chessGame.getStateType() == StateType.READY;
+    public boolean isNotRunning() {
+        return !chessGame.isRunning()
+                && (boardDao.selectState() != StateType.BLACK_TURN && boardDao.selectState() != StateType.WHITE_TURN);
     }
 }

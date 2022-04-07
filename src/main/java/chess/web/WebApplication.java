@@ -21,7 +21,7 @@ public class WebApplication {
                 new WebChessController(new ChessGame(new Ready()), new BoardDaoImpl(), new PieceDaoImpl());
 
         get("/", (req, res) -> {
-            if (webChessController.isReady()) {
+            if (webChessController.isNotRunning()) {
                 res.redirect("/start");
             }
             return render(webChessController.indexModel(), "index.html");
