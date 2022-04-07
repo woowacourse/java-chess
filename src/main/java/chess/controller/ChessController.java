@@ -19,7 +19,7 @@ public class ChessController {
 
     public void run() {
         printChessGameStart();
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
         while (!gameState.isEnd()) {
             gameState = executeCommand(gameState);
             gameState = refresh(gameState);
@@ -57,7 +57,7 @@ public class ChessController {
 
     private GameState refresh(GameState gameState) {
         if (gameState.isFinished()) {
-            return new Ready(ChessBoard.create());
+            return new Ready();
         }
         return gameState;
     }

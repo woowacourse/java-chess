@@ -3,15 +3,12 @@ package chess.domain.state;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
+import chess.domain.piece.ChessPiece;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Ready implements GameState {
     private static final String READY_INVALID_OPERATION_EXCEPTION = "[ERROR] 게임 대기 상태에서는 실행할 수 없습니다.";
-
-    private final ChessBoard chessBoard;
-
-    public Ready(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
 
     @Override
     public GameState start() {
@@ -50,6 +47,7 @@ public class Ready implements GameState {
 
     @Override
     public ChessBoard getChessBoard() {
-        return chessBoard;
+        Map<ChessBoardPosition, ChessPiece> board = new HashMap<>();
+        return new ChessBoard(board);
     }
 }

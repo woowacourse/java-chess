@@ -13,7 +13,7 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 start 명령어를 입력하면 WhiteTurn 상태가 된다.")
     void executeStartCommand() {
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
 
         assertThat(gameState.start()).isInstanceOf(WhiteTurn.class);
     }
@@ -21,7 +21,7 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 end 명령어를 입력하면 End 상태가 된다.")
     void executeEndCommand() {
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
 
         assertThat(gameState.end()).isInstanceOf(End.class);
     }
@@ -29,7 +29,7 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 move 명령어를 입력하면 오류가 발생한다.")
     void executeMoveCommand() {
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
         ChessBoardPosition sourcePosition = ChessBoardPosition.from("b2");
         ChessBoardPosition targetPosition = ChessBoardPosition.from("b4");
 
@@ -40,7 +40,7 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 status 명령어를 입력하면 오류가 발생한다.")
     void executeStatusCommand() {
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
 
         assertThatThrownBy(gameState::status)
                 .isInstanceOf(UnsupportedOperationException.class);
