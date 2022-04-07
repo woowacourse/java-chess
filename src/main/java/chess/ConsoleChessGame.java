@@ -9,7 +9,7 @@ import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public final class ChessGame {
+public final class ConsoleChessGame {
 
     public void run() {
         InputView.announceStart();
