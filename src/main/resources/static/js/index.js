@@ -52,5 +52,5 @@ function sendToServer() {
                 location.reload();
             });
         }
-    );
+    ).catch(error => alert(error));
 }

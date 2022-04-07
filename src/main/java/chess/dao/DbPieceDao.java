@@ -113,7 +113,6 @@ public class DbPieceDao implements PieceDao {
     }
 
     private Piece getPiece(final ResultSet resultSet) throws SQLException {
-
         return Pieces.valueOf(
                 resultSet.getString("name")
         );
