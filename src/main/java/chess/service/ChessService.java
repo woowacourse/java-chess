@@ -54,14 +54,14 @@ public class ChessService {
         return chessGame;
     }
 
-    public ChessGame load(Long id) {
-        final Game game = gameDao.findGameById(id);
-        final List<Board> boards = boardDao.findBoardById(id);
+    public ChessGame load() {
+        final Game game = gameDao.findGameByMaxId();
+        final List<Board> boards = boardDao.findBoardById(game.getGame_id());
 
         final ChessBoard chessBoard = createBoard(boards);
         final State state = createState(game.getGame_state(), game.getGame_turn(), chessBoard);
 
-        return new ChessGame(id, state);
+        return new ChessGame(game.getGame_id(), state);
     }
 
     private ChessBoard createBoard(List<Board> boards) {
