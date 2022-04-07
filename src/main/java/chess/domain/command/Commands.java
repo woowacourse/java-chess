@@ -31,7 +31,7 @@ public class Commands {
     }
 
     public boolean isRightMoveCommands() {
-        return commands.size() != MOVE_COMMAND_SIZE;
+        return commands.size() == MOVE_COMMAND_SIZE;
     }
 
     public String getSource() {

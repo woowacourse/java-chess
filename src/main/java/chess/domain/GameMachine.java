@@ -53,7 +53,7 @@ public final class GameMachine {
             OutputView.announceNotStarted();
             return;
         }
-        if (commands.isRightMoveCommands()) {
+        if (!commands.isRightMoveCommands()) {
             OutputView.announceWrongMoveCommands();
             return;
         }
