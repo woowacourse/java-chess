@@ -51,7 +51,6 @@ public final class Running extends CalculableState {
 
     private void checkFromPosition(final Position from, final Color color) {
         final var piece = board.getPiece(from);
-
         if (piece == null) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }
@@ -66,5 +65,10 @@ public final class Running extends CalculableState {
         if (piece != null && piece.isSameColor(color)) {
             throw new IllegalArgumentException("도착지에 같은색의 기물이 존재합니다.");
         }
+    }
+
+    @Override
+    public Color getCurrentColor() {
+        return currentColor;
     }
 }

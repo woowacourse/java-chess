@@ -23,6 +23,8 @@ public abstract class State {
 
     public abstract State end();
 
+    public abstract Color getCurrentColor();
+
     public final Map<Position, Piece> getBoard() {
         return board.getValue();
     }

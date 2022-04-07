@@ -38,4 +38,9 @@ public final class Ready extends State {
     public State end() {
         throw new IllegalStateException(ERROR_MESSAGE);
     }
+
+    @Override
+    public Color getCurrentColor() {
+        throw new IllegalStateException(ERROR_MESSAGE);
+    }
 }
