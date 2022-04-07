@@ -33,8 +33,10 @@
     <a href="/">뒤로가기!</a>
 </section>
 <section id={{game.state}} class="popup">
-    <div>게임이 종료되었습니다!</div>
-    <a href="/result/{{game.id}}">게임결과 보러 가기!</a>
+    <div class="popup__container">
+        <div class="popup__title">게임이 종료되었습니다!</div>
+        <a href="/result/{{game.id}}">게임결과 보러 가기!</a>
+    </div>
 </section>
 <script src="/scripts/update-game.js"></script>
 </body>

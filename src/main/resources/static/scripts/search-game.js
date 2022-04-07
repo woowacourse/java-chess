@@ -12,14 +12,11 @@ const searchAndRedirect = async (event) => {
         method: 'post',
         body: new URLSearchParams(new FormData(event.target))
     });
-    console.log(response);
     const {ok, error, body} = await response.json();
     if (!ok) {
         alert(error);
         return;
     }
-    console.log(response);
-    console.log(body);
     onSuccessResponse(body);
 }
 

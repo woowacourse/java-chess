@@ -36,3 +36,19 @@ body {
 #BLACK_TURN {
     display:none;
 }
+
+.popup__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.popup__title{
+    font-size: 28px;
+    margin-bottom: 12px;
+}
