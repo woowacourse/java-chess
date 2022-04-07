@@ -32,7 +32,6 @@ public class PieceDaoTest {
 
     @AfterEach
     void clear() {
-        pieceDao.deleteAll(testGameId);
         gameDao.delete(testGameId);
     }
 

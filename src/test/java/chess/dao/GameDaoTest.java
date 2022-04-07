@@ -14,11 +14,9 @@ public class GameDaoTest {
     private static final long testGameId = 1;
 
     private final GameDao gameDao = new GameDaoImpl(new TestConnectionSetup());
-    private final PieceDao pieceDao = new PieceDaoImpl(new TestConnectionSetup());
 
     @AfterEach
     void clear() {
-        pieceDao.deleteAll(testGameId);
         gameDao.delete(testGameId);
     }
 

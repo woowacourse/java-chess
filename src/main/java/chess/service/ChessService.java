@@ -73,7 +73,6 @@ public class ChessService {
     }
 
     public ChessGameResponse restartGame(long gameId) {
-        pieceDao.deleteAll(gameId);
         gameDao.delete(gameId);
         return createGame(gameId);
     }
