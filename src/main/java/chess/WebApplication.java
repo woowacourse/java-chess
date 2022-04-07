@@ -4,8 +4,8 @@ import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
 import chess.controller.ChessGameController;
-import chess.dao.PieceDaoImpl;
-import chess.dao.TurnDaoImpl;
+import chess.dao.PieceDao;
+import chess.dao.TurnDao;
 import chess.service.ChessGameService;
 
 public class WebApplication {
@@ -13,6 +13,6 @@ public class WebApplication {
         port(8080);
         staticFileLocation("/static");
 
-        new ChessGameController(new ChessGameService(new PieceDaoImpl(), new TurnDaoImpl())).run();
+        new ChessGameController(new ChessGameService(new PieceDao(), new TurnDao())).run();
     }
 }

@@ -8,9 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.PieceDao;
-import chess.dao.PieceDaoImpl;
 import chess.dao.TurnDao;
-import chess.dao.TurnDaoImpl;
 import chess.domain.Position;
 import chess.domain.PromotionPiece;
 import chess.domain.piece.Piece;
@@ -32,8 +30,8 @@ class ChessGameServiceTest {
     @BeforeEach
     void setUp() {
         H2Connection.setUpTable();
-        pieceDao = new PieceDaoImpl(H2Connection.getConnection());
-        turnDao = new TurnDaoImpl(H2Connection.getConnection());
+        pieceDao = new PieceDao(H2Connection.getConnection());
+        turnDao = new TurnDao(H2Connection.getConnection());
         chessGameService = new ChessGameService(pieceDao, turnDao);
     }
 

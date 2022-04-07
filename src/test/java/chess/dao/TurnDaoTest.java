@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class TurnDaoImplTest {
+class TurnDaoTest {
 
     private static TurnDao turnDao;
     private static Connection connection;
@@ -21,7 +21,7 @@ class TurnDaoImplTest {
         H2Connection.setUpTable();
         connection = H2Connection.getConnection();
         connection.setAutoCommit(false);
-        turnDao = new TurnDaoImpl(connection);
+        turnDao = new TurnDao(connection);
     }
 
     @AfterEach

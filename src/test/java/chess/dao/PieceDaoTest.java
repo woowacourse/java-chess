@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PieceDaoImplTest {
+class PieceDaoTest {
 
     private static PieceDao pieceDao;
     private static Connection connection;
@@ -31,7 +31,7 @@ class PieceDaoImplTest {
         H2Connection.setUpTable();
         connection = H2Connection.getConnection();
         connection.setAutoCommit(false);
-        pieceDao = new PieceDaoImpl(connection);
+        pieceDao = new PieceDao(connection);
     }
 
     @AfterEach
@@ -42,7 +42,7 @@ class PieceDaoImplTest {
     @BeforeEach
     void setUp() {
         H2Connection.setUpTable();
-        pieceDao = new PieceDaoImpl(H2Connection.getConnection());
+        pieceDao = new PieceDao(H2Connection.getConnection());
         position = Position.of('a', '1');
         pawn = new Piece(WHITE, new Pawn(WHITE));
     }
