@@ -18,7 +18,13 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class BoardController {
 
-    public BoardController() {}
+    private final PieceDao pieceDao;
+    private final TeamColorDao teamColorDao;
+
+    public BoardController(PieceDao pieceDao, TeamColorDao teamColorDao) {
+        this.pieceDao = pieceDao;
+        this.teamColorDao = teamColorDao;
+    }
 
     public Object printCurrentBoard(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
@@ -39,8 +45,8 @@ public class BoardController {
         Position to = Position.from(requestBody.get("to"));
         board.movePiece(from, to);
         isCheckmate(response, board);
-        PieceDao.updatePieces(board);
-        TeamColorDao.update(board.getCurrentTurnTeamColor());
+        pieceDao.updatePieces(board);
+        teamColorDao.update(board.getCurrentTurnTeamColor());
         response.redirect("/chess");
         return "";
     }
@@ -53,15 +59,15 @@ public class BoardController {
 
     public String reset(Request request, Response response) {
         Board board = Board.create();
-        PieceDao.updatePieces(board);
-        TeamColorDao.update(board.getCurrentTurnTeamColor());
+        pieceDao.updatePieces(board);
+        teamColorDao.update(board.getCurrentTurnTeamColor());
         response.redirect("/chess");
         return "end";
     }
 
     private Board getBoard() {
-        List<Piece> pieces = PieceDao.findAll();
-        TeamColor currentTurn = TeamColorDao.findCurrentTurn();
+        List<Piece> pieces = pieceDao.findAll();
+        TeamColor currentTurn = teamColorDao.findCurrentTurn();
         return new Board(pieces, currentTurn);
     }
 
