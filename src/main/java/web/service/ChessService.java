@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import web.dao.PieceDao;
 import web.dao.PieceDaoImpl;
-import chess.dto.MoveReqeust;
-import chess.dto.MoveResponse;
+import web.dto.MoveReqeust;
+import web.dto.MoveResponse;
 
 public class ChessService {
 

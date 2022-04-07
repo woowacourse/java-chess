@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import chess.dto.MoveReqeust;
+import web.dto.MoveReqeust;
 import web.service.ChessService;
 
 public class WebApplication {
