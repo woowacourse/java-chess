@@ -30,7 +30,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("본인 턴이 아닌경우 에러를 발생한다.")
     void validateTurn() {
-        assertThatThrownBy(() -> chessGame.move("a7", "a6"))
+        assertThatThrownBy(() -> chessGame.move('a', 7, 'a', 6))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 당신의 차례가 아닙니다.");
     }
@@ -38,7 +38,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("기물이 이동할 수 없으면 에러를 발생한다.")
     void validateMove() {
-        assertThatThrownBy(() -> chessGame.move("a1", "a2"))
+        assertThatThrownBy(() -> chessGame.move('a', 1, 'a', 2))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 기물을 이동할 수 없습니다.");
     }
@@ -46,9 +46,9 @@ public class ChessGameTest {
     @Test
     @DisplayName("King 이 죽으면 GameSwitch 가 꺼진다.")
     void turnOffWhenKingDie() {
-        board.movePiece(Position.valueOf("e8"), Position.valueOf("e2"));
+        board.movePiece(Position.valueOf('e', 8), Position.valueOf('e', 2));
 
-        chessGame.move("e1", "e2");
+        chessGame.move('e', 1, 'e', 2);
 
         assertThat(chessGame.isOn()).isFalse();
     }

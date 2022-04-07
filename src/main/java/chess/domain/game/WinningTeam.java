@@ -31,6 +31,13 @@ public class WinningTeam {
         this.winningType = winType;
     }
 
+    public boolean isWinByKingDead() {
+        if (winningType.equals(WIN_BY_KING_DEAD)) {
+            return true;
+        }
+        return false;
+    }
+
     public String getValue() {
         return value;
     }

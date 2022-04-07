@@ -18,9 +18,15 @@ public class Result {
     private final WinningTeam winningTeam;
 
     public Result(final Map<Position, Piece> board, final Team teamOfDeadKing) {
-        this.blackScore = calculateScore(board, Team.BLACK);
-        this.whiteScore = calculateScore(board, Team.WHITE);
+        double blackScore = calculateScore(board, Team.BLACK);
+        double whiteScore = calculateScore(board, Team.WHITE);
         this.winningTeam = new WinningTeam(blackScore, whiteScore, teamOfDeadKing);
+        if (winningTeam.isWinByKingDead()) {
+            blackScore = 0;
+            whiteScore = 0;
+        }
+        this.blackScore = blackScore;
+        this.whiteScore = whiteScore;
     }
 
     public double calculateScore(final Map<Position, Piece> board, final Team team) {

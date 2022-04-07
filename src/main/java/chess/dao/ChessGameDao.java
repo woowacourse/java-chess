@@ -35,6 +35,12 @@ public class ChessGameDao {
         }
     }
 
+    private void validateChessGameExist(final ResultSet resultSet) throws SQLException {
+        if (!resultSet.next()) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 ChessGame 입니다.");
+        }
+    }
+
     public void delete(final String name) {
         deleteChessGame(name);
         boardDao.delete(name);
@@ -52,10 +58,10 @@ public class ChessGameDao {
     }
 
     public ChessGame load(final String name) {
-        String loadSql = "select name, is_on, team_value_of_turn from chess_game where name=?";
+        String selectSql = "select name, is_on, team_value_of_turn from chess_game where name=?";
         ChessGame chessGame = null;
         try {
-            PreparedStatement loadStatement = connection.prepareStatement(loadSql);
+            PreparedStatement loadStatement = connection.prepareStatement(selectSql);
             loadStatement.setString(1, name);
             ResultSet resultSet = loadStatement.executeQuery();
             validateChessGameExist(resultSet);
@@ -64,12 +70,6 @@ public class ChessGameDao {
             e.printStackTrace();
         }
         return chessGame;
-    }
-
-    private void validateChessGameExist(final ResultSet resultSet) throws SQLException {
-        if (!resultSet.next()) {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 ChessGame 입니다.");
-        }
     }
 
     private ChessGame generateChessGame(final ResultSet resultSet) throws SQLException {

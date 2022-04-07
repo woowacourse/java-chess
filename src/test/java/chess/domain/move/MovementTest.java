@@ -11,7 +11,7 @@ public class MovementTest {
     @Test
     @DisplayName("Movement 가 수직 이동이다.")
     void isVertical() {
-        Movement movement = new Movement(Position.valueOf("a7"), Position.valueOf("a1"));
+        Movement movement = new Movement(Position.valueOf('a', 7), Position.valueOf('a', 1));
 
         assertThat(movement.isVertical()).isTrue();
     }
@@ -19,7 +19,7 @@ public class MovementTest {
     @Test
     @DisplayName("Movement 가 수평 이동이다.")
     void isHorizontal() {
-        Movement movement = new Movement(Position.valueOf("a7"), Position.valueOf("e7"));
+        Movement movement = new Movement(Position.valueOf('a', 7), Position.valueOf('e', 7));
 
         assertThat(movement.isHorizontal()).isTrue();
     }
@@ -27,7 +27,7 @@ public class MovementTest {
     @Test
     @DisplayName("Movement 가 기울기 1 인 대각선 형태이다.")
     void isPositiveDiagonal() {
-        Movement movement = new Movement(Position.valueOf("d4"), Position.valueOf("f6"));
+        Movement movement = new Movement(Position.valueOf('d', 4), Position.valueOf('f', 6));
 
         assertThat(movement.isPositiveDiagonal()).isTrue();
     }
@@ -35,7 +35,7 @@ public class MovementTest {
     @Test
     @DisplayName("Movement 가 기울기 -1 인 대각선 형태이다.")
     void isNegativeDiagonal() {
-        Movement movement = new Movement(Position.valueOf("d4"), Position.valueOf("f2"));
+        Movement movement = new Movement(Position.valueOf('d', 4), Position.valueOf('f', 2));
 
         assertThat(movement.isNegativeDiagonal()).isTrue();
     }

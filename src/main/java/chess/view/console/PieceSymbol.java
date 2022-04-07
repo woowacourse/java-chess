@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.console;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;

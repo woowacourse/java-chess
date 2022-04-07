@@ -23,8 +23,8 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("폰을 이동 할 수 있다.")
     void isMovable() {
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a6");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('a', 6);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
     }
@@ -32,8 +32,8 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("폰 움직임 전략에 맞지 않는 경우 false")
     void isMovable_NotPawnMovePattern() {
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a8");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('a', 8);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -41,10 +41,10 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("2칸 전진시 Pawn 이 사작위치가 아닌경우 false")
     void isMovable_StartMove_NotStartPosition() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("a6"));
+        board.movePiece(Position.valueOf('a', 7), Position.valueOf('a', 6));
 
-        Position source = Position.valueOf("a6");
-        Position target = Position.valueOf("a4");
+        Position source = Position.valueOf('a', 6);
+        Position target = Position.valueOf('a', 4);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -52,10 +52,10 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("2칸 전진시 기물이 있을 경우 false")
     void isMovable_StartMove_HasPieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a5"));
+        board.movePiece(Position.valueOf('a', 2), Position.valueOf('a', 5));
 
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a5");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('a', 5);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -63,10 +63,10 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("전진시 상대 팀 기물이 있을 경우 false")
     void isMovable_South_HasPieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a6"));
+        board.movePiece(Position.valueOf('a', 2), Position.valueOf('a', 6));
 
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a6");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('a', 6);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -74,8 +74,8 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("대각선 이동시 상대편 기물이 없을 경우 false")
     void isMovable_Diagonal_HasNoOppositePieceOnTarget() {
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("b6");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('b', 6);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -83,10 +83,10 @@ public class PawnBlackMoveStrategyTest {
     @Test
     @DisplayName("대각선 이동시 상대편 기물이 있을 경우 true")
     void isMovable_Diagonal_HasOppositePieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("b6"));
+        board.movePiece(Position.valueOf('a', 2), Position.valueOf('b', 6));
 
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("b6");
+        Position source = Position.valueOf('a', 7);
+        Position target = Position.valueOf('b', 6);
 
         assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
     }

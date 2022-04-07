@@ -46,6 +46,9 @@ public class Board {
 
     public Map<String, Piece> getBoardByRawPosition() {
         return board.keySet().stream()
-                .collect(Collectors.toMap(Position::generateRawPosition, this::getPiece));
+                .collect(Collectors.toMap(
+                        position -> String.valueOf(position.getColumn().getValue()) + position.getRow().getValue(),
+                        this::getPiece
+                ));
     }
 }

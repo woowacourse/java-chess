@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.console;
 
 import static java.util.stream.Collectors.toList;
 
@@ -9,18 +9,18 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String DELIMITER = " ";
+    private static final String INPUT_DELIMITER = " ";
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String inputCommandForStart() {
+    public static String inputFirstCommand() {
         String input = scanner.nextLine().toLowerCase();
-        Command initialCommand = Command.of(input);
-        return initialCommand.getValue();
+        Command firstCommand = Command.of(input);
+        return firstCommand.getValue();
     }
 
     public static List<String> inputCommandForProgressGame() {
-        final List<String> input = Arrays.stream(scanner.nextLine().split(DELIMITER))
+        final List<String> input = Arrays.stream(scanner.nextLine().split(INPUT_DELIMITER))
                 .map(value -> value.toLowerCase(Locale.ROOT))
                 .collect(toList());
         Command progressCommand = Command.of(input.get(0));

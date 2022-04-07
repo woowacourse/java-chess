@@ -14,6 +14,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
+
     public void run() {
         staticFileLocation("/static");
         ChessGameDao chessGameDao = new ChessGameDao();
@@ -37,7 +40,7 @@ public class WebController {
     private void createChessGame(final ChessGameDao chessGameDao) {
         post("/create_chess_game", (req, res) -> {
             String name = req.queryParams("name");
-            chessGameDao.save(ChessGame.createInit(name));
+            chessGameDao.save(ChessGame.createBasic(name));
             res.redirect("/game/" + name);
             return null;
         });
@@ -68,7 +71,12 @@ public class WebController {
         post("/move/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
             ChessGame loadedChessGame = chessGameDao.load(chessGameName);
-            loadedChessGame.move(req.queryParams("source"), req.queryParams("target"));
+            String rawSource = req.queryParams("source").trim().toLowerCase();
+            String rawTarget = req.queryParams("target").trim().toLowerCase();
+            loadedChessGame.move(
+                    rawSource.charAt(COLUMN_INDEX), Character.getNumericValue(rawSource.charAt(ROW_INDEX)),
+                    rawTarget.charAt(COLUMN_INDEX), Character.getNumericValue(rawTarget.charAt(ROW_INDEX))
+            );
             chessGameDao.save(loadedChessGame);
             res.redirect("/game/" + chessGameName);
             return null;
@@ -78,7 +86,7 @@ public class WebController {
     private void resetChessGame(final ChessGameDao chessGameDao) {
         post("/reset/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
-            chessGameDao.save(ChessGame.createInit(chessGameName));
+            chessGameDao.save(ChessGame.createBasic(chessGameName));
             res.redirect("/game/" + chessGameName);
             return null;
         });

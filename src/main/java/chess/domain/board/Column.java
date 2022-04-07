@@ -37,8 +37,4 @@ public enum Column {
     public char getValue() {
         return value;
     }
-
-    public String getValueToString() {
-        return String.valueOf(value);
-    }
 }

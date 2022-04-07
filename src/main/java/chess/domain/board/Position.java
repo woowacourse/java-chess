@@ -17,7 +17,10 @@ public class Position implements Comparable<Position> {
 
     static {
         CACHE = createAll().stream()
-                .collect(toMap(Position::generateRawPosition, position -> position));
+                .collect(toMap(
+                        position -> String.valueOf(position.column.getValue()) + position.row.getValue(),
+                        position -> position
+                ));
     }
 
     private Position(final Column column, final Row row) {
@@ -25,16 +28,16 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position valueOf(final String rawPosition) {
-        String refinedRawPosition = rawPosition.trim().toLowerCase();
+    public static Position valueOf(final char columValue, final int rowValue) {
+        String key = String.valueOf(columValue) + rowValue;
+        validateExistPosition(key);
+        return CACHE.get(key);
+    }
+
+    private static void validateExistPosition(String refinedRawPosition) {
         if (!CACHE.containsKey(refinedRawPosition)) {
             throw new IllegalArgumentException("[ERROR] 체스판에 존재하지 않는 위치 좌표 입니다.");
         }
-        return CACHE.get(refinedRawPosition);
-    }
-
-    public String generateRawPosition() {
-        return column.getValueToString() + row.getValue();
     }
 
     private static List<Position> createAll() {
@@ -56,9 +59,9 @@ public class Position implements Comparable<Position> {
     }
 
     public Position move(int horizon, int vertical) {
-        String column = this.column.move(horizon).getValueToString();
-        int row = this.row.move(vertical).getValue();
-        return Position.valueOf(column + row);
+        char columnValue = this.column.move(horizon).getValue();
+        int rowValue = this.row.move(vertical).getValue();
+        return Position.valueOf(columnValue, rowValue);
     }
 
     public boolean isPawnStartPosition(final Team team) {
@@ -77,6 +80,10 @@ public class Position implements Comparable<Position> {
 
     public Column getColumn() {
         return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 
     @Override

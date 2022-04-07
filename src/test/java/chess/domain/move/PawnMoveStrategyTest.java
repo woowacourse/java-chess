@@ -53,7 +53,7 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 이 시작지점에서 2칸 전진 할 수 있다.")
     void isStartMovable() {
-        Position source = Position.valueOf("a2");
+        Position source = Position.valueOf('a', 2);
 
         assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isTrue();
     }
@@ -61,9 +61,9 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 이 시작지점에 위치 하지 않아서 2칸 전진 할 수 없다.")
     void isStartMovable_NotStartPosition() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a3"));
+        board.movePiece(Position.valueOf('a', 2), Position.valueOf('a', 3));
 
-        Position source = Position.valueOf("a3");
+        Position source = Position.valueOf('a', 3);
 
         assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isFalse();
     }
@@ -71,9 +71,9 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 의 한칸 앞에 다른 기물이 존재해서 2칸 전진 할 수 없다.")
     void isStartMovable_ExistOtherPiece() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("a3"));
+        board.movePiece(Position.valueOf('a', 7), Position.valueOf('a', 3));
 
-        Position source = Position.valueOf("a2");
+        Position source = Position.valueOf('a', 2);
 
         assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isFalse();
     }
@@ -81,7 +81,7 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("Pawn 의 2칸 앞에 다른 기물이 존재하여 2칸 전진 할 수 없다.")
     void isStartMovable_ExistOtherPieceAtTarget() {
-        Position source = Position.valueOf("a2");
+        Position source = Position.valueOf('a', 2);
 
         assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Pawn(Team.BLACK))).isFalse();
     }

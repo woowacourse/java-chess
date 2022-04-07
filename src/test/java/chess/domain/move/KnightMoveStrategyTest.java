@@ -23,8 +23,8 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("나이트가 움직일 수 있다.")
     void isMovable() {
-        Position source = Position.valueOf("b8");
-        Position target = Position.valueOf("c6");
+        Position source = Position.valueOf('b', 8);
+        Position target = Position.valueOf('c', 6);
 
         assertThat(knightMoveStrategy.isMovable(board, source, target)).isTrue();
     }
@@ -32,8 +32,8 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("나이트 이동 패턴이 아니다.")
     void isMovableNotKnightMovePattern() {
-        Position source = Position.valueOf("b8");
-        Position target = Position.valueOf("c7");
+        Position source = Position.valueOf('b', 8);
+        Position target = Position.valueOf('c', 7);
 
         assertThat(knightMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -41,10 +41,10 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
     void isMovableWhenTargetColorSame() {
-        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"));
+        board.movePiece(Position.valueOf('b', 7), Position.valueOf('c', 6));
 
-        Position source = Position.valueOf("b8");
-        Position target = Position.valueOf("c6");
+        Position source = Position.valueOf('b', 8);
+        Position target = Position.valueOf('c', 6);
 
         assertThat(knightMoveStrategy.isMovable(board, source, target)).isFalse();
     }

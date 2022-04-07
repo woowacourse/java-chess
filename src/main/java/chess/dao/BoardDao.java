@@ -21,15 +21,16 @@ public class BoardDao {
     }
 
     private void saveBoard(final ChessGame chessGame) {
-        String insertSql = "insert into board (name, raw_position, piece_name, piece_team_value) values (?, ?, ?, ?)";
-        Map<String, Piece> currentBoard = chessGame.getCurrentBoardByRawPosition();
+        String insertSql = "insert into board (name, position_column_value, position_row_value, piece_name, piece_team_value) values (?, ?, ?, ?, ?)";
+        Map<Position, Piece> currentBoard = chessGame.getCurrentBoard();
         try {
             PreparedStatement insertStatement = connection.prepareStatement(insertSql);
-            for (String key : currentBoard.keySet()) {
+            for (Position position : currentBoard.keySet()) {
                 insertStatement.setString(1, chessGame.getName());
-                insertStatement.setString(2, key);
-                insertStatement.setString(3, currentBoard.get(key).getName());
-                insertStatement.setString(4, currentBoard.get(key).getTeam().getValue());
+                insertStatement.setString(2, String.valueOf(position.getColumn().getValue()));
+                insertStatement.setInt(3, position.getRow().getValue());
+                insertStatement.setString(4, currentBoard.get(position).getName());
+                insertStatement.setString(5, currentBoard.get(position).getTeam().getValue());
                 insertStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -49,12 +50,13 @@ public class BoardDao {
     }
 
     public Board load(final String name) {
-        String loadSql = "select * from board where name=?";
+        String selectSql = "select * from board where name=?";
         Map<Position, Piece> board = new HashMap<>();
         try {
-            PreparedStatement loadStatement = connection.prepareStatement(loadSql);
+            PreparedStatement loadStatement = connection.prepareStatement(selectSql);
             loadStatement.setString(1, name);
-            putPositionAndPiece(board, loadStatement.executeQuery());
+            ResultSet resultSet = loadStatement.executeQuery();
+            putPositionAndPiece(board, resultSet);
             validateBoardExist(board);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +66,9 @@ public class BoardDao {
 
     private void putPositionAndPiece(final Map<Position, Piece> board, final ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            Position position = Position.valueOf(resultSet.getString("raw_position"));
+            String columnValue = resultSet.getString("position_column_value");
+            int rowValue = resultSet.getInt("position_row_value");
+            Position position = Position.valueOf(columnValue.charAt(0), rowValue);
             Piece piece = StringToPieceConvertor.convert(
                     resultSet.getString("piece_name"),
                     resultSet.getString("piece_team_value")

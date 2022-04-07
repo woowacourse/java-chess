@@ -22,7 +22,7 @@ public class ChessGame {
         this.turn = turn;
     }
 
-    public static ChessGame createInit(final String name) {
+    public static ChessGame createBasic(final String name) {
         return new ChessGame(
                 name,
                 BoardFactory.createInitChessBoard(),
@@ -31,9 +31,9 @@ public class ChessGame {
         );
     }
 
-    public void move(final String rawSource, final String rawTarget) {
+    public void move(final char sourceColumn, final int sourceRow, final char targetColumn, final int targetRow) {
         validateGameSwitch();
-        movePiece(Position.valueOf(rawSource), Position.valueOf(rawTarget));
+        movePiece(Position.valueOf(sourceColumn, sourceRow), Position.valueOf(targetColumn, targetRow));
         turnOffWhenKingDie();
         turn.passTurn();
     }
@@ -84,10 +84,6 @@ public class ChessGame {
         return gameSwitch.isOn();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Result generateResult() {
         return new Result(getCurrentBoard(), board.searchTeamOfDeadKing());
     }
@@ -98,6 +94,10 @@ public class ChessGame {
 
     public Map<String, Piece> getCurrentBoardByRawPosition() {
         return board.getBoardByRawPosition();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Turn getTurn() {
