@@ -58,7 +58,6 @@ public final class WebController {
     }
 
     private void handleException(final Exception exception, final Response response) {
-        // 이런식으로 처리해도 되는지?
         response.status(500);
         response.body(gson.toJson(exception.getMessage()));
     }
