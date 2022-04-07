@@ -13,7 +13,6 @@ public abstract class State {
 
     public abstract State start();
   
-    // 자식 클래스에 대한 정보가 메서드에 담겨있다.
     public abstract boolean isEnd();
 
     public abstract State move(final Position from, final Position to);
