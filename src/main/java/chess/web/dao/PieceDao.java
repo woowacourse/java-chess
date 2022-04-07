@@ -12,45 +12,48 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class PieceDao {
-    public void save(int chessBoardId, ChessGameDto chessGameDto) {
+    public void save(ChessGameDto chessGameDto) {
         Connection connection = getConnection();
 
         ChessBoardDto chessBoard = chessGameDto.getChessBoard();
+        String gameName = chessGameDto.getGameName();
 
         Map<PositionDto, PieceDto> cells = chessBoard.getCells();
 
-        final String sql = "insert into piece (type, team, `rank`, file, chessboard_id) values (?, ?, ?, ?, ?)";
+        final String sql = "insert into piece (type, team, `rank`, file, game_name) values (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            updateCells(chessBoardId, cells, statement);
+            updateCells(gameName, cells, statement);
         } catch(SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateCells(int chessBoardId, Map<PositionDto, PieceDto> cells, PreparedStatement statement) throws SQLException {
+    private void updateCells(String gameName, Map<PositionDto, PieceDto> cells, PreparedStatement statement) throws SQLException {
         for (PositionDto positionDto : cells.keySet()) {
             statement.setString(1, cells.get(positionDto).getSymbol());
             statement.setString(2, cells.get(positionDto).getTeam());
             statement.setInt(3, positionDto.getRank());
             statement.setString(4, positionDto.getFile());
-            statement.setInt(5, chessBoardId);
+            statement.setString(5, gameName);
 
             statement.executeUpdate();
         }
     }
 
-    public void delete(int chessboardId) {
+    public void delete(ChessGameDto chessGameDto) {
         Connection connection = getConnection();
 
-        String sql = "delete from piece where chessboard_id = ?";
+        String gameName = chessGameDto.getGameName();
+
+        String sql = "delete from piece where game_name = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setInt(1, chessboardId);
+            statement.setString(1, gameName);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -58,8 +61,8 @@ public class PieceDao {
         }
     }
 
-    public void update(int chessboardId, ChessGameDto chessGameDto) {
-        delete(chessboardId);
-        save(chessboardId, chessGameDto);
+    public void update(ChessGameDto chessGameDto) {
+        delete(chessGameDto);
+        save(chessGameDto);
     }
 }

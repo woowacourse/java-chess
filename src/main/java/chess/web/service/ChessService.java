@@ -3,7 +3,6 @@ package chess.web.service;
 import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.piece.Team;
-import chess.web.dao.ChessBoardDao;
 import chess.web.dao.ChessGameDao;
 import chess.web.dao.PieceDao;
 import chess.web.dto.ChessGameDto;
@@ -13,13 +12,11 @@ import java.util.Map;
 public class ChessService {
 
     private final ChessGameDao chessGameDao;
-    private final ChessBoardDao chessBoardDao;
     private final PieceDao pieceDao;
     private ChessGame chessGame;
 
     public ChessService() {
         this.chessGameDao = new ChessGameDao();
-        this.chessBoardDao = new ChessBoardDao();
         this.pieceDao = new PieceDao();
     }
 
@@ -70,25 +67,24 @@ public class ChessService {
 
         String gameName = chessGameDto.getGameName();
 
-        int chessboardId = chessGameDao.findIdByName(gameName);
+        ChessGame chessGame = chessGameDao.findByName(gameName);
 
-        if (chessboardId > 0) {
-            updateChessGame(chessGameDto, chessboardId);
+        if (chessGame == null) {
+            updateChessGame(chessGameDto);
             return;
         }
 
         saveChessGame(chessGameDto);
     }
 
-    private void updateChessGame(ChessGameDto chessGameDto, int chessboardId) {
-        chessGameDao.update(chessGameDto, chessboardId);
-        pieceDao.update(chessboardId, chessGameDto);
+    private void updateChessGame(ChessGameDto chessGameDto) {
+        chessGameDao.update(chessGameDto);
+        pieceDao.update(chessGameDto);
     }
 
     private void saveChessGame(ChessGameDto chessGameDto) {
-        int savedId = chessBoardDao.save();
-        pieceDao.save(savedId, chessGameDto);
-        chessGameDao.save(chessGameDto, savedId);
+        chessGameDao.save(chessGameDto);
+        pieceDao.save(chessGameDto);
     }
 
     public boolean isEnd() {

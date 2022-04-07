@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameDaoTest {
 
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
     private static final ChessGameDao chessGameDao = new ChessGameDao();
     private static final PieceDao pieceDao = new PieceDao();
 
@@ -43,8 +42,7 @@ class ChessGameDaoTest {
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         //when & then
-        int chessBoardId = chessBoardDao.save();
-        Assertions.assertDoesNotThrow(() -> chessGameDao.save(chessGameDto, chessBoardId));
+        Assertions.assertDoesNotThrow(() -> chessGameDao.save(chessGameDto));
     }
 
     @DisplayName("체스 게임 업데이트 테스트")
@@ -54,15 +52,14 @@ class ChessGameDaoTest {
         ChessGame chessGame = new ChessGame("test");
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
-        int savedId = chessBoardDao.save();
-        pieceDao.save(savedId, chessGameDto);
-        chessGameDao.save(chessGameDto, savedId);
+        chessGameDao.save(chessGameDto);
+        pieceDao.save(chessGameDto);
 
         //when
         chessGame.progress(Command.from("start"));
         chessGameDto = ChessGameDto.from(chessGame);
 
-        chessGameDao.update(chessGameDto, savedId);
+        chessGameDao.update(chessGameDto);
 
         //then
         chessGame = chessGameDao.findByName("test");

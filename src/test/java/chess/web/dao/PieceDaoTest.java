@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
     private static final ChessGameDao chessGameDao = new ChessGameDao();
     private static final PieceDao pieceDao = new PieceDao();
 
@@ -25,10 +24,9 @@ class PieceDaoTest {
         ChessGameDto chessGameDto = ChessGameDto.from(chessGame);
 
         //when
-        int savedId = chessBoardDao.save();
-        chessGameDao.save(chessGameDto, savedId);
+        chessGameDao.save(chessGameDto);
 
         //then
-        Assertions.assertDoesNotThrow(() -> pieceDao.save(savedId, chessGameDto));
+        Assertions.assertDoesNotThrow(() -> pieceDao.save(chessGameDto));
     }
 }
