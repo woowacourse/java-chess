@@ -5,6 +5,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.dto.CreateGameDto;
+import chess.dto.SuccessResponseDto;
 import chess.service.ChessService;
 
 public class HomeController {
@@ -19,8 +20,12 @@ public class HomeController {
         get(HOME_ROUTE, (req, res) -> render(chessService.countGames(), HTML_TEMPLATE_PATH));
         post(HOME_ROUTE, (req, res) -> {
             res.type(JSON_CONTENT_TYPE);
-            CreateGameDto gameCreated = chessService.initGame();
-            return gameCreated.toJson();
+            return new SuccessResponseDto(getGameCreatedResponse()).toJson();
         });
+    }
+
+    private String getGameCreatedResponse() {
+        CreateGameDto gameCreated = chessService.initGame();
+        return gameCreated.toJson();
     }
 }

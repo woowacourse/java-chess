@@ -6,6 +6,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.dto.SearchResultDto;
+import chess.dto.SuccessResponseDto;
 import chess.service.ChessService;
 import spark.Request;
 
@@ -22,12 +23,13 @@ public class SearchController {
         get(SEARCH_ROUTE, (req, res) -> render(chessService.countGames(), HTML_TEMPLATE_PATH));
         post(SEARCH_ROUTE, (req, res) -> {
             res.type(JSON_CONTENT_TYPE);
-            return searchGame(req).toJson();
+            return new SuccessResponseDto(getSearchGameResponse(req)).toJson();
         });
     }
 
-    private SearchResultDto searchGame(Request request) {
+    private String getSearchGameResponse(Request request) {
         int gameId = parseInt(request.queryParams(SEARCH_QUERY_PARAMETER));
-        return chessService.searchGame(gameId);
+        SearchResultDto searchResult = chessService.searchGame(gameId);
+        return searchResult.toJson();
     }
 }

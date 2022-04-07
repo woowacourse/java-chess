@@ -12,5 +12,6 @@ public class WebRouter {
         new SearchController().initRouteHandler();
         new GameController().initRouteHandler();
         new ResultController().initRouteHandler();
+        new ExceptionHandler().init();
     }
 }
