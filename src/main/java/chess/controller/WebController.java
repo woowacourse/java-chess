@@ -36,7 +36,7 @@ public class WebController {
     }
 
     private String getBoard() {
-        BoardDto boardDto = chessService.getBoardDto(GAME_ID);
+        BoardDto boardDto = chessService.getBoard(GAME_ID);
         return JsonMapper.boardDtoToJson(boardDto);
     }
 

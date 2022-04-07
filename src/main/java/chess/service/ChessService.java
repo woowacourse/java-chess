@@ -71,7 +71,7 @@ public class ChessService {
         gameDao.updateTurnToBlack(gameId);
     }
 
-    public BoardDto getBoardDto(String gameId) {
+    public BoardDto getBoard(String gameId) {
         return boardDao.getBoard(gameId);
     }
 
