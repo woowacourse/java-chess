@@ -1,19 +1,17 @@
 CREATE TABLE room
 (
-    id     int        NOT NULL,
-    status varchar(5) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY `room_id_UNIQUE` (`id`)
+    id     bigint        NOT NULL,
+    status varchar(50) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE board
 (
-    id       int        NOT NULL AUTO_INCREMENT,
-    position varchar(5) NOT NULL,
-    symbol   varchar가(5) NOT NULL,
-    room_id  int        NOT NULL,
-    PRIMARY KEY (id, room_id),
+    id       bigint        NOT NULL AUTO_INCREMENT,
+    position varchar(50) NOT NULL,
+    symbol   varchar(50) NOT NULL,
+    room_id  bigint        NOT NULL,
+    PRIMARY KEY (id),
     KEY      room_id (room_id),
     CONSTRAINT id FOREIGN KEY (room_id) REFERENCES room (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
