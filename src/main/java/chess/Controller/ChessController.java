@@ -18,15 +18,22 @@ import java.util.Map;
 
 public class ChessController {
 
+    private final BoardDao boardDao;
+    private final PiecesDao piecesDao;
+    private final UserDao userDao;
+
+
     public ChessController() {
+        this.boardDao = new BoardDao();
+        this.piecesDao = new PiecesDao();
+        this.userDao = new UserDao();
     }
 
     public int initGame(final String userName) {
-        final UserDao userDao = new UserDao();
         final int exUserId = userDao.getUser(userName);
         int boardId = userDao.getBoard(exUserId);
         if (exUserId == CommonDao.FAILED) {
-            boardId = (new BoardDao()).initBoard();
+            boardId = boardDao.initBoard();
         }
         userDao.createUser(userName, boardId);
         return userDao.getUser(userName);
@@ -48,22 +55,21 @@ public class ChessController {
     }
 
     private Board createBoard(final int userId) {
-        final int boardId = (new UserDao()).getBoard(userId);
-        final Map<Position, Piece> pieces = (new PiecesDao()).getPieces(boardId);
-        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        final int boardId = userDao.getBoard(userId);
+        final Map<Position, Piece> pieces = piecesDao.getPieces(boardId);
+        final GameState gameState = boardDao.getGameStatus(userId);
         return new Board(pieces, gameState);
     }
 
     public StateDto getCurrentStatus(final int userId) {
-        final GameState gameState = (new BoardDao()).getGameStatus(userId);
+        final GameState gameState = boardDao.getGameStatus(userId);
         return StateDto.fromEntity(gameState);
     }
 
     public void finishGame(final int userId) {
-        final UserDao userDao = new UserDao();
         final int boardId = userDao.getBoard(userId);
         userDao.deleteUser(userId);
-        (new PiecesDao()).deletePieces(boardId);
-        (new BoardDao()).deleteBoard(boardId);
+        piecesDao.deletePieces(boardId);
+        boardDao.deleteBoard(boardId);
     }
 }
