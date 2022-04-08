@@ -56,10 +56,11 @@ public class GameDao {
 
     public int findLastGameId() {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
-        try (
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ResultSet result = statement.executeQuery();
-        ) {
+        PreparedStatement statement;
+        ResultSet result;
+        try {
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            result = statement.executeQuery();
             if (!result.next()) {
                 return EMPTY_RESULT;
             }
