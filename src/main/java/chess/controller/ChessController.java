@@ -38,7 +38,7 @@ public class ChessController {
         });
 
         get("/move", (request, response) -> {
-            MoveRequestDto moveRequestDto = new MoveRequestDto(request.queryParams("from"), request.queryParams("to"));
+            MoveRequestDto moveRequestDto = new MoveRequestDto(request);
             return render(chessService.move(chessGame, boardId.intValue(), moveRequestDto),
                     BOARD_PAGE);
         });
