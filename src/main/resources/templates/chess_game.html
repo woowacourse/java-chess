@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/game.css">
+</head>
+<body>
+<div>
+    <h1>♟️ 게임 이름 : {{chess_game_name}}</h1>
+    <section class="chess-board">
+        <div class="black-square">
+            {{#a8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a8}}
+        </div>
+        <div class="white-square">
+            {{#b8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b8}}
+        </div>
+        <div class="black-square">
+            {{#c8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c8}}
+        </div>
+        <div class="white-square">
+            {{#d8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d8}}
+        </div>
+        <div class="black-square">
+            {{#e8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e8}}
+        </div>
+        <div class="white-square">
+            {{#f8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f8}}
+        </div>
+        <div class="black-square">
+            {{#g8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g8}}
+        </div>
+        <div class="white-square">
+            {{#h8}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h8}}
+        </div>
+        <div class="white-square">
+            {{#a7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a7}}
+        </div>
+        <div class="black-square">
+            {{#b7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b7}}
+        </div>
+        <div class="white-square">
+            {{#c7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c7}}
+        </div>
+        <div class="black-square">
+            {{#d7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d7}}
+        </div>
+        <div class="white-square">
+            {{#e7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e7}}
+        </div>
+        <div class="black-square">
+            {{#f7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f7}}
+        </div>
+        <div class="white-square">
+            {{#g7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g7}}
+        </div>
+        <div class="black-square">
+            {{#h7}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h7}}
+        </div>
+        <!-- TWO LINE -->
+        <div class="black-square">
+            {{#a6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a6}}
+        </div>
+        <div class="white-square">
+            {{#b6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b6}}
+        </div>
+        <div class="black-square">
+            {{#c6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c6}}
+        </div>
+        <div class="white-square">
+            {{#d6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d6}}
+        </div>
+        <div class="black-square">
+            {{#e6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e6}}
+        </div>
+        <div class="white-square">
+            {{#f6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f6}}
+        </div>
+        <div class="black-square">
+            {{#g6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g6}}
+        </div>
+        <div class="white-square">
+            {{#h6}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h6}}
+        </div>
+        <div class="white-square">
+            {{#a5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a5}}
+        </div>
+        <div class="black-square">
+            {{#b5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b5}}
+        </div>
+        <div class="white-square">
+            {{#c5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c5}}
+        </div>
+        <div class="black-square">
+            {{#d5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d5}}
+        </div>
+        <div class="white-square">
+            {{#e5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e5}}
+        </div>
+        <div class="black-square">
+            {{#f5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f5}}
+        </div>
+        <div class="white-square">
+            {{#g5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g5}}
+        </div>
+        <div class="black-square">
+            {{#h5}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h5}}
+        </div>
+        <!-- TWO LINE -->
+        <div class="black-square">
+            {{#a4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a4}}
+        </div>
+        <div class="white-square">
+            {{#b4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b4}}
+        </div>
+        <div class="black-square">
+            {{#c4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c4}}
+        </div>
+        <div class="white-square">
+            {{#d4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d4}}
+        </div>
+        <div class="black-square">
+            {{#e4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e4}}
+        </div>
+        <div class="white-square">
+            {{#f4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f4}}
+        </div>
+        <div class="black-square">
+            {{#g4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g4}}
+        </div>
+        <div class="white-square">
+            {{#h4}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h4}}
+        </div>
+        <div class="white-square">
+            {{#a3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a3}}
+        </div>
+        <div class="black-square">
+            {{#b3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b3}}
+        </div>
+        <div class="white-square">
+            {{#c3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c3}}
+        </div>
+        <div class="black-square">
+            {{#d3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d3}}
+        </div>
+        <div class="white-square">
+            {{#e3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e3}}
+        </div>
+        <div class="black-square">
+            {{#f3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f3}}
+        </div>
+        <div class="white-square">
+            {{#g3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g3}}
+        </div>
+        <div class="black-square">
+            {{#h3}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h3}}
+        </div>
+        <!-- TWO LINE -->
+        <div class="black-square">
+            {{#a2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a2}}
+        </div>
+        <div class="white-square">
+            {{#b2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b2}}
+        </div>
+        <div class="black-square">
+            {{#c2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c2}}
+        </div>
+        <div class="white-square">
+            {{#d2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d2}}
+        </div>
+        <div class="black-square">
+            {{#e2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e2}}
+        </div>
+        <div class="white-square">
+            {{#f2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f2}}
+        </div>
+        <div class="black-square">
+            {{#g2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g2}}
+        </div>
+        <div class="white-square">
+            {{#h2}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h2}}
+        </div>
+        <div class="white-square">
+            {{#a1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/a1}}
+        </div>
+        <div class="black-square">
+            {{#b1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/b1}}
+        </div>
+        <div class="white-square">
+            {{#c1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/c1}}
+        </div>
+        <div class="black-square">
+            {{#d1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/d1}}
+        </div>
+        <div class="white-square">
+            {{#e1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/e1}}
+        </div>
+        <div class="black-square">
+            {{#f1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/f1}}
+        </div>
+        <div class="white-square">
+            {{#g1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/g1}}
+        </div>
+        <div class="black-square">
+            {{#h1}}
+            <img src="/images/{{name}}_{{team.value}}.png" class="img"/>
+            {{/h1}}
+        </div>
+        <!-- TWO LINE -->
+    </section>
+    <section class="user-ui">
+        <form class="move" method="post" action="/move/{{chess_game_name}}">
+            <h2>🎯 체스 기물 이동 🎯</h2>
+            <input type="text" name="source" placeholder="Source Position">
+            <input type="text" name="target" placeholder="Target Position">
+            <input type="submit" value="MOVE">
+        </form>
+        <div class="status">
+            <p>{{turn.now.value}} 턴</p>
+            {{#result}}
+            <p>BLACK 팀 점수 : {{blackScore}}</p>
+            <p>WHITE 팀 점수 : {{whiteScore}}</p>
+            <p>승리 팀 : {{winningTeam.value}} ({{winningTeam.winningType}})</p>
+            {{/result}}
+        </div>
+        <form class="button" method="post" action="/reset/{{chess_game_name}}">
+            <p class="info">🧨 체스 게임을 리셋합니다.</p>
+            <input type="submit" value="RESET GAME">
+        </form>
+        <form class="button" action="/">
+            <p class="info">🏠 홈 화면으로 돌아가기</p>
+            <input type="submit" value="HOME">
+        </form>
+    </section>
+</div>
+</body>
+</html>

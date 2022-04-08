@@ -7,7 +7,7 @@ public final class Blank extends Piece {
     private static final double POINT = 0;
 
     public Blank() {
-        super(Color.NONE, POINT);
+        super("BLANK", Team.NONE, POINT);
     }
 
     @Override
@@ -27,6 +27,6 @@ public final class Blank extends Piece {
 
     @Override
     public MoveStrategy getMoveStrategy() {
-        throw new IllegalStateException("[ERROR] 이동전략을 가져올 수 없는 기물입니다.");
+        throw new IllegalStateException("[ERROR] Blank 는 이동전략이 존재하지 않습니다.");
     }
 }

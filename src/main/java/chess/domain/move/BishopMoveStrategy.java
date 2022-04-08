@@ -3,41 +3,41 @@ package chess.domain.move;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
-public class BishopMoveStrategy extends LinearMoveStrategy {
+public final class BishopMoveStrategy extends LinearMoveStrategy {
 
     private static final String UNSUPPORTED_MOVE_PATTERN_MESSAGE = "[ERROR] 비숍에서 지원하지 않는 이동전략입니다.";
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = Distance.of(source, target);
-        if (!isBishopMovePattern(distance)) {
+        final Movement movement = new Movement(source, target);
+        if (!isBishopMovePattern(movement)) {
             return false;
         }
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isPositiveDiagonal() && isPieceExistWhenPositiveDiagonal(board, smallerPosition, distance)) {
+        if (movement.isPositiveDiagonal() && isPieceExistAmongPositiveDiagonal(board, smallerPosition, movement)) {
             return false;
         }
-        if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
+        if (movement.isNegativeDiagonal() && isPieceExistAmongNegativeDiagonal(board, smallerPosition, movement)) {
             return false;
         }
-        return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
+        return isMovableToTarget(board.getPiece(target), board.getTeamOfPiece(source));
     }
 
-    private boolean isBishopMovePattern(final Distance distance) {
-        return distance.isPositiveDiagonal() || distance.isNegativeDiagonal();
+    private boolean isBishopMovePattern(final Movement movement) {
+        return movement.isPositiveDiagonal() || movement.isNegativeDiagonal();
     }
 
     @Override
-    protected boolean isPieceExistWhenHorizon(final Board board,
-                                              final Position smallerPosition,
-                                              final Distance distance) {
+    protected boolean isPieceExistAmongHorizon(final Board board,
+                                               final Position smallerPosition,
+                                               final Movement movement) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected boolean isPieceExistWhenVertical(final Board board,
-                                               final Position smallerPosition,
-                                               final Distance distance) {
+    protected boolean isPieceExistAmongVertical(final Board board,
+                                                final Position smallerPosition,
+                                                final Movement movement) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

@@ -1,0 +1,60 @@
+body {
+  background: peru;
+}
+
+h2 {
+  background-color: seashell;
+  padding: 3px;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+.chess-board {
+  width: 640px;
+  border: 4px solid slategrey;
+  display: grid;
+  grid-template-columns: repeat(8, 80px);
+  grid-template-rows: repeat(8, 80px);
+  float : left;
+}
+
+.white-square {
+  background-color: slategrey;
+  color: white;
+}
+
+.black-square {
+  background-color: white;
+  color: slategrey;
+}
+
+img {
+  width: 100%;
+}
+
+.user-ui {
+  margin-left: 30px;
+  float : left;
+}
+
+.move {
+  text-align: center;
+}
+
+.status {
+  margin: 20px 30px;
+  text-align: center;
+  background-color: seashell;
+  border-style: outset;
+}
+
+.button {
+  text-align: center;
+}
+
+.info {
+  background-color: seashell;
+  padding: 3px;
+  margin-left: 70px;
+  margin-right: 70px;
+}

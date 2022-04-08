@@ -3,84 +3,94 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.CatchPieces;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PawnMoveStrategyTest {
 
-    Board board;
-    PawnMoveStrategy pawnBlackMoveStrategy;
-    CatchPieces catchPieces;
+    class PawnMoveStrategyForTest extends PawnMoveStrategy {
+
+        @Override
+        public boolean isMovable(Board board, Position source, Position target) {
+            return false;
+        }
+
+        @Override
+        protected boolean isMovePattern(MovementPattern movementPattern,
+                                        Board board,
+                                        Position source,
+                                        Piece targetPiece) {
+            return false;
+        }
+
+        @Override
+        protected boolean isStartMovable(Board board, Position source, Piece targetPiece) {
+            return super.isStartMovable(board, source, targetPiece);
+        }
+
+        @Override
+        protected boolean isTargetPieceOppositeTeam(Piece targetPiece, Piece sourcePiece) {
+            return super.isTargetPieceOppositeTeam(targetPiece, sourcePiece);
+        }
+    }
+
+    private Board board;
+    private PawnMoveStrategyForTest pawnMoveStrategyForTest;
 
     @BeforeEach
     void setUp() {
-        board = Board.createChessBoard();
-        pawnBlackMoveStrategy = new PawnBlackMoveStrategy();
-        catchPieces = new CatchPieces();
+        board = BoardFactory.createInitChessBoard();
+        pawnMoveStrategyForTest = new PawnMoveStrategyForTest();
     }
 
     @Test
-    @DisplayName("현재 위치에서 폰을 타 폰 위치로 움직일 수 있다.")
-    void isMovable() {
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a6");
+    @DisplayName("Pawn 이 시작지점에서 2칸 전진 할 수 있다.")
+    void isStartMovable() {
+        Position source = Position.of('a', 2);
 
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
+        assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isTrue();
     }
 
     @Test
-    @DisplayName("폰 움직임 전략에 맞지 않는 경우 false")
-    void isMovableNotPawnMovePattern() {
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a8");
+    @DisplayName("Pawn 이 시작지점에 위치 하지 않아서 2칸 전진 할 수 없다.")
+    void isStartMovable_NotStartPosition() {
+        board.movePiece(Position.of('a', 2), Position.of('a', 3));
 
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
+        Position source = Position.of('a', 3);
+
+        assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isFalse();
     }
 
     @Test
-    @DisplayName("2칸 전진시 Pawn 이 사작위치가 아닌경우 false")
-    void isMovableStartMoveNotStartPosition() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("a6"), catchPieces);
+    @DisplayName("Pawn 의 한칸 앞에 다른 기물이 존재해서 2칸 전진 할 수 없다.")
+    void isStartMovable_ExistOtherPiece() {
+        board.movePiece(Position.of('a', 7), Position.of('a', 3));
 
-        Position source = Position.valueOf("a6");
-        Position target = Position.valueOf("a4");
+        Position source = Position.of('a', 2);
 
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Blank())).isFalse();
     }
 
     @Test
-    @DisplayName("2칸 전진시 기물이 있을 경우 false")
-    void isMovableStartMoveHasPieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a5"), catchPieces);
+    @DisplayName("Pawn 의 2칸 앞에 다른 기물이 존재하여 2칸 전진 할 수 없다.")
+    void isStartMovable_ExistOtherPieceAtTarget() {
+        Position source = Position.of('a', 2);
 
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a5");
-
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnMoveStrategyForTest.isStartMovable(board, source, new Pawn(Team.BLACK))).isFalse();
     }
 
     @Test
-    @DisplayName("전진시 기물이 있을 경우 false")
-    void isMovableSouthHasPieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("a6"), catchPieces);
-
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a6");
-
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("대각선 이동시 상대편 기물이 있을 경우 true")
-    void isMovableSouthEastHasPieceOnTarget() {
-        board.movePiece(Position.valueOf("a2"), Position.valueOf("b6"), catchPieces);
-
-        Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("b6");
-
-        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
+    @DisplayName("target Piece 가 상대편 Piece 인지 판별")
+    void isCatchable() {
+        assertThat(pawnMoveStrategyForTest.isTargetPieceOppositeTeam(new Pawn(Team.BLACK), new Pawn(Team.WHITE)))
+                .isTrue();
     }
 }
+

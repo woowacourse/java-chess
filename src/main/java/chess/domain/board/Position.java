@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static java.util.stream.Collectors.toMap;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +12,32 @@ public class Position implements Comparable<Position> {
 
     private final static Map<String, Position> CACHE;
 
-    static {
-        CACHE = createAll().stream()
-                .collect(toMap(Position::createKey, position -> position));
-    }
-
     private final Column column;
     private final Row row;
+
+    static {
+        CACHE = createAll().stream()
+                .collect(toMap(
+                        position -> String.valueOf(position.column.getValue()) + position.row.getValue(),
+                        position -> position
+                ));
+    }
 
     private Position(final Column column, final Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static Position of(final char columValue, final int rowValue) {
+        String key = String.valueOf(columValue) + rowValue;
+        validateExistPosition(key);
+        return CACHE.get(key);
+    }
+
+    private static void validateExistPosition(String refinedRawPosition) {
+        if (!CACHE.containsKey(refinedRawPosition)) {
+            throw new IllegalArgumentException("[ERROR] 체스판에 존재하지 않는 위치 좌표 입니다.");
+        }
     }
 
     private static List<Position> createAll() {
@@ -35,36 +50,25 @@ public class Position implements Comparable<Position> {
         return positions;
     }
 
-    public static Position valueOf(final String rawPosition) {
-        if (!CACHE.containsKey(rawPosition)) {
-            throw new IllegalArgumentException("[ERROR] 범위를 초과하였습니다.");
-        }
-        return CACHE.get(rawPosition);
-    }
-
     public int subtractColumn(final Position position) {
-        return this.column.subtract(position.column);
+        return this.column.subtractValue(position.column);
     }
 
     public int subtractRow(final Position position) {
-        return this.row.subtract(position.row);
-    }
-
-    public boolean isPawnStartPosition(final Color color) {
-        if (color == Color.BLACK && row == Row.SEVEN) {
-            return true;
-        }
-        return color == Color.WHITE && row == Row.TWO;
+        return this.row.subtractValue(position.row);
     }
 
     public Position move(int horizon, int vertical) {
-        String column = this.column.move(horizon).getName();
-        int row = this.row.move(vertical).getValue();
-        return Position.valueOf(column + row);
+        char columnValue = this.column.move(horizon).getValue();
+        int rowValue = this.row.move(vertical).getValue();
+        return Position.of(columnValue, rowValue);
     }
 
-    private String createKey() {
-        return column.getName() + row.getValue();
+    public boolean isPawnStartPosition(final Team team) {
+        if (team == Team.BLACK && row == Row.SEVEN) {
+            return true;
+        }
+        return team == Team.WHITE && row == Row.TWO;
     }
 
     public Position compareSmaller(Position position) {
@@ -76,6 +80,10 @@ public class Position implements Comparable<Position> {
 
     public Column getColumn() {
         return column;
+    }
+
+    public Row getRow() {
+        return row;
     }
 
     @Override

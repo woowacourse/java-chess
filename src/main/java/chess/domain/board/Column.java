@@ -1,46 +1,46 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Column {
 
-    A("a", 1),
-    B("b", 2),
-    C("c", 3),
-    D("d", 4),
-    E("e", 5),
-    F("f", 6),
-    G("g", 7),
-    H("h", 8);
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    private final String name;
-    private final int value;
+    private final char value;
 
-    Column(final String name, final int value) {
-        this.name = name;
+    Column(final char value) {
         this.value = value;
     }
 
-    private static Column of(final int value) {
-        return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findFirst()
+    private static Map<Character, Column> CACHE =
+            Arrays.stream(values()).collect(Collectors.toMap(Column::getValue, Function.identity()));
+
+    private static Column of(final char value) {
+        return Optional
+                .ofNullable(CACHE.get(value))
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 Column 입니다."));
     }
 
     public Column move(final int horizon) {
-        return of(this.value + horizon);
+        return of((char) (this.value + horizon));
     }
 
-    public int subtract(final Column column) {
+    public int subtractValue(final Column column) {
         return column.value - this.value;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 }

@@ -1,0 +1,23 @@
+body {
+    background: peru;
+    text-align: center;
+    padding: 20px 550px;
+}
+
+img {
+    width: 50%;
+}
+
+.info {
+    background-color: seashell;
+    padding: 3px;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.name {
+    background-color: seashell;
+    padding-left: 36px;
+    padding-right: 36px;
+    margin-right: 10px;
+}

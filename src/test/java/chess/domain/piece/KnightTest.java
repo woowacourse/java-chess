@@ -6,9 +6,9 @@ import chess.domain.move.KnightMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class KnightTest {
+public class KnightTest {
 
-    Knight knight = new Knight(Color.WHITE);
+    private Knight knight = new Knight(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

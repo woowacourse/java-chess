@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
-Hello World!!
+<div>
+    <img src="/images/TITLE.png" class="img"/>
+    <div>
+        <p class="info">🕹 새 게임 만들기</p>
+        <form action="/create_chess_game" method="post">
+            <input type="text" name="name"/>
+            <input type="submit" value="생성">
+        </form>
+    </div>
+    <div>
+        <p class="info">📝 게임 목록</p>
+        {{#chess_games}}
+        <form action="delete/{{name}}" method="post">
+            <a class="name" href="/game/{{name}}">{{name}}</a>
+            <input type="submit" value="삭제">
+        </form>
+        <br/>
+        {{/chess_games}}
+    </div>
+</div>
 </body>
 </html>

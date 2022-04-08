@@ -5,11 +5,13 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    private final Color color;
+    private final String name;
+    private final Team team;
     private final double point;
 
-    protected Piece(final Color color, final double point) {
-        this.color = color;
+    protected Piece(final String name, final Team team, final double point) {
+        this.name = name;
+        this.team = team;
         this.point = point;
     }
 
@@ -21,8 +23,12 @@ public abstract class Piece {
 
     public abstract MoveStrategy getMoveStrategy();
 
-    public final Color getColor() {
-        return color;
+    public String getName() {
+        return name;
+    }
+
+    public final Team getTeam() {
+        return team;
     }
 
     public double getPoint() {
@@ -38,11 +44,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color;
+        return team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color);
+        return Objects.hash(team);
     }
 }

@@ -6,9 +6,9 @@ import chess.domain.move.RookMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RookTest {
+public class RookTest {
 
-    Rook rook = new Rook(Color.WHITE);
+    private Rook rook = new Rook(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

@@ -9,34 +9,34 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
     private static final int FIRST_UNIT_FOR_ADD = 1;
     private static final int REVERSE_DIRECTION = -1;
 
-    protected boolean isPieceExistWhenHorizon(final Board board,
-                                              final Position smallerPosition,
-                                              final Distance distance) {
-        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(distance.getHorizon()))
-                .mapToObj(moveUnit -> smallerPosition.move(moveUnit, Distance.NOT_MOVE))
-                .anyMatch(position -> isPieceExist(board, position));
-    }
-
-    protected boolean isPieceExistWhenVertical(final Board board,
+    protected boolean isPieceExistAmongHorizon(final Board board,
                                                final Position smallerPosition,
-                                               final Distance distance) {
-        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(distance.getVertical()))
-                .mapToObj(moveUnit -> smallerPosition.move(Distance.NOT_MOVE, moveUnit * REVERSE_DIRECTION))
+                                               final Movement movement) {
+        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(movement.getHorizon()))
+                .mapToObj(moveUnit -> smallerPosition.move(moveUnit, Movement.NOT_MOVE))
                 .anyMatch(position -> isPieceExist(board, position));
     }
 
-    protected boolean isPieceExistWhenPositiveDiagonal(final Board board,
-                                                       final Position smallerPosition,
-                                                       final Distance distance) {
-        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(distance.getVertical()))
+    protected boolean isPieceExistAmongVertical(final Board board,
+                                                final Position smallerPosition,
+                                                final Movement movement) {
+        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(movement.getVertical()))
+                .mapToObj(moveUnit -> smallerPosition.move(Movement.NOT_MOVE, moveUnit * REVERSE_DIRECTION))
+                .anyMatch(position -> isPieceExist(board, position));
+    }
+
+    protected boolean isPieceExistAmongPositiveDiagonal(final Board board,
+                                                        final Position smallerPosition,
+                                                        final Movement movement) {
+        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(movement.getVertical()))
                 .mapToObj(moveUnit -> smallerPosition.move(moveUnit * REVERSE_DIRECTION, moveUnit * REVERSE_DIRECTION))
                 .anyMatch(position -> isPieceExist(board, position));
     }
 
-    protected boolean isPieceExistWhenNegativeDiagonal(final Board board,
-                                                       final Position smallerPosition,
-                                                       final Distance distance) {
-        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(distance.getVertical()))
+    protected boolean isPieceExistAmongNegativeDiagonal(final Board board,
+                                                        final Position smallerPosition,
+                                                        final Movement movement) {
+        return IntStream.range(FIRST_UNIT_FOR_ADD, Math.abs(movement.getVertical()))
                 .mapToObj(moveUnit -> smallerPosition.move(moveUnit, moveUnit * REVERSE_DIRECTION))
                 .anyMatch(position -> isPieceExist(board, position));
     }
