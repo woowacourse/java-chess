@@ -1,5 +1,7 @@
 package chess.domain.event;
 
+import chess.domain.command.MoveRoute;
+
 public final class InitEvent extends Event {
 
     private static final String INIT_DESCRIPTION = "";
@@ -12,7 +14,7 @@ public final class InitEvent extends Event {
         return false;
     }
 
-    public MoveCommand toMoveCommand() {
+    public MoveRoute toMoveRoute() {
         throw new UnsupportedOperationException("이동 이벤트가 아닙니다.");
     }
 

@@ -1,11 +1,11 @@
-package chess.domain.event;
+package chess.domain.command;
 
 import chess.domain.board.position.Position;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MoveCommand {
+public class MoveRoute {
 
     private static final String DESCRIPTION_DELIMITER = " ";
     private static final String JSON_CONTENT_REGEX = "\\{\"source\":\"(.*)\",\"target\":\"(.*)\"}";
@@ -15,21 +15,21 @@ public class MoveCommand {
     private final Position source;
     private final Position target;
 
-    public MoveCommand(String source, String target) {
+    public MoveRoute(String source, String target) {
         this.source = Position.of(source);
         this.target = Position.of(target);
     }
 
-    public static MoveCommand ofEventDescription(String description) {
+    public static MoveRoute ofEventDescription(String description) {
         String[] positions = description.split(DESCRIPTION_DELIMITER);
-        return new MoveCommand(positions[0], positions[1]);
+        return new MoveRoute(positions[0], positions[1]);
     }
 
-    public static MoveCommand ofJson(String json) {
+    public static MoveRoute ofJson(String json) {
         Matcher matcher = toValidMatcher(json);
         String source = matcher.group(1);
         String target = matcher.group(2);
-        return new MoveCommand(source, target);
+        return new MoveRoute(source, target);
     }
 
     private static Matcher toValidMatcher(String json) {
@@ -63,7 +63,7 @@ public class MoveCommand {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MoveCommand that = (MoveCommand) o;
+        MoveRoute that = (MoveRoute) o;
         return Objects.equals(source, that.source)
                 && Objects.equals(target, that.target);
     }

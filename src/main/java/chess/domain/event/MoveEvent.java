@@ -1,17 +1,18 @@
 package chess.domain.event;
 
+import chess.domain.command.MoveRoute;
 import java.util.Objects;
 
 public final class MoveEvent extends Event {
 
-    private final MoveCommand moveCommand;
+    private final MoveRoute moveRoute;
 
-    public MoveEvent(MoveCommand moveCommand) {
-        this.moveCommand = moveCommand;
+    public MoveEvent(MoveRoute moveRoute) {
+        this.moveRoute = moveRoute;
     }
 
     public MoveEvent(String description) {
-        this(MoveCommand.ofEventDescription(description));
+        this(MoveRoute.ofEventDescription(description));
     }
 
     public boolean isInit() {
@@ -22,8 +23,8 @@ public final class MoveEvent extends Event {
         return true;
     }
 
-    public MoveCommand toMoveCommand() {
-        return moveCommand;
+    public MoveRoute toMoveRoute() {
+        return moveRoute;
     }
 
     public EventType getType() {
@@ -31,7 +32,7 @@ public final class MoveEvent extends Event {
     }
 
     public String getDescription() {
-        return moveCommand.toDescription();
+        return moveRoute.toDescription();
     }
 
     @Override
@@ -43,16 +44,16 @@ public final class MoveEvent extends Event {
             return false;
         }
         MoveEvent moveEvent = (MoveEvent) o;
-        return Objects.equals(moveCommand, moveEvent.moveCommand);
+        return Objects.equals(moveRoute, moveEvent.moveRoute);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(moveCommand);
+        return Objects.hash(moveRoute);
     }
 
     @Override
     public String toString() {
-        return "MoveEvent{" + "description='" + moveCommand + '\'' + '}';
+        return "MoveEvent{" + "description='" + moveRoute + '\'' + '}';
     }
 }

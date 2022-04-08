@@ -5,7 +5,7 @@ import chess.domain.board.piece.Color;
 import chess.domain.board.piece.PieceType;
 import chess.domain.board.position.Position;
 import chess.domain.event.Event;
-import chess.domain.event.MoveCommand;
+import chess.domain.command.MoveRoute;
 import chess.domain.game.statistics.GameResult;
 
 abstract class Running extends Started {
@@ -20,14 +20,14 @@ abstract class Running extends Started {
     @Override
     public Game play(Event event) {
         if (event.isMove()) {
-            return moveChessmen(event.toMoveCommand());
+            return moveChessmen(event.toMoveRoute());
         }
         throw new UnsupportedOperationException(NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE);
     }
 
-    private Game moveChessmen(MoveCommand moveCommand) {
-        Position from = moveCommand.getSource();
-        Position to = moveCommand.getTarget();
+    private Game moveChessmen(MoveRoute moveRoute) {
+        Position from = moveRoute.getSource();
+        Position to = moveRoute.getTarget();
 
         board.movePiece(from, to, getCurrentTurnColor());
         return moveResult();
