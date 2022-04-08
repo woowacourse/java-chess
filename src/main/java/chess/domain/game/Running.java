@@ -11,6 +11,7 @@ import chess.domain.game.statistics.GameResult;
 abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
+    private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 종료되지 않은 게임입니다.";
     private static final String NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE = "아직 구현되지 않은 기능입니다.";
 
     Running(Board board) {
@@ -21,6 +22,9 @@ abstract class Running extends Started {
     public Game play(Event event) {
         if (event.isMove()) {
             return moveChessmen(event.toMoveRoute());
+        }
+        if (event.isInit()) {
+            return new WhiteTurn(board);
         }
         throw new UnsupportedOperationException(NOT_YET_IMPLEMENTED_EXCEPTION_MESSAGE);
     }
@@ -51,6 +55,6 @@ abstract class Running extends Started {
 
     @Override
     public final GameResult getResult() {
-        throw new UnsupportedOperationException("아직 종료되지 않은 게임입니다.");
+        throw new UnsupportedOperationException(GAME_NOT_OVER_EXCEPTION_MESSAGE);
     }
 }

@@ -9,7 +9,7 @@ import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {
 
-    private static final String GAME_NOT_STARTED_EXCEPTION_MESSAGE = "아직 시작되지 않은 게임입니다.";
+    private static final String GAME_NOT_STARTED_EXCEPTION_MESSAGE = "아직 게임이 시작되지 않았습니다.";
 
     @Override
     public Game play(Event event) {

@@ -15,6 +15,9 @@ final class GameOver extends Started {
 
     @Override
     public Game play(Event event) {
+        if (event.isInit()) {
+            return new WhiteTurn(board);
+        }
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
     }
 
