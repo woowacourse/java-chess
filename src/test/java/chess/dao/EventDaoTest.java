@@ -18,7 +18,12 @@ class EventDaoTest {
 
     private static final String CLEANSE_TEST_DB_SQL = String.format("TRUNCATE TABLE %s", TEST_TABLE);
 
-    private final EventDao dao = new EventDaoImpl(TEST_TABLE);
+    private final EventDao dao = new EventDao() {
+        @Override
+        protected String addTable(String sql) {
+            return String.format(sql, TEST_TABLE);
+        }
+    };
 
     @BeforeEach
     void setUp() {

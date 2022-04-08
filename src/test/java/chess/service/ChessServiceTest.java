@@ -25,6 +25,8 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 class ChessServiceTest {
 
+    private static final String INVALID_TEST_STUB_EXCEPTION_MESSAGE = "테스트 더블 내에서 프로덕션 코드가 실행되었습니다.";
+
     private ChessService service;
 
     @BeforeEach
@@ -173,7 +175,7 @@ class ChessServiceTest {
         }
     }
 
-    private static class EventDaoStub implements EventDao {
+    private static class EventDaoStub extends EventDao {
 
         final Map<Integer, List<Event>> repository = new HashMap<>() {{
             put(1, new ArrayList<>(List.of(new InitEvent(), new MoveEvent("e2 e4"),
@@ -186,6 +188,7 @@ class ChessServiceTest {
                     new MoveEvent("a7 a5"), new MoveEvent("b5 e8"))));
         }};
 
+        @Override
         public List<Event> findAllByGameId(int gameId) {
             if (repository.containsKey(gameId)) {
                 return repository.get(gameId);
@@ -193,12 +196,18 @@ class ChessServiceTest {
             return List.of();
         }
 
+        @Override
         public void save(int gameId, Event event) {
             if (repository.containsKey(gameId)) {
                 repository.get(gameId).add(event);
                 return;
             }
             repository.put(gameId, new ArrayList<>(List.of(event)));
+        }
+
+        @Override
+        protected String addTable(String sql) {
+            throw new UnsupportedOperationException(INVALID_TEST_STUB_EXCEPTION_MESSAGE);
         }
     }
 }
