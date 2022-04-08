@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardDao {
+public class BoardDao{
 
     private static final int EMPTY_RESULT = 0;
     private final Connection connection;
@@ -26,10 +26,10 @@ public class BoardDao {
 
     public void save(int gameId, String position, String piece, String color) {
         final String sql = "insert into Board (id, game_id, position, piece, color) values(?, ?, ?, ?, ?)";
-        try {
-            final PreparedStatement statement = makeSaveStatement(gameId, position, piece, color, sql);
+        PreparedStatement statement;
+        try(connection) {
+            statement = makeSaveStatement(gameId, position, piece, color, sql);
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException throwables) {
             logger.error(throwables.getMessage());
             throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
@@ -48,10 +48,12 @@ public class BoardDao {
 
     public List<PieceDto> findByGameId(int gameId) {
         final String sql = "select * from board where game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ResultSet result;
+        PreparedStatement statement;
+        try(connection) {
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
-            final ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             return makePieceList(result);
         } catch (SQLException throwables) {
             logger.error(throwables.getMessage());
@@ -69,6 +71,7 @@ public class BoardDao {
                             result.getString("piece"),
                             result.getString("color")));
         }
+        result.close();
         return pieces;
     }
 
@@ -82,11 +85,11 @@ public class BoardDao {
 
     private void runDelete(int gameId) {
         final String sql = "delete from Board where game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement;
+        try(connection) {
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
             statement.executeUpdate();
-            statement.close();
         } catch (SQLException throwables) {
             logger.error(throwables.getMessage());
             throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
