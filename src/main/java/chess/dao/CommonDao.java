@@ -19,6 +19,8 @@ import java.util.NoSuchElementException;
 
 public class CommonDao {
 
+    private static final String INVALID_COMMAND = "현재 실행할 수 없는 명령입니다.";
+    private static final String NO_SUCH_RECORD = "해당 레코드가 존재하지 않습니다.";
     private static final int COLUMN = 0;
     private static final int ROW = 1;
 
@@ -31,7 +33,7 @@ public class CommonDao {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
+            throw new RuntimeException(INVALID_COMMAND, e);
         }
     }
 
@@ -42,7 +44,7 @@ public class CommonDao {
             statementConsumer.makeStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
+            throw new RuntimeException(INVALID_COMMAND, e);
         }
     }
 
@@ -54,12 +56,12 @@ public class CommonDao {
             statementMaker.makeStatement(statement);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new NoSuchElementException("해당 레코드가 존재하지 않습니다.");
+                throw new NoSuchElementException(NO_SUCH_RECORD);
             }
             return resultSet.getInt(columnLabel);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
+            throw new RuntimeException(INVALID_COMMAND, e);
         }
     }
 
@@ -76,7 +78,7 @@ public class CommonDao {
             return GameState.valueOf(gameStateName);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
+            throw new RuntimeException(INVALID_COMMAND, e);
         }
     }
 
@@ -96,7 +98,7 @@ public class CommonDao {
             return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
+            throw new RuntimeException(INVALID_COMMAND, e);
         }
     }
 
