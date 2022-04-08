@@ -20,7 +20,7 @@ public class ChessService {
 
     private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 게임 결과가 산출되지 않았습니다.";
 
-    private final static ChessService instance = new ChessService(GameDaoImpl.ofProd(), EventDaoImpl.ofProd());
+    private static final ChessService instance = new ChessService(GameDaoImpl.ofProd(), EventDaoImpl.ofProd());
 
     private final GameDao gameDao;
     private final EventDao eventDao;
