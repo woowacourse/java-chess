@@ -139,7 +139,7 @@ class ChessServiceTest {
                 .hasMessage("아직 게임 결과가 산출되지 않았습니다.");
     }
 
-    private static class GameDaoStub implements GameDao {
+    private static class GameDaoStub extends GameDao {
 
         final Map<Integer, GameState> repository = new HashMap<>() {{
             put(1, GameState.RUNNING);
@@ -149,29 +149,39 @@ class ChessServiceTest {
 
         static int autoIncrementId = 3;
 
+        @Override
         public int saveAndGetGeneratedId() {
             autoIncrementId++;
             repository.put(autoIncrementId, GameState.RUNNING);
             return autoIncrementId;
         }
 
+        @Override
         public void finishGame(int gameId) {
             repository.put(gameId, GameState.OVER);
         }
 
+        @Override
         public boolean checkById(int gameId) {
             return repository.containsKey(gameId);
         }
 
+        @Override
         public int countAll() {
             return repository.values().size();
         }
 
+        @Override
         public int countByState(GameState state) {
             return (int) repository.values()
                     .stream()
                     .filter(value -> value == state)
                     .count();
+        }
+
+        @Override
+        protected String addTable(String sql) {
+            throw new UnsupportedOperationException(INVALID_TEST_STUB_EXCEPTION_MESSAGE);
         }
     }
 

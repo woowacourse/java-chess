@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.dao.EventDao;
 import chess.dao.GameDao;
-import chess.dao.GameDaoImpl;
 import chess.dao.GameState;
 import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
@@ -19,7 +18,7 @@ public class ChessService {
 
     private static final String GAME_NOT_OVER_EXCEPTION_MESSAGE = "아직 게임 결과가 산출되지 않았습니다.";
 
-    private static final ChessService instance = new ChessService(GameDaoImpl.ofProd(), new EventDao());
+    private static final ChessService instance = new ChessService(new GameDao(), new EventDao());
 
     private final GameDao gameDao;
     private final EventDao eventDao;
