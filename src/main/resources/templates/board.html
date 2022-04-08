@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+</head>
+<body style="background: dimgray">
+<style>.outer_box {
+    width: 800px;
+    height: 800px;
+    margin: 50px auto 50px 200px;
+    float: left;
+}
+
+.score_board {
+    width: 300px;
+    height: 600px;
+    margin: 150px 50px;
+    float: left;
+}
+
+.inner_score {
+    width: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    float: top;
+    text-align: center;
+}
+
+.turn {
+    width: 300px;
+    height: 200px;
+    margin-bottom: 20px;
+    float: top;
+    text-align: center;
+}
+
+.turn_box {
+    width: 130px;
+    height: 130px;
+    float: left;
+    padding: 10px;
+}
+
+.win_text {
+    width: 140px;
+    height: 50px;
+    text-align: center;
+    font-size: xxx-large;
+    font-weight: bolder;
+    visibility: hidden;
+}
+
+.draw_text {
+    width: 300px;
+    height: 50px;
+    padding-top: 160px;
+    text-align: center;
+    font-size: xxx-large;
+    font-weight: bolder;
+    visibility: hidden;
+}
+
+.inner_box {
+    width: 100px;
+    height: 100px;
+    float: left;
+    text-align: center;
+    display: table;
+}
+
+.inner_box > div {
+    vertical-align: middle;
+    display: table-cell
+}
+
+.black {
+    background-color: grey;
+    color: white;
+}
+
+.white {
+    background-color: white;
+    color: black;
+}
+
+.ui-button {
+    width: 100px;
+    height: 50px;
+    font-size: x-large;
+}
+
+.score {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+}
+
+.error {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    color: darkred;
+}
+
+</style>
+
+<div id="chessBoard" class="outer_box">
+
+    <div class="inner_box white" id="a8"></div>
+    <div class="inner_box black" id="b8"></div>
+    <div class="inner_box white" id="c8"></div>
+    <div class="inner_box black" id="d8"></div>
+    <div class="inner_box white" id="e8"></div>
+    <div class="inner_box black" id="f8"></div>
+    <div class="inner_box white" id="g8"></div>
+    <div class="inner_box black" id="h8"></div>
+
+    <div class="inner_box black" id="a7"></div>
+    <div class="inner_box white" id="b7"></div>
+    <div class="inner_box black" id="c7"></div>
+    <div class="inner_box white" id="d7"></div>
+    <div class="inner_box black" id="e7"></div>
+    <div class="inner_box white" id="f7"></div>
+    <div class="inner_box black" id="g7"></div>
+    <div class="inner_box white" id="h7"></div>
+
+    <div class="inner_box white" id="a6"></div>
+    <div class="inner_box black" id="b6"></div>
+    <div class="inner_box white" id="c6"></div>
+    <div class="inner_box black" id="d6"></div>
+    <div class="inner_box white" id="e6"></div>
+    <div class="inner_box black" id="f6"></div>
+    <div class="inner_box white" id="g6"></div>
+    <div class="inner_box black" id="h6"></div>
+
+    <div class="inner_box black" id="a5"></div>
+    <div class="inner_box white" id="b5"></div>
+    <div class="inner_box black" id="c5"></div>
+    <div class="inner_box white" id="d5"></div>
+    <div class="inner_box black" id="e5"></div>
+    <div class="inner_box white" id="f5"></div>
+    <div class="inner_box black" id="g5"></div>
+    <div class="inner_box white" id="h5"></div>
+
+    <div class="inner_box white" id="a4"></div>
+    <div class="inner_box black" id="b4"></div>
+    <div class="inner_box white" id="c4"></div>
+    <div class="inner_box black" id="d4"></div>
+    <div class="inner_box white" id="e4"></div>
+    <div class="inner_box black" id="f4"></div>
+    <div class="inner_box white" id="g4"></div>
+    <div class="inner_box black" id="h4"></div>
+
+    <div class="inner_box black" id="a3"></div>
+    <div class="inner_box white" id="b3"></div>
+    <div class="inner_box black" id="c3"></div>
+    <div class="inner_box white" id="d3"></div>
+    <div class="inner_box black" id="e3"></div>
+    <div class="inner_box white" id="f3"></div>
+    <div class="inner_box black" id="g3"></div>
+    <div class="inner_box white" id="h3"></div>
+
+    <div class="inner_box white" id="a2"></div>
+    <div class="inner_box black" id="b2"></div>
+    <div class="inner_box white" id="c2"></div>
+    <div class="inner_box black" id="d2"></div>
+    <div class="inner_box white" id="e2"></div>
+    <div class="inner_box black" id="f2"></div>
+    <div class="inner_box white" id="g2"></div>
+    <div class="inner_box black" id="h2"></div>
+
+    <div class="inner_box black" id="a1"></div>
+    <div class="inner_box white" id="b1"></div>
+    <div class="inner_box black" id="c1"></div>
+    <div class="inner_box white" id="d1"></div>
+    <div class="inner_box black" id="e1"></div>
+    <div class="inner_box white" id="f1"></div>
+    <div class="inner_box black" id="g1"></div>
+    <div class="inner_box white" id="h1"></div>
+</div>
+<div class="score_board">
+    <div class="turn" id="turn">
+        <div class="turn_box" id="black_turn">
+            <img src="/images/king_black.png" height="128" width="128"/>
+            <div class="win_text" id="black_win">WIN!</div>
+        </div>
+        <div class="turn_box" id="white_turn">
+            <img src="/images/king_white.png" height="128" width="128"/>
+            <div class="win_text" id="white_win">WIN!</div>
+        </div>
+        <div class="draw_text" id="draw">DRAW!</div>
+    </div>
+    <div class="inner_score">
+        <div class="score" id="whiteScore"></div>
+        <div class="score" id="blackScore"></div>
+    </div>
+    <div class="inner_score">
+        <button class="ui-button" id="start" onclick="exitRoom()">나가기</button>
+        <button class="ui-button" id="end" onclick="end()">종료</button>
+    </div>
+    <div class="inner_score">
+        <div class="error" id="error"></div>
+    </div>
+</div>
+
+<script>
+    let from = "";
+    let to = "";
+    let roomName = "{{roomName}}";
+
+    fetchPieces();
+    fetchScores();
+    fetchTurn();
+
+    chessBoard.addEventListener("click", ({target: {id}}) => {
+        if (from === "") {
+            from = id;
+        } else if (to === "") {
+            to = id;
+            move();
+            from = "";
+            to = "";
+        }
+    })
+
+    async function move() {
+        document.getElementById("error").innerText = "";
+        const pathName = window.location.pathname;
+        await fetch(`${pathName}/pieces`, {
+            method: "PUT",
+            body: `{\"from\": ${from}, \"to\": ${to}}`
+        })
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                }
+            });
+
+        fetchPieces();
+        fetchScores();
+        fetchTurn();
+    }
+
+    async function end() {
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/result`)
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                    return;
+                }
+                let winColor = "";
+                if (dto.score.whiteScore > dto.score.blackScore) {
+                    winColor = "white";
+                } else if (dto.score.whiteScore < dto.score.blackScore) {
+                    winColor = "black";
+                } else {
+                    winColor = "draw";
+                }
+                let element = document.getElementById(winColor);
+                if (winColor !== "draw") {
+                    element = document.getElementById(winColor + "_win");
+                }
+                element.style.visibility = "visible";
+            })
+    }
+
+    function exitRoom() {
+        const pathName = window.location.pathname;
+        window.location.href = "/";
+        fetch(`${pathName}`, {method: "DELETE"})
+    }
+
+    function fetchPieces() {
+        const pathName = window.location.pathname;
+        clearBoard();
+
+        fetch(`${pathName}/pieces`)
+            .then(res => res.json())
+            .then(dtos => dtos.forEach(dto => {
+                const element = document.getElementById(dto.position);
+                element.innerHTML = `<img src=/images/${dto.pieceType}_${dto.color.toLocaleLowerCase()}.png id=${dto.position} alt="piece" height="80px" width="80px" style="padding: 5px"/>`;
+            }));
+    }
+
+
+    function fetchScores() {
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/scores`)
+            .then(res => res.json())
+            .then(dto => {
+                if (dto.error !== undefined) {
+                    document.getElementById("error").innerText = dto.error;
+                    return;
+                }
+                document.getElementById('whiteScore').innerText = `WHITE 점수 : ${dto.whiteScore}`;
+                document.getElementById('blackScore').innerText = `BLACK 점수 : ${dto.blackScore}`;
+            })
+    }
+
+    function fetchTurn() {
+        const pathName = window.location.pathname;
+
+        fetch(`${pathName}/turn`)
+            .then(res => res.json())
+            .then(res => {
+                const turns = document.getElementById("turn");
+                for (let i = 0; i < 2; i++) {
+                    turns.children[i].style.boxShadow = "none";
+                }
+                const currentTurn = document.getElementById(res.currentTurn.toLowerCase() + "_turn");
+                currentTurn.style.boxShadow = "0 0 10px 2px darkred";
+            });
+    }
+
+    function clearBoard() {
+        const chessBoard = document.getElementById("chessBoard");
+        for (let i = 0; i < chessBoard.children.length; i++) {
+            chessBoard.children[i].innerHTML = `<div id=${chessBoard.children[i].id}></div>`
+        }
+    }
+
+</script>
+
+</body>
+</html>

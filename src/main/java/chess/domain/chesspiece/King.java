@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public final class King extends ChessPiece {
 
     private static final Map<Color, King> cache;
-    private static final String NAME = "K";
     private static final Double VALUE = 0.0;
     private static final int MOVING_DISTANCE = 1;
 
@@ -21,7 +20,7 @@ public final class King extends ChessPiece {
     }
 
     private King(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static King from(final Color color) {

@@ -11,11 +11,9 @@ public abstract class ChessPiece {
     protected static final String TARGET_SAME_COLOR_MESSAGE = "같은색 기물입니다.";
 
     protected final Color color;
-    private final String name;
 
-    protected ChessPiece(final Color color, final String name) {
+    protected ChessPiece(final Color color) {
         this.color = color;
-        this.name = color.convertByColor(name);
     }
 
     public abstract void checkMovablePosition(final Position from, final Position to, final ChessPiece chessPiece);
@@ -54,9 +52,10 @@ public abstract class ChessPiece {
         return false;
     }
 
-    public final String name() {
-        return name;
+    public abstract double value();
+
+    public Color color() {
+        return color;
     }
 
-    public abstract double value();
 }

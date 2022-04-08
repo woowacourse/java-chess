@@ -22,6 +22,11 @@ public class ChessBoardFactory {
     }
 
     public static ChessBoard createChessBoard() {
+        final Map<Position, ChessPiece> map = createInitPieceByPosition();
+        return new ChessBoard(map);
+    }
+
+    public static Map<Position, ChessPiece> createInitPieceByPosition() {
         final Map<Position, ChessPiece> map = new HashMap<>();
 
         map.putAll(kingInitPosition());
@@ -31,7 +36,7 @@ public class ChessBoardFactory {
         map.putAll(knightInitPosition());
         map.putAll(pawnInitPosition());
 
-        return new ChessBoard(map);
+        return map;
     }
 
     private static Map<Position, ChessPiece> kingInitPosition() {

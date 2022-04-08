@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public final class Bishop extends ChessPiece {
 
     private static final Map<Color, Bishop> cache;
-    private static final String NAME = "B";
     private static final Double VALUE = 3.0;
 
     static {
@@ -20,7 +19,7 @@ public final class Bishop extends ChessPiece {
     }
 
     private Bishop(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static Bishop from(final Color color) {

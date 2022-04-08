@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.position.Position;
 import chess.result.EndResult;
 import chess.result.MoveResult;
@@ -8,12 +9,17 @@ import chess.result.StartResult;
 
 public class ChessGame {
 
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
     private GameStatus gameStatus;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
         this.gameStatus = GameStatus.READY;
+    }
+
+    public ChessGame(final ChessBoard chessBoard, final GameStatus gameStatus) {
+        this.chessBoard = chessBoard;
+        this.gameStatus = gameStatus;
     }
 
     public MoveResult move(final Position from, final Position to) {
@@ -22,6 +28,7 @@ public class ChessGame {
         final MoveResult result = chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
+            result.changeStatusToKingDie();
         }
         return result;
     }
@@ -33,6 +40,9 @@ public class ChessGame {
 
     public StartResult start() {
         gameStatus.checkReady();
+        if (gameStatus.isEnd()) {
+            chessBoard = ChessBoardFactory.createChessBoard();
+        }
         gameStatus = GameStatus.PLAYING;
         return new StartResult(chessBoard.findAllPiece());
     }

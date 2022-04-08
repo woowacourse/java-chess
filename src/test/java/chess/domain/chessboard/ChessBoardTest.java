@@ -7,6 +7,7 @@ import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Knight;
 import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -20,8 +21,8 @@ class ChessBoardTest {
 
     @ParameterizedTest
     @DisplayName("위치를 기반으로 기물을 찾는다.")
-    @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
-    void findPiece(final String position, final String expected) {
+    @CsvSource(value = {"a1:WHITE", "a8:BLACK"}, delimiter = ':')
+    void findPiece(final String position, final Color color) {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
 
@@ -29,7 +30,8 @@ class ChessBoardTest {
         final ChessPiece actual = chessBoard.findPiece(Position.from(position));
 
         // then
-        assertThat(actual.name()).isEqualTo(expected);
+        assertThat(actual).isInstanceOf(Rook.class);
+        assertThat(actual.isSameColor(color)).isTrue();
     }
 
     @Test
@@ -58,7 +60,7 @@ class ChessBoardTest {
         final ChessPiece actual = chessBoard.findPiece(to);
 
         // then
-        assertThat(actual.name()).isEqualTo("n");
+        assertThat(actual).isInstanceOf(Knight.class);
     }
 
     @Test
@@ -78,7 +80,7 @@ class ChessBoardTest {
         final ChessPiece actual = chessBoard.findPiece(to);
 
         // then
-        assertThat(actual.name()).isEqualTo("b");
+        assertThat(actual).isInstanceOf(Bishop.class);
     }
 
     @Test
