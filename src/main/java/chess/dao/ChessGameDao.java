@@ -10,12 +10,10 @@ import java.util.List;
 
 public class ChessGameDao {
 
-    private final Connection connection = ConnectionManager.getConnection();
-
     public void save(final ChessGameEntity chessGameEntity) {
         String insertSql = "insert into chess_game (name, is_on, team_value_of_turn) values (?, ?, ?)";
-        try {
-            PreparedStatement insertStatement = connection.prepareStatement(insertSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
             insertStatement.setString(1, chessGameEntity.getName());
             insertStatement.setBoolean(2, chessGameEntity.isOn());
             insertStatement.setString(3, chessGameEntity.getTeamValueOfTurn());
@@ -27,8 +25,8 @@ public class ChessGameDao {
 
     public void delete(final String name) {
         String deleteSql = "delete from chess_game where name=?";
-        try {
-            PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
             deleteStatement.setString(1, name);
             deleteStatement.execute();
         } catch (SQLException e) {
@@ -39,12 +37,13 @@ public class ChessGameDao {
     public ChessGameEntity load(final String name) {
         String selectSql = "select name, is_on, team_value_of_turn from chess_game where name=?";
         ChessGameEntity chessGameEntity = null;
-        try {
-            PreparedStatement loadStatement = connection.prepareStatement(selectSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement loadStatement = connection.prepareStatement(selectSql)) {
             loadStatement.setString(1, name);
             ResultSet resultSet = loadStatement.executeQuery();
             validateChessGameExist(resultSet);
             chessGameEntity = generateChessGameDto(resultSet);
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,12 +66,13 @@ public class ChessGameDao {
     public List<ChessGameEntity> loadAll() {
         String loadAllSql = "select * from chess_game";
         List<ChessGameEntity> chessGameEntities = new ArrayList<>();
-        try {
-            PreparedStatement loadNamesStatement = connection.prepareStatement(loadAllSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement loadNamesStatement = connection.prepareStatement(loadAllSql)) {
             ResultSet resultSet = loadNamesStatement.executeQuery();
             while (resultSet.next()) {
                 chessGameEntities.add(generateChessGameDto(resultSet));
             }
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

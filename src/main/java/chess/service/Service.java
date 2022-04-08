@@ -22,10 +22,7 @@ public class Service {
 
     public void createChessGame(final String name) {
         ChessGame chessGame = ChessGame.createBasic(name);
-        chessGameDao.delete(name);
-        chessGameDao.save(new ChessGameEntity(chessGame));
-        boardDao.delete(name);
-        boardDao.save(BoardEntity.generateBoardEntities(name, chessGame.getCurrentBoard()));
+        saveChessGame(chessGame);
     }
 
     public void saveChessGame(final ChessGame chessGame) {

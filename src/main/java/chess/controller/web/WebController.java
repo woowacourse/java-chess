@@ -5,7 +5,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.domain.game.ChessGame;
 import chess.service.Service;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +44,7 @@ public class WebController {
 
     private void deleteChessGame(final Service service) {
         post("/delete/:name", (req, res) -> {
-            String name = req.params(":name");
-            service.deleteChessGame(name);
+            service.deleteChessGame(req.params(":name"));
             res.redirect("/");
             return null;
         });
@@ -56,11 +54,10 @@ public class WebController {
         get("/game/:name", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String name = req.params(":name");
-            ChessGame chessGame = service.loadChessGame(name);
             model.put("chess_game_name", name);
-            model.putAll(chessGame.getCurrentBoardByRawPosition());
-            model.put("turn", chessGame.getTurn());
-            model.put("result", chessGame.generateResult());
+            model.putAll(service.loadChessGame(name).getCurrentBoardByRawPosition());
+            model.put("turn", service.loadChessGame(name).getTurn());
+            model.put("result", service.loadChessGame(name).generateResult());
             return new ModelAndView(model, "chess_game.html");
         }, new HandlebarsTemplateEngine());
     }

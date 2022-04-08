@@ -10,12 +10,10 @@ import java.util.List;
 
 public class BoardDao {
 
-    private final Connection connection = ConnectionManager.getConnection();
-
     public void save(final List<BoardEntity> boardEntities) {
         String insertSql = "insert into board (name, position_column_value, position_row_value, piece_name, piece_team_value) values (?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement insertStatement = connection.prepareStatement(insertSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
             for (BoardEntity boardEntity : boardEntities) {
                 insertStatement.setString(1, boardEntity.getName());
                 insertStatement.setString(2, boardEntity.getPositionColumnValue());
@@ -31,8 +29,8 @@ public class BoardDao {
 
     public void delete(final String name) {
         String deleteSql = "delete from board where name=?";
-        try {
-            PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
             deleteStatement.setString(1, name);
             deleteStatement.execute();
         } catch (SQLException e) {
@@ -43,20 +41,21 @@ public class BoardDao {
     public List<BoardEntity> load(final String name) {
         String selectSql = "select * from board where name=?";
         List<BoardEntity> boardEntities = new ArrayList<>();
-        try {
-            PreparedStatement loadStatement = connection.prepareStatement(selectSql);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement loadStatement = connection.prepareStatement(selectSql)) {
             loadStatement.setString(1, name);
             ResultSet resultSet = loadStatement.executeQuery();
-            putPositionAndPiece(boardEntities, resultSet);
+            addBoardEntity(boardEntities, resultSet);
             validateBoardExist(boardEntities);
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return boardEntities;
     }
 
-    private void putPositionAndPiece(final List<BoardEntity> boardEntities,
-                                     final ResultSet resultSet) throws SQLException {
+    private void addBoardEntity(final List<BoardEntity> boardEntities,
+                                final ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
             String name = resultSet.getString("name");
             String columnValue = resultSet.getString("position_column_value");
