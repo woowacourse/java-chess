@@ -37,7 +37,7 @@ public class ChessWebController {
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
 
-        return render(model, "index.html");
+        return render(model, "game.html");
     }
 
     private String move(Request request, Response response) {
@@ -62,7 +62,7 @@ public class ChessWebController {
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
 
-        return render(model, "index.html");
+        return render(model, "game.html");
     }
 
     private String result(Request request, Response response) {

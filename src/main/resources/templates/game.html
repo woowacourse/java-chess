@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
+</head>
+
+<body>
+<div id="app">
+    <center>
+        <h1>♟ 웹 체스 게임 ♟</h1>
+    <section>
+        <input type="button" value="다시 시작하기" onClick="location.href='/restart'"><br>
+        BLACK팀 점수 : {{black}}<br>
+        WHITE팀 점수 : {{white}}<br>
+        우승자는 아직 존재하지 않습니다.
+    </section>
+    <section class="chess-ui">
+        {{#board.squares}}
+        <div id="{{position}}" class="square">
+            {{#if piece}}
+            <img alt="position" class="squareImage" src="/images/{{pieceImageName}}.png"/>
+            {{else}}
+            <img alt="empty" src="/images/blank.png"/>
+            {{/if}}
+        </div>
+        {{/board.squares}}
+    </section>
+    <section>
+        <form action="/move" method="post">
+            출발 위치: <input type="text" name="source">
+            도착 위치: <input type="text" name="target">
+            <input type="submit" value="submit">
+        </form>
+    </section>
+    </center>
+</div>
+</body>
+<script type="text/javascript" src="/src/chess.js"></script>
+</html>

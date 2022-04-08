@@ -12,7 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.SquareDto;
 
-public class ChessDao {
+public class BoardDao {
 
     private final String URL = "jdbc:mysql://localhost:3306/chess";
     private final String USER = "user";
@@ -102,44 +102,6 @@ public class ChessDao {
                 resultSet.getString("color")
             )
         );
-    }
-
-    public void insertState(final String color) {
-        final Connection connection = getConnection();
-        final String query = "INSERT INTO state VALUES (?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, color);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteAllState() {
-        final Connection connection = getConnection();
-        final String query = "DELETE FROM state";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getState() {
-        final Connection connection = getConnection();
-        final String query = "SELECT * FROM state LIMIT 1";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                return resultSet.getString("color");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void deleteBoard() {
