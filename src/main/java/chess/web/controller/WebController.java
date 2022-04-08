@@ -19,11 +19,7 @@ public class WebController {
     private final ChessService chessService;
 
     public WebController() {
-        chessService = new ChessService(
-            new BoardDao(),
-            new CampDao(),
-            new MemberDaoImpl()
-        );
+        chessService = new ChessService(new BoardDao(), new CampDao(), new MemberDaoImpl());
     }
 
     public void run() {
@@ -37,8 +33,11 @@ public class WebController {
             return render(executeAndGetModel(req, res), "game.html");
         });
 
-        get("/game", (req, res) -> {
-            return render(redirectAndGetModel(req), "game.html");
+        get("/game", (req, res) -> render(redirectAndGetModel(req), "game.html"));
+
+        post("/restart", (req, res) -> {
+            chessService.init();
+            return render(executeAndGetModel(req, res), "game.html");
         });
     }
 

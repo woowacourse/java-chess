@@ -8,15 +8,9 @@ public final class Start implements WebCommandGenerator {
     @Override
     public Map<String, Object> execute(final String command,
                                        final ChessGame chessGame,
-                                       final Supplier returnModelToState) {
-        System.err.println("start커맨드가 req된 것을 확인.");
-        System.err.println("start커맨드가 req된 것을 확인.");
-
+                                       final Supplier<Map<String, Object>> returnModelToState) {
         chessGame.run();
 
-//        printBoardInfoToState.run();
-        final Object model = returnModelToState.get();
-        System.err.println("start커맨드에서 return되는 모델은?" + model);
-        return (Map<String, Object>) model;
+        return returnModelToState.get();
     }
 }
