@@ -7,6 +7,7 @@ import chess.domain.board.Position;
 import chess.domain.dao.BoardDao;
 import chess.domain.dao.PieceDao;
 import chess.dto.ChessBoardDto;
+import chess.dto.ResponseDto;
 
 public class ChessGameService {
 
@@ -28,11 +29,17 @@ public class ChessGameService {
         chessGame.start();
     }
 
-    public void move(Position source, Position target) {
-        chessGame.move(source, target);
-        savePieces(source, target);
-        if (!isRunning()) {
-            end();
+    public ResponseDto move(Position source, Position target) {
+        try {
+            chessGame.move(source, target);
+            savePieces(source, target);
+            if (!isRunning()) {
+                end();
+                return new ResponseDto(301, "");
+            }
+            return new ResponseDto(302, "");
+        } catch (Exception e) {
+            return new ResponseDto(501, e.getMessage());
         }
     }
 
@@ -54,6 +61,12 @@ public class ChessGameService {
         pieceDao.save(chessGame.getBoard().getPiecesByPosition(), boardId);
     }
 
+    public void end() {
+        chessGame.end();
+        pieceDao.deleteByBoardId(1);
+        boardDao.deleteBoard();
+    }
+
     public ChessBoardDto getBoard() {
         return ChessBoardDto.from(chessGame.getBoard().getPiecesByPosition());
     }
@@ -68,12 +81,6 @@ public class ChessGameService {
 
     public double statusOfBlack() {
         return chessGame.statusOfBlack();
-    }
-
-    public void end() {
-        chessGame.end();
-        boardDao.deleteBoard();
-        pieceDao.deleteByBoardId(1);
     }
 
     public Winner findWinner() {

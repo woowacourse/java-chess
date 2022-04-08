@@ -25,16 +25,22 @@ function movePiece() {
         },
         body: source + " " + target
     }).then((res) => {
-        document.getElementById(source).style.backgroundColor = '';
-        document.getElementById(target).style.backgroundColor = '';
-        source = '';
-        target = '';
-        if (res.status === 301) {
-            location.replace("/end");
-        }
-        if (res.status === 302) {
-            location.replace("/chess")
-        }
+        res.json().then(data => {
+            document.getElementById(source).style.backgroundColor = '';
+            document.getElementById(target).style.backgroundColor = '';
+            source = '';
+            target = '';
+            if (data.statusCode === 301) {
+                alert("킹이 잡혀 게임이 종료 되었습니다!")
+                location.replace("/end");
+            }
+            if (data.statusCode === 302) {
+                location.replace("/chess");
+            }
+            if (data.statusCode === 501) {
+                alert(data.errorMessage);
+            }
+        })
     })
 }
 

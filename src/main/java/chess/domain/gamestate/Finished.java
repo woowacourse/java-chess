@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Finished implements State {
     private static final String INVALID_STATE_MOVE_EXCEPTION = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
-    private static final String NOT_RUNNING_STATE_GET_TURN_EXCEPTION = "게임 진행중이 아니기 때문에 턴을 알 수 없습니다.";
 
     private final Board board;
 
@@ -81,6 +80,6 @@ public class Finished implements State {
 
     @Override
     public Color getTurn() {
-        throw new IllegalStateException(NOT_RUNNING_STATE_GET_TURN_EXCEPTION);
+        return board.getTurn();
     }
 }

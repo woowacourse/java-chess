@@ -7,6 +7,7 @@ import static spark.Spark.post;
 import chess.domain.board.Position;
 import chess.domain.dao.BoardDaoImpl;
 import chess.domain.dao.PieceDaoImpl;
+import chess.dto.ResponseDto;
 import chess.dto.ResultDto;
 import chess.dto.StatusDto;
 import chess.service.ChessGameService;
@@ -40,13 +41,9 @@ public class ChessWebController {
 
         post("/move", (req, res) -> {
             List<String> command = Arrays.asList(req.body().split(" "));
-            chessGameService.move(Position.from(command.get(0)), Position.from(command.get(1)));
-            if (!chessGameService.isRunning()) {
-                res.status(301);
-                return res.toString();
-            }
-            res.status(302);
-            return res.toString();
+            final ResponseDto responseDto = chessGameService
+                    .move(Position.from(command.get(0)), Position.from(command.get(1)));
+            return responseDto.toString();
         });
 
         get("/status", (req, res) -> {
