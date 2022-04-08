@@ -11,10 +11,6 @@ public class Bishop extends LinearMovingPiece {
         super(color);
     }
 
-    public Bishop(Color color, int squareId) {
-        super(color, squareId);
-    }
-
     public Bishop(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

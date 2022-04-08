@@ -10,10 +10,6 @@ public class Member {
         this(0, name, 0);
     }
 
-    public Member(String name, int boardId) {
-        this(0, name, boardId);
-    }
-
     public Member(int id, String name, int boardId) {
         this.id = id;
         this.name = name;

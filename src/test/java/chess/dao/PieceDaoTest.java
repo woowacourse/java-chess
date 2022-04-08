@@ -22,7 +22,6 @@ class PieceDaoTest {
     private final BoardDao boardDao = new BoardDao(new ConnectionManager());
     private int boardId;
     private int squareId;
-    private Piece piece;
 
     @BeforeEach
     void setup() {
@@ -30,7 +29,7 @@ class PieceDaoTest {
         this.boardId = board.getId();
         final Square square = squareDao.save(new Square(File.A, Rank.TWO, board.getId()));
         this.squareId = square.getId();
-        this.piece = dao.save(new Pawn(Color.WHITE), squareId);
+        dao.save(new Pawn(Color.WHITE), squareId);
     }
 
     @AfterEach

@@ -11,10 +11,6 @@ public class Rook extends LinearMovingPiece {
         super(color);
     }
 
-    public Rook(Color color, int squareId) {
-        super(0, color, squareId);
-    }
-
     public Rook(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

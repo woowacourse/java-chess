@@ -17,10 +17,6 @@ public abstract class Piece {
         this.squareId = squareId;
     }
 
-    public Piece(Color color, int squareId) {
-        this(0, color, squareId);
-    }
-
     protected Piece(Color color) {
         this(0, color, 0);
     }

@@ -2,7 +2,6 @@ package chess.model.piece;
 
 import chess.model.square.Direction;
 import java.util.List;
-import java.util.Queue;
 
 public class Queen extends LinearMovingPiece {
 
@@ -10,10 +9,6 @@ public class Queen extends LinearMovingPiece {
 
     public Queen(Color color) {
         super(color);
-    }
-
-    public Queen(Color color, int squareId) {
-        super(0, color, squareId);
     }
 
     public Queen(int id, Color color, int squareId) {

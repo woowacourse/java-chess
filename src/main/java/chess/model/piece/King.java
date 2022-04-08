@@ -11,10 +11,6 @@ public class King extends PointMovingPiece {
         super(color);
     }
 
-    public King(Color color, int squareId) {
-        super(color, squareId);
-    }
-
     public King(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

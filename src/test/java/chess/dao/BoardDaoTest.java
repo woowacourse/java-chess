@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 class BoardDaoTest {
 
     private final BoardDao dao = new BoardDao(new ConnectionManager());
-    private final ChessService chessService = new ChessService();
 
     @AfterEach
     void setDown() {

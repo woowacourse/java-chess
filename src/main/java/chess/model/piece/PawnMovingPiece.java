@@ -3,10 +3,8 @@ package chess.model.piece;
 import chess.model.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class PawnMovingPiece extends Piece {
 
@@ -14,10 +12,6 @@ public abstract class PawnMovingPiece extends Piece {
 
     protected PawnMovingPiece(Color color) {
         super(color);
-    }
-
-    protected PawnMovingPiece(Color color, int squareId) {
-        super(0, color, squareId);
     }
 
     protected PawnMovingPiece(int id, Color color, int squareId) {

@@ -11,10 +11,6 @@ public abstract class PointMovingPiece extends Piece {
         super(color);
     }
 
-    protected PointMovingPiece(Color color, int squareId) {
-        super(0, color, squareId);
-    }
-
     protected PointMovingPiece(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

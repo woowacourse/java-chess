@@ -11,10 +11,6 @@ public class Knight extends PointMovingPiece {
         super(color);
     }
 
-    public Knight(Color color, int squareId) {
-        super(color, squareId);
-    }
-
     public Knight(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

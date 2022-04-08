@@ -11,10 +11,6 @@ public class Pawn extends PawnMovingPiece {
         super(color);
     }
 
-    public Pawn(Color color, int squareId) {
-        super(0, color, squareId);
-    }
-
     public Pawn(int id, Color color, int squareId) {
         super(id, color, squareId);
     }

@@ -4,7 +4,6 @@ import chess.model.ConsoleBoard;
 import chess.model.square.Square;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class LinearMovingPiece extends Piece {
 
@@ -12,10 +11,6 @@ public abstract class LinearMovingPiece extends Piece {
 
     protected LinearMovingPiece(Color color) {
         super(color);
-    }
-
-    protected LinearMovingPiece(Color color, int squareId) {
-        super(0, color, squareId);
     }
 
     public LinearMovingPiece(int id, Color color, int squareId) {
