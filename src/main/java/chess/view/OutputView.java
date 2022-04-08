@@ -12,7 +12,6 @@ public class OutputView {
     private static final String BLANK_LINE = System.lineSeparator();
 
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
-    private static final String GAME_OVER_MESSAGE = "> 게임이 종료되었습니다!";
     private static final String START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String END_COMMAND_MESSAGE = "> 프로그램 종료 : end";
     private static final String MOVE_COMMAND_MESSAGE = "> 체스 말 이동 : move source target (예. move b2 b3)";
@@ -26,7 +25,7 @@ public class OutputView {
                 + START_COMMAND_MESSAGE + BLANK_LINE
                 + END_COMMAND_MESSAGE + BLANK_LINE
                 + MOVE_COMMAND_MESSAGE + BLANK_LINE
-                + STATUS_COMMAND_MESSAGE;
+                + STATUS_COMMAND_MESSAGE + BLANK_LINE;
 
         print(instructionMessage);
     }
@@ -38,15 +37,6 @@ public class OutputView {
                     .append(BLANK_LINE);
         }
         print(builder.toString());
-    }
-
-
-    public void printGameOverInstructions() {
-        String instructionMessage = GAME_OVER_MESSAGE + BLANK_LINE
-                + STATUS_COMMAND_MESSAGE + BLANK_LINE
-                + END_COMMAND_MESSAGE + BLANK_LINE;
-
-        print(instructionMessage);
     }
 
     public void printStatus(GameResult gameResult) {

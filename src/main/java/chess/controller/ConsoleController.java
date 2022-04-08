@@ -1,62 +1,66 @@
 package chess.controller;
 
-import static chess.view.OutputView.print;
-
+import chess.domain.command.Command;
+import chess.domain.command.CommandType;
 import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
 import chess.domain.event.MoveEvent;
 import chess.domain.game.Game;
-import chess.domain.game.NewGame;
 import chess.domain.game.statistics.GameResult;
 import chess.dto.board.ConsoleBoardViewDto;
-import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ConsoleController {
 
     private static final int EXIT_STATUS_CODE = 0;
 
-    private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
-    public Game startGame() {
-        outputView.printGameInstructions();
-        if (!inputView.requestValidStartOrEndInput()) {
-            System.exit(EXIT_STATUS_CODE);
-        }
-        return new NewGame().play(new InitEvent());
-    }
-
-    public Game playGame(Game game) {
-        printBoardDisplay(game);
-        while (!game.isEnd()) {
-            game = moveChessmen(game);
+    public Game run(Game game, Command command) {
+        try {
+            game = processCommand(game, command);
+        } catch (Exception e) {
+            OutputView.print(e.getMessage());
         }
         return game;
     }
 
-    private Game moveChessmen(Game game) {
-        try {
-            Event moveEvent = new MoveEvent(inputView.requestValidMoveInput());
-            game = game.play(moveEvent);
-            printBoardDisplay(game);
-            return game;
-        } catch (IllegalArgumentException e) {
-            print(e.getMessage());
-            return moveChessmen(game);
+    private Game processCommand(Game game, Command command) {
+        game = updateGameOnInitOrMoveCommand(game, command);
+        printResultOnStatusCommand(game, command);
+        exitOnEndCommand(command);
+
+        return game;
+    }
+
+    private Game updateGameOnInitOrMoveCommand(Game game, Command command) {
+        if (command.hasTypeOf(CommandType.INIT)) {
+            game = updateAndPrintCurrentBoardView(game, new InitEvent());
+        }
+        if (command.hasTypeOf(CommandType.MOVE)) {
+            Event moveEvent = new MoveEvent(command.toMoveRoute());
+            game = updateAndPrintCurrentBoardView(game, moveEvent);
+        }
+        return game;
+    }
+
+    private Game updateAndPrintCurrentBoardView(Game game, Event moveEvent) {
+        game = game.play(moveEvent);
+        ConsoleBoardViewDto boardView = game.toConsoleView();
+        outputView.printBoard(boardView);
+        return game;
+    }
+
+    private void printResultOnStatusCommand(Game game, Command command) {
+        if (command.hasTypeOf(CommandType.STATUS)) {
+            GameResult result = game.getResult();
+            outputView.printStatus(result);
         }
     }
 
-    private void printBoardDisplay(Game game) {
-        ConsoleBoardViewDto boardView = game.toConsoleView();
-        outputView.printBoard(boardView);
-    }
-
-    public void printGameOver(Game game) {
-        outputView.printGameOverInstructions();
-        while (inputView.requestValidStatusOrEndInput()) {
-            GameResult gameResult = game.getResult();
-            outputView.printStatus(gameResult);
+    private void exitOnEndCommand(Command command) {
+        if (command.hasTypeOf(CommandType.END)) {
+            System.exit(EXIT_STATUS_CODE);
         }
     }
 }
