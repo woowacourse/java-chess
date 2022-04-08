@@ -46,10 +46,9 @@ public class BoardDao {
     }
 
     private void insertBoardSquare(final String position, final String piece, final String color) {
-        final Connection connection = getConnection();
         final String query = "INSERT INTO board(position, piece, color) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, position);
             statement.setString(2, piece);
             statement.setString(3, color);
@@ -60,10 +59,9 @@ public class BoardDao {
     }
 
     public void updateBoardSquare(final String position, final String piece, final String color) {
-        final Connection connection = getConnection();
         final String query = "UPDATE board SET piece = ? , color = ? WHERE position=?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, piece);
             statement.setString(2, color);
             statement.setString(3, position);
@@ -74,12 +72,11 @@ public class BoardDao {
     }
 
     public List<SquareDto> getBoardSquares() {
-        final Connection connection = getConnection();
         final String query = "SELECT * FROM board";
         final List<SquareDto> squares = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 addSquare(squares, resultSet);
             }
@@ -105,10 +102,9 @@ public class BoardDao {
     }
 
     public void deleteBoard() {
-        final Connection connection = getConnection();
         final String query = "DELETE FROM board";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
