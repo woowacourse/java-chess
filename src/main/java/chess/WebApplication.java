@@ -3,6 +3,11 @@ package chess;
 import static spark.Spark.staticFileLocation;
 
 import chess.controller.ChessController;
+import chess.dao.BoardDao;
+import chess.dao.BoardDaoImpl;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
+import chess.service.ChessService;
 import chess.utils.DatabaseUtil;
 import java.sql.Connection;
 
@@ -11,7 +16,11 @@ public class WebApplication {
         staticFileLocation("/static");
 
         Connection connection = DatabaseUtil.getConnection();
-        ChessController chessController = new ChessController(connection);
-        chessController.run();
+        PieceDao pieceDao = new PieceDaoImpl(connection);
+        BoardDao boardDao = new BoardDaoImpl(connection);
+
+        ChessController chessController = new ChessController(pieceDao, boardDao);
+        ChessService chessService = new ChessService();
+        chessController.run(chessService);
     }
 }

@@ -25,16 +25,15 @@ public class ChessController {
     private static final String BOARD_URL = "/board";
     private static final String ID_PARAM = "?id=";
 
-    private final ChessService chessService = new ChessService();
     private final PieceDao pieceDao;
     private final BoardDao boardDao;
 
-    public ChessController(Connection connection) {
-        this.pieceDao = new PieceDaoImpl(connection);
-        this.boardDao = new BoardDaoImpl(connection);
+    public ChessController(PieceDao pieceDao, BoardDao boardDao) {
+        this.pieceDao = pieceDao;
+        this.boardDao = boardDao;
     }
 
-    public void run() {
+    public void run(ChessService chessService) {
         ChessGame chessGame = new ChessGame();
         AtomicInteger boardId = new AtomicInteger();
 
