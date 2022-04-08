@@ -12,6 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.ApiResult;
+import chess.dto.FinishResponse;
 import chess.dto.MoveCommand;
 import chess.dto.MoveResponse;
 import java.util.HashMap;
@@ -54,14 +55,22 @@ public class ChessWebService {
     }
 
     public void initializeState(int gameNumber) {
+        finishGame(gameNumber);
+
         State state = Ready.start(BasicChessBoardGenerator.generator());
-
-        deleteAllPiece(gameNumber);
-        deleteTurn(gameNumber);
-
         Map<Position, Piece> value = state.getBoard().getValue();
         value.forEach((position, piece) -> savePiece(position, piece, gameNumber));
         saveTurn(FIRST_TURN, gameNumber);
+    }
+
+    public ApiResult finishGame(int gameNumber) {
+        try {
+            deleteAllPiece(gameNumber);
+            deleteTurn(gameNumber);
+            return ApiResult.succeed(new FinishResponse(gameNumber));
+        } catch (RuntimeException e) {
+            return ApiResult.failed(e.getMessage());
+        }
     }
 
     public ApiResult movePiece(MoveCommand command) {

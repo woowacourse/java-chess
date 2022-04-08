@@ -17,6 +17,20 @@ function gameStart() {
     });
 }
 
+function gameFinish() {
+    var gameNumber = document.getElementById('game-number').innerHTML;
+
+    fetch('/room/' + gameNumber + '/finish', {
+        method: "POST"}
+    ).then(response => response.json()
+    ).then((data) => {
+        alert(data.response.gameNumber + '번 체스 게임이 종료되었습니다.');
+        location.reload();
+    }).catch((error) => {
+        alert(JSON.stringify(error));
+    });
+}
+
 function clickPiece(id) {
     if (finished) {
         alert('게임이 종료되었습니다! 게임을 다시 시작해주세요.');

@@ -7,6 +7,7 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ## 시스템 설정
+
 * Spark를 이용하여 실행한 웹 체스 포트 번호는 8089이다.
 * 도커를 이용하여 여는 mysql 포트 번호는 13306이다.
 * API 설명
@@ -14,7 +15,8 @@
     * GET:`/room/:gameNumber` : 체스 게임을 할 수 있도록 gameNumber 방의 체스 게임 페이지를 출력한다.
     * GET:`/room/:gameNumber/initialize` : gameNumber 방의 체스 게임 상태를 초기화하고 `/room/:gameNumber`로 이동시킨다.
     * GET:`/room/:gameNumber/status` : gameNumber 방의 체스 게임의 블랙, 화이트 팀의 점수를 JSON으로 반환한다.
-    * POST:`/room/:gameNumber/move` : gameNumber, 시작 위치, 도착 위치를 JSON으로 전송하면 이동한다. 정상적으로 이동 시 시작 위치, 도착 위치, 게임이 종료되었는지 참/거짓을 JSON으로 반환한다.
+    * POST:`/room/:gameNumber/move` : gameNumber, 시작 위치, 도착 위치를 JSON으로 전송하면 이동한다. 정상적으로 이동 시 시작 위치, 도착 위치, 게임이 종료되었는지
+      참/거짓을 JSON으로 반환한다.
 
 ## 기능 요구사항
 
@@ -67,7 +69,7 @@
 * King이 잡혔을 때 게임을 종료해야 한다.
 
 * 콘솔 UI와 더불어 웹으로 체스 게임이 가능해야 한다.
-    
+
 * 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
 * DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
 
@@ -267,4 +269,4 @@
 - [x] predicate값이 너무 문자열에 의존적인 것 같아요. Color, Piece등을 enum으로 관리한다면 별개의 필드를 사용해서 관리할 수도 잇을 것 같아요!
 - [x] Service, Controller 객체는 상태에 의존하지 않고 행위만 할 수 있다!
     - 무상태 객체라는 것을 생각하고 Service를 수정해보자!
-- [ ] 게임을 종료하는 end 기능이 빠져있다!
+- [x] 게임을 종료하는 end 기능이 빠져있다!

@@ -63,6 +63,13 @@ public class WebApplication {
 
             return gson.toJson(apiResult);
         });
+
+        post("/room/:gameNumber/finish", (req, res) -> {
+            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
+            ApiResult apiResult = service.finishGame(gameNumber);
+
+            return gson.toJson(apiResult);
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
