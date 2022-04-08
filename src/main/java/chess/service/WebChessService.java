@@ -5,12 +5,11 @@ import chess.Controller.command.Command;
 import chess.Controller.command.ParsedCommand;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
-import chess.util.JsonParser;
 import chess.util.ViewUtil;
+import chess.util.json.JsonParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Route;
 
@@ -44,7 +43,7 @@ public class WebChessService {
         return new ParsedCommand(rawCommand);
     }
 
-    private static JSONObject doCommandAction(final int userId, final ParsedCommand parsedCommand) {
+    private static String doCommandAction(final int userId, final ParsedCommand parsedCommand) {
         final ChessController chess = new ChessController();
         final Command command = parsedCommand.getCommand();
         if (command == Command.START || command == Command.MOVE) {
@@ -54,8 +53,8 @@ public class WebChessService {
 
     }
 
-    private static JSONObject doActionAboutPieces(final int userId, final ParsedCommand parsedCommand,
-                                                  final ChessController chess) {
+    private static String doActionAboutPieces(final int userId, final ParsedCommand parsedCommand,
+                                              final ChessController chess) {
         final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
         if (parsedCommand.getCommand() == Command.MOVE) {
             return JsonParser.getPiecesAndGameStatus(piecesDto);
@@ -63,10 +62,10 @@ public class WebChessService {
         return JsonParser.makePiecesToJsonArray(piecesDto);
     }
 
-    private static JSONObject doActionAboutScore(final int userId, final ParsedCommand parsedCommand,
-                                                 final ChessController chess) {
+    private static String doActionAboutScore(final int userId, final ParsedCommand parsedCommand,
+                                             final ChessController chess) {
         final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
-        final JSONObject responseObject = JsonParser.scoreToJson(scoreDto, chess.getCurrentStatus(userId));
+        final String responseObject = JsonParser.scoreToJson(scoreDto);
         if (parsedCommand.getCommand() == Command.END) {
             chess.finishGame(userId);
         }

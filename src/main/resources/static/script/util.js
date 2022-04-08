@@ -45,8 +45,8 @@ export function getTurn(gameStatus) {
 }
 
 export function arrangePieces(pieces) {
-    pieces.forEach(({piece_url: pieceUrl, position, symbol}) => {
+    pieces.forEach(({image_url: imageUrl, position, symbol}) => {
         const space = document.getElementById(position);
-        space.innerHTML = `<img class="space__piece" src="${pieceUrl}" alt="${symbol}" />`;
+        space.innerHTML = `<img class="space__piece" src="${imageUrl}" alt="${symbol}" />`;
     });
 }

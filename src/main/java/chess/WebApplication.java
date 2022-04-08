@@ -9,9 +9,9 @@ import static spark.Spark.staticFileLocation;
 
 import chess.service.WebChessService;
 import chess.util.path.Web;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONObject;
 
 public class WebApplication {
 
@@ -36,16 +36,18 @@ public class WebApplication {
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
             final Map<String, String> error = new HashMap<>();
+            final Gson gson = new Gson();
             error.put("error_message", exception.getMessage());
             response.status(400);
-            response.body(JSONObject.toJSONString(error));
+            response.body(gson.toJson(error));
         });
 
         exception(Exception.class, (exception, request, response) -> {
             final Map<String, String> error = new HashMap<>();
+            final Gson gson = new Gson();
             error.put("error_message", "현재 실행할 수 없는 명령입니다.");
             response.status(400);
-            response.body(JSONObject.toJSONString(error));
+            response.body(gson.toJson(error));
         });
 
     }
