@@ -7,7 +7,6 @@ import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
 import chess.Controller.dto.StateDto;
 import chess.dao.BoardDao;
-import chess.dao.CommonDao;
 import chess.dao.PiecesDao;
 import chess.dao.UserDao;
 import chess.domain.GameState;
@@ -15,6 +14,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ChessController {
 
@@ -30,9 +30,12 @@ public class ChessController {
     }
 
     public int initGame(final String userName) {
-        final int exUserId = userDao.getUser(userName);
-        int boardId = userDao.getBoard(exUserId);
-        if (exUserId == CommonDao.FAILED) {
+        int boardId;
+        try {
+            final int exUserId = userDao.getUser(userName);
+            boardId = userDao.getBoard(exUserId);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
             boardId = boardDao.initBoard();
         }
         userDao.createUser(userName, boardId);

@@ -15,10 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class CommonDao {
 
-    public static final int FAILED = -1;
     private static final int COLUMN = 0;
     private static final int ROW = 1;
 
@@ -54,7 +54,7 @@ public class CommonDao {
             statementMaker.makeStatement(statement);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return FAILED;
+                throw new NoSuchElementException("해당 레코드가 존재하지 않습니다.");
             }
             return resultSet.getInt(columnLabel);
         } catch (SQLException e) {
