@@ -13,7 +13,6 @@ export function commandRequest(command, actionAfterSuccess, moveCommand) {
         .then(errorHandling)
         .then(response => response.json())
         .then((response) => {
-            console.log(response);
             if (command === COMMAND.MOVE) {
                 actionAfterSuccess(response, moveCommand);
                 return;
