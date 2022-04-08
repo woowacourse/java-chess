@@ -7,6 +7,7 @@ import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
 import chess.dto.ErrorResponseDto;
 import chess.dto.RoomStatusDto;
+import chess.exception.SQLQueryException;
 import com.google.gson.Gson;
 
 public class RoomService {
@@ -38,7 +39,7 @@ public class RoomService {
             }
 
             return null;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
             return gson.toJson(dto);
         }
@@ -49,7 +50,7 @@ public class RoomService {
             checkRoomExist(roomName);
             final CurrentTurnDto dto = roomDao.findCurrentTurnByName(roomName);
             return gson.toJson(dto);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
             return gson.toJson(dto);
         }

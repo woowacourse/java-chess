@@ -16,6 +16,7 @@ import chess.dto.CurrentTurnDto;
 import chess.dto.ErrorResponseDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.RoomStatusDto;
+import chess.exception.SQLQueryException;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
@@ -42,7 +43,7 @@ public class ChessService {
             checkRoomExist(roomName);
             final List<ChessPieceDto> allByRoomName = chessPieceDao.findAllByRoomName(roomName);
             return gson.toJson(allByRoomName);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.NOT_FOUND);
             return gson.toJson(dto);
         }
@@ -58,7 +59,7 @@ public class ChessService {
             updateRoomStatusTo(roomName, GameStatus.PLAYING);
 
             return null;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.NOT_FOUND);
             return gson.toJson(dto);
         }
@@ -76,7 +77,7 @@ public class ChessService {
             updateRoom(roomName, moveResult.getGameStatus(), moveResult.getCurrentTurn());
 
             return gson.toJson(moveResult);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
             return gson.toJson(dto);
         }
@@ -95,7 +96,7 @@ public class ChessService {
             final Score score = chessGame.calculateScore();
 
             return gson.toJson(score);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
             return gson.toJson(dto);
         }
@@ -110,7 +111,7 @@ public class ChessService {
             updateRoomStatusTo(roomName, GameStatus.END);
 
             return gson.toJson(result);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLQueryException e) {
             final ErrorResponseDto dto = ErrorResponseDto.of(e, StatusCode.BAD_REQUEST);
             return gson.toJson(dto);
         }
