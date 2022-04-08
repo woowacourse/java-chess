@@ -2,20 +2,17 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
+import chess.dao.entity.BoardEntity;
+import chess.dao.entity.ChessGameEntity;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameSwitch;
 import chess.domain.game.Turn;
 import chess.domain.piece.Team;
-import chess.dao.entity.BoardEntity;
-import chess.dao.entity.ChessGameEntity;
 import chess.service.util.BoardEntitiesToBoardConvertor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
-
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final BoardDao boardDao = new BoardDao();
@@ -25,7 +22,7 @@ public class Service {
         saveChessGame(chessGame);
     }
 
-    public void saveChessGame(final ChessGame chessGame) {
+    private void saveChessGame(final ChessGame chessGame) {
         String name = chessGame.getName();
         chessGameDao.delete(name);
         chessGameDao.save(new ChessGameEntity(chessGame));
@@ -63,12 +60,15 @@ public class Service {
         boardDao.delete(name);
     }
 
-    public void movePiece(final String name, final String rawSource, final String rawTarget) {
+    public void movePiece(
+            final String name,
+            final char sourceColumnValue,
+            final int sourceRowValue,
+            final char targetColumnValue,
+            final int targetRowValue
+    ) {
         ChessGame chessGame = loadChessGame(name);
-        chessGame.move(
-                rawSource.charAt(COLUMN_INDEX), Character.getNumericValue(rawSource.charAt(ROW_INDEX)),
-                rawTarget.charAt(COLUMN_INDEX), Character.getNumericValue(rawTarget.charAt(ROW_INDEX))
-        );
+        chessGame.move(sourceColumnValue, sourceRowValue, targetColumnValue, targetRowValue);
         saveChessGame(chessGame);
     }
 }

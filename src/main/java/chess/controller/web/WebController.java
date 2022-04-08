@@ -16,6 +16,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
+
     public void run() {
         staticFileLocation("/static");
         Service service = new Service();
@@ -58,12 +61,7 @@ public class WebController {
             Map<String, Object> model = new HashMap<>();
             String name = req.params(":name");
             model.put("chess_game_name", name);
-            Map<String, Piece> boardForHtml = service.loadChessGame(name).getCurrentBoard().entrySet().stream()
-                    .collect(Collectors.toMap(
-                            entry -> String.valueOf(entry.getKey().getColumn().getValue()) +
-                                    entry.getKey().getRow().getValue(),
-                            Entry::getValue)
-                    );
+            Map<String, Piece> boardForHtml = convertBoardForHtml(service, name);
             model.putAll(boardForHtml);
             model.put("turn", service.loadChessGame(name).getTurn());
             model.put("result", service.loadChessGame(name).generateResult());
@@ -71,12 +69,27 @@ public class WebController {
         }, new HandlebarsTemplateEngine());
     }
 
+    private Map<String, Piece> convertBoardForHtml(Service service, String name) {
+        return service.loadChessGame(name).getCurrentBoard().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> String.valueOf(entry.getKey().getColumn().getValue()) +
+                                entry.getKey().getRow().getValue(),
+                        Entry::getValue
+                ));
+    }
+
     private void movePiece(final Service service) {
         post("/move/:chess_game_name", (req, res) -> {
             String chessGameName = req.params(":chess_game_name");
             String rawSource = req.queryParams("source").trim().toLowerCase();
             String rawTarget = req.queryParams("target").trim().toLowerCase();
-            service.movePiece(chessGameName, rawSource, rawTarget);
+            service.movePiece(
+                    chessGameName,
+                    rawSource.charAt(COLUMN_INDEX),
+                    Character.getNumericValue(rawSource.charAt(ROW_INDEX)),
+                    rawTarget.charAt(COLUMN_INDEX),
+                    Character.getNumericValue(rawTarget.charAt(ROW_INDEX))
+            );
             res.redirect("/game/" + chessGameName);
             return null;
         });
