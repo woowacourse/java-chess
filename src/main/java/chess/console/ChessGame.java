@@ -15,12 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
-    private State state;
 
-    public GameSwitch gameSwitch = GameSwitch.ON;
+    private State state;
+    public GameSwitch gameSwitch;
 
     public ChessGame() {
         state = new Ready();
+        gameSwitch = GameSwitch.ON;
     }
 
     public void start() {

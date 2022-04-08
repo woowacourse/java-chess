@@ -152,12 +152,18 @@ header {
     margin-bottom: 0.2rem;
 }
 
+.message-error {
+    font-weight: bold;
+    color: red;
+    margin-bottom: 0.2rem;
+}
+
 .skill-usage {
     font-size: 0.9rem;
     color: #000000;
 }
-
 /*텍스트*/
+
 .message {
     width: 100%;
     font-weight: bold;
@@ -227,8 +233,8 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-
 /*board*/
+
 .button-container {
     display: flex;
     justify-content: center;
@@ -260,7 +266,7 @@ header {
 }
 
 .board-column {
-    width: 70px;
+    width: 65px;
     aspect-ratio: 1 / 1;
     height: 100%;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
@@ -269,6 +275,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.piece-image {
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .board-column-white {
@@ -280,12 +294,12 @@ header {
 }
 
 .class-type {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #152246FF;
 }
 
 .class-join {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #f44a32;
     background-color: rgba(244, 74, 50, 0.15);
     padding: 0.2rem;
@@ -340,12 +354,6 @@ header {
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
 
-.message-error {
-    font-size: 0.9rem;
-    margin-top: 0.7rem;
-    color: red;
-}
-
 .message-title {
     width: 100%;
     margin-left: 2rem;
@@ -364,11 +372,4 @@ header {
 
 .title {
     text-align: center;
-}
-
-.piece-image {
-    width: 55px;
-    height: 55px;
-    text-align: center;
-    vertical-align: middle;
 }

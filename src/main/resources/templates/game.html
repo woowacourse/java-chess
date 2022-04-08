@@ -12,6 +12,7 @@
             src="https://kit.fontawesome.com/f92cdbaedc.js"
             crossorigin="anonymous"
     ></script>
+    <script>history.scrollRestoration = "manual"</script>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <title>포돌이 체스에 오신 것을 환영합니다.</title>
 </head>
@@ -33,7 +34,6 @@
 <!-- status section -->
 <section>
     <div class="inner">
-        <div class="title"><h1>포돌이 체스를 진행합니다</h1></div>
         <div class="user-container">
             {{#status}}
             <div class="user">
@@ -67,9 +67,12 @@
             <div class="message-container">
                 🔊
                 <div class="message-title">
-                    <div class="skill-name">{{#message}} {{message}} {{else}} 현재 게임 시작을 안했습니다. {{/message}}</div>
                     {{#if hasError }}
                     <div class="message-error"> {{errorMessage}}</div>
+                    {{else}}
+                    <div class="skill-name">{{#message}} {{message}} {{else}} <a href="/"> 즐거우셨나요? 클릭시 메인화면으로 이동해요^^</a>
+                        {{/message}}
+                    </div>
                     {{/if}}
                 </div>
             </div>

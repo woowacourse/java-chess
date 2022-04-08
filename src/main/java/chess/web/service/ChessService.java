@@ -30,6 +30,10 @@ public class ChessService {
         chessGame = new ChessGame();
     }
 
+    public void restart() {
+        chessGame.run();
+    }
+
     public Map<String, Object> executeCommand(final Request req) {
         String command = extractCommandFrom(req);
         final WebGameCommand webgameCommand = WebGameCommand.from(command);

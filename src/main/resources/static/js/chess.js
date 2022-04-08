@@ -1,10 +1,13 @@
 let before = "";
 let after = "";
 
-
 const initialize = () => {
     document.querySelectorAll('.piece-image')
         .forEach(cell => cell.addEventListener('click', cellClick));
+}
+
+function getCommand(url, value) {
+    window.location.replace(url + value);
 }
 
 function postCommand(url, value) {
