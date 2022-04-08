@@ -116,8 +116,8 @@ public class ChessService {
     public ResponseDto end() throws SQLException {
         try{
             chessBoard.changeStatus(new End());
-                    boardDao.delete(gameDao.findLastGameId());
-                    gameDao.delete();
+            boardDao.delete(gameDao.findLastGameId());
+            gameDao.delete();
         } catch (IllegalArgumentException e){
             return new ResponseDto(500, e.getMessage());
         }

@@ -6,7 +6,10 @@ import chess.domain.game.board.ChessBoard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class GameDao {
 
@@ -27,7 +30,7 @@ public class GameDao {
     public int save(ChessBoard chessBoard) {
         final String sql = "insert into Game (id, status, turn) values(?, ?, ?)";
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = makeSaveStatements(chessBoard, sql);
             statement.executeUpdate();
             return gameId;
@@ -39,7 +42,7 @@ public class GameDao {
 
     private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) {
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, ++gameId);
             statement.setBoolean(2, chessBoard.compareStatus(Status.PLAYING));
@@ -53,12 +56,11 @@ public class GameDao {
 
     public int findLastGameId() {
         final String sql = "SELECT * FROM Game ORDER BY id DESC LIMIT 1";
-        PreparedStatement statement;
-        ResultSet result;
-        try(connection) {
-            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            result = statement.executeQuery();
-           if (!result.next()) {
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ResultSet result = statement.executeQuery();
+                ) {
+            if (!result.next()) {
                 return EMPTY_RESULT;
             }
             return result.getInt("id");
@@ -72,7 +74,7 @@ public class GameDao {
         final String sql = "select id, status, turn from game where id = ?";
         PreparedStatement statement;
         ResultSet result;
-        try(connection) {
+        try {
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, id);
             result = statement.executeQuery();
@@ -93,7 +95,7 @@ public class GameDao {
     public int delete() {
         final String sql = "delete from game where id = ?";
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int lastGameid = findLastGameId();
             statement.setInt(1, lastGameid);

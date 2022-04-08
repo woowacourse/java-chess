@@ -110,9 +110,8 @@ public class WebChessController {
 
     private void end() {
         get("/end", (req, res) -> {
-            chessService.end();
-            res.redirect("/");
-            return null;
+            ResponseDto response= chessService.end();
+            return convertToJson(response.convertToString());
         });
     }
 

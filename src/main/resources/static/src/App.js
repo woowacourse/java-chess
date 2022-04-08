@@ -20,21 +20,14 @@ function start() {
 }
 
 function end() {
-    fetch('/end', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify(null)
-    }).then(response => response.json())
-    .then(response => {
-        if (parseInt(response.status) !== 200) {
-            alert(response.message);
-            return;
-        }
-        location.replace("/");
-    });
+    fetch('/end')
+        .then(response => response.json())
+        .then(response => {
+            if (parseInt(response.status) !== 200) {
+                alert(response.message);
+            }
+            location.replace("/");
+        });
 }
 
 function selectBlock(id) {

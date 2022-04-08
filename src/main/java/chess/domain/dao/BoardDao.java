@@ -27,7 +27,7 @@ public class BoardDao{
     public void save(int gameId, String position, String piece, String color) {
         final String sql = "insert into Board (id, game_id, position, piece, color) values(?, ?, ?, ?, ?)";
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = makeSaveStatement(gameId, position, piece, color, sql);
             statement.executeUpdate();
         } catch (SQLException throwables) {
@@ -50,7 +50,7 @@ public class BoardDao{
         final String sql = "select * from board where game_id = ?";
         ResultSet result;
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
             result = statement.executeQuery();
@@ -79,14 +79,13 @@ public class BoardDao{
         if (isSavedGameExist(gameId)) {
             return;
         }
-
         runDelete(gameId);
     }
 
     private void runDelete(int gameId) {
         final String sql = "delete from Board where game_id = ?";
         PreparedStatement statement;
-        try(connection) {
+        try {
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, gameId);
             statement.executeUpdate();
