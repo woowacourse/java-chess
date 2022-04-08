@@ -8,7 +8,9 @@ import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,7 @@ class SquareDaoTest {
     @Test
     void save() {
         final Square square = dao.save(new Square(File.B, Rank.TWO, boardId));
+
         assertAll(
                 () -> assertThat(square.getFile()).isEqualTo(File.B),
                 () -> assertThat(square.getRank()).isEqualTo(Rank.TWO)
@@ -44,6 +47,7 @@ class SquareDaoTest {
     @Test
     void getBySquareTest() {
         final Square square = dao.getBySquareAndBoardId(new Square(File.A, Rank.TWO), boardId);
+
         assertAll(
                 () -> assertThat(square.getFile()).isEqualTo(File.A),
                 () -> assertThat(square.getRank()).isEqualTo(Rank.TWO)
@@ -53,12 +57,14 @@ class SquareDaoTest {
     @Test
     void saveAllSquares() {
         int saveCount = dao.saveAllSquare(boardId);
+
         assertThat(saveCount).isEqualTo(64);
     }
 
     @Test
     void getSquareIdBySquare() {
         int squareId = dao.getSquareIdBySquare(new Square(File.A, Rank.TWO), boardId);
+
         assertThat(squareId).isEqualTo(square.getId());
     }
 

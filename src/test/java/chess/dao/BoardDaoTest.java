@@ -22,6 +22,7 @@ class BoardDaoTest {
     void saveTest() {
         final Board board = dao.save(new Board("개초보만"));
         assertThat(board.getTitle()).isEqualTo("개초보만");
+
         dao.deleteById(board.getId());
     }
 
@@ -29,6 +30,7 @@ class BoardDaoTest {
     void deleteBoard() {
         final Board board = dao.save(new Board("삭제예정"));
         int affectedRow = dao.deleteById(board.getId());
+
         assertThat(affectedRow).isEqualTo(1);
     }
 
@@ -36,14 +38,16 @@ class BoardDaoTest {
     void getByIdTest() {
         final Board board = dao.save(new Board("개초보만"));
         final Board foundBoard = dao.getById(board.getId());
+
         assertThat(foundBoard.getTitle()).isEqualTo("개초보만");
     }
 
     @Test
     void findAllTest() {
-        final Board board1 = dao.save(new Board("개초보만"));
-        final Board board2 = dao.save(new Board("왕허접만"));
+        dao.save(new Board("개초보만"));
+        dao.save(new Board("왕허접만"));
         final List<Board> boards = dao.findAll();
+
         assertThat(boards.size()).isEqualTo(2);
     }
 
@@ -51,6 +55,7 @@ class BoardDaoTest {
     void initBoard() {
         final Board edenFightingBoard = new Board( "에덴파이팅");
         Board board = dao.init(edenFightingBoard, Initializer.initialize());
+
         assertThat(board.getTitle()).isEqualTo("에덴파이팅");
     }
 }

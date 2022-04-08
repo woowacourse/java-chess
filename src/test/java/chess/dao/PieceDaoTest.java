@@ -40,6 +40,7 @@ class PieceDaoTest {
     @Test
     void saveTest() {
         final Piece piece = dao.save(new Pawn(Color.WHITE), squareId);
+
         assertAll(
                 () -> assertThat(piece.name()).isEqualTo("p"),
                 () -> assertThat(piece.color()).isEqualTo(Color.WHITE),
@@ -50,6 +51,7 @@ class PieceDaoTest {
     @Test
     void findBySquareId() {
         Piece piece = dao.findBySquareId(squareId);
+
         assertAll(
                 () -> assertThat(piece.name()).isEqualTo("p"),
                 () -> assertThat(piece.color()).isEqualTo(Color.WHITE)
@@ -59,6 +61,7 @@ class PieceDaoTest {
     @Test
     void deletePieceBySquareId() {
         int affectedRows = dao.deletePieceBySquareId(squareId);
+
         assertThat(affectedRows).isEqualTo(1);
     }
 
@@ -67,12 +70,14 @@ class PieceDaoTest {
         final int originSquareId = squareId;
         final int newSquareId = squareDao.save(new Square(File.A, Rank.FOUR, boardId)).getId();
         int affectedRow = dao.updatePieceSquareId(originSquareId, newSquareId);
+
         assertThat(affectedRow).isEqualTo(1);
     }
 
     @Test
     void getAllPiecesByBoardId() {
         List<Piece> pieces = dao.getAllPiecesByBoardId(boardId);
+
         assertThat(pieces.size()).isEqualTo(1);
     }
 }
