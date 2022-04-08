@@ -3,14 +3,9 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dao.BoardDao;
-import chess.dao.BoardDaoImpl;
-import chess.dao.PieceDao;
-import chess.dao.PieceDaoImpl;
 import chess.domain.game.ChessGame;
 import chess.dto.MoveRequestDto;
 import chess.service.ChessService;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,14 +20,6 @@ public class ChessController {
     private static final String BOARD_URL = "/board";
     private static final String ID_PARAM = "?id=";
 
-    private final PieceDao pieceDao;
-    private final BoardDao boardDao;
-
-    public ChessController(PieceDao pieceDao, BoardDao boardDao) {
-        this.pieceDao = pieceDao;
-        this.boardDao = boardDao;
-    }
-
     public void run(ChessService chessService) {
         ChessGame chessGame = new ChessGame();
         AtomicInteger boardId = new AtomicInteger();
@@ -41,18 +28,18 @@ public class ChessController {
 
         get(BOARD_URL, (request, response) -> {
             boardId.set(Integer.parseInt(request.queryParams("id")));
-            return render(chessService.findBoardModel(chessGame, pieceDao, boardDao, boardId.intValue()), BOARD_PAGE);
+            return render(chessService.findBoardModel(chessGame, boardId.intValue()), BOARD_PAGE);
         });
 
         post("/new", (request, response) -> {
-            boardId.set(chessService.createNewBoard(boardDao, pieceDao, chessGame));
+            boardId.set(chessService.createNewBoard(chessGame));
             response.redirect(BOARD_URL + ID_PARAM + boardId.intValue());
             return null;
         });
 
         get("/move", (request, response) -> {
             MoveRequestDto moveRequestDto = new MoveRequestDto(request.queryParams("from"), request.queryParams("to"));
-            return render(chessService.move(chessGame, pieceDao, boardDao, boardId.intValue(), moveRequestDto),
+            return render(chessService.move(chessGame, boardId.intValue(), moveRequestDto),
                     BOARD_PAGE);
         });
 

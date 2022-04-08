@@ -19,8 +19,8 @@ public class WebApplication {
         PieceDao pieceDao = new PieceDaoImpl(connection);
         BoardDao boardDao = new BoardDaoImpl(connection);
 
-        ChessController chessController = new ChessController(pieceDao, boardDao);
-        ChessService chessService = new ChessService();
+        ChessController chessController = new ChessController();
+        ChessService chessService = new ChessService(pieceDao, boardDao);
         chessController.run(chessService);
     }
 }

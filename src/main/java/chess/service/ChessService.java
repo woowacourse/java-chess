@@ -27,7 +27,15 @@ public class ChessService {
     private static final String SEPARATOR_COLON = ": ";
     private static final String SEPARATOR_SLASH = " / ";
 
-    public Map<String, Object> findBoardModel(ChessGame chessGame, PieceDao pieceDao, BoardDao boardDao, int boardId) {
+    private final PieceDao pieceDao;
+    private final BoardDao boardDao;
+
+    public ChessService(PieceDao pieceDao, BoardDao boardDao) {
+        this.pieceDao = pieceDao;
+        this.boardDao = boardDao;
+    }
+
+    public Map<String, Object> findBoardModel(ChessGame chessGame, int boardId) {
         List<PieceDto> pieces = pieceDao.findByBoardId(boardId);
         Team turn = boardDao.findTurn(boardId);
         chessGame.start(new DatabaseLoadBoardGenerator(pieces, turn));
@@ -47,7 +55,7 @@ public class ChessService {
         return model;
     }
 
-    public int createNewBoard(BoardDao boardDao, PieceDao pieceDao, ChessGame chessGame) {
+    public int createNewBoard(ChessGame chessGame) {
         chessGame.start(new BasicBoardGenerator());
         int boardId = boardDao.createBoard(chessGame.getTurn());
         pieceDao.create(convertPieceDtoList(chessGame.getBoard()), boardId);
@@ -62,8 +70,7 @@ public class ChessService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Map<String, Object> move(ChessGame chessGame, PieceDao pieceDao, BoardDao boardDao, int boardId,
-                                    MoveRequestDto moveRequestDto) {
+    public Map<String, Object> move(ChessGame chessGame, int boardId, MoveRequestDto moveRequestDto) {
         Map<String, Object> model = new HashMap<>();
 
         try {
