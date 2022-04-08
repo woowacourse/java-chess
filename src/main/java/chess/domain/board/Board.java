@@ -20,7 +20,7 @@ public final class Board {
 
     private final Map<Position, Piece> squares;
 
-    Board(Map<Position, Piece> squares) {
+    public Board(Map<Position, Piece> squares) {
         this.squares = new TreeMap<>(squares);
     }
 

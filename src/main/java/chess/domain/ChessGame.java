@@ -1,10 +1,10 @@
 package chess.domain;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Score;
 import chess.domain.gamestate.State;
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class ChessGame {
@@ -16,6 +16,10 @@ public class ChessGame {
 
     public void start() {
         this.state = this.state.start();
+    }
+
+    public void load(Map<Position, Piece> board, boolean whiteTurn) {
+        this.state = this.state.load(board, whiteTurn);
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -30,8 +34,8 @@ public class ChessGame {
         return this.state.isFinished();
     }
 
-    public Board getBoard() {
-        return this.state.getBoard();
+    public Map<Position, Piece> getBoardSquares() {
+        return this.state.getBoard().getSquares();
     }
 
     public Map<Camp, Score> getScores() {

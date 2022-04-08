@@ -1,0 +1,57 @@
+.chess-ui {
+    width: 640px;
+    border: 4px solid slategrey;
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+}
+
+.form {
+    padding: 5px;
+}
+
+.form.start, .form.status, .form.save {
+    float: left;
+}
+
+.form.move {
+    display: block;
+}
+
+.black-square {
+    background-color: slategrey;
+    color: white;
+}
+
+.white-square {
+    background-color: white;
+    color: slategrey;
+}
+
+.piece-img {
+    width: 100%;
+}
+
+section {
+    float: left;
+    margin: 15px;
+    height: 640px;
+}
+
+.player-square {
+    width: 150px;
+    margin: 15px;
+    padding: 10px;
+    background-color: white;
+    border: 4px solid slategrey;
+}
+
+.player-square.white {
+    position: relative;
+    top: 400px;
+}
+
+.player-square img {
+    float: left;
+    width: 30px;
+}

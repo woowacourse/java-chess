@@ -14,8 +14,8 @@ public class Expressions {
     static final String COMMAND_END = "end";
     private static final String COMMAND_STATUS = "status";
 
-    static final Map<Character, Column> EXPRESSIONS_COLUMN;
-    static final Map<Character, Row> EXPRESSIONS_ROW;
+    public static final Map<Character, Column> EXPRESSIONS_COLUMN;
+    public static final Map<Character, Row> EXPRESSIONS_ROW;
     static final Map<String, Supplier<Command>> EXPRESSIONS_COMMAND;
     static final Map<Type, String> PIECE_EXPRESSIONS;
 
