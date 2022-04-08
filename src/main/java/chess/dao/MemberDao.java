@@ -14,7 +14,7 @@ public class MemberDao {
 
     public Member save(String name, int boardId) {
         return connectionManager.executeQuery(connection -> {
-            String sql = "insert into member(name, board_id) values(?, ?)";
+            final String sql = "INSERT INTO member(name, board_id) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, boardId);
@@ -36,7 +36,7 @@ public class MemberDao {
     public List<Member> getAllByBoardId(int boardId) {
         return connectionManager.executeQuery(connection -> {
             List<Member> members = new ArrayList<>();
-            String sql = "select * from member where board_id=?";
+            final String sql = "SELECT * FROM member WHERE board_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, boardId);
             final ResultSet resultSet = preparedStatement.executeQuery();

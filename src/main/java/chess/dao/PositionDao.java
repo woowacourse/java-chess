@@ -23,7 +23,7 @@ public class PositionDao {
 
     public Position save(Position position) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO position (position_column, position_row, board_id) VALUES (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, position.getColumn().value());
             preparedStatement.setInt(2, position.getRow().value());
@@ -50,9 +50,9 @@ public class PositionDao {
     }
 
     private ResultSet findPosition(Column column, Row row, int boardId, Connection connection) throws SQLException {
-        final String sql = "select np.id, np.position_column, np.position_row, np.board_id " +
-                "from position as np " +
-                "where np.position_column=? and np.position_row=? and np.board_id=?";
+        final String sql = "SELECT np.id, np.position_column, np.position_row, np.board_id " +
+                "FROM position AS np " +
+                "WHERE np.position_column=? AND np.position_row=? AND np.board_id=?";
         final PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, column.value());
         preparedStatement.setInt(2, row.value());
@@ -66,7 +66,7 @@ public class PositionDao {
 
     public int saveAllPosition(int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into position (position_column, position_row, board_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO POSITION (position_column, position_row, board_id) values (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             for (Column column : Column.values()) {
                 saveColumnLine(boardId, preparedStatement, column);
@@ -91,11 +91,11 @@ public class PositionDao {
 
     public Map<Position, Piece> findAllPositionsAndPieces(int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select po.id as po_id, po.position_column, po.position_row, po.board_id, " +
-                    "pi.id as pi_id, pi.type, pi.color, pi.position_id " +
-                    "from position po " +
-                    "inner join piece pi on po.id = pi.position_id " +
-                    "where board_id=?";
+            final String sql = "SELECT po.id AS po_id, po.position_column, po.position_row, po.board_id, " +
+                    "pi.id AS pi_id, pi.type, pi.color, pi.position_id " +
+                    "FROM position po " +
+                    "JOIN piece pi ON pi.id = pi.position_id " +
+                    "WHERE board_id=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, boardId);

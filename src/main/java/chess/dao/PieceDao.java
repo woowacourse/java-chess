@@ -20,7 +20,7 @@ public class PieceDao {
 
     public Piece save(Piece piece) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into piece (type, color, position_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO piece (type, color, position_id) VALUES (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, piece.getType().symbol().name());
             preparedStatement.setString(2, piece.getColor().name());
@@ -36,7 +36,7 @@ public class PieceDao {
 
     public Optional<Piece> findByPositionId(int positionId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select * from piece where position_id=?";
+            final String sql = "SELECT * FROM piece WHERE position_id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, positionId);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -53,7 +53,7 @@ public class PieceDao {
 
     public int updatePiecePositionId(int sourcePositionId, int targetPositionId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "update piece set position_id=? where position_id=?";
+            final String sql = "UPDATE piece SET position_id=? WHERE position_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, targetPositionId);
             preparedStatement.setInt(2, sourcePositionId);
@@ -63,7 +63,7 @@ public class PieceDao {
 
     public int deletePieceByPositionId(int positionId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "delete from piece where position_id=?";
+            final String sql = "DELETE FROM piece WHERE position_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, positionId);
             return preparedStatement.executeUpdate();
@@ -72,8 +72,8 @@ public class PieceDao {
 
     public List<Piece> getAllPiecesByBoardId(int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select pi.id, pi.type, pi.color, pi.position_id from piece pi join position po on pi.position_id=po.id " +
-                    "join board nb on po.board_id=nb.id where nb.id=?";
+            final String sql = "SELECT pi.id, pi.type, pi.color, pi.position_id FROM piece pi JOIN position po ON pi.position_id=po.id " +
+                    "JOIN board nb ON po.board_id=nb.id WHERE nb.id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, boardId);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,9 +92,9 @@ public class PieceDao {
 
     public int countPawnsOnSameColumn(int roomId, Column column, Color color) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select count(*) as total_count from piece pi " +
-                    "join position po on pi.position_id = po.id " +
-                    "where po.position_column=? and po.board_id=? and pi.type='PAWN' and pi.color=?";
+            final String sql = "SELECT COUNT(*) AS total_count FROM piece pi " +
+                    "JOIN position po ON pi.position_id=po.id " +
+                    "WHERE po.position_column=? AND po.board_id=? AND pi.type='PAWN' AND pi.color=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, column.value());
             preparedStatement.setInt(2, roomId);
