@@ -9,10 +9,12 @@ public abstract class Piece {
 
     protected final Color color;
     protected final List<Direction> directions;
+    protected final PieceType pieceType;
 
-    public Piece(Color color, List<Direction> directions) {
+    public Piece(Color color, List<Direction> directions, PieceType pieceType) {
         this.color = color;
         this.directions = directions;
+        this.pieceType = pieceType;
     }
 
     public final boolean isSameColor(Color color) {

@@ -14,7 +14,7 @@ public class PieceFactoryTest {
         String color = origin.getColor();
         String type = origin.getType();
 
-        Piece piece = PieceFactory.create(color, type);
+        Piece piece = PieceType.createPiece(color, type);
 
         assertThat(piece).isEqualTo(origin);
     }

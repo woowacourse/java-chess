@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PieceType;
 import chess.utils.JdbcConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,7 +57,7 @@ public class BoardDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return PieceFactory.create(
+            return PieceType.createPiece(
                     resultSet.getString("color"),
                     resultSet.getString("piece")
             );
@@ -77,7 +77,7 @@ public class BoardDao {
             Map<Position, Piece> value = new HashMap<>();
             while (resultSet.next()) {
                 Position position = Position.valueOf(resultSet.getString("position"));
-                Piece piece = PieceFactory.create(
+                Piece piece = PieceType.createPiece(
                         resultSet.getString("color"),
                         resultSet.getString("piece"));
                 value.put(position, piece);

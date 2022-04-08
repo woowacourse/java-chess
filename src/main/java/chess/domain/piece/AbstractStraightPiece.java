@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class AbstractStraightPiece extends Piece {
 
-    AbstractStraightPiece(Color color, List<Direction> directions) {
-        super(color, directions);
+    AbstractStraightPiece(Color color, List<Direction> directions, PieceType pieceType) {
+        super(color, directions, pieceType);
     }
 
     @Override

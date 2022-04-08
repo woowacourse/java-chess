@@ -25,10 +25,10 @@ public final class Knight extends AbstractOncePiece {
             WEST_NORTH_WEST
     );
     private static final double POINT = 2.5;
-    private static final String output = "N";
+    private static final PieceType PIECE_TYPE = PieceType.KNIGHT;
 
     public Knight(Color color) {
-        super(color, DIRECTIONS);
+        super(color, DIRECTIONS, PIECE_TYPE);
     }
 
     @Override
@@ -38,6 +38,7 @@ public final class Knight extends AbstractOncePiece {
 
     @Override
     public String getOutput() {
+        String output = PIECE_TYPE.getOutput();
         if (color == Color.WHITE) {
             return output.toLowerCase();
         }

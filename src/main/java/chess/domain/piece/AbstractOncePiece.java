@@ -10,8 +10,8 @@ public abstract class AbstractOncePiece extends Piece {
 
     private static final int ONCE_TIME = 1;
 
-    AbstractOncePiece(Color color, List<Direction> directions) {
-        super(color, directions);
+    AbstractOncePiece(Color color, List<Direction> directions, PieceType pieceType) {
+        super(color, directions, pieceType);
     }
 
     @Override

@@ -17,10 +17,10 @@ public final class Queen extends AbstractStraightPiece {
     private static final List<Direction> DIRECTIONS = List
             .of(NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 9.0;
-    private static final String output = "Q";
+    private static final PieceType PIECE_TYPE = PieceType.QUEEN;
 
     public Queen(Color color) {
-        super(color, DIRECTIONS);
+        super(color, DIRECTIONS, PIECE_TYPE);
     }
 
     @Override
@@ -30,6 +30,7 @@ public final class Queen extends AbstractStraightPiece {
 
     @Override
     public String getOutput() {
+        String output = PIECE_TYPE.getOutput();
         if (color == Color.WHITE) {
             return output.toLowerCase();
         }
