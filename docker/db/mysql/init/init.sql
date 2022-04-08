@@ -1,7 +1,7 @@
 create table board
 (
     id int not null,
-    turn int not null,
+    turn varchar(5) not null,
     primary key (id)
 );
 
@@ -11,7 +11,7 @@ create table piece
     board_id int not null,
     position varchar(2) not null,
     type varchar(1) not null,
-    color int not null,
+    color varchar(5) not null,
     primary key (id),
     foreign key (board_id) references board (id)
 );

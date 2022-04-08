@@ -3,19 +3,13 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Color {
-    WHITE(0),
-    BLACK(1),
-    NONE(2);
+    WHITE,
+    BLACK,
+    NONE;
 
-    private final int value;
-
-    Color(int value) {
-        this.value = value;
-    }
-
-    public static Color from(int value) {
+    public static Color from(String colorName) {
         return Arrays.stream(values())
-                .filter(color -> color.value == value)
+                .filter(color -> color.name().equals(colorName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색입니다."));
     }

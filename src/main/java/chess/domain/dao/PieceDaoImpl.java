@@ -31,10 +31,10 @@ public class PieceDaoImpl implements PieceDao {
                                     Entry<Position, Piece> positionPieceEntry) {
         Position position = positionPieceEntry.getKey();
         Piece piece = positionPieceEntry.getValue();
-        try (final PreparedStatement statement = connection.prepareStatement(sql)){
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.stringName());
             statement.setString(2, piece.getSymbol());
-            statement.setInt(3, piece.getColor().ordinal());
+            statement.setString(3, piece.getColor().name());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
@@ -60,7 +60,7 @@ public class PieceDaoImpl implements PieceDao {
         while (resultSet.next()) {
             Position position = Position.from(resultSet.getString("position"));
             Type type = Type.from(resultSet.getString("type"));
-            Piece piece = type.makePiece(Color.from(resultSet.getInt("color")));
+            Piece piece = type.makePiece(Color.from(resultSet.getString("color")));
             pieces.put(position, piece);
         }
     }
@@ -93,7 +93,7 @@ public class PieceDaoImpl implements PieceDao {
     @Override
     public void updatePosition(String source, String target) {
         final String getSourcePieceSql = "select type, color from piece where position = ? and board_id = 1";
-        final String updateSourceSql = "update piece set type = '.', color = 2 where position = ? and board_id = 1";
+        final String updateSourceSql = "update piece set type = '.', color = 'NONE' where position = ? and board_id = 1";
         final String updateTargetSql = "update piece set type = ?, color = ? where position = ? and board_id = 1";
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement1 = connection.prepareStatement(getSourcePieceSql);
@@ -106,11 +106,11 @@ public class PieceDaoImpl implements PieceDao {
                 throw new SQLException();
             }
             final String type = resultSet.getString("type");
-            final int color = resultSet.getInt("color");
+            final String color = resultSet.getString("color");
             statement2.setString(1, source);
             statement2.executeUpdate();
             statement3.setString(1, type);
-            statement3.setInt(2, color);
+            statement3.setString(2, color);
             statement3.setString(3, target);
             statement3.executeUpdate();
         } catch (SQLException e) {

@@ -36,7 +36,7 @@ public class BoardDaoImpl implements BoardDao {
     private void executeSave(Color turn, String sql) {
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, turn.ordinal());
+            statement.setString(1, turn.name());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
@@ -57,7 +57,7 @@ public class BoardDaoImpl implements BoardDao {
             if (!resultSet.next()) {
                 throw new SQLException();
             }
-            return Color.from(resultSet.getInt("turn"));
+            return Color.from(resultSet.getString("turn"));
         } catch (SQLException e) {
             throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
         }
