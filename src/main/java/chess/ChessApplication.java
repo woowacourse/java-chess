@@ -30,7 +30,7 @@ public class ChessApplication {
             return render(model, "home.html");
         });
 
-        post("/make-room", (req, res) -> {
+        post("/room", (req, res) -> {
             final List<String> createRoomInput = Arrays.stream(req.body().strip().split("\n"))
                     .map(s -> s.split("=")[1])
                     .collect(Collectors.toList());
