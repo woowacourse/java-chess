@@ -49,4 +49,6 @@ public abstract class Piece {
     public String getColorName() {
         return color.name();
     }
+
+    public abstract String representative();
 }

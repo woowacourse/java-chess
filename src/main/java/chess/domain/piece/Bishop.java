@@ -14,4 +14,9 @@ public class Bishop extends Piece {
     public boolean isMovable(final Position source, final Position target) {
         return source.isDiagonal(target);
     }
+
+    @Override
+    public String representative() {
+        return "Bishop";
+    }
 }
