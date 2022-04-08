@@ -19,11 +19,18 @@ public abstract class Ready implements State {
     }
 
     public static State continueOf(Color color, Board board) {
+        if (board.hasKing(color)) {
+            return createTurn(color, board);
+        }
+        if (color == Color.BLACK) {
+            return new WhiteWin(board);
+        }
+        return new BlackWin(board);
+    }
+
+    private static State createTurn(Color color, Board board) {
         if (color == Color.BLACK) {
             return new BlackTurn(board);
-        }
-        if (color == Color.WHITE) {
-            return new WhiteTurn(board);
         }
         return new WhiteTurn(board);
     }

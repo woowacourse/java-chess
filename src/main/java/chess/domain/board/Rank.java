@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import java.util.Arrays;
 
 public enum Rank {
@@ -43,6 +42,7 @@ public enum Rank {
         }
         return WHITE_START_RANK;
     }
+
     public Rank move(int y) {
         return findByY(this.y + y);
     }
