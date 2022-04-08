@@ -2,9 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스게임</title>
+    <link rel="stylesheet" href="/src/chess.css" />
 </head>
 <body>
-Hello World!!
+<h1 class="centered">체스 게임</h1>
+<div class="button-center">
+    <button class="btn third" id="startButton" type="button">Start</button>
+    <button class="btn third" id="statusButton" type="button" onclick="getScore()">Score</button>
+</div>
+<div class="chess-table">
+    <div class="chess-row">
+        <div id="a8" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="b8" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="c8" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="d8" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="e8" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="f8" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="g8" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="h8" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a7" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="b7" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="c7" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="d7" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="e7" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="f7" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="g7" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="h7" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a6" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="b6" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="c6" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="d6" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="e6" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="f6" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="g6" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="h6" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a5" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="b5" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="c5" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="d5" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="e5" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="f5" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="g5" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="h5" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a4" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="b4" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="c4" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="d4" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="e4" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="f4" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="g4" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="h4" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a3" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="b3" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="c3" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="d3" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="e3" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="f3" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="g3" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="h3" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a2" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="b2" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="c2" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="d2" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="e2" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="f2" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="g2" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="h2" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+    </div>
+
+    <div class="chess-row">
+        <div id="a1" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="b1" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="c1" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="d1" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="e1" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="f1" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+        <div id="g1" onclick="clickMovePosition(id)" class="piece-box black-box"></div>
+        <div id="h1" onclick="clickMovePosition(id)" class="piece-box white-box"></div>
+    </div>
+</div>
+<script src = "/src/chess.js"></script>
 </body>
 </html>

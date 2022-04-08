@@ -9,9 +9,10 @@ public final class Pawn extends ValidPiece {
     public static final double PENALTY_POINT = 0.5;
 
     private static final double POINT = 1;
+    private static final String NAME = "pawn";
 
     public Pawn(final Team team) {
-        super(team, POINT);
+        super(team, NAME, POINT);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
+import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.domain.piece.Team;
@@ -21,7 +21,7 @@ public class ChessGameController {
         Command command = InputView.inputInitialCommand();
         validateInitialCommand(command);
         if (command == Command.START) {
-            ChessGame chessGame = new ChessGame(new Board(BoardInitializer.initialize()));
+            ChessGame chessGame = new ChessGame(new Board(BoardFactory.initialize()));
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }
@@ -29,7 +29,7 @@ public class ChessGameController {
     }
 
     private void validateInitialCommand(final Command command) {
-        if (command == Command.MOVE) {
+        if (command.isMove()) {
             throw new IllegalArgumentException("[ERROR] 게임이 아직 시작되지 않았습니다.");
         }
     }
@@ -52,7 +52,7 @@ public class ChessGameController {
     }
 
     private void validateInvalidProgressCommand(final Command command) {
-        if (command == Command.START) {
+        if (command.isStart()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }
     }

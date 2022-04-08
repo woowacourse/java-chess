@@ -15,12 +15,12 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardInitializerTest {
+class BoardFactoryTest {
 
     @Test
     @DisplayName("최초의 Board 원시값을 생성한다.")
     void init() {
-        Map<Position, Piece> expected = BoardInitializer.initialize();
+        Map<Position, Piece> expected = BoardFactory.initialize();
         List<Piece> pieces = getPieces(Team.BLACK);
         assertAll(
                 () -> assertThat(expected.get(Position.valueOf("a8"))).isEqualTo(pieces.get(0)),

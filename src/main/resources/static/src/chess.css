@@ -1,0 +1,26 @@
+.chess-table {
+    height: 800px;
+    width: 800px;
+}
+
+.chess-row {
+    height: 80px;
+    width: 800px;
+    display: flex;
+}
+
+.piece-box {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+}
+
+.piece-box.white-box {
+    background: #eeeed2;
+}
+.piece-box.black-box {
+    background: #000000;
+}

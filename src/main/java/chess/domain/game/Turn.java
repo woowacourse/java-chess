@@ -6,8 +6,12 @@ public class Turn {
 
     private Team team;
 
+    public Turn(final Team team) {
+        this.team = team;
+    }
+
     public Turn() {
-        this.team = Team.WHITE;
+        this(Team.WHITE);
     }
 
     public void nextTurn() {
@@ -16,5 +20,9 @@ public class Turn {
 
     public boolean isRightTurn(final Team team) {
         return this.team == team;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

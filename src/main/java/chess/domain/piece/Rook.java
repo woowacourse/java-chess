@@ -6,9 +6,10 @@ import chess.domain.move.RookMoveStrategy;
 public final class Rook extends ValidPiece {
 
     private static final double POINT = 5;
+    private static final String NAME = "rook";
 
     public Rook(final Team team) {
-        super(team, POINT);
+        super(team, NAME, POINT);
     }
 
     @Override

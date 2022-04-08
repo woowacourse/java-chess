@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.Map;
 
 public class ChessGame {
@@ -12,10 +13,14 @@ public class ChessGame {
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final Board board, final Turn turn) {
         this.board = board;
         this.gameSwitch = new GameSwitch();
-        this.turn = new Turn();
+        this.turn = turn;
+    }
+
+    public ChessGame(final Board board) {
+        this(board, new Turn());
     }
 
     public void move(final String rawSource, final String rawTarget) {
@@ -56,6 +61,18 @@ public class ChessGame {
 
     public void turnOff() {
         gameSwitch.turnOff();
+    }
+
+    public String getPieceName(final String rawPosition) {
+        return board.getPiece(Position.valueOf(rawPosition)).convertPieceToString();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Team getCurrentTurn() {
+        return turn.getTeam();
     }
 
     public Map<Position, Piece> getCurrentBoard() {
