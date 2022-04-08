@@ -44,10 +44,10 @@ public class ChessDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
+            if (resultSet.next()) {
+                return resultSet.getString(CHESSGAME_STATE);
             }
-            return resultSet.getString(CHESSGAME_STATE);
+            throw new IllegalArgumentException(DATA_NOT_EXISTS_EXCEPTION);
         } catch (SQLException e) {
             throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
         }
@@ -101,10 +101,10 @@ public class ChessDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
+            if (resultSet.next()) {
+                return resultSet.getInt(TABLE_ID);
             }
-            return resultSet.getInt(TABLE_ID);
+            throw new IllegalArgumentException(DATA_NOT_EXISTS_EXCEPTION);
         } catch (SQLException e) {
             throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
         }

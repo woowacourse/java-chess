@@ -29,13 +29,14 @@ public class ChessService {
     }
 
     public GameState findChessGame() {
-        String state = chessDao.findState();
-        if (state == null) {
+        try {
+            String state = chessDao.findState();
+            Map<String, List<String>> board = chessDao.getChessBoard();
+            ChessBoard chessBoard = toChessBoard(board);
+            return toGameState(state, chessBoard);
+        } catch (IllegalArgumentException e) {
             return new Ready();
         }
-        Map<String, List<String>> board = chessDao.getChessBoard();
-        ChessBoard chessBoard = toChessBoard(board);
-        return toGameState(state, chessBoard);
     }
 
     private ChessBoard toChessBoard(Map<String, List<String>> board) {
