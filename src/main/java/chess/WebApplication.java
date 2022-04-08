@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.exception;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.get;
+import static spark.Spark.path;
 import static spark.Spark.port;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
@@ -32,7 +33,12 @@ public class WebApplication {
 
         get(Web.USER_HISTORY, WebChessService.findUserHistory);
 
-        put(Web.COMMAND_ACTION, WebChessService.runCommand);
+        path(Web.COMMAND_ACTION, () -> {
+            put(Web.START, WebChessService.startCommand);
+            put(Web.STATUS, WebChessService.statusCommand);
+            put(Web.MOVE, WebChessService.moveCommand);
+            put(Web.END, WebChessService.endCommand);
+        });
 
         exception(IllegalArgumentException.class, (exception, request, response) -> {
             final Map<String, String> error = new HashMap<>();

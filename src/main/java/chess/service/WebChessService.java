@@ -9,7 +9,6 @@ import chess.util.ViewUtil;
 import chess.util.json.JsonParser;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import spark.Request;
 import spark.Route;
 
@@ -29,41 +28,22 @@ public class WebChessService {
         return JsonParser.getPiecesAndGameStatus(pieces);
     };
 
-    public static final Route runCommand = (req, res) -> {
-        final int userId = req.session().attribute("user-id");
-        final ParsedCommand parsedCommand = parseRequestToCommand(req);
-        return doCommandAction(userId, parsedCommand);
-    };
+    public static final Route statusCommand = (req, res) -> calculateScoreAbout(req, "status");
 
-    private static ParsedCommand parseRequestToCommand(final Request req) {
-        final String command = req.params(":command");
-        final Optional<String> startPosition = Optional.ofNullable(req.queryParams("start"));
-        final Optional<String> endPosition = Optional.ofNullable(req.queryParams("end"));
-        final String rawCommand = command + " " + startPosition.orElse("") + " " + endPosition.orElse("");
+    public static final Route endCommand = (req, res) -> calculateScoreAbout(req, "end");
+
+    private static String calculateScoreAbout(final Request req, final String rawCommand) {
+        final int userId = req.session().attribute("user-id");
+        final ParsedCommand parsedCommand = parseRequestToCommand(rawCommand);
+        return doCommandActionAboutScore(userId, parsedCommand);
+    }
+
+    private static ParsedCommand parseRequestToCommand(final String rawCommand) {
         return new ParsedCommand(rawCommand);
     }
 
-    private static String doCommandAction(final int userId, final ParsedCommand parsedCommand) {
+    private static String doCommandActionAboutScore(final int userId, final ParsedCommand parsedCommand) {
         final ChessController chess = new ChessController();
-        final Command command = parsedCommand.getCommand();
-        if (command == Command.START || command == Command.MOVE) {
-            return doActionAboutPieces(userId, parsedCommand, chess);
-        }
-        return doActionAboutScore(userId, parsedCommand, chess);
-
-    }
-
-    private static String doActionAboutPieces(final int userId, final ParsedCommand parsedCommand,
-                                              final ChessController chess) {
-        final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
-        if (parsedCommand.getCommand() == Command.MOVE) {
-            return JsonParser.getPiecesAndGameStatus(piecesDto);
-        }
-        return JsonParser.makePiecesToJsonArray(piecesDto);
-    }
-
-    private static String doActionAboutScore(final int userId, final ParsedCommand parsedCommand,
-                                             final ChessController chess) {
         final ScoreDto scoreDto = chess.doActionAboutScore(parsedCommand, userId);
         final String responseObject = JsonParser.scoreToJson(scoreDto);
         if (parsedCommand.getCommand() == Command.END) {
@@ -71,5 +51,36 @@ public class WebChessService {
         }
         return responseObject;
     }
+
+    public static final Route startCommand = (req, res) -> getPiecesAbout(req, "start");
+
+
+    public static final Route moveCommand = (req, res) -> getPiecesAbout(req, "move");
+
+    private static String getPiecesAbout(final Request req, final String rawCommand) {
+        final int userId = req.session().attribute("user-id");
+        ParsedCommand parsedCommand = parseRequestToCommand(rawCommand);
+        if (rawCommand.equals("move")) {
+            parsedCommand = parseRequestToMoveCommand(req);
+        }
+        return doCommandActionAboutPieces(userId, parsedCommand);
+    }
+
+    private static ParsedCommand parseRequestToMoveCommand(final Request req) {
+        final String startPosition = req.queryParams("start");
+        final String endPosition = req.queryParams("end");
+        final String rawCommand = "move" + " " + startPosition + " " + endPosition;
+        return parseRequestToCommand(rawCommand);
+    }
+
+    private static String doCommandActionAboutPieces(final int userId, final ParsedCommand parsedCommand) {
+        final ChessController chess = new ChessController();
+        final PiecesDto piecesDto = chess.doActionAboutPieces(parsedCommand, userId);
+        if (parsedCommand.getCommand() == Command.MOVE) {
+            return JsonParser.getPiecesAndGameStatus(piecesDto);
+        }
+        return JsonParser.makePiecesToJsonArray(piecesDto);
+    }
+
 
 }
