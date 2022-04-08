@@ -4,7 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.domain.game.ChessGame;
-import chess.dto.MoveRequestDto;
+import chess.dto.MoveRequest;
 import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +38,8 @@ public class ChessController {
         });
 
         get("/move", (request, response) -> {
-            MoveRequestDto moveRequestDto = new MoveRequestDto(request);
-            return render(chessService.move(chessGame, boardId.intValue(), moveRequestDto),
+            MoveRequest moveRequest = new MoveRequest(request);
+            return render(chessService.move(chessGame, boardId.intValue(), moveRequest),
                     BOARD_PAGE);
         });
 

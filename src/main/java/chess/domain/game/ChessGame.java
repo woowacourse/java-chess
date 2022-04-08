@@ -5,7 +5,7 @@ import chess.domain.board.Score;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.dto.MoveRequestDto;
+import chess.dto.MoveRequest;
 
 public class ChessGame {
 
@@ -15,10 +15,10 @@ public class ChessGame {
         board = boardGenerator.create();
     }
 
-    public void move(MoveRequestDto moveRequestDto) {
+    public void move(MoveRequest moveRequest) {
         validCheck();
-        board.move(Position.of(moveRequestDto.getFrom())
-                , Position.of(moveRequestDto.getTo()));
+        board.move(Position.of(moveRequest.getFrom())
+                , Position.of(moveRequest.getTo()));
     }
 
     public Score status() {

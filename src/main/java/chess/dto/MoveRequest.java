@@ -2,16 +2,16 @@ package chess.dto;
 
 import spark.Request;
 
-public class MoveRequestDto {
+public class MoveRequest {
     private final String from;
     private final String to;
 
-    public MoveRequestDto(String from, String to) {
+    public MoveRequest(String from, String to) {
         this.from = from;
         this.to = to;
     }
 
-    public MoveRequestDto(Request request) {
+    public MoveRequest(Request request) {
         this(request.queryParams("from"), request.queryParams("to"));
     }
 
