@@ -34,7 +34,6 @@ public class ChessService {
     private GameState getGameState(int roomId) {
         Map<String, String> room = roomDao.findById(roomId);
         if (room == null) {
-            deleteAll(roomId);
             return createGameState(roomId);
         }
         return getGameState(room);
@@ -112,7 +111,7 @@ public class ChessService {
     }
 
     private void deleteAll(int roomId) {
-        boardDao.delete();
+        boardDao.delete(roomId);
         roomDao.delete(roomId);
     }
 

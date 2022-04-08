@@ -51,10 +51,11 @@ public class BoardDao {
         }
     }
 
-    public void delete() {
-        final String sql = "delete from board where room_id = 1";
+    public void delete(int roomId) {
+        final String sql = "delete from board where room_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
