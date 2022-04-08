@@ -62,8 +62,7 @@ public class ChessPieceDao {
     }
 
     public int saveAll(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
-        String sql = "INSERT INTO chess_piece (room_name, position, chess_piece, color) VALUES ";
-        sql += appendSqlParameter(pieceByPosition.size());
+        String sql = createBulkInsertSql(pieceByPosition.size());
 
         try (final PreparedStatement statement = ConnectionGenerator.getStatement(sql)) {
             setAllParameter(roomName, pieceByPosition, statement);
@@ -74,10 +73,10 @@ public class ChessPieceDao {
         return 0;
     }
 
-    private String appendSqlParameter(final int rowSize) {
-        final String values = "(?, ?, ?, ?)";
-        return IntStream.range(0, rowSize)
-                .mapToObj(i -> values)
+    private String createBulkInsertSql(final int rowSize) {
+        return "INSERT INTO chess_piece (room_name, position, chess_piece, color) "
+                + "VALUES " + IntStream.range(0, rowSize)
+                .mapToObj(i -> "(?, ?, ?, ?)")
                 .collect(Collectors.joining(", "));
     }
 
