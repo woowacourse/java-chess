@@ -33,12 +33,11 @@ public class WebController {
         addTurnInformation(model);
         addPlayingInformation(model);
         addScoreInformation(model);
-        addFinish(model);
         return model;
     }
 
     private void addScoreInformation(Map<String, Object> model) {
-        if (chessService.isPlaying()) {
+        if (chessService.isPlayingGame()) {
             StatusResult statusResult = chessService.processStatus();
             model.put("blackscore", statusResult.getBlackScore());
             model.put("whitescore", statusResult.getWhiteScore());
@@ -46,7 +45,7 @@ public class WebController {
     }
 
     private void addBoardInformation(Map<String, Object> model) {
-        model.put("pieces", chessService.getCurrentImages());
+        model.put("pieces", chessService.getBoardInformation());
     }
 
     private void addTurnInformation(Map<String, Object> model) {
@@ -56,19 +55,11 @@ public class WebController {
     }
 
     private void addPlayingInformation(Map<String, Object> model) {
-        if (chessService.isPlaying()) {
-            model.put("start", true);
+        if (chessService.isReadyGame()) {
+            model.put("start", false);
             return;
         }
-        model.put("start", false);
-    }
-
-    private void addFinish(Map<String, Object> model) {
-        if (chessService.isFinish()) {
-            model.put("finish", true);
-            return;
-        }
-        model.put("finish", false);
+        model.put("start", true);
     }
 
     public String move(Request request, Response response) {
@@ -86,7 +77,7 @@ public class WebController {
     }
 
     public String start(Request request, Response response) {
-        chessService.start();
+        chessService.init();
         response.redirect("/");
         return null;
     }

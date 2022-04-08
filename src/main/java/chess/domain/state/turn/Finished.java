@@ -19,6 +19,11 @@ public abstract class Finished implements State {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public final State play(Piece target) {
         throw new IllegalArgumentException(GAME_PLAY_ERROR);
     }

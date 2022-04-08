@@ -15,7 +15,7 @@ public class ChessGameDaoTest {
 
     @BeforeEach
     public void before() {
-        chessGameDao.removeAll();
+        chessGameDao.deleteState();
     }
 
     @Test

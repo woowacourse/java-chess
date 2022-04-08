@@ -8,12 +8,7 @@
 </head>
 
 <body>
-    {{#finish}}
-    <div class="js-container container" style="top:0px !important;">
-    {{/finish}}
-    {{^finish}}
     <div class="container" style="top:0px" !important;">
-    {{/finish}}
         <div id="app">
             <h1>🦝 라쿤의 재미있는 체스 게임 🦝</h1>
 
@@ -21,15 +16,17 @@
                 <h3> 에러가 있어요!! -> {{error}} </h3>
             {{/error}}
 
-            {{^finish}}
+            {{#start}}
                 {{#team}}
                     <h2>현재는 {{team}} 팀의 차례입니다🦝</h2>
                 {{/team}}
-            {{/finish}}
+            {{/start}}
 
-            {{#finish}}
-                <h2>{{team}} 팀의 승리입니다!!</h2>
-            {{/finish}}
+            {{^start}}
+                {{#team}}
+                    <h2>{{team}} 팀의 승리입니다!!</h2>
+                {{/team}}
+            {{/start}}
 
             <h2>🐼검은 팀 : {{blackscore}}</h2>
             <h2>🦝하얀 팀 : {{whitescore}}</h2>

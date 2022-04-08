@@ -9,7 +9,8 @@ public enum TurnMapper {
     BLACKTURN("BlackTurn", BlackTurn::new),
     WHITETURN("WhiteTurn", WhiteTurn::new),
     BLACKWIN("BlackWin", BlackWin::new),
-    WHITEWIN("WhiteWin", WhiteWin::new);
+    WHITEWIN("WhiteWin", WhiteWin::new),
+    END("End", End::new);
 
     private final String name;
     private Supplier<State> supplier;

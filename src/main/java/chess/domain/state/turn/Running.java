@@ -17,6 +17,11 @@ public abstract class Running implements State {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public final State play(final Piece target) {
         if (target.isKing() && team.isBlack()) {
             return new BlackWin();

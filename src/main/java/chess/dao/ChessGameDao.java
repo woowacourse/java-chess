@@ -37,7 +37,7 @@ public class ChessGameDao {
         }
     }
 
-    public void removeAll() {
+    public void deleteState() {
         final String sql = "delete from chessgame";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);){

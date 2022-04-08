@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.Winner;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.state.turn.End;
 import chess.domain.state.turn.State;
 import chess.domain.state.turn.WhiteTurn;
 
@@ -127,5 +128,13 @@ public class Board {
 
     public boolean isFinish() {
         return this.state.isFinished();
+    }
+
+    public void end() {
+        state = new End();
+    }
+
+    public boolean isKingDeath() {
+         return this.state.isFinished() && !this.state.isEnd();
     }
 }
