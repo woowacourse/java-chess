@@ -10,7 +10,7 @@ import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.GameResult;
 import chess.domain.GameTurn;
-import chess.domain.board.InitialBoardGenerator;
+import chess.domain.board.SavedBoardGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.dto.BoardDto;
@@ -22,8 +22,6 @@ public class WebController {
         staticFiles.location("/static");
         port(8080);
 
-
-        ChessGame chessGame = new ChessGame();
         ChessGameDao chessGameDao = new ChessGameDao();
         PieceDao pieceDao = new PieceDao();
 
@@ -38,9 +36,10 @@ public class WebController {
         post("/findgame", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
+            GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
+            ChessGame chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            chessGame.startGame();
             try {
-                chessGameDao.loadAndStartGame(gameID, chessGame);
-
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 model.putAll(boardDto.getBoard());
                 model.put("gameID", gameID);
@@ -60,10 +59,11 @@ public class WebController {
 
         get("/ingame", (request, response) -> {
             String gameID = request.queryParams("gameID");
+            GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
+            ChessGame chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            chessGame.startGame();
 
             chessGameDao.save(gameID, chessGame);
-
-            chessGame.startGame(new InitialBoardGenerator(), GameTurn.WHITE);
             chessGameDao.updateTurn(gameID, chessGame);
 
             pieceDao.deleteAll(gameID);
@@ -84,6 +84,10 @@ public class WebController {
             String source = request.queryParams("source");
             String target = request.queryParams("target");
 
+            GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
+            ChessGame chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            chessGame.startGame();
+
             try {
                 chessGame.move(new Square(source), new Square(target));
                 pieceDao.deleteByPosition(new Square(target));
@@ -96,6 +100,8 @@ public class WebController {
                 model.put("gameID", gameID);
                 model.put("message", "누가 이기나 보자구~!");
             } catch (IllegalArgumentException e) {
+                BoardDto boardDto = new BoardDto(chessGame.getBoard());
+                model.putAll(boardDto.getBoard());
                 model.put("message", e.getMessage());
             }
             if (chessGame.isKingDie()) {
@@ -108,6 +114,11 @@ public class WebController {
         get("/status", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
+
+            GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
+            ChessGame chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            chessGame.startGame();
+
             GameResult gameResult = new GameResult(chessGame.getBoard());
             model.put("gameID", gameID);
             model.put("whiteScore", gameResult.calculateScore(Color.WHITE));

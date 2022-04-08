@@ -10,13 +10,14 @@ public final class ChessGame {
     private Board board;
     private GameTurn turn;
 
-    public ChessGame() {
-        this.turn = GameTurn.READY;
-    }
-
-    public void startGame(BoardGenerator boardGenerator, GameTurn gameTurn) {
+    public ChessGame(BoardGenerator boardGenerator, GameTurn gameTurn) {
         this.board = new Board(boardGenerator);
         this.turn = gameTurn;
+    }
+
+    public void startGame() {
+        if (turn.equals(GameTurn.READY))
+        this.turn = GameTurn.WHITE;
     }
 
     public void move(Square source, Square target) {
