@@ -1,6 +1,8 @@
 package chess.dto;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class PieceDto {
@@ -30,5 +32,9 @@ public class PieceDto {
 
     public String getPosition() {
         return position;
+    }
+
+    public Piece toPiece() {
+        return PieceFactory.of(type, Team.of(team));
     }
 }
