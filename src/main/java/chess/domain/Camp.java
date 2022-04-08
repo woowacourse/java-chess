@@ -11,4 +11,8 @@ public enum Camp {
         }
         return WHITE;
     }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }

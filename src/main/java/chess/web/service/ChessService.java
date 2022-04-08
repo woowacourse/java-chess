@@ -52,7 +52,7 @@ public class ChessService {
             if (chessGame.isRunning()) {
                 setCurrentStateToModelMessage(model);
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
-                model.put("camp", chessGame.getCamp());
+                model.put("isWhite", chessGame.getCamp().isWhite());
 
                 // status요청이 아니라 항상 status를 같이 반환하도록 수정
 //                OutputView.printStatus(calculateStatus());
@@ -65,7 +65,7 @@ public class ChessService {
 //            }
             if (isEndInRunning()) {
                 model.put("message", "현재 게임이 종료되었습니다.");
-                model.put("camp", chessGame.getCamp());
+                model.put("isWhite", chessGame.getCamp().isWhite());
                 model.put("status", chessGame.calculateStatus());
                 model.put("isRunning", false);
                 chessGame.ready();

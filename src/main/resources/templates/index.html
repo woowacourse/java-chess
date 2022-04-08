@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/css/chess.css"/>
     <meta charset="UTF-8">
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
     />
     <link rel="stylesheet" href="/css/chess.css">
-    <link
-            href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-            rel="stylesheet" type='text/css'>
+    <script
+            src="https://kit.fontawesome.com/f92cdbaedc.js"
+            crossorigin="anonymous"
+    ></script>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <title>포돌이 체스에 오신 것을 환영합니다.</title>
+    <style>
+        .fake-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .click-button {
+        }
+    </style>
 </head>
 
 <body>
@@ -22,41 +33,90 @@
                 <a href="/">포돌이 체스</a>
             </div>
             <div class="head-start">
-                <a href="/game">시작하기</a>
+                <a href="https://github.com/is2js/java-chess/tree/step2">깃허브</a>
             </div>
         </div>
     </div>
 </header>
+
+<!-- button section -->
 <section>
-    <section>
-        <div class="inner">
-            <div class="skill-container">
-                <div class="skill">
-                    <i class="fa-solid fa-play skill-icon play-style"></i>
-                    <div class="skill-title">
-                        <div class="skill-name">방 목록보기</div>
-                        <div class="skill-usage">Select</div>
-                    </div>
+    <div class="inner">
+        <div class="title"><h1>포돌이 체스를 시작합니다</h1></div>
+        <div class="user-container">
+            <div class="skill">
+                <i class="fas fa-plus skill-icon create-style"></i>
+                <div class="skill-title">
+                    <div class="skill-name">방 생성</div>
+                    <div class="skill-usage">Create</div>
                 </div>
-                <div class="skill">
-                    <i class="fa-solid fa-play skill-icon play-style"></i>
-                    <div class="skill-title">
-                        <div class="skill-name">방 생성하기</div>
-                        <div class="skill-usage">Create</div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <i class="fa-solid fa-play skill-icon play-style"></i>
-                    <div class="skill-title">
-                        <div class="skill-name">기록보기</div>
-                        <div class="skill-usage">History</div>
-                    </div>
+            </div>
+            <div class="skill">
+                <i class="far fa-clipboard skill-icon history-style"></i>
+                <div class="skill-title">
+                    <div class="skill-name">지난 기록</div>
+                    <div class="skill-usage">History</div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
 </section>
+
+<!-- room section -->
+<section>
+    <div class="inner">
+        <!--rooms(title + room list)-->
+        <div class="roadmap-container">
+            <!--rooms title container(title + arrow)-->
+            <div class="roadmap-title-container">
+                <!--room title -->
+                <div class="roadmap-title">
+                    <!--room list -->
+                    <ul class="class-list">
+                        <!--first room -->
+                        <li class="class-card">
+                            <!--room image-->
+                            <img alt="room" class="class-image"
+                                 src="img/room.jpg"/>
+                            <!--room content-->
+                            <div class="class-container">
+                                <!--room id & join -->
+                                <div class="class-skill">
+                                    <div class="class-type"> 1</div>
+                                    <div class="class-join">입장</div>
+                                </div>
+                                <!--room title-->
+                                <div class="class-title">랜덤한 d</div>
+                            </div>
+
+                        </li>
+                        <!-- 2nd room -->
+                        <li class="class-card">
+                            <img alt="room" class="class-image"
+                                 src="https://raw.githubusercontent.com/is2js/screenshots/main/208021580082.jpg"/>
+                        </li>             <!-- 2nd room -->
+                        <li class="class-card">
+                            <img alt="room" class="class-image"
+                                 src="https://raw.githubusercontent.com/is2js/screenshots/main/208021580082.jpg"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="fake-container">
+    <!--    <div class="skill" value="start" onclick="location.href='/game.html';">-->
+    <div class="skill" onclick="postCommand('/', 'start');">
+        <i class="far fa-play-circle skill-icon start-style"></i>
+        <div class="skill-title">
+            <div class="skill-name">막 시작하기</div>
+            <div class="skill-usage">command start</div>
+        </div>
+    </div>
+</div>
+
 <footer></footer>
 
 <script src="/js/chess.js"></script>

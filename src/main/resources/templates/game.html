@@ -1,118 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/css/chess.css"/>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/game.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="/css/chess.css">
+    <script
+            src="https://kit.fontawesome.com/f92cdbaedc.js"
+            crossorigin="anonymous"
+    ></script>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <title>포돌이 체스</title>
-
+    <title>포돌이 체스에 오신 것을 환영합니다.</title>
 </head>
-
 <body>
+<!--header-->
+<header>
+    <div class="inner">
+        <div class="head-container">
+            <div class="head-brand">
+                <a href="/">포돌이 체스</a>
+            </div>
+            <div class="head-start">
+                <a href="https://github.com/is2js/java-chess/tree/step2">깃허브</a>
+            </div>
+        </div>
+    </div>
+</header>
 
-</script>
-<h3>포돌이 체스 방에 오신 것을 환영합니다.</h3>
+<!-- status section -->
+<section>
+    <div class="inner">
+        <div class="title"><h1>포돌이 체스를 진행합니다</h1></div>
+        <div class="user-container">
+            {{#status}}
+            <div class="user">
+                <i class="far fa-user user-icon"></i>
+                <div class="skill-title">
+                    <div class="skill-name">White(포키)</div>
+                    <div class="skill-usage">💯 {{white}}</div>
+                </div>
+            </div>
+            <div class="turn">
+                {{#isRunning }}
+                {{#if isWhite}}
+                <i class="far fa-hand-point-left turn-style"></i>
+                {{else}}
+                <i class="far fa-hand-point-right turn-style"></i>
+                {{/if}}
+                {{else}}
+                <strong class="message">{{gameResultMessage}} </strong>
+                {{/isRunning}} </p>
+            </div>
+            <div class="user">
+                <i class="fas fa-user-alt user-icon"></i>
+                <div class="skill-title">
+                    <div class="skill-name">Black(이스트)</div>
+                    <div class="skill-usage">💯 {{black}}</div>
+                </div>
+            </div>
+            {{/status}}
+        </div>
+        <div class="skill-container">
+            <div class="message-container">
+                🔊
+                <div class="message-title">
+                    <div class="skill-name">{{#message}} {{message}} {{else}} 현재 게임 시작을 안했습니다. {{/message}}</div>
+                    {{#if hasError }}
+                    <div class="message-error"> {{errorMessage}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-{{#isRunning }}
-<form action="/end" method="post">
-    <input name="command" value="end" type="hidden">
-    <input name="end" type="submit" value="종료">
-</form>
-{{else}}
-<form action="/start" method="post">
-    <input name="command" value="start" type="hidden">
-    <input id="start-form" name="start" type="submit" value="시작하기">
-</form>
-{{/isRunning}}
 
-
-<p>🔊 포돌이 알리미:
-    {{#if hasError }}
-    <strong class="message"> {{errorMessage}} </strong>
-    {{else}}
-    <strong class="check">{{message}}</strong>
-    {{/if}}
-</p>
-
-{{#status}}
-<p>💯 점수: White({{white}}) | Black({{black}})</p>
-<p>✔ TURN : {{#isRunning }} {{camp}} {{else}} <strong class="message">{{gameResultMessage}} </strong> {{/isRunning}} </p>
-{{/status}}
+<!-- board section -->
 {{#board}}
-<div class="chessboard">
-    <!-- 1st -->
-    <div class="cell white-cell"><img id="a8" src="img/{{a8}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="b8" src="img/{{b8}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="c8" src="img/{{c8}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="d8" src="img/{{d8}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="e8" src="img/{{e8}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="f8" src="img/{{f8}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="g8" src="img/{{g8}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="h8" src="img/{{h8}}.svg" class="piece-image"/></div>
-    <!-- 2nd -->
-    <div class="cell black-cell"><img id="a7" src="img/{{a7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="b7" src="img/{{b7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="c7" src="img/{{c7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="d7" src="img/{{d7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="e7" src="img/{{e7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="f7" src="img/{{f7}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="g7" src="img/{{g7}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="h7" src="img/{{h7}}.svg" class="piece-image"/></div>
-    <!-- 3th -->
-    <div class="cell white-cell"><img id="a6" src="img/{{a6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="b6" src="img/{{b6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="c6" src="img/{{c6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="d6" src="img/{{d6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="e6" src="img/{{e6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="f6" src="img/{{f6}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="g6" src="img/{{g6}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="h6" src="img/{{h6}}.svg" class="piece-image"/></div>
-    <!-- 4st -->
-    <div class="cell black-cell"><img id="a5" src="img/{{a5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="b5" src="img/{{b5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="c5" src="img/{{c5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="d5" src="img/{{d5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="e5" src="img/{{e5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="f5" src="img/{{f5}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="g5" src="img/{{g5}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="h5" src="img/{{h5}}.svg" class="piece-image"/></div>
-    <!-- 5th -->
-    <div class="cell white-cell"><img id="a4" src="img/{{a4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="b4" src="img/{{b4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="c4" src="img/{{c4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="d4" src="img/{{d4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="e4" src="img/{{e4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="f4" src="img/{{f4}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="g4" src="img/{{g4}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="h4" src="img/{{h4}}.svg" class="piece-image"/></div>
-    <!-- 6th -->
-    <div class="cell black-cell"><img id="a3" src="img/{{a3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="b3" src="img/{{b3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="c3" src="img/{{c3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="d3" src="img/{{d3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="e3" src="img/{{e3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="f3" src="img/{{f3}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="g3" src="img/{{g3}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="h3" src="img/{{h3}}.svg" class="piece-image"/></div>
-    <!-- 7th -->
-    <div class="cell white-cell"><img id="a2" src="img/{{a2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="b2" src="img/{{b2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="c2" src="img/{{c2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="d2" src="img/{{d2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="e2" src="img/{{e2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="f2" src="img/{{f2}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="g2" src="img/{{g2}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="h2" src="img/{{h2}}.svg" class="piece-image"/></div>
-    <!-- 8th -->
-    <div class="cell black-cell"><img id="a1" src="img/{{a1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="b1" src="img/{{b1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="c1" src="img/{{c1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="d1" src="img/{{d1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="e1" src="img/{{e1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="f1" src="img/{{f1}}.svg" class="piece-image"/></div>
-    <div class="cell black-cell"><img id="g1" src="img/{{g1}}.svg" class="piece-image"/></div>
-    <div class="cell white-cell"><img id="h1" src="img/{{h1}}.svg" class="piece-image"/></div>
-</div>
+<section>
+    <div class="inner">
+        <!--button-->
+        <div class="button-container">
+            <form action="/end" method="post">
+                <input name="command" value="end" type="hidden">
+                <input class="form" name="end" type="submit" value="종료">
+            </form>
+            <form action="/restart" method="post">
+                <input name="command" value="start" type="hidden">
+                <input class="form" name="restart" type="submit" value="재시작">
+            </form>
+        </div>
+        <!--board-->
+        <div class="board-container">
+            <!--rows-->
+            <div class="board-row-container">
+                <!--row = columns-->
+                <ul class="board-column-list">
+                    <li class="board-column board-column-white"><img class="piece-image" id="a8" src="img/{{a8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="b8" src="img/{{b8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="c8" src="img/{{c8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="d8" src="img/{{d8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="e8" src="img/{{e8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="f8" src="img/{{f8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="g8" src="img/{{g8}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="h8" src="img/{{h8}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-black"><img class="piece-image" id="a7" src="img/{{a7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="b7" src="img/{{b7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="c7" src="img/{{c7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="d7" src="img/{{d7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="e7" src="img/{{e7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="f7" src="img/{{f7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="g7" src="img/{{g7}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="h7" src="img/{{h7}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-white"><img class="piece-image" id="a6" src="img/{{a6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="b6" src="img/{{b6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="c6" src="img/{{c6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="d6" src="img/{{d6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="e6" src="img/{{e6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="f6" src="img/{{f6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="g6" src="img/{{g6}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="h6" src="img/{{h6}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-black"><img class="piece-image" id="a5" src="img/{{a5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="b5" src="img/{{b5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="c5" src="img/{{c5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="d5" src="img/{{d5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="e5" src="img/{{e5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="f5" src="img/{{f5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="g5" src="img/{{g5}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="h5" src="img/{{h5}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-white"><img class="piece-image" id="a4" src="img/{{a4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="b4" src="img/{{b4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="c4" src="img/{{c4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="d4" src="img/{{d4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="e4" src="img/{{e4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="f4" src="img/{{f4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="g4" src="img/{{g4}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="h4" src="img/{{h4}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-black"><img class="piece-image" id="a3" src="img/{{a3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="b3" src="img/{{b3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="c3" src="img/{{c3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="d3" src="img/{{d3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="e3" src="img/{{e3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="f3" src="img/{{f3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="g3" src="img/{{g3}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="h3" src="img/{{h3}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-white"><img class="piece-image" id="a2" src="img/{{a2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="b2" src="img/{{b2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="c2" src="img/{{c2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="d2" src="img/{{d2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="e2" src="img/{{e2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="f2" src="img/{{f2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="g2" src="img/{{g2}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="h2" src="img/{{h2}}.svg"/>
+                    </li>
+                </ul>
+                <ul class="board-column-list">
+                    <li class="board-column board-column-black"><img class="piece-image" id="a1" src="img/{{a1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="b1" src="img/{{b1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="c1" src="img/{{c1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="d1" src="img/{{d1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="e1" src="img/{{e1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="f1" src="img/{{f1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-black"><img class="piece-image" id="g1" src="img/{{g1}}.svg"/>
+                    </li>
+                    <li class="board-column board-column-white"><img class="piece-image" id="h1" src="img/{{h1}}.svg"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 {{/board}}
 
 

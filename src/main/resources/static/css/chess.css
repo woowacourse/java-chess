@@ -2,13 +2,18 @@
     box-sizing: border-box;
 }
 
-* {
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-}
 
 body {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     margin: 0 auto;
     color: #152447;
+    background-color: #fefbf7;
+}
+
+section {
+    width: 100%;
+    background-color: #fefbf7;
+    position: relative;
 }
 
 a {
@@ -17,29 +22,33 @@ a {
 
 a:link {
     text-decoration: none;
-    color: #fa8283;
+    color: #152246;
 }
 
 a:visited {
     text-decoration: none;
-    color: #fa8283;
+    color: #152246FF;
 }
 
 a:active {
     text-decoration: none;
-    color: #fa8283;
+    color: #152246FF;
 }
 
 a:hover {
     text-decoration: none;
-    color: #fa8283;
+    color: #152246FF;
 }
 
 .inner {
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    padding: 0.3rem;
+    overflow: hidden;
 }
+
+/*text-align: center;*/
 
 @media only screen and (min-width: 1200px) {
     .inner {
@@ -50,16 +59,15 @@ a:hover {
 header {
     width: 100%;
     height: 63px;
-    /*position: fixed;*/
-    top: 0;
-    left: 0;
-    /*z-index: 1000;*/
 }
 
 .head-container {
     width: 100%;
     height: 100%;
     display: flex;
+
+    justify-content: space-between;
+    align-items: center;
 }
 
 .head-container {
@@ -73,11 +81,14 @@ header {
 .head-container .head-brand {
     font-weight: bold;
     font-size: 1.2rem;
+    margin: 2rem;
 }
 
 .head-container .head-start {
     font-weight: bold;
     font-size: 1.2rem;
+    margin: 2rem;
+
 }
 
 
@@ -87,6 +98,16 @@ header {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 1rem;
+}
+
+.user-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
 }
 
 .skill {
@@ -97,6 +118,7 @@ header {
     border-radius: 9px;
     padding: 0.5rem 1rem;
     margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
 
 .skill-icon {
@@ -104,18 +126,24 @@ header {
     margin: 0 7px;
 }
 
+.create-style {
+    color: #65abff;
+}
+
+.history-style {
+    color: #efd81d;
+}
+
+.start-style {
+    color: #3fb27f;
+}
+
 .skill-title {
     display: flex;
     flex-direction: column;
     align-content: center;
-}
 
-.skill-icon {
-    font-size: 2.5rem;
-}
-
-.play-style {
-    color: #e29765;
+    margin: 0 1rem;
 }
 
 .skill-name {
@@ -131,47 +159,216 @@ header {
 
 /*텍스트*/
 .message {
+    width: 100%;
     font-weight: bold;
     color: #ff5b5b;
 }
 
-.check {
+.roadmap-container {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.roadmap-title-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roadmap-title {
+    font-size: 1.3rem;
     font-weight: bold;
-    color: #2a4cfd;
+    color: #152447;
 }
 
-.chessboard {
-    width: 640px;
-    height: 640px;
-    margin: 20px;
-    border: 25px solid #806253;
+.slide-prev {
+    font-size: 1.5rem;
 }
 
-.cell {
-    float: left;
-    width: 80px;
-    height: 80px;
-    font-size: 50px;
+.slide-next {
+    font-size: 1.5rem;
+}
+
+.arrow-container {
+    display: flex;
+}
+
+.class-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+}
+
+.class-card {
+    width: 150px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+    border-radius: 8px;
+    margin: 0 10px;
+    background-color: #ffffff;
+}
+
+.class-image {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    height: 103px;
+}
+
+.class-container {
+    width: 100%;
+    padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.class-skill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*board*/
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.button-form-container {
+    width: 20px;
+    margin-top: 0.5rem;
+}
+
+.board-container {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1.0rem;
+}
+
+.board-row-container {
+    width: 100%;
+}
+
+.board-column-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0rem;
+    justify-content: center;
+}
+
+.board-column {
+    width: 70px;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+    border-radius: 4px;
+    margin: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-column-white {
+    background-color: papayawhip;
+}
+
+.board-column-black {
+    background-color: #ccb1a8;
+}
+
+.class-type {
+    font-size: 0.9rem;
+    color: #152246FF;
+}
+
+.class-join {
+    font-size: 0.9rem;
+    color: #f44a32;
+    background-color: rgba(244, 74, 50, 0.15);
+    padding: 0.2rem;
+}
+
+.class-title {
+    font-size: 1.2rem;
+    width: 100%;
+    margin-top: 1rem;
+    line-height: 1.6rem;
+}
+
+.user-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.user {
+    width: 220px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+
+.user-icon {
+    font-size: 2.0rem;
+    margin: 0 3px;
+}
+
+.turn-style {
+    font-size: 1.5rem;
+    color: #152246;
+    margin: 0 2rem;
+}
+
+.message-container {
+    width: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+
+.message-error {
+    font-size: 0.9rem;
+    margin-top: 0.7rem;
+    color: red;
+}
+
+.message-title {
+    width: 100%;
+    margin-left: 2rem;
+}
+
+.form {
+    font-size: 1rem;
+    color: #152246;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 2px solid #152246;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+
+    margin: 0 1rem;
+}
+
+.title {
     text-align: center;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.black-cell {
-    background-color: #806253;
-}
-
-.white-cell {
-    background-color: #f5eedf;
-    font-size: 50px;
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
 }
 
 .piece-image {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     text-align: center;
     vertical-align: middle;
 }
