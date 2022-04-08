@@ -17,28 +17,38 @@ public class ConsoleController2 {
     private final OutputView outputView = new OutputView();
 
     public Game run(Game game, Command command) {
+        try {
+            game = processCommand(game, command);
+        } catch (Exception e) {
+            OutputView.print(e.getMessage());
+        }
+        return game;
+    }
+
+    private Game processCommand(Game game, Command command) {
         game = updateGameOnInitOrMoveCommand(game, command);
-        printCurrentBoardView(game);
         printResultOnStatusCommand(game, command);
         exitOnEndCommand(command);
+
         return game;
     }
 
     private Game updateGameOnInitOrMoveCommand(Game game, Command command) {
         if (command.hasTypeOf(CommandType.INIT)) {
-            game = game.play(new InitEvent());
-
+            game = updateAndPrintCurrentBoardView(game, new InitEvent());
         }
         if (command.hasTypeOf(CommandType.MOVE)) {
             Event moveEvent = new MoveEvent(command.toMoveRoute());
-            game = game.play(moveEvent);
+            game = updateAndPrintCurrentBoardView(game, moveEvent);
         }
         return game;
     }
 
-    private void printCurrentBoardView(Game game) {
+    private Game updateAndPrintCurrentBoardView(Game game, Event moveEvent) {
+        game = game.play(moveEvent);
         ConsoleBoardViewDto boardView = game.toConsoleView();
         outputView.printBoard(boardView);
+        return game;
     }
 
     private void printResultOnStatusCommand(Game game, Command command) {
