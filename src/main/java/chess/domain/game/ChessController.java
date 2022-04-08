@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.dao.ChessConnectionManager;
 import chess.dao.Member;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;

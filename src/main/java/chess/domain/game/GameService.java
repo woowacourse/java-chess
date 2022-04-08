@@ -27,9 +27,9 @@ public final class GameService {
     private final PieceDao pieceDao;
 
     public GameService() {
-        boardDao = new BoardDao(new ChessConnectionManager());
-        positionDao = new PositionDao(new ChessConnectionManager());
-        pieceDao = new PieceDao(new ChessConnectionManager());
+        this.boardDao = new BoardDao(new ChessConnectionManager());
+        this.positionDao = new PositionDao(new ChessConnectionManager());
+        this.pieceDao = new PieceDao(new ChessConnectionManager());
     }
 
     public Board saveBoard(final Board board, final Initializer initializer) {
