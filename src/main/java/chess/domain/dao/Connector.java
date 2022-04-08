@@ -1,5 +1,6 @@
 package chess.domain.dao;
 
+import chess.domain.dto.ResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class Connector {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             logger.error(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -28,8 +30,8 @@ public class Connector {
             return DriverManager.getConnection(url, USER, PASSWORD);
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
-        return null;
     }
 
 }

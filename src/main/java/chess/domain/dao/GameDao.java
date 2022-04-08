@@ -11,7 +11,6 @@ import java.sql.*;
 public class GameDao {
 
     private static final int EMPTY_RESULT = 0;
-    private static final int UNEXPECTED_ERROR_VALUE = 0;
     private final Connection connection;
     private int gameId = 0;
     private Connector connector = new Connector();
@@ -32,10 +31,10 @@ public class GameDao {
             statement.executeUpdate();
             statement.close();
             return gameId;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (Exception throwables) {
+            logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return UNEXPECTED_ERROR_VALUE;
     }
 
     private PreparedStatement makeSaveStatements(ChessBoard chessBoard, String sql) {
@@ -45,10 +44,10 @@ public class GameDao {
             statement.setBoolean(2, chessBoard.compareStatus(Status.PLAYING));
             statement.setString(3, chessBoard.getCurrentTurn().name());
             return statement;
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return null;
     }
 
     public int findLastGameId() {
@@ -56,14 +55,14 @@ public class GameDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet result = statement.executeQuery();
-            if (!result.next()) {
+           if (!result.next()) {
                 return EMPTY_RESULT;
             }
             return result.getInt("id");
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return UNEXPECTED_ERROR_VALUE;
     }
 
     public GameDto findById(int id) {
@@ -80,10 +79,10 @@ public class GameDao {
                     result.getBoolean("status"),
                     result.getString("turn")
             );
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return null;
     }
 
     public int delete() {
@@ -95,9 +94,9 @@ public class GameDao {
             statement.executeUpdate();
             statement.close();
             return lastGameid;
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return UNEXPECTED_ERROR_VALUE;
     }
 }

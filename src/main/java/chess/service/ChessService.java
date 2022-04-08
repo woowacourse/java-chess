@@ -28,29 +28,43 @@ public class ChessService {
 
     private ChessBoard chessBoard = null;
 
-    public void start() {
-        int lastGameId = gameDao.findLastGameId();
-        if (isNotSaved(lastGameId)) {
-            chessBoard = ChessBoardFactory.initBoard();
-            chessBoard.changeStatus(new Playing());
-            return;
+    public ResponseDto start() {
+        try {
+            int lastGameId = gameDao.findLastGameId();
+            if (isNotSaved(lastGameId)) {
+                return makeNewGame();
+            }
+            loadLastGame(lastGameId);
+        } catch (IllegalArgumentException e) {
+            return new ResponseDto(500, e.getMessage());
         }
-        loadLastGame(lastGameId);
+        return new ResponseDto(200, null);
     }
 
     private boolean isNotSaved(int lastGameId) {
         return lastGameId == EMPTY_RESULT;
     }
 
-    public void save() {
-        int gameId = gameDao.save(chessBoard);
-        for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
-            boardDao.save(
-                    gameId,
-                    getPosition(entry),
-                    getPiece(entry),
-                    getColor(entry));
+    private ResponseDto makeNewGame() {
+        chessBoard = ChessBoardFactory.initBoard();
+        chessBoard.changeStatus(new Playing());
+        return new ResponseDto(200, null);
+    }
+
+    public ResponseDto save() {
+        try{
+            int gameId = gameDao.save(chessBoard);
+            for (Map.Entry<String, ChessPiece> entry : chessBoard.convertToMap().entrySet()) {
+                boardDao.save(
+                        gameId,
+                        getPosition(entry),
+                        getPiece(entry),
+                        getColor(entry));
+            }
+        } catch (IllegalArgumentException e){
+            return new ResponseDto(500, e.getMessage());
         }
+        return new ResponseDto(200, null);
     }
 
     private String getPosition(Map.Entry<String, ChessPiece> entry) {
@@ -99,10 +113,15 @@ public class ChessService {
                 .collect(Collectors.toMap(m -> m.getKey().name(), Map.Entry::getValue));
     }
 
-    public void end() throws SQLException {
-        chessBoard.changeStatus(new End());
-        boardDao.delete(gameDao.findLastGameId());
-        gameDao.delete();
+    public ResponseDto end() throws SQLException {
+        try{
+            chessBoard.changeStatus(new End());
+                    boardDao.delete(gameDao.findLastGameId());
+                    gameDao.delete();
+        } catch (IllegalArgumentException e){
+            return new ResponseDto(500, e.getMessage());
+        }
+        return new ResponseDto(200, null);
     }
 
     public String findWinner() {

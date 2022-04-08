@@ -43,9 +43,8 @@ public class WebChessController {
 
     private void start() {
         post("/start", (req, res) -> {
-            chessService.start();
-            res.redirect("/play");
-            return null;
+            ResponseDto response = chessService.start();
+            return convertToJson(response.convertToString());
         });
     }
 

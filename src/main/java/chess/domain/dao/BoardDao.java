@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BoardDao {
 
     private static final int EMPTY_RESULT = 0;
@@ -33,6 +32,7 @@ public class BoardDao {
             statement.close();
         } catch (SQLException throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
     }
 
@@ -55,8 +55,8 @@ public class BoardDao {
             return makePieceList(result);
         } catch (SQLException throwables) {
             logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
-        return null;
     }
 
     private List<PieceDto> makePieceList(ResultSet result) throws SQLException {
@@ -77,6 +77,10 @@ public class BoardDao {
             return;
         }
 
+        runDelete(gameId);
+    }
+
+    private void runDelete(int gameId) {
         final String sql = "delete from Board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -84,7 +88,8 @@ public class BoardDao {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error(throwables.getMessage());
+            throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
         }
     }
 

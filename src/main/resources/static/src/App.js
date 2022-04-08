@@ -1,6 +1,42 @@
 let source = null;
 let target = null;
 
+function start() {
+    fetch('/start', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(null)
+    }).then(response => response.json())
+    .then(response => {
+        if (parseInt(response.status) !== 200) {
+            alert(response.message);
+            location.replace("/");
+        }
+        location.replace("/play");
+    });
+}
+
+function end() {
+    fetch('/end', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(null)
+    }).then(response => response.json())
+    .then(response => {
+        if (parseInt(response.status) !== 200) {
+            alert(response.message);
+            return;
+        }
+        location.replace("/");
+    });
+}
+
 function selectBlock(id) {
     if (source == null) {
         source = id;

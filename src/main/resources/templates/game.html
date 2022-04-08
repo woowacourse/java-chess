@@ -11,11 +11,9 @@
 <script src="/src/App.js" type="text/javascript"></script>
 {{^play}}
 <div class="button">
-    <form action="/start" id="start" method="post">
-        <button name="start" type="submit">
+        <button name="start" onclick="start()">
             Start
         </button>
-    </form>
 </div>
 {{/play}}
 {{#play}}
@@ -28,11 +26,9 @@
 </div>
 
 <div class="button">
-    <form action="/end" id="end" method="get">
-        <button name="end" type="submit">
+        <button name="end" onclick="end()">
             End
         </button>
-    </form>
 </div>
 
 <div class="button">
