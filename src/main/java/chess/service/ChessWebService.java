@@ -16,6 +16,7 @@ import chess.dto.MoveCommand;
 import chess.dto.MoveResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessWebService {
 
@@ -35,9 +36,15 @@ public class ChessWebService {
         return Ready.continueOf(color, BOARD_DAO.findAllByGameNumber(gameNumber));
     }
 
-    public Board getBoard(int gameNumber) {
+    public Map<String, Object> getModelWithBoard(int gameNumber) {
         State state = getState(gameNumber);
-        return state.getBoard();
+        return toModelMap(state.getBoard());
+    }
+
+    private Map<String, Object> toModelMap(Board board) {
+        return board.getValue().entrySet()
+                .stream()
+                .collect(Collectors.toMap(e -> e.getKey().getStringValue(), Map.Entry::getValue));
     }
 
     public ApiResult getStatus(int gameNumber) {
@@ -66,7 +73,8 @@ public class ChessWebService {
             state = state.movePiece(source, destination);
             updatePiece(source, destination, gameNumber);
             updateTurn(state.getTurn(), gameNumber);
-            return ApiResult.succeed(new MoveResponse(command.getSource(), command.getDestination(), isFinished(state)));
+            return ApiResult
+                    .succeed(new MoveResponse(command.getSource(), command.getDestination(), isFinished(state)));
         } catch (RuntimeException e) {
             return ApiResult.failed(e.getMessage());
         }

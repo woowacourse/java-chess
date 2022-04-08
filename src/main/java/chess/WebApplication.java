@@ -39,8 +39,7 @@ public class WebApplication {
 
         get("/room/:gameNumber", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            Map<String, Object> model = service.getBoard(gameNumber)
-                    .toMap();
+            Map<String, Object> model = service.getModelWithBoard(gameNumber);
             model.put("gameNumber", gameNumber);
             return render(model, "board.html");
         });

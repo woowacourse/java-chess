@@ -155,10 +155,4 @@ public class Board {
     public boolean hasKing(Color color) {
         return value.containsValue(new King(color));
     }
-
-    public Map<String, Object> toMap() {
-        return value.entrySet()
-                .stream()
-                .collect(Collectors.toMap(e -> e.getKey().getStringValue(), Map.Entry::getValue));
-    }
 }
