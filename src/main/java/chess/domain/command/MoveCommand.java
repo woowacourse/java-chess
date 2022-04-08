@@ -53,11 +53,11 @@ public class MoveCommand extends Command {
     }
 
     private List<Position> positions(String sourceInput, String targetInput) {
-        final int sourceFile = inputToFile(sourceInput.charAt(FILE_INDEX));
-        final int sourceRank = inputToRank(sourceInput.charAt(RANK_INDEX));
+        final int sourceFile = inputToPositionValue(sourceInput.charAt(FILE_INDEX));
+        final int sourceRank = inputToPositionValue(sourceInput.charAt(RANK_INDEX));
 
-        final int targetFile = inputToFile(targetInput.charAt(FILE_INDEX));
-        final int targetRank = inputToRank(targetInput.charAt(RANK_INDEX));
+        final int targetFile = inputToPositionValue(targetInput.charAt(FILE_INDEX));
+        final int targetRank = inputToPositionValue(targetInput.charAt(RANK_INDEX));
 
         Position source = Position.of(sourceFile, sourceRank);
         Position target = Position.of(targetFile, targetRank);
@@ -69,7 +69,7 @@ public class MoveCommand extends Command {
         return input - '`';
     }
 
-    private int inputToRank(char input) {
+    private int inputToPositionValue(char input) {
         return Character.getNumericValue(input);
     }
 

@@ -9,12 +9,11 @@ import java.util.List;
 public final class End implements State {
 
     public End() {
-        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
     public State start() {
-        throw new IllegalArgumentException("End 상태에서는 start할 수 없습니다.");
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
@@ -24,7 +23,7 @@ public final class End implements State {
 
     @Override
     public boolean isGameOver() {
-        throw new IllegalArgumentException("게임이 종료되었습니다.");
+        return true;
     }
 
     @Override

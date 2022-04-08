@@ -8,4 +8,9 @@ public class EndCommand extends Command {
     public State changeChessState(final State state) {
         return state.end();
     }
+
+    @Override
+    public String toString() {
+        return "EndCommand{}";
+    }
 }

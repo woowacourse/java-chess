@@ -2,9 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chess</title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script type="text/javascript" src="/src/index.js"></script>
 </head>
-<body>
-Hello World!!
-</body>
+    <body>
+    <div align="center">
+        <h1>Play Chess!</h1>
+        <table class="chess-board">
+            {{#board}}
+            {{#cells}}
+         <tr>
+                {{#this}}
+             <td id="{{position}}" class="{{background}}"  onclick="clicked(this.id)">
+                 <img src="images/{{symbol}}.png" style="width:7vw; height: 7vw;"/>
+             </td>
+                {{/this}}
+         </tr>
+            {{/cells}}
+            {{/board}}
+        </table>
+        <br />
+        <form action="/status" method="get">
+            <button>점수</button>
+        </form>
+
+        <br />
+
+        <div class="score">
+            {{#each score}}
+            <h1> {{@key}} : {{this}} </h1>
+            {{/each}}
+        </div>
+
+        <form action="/save" method="post">
+            <button onclick="alert('게임이 저장되었습니다.')"> 게임저장 </button>
+        </form>
+
+        <br />
+
+        <form action="/find" method="post">
+            <button onclick="alert('가장 최근 게임을 불러옵니다.')"> 최신 게임 불러오기 </button>
+        </form>
+
+        <br />
+
+        <form action="/end" method="get">
+            <button> 게임종료 </button>
+        </form>
+    </div>
+    </body>
 </html>
