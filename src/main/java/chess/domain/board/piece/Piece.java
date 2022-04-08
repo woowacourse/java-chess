@@ -1,7 +1,7 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.position.Position;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public abstract class Piece {
@@ -50,16 +50,11 @@ public abstract class Piece {
 
     private static class PieceCache {
 
-        static final int CACHE_CAPACITY = PieceType.values().length;
-
-        static Map<PieceType, Piece> whitePieceCache = new HashMap<>(CACHE_CAPACITY);
-        static Map<PieceType, Piece> blackPieceCache = new HashMap<>(CACHE_CAPACITY);
+        static Map<Color, Map<PieceType, Piece>> pieceCache = new EnumMap<>(Color.class);
 
         static Piece getCache(Color color, PieceType pieceType) {
-            if (color == Color.WHITE) {
-                return whitePieceCache.computeIfAbsent(pieceType, (type) -> initCacheOf(color, type));
-            }
-            return blackPieceCache.computeIfAbsent(pieceType, (type) -> initCacheOf(color, type));
+            Map<PieceType, Piece> cacheMap = pieceCache.computeIfAbsent(color, (unused) -> new EnumMap<>(PieceType.class));
+            return cacheMap.computeIfAbsent(pieceType, (type) -> initCacheOf(color, type));
         }
 
         static Piece initCacheOf(Color color, PieceType type) {
