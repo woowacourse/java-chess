@@ -33,7 +33,7 @@ public class GameDao {
         try {
             statement = makeSaveStatements(chessBoard, sql);
             statement.executeUpdate();
-            return gameId;
+            return gameId++;
         } catch (Exception throwables) {
             logger.error(throwables.getMessage());
             throw new IllegalArgumentException("요청이 정상적으로 실행되지 않았습니다.");
