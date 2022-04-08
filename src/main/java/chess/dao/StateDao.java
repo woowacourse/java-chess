@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import chess.dto.StateDto;
+
 public class StateDao {
 
     private final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -23,34 +25,28 @@ public class StateDao {
         return connection;
     }
 
-    public void insertState(final String color) {
-        final String query = "INSERT INTO state VALUES (?)";
+    public void updateState(final String gameState, final String color) {
+        final String query = "UPDATE state SET game_state = ? , color = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, color);
+            statement.setString(1, gameState);
+            statement.setString(2, color);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteAllState() {
-        final String query = "DELETE FROM state";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getState() {
+    public StateDto getState() {
         final String query = "SELECT * FROM state LIMIT 1";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                return resultSet.getString("color");
+                return new StateDto(
+                    resultSet.getString("game_state"),
+                    resultSet.getString("color")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -55,4 +55,9 @@ public class End implements GameState {
     public Board board() {
         return board;
     }
+
+    @Override
+    public String get() {
+        return "End";
+    }
 }

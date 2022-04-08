@@ -12,7 +12,10 @@
     <center>
         <h1>♟ 웹 체스 게임 ♟</h1>
     <section>
-        <input type="button" value="다시 시작하기" onClick="location.href='/restart'"><br>
+        <form action="/restart" method="post">
+            <input type="submit" value="다시 시작하기">
+        </form>
+        <br>
         BLACK팀 점수 : {{black}}<br>
         WHITE팀 점수 : {{white}}<br>
         우승자는 아직 존재하지 않습니다.

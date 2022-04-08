@@ -20,15 +20,16 @@ public class ChessWebController {
         staticFileLocation("/static");
 
         get("/", this::start);
+        post("/restart", this::restart);
         post("/move", this::move);
-        get("/update", this::update);
         get("/result", this::result);
-        get("/restart", this::restart);
         exception(Exception.class, this::handleException);
     }
 
     private String start(Request request, Response response) {
-        chessService.startGame();
+        if (chessService.isGameWaiting() || chessService.isGameFinish()) {
+            chessService.startInitializedGame();
+        }
 
         final Map<String, Object> model = new HashMap<>();
         final Map<Color, Double> scores = chessService.getGameScores();
@@ -38,6 +39,12 @@ public class ChessWebController {
         model.put("white", scores.get(Color.WHITE));
 
         return render(model, "game.html");
+    }
+
+    private String restart(Request request, Response response) {
+        chessService.startInitializedGame();
+        response.redirect("/");
+        return null;
     }
 
     private String move(Request request, Response response) {
@@ -50,31 +57,14 @@ public class ChessWebController {
             response.redirect("/result");
             return null;
         }
-        response.redirect("/update");
+        response.redirect("/");
         return null;
-    }
-
-    private String update(Request request, Response response) {
-        final Map<String, Object> model = new HashMap<>();
-        final Map<Color, Double> scores = chessService.getGameScores();
-
-        model.put("board", chessService.getBoard());
-        model.put("black", scores.get(Color.BLACK));
-        model.put("white", scores.get(Color.WHITE));
-
-        return render(model, "game.html");
     }
 
     private String result(Request request, Response response) {
         final Map<String, Object> model = new HashMap<>();
         model.put("winner", chessService.getWinner());
         return render(model, "result.html");
-    }
-
-    private String restart(Request request, Response response) {
-        chessService.deleteCurrentGame();
-        response.redirect("/");
-        return null;
     }
 
     private void handleException(Exception exception, Request request, Response response) {

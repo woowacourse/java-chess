@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import chess.dto.SquareDto;
 
 public class BoardDao {
@@ -27,35 +25,6 @@ public class BoardDao {
         }
 
         return connection;
-    }
-
-    public void insertBoardSquares(final List<SquareDto> squares) {
-        for (SquareDto square : squares) {
-            insertBoardSquaresWithPositionAndPiece(square);
-        }
-    }
-
-    private void insertBoardSquaresWithPositionAndPiece(final SquareDto square) {
-        final Position position = square.getPosition();
-        if (square.getPiece() == null) {
-            insertBoardSquare(position.getRankAndFile(), null, null);
-            return;
-        }
-        final Piece piece = square.getPiece();
-        insertBoardSquare(position.getRankAndFile(), piece.getClass().getSimpleName(), piece.getColorName());
-    }
-
-    private void insertBoardSquare(final String position, final String piece, final String color) {
-        final String query = "INSERT INTO board(position, piece, color) VALUES (?, ?, ?)";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, position);
-            statement.setString(2, piece);
-            statement.setString(3, color);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void updateBoardSquare(final String position, final String piece, final String color) {
@@ -99,15 +68,5 @@ public class BoardDao {
                 resultSet.getString("color")
             )
         );
-    }
-
-    public void deleteBoard() {
-        final String query = "DELETE FROM board";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -20,4 +20,6 @@ public interface GameState {
     Color getTurn();
 
     Board board();
+
+    String get();
 }

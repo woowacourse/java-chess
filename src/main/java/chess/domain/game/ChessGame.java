@@ -59,4 +59,8 @@ public class ChessGame {
     public Board getBoard() {
         return state.board();
     }
+
+    public String getState() {
+        return state.get();
+    }
 }

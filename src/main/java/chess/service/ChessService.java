@@ -8,6 +8,8 @@ import chess.dao.BoardDao;
 import chess.dao.StateDao;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Score;
+import chess.domain.game.Winner;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -18,40 +20,35 @@ public class ChessService {
 
     private final BoardDao boardDao;
     private final StateDao stateDao;
-    private ChessGame chessGame;
 
     public ChessService() {
         this.boardDao = new BoardDao();
         this.stateDao = new StateDao();
-        this.chessGame = new ChessGame();
     }
 
-    public void startGame() {
-        List<SquareDto> squares = boardDao.getBoardSquares();
-        if (squares.isEmpty()) {
-            initializeGameBoard(squares);
+    public void startInitializedGame() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start(BoardFactory.getInitialPieces(), Color.WHITE);
+        initializeGameBoard();
+        stateDao.updateState(chessGame.getState(), Color.WHITE.name());
+    }
+
+    private void initializeGameBoard() {
+        BoardDto boardDto = new BoardDto(BoardFactory.getInitialPieces());
+        List<SquareDto> squares = boardDto.getSquares();
+        for (SquareDto square : squares) {
+            initializeBoardSquares(square);
+        }
+    }
+
+    private void initializeBoardSquares(final SquareDto square) {
+        final Position position = square.getPosition();
+        if (square.getPiece() == null) {
+            boardDao.updateBoardSquare(position.getRankAndFile(), null, null);
             return;
         }
-        startGameWithStoredBoard(squares);
-    }
-
-    private void initializeGameBoard(List<SquareDto> squares) {
-        chessGame.start(BoardFactory.getInitialPieces(), Color.WHITE);
-        BoardDto boardDto = new BoardDto(chessGame.getBoard().getValue());
-        squares.addAll(boardDto.getSquares());
-        boardDao.insertBoardSquares(squares);
-        setState(Color.WHITE.name());
-    }
-
-    private void setState(String color) {
-        stateDao.deleteAllState();
-        stateDao.insertState(color);
-    }
-
-    private void startGameWithStoredBoard(List<SquareDto> squares) {
-        Map<Position, Piece> pieces = getPieces(squares);
-        Color turnColor = Color.get(stateDao.getState());
-        chessGame.start(pieces, turnColor);
+        final Piece piece = square.getPiece();
+        boardDao.updateBoardSquare(position.getRankAndFile(), piece.representative(), piece.getColorName());
     }
 
     private Map<Position, Piece> getPieces(List<SquareDto> squares) {
@@ -65,38 +62,38 @@ public class ChessService {
     }
 
     public BoardDto getBoard() {
-        List<SquareDto> squares = boardDao.getBoardSquares();
-        if (squares.isEmpty()) {
-            BoardDto boardDto = new BoardDto(BoardFactory.getInitialPieces());
-            squares.addAll(boardDto.getSquares());
-            boardDao.insertBoardSquares(squares);
-        }
-        return new BoardDto(squares);
+        return new BoardDto(boardDao.getBoardSquares());
     }
 
     public void movePiece(String source, String target) {
-        Piece sourcePiece = chessGame.getBoard().getValue().get(Position.valueOf(source));
+        ChessGame chessGame = new ChessGame();
+        chessGame.start(getPieces(getBoard().getSquares()), Color.get(stateDao.getState().getColor()));
+        Piece sourcePiece = chessGame.getBoard().findPiece(Position.valueOf(source));
         chessGame.movePiece(source, target);
-        setState(chessGame.getTurn().name());
         boardDao.updateBoardSquare(source, null, null);
         boardDao.updateBoardSquare(target, sourcePiece.representative(), sourcePiece.getColorName());
+        if (chessGame.isFinish()) {
+            stateDao.updateState(chessGame.getState(), Color.NONE.name());
+            return;
+        }
+        stateDao.updateState(chessGame.getState(), chessGame.getTurn().name());
     }
 
     public boolean isGameFinish() {
-        return chessGame.isFinish();
+        return stateDao.getState().isFinish();
+    }
+
+    public boolean isGameWaiting() {
+        return stateDao.getState().isWaiting();
     }
 
     public Map<Color, Double> getGameScores() {
-        return chessGame.calculateScore();
+        Score score = new Score(getPieces(getBoard().getSquares()));
+        return score.getAllTeamScore();
     }
 
     public Color getWinner() {
-        return chessGame.judgeWinner();
-    }
-
-    public void deleteCurrentGame() {
-        boardDao.deleteBoard();
-        stateDao.deleteAllState();
-        this.chessGame = new ChessGame();
+        Winner winner = new Winner(getPieces(getBoard().getSquares()));
+        return winner.getColor();
     }
 }

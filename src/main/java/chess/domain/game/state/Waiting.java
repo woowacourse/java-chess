@@ -48,4 +48,9 @@ public class Waiting implements GameState {
     public Board board() {
         throw new UnsupportedOperationException(UNSUPPORTED_GET_BOARD);
     }
+
+    @Override
+    public String get() {
+        return "Waiting";
+    }
 }

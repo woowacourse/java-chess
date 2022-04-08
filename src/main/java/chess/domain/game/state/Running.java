@@ -76,4 +76,9 @@ public class Running implements GameState {
     public Board board() {
         return board;
     }
+
+    @Override
+    public String get() {
+        return "Running";
+    }
 }
