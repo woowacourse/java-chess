@@ -10,7 +10,7 @@ public class Bishop extends Piece {
     private static final String BLACK_SYMBOL = "B";
     private static final String WHITE_SYMBOL = "b";
     private static final double BISHOP_SCORE = 3.0;
-    private static final String NAME = "bishop";
+    public static final String NAME = "bishop";
 
     public Bishop(final Team team) {
         super(team);

@@ -13,7 +13,7 @@ public class King extends Piece {
     private static final String BLACK_SYMBOL = "K";
     private static final String WHITE_SYMBOL = "k";
     private static final int KING_SCORE = 0;
-    private static final String NAME = "king";
+    public static final String NAME = "king";
 
     public King(final Team team) {
         super(team);

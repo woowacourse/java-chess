@@ -13,7 +13,7 @@ public class Knight extends Piece {
 	private static final String BLACK_SYMBOL = "N";
 	private static final String WHITE_SYMBOL = "n";
 	private static final double KNIGHT_SCORE = 2.5;
-	private static final String NAME = "knight";
+	public static final String NAME = "knight";
 
 	public Knight(final Team team) {
 		super(team);

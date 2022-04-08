@@ -10,7 +10,7 @@ public class Queen extends Piece {
     private static final String BLACK_SYMBOL = "Q";
     private static final String WHITE_SYMBOL = "q";
     private static final double QUEEN_SCORE = 9.0;
-    private static final String NAME = "queen";
+    public static final String NAME = "queen";
 
     public Queen(final Team team) {
         super(team);
