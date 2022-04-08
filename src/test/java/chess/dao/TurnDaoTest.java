@@ -6,6 +6,8 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.dto.TurnSaveRequest;
+import chess.dto.TurnUpdateRequest;
 import chess.utils.JdbcConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +36,7 @@ public class TurnDaoTest {
         Color turn = state.getTurn();
         int gameNumber = 1;
 
-        turnDao.save(turn, gameNumber);
+        turnDao.save(new TurnSaveRequest(turn, gameNumber));
 
         Connection connection = JdbcConnector.getConnection();
         String sql = "select * from turn where game_number = ?";
@@ -58,7 +60,7 @@ public class TurnDaoTest {
 
         TurnDao turnDao = new TurnDao();
 
-        turnDao.update(Color.WHITE, gameNumber);
+        turnDao.update(new TurnUpdateRequest(Color.WHITE, gameNumber));
 
         sql = "select * from turn where game_number = ?";
         statement = connection.prepareStatement(sql);
@@ -80,7 +82,7 @@ public class TurnDaoTest {
         statement.executeUpdate();
 
         TurnDao turnDao = new TurnDao();
-        Color turn = turnDao.findByGameNumber(gameNumber);
+        Color turn = turnDao.findByGameNumber(gameNumber).getColor();
 
         assertThat(turn).isEqualTo(Color.WHITE);
     }

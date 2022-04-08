@@ -7,6 +7,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
+import chess.dto.BoardSaveRequest;
+import chess.dto.BoardUpdateRequest;
 import chess.utils.JdbcConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +37,7 @@ public class BoardDaoTest {
         Piece piece = new Knight(color);
         int gameNumber = 1;
 
-        boardDao.save(position, piece, gameNumber);
+        boardDao.save(new BoardSaveRequest(position, piece, gameNumber));
 
         Connection connection = JdbcConnector.getConnection();
         String sql = "select * from board where position = ? and game_number = ?";
@@ -59,8 +61,8 @@ public class BoardDaoTest {
         Piece piece = new Knight(color);
         int gameNumber = 1;
 
-        boardDao.save(source, piece, gameNumber);
-        boardDao.updateByPosition(destination, source, gameNumber);
+        boardDao.save(new BoardSaveRequest(source, piece, gameNumber));
+        boardDao.updateByPosition(new BoardUpdateRequest(destination, source, gameNumber));
 
         Connection connection = JdbcConnector.getConnection();
         String sql = "select * from board where position = ? and game_number = ?";
@@ -92,7 +94,7 @@ public class BoardDaoTest {
         statement.setString(4, piece.getType());
         statement.executeUpdate();
 
-        Piece result = boardDao.findByPositionAndGameNumber(position, gameNumber);
+        Piece result = boardDao.findByPositionAndGameNumber(position, gameNumber).getPiece();
 
         assertThat(result).isEqualTo(piece);
     }
@@ -115,7 +117,7 @@ public class BoardDaoTest {
         statement.setString(4, piece.getType());
         statement.executeUpdate();
 
-        Board result = boardDao.findAllByGameNumber(gameNumber);
+        Board result = boardDao.findAllByGameNumber(gameNumber).getBoard();
 
         assertThat(result.findPieceBy(position).get()).isEqualTo(piece);
     }

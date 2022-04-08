@@ -12,9 +12,14 @@ import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.ApiResult;
+import chess.dto.BoardSaveRequest;
+import chess.dto.BoardUpdateRequest;
 import chess.dto.FinishResponse;
 import chess.dto.MoveCommand;
 import chess.dto.MoveResponse;
+import chess.dto.TurnFindResponse;
+import chess.dto.TurnSaveRequest;
+import chess.dto.TurnUpdateRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,11 +35,11 @@ public class ChessWebService {
     }
 
     private State getState(int gameNumber) {
-        Color color = TURN_DAO.findByGameNumber(gameNumber);
-        if (color == null) {
+        TurnFindResponse response = TURN_DAO.findByGameNumber(gameNumber);
+        if (response == null) {
             return Ready.start(new Board(new HashMap<>()));
         }
-        return Ready.continueOf(color, BOARD_DAO.findAllByGameNumber(gameNumber));
+        return Ready.continueOf(response.getColor(), BOARD_DAO.findAllByGameNumber(gameNumber).getBoard());
     }
 
     public Map<String, Object> getModelWithBoard(int gameNumber) {
@@ -94,20 +99,20 @@ public class ChessWebService {
     }
 
     private void savePiece(Position position, Piece piece, int gameNumber) {
-        BOARD_DAO.save(position, piece, gameNumber);
+        BOARD_DAO.save(new BoardSaveRequest(position, piece, gameNumber));
     }
 
     private void saveTurn(Color color, int gameNumber) {
-        TURN_DAO.save(color, gameNumber);
+        TURN_DAO.save(new TurnSaveRequest(color, gameNumber));
     }
 
     private void updatePiece(Position source, Position destination, int gameNumber) {
-        BOARD_DAO.updateByPosition(destination, source, gameNumber);
+        BOARD_DAO.updateByPosition(new BoardUpdateRequest(destination, source, gameNumber));
         BOARD_DAO.delete(source, gameNumber);
     }
 
     private void updateTurn(Color color, int gameNumber) {
-        TURN_DAO.update(color, gameNumber);
+        TURN_DAO.update(new TurnUpdateRequest(color, gameNumber));
     }
 
     private void deleteAllPiece(int gameNumber) {
