@@ -13,15 +13,17 @@ public class BoardDao{
     private static final int EMPTY_RESULT = 0;
     private final Connection connection;
     private int boardId = 0;
-    private Connector connector = new Connector();
+    private final Connector connector;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public BoardDao() {
-        connection = connector.makeConnection(Connector.PROD_DB_URL);
+    public BoardDao(Connector connector) {
+        this.connector = connector;
+        connection = this.connector.makeConnection(Connector.PROD_DB_URL);
     }
 
-    BoardDao(final Connection connection) {
+    BoardDao(final Connection connection, Connector connector) {
         this.connection = connection;
+        this.connector = connector;
     }
 
     public void save(int gameId, String position, String piece, String color) {

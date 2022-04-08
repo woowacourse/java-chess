@@ -16,15 +16,17 @@ public class GameDao {
     private static final int EMPTY_RESULT = 0;
     private final Connection connection;
     private int gameId = 0;
-    private Connector connector = new Connector();
+    private final Connector connector;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public GameDao() {
-        connection = connector.makeConnection(Connector.PROD_DB_URL);
+    public GameDao(Connector connector) {
+        this.connector = connector;
+        connection = this.connector.makeConnection(Connector.PROD_DB_URL);
     }
 
-    public GameDao(final Connection connection) {
+    public GameDao(final Connection connection, Connector connector) {
         this.connection = connection;
+        this.connector = connector;
     }
 
     public int save(ChessBoard chessBoard) {

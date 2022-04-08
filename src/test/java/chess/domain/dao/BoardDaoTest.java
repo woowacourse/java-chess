@@ -23,8 +23,8 @@ class BoardDaoTest {
     @BeforeEach
     void set() throws SQLException {
         connection = connector.makeConnection(Connector.DEV_DB_URL);
-        boardDao = new BoardDao(connection);
-        gameDao = new GameDao(connection);
+        boardDao = new BoardDao(connection, connector);
+        gameDao = new GameDao(connection, connector);
         connection.setAutoCommit(false);
         gameDao.save(ChessBoardFactory.initBoard());
     }
@@ -40,7 +40,7 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("가장 최근 게임의 기물 정보를 삭제한다.")
-    void delete() throws SQLException {
+    void delete() {
         //given
         boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
         boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
@@ -53,7 +53,7 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("게임 id로 기물을 찾는다.")
-    void findByGameId() throws SQLException {
+    void findByGameId() {
         //given
         boardDao.save(gameDao.findLastGameId(), "a1", "Pawn", "WHITE");
         boardDao.save(gameDao.findLastGameId(), "a2", "Pawn", "WHITE");
@@ -65,7 +65,6 @@ class BoardDaoTest {
         assertThat(actual.get(0).getPosition()).isEqualTo("a1");
         assertThat(actual.get(0).getPiece()).isEqualTo("Pawn");
     }
-
 
     @AfterEach
     void end() throws SQLException {

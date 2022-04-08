@@ -21,7 +21,7 @@ class GameDaoTest {
     @BeforeEach
     void set() throws SQLException {
         connection = connector.makeConnection(Connector.DEV_DB_URL);
-        gameDao = new GameDao(connection);
+        gameDao = new GameDao(connection, connector);
         connection.setAutoCommit(false);
     }
 
@@ -44,7 +44,6 @@ class GameDaoTest {
         assertThat(actual).isEqualTo(2);
     }
 
-
     @Test
     @DisplayName("id로 게임을 불러온다")
     void findById() {
@@ -58,7 +57,7 @@ class GameDaoTest {
 
     @Test
     @DisplayName("가장 최근 게임을 삭제한다.")
-    void delete() throws SQLException {
+    void delete() {
         //given
         gameDao.save(ChessBoardFactory.initBoard());
         gameDao.save(ChessBoardFactory.initBoard());
