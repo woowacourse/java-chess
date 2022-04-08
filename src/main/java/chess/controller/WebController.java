@@ -22,28 +22,30 @@ public class WebController {
         staticFiles.location("/static");
         port(8080);
 
-        Map<String, Object> model = new HashMap<>();
+
         ChessGame chessGame = new ChessGame();
         ChessGameDao chessGameDao = new ChessGameDao();
         PieceDao pieceDao = new PieceDao();
 
-        get("/", (request, response) -> render(model, "/ready.html"));
+        get("/", (request, response) -> render(new HashMap<>(), "/ready.html"));
 
         get("/findgame", ((request, response) -> {
+            Map<String, Object> model = new HashMap<>();
             model.put("gameRoom", "어디로 들어가려구??");
             return render(model, "/findgame.html");
         }));
 
         post("/findgame", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
             try {
                 chessGameDao.loadAndStartGame(gameID, chessGame);
 
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 model.putAll(boardDto.getBoard());
-
                 model.put("gameID", gameID);
                 model.put("message", "누가 이기나 보자구~!");
+
                 if (chessGame.isKingDie()) {
                     model.put("message", "킹 잡았다!! 게임 끝~!~!");
                     return render(model, "/finished.html");
@@ -68,7 +70,7 @@ public class WebController {
             pieceDao.insertPieces(gameID);
 
             BoardDto boardDto = new BoardDto(chessGame.getBoard());
-            model.putAll(boardDto.getBoard());
+            Map<String, Object> model = new HashMap<>(boardDto.getBoard());
 
             model.put("gameID", gameID);
             model.put("message", "누가 이기나 보자구~!");
@@ -77,6 +79,7 @@ public class WebController {
         });
 
         post("/ingame", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
             String source = request.queryParams("source");
             String target = request.queryParams("target");
@@ -90,7 +93,6 @@ public class WebController {
 
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
                 model.putAll(boardDto.getBoard());
-
                 model.put("gameID", gameID);
                 model.put("message", "누가 이기나 보자구~!");
             } catch (IllegalArgumentException e) {
@@ -104,6 +106,7 @@ public class WebController {
         });
 
         get("/status", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
             GameResult gameResult = new GameResult(chessGame.getBoard());
             model.put("gameID", gameID);
