@@ -32,7 +32,7 @@ function movePiece() {
             target = '';
             if (data.statusCode === 301) {
                 alert("킹이 잡혀 게임이 종료 되었습니다!")
-                location.replace("/end");
+                end();
             }
             if (data.statusCode === 302) {
                 location.replace("/chess");
@@ -40,6 +40,30 @@ function movePiece() {
             if (data.statusCode === 501) {
                 alert(data.errorMessage);
             }
+        })
+    })
+}
+
+function start() {
+    fetch("/start").then(res => {
+        res.json().then(data => {
+            if (data.statusCode === 501) {
+                alert(data.errorMessage);
+                return;
+            }
+            location.replace("/chess");
+        })
+    })
+}
+
+function end() {
+    fetch("/end").then(res => {
+        res.json().then(data => {
+            if (data.statusCode === 501) {
+                alert(data.errorMessage);
+                return;
+            }
+            location.replace("/result");
         })
     })
 }

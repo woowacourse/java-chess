@@ -5,13 +5,13 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public interface PieceDao {
-    void save(Map<Position, Piece> board, int boardId);
+    void save(Map<Position, Piece> board);
 
     Map<Position, Piece> load();
 
     boolean isExistsPieces();
 
-    void deleteByBoardId(int boardId);
+    void delete();
 
-    void updatePosition(String source, String target, int boardId);
+    void updatePosition(String source, String target);
 }

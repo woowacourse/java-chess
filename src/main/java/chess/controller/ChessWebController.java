@@ -28,9 +28,8 @@ public class ChessWebController {
         get("/", (req, res) -> render(new HashMap<>(), "home.hbs"));
 
         get("/start", (req, res) -> {
-            chessGameService.start();
-            res.redirect("/chess");
-            return null;
+            final ResponseDto responseDto = chessGameService.start();
+            return responseDto.toString();
         });
 
         get("/chess", (req, res) -> {
@@ -53,8 +52,12 @@ public class ChessWebController {
         });
 
         get("/end", (req, res) -> {
+            final ResponseDto responseDto = chessGameService.end();
+            return responseDto.toString();
+        });
+
+        get("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessGameService.end();
             model.put("result",
                     ResultDto.of(chessGameService.statusOfWhite(), chessGameService.statusOfBlack(),
                             chessGameService.findWinner()));

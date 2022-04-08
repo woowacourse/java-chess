@@ -8,11 +8,10 @@ import java.sql.SQLException;
 
 public class BoardDaoImpl implements BoardDao {
     @Override
-    public int save(Color turn) {
+    public void save(Color turn) {
         final String sql = decideSql();
 
         executeSave(turn, sql);
-        return 1;
     }
 
     private String decideSql() {
@@ -30,8 +29,7 @@ public class BoardDaoImpl implements BoardDao {
             final ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
         }
     }
 
@@ -41,7 +39,7 @@ public class BoardDaoImpl implements BoardDao {
             statement.setInt(1, turn.ordinal());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
         }
     }
 
@@ -57,12 +55,11 @@ public class BoardDaoImpl implements BoardDao {
 
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalAccessException("저장된 게임이 없습니다.");
+                throw new SQLException();
             }
             return Color.from(resultSet.getInt("turn"));
-        } catch (SQLException | IllegalAccessException e) {
-            e.printStackTrace();
-            return Color.NONE;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
         }
     }
 
@@ -74,7 +71,7 @@ public class BoardDaoImpl implements BoardDao {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("예상치 못한 에러가 발생했습니다. 다시 시도해주세요.");
         }
     }
 }

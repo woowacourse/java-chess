@@ -28,7 +28,7 @@ public class ChessGameServiceTest {
         PieceDao pieceDao = new MockPieceDao();
         BoardDao boardDao = new MockBoardDao();
         board.move(Position.of(Column.A, Row.TWO), Position.of(Column.A, Row.FOUR));
-        pieceDao.save(board.getPiecesByPosition(), 1);
+        pieceDao.save(board.getPiecesByPosition());
         boardDao.save(Color.BLACK);
         ChessGameService chessGameService = new ChessGameService(pieceDao, boardDao);
         //when
@@ -46,7 +46,7 @@ public class ChessGameServiceTest {
         Board board = new Board();
         PieceDao pieceDao = new MockPieceDao();
         BoardDao boardDao = new MockBoardDao();
-        pieceDao.save(board.getPiecesByPosition(), 1);
+        pieceDao.save(board.getPiecesByPosition());
         boardDao.save(Color.WHITE);
         ChessGameService chessGameService = new ChessGameService(pieceDao, boardDao);
         chessGameService.start();

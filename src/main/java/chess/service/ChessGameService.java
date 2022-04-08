@@ -20,13 +20,18 @@ public class ChessGameService {
         this.boardDao = boardDao;
     }
 
-    public void start() {
+    public ResponseDto start() {
         chessGame = new ChessGame();
-        if (pieceDao.isExistsPieces()) {
-            chessGame.load(pieceDao.load(), boardDao.findTurn());
-            return;
+        try {
+            if (pieceDao.isExistsPieces()) {
+                chessGame.load(pieceDao.load(), boardDao.findTurn());
+                return new ResponseDto(200, "");
+            }
+            chessGame.start();
+            return new ResponseDto(200, "");
+        } catch (Exception e) {
+            return new ResponseDto(501, e.getMessage());
         }
-        chessGame.start();
     }
 
     public ResponseDto move(Position source, Position target) {
@@ -52,19 +57,24 @@ public class ChessGameService {
     }
 
     private void updatePosition(Position source, Position target, Color turn) {
-        final int boardId = boardDao.save(turn);
-        pieceDao.updatePosition(source.stringName(), target.stringName(), boardId);
+        boardDao.save(turn);
+        pieceDao.updatePosition(source.stringName(), target.stringName());
     }
 
     private void save(Color turn) {
-        final int boardId = boardDao.save(turn);
-        pieceDao.save(chessGame.getBoard().getPiecesByPosition(), boardId);
+        boardDao.save(turn);
+        pieceDao.save(chessGame.getBoard().getPiecesByPosition());
     }
 
-    public void end() {
-        chessGame.end();
-        pieceDao.deleteByBoardId(1);
-        boardDao.deleteBoard();
+    public ResponseDto end() {
+        try {
+            chessGame.end();
+            pieceDao.delete();
+            boardDao.deleteBoard();
+            return new ResponseDto(200, "");
+        } catch (Exception e) {
+            return new ResponseDto(501, e.getMessage());
+        }
     }
 
     public ChessBoardDto getBoard() {

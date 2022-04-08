@@ -14,13 +14,13 @@ public class MockPieceDao implements PieceDao {
     private Map<Integer, FakePiece> fakePiece = new HashMap<>();
 
     @Override
-    public void save(Map<Position, Piece> board, int boardId) {
+    public void save(Map<Position, Piece> board) {
         int index = 1;
         for (Entry<Position, Piece> positionPieceEntry : board.entrySet()) {
             Position position = positionPieceEntry.getKey();
             Piece piece = positionPieceEntry.getValue();
             fakePiece.put(index++,
-                    new FakePiece(boardId, position.stringName(), piece.getSymbol(), piece.getColor().ordinal()));
+                    new FakePiece(1, position.stringName(), piece.getSymbol(), piece.getColor().ordinal()));
         }
     }
 
@@ -42,12 +42,12 @@ public class MockPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteByBoardId(int boardId) {
+    public void delete() {
         fakePiece = new HashMap<>();
     }
 
     @Override
-    public void updatePosition(String source, String target, int boardId) {
+    public void updatePosition(String source, String target) {
 
     }
 }
