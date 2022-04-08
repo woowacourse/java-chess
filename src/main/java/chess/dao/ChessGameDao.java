@@ -20,7 +20,7 @@ public class ChessGameDao {
     private static final String PASSWORD = "password";
     private static final String ERROR_MESSAGE_NO_SAVED_GAME = "헉.. 저장 안한거 아냐? 그런 게임은 없어!";
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         loadDriver();
         Connection connection = null;
         try {

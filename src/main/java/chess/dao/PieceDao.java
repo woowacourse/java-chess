@@ -15,7 +15,7 @@ public class PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         loadDriver();
         Connection connection = null;
         try {

@@ -24,6 +24,8 @@ public class WebController {
 
         Map<String, Object> model = new HashMap<>();
         ChessGame chessGame = new ChessGame();
+        ChessGameDao chessGameDao = new ChessGameDao();
+        PieceDao pieceDao = new PieceDao();
 
         get("/", (request, response) -> render(model, "/ready.html"));
 
@@ -35,8 +37,6 @@ public class WebController {
         post("/findgame", (request, response) -> {
             String gameID = request.queryParams("gameID");
             try {
-                ChessGameDao chessGameDao = new ChessGameDao();
-                chessGameDao.getConnection();
                 chessGameDao.loadAndStartGame(gameID, chessGame);
 
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
@@ -59,15 +59,11 @@ public class WebController {
         get("/ingame", (request, response) -> {
             String gameID = request.queryParams("gameID");
 
-            ChessGameDao chessGameDao = new ChessGameDao();
-            chessGameDao.getConnection();
             chessGameDao.save(gameID, chessGame);
 
             chessGame.startGame(new InitialBoardGenerator(), GameTurn.WHITE);
             chessGameDao.updateTurn(gameID, chessGame);
 
-            PieceDao pieceDao = new PieceDao();
-            pieceDao.getConnection();
             pieceDao.deleteAll(gameID);
             pieceDao.insertPieces(gameID);
 
@@ -87,13 +83,9 @@ public class WebController {
 
             try {
                 chessGame.move(new Square(source), new Square(target));
-                System.out.println("!!");
-                PieceDao pieceDao = new PieceDao();
                 pieceDao.deleteByPosition(new Square(target));
                 pieceDao.updatePosition(new Square(source), new Square(target));
 
-                ChessGameDao chessGameDao = new ChessGameDao();
-                chessGameDao.getConnection();
                 chessGameDao.updateTurn(gameID, chessGame);
 
                 BoardDto boardDto = new BoardDto(chessGame.getBoard());
