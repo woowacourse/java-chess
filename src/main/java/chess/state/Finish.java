@@ -15,17 +15,27 @@ public class Finish implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 
     @Override
     public State move(MovingPosition movingPosition, Turn turn) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 
     @Override
     public Chessboard getChessboard() {
         return chessboard;
+    }
+
+    @Override
+    public State end() {
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
     }
 
     @Override

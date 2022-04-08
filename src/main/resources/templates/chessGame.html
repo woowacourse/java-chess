@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<h1 id="title"> Chess Game</h1>
+<div class="right">
+    <form action="/start" method="get">
+        <button>시작</button>
+    </form>
+
+    <form action="/end" method="get">
+        <button>종료</button>
+    </form>
+
+    <form action="/restart" method="get">
+        <button>재시작</button>
+    </form>
+
+    <form action="/save" method="get">
+        <button>저장</button>
+    </form>
+
+    <form action="/status" method="get">
+        <button>점수</button>
+    </form>
+
+    <br/><br/>
+
+    <form action="/move" method="post">
+        움직일 말의 위치와 움직일 위치를 입력하고 이동 버튼을 눌러주세요.
+        <table class="move">
+            <tr>
+                <td>움직일 말의 위치</td>
+                <td><input type="text" name="from"></td>
+            </tr>
+            <tr>
+                <td>움직일 위치</td>
+                <td><input type="text" name="to"></td>
+            </tr>
+        </table>
+        <input type="submit" value="이동">
+    </form>
+
+    <br/><br/>
+
+    <div class="error">
+        <h2>{{error}}</h2>
+    </div>
+
+    <div class="score">
+        {{#each score}}
+        {{@key}} : {{this}} <br/>
+        {{/each}}
+    </div>
+
+</div>
+
+<div class="left">
+    <table class="chessboard">
+        <tr>
+            <td class="white">{{pieces.0}}</td>
+            <td class="black">{{pieces.1}}</td>
+            <td class="white">{{pieces.2}}</td>
+            <td class="black">{{pieces.3}}</td>
+            <td class="white">{{pieces.4}}</td>
+            <td class="black">{{pieces.5}}</td>
+            <td class="white">{{pieces.6}}</td>
+            <td class="black">{{pieces.7}}</td>
+        </tr>
+        <tr>
+            <td class="black">{{pieces.8}}</td>
+            <td class="white">{{pieces.9}}</td>
+            <td class="black">{{pieces.10}}</td>
+            <td class="white">{{pieces.11}}</td>
+            <td class="black">{{pieces.12}}</td>
+            <td class="white">{{pieces.13}}</td>
+            <td class="black">{{pieces.14}}</td>
+            <td class="white">{{pieces.15}}</td>
+        </tr>
+        <tr>
+            <td class="white">{{pieces.16}}</td>
+            <td class="black">{{pieces.17}}</td>
+            <td class="white">{{pieces.18}}</td>
+            <td class="black">{{pieces.19}}</td>
+            <td class="white">{{pieces.20}}</td>
+            <td class="black">{{pieces.21}}</td>
+            <td class="white">{{pieces.22}}</td>
+            <td class="black">{{pieces.23}}</td>
+        </tr>
+        <tr>
+            <td class="black">{{pieces.24}}</td>
+            <td class="white">{{pieces.25}}</td>
+            <td class="black">{{pieces.26}}</td>
+            <td class="white">{{pieces.27}}</td>
+            <td class="black">{{pieces.28}}</td>
+            <td class="white">{{pieces.29}}</td>
+            <td class="black">{{pieces.30}}</td>
+            <td class="white">{{pieces.31}}</td>
+        </tr>
+        <tr>
+            <td class="white">{{pieces.32}}</td>
+            <td class="black">{{pieces.33}}</td>
+            <td class="white">{{pieces.34}}</td>
+            <td class="black">{{pieces.35}}</td>
+            <td class="white">{{pieces.36}}</td>
+            <td class="black">{{pieces.37}}</td>
+            <td class="white">{{pieces.38}}</td>
+            <td class="black">{{pieces.39}}</td>
+        </tr>
+        <tr>
+            <td class="black">{{pieces.40}}</td>
+            <td class="white">{{pieces.41}}</td>
+            <td class="black">{{pieces.42}}</td>
+            <td class="white">{{pieces.43}}</td>
+            <td class="black">{{pieces.44}}</td>
+            <td class="white">{{pieces.45}}</td>
+            <td class="black">{{pieces.46}}</td>
+            <td class="white">{{pieces.47}}</td>
+        </tr>
+        <tr>
+            <td class="white">{{pieces.48}}</td>
+            <td class="black">{{pieces.49}}</td>
+            <td class="white">{{pieces.50}}</td>
+            <td class="black">{{pieces.51}}</td>
+            <td class="white">{{pieces.52}}</td>
+            <td class="black">{{pieces.53}}</td>
+            <td class="white">{{pieces.54}}</td>
+            <td class="black">{{pieces.55}}</td>
+        </tr>
+        <tr>
+            <td class="black">{{pieces.56}}</td>
+            <td class="white">{{pieces.57}}</td>
+            <td class="black">{{pieces.58}}</td>
+            <td class="white">{{pieces.59}}</td>
+            <td class="black">{{pieces.60}}</td>
+            <td class="white">{{pieces.61}}</td>
+            <td class="black">{{pieces.62}}</td>
+            <td class="white">{{pieces.63}}</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+</html>

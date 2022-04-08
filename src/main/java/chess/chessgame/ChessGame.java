@@ -4,10 +4,14 @@ import chess.dto.ScoreDto;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.state.Finish;
+import chess.state.Play;
 import chess.state.Ready;
 import chess.state.State;
+import chess.utils.UnicodeConverter;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessGame {
 
@@ -19,6 +23,11 @@ public class ChessGame {
     public ChessGame() {
         this.state = new Ready();
         this.turn = new Turn();
+    }
+
+    public ChessGame(String state, String turn, Map<Position, Piece> boards) {
+        this.state = computeState(state, new Chessboard(() -> boards));
+        this.turn = new Turn(turn);
     }
 
     public void start() {
@@ -55,5 +64,31 @@ public class ChessGame {
         return new ScoreDto(scoreOfBlack, scoreOfWhite);
     }
 
+    public List<String> getPiecesByUnicode() {
+        return state.getChessboard()
+                .getBoard()
+                .values()
+                .stream()
+                .map(piece -> UnicodeConverter.convert(piece.getSymbolByColor()))
+                .collect(Collectors.toList());
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public String getColorOfTurn() {
+        return turn.getColor();
+    }
+
+    private State computeState(String state, Chessboard chessboard) {
+        if (state.equals("Play")) {
+            return new Play(chessboard);
+        }
+        if (state.equals("Finish")) {
+            return new Finish(chessboard);
+        }
+        return new Ready();
+    }
 
 }

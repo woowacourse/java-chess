@@ -9,6 +9,10 @@ public class Turn {
         this.color = Color.WHITE;
     }
 
+    public Turn(String turn) {
+        this.color = Color.valueOf(turn);
+    }
+
     public boolean isRightTurn(Color color) {
         return this.color == color;
     }
@@ -23,4 +27,7 @@ public class Turn {
         }
     }
 
+    public String getColor() {
+        return color.getColor();
+    }
 }

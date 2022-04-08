@@ -1,5 +1,7 @@
-package chess.chessgame;
+package chess.controller;
 
+import chess.chessgame.ChessGame;
+import chess.chessgame.MovingPosition;
 import chess.view.OutputView;
 
 import java.util.StringTokenizer;
@@ -7,7 +9,7 @@ import java.util.StringTokenizer;
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printStartMessage;
 
-public class ChessController {
+public class ConsoleChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame();

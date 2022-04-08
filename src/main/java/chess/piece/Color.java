@@ -4,7 +4,7 @@ public enum Color {
 
     BLACK("BLACK"),
     WHITE("WHITE"),
-    NONE("");
+    NONE("NONE");
 
     private final String color;
 
@@ -15,4 +15,5 @@ public enum Color {
     public String getColor() {
         return color;
     }
+
 }

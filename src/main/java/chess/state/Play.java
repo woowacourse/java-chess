@@ -21,7 +21,7 @@ public class Play implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 
     @Override
@@ -42,8 +42,18 @@ public class Play implements State {
     }
 
     @Override
+    public State end() {
+        return new Finish(chessboard);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return true;
     }
 
     @Override

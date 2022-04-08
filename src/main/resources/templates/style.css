@@ -1,0 +1,46 @@
+body {
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+form {
+    display: inline;
+}
+
+div.left {
+    width: 55%;
+    float: left;
+}
+
+div.right {
+    width: 45%;
+    float: right;
+}
+
+.chessboard {
+    text-align: center;
+    font-size: 50px;
+}
+
+.black {
+    width: 60px;
+    height: 60px;
+    background-color: #828282;
+}
+
+.white {
+    width: 60px;
+    height: 60px;
+    background-color: #d2d2d2;
+}
+
+.move {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.score {
+    font-size: 30px;
+}

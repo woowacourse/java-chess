@@ -22,7 +22,12 @@ public class Ready implements State {
 
     @Override
     public State move(MovingPosition movingPosition, Turn turn) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
+    }
+
+    @Override
+    public State end() {
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 
 
@@ -32,12 +37,17 @@ public class Ready implements State {
     }
 
     @Override
+    public boolean isPlaying(){
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }
 
     @Override
     public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 }

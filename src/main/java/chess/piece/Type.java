@@ -26,6 +26,10 @@ public enum Type {
         return symbol;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
     public double getScore() {
         return score;
     }

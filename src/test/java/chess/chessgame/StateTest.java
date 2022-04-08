@@ -1,7 +1,14 @@
 package chess.chessgame;
 
+import chess.state.Finish;
+import chess.state.Play;
+import chess.state.Ready;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class StateTest {
-    /*
 
     @Test
     @DisplayName("ready -> play")
@@ -19,5 +26,4 @@ public class StateTest {
         assertThat(play.end()).isInstanceOf(Finish.class);
     }
 
-     */
 }
