@@ -16,7 +16,7 @@ public class OutputView {
     private static final String START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String END_COMMAND_MESSAGE = "> 프로그램 종료 : end";
     private static final String MOVE_COMMAND_MESSAGE = "> 체스 말 이동 : move source target (예. move b2 b3)";
-    private static final String STATUS_COMMAND_MESSAGE = "> 게임 결과 조회 : status";
+    private static final String STATUS_COMMAND_MESSAGE = "> 게임 종료 후 결과 조회 : status";
 
     private static final String WINNER_ANNOUNCEMENT_FORMAT = "%s 플레이어가 승리하였습니다!" + BLANK_LINE;
     private static final String SCORE_DISPLAY_FORMAT = "%s 플레이어 점수 : %2.1f점" + BLANK_LINE;
@@ -25,7 +25,8 @@ public class OutputView {
         String instructionMessage = GAME_START_MESSAGE + BLANK_LINE
                 + START_COMMAND_MESSAGE + BLANK_LINE
                 + END_COMMAND_MESSAGE + BLANK_LINE
-                + MOVE_COMMAND_MESSAGE;
+                + MOVE_COMMAND_MESSAGE + BLANK_LINE
+                + STATUS_COMMAND_MESSAGE;
 
         print(instructionMessage);
     }
