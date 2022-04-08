@@ -39,11 +39,6 @@ public class ChessGameService {
         gameStatusDao = new GameStatusDaoImpl();
     }
 
-    public GameStatusDto loadChessGame() {
-        ChessGame chessGame = createCustomChessGame();
-        return GameStatusDto.of(chessGame);
-    }
-
     public GameStatusDto startChessGame(BoardGenerationStrategy strategy) {
         if (gameStatusDao.getStatus().equals(GameStatus.PLAYING.toString())) {
             return loadChessGame();
@@ -51,6 +46,11 @@ public class ChessGameService {
         ChessGame chessGame = new ChessGame();
         chessGame.startGame(strategy);
         gameStatusDao.update(gameStatusDao.getStatus(), chessGame.getGameStatus().toString());
+        return GameStatusDto.of(chessGame);
+    }
+
+    public GameStatusDto loadChessGame() {
+        ChessGame chessGame = createCustomChessGame();
         return GameStatusDto.of(chessGame);
     }
 
@@ -73,12 +73,11 @@ public class ChessGameService {
         return GameStatusDto.of(chessGame);
     }
 
-    private void moveAndUpdateBoard(MoveDto moveDto, ChessGame chessGame) {
-        Position from = new Position(moveDto.getFrom());
-        Position to = new Position(moveDto.getTo());
-        chessGame.move(from, to);
-        boardDao.update(from.toString(), new Blank().toString());
-        boardDao.update(to.toString(), chessGame.takePieceByPosition(to).toString());
+    private void checkReady() {
+        GameStatus gameStatus = GameStatus.of(gameStatusDao.getStatus());
+        if (gameStatus.isReady()) {
+            throw new IllegalArgumentException("체스 게임을 시작해야 합니다.");
+        }
     }
 
     private ChessGame createCustomChessGame() {
@@ -102,6 +101,14 @@ public class ChessGameService {
         return strategy;
     }
 
+    private void moveAndUpdateBoard(MoveDto moveDto, ChessGame chessGame) {
+        Position from = new Position(moveDto.getFrom());
+        Position to = new Position(moveDto.getTo());
+        chessGame.move(from, to);
+        boardDao.update(from.toString(), new Blank().toString());
+        boardDao.update(to.toString(), chessGame.takePieceByPosition(to).toString());
+    }
+
     public ScoreDto end() {
         ChessGame chessGame = createCustomChessGame();
         checkReady();
@@ -120,23 +127,16 @@ public class ChessGameService {
         return selectScoreDto(result, scoreDto);
     }
 
-    private ScoreDto selectScoreDto(Result result, ScoreDto scoreDto) {
-        if (Objects.isNull(scoreDto)) {
-            return ScoreDto.of(result);
-        }
-        return scoreDto;
-    }
-
     private void resetBoard() {
         Board board = new Board();
         board.initBoard(new WebBasicBoardStrategy());
         boardDao.reset(board.toMap());
     }
 
-    public void checkReady() {
-        GameStatus gameStatus = GameStatus.of(gameStatusDao.getStatus());
-        if (gameStatus.isReady()) {
-            throw new IllegalArgumentException("체스 게임을 시작해야 합니다.");
+    private ScoreDto selectScoreDto(Result result, ScoreDto scoreDto) {
+        if (Objects.isNull(scoreDto)) {
+            return ScoreDto.of(result);
         }
+        return scoreDto;
     }
 }
