@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 public class BoardDao {
@@ -32,21 +30,11 @@ public class BoardDao {
     }
 
     public GameState getGameStatus(final int userId) {
-        final Connection connection = CommonDao.getConnection();
         final String sql = "SELECT b.game_status FROM user LEFT JOIN board b on user.board_id = b.id WHERE user.id=?;";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        final StatementMaker<PreparedStatement> statementMaker = (statement -> {
             statement.setInt(1, userId);
-            final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            final String gameStateName = resultSet.getString("game_status");
-            return GameState.valueOf(gameStateName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
-        }
+        });
+        return CommonDao.getGameStatus(sql, statementMaker);
     }
 
     public void changeGameStatus(final String gameStatus, final int boardId) {
