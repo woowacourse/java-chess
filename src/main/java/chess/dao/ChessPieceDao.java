@@ -7,11 +7,11 @@ import chess.dao.util.ConnectionGenerator;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessPieceDto;
+import chess.exception.SQLQueryException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,8 +33,8 @@ public class ChessPieceDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방 이름에 해당하는 기물을 조회에 실패했습니다.", e);
         }
-        return Collections.emptyList();
     }
 
     public int deleteByPosition(final String roomName, final Position position) {
@@ -45,8 +45,8 @@ public class ChessPieceDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("position에 해당하는 기물 삭제에 실패했습니다.", e);
         }
-        return 0;
     }
 
     public int deleteAllByRoomName(final String roomName) {
@@ -57,8 +57,8 @@ public class ChessPieceDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방 이름에 해당하는 모든 기물 삭제에 실패했습니다.", e);
         }
-        return 0;
     }
 
     public int saveAll(final String roomName, final Map<Position, ChessPiece> pieceByPosition) {
@@ -69,8 +69,8 @@ public class ChessPieceDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("모든 기물을 저장하는데 실패했습니다.", e);
         }
-        return 0;
     }
 
     private String createBulkInsertSql(final int rowSize) {
@@ -88,7 +88,7 @@ public class ChessPieceDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("기물 업데이트에 실패했습니다.", e);
         }
-        return 0;
     }
 }

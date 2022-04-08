@@ -7,6 +7,7 @@ import chess.domain.GameStatus;
 import chess.domain.chesspiece.Color;
 import chess.dto.CurrentTurnDto;
 import chess.dto.RoomStatusDto;
+import chess.exception.SQLQueryException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,8 @@ public class RoomDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방을 저장하는데 실패했습니다.", e);
         }
-        return 0;
     }
 
     public boolean isExistName(final String roomName) {
@@ -35,8 +36,8 @@ public class RoomDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방의 존재 확인에 실패했습니다.", e);
         }
-        return false;
     }
 
     public CurrentTurnDto findCurrentTurnByName(final String roomName) {
@@ -48,11 +49,12 @@ public class RoomDao {
                 if (resultSet.next()) {
                     return CurrentTurnDto.from(resultSet);
                 }
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방의 현재 턴 조회에 실패했습니다.", e);
         }
-        return null;
     }
 
     public RoomStatusDto findStatusByName(final String roomName) {
@@ -64,11 +66,12 @@ public class RoomDao {
                 if (resultSet.next()) {
                     return RoomStatusDto.from(resultSet);
                 }
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방의 상태 조회에 실패했습니다.", e);
         }
-        return null;
     }
 
     public int delete(final String roomName) {
@@ -79,8 +82,8 @@ public class RoomDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방 삭제에 실패했습니다.", e);
         }
-        return 0;
     }
 
     public int update(final String roomName, final GameStatus gameStatus, final Color currentTurn) {
@@ -91,8 +94,8 @@ public class RoomDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방 업데이트에 실패했습니다.", e);
         }
-        return 0;
     }
 
     public int updateStatusTo(final String roomName, final GameStatus gameStatus) {
@@ -103,7 +106,7 @@ public class RoomDao {
             return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLQueryException("방을 상태 업데이트에 실패했습니다.", e);
         }
-        return 0;
     }
 }
