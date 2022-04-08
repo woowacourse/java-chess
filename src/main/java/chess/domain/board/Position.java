@@ -28,7 +28,7 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position valueOf(final char columValue, final int rowValue) {
+    public static Position of(final char columValue, final int rowValue) {
         String key = String.valueOf(columValue) + rowValue;
         validateExistPosition(key);
         return CACHE.get(key);
@@ -61,7 +61,7 @@ public class Position implements Comparable<Position> {
     public Position move(int horizon, int vertical) {
         char columnValue = this.column.move(horizon).getValue();
         int rowValue = this.row.move(vertical).getValue();
-        return Position.valueOf(columnValue, rowValue);
+        return Position.of(columnValue, rowValue);
     }
 
     public boolean isPawnStartPosition(final Team team) {

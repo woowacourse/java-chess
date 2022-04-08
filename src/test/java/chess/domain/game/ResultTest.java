@@ -22,8 +22,8 @@ public class ResultTest {
     @Test
     @DisplayName("폰이 수직으로 존재할 경우의 총점을 계산한다.")
     void getWhiteScore_WhenPawnVertical() {
-        board.movePiece(Position.valueOf('a', 2), Position.valueOf('b', 3));
-        board.movePiece(Position.valueOf('c', 2), Position.valueOf('b', 4));
+        board.movePiece(Position.of('a', 2), Position.of('b', 3));
+        board.movePiece(Position.of('c', 2), Position.of('b', 4));
 
         assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWhiteScore()).isEqualTo(36.5);
     }
@@ -31,7 +31,7 @@ public class ResultTest {
     @Test
     @DisplayName("Queen 이 없고 폰이 수직으로 존재하는 경우의 총점을 계산한다.")
     void getWhiteScore_WhenNoQueenAndPawnExistVertically() {
-        board.movePiece(Position.valueOf('a', 2), Position.valueOf('d', 1));
+        board.movePiece(Position.of('a', 2), Position.of('d', 1));
 
         assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWhiteScore()).isEqualTo(28);
     }
@@ -39,7 +39,7 @@ public class ResultTest {
     @Test
     @DisplayName("Black 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenBlackWin() {
-        board.movePiece(Position.valueOf('a', 2), Position.valueOf('d', 1));
+        board.movePiece(Position.of('a', 2), Position.of('d', 1));
 
         assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWinningTeam().getValue())
                 .isEqualTo(Team.BLACK.getValue());
@@ -48,7 +48,7 @@ public class ResultTest {
     @Test
     @DisplayName("White 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenWhiteWin() {
-        board.movePiece(Position.valueOf('a', 7), Position.valueOf('b', 6));
+        board.movePiece(Position.of('a', 7), Position.of('b', 6));
 
         assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWinningTeam().getValue())
                 .isEqualTo(Team.WHITE.getValue());

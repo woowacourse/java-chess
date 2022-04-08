@@ -23,10 +23,10 @@ public class KingMoveStrategyTest {
     @Test
     @DisplayName("킹이 이동 할 수 있다.")
     void isMovable() {
-        board.movePiece(Position.valueOf('e', 7), Position.valueOf('e', 6));
+        board.movePiece(Position.of('e', 7), Position.of('e', 6));
 
-        Position source = Position.valueOf('e', 8);
-        Position target = Position.valueOf('e', 7);
+        Position source = Position.of('e', 8);
+        Position target = Position.of('e', 7);
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isTrue();
     }
@@ -34,10 +34,10 @@ public class KingMoveStrategyTest {
     @Test
     @DisplayName("킹의 이동 패턴이 아니다.")
     void isMovableNotKingMovePattern() {
-        board.movePiece(Position.valueOf('e', 7), Position.valueOf('e', 5));
+        board.movePiece(Position.of('e', 7), Position.of('e', 5));
 
-        Position source = Position.valueOf('e', 8);
-        Position target = Position.valueOf('e', 6);
+        Position source = Position.of('e', 8);
+        Position target = Position.of('e', 6);
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
     }
@@ -45,8 +45,8 @@ public class KingMoveStrategyTest {
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
     void isMovableWhenTargetColorSame() {
-        Position source = Position.valueOf('e', 8);
-        Position target = Position.valueOf('e', 7);
+        Position source = Position.of('e', 8);
+        Position target = Position.of('e', 7);
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
     }

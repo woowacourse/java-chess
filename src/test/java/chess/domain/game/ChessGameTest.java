@@ -64,7 +64,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("King 이 죽으면 GameSwitch 가 꺼진다.")
     void turnOffWhenKingDie() {
-        board.movePiece(Position.valueOf('e', 8), Position.valueOf('e', 2));
+        board.movePiece(Position.of('e', 8), Position.of('e', 2));
 
         chessGame.move('e', 1, 'e', 2);
 

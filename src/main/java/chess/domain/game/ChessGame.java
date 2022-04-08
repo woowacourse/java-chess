@@ -33,7 +33,7 @@ public class ChessGame {
 
     public void move(final char sourceColumn, final int sourceRow, final char targetColumn, final int targetRow) {
         validateGameSwitch();
-        movePiece(Position.valueOf(sourceColumn, sourceRow), Position.valueOf(targetColumn, targetRow));
+        movePiece(Position.of(sourceColumn, sourceRow), Position.of(targetColumn, targetRow));
         turnOffWhenKingDie();
         turn.passTurn();
     }

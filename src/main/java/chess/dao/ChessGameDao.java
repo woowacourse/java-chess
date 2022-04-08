@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.ChessGameExceptBoardDto;
+import chess.entity.ChessGameEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,13 +12,13 @@ public class ChessGameDao {
 
     private final Connection connection = ConnectionManager.getConnection();
 
-    public void save(final ChessGameExceptBoardDto chessGameExceptBoardDto) {
+    public void save(final ChessGameEntity chessGameEntity) {
         String insertSql = "insert into chess_game (name, is_on, team_value_of_turn) values (?, ?, ?)";
         try {
             PreparedStatement insertStatement = connection.prepareStatement(insertSql);
-            insertStatement.setString(1, chessGameExceptBoardDto.getName());
-            insertStatement.setBoolean(2, chessGameExceptBoardDto.isOn());
-            insertStatement.setString(3, chessGameExceptBoardDto.getTeamValueOfTurn());
+            insertStatement.setString(1, chessGameEntity.getName());
+            insertStatement.setBoolean(2, chessGameEntity.isOn());
+            insertStatement.setString(3, chessGameEntity.getTeamValueOfTurn());
             insertStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,19 +36,19 @@ public class ChessGameDao {
         }
     }
 
-    public ChessGameExceptBoardDto load(final String name) {
+    public ChessGameEntity load(final String name) {
         String selectSql = "select name, is_on, team_value_of_turn from chess_game where name=?";
-        ChessGameExceptBoardDto chessGameExceptBoardDto = null;
+        ChessGameEntity chessGameEntity = null;
         try {
             PreparedStatement loadStatement = connection.prepareStatement(selectSql);
             loadStatement.setString(1, name);
             ResultSet resultSet = loadStatement.executeQuery();
             validateChessGameExist(resultSet);
-            chessGameExceptBoardDto = generateChessGameDto(resultSet);
+            chessGameEntity = generateChessGameDto(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return chessGameExceptBoardDto;
+        return chessGameEntity;
     }
 
     private void validateChessGameExist(final ResultSet resultSet) throws SQLException {
@@ -57,25 +57,25 @@ public class ChessGameDao {
         }
     }
 
-    private ChessGameExceptBoardDto generateChessGameDto(final ResultSet resultSet) throws SQLException {
+    private ChessGameEntity generateChessGameDto(final ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         boolean isOn = resultSet.getBoolean("is_on");
         String teamValueOfTurn = resultSet.getString("team_value_of_turn");
-        return new ChessGameExceptBoardDto(name, isOn, teamValueOfTurn);
+        return new ChessGameEntity(name, isOn, teamValueOfTurn);
     }
 
-    public List<ChessGameExceptBoardDto> loadAll() {
+    public List<ChessGameEntity> loadAll() {
         String loadAllSql = "select * from chess_game";
-        List<ChessGameExceptBoardDto> chessGameExceptBoardDtos = new ArrayList<>();
+        List<ChessGameEntity> chessGameEntities = new ArrayList<>();
         try {
             PreparedStatement loadNamesStatement = connection.prepareStatement(loadAllSql);
             ResultSet resultSet = loadNamesStatement.executeQuery();
             while (resultSet.next()) {
-                chessGameExceptBoardDtos.add(generateChessGameDto(resultSet));
+                chessGameEntities.add(generateChessGameDto(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return chessGameExceptBoardDtos;
+        return chessGameEntities;
     }
 }

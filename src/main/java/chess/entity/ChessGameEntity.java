@@ -1,20 +1,20 @@
-package chess.dto;
+package chess.entity;
 
 import chess.domain.game.ChessGame;
 
-public class ChessGameExceptBoardDto {
+public class ChessGameEntity {
 
     private final String name;
     private final boolean isOn;
     private final String teamValueOfTurn;
 
-    public ChessGameExceptBoardDto(String name, boolean isOn, String teamValueOfTurn) {
+    public ChessGameEntity(String name, boolean isOn, String teamValueOfTurn) {
         this.name = name;
         this.isOn = isOn;
         this.teamValueOfTurn = teamValueOfTurn;
     }
 
-    public ChessGameExceptBoardDto(final ChessGame chessGame) {
+    public ChessGameEntity(final ChessGame chessGame) {
         this.name = chessGame.getName();
         this.isOn = chessGame.isOn();
         this.teamValueOfTurn = chessGame.getTurn().getNowValue();

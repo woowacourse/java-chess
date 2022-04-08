@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service.util;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
