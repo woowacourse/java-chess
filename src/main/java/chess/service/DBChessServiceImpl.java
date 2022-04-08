@@ -23,7 +23,7 @@ public class DBChessServiceImpl implements ChessService {
         final Map<String, String> boardByGameId = chessDao.getBoardByGameId(gameId);
         final Color color = Color.fromInt(chessDao.getTurnByGameId(gameId));
         final Board board = BoardFactory.newInstanceByDB(boardByGameId, color);
-        boolean moveResult = board.move(Position.fromDB(from), Position.fromDB(to));
+        boolean moveResult = board.move(Position.from(from), Position.from(to));
         if (moveResult) {
             chessDao.move(gameId, from, to, board.getPieceOnPosition(to));
         }

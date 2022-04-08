@@ -1,6 +1,5 @@
 package chess.service;
 
-import chess.domain.board.BoardFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChessJDBCDao implements ChessDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -51,7 +49,7 @@ public class ChessJDBCDao implements ChessDao {
     }
 
     private Map<String, String> findBoardByGameId(String gameId) {
-        final String sql = "select position, piece from position where gamdId = ?";
+        final String sql = "select position, piece from board where gameId = ?";
         Map<String, String> board = new HashMap<>();
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)
@@ -86,25 +84,19 @@ public class ChessJDBCDao implements ChessDao {
     }
 
     private void insertPiecesOnPositions(String gameId) {
-        final String sql = "insert into position values (?, ?, ?)";
-        final Map<String, String> initialBoard = BoardFactory.newBoardForDB();
-
-        for (Entry<String, String> pieceByPosition : initialBoard.entrySet()) {
-            try (final Connection connection = getConnection();
-                 final PreparedStatement preparedStatement = connection.prepareStatement(sql)
-            ) {
-                preparedStatement.setString(1, gameId);
-                preparedStatement.setString(2, pieceByPosition.getKey());
-                preparedStatement.setString(3, pieceByPosition.getValue());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        final String sql = "insert into board(gameId, position, piece) select ?, initialPosition, initialPiece from initialBoard";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setString(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     private Map<String, String> selectBoardByGameId(String gameId) {
-        final String sql = "select position, piece from position where gamdId = ?";
+        final String sql = "select position, piece from board where gameId = ?";
         final Map<String, String> board = new HashMap<>();
 
         try (final Connection connection = getConnection();
@@ -130,7 +122,7 @@ public class ChessJDBCDao implements ChessDao {
     }
 
     private void deleteFromAndTo(String gameId, String from, String to) {
-        final String sql = "delete from position where gamdId = ? and position in (?,?)";
+        final String sql = "delete from board where gameId = ? and position in (?,?)";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
@@ -144,7 +136,7 @@ public class ChessJDBCDao implements ChessDao {
     }
 
     private void insertTo(String gameId, String to, String piece) {
-        final String sql = "insert into position values (?,?,?)";
+        final String sql = "insert into board values (?,?,?)";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {

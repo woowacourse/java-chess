@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.board.Position;
 import chess.dto.MoveRequestDto;
 import chess.dto.MoveResultDto;
 import chess.service.ChessJDBCDao;
@@ -42,9 +41,8 @@ public class WebApplication {
             final MoveRequestDto moveRequestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
             final boolean moveResult = CHESS_SERVICE.move(moveRequestDto.getGameId(), moveRequestDto.getFrom(),
                     moveRequestDto.getTo());
-            return new MoveResultDto(moveRequestDto.getPiece(),
-                    WebViewMapper.parse(Position.fromDB(moveRequestDto.getFrom())),
-                    WebViewMapper.parse(Position.fromDB(moveRequestDto.getTo())), moveResult);
+            return new MoveResultDto(moveRequestDto.getPiece(), moveRequestDto.getFrom(), moveRequestDto.getTo(),
+                    moveResult);
         }, new JsonTransformer());
     }
 

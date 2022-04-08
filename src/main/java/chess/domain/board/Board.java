@@ -119,6 +119,6 @@ public final class Board {
     }
 
     public String getPieceOnPosition(String from) {
-        return WebViewMapper.parse(board.get(Position.fromDB(from)));
+        return WebViewMapper.parse(board.get(Position.from(from)));
     }
 }
