@@ -3,10 +3,6 @@ package chess.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.dao.EventDao;
-import chess.dao.GameDao;
-import chess.dao.GameState;
-import chess.domain.event.Event;
 import chess.domain.event.InitEvent;
 import chess.domain.event.MoveEvent;
 import chess.domain.game.NewGame;
@@ -15,17 +11,13 @@ import chess.dto.GameCountDto;
 import chess.dto.GameDto;
 import chess.dto.GameResultDto;
 import chess.dto.SearchResultDto;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import chess.service.fixture.EventDaoStub;
+import chess.service.fixture.GameDaoStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class ChessServiceTest {
-
-    private static final String INVALID_TEST_STUB_EXCEPTION_MESSAGE = "테스트 더블 내에서 프로덕션 코드가 실행되었습니다.";
 
     private ChessService service;
 
@@ -137,87 +129,5 @@ class ChessServiceTest {
         assertThatThrownBy(() -> service.findGameResult(1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아직 게임 결과가 산출되지 않았습니다.");
-    }
-
-    private static class GameDaoStub extends GameDao {
-
-        final Map<Integer, GameState> repository = new HashMap<>() {{
-            put(1, GameState.RUNNING);
-            put(2, GameState.RUNNING);
-            put(3, GameState.OVER);
-        }};
-
-        static int autoIncrementId = 3;
-
-        @Override
-        public int saveAndGetGeneratedId() {
-            autoIncrementId++;
-            repository.put(autoIncrementId, GameState.RUNNING);
-            return autoIncrementId;
-        }
-
-        @Override
-        public void finishGame(int gameId) {
-            repository.put(gameId, GameState.OVER);
-        }
-
-        @Override
-        public boolean checkById(int gameId) {
-            return repository.containsKey(gameId);
-        }
-
-        @Override
-        public int countAll() {
-            return repository.values().size();
-        }
-
-        @Override
-        public int countByState(GameState state) {
-            return (int) repository.values()
-                    .stream()
-                    .filter(value -> value == state)
-                    .count();
-        }
-
-        @Override
-        protected String addTable(String sql) {
-            throw new UnsupportedOperationException(INVALID_TEST_STUB_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private static class EventDaoStub extends EventDao {
-
-        final Map<Integer, List<Event>> repository = new HashMap<>() {{
-            put(1, new ArrayList<>(List.of(new InitEvent(), new MoveEvent("e2 e4"),
-                    new MoveEvent("d7 d5"), new MoveEvent("f1 b5"))));
-            put(2, new ArrayList<>(List.of(new InitEvent(),
-                    new MoveEvent("e2 e4"), new MoveEvent("d7 d5"),
-                    new MoveEvent("f1 b5"), new MoveEvent("a7 a5"))));
-            put(3, new ArrayList<>(List.of(new InitEvent(), new MoveEvent("e2 e4"),
-                    new MoveEvent("d7 d5"), new MoveEvent("f1 b5"),
-                    new MoveEvent("a7 a5"), new MoveEvent("b5 e8"))));
-        }};
-
-        @Override
-        public List<Event> findAllByGameId(int gameId) {
-            if (repository.containsKey(gameId)) {
-                return repository.get(gameId);
-            }
-            return List.of();
-        }
-
-        @Override
-        public void save(int gameId, Event event) {
-            if (repository.containsKey(gameId)) {
-                repository.get(gameId).add(event);
-                return;
-            }
-            repository.put(gameId, new ArrayList<>(List.of(event)));
-        }
-
-        @Override
-        protected String addTable(String sql) {
-            throw new UnsupportedOperationException(INVALID_TEST_STUB_EXCEPTION_MESSAGE);
-        }
     }
 }
