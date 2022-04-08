@@ -26,7 +26,7 @@ public class SquareDao {
 
     public Square save(Square square) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into square (square_file, square_rank, board_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO square (square_file, square_rank, board_id) VALUES (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, square.getFile().value());
@@ -54,9 +54,9 @@ public class SquareDao {
     }
 
     private ResultSet findSquare(File file, Rank rank, int boardId, Connection connection) throws SQLException {
-        final String sql = "select s.id, s.square_file, s.square_rank, s.board_id " +
-                "from square as s " +
-                "where s.square_file=? and s.square_rank=? and s.board_id=?";
+        final String sql = "SELECT s.id, s.square_file, s.square_rank, s.board_id " +
+                "FROM square AS s " +
+                "WHERE s.square_file=? AND s.square_rank=? AND s.board_id=?";
         final PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, file.value());
         preparedStatement.setInt(2, rank.value());
@@ -70,7 +70,7 @@ public class SquareDao {
 
     public int saveAllSquare(int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into square (square_file, square_rank, board_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO square (square_file, square_rank, board_id) VALUES (?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             for (File file : File.values()) {
                 for (Rank rank : Rank.values()) {
@@ -91,11 +91,11 @@ public class SquareDao {
 
     public Map<Square, Piece> findAllSquaresAndPieces(int boardId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select po.id as po_id, po.square_file, po.square_rank, po.board_id, " +
-                    "pi.id as pi_id, pi.type, pi.color, pi.square_id " +
-                    "from square po " +
-                    "inner join piece pi on po.id = pi.square_id " +
-                    "where board_id=?";
+            final String sql = "SELECT po.id AS po_id, po.square_file, po.square_rank, po.board_id, " +
+                    "pi.id AS pi_id, pi.type, pi.color, pi.square_id " +
+                    "FROM square po " +
+                    "INNER JOIN piece pi ON po.id = pi.square_id " +
+                    "WHERE board_id=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, boardId);

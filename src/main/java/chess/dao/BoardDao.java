@@ -20,7 +20,7 @@ public class BoardDao {
 
     public Board save(Board board) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into board (room_title) values (?)";
+            final String sql = "INSERT INTO board (room_title) VALUES (?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, board.getTitle());
             preparedStatement.executeUpdate();
@@ -38,7 +38,7 @@ public class BoardDao {
 
     public int deleteAll() {
         return connectionManager.executeQuery(connection -> {
-            String sql = "delete from board";
+            String sql = "DELETE FROM board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             return preparedStatement.executeUpdate();
         });
@@ -46,7 +46,7 @@ public class BoardDao {
 
     public int deleteById(int id) {
         return connectionManager.executeQuery(connection -> {
-            String sql = "delete from board where id=?";
+            String sql = "DELETE FROM board WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             return preparedStatement.executeUpdate();
@@ -55,7 +55,7 @@ public class BoardDao {
 
     public Board getById(int id) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select * from board where id=?";
+            final String sql = "SELETE * FROM board WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -73,7 +73,7 @@ public class BoardDao {
 
     public List<Board> findAll() {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select * from board";
+            final String sql = "SELECT * FROM board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
             final MemberDao memberDao = new MemberDao(connectionManager);

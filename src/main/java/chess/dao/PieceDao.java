@@ -20,7 +20,7 @@ public class PieceDao {
 
     public Piece save(Piece piece, int squareId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "insert into piece (type, color, square_id) values (?, ?, ?)";
+            final String sql = "INSERT INTO piece (type, color, square_id) VALUES(?, ?, ?)";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, piece.name());
@@ -41,7 +41,7 @@ public class PieceDao {
 
     public Piece findBySquareId(int squareId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select * from piece where square_id=?";
+            final String sql = "SELECT * FROM piece WHERE square_id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, squareId);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -58,7 +58,7 @@ public class PieceDao {
 
     public int updatePieceSquareId(int originSquareId, int newSquareId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "update piece set square_id=? where square_id=?";
+            final String sql = "UPDATE piece SET square_id=? WHERE square_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, newSquareId);
@@ -69,7 +69,7 @@ public class PieceDao {
 
     public int deletePieceBySquareId(int squareId) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "delete from piece where square_id=?";
+            final String sql = "DELETE FROM piece WHERE square_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, squareId);
@@ -80,9 +80,9 @@ public class PieceDao {
     public List<Piece> getAllPiecesByBoardId(int boardId) {
         return connectionManager.executeQuery(connection -> {
             final String sql =
-                    "select pi.id, pi.type, pi.color, pi.square_id from piece pi join square po on pi.square_id=po.id "
-                            +
-                            "join board nb on po.board_id=nb.id where nb.id=?";
+                    "SELECT pi.id, pi.type, pi.color, pi.square_id FROM piece pi "
+                            + "JOIN square po ON pi.square_id=po.id "
+                            + "JOIN board nb ON po.board_id=nb.id WHERE nb.id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, boardId);
@@ -102,9 +102,9 @@ public class PieceDao {
 
     public int countPawnsOnSameColumn(int roomId, File column, Color color) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "select count(*) as total_count from piece pi " +
-                    "join square s on pi.square_id = s.id " +
-                    "where s.square_file=? and s.board_id=? and pi.type='p' and pi.color=?";
+            final String sql = "SELECT COUNT(*) AS total_count FROM piece pi " +
+                    "JOIN square s ON pi.square_id = s.id " +
+                    "WHERE s.square_file=? AND s.board_id=? AND pi.type='p' AND pi.color=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, column.value());
             preparedStatement.setInt(2, roomId);
