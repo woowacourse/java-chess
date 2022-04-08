@@ -28,8 +28,9 @@ public class PieceDao {
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("피스를 찾지 못했습니다.");
+                throw new IllegalArgumentException(piece.getType().symbol().name() + " " + piece.getColor() + " 피스를 찾지 못했습니다.");
             }
+
             return new Piece(generatedKeys.getInt(1), piece.getColor(), piece.getType(), piece.getPositionId());
         });
     }
@@ -43,6 +44,7 @@ public class PieceDao {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
+
             return Optional.of(makePiece(resultSet));
         });
     }
@@ -53,6 +55,7 @@ public class PieceDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, targetPositionId);
             preparedStatement.setInt(2, sourcePositionId);
+
             return preparedStatement.executeUpdate();
         });
     }
@@ -62,6 +65,7 @@ public class PieceDao {
             final String sql = "DELETE FROM piece WHERE position_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, positionId);
+
             return preparedStatement.executeUpdate();
         });
     }
@@ -77,6 +81,7 @@ public class PieceDao {
             while (resultSet.next()) {
                 pieces.add(makePiece(resultSet));
             }
+
             return pieces;
         });
     }

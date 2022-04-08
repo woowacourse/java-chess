@@ -23,6 +23,7 @@ public class MemberDao {
             if (!generatedKeys.next()) {
                 throw new IllegalArgumentException("저장에 실패하였습니다.");
             }
+
             return new Member(generatedKeys.getInt(1), name, boardId);
         });
     }
@@ -43,6 +44,7 @@ public class MemberDao {
             while (resultSet.next()) {
                 members.add(makeMember(resultSet));
             }
+
             return members;
         });
     }

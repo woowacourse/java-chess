@@ -33,6 +33,7 @@ public class PositionDao {
             if (!generatedKeys.next()) {
                 throw new SQLException("실행에 오류가 생겼습니다");
             }
+
             return new Position(generatedKeys.getInt(1), position.getColumn(), position.getRow(), position.getBoardId());
         });
     }
@@ -40,6 +41,7 @@ public class PositionDao {
     public Position getByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
         return connectionManager.executeQuery(connection -> {
             final ResultSet resultSet = findPosition(column, row, boardId, connection);
+
             return makePosition(resultSet, "id");
         });
     }
@@ -56,6 +58,7 @@ public class PositionDao {
         if (!resultSet.next()) {
             throw new IllegalArgumentException("위치가 존재하지 않습니다.");
         }
+
         return resultSet;
     }
 
@@ -66,6 +69,7 @@ public class PositionDao {
             for (Column column : Column.values()) {
                 saveColumnLine(boardId, preparedStatement, column);
             }
+
             return preparedStatement.executeBatch().length;
         });
     }
@@ -99,6 +103,7 @@ public class PositionDao {
             while (resultSet.next()) {
                 existPiecesWithPosition.put(makePosition(resultSet, "po_id"), makePiece(resultSet, "pi_id"));
             }
+
             return existPiecesWithPosition;
         });
     }
@@ -125,6 +130,7 @@ public class PositionDao {
         for (Position position : positions) {
             realPositions.add(getByColumnAndRowAndBoardId(position.getColumn(), position.getRow(), roomId));
         }
+
         return realPositions;
     }
 }

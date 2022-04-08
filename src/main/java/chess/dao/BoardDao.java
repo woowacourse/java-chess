@@ -32,6 +32,7 @@ public class BoardDao {
             if (!generatedKeys.next()) {
                 throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
+
             return new Board(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
         });
     }
@@ -45,6 +46,7 @@ public class BoardDao {
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
+
             return makeBoard(resultSet, new MemberDao(connectionManager));
         });
     }
@@ -59,6 +61,7 @@ public class BoardDao {
             while (resultSet.next()) {
                 boards.add(makeBoard(resultSet, new MemberDao(connectionManager)));
             }
+
             return boards;
         });
     }
@@ -76,6 +79,7 @@ public class BoardDao {
                 pieceDao.save(new Piece(piece.getColor(), piece.getType(), lastPositionId));
             }
             memberDao.saveAll(board.getMembers(), savedBoard.getId());
+
             return savedBoard;
         });
     }
@@ -85,6 +89,7 @@ public class BoardDao {
             String sql = "DELETE FROM board where id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+
             return preparedStatement.executeUpdate();
         });
     }
@@ -93,6 +98,7 @@ public class BoardDao {
         connectionManager.executeQuery(connection -> {
             String sql = "DELETE FROM board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             return preparedStatement.executeUpdate();
         });
     }
@@ -103,6 +109,7 @@ public class BoardDao {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, color.name());
             preparedStatement.setInt(2, boardId);
+
             return preparedStatement.executeUpdate();
         });
     }
