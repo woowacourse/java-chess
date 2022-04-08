@@ -45,12 +45,9 @@ public final class GameService {
         movePiece(roomId, sourcePosition, targetPosition, sourcePiece);
     }
 
-    private Piece getPieceByPosition(Position sourcePosition) {
-        final Optional<Piece> optionalPiece = pieceDao.findByPositionId(sourcePosition.getId());
-        if (optionalPiece.isEmpty()) {
-            throw new IllegalArgumentException("말이 존재하지 않습니다.");
-        }
-        return optionalPiece.get();
+    private void validateTurn(final int roomId, final Position sourcePosition) {
+        final Optional<Piece> wrappedPiece = pieceDao.findByPositionId(positionDao.getPositionIdByColumnAndRowAndBoardId(sourcePosition.getColumn(), sourcePosition.getRow(), roomId));
+        wrappedPiece.ifPresent(piece -> validateCorrectTurn(roomId, piece));
     }
 
     private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
@@ -59,9 +56,24 @@ public final class GameService {
         }
     }
 
-    private void validateTurn(final int roomId, final Position sourcePosition) {
-        final Optional<Piece> wrappedPiece = pieceDao.findByPositionId(positionDao.getPositionIdByColumnAndRowAndBoardId(sourcePosition.getColumn(), sourcePosition.getRow(), roomId));
-        wrappedPiece.ifPresent(piece -> validateCorrectTurn(roomId, piece));
+    private Piece getPieceByPosition(Position sourcePosition) {
+        final Optional<Piece> optionalPiece = pieceDao.findByPositionId(sourcePosition.getId());
+        if (optionalPiece.isEmpty()) {
+            throw new IllegalArgumentException("말이 존재하지 않습니다.");
+        }
+        return optionalPiece.get();
+    }
+
+    private void movePiece(final int roomId, final Position sourcePosition, final Position targetPosition, final Piece sourcePiece) {
+        if (!sourcePiece.isMovable(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
+        }
+        final Optional<Piece> targetPiece = pieceDao.findByPositionId(targetPosition.getId());
+        targetPiece.ifPresent(piece -> validateTargetNotSameColor(sourcePiece, piece));
+        checkPawnMovement(sourcePosition, targetPosition, sourcePiece, targetPiece);
+        validatePathEmpty(roomId, sourcePosition, targetPosition);
+        updateMovingPiecePosition(sourcePosition, targetPosition, targetPiece);
+        changeTurn(roomId);
     }
 
     private void validateCorrectTurn(int roomId, Piece piece) {
@@ -87,18 +99,6 @@ public final class GameService {
                 .collect(Collectors.toMap(
                         position -> position.getRow().value() + position.getColumn().name(),
                         allPositionsAndPieces::get));
-    }
-
-    private void movePiece(final int roomId, final Position sourcePosition, final Position targetPosition, final Piece sourcePiece) {
-        if (!sourcePiece.isMovable(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
-        }
-        final Optional<Piece> targetPiece = pieceDao.findByPositionId(targetPosition.getId());
-        targetPiece.ifPresent(piece -> validateTargetNotSameColor(sourcePiece, piece));
-        checkPawnMovement(sourcePosition, targetPosition, sourcePiece, targetPiece);
-        validatePathEmpty(roomId, sourcePosition, targetPosition);
-        updateMovingPiecePosition(sourcePosition, targetPosition, targetPiece);
-        changeTurn(roomId);
     }
 
     private void updateMovingPiecePosition(Position sourcePosition, Position targetPosition, Optional<Piece> targetPiece) {
