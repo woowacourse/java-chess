@@ -8,10 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class GameDao {
+    private final DatabaseConnector databaseConnector;
 
-    public void saveTo(String databaseName) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
-        final String sql = chooseSaveSql(databaseName);
+    public GameDao(DatabaseConnector databaseConnector) {
+        this.databaseConnector = databaseConnector;
+    }
+
+    public void save() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        final String sql = chooseSaveSql();
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setBoolean(1, Camp.BLACK.isNotTurn());
@@ -19,16 +24,16 @@ public class GameDao {
         DatabaseConnector.close(connection, statement);
     }
 
-    private String chooseSaveSql(String databaseName) throws SQLException {
-        String sql = "insert into game (no, white_turn) values (0,?)";
-        if (isGameExistIn(databaseName)) {
+    private String chooseSaveSql() throws SQLException {
+        String sql = "insert into game (no, white_turn) values (1,?)";
+        if (isGameExistIn()) {
             sql = "update game set white_turn = ?";
         }
         return sql;
     }
 
-    private boolean isGameExistIn(String databaseName) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+    private boolean isGameExistIn() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
         final String sql = "select no from game";
 
         Statement statement = connection.createStatement();
@@ -38,8 +43,8 @@ public class GameDao {
         return gameExist;
     }
 
-    public boolean isWhiteTurnIn(String databaseName) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+    public boolean isWhiteTurn() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
         final String sql = "select white_turn from game";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Score;

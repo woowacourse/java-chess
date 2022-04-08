@@ -14,10 +14,15 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class BoardDao {
+    private final DatabaseConnector databaseConnector;
 
-    public void saveTo(String databaseName, Map<Position, Piece> board) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
-        final String sql = chooseSaveSql(databaseName);
+    public BoardDao(DatabaseConnector databaseConnector) {
+        this.databaseConnector = databaseConnector;
+    }
+
+    public void save(Map<Position, Piece> board) throws SQLException {
+        Connection connection = databaseConnector.getConnection();
+        final String sql = chooseSaveSql();
 
         PreparedStatement statement = connection.prepareStatement(sql);
         for (Entry<Position, Piece> entry : board.entrySet()) {
@@ -26,9 +31,9 @@ public class BoardDao {
         DatabaseConnector.close(connection, statement);
     }
 
-    private String chooseSaveSql(String databaseName) throws SQLException {
-        String sql = "insert into piece (no, game_no, type, white, position) values (0, 1, ?, ?, ?)";
-        if (isBoardExistIn(databaseName)) {
+    private String chooseSaveSql() throws SQLException {
+        String sql = "insert into piece (game_no, type, white, position) values (1, ?, ?, ?)";
+        if (isBoardExistIn()) {
             sql = "update piece set type = ?, white = ? where position = ?";
         }
         return sql;
@@ -42,8 +47,8 @@ public class BoardDao {
         statement.execute();
     }
 
-    private boolean isBoardExistIn(String databaseName) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+    private boolean isBoardExistIn() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
         final String sql = "select no from piece";
 
         Statement statement = connection.createStatement();
@@ -53,8 +58,8 @@ public class BoardDao {
         return boardExist;
     }
 
-    public Map<String, PieceDto> loadFrom(String databaseName) throws SQLException {
-        Connection connection = DatabaseConnector.getConnectionWith(databaseName);
+    public Map<String, PieceDto> load() throws SQLException {
+        Connection connection = databaseConnector.getConnection();
         final String sql = "select type, white, position from piece";
 
         Map<String, PieceDto> board = new TreeMap<>();

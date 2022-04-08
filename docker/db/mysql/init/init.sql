@@ -1,3 +1,6 @@
+drop table if exists piece cascade;
+drop table if exists game cascade;
+
 create table game
 (
     no         int     not null auto_increment,

@@ -8,12 +8,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnector {
-    private static final String URL = "jdbc:mysql://localhost:3307/";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
+    private final String url;
+    private final String user;
+    private final String password;
 
-    static Connection getConnectionWith(String databaseName) throws SQLException {
-        return DriverManager.getConnection(URL + databaseName, USER, PASSWORD);
+    public DatabaseConnector(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
+
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
     }
 
     static void close(Connection connection, PreparedStatement statement) {

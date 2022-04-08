@@ -4,6 +4,7 @@ import static chess.view.Expressions.EXPRESSIONS_COLUMN;
 import static chess.view.Expressions.EXPRESSIONS_ROW;
 
 import chess.dao.BoardDao;
+import chess.dao.DatabaseConnector;
 import chess.dao.GameDao;
 import chess.domain.Camp;
 import chess.domain.ChessGame;
@@ -30,7 +31,9 @@ public class WebGameController {
     private static final String REGEX_VALUE = "=";
     private static final String REGEX_DATA = "&";
 
-    private static final String DATABASE_NAME = "chess";
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/chess";
+    private static final String DB_USER = "user";
+    private static final String DB_PASSWORD = "password";
 
     private static final int INDEX_KEY = 0;
     private static final int INDEX_VALUE = 1;
@@ -43,8 +46,9 @@ public class WebGameController {
 
     public WebGameController() {
         this.chessGame = new ChessGame();
-        this.gameDao = new GameDao();
-        this.boardDao = new BoardDao();
+        DatabaseConnector databaseConnector = new DatabaseConnector(DB_URL, DB_USER, DB_PASSWORD);
+        this.gameDao = new GameDao(databaseConnector);
+        this.boardDao = new BoardDao(databaseConnector);
     }
 
     public Map<String, Object> modelReady() {
@@ -70,13 +74,13 @@ public class WebGameController {
     }
 
     public void load() throws SQLException {
-        Map<String, PieceDto> rawBoard = boardDao.loadFrom(DATABASE_NAME);
+        Map<String, PieceDto> rawBoard = boardDao.load();
         Map<Position, Piece> board = rawBoard.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> parsePosition(entry.getKey()),
                         entry -> parsePiece(entry.getValue())
                 ));
-        chessGame.load(board, gameDao.isWhiteTurnIn(DATABASE_NAME));
+        chessGame.load(board, gameDao.isWhiteTurn());
     }
 
     private Piece parsePiece(PieceDto piece) {
@@ -115,8 +119,8 @@ public class WebGameController {
     }
 
     public void save() throws SQLException {
-        gameDao.saveTo(DATABASE_NAME);
-        boardDao.saveTo(DATABASE_NAME, chessGame.getBoardSquares());
+        gameDao.save();
+        boardDao.save(chessGame.getBoardSquares());
     }
 
     public Map<String, Object> end() {
