@@ -21,10 +21,6 @@ public class Turn {
         return this.now == team;
     }
 
-    public String getNowValue() {
-        return now.getValue();
-    }
-
     public Team getNow() {
         return now;
     }
