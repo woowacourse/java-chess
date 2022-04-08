@@ -72,13 +72,4 @@ public class ChessService {
         chessGame.start();
         chessGameDao.saveState(chessGame.getState());
     }
-
-    public void load() {
-        chessGame.load(boardDao.loadAllPieces(), chessGameDao.loadState());
-    }
-
-    public void save() {
-        chessGameDao.saveState(chessGame.getState());
-        boardDao.saveAllPieces(chessGame.getBoard());
-    }
 }
