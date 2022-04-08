@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DatabaseLoadBoardGenerator implements BoardGenerator {
-    private final Map<Position, Piece> board = new HashMap<>();
+
     private final List<PieceDto> pieceDtos;
     private final Team turn;
 
@@ -22,10 +22,11 @@ public class DatabaseLoadBoardGenerator implements BoardGenerator {
 
     @Override
     public Board create() {
+        Map<Position, Piece> board = new HashMap<>();
         for (PieceDto pieceDto : pieceDtos) {
             board.put(Position.of(pieceDto.getPosition()), createPiece(pieceDto));
         }
-        return new Board(new HashMap<>(board), turn);
+        return new Board(board, turn);
     }
 
     private Piece createPiece(PieceDto pieceDto) {
