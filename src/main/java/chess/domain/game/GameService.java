@@ -65,15 +65,19 @@ public final class GameService {
     }
 
     private void movePiece(final int roomId, final Position sourcePosition, final Position targetPosition, final Piece sourcePiece) {
-        if (!sourcePiece.isMovable(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
-        }
+        validateMovement(sourcePosition, targetPosition, sourcePiece);
         final Optional<Piece> targetPiece = pieceDao.findByPositionId(targetPosition.getId());
         targetPiece.ifPresent(piece -> validateTargetNotSameColor(sourcePiece, piece));
-        checkPawnMovement(sourcePosition, targetPosition, sourcePiece, targetPiece);
+        validatePawnMovement(sourcePosition, targetPosition, sourcePiece, targetPiece);
         validatePathEmpty(roomId, sourcePosition, targetPosition);
         updateMovingPiecePosition(sourcePosition, targetPosition, targetPiece);
         changeTurn(roomId);
+    }
+
+    private void validateMovement(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        if (!sourcePiece.isMovable(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
+        }
     }
 
     private void validateCorrectTurn(int roomId, Piece piece) {
@@ -135,7 +139,7 @@ public final class GameService {
         }
     }
 
-    private void checkPawnMovement(final Position sourcePosition, final Position targetPosition, final Piece sourcePiece, final Optional<Piece> targetPiece) {
+    private void validatePawnMovement(final Position sourcePosition, final Position targetPosition, final Piece sourcePiece, final Optional<Piece> targetPiece) {
         if (sourcePiece.isPawn() && Direction.calculate(sourcePosition, targetPosition).isDiagonal()) {
             checkPawnTargetExist(targetPiece);
         }
