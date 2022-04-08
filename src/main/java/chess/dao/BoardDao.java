@@ -1,32 +1,39 @@
 package chess.dao;
 
+import chess.dao.initialboard.InitialBoard;
 import chess.domain.GameState;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import org.apache.ibatis.jdbc.ScriptRunner;
+import java.util.Map;
 
 public class BoardDao {
 
-    private static final String INIT_BOARD_FILE_PATH = "/src/main/java/chess/dao/init-board.sql";
-
     public int initBoard() {
-        final Connection connection = CommonDao.getConnection();
-        final ScriptRunner scriptRunner = new ScriptRunner(connection);
-        final String filePath = System.getProperty("user.dir") + INIT_BOARD_FILE_PATH;
+        final String sql = "INSERT INTO pieces(piece_id, position, board_id) VALUES (?, ?, ?);";
+        createNewBoard();
+        final int boardId = getLastCreatedBoardId();
+        final Map<String, Integer> pieces = InitialBoard.getInitialPiecesIdAndLocation();
+        final StatementMaker<PreparedStatement> statementMaker = (statement -> {
+            for (Map.Entry<String, Integer> positionAndPieceId : pieces.entrySet()) {
+                statement.setInt(1, positionAndPieceId.getValue());
+                statement.setString(2, positionAndPieceId.getKey());
+                statement.setInt(3, boardId);
+                statement.execute();
+            }
+        });
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
+        return boardId;
+    }
+
+    private void createNewBoard() {
+        final String sql = "INSERT INTO board(game_status) VALUES ('READY');";
+        final StatementMaker<PreparedStatement> statementMaker = (PreparedStatement::execute);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
+    }
+
+    private int getLastCreatedBoardId() {
         final String sql = "SELECT id FROM board ORDER BY id DESC LIMIT 1";
-        try (Reader reader = new BufferedReader(new FileReader(filePath))) {
-            final StatementMaker<PreparedStatement> statementMaker = (statement -> {
-                scriptRunner.runScript(reader);
-            });
-            return CommonDao.findId(sql, statementMaker, "id");
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("현재 실행할 수 없는 명령입니다.", e);
-        }
+        final StatementMaker<PreparedStatement> statementMaker = (PreparedStatement::execute);
+        return CommonDao.findId(sql, statementMaker, "id");
     }
 
     public GameState getGameStatus(final int userId) {
@@ -44,7 +51,7 @@ public class BoardDao {
             statement.setInt(2, boardId);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 
     public void deleteBoard(final int id) {
@@ -53,6 +60,6 @@ public class BoardDao {
             statement.setInt(1, id);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 }

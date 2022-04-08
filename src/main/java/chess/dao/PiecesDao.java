@@ -25,7 +25,7 @@ public class PiecesDao {
             statement.setInt(3, boardId);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 
     public void deletePiece(final String position) {
@@ -34,7 +34,7 @@ public class PiecesDao {
             statement.setString(1, position);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 
     public void deletePieces(final int boardId) {
@@ -43,6 +43,6 @@ public class PiecesDao {
             statement.setInt(1, boardId);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 }

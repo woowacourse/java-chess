@@ -11,7 +11,7 @@ public class UserDao {
             statement.setInt(2, boardId);
             statement.execute();
         };
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 
     public int getUser(final String name) {
@@ -36,6 +36,6 @@ public class UserDao {
             statement.setInt(1, userId);
             statement.execute();
         });
-        CommonDao.UpdateOrDelete(sql, statementMaker);
+        CommonDao.CreateUpdateDelete(sql, statementMaker);
     }
 }

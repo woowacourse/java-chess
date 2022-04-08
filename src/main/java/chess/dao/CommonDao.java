@@ -35,7 +35,7 @@ public class CommonDao {
         }
     }
 
-    static void UpdateOrDelete(final String sql, StatementMaker<PreparedStatement> statementConsumer) {
+    static void CreateUpdateDelete(final String sql, StatementMaker<PreparedStatement> statementConsumer) {
         try {
             final Connection connection = getConnection();
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -112,5 +112,6 @@ public class CommonDao {
                 Row.from(Integer.parseInt(rawPosition.substring(ROW, 2))));
     }
 
-
+    private CommonDao() {
+    }
 }
