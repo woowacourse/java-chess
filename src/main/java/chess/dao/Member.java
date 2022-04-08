@@ -2,18 +2,18 @@ package chess.dao;
 
 public class Member {
 
-    private final int id;
+    private final Integer id;
     private final String name;
     private final int boardId;
 
-    public Member(String name) {
-        this(0, name, 0);
-    }
-
-    public Member(int id, String name, int boardId) {
+    public Member(Integer id, String name, Integer boardId) {
         this.id = id;
         this.name = name;
         this.boardId = boardId;
+    }
+
+    public Member(String name) {
+        this(null, name, null);
     }
 
     public int getId() {

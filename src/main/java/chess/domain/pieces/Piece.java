@@ -9,12 +9,12 @@ public final class Piece {
     private static final String WHITE_SYMBOL = "white";
     private static final String BLACK_SYMBOL = "black";
 
-    private final int id;
+    private final Integer id;
     private final Color color;
     private final Type type;
-    private final int positionId;
+    private final Integer positionId;
 
-    public Piece(int id, Color color, Type type, int positionId) {
+    public Piece(Integer id, Color color, Type type, Integer positionId) {
         this.id = id;
         this.color = color;
         this.type = type;
@@ -22,11 +22,11 @@ public final class Piece {
     }
 
     public Piece(Color color, Type type, int positionId) {
-        this(0, color, type, positionId);
+        this(null, color, type, positionId);
     }
 
     public Piece(final Color color, final Type type) {
-        this(0, color, type, 0);
+        this(null, color, type, null);
     }
 
     public String symbol() {

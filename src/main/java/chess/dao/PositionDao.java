@@ -89,7 +89,7 @@ public class PositionDao {
             final String sql = "SELECT po.id AS po_id, po.position_column, po.position_row, po.board_id, " +
                     "pi.id AS pi_id, pi.type, pi.color, pi.position_id " +
                     "FROM position po " +
-                    "JOIN piece pi ON pi.id = pi.position_id " +
+                    "JOIN piece pi ON po.id = pi.position_id " +
                     "WHERE board_id=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

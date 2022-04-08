@@ -8,12 +8,12 @@ public final class Position {
     private static final int COLUMN_ROW_LENGTH = 2;
     private static final Map<String, Position> caches = new HashMap<>();
 
-    private final int id;
+    private final Integer id;
     private final Column column;
     private final Row row;
-    private final int boardId;
+    private final Integer boardId;
 
-    public Position(final int id, final Column column, final Row row, final int boardId) {
+    public Position(final Integer id, final Column column, final Row row, final Integer boardId) {
         this.id = id;
         this.column = column;
         this.row = row;
@@ -21,11 +21,11 @@ public final class Position {
     }
 
     public Position(final Column column, final Row row) {
-        this(0, column, row, 0);
+        this(null, column, row, null);
     }
 
     public Position(final Column column, final Row row, final int boardId) {
-        this(0, column, row, boardId);
+        this(null, column, row, boardId);
     }
 
     public static Position of(final String value) {

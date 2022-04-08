@@ -8,28 +8,28 @@ import java.util.List;
 
 public final class Board {
 
-    private final int id;
+    private final Integer id;
     private final String roomTitle;
     private final Color turn;
     private final List<Member> members;
 
-    public Board(int id, String roomTitle, Color turn, List<Member> members) {
+    public Board(Integer id, String roomTitle, Color turn, List<Member> members) {
         this.id = id;
         this.roomTitle = roomTitle;
         this.turn = turn;
         this.members = members;
     }
 
-    public Board(int roomId, String roomTitle, Color turn) {
+    public Board(Integer roomId, String roomTitle, Color turn) {
         this(roomId, roomTitle, turn, new ArrayList<>());
     }
 
     public Board(String roomTitle, Color turn, List<Member> members) {
-        this(0, roomTitle, turn, members);
+        this(null, roomTitle, turn, members);
     }
 
     public Board(String roomTitle) {
-        this(0, roomTitle, Color.WHITE);
+        this(null, roomTitle, Color.WHITE);
     }
 
     public int getId() {
