@@ -1,7 +1,6 @@
-package chess;
+package chess.domain;
 
 import chess.controller.dto.GameStatusDto;
-import chess.controller.dto.MoveDto;
 import chess.controller.dto.ScoreDto;
 import chess.dao.BoardDao;
 import chess.dao.BoardDaoImpl;
@@ -9,8 +8,6 @@ import chess.dao.GameStatusDao;
 import chess.dao.GameStatusDaoImpl;
 import chess.dao.TurnDao;
 import chess.dao.TurnDaoImpl;
-import chess.domain.ChessGame;
-import chess.domain.GameStatus;
 import chess.domain.board.Board;
 import chess.domain.board.Result;
 import chess.domain.board.strategy.BoardGenerationStrategy;
@@ -60,11 +57,11 @@ public class ChessGameService {
         return ScoreDto.of(result);
     }
 
-    public GameStatusDto move(final MoveDto moveDto) {
+    public GameStatusDto move(String from, String to) {
         checkReady();
 
         ChessGame chessGame = createCustomChessGame();
-        moveAndUpdateBoard(moveDto, chessGame);
+        moveAndUpdateBoard(from, to, chessGame);
         chessGame.checkGameStatus();
 
         turnDao.update(turnDao.getTurn(), chessGame.getTurn().toString());
@@ -101,9 +98,9 @@ public class ChessGameService {
         return strategy;
     }
 
-    private void moveAndUpdateBoard(MoveDto moveDto, ChessGame chessGame) {
-        Position from = new Position(moveDto.getFrom());
-        Position to = new Position(moveDto.getTo());
+    private void moveAndUpdateBoard(String fromData, String toData, ChessGame chessGame) {
+        Position from = new Position(fromData);
+        Position to = new Position(toData);
         chessGame.move(from, to);
         boardDao.update(from.toString(), new Blank().toString());
         boardDao.update(to.toString(), chessGame.takePieceByPosition(to).toString());

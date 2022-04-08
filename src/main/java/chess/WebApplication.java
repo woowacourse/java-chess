@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.ChessWebController;
+import chess.domain.ChessGameService;
 import chess.domain.board.strategy.WebBasicBoardStrategy;
 
 public class WebApplication {

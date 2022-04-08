@@ -5,7 +5,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.ChessGameService;
+import chess.domain.ChessGameService;
 import chess.controller.dto.ErrorDto;
 import chess.controller.dto.MoveDto;
 import chess.domain.board.strategy.BoardGenerationStrategy;
@@ -38,8 +38,7 @@ public class ChessWebController {
         post("/move", (req, res) -> {
             try {
                 MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-                System.out.println("moveDto 변환완료");
-                return gson.toJson(chessGameService.move(moveDto));
+                return gson.toJson(chessGameService.move(moveDto.getFrom(), moveDto.getTo()));
             } catch (Exception e) {
                 return gson.toJson(new ErrorDto(e.getMessage()));
             }

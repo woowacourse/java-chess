@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.ChessGameService;
+import chess.domain.ChessGameService;
 import chess.domain.board.Result;
 import chess.domain.piece.Team;
 import java.util.List;
