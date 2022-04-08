@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +42,10 @@ public class BoardDao {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            final MemberDao memberDao = new MemberDao(connectionManager);
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
-            return new Board(
-                    resultSet.getInt("id"),
-                    resultSet.getString("room_title"),
-                    Color.findColor(resultSet.getString("turn")),
-                    memberDao.getAllByBoardId(resultSet.getInt("id"))
-            );
+            return makeBoard(resultSet, new MemberDao(connectionManager));
         });
     }
 
@@ -62,12 +57,7 @@ public class BoardDao {
             final MemberDao memberDao = new MemberDao(connectionManager);
             List<Board> boards = new ArrayList<>();
             while (resultSet.next()) {
-                boards.add(new Board(
-                        resultSet.getInt("id"),
-                        resultSet.getString("room_title"),
-                        Color.findColor(resultSet.getString("turn")),
-                        memberDao.getAllByBoardId(resultSet.getInt("id")))
-                );
+                boards.add(makeBoard(resultSet, new MemberDao(connectionManager)));
             }
             return boards;
         });
@@ -115,5 +105,13 @@ public class BoardDao {
             preparedStatement.setInt(2, boardId);
             return preparedStatement.executeUpdate();
         });
+    }
+
+    private Board makeBoard(ResultSet resultSet, MemberDao memberDao) throws SQLException {
+        return new Board(
+                resultSet.getInt("id"),
+                resultSet.getString("room_title"),
+                Color.findColor(resultSet.getString("turn")),
+                memberDao.getAllByBoardId(resultSet.getInt("id")));
     }
 }

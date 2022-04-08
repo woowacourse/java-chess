@@ -40,19 +40,14 @@ public class PositionDao {
     public Position getByColumnAndRowAndBoardId(Column column, Row row, int boardId) {
         return connectionManager.executeQuery(connection -> {
             final ResultSet resultSet = findPosition(column, row, boardId, connection);
-            return new Position(
-                    resultSet.getInt("id"),
-                    Column.findColumn(resultSet.getInt("position_column")),
-                    Row.findRow(resultSet.getInt("position_row")),
-                    resultSet.getInt("board_id")
-            );
+            return makePosition(resultSet, "id");
         });
     }
 
     private ResultSet findPosition(Column column, Row row, int boardId, Connection connection) throws SQLException {
-        final String sql = "SELECT np.id, np.position_column, np.position_row, np.board_id " +
-                "FROM position AS np " +
-                "WHERE np.position_column=? AND np.position_row=? AND np.board_id=?";
+        final String sql = "SELECT id, position_column, position_row, board_id " +
+                "FROM position " +
+                "WHERE position_column=? AND position_row=? AND board_id=?";
         final PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, column.value());
         preparedStatement.setInt(2, row.value());
@@ -102,23 +97,23 @@ public class PositionDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             Map<Position, Piece> existPiecesWithPosition = new HashMap<>();
             while (resultSet.next()) {
-                existPiecesWithPosition.put(makePosition(resultSet), makePiece(resultSet));
+                existPiecesWithPosition.put(makePosition(resultSet, "po_id"), makePiece(resultSet, "pi_id"));
             }
             return existPiecesWithPosition;
         });
     }
 
-    private Position makePosition(ResultSet resultSet) throws SQLException {
+    private Position makePosition(ResultSet resultSet, String idLabel) throws SQLException {
         return new Position(
-                resultSet.getInt("po_id"),
+                resultSet.getInt(idLabel),
                 Column.findColumn(resultSet.getInt("position_column")),
                 Row.findRow(resultSet.getInt("position_row")),
                 resultSet.getInt("board_id"));
     }
 
-    private Piece makePiece(ResultSet resultSet) throws SQLException {
+    private Piece makePiece(ResultSet resultSet, String idLabel) throws SQLException {
         return new Piece(
-                resultSet.getInt("pi_id"),
+                resultSet.getInt(idLabel),
                 Color.findColor(resultSet.getString("color")),
                 Symbol.findSymbol(resultSet.getString("type")).type(),
                 resultSet.getInt("position_id")

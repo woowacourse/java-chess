@@ -41,13 +41,16 @@ public class MemberDao {
             preparedStatement.setInt(1, boardId);
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                members.add(
-                        new Member(resultSet.getInt("id"),
-                                resultSet.getString("name"),
-                                resultSet.getInt("board_id")
-                        ));
+                members.add(makeMember(resultSet));
             }
             return members;
         });
+    }
+
+    private Member makeMember(ResultSet resultSet) throws SQLException {
+        return new Member(resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getInt("board_id")
+        );
     }
 }

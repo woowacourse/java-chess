@@ -43,11 +43,7 @@ public class PieceDao {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
-            return Optional.of(new Piece(
-                    resultSet.getInt("id"),
-                    Color.findColor(resultSet.getString("color")),
-                    Symbol.findSymbol(resultSet.getString("type")).type(),
-                    resultSet.getInt("position_id")));
+            return Optional.of(makePiece(resultSet));
         });
     }
 
@@ -79,12 +75,7 @@ public class PieceDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             List<Piece> pieces = new ArrayList<>();
             while (resultSet.next()) {
-                pieces.add(new Piece(
-                        resultSet.getInt("id"),
-                        Color.findColor(resultSet.getString("color")),
-                        Symbol.findSymbol(resultSet.getString("type")).type(),
-                        resultSet.getInt("position_id")
-                ));
+                pieces.add(makePiece(resultSet));
             }
             return pieces;
         });
@@ -106,5 +97,14 @@ public class PieceDao {
 
             return resultSet.getInt("total_count");
         });
+    }
+
+    private Piece makePiece(ResultSet resultSet) throws SQLException {
+        return new Piece(
+                resultSet.getInt("id"),
+                Color.findColor(resultSet.getString("color")),
+                Symbol.findSymbol(resultSet.getString("type")).type(),
+                resultSet.getInt("position_id")
+        );
     }
 }
