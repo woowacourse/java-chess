@@ -6,9 +6,14 @@ import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessGame {
+
+    public static final int ONE_DEAD_KING = 1;
+    public static final int FIRST_INDEX_OF_ALIVE_KINGS = 0;
 
     private final String name;
     private final Board board;
@@ -71,9 +76,19 @@ public class ChessGame {
     }
 
     private void turnOffWhenKingDie() {
-        if (board.searchTeamOfDeadKing() != Team.NONE) {
+        if (searchTeamOfDeadKingWhenSingleKingAlive() != Team.NONE) {
             turnOff();
         }
+    }
+
+    private Team searchTeamOfDeadKingWhenSingleKingAlive() {
+        List<Piece> aliveKings = board.getBoard().values().stream()
+                .filter(Piece::isKing)
+                .collect(Collectors.toList());
+        if (aliveKings.size() == ONE_DEAD_KING) {
+            return aliveKings.get(FIRST_INDEX_OF_ALIVE_KINGS).getTeam().oppositeTeam();
+        }
+        return Team.NONE;
     }
 
     public void turnOff() {
@@ -85,7 +100,7 @@ public class ChessGame {
     }
 
     public Result generateResult() {
-        return new Result(getCurrentBoard(), board.searchTeamOfDeadKing());
+        return new Result(getCurrentBoard(), searchTeamOfDeadKingWhenSingleKingAlive());
     }
 
     public String getName() {

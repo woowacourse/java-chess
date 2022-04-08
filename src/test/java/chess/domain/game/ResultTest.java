@@ -13,10 +13,17 @@ import org.junit.jupiter.api.Test;
 public class ResultTest {
 
     private Board board;
+    private ChessGame chessGame;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.createInitChessBoard();
+        chessGame = new ChessGame(
+                "ChessGame",
+                board,
+                new GameSwitch(true),
+                new Turn(Team.WHITE)
+        );
     }
 
     @Test
@@ -25,7 +32,7 @@ public class ResultTest {
         board.movePiece(Position.of('a', 2), Position.of('b', 3));
         board.movePiece(Position.of('c', 2), Position.of('b', 4));
 
-        assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWhiteScore()).isEqualTo(36.5);
+        assertThat(chessGame.generateResult().getWhiteScore()).isEqualTo(36.5);
     }
 
     @Test
@@ -33,7 +40,7 @@ public class ResultTest {
     void getWhiteScore_WhenNoQueenAndPawnExistVertically() {
         board.movePiece(Position.of('a', 2), Position.of('d', 1));
 
-        assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWhiteScore()).isEqualTo(28);
+        assertThat(chessGame.generateResult().getWhiteScore()).isEqualTo(28);
     }
 
     @Test
@@ -41,8 +48,7 @@ public class ResultTest {
     void getWinColor_WhenBlackWin() {
         board.movePiece(Position.of('a', 2), Position.of('d', 1));
 
-        assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWinningTeam().getValue())
-                .isEqualTo(Team.BLACK.getValue());
+        assertThat(chessGame.generateResult().getWinningTeam().getValue()).isEqualTo(Team.BLACK.getValue());
     }
 
     @Test
@@ -50,7 +56,6 @@ public class ResultTest {
     void getWinColor_WhenWhiteWin() {
         board.movePiece(Position.of('a', 7), Position.of('b', 6));
 
-        assertThat(new Result(board.getBoard(), board.searchTeamOfDeadKing()).getWinningTeam().getValue())
-                .isEqualTo(Team.WHITE.getValue());
+        assertThat(chessGame.generateResult().getWinningTeam().getValue()).isEqualTo(Team.WHITE.getValue());
     }
 }

@@ -4,10 +4,8 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -28,16 +26,6 @@ public class Board {
 
     public Piece getPiece(final Position position) {
         return board.get(position);
-    }
-
-    public Team searchTeamOfDeadKing() {
-        List<Piece> aliveKings = board.values().stream()
-                .filter(Piece::isKing)
-                .collect(Collectors.toList());
-        if (aliveKings.size() == 1) {
-            return aliveKings.get(0).getTeam().oppositeTeam();
-        }
-        return Team.NONE;
     }
 
     public Map<Position, Piece> getBoard() {

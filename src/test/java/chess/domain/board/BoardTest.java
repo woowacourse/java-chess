@@ -40,12 +40,4 @@ public class BoardTest {
         Board board = BoardFactory.createInitChessBoard();
         assertThat(board.getPiece(Position.of('a', 8))).isEqualTo(new Rook(Team.BLACK));
     }
-
-    @Test
-    @DisplayName("왕이 죽은 Team 을 반환한다.")
-    void searchTeamOfDeadKing() {
-        board.movePiece(Position.of('e', 1), Position.of('e', 8));
-
-        assertThat(board.searchTeamOfDeadKing()).isEqualTo(Team.BLACK);
-    }
 }
