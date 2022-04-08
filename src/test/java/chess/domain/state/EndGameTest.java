@@ -26,12 +26,12 @@ class EndGameTest {
 	}
 
 	@Test
-	void play() {
+	void move() {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
-		assertThatThrownBy(() -> endGame.play(initialWhitePawn, Position.of(THREE, A)))
+		assertThatThrownBy(() -> endGame.move(initialWhitePawn, Position.of(THREE, A)))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}

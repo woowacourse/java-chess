@@ -3,11 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public final class Bishop extends Piece {
-	
+
 	private static final int BISHOP_SCORE = 3;
+	private static final String symbol = "bishop";
 
 	public Bishop(final Team team) {
-		super(team);
+		super(team, symbol);
 	}
 
 	@Override

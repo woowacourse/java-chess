@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <link rel="stylesheet" href="/css/chess.css"/>
+</head>
+<body>
+
+<div class="background">
+    <div class="board" id="board">
+        <div class="rank">
+            <div class="light-board piece-container" id="a8"></div>
+            <div class="dark-board piece-container" id="b8"></div>
+            <div class="light-board piece-container" id="c8"></div>
+            <div class="dark-board piece-container" id="d8"></div>
+            <div class="light-board piece-container" id="e8"></div>
+            <div class="dark-board piece-container" id="f8"></div>
+            <div class="light-board piece-container" id="g8"></div>
+            <div class="dark-board piece-container" id="h8"></div>
+        </div>
+
+        <div class="rank">
+            <div class="dark-board piece-container" id="a7"></div>
+            <div class="light-board piece-container" id="b7"></div>
+            <div class="dark-board piece-container" id="c7"></div>
+            <div class="light-board piece-container" id="d7"></div>
+            <div class="dark-board piece-container" id="e7"></div>
+            <div class="light-board piece-container" id="f7"></div>
+            <div class="dark-board piece-container" id="g7"></div>
+            <div class="light-board piece-container" id="h7"></div>
+        </div>
+
+        <div class="rank">
+            <div class="light-board piece-container" id="a6"></div>
+            <div class="dark-board piece-container" id="b6"></div>
+            <div class="light-board piece-container" id="c6"></div>
+            <div class="dark-board piece-container" id="d6"></div>
+            <div class="light-board piece-container" id="e6"></div>
+            <div class="dark-board piece-container" id="f6"></div>
+            <div class="light-board piece-container" id="g6"></div>
+            <div class="dark-board piece-container" id="h6"></div>
+        </div>
+
+        <div class="rank">
+            <div class="dark-board piece-container" id="a5"></div>
+            <div class="light-board piece-container" id="b5"></div>
+            <div class="dark-board piece-container" id="c5"></div>
+            <div class="light-board piece-container" id="d5"></div>
+            <div class="dark-board piece-container" id="e5"></div>
+            <div class="light-board piece-container" id="f5"></div>
+            <div class="dark-board piece-container" id="g5"></div>
+            <div class="light-board piece-container" id="h5"></div>
+        </div>
+
+        <div class="rank">
+            <div class="light-board piece-container" id="a4"></div>
+            <div class="dark-board piece-container" id="b4"></div>
+            <div class="light-board piece-container" id="c4"></div>
+            <div class="dark-board piece-container" id="d4"></div>
+            <div class="light-board piece-container" id="e4"></div>
+            <div class="dark-board piece-container" id="f4"></div>
+            <div class="light-board piece-container" id="g4"></div>
+            <div class="dark-board piece-container" id="h4"></div>
+        </div>
+
+        <div class="rank">
+            <div class="dark-board piece-container" id="a3"></div>
+            <div class="light-board piece-container" id="b3"></div>
+            <div class="dark-board piece-container" id="c3"></div>
+            <div class="light-board piece-container" id="d3"></div>
+            <div class="dark-board piece-container" id="e3"></div>
+            <div class="light-board piece-container" id="f3"></div>
+            <div class="dark-board piece-container" id="g3"></div>
+            <div class="light-board piece-container" id="h3"></div>
+        </div>
+
+        <div class="rank">
+            <div class="light-board piece-container" id="a2"></div>
+            <div class="dark-board piece-container" id="b2"></div>
+            <div class="light-board piece-container" id="c2"></div>
+            <div class="dark-board piece-container" id="d2"></div>
+            <div class="light-board piece-container" id="e2"></div>
+            <div class="dark-board piece-container" id="f2"></div>
+            <div class="light-board piece-container" id="g2"></div>
+            <div class="dark-board piece-container" id="h2"></div>
+        </div>
+
+        <div class="rank">
+            <div class="dark-board piece-container" id="a1"></div>
+            <div class="light-board piece-container" id="b1"></div>
+            <div class="dark-board piece-container" id="c1"></div>
+            <div class="light-board piece-container" id="d1"></div>
+            <div class="dark-board piece-container" id="e1"></div>
+            <div class="light-board piece-container" id="f1"></div>
+            <div class="dark-board piece-container" id="g1"></div>
+            <div class="light-board piece-container" id="h1"></div>
+        </div>
+    </div>
+
+    <div class="game">
+        <input id="game_id" type="hidden" value="{{gameId}}">
+        <img src="/image/chess_logo.png" width="250px" height="250px">
+        <br>
+        <br>
+        <button id="status-button" type="button">점수 확인</button>
+        <br>
+        <br>
+        <button id="back-button" type="button">게임 저장 후 뒤로가기</button>
+        <br>
+        <br>
+        <button id="end-button" type="button">게임 종료</button>
+    </div>
+
+</div>
+<script src="/js/chess.js"></script>
+</body>
+</html>

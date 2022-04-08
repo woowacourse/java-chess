@@ -22,10 +22,10 @@ class ReadyTest {
 	}
 
 	@Test
-	void play() {
+	void move() {
 		State state = new Ready();
 
-		assertThatThrownBy(() -> state.play(initialWhitePawn, Position.of(THREE, A)))
+		assertThatThrownBy(() -> state.move(initialWhitePawn, Position.of(THREE, A)))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}

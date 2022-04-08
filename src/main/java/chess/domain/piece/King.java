@@ -7,11 +7,12 @@ import java.util.List;
 public final class King extends Piece {
 
 	private static final int KING_SCORE = 0;
+	private static final String symbol = "king";
 
 	public King(final Team team) {
-		super(team);
+		super(team, symbol);
 	}
-	
+
 	@Override
 	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		List<Direction> directions = Direction.getKingDirection();

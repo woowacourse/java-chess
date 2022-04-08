@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게임 불러오기</title>
+    <link rel="stylesheet" href="/css/chess.css"/>
+</head>
+<body>
+<div class="select_board">
+    <h2>게임들</h2>
+    {{#games}}
+    <div>
+        <button onclick="loadGame({{id}})">{{name}}</button>
+        <button style="color: red" onclick="deleteGame({{id}})">삭제</button>
+        <br>
+    </div>
+    {{/games}}
+</div>
+</body>
+</html>

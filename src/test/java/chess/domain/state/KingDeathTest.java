@@ -22,7 +22,7 @@ class KingDeathTest {
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
 		assertThatThrownBy(() -> kingDeath.start(board))
 				.isInstanceOf(IllegalStateException.class)
@@ -30,14 +30,14 @@ class KingDeathTest {
 	}
 
 	@Test
-	void play() {
+	void move() {
 		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
-		assertThatThrownBy(() -> kingDeath.play(Position.of(FIVE, E), Position.of(FIVE, F)))
+		assertThatThrownBy(() -> kingDeath.move(Position.of(FIVE, E), Position.of(FIVE, F)))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}
@@ -48,7 +48,7 @@ class KingDeathTest {
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
 		assertThatThrownBy(kingDeath::createStatus)
 				.isInstanceOf(IllegalStateException.class)
@@ -61,7 +61,7 @@ class KingDeathTest {
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
 		assertThatThrownBy(kingDeath::finish)
 				.isInstanceOf(IllegalStateException.class)
@@ -74,7 +74,7 @@ class KingDeathTest {
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
 		assertThat(kingDeath.isFinished()).isTrue();
 	}
@@ -85,7 +85,7 @@ class KingDeathTest {
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(FOUR, D);
 		Position blackKing = Position.of(FIVE, E);
-		State kingDeath = state.play(whiteKing, blackKing);
+		State kingDeath = state.move(whiteKing, blackKing);
 
 		assertThat(kingDeath.judgeWinner()).isEqualTo(Team.WHITE);
 	}

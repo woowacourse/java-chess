@@ -6,9 +6,10 @@ public final class Blank extends Piece {
 
 	private static final String CAN_NOT_MOVE_ERROR = "해당 위치에 기물이 없어 움직일 수 없습니다.";
 	private static final int BLANK_SCORE = 0;
+	private static final String symbol = "blank";
 
 	public Blank() {
-		super(Team.NEUTRALITY);
+		super(Team.NEUTRALITY, symbol);
 	}
 
 	@Override

@@ -52,4 +52,8 @@ public enum File {
 	public int subtract(final File file) {
 		return this.value - file.value;
 	}
+
+	public String getSymbol() {
+		return symbol;
+	}
 }

@@ -1,9 +1,15 @@
 package chess.domain.piece;
 
 public enum Team {
-	WHITE,
-	BLACK,
-	NEUTRALITY;
+	WHITE("white"),
+	BLACK("black"),
+	NEUTRALITY("neutrality");
+
+	private final String value;
+
+	Team(final String value) {
+		this.value = value;
+	}
 
 	public boolean isBlack() {
 		return this == Team.BLACK;
@@ -11,5 +17,9 @@ public enum Team {
 
 	public boolean isWhite() {
 		return this == Team.WHITE;
+	}
+
+	public String getValue() {
+		return value;
 	}
 }

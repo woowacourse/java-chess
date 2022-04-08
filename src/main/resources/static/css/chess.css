@@ -1,0 +1,65 @@
+.select_board {
+    background-image: url("/image/wood.svg");
+    width: 100%;
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.background {
+    background-image: url("/image/wood.svg");
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.setting_background {
+    background-image: url("/image/wood.svg");
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.setting_board {
+    margin: auto;
+    width: 600px;
+}
+
+.board {
+    margin: 20px;
+    width: 650px;
+}
+
+.game {
+    width: 300px;
+    text-align: center;
+}
+
+.rank {
+    height: 76px;
+    display: flex;
+}
+
+.light-board {
+    background-color: antiquewhite;
+}
+
+.dark-board {
+    background-color: brown;
+}
+
+.piece-container {
+    width: 76px;
+    height: 76px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.piece {
+    width: 62px;
+    height: 62px;
+}

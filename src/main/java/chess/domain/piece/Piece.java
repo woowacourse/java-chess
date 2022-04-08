@@ -10,9 +10,11 @@ public abstract class Piece {
 	private static final String CAN_NOT_CATCH_AllY_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
 
 	protected final Team team;
+	protected final String symbol;
 
-	protected Piece(final Team team) {
+	public Piece(final Team team, final String symbol) {
 		this.team = team;
+		this.symbol = symbol;
 	}
 
 	public final void validateMovement(final Position source, final Position target, final Piece targetPiece) {
@@ -39,6 +41,14 @@ public abstract class Piece {
 	public abstract boolean isKing();
 
 	public abstract double getScore();
+
+	public final String getTeam() {
+		return team.getValue();
+	}
+
+	public final String convertToString() {
+		return symbol;
+	}
 
 	@Override
 	public boolean equals(final Object o) {
