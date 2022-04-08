@@ -23,10 +23,15 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private static final int EMPTY_RESULT = 0;
-    private final GameDao gameDao = new GameDao();
-    private final BoardDao boardDao = new BoardDao();
 
+    private final GameDao gameDao;
+    private final BoardDao boardDao;
     private ChessBoard chessBoard = null;
+
+    public ChessService(GameDao gameDao, BoardDao boardDao) {
+        this.gameDao = gameDao;
+        this.boardDao = boardDao;
+    }
 
     public ResponseDto start() {
         try {

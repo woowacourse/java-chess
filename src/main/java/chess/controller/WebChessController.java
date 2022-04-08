@@ -17,7 +17,11 @@ import static spark.Spark.post;
 
 public class WebChessController {
 
-    private final ChessService chessService = new ChessService();
+    private final ChessService chessService;
+
+    public WebChessController(ChessService chessService) {
+        this.chessService = chessService;
+    }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
