@@ -72,7 +72,6 @@ public class ChessService {
                 model.put("isWhite", chessGame.getCamp().isWhite());
                 model.put("status", chessGame.calculateStatus());
                 model.put("isRunning", false);
-                chessGame.ready();
                 model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
 
                 return model;

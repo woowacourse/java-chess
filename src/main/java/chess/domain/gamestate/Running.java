@@ -32,9 +32,6 @@ public class Running implements State {
 
     @Override
     public State run() {
-        // running중에 run시 예외처리 -> new Board()가지고 시작하도록 변경
-        // -> 재시작 버튼 누를 때 Ready로 가면, running중이 아닌 것으로 필터링 되서 스위치 꺼짐
-        // -> 재시작: Running중에  새board를 가지고 new Running() 만드는 것( new Ready()로 가면안됨)
         return new Running(new Board());
     }
 

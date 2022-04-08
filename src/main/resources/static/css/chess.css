@@ -142,7 +142,6 @@ header {
     display: flex;
     flex-direction: column;
     align-content: center;
-
     margin: 0 1rem;
 }
 
@@ -162,6 +161,7 @@ header {
     font-size: 0.9rem;
     color: #000000;
 }
+
 /*텍스트*/
 
 .message {
@@ -233,6 +233,7 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
 /*board*/
 
 .button-container {
@@ -266,19 +267,19 @@ header {
 }
 
 .board-column {
-    width: 65px;
+    width: 60px;
     aspect-ratio: 1 / 1;
     height: 100%;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
     border-radius: 4px;
-    margin: 0 3px;
+    margin: -2px 2px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .piece-image {
-    width: 50px;
+    width: 45px;
     aspect-ratio: 1 / 1;
     height: 100%;
     text-align: center;
@@ -344,7 +345,7 @@ header {
 }
 
 .message-container {
-    width: 50%;
+    width: 60%;
     background-color: #fff;
     display: flex;
     align-items: center;

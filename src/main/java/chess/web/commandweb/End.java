@@ -14,17 +14,14 @@ public final class End implements WebCommandGenerator {
         // -> ready도 포함해서 통과시켜줘야한다.
         if (!chessGame.isRunning()) {
             chessGame.gameSwitchOff();
-            returnModelToState.get();
-            //db 저장하면 될 듯.
-            return null;
         }
 
+        //finished상태로 response할 데이터 정리해두고
         chessGame.end();
-
-        returnModelToState.get();
-//
-//        chessGame.ready();
-        // 게임은 ready로 돌리고 render는 다시 index.html로 돌아가도록 해보자.
-        return null;
+        final Map<String, Object> model = returnModelToState.get();
+        
+        // 겜 상태는 Ready상태로 만들어놓기
+        chessGame.ready();
+        return model;
     }
 }
