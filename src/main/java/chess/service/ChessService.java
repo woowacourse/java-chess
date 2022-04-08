@@ -47,11 +47,12 @@ public class ChessService {
     }
 
     private Playing getGameState(Map<String, String> room) {
-        Map<String, String> boardDaos = boardDao.findAll(room.get("id"));
+        List<PieceDTO> pieces = boardDao.findAll(room.get("id"));
         Map<Position, Piece> board = new HashMap<>();
-        for (String position : boardDaos.keySet()) {
-            Piece piece = PieceFactory.create(boardDaos.get(position));
-            board.put(Position.from(position), piece);
+        for (PieceDTO pieceOfPieces :pieces) {
+            Piece piece = PieceFactory.create(pieceOfPieces.getSymbol());
+            Position position = Position.from(pieceOfPieces.getPosition());
+            board.put(position, piece);
         }
         if (room.get("status").equals("White")) {
             return new WhiteTurn(board);

@@ -3,30 +3,32 @@ package chess.dao;
 import chess.database.DBConnection;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.PieceDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class BoardDao {
     final Connection connection = DBConnection.getConnection();
 
-    public Map<String, String> findAll(String roomId) {
+    public List<PieceDTO> findAll(String roomId) {
         final String sql = "select * from board where room_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, roomId);
             ResultSet resultSet = statement.executeQuery();
-            Map<String, String> board = new HashMap<>();
+            List<PieceDTO> pieces = new ArrayList<>();
             while (resultSet.next()) {
                 String position = resultSet.getString("position");
                 String symbol = resultSet.getString("symbol");
-                board.put(position, symbol);
+                pieces.add(new PieceDTO(position, symbol));
             }
-            return board;
+            return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
         }
