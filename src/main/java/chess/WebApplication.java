@@ -8,7 +8,6 @@ import static spark.Spark.staticFileLocation;
 import chess.dto.ApiResult;
 import chess.dto.MoveCommand;
 import chess.service.ChessWebService;
-import chess.utils.RequestToCommand;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +64,7 @@ public class WebApplication {
         });
 
         post("/room/:gameNumber/move", (req, res) -> {
-            final MoveCommand command = RequestToCommand.toMoveCommand(req.body());
+            final MoveCommand command = gson.fromJson(req.body(), MoveCommand.class);
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
             ApiResult apiResult = services.get(gameNumber).movePiece(command);
 
