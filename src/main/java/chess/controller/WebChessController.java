@@ -33,7 +33,7 @@ public class WebChessController {
 
     public WebChessController() {
         this.chessService = new ChessService();
-        this.gameState = chessService.findState();
+        this.gameState = chessService.findChessGame();
     }
 
     public void run() {

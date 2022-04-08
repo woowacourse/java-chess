@@ -20,6 +20,11 @@ public class ChessDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
     private static final String TABLE_ID = "id";
+    private static final String CHESSGAME_STATE = "state";
+    private static final String CHESSBOARD_BOARD_ROW = "board_row";
+    private static final String CHESSBOARD_BOARD_COLUMN = "board_column";
+    private static final String CHESSPIECE_NAME = "name";
+    private static final String CHESSPIECE_TEAM = "team";
     private static final String SQL_STATEMENT_EXCEPTION = "[ERROR] SQL 문을 실행할 수 없습니다.";
     private static final String DATA_NOT_EXISTS_EXCEPTION = "[ERROR] 요청된 데이터가 존재하지 않습니다.";
 
@@ -31,6 +36,42 @@ public class ChessDao {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public String findState() {
+        final Connection connection = getConnection();
+        final String sql = "select state from chessgame";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return resultSet.getString(CHESSGAME_STATE);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
+        }
+    }
+
+    public Map<String, List<String>> getChessBoard() {
+        final Connection connection = getConnection();
+        final String sql = "select board_row, board_column, name, team "
+                + "from chessboard join chesspiece on chessboard.chesspiece_id = chesspiece.id";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            Map<String, List<String>> board = new HashMap<>();
+            while (resultSet.next()) {
+                int row = resultSet.getInt(CHESSBOARD_BOARD_ROW);
+                String column = resultSet.getString(CHESSBOARD_BOARD_COLUMN);
+                String chessPieceName = resultSet.getString(CHESSPIECE_NAME);
+                String team = resultSet.getString(CHESSPIECE_TEAM);
+                board.put(column + row, List.of(chessPieceName, team));
+            }
+            return board;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
+        }
     }
 
     public int saveGameState(GameState gameState) {
@@ -54,7 +95,7 @@ public class ChessDao {
         }
     }
 
-    public Integer findChessGameId() {
+    private Integer findChessGameId() {
         final Connection connection = getConnection();
         final String sql = "select id from chessgame";
         try {
@@ -165,42 +206,4 @@ public class ChessDao {
             e.printStackTrace();
         }
     }
-
-    public String findChessGameState() {
-        final Connection connection = getConnection();
-        final String sql = "select state from chessgame";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return resultSet.getString("state");
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
-        }
-    }
-
-    public Map<String, List<String>> getChessBoard() {
-        final Connection connection = getConnection();
-        final String sql = "select board_row, board_column, name, team "
-                + "from chessboard join chesspiece on chessboard.chesspiece_id = chesspiece.id";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            Map<String, List<String>> board = new HashMap<>();
-            while (resultSet.next()) {
-                int row = resultSet.getInt("board_row");
-                String column = resultSet.getString("board_column");
-                String chessPieceName = resultSet.getString("name");
-                String team = resultSet.getString("team");
-                board.put(column + row, List.of(chessPieceName, team));
-            }
-            return board;
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(SQL_STATEMENT_EXCEPTION);
-        }
-    }
-
-
 }
