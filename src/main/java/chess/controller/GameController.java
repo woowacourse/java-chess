@@ -14,8 +14,8 @@ import spark.Request;
 public class GameController {
 
     private static final String GAME_ROUTE = "/game/:id";
-    private static final String HTML_TEMPLATE_PATH = "game.html";
     private static final String GAME_ID_PARAMETER = "id";
+    private static final String HTML_TEMPLATE_PATH = "game.html";
 
     private final ChessService chessService = ChessService.getInstance();
 
