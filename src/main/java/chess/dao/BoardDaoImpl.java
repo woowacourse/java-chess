@@ -49,7 +49,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void reset(final Map<String, String> board) {
-        removeAll("board");
+        removeAll();
 
         final String sql = "insert into board (position, piece) values (?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -65,11 +65,12 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
-    public void removeAll(String name) {
-        String sql = "truncate table " + name;
+    public void removeAll() {
+        String sql = "truncate table ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(PARAMETER_FIRST_INDEX, "board");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

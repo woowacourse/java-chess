@@ -45,7 +45,7 @@ public class GameStatusDaoImpl implements GameStatusDao {
 
     @Override
     public void reset() {
-        removeAll("game_status");
+        removeAll();
         final String sql = "insert into game_status (status) values (?)";
 
         try {
@@ -58,11 +58,12 @@ public class GameStatusDaoImpl implements GameStatusDao {
         }
     }
 
-    public void removeAll(String name) {
-        String sql = "truncate table " + name;
+    public void removeAll() {
+        String sql = "truncate table ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(PARAMETER_FIRST_INDEX, "game_status");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

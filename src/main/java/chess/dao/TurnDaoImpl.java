@@ -45,7 +45,7 @@ public class TurnDaoImpl implements TurnDao {
 
     @Override
     public void reset() {
-        removeAll("turn");
+        removeAll();
         final String sql = "insert into turn (team) values (?)";
 
         try {
@@ -58,11 +58,12 @@ public class TurnDaoImpl implements TurnDao {
         }
     }
 
-    public void removeAll(String name) {
-        String sql = "truncate table " + name;
+    public void removeAll() {
+        String sql = "truncate table ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(PARAMETER_FIRST_INDEX, "turn");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
