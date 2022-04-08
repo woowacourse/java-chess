@@ -263,6 +263,6 @@
     - directions은 private 메서드로 분리하고 폰의 시작 Rank는 Rank에서 `getStartRankOfPawn()`를 만들었다.
     - 그 결과 관리하는 데이터를 나누고 Pawn의 정적 팩터리 메서드의 코드가 간단해졌다.
 - [ ] predicate값이 너무 문자열에 의존적인 것 같아요. Color, Piece등을 enum으로 관리한다면 별개의 필드를 사용해서 관리할 수도 잇을 것 같아요!
-- [ ] Service, Controller 객체는 상태에 의존하지 않고 행위만 할 수 있다!
+- [x] Service, Controller 객체는 상태에 의존하지 않고 행위만 할 수 있다!
     - 무상태 객체라는 것을 생각하고 Service를 수정해보자!
 - [ ] 게임을 종료하는 end 기능이 빠져있다!

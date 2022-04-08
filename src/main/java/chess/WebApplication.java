@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -26,9 +24,7 @@ public class WebApplication {
         port(8089);
         staticFileLocation("/static");
 
-        List<ChessWebService> services = IntStream.range(0, MAX_GAME_NUMBER)
-                .mapToObj(gameNumber -> new ChessWebService())
-                .collect(Collectors.toList());
+        ChessWebService service = new ChessWebService();
         Gson gson = new Gson();
 
         get("/room", (req, res) -> {
@@ -43,8 +39,7 @@ public class WebApplication {
 
         get("/room/:gameNumber", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            Map<String, Object> model = services.get(gameNumber)
-                    .getBoard(gameNumber)
+            Map<String, Object> model = service.getBoard(gameNumber)
                     .toMap();
             model.put("gameNumber", gameNumber);
             return render(model, "board.html");
@@ -52,21 +47,20 @@ public class WebApplication {
 
         get("/room/:gameNumber/initialize", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            services.get(gameNumber).initializeState(gameNumber);
+            service.initializeState(gameNumber);
             res.redirect("/room/" + gameNumber);
             return null;
         });
 
         get("/room/:gameNumber/status", (req, res) -> {
             int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            ApiResult statusResult = services.get(gameNumber).getStatus(gameNumber);
+            ApiResult statusResult = service.getStatus(gameNumber);
             return gson.toJson(statusResult);
         });
 
         post("/room/:gameNumber/move", (req, res) -> {
             final MoveCommand command = gson.fromJson(req.body(), MoveCommand.class);
-            int gameNumber = Integer.parseInt(req.params(":gameNumber"));
-            ApiResult apiResult = services.get(gameNumber).movePiece(command);
+            ApiResult apiResult = service.movePiece(command);
 
             return gson.toJson(apiResult);
         });
