@@ -65,7 +65,7 @@ public class ChessController {
         });
     }
 
-    public String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
