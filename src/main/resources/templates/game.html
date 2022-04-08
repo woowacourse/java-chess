@@ -181,9 +181,8 @@
     {{#winner}}
     {{winner}}가 승리하였습니다.
     재시작을 원하시면 다음 버튼을 눌러주세요.
-    <form action="/end" id="restart" method="get">
-        <button type="submit">Reset</button>
-    </form>
+    <br>
+    <button onclick="end()">Reset</button>
     {{/winner}}
 
     {{#status}}
