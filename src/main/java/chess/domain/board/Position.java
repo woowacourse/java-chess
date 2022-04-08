@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Position {
 
-    private static final Map<String, Position> cachePosition = new HashMap<>(64);
+    private static final Map<String, Position> CACHE_POSITION = new HashMap<>(64);
 
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
@@ -27,10 +27,10 @@ public class Position {
         File file = File.of(input.substring(FILE_INDEX, FILE_INDEX + 1));
         Rank rank = Rank.of(input.substring(RANK_INDEX, RANK_INDEX + 1));
 
-        if (!cachePosition.containsKey(input)) {
-            cachePosition.put(input, new Position(file, rank));
+        if (!CACHE_POSITION.containsKey(input)) {
+            CACHE_POSITION.put(input, new Position(file, rank));
         }
-        return cachePosition.get(input);
+        return CACHE_POSITION.get(input);
     }
 
     public static Position withFileAndRank(File file, Rank rank) {

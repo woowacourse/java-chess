@@ -20,11 +20,13 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
+
+    private static final int MAX_GAME_NUMBER = 3;
+
     public static void main(String[] args) {
         port(8089);
         staticFileLocation("/static");
 
-        int MAX_GAME_NUMBER = 3;
         List<ChessWebService> services = IntStream.range(0, MAX_GAME_NUMBER)
                 .mapToObj(gameNumber -> new ChessWebService())
                 .collect(Collectors.toList());

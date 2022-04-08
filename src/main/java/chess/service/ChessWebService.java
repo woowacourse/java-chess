@@ -13,7 +13,7 @@ import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.dto.ApiResult;
 import chess.dto.MoveCommand;
-import chess.dto.MoveResponseDto;
+import chess.dto.MoveResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,9 +64,9 @@ public class ChessWebService {
         Position destination = Position.valueOf(command.getDestination());
         try {
             state = state.movePiece(source, destination);
-            updateDbPiece(source, destination, gameNumber);
-            updateDbTurn(state.getTurn(), gameNumber);
-            return ApiResult.succeed(new MoveResponseDto(command.getSource(), command.getDestination(), isFinished(state)));
+            updatePiece(source, destination, gameNumber);
+            updateTurn(state.getTurn(), gameNumber);
+            return ApiResult.succeed(new MoveResponse(command.getSource(), command.getDestination(), isFinished(state)));
         } catch (RuntimeException e) {
             return ApiResult.failed(e.getMessage());
         }
@@ -84,12 +84,12 @@ public class ChessWebService {
         TURN_DAO.save(color, gameNumber);
     }
 
-    private void updateDbPiece(Position source, Position destination, int gameNumber) {
+    private void updatePiece(Position source, Position destination, int gameNumber) {
         BOARD_DAO.updateByPosition(destination, source, gameNumber);
         BOARD_DAO.delete(source, gameNumber);
     }
 
-    private void updateDbTurn(Color color, int gameNumber) {
+    private void updateTurn(Color color, int gameNumber) {
         TURN_DAO.update(color, gameNumber);
     }
 

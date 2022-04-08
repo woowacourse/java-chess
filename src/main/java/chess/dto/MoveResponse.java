@@ -1,12 +1,12 @@
 package chess.dto;
 
-public class MoveResponseDto {
+public class MoveResponse {
 
     private final String source;
     private final String destination;
     private final boolean finished;
 
-    public MoveResponseDto(String source, String destination, boolean finished) {
+    public MoveResponse(String source, String destination, boolean finished) {
         this.source = source;
         this.destination = destination;
         this.finished = finished;
