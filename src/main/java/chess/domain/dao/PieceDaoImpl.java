@@ -66,7 +66,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public boolean isExistsPieces() {
+    public boolean existPieces() {
         final String sql = "select id from piece where board_id = 1";
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {

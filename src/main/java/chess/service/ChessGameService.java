@@ -23,7 +23,7 @@ public class ChessGameService {
     public ResponseDto start() {
         chessGame = new ChessGame();
         try {
-            if (pieceDao.isExistsPieces()) {
+            if (pieceDao.existPieces()) {
                 chessGame.load(pieceDao.load(), boardDao.findTurn());
                 return new ResponseDto(200, "");
             }
@@ -49,7 +49,7 @@ public class ChessGameService {
     }
 
     private void savePieces(Position source, Position target) {
-        if (pieceDao.isExistsPieces()) {
+        if (pieceDao.existPieces()) {
             updatePosition(source, target, chessGame.getTurn());
             return;
         }

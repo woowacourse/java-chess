@@ -37,7 +37,7 @@ public class MockPieceDao implements PieceDao {
     }
 
     @Override
-    public boolean isExistsPieces() {
+    public boolean existPieces() {
         return fakePiece.size() > 0;
     }
 

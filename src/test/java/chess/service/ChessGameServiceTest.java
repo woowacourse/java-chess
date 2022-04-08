@@ -53,6 +53,6 @@ public class ChessGameServiceTest {
         //when
         chessGameService.end();
         //then
-        assertThat(pieceDao.isExistsPieces()).isFalse();
+        assertThat(pieceDao.existPieces()).isFalse();
     }
 }

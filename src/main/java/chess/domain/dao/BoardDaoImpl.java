@@ -15,13 +15,13 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     private String decideSql() {
-        if (isBoardExist()) {
+        if (existBoard()) {
             return "update board set turn = ?";
         }
         return "insert into board (id, turn) values (1, ?)";
     }
 
-    private boolean isBoardExist() {
+    private boolean existBoard() {
         final String sql = "select id from board where id = 1";
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {

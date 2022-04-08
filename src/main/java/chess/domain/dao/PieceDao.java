@@ -9,7 +9,7 @@ public interface PieceDao {
 
     Map<Position, Piece> load();
 
-    boolean isExistsPieces();
+    boolean existPieces();
 
     void delete();
 
