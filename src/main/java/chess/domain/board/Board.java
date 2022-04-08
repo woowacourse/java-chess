@@ -43,12 +43,4 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
-
-    public Map<String, Piece> getBoardByRawPosition() {
-        return board.keySet().stream()
-                .collect(Collectors.toMap(
-                        position -> String.valueOf(position.getColumn().getValue()) + position.getRow().getValue(),
-                        this::getPiece
-                ));
-    }
 }

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.entity.ChessGameEntity;
+import chess.dao.entity.ChessGameEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

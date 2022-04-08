@@ -1,4 +1,4 @@
-package chess.entity;
+package chess.dao.entity;
 
 import chess.domain.game.ChessGame;
 

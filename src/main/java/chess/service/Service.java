@@ -6,8 +6,8 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.GameSwitch;
 import chess.domain.game.Turn;
 import chess.domain.piece.Team;
-import chess.entity.BoardEntity;
-import chess.entity.ChessGameEntity;
+import chess.dao.entity.BoardEntity;
+import chess.dao.entity.ChessGameEntity;
 import chess.service.util.BoardEntitiesToBoardConvertor;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,9 @@ public class Service {
 
     public ChessGame loadChessGame(final String name) {
         ChessGameEntity chessGameEntity = chessGameDao.load(name);
-        List<BoardEntity> boardEntities = boardDao.load(name);
         return new ChessGame(
                 chessGameEntity.getName(),
-                BoardEntitiesToBoardConvertor.convert(boardEntities),
+                BoardEntitiesToBoardConvertor.convert(boardDao.load(name)),
                 new GameSwitch(chessGameEntity.isOn()),
                 new Turn(Team.of(chessGameEntity.getTeamValueOfTurn()))
         );

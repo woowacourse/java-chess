@@ -3,7 +3,7 @@ package chess.service.util;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.entity.BoardEntity;
+import chess.dao.entity.BoardEntity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

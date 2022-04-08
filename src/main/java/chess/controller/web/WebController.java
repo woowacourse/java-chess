@@ -5,9 +5,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.domain.piece.Piece;
 import chess.service.Service;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -55,7 +58,13 @@ public class WebController {
             Map<String, Object> model = new HashMap<>();
             String name = req.params(":name");
             model.put("chess_game_name", name);
-            model.putAll(service.loadChessGame(name).getCurrentBoardByRawPosition());
+            Map<String, Piece> boardForHtml = service.loadChessGame(name).getCurrentBoard().entrySet().stream()
+                    .collect(Collectors.toMap(
+                            entry -> String.valueOf(entry.getKey().getColumn().getValue()) +
+                                    entry.getKey().getRow().getValue(),
+                            Entry::getValue)
+                    );
+            model.putAll(boardForHtml);
             model.put("turn", service.loadChessGame(name).getTurn());
             model.put("result", service.loadChessGame(name).generateResult());
             return new ModelAndView(model, "chess_game.html");

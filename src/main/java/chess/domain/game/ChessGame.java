@@ -96,10 +96,6 @@ public class ChessGame {
         return board.getBoard();
     }
 
-    public Map<String, Piece> getCurrentBoardByRawPosition() {
-        return board.getBoardByRawPosition();
-    }
-
     public Turn getTurn() {
         return turn;
     }
