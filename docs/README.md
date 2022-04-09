@@ -8,6 +8,13 @@
 
 ## 4, 5단계 웹 적용하기
 
+### WebApplication 구동
+
+1. docker가 실행되어 있는지 확인한다.
+2. open project > `docker`폴더로 이동하여 > `data`폴더 전체삭제 + `docker-compose.yml`을 실행한다
+    - host mysql port : 13306
+3.
+
 ### 적용 예정 사항
 
 - [x] try-with-resource

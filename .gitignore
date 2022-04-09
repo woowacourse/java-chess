@@ -34,7 +34,7 @@ out/
 ### Docker ###
 #/docker/docker-compose.yml
 docker/db/mysql/data/
-docker/db/mysql/init/*
+
 #!docker/db/mysql/init/init.sql
 #/docker/db/mysql/init/init.sql
 
@@ -50,3 +50,13 @@ docker/db/mysql/init/*
 /src/main/java/chess/MyCommand.java
 /src/main/java/chess/Cf.java
 /src/main/java/chess/web/dao/camp/
+/src/main/java/chess/web/dao/camp/
+/src/main/java/chess/web/dao/member/
+/src/main/java/chess/web/dao/member/
+/src/test/java/chess/web/dao/member/MemberDaoImplTest.java
+/src/test/java/chess/web/dao/member/
+/src/test/java/chess/web/dao/camp/CampDaoTest.java
+/src/test/java/chess/web/dao/camp/
+/src/test/java/chess/web/dao/board/BoardDaoTest.java
+/src/test/java/chess/web/dao/board/
+/src/test/java/chess/web/
