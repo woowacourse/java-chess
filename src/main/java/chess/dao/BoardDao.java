@@ -4,7 +4,7 @@ import chess.domain.piece.PieceFactory;
 import chess.dto.BoardDto;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.Grid;
+import chess.dto.GridDto;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -16,12 +16,13 @@ public class BoardDao {
     public void saveBoard(BoardDto boardDto) throws SQLException {
         Objects.requireNonNull(boardDto);
         Connection connection = getConnection();
-        String query = "INSERT INTO chessboard VALUES (?, ?)";
+        String query = "INSERT INTO chessboard VALUES (?, ?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
-        for (Grid grid : boardDto.getBoard()) {
+        for (GridDto grid : boardDto.getBoard()) {
             pstmt.setString(1, grid.getPosition());
             pstmt.setString(2, grid.getPiece());
+            pstmt.setInt(3, grid.getMoveCount());
             pstmt.addBatch();
         }
 
