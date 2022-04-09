@@ -2,18 +2,29 @@
 
 체스 미션 저장소
 
-## 우아한테크코스 코드리뷰
-
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+![image-20220409144410231](https://raw.githubusercontent.com/is2js/screenshots/main/image-20220409144410231.png)
 
 ## 4, 5단계 웹 적용하기
 
 ### WebApplication 구동
 
-1. docker가 실행되어 있는지 확인한다.
-2. open project > `docker`폴더로 이동하여 > `data`폴더 전체삭제 + `docker-compose.yml`을 실행한다
-    - host mysql port : 13306
-3.
+1. 내 컴퓨터의 Docker가 실행 중인지 확인한다.
+2. Clone > Open project > `docker`폴더로 이동하여
+    1. `data`폴더는 전체삭제
+    2. `docker-compose.yml`는 실행을 한다.
+        - `우클릭 > Run` 혹은 커맨드로 한다면 `docker-compose -p chess up -d`
+        - cf) host mysql port : 13306
+3. WebApplication으로 가서 실행한다.
+   `localhost:4567`
+    - cf) spark java default port: 4567
+
+### 현재 진행 상황(4단계 완료)
+
+1. Console -> Web에서 `막 시작하기`버튼으로 방 생성과 상관없이 실행가능한 상태
+2. Room은 생성/조회만 개발된 상태 `생성하기`버튼만 작동함
+    - 게임과 무관한 상태
+3. 개발 예정
+    - Room 삭제기능 및 Room마다 Board를 저장가능하도록 구현 예정
 
 ### 적용 예정 사항
 
