@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Team;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
+import chess.domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class Pawn extends Piece {
@@ -14,6 +15,7 @@ public class Pawn extends Piece {
     private static final String WHITE_SYMBOL = "p";
     private static final String CAN_NOT_CATCH_ERROR = "폰은 해당 위치의 기물을 잡을 수 없습니다.";
     private static final String INVALID_DIRECTION_MOVEMENT_ERROR = "폰은 해당 위치로 이동할 수 없습니다.";
+    public static final String NAME = "pawn";
 
     public Pawn(final Team team) {
         super(team);
@@ -111,5 +113,10 @@ public class Pawn extends Piece {
     @Override
     public double getScore() {
         return 1;
+    }
+
+    @Override
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }

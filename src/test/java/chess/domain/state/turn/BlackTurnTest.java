@@ -6,9 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.Team;
-import chess.domain.state.turn.KingDeath;
-import chess.domain.state.turn.State;
-import chess.domain.state.turn.WhiteTurn;
 import org.junit.jupiter.api.Test;
 
 class BlackTurnTest {
@@ -34,6 +31,6 @@ class BlackTurnTest {
 		State state = new WhiteTurn();
 		state = state.play(new Pawn(Team.BLACK));
 
-		assertThat(state.play(new King(Team.WHITE))).isInstanceOf(KingDeath.class);
+		assertThat(state.play(new King(Team.WHITE))).isInstanceOf(BlackWin.class);
 	}
 }

@@ -3,11 +3,14 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.board.Position;
 
+import java.util.Locale;
+
 public class Queen extends Piece {
 
     private static final String BLACK_SYMBOL = "Q";
     private static final String WHITE_SYMBOL = "q";
     private static final double QUEEN_SCORE = 9.0;
+    public static final String NAME = "queen";
 
     public Queen(final Team team) {
         super(team);
@@ -46,5 +49,10 @@ public class Queen extends Piece {
     @Override
     public double getScore() {
         return QUEEN_SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }

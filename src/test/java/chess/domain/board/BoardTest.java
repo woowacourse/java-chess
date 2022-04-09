@@ -5,16 +5,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.Team;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
 	@Test
 	void checkStartBoard() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 
 		assertAll(
 				() -> assertThat(board.isBlank(Position.of(4, 4))).isTrue(),
@@ -25,9 +22,10 @@ class BoardTest {
 
 	@Test
 	void moveWithWrongSource() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(4, 4);
 		Position target = Position.of(5, 5);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치에 기물이 없습니다.");
@@ -35,9 +33,10 @@ class BoardTest {
 
 	@Test
 	void moveToSameTeam() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 5);
 		Position target = Position.of(1, 4);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
@@ -45,9 +44,10 @@ class BoardTest {
 
 	@Test
 	void moveBishopBlock() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 3);
 		Position target = Position.of(3, 5);
+
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치로 기물을 옮길 수 없습니다.");
@@ -55,15 +55,16 @@ class BoardTest {
 
 	@Test
 	void moveKnight() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 		Position source = Position.of(1, 2);
 		Position target = Position.of(3, 3);
+
 		assertDoesNotThrow(() -> board.move(source, target));
 	}
 
 	@Test
 	void moveToEnemy() {
-		Board board = new Board(new PieceBuilder());
+		Board board = new Board(new BoardBuilder());
 
 		Position whitePawn = Position.of(2, 4);
 		Position whitePawnTarget = Position.of(4, 4);

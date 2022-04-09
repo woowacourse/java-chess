@@ -5,8 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
-import chess.domain.piece.Blank;
-import chess.domain.piece.King;
 import chess.domain.Team;
 import org.junit.jupiter.api.Test;
 
@@ -15,18 +13,21 @@ public class KingTest {
 	@Test
 	void checkBlackTeamSymbol() {
 		King king = new King(Team.BLACK);
+
 		assertThat(king.getSymbol()).isEqualTo("K");
 	}
 
 	@Test
 	void checkWhiteTeamSymbol() {
 		King king = new King(Team.WHITE);
+
 		assertThat(king.getSymbol()).isEqualTo("k");
 	}
 
 	@Test
 	void validateMovement() {
 		King king = new King(Team.BLACK);
+
 		assertDoesNotThrow(() -> king.checkReachable(
 				new Blank(),
 				Position.of(1, 1),
@@ -37,6 +38,7 @@ public class KingTest {
 	@Test
 	void validateMovementException() {
 		King king = new King(Team.BLACK);
+
 		assertThatThrownBy(() -> king.checkReachable(
 				new Blank(),
 				Position.of(1, 1),

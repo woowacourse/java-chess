@@ -1,7 +1,7 @@
 package chess.domain.state.turn;
 
-import chess.domain.piece.Piece;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
 
 public abstract class Running implements State {
 
@@ -17,9 +17,17 @@ public abstract class Running implements State {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public final State play(final Piece target) {
-        if (target.isKing()) {
-            return new KingDeath(team);
+        if (target.isKing() && team.isBlack()) {
+            return new BlackWin();
+        }
+        if (target.isKing() && team.isWhite()) {
+            return new WhiteWin();
         }
         return next();
     }

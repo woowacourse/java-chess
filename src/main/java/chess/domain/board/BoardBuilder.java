@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PieceBuilder implements Builder {
+public class BoardBuilder implements Builder {
 
     public Map<Position, Piece> build() {
         Map<Position, Piece> board = new HashMap<>();
@@ -23,7 +23,6 @@ public class PieceBuilder implements Builder {
             board.put(Position.of(1, i + 1), whiteSpecials.get(i));
             board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
         }
-
         return board;
     }
 

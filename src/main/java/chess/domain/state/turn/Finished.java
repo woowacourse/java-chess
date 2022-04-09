@@ -1,7 +1,7 @@
 package chess.domain.state.turn;
 
-import chess.domain.piece.Piece;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
 
 public abstract class Finished implements State {
 
@@ -19,6 +19,11 @@ public abstract class Finished implements State {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public final State play(Piece target) {
         throw new IllegalArgumentException(GAME_PLAY_ERROR);
     }
@@ -27,4 +32,5 @@ public abstract class Finished implements State {
     public final Team getTeam() {
         return winner;
     }
+
 }

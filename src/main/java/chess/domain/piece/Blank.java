@@ -8,9 +8,14 @@ public class Blank extends Piece {
     private static final String SYMBOL = ".";
     private static final String CAN_NOT_MOVE_ERROR = "빈 곳은 이동이 불가능 합니다.";
     private static final double NO_SCORE = 0;
+    public static final String NAME = "blank";
 
     public Blank() {
         super(Team.NEUTRALITY);
+    }
+
+    public Blank(Team team) {
+        super(team);
     }
 
     @Override
@@ -41,5 +46,10 @@ public class Blank extends Piece {
     @Override
     public double getScore() {
         return NO_SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

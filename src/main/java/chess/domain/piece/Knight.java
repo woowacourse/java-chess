@@ -3,7 +3,9 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
+
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class Knight extends Piece {
@@ -11,6 +13,7 @@ public class Knight extends Piece {
 	private static final String BLACK_SYMBOL = "N";
 	private static final String WHITE_SYMBOL = "n";
 	private static final double KNIGHT_SCORE = 2.5;
+	public static final String NAME = "knight";
 
 	public Knight(final Team team) {
 		super(team);
@@ -73,5 +76,10 @@ public class Knight extends Piece {
 	@Override
 	public double getScore() {
 		return KNIGHT_SCORE;
+	}
+
+	@Override
+	public String getName() {
+		return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
 	}
 }

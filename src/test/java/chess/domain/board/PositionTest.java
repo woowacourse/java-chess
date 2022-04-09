@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.board.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

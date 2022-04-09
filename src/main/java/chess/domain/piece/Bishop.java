@@ -3,11 +3,14 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.board.Position;
 
+import java.util.Locale;
+
 public class Bishop extends Piece {
 
     private static final String BLACK_SYMBOL = "B";
     private static final String WHITE_SYMBOL = "b";
     private static final double BISHOP_SCORE = 3.0;
+    public static final String NAME = "bishop";
 
     public Bishop(final Team team) {
         super(team);
@@ -47,4 +50,11 @@ public class Bishop extends Piece {
     public double getScore() {
         return BISHOP_SCORE;
     }
+
+    @Override
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
+    }
+
+
 }

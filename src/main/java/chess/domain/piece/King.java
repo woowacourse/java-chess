@@ -5,6 +5,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class King extends Piece {
@@ -12,6 +13,7 @@ public class King extends Piece {
     private static final String BLACK_SYMBOL = "K";
     private static final String WHITE_SYMBOL = "k";
     private static final int KING_SCORE = 0;
+    public static final String NAME = "king";
 
     public King(final Team team) {
         super(team);
@@ -60,5 +62,10 @@ public class King extends Piece {
     @Override
     public double getScore() {
         return KING_SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + NAME;
     }
 }
