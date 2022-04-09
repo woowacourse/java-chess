@@ -8,27 +8,28 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 
 public class PieceConverter {
 
     public static Piece of(String team, String name) {
         if (name.equals("PAWN")) {
-            return new Pawn(TeamConverter.of(team));
+            return new Pawn(Team.valueOf(team));
         }
         if (name.equals("ROOK")) {
-            return new Rook(TeamConverter.of(team));
+            return new Rook(Team.valueOf(team));
         }
         if (name.equals("KNIGHT")) {
-            return new Knight(TeamConverter.of(team));
+            return new Knight(Team.valueOf(team));
         }
         if (name.equals("BISHOP")) {
-            return new Bishop(TeamConverter.of(team));
+            return new Bishop(Team.valueOf(team));
         }
         if (name.equals("QUEEN")) {
-            return new Queen(TeamConverter.of(team));
+            return new Queen(Team.valueOf(team));
         }
         if (name.equals("KING")) {
-            return new King(TeamConverter.of(team));
+            return new King(Team.valueOf(team));
         }
         if (name.equals("EMPTY")) {
             return new EmptyPiece();
