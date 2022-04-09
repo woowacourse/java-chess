@@ -18,6 +18,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebGameController {
 
+    private static final Gson GSON = new Gson();
+
     private final ChessService chessService;
 
     public WebGameController() {
@@ -29,26 +31,24 @@ public class WebGameController {
     }
 
     public void run() {
-        Gson gson = new Gson();
-
         get("/", (req, res) -> {
             return render(new HashMap<>(), "index.html");
         });
         get("/load", (req, res) -> {
-            return gson.toJson(load());
+            return GSON.toJson(load());
         });
         get("/start", (req, res) -> {
-            return gson.toJson(start());
+            return GSON.toJson(start());
         });
         post("/move", (req, res) -> {
-            final MovableDto movableDto = gson.fromJson(req.body(), MovableDto.class);
-            return gson.toJson(move(movableDto));
+            final MovableDto movableDto = GSON.fromJson(req.body(), MovableDto.class);
+            return GSON.toJson(move(movableDto));
         });
         get("/status", (req, res) -> {
-            return gson.toJson(status());
+            return GSON.toJson(status());
         });
         get("/end", (req, res) -> {
-           return gson.toJson(end());
+           return GSON.toJson(end());
         });
     }
 
