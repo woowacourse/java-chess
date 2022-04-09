@@ -57,7 +57,7 @@ public class End implements GameState {
     }
 
     @Override
-    public String get() {
+    public String representative() {
         return "End";
     }
 }

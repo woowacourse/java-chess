@@ -61,6 +61,6 @@ public class ChessGame {
     }
 
     public String getState() {
-        return state.get();
+        return state.representative();
     }
 }

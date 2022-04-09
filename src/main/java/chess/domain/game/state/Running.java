@@ -78,7 +78,7 @@ public class Running implements GameState {
     }
 
     @Override
-    public String get() {
+    public String representative() {
         return "Running";
     }
 }

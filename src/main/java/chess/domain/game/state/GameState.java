@@ -21,5 +21,5 @@ public interface GameState {
 
     Board board();
 
-    String get();
+    String representative();
 }
