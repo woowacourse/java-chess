@@ -3,7 +3,7 @@ package chess;
 import chess.domain.piece.property.Team;
 import chess.utils.JsonConvertor;
 import chess.dao.ChessGame;
-import chess.dto.ChessGameDTO;
+import chess.dto.ChessGameInfoDTO;
 import chess.service.ChessService;
 import chess.utils.Render;
 import java.sql.SQLException;
@@ -36,8 +36,8 @@ public final class WebApplication {
         });
 
         get("/chess/game/:id", (req, res) -> {
-            ChessGameDTO chessGameDTO = CHESS_SERVICE.findGameById(req.params(":id"));
-            return Render.renderGame(chessGameDTO);
+            ChessGameInfoDTO chessGameInfoDTO = CHESS_SERVICE.findGameById(req.params(":id"));
+            return Render.renderGame(chessGameInfoDTO);
         });
 
         get("/chess/game/:id/board", (req, res) -> {
