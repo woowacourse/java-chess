@@ -6,6 +6,13 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+## 어플리케이션 실행 방법 - terminal
+1. cd docker
+2. docker exec -it chess-db-1 bash
+3. mysql -u root -proot
+4. use chess
+5. /sql/init.sql의 쿼리문들을 복사해서 입력해주세요!
+
 ## 기능 요구 사항
 ### 입력
 - **게임 옵션 입력 기능**
