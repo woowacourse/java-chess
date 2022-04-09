@@ -11,10 +11,15 @@ public abstract class Piece {
     protected final PieceType pieceType;
     protected int moveCount;
 
-    public Piece(Color color, PieceType pieceType) {
+    public Piece(Color color, PieceType pieceType){
         this.color = color;
         this.pieceType = pieceType;
         this.moveCount = 0;
+    }
+
+    public Piece setMoveCount(int moveCount) {
+        this.moveCount = moveCount;
+        return this;
     }
 
     public String signature() {

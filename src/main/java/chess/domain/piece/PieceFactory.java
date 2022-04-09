@@ -26,7 +26,7 @@ public class PieceFactory {
         pieces.put("blanknone", new Blank());
     }
 
-    public static Piece of(String piece) {
-        return pieces.get(piece);
+    public static Piece of(String piece, int moveCount) {
+        return pieces.get(piece).setMoveCount(moveCount);
     }
 }

@@ -56,7 +56,7 @@ public class BoardDao {
         try (connection; stmt; rs) {
             while (rs.next()) {
                 Position position = Position.of(rs.getString("position"));
-                Piece piece = PieceFactory.of(rs.getString("piece"));
+                Piece piece = PieceFactory.of(rs.getString("piece"), rs.getInt("moveCount"));
                 chessBoard.put(position, piece);
             }
         } catch (SQLException e) {
