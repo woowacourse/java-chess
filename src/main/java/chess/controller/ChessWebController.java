@@ -5,7 +5,6 @@ import static spark.Spark.post;
 
 import chess.dao.BoardDaoImpl;
 import chess.dao.GameDaoImpl;
-import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.dto.GameDto;
 import chess.dto.ScoreDto;
@@ -18,7 +17,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ChessService chessService;
 
@@ -33,7 +32,7 @@ public class ChessWebController {
 
         get("/start/:gamenumber", (req, res) -> {
             GameDto gameDto = chessService.getGame();
-            String game = objectMapper.writeValueAsString(gameDto);
+            String game = OBJECT_MAPPER.writeValueAsString(gameDto);
             return game;
         });
 
@@ -44,7 +43,7 @@ public class ChessWebController {
 
         get("/status/:gamenumber", (req, res) -> {
             ScoreDto scoreDto = chessService.getScore();
-            String score = objectMapper.writeValueAsString(scoreDto);
+            String score = OBJECT_MAPPER.writeValueAsString(scoreDto);
             return score;
         });
 
@@ -52,7 +51,7 @@ public class ChessWebController {
             chessService.movePiece(new CommandDto(req.body()));
 
             GameDto gameDto = chessService.getGame();
-            String game = objectMapper.writeValueAsString(gameDto);
+            String game = OBJECT_MAPPER.writeValueAsString(gameDto);
             return game;
         });
     }
