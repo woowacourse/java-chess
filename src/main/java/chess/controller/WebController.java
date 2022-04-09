@@ -25,11 +25,7 @@ public class WebController {
     }
 
     public Route askGameID() {
-        return (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("gameRoom", "어디로 들어가려구??");
-            return render(model, "/findgame.html");
-        };
+        return (request, response) -> render(Map.of("message", "어디로 들어가려구??"), "/findgame.html");
     }
 
     public Route findGame() {
@@ -37,19 +33,20 @@ public class WebController {
             String gameID = request.queryParams("gameID");
             Map<String, Object> model = addGameID(gameID);
 
-            ChessGame chessGame = getSavedGame(gameID);
-            return searchGame(model, chessGame);
+            return searchGame(model, gameID);
         };
     }
 
-    private String searchGame(Map<String, Object> model, ChessGame chessGame) {
+    private String searchGame(Map<String, Object> model, String gameID) {
         try {
+            ChessGame chessGame = getSavedGame(gameID);
             addBoardStatus(model, chessGame);
             model.put("message", "누가 이기나 보자구~!");
             String url = getUrl(model, chessGame);
             return render(model, url);
         } catch (IllegalArgumentException e) {
-            model.put("gameRoom", e.getMessage());
+            model.put("message", e.getMessage());
+            System.err.println(e.getMessage());
             return render(model, "/findgame.html");
         }
     }
