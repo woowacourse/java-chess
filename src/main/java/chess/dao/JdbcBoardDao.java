@@ -65,11 +65,9 @@ public class JdbcBoardDao implements BoardDao {
     }
 
     public void removeAll() {
-        String sql = "truncate table ?";
+        String sql = "truncate table board";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(PARAMETER_FIRST_INDEX, "board");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

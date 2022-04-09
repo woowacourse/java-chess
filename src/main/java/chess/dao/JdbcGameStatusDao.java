@@ -59,10 +59,9 @@ public class JdbcGameStatusDao implements GameStatusDao {
     }
 
     public void removeAll() {
-        String sql = "truncate table ?";
+        String sql = "truncate table game_status";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(PARAMETER_FIRST_INDEX, "game_status");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

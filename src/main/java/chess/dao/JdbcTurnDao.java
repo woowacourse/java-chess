@@ -58,10 +58,9 @@ public class JdbcTurnDao implements TurnDao {
     }
 
     public void removeAll() {
-        String sql = "truncate table ?";
+        String sql = "truncate table turn";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(PARAMETER_FIRST_INDEX, "turn");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
