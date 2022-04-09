@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class PieceDao {
 
-    public void saveOne(int boardId, PieceDto pieceDto) {
+    public void save(int boardId, PieceDto pieceDto) {
         final Connection connection = DBConnector.getConnection();
         final String sql = "insert into piece (board_id, position , color, role) values (?, ?, ?, ?)";
         try (final PreparedStatement statement = connection.prepareStatement(sql)) {

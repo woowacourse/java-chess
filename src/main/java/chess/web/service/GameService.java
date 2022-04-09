@@ -63,7 +63,7 @@ public class GameService {
             pieceDao.updateOne(boardId, target, pickedPieceDto);
             return;
         }
-        pieceDao.saveOne(boardId, pickedPieceDto);
+        pieceDao.save(boardId, pickedPieceDto);
     }
 
     private void deleteMovedPieceFromSource(int boardId, String source) {
