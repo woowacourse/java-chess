@@ -65,13 +65,10 @@ public class ChessBoard {
     }
 
     public boolean isFinished() {
-        return getAliveKingCount() != DEFAULT_ALIVE_KING_COUNT;
-    }
-
-    private long getAliveKingCount() {
-        return board.values().stream()
+        return board.values()
+                .stream()
                 .filter(Piece::isKing)
-                .count();
+                .count() < DEFAULT_ALIVE_KING_COUNT;
     }
 
     public boolean hasKing(PieceColor pieceColor) {
