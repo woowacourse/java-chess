@@ -36,24 +36,37 @@ public class WebController {
     }
 
     private String getBoard() {
-        BoardDto boardDto = chessService.getBoard(GAME_ID);
-        return JsonMapper.boardDtoToJson(boardDto);
+        try {
+            BoardDto boardDto = chessService.getBoard(GAME_ID);
+            return JsonMapper.boardDtoToJson(boardDto);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            return JsonMapper.exceptionToJson(e);
+        }
     }
 
     private String getTurn() {
-        PieceColorDto pieceColorDto = chessService.getCurrentTurn(GAME_ID);
-        return JsonMapper.turnToJson(pieceColorDto);
+        try {
+
+            PieceColorDto pieceColorDto = chessService.getCurrentTurn(GAME_ID);
+            return JsonMapper.turnToJson(pieceColorDto);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            return JsonMapper.exceptionToJson(e);
+        }
     }
 
     private String getScore() {
-        ScoreResultDto scoreResultDto = chessService.getScore(GAME_ID);
-        return JsonMapper.scoreResultDtoToJson(scoreResultDto);
+        try {
+            ScoreResultDto scoreResultDto = chessService.getScore(GAME_ID);
+            return JsonMapper.scoreResultDtoToJson(scoreResultDto);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            return JsonMapper.exceptionToJson(e);
+        }
     }
 
     private String getWinner() {
         try {
             return JsonMapper.winnerToJson(chessService.getWinColor(GAME_ID));
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | IllegalArgumentException e) {
             return JsonMapper.exceptionToJson(e);
         }
     }

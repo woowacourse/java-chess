@@ -21,7 +21,11 @@ public class GameDao extends Dao {
             preparedStatement.setString(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            resultSet.next();
+            boolean hasNext = resultSet.next();
+            if (!hasNext) {
+                throw new IllegalArgumentException("해당하는 게임 ID가 존재하지 않습니다.");
+            }
+
             return ChessGameDto.from(gameId, resultSet.getString("turn"));
         } catch (SQLException e) {
             throw new DatabaseException();
