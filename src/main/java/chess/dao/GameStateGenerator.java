@@ -22,7 +22,6 @@ public class GameStateGenerator {
     private static final int STATE_INDEX = 0;
     private static final int COLOR_INDEX = 1;
 
-
     public static GameState generate(Board board, List<String> stateAndColor) {
         validateSize(stateAndColor);
         return STATE_GENERATOR.get(stateAndColor.get(STATE_INDEX))

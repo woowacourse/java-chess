@@ -34,7 +34,8 @@ public enum PieceType {
         return totalScore;
     }
 
-    private static double calculateVerticalScore(Map<Point, Piece> pointPieces, Color color, double totalScore, int verticalIndex) {
+    private static double calculateVerticalScore(Map<Point, Piece> pointPieces, Color color, double totalScore,
+        int verticalIndex) {
         int pawnCount = 0;
         for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
             Piece piece = pointPieces.get(Point.of(verticalIndex, horizontalIndex));
