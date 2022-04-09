@@ -1,31 +1,26 @@
 package chess.db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class DBConnector {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
+    private Connection connection;
 
-    public static Connection getConnection() {
-        Connection connection = null;
-        roadDriver();
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public DBConnector() {
+        this.connection = JdbcConnector.getConnection();
     }
 
-    private static void roadDriver() {
+    public Connection getConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
+            if (Objects.isNull(connection) || connection.isClosed()) {
+                connection = JdbcConnector.getConnection();
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw new IllegalArgumentException("Connection 연결에 실패했습니다.");
         }
+        return connection;
     }
 }

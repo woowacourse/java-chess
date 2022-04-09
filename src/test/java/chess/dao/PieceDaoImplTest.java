@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.db.DBConnector;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class PieceDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        pieceDao = new PieceDaoImpl();
+        pieceDao = new PieceDaoImpl(new DBConnector());
         pieceDao.removeAll();
     }
 

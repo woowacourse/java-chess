@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.dao.GameDaoImpl;
 import chess.dao.PieceDaoImpl;
+import chess.db.DBConnector;
 import chess.domain.command.MoveCommand;
 import chess.serviece.ChessService;
 import com.google.gson.Gson;
@@ -23,7 +24,8 @@ public class ChessController {
     private final HandlebarsTemplateEngine templateEngine;
 
     public ChessController() {
-        this.chessService = new ChessService(new PieceDaoImpl(), new GameDaoImpl());
+        final DBConnector dbConnector = new DBConnector();
+        this.chessService = new ChessService(new PieceDaoImpl(dbConnector), new GameDaoImpl(dbConnector));
         this.templateEngine = new HandlebarsTemplateEngine();
     }
 

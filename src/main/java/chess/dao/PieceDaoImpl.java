@@ -13,17 +13,17 @@ import java.util.List;
 
 public class PieceDaoImpl implements PieceDao {
 
-    private final Connection connection;
+    private final DBConnector dbConnector;
 
-    public PieceDaoImpl() {
-        connection = DBConnector.getConnection();
+    public PieceDaoImpl(DBConnector dbConnector) {
+        this.dbConnector = dbConnector;
     }
 
     @Override
     public void remove(Position position) {
         final String sql = "delete from piece where position = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.getName());
             statement.execute();
         } catch (SQLException e) {
@@ -34,8 +34,8 @@ public class PieceDaoImpl implements PieceDao {
     @Override
     public void removeAll() {
         final String sql = "delete from piece";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,8 +50,8 @@ public class PieceDaoImpl implements PieceDao {
     @Override
     public void save(PieceDto pieceDto) {
         final String sql = "insert into piece (position, type, color) values (?, ?, ?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, pieceDto.getPosition());
             statement.setString(2, pieceDto.getType());
             statement.setString(3, pieceDto.getColor());
@@ -65,8 +65,8 @@ public class PieceDaoImpl implements PieceDao {
     public List<PieceDto> findAll() {
         final String sql = "select * from piece";
         List<PieceDto> pieces = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 pieces.add(
@@ -86,8 +86,8 @@ public class PieceDaoImpl implements PieceDao {
     @Override
     public void update(Position source, Position target) {
         final String sql = "update piece set position = ? where position = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, target.getName());
             statement.setString(2, source.getName());
             statement.executeUpdate();

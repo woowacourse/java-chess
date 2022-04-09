@@ -12,7 +12,8 @@ public class DBConnectorTest {
     @Test
     @DisplayName("db 연결")
     void connection() {
-        Connection connection = DBConnector.getConnection();
+        DBConnector dbConnector = new DBConnector();
+        Connection connection = dbConnector.getConnection();
 
         assertNotNull(connection);
     }
