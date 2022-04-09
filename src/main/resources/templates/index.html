@@ -83,7 +83,7 @@
                                 <div class="class-skill">
                                     <div class="class-type">{{id}}번방</div>
 
-                                    <div class="class-update">수정</div>
+                                    <div class="class-update" onclick="updateRoomName('{{id}}');">수정</div>
                                     <div class="class-delete">삭제</div>
 
                                 </div>
@@ -110,7 +110,7 @@
 </section>
 
 <div class="fake-container">
-    <div class="skill" onclick="postCommand('/', 'start');">
+    <div class="skill" onclick="postToCommand('/', 'start');">
         <i class="far fa-play-circle skill-icon start-style"></i>
         <div class="skill-title">
             <div class="skill-name">막 시작하기</div>

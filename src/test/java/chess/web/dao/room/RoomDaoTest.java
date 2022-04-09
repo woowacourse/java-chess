@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RoomDaoTest {
-    private static final int CURRENT_CREATE_ROOM_ID = 10;
+    private static final int CURRENT_CREATE_ROOM_ID = 28;
     private RoomDao roomDao;
 
     @BeforeEach

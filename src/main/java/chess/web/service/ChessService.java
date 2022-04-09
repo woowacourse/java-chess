@@ -107,4 +107,8 @@ public class ChessService {
     public void createRoom(final String name) {
         roomDao.save(name);
     }
+
+    public void updateRoomName(final String id, final String roomName) {
+        roomDao.updateNameById(Integer.parseInt(id), roomName);
+    }
 }

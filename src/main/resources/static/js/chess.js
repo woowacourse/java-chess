@@ -12,7 +12,6 @@ function getCommand(url, value) {
 
 function createRoom() {
     const roomName = window.prompt("방 제목을 입력해주세요.", "포돌이체스방");
-    console.log(roomName);
 
     let f = document.createElement("form");
     f.setAttribute("method", "post");
@@ -27,17 +26,57 @@ function createRoom() {
     f.submit();
 }
 
-function postCommand(url, value) {
-    let f = document.createElement("form"); // form 엘리멘트 생성
-    f.setAttribute("method", "post"); // method 속성을 post로 설정
-    f.setAttribute("action", url + value); // submit했을 때 무슨 동작을 할 것인지 설정
+function updateRoomName(id) {
+
+    const roomName = window.prompt("바꿀 방 제목을 입력해주세요");
+
+    let f = document.createElement("form");
+    f.setAttribute("method", "post");
+    f.setAttribute("action", "/room/update/" + id); //url
     document.body.appendChild(f);
 
-    let i = document.createElement("input"); // input 엘리멘트 생성
-    i.setAttribute("type", "hidden"); // type 속성을 hidden으로 설정
-    i.setAttribute("name", "command"); // name 속성을 'm_nickname'으로 설정
-    i.setAttribute("value", value); // value 속성을 neilong에 담겨있는 값으로 설정
-    f.appendChild(i); // form 엘리멘트에 input 엘리멘트 추가
+    let i = document.createElement("input");
+    i.setAttribute("type", "hidden");
+    i.setAttribute("name", "roomName"); // key
+    i.setAttribute("value", roomName); // value
+    f.appendChild(i);
+
+    let i2 = document.createElement("input");
+    i2.setAttribute("type", "hidden");
+    i2.setAttribute("name", "roomId"); // key
+    i2.setAttribute("value", id); // value
+    f.appendChild(i2);
+
+    f.submit();
+}
+
+
+function postRoomWithIdAndUrl(url, url) {
+    let f = document.createElement("form"); // form 엘리멘트 생성
+    f.setAttribute("method", "post"); // method 속성을 post로 설정
+    f.setAttribute("action", url + value);
+    document.body.appendChild(f);
+
+    let i = document.createElement("input");
+    i.setAttribute("type", "hidden");
+    i.setAttribute("name", "command"); // name
+    i.setAttribute("value", value); // value
+    f.appendChild(i);
+    f.submit();
+}
+
+
+function postToCommand(url, value) {
+    let f = document.createElement("form"); // form 엘리멘트 생성
+    f.setAttribute("method", "post"); // method 속성을 post로 설정
+    f.setAttribute("action", url + value);
+    document.body.appendChild(f);
+
+    let i = document.createElement("input");
+    i.setAttribute("type", "hidden");
+    i.setAttribute("name", "command"); // name
+    i.setAttribute("value", value); // value
+    f.appendChild(i);
     f.submit();
 }
 

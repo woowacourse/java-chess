@@ -91,4 +91,45 @@ public class RoomDao {
         return rooms;
     }
 
+    public void updateNameById(final int id, final String name) {
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET name = ?"
+            + "  WHERE id = ?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCanJoinById(final int id, final Boolean canJoin) {
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET canJoin = ?"
+            + "  WHERE id = ?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setBoolean(1, canJoin);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCampById(final int id, final String currentCamp) {
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET currentCamp = ?"
+            + "  WHERE id = ?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, currentCamp);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

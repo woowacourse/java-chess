@@ -256,8 +256,8 @@ header {
 
 .class-join {
     font-size: 0.8rem;
-    color: #f44a32;
-    background-color: rgba(244, 74, 50, 0.15);
+    color: #000000;
+    background-color: rgba(148, 148, 148, 0.15);
     padding: 0.2rem;
     text-align: center;
 }

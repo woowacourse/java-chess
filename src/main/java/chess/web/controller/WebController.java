@@ -26,6 +26,7 @@ public class WebController {
         get("/", (req, res) -> render(chessService.getRooms(), "index.html"));
 
         post("/room/create", this::createRoomAndRedirectIndex);
+        post("/room/update/:id", this::updateRoomNameAndRedirectIndex);
 
         post("/:command", (req, res) -> {
             checkGameState(req, res);
@@ -38,6 +39,12 @@ public class WebController {
             chessService.restart();
             return render(executeAndGetModel(req, res), "game.html");
         });
+    }
+
+    private Object updateRoomNameAndRedirectIndex(final Request req, final Response res) {
+        chessService.updateRoomName(req.queryParams("roomId"), req.queryParams("roomName"));
+        res.redirect("/");
+        return null;
     }
 
     private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
