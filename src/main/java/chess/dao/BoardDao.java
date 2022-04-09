@@ -55,7 +55,7 @@ public class BoardDao {
 
     public Board getById(int id) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "SELETE * FROM board WHERE id=?";
+            final String sql = "SELECT * FROM board WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();

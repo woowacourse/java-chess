@@ -24,14 +24,15 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private static final int PROPER_KING_COUNT = 2;
+
     private final BoardDao boardDao;
     private final SquareDao squareDao;
     private final PieceDao pieceDao;
 
-    public ChessService() {
-        this.boardDao = new BoardDao(new ConnectionManager());
-        this.squareDao = new SquareDao(new ConnectionManager());
-        this.pieceDao = new PieceDao(new ConnectionManager());
+    public ChessService(BoardDao boardDao, SquareDao squareDao, PieceDao pieceDao) {
+        this.boardDao = boardDao;
+        this.squareDao = squareDao;
+        this.pieceDao = pieceDao;
     }
 
     public Board init(Board board) {

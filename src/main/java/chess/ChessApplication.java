@@ -5,6 +5,10 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.ChessController;
+import chess.dao.BoardDao;
+import chess.dao.ConnectionManager;
+import chess.dao.PieceDao;
+import chess.dao.SquareDao;
 import chess.dto.BoardsDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
@@ -18,7 +22,16 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessApplication {
 
-    private static final ChessController chessController = new ChessController();
+    private static final ChessController chessController;
+
+    static {
+        ConnectionManager connectionManager = new ConnectionManager();
+        BoardDao boardDao = new BoardDao(connectionManager);
+        SquareDao squareDao = new SquareDao(connectionManager);
+        PieceDao pieceDao = new PieceDao(connectionManager);
+        ChessService chessService = new ChessService(boardDao, squareDao, pieceDao);
+        chessController = new ChessController(chessService);
+    }
 
     public static void main(String[] args) {
 

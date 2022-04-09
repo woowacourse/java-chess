@@ -14,8 +14,8 @@ public class ChessController {
 
     private final ChessService chessService;
 
-    public ChessController() {
-        this.chessService = new ChessService();
+    public ChessController(ChessService chessService) {
+        this.chessService = chessService;
     }
 
     public BoardDto getBoard(int roomId) {
