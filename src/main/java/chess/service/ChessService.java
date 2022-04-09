@@ -17,7 +17,7 @@ import chess.model.piece.PieceLetter;
 import chess.service.dto.BoardDto;
 import chess.service.dto.ChessGameDto;
 import chess.service.dto.GameResultDto;
-import chess.service.dto.PieceDto;
+import chess.service.dto.PieceWithSquareDto;
 import chess.service.dto.StatusDto;
 import java.util.Arrays;
 import java.util.List;
@@ -57,12 +57,14 @@ public class ChessService {
 
     private BoardDto toBoardDto(Map<Square, Piece> board) {
         return new BoardDto(board.keySet().stream()
-                .collect(toMap(Square::getName, key -> toDto(board.get(key)))));
+                .map(square -> toPieceDto(square, board.get(square)))
+                .collect(Collectors.toList()));
     }
 
-    private PieceDto toDto(Piece piece) {
+    private PieceWithSquareDto toPieceDto(Square square, Piece piece) {
+        String squareName = square.getName();
         String pieceName = PieceLetter.getName(piece);
-        return new PieceDto(pieceName, piece.getColor().name());
+        return new PieceWithSquareDto(squareName, pieceName, piece.getColor().name());
     }
 
     public List<List<String>> getAllPieceLetter(String gameName) {
@@ -78,6 +80,7 @@ public class ChessService {
                 .collect(Collectors.toList());
     }
 
+    //TODO
     public void move(String gameName, String from, String to) {
         ChessGame chessGame = getGameFromDao(gameName);
         chessGame.move(Square.of(from), Square.of(to));

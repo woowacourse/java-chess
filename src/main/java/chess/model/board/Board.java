@@ -27,8 +27,8 @@ public final class Board {
     }
 
     public Board(BoardDto boardDto) {
-        this.board = boardDto.getPieces().entrySet().stream()
-                .collect(toMap(entry -> Square.of(entry.getKey()), entry -> PieceFactory.create(entry.getValue())));
+        this.board = boardDto.getPieces().stream()
+                .collect(toMap(dto -> Square.of(dto.getSquare()), PieceFactory::create));
     }
 
     public Map<Square, Piece> getPieces() {

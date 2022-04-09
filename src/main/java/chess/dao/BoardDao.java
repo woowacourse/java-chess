@@ -1,30 +1,31 @@
 package chess.dao;
 
 import chess.service.dto.BoardDto;
-import chess.service.dto.PieceDto;
+import chess.service.dto.PieceWithSquareDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BoardDao {
 
     public void initBoard(BoardDto boardDto, String gameName) {
-        for (Entry<String, PieceDto> entry : boardDto.getPieces().entrySet()) {
-            insert(entry.getValue(), entry.getKey(), gameName);
+        for (PieceWithSquareDto piece : boardDto.getPieces()) {
+            insert(piece, gameName);
         }
     }
 
-    public void insert(PieceDto pieceDto, String square, String gameName) {
+    public void insert(PieceWithSquareDto pieceDto, String gameName) {
         String sql = "insert into board (piece_type, piece_color, square, game_name)\n"
                 + "values (?, ?, ?, ?) on duplicate key update piece_type = ?, piece_color =?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             String type = pieceDto.getType();
             String color = pieceDto.getColor();
+            String square = pieceDto.getSquare();
             JdbcUtil.setStringsToStatement(statement, Map.of(1, type, 2, color, 3, square,
                     4, gameName, 5, type, 6, color));
             statement.executeUpdate();
@@ -72,12 +73,12 @@ public class BoardDao {
     }
 
     private BoardDto getBoardDtoFromResultSet(ResultSet resultSet) throws SQLException {
-        Map<String, PieceDto> pieces = new HashMap<>();
+        List<PieceWithSquareDto> pieces = new ArrayList<>();
         while (resultSet.next()) {
             String color = resultSet.getString("piece_color");
             String type = resultSet.getString("piece_type");
             String square = resultSet.getString("square");
-            pieces.put(square, new PieceDto(type, color));
+            pieces.add(new PieceWithSquareDto(square, type, color));
         }
         return new BoardDto(pieces);
     }

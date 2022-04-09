@@ -1,16 +1,17 @@
 package chess.service.dto;
 
+import java.util.List;
 import java.util.Map;
 
 public class BoardDto {
-    private final Map<String, PieceDto> pieces;
+    private final List<PieceWithSquareDto> pieces;
     private int id;
 
-    public BoardDto(Map<String, PieceDto> pieces) {
+    public BoardDto(List<PieceWithSquareDto> pieces) {
         this.pieces = pieces;
     }
 
-    public BoardDto(int id, Map<String, PieceDto> pieces) {
+    public BoardDto(int id, List<PieceWithSquareDto> pieces) {
         this.id = id;
         this.pieces = pieces;
     }
@@ -19,7 +20,7 @@ public class BoardDto {
         return id;
     }
 
-    public Map<String, PieceDto> getPieces() {
+    public List<PieceWithSquareDto> getPieces() {
         return pieces;
     }
 }

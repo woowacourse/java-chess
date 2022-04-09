@@ -2,10 +2,10 @@ package chess.model.piece;
 
 import chess.model.Color;
 import chess.model.piece.pawn.Pawn;
-import chess.service.dto.PieceDto;
+import chess.service.dto.PieceWithSquareDto;
 
 public class PieceFactory {
-    public static Piece create(PieceDto dto) {
+    public static Piece create(PieceWithSquareDto dto) {
         Color color = Color.valueOf(dto.getColor().toUpperCase());
         String typeName = dto.getType();
         if (typeName.equals("pawn")) {

@@ -4,6 +4,7 @@ import chess.model.board.Board;
 import chess.model.board.BoardInitializer;
 import chess.model.board.Square;
 import chess.model.piece.King;
+import chess.model.piece.Piece;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -54,6 +55,10 @@ public class ChessGame {
 
     public boolean isEmpty() {
         return status.isEmpty();
+    }
+
+    public Piece findPieceBySquare(Square square) {
+        return board.findPieceBySquare(square);
     }
 
     public Color findWinner() {
