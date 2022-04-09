@@ -19,6 +19,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
 
+    private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+
     public static void main(String[] args) {
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
@@ -106,7 +108,7 @@ public class WebApplication {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 
 }
