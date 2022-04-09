@@ -16,7 +16,7 @@ public class JdbcGameDao implements GameDao {
         if (holder.next()) {
             return holder.getStrings("state", "turn_color");
         }
-        return null;
+        throw new IllegalArgumentException("[ERROR] 해당하는 게임이 없습니다.");
     }
 
     @Override

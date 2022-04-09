@@ -24,7 +24,7 @@ public class WebApplication {
         get("/end", controller::end);
         post("/move", controller::move);
         get("status", controller::status);
-        exception(Exception.class, controller::handleException);
+        exception(RuntimeException.class, controller::handleException);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

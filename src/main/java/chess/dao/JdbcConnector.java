@@ -32,22 +32,19 @@ public class JdbcConnector {
 
     private static Connection getConnection() {
         loadDriver();
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException ignored) {
         }
-        return connection;
+        throw new IllegalStateException("[ERROR] 데이터베이스 연결에 실패했습니다.");
     }
 
-    private static Connection loadDriver() {
+    private static void loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException ignored) {
         }
-        return null;
+        throw new IllegalStateException("[ERROR] JDBC 연결에 실패했습니다.");
     }
 
     public static JdbcConnector query(String sql) {
@@ -55,13 +52,8 @@ public class JdbcConnector {
         try {
             return new JdbcConnector(connection.prepareStatement(sql));
         } catch (SQLException ignored) {
-            toIllegalArgumentException(sql);
         }
         throw new IllegalArgumentException("[ERROR] SQL 구문이 올바르지 않습니다.");
-    }
-
-    private static void toIllegalArgumentException(String sql) throws IllegalStateException {
-        throw new IllegalArgumentException(String.format("[ERROR] SQL 예외가 발생했습니다 : %s", sql));
     }
 
     public JdbcConnector parameters(int... arguments) {
@@ -85,19 +77,19 @@ public class JdbcConnector {
     private int setInt(int copyIndex, int argument) {
         try {
             statement.setInt(copyIndex++, argument);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return copyIndex;
+        } catch (SQLException ignored) {
         }
-        return copyIndex;
+        throw new IllegalArgumentException(String.format("[ERROR] 값 세팅에 실패했습니다. : %d", argument));
     }
 
     private int setString(int copyIndex, String argument) {
         try {
             statement.setString(copyIndex++, argument);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return copyIndex;
+        } catch (SQLException ignored) {
         }
-        return copyIndex;
+        throw new IllegalArgumentException(String.format("[ERROR] 값 세팅에 실패했습니다. : %s", argument));
     }
 
     public JdbcConnector batch() {
@@ -105,35 +97,34 @@ public class JdbcConnector {
         try {
             copy.statement.addBatch();
             copy.statement.clearParameters();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return copy;
+        } catch (SQLException ignored) {
         }
-        return copy;
+        throw new IllegalArgumentException("[ERROR] 배치 쿼리 추가에 실패했습니다.");
     }
 
     public ResultSetHolder executeQuery() {
         try {
             return new ResultSetHolder(statement.executeQuery());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
-        throw new IllegalArgumentException("[ERROR] excute failed");
+        throw new IllegalStateException("[ERROR] 쿼리 실행에 실패했습니다.");
     }
 
     public void executeUpdate() {
         try {
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
+        throw new IllegalStateException("[ERROR] 업데이트 쿼리를 실패했습니다.");
     }
 
     public void executeBatch() {
         try {
             statement.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
+        throw new IllegalStateException("[ERROR] 배치 쿼리를 실패했습니다.");
     }
 
     static class ResultSetHolder {
@@ -147,10 +138,9 @@ public class JdbcConnector {
         public boolean next() {
             try {
                 return resultSet.next();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException ignored) {
             }
-            return false;
+            throw new IllegalStateException("[ERROR] ResultSet의 next 실행에 실패했습니다.");
         }
 
         public List<String> getStrings(String... columns) {
@@ -162,25 +152,17 @@ public class JdbcConnector {
         public String getString(String column) {
             try {
                 return resultSet.getString(column);
-            } catch (SQLException e) {
-                toIllegalArgumentException(column);
+            } catch (SQLException ignored) {
             }
-            throw new IllegalArgumentException("[ERROR] getString failed");
-        }
-
-        public List<Integer> getIntegers(String... columns) {
-            return Arrays.stream(columns)
-                .map(this::getInteger)
-                .collect(Collectors.toList());
+            throw new IllegalArgumentException(String.format("[ERROR] 해당하는 칼럼이 없습니다. : %s", column));
         }
 
         public int getInteger(String column) {
             try {
                 return resultSet.getInt(column);
-            } catch (SQLException exception) {
-                toIllegalArgumentException(column);
+            } catch (SQLException ignored) {
             }
-            throw new IllegalArgumentException("[ERROR] getInteger failed");
+            throw new IllegalArgumentException(String.format("[ERROR] 해당하는 칼럼이 없습니다. : %s", column));
         }
     }
 }
