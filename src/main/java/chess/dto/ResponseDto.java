@@ -29,8 +29,8 @@ public class ResponseDto {
         this.board = createBoard(chessGame.board().getBoard());
     }
 
-    public static ResponseDto createResponseDto(String turn, ChessGame chessGame) {
-        return new ResponseDto(turn, chessGame);
+    public static ResponseDto createResponseDto(ChessGame chessGame) {
+        return new ResponseDto(chessGame.turn().name(), chessGame);
     }
 
     public static ResponseDto createErrorResponseDto(String message, ChessGame chessGame) {

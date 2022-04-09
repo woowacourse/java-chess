@@ -56,7 +56,7 @@ public class WebGameController {
         ChessGame chessGame = null;
         try {
             chessGame = chessService.load();
-            return ResponseDto.createResponseDto(chessGame.turn().name(), chessGame);
+            return ResponseDto.createResponseDto(chessGame);
         } catch (IllegalArgumentException e) {
             return ResponseDto.createErrorResponseDto(e.getMessage(), chessGame);
         }
@@ -66,7 +66,7 @@ public class WebGameController {
         ChessGame chessGame = null;
         try {
             chessGame = chessService.createRoom();
-            return ResponseDto.createResponseDto(chessGame.turn().name(), chessGame);
+            return ResponseDto.createResponseDto(chessGame);
         } catch (IllegalArgumentException e) {
             return ResponseDto.createErrorResponseDto(e.getMessage(), chessGame);
         }
@@ -77,7 +77,7 @@ public class WebGameController {
         try {
             chessGame = chessService.load();
             chessService.move(chessGame, movableDto.getSource(), movableDto.getTarget());
-            return ResponseDto.createResponseDto(chessGame.turn().name(), chessGame);
+            return ResponseDto.createResponseDto(chessGame);
         } catch (RuntimeException e) {
             return ResponseDto.createErrorResponseDto(e.getMessage(), chessGame);
         }
