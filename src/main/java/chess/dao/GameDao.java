@@ -14,6 +14,7 @@ public class GameDao {
     public boolean create(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
+
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, gameId);
@@ -22,38 +23,34 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(connection);
         return false;
     }
 
     public boolean findById(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "select id from game where id = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+
         try {
-            statement = connection.prepareStatement(sql);
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, gameId);
-            resultSet = statement.executeQuery();
+            final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(statement, resultSet, connection);
         return true;
     }
 
     public boolean findForceEndFlagById(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "select force_end_flag from game where id = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+
         try {
-            statement = connection.prepareStatement(sql);
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, gameId);
-            resultSet = statement.executeQuery();
+            final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("유효하지 않은 게임입니다.");
             }
@@ -61,19 +58,17 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(statement, resultSet, connection);
         return false;
     }
 
     public Color findTurnById(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "select id, turn from game where id = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+
         try {
-            statement = connection.prepareStatement(sql);
+            final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, gameId);
-            resultSet = statement.executeQuery();
+            final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("유효하지 않은 게임입니다.");
             }
@@ -81,7 +76,6 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(statement, resultSet, connection);
         return null;
     }
 
@@ -96,7 +90,6 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(connection);
     }
 
     public void updateForceEndFlagById(String gameId) {
@@ -109,7 +102,6 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(connection);
     }
 
     public void deleteById(String gameId) {
@@ -122,7 +114,6 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        databaseConnector.close(connection);
     }
 
 }

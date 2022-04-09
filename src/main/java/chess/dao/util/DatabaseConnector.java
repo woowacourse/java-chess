@@ -2,8 +2,6 @@ package chess.dao.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
@@ -27,33 +25,6 @@ public class DatabaseConnector {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void close(PreparedStatement statement, Connection connection) {
-        try {
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void close(PreparedStatement statement, ResultSet resultSet, Connection connection) {
-        try {
-            statement.close();
-            resultSet.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void close(Connection connection) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
