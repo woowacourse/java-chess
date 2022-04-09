@@ -34,41 +34,35 @@ public class WebController {
 
     public Route findGame() {
         return (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
-            ChessGame chessGame = service.getChessGame(gameID, service.getTurn(gameID));
-            chessGame.startGame();
-            try {
-                BoardDto boardDto = new BoardDto(chessGame.getBoard());
-                model.putAll(boardDto.getBoard());
-                model.put("gameID", gameID);
-                model.put("message", "누가 이기나 보자구~!");
+            Map<String, Object> model = addGameID(gameID);
 
-                if (chessGame.isKingDie()) {
-                    model.put("message", "킹 잡았다!! 게임 끝~!~!");
-                    return render(model, "/finished.html");
-                }
-                return render(model, "/ingame.html");
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                model.put("gameRoom", e.getMessage());
-                return render(model, "/findgame.html");
-            }
+            ChessGame chessGame = getSavedGame(gameID);
+            return searchGame(model, chessGame);
         };
+    }
+
+    private String searchGame(Map<String, Object> model, ChessGame chessGame) {
+        try {
+            addBoardStatus(model, chessGame);
+            model.put("message", "누가 이기나 보자구~!");
+            String url = getUrl(model, chessGame);
+            return render(model, url);
+        } catch (IllegalArgumentException e) {
+            model.put("gameRoom", e.getMessage());
+            return render(model, "/findgame.html");
+        }
     }
 
     public Route runGame() {
         return (request, response) -> {
             String gameID = request.queryParams("gameID");
-            ChessGame chessGame = service.loadGame(gameID);
+            Map<String, Object> model = addGameID(gameID);
 
+            ChessGame chessGame = service.loadGame(gameID);
             service.startGame(gameID, chessGame);
             service.loadPieces(gameID);
-
-            BoardDto boardDto = new BoardDto(chessGame.getBoard());
-            Map<String, Object> model = new HashMap<>(boardDto.getBoard());
-
-            model.put("gameID", gameID);
+            addBoardStatus(model, chessGame);
             model.put("message", "누가 이기나 보자구~!");
 
             return render(model, "/ingame.html");
@@ -77,49 +71,67 @@ public class WebController {
 
     public Route movePiece() {
         return (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
+            Map<String, Object> model = addGameID(gameID);
+
             String source = request.queryParams("source");
             String target = request.queryParams("target");
 
-            ChessGame chessGame = service.getChessGame(gameID, service.getTurn(gameID));
-            chessGame.startGame();
+            ChessGame chessGame = getSavedGame(gameID);
 
             try {
                 chessGame.move(new Square(source), new Square(target));
                 service.movePiece(gameID, source, target);
                 service.updateTurn(gameID, chessGame);
 
-                BoardDto boardDto = new BoardDto(chessGame.getBoard());
-                model.putAll(boardDto.getBoard());
-                model.put("gameID", gameID);
+                addBoardStatus(model, chessGame);
                 model.put("message", "누가 이기나 보자구~!");
             } catch (IllegalArgumentException e) {
-                BoardDto boardDto = new BoardDto(chessGame.getBoard());
-                model.putAll(boardDto.getBoard());
+                addBoardStatus(model, chessGame);
                 model.put("message", e.getMessage());
             }
-            if (chessGame.isKingDie()) {
-                model.put("message", "킹 잡았다!! 게임 끝~!~!");
-                return render(model, "/finished.html");
-            }
-            return render(model, "/ingame.html");
+            String url = getUrl(model, chessGame);
+            return render(model, url);
         };
+    }
+
+    private String getUrl(Map<String, Object> model, ChessGame chessGame) {
+        if (chessGame.isKingDie()) {
+            model.put("message", "킹 잡았다!! 게임 끝~!~!");
+            return "/finished.html";
+        }
+        return "/ingame.html";
+    }
+
+    private ChessGame getSavedGame(String gameID) {
+        ChessGame chessGame = service.loadSavedChessGame(gameID, service.getTurn(gameID));
+        chessGame.startGame();
+        return chessGame;
     }
 
     public Route showResult() {
         return (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameID = request.queryParams("gameID");
+            Map<String, Object> model = addGameID(gameID);
 
             GameResult gameResult = service.getGameResult(gameID);
-
-            model.put("gameID", gameID);
             model.put("whiteScore", gameResult.calculateScore(Color.WHITE));
             model.put("blackScore", gameResult.calculateScore(Color.BLACK));
             model.put("message", "수고하셨습니다 ^0^");
+
             return render(model, "/status.html");
         };
+    }
+
+    private void addBoardStatus(Map<String, Object> model, ChessGame chessGame) {
+        BoardDto boardDto = new BoardDto(chessGame.getBoard());
+        model.putAll(boardDto.getBoard());
+    }
+
+    public Map<String, Object> addGameID(String gameID) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("gameID", gameID);
+        return model;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
