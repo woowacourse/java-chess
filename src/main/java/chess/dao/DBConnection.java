@@ -16,7 +16,7 @@ public class DBConnection {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new DataAccessException("DB 연결 실패");
+            throw new DataAccessException("[DATABASE_ERROR] DB 연결 실패");
         }
     }
 }

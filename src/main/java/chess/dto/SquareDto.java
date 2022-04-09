@@ -3,13 +3,13 @@ package chess.dto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
-import chess.view.ImageNameMapper;
 
 public class SquareDto {
 
     private final Position position;
     private Piece piece;
-    private String pieceImageName;
+    private String pieceName;
+    private String pieceColor;
 
     public SquareDto(final Position position) {
         this.position = position;
@@ -22,13 +22,15 @@ public class SquareDto {
     public SquareDto(final Position position, final Piece piece) {
         this.position = position;
         this.piece = piece;
-        this.pieceImageName = ImageNameMapper.from(piece);
+        this.pieceName = piece.representative().toUpperCase();
+        this.pieceColor = piece.getColorName();
     }
 
     public SquareDto(final String position, final String piece, final String color) {
         this.position = Position.valueOf(position);
         this.piece = PieceFactory.create(piece, color);
-        this.pieceImageName = ImageNameMapper.from(this.piece);
+        this.pieceName = this.piece.representative().toUpperCase();
+        this.pieceColor = color;
     }
 
     public Position getPosition() {
@@ -39,7 +41,11 @@ public class SquareDto {
         return piece;
     }
 
-    public String getPieceImageName() {
-        return pieceImageName;
+    public String getPieceName() {
+        return pieceName;
+    }
+
+    public String getPieceColor() {
+        return pieceColor;
     }
 }
