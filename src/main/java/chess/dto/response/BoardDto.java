@@ -11,10 +11,10 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 public class BoardDto {
-    private final Map<PositionDto, PieceDto> value;
+    private final Map<PositionDto, PieceDto> board;
 
-    private BoardDto(Map<PositionDto, PieceDto> value) {
-        this.value = value;
+    private BoardDto(Map<PositionDto, PieceDto> board) {
+        this.board = board;
     }
 
     public static BoardDto from(Board board) {
@@ -51,7 +51,7 @@ public class BoardDto {
     public Board toBoard() {
         Map<Position, Piece> boardValue = new HashMap<>();
 
-        for (Entry<PositionDto, PieceDto> entrySet : value.entrySet()) {
+        for (Entry<PositionDto, PieceDto> entrySet : this.board.entrySet()) {
             Piece piece = entrySet.getValue().toPiece();
             Position position = entrySet.getKey().toPosition();
             boardValue.put(position, piece);
@@ -61,13 +61,13 @@ public class BoardDto {
     }
 
     public Map<PositionDto, PieceDto> getValue() {
-        return Map.copyOf(value);
+        return Map.copyOf(board);
     }
 
     @Override
     public String toString() {
-        return "AltBoardDto{" +
-                "value=" + value +
+        return "BoardDto{" +
+                "board=" + board +
                 '}';
     }
 }
