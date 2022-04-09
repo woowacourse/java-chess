@@ -102,6 +102,10 @@ public class Position {
         return yAxis;
     }
 
+    public boolean isFarOneOnXAxis(Position to) {
+        return Math.abs(this.yAxis.getValue() - to.yAxis.getValue()) == 1;
+    }
+
     private static class Cache {
 
         private static final List<Position> cache;
