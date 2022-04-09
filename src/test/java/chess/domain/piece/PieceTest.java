@@ -1,75 +1,80 @@
 package chess.domain.piece;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.File.H;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.piece.vo.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.File;
 import chess.domain.board.Position;
-import chess.domain.board.Rank;
-import java.util.stream.Stream;
+import chess.domain.piece.vo.TeamColor;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceTest {
 
-    @ParameterizedTest
-    @DisplayName("Rank와 File 값을 받아 초기 위치의 기물을 반환한다.")
-    @MethodSource("provideFileAndRankAndExpected")
-    void create(final File file, final Rank rank, final Class<? extends Piece> expected) {
-        //when
-        final Piece actual = Piece.create(file, rank);
-        //then
-        assertThat(actual).isInstanceOf(expected);
-    }
+    private Piece piece;
 
-    private static Stream<Arguments> provideFileAndRankAndExpected() {
-        return Stream.of(
-                Arguments.of(A, ONE, Rook.class),
-                Arguments.of(B, ONE, Knight.class),
-                Arguments.of(C, ONE, Bishop.class),
-                Arguments.of(D, ONE, Queen.class),
-                Arguments.of(E, ONE, King.class),
-                Arguments.of(F, ONE, Bishop.class),
-                Arguments.of(G, ONE, Knight.class),
-                Arguments.of(H, ONE, Rook.class),
-                Arguments.of(A, TWO, Pawn.class)
-        );
+    @BeforeEach
+    void setUp() {
+        piece = new Piece(WHITE, Position.from("a1")) {
+            @Override
+            public Piece move(List<Piece> otherPieces, Position targetPosition) {
+                return null;
+            }
+
+            @Override
+            public double getScore() {
+                return 0;
+            }
+        };
     }
 
     @ParameterizedTest
-    @DisplayName("Rank, File을 받아 자신의 위치와 동일한지 반환한다.")
-    @CsvSource({"A, ONE, true", "A, TWO, false"})
-    void hasPosition(final File file, final Rank rank, final boolean expected) {
+    @DisplayName("기물이 BLACK 팀인지 반환")
+    @CsvSource({"BLACK, true", "WHITE, false"})
+    void isBlackTeam(TeamColor teamColor, boolean expected) {
         // given
-        final Piece piece = Piece.create(A, ONE);
-        // when
-        final boolean actual = piece.hasPosition(Position.of(file, rank));
-        // then
-        assertThat(actual).isEqualTo(expected);
+        Piece piece = new Piece(teamColor, Position.from("a1")) {
+            @Override
+            public Piece move(List<Piece> otherPieces, Position targetPosition) {
+                return null;
+            }
+
+            @Override
+            public double getScore() {
+                return 0;
+            }
+        };
+        //when, then
+        assertThat(piece.isBlackTeam()).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("다른 기물을 받아 자신과 같은 팀인지 반환한다.")
-    @CsvSource({"H, ONE, true", "H, EIGHT, false"})
-    void isSameTeam(final File anotherFile, final Rank anotherRank, final boolean expected) {
-        // given
-        final Piece piece = Piece.create(A, ONE);
-        final Piece anotherPiece = Piece.create(anotherFile, anotherRank);
+    @Test
+    @DisplayName("기물이 주어진 위치에 있는지 반환")
+    void hasPosition() {
+        assertThat(piece.hasPosition(Position.from("a1"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("기물과 같은 팀인지 반환")
+    void isSameTeam() {
+        //given
+        Piece otherPiece = new Piece(WHITE, Position.from("a2")) {
+            @Override
+            public Piece move(List<Piece> otherPieces, Position targetPosition) {
+                return null;
+            }
+
+            @Override
+            public double getScore() {
+                return 0;
+            }
+        };
         // when
-        final boolean actual = piece.isSameTeam(anotherPiece);
+        boolean actual = piece.isSameTeam(otherPiece);
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 }

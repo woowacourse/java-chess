@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="src/board.css">
+</head>
+
+<body>
+<div id="app">
+    <h1>♟️ 체스</h1>
+    <h2> 흰색팀 점수 : {{whiteTotalScore}} </h2>
+    <h2> 검정색팀 점수 : {{blackTotalScore}} </h2>
+    <section class="chess-ui">
+        {{#pieces}}
+        <div class="black-square">
+            {{#symbol}}
+            <img src="images/{{color}}_{{symbol}}.png"/>
+            {{/symbol}}
+        </div>
+        {{/pieces}}
+    </section>
+    <section>
+        <h3>현재 턴: {{currentTurn.color}}</h3>
+        <form enctype="text/plain" action="/chess/move" method="post" class="form-example">
+            <div class="form-example">
+                <label for="from">from</label>
+                <input type="text" id="from" name="from" required>
+                <label for="to">to</label>
+                <input type="text" id="to" name="to" required>
+                <input type="submit" value="제출">
+            </div>
+        </form>
+        <form enctype="text/plain" action="/chess/reset" method="get" class="form-example">
+            <div class="form-example">
+                <input type="submit" value="리셋">
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+
+</html>

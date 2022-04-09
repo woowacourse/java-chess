@@ -1,8 +1,9 @@
-package chess.game;
+package chess.console;
 
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
 import chess.domain.board.Position;
+import chess.domain.board.TotalScore;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

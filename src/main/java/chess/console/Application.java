@@ -1,6 +1,4 @@
-package chess;
-
-import chess.game.ChessGame;
+package chess.console;
 
 public class Application {
 

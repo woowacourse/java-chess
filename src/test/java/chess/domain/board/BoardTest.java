@@ -20,7 +20,7 @@ class BoardTest {
     @DisplayName("기물이 없는 위치에서 기물을 찾으려하면 예외를 발생 시킨다.")
     void findPieceInPositionException() {
         //given
-        final Board board = new Board();
+        final Board board = Board.create();
         final Position invalidPosition = Position.of(A, Rank.FOUR);
         //when, then
         assertThatThrownBy(() -> board.findPieceInPosition(invalidPosition))
@@ -32,7 +32,7 @@ class BoardTest {
     @DisplayName("같은 팀 기물이 있는 위치로 이동하려고 하면 예외를 발생시킨다.")
     void moveExceptionBySameTeamPosition() {
         //given
-        final Board board = new Board();
+        final Board board = Board.create();
         final Position sourcePosition = Position.of(A, ONE);
         final Position targetPosition = Position.of(A, TWO);
         //when, then
@@ -45,7 +45,7 @@ class BoardTest {
     @DisplayName("턴에 맞지 않은 기물을 이동시키려 하면 예외를 발생시킨다.")
     void moveExceptionByInvalidTurnPiece() {
         //given
-        final Board board = new Board();
+        final Board board = Board.create();
         final Position blackTeamSourcePosition = Position.of(A, SEVEN);
         final Position targetPosition = Position.of(A, SIX);
         //when, then
@@ -59,7 +59,7 @@ class BoardTest {
     @CsvSource({"WHITE, 37", "BLACK, 37"})
     void getTotalScore(final TeamColor teamColor, final double expected) {
         //given
-        Board board = new Board();
+        Board board = Board.create();
         board = board.movePiece(Position.from("a2"), Position.from("a4"));
         board = board.movePiece(Position.from("b7"), Position.from("b5"));
         board = board.movePiece(Position.from("a4"), Position.from("b5"));
@@ -68,5 +68,19 @@ class BoardTest {
         double actual = board.getTotalPoint(teamColor);
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("기물에 하나의 킹만 있는지 반환한다.")
+    void hasOneKing() {
+        // given
+        Board boardHasTwoKing = Board.create();
+        Board boardHasOneKing = boardHasTwoKing.movePiece(Position.from("e2"), Position.from("e4"))
+            .movePiece(Position.from("f7"), Position.from("f6"))
+            .movePiece(Position.from("d1"), Position.from("h5"))
+            .movePiece(Position.from("f6"), Position.from("f5"))
+            .movePiece(Position.from("h5"), Position.from("e8"));
+        // when, then
+        assertThat(boardHasOneKing.hasOneKing()).isTrue();
     }
 }
