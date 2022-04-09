@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 
     private static final int PAWN_POINT = 1;
 
-    public Pawn(final Color color) {
+    protected Pawn(final Color color) {
         super(color, Symbol.PAWN);
     }
 

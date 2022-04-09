@@ -10,7 +10,7 @@ public final class King extends Piece {
 
     private static final int KING_POINT = 0;
 
-    public King(final Color color) {
+    protected King(final Color color) {
         super(color, Symbol.KING);
     }
 

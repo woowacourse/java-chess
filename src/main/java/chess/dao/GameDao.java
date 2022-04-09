@@ -29,7 +29,7 @@ public class GameDao {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
-                    return null;
+                    throw new RuntimeException();
                 }
                 return resultSet.getString("state");
             }

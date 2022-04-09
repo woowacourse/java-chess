@@ -10,7 +10,7 @@ public final class Queen extends Piece {
 
     private static final int QUEEN_POINT = 9;
 
-    public Queen(final Color color) {
+    protected Queen(final Color color) {
         super(color, Symbol.QUEEN);
     }
 

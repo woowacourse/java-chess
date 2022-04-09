@@ -11,7 +11,7 @@ public final class Bishop extends Piece {
 
     private static final int BISHOP_POINT = 3;
 
-    public Bishop(final Color color) {
+    protected Bishop(final Color color) {
         super(color, Symbol.BISHOP);
     }
 

@@ -8,10 +8,10 @@ public interface State {
     State proceed(final ChessBoard chessBoard, final GameCommand gameCommand);
 
     static State of(String value) {
-        if (value.equals("blackrunning")) {
+        if (value.equals("BlackRunning")) {
             return new BlackRunning();
         }
-        if (value.equals("whiterunning")) {
+        if (value.equals("WhiteRunning")) {
             return new WhiteRunning();
         }
         throw new IllegalArgumentException();

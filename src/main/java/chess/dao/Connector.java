@@ -11,12 +11,10 @@ public class Connector {
     private static final String PASSWORD = "password";
 
     public static Connection getConnection() {
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-        return connection;
     }
 }

@@ -3,13 +3,9 @@ package chess.domain.game;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.game.ScoreCalculator;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,14 +18,14 @@ public class ScoreCalculatorTest {
     @DisplayName("여러 컬럼의 검은색 점수를 계산한다.")
     void calculateColumnsForBlack() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("a8"), new King(Color.BLACK)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.KING)),
+                Map.entry(Position.of("a8"), Piece.of(Color.BLACK, Symbol.KING)),
+                Map.entry(Position.of("b3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("c4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a4"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("a7"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
@@ -43,14 +39,14 @@ public class ScoreCalculatorTest {
     @DisplayName("여러 컬럼의 하얀색 점수를 계산한다.")
     void calculateColumnsForWhite() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("a8"), new King(Color.BLACK)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("b4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new Bishop(Color.WHITE)),
-                Map.entry(Position.of("a7"), new Rook(Color.WHITE)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.KING)),
+                Map.entry(Position.of("a8"), Piece.of(Color.BLACK, Symbol.KING)),
+                Map.entry(Position.of("b3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("b4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a4"), Piece.of(Color.WHITE, Symbol.BISHOP)),
+                Map.entry(Position.of("a7"), Piece.of(Color.WHITE, Symbol.ROOK)),
+                Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 

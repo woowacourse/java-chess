@@ -5,13 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.command.GameCommand;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.generator.NormalPiecesGenerator;
@@ -31,8 +27,8 @@ public class ChessBoardTest {
     @DisplayName("체스판을 생성한다.")
     void construct() {
         final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a2"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a2"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> pieces);
         final Map<Position, Piece> actual = chessBoard.getPieces();
@@ -44,8 +40,8 @@ public class ChessBoardTest {
     @DisplayName("체스판을 생성할 때 빈 칸은 EmptyPiece를 삽입한다.")
     void constructEmptyPieces() {
         final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a2"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a2"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> pieces);
         final Map<Position, Piece> actual = chessBoard.getPieces();
@@ -70,9 +66,9 @@ public class ChessBoardTest {
         @DisplayName("킹을 이동시킬 수 있다.")
         void king() {
             final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                    Map.entry(Position.of("d4"), new King(Color.WHITE)),
-                    Map.entry(Position.of("d3"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d5"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("d4"), Piece.of(Color.WHITE, Symbol.KING)),
+                    Map.entry(Position.of("d3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                    Map.entry(Position.of("d5"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
@@ -91,9 +87,9 @@ public class ChessBoardTest {
         @DisplayName("퀸을 이동시킬 수 있다.")
         void queen() {
             final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                    Map.entry(Position.of("d4"), new Queen(Color.WHITE)),
-                    Map.entry(Position.of("g4"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("d4"), Piece.of(Color.WHITE, Symbol.QUEEN)),
+                    Map.entry(Position.of("g4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                    Map.entry(Position.of("d2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
@@ -112,9 +108,9 @@ public class ChessBoardTest {
         @DisplayName("룩을 이동시킬 수 있다.")
         void rook() {
             final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                    Map.entry(Position.of("d4"), new Rook(Color.WHITE)),
-                    Map.entry(Position.of("g4"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("d4"), Piece.of(Color.WHITE, Symbol.ROOK)),
+                    Map.entry(Position.of("g4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                    Map.entry(Position.of("d2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
@@ -133,9 +129,9 @@ public class ChessBoardTest {
         @DisplayName("비숍을 이동시킬 수 있다.")
         void bishop() {
             Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                    Map.entry(Position.of("d4"), new Bishop(Color.WHITE)),
-                    Map.entry(Position.of("g7"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("f2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("d4"), Piece.of(Color.WHITE, Symbol.BISHOP)),
+                    Map.entry(Position.of("g7"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                    Map.entry(Position.of("f2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
@@ -204,13 +200,13 @@ public class ChessBoardTest {
     @DisplayName("킹이 1개일 때, 게임은 끝난다.")
     void isEndTrue() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.KING)),
+                Map.entry(Position.of("b3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("c4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a4"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("a7"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final boolean actual = chessBoard.isEnd();
@@ -222,13 +218,13 @@ public class ChessBoardTest {
     @DisplayName("킹이 2개일 때, 게임은 끝나지 않는다.")
     void isEndFalse() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new King(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.KING)),
+                Map.entry(Position.of("b3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("c4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a4"), Piece.of(Color.BLACK, Symbol.KING)),
+                Map.entry(Position.of("a7"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final boolean actual = chessBoard.isEnd();
@@ -240,12 +236,12 @@ public class ChessBoardTest {
     @DisplayName("검은색 킹이 없으면, 승자는 흰색이다.")
     void getWinner() {
         final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.KING)),
+                Map.entry(Position.of("b3"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("c4"), Piece.of(Color.WHITE, Symbol.PAWN)),
+                Map.entry(Position.of("a7"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
+                Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final Color winner = chessBoard.getWinner();

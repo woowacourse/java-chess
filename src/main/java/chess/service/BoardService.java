@@ -8,7 +8,6 @@ import chess.dto.BoardDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class BoardService {
@@ -25,8 +24,8 @@ public class BoardService {
 
         for (String key : model.keySet()) {
             Piece piece = model.get(key);
-            String symbol = piece.getSymbol().name().toLowerCase(Locale.ROOT);
-            String color = piece.getColor().name().toLowerCase(Locale.ROOT);
+            String symbol = piece.getSymbol().name();
+            String color = piece.getColor().name();
             BoardDto boardDto = new BoardDto(key, symbol, color);
             boardDtos.add(boardDto);
         }
@@ -67,8 +66,8 @@ public class BoardService {
         Map<String, Piece> model = chessGame.getChessBoard().toMap();
 
         Piece piece = model.get(position);
-        String symbol = piece.getSymbol().name().toLowerCase(Locale.ROOT);
-        String color = piece.getColor().name().toLowerCase(Locale.ROOT);
+        String symbol = piece.getSymbol().name();
+        String color = piece.getColor().name();
         BoardDto boardDto = new BoardDto(position, symbol, color);
         boardDao.update(boardDto);
     }

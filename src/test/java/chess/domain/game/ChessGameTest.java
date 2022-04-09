@@ -5,9 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Position;
 import chess.domain.state.BlackRunning;
 import chess.domain.state.Finish;
@@ -26,9 +25,9 @@ public class ChessGameTest {
 
     @BeforeEach
     void init() {
-        testBoard.put(Position.of("d4"), new King(Color.WHITE));
-        testBoard.put(Position.of("d5"), new Pawn(Color.WHITE));
-        testBoard.put(Position.of("e3"), new Pawn(Color.BLACK));
+        testBoard.put(Position.of("d4"), Piece.of(Color.WHITE, Symbol.KING));
+        testBoard.put(Position.of("d5"), Piece.of(Color.WHITE, Symbol.PAWN));
+        testBoard.put(Position.of("e3"), Piece.of(Color.BLACK, Symbol.PAWN));
     }
 
     @Test

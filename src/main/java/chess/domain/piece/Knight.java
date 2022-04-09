@@ -11,7 +11,7 @@ public final class Knight extends Piece {
 
     private static final double KNIGHT_POINT = 2.5;
 
-    public Knight(final Color color) {
+    protected Knight(final Color color) {
         super(color, Symbol.KNIGHT);
     }
 

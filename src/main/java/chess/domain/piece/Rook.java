@@ -11,7 +11,7 @@ public final class Rook extends Piece {
 
     private static final int ROOK_POINT = 5;
 
-    public Rook(final Color color) {
+    protected Rook(final Color color) {
         super(color, Symbol.ROOK);
     }
 
