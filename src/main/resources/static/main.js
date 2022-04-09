@@ -92,7 +92,9 @@ const renderCurrentTurn = async () => {
     let turn = "";
     if (currentTurn.pieceColor === "WHITE") {
         turn = "백";
-    } else {
+    }
+
+    if (currentTurn.pieceColor === "BLACK") {
         turn = "흑";
     }
 
@@ -112,7 +114,7 @@ const renderScore = async () => {
 const renderWinner = async () => {
     const winner = await fetchWinner();
 
-    if (winner.pieceColor !== "null") {
+    if (!winner.error) {
         let color = "";
         if (winner.pieceColor === "WHITE") {
             color = "백";

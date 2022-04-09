@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 public class JsonMapper {
     private static final Gson GSON = new Gson();
@@ -18,7 +17,6 @@ public class JsonMapper {
     private static final String PIECE_NAME_FORMAT = "%s_%s";
     private static final String WHITE_PIECE_COLOR_NAME = "WHITE";
     private static final String BLACK_PIECE_COLOR_NAME = "BLACK";
-    private static final String EMPTY_PIECE_COLOR_NAME = "null";
 
     public static String boardDtoToJson(BoardDto boardDto) {
         Map<String, String> coordinateAndPiece = new HashMap<>();
@@ -42,9 +40,8 @@ public class JsonMapper {
         return generatePieceColorJson(color);
     }
 
-    public static String winnerToJson(Optional<PieceColorDto> pieceColorDto) {
-        String color = pieceColorDto.map(JsonMapper::getColorFromPieceColorDto)
-                .orElse(EMPTY_PIECE_COLOR_NAME);
+    public static String winnerToJson(PieceColorDto pieceColorDto) {
+        String color = getColorFromPieceColorDto(pieceColorDto);
         return generatePieceColorJson(color);
     }
 
@@ -65,6 +62,13 @@ public class JsonMapper {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("white", scoreResultDto.getWhiteScore());
         jsonObject.addProperty("black", scoreResultDto.getBlackScore());
+
+        return GSON.toJson(jsonObject);
+    }
+
+    public static String exceptionToJson(Exception e) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("error", e.getMessage());
 
         return GSON.toJson(jsonObject);
     }

@@ -51,7 +51,11 @@ public class WebController {
     }
 
     private String getWinner() {
-        return JsonMapper.winnerToJson(chessService.getWinColor(GAME_ID));
+        try {
+            return JsonMapper.winnerToJson(chessService.getWinColor(GAME_ID));
+        } catch (IllegalStateException e) {
+            return JsonMapper.exceptionToJson(e);
+        }
     }
 
     private String movePiece(Request req) {

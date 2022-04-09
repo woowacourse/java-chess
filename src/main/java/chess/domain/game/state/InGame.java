@@ -52,7 +52,7 @@ public abstract class InGame implements GameState {
             return PieceColor.WHITE;
         }
 
-        return null;
+        throw new IllegalStateException("아직 양쪽의 킹이 모두 살아있습니다.");
     }
 
     @Override

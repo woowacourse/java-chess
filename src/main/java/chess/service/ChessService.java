@@ -14,7 +14,6 @@ import chess.dto.response.ChessGameDto;
 import chess.dto.response.PieceColorDto;
 import chess.dto.response.ScoreResultDto;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 public class ChessService {
     private final GameDao gameDao;
@@ -83,13 +82,9 @@ public class ChessService {
         return ScoreResultDto.from(generateChessGame(gameId));
     }
 
-    public Optional<PieceColorDto> getWinColor(String gameId) {
+    public PieceColorDto getWinColor(String gameId) {
         ChessGame chessGame = generateChessGame(gameId);
-        if (!chessGame.isEnd()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(PieceColorDto.from(chessGame.getWinColor()));
+        return PieceColorDto.from(chessGame.getWinColor());
     }
 
     private ChessGame generateChessGame(String gameId) {
