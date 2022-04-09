@@ -14,6 +14,11 @@ import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
+    private static final String PATH_READY = "/ready.html";
+    private static final String PATH_FIND_GAME = "/findgame.html";
+    private static final String PATH_IN_GAME = "/ingame.html";
+    private static final String PATH_FINISHED = "/finished.html";
+    private static final String PATH_STATUS = "/status.html";
     private final Service service;
 
     public WebController() {
@@ -21,11 +26,11 @@ public class WebController {
     }
 
     public Route ready() {
-        return (request, response) -> render(new HashMap<>(), "/ready.html");
+        return (request, response) -> render(new HashMap<>(), PATH_READY);
     }
 
     public Route askGameID() {
-        return (request, response) -> render(Map.of("message", "어디로 들어가려구??"), "/findgame.html");
+        return (request, response) -> render(Map.of("message", "어디로 들어가려구??"), PATH_FIND_GAME);
     }
 
     public Route findGame() {
@@ -41,13 +46,12 @@ public class WebController {
         try {
             ChessGame chessGame = getSavedGame(gameID);
             addBoardStatus(model, chessGame);
-            model.put("message", "누가 이기나 보자구~!");
-            String url = getUrl(model, chessGame);
-            return render(model, url);
+
+            String path = getPath(model, chessGame);
+            return render(model, path);
         } catch (IllegalArgumentException e) {
             model.put("message", e.getMessage());
-            System.err.println(e.getMessage());
-            return render(model, "/findgame.html");
+            return render(model, PATH_FIND_GAME);
         }
     }
 
@@ -59,10 +63,10 @@ public class WebController {
             ChessGame chessGame = service.loadGame(gameID);
             service.startGame(gameID, chessGame);
             service.loadPieces(gameID);
-            addBoardStatus(model, chessGame);
-            model.put("message", "누가 이기나 보자구~!");
 
-            return render(model, "/ingame.html");
+            addBoardStatus(model, chessGame);
+
+            return render(model, PATH_IN_GAME);
         };
     }
 
@@ -82,22 +86,21 @@ public class WebController {
                 service.updateTurn(gameID, chessGame);
 
                 addBoardStatus(model, chessGame);
-                model.put("message", "누가 이기나 보자구~!");
             } catch (IllegalArgumentException e) {
                 addBoardStatus(model, chessGame);
                 model.put("message", e.getMessage());
             }
-            String url = getUrl(model, chessGame);
-            return render(model, url);
+            String path = getPath(model, chessGame);
+            return render(model, path);
         };
     }
 
-    private String getUrl(Map<String, Object> model, ChessGame chessGame) {
+    private String getPath(Map<String, Object> model, ChessGame chessGame) {
         if (chessGame.isKingDie()) {
             model.put("message", "킹 잡았다!! 게임 끝~!~!");
-            return "/finished.html";
+            return PATH_FINISHED;
         }
-        return "/ingame.html";
+        return PATH_IN_GAME;
     }
 
     private ChessGame getSavedGame(String gameID) {
@@ -116,19 +119,18 @@ public class WebController {
             model.put("blackScore", gameResult.calculateScore(Color.BLACK));
             model.put("message", "수고하셨습니다 ^0^");
 
-            return render(model, "/status.html");
+            return render(model, PATH_STATUS);
         };
     }
 
     private void addBoardStatus(Map<String, Object> model, ChessGame chessGame) {
         BoardDto boardDto = new BoardDto(chessGame.getBoard());
         model.putAll(boardDto.getBoard());
+        model.put("message", "누가 이기나 보자구~!");
     }
 
     public Map<String, Object> addGameID(String gameID) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("gameID", gameID);
-        return model;
+        return Map.of("gameID", gameID);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
