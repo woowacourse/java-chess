@@ -13,8 +13,4 @@ public class BoardDto {
     public Map<String, List<String>> getBoard() {
         return board;
     }
-
-    public void setBoard(Map<String, List<String>> board) {
-        this.board = board;
-    }
 }

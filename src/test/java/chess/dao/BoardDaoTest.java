@@ -36,7 +36,7 @@ class BoardDaoTest {
     @Test
     void movePiece() {
         BoardDaoImpl boardDao = new BoardDaoImpl();
-        boardDao.movePiece(new CommandDto("a2 a3"));
+        boardDao.updatePiecePosition(new CommandDto("a2 a3"));
 
         BoardDto boardDto = boardDao.loadBoard();
         Map<String, List<String>> board = boardDto.getBoard();
@@ -47,6 +47,6 @@ class BoardDaoTest {
     @AfterAll
     static void afterAll() {
         BoardDaoImpl boardDao = new BoardDaoImpl();
-        boardDao.movePiece(new CommandDto("a3 a2"));
+        boardDao.updatePiecePosition(new CommandDto("a3 a2"));
     }
 }

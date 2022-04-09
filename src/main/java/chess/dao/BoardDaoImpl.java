@@ -32,7 +32,7 @@ public class BoardDaoImpl implements BoardDao{
         return new BoardDto(board);
     }
 
-    public void movePiece(CommandDto commandDto) {
+    public void updatePiecePosition(CommandDto commandDto) {
         String selectSql = "SELECT board.piece, board.color"
                 + " FROM board INNER JOIN game ON board.game_id = game.id WHERE game_id = '1' AND board.position = ?";
 

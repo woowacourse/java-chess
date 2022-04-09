@@ -19,12 +19,4 @@ public class GameDto {
     public String getTurn() {
         return turn;
     }
-
-    public void setBoard(Map<String, List<String>> board) {
-        this.board = board;
-    }
-
-    public void setTurn(String turn) {
-        this.turn = turn;
-    }
 }

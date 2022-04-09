@@ -14,7 +14,7 @@ public class ChessGame {
         this.state = new Ready();
     }
 
-    public void startsWith(State state) {
+    public void updateState(State state) {
         this.state = state;
     }
 

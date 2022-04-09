@@ -16,12 +16,4 @@ public class ScoreDto {
     public double getBlackScore() {
         return blackScore;
     }
-
-    public void setWhiteScore(double whiteScore) {
-        this.whiteScore = whiteScore;
-    }
-
-    public void setBlackScore(double blackScore) {
-        this.blackScore = blackScore;
-    }
 }

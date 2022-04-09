@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.dao.GameDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.running.RunningBlack;
@@ -37,10 +36,10 @@ public class ChessService {
         TurnDto turnDto = gameDao.getTurn();
 
         if (PieceColor.BLACK.name().equals(turnDto.getTurn())) {
-            chessGame.startsWith(new RunningBlack(convertBoardDtoToBoard(boardDto)));
+            chessGame.updateState(new RunningBlack(convertBoardDtoToBoard(boardDto)));
             return new GameDto(boardDto.getBoard(), turnDto.getTurn());
         }
-        chessGame.startsWith(new RunningWhite(convertBoardDtoToBoard(boardDto)));
+        chessGame.updateState(new RunningWhite(convertBoardDtoToBoard(boardDto)));
         return new GameDto(boardDto.getBoard(), turnDto.getTurn());
     }
 
@@ -62,7 +61,7 @@ public class ChessService {
         Position from = Position.from(commandDto.getFrom());
         Position to = Position.from(commandDto.getTo());
         chessGame.movePiece(from, to);
-        boardDao.movePiece(commandDto);
+        boardDao.updatePiecePosition(commandDto);
         gameDao.changeTurn();
     }
 
