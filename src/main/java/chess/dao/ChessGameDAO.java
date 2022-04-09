@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessGameDAO {
+public final class ChessGameDAO {
 
     public String addGame(final ChessGame chessGame) throws SQLException {
         String query = "INSERT INTO CHESS_GAME (name) VALUES (?)";
@@ -38,7 +38,7 @@ public class ChessGameDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 ChessGameRoomInfoDTO chessGameDTO = new ChessGameRoomInfoDTO(rs.getString("id"), rs.getString("name"));
                 chessGameDTOs.add(chessGameDTO);
             }
@@ -71,7 +71,7 @@ public class ChessGameDAO {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, gameId);
 
-        try (connection; statement){
+        try (connection; statement) {
             statement.executeUpdate();
         }
     }

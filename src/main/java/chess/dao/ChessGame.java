@@ -5,7 +5,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.position.Position;
 
-public class ChessGame {
+public final class ChessGame {
 
     private String id;
     private String name;
@@ -27,10 +27,6 @@ public class ChessGame {
 
     public void setName(final String name) {
         this.name = name;
-    }
-
-    public void setEnd(final boolean end) {
-        isEnd = end;
     }
 
     public String getId() {

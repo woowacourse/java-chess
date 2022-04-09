@@ -1,6 +1,6 @@
 package chess.dto;
 
-public class ChessGameRoomInfoDTO {
+public final class ChessGameRoomInfoDTO {
 
     private final String id;
     private final String name;

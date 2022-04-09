@@ -11,7 +11,7 @@ import spark.ModelAndView;
 import spark.TemplateEngine;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class Render {
+public final class Render {
 
     private static final TemplateEngine HANDLEBARS_RENDER = new HandlebarsTemplateEngine();
 

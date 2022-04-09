@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardDTO {
+public final class BoardDTO {
 
     private Map<String, Object> result = new HashMap<>();
 
