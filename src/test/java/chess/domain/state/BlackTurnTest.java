@@ -21,9 +21,9 @@ class BlackTurnTest {
 
         //when
         Piece piece = board.getPiece(Position.from(position));
-        String result = piece.getSymbol();
 
         // then
+        String result = piece.getSymbol();
         assertThat(result).isEqualTo(symbol);
     }
 
@@ -36,10 +36,10 @@ class BlackTurnTest {
 
         // when
         board.move(source, destination);
-        Piece piece = board.getPiece(Position.from(destination));
-        String result = piece.getSymbol();
 
         // then
+        Piece piece = board.getPiece(Position.from(destination));
+        String result = piece.getSymbol();
         assertThat(result).isEqualTo(symbol);
     }
 
@@ -74,9 +74,9 @@ class BlackTurnTest {
 
         // when
         GameState whiteTurn = board.move(source, destination);
-        Team result = whiteTurn.getTeam();
 
         // then
+        Team result = whiteTurn.getTeam();
         assertThat(result).isEqualTo(Team.WHITE);
     }
 }

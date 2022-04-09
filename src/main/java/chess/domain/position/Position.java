@@ -2,38 +2,17 @@ package chess.domain.position;
 
 import chess.domain.piece.Direction;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
-    private final static Map<String, Position> POSITIONS;
-    private final static int POSITION_TO_STRING_LENGTH = 2;
+    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private final static int POSITION_ROW_INDEX = 1;
+    private final static int POSITION_COLUMN_INDEX = 0;
 
     private final Column col;
     private final Row row;
-
-    static {
-        POSITIONS = createPositions().stream()
-                .collect(toMap(Position::getPositionToString, position -> position));
-    }
-
-    private static List<Position> createPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (Row row : Row.values()) {
-            createPosition(positions, row);
-        }
-        return positions;
-    }
-
-    private static void createPosition(List<Position> positions, Row row) {
-        for (Column col : Column.values()) {
-            positions.add(new Position(col, row));
-        }
-    }
 
     public String getPositionToString() {
         return col.getSymbol() + row.getSymbol();
@@ -41,21 +20,23 @@ public class Position {
 
     public static Position of(Column col, Row row) throws RuntimeException {
         String position = col.getSymbol() + row.getSymbol();
-        return POSITIONS.get(position);
+        return getPosition(position);
     }
 
     public static Position from(String position) throws RuntimeException {
-        validateLength(position);
+        return getPosition(position);
+    }
+
+    private static Position getPosition(String position) {
+        if (!POSITIONS.containsKey(position)) {
+            Column column = Column.find(position.charAt(POSITION_COLUMN_INDEX));
+            Row row = Row.find(position.charAt(POSITION_ROW_INDEX));
+            POSITIONS.put(position, new Position(column, row));
+        }
         return POSITIONS.get(position);
     }
 
-    private static void validateLength(String position) {
-        if (position.length() != POSITION_TO_STRING_LENGTH) {
-            throw new IllegalArgumentException("올바른 포지션 값이 아닙니다.");
-        }
-    }
-
-    private Position(Column col, Row row) {
+    Position(Column col, Row row) {
         this.col = col;
         this.row = row;
     }

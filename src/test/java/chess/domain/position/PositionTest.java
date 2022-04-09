@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
 
@@ -58,9 +57,9 @@ class PositionTest {
 
         // when
         Position result = position.plusDirection(direction);
-        Position expected = Position.from("b1");
 
         // then
+        Position expected = Position.from("b1");
         assertThat(result).isEqualTo(expected);
     }
 }

@@ -36,10 +36,10 @@ class WhiteTurnTest {
 
         // when
         board.move(source, destination);
-        Piece piece = board.getPiece(Position.from(destination));
-        String result = piece.getSymbol();
 
         // then
+        Piece piece = board.getPiece(Position.from(destination));
+        String result = piece.getSymbol();
         assertThat(result).isEqualTo(symbol);
     }
 

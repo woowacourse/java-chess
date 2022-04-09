@@ -58,9 +58,9 @@ class ColumnTest {
 
         // when
         Column result = column.plusColumn(1);
-        Column expected = Column.E;
 
         // then
+        Column expected = Column.E;
         assertThat(result).isEqualTo(expected);
     }
 }
