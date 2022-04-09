@@ -23,8 +23,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public Long save(GameDto gameDto) {
         final String sql = "INSERT INTO chess_game(game_state, game_turn) values (?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql, new String[]{"id"});
+        try (PreparedStatement statement = connection.prepareStatement(sql, new String[]{"id"})) {
             statement.setString(1, gameDto.getState());
             statement.setString(2, gameDto.getTurn());
             statement.execute();
@@ -43,8 +42,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public Game findGameById(Long id) {
         final String sql = "SELECT * from chess_game WHERE game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
 
             ResultSet rs = statement.executeQuery();
@@ -63,9 +61,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public Game findGameByMaxId() {
         final String sql = "SELECT * FROM chess_game WHERE game_id IN (SELECT MAX(game_id) FROM chess_game)";
-
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             final ResultSet rs = statement.executeQuery(sql);
             if (!rs.next()) {
                 return null;
@@ -82,8 +78,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void updateByGame(GameDto gameDto) {
         final String sql = "UPDATE chess_game SET game_state = ?, game_turn = ? WHERE game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, gameDto.getState());
             statement.setString(2, gameDto.getTurn());
             statement.setLong(3, gameDto.getId());

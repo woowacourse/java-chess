@@ -37,8 +37,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     private void savePiece(String sql, Long gameId, String position, PieceDto pieceDto) {
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, gameId);
             statement.setString(2, position);
             statement.setString(3, pieceDto.getType());
@@ -52,8 +51,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public List<Board> findBoardById(Long id) {
         final String sql = "SELECT * from chess_board WHERE game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
 
             ResultSet rs = statement.executeQuery();
@@ -76,8 +74,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void updateByPosition(Long gameId, String position, PieceDto pieceDto) {
         final String sql = "UPDATE chess_board SET board_piece = ?, board_color = ? WHERE game_id = ? AND board_position = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, pieceDto.getType());
             statement.setString(2, pieceDto.getColor());
             statement.setLong(3, gameId);
