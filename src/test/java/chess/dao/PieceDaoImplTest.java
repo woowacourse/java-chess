@@ -16,9 +16,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PieceDaoTest {
+class PieceDaoImplTest {
 
-    final PieceDao pieceDao = new PieceDao();
+    final PieceDaoImpl pieceDaoImpl = new PieceDaoImpl();
 
     @Test
     @DisplayName("위치에 따른 기물들을 받아 위치, 팀, 이름을 DB에 저장할 수 있다.")
@@ -29,9 +29,9 @@ class PieceDaoTest {
                 Position.from("a2"), new Knight(BLACK),
                 Position.from("a3"), new Rook(WHITE)
         );
-        pieceDao.saveAll(board);
+        pieceDaoImpl.saveAllPieces(board);
         //when
-        final Map<String, PieceDto> allPiecesByPosition = pieceDao.findAll();
+        final Map<String, PieceDto> allPiecesByPosition = pieceDaoImpl.findAllPieces();
         //then
         assertThat(allPiecesByPosition).contains(
                 entry("a1", new PieceDto("WHITE", "Pawn")),
@@ -43,10 +43,10 @@ class PieceDaoTest {
     @DisplayName("위치 값과 기물을 받아, 해당 위치 값 데이터를 기물 정보로 업데이트 시킨다.")
     void removeByPosition() {
         //given
-        pieceDao.saveAll(Map.of(Position.from("a2"), new Pawn(BLACK)));
-        pieceDao.removeByPosition("a2");
+        pieceDaoImpl.saveAllPieces(Map.of(Position.from("a2"), new Pawn(BLACK)));
+        pieceDaoImpl.removePieceByPosition("a2");
         //when
-        final Map<String, PieceDto> actual = pieceDao.findAll();
+        final Map<String, PieceDto> actual = pieceDaoImpl.findAllPieces();
         //then
         assertThat(actual).doesNotContain(entry("a2", new PieceDto("WHITE", "Knight")));
     }
@@ -56,41 +56,18 @@ class PieceDaoTest {
     void update() {
         //given
         final Piece piece = new Pawn(BLACK);
-        pieceDao.saveAll(Map.of(
+        pieceDaoImpl.saveAllPieces(Map.of(
                 Position.from("a2"), new Pawn(BLACK),
                 Position.from("a3"), new Knight(WHITE)));
-        pieceDao.updatePiece("a3", piece);
+        pieceDaoImpl.updatePiece("a3", piece);
         //when
-        final PieceDto actual = pieceDao.findAll().get("a3");
+        final PieceDto actual = pieceDaoImpl.findAllPieces().get("a3");
         //then
         assertThat(actual).isEqualTo(new PieceDto("BLACK", "Pawn"));
     }
 
-    @Test
-    @DisplayName("턴 정보를 DB에 저장한다.")
-    void saveTurn() {
-        //given
-        pieceDao.saveTurn("WHITE");
-        //when
-        final String actual = pieceDao.getTurn();
-        //then
-        assertThat(actual).isEqualTo("WHITE");
-    }
-
-    @Test
-    @DisplayName("게임 상태를 DB에 저장한다.")
-    void saveState() {
-        //given
-        pieceDao.saveState("playing");
-        //when
-        final String actual = pieceDao.getGameState();
-        //then
-        assertThat(actual).isEqualTo("playing");
-    }
-
     @AfterEach
-    void removeAll() {
-        pieceDao.removeGameState();
-        pieceDao.removeAllPieces();
+    void remove() {
+        pieceDaoImpl.removeAllPieces();
     }
 }
