@@ -1,7 +1,6 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.Member;
 import chess.model.Board;
@@ -10,21 +9,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MemberDaoTest {
+class ChessMemberDaoTest {
 
-    private final MemberDao dao = new MemberDao(new ConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ConnectionManager());
+    private final ChessMemberDao dao = new ChessMemberDao(new ConnectionManager());
+    private final ChessBoardDao chessBoardDao = new ChessBoardDao(new ConnectionManager());
     private int boardId;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("에덴파이팅~!"));
+        final Board board = chessBoardDao.save(new Board("에덴파이팅~!"));
         this.boardId = board.getId();
     }
 
     @AfterEach
     void setDown() {
-        boardDao.deleteAll();
+        chessBoardDao.deleteAll();
     }
 
     @Test

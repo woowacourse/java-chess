@@ -11,7 +11,7 @@ public enum PieceType {
     n(Knight::new),
     q(Queen::new),
     k(King::new),
-    empty(((id, color, squareId) -> new Empty(id, Color.EMPTY, squareId))),
+    empty(((id, color, squareId) -> new Empty(id, squareId))),
     ;
 
     private final PieceMapper function;

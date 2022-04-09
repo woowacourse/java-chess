@@ -16,14 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SquareDao {
+public class ChessSquareDao implements SquareDao<Square> {
 
     private final ConnectionManager connectionManager;
 
-    public SquareDao(ConnectionManager connectionManager) {
+    public ChessSquareDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    @Override
     public Square save(Square square) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "INSERT INTO square (square_file, square_rank, board_id) VALUES (?, ?, ?)";
@@ -41,6 +42,7 @@ public class SquareDao {
         });
     }
 
+    @Override
     public Square getBySquareAndBoardId(Square square, int boardId) {
         return connectionManager.executeQuery(connection -> {
             final ResultSet resultSet = findSquare(square.getFile(), square.getRank(), boardId, connection);
@@ -68,6 +70,7 @@ public class SquareDao {
         return resultSet;
     }
 
+    @Override
     public int saveAllSquare(int boardId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "INSERT INTO square (square_file, square_rank, board_id) VALUES (?, ?, ?)";
@@ -85,10 +88,12 @@ public class SquareDao {
         });
     }
 
+    @Override
     public int getSquareIdBySquare(Square square, int boardId) {
         return getBySquareAndBoardId(square, boardId).getId();
     }
 
+    @Override
     public Map<Square, Piece> findAllSquaresAndPieces(int boardId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT po.id AS po_id, po.square_file, po.square_rank, po.board_id, " +
@@ -122,6 +127,7 @@ public class SquareDao {
                 resultSet.getInt("board_id"));
     }
 
+    @Override
     public List<Square> getPaths(List<Square> squares, int roomId) {
         List<Square> realSquares = new ArrayList<>();
         for (Square square : squares) {

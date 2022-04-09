@@ -8,30 +8,28 @@ import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SquareDaoTest {
+class ChessSquareDaoTest {
 
-    private final SquareDao dao = new SquareDao(new ConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ConnectionManager());
+    private final ChessSquareDao dao = new ChessSquareDao(new ConnectionManager());
+    private final ChessBoardDao chessBoardDao = new ChessBoardDao(new ConnectionManager());
     private int boardId;
     private Square square;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("코린파이팅"));
+        final Board board = chessBoardDao.save(new Board("코린파이팅"));
         this.boardId = board.getId();
         this.square = dao.save(new Square(File.A, Rank.TWO, boardId));
     }
 
     @AfterEach
     void setDown() {
-        boardDao.deleteAll();
+        chessBoardDao.deleteAll();
     }
 
     @Test

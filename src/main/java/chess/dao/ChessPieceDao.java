@@ -10,14 +10,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceDao {
+public class ChessPieceDao implements PieceDao<Piece> {
 
     private final ConnectionManager connectionManager;
 
-    public PieceDao(ConnectionManager connectionManager) {
+    public ChessPieceDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    @Override
     public Piece save(Piece piece, int squareId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "INSERT INTO piece (type, color, square_id) VALUES(?, ?, ?)";
@@ -35,10 +36,11 @@ public class PieceDao {
                     piece.name(),
                     resultSet.getInt(1),
                     piece.color(),
-                    squareId);
+                    piece.getSquareId());
         });
     }
 
+    @Override
     public Piece findBySquareId(int squareId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT * FROM piece WHERE square_id=?";
@@ -56,6 +58,7 @@ public class PieceDao {
         });
     }
 
+    @Override
     public int updatePieceSquareId(int originSquareId, int newSquareId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "UPDATE piece SET square_id=? WHERE square_id=?";
@@ -67,6 +70,7 @@ public class PieceDao {
         });
     }
 
+    @Override
     public int deletePieceBySquareId(int squareId) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "DELETE FROM piece WHERE square_id=?";
@@ -77,6 +81,7 @@ public class PieceDao {
         });
     }
 
+    @Override
     public List<Piece> getAllPiecesByBoardId(int boardId) {
         return connectionManager.executeQuery(connection -> {
             final String sql =
@@ -100,12 +105,14 @@ public class PieceDao {
         });
     }
 
+    @Override
     public int countPawnsOnSameColumn(int roomId, File column, Color color) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT COUNT(*) AS total_count FROM piece pi " +
                     "JOIN square s ON pi.square_id = s.id " +
                     "WHERE s.square_file=? AND s.board_id=? AND pi.type='p' AND pi.color=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql,
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, column.value());
             preparedStatement.setInt(2, roomId);
             preparedStatement.setString(3, color.name());

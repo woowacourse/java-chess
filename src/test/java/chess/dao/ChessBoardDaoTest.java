@@ -2,16 +2,15 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.ChessService;
 import chess.model.Board;
 import chess.model.piece.Initializer;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-class BoardDaoTest {
+class ChessBoardDaoTest {
 
-    private final BoardDao dao = new BoardDao(new ConnectionManager());
+    private final ChessBoardDao dao = new ChessBoardDao(new ConnectionManager());
 
     @AfterEach
     void setDown() {
@@ -53,7 +52,7 @@ class BoardDaoTest {
 
     @Test
     void initBoard() {
-        final Board edenFightingBoard = new Board( "에덴파이팅");
+        final Board edenFightingBoard = new Board("에덴파이팅");
         Board board = dao.init(edenFightingBoard, Initializer.initialize());
 
         assertThat(board.getTitle()).isEqualTo("에덴파이팅");

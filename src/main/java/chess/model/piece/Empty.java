@@ -13,7 +13,7 @@ public class Empty extends Piece {
         super(Color.EMPTY);
     }
 
-    public Empty(int id, Color color, int squareId) {
+    public Empty(int id, int squareId) {
         super(id, Color.EMPTY, squareId);
     }
 

@@ -15,26 +15,26 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PieceDaoTest {
+class ChessPieceDaoTest {
 
-    private final PieceDao dao = new PieceDao(new ConnectionManager());
-    private final SquareDao squareDao = new SquareDao(new ConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ConnectionManager());
+    private final ChessPieceDao dao = new ChessPieceDao(new ConnectionManager());
+    private final ChessSquareDao chessSquareDao = new ChessSquareDao(new ConnectionManager());
+    private final ChessBoardDao chessBoardDao = new ChessBoardDao(new ConnectionManager());
     private int boardId;
     private int squareId;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("corinne"));
+        final Board board = chessBoardDao.save(new Board("corinne"));
         this.boardId = board.getId();
-        final Square square = squareDao.save(new Square(File.A, Rank.TWO, board.getId()));
+        final Square square = chessSquareDao.save(new Square(File.A, Rank.TWO, board.getId()));
         this.squareId = square.getId();
         dao.save(new Pawn(Color.WHITE), squareId);
     }
 
     @AfterEach
     void setDown() {
-        boardDao.deleteAll();
+        chessBoardDao.deleteAll();
     }
 
     @Test
@@ -68,7 +68,7 @@ class PieceDaoTest {
     @Test
     void updatePieceSquareId() {
         final int originSquareId = squareId;
-        final int newSquareId = squareDao.save(new Square(File.A, Rank.FOUR, boardId)).getId();
+        final int newSquareId = chessSquareDao.save(new Square(File.A, Rank.FOUR, boardId)).getId();
         int affectedRow = dao.updatePieceSquareId(originSquareId, newSquareId);
 
         assertThat(affectedRow).isEqualTo(1);

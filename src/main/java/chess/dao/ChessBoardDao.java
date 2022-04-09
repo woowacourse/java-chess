@@ -10,21 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardDao {
+public class ChessBoardDao implements BoardDao<Board> {
 
     private final ConnectionManager connectionManager;
 
-    public BoardDao(ConnectionManager connectionManager) {
+    public ChessBoardDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    @Override
     public Board save(Board board) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "INSERT INTO board (room_title) VALUES (?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, board.getTitle());
             preparedStatement.executeUpdate();
-            final MemberDao memberDao = new MemberDao(new ConnectionManager());
+            final ChessMemberDao chessMemberDao = new ChessMemberDao(new ConnectionManager());
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
                 throw new IllegalArgumentException("보드가 없습니다. 방 제목: " + board.getTitle());
@@ -32,10 +33,11 @@ public class BoardDao {
             return new Board(
                     generatedKeys.getInt(1),
                     board.getTitle(),
-                    memberDao.getAllByBoardId(generatedKeys.getInt(1)));
+                    chessMemberDao.getAllByBoardId(generatedKeys.getInt(1)));
         });
     }
 
+    @Override
     public int deleteAll() {
         return connectionManager.executeQuery(connection -> {
             String sql = "DELETE FROM board";
@@ -44,6 +46,7 @@ public class BoardDao {
         });
     }
 
+    @Override
     public int deleteById(int id) {
         return connectionManager.executeQuery(connection -> {
             String sql = "DELETE FROM board WHERE id=?";
@@ -53,54 +56,57 @@ public class BoardDao {
         });
     }
 
+    @Override
     public Board getById(int id) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT * FROM board WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            final MemberDao memberDao = new MemberDao(new ConnectionManager());
+            final ChessMemberDao chessMemberDao = new ChessMemberDao(new ConnectionManager());
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("그런 보드 없습니다. 방 id: " + id);
             }
             return new Board(
                     resultSet.getInt("id"),
                     resultSet.getString("room_title"),
-                    memberDao.getAllByBoardId(resultSet.getInt("id"))
+                    chessMemberDao.getAllByBoardId(resultSet.getInt("id"))
             );
         });
     }
 
+    @Override
     public List<Board> findAll() {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT * FROM board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            final MemberDao memberDao = new MemberDao(connectionManager);
+            final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
             List<Board> boards = new ArrayList<>();
             while (resultSet.next()) {
                 boards.add(new Board(
                         resultSet.getInt("id"),
                         resultSet.getString("room_title"),
-                        memberDao.getAllByBoardId(resultSet.getInt("id")))
+                        chessMemberDao.getAllByBoardId(resultSet.getInt("id")))
                 );
             }
             return boards;
         });
     }
 
+    @Override
     public Board init(Board board, Map<Square, Piece> startingPieces) {
         return connectionManager.executeQuery(connection -> {
             final Board savedBoard = save(board);
-            final SquareDao squareDao = new SquareDao(connectionManager);
-            final PieceDao pieceDao = new PieceDao(connectionManager);
-            final MemberDao memberDao = new MemberDao(connectionManager);
-            squareDao.saveAllSquare(savedBoard.getId());
+            final ChessSquareDao chessSquareDao = new ChessSquareDao(connectionManager);
+            final ChessPieceDao chessPieceDao = new ChessPieceDao(connectionManager);
+            final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
+            chessSquareDao.saveAllSquare(savedBoard.getId());
             for (Square square : startingPieces.keySet()) {
-                int squareId = squareDao.getSquareIdBySquare(square, savedBoard.getId());
-                pieceDao.save(startingPieces.get(square), squareId);
+                int squareId = chessSquareDao.getSquareIdBySquare(square, savedBoard.getId());
+                chessPieceDao.save(startingPieces.get(square), squareId);
             }
-            memberDao.saveAll(board.getMembers(), savedBoard.getId());
+            chessMemberDao.saveAll(board.getMembers(), savedBoard.getId());
             return savedBoard;
         });
     }

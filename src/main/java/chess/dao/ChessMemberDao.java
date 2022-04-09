@@ -7,14 +7,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDao {
+public class ChessMemberDao implements MemberDao<Member> {
 
     private final ConnectionManager connectionManager;
 
-    public MemberDao(ConnectionManager connectionManager) {
+    public ChessMemberDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    @Override
     public List<Member> getAllByBoardId(int boardId) {
         return connectionManager.executeQuery(connection -> {
             List<Member> members = new ArrayList<>();
@@ -33,6 +34,7 @@ public class MemberDao {
         });
     }
 
+    @Override
     public Member save(String name, int boardId) {
         return connectionManager.executeQuery(connection -> {
             String sql = "INSERT INTO member(name, board_id) VALUES(?, ?)";
@@ -48,6 +50,7 @@ public class MemberDao {
         });
     }
 
+    @Override
     public void saveAll(List<Member> members, int boardId) {
         for (Member member : members) {
             save(member.getName(), boardId);

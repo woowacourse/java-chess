@@ -6,12 +6,17 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.ChessController;
 import chess.dao.BoardDao;
+import chess.dao.ChessBoardDao;
 import chess.dao.ConnectionManager;
+import chess.dao.ChessPieceDao;
+import chess.dao.ChessSquareDao;
 import chess.dao.PieceDao;
 import chess.dao.SquareDao;
-import chess.dto.BoardsDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
+import chess.model.Board;
+import chess.model.piece.Piece;
+import chess.model.square.Square;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +31,10 @@ public class ChessApplication {
 
     static {
         ConnectionManager connectionManager = new ConnectionManager();
-        BoardDao boardDao = new BoardDao(connectionManager);
-        SquareDao squareDao = new SquareDao(connectionManager);
-        PieceDao pieceDao = new PieceDao(connectionManager);
-        ChessService chessService = new ChessService(boardDao, squareDao, pieceDao);
+        BoardDao<Board> chessBoardDao = new ChessBoardDao(connectionManager);
+        SquareDao<Square> chessSquareDao = new ChessSquareDao(connectionManager);
+        PieceDao<Piece> chessPieceDao = new ChessPieceDao(connectionManager);
+        ChessService chessService = new ChessService(chessBoardDao, chessSquareDao, chessPieceDao);
         chessController = new ChessController(chessService);
     }
 
@@ -62,8 +67,10 @@ public class ChessApplication {
 
         post("/room/:roomId/move", (req, res) -> {
             final String[] split = req.body().strip().split("=")[1].split(" ");
+            String source = split[0];
+            String target = split[1];
             final int roomId = Integer.parseInt(req.params(":roomId"));
-            ResponseDto response = chessController.move(roomId, split[1], split[2]);
+            ResponseDto response = chessController.move(roomId, source, target);
             return response.toString();
         });
 
