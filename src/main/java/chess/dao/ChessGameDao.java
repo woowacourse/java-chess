@@ -1,41 +1,36 @@
 package chess.dao;
 
 import chess.domain.game.Color;
-import chess.dto.ResponseDto;
+import chess.dto.ChessGameDto;
 
 import java.sql.*;
 import java.util.Objects;
 
 public class ChessGameDao {
-    public void saveGame(ResponseDto responseDto) throws SQLException {
+    public void saveGame(ChessGameDto responseDto) throws SQLException {
         Objects.requireNonNull(responseDto);
 
         Connection connection = getConnection();
-        String query = "INSERT INTO chessgame (turn, white_score, black_score) VALUES (?,?,?)";
+        String query = "INSERT INTO chessgame (turn) VALUES (?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         try (connection; pstmt) {
             pstmt.setString(1, responseDto.getTurn().name());
-            pstmt.setDouble(2, responseDto.getResult().getScoresOf(Color.WHITE));
-            pstmt.setDouble(3, responseDto.getResult().getScoresOf(Color.BLACK));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("CANNOT SAVE GAME INFO ERROR");
         }
     }
 
-    public void updateGame(ResponseDto responseDto) throws SQLException {
+    public void updateGame(ChessGameDto responseDto) throws SQLException {
         Objects.requireNonNull(responseDto);
 
         Connection connection = getConnection();
-        String query = "UPDATE chessgame " +
-                "SET turn = ?, white_score = ?, black_score = ?";
+        String query = "UPDATE chessgame " + "SET turn = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         try (connection; pstmt) {
             pstmt.setString(1, responseDto.getTurn().name());
-            pstmt.setDouble(2, responseDto.getResult().getScoresOf(Color.WHITE));
-            pstmt.setDouble(3, responseDto.getResult().getScoresOf(Color.BLACK));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("CANNOT UPDATE GAME INFO ERROR");
@@ -98,16 +93,5 @@ public class ChessGameDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    // 드라이버 연결해제
-    public void close(Connection con) {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 }
