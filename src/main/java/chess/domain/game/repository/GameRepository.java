@@ -3,6 +3,7 @@ package chess.domain.game.repository;
 import java.util.List;
 import java.util.Map;
 
+import chess.dao.connect.JdbcTemplate;
 import chess.dao.dto.GameDto;
 import chess.dao.dto.GameUpdateDto;
 import chess.dao.mysql.GameDao;
@@ -16,6 +17,10 @@ public class GameRepository {
 
     private final PlayerRepository playerRepository;
     private final GameDao gameDao;
+
+    public GameRepository(final PlayerRepository playerRepository, final JdbcTemplate jdbcTemplate) {
+        this(playerRepository, new GameDao(jdbcTemplate));
+    }
 
     public GameRepository(final PlayerRepository playerRepository, final GameDao gameDao) {
         this.playerRepository = playerRepository;

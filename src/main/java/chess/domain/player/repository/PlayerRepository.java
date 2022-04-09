@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import chess.dao.connect.JdbcTemplate;
 import chess.dao.dto.PlayerDto;
 import chess.dao.mysql.PlayerDao;
 import chess.domain.Color;
@@ -19,6 +20,10 @@ import chess.domain.player.Players;
 public class PlayerRepository {
 
     private final PlayerDao playerDao;
+
+    public PlayerRepository(final JdbcTemplate jdbcTemplate) {
+        this(new PlayerDao(jdbcTemplate));
+    }
 
     public PlayerRepository(final PlayerDao playerDao) {
         this.playerDao = playerDao;
