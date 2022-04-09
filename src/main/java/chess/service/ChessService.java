@@ -70,6 +70,6 @@ public class ChessService {
     }
 
     public ScoreDto getScore() {
-        return chessGame.getScore();
+        return new ScoreDto(chessGame.getScore());
     }
 }

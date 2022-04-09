@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.game.state.beforerunning.Ready;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
-import chess.dto.ScoreDto;
+import java.util.List;
 
 public class ChessGame {
 
@@ -38,7 +38,7 @@ public class ChessGame {
         return state.isEnd();
     }
 
-    public ScoreDto getScore() {
-        return new ScoreDto(state.calculateWhiteScore(), state.calculateBlackScore());
+    public List<Double> getScore() {
+        return List.of(state.calculateWhiteScore(), state.calculateBlackScore());
     }
 }
