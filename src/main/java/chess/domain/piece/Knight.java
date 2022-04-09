@@ -30,3 +30,4 @@ public class Knight extends Piece {
         return POSSIBLE_DIRECTIONS;
     }
 }
+

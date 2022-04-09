@@ -76,8 +76,8 @@ public abstract class Piece {
         return target.calculateColumnDifference(current);
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+    public String getPieceSymbol() {
+        return pieceType.getSymbol();
     }
 
     public Color getColor() {
@@ -99,3 +99,4 @@ public abstract class Piece {
     }
 
 }
+

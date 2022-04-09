@@ -26,3 +26,4 @@ public class Bishop extends Piece {
         return POSSIBLE_DIRECTIONS;
     }
 }
+

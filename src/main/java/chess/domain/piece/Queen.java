@@ -30,3 +30,4 @@ public class Queen extends Piece {
         return POSSIBLE_DIRECTIONS;
     }
 }
+

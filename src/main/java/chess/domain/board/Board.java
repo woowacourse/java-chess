@@ -24,11 +24,11 @@ public class Board {
     private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
-    private GameState gameState;
+    private final GameState gameState;
 
-    public Board(final Map<Position, Piece> pieces) {
+    public Board(final Map<Position, Piece> pieces, final GameState gameState) {
         this.pieces = pieces;
-        gameState = GameState.READY;
+        this.gameState = gameState;
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
@@ -125,7 +125,6 @@ public class Board {
                 .count();
     }
 
-
     private boolean isPawnWith(final Piece piece, final Color color) {
         return piece.isSamePiece(PAWN) && piece.isSameColor(color);
     }
@@ -160,10 +159,6 @@ public class Board {
                 .count();
     }
 
-    public boolean isEnd() {
-        return gameState == GameState.END;
-    }
-
     public boolean isReady() {
         return gameState == GameState.READY;
     }
@@ -172,16 +167,8 @@ public class Board {
         return gameState.isRunning();
     }
 
-    public void startFirstTurn() {
-        gameState = GameState.WHITE_RUNNING;
-    }
-
-    public void changeTurn() {
-        gameState = gameState.getOpposite();
-    }
-
-    public void terminateGame() {
-        gameState = GameState.END;
+    public GameState changeTurn() {
+        return gameState.getOpposite();
     }
 
     public Color getCurrentColor() {
@@ -189,6 +176,10 @@ public class Board {
             return Color.BLACK;
         }
         return Color.WHITE;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     public Map<Position, Piece> getPieces() {

@@ -1,25 +1,62 @@
 package chess;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.board.strategy.CreateCompleteBoardStrategy;
-import chess.domain.piece.Piece;
+import static spark.Spark.exception;
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.get;
+import static spark.Spark.path;
+import static spark.Spark.port;
+import static spark.Spark.put;
+import static spark.Spark.staticFileLocation;
+
+import chess.service.WebChessService;
+import chess.util.path.Web;
+import com.google.gson.Gson;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WebApplication {
 
-    public static void main(String[] args) {
-        // get("/", (req, res) -> {
-        //     Map<String, Object> model = new HashMap<>();
-        //     return render(model, "index.html");
-        // });
+    public static String STATUS = "dev";
 
-        final Map<Position, Piece> pieces = (new CreateCompleteBoardStrategy()).createPieces();
-        Chess chess = new Chess();
-        chess.run(new Board(pieces));
+    public static void main(String[] args) {
+        port(8080);
+
+        if (STATUS.equals("dev")) {
+            String projectDirectory = System.getProperty("user.dir");
+            String staticDirectory = "/src/main/resources/static";
+            externalStaticFileLocation(projectDirectory + staticDirectory);
+        } else {
+            staticFileLocation("/static");
+        }
+
+        get(Web.MAIN_PAGE, WebChessService.renderMainPage);
+
+        get(Web.USER_HISTORY, WebChessService.findUserHistory);
+
+        path(Web.COMMAND_ACTION, () -> {
+            put(Web.START, WebChessService.startCommand);
+            put(Web.STATUS, WebChessService.statusCommand);
+            put(Web.MOVE, WebChessService.moveCommand);
+            put(Web.END, WebChessService.endCommand);
+        });
+
+        exception(IllegalArgumentException.class, (exception, request, response) -> {
+            final Map<String, String> error = new HashMap<>();
+            final Gson gson = new Gson();
+            error.put("error_message", exception.getMessage());
+            response.status(400);
+            response.body(gson.toJson(error));
+        });
+
+        exception(Exception.class, (exception, request, response) -> {
+            final Map<String, String> error = new HashMap<>();
+            final Gson gson = new Gson();
+            error.put("error_message", "현재 실행할 수 없는 명령입니다.");
+            response.status(400);
+            response.body(gson.toJson(error));
+        });
+
     }
 
-    // private static String render(Map<String, Object> model, String templatePath) {
-    //     return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    // }
 }
+

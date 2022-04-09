@@ -1,0 +1,14 @@
+GET http://localhost:8080/game/board-status
+
+###
+GET http://localhost:8080/game/command/start
+
+###
+GET http://localhost:8080/user/name/test
+
+###
+GET http://localhost:8080/game/command/move?start=a1&end=a3
+
+###
+GET http://localhost:8080/game/command/status
+Cookie: user-id=62;

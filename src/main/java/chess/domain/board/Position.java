@@ -63,3 +63,4 @@ public class Position {
         return Objects.hash(row, column);
     }
 }
+

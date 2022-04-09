@@ -1,10 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="/style/index.css">
+  <title>chess</title>
 </head>
 <body>
-Hello World!!
+<main id="main">
+  <section id="main__game">
+    <table id="game__chess-table">
+      <tr>
+        <td class="chess-table__space wood-color-space" id="A8"></td>
+        <td class="chess-table__space black-color-space" id="B8"></td>
+        <td class="chess-table__space wood-color-space" id="C8"></td>
+        <td class="chess-table__space black-color-space" id="D8"></td>
+        <td class="chess-table__space wood-color-space" id="E8"></td>
+        <td class="chess-table__space black-color-space" id="F8"></td>
+        <td class="chess-table__space wood-color-space" id="G8"></td>
+        <td class="chess-table__space black-color-space" id="H8"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="A7"></td>
+        <td class="chess-table__space wood-color-space" id="B7"></td>
+        <td class="chess-table__space black-color-space" id="C7"></td>
+        <td class="chess-table__space wood-color-space" id="D7"></td>
+        <td class="chess-table__space black-color-space" id="E7"></td>
+        <td class="chess-table__space wood-color-space" id="F7"></td>
+        <td class="chess-table__space black-color-space" id="G7"></td>
+        <td class="chess-table__space wood-color-space" id="H7"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="A6"></td>
+        <td class="chess-table__space black-color-space" id="B6"></td>
+        <td class="chess-table__space wood-color-space" id="C6"></td>
+        <td class="chess-table__space black-color-space" id="D6"></td>
+        <td class="chess-table__space wood-color-space" id="E6"></td>
+        <td class="chess-table__space black-color-space" id="F6"></td>
+        <td class="chess-table__space wood-color-space" id="G6"></td>
+        <td class="chess-table__space black-color-space" id="H6"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="A5"></td>
+        <td class="chess-table__space wood-color-space" id="B5"></td>
+        <td class="chess-table__space black-color-space" id="C5"></td>
+        <td class="chess-table__space wood-color-space" id="D5"></td>
+        <td class="chess-table__space black-color-space" id="E5"></td>
+        <td class="chess-table__space wood-color-space" id="F5"></td>
+        <td class="chess-table__space black-color-space" id="G5"></td>
+        <td class="chess-table__space wood-color-space" id="H5"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="A4"></td>
+        <td class="chess-table__space black-color-space" id="B4"></td>
+        <td class="chess-table__space wood-color-space" id="C4"></td>
+        <td class="chess-table__space black-color-space" id="D4"></td>
+        <td class="chess-table__space wood-color-space" id="E4"></td>
+        <td class="chess-table__space black-color-space" id="F4"></td>
+        <td class="chess-table__space wood-color-space" id="G4"></td>
+        <td class="chess-table__space black-color-space" id="H4"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="A3"></td>
+        <td class="chess-table__space wood-color-space" id="B3"></td>
+        <td class="chess-table__space black-color-space" id="C3"></td>
+        <td class="chess-table__space wood-color-space" id="D3"></td>
+        <td class="chess-table__space black-color-space" id="E3"></td>
+        <td class="chess-table__space wood-color-space" id="F3"></td>
+        <td class="chess-table__space black-color-space" id="G3"></td>
+        <td class="chess-table__space wood-color-space" id="H3"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space wood-color-space" id="A2"></td>
+        <td class="chess-table__space black-color-space" id="B2"></td>
+        <td class="chess-table__space wood-color-space" id="C2"></td>
+        <td class="chess-table__space black-color-space" id="D2"></td>
+        <td class="chess-table__space wood-color-space" id="E2"></td>
+        <td class="chess-table__space black-color-space" id="F2"></td>
+        <td class="chess-table__space wood-color-space" id="G2"></td>
+        <td class="chess-table__space black-color-space" id="H2"></td>
+      </tr>
+      <tr>
+        <td class="chess-table__space black-color-space" id="A1"></td>
+        <td class="chess-table__space wood-color-space" id="B1"></td>
+        <td class="chess-table__space black-color-space" id="C1"></td>
+        <td class="chess-table__space wood-color-space" id="D1"></td>
+        <td class="chess-table__space black-color-space" id="E1"></td>
+        <td class="chess-table__space wood-color-space" id="F1"></td>
+        <td class="chess-table__space black-color-space" id="G1"></td>
+        <td class="chess-table__space wood-color-space" id="H1"></td>
+      </tr>
+    </table>
+  </section>
+  <section id="game-information">
+    <div class="team" id="game-information__black-team">
+      <img class="team__pawn" src="/images/pieces/black/black-pawn.svg" alt="black pawn">
+      <p class="team__user-name">YOU(2)</p>
+    </div>
+    <div id="command-button">
+      <button class="command" id="command-button__start" name="start">start</button>
+      <button class="command" id="command-button__status" name="status">status</button>
+      <button class="command" id="command-button__end" name="end">end</button>
+    </div>
+    <div class="team" id="game-information__white-team">
+      <img class="team__pawn" src="/images/pieces/white/white-pawn.svg" alt="white pawn">
+      <p class="team__user-name">YOU</p>
+    </div>
+  </section>
+  <script src="/script/util.js" type="module"></script>
+  <script src="/script/request.js" type="module"></script>
+  <script src="/script/command-button.js" type="module"></script>
+  <script src="/script/index.js" type="module"></script>
+</main>
 </body>
 </html>

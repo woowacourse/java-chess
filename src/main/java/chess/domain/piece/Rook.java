@@ -26,3 +26,4 @@ public class Rook extends Piece {
         return POSSIBLE_DIRECTIONS;
     }
 }
+

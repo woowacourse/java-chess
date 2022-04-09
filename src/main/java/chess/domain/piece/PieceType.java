@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum PieceType {
     QUEEN("q", 9),
     ROOK("r", 5),
@@ -15,6 +17,13 @@ public enum PieceType {
     PieceType(final String symbol, final double score) {
         this.symbol = symbol;
         this.score = score;
+    }
+
+    public static PieceType of(final String symbol) {
+        return Arrays.stream(values())
+                .filter(pieceType -> pieceType.symbol.equals(symbol))
+                .findFirst()
+                .orElse(NONE);
     }
 
     public double calculateScore(final int count) {
