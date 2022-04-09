@@ -1,5 +1,8 @@
 package chess.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
 
 public class TurnDaoTest {
@@ -8,13 +11,6 @@ public class TurnDaoTest {
     void saveTurn() {
         final TurnDao turnDao = new TurnDao();
         turnDao.saveTurn("black");
-    }
-
-
-    @Test
-    void getTurn() {
-        final TurnDao turnDao = new TurnDao();
-        turnDao.getTurnTeam();
-        System.out.println(turnDao.getTurnTeam());
+        assertThat(turnDao.getTurnTeam()).isEqualTo(Team.BLACK);
     }
 }
