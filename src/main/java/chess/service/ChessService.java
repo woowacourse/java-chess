@@ -28,7 +28,7 @@ public class ChessService {
                 .stream()
                 .map(i -> new PieceDto(i.getKey(), i.getValue()))
                 .collect(Collectors.toUnmodifiableList());
-        return new BoardDto(pieces, gameState.getTeam().getValue());
+        return new BoardDto(pieces, gameState.getTeam());
     }
 
     private GameState getGameState(int roomId) {
@@ -40,7 +40,7 @@ public class ChessService {
     }
 
     private WhiteTurn createGameState(int roomId) {
-        roomDao.save(roomId, "White");
+        roomDao.save(roomId, Team.WHITE);
         Map<Position, Piece> board = BoardInitialize.create();
         boardDao.saveAll(board);
         return new WhiteTurn(board);
@@ -68,7 +68,7 @@ public class ChessService {
         updateMove(roomId, source, destination);
 
         Team team = gameState.getTeam();
-        return new GameStateDto(team.getValue(), gameState.isRunning());
+        return new GameStateDto(team, gameState.isRunning());
     }
 
     private void updateMove(int roomId, String source, String destination) {
@@ -83,7 +83,7 @@ public class ChessService {
             deleteAll(roomId);
             return;
         }
-        roomDao.updateStatus(gameState.getTeam().getValue(), roomId);
+        roomDao.updateStatus(gameState.getTeam(), roomId);
     }
 
     public ScoreDto getStatus() {
@@ -99,7 +99,7 @@ public class ChessService {
                 .stream()
                 .map(i -> new PieceDto(i.getKey(), i.getValue()))
                 .collect(Collectors.toUnmodifiableList());
-        return new BoardDto(pieces, gameState.getTeam().getValue());
+        return new BoardDto(pieces, gameState.getTeam());
     }
 
     private Map<String, String> getBoardPieces() {
@@ -122,6 +122,6 @@ public class ChessService {
         deleteAll(roomId);
         Score score = new Score(gameState.getBoard());
         Team winningTeam = score.getWinningTeam();
-        return new GameStateDto(winningTeam.getValue(), gameState.isRunning());
+        return new GameStateDto(winningTeam, gameState.isRunning());
     }
 }

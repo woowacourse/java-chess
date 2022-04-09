@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RoomDao {
     final Connection connection = DBConnection.getConnection();
@@ -17,7 +15,6 @@ public class RoomDao {
     public RoomDto findById(int roomId) {
         final String sql = "select * from room  where id = ?";
         try {
-            Map<String, String> model = new HashMap<>();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, roomId);
             ResultSet resultSet = statement.executeQuery();
@@ -25,7 +22,7 @@ public class RoomDao {
                 return null;
             }
             Long id = resultSet.getLong("id");
-            Team status = Team.find(resultSet.getString("status"));
+            Team status = Team.valueOf(resultSet.getString("status"));
             return new RoomDto(id, status);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,25 +41,25 @@ public class RoomDao {
         }
     }
 
-    public void save(int roomId, String team) {
+    public void save(int roomId, Team team) {
         final String sql = "insert into room (id, status) values(?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, roomId);
-            statement.setString(2, team);
+            statement.setString(2, team.name());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateStatus(String team, int roomId) {
+    public void updateStatus(Team team, int roomId) {
         final String sql = "update room set status = ? where id = ?";
         try {
-            PreparedStatement statement1 = connection.prepareStatement(sql);
-            statement1.setString(1, team);
-            statement1.setInt(2, roomId);
-            statement1.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, team.toString());
+            statement.setInt(2, roomId);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
