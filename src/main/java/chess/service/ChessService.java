@@ -43,7 +43,7 @@ public class ChessService {
         return new GameDto(boardDto.getBoard(), turnDto.getTurn());
     }
 
-    public Board convertBoardDtoToBoard(BoardDto boardDto) {
+    private Board convertBoardDtoToBoard(BoardDto boardDto) {
         Map<String, List<String>> rawBoard = boardDto.getBoard();
         Map<Position, AbstractPiece> board = new HashMap<>();
         for (String key : rawBoard.keySet()) {
