@@ -1,12 +1,11 @@
-package chess.domain.board.boardGenerator;
+package chess.domain.board.strategy;
 
-import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestBoardStrategy implements BoardGenerationStrategy {
+public class CustomBoardStrategy implements BoardGenerationStrategy {
 
     private final Map<Position, Piece> board = new HashMap<>();
 
@@ -15,7 +14,7 @@ public class TestBoardStrategy implements BoardGenerationStrategy {
         return Map.copyOf(board);
     }
 
-    public void put(Position position, Piece piece) {
-        board.put(position, piece);
+    public void put(Map<Position, Piece> data) {
+        board.putAll(data);
     }
 }

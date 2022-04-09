@@ -24,7 +24,7 @@ public class PawnTest {
         Bishop toPiece = new Bishop(Team.BLACK);
 
         // then
-        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, null));
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, new Blank()));
     }
 
     @DisplayName("흰색 팀일 때 대각선 이동 가능 확인")
@@ -83,7 +83,7 @@ public class PawnTest {
         Pawn pawn = new BlackPawn();
 
         // then
-        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, null));
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, new Blank()));
     }
 
     @DisplayName("검은 팀일 때 대각선 이동 가능 확인")
@@ -116,7 +116,7 @@ public class PawnTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"P"})
+    @CsvSource(value = {"pawn"})
     void name(String expect) {
         // given
         Pawn pawn = new BlackPawn();

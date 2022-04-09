@@ -72,16 +72,16 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isBlank() {
+        return false;
+    }
+
     public boolean isOneStep() {
         return true;
     }
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "name='" + name + '\'' +
-                ", score=" + getScore() +
-                ", team=" + team +
-                '}';
+        return team.toString() + "_" + name;
     }
 }

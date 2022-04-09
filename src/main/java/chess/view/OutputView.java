@@ -9,6 +9,7 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -50,10 +51,11 @@ public class OutputView {
     }
 
     private static String changeCaseSensitive(Piece piece) {
+        String name = piece.getName().substring(0, 1);
         if (piece.isSameTeam(BLACK)) {
-            return piece.getName();
+            return name.toUpperCase(Locale.ROOT);
         }
-        return piece.getName().toLowerCase();
+        return name;
     }
 
     public static void printStatus(Result result) {

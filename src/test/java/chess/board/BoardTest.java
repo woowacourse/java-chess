@@ -1,8 +1,9 @@
-package chess.domain.board;
+package chess.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+import chess.domain.board.strategy.BasicBoardStrategy;
+import chess.domain.board.Board;
 import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;

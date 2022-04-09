@@ -1,7 +1,8 @@
-package chess.domain.board;
+package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Result;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Knight;

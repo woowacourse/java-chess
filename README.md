@@ -66,8 +66,8 @@
         - [x] 도착 위치에 있던 말 대신, `이동한 말을 위치시킨다.`
     - [x] `Pawn`
         - [x] 첫수
-          - [x] 스타트 지점에서 1칸 또는 2칸 이동이 가능하다.
-          - [x] [예외] 이동 경로에 다른 말이 있다면 예외를 던진다.
+            - [x] 스타트 지점에서 1칸 또는 2칸 이동이 가능하다.
+            - [x] [예외] 이동 경로에 다른 말이 있다면 예외를 던진다.
         - [x] 현재 위치 -> 도착위치의 이동 경로를 구한다.(ex 위, 왼, 위, 왼)
         - [x] [예외] 말의 규칙과 경로가 일치하는지 확인한다.
         - [x] 앞으로 전진
@@ -87,13 +87,51 @@
 
 - [x] status 명령어 입력 시 점수를 계산한다.
 - [x] 각 기물의 점수는 팀별로 계산
-  - [x] `King`: 0, `Queen`: 9, `Rook`: 5, `Bishop`: 3, `Knight`: 2.5, `Pawn`: 1으로 계산한다.
-  - [x] 단, 같은 세로줄에 같은 팀의 `Pawn`이 존재하면 0.5로 계산한다.
+    - [x] `King`: 0, `Queen`: 9, `Rook`: 5, `Bishop`: 3, `Knight`: 2.5, `Pawn`: 1으로 계산한다.
+    - [x] 단, 같은 세로줄에 같은 팀의 `Pawn`이 존재하면 0.5로 계산한다.
 - [x] `King`이 checkmate 이면 게임을 종료해야 한다.
-  - [x] check: 다음 턴에 킹을 잡을 수 있음
-  - [x] checkmate: 체크에서 벗어날 수 없는 상황
+    - [x] check: 다음 턴에 킹을 잡을 수 있음
+    - [x] checkmate: 체크에서 벗어날 수 없는 상황
+
+## 4단계 web + server 구현
+
+- [x] get start 구현
+- [x] post move 구현
+- [x] get status 구현
+- [x] get end 구현
+- [x] 예외 발생 시 alter 로 보여주기
+
+## 5단계 docker - mysql
+
+- [x] db 설계하기 board, turn
+- [x] table 구현 board, turn
+- [x] dao 구현
+    - [x] `board` 전체 조회
+    - [x] `board` 업데이트
+    - [x] `board` 초기화
+    - [x] `turn` 조회
+    - [x] `turn` 업데이트
+    - [x] `turn` 리셋
+    - [x] `gameStatus` 조회
+    - [x] `gameStatus` 업데이트
+    - [x] `gameStatus` 리셋
+- [x] dao 테스트
+- [x] 전체 동작 확인
 
 ## 페어 프로그래밍 룰
 
 - 타이머는 10분으로 한다.
 - 쉬는 시간은 1시간 30분 마다 10분씩 가진다.
+
+## WebApplication 작동 방법 설명
+
+웹 어플리케인션은 도커와 , mysql 을 사용하여 작동합니다.
+
+- `첫번째로` [docker 를 실행시켜 주세요.](https://www.docker.com/products/docker-desktop/)
+- `두번째로` IDE - terminal or 로컬 terminal 에서  `cd docker` 로 들어와 주세요.
+- `세번째로` docker exec -it chess-db-1 bash 명령어로 도커의 체스를 시작 시켜주세요.
+- `네번째로`  mysql -u root -proot 아이디와 비밀번호를 입력해주세요.
+- `그 이후로 ` docker/db/mysql/init/init.sql 에 있는 `sql 문을 복사해서 터미널에서 실행시켜주세요.`
+
+그럼 준비 완료 입니다 !!
+

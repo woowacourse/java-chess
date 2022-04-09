@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessGame;
-import chess.domain.board.BasicBoardStrategy;
+import chess.domain.board.strategy.BasicBoardStrategy;
 
-import chess.domain.board.boardGenerator.CheckmateBoardStrategy;
-import chess.domain.board.boardGenerator.NotCheckmateBoardStrategy;
-import chess.domain.board.boardGenerator.TestBoardStrategy;
-import chess.domain.board.boardGenerator.WhiteCheckBoardStrategy;
+import chess.board.boardGenerator.CheckmateBoardStrategy;
+import chess.board.boardGenerator.NotCheckmateBoardStrategy;
+import chess.board.boardGenerator.TestBoardStrategy;
+import chess.board.boardGenerator.WhiteCheckBoardStrategy;
 import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Team;
@@ -134,17 +134,6 @@ class ChessGameTest {
 
         // then
         assertThat(game.isCheckmate()).isFalse();
-    }
-
-    @DisplayName("체크인 상황에서 벗어나지 않을 경우")
-    @Test
-    void valid_black_check_move() {
-        // given
-        game.startGame(new WhiteCheckBoardStrategy());
-
-        // then
-        assertThatThrownBy(() -> game.move(new Position("a8"), new Position("a7")))
-                .hasMessage("체크 상황을 벗어나야 합니다.");
     }
 
     @DisplayName("체크인 상황에서 벗어남")

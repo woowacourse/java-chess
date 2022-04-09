@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public abstract class Pawn extends Piece {
 
-    private static final String name = "P";
+    private static final String name = "pawn";
     private static final float score = 1.0f;
 
     public Pawn(Team team, List<Direction> directions) {
@@ -30,7 +30,7 @@ public abstract class Pawn extends Piece {
     abstract void checkValidFirstMove(Position from, Direction direction);
 
     private void checkStraightCondition(Piece to, Direction direction) {
-        if ((direction == NORTH || direction == SOUTH) && Objects.nonNull(to)) {
+        if ((direction == NORTH || direction == SOUTH) && !to.isBlank()) {
             throw new IllegalArgumentException("직진은 도착 지점에 말이 없을 때만 가능합니다.");
         }
     }

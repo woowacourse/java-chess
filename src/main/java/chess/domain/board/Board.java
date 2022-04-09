@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.strategy.BoardGenerationStrategy;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -16,6 +17,10 @@ public class Board {
 
     public void initBoard(BoardGenerationStrategy boardGenerator) {
         board.putAll(boardGenerator.create());
+    }
+
+    public void removeBoard() {
+        board.clear();
     }
 
     public void validatePath(Position from, Position to, Direction direction) {
@@ -65,4 +70,12 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }
+
+
+    public Map<String, String> toMap() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), m -> m.getValue().toString()));
+    }
 }
+

@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.strategy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.BlackPawn;
