@@ -2,13 +2,7 @@ package chess.controller;
 
 import chess.dao.GameDaoImpl;
 import chess.dao.PieceDaoImpl;
-import chess.domain.ChessGame;
 import chess.domain.command.MoveCommand;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceFactory;
-import chess.domain.position.Position;
-import chess.dto.PieceDto;
 import chess.serviece.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -16,9 +10,7 @@ import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -28,9 +20,11 @@ public class ChessController {
     private static final String VIEW_NAME = "index.html";
 
     private final ChessService chessService;
+    private final HandlebarsTemplateEngine templateEngine;
 
     public ChessController() {
         this.chessService = new ChessService(new PieceDaoImpl(), new GameDaoImpl());
+        this.templateEngine = new HandlebarsTemplateEngine();
     }
 
     public void run() {
@@ -57,7 +51,7 @@ public class ChessController {
     }
 
     private String render(Map<String, Object> model) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, VIEW_NAME));
+        return templateEngine.render(new ModelAndView(model, VIEW_NAME));
     }
 
     private MoveCommand parseToMoveCommand(Request request) {
