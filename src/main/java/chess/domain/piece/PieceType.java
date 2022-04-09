@@ -34,6 +34,10 @@ public enum PieceType {
         return name;
     }
 
+    public double getScore() {
+        return score;
+    }
+
     public BiFunction<Color, Position, Piece> getConstructor() {
         return constructor;
     }

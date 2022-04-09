@@ -7,9 +7,7 @@ import java.util.Objects;
 
 public class King extends Piece {
 
-    private static final String NAME = "king";
-
-    private static final double SCORE = 0;
+    private static final PieceType PIECE_TYPE = PieceType.KING;
 
     private static final int MAX_MOVE_DIFFERENCE = 1;
 
@@ -60,12 +58,12 @@ public class King extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return PIECE_TYPE.getScore();
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return PIECE_TYPE.getName();
     }
 
     @Override

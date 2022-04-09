@@ -7,9 +7,7 @@ import java.util.Objects;
 
 public class Bishop extends Piece {
 
-    private static final String NAME = "bishop";
-
-    private static final double SCORE = 3;
+    private static final PieceType PIECE_TYPE = PieceType.BISHOP;
 
     public Bishop(Color color, Position position) {
         super(color, position);
@@ -56,12 +54,12 @@ public class Bishop extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return PIECE_TYPE.getScore();
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return PIECE_TYPE.getName();
     }
 
     @Override

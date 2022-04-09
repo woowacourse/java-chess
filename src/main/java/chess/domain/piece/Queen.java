@@ -7,9 +7,7 @@ import java.util.Objects;
 
 public class Queen extends Piece {
 
-    private static final String NAME = "queen";
-
-    private static final double SCORE = 9;
+    private static final PieceType PIECE_TYPE = PieceType.QUEEN;
 
     public Queen(Color color, Position position) {
         super(color, position);
@@ -57,12 +55,12 @@ public class Queen extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return PIECE_TYPE.getScore();
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return PIECE_TYPE.getName();
     }
 
     @Override
