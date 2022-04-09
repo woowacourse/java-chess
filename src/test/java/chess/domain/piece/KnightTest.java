@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Stack;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
@@ -40,14 +37,4 @@ class KnightTest {
 
     }
 
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute() {
-        // given
-        ChessPiece knight = new Knight(Color.BLACK);
-        // when
-        Stack<Position> actual = knight.findRoute(initialPosition, new Position("b6"));
-        // then
-        assertThat(actual).isEmpty();
-    }
 }

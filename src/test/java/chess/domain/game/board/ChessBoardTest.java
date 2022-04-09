@@ -1,7 +1,6 @@
-package chess.domain;
+package chess.domain.game.board;
 
 import chess.domain.game.Color;
-import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static chess.domain.game.board.ChessBoardFactory.initBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -24,7 +22,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void set() {
-        chessBoard = new ChessBoard(initBoard());
+        chessBoard = ChessBoardFactory.initBoard();
     }
 
     @Test
@@ -36,7 +34,7 @@ class ChessBoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
+    @CsvSource(value = {"a7:P", "a8:R"}, delimiter = ':')
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     void findPiece(String position, String expected) {
         Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
@@ -113,7 +111,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("자신의 순서가 아니면 예외를 발생시킵니다..")
+    @DisplayName("자신의 순서가 아니면 예외를 발생시킵니다.")
     void chessBoard_turn() {
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))

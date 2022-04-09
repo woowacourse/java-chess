@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ChessGame!</title>
+    <link href="/src/game.css" rel="stylesheet"/>
+</head>
+
+<body>
+<script src="/src/App.js" type="text/javascript"></script>
+{{^play}}
+<div class="button">
+        <button name="start" onclick="start()">
+            Start
+        </button>
+</div>
+{{/play}}
+{{#play}}
+<div class="button">
+    <form action="/status" id="status" method="get">
+        <button name="status" type="submit">
+            Status
+        </button>
+    </form>
+</div>
+
+<div class="button">
+        <button name="end" onclick="end()">
+            End
+        </button>
+</div>
+
+<div class="button">
+    <form action="/save" id="save" method="post">
+        <button name="save" type="submit">
+            Save
+        </button>
+    </form>
+</div>
+
+{{/play}}
+<div class="chess_board">
+    <div class="block white" id="a8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a8}}.png"/></div>
+    <div class="block black" id="b8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b8}}.png"/></div>
+    <div class="block white" id="c8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c8}}.png"/></div>
+    <div class="block black" id="d8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d8}}.png"/></div>
+    <div class="block white" id="e8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e8}}.png"/></div>
+    <div class="block black" id="f8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f8}}.png"/></div>
+    <div class="block white" id="g8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g8}}.png"/></div>
+    <div class="block black" id="h8" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h8}}.png"/></div>
+
+    <div class="block black" id="a7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a7}}.png"/></div>
+    <div class="block white" id="b7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b7}}.png"/></div>
+    <div class="block black" id="c7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c7}}.png"/></div>
+    <div class="block white" id="d7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d7}}.png"/></div>
+    <div class="block black" id="e7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e7}}.png"/></div>
+    <div class="block white" id="f7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f7}}.png"/></div>
+    <div class="block black" id="g7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g7}}.png"/></div>
+    <div class="block white" id="h7" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h7}}.png"/></div>
+
+    <div class="block white" id="a6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a6}}.png"/></div>
+    <div class="block black" id="b6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b6}}.png"/></div>
+    <div class="block white" id="c6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c6}}.png"/></div>
+    <div class="block black" id="d6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d6}}.png"/></div>
+    <div class="block white" id="e6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e6}}.png"/></div>
+    <div class="block black" id="f6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f6}}.png"/></div>
+    <div class="block white" id="g6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g6}}.png"/></div>
+    <div class="block black" id="h6" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h6}}.png"/></div>
+
+    <div class="block black" id="a5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a5}}.png"/></div>
+    <div class="block white" id="b5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b5}}.png"/></div>
+    <div class="block black" id="c5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c5}}.png"/></div>
+    <div class="block white" id="d5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d5}}.png"/></div>
+    <div class="block black" id="e5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e5}}.png"/></div>
+    <div class="block white" id="f5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f5}}.png"/></div>
+    <div class="block black" id="g5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g5}}.png"/></div>
+    <div class="block white" id="h5" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h5}}.png"/></div>
+
+    <div class="block white" id="a4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a4}}.png"/></div>
+    <div class="block black" id="b4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b4}}.png"/></div>
+    <div class="block white" id="c4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c4}}.png"/></div>
+    <div class="block black" id="d4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d4}}.png"/></div>
+    <div class="block white" id="e4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e4}}.png"/></div>
+    <div class="block black" id="f4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f4}}.png"/></div>
+    <div class="block white" id="g4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g4}}.png"/></div>
+    <div class="block black" id="h4" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h4}}.png"/></div>
+
+    <div class="block black" id="a3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a3}}.png"/></div>
+    <div class="block white" id="b3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b3}}.png"/></div>
+    <div class="block black" id="c3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c3}}.png"/></div>
+    <div class="block white" id="d3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d3}}.png"/></div>
+    <div class="block black" id="e3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e3}}.png"/></div>
+    <div class="block white" id="f3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f3}}.png"/></div>
+    <div class="block black" id="g3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g3}}.png"/></div>
+    <div class="block white" id="h3" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h3}}.png"/></div>
+
+    <div class="block white" id="a2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a2}}.png"/></div>
+    <div class="block black" id="b2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b2}}.png"/></div>
+    <div class="block white" id="c2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c2}}.png"/></div>
+    <div class="block black" id="d2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d2}}.png"/></div>
+    <div class="block white" id="e2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e2}}.png"/></div>
+    <div class="block black" id="f2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f2}}.png"/></div>
+    <div class="block white" id="g2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g2}}.png"/></div>
+    <div class="block black" id="h2" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h2}}.png"/></div>
+
+    <div class="block black" id="a1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.a1}}.png"/></div>
+    <div class="block white" id="b1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.b1}}.png"/></div>
+    <div class="block black" id="c1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.c1}}.png"/></div>
+    <div class="block white" id="d1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.d1}}.png"/></div>
+    <div class="block black" id="e1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.e1}}.png"/></div>
+    <div class="block white" id="f1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.f1}}.png"/></div>
+    <div class="block black" id="g1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.g1}}.png"/></div>
+    <div class="block white" id="h1" onclick=selectBlock(this)><img onerror="this.style.display = 'none'"
+                                                                    src="/images/{{board.h1}}.png"/></div>
+</div>
+<div class="status">
+    {{#winner}}
+    {{winner}}가 승리하였습니다.
+    재시작을 원하시면 다음 버튼을 눌러주세요.
+    <br>
+    <button onclick="end()">Reset</button>
+    {{/winner}}
+
+    {{#status}}
+    <table>
+        <th>백팀</th>
+        <th>흑팀</th>
+        <tr>
+            <td>{{status.WHITE}}</td>
+            <td>{{status.BLACK}}</td>
+        </tr>
+    </table>
+    {{/status}}
+</div>
+</body>
+
+</html>

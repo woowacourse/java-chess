@@ -26,6 +26,7 @@ public class OutputView {
     private static final String FILE_FORMAT = "abcdefgh";
     private static final String RANK_INFO = " (rank %d)";
     private static final String RANK_FORMAT = "  %d";
+    private static final String WINNER_FORMAT = "승자는 %s 입니다.%n";
 
     private OutputView() {
     }
@@ -61,10 +62,17 @@ public class OutputView {
             String position = (char) i + String.valueOf(j);
 
             Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
-            possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.printf(piece.getName()),
-                    () -> System.out.print(EMPTY));
+            possiblePiece.ifPresentOrElse(OutputView::printPieceByColor, () -> System.out.print(EMPTY));
         }
+    }
+
+    private static void printPieceByColor(ChessPiece piece) {
+        if (piece.isBlack()) {
+            System.out.printf(Color.BLACK.convertByColor(piece.getName()));
+            return;
+        }
+        System.out.printf(Color.WHITE.convertByColor(piece.getName()));
+
     }
 
 
@@ -80,7 +88,7 @@ public class OutputView {
     }
 
     private static void printWinner(Color winnerColor) {
-        System.out.println(String.format("승자는 %s 입니다.", winnerColor.name()));
+        System.out.printf(WINNER_FORMAT, winnerColor.name());
     }
 
     private static void printTotalScore(Map<Color, Double> scoreByColor) {

@@ -6,10 +6,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Stack;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
@@ -36,17 +32,5 @@ class RookTest {
         Assertions.assertThatCode(() -> rook.checkMovable(initialPosition, new Position("c5")))
                 .doesNotThrowAnyException();
 
-    }
-
-    @Test
-    @DisplayName("목적지까지 경로를 구한다.")
-    void findRoute() {
-        // given
-        ChessPiece rook = new Rook(Color.BLACK);
-        // when
-        Stack<Position> actual = rook.findRoute(initialPosition, new Position("d1"));
-        List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
-        // then
-        assertThat(actual).containsAll(expected);
     }
 }

@@ -1,0 +1,60 @@
+.chess_board {
+    width: 640px;
+    height: 640px;
+    border: solid black 1px;
+    margin: 0 auto;
+}
+
+.block {
+    width: 80px;
+    height: 80px;
+    float: left;
+    display: flex;
+    justify-content: center;
+}
+
+.block.white {
+    background: #ffffff;
+}
+
+.block.black {
+    background: #000000;
+}
+
+.button {
+    text-align: center;
+    margin: 10px;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    background: black;
+    color: red;
+}
+
+img {
+    margin-top: 20%;
+    max-height: 70%;
+}
+
+.status {
+    text-align: center;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+table {
+    width: 70%;
+    margin-top: 15%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+table, td, th {
+    border-collapse: collapse;
+    border: 1px solid black;
+}

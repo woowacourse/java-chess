@@ -4,12 +4,10 @@ import chess.domain.game.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Stack;
 
 public class Knight extends ChessPiece {
 
     private static final String NAME = "N";
-    private static final Double SCORE = 2.5;
     private static final int SUM_OF_MOVABLE_DISTANCE = 3;
 
     public Knight(Color color) {
@@ -41,12 +39,17 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public Stack<Position> findRoute(final Position from, Position to) {
-        return new Stack<>();
+    public boolean isKnight() {
+        return true;
     }
 
     @Override
     public double getScore() {
-        return SCORE;
+        return 2.5;
+    }
+
+    @Override
+    public String convertToImageName() {
+        return (getColor().name() + "-knight").toLowerCase();
     }
 }
