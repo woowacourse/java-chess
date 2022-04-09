@@ -70,9 +70,9 @@ public class ChessService {
     private void processWhenRunning(final HashMap<String, Object> model) {
         if (chessGame.isRunning()) {
             setCurrentStateToModelMessage(model);
-            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
             model.put("isWhite", chessGame.getCamp().isWhite());
             model.put("status", chessGame.calculateStatus());
+            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
         }
     }
 
@@ -110,5 +110,9 @@ public class ChessService {
 
     public void updateRoomName(final String id, final String roomName) {
         roomDao.updateNameById(Integer.parseInt(id), roomName);
+    }
+
+    public void removeRoom(final String id) {
+        roomDao.removeById(Integer.parseInt(id));
     }
 }

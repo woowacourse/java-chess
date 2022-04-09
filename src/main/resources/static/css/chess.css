@@ -248,15 +248,23 @@ header {
 
 .class-delete {
     font-size: 0.6rem;
-    color: #e132f4;
-    background-color: rgba(223, 188, 243, 0.15);
+    color: #f43232;
+    background-color: rgb(255, 205, 205);
     padding: 0.2rem;
 }
 
 
 .class-join {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #000000;
+    background-color: rgba(148, 148, 148, 0.15);
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.class-cant-join {
+    font-size: 0.9rem;
+    color: #ff0000;
     background-color: rgba(148, 148, 148, 0.15);
     padding: 0.2rem;
     text-align: center;

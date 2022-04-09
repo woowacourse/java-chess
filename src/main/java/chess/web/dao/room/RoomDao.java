@@ -14,7 +14,7 @@ public class RoomDao {
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
-    private static final String TABLE = "room"; // 달라짐
+    private static final String TABLE = "room";
 
     public Connection getConnection() {
         Connection connection = null;

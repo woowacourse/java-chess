@@ -24,31 +24,41 @@ public class WebController {
 
     public void run() {
         get("/", (req, res) -> render(chessService.getRooms(), "index.html"));
-
         post("/room/create", this::createRoomAndRedirectIndex);
-        post("/room/update/:id", this::updateRoomNameAndRedirectIndex);
+        post("/room/update/", this::updateRoomNameAndRedirectIndex);
+        post("/room/delete/", this::deleteRoomAndRedirectIndex);
 
         post("/:command", (req, res) -> {
             checkGameState(req, res);
-            return render(executeAndGetModel(req, res), "game.html");
+            final Map<String, Object> model = executeAndGetModel(req, res);
+            model.put("roomId", req.queryParams("roomId"));
+            //TODO: roomId + model정보로 front가기 직전에 DB에 저장?
+            return render(model, "game.html");
         });
 
-        get("/game", (req, res) -> render(redirectAndGetModel(req), "game.html"));
-
+        //for Error Redirect
+        get("/game", (req, res) -> render(redirectWithErrorFlash(req), "game.html"));
+        //for Restart
         post("/restart", (req, res) -> {
             chessService.restart();
             return render(executeAndGetModel(req, res), "game.html");
         });
     }
 
-    private Object updateRoomNameAndRedirectIndex(final Request req, final Response res) {
+    private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
+        chessService.createRoom(req.queryParams("roomName"));
+        res.redirect("/");
+        return null;
+    }
+
+    private Map<String, Object> updateRoomNameAndRedirectIndex(final Request req, final Response res) {
         chessService.updateRoomName(req.queryParams("roomId"), req.queryParams("roomName"));
         res.redirect("/");
         return null;
     }
 
-    private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
-        chessService.createRoom(req.queryParams("roomName"));
+    private Map<String, Object> deleteRoomAndRedirectIndex(final Request req, final Response res) {
+        chessService.removeRoom(req.queryParams("roomId"));
         res.redirect("/");
         return null;
     }
@@ -63,7 +73,7 @@ public class WebController {
         }
     }
 
-    private Map<String, Object> redirectAndGetModel(final Request req) {
+    private Map<String, Object> redirectWithErrorFlash(final Request req) {
         final Map<String, Object> currentModel = chessService.getModelToState().get();
         if (req.session().attribute("errorFlash") != null) {
             currentModel.putAll(req.session().attribute("errorFlash"));

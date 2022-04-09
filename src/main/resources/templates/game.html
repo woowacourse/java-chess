@@ -14,7 +14,7 @@
     ></script>
     <script>history.scrollRestoration = "manual"</script>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <title>포돌이 체스에 오신 것을 환영합니다.</title>
+    <title>{{roomId}}번방</title>
 </head>
 <body>
 <!--header-->
@@ -22,7 +22,7 @@
     <div class="inner">
         <div class="head-container">
             <div class="head-brand">
-                <a href="/">포돌이 체스</a>
+                <a href="/">시작화면으로</a>
             </div>
             <div class="head-start">
                 <a href="https://github.com/is2js/java-chess/tree/step2">깃허브</a>
@@ -89,10 +89,12 @@
         <div class="button-container">
             <form action="/end" method="post">
                 <input name="command" value="end" type="hidden">
+                <input name="roomId" value="{{id}}" type="hidden">
                 <input class="form" name="end" type="submit" value="종료">
             </form>
             <form action="/restart" method="post">
                 <input name="command" value="start" type="hidden">
+                <input name="roomId" value="{{id}}" type="hidden">
                 <input class="form" name="restart" type="submit" value="재시작">
             </form>
         </div>

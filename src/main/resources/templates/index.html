@@ -84,16 +84,16 @@
                                     <div class="class-type">{{id}}번방</div>
 
                                     <div class="class-update" onclick="updateRoomName('{{id}}');">수정</div>
-                                    <div class="class-delete">삭제</div>
+                                    <div class="class-delete" onclick="deleteRoom('{{id}}');">삭제</div>
 
                                 </div>
                                 <!--room title + enter-->
                                 <div class="class-title-container">
                                     <div class="class-title">{{name}}</div>
                                     {{#if canJoin}}
-                                    <div class="class-join">입 장</div>
+                                    <div class="class-join" onclick="postToCommand('{{id}}', 'start');">입 장</div>
                                     {{else}}
-                                    <div class="class-join">입장 불가</div>
+                                    <div class="class-cant-join">입장 불가</div>
                                     {{/if}}
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
 </section>
 
 <div class="fake-container">
-    <div class="skill" onclick="postToCommand('/', 'start');">
+    <div class="skill" onclick="postToCommand('{{id}}', '/start');">
         <i class="far fa-play-circle skill-icon start-style"></i>
         <div class="skill-title">
             <div class="skill-name">막 시작하기</div>
