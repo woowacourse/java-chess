@@ -6,7 +6,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Command;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import java.util.Map;
+import chess.domain.position.Positions;
 
 public class White implements State {
 
@@ -18,22 +18,36 @@ public class White implements State {
     @Override
     public State execute(Command command, ChessBoard chessBoard) {
         if (command.isMoveCommand()) {
-            checkTeam(command, chessBoard);
-
-            chessBoard.move(command);
-
-            return new Black();
+            return move(command, chessBoard);
         }
+
         if (command.isEnd()) {
             return new End();
         }
         return this;
     }
 
-    private void checkTeam(Command command, ChessBoard chessBoard) {
-        Map<String, Position> positions = command.makePositions();
+    private State move(Command command, ChessBoard chessBoard) {
+        checkTeam(command, chessBoard);
 
-        Position source = positions.get("source");
+        chessBoard.move(command);
+
+        if (!chessBoard.isExistKing()) {
+            return new End();
+        }
+
+        return new Black();
+    }
+
+    @Override
+    public String getTurn() {
+        return "white";
+    }
+
+    private void checkTeam(Command command, ChessBoard chessBoard) {
+        Positions positions = command.makePositions();
+
+        Position source = positions.getSource();
 
         Team team = chessBoard.findTeam(source);
 

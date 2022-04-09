@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="UTF-8">
+  <title>체스 게임</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
-<body>
-Hello World!!
+<body class="announce">
+<br><br>
+<h1>디우의 Chess Game</h1>
+<br>
+<form action="/start" method="get">
+  <input name="game_name" type="text" placeholder="게임 이름을 입력해주세요" maxlength="20" size="20" class="from-control" aria-label="default input example"/>
+  <button type="submit" class="btn btn-secondary">게임 시작</button>
+</form>
 </body>
 </html>

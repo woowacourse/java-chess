@@ -6,6 +6,7 @@ import static chess.domain.position.Rank.SEVEN;
 import static chess.domain.position.Rank.TWO;
 
 import chess.domain.ChessBoard;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public final class PawnMoveStrategy implements MoveStrategy {
@@ -25,6 +26,7 @@ public final class PawnMoveStrategy implements MoveStrategy {
         }
 
         checkPawnDirection(source, target, chessBoard);
+        checkPawnStraightDirection(source, target, chessBoard);
     }
 
     private boolean checkPawnMoveDistance(Position source, Position target, ChessBoard chessBoard) {
@@ -41,6 +43,14 @@ public final class PawnMoveStrategy implements MoveStrategy {
         }
 
         if (chessBoard.findTeam(source) == BLACK && source.isIncreaseRank(target)) {
+            throw new IllegalArgumentException("잘못된 이동입니다.");
+        }
+    }
+
+    private void checkPawnStraightDirection(Position source, Position target, ChessBoard chessBoard) {
+        Direction direction = Direction.of(source, target);
+
+        if (chessBoard.isExist(target) && direction.isLinearDirection()) {
             throw new IllegalArgumentException("잘못된 이동입니다.");
         }
     }

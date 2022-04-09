@@ -8,7 +8,7 @@ public final class KnightMoveStrategy implements MoveStrategy {
 
     @Override
     public void isMovable(Position source, Position target, ChessBoard chessBoard) {
-        if (source.isSameFile(target) && source.isSameRank(target)) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException("제자리에 머무를 수 없습니다.");
         }
 

@@ -17,4 +17,9 @@ public class End implements State {
         }
         return this;
     }
+
+    @Override
+    public String getTurn() {
+        return "end";
+    }
 }

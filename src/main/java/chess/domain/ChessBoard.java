@@ -2,6 +2,7 @@ package chess.domain;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
+import static java.util.Collections.unmodifiableMap;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -10,6 +11,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,16 +20,22 @@ import java.util.Set;
 
 public class ChessBoard {
 
-    private final Map<Position, Piece> cells = new LinkedHashMap<>();
+    private static final int TOTAL_KING_COUNT = 2;
+
+    private final Map<Position, Piece> cells;
 
     public ChessBoard() {
         Map<Position, Piece> pieces = PieceFactory.createPieces();
-
+        cells = new LinkedHashMap<>();
         cells.putAll(pieces);
     }
 
+    public ChessBoard(Map<Position, Piece> cells) {
+        this.cells = cells;
+    }
+
     public Map<Position, Piece> getCells() {
-        return cells;
+        return unmodifiableMap(cells);
     }
 
     public Team findTeam(Position position) {
@@ -41,15 +49,12 @@ public class ChessBoard {
     }
 
     public void move(Command command) {
-        Map<String, Position> positions = command.makePositions();
+        Positions positions = command.makePositions();
 
-        Position source = positions.get("source");
+        Position source = positions.getSource();
+        Position target = positions.getTarget();
 
-        Position target = positions.get("target");
-
-        Piece piece = cells.get(source);
-
-        movePiece(source, target, piece);
+        moveSourceToTarget(source, target);
     }
 
     public boolean isContainPiece(List<Position> paths) {
@@ -62,7 +67,7 @@ public class ChessBoard {
         return count > 0;
     }
 
-    public double calculateByTeam(Team team) {
+    public double calculateScoreByTeam(Team team) {
         int sameRankPawn = countSameRankPawn(team);
 
         double sameRankPawnScore = sameRankPawn * 0.5;
@@ -74,8 +79,8 @@ public class ChessBoard {
         return cells.get(position);
     }
 
-    public boolean isExist(Position target) {
-        return cells.containsKey(target);
+    public boolean isExist(Position position) {
+        return cells.containsKey(position);
     }
 
     public boolean isExistKing() {
@@ -84,24 +89,26 @@ public class ChessBoard {
                 .filter(Piece::isKing)
                 .count();
 
-        return kingCount == 2;
+        return kingCount == TOTAL_KING_COUNT;
     }
 
-    public String findWinTeam(Map<Team, Double> teamScores) {
+    public Result findWinTeam(Map<Team, Double> teamScores) {
         Double whiteScore = teamScores.get(WHITE);
         Double blackScore = teamScores.get(BLACK);
 
         if (isExistKing() && whiteScore.equals(blackScore)) {
-            return "무승부";
+            return Result.DRAW;
         }
 
-        Piece winKing = getWinKing();
-
-        return winKing.getTeam().toString();
+        Team winTeam = getWinTeam();
+        return Result.of(winTeam);
     }
 
-    private void movePiece(Position source, Position target, Piece piece) {
+    private void moveSourceToTarget(Position source, Position target) {
+        Piece piece = cells.get(source);
+
         piece.move(source, target, this);
+
         cells.remove(source);
         cells.put(target, piece);
     }
@@ -144,11 +151,13 @@ public class ChessBoard {
         return 0;
     }
 
-    private Piece getWinKing() {
-        return cells.values()
+    private Team getWinTeam() {
+        Piece winPiece = cells.values()
                 .stream()
                 .filter(Piece::isKing)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+
+        return winPiece.getTeam();
     }
 }

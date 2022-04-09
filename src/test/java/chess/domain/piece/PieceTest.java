@@ -9,6 +9,6 @@ public class PieceTest {
     @Test
     public void piece() {
         //given & when & then
-        Assertions.assertDoesNotThrow(() -> new Pawn(Team.WHITE, "p"));
+        Assertions.assertDoesNotThrow(() -> new Pawn(Team.WHITE));
     }
 }

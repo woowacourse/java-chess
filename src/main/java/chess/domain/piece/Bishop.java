@@ -1,19 +1,14 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Symbol.BISHOP;
+
 import chess.domain.strategy.BishopMoveStrategy;
 
 public final class Bishop extends Piece {
-    public static final int BISHOP_SCORE = 3;
-    private final String symbol;
+    private static final int BISHOP_SCORE = 3;
 
-    public Bishop(Team team, String symbol) {
-        super(new BishopMoveStrategy(), team);
-        this.symbol = symbol;
-    }
-
-    @Override
-    public String getSymbol() {
-        return symbol;
+    public Bishop(Team team) {
+        super(team, BISHOP, new BishopMoveStrategy());
     }
 
     @Override

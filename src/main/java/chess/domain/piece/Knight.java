@@ -1,27 +1,20 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Symbol.KNIGHT;
+
 import chess.domain.strategy.KnightMoveStrategy;
 
 public final class Knight extends Piece {
 
-    public static final double KNIGHT_SOCRE = 2.5;
-    private final Team team;
-    private final String symbol;
+    private static final double KNIGHT_SCORE = 2.5;
 
-    public Knight(Team team, String symbol) {
-        super(new KnightMoveStrategy(), team);
-        this.team = team;
-        this.symbol = symbol;
-    }
-
-    @Override
-    public String getSymbol() {
-        return symbol;
+    public Knight(Team team) {
+        super(team, KNIGHT, new KnightMoveStrategy());
     }
 
     @Override
     public double getScore() {
-        return KNIGHT_SOCRE;
+        return KNIGHT_SCORE;
     }
 
     @Override

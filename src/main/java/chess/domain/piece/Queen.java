@@ -1,21 +1,14 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Symbol.QUEEN;
+
 import chess.domain.strategy.QueenMoveStrategy;
 
 public final class Queen extends Piece {
-    public static final int QUEEN_SCORE = 9;
-    private final Team team;
-    private final String symbol;
+    private static final int QUEEN_SCORE = 9;
 
-    public Queen(Team team, String symbol) {
-        super(new QueenMoveStrategy(), team);
-        this.team = team;
-        this.symbol = symbol;
-    }
-
-    @Override
-    public String getSymbol() {
-        return symbol;
+    public Queen(Team team) {
+        super(team, QUEEN, new QueenMoveStrategy());
     }
 
     @Override

@@ -52,6 +52,18 @@ public enum Direction {
         return knightDirection.contains(this);
     }
 
+    public boolean isLinearDirection() {
+        List<Direction> linearDirection = List.of(TOP, LEFT, BOTTOM, RIGHT);
+
+        return linearDirection.contains(this);
+    }
+
+    public boolean isDiagonalDirection() {
+        List<Direction> diagonalDirection = List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
+
+        return diagonalDirection.contains(this);
+    }
+
     private static Direction getDirection(Direction[] values, int file, int rank) {
         return Arrays.stream(values)
                 .filter(direction -> direction.getFile() == file && direction.getRank() == rank)
