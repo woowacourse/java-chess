@@ -24,7 +24,7 @@ class KingTest {
         assertThat(king.canMove(f1, f2)).isTrue();
     }
 
-    @DisplayName("킹은 한 칸 앞으로 움직일 수 있다.")
+    @DisplayName("킹은 대각선으로 움직일 수 있다.")
     @Test
     void move_f1_g2() {
         //given

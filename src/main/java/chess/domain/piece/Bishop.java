@@ -9,7 +9,7 @@ public final class Bishop extends Piece {
     private static final int SCORE = 3;
 
     public Bishop(Color color) {
-        super(color);
+        super(color, Type.BISHOP);
     }
 
     @Override

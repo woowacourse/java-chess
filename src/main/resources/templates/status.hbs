@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상태</title>
+</head>
+<body>
+<div align="left">
+    <button type="button" onclick="location.href='/chess';"> 뒤로가기 </button>
+</div>
+<div align="center">
+    {{#status}}
+        <p> 백색 점수: {{status.white}}</p>
+        <p> 흑색 점수: {{status.black}}</p>
+    {{/status}}
+</div>
+
+</body>
+</html>

@@ -53,9 +53,9 @@ public enum Column {
 
     public List<Column> pathTo(Column otherColumn) {
         if (this.value < otherColumn.value) {
-            return this.upPathTo(otherColumn);
+            return upPathTo(otherColumn);
         }
-        return this.downPathTo(otherColumn);
+        return downPathTo(otherColumn);
     }
 
     private List<Column> upPathTo(Column otherColumn) {
@@ -72,5 +72,9 @@ public enum Column {
             path.add(Column.from(i));
         }
         return path;
+    }
+
+    public String getName() {
+        return name;
     }
 }

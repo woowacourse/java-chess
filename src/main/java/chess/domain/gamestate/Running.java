@@ -1,8 +1,11 @@
 package chess.domain.gamestate;
 
+import chess.domain.Color;
 import chess.domain.Winner;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Running implements State {
     private static final String INVALID_STATE_RUNNING_START_EXCEPTION = "진행 중일 때는 시작할 수 없습니다.";
@@ -21,16 +24,16 @@ public class Running implements State {
 
     @Override
     public State move(Position beforePosition, Position afterPosition) {
-        this.board.move(beforePosition, afterPosition);
-        if (this.board.hasKingCaptured()) {
-            return new Finished(this.board);
+        board.move(beforePosition, afterPosition);
+        if (board.hasKingCaptured()) {
+            return new Finished(board);
         }
         return this;
     }
 
     @Override
     public State end() {
-        return new Finished(this.board);
+        return new Finished(board);
     }
 
     @Override
@@ -49,12 +52,22 @@ public class Running implements State {
     }
 
     @Override
+    public State load(Map<Position, Piece> board, Color turn) {
+        throw new IllegalStateException("게임 진행중에는 로드할 수 없습니다.");
+    }
+
+    @Override
     public boolean isRunning() {
         return true;
     }
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
+    }
+
+    @Override
+    public Color getTurn() {
+        return board.getTurn();
     }
 }

@@ -1,8 +1,11 @@
 package chess.domain.gamestate;
 
+import chess.domain.Color;
 import chess.domain.Winner;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Finished implements State {
     private static final String INVALID_STATE_MOVE_EXCEPTION = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
@@ -16,6 +19,11 @@ public class Finished implements State {
     @Override
     public State start() {
         return new Running(new Board());
+    }
+
+    @Override
+    public State load(Map<Position, Piece> board, Color turn) {
+        return new Running(new Board(board, turn));
     }
 
     @Override
@@ -40,17 +48,17 @@ public class Finished implements State {
 
     @Override
     public Winner findWinner() {
-        if (this.board.hasBlackKingCaptured()) {
+        if (board.hasBlackKingCaptured()) {
             return Winner.WHITE;
         }
-        if (this.board.hasWhiteKingCaptured()) {
+        if (board.hasWhiteKingCaptured()) {
             return Winner.BLACK;
         }
         return findWinnerByScore();
     }
 
     private Winner findWinnerByScore() {
-        final int compared = Double.compare(this.board.scoreOfBlack(), this.board.scoreOfWhite());
+        final int compared = Double.compare(board.scoreOfBlack(), board.scoreOfWhite());
         if (compared > 0) {
             return Winner.BLACK;
         }
@@ -67,6 +75,11 @@ public class Finished implements State {
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
+    }
+
+    @Override
+    public Color getTurn() {
+        return board.getTurn();
     }
 }

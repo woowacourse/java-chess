@@ -128,6 +128,32 @@ end
   - [x] 대각선 앞 한 칸에 상대 기물이 있을 경우, 해당 칸으로 가 상대 기물을 잡을 수 있다.
   - [x] 바로 앞에 상대 기물이 있을 경우, 잡을 수 없다.
   
+### 4단계 웹 UI 적용
+#### API 명세
+- [x] GET /
+  - 체스 게임 home
+- [x] GET /chess
+  - 체스 게임 페이지
+- [x] GET /start
+  - 체스 게임 시작
+- [x] POST /move
+  - source, target position 을 기준으로 이동 명령 수행
+- [x] GET /end
+  - 해당 게임 종료
+- [x] GET /status
+  - 점수 확인
+- [x] GET /save
+  - 게임 저장
+#### UI 기능
+- [x] 체스 보드의 칸을 클릭해 source, target position 선택 가능
+- [x] status 버튼을 클릭하면 점수를 볼 수 있음
+- [x] 끝내기 버튼을 클릭하면 게임을 끝내고 결과를 볼 수 있음
+
+### 5단계 DB 적용
+- [x] 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있다.
+  - [x] save 할 수 있는 기능
+  - [x] load 할 수 있는 기능
+- [x] 게임을 종료하면 해당 게임은 삭제된다.
 ---
 ### Reference
 [체스판을 준비하는 방법](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)

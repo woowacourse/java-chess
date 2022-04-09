@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -13,34 +15,42 @@ public class ChessGame {
     }
 
     public void start() {
-        this.state = this.state.start();
+        state = state.start();
     }
 
     public void move(Position beforePosition, Position afterPosition) {
-        this.state = this.state.move(beforePosition, afterPosition);
+        state = state.move(beforePosition, afterPosition);
     }
 
     public void end() {
-        this.state = this.state.end();
+        state = state.end();
     }
 
     public double statusOfBlack() {
-        return this.state.statusOfBlack();
+        return state.statusOfBlack();
     }
 
     public double statusOfWhite() {
-        return this.state.statusOfWhite();
+        return state.statusOfWhite();
     }
 
     public boolean isRunning() {
-        return this.state.isRunning();
+        return state.isRunning();
     }
 
     public Board getBoard() {
-        return this.state.getBoard();
+        return state.getBoard();
     }
 
     public Winner findWinner() {
-        return this.state.findWinner();
+        return state.findWinner();
+    }
+
+    public void load(Map<Position, Piece> board, Color turn) {
+        state = state.load(board, turn);
+    }
+
+    public Color getTurn() {
+        return state.getTurn();
     }
 }
