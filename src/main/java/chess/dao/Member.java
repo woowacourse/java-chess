@@ -4,7 +4,7 @@ public class Member {
 
     private final Integer id;
     private final String name;
-    private final int boardId;
+    private final Integer boardId;
 
     public Member(Integer id, String name, Integer boardId) {
         this.id = id;

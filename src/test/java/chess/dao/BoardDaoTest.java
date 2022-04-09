@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BoardDaoTest {
 
-    private final BoardDao dao = new BoardDao(new ChessConnectionManager());
+    private final BoardDao<Board> dao = new ChessBoardDao(new ChessConnectionManager());
 
     @AfterEach
     void setDown() {

@@ -1,9 +1,6 @@
 package chess.domain.game;
 
-import chess.dao.BoardDao;
-import chess.dao.ChessConnectionManager;
-import chess.dao.PieceDao;
-import chess.dao.PositionDao;
+import chess.dao.*;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Column;
@@ -22,14 +19,14 @@ public final class GameService {
     private static final double PAWN_PENALTY_SCORE = 0.5;
     private static final int SINGLE_COUNT = 1;
 
-    private final BoardDao boardDao;
-    private final PositionDao positionDao;
-    private final PieceDao pieceDao;
+    private final BoardDao<Board> boardDao;
+    private final PositionDao<Position> chessPositionDao;
+    private final PieceDao<Piece> chessPieceDao;
 
     public GameService() {
-        this.boardDao = new BoardDao(new ChessConnectionManager());
-        this.positionDao = new PositionDao(new ChessConnectionManager());
-        this.pieceDao = new PieceDao(new ChessConnectionManager());
+        this.boardDao = new ChessBoardDao(new ChessConnectionManager());
+        this.chessPositionDao = new ChessPositionDao(new ChessConnectionManager());
+        this.chessPieceDao = new ChessPieceDao(new ChessConnectionManager());
     }
 
     public Board saveBoard(final Board board, final Initializer initializer) {
@@ -37,8 +34,8 @@ public final class GameService {
     }
 
     public void move(final int roomId, final Position sourceRawPosition, final Position targetRawPosition) {
-        Position sourcePosition = positionDao.getByColumnAndRowAndBoardId(sourceRawPosition.getColumn(), sourceRawPosition.getRow(), roomId);
-        Position targetPosition = positionDao.getByColumnAndRowAndBoardId(targetRawPosition.getColumn(), targetRawPosition.getRow(), roomId);
+        Position sourcePosition = chessPositionDao.getByColumnAndRowAndBoardId(sourceRawPosition.getColumn(), sourceRawPosition.getRow(), roomId);
+        Position targetPosition = chessPositionDao.getByColumnAndRowAndBoardId(targetRawPosition.getColumn(), targetRawPosition.getRow(), roomId);
         validateTurn(roomId, sourcePosition);
         validateNotEquals(sourcePosition, targetPosition);
         final Piece sourcePiece = getPieceByPosition(sourcePosition);
@@ -46,7 +43,7 @@ public final class GameService {
     }
 
     private void validateTurn(final int roomId, final Position sourcePosition) {
-        final Optional<Piece> wrappedPiece = pieceDao.findByPositionId(positionDao.getPositionIdByColumnAndRowAndBoardId(sourcePosition.getColumn(), sourcePosition.getRow(), roomId));
+        final Optional<Piece> wrappedPiece = chessPieceDao.findByPositionId(chessPositionDao.getIdByColumnAndRowAndBoardId(sourcePosition.getColumn(), sourcePosition.getRow(), roomId));
         wrappedPiece.ifPresent(piece -> validateCorrectTurn(roomId, piece));
     }
 
@@ -57,7 +54,7 @@ public final class GameService {
     }
 
     private Piece getPieceByPosition(Position sourcePosition) {
-        final Optional<Piece> optionalPiece = pieceDao.findByPositionId(sourcePosition.getId());
+        final Optional<Piece> optionalPiece = chessPieceDao.findByPositionId(sourcePosition.getId());
         if (optionalPiece.isEmpty()) {
             throw new IllegalArgumentException("말이 존재하지 않습니다.");
         }
@@ -66,7 +63,7 @@ public final class GameService {
 
     private void movePiece(final int roomId, final Position sourcePosition, final Position targetPosition, final Piece sourcePiece) {
         validateMovement(sourcePosition, targetPosition, sourcePiece);
-        final Optional<Piece> targetPiece = pieceDao.findByPositionId(targetPosition.getId());
+        final Optional<Piece> targetPiece = chessPieceDao.findByPositionId(targetPosition.getId());
         targetPiece.ifPresent(piece -> validateTargetNotSameColor(sourcePiece, piece));
         validatePawnMovement(sourcePosition, targetPosition, sourcePiece, targetPiece);
         validatePathEmpty(roomId, sourcePosition, targetPosition);
@@ -93,7 +90,7 @@ public final class GameService {
 
     public BoardDto getBoard(int roomId) {
         final Board board = boardDao.getById(roomId);
-        final Map<Position, Piece> allPositionsAndPieces = positionDao.findAllPositionsAndPieces(roomId);
+        final Map<Position, Piece> allPositionsAndPieces = chessPositionDao.findAllPositionsAndPieces(roomId);
         Map<String, Piece> pieces = mapPositionToString(allPositionsAndPieces);
         return BoardDto.of(pieces, board.getRoomTitle(), board.getMembers().get(0), board.getMembers().get(1));
     }
@@ -107,9 +104,9 @@ public final class GameService {
 
     private void updateMovingPiecePosition(Position sourcePosition, Position targetPosition, Optional<Piece> targetPiece) {
         if (targetPiece.isPresent()) {
-            pieceDao.deletePieceByPositionId(targetPosition.getId());
+            chessPieceDao.deleteByPositionId(targetPosition.getId());
         }
-        pieceDao.updatePiecePositionId(sourcePosition.getId(), targetPosition.getId());
+        chessPieceDao.updatePositionId(sourcePosition.getId(), targetPosition.getId());
     }
 
     private void validateTargetNotSameColor(final Piece source, final Piece target) {
@@ -122,7 +119,7 @@ public final class GameService {
         final Direction direction = Direction.calculate(source, target);
         if (!direction.isIgnore()) {
             List<Position> positions = source.calculatePath(target, direction);
-            List<Position> realPositions = positionDao.getPaths(positions, roomId);
+            List<Position> realPositions = chessPositionDao.getPaths(positions, roomId);
             validatePiecesNotExistOnPath(realPositions);
         }
     }
@@ -134,7 +131,7 @@ public final class GameService {
     }
 
     private void validatePieceNotExist(final Position position) {
-        if (pieceDao.findByPositionId(position.getId()).isPresent()) {
+        if (chessPieceDao.findByPositionId(position.getId()).isPresent()) {
             throw new IllegalArgumentException("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
         }
     }
@@ -161,7 +158,7 @@ public final class GameService {
     }
 
     public boolean isEnd(int roomId) {
-        final boolean kingDead = pieceDao.getAllPiecesByBoardId(roomId)
+        final boolean kingDead = chessPieceDao.getAllByBoardId(roomId)
                 .stream()
                 .filter(Piece::isKing)
                 .count() != KING_TOTAL_COUNT;
@@ -172,7 +169,7 @@ public final class GameService {
     }
 
     public List<Piece> existPieces(int roomId) {
-        return pieceDao.getAllPiecesByBoardId(roomId);
+        return chessPieceDao.getAllByBoardId(roomId);
     }
 
     public double calculateScore(int roomId, final Color color) {
@@ -189,7 +186,7 @@ public final class GameService {
 
     private int countPawnsOnSameColumns(int roomId, final Color color) {
         return Arrays.stream(Column.values())
-                .mapToInt(column -> pieceDao.countPawnsOnSameColumn(roomId, column, color))
+                .mapToInt(column -> chessPieceDao.countPawnsOnSameColumn(roomId, column, color))
                 .filter(count -> count > SINGLE_COUNT)
                 .sum();
     }

@@ -1,58 +1,12 @@
 package chess.dao;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDao {
+public interface MemberDao<T> extends Dao<T> {
 
-    private final ConnectionManager connectionManager;
+    void saveAll(List<T> targets, int boardId);
 
-    public MemberDao(ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
-    }
+    List<T> getAllByBoardId(int boardId);
 
-    public Member save(String name, int boardId) {
-        return connectionManager.executeQuery(connection -> {
-            final String sql = "INSERT INTO member(name, board_id) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, boardId);
-            preparedStatement.executeUpdate();
-            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("저장에 실패하였습니다.");
-            }
-
-            return new Member(generatedKeys.getInt(1), name, boardId);
-        });
-    }
-
-    public void saveAll(List<Member> members, int boardId) {
-        for (Member member : members) {
-            save(member.getName(), boardId);
-        }
-    }
-
-    public List<Member> getAllByBoardId(int boardId) {
-        return connectionManager.executeQuery(connection -> {
-            List<Member> members = new ArrayList<>();
-            final String sql = "SELECT * FROM member WHERE board_id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, boardId);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                members.add(makeMember(resultSet));
-            }
-
-            return members;
-        });
-    }
-
-    private Member makeMember(ResultSet resultSet) throws SQLException {
-        return new Member(resultSet.getInt("id"),
-                resultSet.getString("name"),
-                resultSet.getInt("board_id")
-        );
-    }
+    T save(String name, int boardId);
 }

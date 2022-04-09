@@ -9,19 +9,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberDaoTest {
 
-    private final MemberDao dao = new MemberDao(new ChessConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ChessConnectionManager());
+    private final MemberDao<Member> dao = new ChessMemberDao(new ChessConnectionManager());
+    private final ChessBoardDao BoardDao = new ChessBoardDao(new ChessConnectionManager());
     private int boardId;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("에덴파이팅~!"));
+        final Board board = BoardDao.save(new Board("에덴파이팅~!"));
         this.boardId = board.getId();
     }
 
     @AfterEach
     void setDown() {
-        boardDao.deleteAll();
+        BoardDao.deleteAll();
     }
 
     @Test

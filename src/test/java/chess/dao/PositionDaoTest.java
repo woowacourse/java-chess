@@ -19,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PositionDaoTest {
 
-    private final PositionDao dao = new PositionDao(new ChessConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ChessConnectionManager());
-    private final PieceDao pieceDao = new PieceDao(new ChessConnectionManager());
+    private final PositionDao<Position> dao = new ChessPositionDao(new ChessConnectionManager());
+    private final BoardDao<Board> boardDao = new ChessBoardDao(new ChessConnectionManager());
+    private final PieceDao<Piece> pieceDao = new ChessPieceDao(new ChessConnectionManager());
     private int boardId;
 
     @BeforeEach
@@ -29,7 +29,7 @@ class PositionDaoTest {
         final Board board = boardDao.save(new Board("코린파이팅"));
         this.boardId = board.getId();
         Position position = dao.save(new Position(Column.A, Row.TWO, boardId));
-        final Piece piece = pieceDao.save(new Piece(Color.WHITE, new Pawn(), position.getId()));
+        pieceDao.save(new Piece(Color.WHITE, new Pawn(), position.getId()));
     }
 
     @AfterEach
@@ -66,7 +66,7 @@ class PositionDaoTest {
 
     @Test
     void saveAllPositionTest() {
-        final int savedRecords = dao.saveAllPosition(boardId);
+        final int savedRecords = dao.saveAll(boardId);
         assertThat(savedRecords).isEqualTo(64);
     }
 }

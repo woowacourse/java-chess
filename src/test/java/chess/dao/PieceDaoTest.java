@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PieceDaoTest {
 
-    private final PieceDao dao = new PieceDao(new ChessConnectionManager());
-    private final PositionDao positionDao = new PositionDao(new ChessConnectionManager());
-    private final BoardDao boardDao = new BoardDao(new ChessConnectionManager());
+    private final PieceDao<Piece> dao = new ChessPieceDao(new ChessConnectionManager());
+    private final PositionDao<Position> chessPositionDao = new ChessPositionDao(new ChessConnectionManager());
+    private final BoardDao<Board> boardDao = new ChessBoardDao(new ChessConnectionManager());
     private int boardId;
     private int positionId;
 
@@ -28,7 +28,7 @@ class PieceDaoTest {
     void setup() {
         final Board board = boardDao.save(new Board("corinne"));
         this.boardId = board.getId();
-        final Position position = positionDao.save(new Position(Column.A, Row.TWO, board.getId()));
+        final Position position = chessPositionDao.save(new Position(Column.A, Row.TWO, board.getId()));
         this.positionId = position.getId();
         final Piece piece = dao.save(new Piece(Color.WHITE, new Pawn(), positionId));
     }
@@ -60,20 +60,20 @@ class PieceDaoTest {
     @Test
     void updatePiecePositionId() {
         final int sourcePositionId = positionId;
-        final int targetPositionId = positionDao.save(new Position(Column.A, Row.TWO, boardId)).getId();
-        int affectedRow = dao.updatePiecePositionId(sourcePositionId, targetPositionId);
+        final int targetPositionId = chessPositionDao.save(new Position(Column.A, Row.TWO, boardId)).getId();
+        int affectedRow = dao.updatePositionId(sourcePositionId, targetPositionId);
         assertThat(affectedRow).isEqualTo(1);
     }
 
     @Test
     void deletePieceByPositionId() {
-        int affectedRows = dao.deletePieceByPositionId(positionId);
+        int affectedRows = dao.deleteByPositionId(positionId);
         assertThat(affectedRows).isEqualTo(1);
     }
 
     @Test
     void getAllPiecesTest() {
-        final List<Piece> pieces = dao.getAllPiecesByBoardId(boardId);
+        final List<Piece> pieces = dao.getAllByBoardId(boardId);
         assertThat(pieces.size()).isEqualTo(1);
     }
 }
