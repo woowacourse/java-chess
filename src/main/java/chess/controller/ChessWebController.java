@@ -3,6 +3,9 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
+import chess.domain.Board;
 import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +21,7 @@ public class ChessWebController {
     private final ChessService chessService;
 
     public ChessWebController() {
-        this.chessService = new ChessService();
+        this.chessService = new ChessService(new ChessGameDao(), new BoardDao());
     }
 
     public void run() {
@@ -30,13 +33,18 @@ public class ChessWebController {
     }
 
     private void renderReady() {
-        get("/", (req, res) -> render(chessService.ready()));
+        get("/", (req, res) -> {
+            Board board = chessService.ready();
+            Map<String, Object> model = board.toMap();
+            return render(model);
+        });
     }
 
     private void renderStart() {
         get("/start", (req, res) -> {
             try {
-                return render(chessService.start());
+                Board board = chessService.start();
+                return render(board.toMap());
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -46,7 +54,8 @@ public class ChessWebController {
     private void renderMove() {
         post("/move", (req, res) -> {
             try {
-                Map<String, Object> model = chessService.move(req.queryParams("from"), req.queryParams("to"));
+                Board board = chessService.move(req.queryParams("from"), req.queryParams("to"));
+                Map<String, Object> model = board.toMap();
                 model.putAll(renderWinner());
                 return render(model);
             } catch (IllegalStateException | IllegalArgumentException exception) {
@@ -58,7 +67,8 @@ public class ChessWebController {
     private Map<String, Object> renderWinner() {
         Map<String, Object> winningMessage = new HashMap<>();
         if (chessService.isComplete()) {
-            winningMessage.putAll(chessService.complete(WINNING_MESSAGE));
+            String winner = String.format(WINNING_MESSAGE, chessService.complete().name());
+            winningMessage.put("complete", winner);
         }
         return winningMessage;
     }
@@ -80,7 +90,8 @@ public class ChessWebController {
         get("/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                model.putAll(chessService.terminate(TERMINATE_MESSAGE));
+                chessService.terminate();
+                model.put("terminate", TERMINATE_MESSAGE);
                 model.putAll(chessService.showBoard());
                 return render(model);
             } catch (IllegalStateException exception) {

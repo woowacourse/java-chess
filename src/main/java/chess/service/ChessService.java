@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class ChessService {
 
-    private static final String TERMINATE_KEY = "end";
     private static final String BLACK_TURN = "blackturn";
     private static final String WHITE_TURN = "whiteturn";
     private static final String TERMINATE = "terminate";
@@ -25,22 +24,22 @@ public class ChessService {
     private final ChessGameDao chessGameDao;
     private final BoardDao boardDao;
 
-    public ChessService() {
-        chessGameDao = new ChessGameDao();
-        boardDao = new BoardDao();
+    public ChessService(ChessGameDao chessGameDao, BoardDao boardDao) {
+        this.chessGameDao = chessGameDao;
+        this.boardDao = boardDao;
         chessGame = new Ready();
     }
 
-    public Map<String, Object> ready() {
+    public Board ready() {
         int gameId = chessGameDao.findRecentGame();
         String state = chessGameDao.findById(gameId);
         if (gameId != 0 && !isEnded(state)) {
             Board board = new Board(boardDao.findGame(gameId));
             chessGame = toChessGame(board, state);
-            return board.toMap();
+            return board;
         }
         chessGameDao.save(chessGame);
-        return chessGame.getBoard().toMap();
+        return chessGame.getBoard();
     }
 
     private ChessGame toChessGame(Board board, String state) {
@@ -57,27 +56,27 @@ public class ChessService {
         return state.equals(TERMINATE) || state.equals(COMPLETE);
     }
 
-    public Map<String, Object> start() {
+    public Board start() {
         chessGame = chessGame.initBoard();
-        Map<String, Object> board = chessGame.getBoard().toMap();
+        Map<Position, Piece> board = chessGame.getBoard().getBoard();
         int gameId = chessGameDao.findRecentGame();
-        for (String position : board.keySet()) {
-            Piece piece = (Piece) board.get(position);
-            boardDao.save(position, piece.getName(), piece.getColorValue(), gameId);
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            boardDao.save(position.toString(), piece.getName(), piece.getColorValue(), gameId);
         }
         chessGameDao.update(gameId, chessGame);
-        return board;
+        return chessGame.getBoard();
     }
 
-    public Map<String, Object> move(String from, String to) {
+    public Board move(String from, String to) {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
-        Map<String, Object> board = chessGame.getBoard().toMap();
+        Map<Position, Piece> board = chessGame.getBoard().getBoard();
         int gameId = chessGameDao.findRecentGame();
         boardDao.delete(from, gameId);
-        Piece piece = (Piece) board.get(to);
+        Piece piece = board.get(to);
         boardDao.update(to, piece.getName(), piece.getColorValue(), gameId);
         chessGameDao.update(gameId, chessGame);
-        return board;
+        return chessGame.getBoard();
     }
 
     public Map<String, Double> showStatus() {
@@ -87,19 +86,14 @@ public class ChessService {
         return scoreStatus;
     }
 
-    public Map<String, String> terminate(String message) {
-        Map<String, String> terminateMessage = new HashMap<>();
+    public void terminate() {
         chessGame = chessGame.end();
         int gameId = chessGameDao.findRecentGame();
         chessGameDao.update(gameId, chessGame);
-        terminateMessage.put(TERMINATE_KEY, message);
-        return terminateMessage;
     }
 
-    public Map<String, String> complete(String message) {
-        Map<String, String> winningMessage = new HashMap<>();
-        winningMessage.put("complete", String.format(message, chessGame.judgeWinner().name()));
-        return winningMessage;
+    public Color complete() {
+        return chessGame.judgeWinner();
     }
 
     public boolean isComplete() {
