@@ -7,11 +7,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChessGameDao {
     private static final String URL = "jdbc:mysql://localhost:3307/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     public void save(ChessGame chessGame) {
@@ -21,7 +25,7 @@ public class ChessGameDao {
             statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
@@ -36,7 +40,7 @@ public class ChessGameDao {
             return resultSet.getInt("id");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
         return 0;
     }
@@ -49,7 +53,7 @@ public class ChessGameDao {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
@@ -65,7 +69,7 @@ public class ChessGameDao {
             return resultSet.getString("state");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
         return null;
     }

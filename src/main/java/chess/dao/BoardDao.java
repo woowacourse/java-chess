@@ -12,11 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BoardDao {
     private static final String URL = "jdbc:mysql://localhost:3307/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void save(String position, String piece, String color, int gameId) {
         final String sql = "insert into board (position, piece, color, game_id) values (?, ?, ?, ?)";
@@ -28,7 +32,7 @@ public class BoardDao {
             statement.setInt(4, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
@@ -45,7 +49,7 @@ public class BoardDao {
             statement.setString(6, color);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 
@@ -63,7 +67,7 @@ public class BoardDao {
                 board.put(position, piece);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
         return board;
     }
@@ -76,7 +80,7 @@ public class BoardDao {
             statement.setString(2, position);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 }

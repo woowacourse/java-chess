@@ -1,5 +1,6 @@
 package chess.dao;
 
+import static chess.dao.DBConnector.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.game.state.ChessGame;
@@ -12,7 +13,7 @@ public class ChessGameDaoTest {
     @Test
     void connection() {
         final ChessGameDao memberDao = new ChessGameDao();
-        final Connection connection = memberDao.getConnection();
+        final Connection connection = getConnection();
         assertThat(connection).isNotNull();
     }
 
