@@ -50,42 +50,36 @@ public class ChessService {
     public Supplier<Map<String, Object>> getModelToState() {
         final HashMap<String, Object> model = new HashMap<>();
         return () -> {
-            if (chessGame.isRunning()) {
-                setCurrentStateToModelMessage(model);
-                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
-                model.put("isWhite", chessGame.getCamp().isWhite());
+            processWhenRunning(model);
+            processWhenEnd(model);
 
-                // status요청이 아니라 항상 status를 같이 반환하도록 수정
-//                OutputView.printStatus(calculateStatus());
-                model.put("status", chessGame.calculateStatus());
-                System.err.println("모델갓다주기 직전인데, game.html은 없데이트가 안되는 듯싶넹.");
-                return model;
-            }
-//            if (isStatusInRunning()) {
-//                OutputView.printStatus(calculateStatus());
-//            }
-            if (isEndInRunning()) {
-                model.put("message", "현재 게임이 종료되었습니다.");
-                model.put("isWhite", chessGame.getCamp().isWhite());
-                model.put("status", chessGame.calculateStatus());
-                model.put("isRunning", false);
-                model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
-
-                return model;
-            }
-//            if (isEndInGameOff()) {
-//
-//            }
             return model;
         };
     }
 
+    private void processWhenEnd(final HashMap<String, Object> model) {
+        if (isEndInRunning()) {
+            model.put("message", "현재 게임이 종료되었습니다.");
+            model.put("isWhite", chessGame.getCamp().isWhite());
+            model.put("status", chessGame.calculateStatus());
+            model.put("isRunning", false);
+            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+        }
+    }
+
+    private void processWhenRunning(final HashMap<String, Object> model) {
+        if (chessGame.isRunning()) {
+            setCurrentStateToModelMessage(model);
+            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+            model.put("isWhite", chessGame.getCamp().isWhite());
+            model.put("status", chessGame.calculateStatus());
+        }
+    }
+
     private void setCurrentStateToModelMessage(final HashMap<String, Object> model) {
-        // WebCommand에서 move 로직 실행 후 -> 체크, 체크메이트 등 별 message가 들어있지 않으면, 진행 중 메세지를 입력함.
         if (model.get("message") == null || model.get("message").equals("")) {
             model.put("message", "게임이 진행중 입니다.");
         }
-        // WebCommand에서 move 로직 실행 후 -> 체크메이트 등 에 대한 표기를 안했을 때 <-> 종료 표기를 위한 게임 진행상태도 같이 전달
         if (model.get("isRunning") == null || model.get("isRunning").equals("")) {
             model.put("isRunning", true);
         }

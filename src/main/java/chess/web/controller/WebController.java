@@ -23,9 +23,7 @@ public class WebController {
     }
 
     public void run() {
-        get("/", (req, res) -> {
-            return render(chessService.getRooms(), "index.html");
-        });
+        get("/", (req, res) -> render(chessService.getRooms(), "index.html"));
 
         post("/room/create", this::createRoomAndRedirectIndex);
 
@@ -69,12 +67,10 @@ public class WebController {
     }
 
     private void checkGameState(final Request req, final Response res) {
-        // index.html에서 시작을 안누르고  바로 game.html으로 진입하는 경우를 처리
         if (chessService.isNotExistGame()) {
             res.redirect("/");
         }
 
-        // game.html에서 명령어(종료버튼)입력시 내부게임종료상태로 확인되면 -> 바로 index.html로 redirect
         if (chessService.isEndInGameOff()) {
             res.redirect("/");
         }

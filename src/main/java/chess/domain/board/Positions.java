@@ -49,10 +49,6 @@ public class Positions {
         return before().rowDirectedDistance(after());
     }
 
-    public int calculateDirectedColumnDistance() {
-        return before().columnDirectedDistance(after());
-    }
-
     public boolean isDiagonalMove() {
         int rowDirectedDistance = calculateDirectedRowDistance();
         int columnDistance = calculateColumnDistance();

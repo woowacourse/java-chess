@@ -8,8 +8,6 @@ import java.util.List;
 public class FakeMemberDao implements MemberDao {
 
     private final HashMap<String, Member> members = new HashMap<>();
-    //    private int ids = 0;
-//    private final AtomicInteger ids = new AtomicInteger();
 
 
     @Override
@@ -19,8 +17,6 @@ public class FakeMemberDao implements MemberDao {
 
     @Override
     public void save(final Member member) {
-//        ids++;
-//        ids.incrementAndGet();
         members.put(member.getId(), member);
     }
 

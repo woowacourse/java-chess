@@ -20,7 +20,6 @@ class RoomDaoTest {
         roomDao = new RoomDao();
     }
 
-    //connection
     @DisplayName("room 테이블에 대한 connection 생성한다.")
     @Test
     void connection() {
@@ -28,7 +27,6 @@ class RoomDaoTest {
         assertThat(connection).isNotNull();
     }
 
-    //save_by_insert_into (C) with tearDown removeById(D)
     @DisplayName("room 테이블에 데이터를 생성한다.")
     @Test
     void save() {
@@ -38,7 +36,6 @@ class RoomDaoTest {
     }
 
 
-    //findById_by_select_where (R)
     @DisplayName("room 테이블에서 id를 통해 특정 데이터를 가져와 해당 class 객체로 응답받는다.")
     @Test
     void findById() {
@@ -52,7 +49,6 @@ class RoomDaoTest {
     }
 
 
-    //findAll_by_select_noWhere(R2)
     @DisplayName("room 테이블에서 모든 데이터를 가져와 해당 class 객체들들로 응받는다.")
     @Test
     void select_findAll() {
@@ -63,20 +59,7 @@ class RoomDaoTest {
         assertThat(rooms).isNotEmpty();
     }
 
-    //
-//    @DisplayName("room 테이블에 있는 특정 데이터를 id로 찾아 name 값을 변경한다.")
-//    @Test
-//    void updateNameById() {
-//        //바뀌기전 데이터
-//        roomDao.save(new LectureMember("테스트용Id", "테스트용Name"));
-//
-//        //바뀐후 데이터
-//        roomDao.updateNameById("테스트용Id", "바뀐이름");
-//        final LectureMember lectureMember = roomDao.findById("테스트용Id");
-//
-//        assertThat(lectureMember.getName()).isEqualTo("바뀐이름");
-//    }
-//
+
     @AfterEach
     void tearDown() {
         roomDao.removeById(CURRENT_CREATE_ROOM_ID);
