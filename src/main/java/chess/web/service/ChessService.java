@@ -1,13 +1,13 @@
 package chess.web.service;
 
 import chess.domain.board.ChessBoardGenerator;
-import chess.domain.dto.GameStatus;
 import chess.domain.piece.property.Team;
 import chess.domain.position.Position;
 import chess.web.dao.ChessGame;
 import chess.web.dao.ChessGameDAO;
 import chess.web.dao.Movement;
 import chess.web.dao.MovementDAO;
+import chess.web.dto.ChessGameDTO;
 import chess.web.view.Render;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -73,5 +73,13 @@ public final class ChessService {
         model.put("winner", chessGame.getChessBoard().calculateWhoWinner().toString());
 
         return model;
+    }
+
+    public List<ChessGameDTO> getGames() throws SQLException {
+        return CHESS_GAME_DAO.findActiveGames();
+    }
+
+    public ChessGameDTO findGameById(String id) {
+        return CHESS_GAME_DAO.findGameById(id);
     }
 }

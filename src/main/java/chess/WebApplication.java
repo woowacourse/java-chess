@@ -21,7 +21,6 @@ import static spark.Spark.staticFiles;
 public final class WebApplication {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
     private static final ChessService CHESS_SERVICE = new ChessService();
 
     public static void main(String[] args) {
@@ -29,7 +28,7 @@ public final class WebApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("games", CHESS_GAME_DAO.findActiveGames());
+            model.put("games", CHESS_SERVICE.getGames());
             return Render.renderHtml(model, "/lobby.html");
         });
 
@@ -40,7 +39,7 @@ public final class WebApplication {
         });
 
         get("/chess/game/:id", (req, res) -> {
-            ChessGameDTO chessGameDTO = CHESS_GAME_DAO.findGameById(req.params(":id"));
+            ChessGameDTO chessGameDTO = CHESS_SERVICE.findGameById(req.params(":id"));
             return Render.renderGame(chessGameDTO);
         });
 
