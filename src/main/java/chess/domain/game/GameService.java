@@ -23,10 +23,10 @@ public final class GameService {
     private final PositionDao<Position> chessPositionDao;
     private final PieceDao<Piece> chessPieceDao;
 
-    public GameService() {
-        this.boardDao = new ChessBoardDao(new ChessConnectionManager());
-        this.chessPositionDao = new ChessPositionDao(new ChessConnectionManager());
-        this.chessPieceDao = new ChessPieceDao(new ChessConnectionManager());
+    public GameService(BoardDao<Board> boardDao, PositionDao<Position> positionDao, PieceDao<Piece> pieceDao) {
+        this.boardDao = boardDao;
+        this.chessPositionDao = positionDao;
+        this.chessPieceDao = pieceDao;
     }
 
     public Board saveBoard(final Board board, final Initializer initializer) {

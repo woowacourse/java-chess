@@ -1,7 +1,6 @@
 package chess.domain.game;
 
-import chess.dao.ChessConnectionManager;
-import chess.dao.Member;
+import chess.dao.*;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
@@ -23,7 +22,12 @@ public class ChessController {
     private final GameService gameService;
 
     public ChessController() {
-        gameService = new GameService();
+        final ConnectionManager connectionManager = new ChessConnectionManager();
+        gameService = new GameService(
+                new ChessBoardDao(connectionManager),
+                new ChessPositionDao(connectionManager),
+                new ChessPieceDao(connectionManager)
+        );
     }
 
     public int startGame(String roomTitle, String member1, String member2) {
