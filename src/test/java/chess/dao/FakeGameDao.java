@@ -24,11 +24,6 @@ public class FakeGameDao implements GameDao {
     }
 
     @Override
-    public void updateTurn(String turn) {
-        this.gameDto = new GameDto(turn, this.gameDto.getStatus());
-    }
-
-    @Override
     public void updateStatus(GameStatusDto statusDto) {
         this.gameDto = new GameDto(this.gameDto.getTurn(), statusDto.getName());
     }

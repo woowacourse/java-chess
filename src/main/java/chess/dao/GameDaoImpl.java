@@ -55,18 +55,6 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void updateTurn(String turn) {
-        final String sql = "update game set turn = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, turn);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void updateStatus(GameStatusDto statusDto) {
         final String sql = "update game set status = ?";
         try {

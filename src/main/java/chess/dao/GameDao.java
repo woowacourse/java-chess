@@ -12,8 +12,6 @@ public interface GameDao {
 
     void update(GameDto gameDto);
 
-    void updateTurn(String turn);
-
     void updateStatus(GameStatusDto statusDto);
 
     GameDto find();
