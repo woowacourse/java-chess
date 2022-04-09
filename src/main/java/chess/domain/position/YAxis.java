@@ -37,6 +37,12 @@ public enum YAxis {
                 .collect(Collectors.toList());
     }
 
+    public static List<Position> getPositionsSameYAxisBetween(Position from, Position to) {
+        return getBetween(from.getYAxis(), to.getYAxis()).stream()
+                .map(yAxis -> Position.from(from.getXAxis(), yAxis))
+                .collect(Collectors.toList());
+    }
+
     public int subtract(YAxis other) {
         return this.value - other.value;
     }

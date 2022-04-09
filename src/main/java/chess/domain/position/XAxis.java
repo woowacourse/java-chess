@@ -37,6 +37,12 @@ public enum XAxis {
                 .collect(Collectors.toList());
     }
 
+    public static List<Position> getPositionsSameXAxisBetween(Position from, Position to) {
+        return getBetween(from.getXAxis(), to.getXAxis()).stream()
+                .map(xAxis -> Position.from(xAxis, from.getYAxis()))
+                .collect(Collectors.toList());
+    }
+
     public int getValue() {
         return value;
     }

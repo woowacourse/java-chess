@@ -1,6 +1,7 @@
 package chess.domain.board;
 
-import static chess.domain.position.direction.DirectionUtil.*;
+import static chess.domain.position.XAxis.getPositionsSameXAxisBetween;
+import static chess.domain.position.YAxis.getPositionsSameYAxisBetween;
 
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
@@ -9,7 +10,6 @@ import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.direction.DiagonalDirection;
 import chess.domain.position.direction.Direction;
-import chess.dto.BoardDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +60,7 @@ public class Board {
 
         Direction direction = new DiagonalDirection();
         if (direction.isOnDirection(from, to)) {
-            return hasAnyPiece(getPositionsSameDirectionDiagonalBetween(from, to));
+            return hasAnyPiece(Position.getPositionsSameDirectionDiagonalBetween(from, to));
         }
 
         return false;
