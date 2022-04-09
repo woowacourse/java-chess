@@ -13,7 +13,7 @@ public abstract class Piece {
 
     public Piece(Color color, PieceType pieceType) {
         this.color = color;
-        this.pieceType=pieceType;
+        this.pieceType = pieceType;
         this.moveCount = 0;
     }
 
@@ -34,23 +34,23 @@ public abstract class Piece {
         return this;
     }
 
-    public boolean isBlank(){
+    public boolean isBlank() {
         return false;
     }
 
-    public boolean isPawn(){
+    public boolean isPawn() {
         return false;
     }
 
-    public boolean isKing(){
+    public boolean isKing() {
         return false;
     }
 
-    public boolean isRook(){
+    public boolean isRook() {
         return false;
     }
 
-    public boolean isEnPassantAvailable(){
+    public boolean isEnPassantAvailable() {
         return false;
     }
 
@@ -63,6 +63,10 @@ public abstract class Piece {
     public abstract double score();
 
     public String getPieceName() {
-        return (pieceType.name()+color.name()).toLowerCase();
+        return (pieceType.name() + color.name()).toLowerCase();
+    }
+
+    public int getMoveCount() {
+        return moveCount;
     }
 }

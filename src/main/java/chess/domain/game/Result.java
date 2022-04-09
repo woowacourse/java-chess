@@ -22,7 +22,7 @@ public class Result {
 
         this.isGameFinished = this.scores.stream()
                 .map(Score::getScore)
-                .anyMatch(score -> Math.abs(score) < 0.1);
+                .anyMatch(score -> Double.compare(score, 0) == 0);
     }
 
     private Color decideWinner(Map<Color, Double> scores) {
@@ -35,7 +35,7 @@ public class Result {
     private boolean isDraw(Map<Color, Double> scores) {
         double whiteScore = scores.get(Color.WHITE);
         double blackScore = scores.get(Color.BLACK);
-        return Math.abs(whiteScore - blackScore) < 0.1;
+        return Double.compare(whiteScore, blackScore) == 0;
     }
 
     public double getScoresOf(Color color) {

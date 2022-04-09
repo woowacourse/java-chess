@@ -60,7 +60,6 @@ $(document).ready(function () {
 // 체스 기물 초기화
 function printChessBoardAndStatus(response) {
     let isGameFinished = response["result"]["isGameFinished"];
-    console.log("isGameFinished: " + isGameFinished);
     if (isGameFinished) {
         location.replace("/end.html");
     }
@@ -73,15 +72,10 @@ function printChessBoardAndStatus(response) {
         piece.src = "../img/piece/" + item.piece + ".png";
         piece.id = item.piece;
         piece.className = "piece";
-        console.log(piece.src);
-        console.log(item.piece);
-        console.log(item.position);
         $("#" + item.position).append(piece);
     });
 
     let scores = response["result"]["scores"];
-    //console.log("Score");
-    //console.dir(response["result"]);
     scores.forEach(function (item) {
         if (item.color == "WHITE") {
             $("#white-score").text(item.score+" pt");
