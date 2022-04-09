@@ -4,10 +4,13 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.view.console.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public final class Bishop extends Piece {
     private static final List<Integer> BISHOP_ANGLES = List.of(45, -45, -135, 135);
-    private static final double SCORE = 3.0;
+    private static final Map<Color, Symbol> SYMBOL = Map.of(
+            Color.WHITE, Symbol.BISHOP_WHITE,
+            Color.BLACK, Symbol.BISHOP_BLACK);
 
     public Bishop(Color color) {
         super(color);
@@ -28,6 +31,11 @@ public final class Bishop extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Symbol.getScore(SYMBOL.get(this.color));
+    }
+
+    @Override
+    public String getName() {
+        return Symbol.getName(SYMBOL.get(this.color));
     }
 }

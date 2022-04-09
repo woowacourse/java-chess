@@ -4,10 +4,13 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.view.console.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public final class Queen extends Piece {
     private static final List<Integer> QUEEN_ANGLES = List.of(90, 45, 0, -45, -90, -135, 180, 135);
-    private static final double SCORE = 9.0;
+    private static final Map<Color, Symbol> SYMBOL = Map.of(
+            Color.WHITE, Symbol.QUEEN_WHITE,
+            Color.BLACK, Symbol.QUEEN_BLACK);
 
     public Queen(Color color) {
         super(color);
@@ -28,6 +31,11 @@ public final class Queen extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Symbol.getScore(SYMBOL.get(this.color));
+    }
+
+    @Override
+    public String getName() {
+        return Symbol.getName(SYMBOL.get(this.color));
     }
 }
