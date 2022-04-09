@@ -1,5 +1,7 @@
 package chess.dto;
 
+import java.util.Objects;
+
 public class ResponseDto {
 
     private final String code;
@@ -12,4 +14,21 @@ public class ResponseDto {
         this.turn = turn;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ResponseDto that = (ResponseDto) o;
+        return Objects.equals(code, that.code) && Objects.equals(message, that.message)
+                && Objects.equals(turn, that.turn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, message, turn);
+    }
 }
