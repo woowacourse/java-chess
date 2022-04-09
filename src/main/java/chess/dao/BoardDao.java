@@ -1,7 +1,6 @@
 package chess.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,41 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.dto.SquareDto;
+import chess.exception.DataAccessException;
 
 public class BoardDao {
 
-    private final String URL = "jdbc:mysql://localhost:3306/chess";
-    private final String USER = "user";
-    private final String PASSWORD = "password";
-
-    private Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return connection;
-    }
+    private final DBConnection dbConnection = new DBConnection();
 
     public void updateBoardSquare(final String position, final String piece, final String color) {
         final String query = "UPDATE board SET piece = ? , color = ? WHERE position=?";
-        try (Connection connection = getConnection();
+        try (Connection connection = dbConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, piece);
             statement.setString(2, color);
             statement.setString(3, position);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("[DATABASE_ERROR] 체스 말 업데이트 실패");
         }
     }
 
     public List<SquareDto> getBoardSquares() {
         final String query = "SELECT * FROM board";
         final List<SquareDto> squares = new ArrayList<>();
-        try (Connection connection = getConnection();
+        try (Connection connection = dbConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -51,9 +38,8 @@ public class BoardDao {
             }
             return squares;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("[DATABASE_ERROR] 보드 정보 가져오기 실패");
         }
-        return null;
     }
 
     private void addSquare(final List<SquareDto> squares, final ResultSet resultSet) throws SQLException {
