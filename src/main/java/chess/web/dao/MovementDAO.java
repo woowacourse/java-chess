@@ -2,7 +2,7 @@ package chess.web.dao;
 
 import chess.domain.position.Position;
 import chess.view.OutputView;
-import chess.web.connection.DBConnectionUtils;
+import chess.utils.DBConnectionUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

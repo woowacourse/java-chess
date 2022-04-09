@@ -1,4 +1,4 @@
-package chess.web.connection;
+package chess.utils;
 
 import chess.view.OutputView;
 import java.sql.Connection;

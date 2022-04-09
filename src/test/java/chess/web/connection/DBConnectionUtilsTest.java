@@ -1,5 +1,6 @@
 package chess.web.connection;
 
+import chess.utils.DBConnectionUtils;
 import java.sql.Connection;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

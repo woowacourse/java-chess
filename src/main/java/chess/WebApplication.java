@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.piece.property.Team;
+import chess.utils.JsonConvertor;
 import chess.web.dao.ChessGame;
 import chess.web.dao.ChessGameDAO;
 import chess.web.dto.ChessGameDTO;
@@ -20,7 +21,6 @@ import static spark.Spark.staticFiles;
 
 public final class WebApplication {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final ChessService CHESS_SERVICE = new ChessService();
 
     public static void main(String[] args) {
@@ -46,7 +46,7 @@ public final class WebApplication {
         get("/chess/game/:id/board", (req, res) -> {
             ChessGame chessGame = CHESS_SERVICE.replayedChessGame(req.params(":id"));
             Map<String, Object> model = Render.renderBoard(chessGame);
-            return GSON.toJson(model);
+            return JsonConvertor.toJson(model);
         });
 
         post("/chess/game/:id/move", (req, res) -> {
@@ -55,7 +55,7 @@ public final class WebApplication {
             Team team = Team.valueOf(req.queryParams("team"));
 
             Map<String, Object> model = CHESS_SERVICE.movePiece(req.params(":id"), source, target, team);
-            return GSON.toJson(model);
+            return JsonConvertor.toJson(model);
         });
 
         exception(Exception.class, (e, request, response) -> {

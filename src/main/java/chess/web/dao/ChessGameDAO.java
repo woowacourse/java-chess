@@ -1,7 +1,7 @@
 package chess.web.dao;
 
 import chess.view.OutputView;
-import chess.web.connection.DBConnectionUtils;
+import chess.utils.DBConnectionUtils;
 import chess.web.dto.ChessGameDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
