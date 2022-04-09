@@ -66,7 +66,7 @@ public class PieceDao {
         }
     }
 
-    public Pieces findAll(String gameId) {
+    public Pieces findAllByGameId(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "select name, color, position from piece where game_id = ?";
         final List<Piece> members = new ArrayList<>();
@@ -105,7 +105,7 @@ public class PieceDao {
         return null;
     }
 
-    public void deleteAll(String gameId) {
+    public void deleteAllByGameId(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "delete from piece where game_id = ?";
         try {

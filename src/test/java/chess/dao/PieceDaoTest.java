@@ -67,11 +67,11 @@ public class PieceDaoTest {
     }
 
     @Test
-    void deleteAll() {
+    void deleteAllByGameId() {
         gameDao.create(gameId);
-        pieceDao.deleteAll(gameId);
+        pieceDao.deleteAllByGameId(gameId);
 
-        final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
+        final List<Piece> pieces = pieceDao.findAllByGameId(gameId).getPieces();
 
         assertThat(pieces.size()).isEqualTo(0);
     }
@@ -87,11 +87,11 @@ public class PieceDaoTest {
     }
 
     @Test
-    void findAll() {
+    void findAllByGameId() {
         gameDao.create(gameId);
         pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
 
-        final List<Piece> pieces = pieceDao.findAll(gameId).getPieces();
+        final List<Piece> pieces = pieceDao.findAllByGameId(gameId).getPieces();
 
         assertThat(pieces.size()).isNotEqualTo(0);
     }
