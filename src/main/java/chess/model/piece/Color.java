@@ -22,6 +22,6 @@ public enum Color {
         return Arrays.stream(values())
                 .filter(color -> color.name().equals(name))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("알맞은 팀이 아닙니다: " + name));
     }
 }

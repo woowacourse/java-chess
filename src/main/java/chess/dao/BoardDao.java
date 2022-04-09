@@ -27,7 +27,7 @@ public class BoardDao {
             final MemberDao memberDao = new MemberDao(new ConnectionManager());
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("보드가 없습니다.");
+                throw new IllegalArgumentException("보드가 없습니다. 방 제목: " + board.getTitle());
             }
             return new Board(
                     generatedKeys.getInt(1),
@@ -61,7 +61,7 @@ public class BoardDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             final MemberDao memberDao = new MemberDao(new ConnectionManager());
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("그런 보드 없습니다.");
+                throw new IllegalArgumentException("그런 보드 없습니다. 방 id: " + id);
             }
             return new Board(
                     resultSet.getInt("id"),

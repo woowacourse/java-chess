@@ -35,7 +35,7 @@ public class Square {
     }
 
     public static Square fromString(String square) {
-        File file = File.findFile(Character.toString(square.charAt(ROW_INDEX)));
+        File file = File.findFileByName(Character.toString(square.charAt(ROW_INDEX)));
         Rank rank = Rank.findRank(Integer.parseInt(String.valueOf(square.charAt(COL_INDEX))));
         return new Square(file, rank);
     }

@@ -46,7 +46,7 @@ public class SquareDao {
             final ResultSet resultSet = findSquare(square.getFile(), square.getRank(), boardId, connection);
             return new Square(
                     resultSet.getInt("id"),
-                    File.findFile(resultSet.getInt("square_file")),
+                    File.findFileByValue(resultSet.getInt("square_file")),
                     Rank.findRank(resultSet.getInt("square_rank")),
                     resultSet.getInt("board_id")
             );
@@ -63,7 +63,7 @@ public class SquareDao {
         preparedStatement.setInt(3, boardId);
         final ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) {
-            throw new IllegalArgumentException("위치가 존재하지 않습니다.");
+            throw new IllegalArgumentException("위치가 존재하지 않습니다." + file.name() + rank.name());
         }
         return resultSet;
     }
@@ -117,7 +117,7 @@ public class SquareDao {
 
     private Square makeSquare(ResultSet resultSet) throws SQLException {
         return new Square(resultSet.getInt("po_id"),
-                File.findFile(resultSet.getInt("square_file")),
+                File.findFileByValue(resultSet.getInt("square_file")),
                 Rank.findRank(resultSet.getInt("square_rank")),
                 resultSet.getInt("board_id"));
     }

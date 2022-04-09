@@ -42,7 +42,7 @@ public class MemberDao {
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("저장에 실패하였습니다.");
+                throw new IllegalArgumentException("저장에 실패하였습니다: " + name);
             }
             return new Member(generatedKeys.getInt(1), name, boardId);
         });

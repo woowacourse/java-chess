@@ -24,7 +24,7 @@ public enum PieceType {
         return Arrays.stream(values())
                 .filter(pieceType -> pieceType.name().equals(name))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다: " + name))
                 .function.mapToPiece(pieceId, color, squareId);
     }
 

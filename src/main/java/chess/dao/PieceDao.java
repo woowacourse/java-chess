@@ -29,7 +29,7 @@ public class PieceDao {
             preparedStatement.executeUpdate();
             final ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("피스를 찾지 못했습니다.");
+                throw new IllegalArgumentException("피스를 찾지 못했습니다." + piece.name());
             }
             return PieceType.getPiece(
                     piece.name(),

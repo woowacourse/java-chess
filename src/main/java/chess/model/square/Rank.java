@@ -24,7 +24,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == rawRank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 입니다: " + rawRank));
     }
 
     public boolean availableLocation(int distance) {
@@ -36,7 +36,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == this.value + value)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 입니다: " + value));
     }
 
     public int value() {
