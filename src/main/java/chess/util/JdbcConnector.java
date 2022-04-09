@@ -14,7 +14,11 @@ public class JdbcConnector {
     }
 
     public static Connection getConnection() {
-        loadDriver(); // 드라이브를 등록하기 위한 동작
+        return Holder.connection;
+    }
+
+    private static Connection createConnection() {
+        loadDriver();
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -33,4 +37,10 @@ public class JdbcConnector {
         }
         return null;
     }
+
+    private static class Holder {
+        private static final Connection connection = createConnection();
+    }
 }
+
+
