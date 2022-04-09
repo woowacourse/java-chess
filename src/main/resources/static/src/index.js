@@ -53,6 +53,24 @@ async function sendStatus() {
         });
 }
 
+async function sendBoard() {
+    let state = "";
+    await fetch("/load")
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === "success") {
+                loadData(data);
+                state = data.state;
+            } else {
+                alert(data.message);
+            }
+        });
+
+    if(state === "finished") {
+        alert("게임이 종료되었습니다.");
+    }
+}
+
 async function move(event) {
     const id = event.currentTarget.id;
     const divClassName = document.getElementById(id).classList;
@@ -81,7 +99,7 @@ async function requestMove() {
         .then(response => response.json())
         .then(data => {
             if (data.code === "success") {
-                loadData(data);
+                sendBoard();
             } else {
                 alert(data.message);
             }
@@ -137,7 +155,7 @@ function setPiece(div, piece) {
 }
 
 
-function loadState(state, turn) {
+async function loadState(state, turn) {
     document.getElementsByClassName('state')[0].textContent = state;
     document.getElementsByClassName('chessBox')[0].style.visibility = 'visible';
 
@@ -147,6 +165,5 @@ function loadState(state, turn) {
     }
     if (state === "finished") {
         document.getElementsByClassName('chessBox')[0].style.visibility = 'visible';
-        alert("게임이 종료되었습니다.");
     }
 }

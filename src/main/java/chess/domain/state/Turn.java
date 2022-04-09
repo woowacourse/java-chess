@@ -4,7 +4,8 @@ import chess.domain.piece.PieceColor;
 
 public enum Turn {
     WHITE(PieceColor.WHITE),
-    BLACK(PieceColor.BLACK)
+    BLACK(PieceColor.BLACK),
+    NONE(PieceColor.NONE)
     ;
 
     private PieceColor pieceColor;

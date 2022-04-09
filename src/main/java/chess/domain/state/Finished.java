@@ -48,7 +48,7 @@ public class Finished implements State {
 
     @Override
     public Turn turn() {
-        throw new UnsupportedOperationException("이미 종료되었습니다.");
+        return Turn.NONE;
     }
 
     @Override
