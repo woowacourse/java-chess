@@ -18,13 +18,13 @@ public class ChessGameRepository implements ChessGameDao {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                return null;
+                return -1L;
             }
             return generatedKeys.getLong(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return -1L;
     }
 
     @Override
@@ -35,13 +35,13 @@ public class ChessGameRepository implements ChessGameDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                return Color.NONE;
             }
             return Color.from(resultSet.getString("turn"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Color.NONE;
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class BoardRepository implements BoardDao{
+public class BoardRepository implements BoardDao {
 
     @Override
     public void saveAll(final Long gameId, final Board board) {
@@ -54,7 +54,7 @@ public class BoardRepository implements BoardDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new Board(board);
     }
 
     @Override

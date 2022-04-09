@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 
 public class ChessService {
 
+    private static final long NOT_SAVE_GAME_ID = -1L;
+
     private final ChessGameDao chessGameDao;
     private final BoardDao boardDao;
 
@@ -30,6 +32,9 @@ public class ChessService {
 
     public String start() {
         final Long gameId = chessGameDao.save(Color.WHITE);
+        if (gameId.equals(NOT_SAVE_GAME_ID)){
+            start();
+        }
         boardDao.saveAll(gameId, Board.create());
         return String.valueOf(gameId);
     }

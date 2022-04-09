@@ -76,10 +76,12 @@ async function syncBoard() {
         body: JSON.stringify(data)
     }).then(res => res.json())
         .then(res => {
-            console.log(res);
             const positions = Object.keys(res);
             const pieces = Object.values(res);
-
+            if (positions.length!==64){
+                alert("잘못된 게임이 생성됐습니다!\n처음 화면으로 돌아갑니다.")
+                window.location.replace("http://localhost:8080/");
+            }
             const cells = document.querySelectorAll(".chessColumn");
             for (let i = 0; i < cells.length; i++) {
                 if (cells[i].getElementsByTagName("img")[0]) {
@@ -115,6 +117,11 @@ async function changeTurn() {
     }).then(res => {
         return res.json();
     });
+    console.log(turn);
+    if (turn === ""){
+        alert("잘못된 게임이 생성됐습니다!\n처음 화면으로 돌아갑니다.")
+        window.location.replace("http://localhost:8080/");
+    }
     const turnMessage = document.querySelector(".turn");
     turnMessage.textContent = turn;
 }
