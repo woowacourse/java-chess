@@ -79,17 +79,23 @@
                                  src="img/room.jpg"/>
                             <!--room content-->
                             <div class="class-container">
-                                <!--room id & join -->
+                                <!--room id +  수정/삭제 -->
                                 <div class="class-skill">
                                     <div class="class-type">{{id}}번방</div>
+
+                                    <div class="class-update">수정</div>
+                                    <div class="class-delete">삭제</div>
+
+                                </div>
+                                <!--room title + enter-->
+                                <div class="class-title-container">
+                                    <div class="class-title">{{name}}</div>
                                     {{#if canJoin}}
-                                    <div class="class-join">입장</div>
+                                    <div class="class-join">입 장</div>
                                     {{else}}
-                                    <div class="class-join">입장불가</div>
+                                    <div class="class-join">입장 불가</div>
                                     {{/if}}
                                 </div>
-                                <!--room title-->
-                                <div class="class-title">{{name}}</div>
                             </div>
 
                         </li>
