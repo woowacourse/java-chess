@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.InitialPositionPieceGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
@@ -58,7 +59,7 @@ public class PieceDao {
     }
 
     public void deleteByPosition(Square target) {
-        final String sql = "delete from piece where position = ?";
+        String sql = "delete from piece where position = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, target.getName());
@@ -74,6 +75,20 @@ public class PieceDao {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, target.getName());
             statement.setString(2, source.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertNone(String gameID, Square source) {
+        String sql = "insert into piece (position, type, color, gameID) values (?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, source.getName());
+            statement.setString(2, InitialPositionPieceGenerator.NONE.name());
+            statement.setString(3, Color.NONE.name());
+            statement.setString(4, gameID);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

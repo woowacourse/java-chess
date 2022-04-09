@@ -10,6 +10,7 @@ import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.GameResult;
 import chess.domain.GameTurn;
+import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.SavedBoardGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
@@ -59,8 +60,16 @@ public class WebController {
 
         get("/ingame", (request, response) -> {
             String gameID = request.queryParams("gameID");
-            GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
-            ChessGame chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            ChessGame chessGame;
+            try {
+                GameTurn gameTurn = GameTurn.find(chessGameDao.findTurnByID(gameID));
+                if (GameTurn.FINISHED.equals(gameTurn)) {
+                    throw new IllegalArgumentException();
+                }
+                chessGame = new ChessGame(new SavedBoardGenerator(pieceDao.findByGameID(gameID)), gameTurn);
+            } catch (IllegalArgumentException e) {
+                chessGame = new ChessGame(new InitialBoardGenerator(), GameTurn.READY);
+            }
             chessGame.startGame();
 
             chessGameDao.save(gameID, chessGame);
@@ -92,6 +101,7 @@ public class WebController {
                 chessGame.move(new Square(source), new Square(target));
                 pieceDao.deleteByPosition(new Square(target));
                 pieceDao.updatePosition(new Square(source), new Square(target));
+                pieceDao.insertNone(gameID, new Square(source));
 
                 chessGameDao.updateTurn(gameID, chessGame);
 
