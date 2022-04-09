@@ -100,7 +100,7 @@ public class GameService {
 
     private void deletePreviousPieces(int boardId) {
         Optional<PieceDto> piece = pieceDao.findOne(boardId, "a1");
-        if (!piece.isEmpty()) {
+        if (piece.isPresent()) {
             pieceDao.deleteAll(boardId);
         }
     }
