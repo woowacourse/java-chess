@@ -30,13 +30,9 @@ public class ChessWebController {
     }
 
     public void run() {
-        get("/", (req, res) -> {
-            return render(new HashMap<>(), "lobby.html");
-        });
+        get("/", (req, res) -> render(new HashMap<>(), "lobby.html"));
 
-        get("/load/games", (req, res) -> {
-            return GSON.toJson(loadGames());
-        });
+        get("/load/games", (req, res) -> GSON.toJson(loadGames()));
 
         get("/game", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
@@ -69,9 +65,7 @@ public class ChessWebController {
             return GSON.toJson(move(moveDto.getId(), moveDto));
         });
 
-        exception(Exception.class, (e, req, res) -> {
-            res.body(GSON.toJson(new ErrorResponseDto(e.getMessage())));
-        });
+        exception(Exception.class, (e, req, res) -> res.body(GSON.toJson(new ErrorResponseDto(e.getMessage()))));
     }
 
     private String render(final Map<String, Object> model, final String templatePath) {
