@@ -1,11 +1,11 @@
 package chess.dto;
 
-public class ChessGameInfoDTO {
+public class ChessGameRoomInfoDTO {
 
     private final String id;
     private final String name;
 
-    public ChessGameInfoDTO(final String id, final String name) {
+    public ChessGameRoomInfoDTO(final String id, final String name) {
         this.id = id;
         this.name = name;
     }

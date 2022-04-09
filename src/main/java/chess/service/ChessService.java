@@ -7,7 +7,7 @@ import chess.dao.ChessGame;
 import chess.dao.ChessGameDAO;
 import chess.dao.Movement;
 import chess.dao.MovementDAO;
-import chess.dto.ChessGameInfoDTO;
+import chess.dto.ChessGameRoomInfoDTO;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -67,11 +67,11 @@ public final class ChessService {
         return model;
     }
 
-    public List<ChessGameInfoDTO> getGames() throws SQLException {
+    public List<ChessGameRoomInfoDTO> getGames() throws SQLException {
         return CHESS_GAME_DAO.findActiveGames();
     }
 
-    public ChessGameInfoDTO findGameById(String id) {
+    public ChessGameRoomInfoDTO findGameById(String id) {
         return CHESS_GAME_DAO.findGameById(id);
     }
 

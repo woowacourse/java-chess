@@ -4,7 +4,7 @@ import chess.dto.GameStatus;
 import chess.domain.piece.property.Team;
 import chess.dao.ChessGame;
 import chess.dto.BoardDTO;
-import chess.dto.ChessGameInfoDTO;
+import chess.dto.ChessGameRoomInfoDTO;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -37,7 +37,7 @@ public class Render {
         model.put("currentWhiteScore", whiteScore);
     }
 
-    public static String renderGame(ChessGameInfoDTO chessGameDTO) {
+    public static String renderGame(ChessGameRoomInfoDTO chessGameDTO) {
         Map<String, Object> model = new HashMap<>();
         model.put("gameId", chessGameDTO.getId());
         model.put("gameName", chessGameDTO.getName());

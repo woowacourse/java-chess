@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.view.OutputView;
 import chess.utils.DBConnectionUtils;
-import chess.dto.ChessGameInfoDTO;
+import chess.dto.ChessGameRoomInfoDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,15 +31,15 @@ public class ChessGameDAO {
         return gameId;
     }
 
-    public List<ChessGameInfoDTO> findActiveGames() throws SQLException {
+    public List<ChessGameRoomInfoDTO> findActiveGames() throws SQLException {
         String query = "SELECT * FROM CHESS_GAME WHERE IS_END = false";
         Connection connection = DBConnectionUtils.getConnection();
-        List<ChessGameInfoDTO> chessGameDTOs = new ArrayList<>();
+        List<ChessGameRoomInfoDTO> chessGameDTOs = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             while(rs.next()){
-                ChessGameInfoDTO chessGameDTO = new ChessGameInfoDTO(rs.getString("id"), rs.getString("name"));
+                ChessGameRoomInfoDTO chessGameDTO = new ChessGameRoomInfoDTO(rs.getString("id"), rs.getString("name"));
                 chessGameDTOs.add(chessGameDTO);
             }
             DBConnectionUtils.closeConnection(connection);
@@ -49,7 +49,7 @@ public class ChessGameDAO {
         return chessGameDTOs;
     }
 
-    public ChessGameInfoDTO findGameById(final String gameId) {
+    public ChessGameRoomInfoDTO findGameById(final String gameId) {
         String query = "SELECT * FROM CHESS_GAME WHERE ID = ? AND IS_END = FALSE ORDER BY created_at";
         Connection connection = DBConnectionUtils.getConnection();
 
@@ -58,7 +58,7 @@ public class ChessGameDAO {
             statement.setString(1, gameId);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            return new ChessGameInfoDTO(rs.getString("id"), rs.getString("name"));
+            return new ChessGameRoomInfoDTO(rs.getString("id"), rs.getString("name"));
         } catch (SQLException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
