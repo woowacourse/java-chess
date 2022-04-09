@@ -28,7 +28,7 @@ public class GameDao extends Dao {
 
             return ChessGameDto.from(gameId, resultSet.getString("turn"));
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -40,7 +40,7 @@ public class GameDao extends Dao {
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class GameDao extends Dao {
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ public class GameDao extends Dao {
             preparedStatement.setString(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 }

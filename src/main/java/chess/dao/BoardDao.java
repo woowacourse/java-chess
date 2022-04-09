@@ -42,7 +42,7 @@ public class BoardDao extends Dao {
 
             return BoardDto.from(boardValue);
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(5, createPieceDto.getPieceColorName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(3, deletePieceDto.getYAxisValueAsString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -92,7 +92,7 @@ public class BoardDao extends Dao {
             preparedStatement.setString(5, updatePiecePositionDto.getGameId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException();
+            throw new DatabaseException(e.getMessage());
         }
     }
 }
