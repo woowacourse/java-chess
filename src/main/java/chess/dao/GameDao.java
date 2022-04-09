@@ -1,27 +1,12 @@
 package chess.dao;
 
-import chess.dto.GameDto;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import static chess.dao.Connector.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GameDao {
-
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
 
     public int findGameId() {
         final String sql = "select id from game order by id DESC LIMIT 1";
@@ -29,7 +14,7 @@ public class GameDao {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
-                    return 0;
+                    throw new RuntimeException();
                 }
                 return resultSet.getInt("id");
             }
@@ -38,7 +23,7 @@ public class GameDao {
         }
     }
 
-    public GameDto findGameState() {
+    public String findGameState() {
         final String sql = "select * from game order by id DESC LIMIT 1";
 
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
@@ -46,29 +31,29 @@ public class GameDao {
                 if (!resultSet.next()) {
                     return null;
                 }
-                return new GameDto(resultSet.getString("state"));
+                return resultSet.getString("state");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void save(final GameDto gameDto) {
+    public void save(final String state) {
         final String sql = "insert into game (state) values (?)";
 
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setString(1, gameDto.getState());
+            statement.setString(1, state);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void update(final GameDto gameDto, int gameId) {
+    public void update(final String state, int gameId) {
         final String sql = "update game set state = (?) where id = (?)";
 
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setString(1, gameDto.getState());
+            statement.setString(1, state);
             statement.setInt(2, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {

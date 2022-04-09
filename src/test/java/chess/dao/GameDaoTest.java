@@ -3,7 +3,6 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import chess.dto.GameDto;
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,14 +18,14 @@ public class GameDaoTest {
 
     @Test
     void connection() {
-        final Connection connection = gameDao.getConnection();
+        final Connection connection = Connector.getConnection();
         assertThat(connection).isNotNull();
     }
 
     @Test
     void save() {
         assertThatCode(() -> {
-            gameDao.save(new GameDto("blackrunning"));
+            gameDao.save("blackrunning");
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());
@@ -34,7 +33,7 @@ public class GameDaoTest {
 
     @Test
     void findAGameId() {
-        gameDao.save(new GameDto("whiterunning"));
+        gameDao.save("whiterunning");
 
         assertThat(gameDao.findGameId()).isInstanceOf(Integer.class);
 
@@ -43,9 +42,8 @@ public class GameDaoTest {
 
     @Test
     void findAGameState() {
-        gameDao.save(new GameDto("whiterunning"));
-        GameDto gameState = gameDao.findGameState();
-        String state = gameState.getState();
+        gameDao.save("whiterunning");
+        String state = gameDao.findGameState();
 
         assertThat(state).isEqualTo("whiterunning");
 
@@ -55,8 +53,8 @@ public class GameDaoTest {
     @Test
     void update() {
         assertThatCode(() -> {
-            gameDao.save(new GameDto("blackrunning"));
-            gameDao.update(new GameDto("blackrunning"), gameDao.findGameId());
+            gameDao.save("blackrunning");
+            gameDao.update("blackrunning", gameDao.findGameId());
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());
@@ -64,7 +62,7 @@ public class GameDaoTest {
 
     @Test
     void delete() {
-        gameDao.save(new GameDto("blackrunning"));
+        gameDao.save("blackrunning");
 
         assertThatCode(() -> {
             gameDao.delete(gameDao.findGameId());

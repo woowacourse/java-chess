@@ -1,8 +1,8 @@
 package chess.dao;
 
+import static chess.dao.Connector.getConnection;
+
 import chess.dto.BoardDto;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,20 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDao {
-
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
 
     public List<BoardDto> findAll() {
         final String sql = "select position, symbol, color from board";

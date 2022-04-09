@@ -4,7 +4,6 @@ import chess.dao.GameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.dto.GameDto;
 import java.util.Locale;
 
 public class GameService {
@@ -19,9 +18,7 @@ public class GameService {
         State state = chessGame.getState();
         String nowState = state.toString().toLowerCase(Locale.ROOT);
 
-        GameDto gameDto = new GameDto(nowState);
-
-        gameDao.save(gameDto);
+        gameDao.save(nowState);
     }
 
     public int findGameId() {
@@ -30,9 +27,8 @@ public class GameService {
 
     public State loadState() {
         try {
-            GameDto gameDto = gameDao.findGameState();
-            String value = gameDto.getState();
-            return State.of(value);
+            String state = gameDao.findGameState();
+            return State.of(state);
         } catch (NullPointerException e) {
             return new Ready();
         }
@@ -42,10 +38,9 @@ public class GameService {
         State state = chessGame.getState();
         String nowState = state.toString().toLowerCase(Locale.ROOT);
 
-        GameDto gameDto = new GameDto(nowState);
         int gameId = findGameId();
 
-        gameDao.update(gameDto, gameId);
+        gameDao.update(nowState, gameId);
     }
 
     public void delete() {
