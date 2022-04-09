@@ -9,7 +9,7 @@ public class Connector {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public static Connection getConnection() {
+    static Connection getConnection() {
         loadDriver();
         Connection connection = null;
         try {
