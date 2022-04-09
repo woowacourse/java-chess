@@ -61,7 +61,7 @@ public class Service {
 
     public void loadPieces(String gameID) {
         pieceDao.deleteAll(gameID);
-        pieceDao.insertPieces(gameID);
+        pieceDao.save(gameID);
     }
 
     public GameResult getGameResult(String gameID) {

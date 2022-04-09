@@ -130,7 +130,9 @@ public class WebController {
     }
 
     public Map<String, Object> addGameID(String gameID) {
-        return Map.of("gameID", gameID);
+        Map<String, Object> model = new HashMap<>();
+        model.put("gameID", gameID);
+        return model;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
