@@ -3,11 +3,11 @@ package chess.domain;
 import chess.controller.dto.GameStatusDto;
 import chess.controller.dto.ScoreDto;
 import chess.dao.BoardDao;
-import chess.dao.BoardDaoImpl;
+import chess.dao.JdbcBoardDao;
 import chess.dao.GameStatusDao;
-import chess.dao.GameStatusDaoImpl;
+import chess.dao.JdbcGameStatusDao;
 import chess.dao.TurnDao;
-import chess.dao.TurnDaoImpl;
+import chess.dao.JdbcTurnDao;
 import chess.domain.board.Board;
 import chess.domain.board.Result;
 import chess.domain.board.strategy.BoardGenerationStrategy;
@@ -31,9 +31,9 @@ public class ChessGameService {
     private final GameStatusDao gameStatusDao;
 
     public ChessGameService() {
-        boardDao = new BoardDaoImpl();
-        turnDao = new TurnDaoImpl();
-        gameStatusDao = new GameStatusDaoImpl();
+        boardDao = new JdbcBoardDao();
+        turnDao = new JdbcTurnDao();
+        gameStatusDao = new JdbcGameStatusDao();
     }
 
     public GameStatusDto startChessGame(BoardGenerationStrategy strategy) {

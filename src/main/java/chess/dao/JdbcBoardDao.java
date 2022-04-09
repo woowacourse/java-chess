@@ -1,6 +1,6 @@
 package chess.dao;
 
-import static chess.dao.GameStatusDaoImpl.*;
+import static chess.dao.JdbcGameStatusDao.*;
 
 import chess.util.JdbcConnector;
 import java.sql.Connection;
@@ -11,13 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class BoardDaoImpl implements BoardDao {
+public class JdbcBoardDao implements BoardDao {
 
     private final Connection connection = JdbcConnector.getConnection();
 
     @Override
     public void update(String position, String piece) {
         String sql = "update board set piece = ? where position = ?";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(PARAMETER_FIRST_INDEX, piece);
             preparedStatement.setString(PARAMETER_SECOND_INDEX, position);
@@ -31,15 +32,14 @@ public class BoardDaoImpl implements BoardDao {
     public Map<String, String> getBoard() {
         final String sql = "select * from board";
 
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             final ResultSet resultSet = statement.executeQuery();
 
             Map<String, String> board = new HashMap<>();
-
             while (resultSet.next()) {
                 board.put(resultSet.getString("position"), resultSet.getString("piece"));
             }
+
             return board;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,10 +50,9 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void reset(final Map<String, String> board) {
         removeAll();
-
         final String sql = "insert into board (position, piece) values (?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             for (Entry<String, String> boardEntry : board.entrySet()) {
                 preparedStatement.setString(PARAMETER_FIRST_INDEX, boardEntry.getKey());
                 preparedStatement.setString(PARAMETER_SECOND_INDEX, boardEntry.getValue());
