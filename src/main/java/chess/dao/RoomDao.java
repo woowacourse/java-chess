@@ -1,6 +1,8 @@
 package chess.dao;
 
 import chess.database.DBConnection;
+import chess.domain.Team;
+import chess.dto.RoomDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +13,8 @@ import java.util.Map;
 
 public class RoomDao {
     final Connection connection = DBConnection.getConnection();
-    public Map<String, String> findById(int roomId) {
+
+    public RoomDto findById(int roomId) {
         final String sql = "select * from room  where id = ?";
         try {
             Map<String, String> model = new HashMap<>();
@@ -21,9 +24,9 @@ public class RoomDao {
             if (!resultSet.next()) {
                 return null;
             }
-            model.put("id", resultSet.getString("id"));
-            model.put("status", resultSet.getString("status"));
-            return model;
+            Long id = resultSet.getLong("id");
+            Team status = Team.find(resultSet.getString("status"));
+            return new RoomDto(id, status);
         } catch (SQLException e) {
             e.printStackTrace();
         }

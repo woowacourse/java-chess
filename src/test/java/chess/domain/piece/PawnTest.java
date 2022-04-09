@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
-import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
-import chess.dto.MoveDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,14 +73,5 @@ class PawnTest {
                     pawn.findPath(position, Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
-    }
-
-    @Test
-    void test() {
-        Pawn pawn = new Pawn(Team.BLACK);
-        String source = "g7";
-        String destination = "g3";
-        Direction direction = pawn.findDirection(Position.from(source), Position.from(destination));
-        System.out.println(direction.toString());
     }
 }

@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.dto.MoveDTO;
+import chess.dto.MoveDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 
@@ -17,7 +17,7 @@ public class ChessController {
         get("/board", (req, res) -> gson.toJson(chessService.getInitialBoard(roomId)));
 
         post("/move", (req, res) -> {
-            MoveDTO moveDTO = gson.fromJson(req.body(), MoveDTO.class);
+            MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
             return gson.toJson(chessService.move(moveDTO, roomId));
         });
 

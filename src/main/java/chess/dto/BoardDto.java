@@ -3,10 +3,10 @@ package chess.dto;
 import java.util.List;
 
 public class BoardDto {
-    private final List<PieceDTO> pieces;
+    private final List<PieceDto> pieces;
     private final String team;
 
-    public BoardDto(List<PieceDTO> pieces, String team) {
+    public BoardDto(List<PieceDto> pieces, String team) {
         this.pieces = pieces;
         this.team = team;
     }

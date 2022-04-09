@@ -3,7 +3,7 @@ package chess.dao;
 import chess.database.DBConnection;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,17 +16,17 @@ import java.util.Map;
 public class BoardDao {
     final Connection connection = DBConnection.getConnection();
 
-    public List<PieceDTO> findAll(String roomId) {
+    public List<PieceDto> findAll(Long roomId) {
         final String sql = "select * from board where room_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, roomId);
+            statement.setLong(1, roomId);
             ResultSet resultSet = statement.executeQuery();
-            List<PieceDTO> pieces = new ArrayList<>();
+            List<PieceDto> pieces = new ArrayList<>();
             while (resultSet.next()) {
                 String position = resultSet.getString("position");
                 String symbol = resultSet.getString("symbol");
-                pieces.add(new PieceDTO(position, symbol));
+                pieces.add(new PieceDto(position, symbol));
             }
             return pieces;
         } catch (SQLException e) {
@@ -65,9 +65,9 @@ public class BoardDao {
     }
 
     public void updatePosition(String position, String symbol) {
-        final String sql1 = "update board set symbol = ? where position = ?";
+        final String sql = "update board set symbol = ? where position = ?";
         try {
-            PreparedStatement statement1 = connection.prepareStatement(sql1);
+            PreparedStatement statement1 = connection.prepareStatement(sql);
             statement1.setString(1, symbol);
             statement1.setString(2, position);
             statement1.executeUpdate();

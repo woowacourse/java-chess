@@ -1,10 +1,10 @@
 package chess.dto;
 
-public class GameStateDTO {
+public class GameStateDto {
     private final String gameState;
     private final boolean isRunning;
 
-    public GameStateDTO(String gameState, boolean isFinished) {
+    public GameStateDto(String gameState, boolean isFinished) {
         this.gameState = gameState;
         this.isRunning = isFinished;
     }

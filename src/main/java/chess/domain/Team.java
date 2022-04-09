@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public enum Team {
@@ -25,11 +26,22 @@ public enum Team {
         return Blank.SYMBOL;
     }
 
+    public static Team find(String team) {
+        return Arrays.stream(values())
+                .filter(i -> i.value.equals(team))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 Team 값이 아닙니다."));
+    }
+
     public String getValue() {
         return value;
     }
 
     public boolean matchTeam(Team team) {
         return this == team;
+    }
+
+    public boolean isWhiteTeam() {
+        return this == WHITE;
     }
 }
