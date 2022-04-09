@@ -43,9 +43,12 @@ async function sendStatus() {
                 if (data.result == "NONE") {
                     alert("현재 동점입니다.");
                 }
-                if (data.result != "NONE") {
+                if (data.result != "NONE" && data.state === "running") {
                     alert("WHITE 팀 : " + data.whiteScore + " BLACK 팀 : " + data.blackScore
                         + "으로 현재 " + data.result + "팀이 유리합니다.");
+                }
+                if (data.result != "NONE" && data.state === "finished") {
+                    alert(data.result + "팀이 승리했습니다.");
                 }
             } else {
                 alert(data.message);
@@ -140,7 +143,6 @@ function loadBoard(board) {
 }
 
 function resetPiece(div) {
-    console.log(div);
     if (div.hasChildNodes()) {
         div.removeChild(div.firstChild);
     }

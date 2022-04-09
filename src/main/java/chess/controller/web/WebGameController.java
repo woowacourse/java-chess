@@ -87,7 +87,7 @@ public class WebGameController {
         try {
             ChessGame chessGame = chessService.load();
             final Status status = chessService.status(chessGame);
-            return ResponseStatusDto.createResponseStatusDto(status);
+            return ResponseStatusDto.createResponseStatusDto(status, chessGame);
         } catch (IllegalArgumentException e) {
             return ResponseStatusDto.createErrorResponseDto(e.getMessage());
         }
