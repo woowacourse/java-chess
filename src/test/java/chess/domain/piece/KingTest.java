@@ -28,7 +28,7 @@ class KingTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"c8", "d7", "e7", "f7", "f8"})
+    @ValueSource(strings = {"d8", "d7", "e7", "f7", "f8"})
     @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
     void findPath(String destination) {
         // given
