@@ -1,12 +1,14 @@
 package chess.service;
 
 
+import chess.dao.BoardDao;
+import chess.dao.BoardRepository;
+import chess.dao.ChessGameDao;
+import chess.dao.ChessGameRepository;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Result;
 import chess.domain.Score;
-import chess.dao.BoardDao;
-import chess.dao.ChessGameDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
@@ -20,8 +22,13 @@ import java.util.Map.Entry;
 
 public class ChessService {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
-    private final BoardDao boardDao = new BoardDao();
+    private final ChessGameDao chessGameDao;
+    private final BoardDao boardDao;
+
+    public ChessService(final ChessGameDao chessGameDao, final BoardDao boardDao) {
+        this.chessGameDao = chessGameDao;
+        this.boardDao = boardDao;
+    }
 
     public String start() {
         final Long gameId = chessGameDao.save(Color.WHITE);

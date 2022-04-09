@@ -4,6 +4,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.JsonTransformer;
+import chess.dao.BoardRepository;
+import chess.dao.ChessGameRepository;
 import chess.dto.GameDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
@@ -14,7 +16,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
-    private final ChessService chessService = new ChessService();
+    private final ChessService chessService = new ChessService(new ChessGameRepository(), new BoardRepository());
     private final JsonTransformer jsonTransformer = new JsonTransformer();
 
     public void run() {
