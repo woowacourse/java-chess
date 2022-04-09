@@ -8,6 +8,7 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
         port(8080);
+
         WebController webController = new WebController();
 
         get("/", webController.ready());
