@@ -1,5 +1,9 @@
 package chess.dao;
 
+import chess.dao.exception.DeleteQueryException;
+import chess.dao.exception.InsertQueryException;
+import chess.dao.exception.SelectQueryException;
+import chess.dao.exception.UpdateQueryException;
 import chess.database.DBConnection;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -30,9 +34,8 @@ public class BoardDao {
             }
             return pieces;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SelectQueryException();
         }
-        return null;
     }
 
     public void saveAll(Map<Position, Piece> board) {
@@ -49,7 +52,7 @@ public class BoardDao {
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InsertQueryException();
         }
     }
 
@@ -60,7 +63,7 @@ public class BoardDao {
             statement.setInt(1, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DeleteQueryException();
         }
     }
 
@@ -72,7 +75,7 @@ public class BoardDao {
             statement1.setString(2, position);
             statement1.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new UpdateQueryException();
         }
     }
 }

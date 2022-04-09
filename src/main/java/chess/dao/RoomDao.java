@@ -1,5 +1,9 @@
 package chess.dao;
 
+import chess.dao.exception.DeleteQueryException;
+import chess.dao.exception.InsertQueryException;
+import chess.dao.exception.SelectQueryException;
+import chess.dao.exception.UpdateQueryException;
 import chess.database.DBConnection;
 import chess.domain.Team;
 import chess.dto.RoomDto;
@@ -25,9 +29,8 @@ public class RoomDao {
             Team status = Team.valueOf(resultSet.getString("status"));
             return new RoomDto(id, status);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SelectQueryException();
         }
-        return null;
     }
 
     public void delete(int roomId) {
@@ -37,7 +40,7 @@ public class RoomDao {
             statement.setInt(1, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DeleteQueryException();
         }
     }
 
@@ -49,7 +52,7 @@ public class RoomDao {
             statement.setString(2, team.name());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InsertQueryException();
         }
     }
 
@@ -61,7 +64,7 @@ public class RoomDao {
             statement.setInt(2, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new UpdateQueryException();
         }
     }
 }
