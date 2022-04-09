@@ -45,10 +45,12 @@ public class GameService {
     }
 
     public Map<String, Object> loadGame(int playerId) {
-        Map<Position, Piece> pieces = new HashMap<>();
         int boardId = boardDao.getBoardIdByPlayer(playerId);
-        pieceDao.findAll(boardId).stream()
-                .forEach(pieceDto -> pieces.put(Position.of(pieceDto.getPosition()), PieceFactory.build(pieceDto)));
+        List<PieceDto> pieceDtos = pieceDao.findAll(boardId);
+        Map<Position, Piece> pieces = new HashMap<>();
+        for (PieceDto pieceDto : pieceDtos) {
+            pieces.put(Position.of(pieceDto.getPosition()), PieceFactory.build(pieceDto));
+        }
         board = new Board(() -> pieces);
         board.loadTurn(boardDao.getTurn(boardId));
         return gameStateAndPieces(boardId);
