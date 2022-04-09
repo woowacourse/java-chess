@@ -83,8 +83,11 @@ public class ChessService {
     //TODO
     public void move(String gameName, String from, String to) {
         ChessGame chessGame = getGameFromDao(gameName);
-        chessGame.move(Square.of(from), Square.of(to));
-        boardDao.move(from, to, gameName);
+        Square fromSquare = Square.of(from);
+        Square toSquare = Square.of(to);
+        chessGame.move(fromSquare, toSquare);
+        boardDao.update(toPieceDto(toSquare, chessGame.findPieceBySquare(toSquare)));
+        boardDao.update(toPieceDto(fromSquare, chessGame.findPieceBySquare(fromSquare)));
         updateGame(chessGame, gameName);
     }
 

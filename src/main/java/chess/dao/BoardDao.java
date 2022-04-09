@@ -34,32 +34,6 @@ public class BoardDao {
         }
     }
 
-    public void move(String squareFrom, String squareTo, String gameName) {
-        String moveSql = "update board set piece_type = (select a.piece_type from\n"
-                + "            (select piece_type from board where square = ? and game_name = ?) a)\n"
-                + "            , piece_color = (select b.piece_color from\n"
-                + "            (select piece_color from board where square = ? and game_name = ?) b)\n"
-                + "            where square = ? and game_name = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement moveStatement = connection.prepareStatement(moveSql)) {
-            JdbcUtil.setStringsToStatement(moveStatement,
-                    Map.of(1, squareFrom, 2, gameName, 3, squareFrom, 4, gameName, 5, squareTo, 6, gameName));
-            moveStatement.executeUpdate();
-            removePieceFrom(connection, squareFrom, gameName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void removePieceFrom(Connection connection, String squareFrom, String gameName) throws SQLException {
-        String removeSql = "update board set piece_color = 'nothing', piece_type = 'empty' "
-                + "where square = ? and game_name = ?;";
-        PreparedStatement removeStatement = connection.prepareStatement(removeSql);
-        JdbcUtil.setStringsToStatement(removeStatement, Map.of(1, squareFrom, 2, gameName));
-        removeStatement.executeUpdate();
-        removeStatement.close();
-    }
-
     public BoardDto getBoardByGameId(String gameName) {
         String sql = "select piece_type, piece_color, square from board where game_name = ?";
         try (Connection connection = JdbcUtil.getConnection();
@@ -88,6 +62,18 @@ public class BoardDao {
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gameName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(PieceWithSquareDto piece) {
+        String sql = "update board set piece_type = ?, piece_color = ? where square = ?";
+        try (Connection connection = JdbcUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+            JdbcUtil.setStringsToStatement(statement,
+                    Map.of(1, piece.getType(), 2, piece.getColor(), 3, piece.getSquare()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
