@@ -4,8 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.web.dao.board.BoardDao;
-import chess.web.dao.camp.CampDao;
-import chess.web.dao.member.MemberDaoImpl;
+import chess.web.dao.room.RoomDao;
 import chess.web.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,17 +15,19 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-    private ChessService chessService;
+    private final ChessService chessService;
 
     public WebController() {
-        chessService = new ChessService(new BoardDao(), new CampDao(), new MemberDaoImpl());
+        chessService = new ChessService(new RoomDao(), new BoardDao());
+        chessService.init();
     }
 
     public void run() {
         get("/", (req, res) -> {
-            chessService.init();
-            return render(new HashMap<>(), "index.html");
+            return render(chessService.getRooms(), "index.html");
         });
+
+        post("/room/create", this::createRoomAndRedirectIndex);
 
         post("/:command", (req, res) -> {
             checkGameState(req, res);
@@ -39,6 +40,12 @@ public class WebController {
             chessService.restart();
             return render(executeAndGetModel(req, res), "game.html");
         });
+    }
+
+    private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
+        chessService.createRoom(req.queryParams("roomName"));
+        res.redirect("/");
+        return null;
     }
 
     private Map<String, Object> executeAndGetModel(final Request req, final Response res) {

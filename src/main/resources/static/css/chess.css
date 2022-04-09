@@ -213,7 +213,7 @@ header {
     width: 150px;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
     border-radius: 8px;
-    margin: 0 10px;
+    margin: 10px 10px;
     background-color: #ffffff;
 }
 
@@ -295,19 +295,19 @@ header {
 }
 
 .class-type {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #152246FF;
 }
 
 .class-join {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #f44a32;
     background-color: rgba(244, 74, 50, 0.15);
     padding: 0.2rem;
 }
 
 .class-title {
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     width: 100%;
     margin-top: 1rem;
     line-height: 1.6rem;

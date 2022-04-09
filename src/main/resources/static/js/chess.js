@@ -10,6 +10,23 @@ function getCommand(url, value) {
     window.location.replace(url + value);
 }
 
+function createRoom() {
+    const roomName = window.prompt("방 제목을 입력해주세요.", "포돌이체스방");
+    console.log(roomName);
+
+    let f = document.createElement("form");
+    f.setAttribute("method", "post");
+    f.setAttribute("action", "/room/create"); // url
+    document.body.appendChild(f);
+
+    let i = document.createElement("input");
+    i.setAttribute("type", "hidden"); //
+    i.setAttribute("name", "roomName"); // key
+    i.setAttribute("value", roomName); // value
+    f.appendChild(i);
+    f.submit();
+}
+
 function postCommand(url, value) {
     let f = document.createElement("form"); // form 엘리멘트 생성
     f.setAttribute("method", "post"); // method 속성을 post로 설정

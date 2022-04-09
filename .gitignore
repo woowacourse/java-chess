@@ -49,3 +49,4 @@ docker/db/mysql/init/*
 /src/main/java/chess/MyApplication.java
 /src/main/java/chess/MyCommand.java
 /src/main/java/chess/Cf.java
+/src/main/java/chess/web/dao/camp/

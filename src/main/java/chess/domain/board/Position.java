@@ -29,7 +29,6 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position of(Column column, Row row) {
-        // TODO next row, column도 들어올 것이니, 검증필요함.
         return CACHE.computeIfAbsent(column.name() + row.name(), ignored -> new Position(column, row));
     }
 

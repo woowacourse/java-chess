@@ -3,8 +3,7 @@ package chess.web.service;
 import chess.console.ChessGame;
 import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
-import chess.web.dao.camp.CampDao;
-import chess.web.dao.member.MemberDaoImpl;
+import chess.web.dao.room.RoomDao;
 import chess.web.dto.BoardDto;
 import chess.web.dto.MoveReqDto;
 import com.google.gson.Gson;
@@ -15,15 +14,13 @@ import spark.Request;
 
 public class ChessService {
 
+    private final RoomDao roomDao;
     private final BoardDao boardDao;
-    private final CampDao campDao;
-    private final MemberDaoImpl memberDao;
     private ChessGame chessGame;
 
-    public ChessService(final BoardDao boardDao, final CampDao campDao, final MemberDaoImpl memberDao) {
+    public ChessService(final RoomDao roomDao, final BoardDao boardDao) {
+        this.roomDao = roomDao;
         this.boardDao = boardDao;
-        this.campDao = campDao;
-        this.memberDao = memberDao;
     }
 
     public void init() {
@@ -107,5 +104,13 @@ public class ChessService {
 
     public boolean isNotExistGame() {
         return chessGame == null;
+    }
+
+    public HashMap<String, Object> getRooms() {
+        return new HashMap(Map.of("rooms", roomDao.findAll()));
+    }
+
+    public void createRoom(final String name) {
+        roomDao.save(name);
     }
 }

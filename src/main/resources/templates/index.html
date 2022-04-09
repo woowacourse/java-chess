@@ -41,7 +41,7 @@
     <div class="inner">
         <div class="title"><h1>돌범의 포돌이체스에 오신 것을 환영합니다.</h1></div>
         <div class="user-container">
-            <div class="skill">
+            <div class="skill" onclick="createRoom();">
                 <i class="fas fa-plus skill-icon create-style"></i>
                 <div class="skill-title">
                     <div class="skill-name">방 생성</div>
@@ -68,8 +68,10 @@
             <div class="roadmap-title-container">
                 <!--room title -->
                 <div class="roadmap-title">
+
                     <!--room list -->
                     <ul class="class-list">
+                        {{#rooms}}
                         <!--first room -->
                         <li class="class-card">
                             <!--room image-->
@@ -79,24 +81,22 @@
                             <div class="class-container">
                                 <!--room id & join -->
                                 <div class="class-skill">
-                                    <div class="class-type">1번방</div>
+                                    <div class="class-type">{{id}}번방</div>
+                                    {{#if canJoin}}
                                     <div class="class-join">입장</div>
+                                    {{else}}
+                                    <div class="class-join">입장불가</div>
+                                    {{/if}}
                                 </div>
                                 <!--room title-->
-                                <div class="class-title">랜덤한 d</div>
+                                <div class="class-title">{{name}}</div>
                             </div>
 
                         </li>
+                        {{/rooms}}
                         <!-- 2nd room -->
-                        <li class="class-card">
-                            <img alt="room" class="class-image"
-                                 src="https://raw.githubusercontent.com/is2js/screenshots/main/208021580082.jpg"/>
-                        </li>             <!-- 2nd room -->
-                        <li class="class-card">
-                            <img alt="room" class="class-image"
-                                 src="https://raw.githubusercontent.com/is2js/screenshots/main/208021580082.jpg"/>
-                        </li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -104,7 +104,6 @@
 </section>
 
 <div class="fake-container">
-    <!--    <div class="skill" value="start" onclick="location.href='/game.html';">-->
     <div class="skill" onclick="postCommand('/', 'start');">
         <i class="far fa-play-circle skill-icon start-style"></i>
         <div class="skill-title">
