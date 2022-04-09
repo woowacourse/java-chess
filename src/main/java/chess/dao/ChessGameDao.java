@@ -32,9 +32,9 @@ public class ChessGameDao {
     }
 
     public void save(ChessGame chessGame) {
-        Connection connection = getConnection();
         final String sql = "insert into game (state) values (?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -43,15 +43,15 @@ public class ChessGameDao {
     }
 
     public int findRecentGame() {
-        final Connection connection = getConnection();
         final String sql = "select id from game order by id desc limit 1";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (!resultSet.next()) {
-                    return 0;
-                }
-                return resultSet.getInt("id");
+        try (final Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (!resultSet.next()) {
+                return 0;
             }
+            return resultSet.getInt("id");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,9 +59,9 @@ public class ChessGameDao {
     }
 
     public void update(int id, ChessGame chessGame) {
-        Connection connection = getConnection();
         final String sql = "update game set state = ? where id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
             statement.setInt(2, id);
             statement.executeUpdate();
@@ -71,16 +71,16 @@ public class ChessGameDao {
     }
 
     public String findById(int id) {
-        final Connection connection = getConnection();
         final String sql = "select state from game where id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (!resultSet.next()) {
-                    return null;
-                }
-                return resultSet.getString("state");
+            if (!resultSet.next()) {
+                return null;
             }
+            return resultSet.getString("state");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

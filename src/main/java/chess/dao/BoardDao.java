@@ -37,9 +37,9 @@ public class BoardDao {
     }
 
     public void save(String position, String piece, String color, int gameId) {
-        Connection connection = getConnection();
         final String sql = "insert into board (position, piece, color, game_id) values (?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position);
             statement.setString(2, piece);
             statement.setString(3, color);
@@ -51,10 +51,10 @@ public class BoardDao {
     }
 
     public void update(String position, String piece, String color, int id) {
-        Connection connection = getConnection();
         final String sql = "insert into board (position, piece, color, game_id) values (?, ?, ?, ?)"
                 + "on duplicate key update piece = ?, color = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position);
             statement.setString(2, piece);
             statement.setString(3, color);
@@ -68,18 +68,17 @@ public class BoardDao {
     }
 
     public Map<Position, Piece> findGame(int id) {
-        Connection connection = getConnection();
         Map<Position, Piece> board = new HashMap<>();
         final String sql = "select position, piece, color from board where game_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery();) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Position position = Position.valueOf(resultSet.getString("position"));
-                    Color color = Color.of(resultSet.getString("color"));
-                    Piece piece = PieceMapper.of(resultSet.getString("piece"), color);
-                    board.put(position, piece);
-                }
+            while (resultSet.next()) {
+                Position position = Position.valueOf(resultSet.getString("position"));
+                Color color = Color.of(resultSet.getString("color"));
+                Piece piece = PieceMapper.of(resultSet.getString("piece"), color);
+                board.put(position, piece);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,9 +87,9 @@ public class BoardDao {
     }
 
     public void delete(String position, int id) {
-        Connection connection = getConnection();
         final String sql = "delete from board  where game_id = ? and position = ? ";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.setString(2, position);
             statement.executeUpdate();
