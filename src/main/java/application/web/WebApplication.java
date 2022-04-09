@@ -30,7 +30,7 @@ public class WebApplication {
 
         get("/", gameController.index());
 
-        path("/room", () -> {
+        path("/games", () -> {
             get("/start", gameController.createNewGame());
             get("/:gameId", gameController.loadGame());
             post("/:gameId/move", gameController.movePiece());
