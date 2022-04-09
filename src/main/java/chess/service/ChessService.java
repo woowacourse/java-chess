@@ -1,14 +1,13 @@
-package chess.web.service;
+package chess.service;
 
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.piece.property.Team;
 import chess.domain.position.Position;
-import chess.web.dao.ChessGame;
-import chess.web.dao.ChessGameDAO;
-import chess.web.dao.Movement;
-import chess.web.dao.MovementDAO;
-import chess.web.dto.ChessGameDTO;
-import chess.web.view.Render;
+import chess.dao.ChessGame;
+import chess.dao.ChessGameDAO;
+import chess.dao.Movement;
+import chess.dao.MovementDAO;
+import chess.dto.ChessGameDTO;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,7 @@ public final class ChessService {
         return CHESS_GAME_DAO.addGame(chessGame);
     }
 
-    public ChessGame replayedChessGame(final String gameId) throws SQLException {
+    public ChessGame getChessGamePlayed(final String gameId) throws SQLException {
         List<Movement> movementByGameId = MOVEMENT_DAO.findMovementByGameId(gameId);
         ChessGame chessGame = ChessGame.initChessGame();
         for (Movement movement : movementByGameId) {
@@ -36,19 +35,12 @@ public final class ChessService {
         return chessGame;
     }
 
-    public Map<String, Object> movePiece(final String gameId, final String source, final String target, final Team team)
+    public ChessGame movePiece(final String gameId, final String source, final String target, final Team team)
             throws SQLException {
-        final ChessGame chessGame = replayedChessGame(gameId);
+        final ChessGame chessGame = getChessGamePlayed(gameId);
         validateCurrentTurn(chessGame, team);
         move(chessGame, new Movement(Position.of(source), Position.of(target)), team);
-        final Map<String, Object> model = Render.renderBoard(chessGame);
-
-        if (chessGame.isGameSet()) {
-            CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
-            model.put("gameResult", result(chessGame));
-            model.put("isGameSet", Boolean.TRUE);
-        }
-        return model;
+        return chessGame;
     }
 
     private void validateCurrentTurn(final ChessGame chessGame, final Team team) {
@@ -81,5 +73,14 @@ public final class ChessService {
 
     public ChessGameDTO findGameById(String id) {
         return CHESS_GAME_DAO.findGameById(id);
+    }
+
+    public Map<String, Object> getResult(ChessGame chessGame) throws SQLException {
+        final Map<String, Object> model = new HashMap<>();
+        CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
+        model.put("gameResult", result(chessGame));
+        model.put("isGameSet", Boolean.TRUE);
+
+        return model;
     }
 }

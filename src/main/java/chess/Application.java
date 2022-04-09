@@ -4,8 +4,8 @@ import chess.domain.board.BoardGenerator;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.classification.Command;
-import chess.domain.dto.GameStatus;
-import chess.domain.dto.StatusDTO;
+import chess.dto.GameStatus;
+import chess.dto.StatusDTO;
 import chess.view.InputView;
 import chess.view.OutputView;
 

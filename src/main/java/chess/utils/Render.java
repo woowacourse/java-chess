@@ -1,11 +1,10 @@
-package chess.web.view;
+package chess.utils;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.dto.GameStatus;
+import chess.dto.GameStatus;
 import chess.domain.piece.property.Team;
-import chess.web.dao.ChessGame;
-import chess.web.dto.BoardDTO;
-import chess.web.dto.ChessGameDTO;
+import chess.dao.ChessGame;
+import chess.dto.BoardDTO;
+import chess.dto.ChessGameDTO;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;

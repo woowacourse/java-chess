@@ -1,4 +1,4 @@
-package chess.web.dao;
+package chess.dao;
 
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.ChessBoard;

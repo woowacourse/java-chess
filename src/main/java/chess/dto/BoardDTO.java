@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.dto;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.unit.Piece;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class BoardDTO {
 
-    Map<String, Object> result = new HashMap<>();
+    private Map<String, Object> result = new HashMap<>();
 
     public BoardDTO(final ChessBoard chessBoard) {
         Map<Position, Piece> board = chessBoard.getBoard();

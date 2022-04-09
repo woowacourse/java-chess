@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
-import chess.domain.dto.GameStatus;
+import chess.dto.GameStatus;
 import chess.domain.piece.unit.Bishop;
 import chess.domain.piece.unit.Pawn;
 import chess.domain.piece.unit.Piece;
@@ -15,7 +15,6 @@ import chess.domain.piece.unit.Rook;
 import chess.domain.position.Position;
 import chess.domain.classification.Result;
 import java.util.stream.Stream;
-import org.eclipse.jetty.util.security.Credential.MD5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

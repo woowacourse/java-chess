@@ -1,8 +1,8 @@
-package chess.web.dao;
+package chess.dao;
 
 import chess.view.OutputView;
 import chess.utils.DBConnectionUtils;
-import chess.web.dto.ChessGameDTO;
+import chess.dto.ChessGameDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

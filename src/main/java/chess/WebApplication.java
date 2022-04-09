@@ -2,13 +2,10 @@ package chess;
 
 import chess.domain.piece.property.Team;
 import chess.utils.JsonConvertor;
-import chess.web.dao.ChessGame;
-import chess.web.dao.ChessGameDAO;
-import chess.web.dto.ChessGameDTO;
-import chess.web.service.ChessService;
-import chess.web.view.Render;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import chess.dao.ChessGame;
+import chess.dto.ChessGameDTO;
+import chess.service.ChessService;
+import chess.utils.Render;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -44,7 +41,7 @@ public final class WebApplication {
         });
 
         get("/chess/game/:id/board", (req, res) -> {
-            ChessGame chessGame = CHESS_SERVICE.replayedChessGame(req.params(":id"));
+            ChessGame chessGame = CHESS_SERVICE.getChessGamePlayed(req.params(":id"));
             Map<String, Object> model = Render.renderBoard(chessGame);
             return JsonConvertor.toJson(model);
         });
@@ -53,8 +50,13 @@ public final class WebApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
             Team team = Team.valueOf(req.queryParams("team"));
+            ChessGame chessGame = CHESS_SERVICE.movePiece(req.params(":id"), source, target, team);
+            final Map<String, Object> model = Render.renderBoard(chessGame);
 
-            Map<String, Object> model = CHESS_SERVICE.movePiece(req.params(":id"), source, target, team);
+            if (chessGame.isGameSet()) {
+                Map<String, Object> result = CHESS_SERVICE.getResult(chessGame);
+                model.putAll(result);
+            }
             return JsonConvertor.toJson(model);
         });
 
