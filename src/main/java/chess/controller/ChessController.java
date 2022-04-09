@@ -3,10 +3,10 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.service.ChessService;
 import chess.JsonTransformer;
 import chess.dto.GameDto;
 import chess.dto.MoveDto;
+import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -14,43 +14,56 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
 
+    private final ChessService chessService = new ChessService();
+    private final JsonTransformer jsonTransformer = new JsonTransformer();
+
     public void run() {
-
-        final ChessService chessService = new ChessService();
-        final JsonTransformer jsonTransformer = new JsonTransformer();
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "game.html");
         });
+    }
 
+    public void start() {
+        post("/start", (req, res) -> chessService.start(), jsonTransformer);
+    }
+
+    public void runMain() {
         get("game/:gameId", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+    }
 
-        post("/start", (req, res) -> chessService.start(), jsonTransformer);
-
+    public void board() {
         post("/board", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
             return chessService.getBoard(gameDto.getGameId());
         }, jsonTransformer);
+    }
 
+    public void turn() {
         post("/turn", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
             return chessService.getTurn(gameDto.getGameId());
         }, jsonTransformer);
+    }
 
-        post("/move", (req, res) -> {
-            MoveDto moveDto = jsonTransformer.getGson().fromJson(req.body(), MoveDto.class);
-            return chessService.move(moveDto);
-        }, jsonTransformer);
-
+    public void status() {
         post("/status", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
             return chessService.status(gameDto.getGameId());
         }, jsonTransformer);
+    }
 
+    public void move() {
+        post("/move", (req, res) -> {
+            MoveDto moveDto = jsonTransformer.getGson().fromJson(req.body(), MoveDto.class);
+            return chessService.move(moveDto);
+        }, jsonTransformer);
+    }
+
+    public void end() {
         post("/end", (req, res) -> {
             GameDto gameDto = jsonTransformer.getGson().fromJson(req.body(), GameDto.class);
             chessService.end(gameDto.getGameId());

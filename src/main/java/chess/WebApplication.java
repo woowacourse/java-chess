@@ -13,6 +13,13 @@ public class WebApplication {
 
         ChessController chessController = new ChessController();
         chessController.run();
+        chessController.start();
+        chessController.runMain();
+        chessController.board();
+        chessController.turn();
+        chessController.move();
+        chessController.status();
+        chessController.end();
     }
 
 }
