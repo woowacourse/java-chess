@@ -36,8 +36,7 @@ public class ChessService {
 
     public void initGame(String gameName) {
         ChessGame chessGame = new ChessGame(new ChessInitializer(), Status.PLAYING);
-        Map<Square, Piece> pieces = chessGame.getBoard().getPieces();
-        boardDao.initBoard(toBoardDto(pieces), gameName);
+        boardDao.initBoard(gameName);
         updateGame(chessGame, gameName);
     }
 

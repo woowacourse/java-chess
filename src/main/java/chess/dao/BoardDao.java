@@ -12,22 +12,13 @@ import java.util.Map;
 
 public class BoardDao {
 
-    public void initBoard(BoardDto boardDto, String gameName) {
-        for (PieceWithSquareDto piece : boardDto.getPieces()) {
-            insert(piece, gameName);
-        }
-    }
-
-    public void insert(PieceWithSquareDto pieceDto, String gameName) {
-        String sql = "insert into board (piece_type, piece_color, square, game_name)\n"
-                + "values (?, ?, ?, ?) on duplicate key update piece_type = ?, piece_color =?";
+    public void initBoard(String gameName) {
+        String sql = "insert into board\n"
+                + "select init.piece_type, init.piece_color, init.square, ? from init_board as init\n"
+                + "on duplicate key update piece_type = init.piece_type, piece_color = init.piece_color";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            String type = pieceDto.getType();
-            String color = pieceDto.getColor();
-            String square = pieceDto.getSquare();
-            JdbcUtil.setStringsToStatement(statement, Map.of(1, type, 2, color, 3, square,
-                    4, gameName, 5, type, 6, color));
+            statement.setString(1, gameName);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
