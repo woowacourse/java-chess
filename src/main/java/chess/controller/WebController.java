@@ -30,6 +30,11 @@ public class WebController {
             return null;
         });
 
+        get("/chess-game", (req, res) -> {
+            res.redirect("/");
+            return null;
+        });
+
         get("/chess-game/:id", (req, res) -> {
             int chessGameId = Integer.parseInt(req.params("id"));
             Response response = Response.init(chessGameId, getChessGame(chessGameId));
