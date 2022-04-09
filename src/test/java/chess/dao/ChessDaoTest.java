@@ -11,7 +11,7 @@ class ChessDaoTest {
     @Test
     void connection() {
         ChessDao chessDao = new ChessDao();
-        Connection connection = chessDao.getConnection();
+        Connection connection = Connector.getConnection();
         Assertions.assertThat(connection).isNotNull();
     }
 
