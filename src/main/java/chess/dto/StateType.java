@@ -15,7 +15,7 @@ public enum StateType {
     READY("ready", Ready::new),
     WHITE_TURN("WhiteTurn", WhiteTurn::new),
     BLACK_TURN("BlackTurn", BlackTurn::new),
-    END("End", (board) -> new End()),
+    END("End", End::new),
     ;
 
     private final String type;

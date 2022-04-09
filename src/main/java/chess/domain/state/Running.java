@@ -37,7 +37,7 @@ public abstract class Running extends State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(board);
     }
 
     @Override

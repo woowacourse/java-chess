@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.position.Position;
 import chess.view.Output;
 import org.junit.jupiter.api.DisplayName;
@@ -11,10 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EndTest {
 
+    private static final Board board = new Board(new BoardInitializer());
+
     @Test
     @DisplayName("start 시 예외 발생")
     void startException() {
-        State end = new End();
+        State end = new End(board);
 
         assertThatThrownBy(end::start)
                 .isInstanceOf(IllegalStateException.class)
@@ -24,7 +28,7 @@ class EndTest {
     @Test
     @DisplayName("move 시 예외 발생")
     void moveException() {
-        State end = new End();
+        State end = new End(board);
 
         assertThatThrownBy(() -> end.move(Position.from("a2"), Position.from("a3")))
                 .isInstanceOf(IllegalStateException.class)
@@ -34,7 +38,7 @@ class EndTest {
     @Test
     @DisplayName("end 시 예외 발생")
     void endException() {
-        State end = new End();
+        State end = new End(board);
 
         assertThatThrownBy(end::end)
                 .isInstanceOf(IllegalStateException.class)
@@ -44,7 +48,7 @@ class EndTest {
     @Test
     @DisplayName("status 시 예외 발생")
     void statusException() {
-        State end = new End();
+        State end = new End(board);
 
         assertThatThrownBy(() -> end.status(Output::printScore))
                 .isInstanceOf(IllegalStateException.class)
@@ -54,7 +58,7 @@ class EndTest {
     @Test
     @DisplayName("게임이 실행중이 아닌 것을 확인")
     void isRunning() {
-        State end = new End();
+        State end = new End(board);
 
         assertThat(end.isRunning()).isFalse();
     }
@@ -62,7 +66,7 @@ class EndTest {
     @Test
     @DisplayName("게임이 끝난 것을 확인")
     void isEnded() {
-        State end = new End();
+        State end = new End(board);
 
         assertThat(end.isEnded()).isTrue();
     }
