@@ -50,17 +50,10 @@ public class ChessService {
         boardDao.save(boardDtos, gameId);
     }
 
-    public void updateBoard(int gameId, String from, String to) {
-        Board board = findBoardByGameId(gameId);
+    public void updateBoard(Piece piece, String position, int gameId) {
+        BoardDto boardDto = new BoardDto(piece.getSymbol(), piece.getTeam(), position);
 
-        Piece fromPiece = board.findPiece(Coordinate.of(from));
-        Piece toPiece = board.findPiece(Coordinate.of(to));
-
-        BoardDto boardDtoByFromPiece = new BoardDto(fromPiece.getSymbol(), fromPiece.getTeam(), from);
-        BoardDto boardDtoByToPiece = new BoardDto(toPiece.getSymbol(), toPiece.getTeam(), to);
-
-        boardDao.update(boardDtoByFromPiece, gameId);
-        boardDao.update(boardDtoByToPiece, gameId);
+        boardDao.update(boardDto, gameId);
     }
 
     public void saveGame(String whiteUserName, String blackUserName, String state) {
@@ -81,16 +74,22 @@ public class ChessService {
     public void move(int gameId, String from, String to) {
         Board board = findBoardByGameId(gameId);
         GameDto gameDto = gameDao.findById(gameId);
+
         ChessGame chessGame = new ChessGame(board, gameDto.getState());
         chessGame.move(Coordinate.of(from), Coordinate.of(to));
+        changeState(gameId, gameDto, chessGame);
+
+        updateBoard(board.findPiece(Coordinate.of(from)), from, gameId);
+        updateBoard(board.findPiece(Coordinate.of(to)), to, gameId);
+    }
+
+    private void changeState(int gameId, GameDto gameDto, ChessGame chessGame) {
         if (chessGame.isFinished()) {
             endGame(gameId);
-            updateBoard(gameId, from, to);
             return;
         }
 
         changeTurn(gameDto.getState(), gameId);
-        updateBoard(gameId, from, to);
     }
 
     private void changeTurn(String state, int gameId) {
@@ -123,5 +122,9 @@ public class ChessService {
 
         ChessGame chessGame = new ChessGame(board, gameDto.getState());
         return chessGame.status();
+    }
+
+    public void deleteGameByGameId(int gameId) {
+        gameDao.deleteById(gameId);
     }
 }

@@ -65,7 +65,7 @@ public class WebChessController {
 
         post("/game/:id/end", (req, res) -> {
             int gameId = Integer.parseInt(req.params(":id"));
-            chessService.endGame(gameId);
+            chessService.deleteGameByGameId(gameId);
             res.redirect("/");
             return null;
         });
