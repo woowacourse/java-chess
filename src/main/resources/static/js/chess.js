@@ -34,7 +34,7 @@ const cellClick = (event, id) => {
         return;
     }
 
-    if ( after === "") {
+    if (after === "") {
         after = currentPieceImg;
         after.style.backgroundColor = '#fc8383';
 
@@ -74,7 +74,7 @@ function updateRoomName(id) {
 
     let f = document.createElement("form");
     f.setAttribute("method", "post");
-    f.setAttribute("action", "/room/update/" + id); //url
+    f.setAttribute("action", "/room/update/"); //url
     document.body.appendChild(f);
 
     let i = document.createElement("input");
@@ -97,7 +97,7 @@ function deleteRoom(id) {
 
     let f = document.createElement("form");
     f.setAttribute("method", "post");
-    f.setAttribute("action", "/room/delete/" + id); //url
+    f.setAttribute("action", "/room/delete/"); //url
     document.body.appendChild(f);
 
     let i = document.createElement("input");
@@ -106,6 +106,7 @@ function deleteRoom(id) {
     i.setAttribute("value", id); // value
     f.appendChild(i);
 
+    console.log(f);
     f.submit();
 }
 
