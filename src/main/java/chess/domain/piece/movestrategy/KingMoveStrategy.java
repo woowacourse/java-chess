@@ -3,7 +3,7 @@ package chess.domain.piece.movestrategy;
 import chess.domain.board.MoveOrder;
 import chess.domain.board.Direction;
 
-public class KingMoveStrategy extends MoveStrategy {
+public final class KingMoveStrategy extends MoveStrategy {
 
     private static final int ONE_STEP = 1;
 
