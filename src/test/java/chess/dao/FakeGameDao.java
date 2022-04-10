@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chess.database.GameStateDto;
+
 public class FakeGameDao implements GameDao {
 
     private static final int STATE_INDEX = 0;
@@ -17,19 +19,20 @@ public class FakeGameDao implements GameDao {
     }
 
     @Override
-    public void saveGame(String state, String color, String roomName) {
-        memoryDatabase.put(roomName, Arrays.asList(state, color));
-    }
-
-    @Override
     public List<String> readStateAndColor(String roomName) {
         return memoryDatabase.get(roomName);
     }
 
     @Override
-    public void updateState(String state, String color, String roomName) {
-        List<String> target = memoryDatabase.get(roomName);
-        target.set(STATE_INDEX, state);
-        target.set(COLOR_INDEX, color);
+    public void saveGame(GameStateDto gameStateDto, String roomName) {
+        memoryDatabase.put(roomName, Arrays.asList(gameStateDto.getState(), gameStateDto.getTurnColor()));
     }
+
+    @Override
+    public void updateState(GameStateDto gameStateDto, String roomName) {
+        List<String> target = memoryDatabase.get(roomName);
+        target.set(STATE_INDEX, gameStateDto.getState());
+        target.set(COLOR_INDEX, gameStateDto.getTurnColor());
+    }
+
 }

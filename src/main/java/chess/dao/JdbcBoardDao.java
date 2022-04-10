@@ -2,28 +2,24 @@ package chess.dao;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.BoardGenerator;
-import chess.domain.board.CustomBoardGenerator;
-import chess.domain.board.Point;
-import chess.domain.board.Route;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.database.BoardDto;
+import chess.database.PieceDto;
+import chess.database.PointDto;
+import chess.database.RouteDto;
 
 public class JdbcBoardDao implements BoardDao {
 
     @Override
-    public void saveBoard(Map<Point, Piece> pointPieces, String roomName) {
+    public void saveBoard(BoardDto boardDto, String roomName) {
         JdbcConnector connector = JdbcConnector.query(
             "insert into board (horizontal_index, vertical_index, piece_type, piece_color, room_name)"
                 + " values (?, ?, ?, ?, ?)");
-        pointPieces = ignoreEmpty(pointPieces);
-        for (Map.Entry<Point, Piece> entry : pointPieces.entrySet()) {
-            Point point = entry.getKey();
-            Piece piece = entry.getValue();
+
+        Map<PointDto, PieceDto> pointPieceDto = boardDto.getPointPieces();
+        for (Map.Entry<PointDto, PieceDto> entry : pointPieceDto.entrySet()) {
+            PointDto point = entry.getKey();
+            PieceDto piece = entry.getValue();
             connector = connector
                 .parameters(point.getHorizontal(), point.getVertical())
                 .parameters(piece.getType(), piece.getColor(), roomName)
@@ -32,35 +28,27 @@ public class JdbcBoardDao implements BoardDao {
         connector.executeBatch();
     }
 
-    private Map<Point, Piece> ignoreEmpty(Map<Point, Piece> pointPieces) {
-        return pointPieces.entrySet()
-            .stream()
-            .filter(entry -> !entry.getValue().isSameType(PieceType.EMPTY))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
     @Override
-    public Board readBoard(String roomName) {
+    public BoardDto readBoard(String roomName) {
         JdbcConnector.ResultSetHolder holder = JdbcConnector.query("select * from board where room_name = ?")
             .parameters(roomName)
             .executeQuery();
 
-        Map<Point, Piece> pointPieces = new HashMap<>();
+        Map<PointDto, PieceDto> pointPieceDto = new HashMap<>();
         while (holder.next()) {
-            Point point = Point.of(
+            PointDto point = PointDto.of(
                 holder.getInteger("horizontal_index"), holder.getInteger("vertical_index")
             );
-            Piece piece = PieceCache.getPiece(
-                holder.getString("piece_type"), Color.of(holder.getString("piece_color"))
+            PieceDto piece = PieceDto.of(
+                holder.getString("piece_type"), holder.getString("piece_color")
             );
-            pointPieces.put(point, piece);
+            pointPieceDto.put(point, piece);
         }
-        validateExist(pointPieces, roomName);
-        BoardGenerator generator = new CustomBoardGenerator(pointPieces);
-        return Board.of(generator);
+        validateExist(pointPieceDto, roomName);
+        return new BoardDto(pointPieceDto);
     }
 
-    private void validateExist(Map<Point, Piece> pointPieces, String roomName) {
+    private void validateExist(Map<PointDto, PieceDto> pointPieces, String roomName) {
         if (pointPieces.size() == 0) {
             throw new IllegalArgumentException(
                 String.format("[ERROR] %s에 해당하는 이름의 보드가 없습니다.", roomName)
@@ -69,17 +57,17 @@ public class JdbcBoardDao implements BoardDao {
     }
 
     @Override
-    public void deletePiece(Point point, String roomName) {
+    public void deletePiece(PointDto pointDto, String roomName) {
         JdbcConnector.query("DELETE FROM board WHERE horizontal_index = ? and vertical_index = ? and room_name = ?")
-            .parameters(point.getHorizontal(), point.getVertical())
+            .parameters(pointDto.getHorizontal(), pointDto.getVertical())
             .parameters(roomName)
             .executeUpdate();
     }
 
     @Override
-    public void updatePiece(Route route, String roomName) {
-        Point source = route.getSource();
-        Point destination = route.getDestination();
+    public void updatePiece(RouteDto routeDto, String roomName) {
+        PointDto source = routeDto.getSource();
+        PointDto destination = routeDto.getDestination();
         JdbcConnector.query("update board set horizontal_index = ?, vertical_index = ? "
                 + "where horizontal_index = ? and vertical_index = ? and room_name = ?")
             .parameters(destination.getHorizontal(), destination.getVertical(),

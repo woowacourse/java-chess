@@ -43,8 +43,8 @@ public class JdbcConnector {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ignored) {
+            throw new IllegalStateException("[ERROR] JDBC 연결에 실패했습니다.");
         }
-        throw new IllegalStateException("[ERROR] JDBC 연결에 실패했습니다.");
     }
 
     public static JdbcConnector query(String sql) {
@@ -115,16 +115,16 @@ public class JdbcConnector {
         try {
             statement.executeUpdate();
         } catch (SQLException ignored) {
+            throw new IllegalStateException("[ERROR] 업데이트 쿼리를 실패했습니다.");
         }
-        throw new IllegalStateException("[ERROR] 업데이트 쿼리를 실패했습니다.");
     }
 
     public void executeBatch() {
         try {
             statement.executeBatch();
         } catch (SQLException ignored) {
+            throw new IllegalStateException("[ERROR] 배치 쿼리를 실패했습니다.");
         }
-        throw new IllegalStateException("[ERROR] 배치 쿼리를 실패했습니다.");
     }
 
     static class ResultSetHolder {

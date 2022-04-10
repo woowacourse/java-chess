@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import chess.domain.Color;
+import chess.database.GameStateDto;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 
@@ -27,7 +27,8 @@ class GameDaoTest {
     @Order(1)
     @DisplayName("게임을 생성한다.")
     public void createGame() {
-        assertThatCode(() -> dao.saveGame("READY", Color.WHITE.name(), TEST_ROOM_NAME))
+        GameState state = new Ready();
+        assertThatCode(() -> dao.saveGame(GameStateDto.of(state), TEST_ROOM_NAME))
             .doesNotThrowAnyException();
     }
 
@@ -56,7 +57,7 @@ class GameDaoTest {
         GameState state = new Ready();
         GameState started = state.start();
         // when
-        dao.updateState(started.getState(), started.getColor(), TEST_ROOM_NAME);
+        dao.updateState(GameStateDto.of(started), TEST_ROOM_NAME);
         List<String> stateAndColor = dao.readStateAndColor(TEST_ROOM_NAME);
 
         String stateString = stateAndColor.get(0);

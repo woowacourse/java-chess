@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.database.PointDto;
 import chess.domain.piece.move.Direction;
 
 public class Point {
@@ -46,6 +47,10 @@ public class Point {
         if (argument.length() != LINE_NUMBER_COUNT) {
             throw new IllegalArgumentException(String.format("[ERROR] 좌표의 크기는 %d 여야 합니다.", DECIMAL));
         }
+    }
+
+    public static Point of(PointDto pointDto) {
+        return of(pointDto.getHorizontal(), pointDto.getVertical());
     }
 
     public int subtractHorizontal(Point other) {

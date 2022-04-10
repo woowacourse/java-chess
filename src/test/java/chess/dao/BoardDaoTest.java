@@ -13,25 +13,33 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import chess.database.BoardDto;
+import chess.database.GameStateDto;
+import chess.database.PointDto;
+import chess.database.RouteDto;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.Point;
 import chess.domain.board.Route;
+import chess.domain.game.GameState;
+import chess.domain.game.Ready;
 import chess.domain.piece.Piece;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BoardDaoTest {
 
     private static final String TEST_ROOM_NAME = "TESTING";
+    private static GameState state;
 
     private final BoardDao dao = new JdbcBoardDao();
 
     @BeforeAll
     static void setUp() {
+        state = new Ready();
         JdbcGameDao gameDao = new JdbcGameDao();
-        gameDao.saveGame("READY", Color.WHITE.name(), TEST_ROOM_NAME);
+        gameDao.saveGame(GameStateDto.of(state), TEST_ROOM_NAME);
     }
 
     @Test
@@ -39,10 +47,10 @@ class BoardDaoTest {
     @DisplayName("말의 위치와 종류를 저장한다.")
     public void insert() {
         // given & when
+        Board board = Board.of(new InitialBoardGenerator());
         BoardGenerator generator = new InitialBoardGenerator();
-        Map<Point, Piece> pointPieces = generator.generate();
         // then
-        assertThatCode(() -> dao.saveBoard(pointPieces, TEST_ROOM_NAME))
+        assertThatCode(() -> dao.saveBoard(BoardDto.of(board.getPointPieces()), TEST_ROOM_NAME))
             .doesNotThrowAnyException();
     }
 
@@ -53,9 +61,9 @@ class BoardDaoTest {
         // given
         String roomName = TEST_ROOM_NAME;
         // when
-        Board board = dao.readBoard(roomName);
+        BoardDto boardDto = dao.readBoard(roomName);
         // then
-        assertThat(board.getPointPieces().size()).isEqualTo(64);
+        assertThat(boardDto.getPointPieces().size()).isEqualTo(32);
     }
 
     @Test
@@ -77,7 +85,7 @@ class BoardDaoTest {
         String roomName = TEST_ROOM_NAME;
         Route route = Route.of(List.of("a2", "a4"));
         // then
-        assertThatCode(() -> dao.updatePiece(route, roomName))
+        assertThatCode(() -> dao.updatePiece(RouteDto.of(route), roomName))
             .doesNotThrowAnyException();
     }
 
@@ -89,7 +97,7 @@ class BoardDaoTest {
         String roomName = TEST_ROOM_NAME;
         Point point = Point.of("b2");
         // then
-        assertThatCode(() -> dao.deletePiece(point, roomName))
+        assertThatCode(() -> dao.deletePiece(PointDto.of(point), roomName))
             .doesNotThrowAnyException();
     }
 

@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import chess.database.BoardDto;
+import chess.database.PieceDto;
+import chess.database.PointDto;
 import chess.domain.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;

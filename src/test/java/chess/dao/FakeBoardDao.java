@@ -3,42 +3,40 @@ package chess.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.board.Board;
-import chess.domain.board.CustomBoardGenerator;
-import chess.domain.board.Point;
-import chess.domain.board.Route;
-import chess.domain.piece.Piece;
+import chess.database.BoardDto;
+import chess.database.PieceDto;
+import chess.database.PointDto;
+import chess.database.RouteDto;
 
 public class FakeBoardDao implements BoardDao {
 
-    private final Map<String, Map<Point, Piece>> memoryDatabase;
+    private final Map<String, Map<PointDto, PieceDto>> memoryDatabase;
 
     public FakeBoardDao() {
         this.memoryDatabase = new HashMap<>();
     }
 
     @Override
-    public void saveBoard(Map<Point, Piece> pointPieces, String roomName) {
-        this.memoryDatabase.put(roomName, new HashMap<>(pointPieces));
+    public void saveBoard(BoardDto boardDto, String roomName) {
+        this.memoryDatabase.put(roomName, new HashMap<>(boardDto.getPointPieces()));
     }
 
     @Override
-    public Board readBoard(String roomName) {
-        Map<Point, Piece> pointPieces = memoryDatabase.get(roomName);
-        return Board.of(new CustomBoardGenerator(pointPieces));
+    public BoardDto readBoard(String roomName) {
+        return new BoardDto(memoryDatabase.get(roomName));
     }
 
     @Override
-    public void deletePiece(Point destination, String roomName) {
-        Map<Point, Piece> pointPieces = memoryDatabase.get(roomName);
+    public void deletePiece(PointDto destination, String roomName) {
+        Map<PointDto, PieceDto> pointPieces = memoryDatabase.get(roomName);
         pointPieces.remove(destination);
     }
 
     @Override
-    public void updatePiece(Route route, String roomName) {
-        Map<Point, Piece> pointPieces = memoryDatabase.get(roomName);
-        Piece piece = pointPieces.get(route.getSource());
-        pointPieces.remove(route.getSource());
-        pointPieces.put(route.getDestination(), piece);
+    public void updatePiece(RouteDto routeDto, String roomName) {
+        Map<PointDto, PieceDto> pointPieces = memoryDatabase.get(roomName);
+        PieceDto piece = pointPieces.get(routeDto.getSource());
+        pointPieces.remove(routeDto.getSource());
+        pointPieces.put(routeDto.getDestination(), piece);
     }
 }

@@ -2,6 +2,8 @@ package chess.dao;
 
 import java.util.List;
 
+import chess.database.GameStateDto;
+
 public class JdbcGameDao implements GameDao {
 
     @Override
@@ -17,16 +19,16 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void saveGame(String state, String color, String roomName) {
+    public void saveGame(GameStateDto gameStateDto, String roomName) {
         JdbcConnector.query("insert into game(room_name, turn_color, state) values (?, ?, ?)")
-            .parameters(roomName, color, state)
+            .parameters(roomName, gameStateDto.getTurnColor(), gameStateDto.getState())
             .executeUpdate();
     }
 
     @Override
-    public void updateState(String state, String color, String roomName) {
+    public void updateState(GameStateDto gameStateDto, String roomName) {
         JdbcConnector.query("UPDATE game SET state = ?, turn_color = ? WHERE room_name = ?")
-            .parameters(state, color, roomName)
+            .parameters(gameStateDto.getState(), gameStateDto.getTurnColor(), roomName)
             .executeUpdate();
     }
 }

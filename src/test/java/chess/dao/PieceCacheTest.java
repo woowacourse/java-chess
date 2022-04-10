@@ -16,7 +16,7 @@ class PieceCacheTest {
     public void createPieceByNameAndColor() {
         // given
         String name = "PAWN";
-        Color color = Color.of("WHITE");
+        String color = "WHITE";
         // when
         Piece piece = PieceCache.getPiece(name, color);
         // then
