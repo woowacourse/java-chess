@@ -36,10 +36,8 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void saveAllPieces(final Map<Position, Piece> board) {
-        final Connection connection = getConnection();
         final String sql = "insert into piece (position, team, name) values (?, ?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             saveAllPieces(board, statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,12 +56,11 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public Map<String, PieceDto> findAllPieces() {
-        final Connection connection = getConnection();
         final String sql = "select position, team, name from piece";
         final Map<String, PieceDto> allPieces = new HashMap<>();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
+
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
             putAllPieces(allPieces, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,10 +80,8 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void removePieceByPosition(final String position) {
-        final Connection connection = getConnection();
         final String sql = "delete from piece where position = (?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, position);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -96,12 +91,9 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void updatePiece(final String position, final Piece piece) {
-        final Connection connection = getConnection();
         final String sql = "insert into piece (position, team, name) values (?, ?, ?) "
                 + "on duplicate key update team = (?), name = (?)";
-
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, position);
             statement.setString(2, piece.getTeam());
             statement.setString(3, piece.getName());
@@ -115,10 +107,8 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void removeAllPieces() {
-        final Connection connection = getConnection();
         final String sql = "TRUNCATE piece";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

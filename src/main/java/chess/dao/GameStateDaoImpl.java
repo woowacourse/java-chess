@@ -32,30 +32,31 @@ public class GameStateDaoImpl implements GameStateDao {
 
     @Override
     public boolean hasPlayingGame() {
-        final Connection connection = getConnection();
         final String sql = "select count(*) as result from game";
         int count = 0;
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                count = resultSet.getInt("result");
-            }
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
+            count = getGameCount(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return count > 0;
     }
 
+    private int getGameCount(final ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return resultSet.getInt("result");
+        }
+        return 0;
+    }
+
     @Override
     public void saveState(final String state) {
-        final Connection connection = getConnection();
         String sql = "insert into game (state) values (?)";
         if (hasPlayingGame()) {
             sql = "update game set state = (?)";
         }
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, state);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -65,13 +66,11 @@ public class GameStateDaoImpl implements GameStateDao {
 
     @Override
     public void saveTurn(final String turn) {
-        final Connection connection = getConnection();
         String sql = "insert into game (turn) values (?)";
         if (hasPlayingGame()) {
             sql = "update game set turn = (?)";
         }
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, turn);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -81,50 +80,48 @@ public class GameStateDaoImpl implements GameStateDao {
 
     @Override
     public String getGameState() {
-        final Connection connection = getConnection();
         final String sql = "select state from game";
         String state = null;
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                state = resultSet.getString("state");
-            }
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
+            state = getGameState(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        if (state == null) {
-            return DATABASE_EMPTY_SYMBOL;
         }
         return state;
     }
 
+    private String getGameState(final ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return resultSet.getString("state");
+        }
+        return DATABASE_EMPTY_SYMBOL;
+    }
+
     @Override
     public String getTurn() {
-        final Connection connection = getConnection();
         final String sql = "select turn from game";
         String turn = null;
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                turn = resultSet.getString("turn");
-            }
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
+            turn = getTurn(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        if (turn == null) {
-            return DATABASE_EMPTY_SYMBOL;
         }
         return turn;
     }
 
+    private String getTurn(final ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return resultSet.getString("turn");
+        }
+        return DATABASE_EMPTY_SYMBOL;
+    }
+
     @Override
     public void removeGameState() {
-        final Connection connection = getConnection();
         final String sql = "TRUNCATE game";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
