@@ -35,7 +35,7 @@ public class GameController {
     public Route createNewGame() {
         return (request, response) -> {
             final ChessGame chessGame = gameService.createNewGame();
-            response.redirect("/room/" + chessGame.getId());
+            response.redirect("/games/" + chessGame.getId());
             return "";
         };
     }

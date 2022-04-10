@@ -60,7 +60,7 @@
     <br>
 
     <div id="moveFormDiv" style="display:none;">
-        <form id="moveForm" method="post" action="/room/{{game.gameId}}/move">
+        <form id="moveForm" method="post" action="/games/{{game.gameId}}/move">
             <input id="source" name="source" type="text" value="">
             <input id="target" name="target" type="text" value="">
             <input type="submit" value="이동">
@@ -70,7 +70,7 @@
     {{#unless game.finished}}
     {{#if promotable}}
     <p>폰으로 프로모션하고 싶은 기물을 선택하세요.</p>
-    <form id="promotionForm" method="post" action="/room/{{game.gameId}}/promotion">
+    <form id="promotionForm" method="post" action="/games/{{game.gameId}}/promotion">
         <input type="radio" name="pieceName" value="Queen" checked="checked">퀸
         <input type="radio" name="pieceName" value="Bishop">비숍
         <input type="radio" name="pieceName" value="Rook">룩
@@ -89,7 +89,7 @@
     <div id="optionDiv">
         <button type="button" onclick="location.href='/';">목록으로 돌아가기</button>
         {{#unless game.finished}}
-        <button type="button" onclick="location.href='/room/{{game.gameId}}/end';">게임 종료하기</button>
+        <button type="button" onclick="location.href='/games/{{game.gameId}}/end';">게임 종료하기</button>
         {{/unless}}
     </div>
 </div>
@@ -188,7 +188,7 @@
 
     function calculateScores() {
         $.ajax({
-            url: "/room/{{game.gameId}}/status",
+            url: "/games/{{game.gameId}}/status",
             type: "get",
             success(data) {
                 let obj = JSON.parse(data);

@@ -48,7 +48,7 @@
             {{#each games as |value key|}}
             <tr>
                 <td>
-                    <a href="/room/{{key}}">{{key}}</a>
+                    <a href="/games/{{key}}">{{key}}</a>
                 </td>
                 <td>
                     {{#if value}}
@@ -65,7 +65,7 @@
     <br>
     <br>
 
-    <button type="button" onclick="location.href='/room/start';">새로 시작하기</button>
+    <button type="button" onclick="location.href='/games/start';">새로 시작하기</button>
 </div>
 
 </body>
