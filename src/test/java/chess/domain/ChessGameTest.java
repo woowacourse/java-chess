@@ -122,7 +122,7 @@ public class ChessGameTest {
 
         chessGame.moveChessmen(command1, BLACK);
 
-        assertThatCode(() -> chessGame.moveChessmen(command2, BLACK))
+        assertThatCode(() -> chessGame.moveChessmen(command2, WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("턴은 백색 말부터 시작해 한번씩 움직일 수 있습니다.");
     }
