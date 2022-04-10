@@ -6,4 +6,9 @@ public class Ready implements Status {
     public boolean isEnd() {
         return false;
     }
+
+    @Override
+    public String name() {
+        return "ready";
+    }
 }

@@ -16,18 +16,18 @@ public class ChessMemberDao implements MemberDao<Member> {
     }
 
     @Override
-    public List<Member> getAllByBoardId(int boardId) {
+    public List<Member> getAllByRoomId(int roomId) {
         return connectionManager.executeQuery(connection -> {
             List<Member> members = new ArrayList<>();
-            String sql = "SELECT * FROM member WHERE board_id=?";
+            String sql = "SELECT * FROM member WHERE room_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, boardId);
+            preparedStatement.setInt(1, roomId);
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 members.add(
                         new Member(resultSet.getInt("id"),
                                 resultSet.getString("name"),
-                                resultSet.getInt("board_id")
+                                resultSet.getInt("room_id")
                         ));
             }
             return members;
@@ -35,25 +35,25 @@ public class ChessMemberDao implements MemberDao<Member> {
     }
 
     @Override
-    public Member save(String name, int boardId) {
+    public Member save(String name, int roomId) {
         return connectionManager.executeQuery(connection -> {
-            String sql = "INSERT INTO member(name, board_id) VALUES(?, ?)";
+            String sql = "INSERT INTO member(name, room_id) VALUES(?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, boardId);
+            preparedStatement.setInt(2, roomId);
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
                 throw new IllegalArgumentException("저장에 실패하였습니다: " + name);
             }
-            return new Member(generatedKeys.getInt(1), name, boardId);
+            return new Member(generatedKeys.getInt(1), name, roomId);
         });
     }
 
     @Override
-    public void saveAll(List<Member> members, int boardId) {
+    public void saveAll(List<Member> members, int roomId) {
         for (Member member : members) {
-            save(member.getName(), boardId);
+            save(member.getName(), roomId);
         }
     }
 }

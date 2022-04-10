@@ -1,13 +1,10 @@
 package chess.controller;
 
 import chess.ChessService;
-import chess.Member;
-import chess.model.Board;
 import chess.dto.BoardDto;
-import chess.dto.BoardsDto;
+import chess.dto.RoomsDto;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
-import java.util.List;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class ChessController {
@@ -35,13 +32,12 @@ public class ChessController {
         return chessService.status(roomId);
     }
 
-    public BoardsDto getBoards() {
-        return chessService.getBoards();
+    public RoomsDto getRooms() {
+        return chessService.getRooms();
     }
 
     public int startGame(String roomTitle, String member1, String member2) {
-        final Board board = new Board(roomTitle, List.of(new Member(member1), new Member(member2)));
-        return chessService.init(board).getId();
+        return chessService.init(roomTitle, member1, member2).getId();
     }
 
     public void end(int roomId) {

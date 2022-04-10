@@ -16,7 +16,5 @@ public interface BoardDao<T> {
 
     T getById(int id);
 
-    List<T> findAll();
-
     T init(T board, Map<Square, Piece> startingPieces);
 }

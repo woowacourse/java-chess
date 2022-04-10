@@ -10,6 +10,7 @@ import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
+import chess.model.status.Running;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,7 @@ class ChessPieceDaoTest {
 
     @BeforeEach
     void setup() {
-        final Board board = chessBoardDao.save(new Board("corinne"));
+        final Board board = chessBoardDao.save(new Board(new Running()));
         this.boardId = board.getId();
         final Square square = chessSquareDao.save(new Square(File.A, Rank.TWO, board.getId()));
         this.squareId = square.getId();

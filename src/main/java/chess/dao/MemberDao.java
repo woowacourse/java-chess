@@ -1,13 +1,12 @@
 package chess.dao;
 
-import chess.Member;
 import java.util.List;
 
 public interface MemberDao<T> {
 
-    List<T> getAllByBoardId(int boardId);
+    List<T> getAllByRoomId(int roomId);
 
-    Member save(String name, int boardId);
+    T save(String name, int roomId);
 
-    void saveAll(List<T> members, int boardId);
+    void saveAll(List<T> members, int roomId);
 }

@@ -4,16 +4,16 @@ public class Member {
 
     private final int id;
     private final String name;
-    private final int boardId;
+    private final int roomId;
 
     public Member(String name) {
         this(0, name, 0);
     }
 
-    public Member(int id, String name, int boardId) {
+    public Member(int id, String name, int roomId) {
         this.id = id;
         this.name = name;
-        this.boardId = boardId;
+        this.roomId = roomId;
     }
 
     public int getId() {
@@ -24,7 +24,7 @@ public class Member {
         return name;
     }
 
-    public int getBoardId() {
-        return boardId;
+    public int getRoomId() {
+        return roomId;
     }
 }

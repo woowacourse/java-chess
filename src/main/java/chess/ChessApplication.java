@@ -7,10 +7,12 @@ import static spark.Spark.staticFiles;
 import chess.controller.ChessController;
 import chess.dao.BoardDao;
 import chess.dao.ChessBoardDao;
+import chess.dao.ChessRoomDao;
 import chess.dao.ConnectionManager;
 import chess.dao.ChessPieceDao;
 import chess.dao.ChessSquareDao;
 import chess.dao.PieceDao;
+import chess.dao.RoomDao;
 import chess.dao.SquareDao;
 import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
@@ -34,7 +36,8 @@ public class ChessApplication {
         BoardDao<Board> chessBoardDao = new ChessBoardDao(connectionManager);
         SquareDao<Square> chessSquareDao = new ChessSquareDao(connectionManager);
         PieceDao<Piece> chessPieceDao = new ChessPieceDao(connectionManager);
-        ChessService chessService = new ChessService(chessBoardDao, chessSquareDao, chessPieceDao);
+        RoomDao<Room> chessRoomDao = new ChessRoomDao(connectionManager);
+        ChessService chessService = new ChessService(chessBoardDao, chessSquareDao, chessPieceDao, chessRoomDao);
         chessController = new ChessController(chessService);
     }
 
@@ -44,7 +47,7 @@ public class ChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("boards", chessController.getBoards());
+            model.put("rooms", chessController.getRooms());
             return render(model, "home.html");
         });
 
@@ -52,7 +55,9 @@ public class ChessApplication {
             final List<String> createRoomInput = Arrays.stream(req.body().strip().split("\n"))
                     .map(s -> s.split("=")[1])
                     .collect(Collectors.toList());
-            final int roomId = chessController.startGame(createRoomInput.get(0), createRoomInput.get(1),
+            final int roomId = chessController.startGame(
+                    createRoomInput.get(0),
+                    createRoomInput.get(1),
                     createRoomInput.get(2));
             res.redirect("/room/" + roomId);
             return null;

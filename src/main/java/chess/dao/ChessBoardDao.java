@@ -3,6 +3,7 @@ package chess.dao;
 import chess.model.Board;
 import chess.model.piece.Piece;
 import chess.model.square.Square;
+import chess.model.status.StatusType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,19 +22,18 @@ public class ChessBoardDao implements BoardDao<Board> {
     @Override
     public Board save(Board board) {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "INSERT INTO board (room_title) VALUES (?)";
+            final String sql = "INSERT INTO board (status) VALUES (?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, board.getTitle());
+            preparedStatement.setString(1, board.getStatus().name());
             preparedStatement.executeUpdate();
             final ChessMemberDao chessMemberDao = new ChessMemberDao(new ConnectionManager());
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("보드가 없습니다. 방 제목: " + board.getTitle());
+                throw new IllegalArgumentException("보드가 없습니다. 방 제목: " + board.getStatus());
             }
             return new Board(
                     generatedKeys.getInt(1),
-                    board.getTitle(),
-                    chessMemberDao.getAllByBoardId(generatedKeys.getInt(1)));
+                    board.getStatus());
         });
     }
 
@@ -69,28 +69,8 @@ public class ChessBoardDao implements BoardDao<Board> {
             }
             return new Board(
                     resultSet.getInt("id"),
-                    resultSet.getString("room_title"),
-                    chessMemberDao.getAllByBoardId(resultSet.getInt("id"))
+                    StatusType.findStatus(resultSet.getString("status"))
             );
-        });
-    }
-
-    @Override
-    public List<Board> findAll() {
-        return connectionManager.executeQuery(connection -> {
-            final String sql = "SELECT * FROM board";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
-            List<Board> boards = new ArrayList<>();
-            while (resultSet.next()) {
-                boards.add(new Board(
-                        resultSet.getInt("id"),
-                        resultSet.getString("room_title"),
-                        chessMemberDao.getAllByBoardId(resultSet.getInt("id")))
-                );
-            }
-            return boards;
         });
     }
 
@@ -100,13 +80,11 @@ public class ChessBoardDao implements BoardDao<Board> {
             final Board savedBoard = save(board);
             final ChessSquareDao chessSquareDao = new ChessSquareDao(connectionManager);
             final ChessPieceDao chessPieceDao = new ChessPieceDao(connectionManager);
-            final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
             chessSquareDao.saveAllSquare(savedBoard.getId());
             for (Square square : startingPieces.keySet()) {
                 int squareId = chessSquareDao.getSquareIdBySquare(square, savedBoard.getId());
                 chessPieceDao.save(startingPieces.get(square), squareId);
             }
-            chessMemberDao.saveAll(board.getMembers(), savedBoard.getId());
             return savedBoard;
         });
     }

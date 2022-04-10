@@ -4,13 +4,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Board;
 import chess.model.piece.Initializer;
-import java.util.List;
+import chess.model.status.Ready;
+import chess.model.status.Running;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardDaoTest {
 
     private final ChessBoardDao dao = new ChessBoardDao(new ConnectionManager());
+    private Board board;
+
+    @BeforeEach
+    void setup() {
+        board = dao.save(new Board(new Ready()));
+    }
 
     @AfterEach
     void setDown() {
@@ -19,15 +27,12 @@ class ChessBoardDaoTest {
 
     @Test
     void saveTest() {
-        final Board board = dao.save(new Board("개초보만"));
-        assertThat(board.getTitle()).isEqualTo("개초보만");
 
-        dao.deleteById(board.getId());
+        assertThat(board.getStatus()).isInstanceOf(Ready.class);
     }
 
     @Test
     void deleteBoard() {
-        final Board board = dao.save(new Board("삭제예정"));
         int affectedRow = dao.deleteById(board.getId());
 
         assertThat(affectedRow).isEqualTo(1);
@@ -35,26 +40,16 @@ class ChessBoardDaoTest {
 
     @Test
     void getByIdTest() {
-        final Board board = dao.save(new Board("개초보만"));
         final Board foundBoard = dao.getById(board.getId());
 
-        assertThat(foundBoard.getTitle()).isEqualTo("개초보만");
-    }
-
-    @Test
-    void findAllTest() {
-        dao.save(new Board("개초보만"));
-        dao.save(new Board("왕허접만"));
-        final List<Board> boards = dao.findAll();
-
-        assertThat(boards.size()).isEqualTo(2);
+        assertThat(foundBoard.getStatus()).isInstanceOf(Ready.class);
     }
 
     @Test
     void initBoard() {
-        final Board edenFightingBoard = new Board("에덴파이팅");
+        final Board edenFightingBoard = new Board(new Running());
         Board board = dao.init(edenFightingBoard, Initializer.initialize());
 
-        assertThat(board.getTitle()).isEqualTo("에덴파이팅");
+        assertThat(board.getStatus().name()).isEqualTo("running");
     }
 }

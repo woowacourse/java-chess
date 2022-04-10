@@ -6,4 +6,9 @@ public class End implements Status {
     public boolean isEnd() {
         return true;
     }
+
+    @Override
+    public String name() {
+        return "end";
+    }
 }

@@ -36,7 +36,7 @@ public class ChessPieceDao implements PieceDao<Piece> {
                     piece.name(),
                     resultSet.getInt(1),
                     piece.color(),
-                    piece.getSquareId());
+                    squareId);
         });
     }
 

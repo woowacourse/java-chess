@@ -2,9 +2,10 @@ package chess;
 
 import chess.dao.BoardDao;
 import chess.dao.PieceDao;
+import chess.dao.RoomDao;
 import chess.dao.SquareDao;
 import chess.dto.BoardDto;
-import chess.dto.BoardsDto;
+import chess.dto.RoomsDto;
 import chess.dto.RoomDto;
 import chess.dto.ScoreDto;
 import chess.model.Board;
@@ -14,6 +15,7 @@ import chess.model.piece.Initializer;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Square;
+import chess.model.status.Running;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,32 +29,41 @@ public class ChessService {
     private final BoardDao<Board> chessBoardDao;
     private final SquareDao<Square> chessSquareDao;
     private final PieceDao<Piece> chessPieceDao;
+    private final RoomDao<Room> chessRoomDao;
 
-    public ChessService(BoardDao<Board> chessBoardDao, SquareDao<Square> chessSquareDao, PieceDao<Piece> chessPieceDao) {
+    public ChessService(BoardDao<Board> chessBoardDao, SquareDao<Square> chessSquareDao, PieceDao<Piece> chessPieceDao,
+                        RoomDao<Room> chessRoomDao) {
         this.chessBoardDao = chessBoardDao;
         this.chessSquareDao = chessSquareDao;
         this.chessPieceDao = chessPieceDao;
+        this.chessRoomDao = chessRoomDao;
     }
 
-    public Board init(Board board) {
-        return chessBoardDao.init(board, Initializer.initialize());
+    public Board init(String roomTitle, String member1, String member2) {
+        Board board = chessBoardDao.init(new Board(new Running()), Initializer.initialize());
+        chessRoomDao.save(new Room(roomTitle, List.of(new Member(member1), new Member(member2)), board.getId()));
+        return board;
     }
 
-    public BoardsDto getBoards() {
-        List<RoomDto> boardsDto = new ArrayList<>();
-        List<Board> boards = chessBoardDao.findAll();
-        for (Board board : boards) {
-            boardsDto.add(
-                    new RoomDto(board.getId(), board.getTitle(), board.getMembers().get(0), board.getMembers().get(1)));
+    public RoomsDto getRooms() {
+        List<RoomDto> roomsDto = new ArrayList<>();
+        List<Room> rooms = chessRoomDao.findAll();
+        for (Room room : rooms) {
+            roomsDto.add(
+                    new RoomDto(room.getId(), room.getTitle(), room.getMembers().get(0), room.getMembers().get(1)));
         }
-        return new BoardsDto(boardsDto);
+        return new RoomsDto(roomsDto);
     }
 
     public BoardDto getBoard(int roomId) {
-        final Board board = chessBoardDao.getById(roomId);
-        final Map<Square, Piece> allPositionsAndPieces = chessSquareDao.findAllSquaresAndPieces(roomId);
-        return BoardDto.of(allPositionsAndPieces, board.getTitle(), board.getMembers().get(0),
-                board.getMembers().get(1));
+        final Room room = chessRoomDao.getById(roomId);
+        final Board board = chessBoardDao.getById(room.getBoardId());
+        final Map<Square, Piece> allPositionsAndPieces = chessSquareDao.findAllSquaresAndPieces(board.getId());
+        return BoardDto.of(
+                allPositionsAndPieces,
+                room.getTitle(),
+                room.getMembers().get(0),
+                room.getMembers().get(1));
     }
 
     public void move(String source, String target, int boardId) {
