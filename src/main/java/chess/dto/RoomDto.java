@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.dao.Member;
+import chess.domain.member.Member;
 
 public class RoomDto {
 

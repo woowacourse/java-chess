@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.member.Member;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,11 @@
 package chess.domain.game;
 
 import chess.dao.*;
+import chess.domain.member.Member;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.BoardsDto;
 import chess.dto.ResponseDto;
 import chess.dto.StatusDto;
 import chess.mapper.Command;

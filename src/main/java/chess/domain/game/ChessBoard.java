@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.dao.Member;
+import chess.domain.member.Member;
 import chess.domain.pieces.Color;
 
 import java.util.ArrayList;

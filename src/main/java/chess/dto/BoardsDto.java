@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.dto;
 
 import chess.dto.RoomDto;
 

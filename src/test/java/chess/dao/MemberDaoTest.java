@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.game.ChessBoard;
+import chess.domain.member.Member;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

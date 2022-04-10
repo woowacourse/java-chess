@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.domain.member;
 
 public class Member {
 

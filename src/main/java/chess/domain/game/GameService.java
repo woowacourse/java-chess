@@ -7,6 +7,7 @@ import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.BoardsDto;
 import chess.dto.RoomDto;
 import chess.dto.StatusDto;
 

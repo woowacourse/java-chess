@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.dao.Member;
+import chess.domain.member.Member;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Symbol;
