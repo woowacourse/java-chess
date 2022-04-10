@@ -19,7 +19,7 @@ public final class End implements WebCommandGenerator {
         //finished상태로 response할 데이터 정리해두고
         chessGame.end();
         final Map<String, Object> model = returnModelToState.get();
-        
+
         // 겜 상태는 Ready상태로 만들어놓기
         chessGame.ready();
         return model;
