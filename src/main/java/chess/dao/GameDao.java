@@ -11,7 +11,7 @@ public class GameDao {
 
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public boolean create(String gameId) {
+    public void create(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
 
@@ -23,7 +23,6 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     public boolean findById(String gameId) {
@@ -92,12 +91,13 @@ public class GameDao {
         }
     }
 
-    public void updateForceEndFlagById(String gameId) {
+    public void updateForceEndFlagById(boolean forceEndFlag, String gameId) {
         final Connection connection = databaseConnector.getConnection();
-        final String sql = "update game set force_end_flag = true where id = ?";
+        final String sql = "update game set force_end_flag = ? where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, gameId);
+            statement.setBoolean(1, forceEndFlag);
+            statement.setString(2, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

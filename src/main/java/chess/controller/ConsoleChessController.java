@@ -5,17 +5,19 @@ import static chess.console.consoleview.InputView.requestStartOrEndInput;
 import static chess.console.consoleview.InputView.requestStatusOrEndInput;
 
 import chess.console.consoleview.OutputView;
+import chess.console.consoleview.boardview.BoardView;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.piece.ChessmenInitializer;
+import chess.domain.piece.Color;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
-import chess.console.consoleview.boardview.BoardView;
 
 public class ConsoleChessController {
 
     private boolean playerWantToEndStatus = false;
+    private Color turn = Color.BLACK;
 
     public void run() {
         OutputView.printGameInstructions();
@@ -34,7 +36,7 @@ public class ConsoleChessController {
 
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
 
-        ChessGame game = ChessGame.of(chessmenInitializer.init(), "1234");
+        ChessGame game = ChessGame.of(chessmenInitializer.init());
 
         OutputView.printBoard(new BoardView(new ChessGameDto(game)));
 
@@ -70,7 +72,8 @@ public class ConsoleChessController {
     }
 
     private ChessGame move(ChessGame chessGame, String command) {
-        chessGame.moveChessmen(new MovePositionCommandDto(command));
+        chessGame.moveChessmen(new MovePositionCommandDto(command), turn);
+        turn = turn.nextTurn();
         return chessGame;
     }
 

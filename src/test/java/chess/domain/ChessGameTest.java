@@ -21,9 +21,6 @@ import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
 
-    static int id = 10000;
-    static String gameId = "9999";
-
     ChessmenInitializer chessmenInitializer;
     ChessGame chessGame;
 
@@ -31,8 +28,7 @@ public class ChessGameTest {
     @BeforeEach
     void setup_chessGame() {
         chessmenInitializer = new ChessmenInitializer();
-        gameId = String.valueOf(++id);
-        chessGame = ChessGame.of(chessmenInitializer.init(), gameId);
+        chessGame = ChessGame.of(chessmenInitializer.init());
     }
 
     @DisplayName("체스말이 이동할 수 있는 위치면 이동에 성공한다.")
@@ -41,7 +37,7 @@ public class ChessGameTest {
         MovePositionCommandDto command = new MovePositionCommandDto("move a2 a4");
         Position a4 = Position.of("a4");
 
-        chessGame.moveChessmen(command);
+        chessGame.moveChessmen(command, BLACK);
 
         Position actual = chessGame.getChessmen()
             .extractPiece(Position.of("a4"))
@@ -55,7 +51,7 @@ public class ChessGameTest {
     void move_failOnInvalidMove() {
         MovePositionCommandDto command = new MovePositionCommandDto("move a2 a5");
 
-        assertThatCode(() -> chessGame.moveChessmen(command))
+        assertThatCode(() -> chessGame.moveChessmen(command, BLACK))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이동할 수 없는 위치입니다.");
     }
@@ -65,7 +61,7 @@ public class ChessGameTest {
     void move_failOnObstacleInPath() {
         MovePositionCommandDto command = new MovePositionCommandDto("move a1 a3");
 
-        assertThatCode(() -> chessGame.moveChessmen(command))
+        assertThatCode(() -> chessGame.moveChessmen(command, BLACK))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("가는 길목에 다른 말이 있어 이동할 수 없습니다.");
     }
@@ -75,7 +71,7 @@ public class ChessGameTest {
     void move_failOnFriendlyInTargetPosition() {
         MovePositionCommandDto command = new MovePositionCommandDto("move a1 a2");
 
-        assertThatCode(() -> chessGame.moveChessmen(command))
+        assertThatCode(() -> chessGame.moveChessmen(command, BLACK))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이동하려는 위치에 아군 말이 있습니다.");
     }
@@ -87,9 +83,9 @@ public class ChessGameTest {
         MovePositionCommandDto command2 = new MovePositionCommandDto("move b7 b5");
         MovePositionCommandDto command3 = new MovePositionCommandDto("move a4 b5");
 
-        chessGame.moveChessmen(command1);
-        chessGame.moveChessmen(command2);
-        chessGame.moveChessmen(command3);
+        chessGame.moveChessmen(command1, BLACK);
+        chessGame.moveChessmen(command2, WHITE);
+        chessGame.moveChessmen(command3, BLACK);
 
         Piece actual = chessGame.getChessmen().extractPiece(Position.of("b5"));
         Pawn expected = new Pawn(WHITE, Position.of("b5"));
@@ -101,7 +97,7 @@ public class ChessGameTest {
     @Test
     void checkTurn_white() {
         MovePositionCommandDto command1 = new MovePositionCommandDto("move a2 a4");
-        chessGame.moveChessmen(command1);
+        chessGame.moveChessmen(command1, BLACK);
 
         Color actual = chessGame.getChessmen().extractPiece(Position.of("a4")).getColor();
 
@@ -113,7 +109,7 @@ public class ChessGameTest {
     void checkTurn_white_Exception() {
         MovePositionCommandDto command = new MovePositionCommandDto("move a7 a6");
 
-        assertThatCode(() -> chessGame.moveChessmen(command))
+        assertThatCode(() -> chessGame.moveChessmen(command, BLACK))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("턴은 백색 말부터 시작해 한번씩 움직일 수 있습니다.");
     }
@@ -124,9 +120,9 @@ public class ChessGameTest {
         MovePositionCommandDto command1 = new MovePositionCommandDto("move a2 a4");
         MovePositionCommandDto command2 = new MovePositionCommandDto("move a4 a5");
 
-        chessGame.moveChessmen(command1);
+        chessGame.moveChessmen(command1, BLACK);
 
-        assertThatCode(() -> chessGame.moveChessmen(command2))
+        assertThatCode(() -> chessGame.moveChessmen(command2, BLACK))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("턴은 백색 말부터 시작해 한번씩 움직일 수 있습니다.");
     }
@@ -142,7 +138,7 @@ public class ChessGameTest {
     @DisplayName("King이 한 개라도 죽으면 게임은 끝난다.")
     @Test
     void isEnd_true() {
-        chessGame = ChessGame.of(new Pieces(List.of(new King(WHITE, Position.of("e1")))), gameId + "something");
+        chessGame = ChessGame.of(new Pieces(List.of(new King(WHITE, Position.of("e1")))));
 
         boolean actual = chessGame.isEnd();
 
