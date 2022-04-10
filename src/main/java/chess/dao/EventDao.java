@@ -12,8 +12,9 @@ public class EventDao {
         final String sql = addTable("SELECT type, description FROM %s WHERE game_id = ?");
         final ResultReader reader = new StatementExecutor(sql).setInt(gameId)
                 .executeQuery();
-
-        return readAllEvents(reader);
+        try (reader) {
+            return readAllEvents(reader);
+        }
     }
 
     private List<Event> readAllEvents(ResultReader reader) {

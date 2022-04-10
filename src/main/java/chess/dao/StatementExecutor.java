@@ -52,14 +52,14 @@ public class StatementExecutor {
 
     public ResultReader executeQuery() {
         try {
-            return new ResultReader(statement.executeQuery());
+            return ResultReader.ofQuery(statement);
         } catch (SQLException e) {
             throw new IllegalStateException(QUERY_EXCEPTION_MESSAGE);
         }
     }
 
     public void executeCommand() {
-        try {
+        try (statement) {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
@@ -69,7 +69,7 @@ public class StatementExecutor {
     public ResultReader executeCommandAndGetGeneratedKeys() {
         try {
             statement.executeUpdate();
-            return new ResultReader(statement.getGeneratedKeys());
+            return ResultReader.ofGeneratedKey(statement);
         } catch (SQLException e) {
             throw new IllegalStateException(COMMAND_EXCEPTION_MESSAGE);
         }
