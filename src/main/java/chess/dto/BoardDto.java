@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.dao.Member;
+import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Symbol;
 import chess.domain.position.Column;
@@ -49,7 +50,11 @@ public class BoardDto {
 
     private static String findByKey(Map<String, Piece> pieces, Integer row, Column column) {
         if (pieces.containsKey(row + column.name())) {
-            return pieces.get(row + column.name()).symbol();
+            final Piece piece = pieces.get(row + column.name());
+            if(piece.isSameColor(Color.WHITE)) {
+                return "white-" + piece.symbol() + ".png";
+            }
+            return "black-" + piece.symbol() + ".png";
         }
         return Symbol.BLANK.value();
     }

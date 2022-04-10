@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.game.Board;
+import chess.domain.game.ChessBoard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class MemberDaoTest {
 
     @BeforeEach
     void setup() {
-        final Board board = BoardDao.save(new Board("에덴파이팅~!"));
+        final ChessBoard board = BoardDao.save(new ChessBoard("에덴파이팅~!"));
         this.boardId = board.getId();
     }
 

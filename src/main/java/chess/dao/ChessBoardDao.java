@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.game.Board;
+import chess.domain.game.ChessBoard;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ChessBoardDao implements BoardDao<Board> {
+public class ChessBoardDao implements BoardDao<ChessBoard> {
 
     private final ConnectionManager connectionManager;
 
@@ -22,7 +22,7 @@ public class ChessBoardDao implements BoardDao<Board> {
     }
 
     @Override
-    public Board save(Board board) {
+    public ChessBoard save(ChessBoard board) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "INSERT INTO board (room_title, turn) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -34,12 +34,12 @@ public class ChessBoardDao implements BoardDao<Board> {
                 throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
             }
 
-            return new Board(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
+            return new ChessBoard(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
         });
     }
 
     @Override
-    public Board getById(int id) {
+    public ChessBoard getById(int id) {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT * FROM board WHERE id=?";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -54,12 +54,12 @@ public class ChessBoardDao implements BoardDao<Board> {
     }
 
     @Override
-    public List<Board> findAll() {
+    public List<ChessBoard> findAll() {
         return connectionManager.executeQuery(connection -> {
             final String sql = "SELECT * FROM board";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            List<Board> boards = new ArrayList<>();
+            List<ChessBoard> boards = new ArrayList<>();
             while (resultSet.next()) {
                 boards.add(makeBoard(resultSet, new ChessMemberDao(connectionManager)));
             }
@@ -69,9 +69,9 @@ public class ChessBoardDao implements BoardDao<Board> {
     }
 
     @Override
-    public Board init(Board board, Map<Position, Piece> initialize) {
+    public ChessBoard init(ChessBoard board, Map<Position, Piece> initialize) {
         return connectionManager.executeQuery(connection -> {
-            final Board savedBoard = save(board);
+            final ChessBoard savedBoard = save(board);
             final ChessPositionDao chessPositionDao = new ChessPositionDao(connectionManager);
             final ChessPieceDao chessPieceDao = new ChessPieceDao(connectionManager);
             final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
@@ -120,8 +120,8 @@ public class ChessBoardDao implements BoardDao<Board> {
         });
     }
 
-    private Board makeBoard(ResultSet resultSet, ChessMemberDao chessMemberDao) throws SQLException {
-        return new Board(
+    private ChessBoard makeBoard(ResultSet resultSet, ChessMemberDao chessMemberDao) throws SQLException {
+        return new ChessBoard(
                 resultSet.getInt("id"),
                 resultSet.getString("room_title"),
                 Color.findColor(resultSet.getString("turn")),

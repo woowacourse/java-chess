@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.game.Board;
+import chess.domain.game.ChessBoard;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pawn;
@@ -20,13 +20,13 @@ class PieceDaoTest {
 
     private final PieceDao<Piece> dao = new ChessPieceDao(new ChessConnectionManager());
     private final PositionDao<Position> chessPositionDao = new ChessPositionDao(new ChessConnectionManager());
-    private final BoardDao<Board> boardDao = new ChessBoardDao(new ChessConnectionManager());
+    private final BoardDao<ChessBoard> boardDao = new ChessBoardDao(new ChessConnectionManager());
     private int boardId;
     private int positionId;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("corinne"));
+        final ChessBoard board = boardDao.save(new ChessBoard("corinne"));
         this.boardId = board.getId();
         final Position position = chessPositionDao.save(new Position(Column.A, Row.TWO, board.getId()));
         this.positionId = position.getId();

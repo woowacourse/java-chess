@@ -31,7 +31,7 @@ public class ChessController {
     }
 
     public int startGame(String roomTitle, String member1, String member2) {
-        final Board board = new Board(roomTitle, Color.WHITE, List.of(new Member(member1), new Member(member2)));
+        final ChessBoard board = new ChessBoard(roomTitle, Color.WHITE, List.of(new Member(member1), new Member(member2)));
         return gameService.saveBoard(board, new BoardInitializer()).getId();
     }
 

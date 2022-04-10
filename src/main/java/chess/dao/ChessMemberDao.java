@@ -57,9 +57,4 @@ public class ChessMemberDao implements MemberDao<Member> {
                 resultSet.getInt("board_id")
         );
     }
-
-    @Override
-    public Member save(Member target) {
-        return null;
-    }
 }

@@ -7,7 +7,9 @@ import chess.domain.position.Row;
 import java.util.List;
 import java.util.Map;
 
-public interface PositionDao<T> extends Dao<T> {
+public interface PositionDao<T> {
+
+    T save(T position);
 
     T getByColumnAndRowAndBoardId(Column column, Row row, int boardId);
 

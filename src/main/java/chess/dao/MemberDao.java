@@ -2,7 +2,7 @@ package chess.dao;
 
 import java.util.List;
 
-public interface MemberDao<T> extends Dao<T> {
+public interface MemberDao<T> {
 
     void saveAll(List<T> targets, int boardId);
 

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.game.Board;
+import chess.domain.game.ChessBoard;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pawn;
@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class PositionDaoTest {
 
     private final PositionDao<Position> dao = new ChessPositionDao(new ChessConnectionManager());
-    private final BoardDao<Board> boardDao = new ChessBoardDao(new ChessConnectionManager());
+    private final BoardDao<ChessBoard> boardDao = new ChessBoardDao(new ChessConnectionManager());
     private final PieceDao<Piece> pieceDao = new ChessPieceDao(new ChessConnectionManager());
     private int boardId;
 
     @BeforeEach
     void setup() {
-        final Board board = boardDao.save(new Board("코린파이팅"));
+        final ChessBoard board = boardDao.save(new ChessBoard("코린파이팅"));
         this.boardId = board.getId();
         Position position = dao.save(new Position(Column.A, Row.TWO, boardId));
         pieceDao.save(new Piece(Color.WHITE, new Pawn(), position.getId()));

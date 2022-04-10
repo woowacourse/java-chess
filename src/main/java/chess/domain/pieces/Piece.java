@@ -31,9 +31,9 @@ public final class Piece {
 
     public String symbol() {
         if (color.isWhite()) {
-            return WHITE_SYMBOL + type.symbol().value();
+            return type.symbol().value().toLowerCase();
         }
-        return BLACK_SYMBOL + type.symbol().value();
+        return type.symbol().value();
     }
 
     public boolean isMovable(final Position source, final Position target) {

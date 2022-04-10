@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public interface BoardDao<T> extends Dao<T> {
+public interface BoardDao<T> {
 
     T save(T target);
 

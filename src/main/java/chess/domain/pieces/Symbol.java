@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 public enum Symbol {
 
-    BISHOP("-bishop.png", 3, new Bishop()),
-    KING("-king.png", 0, new King()),
-    KNIGHT("-knight.png", 2.5, new Knight()),
-    PAWN("-pawn.png", 1, new Pawn()),
-    QUEEN("-queen.png", 9, new Queen()),
-    ROOK("-rook.png", 5, new Rook()),
+    BISHOP("b", 3, new Bishop()),
+    KING("k", 0, new King()),
+    KNIGHT("n", 2.5, new Knight()),
+    PAWN("p", 1, new Pawn()),
+    QUEEN("q", 9, new Queen()),
+    ROOK("r", 5, new Rook()),
     BLANK("blank.png", 0, null),
     ;
 
