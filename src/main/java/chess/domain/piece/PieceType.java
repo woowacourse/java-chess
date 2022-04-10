@@ -10,7 +10,7 @@ public enum PieceType {
     KNIGHT("knight", 2.5, Knight::new),
     BISHOP("bishop", 3.0, Bishop::new),
     ROOK("rook", 5.0, Rook::new),
-    QUEEN("queen", 8.0, Queen::new),
+    QUEEN("queen", 9.0, Queen::new),
     KING("king", 0.0, King::new);
 
     private final String name;
