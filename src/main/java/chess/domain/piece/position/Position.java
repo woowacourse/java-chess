@@ -18,6 +18,10 @@ public class Position {
         return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 
+    public static Position from(String input) {
+        return Position.of(File.of(input.substring(0, 1)), Rank.of(input.substring(1, 2)));
+    }
+
     public boolean isBlocked(Direction direction) {
         Position next = getNext(direction);
         return next.getFile() == File.OUT || next.getRank() == Rank.OUT;
@@ -33,10 +37,6 @@ public class Position {
 
     public Rank getRank() {
         return rank;
-    }
-
-    public static Position toPosition(String input) {
-        return Position.of(File.of(input.substring(0, 1)), Rank.of(input.substring(1, 2)));
     }
 
     @Override

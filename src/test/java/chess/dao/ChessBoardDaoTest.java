@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
-import java.sql.Connection;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,6 @@ public class ChessBoardDaoTest {
     void init() {
         final ChessBoardDao chessBoardDao = new ChessBoardDao();
         chessBoardDao.deleteAll();
-    }
-
-    @Test
-    void connection() {
-        final ChessBoardDao chessBoardDao = new ChessBoardDao();
-        final Connection connection = chessBoardDao.getConection();
-        assertThat(connection).isNotNull();
     }
 
     @Test

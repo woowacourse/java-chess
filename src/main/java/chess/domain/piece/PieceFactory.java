@@ -19,6 +19,8 @@ public enum PieceFactory {
     r_WHITE("r_WHITE", new Rook(Color.WHITE))
     ;
 
+    public static final String BLACK_PAWN_START_RANK = "7";
+    public static final String WHITE_PAWN_START_RANK = "2";
     private String name;
     private Piece piece;
 
@@ -36,10 +38,10 @@ public enum PieceFactory {
 
         if (piece instanceof StartedPawn) {
             String file = position.substring(1, 2);
-            if(piece.color() == Color.BLACK && !file.equals("7")) {
+            if(piece.color() == Color.BLACK && !file.equals(BLACK_PAWN_START_RANK)) {
                 return new MovedPawn(piece.color());
             }
-            if(piece.color() == Color.WHITE && !file.equals("2")) {
+            if(piece.color() == Color.WHITE && !file.equals(WHITE_PAWN_START_RANK)) {
                 return new MovedPawn(piece.color());
             }
         }

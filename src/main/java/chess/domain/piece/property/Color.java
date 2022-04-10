@@ -2,6 +2,7 @@ package chess.domain.piece.property;
 
 import chess.domain.piece.position.Direction;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum Color {
     BLACK(Direction.DOWN),
@@ -18,7 +19,7 @@ public enum Color {
         return Arrays.stream(Color.values())
                 .filter(color -> color.name().equals(colorName))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("해당하는 이름에 대응하는 색이 존재하지 않습니다."));
     }
 
     public Direction getForwardDirection() {

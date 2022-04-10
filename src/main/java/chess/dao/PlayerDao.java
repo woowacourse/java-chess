@@ -20,7 +20,7 @@ public class PlayerDao {
         connection = getConection();
     }
 
-    public Connection getConection() {
+    private Connection getConection() {
         loadDriver();
         Connection connection = null;
         try {

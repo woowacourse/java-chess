@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.game.state.Player;
 import chess.domain.piece.property.Color;
-import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +13,6 @@ public class PlayerDaoTest {
     void init() {
         final PlayerDao playerDao = new PlayerDao();
         playerDao.deleteAll();
-    }
-
-    @Test
-    void connection() {
-        final PlayerDao playerDao = new PlayerDao();
-        final Connection connection = playerDao.getConection();
-        assertThat(connection).isNotNull();
     }
 
     @Test

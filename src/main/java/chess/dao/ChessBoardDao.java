@@ -22,7 +22,7 @@ public class ChessBoardDao {
         connection = getConection();
     }
 
-    public Connection getConection() {
+    private Connection getConection() {
         loadDriver();
         Connection connection = null;
         try {
