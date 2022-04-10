@@ -4,7 +4,8 @@
 
 ```
 docker 실행   docker-compose -p chess up -d
-docker 접속   docker exec -it chess-db-1 bash
+docker 접속   docker exec -it chess_master_db_1 bash
+docker 접속   docker exec -it chess_test_db_1 bash
 docker 종료   docker-compose -p chess down
 ```
 
