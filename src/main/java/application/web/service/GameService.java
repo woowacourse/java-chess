@@ -20,8 +20,7 @@ public class GameService {
     }
 
     public ChessGame createNewGame() {
-        final ChessGame chessGame = ChessGame.initializeChessGame();
-        chessGame.start();
+        final ChessGame chessGame = ChessGame.initializeAndStartChessGame();
         return gameRepository.save(chessGame);
     }
 

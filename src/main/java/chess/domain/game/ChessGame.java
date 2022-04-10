@@ -37,6 +37,12 @@ public class ChessGame {
         return new ChessGame(id, new RunningState(players, currentTurnColor));
     }
 
+    public static ChessGame initializeAndStartChessGame() {
+        final ChessGame chessGame = initializeChessGame();
+        chessGame.start();
+        return chessGame;
+    }
+
     public void start() {
         validateGameAvailableToStart();
         gameState = RunningState.createFirstTurnRunning();
