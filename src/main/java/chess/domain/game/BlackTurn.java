@@ -1,9 +1,8 @@
 package chess.domain.game;
 
-import static chess.domain.board.piece.Color.BLACK;
-
-import chess.domain.board.piece.Color;
 import chess.domain.board.Board;
+import chess.domain.board.piece.Color;
+import chess.domain.game.statistics.GameState;
 import java.util.Objects;
 
 final class BlackTurn extends Running {
@@ -13,13 +12,18 @@ final class BlackTurn extends Running {
     }
 
     @Override
-    protected Color currentTurnColor() {
-        return BLACK;
+    public Color getCurrentTurnColor() {
+        return Color.BLACK;
     }
 
     @Override
     protected Game continueGame() {
         return new WhiteTurn(board);
+    }
+
+    @Override
+    protected GameState getState() {
+        return GameState.BLACK_TURN;
     }
 
     @Override

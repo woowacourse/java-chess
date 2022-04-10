@@ -3,19 +3,13 @@ package chess.domain.board.piece;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.position.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class BlackPawnTest {
 
-    Piece blackPawn;
-
-    @BeforeEach
-    void setUp() {
-        blackPawn = new Pawn(Color.BLACK);
-    }
+    private final Piece blackPawn = new Pawn(Color.BLACK);
 
     @Nested
     class BlackPawnMoveTest {

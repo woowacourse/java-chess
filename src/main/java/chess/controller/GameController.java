@@ -1,60 +1,39 @@
 package chess.controller;
 
-import static chess.view.OutputView.print;
+import static chess.web.WebUtils.render;
+import static java.lang.Integer.parseInt;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
-import chess.domain.game.Game;
-import chess.domain.game.GameResult;
-import chess.domain.game.NewGame;
-import chess.dto.BoardViewDto;
-import chess.dto.MoveCommandDto;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.domain.command.MoveRoute;
+import chess.domain.event.MoveEvent;
+import chess.dto.GameDto;
+import chess.service.ChessService;
+import spark.Request;
 
 public class GameController {
 
-    private static final int EXIT_STATUS_CODE = 0;
+    private static final String GAME_ROUTE = "/game/:id";
+    private static final String GAME_ID_PARAMETER = "id";
+    private static final String HTML_TEMPLATE_PATH = "game.html";
 
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private final ChessService chessService = ChessService.getInstance();
 
-    public Game startGame() {
-        outputView.printGameInstructions();
-        if (!inputView.requestValidStartOrEndInput()) {
-            System.exit(EXIT_STATUS_CODE);
-        }
-        return new NewGame().init();
+    public void initRouteHandler() {
+        get(GAME_ROUTE, (req, res) -> render(findGame(req), HTML_TEMPLATE_PATH));
+        post(GAME_ROUTE, (req, res) -> render(playGame(req), HTML_TEMPLATE_PATH));
     }
 
-    public Game playGame(Game game) {
-        printBoardDisplay(game);
-        while (!game.isEnd()) {
-            game = moveChessmen(game);
-        }
-        return game;
+    private GameDto findGame(Request request) {
+        int gameId = parseInt(request.params(GAME_ID_PARAMETER));
+        return chessService.findGame(gameId);
     }
 
-    private Game moveChessmen(Game game) {
-        try {
-            MoveCommandDto validMoveInput = inputView.requestValidMoveInput();
-            game = game.moveChessmen(validMoveInput);
-            printBoardDisplay(game);
-            return game;
-        } catch (IllegalArgumentException e) {
-            print(e.getMessage());
-            return moveChessmen(game);
-        }
-    }
+    private GameDto playGame(Request request) {
+        int gameId = parseInt(request.params(GAME_ID_PARAMETER));
+        String body = request.body();
+        MoveRoute moveRoute = MoveRoute.ofJson(body);
 
-    private void printBoardDisplay(Game game) {
-        BoardViewDto boardView = game.boardView();
-        outputView.printBoard(boardView);
-    }
-
-    public void printGameOver(Game game) {
-        outputView.printGameOverInstructions();
-        while (inputView.requestValidStatusOrEndInput()) {
-            GameResult gameResult = game.result();
-            outputView.printStatus(gameResult);
-        }
+        return chessService.playGame(gameId, new MoveEvent(moveRoute));
     }
 }

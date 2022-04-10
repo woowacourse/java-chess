@@ -6,7 +6,6 @@ services:
     restart: always
     ports:
       - "3306:3306"
-      # ex) "13306:3306" : localhost:13306에 실행할 프로그램의 3306 포트 연결
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: chess

@@ -2,11 +2,11 @@ package chess.domain.board.piece;
 
 import chess.domain.board.position.Position;
 
-public final class NonPawn extends Piece {
+final class NonPawn extends Piece {
 
     private static final String INVALID_TYPE_EXCEPTION_MESSAGE = "해당 타입은 폰이 될 수 없습니다.";
 
-    public NonPawn(Color color, PieceType type) {
+    NonPawn(Color color, PieceType type) {
         super(color, type);
         validateNonPawn();
     }

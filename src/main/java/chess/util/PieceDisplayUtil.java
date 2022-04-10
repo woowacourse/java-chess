@@ -1,8 +1,6 @@
 package chess.util;
 
 import chess.domain.board.piece.Color;
-import chess.domain.board.piece.NonPawn;
-import chess.domain.board.piece.Pawn;
 import chess.domain.board.piece.Piece;
 import chess.domain.board.piece.PieceType;
 import java.util.HashMap;
@@ -17,40 +15,56 @@ public class PieceDisplayUtil {
         return PieceDisplayMap.displayOf(piece);
     }
 
+    public static String toWebDisplay(Piece piece) {
+        return PieceDisplayMap.colorlessDisplayOf(piece);
+    }
+
     private static class PieceDisplayMap {
 
-        static final String BLACK_DISPLAY_FORMATS = "♗♘♙♖♕♔";
-        static final String WHITE_DISPLAY_FORMATS = "♝♞♟♜♛♚";
+        static final String[] BLACK_DISPLAY_FORMATS = "♙♘♗♖♕♔".split("");
+        static final String[] WHITE_DISPLAY_FORMATS = "♟♞♝♜♛♚".split("");
         static final String EMPTY_DISPLAY_FORMAT = ".";
 
-        static final int PAWN_IDX = 0;
-        static final int KNIGHT_IDX = 1;
-        static final int BISHOP_IDX = 2;
-        static final int ROOK_IDX = 3;
-        static final int QUEEN_IDX = 4;
-        static final int KING_IDX = 5;
+        static final String[] COLORLESS_DISPLAY_FORMATS = "♟♞♝♜♛♚".split("");
+        static final String WEB_EMPTY_DISPLAY_FORMAT = "";
 
-        static final Map<Piece, String> displayMap = new HashMap<>();
+        static final Map<Piece, String> displayMap;
+        static final Map<Piece, String> colorlessDisplayMap;
 
         static {
-            String[] blackDisplayFormats = BLACK_DISPLAY_FORMATS.split("");
-            String[] whiteDisplayFormats = WHITE_DISPLAY_FORMATS.split("");
-
-            initDisplayMap(blackDisplayFormats, Color.BLACK);
-            initDisplayMap(whiteDisplayFormats, Color.WHITE);
+            displayMap = initDisplayMap();
+            colorlessDisplayMap = initColorlessDisplayMap();
         }
 
-        static void initDisplayMap(String[] displayFormats, Color color) {
-            displayMap.put(new Pawn(color), displayFormats[PAWN_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.BISHOP), displayFormats[BISHOP_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.ROOK), displayFormats[ROOK_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.QUEEN), displayFormats[QUEEN_IDX]);
-            displayMap.put(new NonPawn(color, PieceType.KING), displayFormats[KING_IDX]);
+        static Map<Piece, String> initDisplayMap() {
+            Map<Piece, String> displayMap = new HashMap<>();
+            putEachPiece(BLACK_DISPLAY_FORMATS, displayMap, Color.BLACK);
+            putEachPiece(WHITE_DISPLAY_FORMATS, displayMap, Color.WHITE);
+            return displayMap;
+        }
+
+        static Map<Piece, String> initColorlessDisplayMap() {
+            Map<Piece, String> colorlessDisplayMap = new HashMap<>();
+            for (Color color : Color.values()) {
+                putEachPiece(COLORLESS_DISPLAY_FORMATS, colorlessDisplayMap, color);
+            }
+            return colorlessDisplayMap;
+        }
+
+        static void putEachPiece(String[] displayFormats, Map<Piece, String> displayMap, Color color) {
+            PieceType[] pieceTypes = PieceType.values();
+            for (int idx = 0; idx < pieceTypes.length; idx++ ){
+                Piece piece = Piece.of(color, pieceTypes[idx]);
+                displayMap.put(piece, displayFormats[idx]);
+            }
         }
 
         static String displayOf(Piece piece) {
             return displayMap.getOrDefault(piece, EMPTY_DISPLAY_FORMAT);
+        }
+
+        static String colorlessDisplayOf(Piece piece) {
+            return colorlessDisplayMap.getOrDefault(piece, WEB_EMPTY_DISPLAY_FORMAT);
         }
     }
 }

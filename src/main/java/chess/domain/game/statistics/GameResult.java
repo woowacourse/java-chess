@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.game.statistics;
 
 import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
@@ -10,21 +10,20 @@ import chess.domain.board.piece.Piece;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.dto.GameScoreDto;
-import chess.util.PieceScoreUtil;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameResult {
 
     private static final int SAME_FILE_PAWN_MIN_COUNT = 2;
     private static final double SAME_FILE_PAWN_DISADVANTAGE = 0.5;
 
-    private final Color winnerColor;
-    private final GameScoreDto scoreResult;
+    private final Color winner;
+    private final GameScore scoreResult;
 
     public GameResult(Map<Position, Piece> board) {
-        this.winnerColor = chooseWinner(board);
-        this.scoreResult = new GameScoreDto(calculateScore(board, WHITE), calculateScore(board, BLACK));
+        this.winner = chooseWinner(board);
+        this.scoreResult = new GameScore(calculateScore(board, WHITE), calculateScore(board, BLACK));
     }
 
     private Color chooseWinner(Map<Position, Piece> board) {
@@ -44,48 +43,73 @@ public class GameResult {
     }
 
     public double calculateScore(Map<Position, Piece> board, Color color) {
-        double defaultScore = defaultScore(board, color);
+        double defaultScore = calculateDefaultScore(board, color);
         int sameFilePawnCount = countAllSameFilePawns(board, color);
 
         return defaultScore - (sameFilePawnCount * SAME_FILE_PAWN_DISADVANTAGE);
     }
 
-    private double defaultScore(Map<Position, Piece> board, Color color) {
+    private double calculateDefaultScore(Map<Position, Piece> board, Color color) {
         return board.values()
                 .stream()
                 .filter(piece -> piece.hasColorOf(color))
-                .mapToDouble(PieceScoreUtil::toScore)
+                .mapToDouble(Piece::toScore)
                 .sum();
     }
 
     private int countAllSameFilePawns(Map<Position, Piece> board, Color color) {
-        return  File.allFilesAscending()
+        return File.allFilesAscending()
                 .stream()
-                .mapToInt(file -> countSameFilePawns(board, file, color))
+                .mapToInt(file -> countPawnsOfSameFile(board, file, color))
                 .filter(sameFilePawnCount -> sameFilePawnCount >= SAME_FILE_PAWN_MIN_COUNT)
                 .sum();
     }
 
-    private int countSameFilePawns(Map<Position, Piece> board, File file, Color color) {
+    private int countPawnsOfSameFile(Map<Position, Piece> board, File file, Color color) {
         return (int) Rank.allRanksDescending()
                 .stream()
                 .map(rank -> Position.of(file, rank))
                 .filter(board::containsKey)
                 .map(board::get)
-                .filter(piece -> piece.hasColorOf(color))
-                .filter(piece -> piece.hasTypeOf(PAWN))
+                .filter(piece -> isPawnAndHasColorOf(piece, color))
                 .count();
     }
 
-    public Color winnerColor() {
-        return winnerColor;
+    private boolean isPawnAndHasColorOf(Piece piece, Color color) {
+        return piece.hasTypeOf(PAWN) && piece.hasColorOf(color);
     }
 
-    public double whiteScore() {
-        return scoreResult.whiteScore();
+    public Color getWinner() {
+        return winner;
     }
 
-    public double blackScore() {
-        return scoreResult.blackScore();
+    public double getWhiteScore() {
+        return scoreResult.getWhiteScore();
+    }
+
+    public double getBlackScore() {
+        return scoreResult.getBlackScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GameResult that = (GameResult) o;
+        return winner == that.winner && Objects.equals(scoreResult, that.scoreResult);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(winner, scoreResult);
+    }
+
+    @Override
+    public String toString() {
+        return "GameResult{" + "winner=" + winner + ", scoreResult=" + scoreResult + '}';
     }
 }

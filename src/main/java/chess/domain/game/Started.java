@@ -1,9 +1,13 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.dto.BoardViewDto;
+import chess.domain.game.statistics.GameState;
+import chess.dto.GameDataDto;
+import chess.dto.GameDto;
+import chess.dto.board.ConsoleBoardViewDto;
+import chess.dto.board.WebBoardViewDto;
 
-abstract class Started implements Game {
+public abstract class Started implements Game {
 
     protected final Board board;
 
@@ -12,12 +16,14 @@ abstract class Started implements Game {
     }
 
     @Override
-    public final Game init() {
-        return new NewGame().init();
+    public final ConsoleBoardViewDto toConsoleView() {
+        return new ConsoleBoardViewDto(board);
     }
 
     @Override
-    public final BoardViewDto boardView() {
-        return new BoardViewDto(board);
+    public GameDto toDtoOf(int gameId) {
+        return new GameDto(new GameDataDto(gameId, getState()), new WebBoardViewDto(board));
     }
+
+    protected abstract GameState getState();
 }

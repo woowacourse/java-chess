@@ -3,6 +3,7 @@ package chess.domain.board.piece;
 import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
 import static chess.domain.board.piece.PieceType.KNIGHT;
+import static chess.domain.board.piece.PieceType.PAWN;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -14,8 +15,8 @@ public class PieceTest {
 
     @Test
     void 아군_공격_시도시_예외발생() {
-        Piece knight = new NonPawn(WHITE, KNIGHT);
-        Piece sameColorPiece = new NonPawn(WHITE, KNIGHT);
+        Piece knight = Piece.of(WHITE, KNIGHT);
+        Piece sameColorPiece = Piece.of(WHITE, KNIGHT);
 
         Position position1 = Position.of("a1");
         Position position2 = Position.of("b3");
@@ -25,26 +26,26 @@ public class PieceTest {
     }
 
     @Test
-    void 색과_타입만_같으면_동일한_인스턴스() {
-        Piece actual = new NonPawn(WHITE, KNIGHT);
-        Piece expected = new NonPawn(WHITE, KNIGHT);
+    void of_메서드는_캐쉬를_반환() {
+        Piece actual = Piece.of(WHITE, KNIGHT);
+        Piece expected = Piece.of(WHITE, KNIGHT);
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    void 타입이_동일해도_색이_다르면_별개의_인스턴스() {
-        Piece pawn1 = new Pawn(WHITE);
-        Piece pawn2 = new Pawn(BLACK);
+    void 타입이_동일해도_색이_다르면_별개의_인스턴스를_캐쉬로_반환() {
+        Piece pawn1 = Piece.of(WHITE, PAWN);
+        Piece pawn2 = Piece.of(BLACK, PAWN);
 
         assertThat(pawn1).isNotEqualTo(pawn2);
     }
 
     @Test
-    void 색과_위치가_동일한_두_인스턴스의_해쉬코드는_동일() {
-        int actual = new NonPawn(WHITE, KNIGHT).hashCode();
-        int expected = new NonPawn(WHITE, KNIGHT).hashCode();
+    void 색이_동일해도_타입이_다르면_별개의_인스턴스를_캐쉬로_반환() {
+        Piece blackPiece1 = Piece.of(BLACK, KNIGHT);
+        Piece blackPiece2 = Piece.of(BLACK, PAWN);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(blackPiece1).isNotEqualTo(blackPiece2);
     }
 }

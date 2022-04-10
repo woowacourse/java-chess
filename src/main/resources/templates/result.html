@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>게임 결과 | 체스 시뮬레이터</title>
+    <link rel="stylesheet" href="/styles/result.css"/>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+<body>
+<section class="header__container">
+    <h1>체스 시뮬레이터</h1>
+    <div class="game_info__container">
+        <div>
+            <span>게임 ID: {{gameInfo.game.id}} | </span>
+            {{#result}}
+            <span class="bold">승자: {{winner}}</span>
+        </div>
+        <div>White 점수: {{whiteScore}}점</div>
+        <div>Black 점수: {{blackScore}}점</div>
+        {{/result}}
+    </div>
+</section>
+<section id="chess_board">
+    {{#gameInfo.board}}
+    <div class="row">
+        {{#squares}}
+        <div class="square">
+            <span class="piece {{color}}">{{value}}</span>
+        </div>
+        {{/squares}}
+    </div>
+    {{/gameInfo.board}}
+</section>
+<section class="buttons__container">
+    <a href="/">홈으로 돌아가기!</a>
+</section>
+</body>
+</html>

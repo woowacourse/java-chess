@@ -1,0 +1,48 @@
+#chess_board {
+    width: 400px;
+    height: 400px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px black solid;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: 50px;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 50px;
+
+    border: 1px black solid;
+    background-color: rgb(234, 178, 80);
+}
+
+.row:nth-child(odd) > .square:nth-child(even),
+.row:nth-child(even) > .square:nth-child(odd) {
+    background-color: rgb(183, 121, 19);
+}
+
+.occupied:hover {
+    font-size: 56px;
+}
+
+.selected {
+    border: 2px red solid;
+}
+
+.piece {
+    color: black;
+    pointer-events: none;
+}
+
+.white {
+    color: white;
+}

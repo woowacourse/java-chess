@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.board;
 
 import chess.domain.board.Board;
 import chess.domain.board.piece.Piece;
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardViewDto {
+public class ConsoleBoardViewDto {
 
     private final List<String> boardDisplay;
 
-    public BoardViewDto(Board board) {
+    public ConsoleBoardViewDto(Board board) {
         boardDisplay = toBoardDisplay(board.toMap());
     }
 
@@ -26,7 +26,7 @@ public class BoardViewDto {
     }
 
     private static String toRowDisplay(Map<Position, Piece> board, Rank rank) {
-        return  File.allFilesAscending()
+        return File.allFilesAscending()
                 .stream()
                 .map(file -> Position.of(file, rank))
                 .map(board::get)
@@ -34,7 +34,7 @@ public class BoardViewDto {
                 .collect(Collectors.joining());
     }
 
-    public List<String> display() {
+    public List<String> toDisplay() {
         return boardDisplay;
     }
 }

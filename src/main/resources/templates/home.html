@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>체스 시뮬레이터 by bugoverdose</title>
+    <link rel="stylesheet" href="/styles/home.css"/>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+<body>
+    <section class="header__container">
+        <h1>체스 시뮬레이터</h1>
+        <p>체스 말의 기초적인 움직임을 테스트하기 위한 사이트</p>
+        <div>총 {{totalCount}}개의 게임이 생성되었습니다.</div>
+        <div>현재 {{runningCount}}개의 게임이 진행 중입니다.</div>
+    </section>
+    <section class="buttons__container">
+        <button id="init_game">새로운 게임 시작</button>
+        <a href="/search">기존 게임 재개</a>
+    </section>
+    <script src="/scripts/new-game.js"></script>
+</body>
+</html>

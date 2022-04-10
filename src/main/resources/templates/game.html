@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>게임 {{id}} | 체스 시뮬레이터</title>
+    <link rel="stylesheet" href="/styles/game.css"/>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+<body>
+<section class="header__container">
+    <h1>체스 시뮬레이터</h1>
+    <div class="game_info__container">
+        <span>게임 ID: {{game.id}} | 게임 상태: </span>
+        <span class="bold">{{game.state.value}}</span>
+    </div>
+</section>
+<section id="chess_board">
+    {{#board}}
+    <div class="row">
+        {{#squares}}
+        <div class="square">
+            <span class="piece {{color}}">{{value}}</span>
+        </div>
+        {{/squares}}
+    </div>
+    {{/board}}
+</section>
+<section>
+    <p>현재 턴에 맞는 색상의 체스말을 클릭한 후, 이동하고 싶은 장소를 클릭!</p>
+    <p>다른 체스말을 이동하고 싶다면 선택된 체스말을 다시 한번 클릭!</p>
+</section>
+<section>
+    <a href="/">뒤로가기!</a>
+</section>
+<section id={{game.state}} class="popup">
+    <div class="popup__container">
+        <div class="popup__title">게임이 종료되었습니다!</div>
+        <a href="/result/{{game.id}}">게임결과 보러 가기!</a>
+    </div>
+</section>
+<script src="/scripts/update-game.js"></script>
+</body>
+</html>
