@@ -15,24 +15,22 @@ public class PieceDao {
 
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public void save(Piece piece, String gameId) {
+    public void saveAllByGameId(List<Piece> pieces, String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "insert into piece (name, color, position, game_id) values (?, ?, ?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, piece.getName());
-            statement.setString(2, piece.getColor().getName());
-            statement.setString(3, piece.getPosition().getPosition());
-            statement.setString(4, gameId);
-            statement.executeUpdate();
+            for (Piece piece : pieces) {
+                statement.setString(1, piece.getName());
+                statement.setString(2, piece.getColor().getName());
+                statement.setString(3, piece.getPosition().getPosition());
+                statement.setString(4, gameId);
+                statement.addBatch();
+            }
+            statement.executeBatch();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void saveAll(List<Piece> pieces, String gameId) {
-        for (Piece piece : pieces) {
-            save(piece, gameId);
         }
     }
 

@@ -4,10 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.piece.ChessmenInitializer;
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,15 +23,6 @@ public class PieceDaoTest {
     }
 
     @Test
-    void save() {
-        gameDao.create(gameId);
-
-        assertThatCode(() ->
-            pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId))
-            .doesNotThrowAnyException();
-    }
-
-    @Test
     void saveAll() {
         final ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         final List<Piece> pieces = chessmenInitializer.init().getPieces();
@@ -42,7 +30,7 @@ public class PieceDaoTest {
         gameDao.create(gameId);
 
         assertThatCode(() ->
-            pieceDao.saveAll(pieces, gameId))
+            pieceDao.saveAllByGameId(pieces, gameId))
             .doesNotThrowAnyException();
     }
 
@@ -55,16 +43,5 @@ public class PieceDaoTest {
 
         assertThat(pieces.size()).isEqualTo(0);
     }
-
-    @Test
-    void findAllByGameId() {
-        gameDao.create(gameId);
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
-
-        final List<Piece> pieces = pieceDao.findAllByGameId(gameId).getPieces();
-
-        assertThat(pieces.size()).isNotEqualTo(0);
-    }
-
 
 }

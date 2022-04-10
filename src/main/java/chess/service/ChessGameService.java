@@ -58,7 +58,7 @@ public class ChessGameService {
     public void initGame() {
         gameDao.create(gameId);
         Pieces chessmen = chessmenInitializer.init();
-        pieceDao.saveAll(chessmen.getPieces(), gameId);
+        pieceDao.saveAllByGameId(chessmen.getPieces(), gameId);
 
         game = ChessGame.of(chessmen);
     }
@@ -72,7 +72,8 @@ public class ChessGameService {
 
     public void save() {
         Pieces chessmen  = game.getChessmen();
-        pieceDao.saveAll(chessmen.getPieces(), gameId);
+        pieceDao.deleteAllByGameId(gameId);
+        pieceDao.saveAllByGameId(chessmen.getPieces(), gameId);
     }
 
     public void forceEnd() {
