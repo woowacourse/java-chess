@@ -6,7 +6,9 @@ public class ChessGameDto {
     private final String status;
     private final String turn;
 
-    public ChessGameDto(String status, String turn) {
+    public ChessGameDto(int id, String name, String status, String turn) {
+        this.id = id;
+        this.name = name;
         this.status = status;
         this.turn = turn;
     }

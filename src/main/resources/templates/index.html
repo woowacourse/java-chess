@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klay's Chess Game</title>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <div class="header center-object">
+        <h1 class="main-message">초간단 체스게임♞</h1>
+    </div>
+    <h2 class="main-message center-object">게임 목록</h2>
+    {{#each this.games}}
+        <a class="center-object" href ="/board/{{this.id}}"><h2>{{this.name}}</h2></a>
+    {{/each}}
+</body>
+</html>

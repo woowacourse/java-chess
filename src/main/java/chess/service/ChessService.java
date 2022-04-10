@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.dao.GamesDto;
 import chess.model.ChessGame;
 import chess.model.Color;
 import chess.model.File;
@@ -114,5 +115,9 @@ public class ChessService {
         return getGameFromDao(id).getPlayersScore().entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
+    }
+
+    public GamesDto getAllGames() {
+        return gameDao.findAll();
     }
 }

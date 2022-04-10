@@ -52,8 +52,7 @@ public class WebChessController {
     }
 
     private String redirectToBoard(Request req, Response res) {
-        res.redirect("/board/" + GAME_ID);
-        return OK;
+        return render(new ModelAndView(service.getAllGames(), "index.html"));
     }
 
     private String renderBoard(Request req, Response res) {
