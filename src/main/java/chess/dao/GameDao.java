@@ -3,20 +3,18 @@ package chess.dao;
 import java.sql.Connection;
 import java.util.List;
 
+import chess.Game;
+
 public interface GameDao {
     Connection getConnection();
 
-    void save();
+    void save(Game game);
 
     void deleteById(int id);
-
-    int getId();
 
     List<String> findById(int id);
 
     String findTurnById(int id);
-
-    void nextTurn();
 
     int findByIds(String idPlayerWhite, String idPlayerBlack);
 }

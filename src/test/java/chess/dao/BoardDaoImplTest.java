@@ -22,7 +22,7 @@ public class BoardDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        gameDao = new GameDaoImpl(new Game("white", "black", 1));
+        gameDao = new GameDaoImpl();
         boardDao = new BoardDaoImpl();
     }
 
@@ -46,7 +46,7 @@ public class BoardDaoImplTest {
     @DisplayName("DB에 현재 기물 위치, 피스 정보를 저장한다.")
     void save() {
         Board board = new Board(new DefaultArrangement());
-        gameDao.save();
+        gameDao.save(new Game("white", "black", 1));
 
         assertThatCode(() -> boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues())))
@@ -58,7 +58,7 @@ public class BoardDaoImplTest {
     void deleteById() {
         //given
         Board board = new Board(new DefaultArrangement());
-        gameDao.save();
+        gameDao.save(new Game("white", "black", 1));
         boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues()));
 
@@ -73,8 +73,8 @@ public class BoardDaoImplTest {
     @DisplayName("DB에서 Id로 기물 위치, 피스 정보를 불러온다.")
     void find() {
         //given
-        GameDao gameDao = new GameDaoImpl(new Game("white", "black", 1));
-        gameDao.save();
+        GameDao gameDao = new GameDaoImpl();
+        gameDao.save(new Game("white", "black", 1));
         int gameId = 1;
 
         Board board = new Board(new DefaultArrangement());

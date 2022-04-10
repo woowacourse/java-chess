@@ -16,16 +16,6 @@ public class GameDaoImpl implements GameDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    private Game game;
-
-    public GameDaoImpl(Game game) {
-        this.game = game;
-    }
-
-    public GameDaoImpl() {
-
-    }
-
     @Override
     public Connection getConnection() {
         Connection connection = null;
@@ -38,7 +28,7 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void save() {
+    public void save(Game game) {
         Connection connection = getConnection();
         deleteById(game.getId());
         String sql = "insert into game (id, id_white_player, id_black_player, turn) values (?, ?, ?, ?)";
@@ -57,7 +47,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void deleteById(int id) {
         Connection connection = getConnection();
-        new BoardDaoImpl().deleteById(game.getId());
+        new BoardDaoImpl().deleteById(id);
         String sql = "delete from game where id = " + "'" + id + "'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -65,11 +55,6 @@ public class GameDaoImpl implements GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public int getId() {
-        return game.getId();
     }
 
     @Override
@@ -112,11 +97,6 @@ public class GameDaoImpl implements GameDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public void nextTurn() {
-        game.nextTurn();
     }
 
     @Override

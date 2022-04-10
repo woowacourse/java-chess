@@ -9,6 +9,7 @@ import java.util.Map;
 import chess.Game;
 import chess.dao.GameDaoImpl;
 import chess.dto.Request;
+import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
 import chess.model.PieceColor;
 import chess.model.Position;
@@ -18,6 +19,9 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
+
+    private Game game;
+    private ChessGame chessGame;
 
     public void run(ChessGameService service) {
         index();
@@ -40,13 +44,14 @@ public class WebChessController {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int id = new GameDaoImpl().findByIds(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"));
-            Game game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"),
+            game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"),
                 new Turn(PieceColor.valueOf(new GameDaoImpl().findTurnById(id))), id);
 
-            service.setGameDao(new GameDaoImpl(game));
-            service.init(new Turn(), new DefaultArrangement());
-            model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
-            model.put("color", service.loadTurnColor());
+            service.setGameDao(new GameDaoImpl());
+
+            chessGame = service.init(game.getId(), new Turn(game.getTurn()), new DefaultArrangement());
+            model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+            model.put("color", chessGame.getTurnColor());
             return render(model, "game.html");
         });
     }
@@ -57,18 +62,19 @@ public class WebChessController {
             try {
                 Request request = Request.toPlay(
                     "move" + " " + req.queryParams("source") + " " + req.queryParams("target"));
-                service.move(Position.of(request.getSource()), Position.of(request.getTarget()));
-                model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
-                model.put("color", service.getTurnColor());
-                if (service.isFinished()) {
+                chessGame.move(Position.of(request.getSource()), Position.of(request.getTarget()));
+                game.nextTurn();
+                model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+                model.put("color", chessGame.getTurnColor());
+                if (chessGame.isFinished()) {
                     return finish(service, model);
                 }
 
                 return render(model, "game.html");
 
             } catch (RuntimeException e) {
-                model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
-                model.put("color", service.getTurnColor());
+                model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+                model.put("color", chessGame.getTurnColor());
                 model.put("error", e.getMessage());
                 return render(model, "game.html");
             }
@@ -78,9 +84,9 @@ public class WebChessController {
     private void status(ChessGameService service) {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
-            model.put("color", service.getTurnColor());
-            model.put("score", service.getScore());
+            model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+            model.put("color", chessGame.getTurnColor());
+            model.put("score", chessGame.getScore());
             return render(model, "game.html");
         });
     }
@@ -88,24 +94,24 @@ public class WebChessController {
     private void save(ChessGameService service) {
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            service.save();
-            model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
-            model.put("color", service.getTurnColor());
+            service.save(game, chessGame);
+            model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
+            model.put("color", chessGame.getTurnColor());
             return render(model, "game.html");
         });
     }
 
     private void init(ChessGameService service) {
         post("/init", (req, res) -> {
-            service.delete();
-            service.init(new Turn(), new DefaultArrangement());
+            service.deleteById(game.getId());
+            chessGame = service.init(game.getId(), new Turn(), new DefaultArrangement());
             return render(Map.of(), "index.html");
         });
     }
 
     private String finish(ChessGameService service, Map<String, Object> model) {
-        model.put("score", service.getScore());
-        model.put("color", service.getTurnColor());
+        model.put("score", chessGame.getScore());
+        model.put("color", chessGame.getTurnColor());
         return render(model, "finish.html");
     }
 
