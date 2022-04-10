@@ -4,6 +4,7 @@ import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.domain.board.BasicBoardFactory;
 import chess.domain.board.Board;
+import chess.domain.board.CustomBoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Ended;
 import chess.domain.game.state.Ready;
@@ -17,6 +18,7 @@ import chess.dto.ChessResponseDto;
 import chess.dto.GameDto;
 import chess.dto.PieceDto;
 import chess.dto.StatusResponseDto;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,16 +33,15 @@ public class ChessService {
     }
 
     public ChessGame load(final String id) {
-        final GameDto gameDto = gameDao.findById(id);
-
-        if (gameDto == null) {
+        try {
+            final GameDto gameDto = gameDao.findById(id);
+            final BoardDto boardDto = boardDao.findByGameId(id);
+            final Board board = boardDto.toBoard();
+            final State state = createState(gameDto.getState(), gameDto.getTurn());
+            return new ChessGame(state, board);
+        } catch (RuntimeException e) {
             return createNewGame(id);
         }
-
-        final BoardDto boardDto = boardDao.findByGameId(id);
-        final Board board = boardDto.toBoard();
-        final State state = createState(gameDto.getState(), gameDto.getTurn(), board);
-        return new ChessGame(state, board);
     }
 
     private ChessGame createNewGame(final String id) {
@@ -50,7 +51,7 @@ public class ChessService {
         return chessGame;
     }
 
-    private State createState(final String state, final String turn, final Board board) {
+    private State createState(final String state, final String turn) {
         if (Objects.equals(state, "Ready")) {
             return new Ready();
         }
@@ -64,11 +65,11 @@ public class ChessService {
         if (!chessGame.isNotEnded()) {
             chessGame = new ChessGame(new Ready(), new Board(new BasicBoardFactory()));
             boardDao.deleteByGameId(id);
+            boardDao.save(BoardDto.of(id, chessGame.getBoard()));
         }
 
         chessGame.start();
         gameDao.updateById(GameDto.of(id, chessGame));
-        boardDao.save(BoardDto.of(id, chessGame.getBoard()));
         return chessGame;
     }
 

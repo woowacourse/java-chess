@@ -1,4 +1,4 @@
-package chess.db;
+package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,12 +11,10 @@ public class MySqlConnector {
     private static final String PASSWORD = "password";
 
     public static Connection getConnection() {
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (final SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException("MySQL 연결에 실패했습니다.");
         }
-        return connection;
     }
 }

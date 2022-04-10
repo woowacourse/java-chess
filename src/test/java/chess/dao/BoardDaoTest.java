@@ -2,7 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.MySqlConnector;
 import chess.domain.board.BasicBoardFactory;
 import chess.domain.board.Board;
 import chess.domain.piece.BishopPiece;

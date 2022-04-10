@@ -2,6 +2,7 @@ package chess.db;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.MySqlConnector;
 import java.sql.Connection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.db.MySqlConnector;
 import chess.dto.GameDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +29,7 @@ public class GameDao {
             statement.setString(3, game.getTurn());
             statement.execute();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에 게임 정보를 저장하는데 실패했습니다.");
         }
     }
 
@@ -46,9 +45,8 @@ public class GameDao {
             }
             return new GameDto(resultSet.getString("id"), resultSet.getString("state"), resultSet.getString("turn"));
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에서 게임 정보를 불러오는데 실패했습니다.");
         }
-        return null;
     }
 
     public List<GameDto> findAll() {
@@ -64,9 +62,8 @@ public class GameDao {
             }
             return games;
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에서 모든 게임 정보를 불러오는데 실패했습니다.");
         }
-        return null;
     }
 
     public void updateById(final GameDto gameDto) {
@@ -78,7 +75,7 @@ public class GameDao {
             statement.setString(3, gameDto.getId());
             statement.execute();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에 게임 정보를 업데이트하는데 실패했습니다.");
         }
     }
 }

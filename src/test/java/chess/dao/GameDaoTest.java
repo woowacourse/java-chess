@@ -2,7 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.MySqlConnector;
 import chess.dto.GameDto;
 import java.sql.Connection;
 import java.sql.SQLException;

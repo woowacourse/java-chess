@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.db.MySqlConnector;
 import chess.dto.BoardDto;
 import chess.dto.PieceDto;
 import java.sql.Connection;
@@ -39,7 +38,7 @@ public class BoardDao {
             statement.setString(4, piece.getColor());
             statement.execute();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에 기물 정보를 저장하는데 실패했습니다.");
         }
     }
 
@@ -50,7 +49,7 @@ public class BoardDao {
             statement.setString(1, gameId);
             statement.execute();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에서 체스판 정보를 삭제하는데 실패했습니다.");
         }
     }
 
@@ -66,7 +65,7 @@ public class BoardDao {
             statement.setString(6, piece.getColor());
             statement.execute();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에 기물 정보를 업데이트하는데 실패했습니다.");
         }
     }
 
@@ -85,8 +84,7 @@ public class BoardDao {
 
             return new BoardDto(gameId, board);
         } catch (final SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("DB에서 체스판 정보를 불러오는데 실패했습니다.");
         }
-        return null;
     }
 }
