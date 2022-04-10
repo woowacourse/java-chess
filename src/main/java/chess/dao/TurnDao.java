@@ -34,16 +34,32 @@ public class TurnDao {
 
     public void saveTurn(String team) {
         final Connection connection = getConnection();
-        final String insertTurnSql = "update turn set team = ?";
+        final String updateTurnSql = "update turn set team = ?";
         try {
-            final PreparedStatement updateStatement = connection.prepareStatement(insertTurnSql);
+            final PreparedStatement updateStatement = connection.prepareStatement(updateTurnSql);
             updateStatement.setString(1, team);
             updateStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
+//    private void checkTurnExistence(Connection connection) {
+//        final String getTurnSql = "select * from turn";
+//
+//        try {
+//            final PreparedStatement statement = connection.prepareStatement(getTurnSql);
+//            final ResultSet resultSet = statement.executeQuery();
+//            if (!resultSet.next()) {
+//               
+//                PreparedStatement preparedStatement = connection.prepareStatement(insertTurnSql);
+//                preparedStatement.executeQuery();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public Team getTurnTeam() {
         final Connection connection = getConnection();
         final String getTurnTeamSql = "select * from turn";
@@ -51,9 +67,13 @@ public class TurnDao {
         try {
             final PreparedStatement statement = connection.prepareStatement(getTurnTeamSql);
             final ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                team = Team.of(resultSet.getString("team"));
+            if (!resultSet.next()) {
+                final String insertTurnSql = "insert into turn(team) values ('none')";
+                PreparedStatement preparedStatement = connection.prepareStatement(insertTurnSql);
+                preparedStatement.executeUpdate();
+                return Team.NONE;
             }
+            team = Team.of(resultSet.getString("team"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
