@@ -59,7 +59,8 @@ public class PieceDaoImpl implements PieceDao {
 
     private void putAllPieces(final Map<String, PieceDto> all, final ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            all.put(resultSet.getString("position"), new PieceDto(
+            all.put(resultSet.getString("position"),
+                    new PieceDto(
                             resultSet.getString("team"),
                             resultSet.getString("name")
                     )
