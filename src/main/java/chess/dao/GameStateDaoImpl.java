@@ -1,7 +1,7 @@
 package chess.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import static chess.util.JdbcConnector.getConnection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +10,6 @@ public class GameStateDaoImpl implements GameStateDao {
 
     private static final GameStateDaoImpl INSTANCE = new GameStateDaoImpl();
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
     private static final String DATABASE_EMPTY_SYMBOL = "nothing";
 
     public static GameStateDaoImpl getInstance() {
@@ -21,16 +17,6 @@ public class GameStateDaoImpl implements GameStateDao {
     }
 
     private GameStateDaoImpl() {
-    }
-
-    private Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 
     @Override

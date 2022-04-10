@@ -1,10 +1,10 @@
 package chess.dao;
 
+import static chess.util.JdbcConnector.getConnection;
+
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.dto.PieceDto;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,21 +20,7 @@ public class PieceDaoImpl implements PieceDao {
         return INSTANCE;
     }
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
     private PieceDaoImpl() {
-    }
-
-    private Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 
     @Override
