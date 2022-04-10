@@ -11,6 +11,10 @@ public class DaoService {
     private final ChessGameDao chessGameDao;
     private final BoardDao boardDao;
 
+    public DaoService() {
+        this(new ChessGameDao(), new BoardDao());
+    }
+
     public DaoService(ChessGameDao chessGameDao, BoardDao boardDao) {
         this.chessGameDao = chessGameDao;
         this.boardDao = boardDao;

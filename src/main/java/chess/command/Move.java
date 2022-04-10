@@ -32,7 +32,7 @@ public class Move extends Command {
             throw new IllegalArgumentException(ERROR_GAME_IS_OVER);
         }
         game.move(source, target);
-        daoService.save(game);
+        daoService.update(game);
         return game;
     }
 

@@ -43,4 +43,8 @@ public abstract class Command {
     public Result getResult() {
         return null;
     }
+
+    public CommandType getCommandType() {
+        return commandType;
+    }
 }

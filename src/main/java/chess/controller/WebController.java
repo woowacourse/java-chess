@@ -2,38 +2,20 @@ package chess.controller;
 
 import static spark.Spark.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import chess.command.CommandType;
-import chess.dao.BoardDao;
-import chess.dao.ChessGameDao;
-import chess.dao.DBConnector;
+import chess.command.Command;
+import chess.command.CommandGenerator;
 import chess.domain.ChessGame;
-import chess.domain.Result;
-import chess.domain.piece.Piece;
-import chess.domain.position.Square;
-import chess.dto.ScoreDTO;
-import chess.dto.SquareAndPiece;
-import chess.view.InputView;
+import chess.service.DaoService;
+import chess.service.DtoService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
-    private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
-    private static final String ERROR_GAME_NOT_START_YET = "[ERROR]게임부터 시작하지지?!";
-    private static final String ERROR_GAME_IS_OVER = "[ERROR] 지금은 못 움직여!";
-    private static final String ERROR_NO_SAVE_GAME = "[ERROR] 저장된 게임이 없습니다";
-    private static final String ERROR_GAME_IS_NOT_END = "[ERROR]아직 게임 안끝났어!";
-
-    private static final int SOURCE_INDEX = 0;
-    private static final int TARGET_INDEX = 1;
-    private static final int BOARD_ID = 1;
-
     private ChessGame game;
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final DaoService daoService = new DaoService();
 
     public void run() {
         port(8080);
@@ -43,133 +25,22 @@ public class WebController {
             return render(model, "index.html");
         });
 
-        post("/chess/command", (req, res) -> {
+        post("/command", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            inGame(req.queryParams("chess/command"), model);
+            inGame(req.queryParams("command"), model);
             return render(model, "startedChess.html");
         });
     }
 
     private void inGame(String input, Map<String, Object> model) {
         try {
-            packBoardInfo(model);
-            executeCommand(InputView.requireCommand(input), model);
+            DtoService.packBoardInfo(game, model);
+            Command command = CommandGenerator.generate(input);
+            game = command.execute(game, daoService);
+            DtoService.saveInfo(command, game, model);
         } catch (IllegalArgumentException e) {
             model.put("error", e);
         }
-    }
-
-    private void packBoardInfo(Map<String, Object> model) {
-        if (game == null) {
-            return;
-        }
-        Map<Square, Piece> pieceMap = game.getBoard();
-        List<SquareAndPiece> infos = new ArrayList<>();
-        for (Square square : pieceMap.keySet()) {
-            infos.add(SquareAndPiece.of(square, pieceMap.get(square)));
-        }
-        model.put("infos", infos);
-    }
-
-    private void executeCommand(Map.Entry<CommandType, List<Square>> commands, Map<String, Object> model) {
-        CommandType commandType = commands.getKey();
-        if (commandType == CommandType.START) {
-            start(model);
-            save();
-        }
-
-        if (commandType == CommandType.MOVE) {
-            move(commands, model);
-            update();
-        }
-
-        if (commandType == CommandType.END) {
-            model.put("exit", true);
-            remove();
-            game = null;
-        }
-
-        if (commandType == CommandType.STATUS) {
-            status(model);
-            remove();
-        }
-
-        if (commandType == CommandType.CONTINUE) {
-            continueGame(model);
-            save();
-        }
-    }
-
-    private void start(Map<String, Object> model) {
-        if (game != null) {
-            throw new IllegalArgumentException(ERROR_GAME_IS_NOT_END);
-        }
-        game = new ChessGame();
-        packBoardInfo(model);
-    }
-
-    private void move(Map.Entry<CommandType, List<Square>> commands, Map<String, Object> model) {
-        checkGameStarted();
-        if (game.isKingDie()) {
-            throw new IllegalArgumentException(ERROR_GAME_IS_OVER);
-        }
-
-        List<Square> squares = commands.getValue();
-        game.move(squares.get(SOURCE_INDEX), squares.get(TARGET_INDEX));
-        packBoardInfo(model);
-        checkKingDieAfterMove(model);
-    }
-
-    private void checkKingDieAfterMove(Map<String, Object> model) {
-        if (game.isKingDie()) {
-            model.put("kingDie", true);
-        }
-    }
-
-    private void status(Map<String, Object> model) {
-        checkGameStarted();
-        if (!game.isKingDie()) {
-            throw new IllegalArgumentException(ERROR_GAME_IS_NOT_END);
-        }
-        Result result = game.saveStatus();
-        model.put("score", ScoreDTO.of(result));
-        model.put("exit", true);
-        game = null;
-    }
-
-    private void continueGame(Map<String, Object> model) {
-        if (game != null) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
-        }
-        game = chessGameDao.find(BOARD_ID, DBConnector.getConnection());
-
-        if (game == null) {
-            throw new IllegalArgumentException(ERROR_NO_SAVE_GAME);
-        }
-        packBoardInfo(model);
-    }
-
-    private void checkGameStarted() {
-        if (game == null) {
-            throw new IllegalArgumentException(ERROR_GAME_NOT_START_YET);
-        }
-    }
-
-    private void save() {
-        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
-        chessGameDao.save(game, BOARD_ID, DBConnector.getConnection());
-        new BoardDao().save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
-    }
-
-    private void update() {
-        chessGameDao.update(game, BOARD_ID, DBConnector.getConnection());
-        BoardDao boardDao = new BoardDao();
-        boardDao.remove(BOARD_ID, DBConnector.getConnection());
-        boardDao.save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
-    }
-
-    private void remove() {
-        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

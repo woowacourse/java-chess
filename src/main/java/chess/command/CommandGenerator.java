@@ -26,7 +26,7 @@ public enum CommandGenerator {
     }
 
     public static Command generate(String inputCommand) {
-        List<String> splitCommands = splitCommands(inputCommand);
+        List<String> splitCommands = getCommands(inputCommand);
         CommandType commandType = CommandType.from(splitCommands.get(COMMAND_TYPE_INDEX));
         return Arrays.stream(CommandGenerator.values())
             .filter(command -> command.condition.test(commandType))
@@ -35,7 +35,7 @@ public enum CommandGenerator {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static List<String> splitCommands(String input) {
+    private static List<String> getCommands(String input) {
         String answer = input.trim().toLowerCase(Locale.ROOT);
         return Arrays.stream(answer.split(SPLIT_REGEX))
             .filter(cmd -> !cmd.isBlank())

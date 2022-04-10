@@ -29,7 +29,7 @@ public class BoardDao {
                 .collect(Collectors.toList());
             for (Map.Entry<Square, Piece> entry : pieces) {
                 statement = connection.prepareStatement(sql);
-                setInsertStatement(pieces.indexOf(entry), board_id, statement, entry.getKey(), entry.getValue());
+                setInsertStatement(pieces.indexOf(entry) + 1, board_id, statement, entry.getKey(), entry.getValue());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
