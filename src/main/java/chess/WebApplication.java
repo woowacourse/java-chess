@@ -6,18 +6,20 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.domain.piece.Piece;
+import chess.dto.PiecesDto;
 import chess.service.ChessGameService;
 import chess.web.util.JsonTransformer;
+import chess.web.util.RenderingUtil;
+import chess.web.view.BoardView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
 
-    private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+
 
     public static void main(String[] args) {
 
@@ -28,27 +30,31 @@ public class WebApplication {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
+            Map<String, Piece> model = new HashMap<>();
 
-            return render(model, "index.html");
+            return RenderingUtil.render(model, "index.html");
         });
 
         get("/game", (req, res) -> {
             chessGameService.set(new ChessGameService(req.queryParams("gameId")));
+            PiecesDto piecesDto = chessGameService.get()
+                .createOrGet();
 
-            Map<String, Object> model = chessGameService.get()
-                .createOrGet()
-                .getBoardMap();
+            Map<String, Piece> model = BoardView.of(piecesDto)
+                .getBoardView();
 
-            return render(model, "game.html");
+            return RenderingUtil.render(model, "game.html");
         });
 
         get("/game/progress", (req, res) -> {
-            Map<String, Object> model = chessGameService.get()
-                .getCurrentGame()
-                .getBoardMap();
+            chessGameService.set(new ChessGameService(req.queryParams("gameId")));
+            PiecesDto piecesDto = chessGameService.get()
+                .getCurrentGame();
 
-            return render(model, "game.html");
+            Map<String, Piece> model = BoardView.of(piecesDto)
+                .getBoardView();
+
+            return RenderingUtil.render(model, "game.html");
         });
 
         get("/game/status", (req, res) -> {
@@ -114,10 +120,6 @@ public class WebApplication {
             response.body(exception.getMessage());
         });
 
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 
 }

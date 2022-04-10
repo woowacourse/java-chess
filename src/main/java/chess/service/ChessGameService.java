@@ -6,9 +6,10 @@ import chess.domain.ChessGame;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pieces;
-import chess.dto.BoardMapDto;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
+import chess.dto.PiecesDto;
+import java.util.List;
 
 public class ChessGameService {
 
@@ -26,25 +27,25 @@ public class ChessGameService {
         this.gameId = gameId;
     }
 
-    public BoardMapDto createOrGet() {
+    public PiecesDto createOrGet() {
         if (!gameDao.findById(gameId)) {
             createGame();
-            return game.toBoard();
+            return new PiecesDto(new Pieces(List.of()));
         }
         boolean forceEndFlag = gameDao.findForceEndFlagById(gameId);
         Color turn = gameDao.findTurnById(gameId);
         Pieces chessmen = pieceDao.findAllByGameId(gameId);
 
         game = new ChessGame(forceEndFlag, chessmen, turn);
-        return game.toBoard();
+        return new PiecesDto(chessmen);
     }
 
     private void createGame() {
         game = new ChessGame();
     }
 
-    public BoardMapDto getCurrentGame() {
-        return game.toBoard();
+    public PiecesDto getCurrentGame() {
+        return new PiecesDto(game.getChessmen());
     }
 
     public GameResultDto calculateGameResult() {
