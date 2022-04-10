@@ -106,10 +106,16 @@ async function initPieces(pieces) {
     resetSourceAndTarget();
 }
 
-function toggleTurn(state) {
+function toggleState(state) {
     turn = state.turn;
     document.getElementById('white-message').innerHTML = '';
     document.getElementById('black-message').innerHTML = '';
+    end = state.end;
+    if (end === 'true') {
+        disableLoadGame();
+        return;
+    }
+    activateLoadGame();
 }
 
 function showErrorMessage(message) {
@@ -149,7 +155,14 @@ function resetScores() {
 
 function setBoardId(id) {
     document.getElementById("board-id").value = id;
+}
 
+function disableLoadGame() {
+    document.getElementById('game-state').value = 'true';
+}
+
+function activateLoadGame() {
+    document.getElementById('game-state').value = 'false';
 }
 
 window.onload = async function () {
@@ -169,12 +182,18 @@ function fetchNewChess() {
         .then(res => {
             setBoardId(res.boardId);
             resetScores();
-            toggleTurn(res.state);
+            toggleState(res.state);
             initPieces(res.pieces);
+            activateLoadGame();
         })
 }
 
 function fetchLoadChess() {
+    let end = document.getElementById('game-state').value;
+    if (end === 'true') {
+        alert("게임이 종료되었습니다. 새 게임을 눌러주세요.");
+        return;
+    }
     let playerId = document.getElementById("player-id").value;
     fetch('http://localhost:8080/load?playerId=' + playerId, {
         method: 'GET',
@@ -186,7 +205,7 @@ function fetchLoadChess() {
         .then(res => {
             setBoardId(res.boardId);
             resetScores();
-            toggleTurn(res.state);
+            toggleState(res.state);
             initPieces(res.pieces);
         })
 }
@@ -209,7 +228,7 @@ function fetchMove(source, target) {
             if (res.message) {
                 throw new Error(res.message);
             }
-            toggleTurn(res.state);
+            toggleState(res.state);
             initPieces(res.pieces);
             checkEnd(res.state);
         })
@@ -233,12 +252,15 @@ function fetchResult() {
 }
 
 function fetchFinalResult() {
-    fetch('http://localhost:8080/result', {
+    fetch('http://localhost:8080/end', {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
         .then(res => res.json())
-        .then(res => showFinalResult(res.result));
+        .then(res => {
+            disableLoadGame();
+            showFinalResult(res.result);
+        });
 }
