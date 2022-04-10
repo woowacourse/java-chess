@@ -19,12 +19,12 @@ public class GameDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        gameDao = new GameDaoImpl(new Game("white", "black"));
+        gameDao = new GameDaoImpl(new Game("white", "black", 1));
     }
 
     @AfterEach
     void tearDown() {
-        gameDao.deleteById(gameDao.getId());
+        gameDao.deleteById(1);
     }
 
     @Test
@@ -48,14 +48,14 @@ public class GameDaoImplTest {
     @DisplayName("DB에 존재하는 game 정보를 id로 찾아 삭제한다.")
     void deleteById() {
         gameDao.save();
-        gameDao.deleteById(gameDao.getId());
+        gameDao.deleteById(1);
     }
 
     @Test
     @DisplayName("DB에 id가 존재하는지 검증한다.")
     void findById() {
         //when
-        int id = gameDao.getId();
+        int id = 1;
         gameDao.save();
 
         List<String> actual = gameDao.findById(id);
@@ -68,7 +68,7 @@ public class GameDaoImplTest {
     @DisplayName("DB에 저장한 Turn이 옳은지 검증한다.")
     void findTurnById() {
         //when
-        int id = gameDao.getId();
+        int id = 1;
         gameDao.nextTurn();
         gameDao.save();
 

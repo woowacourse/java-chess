@@ -39,7 +39,7 @@ public class ChessGameServiceTest {
 
     @BeforeEach
     void setUp() {
-        GameDao gameDao = new fakeGameDao(new Game("white", "black"));
+        GameDao gameDao = new fakeGameDao(new Game("white", "black", 1));
         chessGameService = new ChessGameService(new fakeBoardDao());
         chessGameService.setGameDao(gameDao);
     }
@@ -282,6 +282,11 @@ public class ChessGameServiceTest {
         @Override
         public void nextTurn() {
             game.nextTurn();
+        }
+
+        @Override
+        public int findByIds(String idPlayerWhite, String idPlayerBlack) {
+            return 0;
         }
     }
 }

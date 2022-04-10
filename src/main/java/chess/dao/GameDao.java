@@ -17,4 +17,6 @@ public interface GameDao {
     String findTurnById(int id);
 
     void nextTurn();
+
+    int findByIds(String idPlayerWhite, String idPlayerBlack);
 }

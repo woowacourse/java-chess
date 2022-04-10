@@ -22,13 +22,13 @@ public class BoardDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        gameDao = new GameDaoImpl(new Game("white", "black"));
+        gameDao = new GameDaoImpl(new Game("white", "black", 1));
         boardDao = new BoardDaoImpl();
     }
 
     @AfterEach
     void tearDown() {
-        gameDao.deleteById(gameDao.getId());
+        gameDao.deleteById(1);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BoardDaoImplTest {
         Board board = new Board(new DefaultArrangement());
         gameDao.save();
 
-        assertThatCode(() -> boardDao.save(gameDao.getId(),
+        assertThatCode(() -> boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues())))
             .doesNotThrowAnyException();
     }
@@ -59,23 +59,23 @@ public class BoardDaoImplTest {
         //given
         Board board = new Board(new DefaultArrangement());
         gameDao.save();
-        boardDao.save(gameDao.getId(),
+        boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues()));
 
         //when
-        boardDao.deleteById(gameDao.getId());
+        boardDao.deleteById(1);
 
         //then
-        assertThat(boardDao.findById(gameDao.getId())).isEmpty();
+        assertThat(boardDao.findById(1)).isEmpty();
     }
 
     @Test
     @DisplayName("DB에서 Id로 기물 위치, 피스 정보를 불러온다.")
     void find() {
         //given
-        GameDao gameDao = new GameDaoImpl(new Game("white", "black"));
+        GameDao gameDao = new GameDaoImpl(new Game("white", "black", 1));
         gameDao.save();
-        int gameId = gameDao.getId();
+        int gameId = 1;
 
         Board board = new Board(new DefaultArrangement());
         Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());

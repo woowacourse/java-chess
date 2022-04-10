@@ -16,10 +16,14 @@ public class GameDaoImpl implements GameDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    private final Game game;
+    private Game game;
 
     public GameDaoImpl(Game game) {
         this.game = game;
+    }
+
+    public GameDaoImpl() {
+
     }
 
     @Override
@@ -36,7 +40,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void save() {
         Connection connection = getConnection();
-        deleteById(getId());
+        deleteById(game.getId());
         String sql = "insert into game (id, id_white_player, id_black_player, turn) values (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -53,7 +57,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void deleteById(int id) {
         Connection connection = getConnection();
-        new BoardDaoImpl().deleteById(getId());
+        new BoardDaoImpl().deleteById(game.getId());
         String sql = "delete from game where id = " + "'" + id + "'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -113,5 +117,27 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void nextTurn() {
         game.nextTurn();
+    }
+
+    @Override
+    public int findByIds(String idPlayerWhite, String idPlayerBlack) {
+        Connection connection = getConnection();
+        String sql = "select id from game where id_white_player = ? and id_black_player = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idPlayerWhite);
+            statement.setString(2, idPlayerBlack);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+
+            return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

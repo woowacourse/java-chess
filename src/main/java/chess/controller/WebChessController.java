@@ -38,7 +38,8 @@ public class WebChessController {
     private void game(ChessGameService service) {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Game game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"));
+            int id = new GameDaoImpl().findByIds(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"));
+            Game game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"), id);
             service.setGameDao(new GameDaoImpl(game));
             service.init(new Turn(), new DefaultArrangement());
             model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
