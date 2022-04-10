@@ -2,18 +2,18 @@ package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.FakeGameStateDao;
 import chess.controller.FakePieceDao;
-import chess.dto.PieceDto;
+import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 import chess.dto.ScoreDto;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessGameServiceTest {
-
     private final ChessGameService chessGameService =
             new ChessGameService(new FakePieceDao(), new FakeGameStateDao());
 
@@ -22,7 +22,7 @@ class ChessGameServiceTest {
     void start() {
         chessGameService.start();
         //actual
-        final Map<String, Object> allPiecesByPosition = chessGameService.getPieces();
+        final Map<Position, Piece> allPiecesByPosition = chessGameService.getPieces();
         //then
         assertThat(allPiecesByPosition).hasSize(32);
         chessGameService.end();
@@ -59,7 +59,7 @@ class ChessGameServiceTest {
         chessGameService.start();
         //actual
         chessGameService.end();
-        final Map<String, Object> actual = chessGameService.getPieces();
+        final Map<Position, Piece> actual = chessGameService.getPieces();
         //then
         assertThat(actual).isEmpty();
     }
@@ -77,25 +77,18 @@ class ChessGameServiceTest {
     @DisplayName("기물이 움직인 결과를 DB에 저장한다.")
     void move() {
         //given
+        final String targetPosition = "a4";
         chessGameService.start();
+        final Map<Position, Piece> pieces = chessGameService.move("a2", targetPosition);
+        final Piece piece = pieces.get(Position.from(targetPosition));
         //when
-        final Map<String, Object> actual = chessGameService.move("a2", "a4");
+        final String actualName = piece.getName();
+        final String actualTeam = piece.getTeam();
         //then
-        assertThat(actual).contains(entry("a4", new PieceDto("WHITE", "Pawn")));
-        chessGameService.end();
-    }
-
-    @Test
-    @DisplayName("기물이 공격 당해 사라진다면, 해당 데이터를 DB에서 삭제한다.")
-    void moveAttack() {
-        //given
-        chessGameService.start();
-        chessGameService.move("a2", "a4");
-        chessGameService.move("b7", "b5");
-        //when
-        final Map<String, Object> allPiecesByPosition = chessGameService.move("a4", "b5");
-        //actual
-        assertThat(allPiecesByPosition).doesNotContain(entry("b5", new PieceDto("BLACK", "Pawn")));
+        assertAll(
+                () -> assertThat(actualName).isEqualTo("Pawn"),
+                () -> assertThat(actualTeam).isEqualTo("WHITE")
+        );
         chessGameService.end();
     }
 }

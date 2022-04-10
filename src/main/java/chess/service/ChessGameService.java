@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ChessGameService {
 
@@ -41,19 +40,16 @@ public class ChessGameService {
         this.gameStateDao = gameStateDao;
     }
 
-    public Map<String, Object> getPieces() {
+    public Map<Position, Piece> getPieces() {
         final String gameState = gameStateDao.getGameState();
 
         if (gameState.equals(EMPTY_GAME_STATE)) {
             return new HashMap<>();
         }
-        return pieceDao.findAllPieces()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+        return convertToPiecesByPosition();
     }
 
-    public Map<String, Object> start() {
+    public Map<Position, Piece> start() {
         validatePlayingGame();
         final Board board = new Board();
         final String turn = board.getTurn()
@@ -61,7 +57,7 @@ public class ChessGameService {
         gameStateDao.saveTurn(turn);
         gameStateDao.saveState(PLAYING_GAME_STATE);
         pieceDao.saveAllPieces(board.getPieces());
-        return getAllPiecesByPosition();
+        return board.getPieces();
     }
 
     private void validatePlayingGame() {
@@ -70,7 +66,7 @@ public class ChessGameService {
         }
     }
 
-    public Map<String, Object> move(final String sourcePosition, final String targetPosition) {
+    public Map<Position, Piece> move(final String sourcePosition, final String targetPosition) {
         checkPlayingGame();
         Board board = getSavedBoard();
         final Board movedBoard = board.movePiece(Position.from(sourcePosition), Position.from(targetPosition));
@@ -78,7 +74,7 @@ public class ChessGameService {
         pieceDao.saveAllPieces(movedBoard.getPieces());
         final Team turn = movedBoard.getTurn();
         gameStateDao.saveTurn(turn.name());
-        return getAllPiecesByPosition();
+        return board.getPieces();
     }
 
     private void checkPlayingGame() {
@@ -90,11 +86,11 @@ public class ChessGameService {
     private Board getSavedBoard() {
         final String turn = gameStateDao.getTurn();
         final Team turnTeam = TEAM_CREATION_STRATEGY.get(turn);
-        final Map<Position, Piece> pieces = getSavedPieces();
+        final Map<Position, Piece> pieces = convertToPiecesByPosition();
         return new Board(pieces, turnTeam);
     }
 
-    private Map<Position, Piece> getSavedPieces() {
+    private Map<Position, Piece> convertToPiecesByPosition() {
         final Map<String, PieceDto> savedPieces = pieceDao.findAllPieces();
         final Map<Position, Piece> pieces = new HashMap<>();
 
@@ -111,24 +107,17 @@ public class ChessGameService {
         return pieces;
     }
 
-    private Map<String, Object> getAllPiecesByPosition() {
-        return pieceDao.findAllPieces()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
     public ScoreDto getScore() {
         checkPlayingGame();
         final Board board = getSavedBoard();
         return new ScoreDto(board.getTotalPoint(WHITE), board.getTotalPoint(BLACK));
     }
 
-    public Map<String, Object> end() {
-        final Map<String, Object> pieces = getAllPiecesByPosition();
+    public Map<Position, Piece> end() {
+        final Board board = getSavedBoard();
         checkPlayingGame();
         gameStateDao.removeGameState();
         pieceDao.removeAllPieces();
-        return pieces;
+        return board.getPieces();
     }
 }

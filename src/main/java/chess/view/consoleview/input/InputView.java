@@ -1,4 +1,4 @@
-package chess.view.input;
+package chess.view.consoleview.input;
 
 import java.util.Scanner;
 

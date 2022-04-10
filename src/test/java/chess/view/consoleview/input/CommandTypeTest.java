@@ -1,4 +1,4 @@
-package chess.view.input;
+package chess.view.consoleview.input;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

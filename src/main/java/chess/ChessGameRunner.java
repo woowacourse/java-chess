@@ -2,19 +2,19 @@ package chess;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
-import static chess.view.input.CommandType.END;
-import static chess.view.input.CommandType.MOVE;
-import static chess.view.input.CommandType.START;
-import static chess.view.input.CommandType.STATUS;
-import static chess.view.input.InputView.inputCommand;
-import static chess.view.input.InputView.inputPromotionType;
-import static chess.view.output.OutputView.printCurrentBoard;
-import static chess.view.output.OutputView.printStartMessage;
+import static chess.view.consoleview.input.CommandType.END;
+import static chess.view.consoleview.input.CommandType.MOVE;
+import static chess.view.consoleview.input.CommandType.START;
+import static chess.view.consoleview.input.CommandType.STATUS;
+import static chess.view.consoleview.input.InputView.inputCommand;
+import static chess.view.consoleview.input.InputView.inputPromotionType;
+import static chess.view.consoleview.output.OutputView.printCurrentBoard;
+import static chess.view.consoleview.output.OutputView.printStartMessage;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
-import chess.view.input.CommandType;
-import chess.view.output.OutputView;
+import chess.view.consoleview.input.CommandType;
+import chess.view.consoleview.output.OutputView;
 
 public class ChessGameRunner {
     //TODO : view를 분리시키자.
