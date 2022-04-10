@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.model.ChessGame;
 import chess.model.GameResult;
+import chess.model.MoveType;
 import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
@@ -10,11 +11,14 @@ import chess.model.dao.TurnDao;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceFactory;
 import chess.model.position.Position;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessService {
+    private static final String NONE = "";
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
     private ChessGame chessGame;
@@ -30,24 +34,6 @@ public class ChessService {
         chessGame = new ChessGame(board);
 
         return WebBoardDto.from(board);
-    }
-
-    private Board initBoard() {
-        Map<Position, Piece> board = pieceDao.findAll();
-
-        if (board.size() == 0) {
-            pieceDao.init(BoardFactory.create());
-        }
-
-        return new Board(pieceDao.findAll());
-    }
-
-    private void initTurn() {
-        String turn = turnDao.findOne();
-
-        if (turn.equals("")) {
-            turnDao.init();
-        }
     }
 
     public WebBoardDto move(MoveDto moveDto) {
@@ -85,5 +71,32 @@ public class ChessService {
     public void exitGame() {
         pieceDao.deleteAll();
         turnDao.deleteAll();
+    }
+
+    private Board initBoard() {
+        Map<String, String> board = pieceDao.findAll();
+
+        if (board.size() == 0) {
+            pieceDao.init(BoardFactory.create());
+        }
+
+        return new Board(toBoard(pieceDao.findAll()));
+    }
+
+    private Map<Position, Piece> toBoard(Map<String, String> rawBoard) {
+
+        return rawBoard.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> Position.from(entry.getKey()),
+                        entry -> PieceFactory.create(entry.getValue()))
+                );
+    }
+
+    private void initTurn() {
+        String turn = turnDao.findOne();
+
+        if (turn.equals(NONE)) {
+            turnDao.init();
+        }
     }
 }

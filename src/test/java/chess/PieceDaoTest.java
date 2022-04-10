@@ -21,7 +21,7 @@ class PieceDaoTest {
         Board board = BoardFactory.create();
         pieceDao.init(board);
 
-        Map<Position, Piece> boardMap = pieceDao.findAll();
+        Map<String, String> boardMap = pieceDao.findAll();
 
         assertThat(boardMap.size()).isEqualTo(64);
     }
@@ -61,7 +61,7 @@ class PieceDaoTest {
 
         pieceDao.deleteAll();
 
-        Map<Position, Piece> boardMap = pieceDao.findAll();
+        Map<String, String> boardMap = pieceDao.findAll();
         assertThat(boardMap.size()).isZero();
     }
 }

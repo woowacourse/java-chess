@@ -26,9 +26,9 @@ public class PieceDao {
         }));
     }
 
-    public Map<Position, Piece> findAll() {
+    public Map<String, String> findAll() {
         String query = "select position, name from pieces";
-        Map<Position, Piece> board = new HashMap<>();
+        Map<String, String> board = new HashMap<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             makeBoard(board, resultSet);
@@ -38,12 +38,10 @@ public class PieceDao {
         return board;
     }
 
-    private void makeBoard(Map<Position, Piece> board, ResultSet resultSet) throws SQLException {
+    private void makeBoard(Map<String, String> board, ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            String pieceResult = resultSet.getString("name");
-            Piece piece = PieceFactory.create(pieceResult);
-            String positionResult = resultSet.getString("position");
-            Position position = Position.from(positionResult);
+            String piece = resultSet.getString("name");
+            String position = resultSet.getString("position");
             board.put(position, piece);
         }
     }
