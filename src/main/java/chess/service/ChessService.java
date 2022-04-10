@@ -10,6 +10,7 @@ import chess.domain.game.state.Ready;
 import chess.domain.game.state.WhiteTurn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,14 +33,29 @@ public class ChessService {
 
     public Board ready() {
         int gameId = chessGameDao.findRecentGame();
-        String state = chessGameDao.findById(gameId);
+        String state = null;
+        try {
+            state = chessGameDao.findById(gameId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (gameId != 0 && !isEnded(state)) {
-            Board board = new Board(boardDao.findGame(gameId));
+            Board board = getBoard(gameId);
             chessGame = toChessGame(board, state);
             return board;
         }
         chessGameDao.save(chessGame);
         return chessGame.getBoard();
+    }
+
+    private Board getBoard(int gameId) {
+        Board board = null;
+        try {
+            board = new Board(boardDao.findGame(gameId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return board;
     }
 
     private ChessGame toChessGame(Board board, String state) {
@@ -73,7 +89,7 @@ public class ChessService {
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
         int gameId = chessGameDao.findRecentGame();
         boardDao.delete(from, gameId);
-        Piece piece = board.get(to);
+        Piece piece = board.get(Position.valueOf(to));
         boardDao.update(to, piece.getName(), piece.getColorValue(), gameId);
         chessGameDao.update(gameId, chessGame);
         return chessGame.getBoard();
