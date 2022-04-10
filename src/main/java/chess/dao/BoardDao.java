@@ -19,7 +19,6 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class BoardDao {
-    private int piece_id = 1;
 
     public void save(Map<Square, Piece> board, int board_id, Connection connection) {
         final String sql = "insert into piece (piece_id, board_id, type, team, square) values (?,?,?,?,?)";
@@ -30,7 +29,7 @@ public class BoardDao {
                 .collect(Collectors.toList());
             for (Map.Entry<Square, Piece> entry : pieces) {
                 statement = connection.prepareStatement(sql);
-                setInsertStatement(board_id, statement, entry.getKey(), entry.getValue());
+                setInsertStatement(pieces.indexOf(entry), board_id, statement, entry.getKey(), entry.getValue());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -40,9 +39,10 @@ public class BoardDao {
         DBConnector.closeDB(connection, statement);
     }
 
-    private void setInsertStatement(int board_id, PreparedStatement statement, Square square, Piece piece) throws
+    private void setInsertStatement(int piece_id, int board_id, PreparedStatement statement, Square square,
+        Piece piece) throws
         SQLException {
-        statement.setInt(1, piece_id++);
+        statement.setInt(1, piece_id);
         statement.setInt(2, board_id);
         statement.setString(3, piece.getType());
         statement.setString(4, piece.getColor());

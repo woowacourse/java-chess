@@ -45,8 +45,8 @@ public final class ChessGame {
         return turn == Color.NONE;
     }
 
-    public Status saveStatus() {
-        return new Status(board);
+    public Result saveStatus() {
+        return new Result(board);
     }
 
     public Map<Square, Piece> getBoard() {

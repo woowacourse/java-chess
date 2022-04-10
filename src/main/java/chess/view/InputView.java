@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import chess.Command;
+import chess.command.CommandType;
 import chess.domain.position.Square;
 
 public class InputView {
@@ -24,29 +24,29 @@ public class InputView {
     private static final int POSITION_SIZE = 2;
     private static final int COMMAND_NOT_MOVE_FORMAT_SIZE = 1;
 
-    public static Map.Entry<Command, List<Square>> requireCommand() {
+    public static Map.Entry<CommandType, List<Square>> requireCommand() {
         try {
             List<String> commands = getCommands();
-            Command command = Command.from(commands.get(COMMAND_INDEX));
-            validateCommandFormatSize(command, commands);
-            if (command == Command.MOVE) {
-                return Map.entry(command, getSourceAndTarget(commands));
+            CommandType commandType = CommandType.from(commands.get(COMMAND_INDEX));
+            validateCommandFormatSize(commandType, commands);
+            if (commandType == CommandType.MOVE) {
+                return Map.entry(commandType, getSourceAndTarget(commands));
             }
-            return Map.entry(command, List.of());
+            return Map.entry(commandType, List.of());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return requireCommand();
         }
     }
 
-    public static Map.Entry<Command, List<Square>> requireCommand(String input) {
+    public static Map.Entry<CommandType, List<Square>> requireCommand(String input) {
         List<String> commands = getCommands(input);
-        Command command = Command.from(commands.get(COMMAND_INDEX));
-        validateCommandFormatSize(command, commands);
-        if (command == Command.MOVE) {
-            return Map.entry(command, getSourceAndTarget(commands));
+        CommandType commandType = CommandType.from(commands.get(COMMAND_INDEX));
+        validateCommandFormatSize(commandType, commands);
+        if (commandType == CommandType.MOVE) {
+            return Map.entry(commandType, getSourceAndTarget(commands));
         }
-        return Map.entry(command, List.of());
+        return Map.entry(commandType, List.of());
     }
 
     private static List<String> getCommands() {
@@ -73,8 +73,8 @@ public class InputView {
         return squares;
     }
 
-    private static void validateCommandFormatSize(Command command, List<String> commands) {
-        if (Command.MOVE == command) {
+    private static void validateCommandFormatSize(CommandType commandType, List<String> commands) {
+        if (CommandType.MOVE == commandType) {
             validateInformationCount(commands, COMMAND_MOVE_FORMAT_SIZE);
             return;
         }

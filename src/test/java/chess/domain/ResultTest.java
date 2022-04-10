@@ -12,7 +12,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Square;
 
-public class StatusTest {
+public class ResultTest {
 
     @Test
     @DisplayName("룩1, 비숍1, 퀸1, 폰1 가 있으면 18점을 반환한다")
@@ -23,9 +23,9 @@ public class StatusTest {
         board.put(new Square("c5"), WHITE_BISHOP);
         board.put(new Square("c6"), WHITE_PAWN);
         Board chessBoard = new Board(board);
-        Status status = new Status(chessBoard);
+        Result result = new Result(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18);
+        assertThat(result.calculateScore(Color.WHITE)).isEqualTo(18);
     }
 
     @Test
@@ -35,9 +35,9 @@ public class StatusTest {
         board.put(new Square("c5"), WHITE_PAWN);
         board.put(new Square("c6"), WHITE_PAWN);
         Board chessBoard = new Board(board);
-        Status status = new Status(chessBoard);
+        Result result = new Result(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(1);
+        assertThat(result.calculateScore(Color.WHITE)).isEqualTo(1);
     }
 
     @Test
@@ -51,8 +51,8 @@ public class StatusTest {
         board.put(new Square("c5"), WHITE_PAWN);
         board.put(new Square("c4"), WHITE_PAWN);
         Board chessBoard = new Board(board);
-        Status status = new Status(chessBoard);
+        Result result = new Result(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18.5);
+        assertThat(result.calculateScore(Color.WHITE)).isEqualTo(18.5);
     }
 }

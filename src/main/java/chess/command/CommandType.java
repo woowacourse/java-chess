@@ -1,8 +1,8 @@
-package chess;
+package chess.command;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum CommandType {
     START("start"),
     MOVE("move"),
     END("end"),
@@ -13,13 +13,13 @@ public enum Command {
 
     private final String name;
 
-    Command(String name) {
+    CommandType(String name) {
         this.name = name;
     }
 
-    public static Command from(String name) {
-        return Arrays.stream(Command.values())
-            .filter(command -> command.name.equals(name))
+    public static CommandType from(String name) {
+        return Arrays.stream(CommandType.values())
+            .filter(commandType -> commandType.name.equals(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_COMMAND));
     }

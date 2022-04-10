@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.Command;
+import chess.command.CommandType;
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
 import chess.dao.DBConnector;
 import chess.domain.ChessGame;
-import chess.domain.Status;
+import chess.domain.Result;
 import chess.domain.piece.Piece;
 import chess.domain.position.Square;
 import chess.dto.ScoreDTO;
@@ -43,9 +43,9 @@ public class WebController {
             return render(model, "index.html");
         });
 
-        post("/command", (req, res) -> {
+        post("/chess/command", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            inGame(req.queryParams("command"), model);
+            inGame(req.queryParams("chess/command"), model);
             return render(model, "startedChess.html");
         });
     }
@@ -71,30 +71,30 @@ public class WebController {
         model.put("infos", infos);
     }
 
-    private void executeCommand(Map.Entry<Command, List<Square>> commands, Map<String, Object> model) {
-        Command command = commands.getKey();
-        if (command == Command.START) {
+    private void executeCommand(Map.Entry<CommandType, List<Square>> commands, Map<String, Object> model) {
+        CommandType commandType = commands.getKey();
+        if (commandType == CommandType.START) {
             start(model);
             save();
         }
 
-        if (command == Command.MOVE) {
+        if (commandType == CommandType.MOVE) {
             move(commands, model);
             update();
         }
 
-        if (command == Command.END) {
+        if (commandType == CommandType.END) {
             model.put("exit", true);
             remove();
             game = null;
         }
 
-        if (command == Command.STATUS) {
+        if (commandType == CommandType.STATUS) {
             status(model);
             remove();
         }
 
-        if (command == Command.CONTINUE) {
+        if (commandType == CommandType.CONTINUE) {
             continueGame(model);
             save();
         }
@@ -108,7 +108,7 @@ public class WebController {
         packBoardInfo(model);
     }
 
-    private void move(Map.Entry<Command, List<Square>> commands, Map<String, Object> model) {
+    private void move(Map.Entry<CommandType, List<Square>> commands, Map<String, Object> model) {
         checkGameStarted();
         if (game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_GAME_IS_OVER);
@@ -131,8 +131,8 @@ public class WebController {
         if (!game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_GAME_IS_NOT_END);
         }
-        Status status = game.saveStatus();
-        model.put("score", ScoreDTO.of(status));
+        Result result = game.saveStatus();
+        model.put("score", ScoreDTO.of(result));
         model.put("exit", true);
         game = null;
     }

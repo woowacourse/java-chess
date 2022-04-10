@@ -3,9 +3,9 @@ package chess.controller;
 import java.util.List;
 import java.util.Map;
 
-import chess.Command;
+import chess.command.CommandType;
 import chess.domain.ChessGame;
-import chess.domain.Status;
+import chess.domain.Result;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
@@ -37,28 +37,28 @@ public class ConsoleController {
         }
     }
 
-    private boolean executeCommand(Map.Entry<Command, List<Square>> commands) {
-        Command command = commands.getKey();
-        if (command == Command.START) {
+    private boolean executeCommand(Map.Entry<CommandType, List<Square>> commands) {
+        CommandType commandType = commands.getKey();
+        if (commandType == CommandType.START) {
             start();
             return true;
         }
 
-        if (command == Command.MOVE) {
+        if (commandType == CommandType.MOVE) {
             move(commands);
             return true;
         }
 
-        if (command == Command.END) {
+        if (commandType == CommandType.END) {
             return false;
         }
 
-        if (command == Command.STATUS) {
+        if (commandType == CommandType.STATUS) {
             status();
             return false;
         }
 
-        if (command == Command.CONTINUE) {
+        if (commandType == CommandType.CONTINUE) {
             throw new IllegalArgumentException(ERROR_CONSOLE_CANT_CONTINUE);
         }
         return true;
@@ -72,7 +72,7 @@ public class ConsoleController {
         OutputView.showBoard(game.getBoard());
     }
 
-    private void move(Map.Entry<Command, List<Square>> commands) {
+    private void move(Map.Entry<CommandType, List<Square>> commands) {
         checkGameStarted();
         if (game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
@@ -96,9 +96,9 @@ public class ConsoleController {
         if (!game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
-        Status status = game.saveStatus();
-        OutputView.showScore(status, Color.WHITE);
-        OutputView.showScore(status, Color.BLACK);
+        Result result = game.saveStatus();
+        OutputView.showScore(result, Color.WHITE);
+        OutputView.showScore(result, Color.BLACK);
     }
 
     private void checkGameStarted() {

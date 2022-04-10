@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.domain.Status;
+import chess.domain.Result;
 import chess.domain.piece.Color;
 
 public class ScoreDTO {
@@ -12,8 +12,8 @@ public class ScoreDTO {
         this.whiteScore = whiteScore;
     }
 
-    public static ScoreDTO of(Status status) {
-        return new ScoreDTO(status.calculateScore(Color.BLACK), status.calculateScore(Color.WHITE));
+    public static ScoreDTO of(Result result) {
+        return new ScoreDTO(result.calculateScore(Color.BLACK), result.calculateScore(Color.WHITE));
     }
 
     public double getBlackScore() {
