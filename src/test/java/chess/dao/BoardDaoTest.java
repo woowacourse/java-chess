@@ -36,11 +36,7 @@ class BoardDaoTest {
         List<BoardDto> boardDtos = boardDao.findByGameId(gameId);
         assertThat(boardDtos.get(0).getSymbol()).isEqualTo("PAWN");
     }
-
-    @Test
-    void save() {
-    }
-
+    
     @Test
     void update() {
         BoardDto boardDto = new BoardDto("BISHOP", "WHITE", "a2");
