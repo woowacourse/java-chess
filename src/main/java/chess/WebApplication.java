@@ -6,13 +6,10 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.piece.Piece;
 import chess.dto.PiecesDto;
 import chess.service.ChessGameService;
 import chess.web.util.JsonTransformer;
 import chess.web.util.RenderingUtil;
-import chess.web.view.BoardView;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
@@ -30,9 +27,9 @@ public class WebApplication {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            Map<String, Piece> model = new HashMap<>();
+            PiecesDto piecesDto = new PiecesDto();
 
-            return RenderingUtil.render(model, "index.html");
+            return RenderingUtil.render(piecesDto, "index.html");
         });
 
         get("/game", (req, res) -> {
@@ -40,10 +37,7 @@ public class WebApplication {
             PiecesDto piecesDto = chessGameService.get()
                 .createOrGet();
 
-            Map<String, Piece> model = BoardView.of(piecesDto)
-                .getBoardView();
-
-            return RenderingUtil.render(model, "game.html");
+            return RenderingUtil.render(piecesDto, "game.html");
         });
 
         get("/game/progress", (req, res) -> {
@@ -51,10 +45,7 @@ public class WebApplication {
             PiecesDto piecesDto = chessGameService.get()
                 .getCurrentGame();
 
-            Map<String, Piece> model = BoardView.of(piecesDto)
-                .getBoardView();
-
-            return RenderingUtil.render(model, "game.html");
+            return RenderingUtil.render(piecesDto, "game.html");
         });
 
         get("/game/status", (req, res) -> {
