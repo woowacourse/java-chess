@@ -79,4 +79,12 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(team, name, isFirst);
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", name=" + name +
+                '}';
+    }
 }
