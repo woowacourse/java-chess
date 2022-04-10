@@ -32,8 +32,8 @@ public abstract class GameState {
         return board.getPointPieces();
     }
 
-    public Color getColor() {
-        return turnColor;
+    public String getColor() {
+        return turnColor.name();
     }
 
     public Map<Color, Double> getColorScore() {

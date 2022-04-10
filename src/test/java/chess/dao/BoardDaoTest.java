@@ -31,7 +31,7 @@ class BoardDaoTest {
     @BeforeAll
     static void setUp() {
         JdbcGameDao gameDao = new JdbcGameDao();
-        gameDao.saveGame("READY", Color.WHITE, TEST_ROOM_NAME);
+        gameDao.saveGame("READY", Color.WHITE.name(), TEST_ROOM_NAME);
     }
 
     @Test

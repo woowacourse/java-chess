@@ -33,12 +33,12 @@ public class GameService {
 
     public void startGame(String roomName) {
         GameState state = readGameState(roomName).start();
-        gameDao.updateState(state, roomName);
+        gameDao.updateState(state.getState(), state.getColor(), roomName);
     }
 
     public void finishGame(String roomName) {
         GameState state = readGameState(roomName).finish();
-        gameDao.updateState(state, roomName);
+        gameDao.updateState(state.getState(), state.getColor(), roomName);
     }
 
     public GameState readGameState(String roomName) {
@@ -51,7 +51,7 @@ public class GameService {
     public GameState moveBoard(String roomName, Arguments arguments) {
         GameState state = readGameState(roomName);
         GameState moved = state.move(arguments);
-        gameDao.updateState(moved, roomName);
+        gameDao.updateState(state.getState(), state.getColor(), roomName);
 
         Route route = Route.of(arguments);
         boardDao.deletePiece(route.getDestination(), roomName);

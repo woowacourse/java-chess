@@ -17,7 +17,7 @@ public class OutputView {
             + "> 점수 확인 : status");
     }
 
-    public void printBoard(Map<Point, Piece> pointPieces, Color turnColor) {
+    public void printBoard(Map<Point, Piece> pointPieces, String turnColor) {
         System.out.println(toBoardString(pointPieces));
         System.out.println(turnColor + "의 차례입니다.");
     }

@@ -27,7 +27,7 @@ class GameDaoTest {
     @Order(1)
     @DisplayName("게임을 생성한다.")
     public void createGame() {
-        assertThatCode(() -> dao.saveGame("READY", Color.WHITE, TEST_ROOM_NAME))
+        assertThatCode(() -> dao.saveGame("READY", Color.WHITE.name(), TEST_ROOM_NAME))
             .doesNotThrowAnyException();
     }
 
@@ -56,7 +56,7 @@ class GameDaoTest {
         GameState state = new Ready();
         GameState started = state.start();
         // when
-        dao.updateState(started, TEST_ROOM_NAME);
+        dao.updateState(started.getState(), started.getColor(), TEST_ROOM_NAME);
         List<String> stateAndColor = dao.readStateAndColor(TEST_ROOM_NAME);
 
         String stateString = stateAndColor.get(0);
