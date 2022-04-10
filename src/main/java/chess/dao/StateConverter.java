@@ -22,6 +22,6 @@ public class StateConverter {
         if ("end".equals(state)) {
             return new End(board);
         }
-        throw new IllegalArgumentException("[ERROR] 상태가 존재하지 않습니다.");
+        return null;
     }
 }

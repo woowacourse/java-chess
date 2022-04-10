@@ -18,7 +18,7 @@ public class WebApplication {
 
         get("/", (req, res) -> {
             State state = webChessService.getState();
-            if (state.isRunning()) {
+            if (null != state && state.isRunning()) {
                 chessGame.setState(state);
             }
             return new ModelAndView(chessGame.toMap(), "index.html");
