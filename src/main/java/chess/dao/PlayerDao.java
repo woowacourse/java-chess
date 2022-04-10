@@ -14,6 +14,12 @@ public class PlayerDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private final Connection connection;
+
+    public PlayerDao() {
+        connection = getConection();
+    }
+
     public Connection getConection() {
         loadDriver();
         Connection connection = null;
@@ -34,7 +40,6 @@ public class PlayerDao {
     }
 
     public void save(Color color) {
-        final Connection connection = getConection();
         final String sql = "insert into player (color) values (?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -46,7 +51,6 @@ public class PlayerDao {
     }
 
     public Player findAll() {
-        final Connection connection = getConection();
         final String sql = "select color from player";
         Player player = null;
         try {
@@ -63,7 +67,6 @@ public class PlayerDao {
     }
 
     public void deleteAll() {
-        final Connection connection = getConection();
         final String sql = "delete from player";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);

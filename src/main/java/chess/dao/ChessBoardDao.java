@@ -16,6 +16,12 @@ public class ChessBoardDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private final Connection connection;
+
+    public ChessBoardDao() {
+        connection = getConection();
+    }
+
     public Connection getConection() {
         loadDriver();
         Connection connection = null;
@@ -36,7 +42,6 @@ public class ChessBoardDao {
     }
 
     public void save(Map<Position, Piece> board) {
-        final Connection connection = getConection();
         final String sql = "insert into board (position, piece) values (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,7 +57,6 @@ public class ChessBoardDao {
     }
 
     public String findByPosition(String position) {
-        final Connection connection = getConection();
         final String sql = "select position, piece from board where position = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -69,7 +73,6 @@ public class ChessBoardDao {
     }
 
     public void deleteAll() {
-        final Connection connection = getConection();
         final String sql = "delete from board";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
@@ -80,7 +83,6 @@ public class ChessBoardDao {
     }
 
     public Map<String, String> findAll() {
-        final Connection connection = getConection();
         final String sql = "select position, piece from board";
         final Map<String, String> board = new HashMap<>();
         try {

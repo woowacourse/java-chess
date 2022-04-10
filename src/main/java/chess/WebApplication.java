@@ -102,6 +102,7 @@ public class WebApplication {
             final Request request = Request.of(req.body());
             String command = request.command();
 
+            //command a2a4
             String source = command.substring(0, 2);
             String target = command.substring(2, 4);
             chessGame.move(Position.toPosition(source), Position.toPosition(target));
