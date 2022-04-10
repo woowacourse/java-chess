@@ -11,7 +11,7 @@ public class Rook extends UnpromotablePiece {
     private static final double SCORE = 5;
 
     private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY =
-            (rankMove, fileMove) -> (fileMove == 0 && fileMove != 0) || (fileMove != 0 && rankMove == 0);
+            (rankMove, fileMove) -> rankMove == 0 || fileMove == 0;
 
     public Rook(final Team team) {
         super(team);
@@ -21,7 +21,7 @@ public class Rook extends UnpromotablePiece {
     public boolean canMove(final Position sourcePosition,
                            final Position targetPosition,
                            final List<Position> otherPositions) {
-        return sourcePosition.canMove(sourcePosition, MOVEMENT_STRATEGY) &&
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY) &&
                 !sourcePosition.isOtherPieceInPathToTarget(targetPosition, otherPositions);
     }
 
