@@ -52,6 +52,25 @@ public class WebApplication {
             return render(model, "game.html");
         });
 
+        get("/game/status", (req, res) -> {
+            res.type("application/json");
+            JsonTransformer jsonTransformer = new JsonTransformer();
+
+            Map<String, Object> model = game.get().calculateGameResult().getGameResultMap();
+
+            return jsonTransformer.render(model);
+        });
+
+        post("/game/start", (req, res) -> {
+            game.get().clean(String.valueOf(gameId));
+
+            game.set(ChessGame.of(chessmenInitializer.init(), String.valueOf(gameId)));
+
+            res.redirect("/game/progress");
+
+            return null;
+        });
+
         post("/game/move", (req, res) -> {
             JSONObject jObject = new JSONObject(req.body());
 
@@ -65,17 +84,7 @@ public class WebApplication {
             return null;
         });
 
-        get("/game/start", (req, res) -> {
-            game.get().clean(String.valueOf(gameId));
-
-            game.set(ChessGame.of(chessmenInitializer.init(), String.valueOf(gameId)));
-
-            res.redirect("/game/progress");
-
-            return null;
-        });
-
-        get("/game/end", (req, res) -> {
+        post("/game/end", (req, res) -> {
             game.get().forceEnd(String.valueOf(gameId));
 
             res.redirect("/game/progress");
@@ -83,16 +92,7 @@ public class WebApplication {
             return null;
         });
 
-        get("/game/status", (req, res) -> {
-            res.type("application/json");
-            JsonTransformer jsonTransformer = new JsonTransformer();
-
-            Map<String, Object> model = game.get().calculateGameResult().getGameResultMap();
-
-            return jsonTransformer.render(model);
-        });
-
-        get("/game/exit", (req, res) -> {
+        post("/game/exit", (req, res) -> {
             game.get().clean(String.valueOf(gameId));
 
             res.redirect("/");

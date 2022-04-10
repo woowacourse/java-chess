@@ -353,14 +353,14 @@
   <div class="chess-status">
 
     <div class="start">
-      <form action="/game/start" method="get">
-        <button type="submit" formmethod="GET">start</button>
+      <form action="/game/start" method="post">
+        <button type="submit" formmethod="post">start</button>
       </form>
     </div>
 
     <div class="end">
-      <form action="/game/end" method="get">
-        <button type="submit" formmethod="GET">end</button>
+      <form action="/game/end" method="post">
+        <button type="submit" formmethod="post">end</button>
       </form>
     </div>
 
@@ -373,8 +373,8 @@
     </div>
 
     <div class="exit" id="exit">
-      <form action="/game/exit" method="get">
-        <button type="submit" formmethod="GET">exit</button>
+      <form action="/game/exit" method="post">
+        <button type="submit">exit</button>
       </form>
     </div>
   </div>
@@ -415,7 +415,7 @@
     toInput = findTagId(event);
 
     fetch("/game/move", {
-      method: "POST",
+      method: "post",
       redirect: 'follow',
       headers: {
         'Content-Type': 'application/json',
