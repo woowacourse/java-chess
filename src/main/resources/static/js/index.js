@@ -1,50 +1,37 @@
-const button = document.querySelector(".button");
+const startButton = document.querySelector("#start-button");
+const restartButton = document.querySelector("#restart-button");
 const chessBoard = document.querySelector("table");
+const whiteScore = document.querySelector("#white-score");
+const blackScore = document.querySelector("#black-score");
 
-button.addEventListener("click", onClickButton);
+startButton.addEventListener("click", onClickStartButton);
+restartButton.addEventListener("click", onClickRestartButton);
 chessBoard.addEventListener("click", onClickBoard);
 
-function onClickButton ({target: {id}}) {
-    if (id === "start-button") {
-        onClickStartButton();
-        return;
-    }
-    if (id === "end-button") {
-        onClickEndButton();
-        return;
-    }
-    if (id === "status-button") {
-       onClickStatusButton();
-        return;
-    }
-}
-
 async function onClickStartButton () {
-    const isRestart = confirm("이전 게임을 불러오겠습니까?");
-    const response = await getStartFetch(isRestart);
+    const response = await fetch("/start");
     const data = await response.json();
 
     if (response.ok) {
-        initBoard(data);
+        loadBoard(data);
         return;
     }
 
     alert(JSON.stringify(data));
 }
 
-async function getStartFetch (isRestart) {
-    if (isRestart) {
-        return await fetch("/restart");
-    }
-    return await fetch("/start");
-}
-
-function initBoard (data) {
+function loadBoard (data) {
     removeAllPiece();
     Object.entries(data.positionsAndPieces).forEach(([key, value]) => {
-        const block = document.getElementById(key);
+        const block = document.getElementById(key.toLowerCase());
         block.appendChild(createPieceImage(value));
     });
+    whiteScore.innerText = data.whiteScore.WHITE;
+    blackScore.innerText = data.blackScore.BLACK;
+    const result = data.result;
+    if (result !== "EMPTY") {
+        alert(result);
+    }
 }
 
 function removeAllPiece () {
@@ -60,19 +47,16 @@ function createPieceImage ({color, name}) {
     return image;
 }
 
-async function onClickEndButton () {
-    const response = await fetch("/end");
+async function onClickRestartButton () {
+    const response = await fetch("/restart");
+    const data = await response.json();
+
     if (response.ok) {
-        alert("게임이 종료됐습니다!");
+        loadBoard(data);
         return;
     }
-    alert(JSON.stringify(await response.json()));
-}
 
-async function onClickStatusButton () {
-    const response = await fetch("/status");
-    const data = await response.json();
-    alert(JSON.stringify(data, null, 2));
+    alert(JSON.stringify(data));
 }
 
 function onClickBoard ({target: {classList, id, parentNode}}) {
@@ -107,17 +91,15 @@ async function onClickPiece (id) {
                        headers: {"Content-Type": "application/json"},
                        body: JSON.stringify({from: from, to: to})
                      });
+    const data = await response.json();
     if (response.ok) {
         movePiece(from, to);
-        const isRemovedKing = await response.json();
-        if (isRemovedKing) {
-            onClickStatusButton();
-        }
+        console.log(data);
+        loadBoard(data);
         return;
     }
 
-    const errorMessage = await response.json();
-    alert(JSON.stringify(errorMessage));
+    alert(JSON.stringify(data));
 }
 
 function getSecondSelectedId (id) {
