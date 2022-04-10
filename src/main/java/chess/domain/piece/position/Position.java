@@ -18,7 +18,7 @@ public class Position {
         return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 
-    public static Position from(String input) {
+    public static Position of(String input) {
         return Position.of(File.of(input.substring(0, 1)), Rank.of(input.substring(1, 2)));
     }
 

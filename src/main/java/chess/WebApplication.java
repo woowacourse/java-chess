@@ -114,7 +114,7 @@ public class WebApplication {
             //command a2a4
             String source = command.substring(0, 2);
             String target = command.substring(2, 4);
-            chessGame.move(Position.from(source), Position.from(target));
+            chessGame.move(Position.of(source), Position.of(target));
 
             //전부 지우고 다시 채운다.
             chessBoardDao.deleteAll();
