@@ -36,7 +36,7 @@ public class ChessController {
             Map<String, Object> model = new HashMap<>();
             try {
                 model = playerService.login(req.queryParams("name"));
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 res.status(400);
                 model.put("message", e.getMessage());
                 return render(model, "login.html");

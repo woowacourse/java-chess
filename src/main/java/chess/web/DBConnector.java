@@ -8,7 +8,7 @@ public class DBConnector {
 
     private static final String URL = "jdbc:mysql://localhost:3310/chess";
     private static final String USER = "user";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "password";
     public static final String ERROR_DB_CONNECTION_FAILED = "[ERROR] DB 연결에 실패했습니다.";
     public static final String ERROR_CLASS_NOT_FOUND = "[ERROR] 해당 클래스를 찾을 수 없습니다.";
 
