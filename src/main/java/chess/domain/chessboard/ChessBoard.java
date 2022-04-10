@@ -5,10 +5,8 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.generator.PiecesGenerator;
-import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,23 +20,11 @@ public class ChessBoard {
 
     public ChessBoard(final PiecesGenerator piecesGenerator) {
         this.pieces = piecesGenerator.generate();
-        fillEmptyPieceIfAbsent();
+//        fillEmptyPieceIfAbsent();
     }
 
     public ChessBoard(final Map<Position, Piece> pieces) {
         this.pieces = pieces;
-    }
-
-    private void fillEmptyPieceIfAbsent() {
-        for (final Column column : Column.values()) {
-            fillEmptyPieceInColumn(column);
-        }
-    }
-
-    private void fillEmptyPieceInColumn(final Column column) {
-        for (final Row row : Row.values()) {
-            this.pieces.computeIfAbsent(Position.of(column, row), value -> EmptyPiece.getInstance());
-        }
     }
 
     public void move(final Position from, final Position to) {

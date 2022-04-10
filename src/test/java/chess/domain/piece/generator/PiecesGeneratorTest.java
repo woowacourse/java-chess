@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 public class PiecesGeneratorTest {
 
     @Test
-    @DisplayName("32개의 체스말들을 생성한다")
+    @DisplayName("32개의 체스말들을 생성하면 Empty를 포함하여 크기가 64이다.")
     void generate() {
         final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         final Map<Position, Piece> pieces = piecesGenerator.generate();
 
-        assertThat(pieces).hasSize(32);
+        assertThat(pieces).hasSize(64);
     }
 }

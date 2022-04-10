@@ -30,6 +30,8 @@ public class ChessBoardTest {
                 Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.PAWN)),
                 Map.entry(Position.of("a2"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+
+        PiecesGenerator.fillEmptyPiece(pieces);
         final ChessBoard chessBoard = new ChessBoard(() -> pieces);
         final Map<Position, Piece> actual = chessBoard.getPieces();
 
@@ -37,12 +39,14 @@ public class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("체스판을 생성할 때 빈 칸은 EmptyPiece를 삽입한다.")
+    @DisplayName("체스판에 말이 없는 곳은 EmptyPiece이다.")
     void constructEmptyPieces() {
         final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), Piece.of(Color.WHITE, Symbol.PAWN)),
                 Map.entry(Position.of("a2"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+
+        PiecesGenerator.fillEmptyPiece(pieces);
         final ChessBoard chessBoard = new ChessBoard(() -> pieces);
         final Map<Position, Piece> actual = chessBoard.getPieces();
 
@@ -71,6 +75,7 @@ public class ChessBoardTest {
                     Map.entry(Position.of("d5"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
+            PiecesGenerator.fillEmptyPiece(pieces);
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
             chessBoard.move(Position.of("d4"), Position.of("d5"));
 
@@ -92,6 +97,7 @@ public class ChessBoardTest {
                     Map.entry(Position.of("d2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
+            PiecesGenerator.fillEmptyPiece(pieces);
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
             chessBoard.move(Position.of("d4"), Position.of("d2"));
 
@@ -113,6 +119,7 @@ public class ChessBoardTest {
                     Map.entry(Position.of("d2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
+            PiecesGenerator.fillEmptyPiece(pieces);
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
             chessBoard.move(Position.of("d4"), Position.of("d2"));
 
@@ -134,6 +141,7 @@ public class ChessBoardTest {
                     Map.entry(Position.of("f2"), Piece.of(Color.BLACK, Symbol.PAWN))
             ));
 
+            PiecesGenerator.fillEmptyPiece(pieces);
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
             final GameCommand gameCommand = new GameCommand("move", "d4", "f2");
 
@@ -208,6 +216,8 @@ public class ChessBoardTest {
                 Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
                 Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+
+        PiecesGenerator.fillEmptyPiece(testPieces);
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final boolean actual = chessBoard.isEnd();
 
@@ -226,6 +236,8 @@ public class ChessBoardTest {
                 Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
                 Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+
+        PiecesGenerator.fillEmptyPiece(testPieces);
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final boolean actual = chessBoard.isEnd();
 

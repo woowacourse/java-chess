@@ -7,6 +7,7 @@ import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
+import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Position;
 import chess.domain.state.BlackRunning;
 import chess.domain.state.Finish;
@@ -28,6 +29,7 @@ public class ChessGameTest {
         testBoard.put(Position.of("d4"), Piece.of(Color.WHITE, Symbol.KING));
         testBoard.put(Position.of("d5"), Piece.of(Color.WHITE, Symbol.PAWN));
         testBoard.put(Position.of("e3"), Piece.of(Color.BLACK, Symbol.PAWN));
+        PiecesGenerator.fillEmptyPiece(testBoard);
     }
 
     @Test

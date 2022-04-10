@@ -6,6 +6,7 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
+import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class ScoreCalculatorTest {
                 Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
                 Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+        PiecesGenerator.fillEmptyPiece(testPieces);
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
         final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
@@ -48,6 +50,7 @@ public class ScoreCalculatorTest {
                 Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
                 Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+        PiecesGenerator.fillEmptyPiece(testPieces);
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
         final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
