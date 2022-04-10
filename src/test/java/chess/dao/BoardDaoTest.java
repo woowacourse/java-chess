@@ -10,7 +10,6 @@ public class BoardDaoTest {
         ChessGameDao chessGameDao = new ChessGameDao();
         int gameId = chessGameDao.findRecentGame();
         boardDao.save("a1", "pawn", "white", gameId);
-        boardDao.delete("a1", gameId);
     }
 
     @Test
@@ -18,7 +17,6 @@ public class BoardDaoTest {
         final BoardDao boardDao = new BoardDao();
         ChessGameDao chessGameDao = new ChessGameDao();
         int gameId = chessGameDao.findRecentGame();
-        boardDao.update("a1", "empty", "empty", gameId);
-        boardDao.delete("a1", gameId);
+        boardDao.update("a1", "a2", "empty", "empty", gameId);
     }
 }

@@ -36,18 +36,23 @@ public class BoardDao {
         }
     }
 
-    public void update(String position, String piece, String color, int id) {
+    public void update(String from, String to, String piece, String color, int id) {
+        final String delete = "delete from board where game_id = ? and position = ?";
         final String sql = "insert into board (position, piece, color, game_id) values (?, ?, ?, ?)"
                 + "on duplicate key update piece = ?, color = ?";
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, position);
-            statement.setString(2, piece);
-            statement.setString(3, color);
-            statement.setInt(4, id);
-            statement.setString(5, piece);
-            statement.setString(6, color);
+             PreparedStatement statement = connection.prepareStatement(delete);
+             PreparedStatement statement2 = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.setString(2, from);
             statement.executeUpdate();
+            statement2.setString(1, to);
+            statement2.setString(2, piece);
+            statement2.setString(3, color);
+            statement2.setInt(4, id);
+            statement2.setString(5, piece);
+            statement2.setString(6, color);
+            statement2.executeUpdate();
         } catch (SQLException e) {
             logger.warn(e.getMessage());
         }
@@ -69,17 +74,5 @@ public class BoardDao {
             }
         }
         return board;
-    }
-
-    public void delete(String position, int id) {
-        final String sql = "delete from board  where game_id = ? and position = ? ";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            statement.setString(2, position);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.warn(e.getMessage());
-        }
     }
 }

@@ -88,9 +88,8 @@ public class ChessService {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
         int gameId = chessGameDao.findRecentGame();
-        boardDao.delete(from, gameId);
         Piece piece = board.get(Position.valueOf(to));
-        boardDao.update(to, piece.getName(), piece.getColorValue(), gameId);
+        boardDao.update(from, to, piece.getName(), piece.getColorValue(), gameId);
         chessGameDao.update(gameId, chessGame);
         return chessGame.getBoard();
     }
