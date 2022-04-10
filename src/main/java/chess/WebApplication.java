@@ -18,6 +18,7 @@ import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.position.Rank;
 import chess.domain.piece.property.Color;
+import chess.web.controller.Request;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;

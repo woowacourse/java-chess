@@ -1,4 +1,4 @@
-package chess;
+package chess.web.controller;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toMap;
