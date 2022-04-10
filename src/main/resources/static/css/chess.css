@@ -1,0 +1,122 @@
+body {
+    background: linear-gradient(to bottom right, #263542, #483343);
+}
+
+.player-container {
+    width: 280px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 80px 16px 80px 16px;
+    margin: 80px 24px 24px 24px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.player-icon-wrap {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.player-icon {
+    object-fit: none;
+}
+
+.player-panel {
+    width: 100%;
+    height: 160px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 56px;
+}
+
+.score-panel {
+    width: 100%;
+    font-size: 24px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-bar {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.chess-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.board-container {
+    position: relative;
+}
+
+.pieces-container {
+    width: 624px;
+    height: 624px;
+    padding: 48px 39px 48px 39px;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.square {
+    width: 78px;
+    height: 78px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.square.active:hover {
+    /*background-color: white;*/
+    animation-duration: 0.5s;
+    animation-name: squareBlink;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+.piece.active:hover {
+    /*background-color: white;*/
+    animation-duration: 0.5s;
+    animation-name: pieceBlink;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+@keyframes squareBlink {
+    from {
+        background-color: rgba(246, 246, 246, 0.1);
+    }
+
+    to {
+        background-color: rgb(255, 128, 192);
+    }
+}
+
+@keyframes pieceBlink {
+    from {
+        filter: invert(90%) sepia(50%) saturate(200%) hue-rotate(291deg) brightness(100%) contrast(20%);
+    }
+
+    to {
+        filter: invert(71%) sepia(83%) saturate(1737%) hue-rotate(291deg) brightness(102%) contrast(104%)
+    }
+}
+
+.piece {
+    position: relative;
+    object-fit: none;
+}

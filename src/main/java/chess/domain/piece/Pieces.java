@@ -6,6 +6,7 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -70,5 +71,9 @@ public final class Pieces {
                 .map(row -> findPiece(Position.valueOf(column, row)))
                 .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))
                 .count();
+    }
+
+    public Map<Position, Piece> getPieces() {
+        return new HashMap<>(pieces);
     }
 }

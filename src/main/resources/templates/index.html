@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <link rel="stylesheet" href="css/chess.css">
 </head>
 <body>
-Hello World!!
+<div class="chess-container">
+    <div class="player-container">
+        <div class="player-icon-wrap">
+            <img src="images/white_player.png" class="player-icon">
+        </div>
+        <div class="player-panel" id="white-message"></div>
+        <div class="score-panel" id="white-score">-점</div>
+    </div>
+    <div class="board-container">
+        <div class="pieces-container" id="pieces-container">
+        </div>
+        <img src="images/board.png">
+    </div>
+    <div class="player-container">
+        <div class="player-icon-wrap">
+            <img src="images/black_player.png" class="player-icon">
+        </div>
+        <div class="player-panel" id="black-message"></div>
+        <div class="score-panel" id="black-score">-점</div>
+    </div>
+</div>
+<div class="menu-bar">
+    <input type="hidden" value="{{player.id}}" id="player-id">
+    <input type="hidden" value="" id="board-id">
+    <input type="hidden" value="" id="game-state-end">
+    <button onclick="fetchNewChess()">새 게임</button>
+    <button onclick="fetchLoadChess()" id="load-button">이어하기</button>
+    <button onclick="fetchResult()">점수 갱신</button>
+</div>
+<script type="text/javascript" src="js/chess.js"></script>
 </body>
 </html>

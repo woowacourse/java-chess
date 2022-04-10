@@ -68,18 +68,21 @@ public final class Board {
         return pieces.findPiece(position);
     }
 
+    public void loadTurn(Color color) {
+        if (turn != color) {
+            turn = Color.opposite(turn);
+        }
+    }
+
     private void validatePositionsNotEquals(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException(ERROR_SOURCE_AND_TARGET_SAME);
         }
     }
 
-    private Piece pickPiece(Position source) {
-        Optional<Piece> piece = findPiece(source);
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
-        }
-        return piece.get();
+    private Piece pickPiece(Position position) {
+        Optional<Piece> piece = findPiece(position);
+        return piece.orElseThrow(() -> new IllegalArgumentException(ERROR_PIECE_NOT_EXIST));
     }
 
     private void validateTargetNotSameColor(Position target, Piece piece) {
@@ -98,7 +101,7 @@ public final class Board {
 
     private void validateCorrectTurn(Piece piece) {
         if (!piece.isSameColor(turn)) {
-            throw new IllegalArgumentException("지금은 " + turn.value() + "의 턴입니다.");
+            throw new IllegalArgumentException("지금은 " + turn.text() + "의 턴입니다.");
         }
     }
 
@@ -148,4 +151,11 @@ public final class Board {
         turn = Color.opposite(turn);
     }
 
+    public Map<Position, Piece> getPieces() {
+        return pieces.getPieces();
+    }
+
+    public Color getTurn() {
+        return turn;
+    }
 }

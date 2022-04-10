@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-title-wrap">
+            <img src="images/white_q.png" class="icon-image">
+            <img src="images/white_n.png" class="icon-image">
+            <img src="images/white_p.png" class="icon-image">
+            <h2 class="login-title">Welcome Chess</h2>
+            <img src="images/black_k.png" class="icon-image">
+        </div>
+        <form action="http://localhost:8080/board" onsubmit="return checkNameNotEmpty();" method="post">
+            <input type="text" id="name" name="name" placeholder="닉네임">
+            <button type="submit">입장</button>
+        </form>
+        <span id="error-message">{{message}}</span>
+    </div>
+</body>
+<script type="text/javascript">
+    function checkNameNotEmpty() {
+        let name = document.getElementById('name').value.trim();
+        if (name === '' || name.length > 12) {
+            document.getElementById('error-message').innerHTML = "닉네임 길이는 1자 이상, 12자 이하입니다.";
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</html>

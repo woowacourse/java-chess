@@ -3,13 +3,13 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.RegularRuleSetup;
 import chess.domain.command.Commands;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 
 public final class GameMachine {
 
     public void run() {
-        InputView.announceStart();
+        OutputView.announceStart();
         Board board = null;
         Commands commands;
         do {
@@ -53,7 +53,7 @@ public final class GameMachine {
             OutputView.announceNotStarted();
             return;
         }
-        if (commands.isRightMoveCommands()) {
+        if (!commands.isRightMoveCommands()) {
             OutputView.announceWrongMoveCommands();
             return;
         }

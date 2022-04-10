@@ -135,6 +135,10 @@ public final class Position {
                 .forEach(row -> CACHE.put(column.name() + row.getValue(), new Position(column, row)));
     }
 
+    public String ColumnRowString() {
+        return column.name() + row.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

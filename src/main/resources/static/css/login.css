@@ -1,0 +1,12 @@
+.login-title-wrap {
+    display: flex;
+    align-content: flex-end;
+}
+
+.icon-image {
+    object-fit: none;
+}
+
+.login-title {
+    width: 400px;
+}
