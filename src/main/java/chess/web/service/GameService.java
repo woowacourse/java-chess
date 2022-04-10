@@ -61,7 +61,7 @@ public class GameService {
         PieceDto pickedPieceDto = PieceDto.from(Position.of(target), pickedPiece);
 
         Optional<PieceDto> targetPieceDto = pieceDao.findOne(boardId, target);
-        if (!targetPieceDto.isEmpty()) {
+        if (targetPieceDto.isPresent()) {
             pieceDao.updateOne(boardId, target, pickedPieceDto);
             return;
         }
