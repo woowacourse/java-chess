@@ -1,23 +1,26 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.DOWN;
-import static chess.domain.board.Direction.DOWN_LEFT;
-import static chess.domain.board.Direction.DOWN_RIGHT;
-import static chess.domain.board.Direction.LEFT;
-import static chess.domain.board.Direction.RIGHT;
-import static chess.domain.board.Direction.TOP;
-import static chess.domain.board.Direction.TOP_LEFT;
-import static chess.domain.board.Direction.TOP_RIGHT;
+import java.util.List;
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
 
-import chess.domain.piece.attribute.Color;
-import java.util.Arrays;
+public class Queen extends Piece {
 
-public class Queen extends MultipleMovablePiece {
+    public Queen(PieceColor pieceColor, Position position) {
+        super(PieceType.QUEEN, pieceColor, position);
+    }
 
-    private static final String QUEEN_INITIAL = "Q";
+    @Override
+    public Direction findByDirection(Position from, Position to) {
+        final int column = to.getColumn() - from.getColumn();
+        final int row = to.getRow() - from.getRow();
 
-    public Queen(Color color) {
-        super(color, QUEEN_INITIAL, Arrays.asList(TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
+        return Direction.ofAll(column, row);
+    }
+
+    @Override
+    protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
+        return Direction.EVERY_DIRECTION;
     }
 
     @Override

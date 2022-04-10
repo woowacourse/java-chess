@@ -1,8 +1,9 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
+import chess.domain.board.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -10,20 +11,32 @@ import org.junit.jupiter.params.provider.CsvSource;
 class DirectionTest {
 
     @ParameterizedTest
-    @CsvSource(value = {
-            "a,2,a,2,TOP,0", "a,2,a,3,TOP,1", "a,2,a,4,TOP,2",
-            "a,7,a,7,DOWN,0", "a,7,a,6,DOWN,1", "a,7,a,5,DOWN,2",
-            "a,3,a,3,RIGHT,0", "a,3,h,3,RIGHT,7",
-            "h,3,h,3,LEFT,0", "h,3,a,3,LEFT,7",
-            "a,2,b,3,TOP_RIGHT,1", "a,2,f,7,TOP_RIGHT,5",
-            "f,2,e,3,TOP_LEFT,1", "f,2,a,7,TOP_LEFT,5",
-            "a,7,b,6,DOWN_RIGHT,1", "a,7,f,2,DOWN_RIGHT,5",
-            "f,7,e,6,DOWN_LEFT,1", "f,7,a,2,DOWN_LEFT,5"})
-    @DisplayName("기물의 현재 위치에서 최종 위치로 이동할 때 이동하는 모든 위치 값들을 구할 수 있다.")
-    void findByRoute(String fromColumn, String fromRow, String toColumn, String toRow, Direction direction, int size) {
-        final List<Position> directions = direction.route(
-                Position.of(fromColumn, fromRow), Position.of(toColumn, toRow));
+    @CsvSource(value = {"0, 1, NORTH", "0, -1, SOUTH", "1, 0, EAST", "-1, 0, WEST"})
+    @DisplayName("기물이 움직이는 방향을 생성할 수 있다.")
+    void createValidDirection(int column, int row, Direction direction) {
+        assertThat(Direction.of(column, row)).isEqualTo(direction);
+    }
 
-        assertThat(directions).hasSize(size);
+    @ParameterizedTest
+    @CsvSource(value = {"-2, -2", "0, 0"})
+    @DisplayName("기물이 움직이는 방향에 대하여 값이 존재하지 않은 경우 예외가 발생한다.")
+    void createInvalidDirection(int column, int row) {
+        assertThatThrownBy(() -> Direction.of(column, row))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유효하지 않은 방향입니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0, 1, NORTH", "0, -1, SOUTH", "1, 0, EAST", "-1, 0, WEST"})
+    @DisplayName("기물이 움직이는 방향이 직선인 경우 직선에 해당하는 방향 값을 생성할 수 있다.")
+    void createValidLinearDirection(int column, int row, Direction direction) {
+        assertThat(Direction.ofLinear(column, row)).isEqualTo(direction);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1, 1, NORTH_EAST", "-1, -1, SOUTH_WEST", "-1, 1, NORTH_WEST", "1, -1, SOUTH_EAST"})
+    @DisplayName("기물이 움직이는 방향이 대각선인 경우 대각선에 해당하는 방향 값을 생성할 수 있다.")
+    void createValidDiagonalDirection(int column, int row, Direction direction) {
+        assertThat(Direction.ofDiagonal(column, row)).isEqualTo(direction);
     }
 }

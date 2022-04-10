@@ -1,26 +1,26 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.DOWN_DOWN_LEFT;
-import static chess.domain.board.Direction.DOWN_DOWN_RIGHT;
-import static chess.domain.board.Direction.DOWN_LEFT_LEFT;
-import static chess.domain.board.Direction.DOWN_RIGHT_RIGHT;
-import static chess.domain.board.Direction.TOP_LEFT_LEFT;
-import static chess.domain.board.Direction.TOP_RIGHT_RIGHT;
-import static chess.domain.board.Direction.TOP_TOP_LEFT;
-import static chess.domain.board.Direction.TOP_TOP_RIGHT;
+import java.util.List;
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
 
-import chess.domain.piece.attribute.Color;
-import java.util.Arrays;
+public class Knight extends Piece {
 
-public class Knight extends FixedMovablePiece {
+    public Knight(PieceColor pieceColor, Position position) {
+        super(PieceType.KNIGHT, pieceColor, position);
+    }
 
-    private static final String NIGHT_INITIAL = "N";
+    @Override
+    public Direction findByDirection(Position from, Position to) {
+        final int column = to.getColumn() - from.getColumn();
+        final int row = to.getRow() - from.getRow();
 
-    public Knight(Color color) {
-        super(color, NIGHT_INITIAL, Arrays.asList(
-                TOP_TOP_RIGHT, TOP_TOP_LEFT, TOP_RIGHT_RIGHT, TOP_LEFT_LEFT,
-                DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, DOWN_RIGHT_RIGHT, DOWN_LEFT_LEFT
-        ));
+        return Direction.of(column, row);
+    }
+
+    @Override
+    protected List<Direction> findByMovableDirection(Piece piece, Direction direction) {
+        return Direction.KNIGHT_DIRECTION;
     }
 
     @Override

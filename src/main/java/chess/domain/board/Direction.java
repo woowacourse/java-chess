@@ -1,32 +1,47 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
 
-    TOP(0, 1),
-    DOWN(0, -1),
-    RIGHT(1, 0),
-    LEFT(-1, 0),
+    NORTH(0, 1),
+    SOUTH(0, -1),
+    EAST(1, 0),
+    WEST(-1, 0),
 
-    TOP_RIGHT(1, 1),
-    TOP_LEFT(-1, 1),
-    DOWN_RIGHT(1, -1),
-    DOWN_LEFT(-1, -1),
+    NORTH_EAST(1, 1),
+    NORTH_WEST(-1, 1),
+    SOUTH_EAST(1, -1),
+    SOUTH_WEST(-1, -1),
 
-    TOP_TOP_RIGHT(1, 2),
-    TOP_TOP_LEFT(-1, 2),
+    NORTH_NORTH_EAST(1, 2),
+    NORTH_NORTH_WEST(-1, 2),
 
-    TOP_RIGHT_RIGHT(2, 1),
-    TOP_LEFT_LEFT(-2, 1),
+    NORTH_EAST_EAST(2, 1),
+    NORTH_WEST_WEST(-2, 1),
 
-    DOWN_DOWN_RIGHT(1, -2),
-    DOWN_DOWN_LEFT(-1, -2),
+    SOUTH_SOUTH_EAST(1, -2),
+    SOUTH_SOUTH_WEST(-1, -2),
 
-    DOWN_RIGHT_RIGHT(2, -1),
-    DOWN_LEFT_LEFT(-2, -1),
+    SOUTH_EAST_EAST(2, -1),
+    SOUTH_WEST_WEST(-2, -1),
     ;
+
+    public static final List<Direction> LINEAR_DIRECTION = Arrays.asList(
+            NORTH, EAST, SOUTH, WEST);
+    public static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(
+            NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    public static final List<Direction> EVERY_DIRECTION = Arrays.asList(
+            NORTH, EAST, SOUTH, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    public static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(
+            NORTH_NORTH_EAST, NORTH_NORTH_WEST, NORTH_EAST_EAST, NORTH_WEST_WEST,
+            SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, SOUTH_EAST_EAST, SOUTH_WEST_WEST);
+    public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(
+            NORTH, NORTH_EAST, NORTH_WEST);
+    public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(
+            SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final int PAWN_START_LINE = 2;
 
     private final int column;
     private final int row;
@@ -36,36 +51,51 @@ public enum Direction {
         this.row = row;
     }
 
-    public List<Position> route(Position from, Position to) {
-        if (isNotMovable(from, to)) {
-            return new ArrayList<>();
-        }
-
-        return calculateRoute(from, to, new ArrayList<>());
+    public static Direction of(int column, int row) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.column == column && direction.row == row)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
-    private boolean isNotMovable(Position from, Position to) {
-        return from.equals(to) || !isMovableByMultiple(from, to);
+    public static Direction ofLinear(int column, int row) {
+        if (Math.abs(column - row) != Math.abs(column + row)) {
+            throw new IllegalArgumentException("직선 방향이 아닙니다.");
+        }
+
+        return distinctCompareToConvert(column, row);
     }
 
-    private boolean isMovableByMultiple(Position from, Position to) {
-        if (from.equals(to)) {
-            return true;
+    public static Direction ofDiagonal(int column, int row) {
+        if (Math.abs(column) - Math.abs(row) != 0) {
+            throw new IllegalArgumentException("대각선 방향이 아닙니다.");
         }
-        if (from.isMovable(column, row)) {
-            return isMovableByMultiple(from.move(column, row), to);
-        }
-
-        return false;
+        return distinctCompareToConvert(column, row);
     }
 
-    private List<Position> calculateRoute(Position from, Position to, List<Position> route) {
-        if (from.equals(to)) {
-            return route;
+    public static Direction ofAll(int column, int row) {
+        if (Math.abs(column) - Math.abs(row) != 0 && Math.abs(column - row) != Math.abs(column + row)) {
+            throw new IllegalArgumentException("직선 또는 대각선 방향이 아닙니다.");
         }
-        final Position movePosition = from.move(column, row);
-        route.add(movePosition);
+        return distinctCompareToConvert(column, row);
+    }
 
-        return calculateRoute(movePosition, to, route);
+    public static Direction ofPawnOfDefault(int column, int row) {
+        if (Math.abs(row) == PAWN_START_LINE) {
+            return distinctCompareToConvert(column, row);
+        }
+        return of(column, row);
+    }
+
+    private static Direction distinctCompareToConvert(int column, int row) {
+        return of(Integer.compare(column, 0), Integer.compare(row, 0));
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
     }
 }

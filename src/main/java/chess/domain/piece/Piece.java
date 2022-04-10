@@ -1,52 +1,83 @@
 package chess.domain.piece;
 
+import chess.domain.board.MovePath;
+import java.util.List;
+import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.piece.attribute.Color;
-import chess.domain.board.ChessBoard;
-import java.util.Locale;
 
-public abstract class Piece implements Article {
+public abstract class Piece {
 
-    private final Color color;
-    private final String name;
+    private final PieceType pieceType;
+    private final PieceColor pieceColor;
+    private Position position;
 
-    public Piece(Color color, String name) {
-        this.color = color;
-        this.name = name;
+    public Piece(PieceType pieceType, PieceColor pieceColor, Position position) {
+        this.pieceType = pieceType;
+        this.pieceColor = pieceColor;
+        this.position = position;
     }
 
-    @Override
-    public Piece move(Position from, Position to, ChessBoard chessBoard) {
-        if (!isMovable(from, to, chessBoard)) {
-            throw new IllegalArgumentException("움직일 수 없는 이동입니다.");
+    public MovePath findByMovePath(Piece piece) {
+        validateColor(piece);
+        final Direction direction = findByDirection(this.position, piece.position);
+        validateDirection(direction, findByMovableDirection(piece, direction));
+        return new MovePath(this.position, piece.position, direction);
+    }
+
+    private void validateColor(Piece piece) {
+        if (!piece.isSameColor(piece)) {
+            throw new IllegalArgumentException("목표 지점에 같은 팀의 기물이 존재합니다.");
         }
-
-        return this;
     }
 
-    @Override
-    public boolean isSameTeamPiece(Article article) {
-        return this.color == article.getColor();
+    private boolean isSameColor(Piece piece) {
+        return this.pieceColor == piece.pieceColor;
     }
 
-    @Override
-    public Color getColor() {
-        return color;
+    public boolean isSameColor(PieceColor pieceColor) {
+        return this.pieceColor == pieceColor;
     }
 
-    @Override
-    public String getName() {
-        if (color.equals(Color.WHITE)) {
-            return name.toLowerCase(Locale.ROOT);
+    private void validateDirection(Direction direction, List<Direction> directions) {
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException("해당 방향으로 기물이 움직일 수 없습니다.");
         }
-        return name;
     }
+
+    public void move(Position position) {
+        this.position = Position.change(position.getColumn(), position.getRow());
+    }
+
+    public boolean isBlank() {
+        return this.pieceType == PieceType.NO_PIECE;
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    protected abstract Direction findByDirection(Position from, Position to);
+
+    protected abstract List<Direction> findByMovableDirection(Piece piece, Direction direction);
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     @Override
     public String toString() {
         return "Piece{" +
-                "color=" + color +
-                ", name='" + name + '\'' +
+                "pieceType=" + pieceType +
+                ", pieceColor=" + pieceColor +
+                ", position=" + position +
                 '}';
     }
 }

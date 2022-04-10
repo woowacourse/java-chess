@@ -1,54 +1,84 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private final File file;
-    private final Rank rank;
+    private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
 
-    public Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
-    }
-
-    public static Position from(String position) {
-        String[] attribute = position.split("");
-        if (attribute.length != 2) {
-            throw new IllegalArgumentException("잘못된 위치 값 입니다.");
+    static {
+        for (int column = 7; column >= 0; column--) {
+            for (int row = 0; row < 8; row++) {
+                POSITIONS.put(getKey(row, column), new Position(row, column));
+            }
         }
-        File file = File.letterOf(attribute[0]);
-        Rank rank = Rank.letterOf(attribute[1]);
-
-        return new Position(file, rank);
     }
 
-    public static Position of(String column, String row) {
-        return new Position(File.letterOf(column), Rank.letterOf(row));
+    private final int column;
+    private final int row;
+
+    private Position(int column, int row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public Position move(int column, int row) {
-        return new Position(file.plus(column), rank.plus(row));
+    private static String getKey(int row, int column) {
+        return (char) ('a' + row) + String.valueOf(1 + column);
     }
 
-    public boolean isMovable(int column, int row) {
-        return isFileInRange(column) && isRankInRange(row);
+    public static Position valueOf(String value) {
+        if (!POSITIONS.containsKey(value.toLowerCase(Locale.ROOT))) {
+            throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
+        }
+
+        return POSITIONS.get(value.toLowerCase(Locale.ROOT));
     }
 
-    private boolean isFileInRange(int value) {
-        return file.isMoveInRange(file.getNumber() + value);
+    public Position add(int column, int row) {
+        return POSITIONS.get(getKey(this.column + column, this.row + row));
     }
 
-    private boolean isRankInRange(int value) {
-        return rank.isMoveInRange(rank.getNumber() + value);
+    public static Position change(int column, int row) {
+        if (!POSITIONS.containsKey(getKey(column, row))) {
+            throw new IllegalArgumentException("범위를 벗어난 값 입니다.");
+        }
+
+        return POSITIONS.get(getKey(column, row));
     }
 
-    public boolean isInitLine() {
-        return rank == Rank.TWO || rank == Rank.SEVEN;
+    public static Collection<Position> values() {
+        return Collections.unmodifiableCollection(POSITIONS.values());
     }
 
-    public boolean isEqualsColumn(Position otherPosition) {
-        return this.file == otherPosition.file || this.rank == otherPosition.rank;
+    public String getName() {
+        return (char) ('a' + column) + String.valueOf(1 + row);
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public boolean isSameRow(int value) {
+        return row == value;
+    }
+
+    public boolean isSameColumn(Position position) {
+        return this.column == position.column || this.row == position.row;
+    }
+
+    public static List<Position> getPositions() {
+        return new ArrayList<>(POSITIONS.values());
     }
 
     @Override
@@ -60,19 +90,19 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, row);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
+                "column=" + column +
+                ", row=" + row +
                 '}';
     }
 }
