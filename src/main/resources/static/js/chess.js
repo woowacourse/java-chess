@@ -158,11 +158,11 @@ function setBoardId(id) {
 }
 
 function disableLoadGame() {
-    document.getElementById('game-state').value = 'true';
+    document.getElementById('game-state-end').value = 'true';
 }
 
 function activateLoadGame() {
-    document.getElementById('game-state').value = 'false';
+    document.getElementById('game-state-end').value = 'false';
 }
 
 window.onload = async function () {
@@ -189,7 +189,7 @@ function fetchNewChess() {
 }
 
 function fetchLoadChess() {
-    let end = document.getElementById('game-state').value;
+    let end = document.getElementById('game-state-end').value;
     if (end === 'true') {
         alert("게임이 종료되었습니다. 새 게임을 눌러주세요.");
         return;
@@ -241,6 +241,11 @@ function fetchMove(source, target) {
 }
 
 function fetchResult() {
+    let end = document.getElementById('game-state-end').value;
+    if (end === 'true') {
+        alert("게임이 종료되었습니다. 새 게임을 눌러주세요.");
+        return;
+    }
     let boardId = document.getElementById("board-id").value;
     fetch('http://localhost:8080/result?boardId=' + boardId, {
         method: 'GET',
