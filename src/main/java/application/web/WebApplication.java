@@ -8,7 +8,7 @@ import static spark.Spark.post;
 
 import application.web.controller.GameController;
 import application.web.service.GameService;
-import chess.dao.connect.DbConnector;
+import chess.dao.connect.DbConnectorImpl;
 import chess.dao.connect.JdbcTemplate;
 import chess.dao.mysql.GameDao;
 import chess.dao.mysql.PlayerDao;
@@ -45,7 +45,7 @@ public class WebApplication {
     }
 
     private GameController initializeGameController() {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(new DbConnector());
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(new DbConnectorImpl());
         final PlayerRepository playerRepository = new PlayerRepository(new PlayerDao(jdbcTemplate));
         final GameRepository gameRepository = new GameRepository(playerRepository, new GameDao(jdbcTemplate));
         final GameService gameService = new GameService(gameRepository);

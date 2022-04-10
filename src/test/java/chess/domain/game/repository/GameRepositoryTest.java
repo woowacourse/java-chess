@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.dao.connect.DbConnector;
 import chess.dao.connect.JdbcTemplate;
+import chess.dao.connect.TestDbConnector;
 import chess.domain.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.player.repository.PlayerRepository;
@@ -19,8 +19,8 @@ class GameRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        final PlayerRepository playerRepository = new PlayerRepository(new JdbcTemplate(new DbConnector()));
-        gameRepository = new GameRepository(playerRepository, new JdbcTemplate(new DbConnector()));
+        final PlayerRepository playerRepository = new PlayerRepository(new JdbcTemplate(new TestDbConnector()));
+        gameRepository = new GameRepository(playerRepository, new JdbcTemplate(new TestDbConnector()));
     }
 
     @DisplayName("데이터를 저장할 수 있어야 한다.")

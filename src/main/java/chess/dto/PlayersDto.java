@@ -2,7 +2,6 @@ package chess.dto;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import chess.domain.Color;
