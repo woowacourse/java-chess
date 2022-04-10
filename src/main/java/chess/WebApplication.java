@@ -24,6 +24,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
+
     public static void main(String[] args) {
         port(8082);
         staticFileLocation("/static");
@@ -42,7 +43,10 @@ public class WebApplication {
 
             //전부 지우고 다시 채운다.
             chessBoardDao.deleteAll();
-            chessBoardDao.save(chessGame.getBoard());
+            Map<Position, Piece> chessBoard = chessGame.getBoard();
+            for (Position position : chessBoard.keySet()) {
+                chessBoardDao.save(position, chessBoard.get(position));
+            }
             playerDao.deleteAll();
             playerDao.save(Color.of(chessGame.getTurn()));
 
@@ -109,7 +113,10 @@ public class WebApplication {
 
             //전부 지우고 다시 채운다.
             chessBoardDao.deleteAll();
-            chessBoardDao.save(chessGame.getBoard());
+            chessBoard = chessGame.getBoard();
+            for (Position position : chessBoard.keySet()) {
+                chessBoardDao.save(position, chessBoard.get(position));
+            }
             playerDao.deleteAll();
             playerDao.save(Color.of(chessGame.getTurn()));
 

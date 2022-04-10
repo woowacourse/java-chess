@@ -23,7 +23,9 @@ public class ChessBoardDaoTest {
         final ChessBoardDao chessBoardDao = new ChessBoardDao();
         ChessGame chessGame = new ChessGame();
         Map<Position, Piece> initBoard = chessGame.start();
-        chessBoardDao.save(initBoard);
+        for (Position position : initBoard.keySet()) {
+            chessBoardDao.save(position, initBoard.get(position));
+        }
     }
 
     @Test
@@ -31,7 +33,9 @@ public class ChessBoardDaoTest {
         final ChessBoardDao chessBoardDao = new ChessBoardDao();
         ChessGame chessGame = new ChessGame();
         Map<Position, Piece> initBoard = chessGame.start();
-        chessBoardDao.save(initBoard);
+        for (Position position : initBoard.keySet()) {
+            chessBoardDao.save(position, initBoard.get(position));
+        }
         Optional<String> piece = chessBoardDao.findByPosition("A8");
 
         assertThat(piece.orElseThrow()).isEqualTo("R_BLACK");
@@ -42,7 +46,9 @@ public class ChessBoardDaoTest {
         final ChessBoardDao chessBoardDao = new ChessBoardDao();
         ChessGame chessGame = new ChessGame();
         Map<Position, Piece> initBoard = chessGame.start();
-        chessBoardDao.save(initBoard);
+        for (Position position : initBoard.keySet()) {
+            chessBoardDao.save(position, initBoard.get(position));
+        }
         chessBoardDao.deleteAll();
         final Map<String, String> board = chessBoardDao.findAll();
 

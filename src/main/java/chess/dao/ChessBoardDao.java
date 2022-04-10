@@ -2,8 +2,8 @@ package chess.dao;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import chess.web.jdbc.JdbcTemplate;
+import chess.web.jdbc.SelectJdbcTemplate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,88 +13,70 @@ import java.util.Optional;
 
 public class ChessBoardDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    private final Connection connection;
-
-    public ChessBoardDao() {
-        connection = getConection();
-    }
-
-    private Connection getConection() {
-        loadDriver();
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void save(Map<Position, Piece> board) {
-        final String sql = "insert into board (position, piece) values (?, ?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            for (Position position : board.keySet()) {
-                Piece piece = board.get(position);
+    public void save(Position position, Piece piece) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+            @Override
+            public void setParameters(PreparedStatement statement)
+                    throws SQLException {
                 statement.setString(1, position.toString());
                 statement.setString(2, piece.toString());
-                statement.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        };
+        final String sql = "insert into board (position, piece) values (?, ?)";
+        jdbcTemplate.executeUpdate(sql);
     }
 
     public Optional<String> findByPosition(String position) {
-        final String sql = "select position, piece from board where position = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return Optional.empty();
+        SelectJdbcTemplate jdbcTemplate = new SelectJdbcTemplate() {
+            @Override
+            public void setParameters(PreparedStatement statement) throws SQLException {
+                statement.setString(1, position);
             }
-            return Optional.ofNullable(resultSet.getString("piece"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+
+            @Override
+            public Object mapRow(ResultSet resultSet) throws SQLException {
+                if (!resultSet.next()) {
+                    return null;
+                }
+                return resultSet.getString("piece");
+            }
+        };
+        final String sql = "select position, piece from board where position = ?";
+        Object result = jdbcTemplate.executeQuery(sql);
+
+        return Optional.ofNullable(result.toString());
     }
 
     public void deleteAll() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+            @Override
+            public void setParameters(PreparedStatement statement) throws SQLException {
+                return;
+            }
+        };
         final String sql = "delete from board";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        jdbcTemplate.executeUpdate(sql);
     }
 
     public Map<String, String> findAll() {
-        final String sql = "select position, piece from board";
         final Map<String, String> board = new HashMap<>();
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                board.put(resultSet.getString("position"), resultSet.getString("piece"));
+        SelectJdbcTemplate jdbcTemplate = new SelectJdbcTemplate() {
+            @Override
+            public void setParameters(PreparedStatement statement) throws SQLException {
+                return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public Object mapRow(ResultSet resultSet) throws SQLException {
+                while (resultSet.next()) {
+                    board.put(resultSet.getString("position"), resultSet.getString("piece"));
+                }
+                return null;
+            }
+        };
+        final String sql = "select position, piece from board";
+        jdbcTemplate.executeQuery(sql);
+
         return board;
     }
 }
