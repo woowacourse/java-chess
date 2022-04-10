@@ -18,6 +18,8 @@ CREATE TABLE board
     foreign key (game_id) references game (id)
 );
 
+ALTER TABLE board ADD UNIQUE (game_id, square);
+
 CREATE TABLE init_board
 (
     square      varchar(10) not null,
