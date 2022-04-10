@@ -52,6 +52,29 @@ public class GameService {
         return gameStateAndPieces(boardId);
     }
 
+    public Map<String, Object> gameStateAndPieces(int boardId) {
+        Board board = loadBoard(boardId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("boardId", boardId);
+        data.put("state", getGameStateDto(board));
+        data.put("pieces", getPieceDtos(board));
+        return data;
+    }
+
+    public Map<String, Object> gameResult(int boardId) {
+        Board board = loadBoard(boardId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("result", getResultDto(board));
+        return data;
+    }
+
+    public Map<String, Object> gameFinalResult(int boardId) {
+        Board board = loadBoard(boardId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("result", getFinalResultDto(board));
+        return data;
+    }
+
     private void updateMovedPieceToTarget(int boardId, String target, PieceDto pickedPieceDto) {
         Optional<PieceDto> targetPieceDto = pieceDao.findOne(boardId, target);
         if (targetPieceDto.isPresent()) {
@@ -77,29 +100,6 @@ public class GameService {
         Board board = new Board(() -> pieces);
         board.loadTurn(boardDao.getTurn(boardId));
         return board;
-    }
-
-    public Map<String, Object> gameStateAndPieces(int boardId) {
-        Board board = loadBoard(boardId);
-        Map<String, Object> data = new HashMap<>();
-        data.put("boardId", boardId);
-        data.put("state", getGameStateDto(board));
-        data.put("pieces", getPieceDtos(board));
-        return data;
-    }
-
-    public Map<String, Object> gameResult(int boardId) {
-        Board board = loadBoard(boardId);
-        Map<String, Object> data = new HashMap<>();
-        data.put("result", getResultDto(board));
-        return data;
-    }
-
-    public Map<String, Object> gameFinalResult(int boardId) {
-        Board board = loadBoard(boardId);
-        Map<String, Object> data = new HashMap<>();
-        data.put("result", getFinalResultDto(board));
-        return data;
     }
 
     private void saveNewPieces(Board board, int boardId) {
