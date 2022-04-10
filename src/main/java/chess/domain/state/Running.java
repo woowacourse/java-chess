@@ -65,9 +65,4 @@ public final class Running extends CalculableState {
             throw new IllegalArgumentException("도착지에 같은색의 기물이 존재합니다.");
         }
     }
-  
-    @Override
-    public Color getCurrentColor() {
-        return currentColor;
-    }
 }

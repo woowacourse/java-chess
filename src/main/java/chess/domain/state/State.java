@@ -12,7 +12,7 @@ public abstract class State {
     protected Board board;
 
     public abstract State start();
-  
+
     public abstract boolean isEnd();
 
     public abstract State move(final Position from, final Position to);
@@ -23,13 +23,7 @@ public abstract class State {
 
     public abstract State end();
 
-    public abstract Color getCurrentColor();
-
     public final Map<Position, Piece> getBoard() {
         return board.getValue();
-    }
-
-    public final boolean isRemovedKing() {
-        return board.isRemovedKing();
     }
 }

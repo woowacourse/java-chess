@@ -39,9 +39,4 @@ public final class End extends CalculableState {
     public State end() {
         throw new IllegalStateException(END_MESSAGE);
     }
-
-    @Override
-    public Color getCurrentColor() {
-        throw new IllegalStateException(END_MESSAGE);
-    }
 }
