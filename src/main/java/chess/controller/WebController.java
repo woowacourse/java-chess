@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.dto.BoardDto;
 import chess.dto.MoveDto;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
@@ -14,7 +13,7 @@ import static spark.Spark.*;
 public final class WebController {
 
     private final Gson gson = new Gson();
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessService chessService = new ChessService();
 
     public void run() {
         staticFileLocation("/static");
@@ -23,38 +22,18 @@ public final class WebController {
 
         get("/", (request, response) -> new HandlebarsTemplateEngine().render(new ModelAndView(null, "index.html")));
 
-        get("/start", (request, response) -> start());
+        get("/start", (request, response) -> gson.toJson(chessService.newGame()));
 
-        get("/restart", (request, response) -> restart());
-
-        get("/end", (request, response) -> end());
-
-        get("/status", (request, response) -> gson.toJson(chessGame.status()));
+        get("/restart", (request, response) -> gson.toJson(chessService.loadGame()));
 
         put("/move", (request, response) -> move(request));
 
         exception(RuntimeException.class, (exception, request, response) -> handleException(exception, response));
     }
 
-    private String start() {
-        chessGame.start();
-        return gson.toJson(new BoardDto(chessGame));
-    }
-
-    private String restart() {
-        chessGame.restart();
-        return gson.toJson(new BoardDto(chessGame));
-    }
-
-    private boolean end() {
-        chessGame.end();
-        return true;
-    }
-
-    private boolean move(final Request request) {
+    private String move(final Request request) {
         final var moveDto = gson.fromJson(request.body(), MoveDto.class);
-        chessGame.move(new String[]{moveDto.getFrom(), moveDto.getTo()});
-        return chessGame.isRemovedKing();
+        return gson.toJson(chessService.move(moveDto.getFrom(), moveDto.getTo()));
     }
 
     private void handleException(final Exception exception, final Response response) {
