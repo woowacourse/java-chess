@@ -28,11 +28,11 @@ public final class ConsoleBoard {
         return Optional.empty();
     }
 
-    public boolean move(final Position sourcePosition, final Position targetPosition) {
+    public void move(final Position sourcePosition, final Position targetPosition) {
         final Piece piece = findPiece(sourcePosition);
-        validateTargetNotSameColor(targetPosition, piece);
-
-        return movePiece(sourcePosition, targetPosition, piece);
+        validateMovement(sourcePosition, targetPosition);
+        pieces.remove(sourcePosition);
+        pieces.put(targetPosition, piece);
     }
 
     private Piece findPiece(final Position sourcePosition) {
@@ -43,21 +43,24 @@ public final class ConsoleBoard {
         return wrappedPiece.get();
     }
 
+    public void validateMovement(Position sourcePosition, Position targetPosition) {
+        validateNotEquals(sourcePosition, targetPosition);
+        validateTargetNotSameColor(targetPosition, findPiece(sourcePosition));
+        findPiece(sourcePosition).validateMovement(sourcePosition, targetPosition);
+        checkPawnMovement(sourcePosition, targetPosition, findPiece(sourcePosition));
+        validatePathEmpty(sourcePosition, targetPosition);
+    }
+
+    private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
+        }
+    }
+
     private void validateTargetNotSameColor(final Position targetPosition, final Piece piece) {
         if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
             throw new IllegalArgumentException("목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.");
         }
-    }
-
-    private boolean movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        final boolean movable = piece.isMovable(sourcePosition, targetPosition);
-        if (movable) {
-            checkPawnMovement(sourcePosition, targetPosition, piece);
-            validatePathEmpty(sourcePosition, targetPosition);
-            pieces.remove(sourcePosition);
-            pieces.put(targetPosition, piece);
-        }
-        return movable;
     }
 
     private void validatePathEmpty(final Position source, final Position target) {
