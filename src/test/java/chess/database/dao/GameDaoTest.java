@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.database.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import chess.database.GameStateDto;
+import chess.database.dto.GameStateDto;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 

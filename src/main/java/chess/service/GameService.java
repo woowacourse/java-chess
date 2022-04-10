@@ -2,13 +2,13 @@ package chess.service;
 
 import java.util.List;
 
-import chess.dao.BoardDao;
-import chess.dao.GameDao;
-import chess.dao.GameStateGenerator;
-import chess.database.BoardDto;
-import chess.database.GameStateDto;
-import chess.database.PointDto;
-import chess.database.RouteDto;
+import chess.database.dao.BoardDao;
+import chess.database.dao.GameDao;
+import chess.database.GameStateGenerator;
+import chess.database.dto.BoardDto;
+import chess.database.dto.GameStateDto;
+import chess.database.dto.PointDto;
+import chess.database.dto.RouteDto;
 import chess.domain.board.Board;
 import chess.domain.board.CustomBoardGenerator;
 import chess.domain.board.Route;

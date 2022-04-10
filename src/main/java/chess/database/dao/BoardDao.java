@@ -1,8 +1,8 @@
-package chess.dao;
+package chess.database.dao;
 
-import chess.database.BoardDto;
-import chess.database.PointDto;
-import chess.database.RouteDto;
+import chess.database.dto.BoardDto;
+import chess.database.dto.PointDto;
+import chess.database.dto.RouteDto;
 
 public interface BoardDao {
     void saveBoard(BoardDto boardDto, String roomName);

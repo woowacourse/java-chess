@@ -1,8 +1,8 @@
-package chess.dao;
+package chess.database.dao;
 
 import java.util.List;
 
-import chess.database.GameStateDto;
+import chess.database.dto.GameStateDto;
 
 public interface GameDao {
     List<String> readStateAndColor(String roomName);

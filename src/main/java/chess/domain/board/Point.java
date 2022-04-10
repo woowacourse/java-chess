@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.database.PointDto;
+import chess.database.dto.PointDto;
 import chess.domain.piece.move.Direction;
 
 public class Point {

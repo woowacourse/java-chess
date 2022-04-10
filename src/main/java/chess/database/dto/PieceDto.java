@@ -1,6 +1,5 @@
-package chess.database;
+package chess.database.dto;
 
-import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 

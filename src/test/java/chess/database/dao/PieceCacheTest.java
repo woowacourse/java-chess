@@ -1,11 +1,11 @@
-package chess.dao;
+package chess.database.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Color;
+import chess.database.PieceCache;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 

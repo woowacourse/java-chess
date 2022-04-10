@@ -1,10 +1,10 @@
-package chess.dao;
+package chess.database;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import chess.database.PieceDto;
+import chess.database.dto.PieceDto;
 import chess.domain.Color;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

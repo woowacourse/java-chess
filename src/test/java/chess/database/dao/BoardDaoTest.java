@@ -1,9 +1,8 @@
-package chess.dao;
+package chess.database.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,11 +12,10 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import chess.database.BoardDto;
-import chess.database.GameStateDto;
-import chess.database.PointDto;
-import chess.database.RouteDto;
-import chess.domain.Color;
+import chess.database.dto.BoardDto;
+import chess.database.dto.GameStateDto;
+import chess.database.dto.PointDto;
+import chess.database.dto.RouteDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.InitialBoardGenerator;
@@ -25,7 +23,6 @@ import chess.domain.board.Point;
 import chess.domain.board.Route;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
-import chess.domain.piece.Piece;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BoardDaoTest {

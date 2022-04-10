@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.database.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.database.GameStateGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
 import chess.domain.game.GameState;

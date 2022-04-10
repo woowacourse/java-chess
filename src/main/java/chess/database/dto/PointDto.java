@@ -1,4 +1,4 @@
-package chess.database;
+package chess.database.dto;
 
 import java.util.Objects;
 

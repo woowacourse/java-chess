@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.dao.PieceCache;
-import chess.database.BoardDto;
+import chess.database.PieceCache;
+import chess.database.dto.BoardDto;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 

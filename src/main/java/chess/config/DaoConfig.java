@@ -1,8 +1,8 @@
 package chess.config;
 
-import chess.dao.BoardDao;
-import chess.dao.JdbcBoardDao;
-import chess.dao.JdbcGameDao;
+import chess.database.dao.BoardDao;
+import chess.database.dao.JdbcBoardDao;
+import chess.database.dao.JdbcGameDao;
 
 public class DaoConfig {
 

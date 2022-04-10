@@ -1,11 +1,11 @@
-package chess.dao;
+package chess.database.dao;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.database.GameStateDto;
+import chess.database.dto.GameStateDto;
 
 public class FakeGameDao implements GameDao {
 

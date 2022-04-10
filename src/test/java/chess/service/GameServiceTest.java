@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import chess.dao.BoardDao;
-import chess.dao.FakeBoardDao;
-import chess.dao.FakeGameDao;
-import chess.dao.GameDao;
+import chess.database.dao.FakeBoardDao;
+import chess.database.dao.FakeGameDao;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.dto.Arguments;
