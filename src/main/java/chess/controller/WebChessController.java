@@ -19,6 +19,7 @@ import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
 import chess.webview.RowName;
 import chess.webview.TeamName;
+import chess.webview.WebInputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class WebChessController {
         DbService dbService = DbService.create(new DbGameDao(), new DbBoardDao());
 
         get("/applicationCommand", (req, res) -> {
-            ApplicationCommand command = ApplicationCommand.of(req.queryParams("command"));
+            ApplicationCommand command = WebInputView.toApplicationCommand(req.queryParams("command"));
             doApplicationCommand(res, chessGame, command);
             return null;
         });
