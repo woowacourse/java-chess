@@ -36,10 +36,9 @@ public class WebController {
     }
 
     private void status(final ChessGameService chessGameService) {
-        get("/status", ((req, res) -> {
-            final JsonTransformer jsonTransformer = new JsonTransformer();
-            return jsonTransformer.render(chessGameService.getScore());
-        }));
+        final JsonTransformer jsonTransformer = new JsonTransformer();
+        get("/status", ((req, res) ->
+                jsonTransformer.render(chessGameService.getScore())));
     }
 
     private void end(final ChessGameService chessGameService) {
