@@ -78,7 +78,7 @@ public class GameDao {
         return null;
     }
 
-    public void updateTurnById(String gameId, Color nextTurn) {
+    public void updateTurnById(Color nextTurn, String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "update game set turn = ? where id = ?";
         try {

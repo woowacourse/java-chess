@@ -32,8 +32,10 @@ public class ChessGameService {
             return game.toBoard();
         }
         boolean forceEndFlag = gameDao.findForceEndFlagById(gameId);
+        Color turn = gameDao.findTurnById(gameId);
         Pieces chessmen = pieceDao.findAllByGameId(gameId);
-        game = new ChessGame(forceEndFlag, chessmen);
+
+        game = new ChessGame(forceEndFlag, chessmen, turn);
         return game.toBoard();
     }
 
@@ -64,21 +66,23 @@ public class ChessGameService {
     }
 
     public void move(String from, String to) {
-        Color turn = gameDao.findTurnById(gameId);
-
-        game.moveChessmen(new MovePositionCommandDto(from, to), turn);
-        gameDao.updateTurnById(gameId, turn.nextTurn());
+        game.moveChessmen(new MovePositionCommandDto(from, to));
     }
 
     public void save() {
         Pieces chessmen  = game.getChessmen();
+        Color turn = game.getTurn();
+        boolean forceEndFlag = game.getForceEndFlag();
+
         pieceDao.deleteAllByGameId(gameId);
         pieceDao.saveAllByGameId(chessmen.getPieces(), gameId);
+        gameDao.updateTurnById(turn, gameId);
+        gameDao.updateForceEndFlagById(forceEndFlag, gameId);
     }
 
     public void forceEnd() {
-        boolean forceEndFlag = game.forceEnd(gameId);
-        gameDao.updateForceEndFlagById(forceEndFlag, gameId);
+        game.forceEnd();
+        save();
     }
 
 }

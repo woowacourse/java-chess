@@ -72,7 +72,7 @@ public class ConsoleChessController {
     }
 
     private ChessGame move(ChessGame chessGame, String command) {
-        chessGame.moveChessmen(new MovePositionCommandDto(command), turn);
+        chessGame.moveChessmen(new MovePositionCommandDto(command));
         turn = turn.nextTurn();
         return chessGame;
     }

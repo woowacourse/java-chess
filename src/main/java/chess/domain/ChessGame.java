@@ -20,16 +20,19 @@ public class ChessGame {
     private static final String GAME_END_EXCEPTION_MESSAGE = "게임이 끝난 후에는 경기를 더 진행할 수 없습니다.";
 
     private Pieces chessmen;
+    private Color turn;
     private boolean forceEndFlag;
 
-    public ChessGame(boolean forceEndFlag, Pieces chessmen) {
+    public ChessGame(boolean forceEndFlag, Pieces chessmen, Color turn) {
         this.forceEndFlag = forceEndFlag;
         this.chessmen = chessmen;
+        this.turn = turn;
     }
 
     private ChessGame(Pieces chessmen) {
-        forceEndFlag = false;
+        this.forceEndFlag = false;
         this.chessmen = chessmen;
+        this.turn = Color.BLACK;
     }
 
     public ChessGame() {
@@ -45,15 +48,18 @@ public class ChessGame {
         return new ChessGame();
     }
 
-    public void moveChessmen(MovePositionCommandDto dto, Color turn) {
+    public void moveChessmen(MovePositionCommandDto dto) {
         Piece sourcePiece = chessmen.extractPiece(Position.of(dto.getSource()));
         Position toPosition = Position.of(dto.getTarget());
 
         checkEnd();
-        validateTurn(sourcePiece, turn);
+        validateTurn(sourcePiece);
         checkMovable(sourcePiece, toPosition);
         moveOrKill(sourcePiece, toPosition);
+        changeTurn();
     }
+
+
 
     private void checkEnd() {
         if (isEnd()) {
@@ -68,7 +74,7 @@ public class ChessGame {
         checkPath(sourcePiece, toPosition, chessmen);
     }
 
-    private void validateTurn(Piece sourcePiece, Color turn) {
+    private void validateTurn(Piece sourcePiece) {
         if (sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(TURN_EXCEPTION_MESSAGE);
         }
@@ -102,13 +108,16 @@ public class ChessGame {
         chessmen.remove(target);
     }
 
+    private void changeTurn() {
+        this.turn = turn.nextTurn();
+    }
+
     public boolean isEnd() {
         return forceEndFlag || chessmen.hasLessThanTotalKingCount();
     }
 
-    public boolean forceEnd(String gameId) {
+    public void forceEnd() {
         forceEndFlag = true;
-        return forceEndFlag;
     }
 
     public GameResultDto calculateGameResult() {
@@ -137,6 +146,14 @@ public class ChessGame {
 
     public Pieces getChessmen() {
         return chessmen;
+    }
+
+    public Color getTurn() {
+        return turn;
+    }
+
+    public boolean getForceEndFlag() {
+        return forceEndFlag;
     }
 
     public void clean() {
