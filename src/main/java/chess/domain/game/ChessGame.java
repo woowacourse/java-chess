@@ -3,16 +3,26 @@ package chess.domain.game;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.command.GameCommand;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.state.Finish;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
 
     private State state;
     private ChessBoard chessBoard;
+
+    public ChessGame(final PiecesGenerator piecesGenerator) {
+        init(piecesGenerator);
+    }
+
+    public void init(final PiecesGenerator piecesGenerator) {
+        this.state = new Ready();
+        this.chessBoard = new ChessBoard(piecesGenerator);
+    }
 
     public ChessGame(final ChessBoard chessBoard) {
         this.state = new Ready();
@@ -43,17 +53,17 @@ public class ChessGame {
         return chessBoard.isEnd();
     }
 
-    public double calculateScore(final Color color) {
+    public Map<Color, Double> calculateScore() {
+        Map<Color, Double> scores = new HashMap<>();
         final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
-        return calculator.calculate(color);
+
+        scores.put(Color.WHITE, calculator.calculate(Color.WHITE));
+        scores.put(Color.BLACK, calculator.calculate(Color.BLACK));
+        return scores;
     }
 
     public ChessBoard getChessBoard() {
         return chessBoard;
-    }
-
-    public Map<String, Piece> chessBoardToMap() {
-        return chessBoard.toMap();
     }
 
     public State getState() {

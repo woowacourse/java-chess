@@ -1,10 +1,9 @@
 package chess.controller;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.game.ChessGame;
 import chess.domain.command.CommandType;
 import chess.domain.command.GameCommand;
-import chess.domain.piece.Color;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.position.Position;
@@ -15,8 +14,7 @@ import java.util.Map;
 public class GameController {
 
     public void run() {
-        final ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
-        final ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessGame chessGame = new ChessGame(new NormalPiecesGenerator());
 
         play(chessGame);
     }
@@ -48,11 +46,9 @@ public class GameController {
     }
 
     private void printStatus(final ChessGame chessGame) {
-        final double whiteScore = chessGame.calculateScore(Color.WHITE);
-        final double blackScore = chessGame.calculateScore(Color.BLACK);
 
-        OutputView.printStatus(Color.WHITE, whiteScore);
-        OutputView.printStatus(Color.BLACK, blackScore);
+
+        OutputView.printStatus(chessGame.calculateScore());
     }
 
     private void printChessBoard(final ChessGame chessGame) {

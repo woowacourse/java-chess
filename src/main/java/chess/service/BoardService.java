@@ -12,20 +12,20 @@ import java.util.Map;
 
 public class BoardService {
 
-    private BoardDao boardDao;
+    private final BoardDao boardDao;
 
-    public BoardService(BoardDao boardDao) {
+    public BoardService(final BoardDao boardDao) {
         this.boardDao = boardDao;
     }
 
-    public void saveBoard(ChessGame chessGame, int gameId) {
-        Map<String, Piece> model = chessGame.getChessBoard().toMap();
-        List<BoardDto> boardDtos = new ArrayList<>();
+    public void saveBoard(final ChessGame chessGame, final int gameId) {
+        final Map<String, Piece> model = chessGame.getChessBoard().toMap();
+        final List<BoardDto> boardDtos = new ArrayList<>();
 
-        for (String key : model.keySet()) {
-            Piece piece = model.get(key);
-            String symbol = piece.getSymbol().name();
-            String color = piece.getColor().name();
+        for (final String key : model.keySet()) {
+            final Piece piece = model.get(key);
+            final String symbol = piece.getSymbol().name();
+            final String color = piece.getColor().name();
             BoardDto boardDto = new BoardDto(key, symbol, color);
             boardDtos.add(boardDto);
         }
@@ -33,41 +33,38 @@ public class BoardService {
     }
 
     public Map<String, Piece> findBoard() {
-        Map<String, Piece> model = new HashMap<>();
+        final Map<String, Piece> model = new HashMap<>();
+        final List<BoardDto> boardDtos = boardDao.findAll();
 
-        List<BoardDto> boardDtos = boardDao.findAll();
-
-        for (BoardDto boardDto : boardDtos) {
-            String position = boardDto.getPosition();
-            String color = boardDto.getColor();
-            String symbol = boardDto.getSymbol();
+        for (final BoardDto boardDto : boardDtos) {
+            final String position = boardDto.getPosition();
+            final String color = boardDto.getColor();
+            final String symbol = boardDto.getSymbol();
             model.put(position, Piece.of(color, symbol));
         }
-
         return model;
     }
 
     public Map<Position, Piece> loadBoard() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        final Map<Position, Piece> pieces = new HashMap<>();
+        final List<BoardDto> boardDtos = boardDao.findAll();
 
-        List<BoardDto> boardDtos = boardDao.findAll();
-
-        for (BoardDto boardDto : boardDtos) {
-            String positionName = boardDto.getPosition();
-            String symbol = boardDto.getSymbol();
-            String color = boardDto.getColor();
+        for (final BoardDto boardDto : boardDtos) {
+            final String positionName = boardDto.getPosition();
+            final String symbol = boardDto.getSymbol();
+            final String color = boardDto.getColor();
             Position position = Position.of(positionName);
             pieces.put(position, Piece.of(color, symbol));
         }
         return pieces;
     }
 
-    public void update(ChessGame chessGame, String position) {
-        Map<String, Piece> model = chessGame.getChessBoard().toMap();
+    public void update(final ChessGame chessGame, final String position) {
+        final Map<String, Piece> model = chessGame.getChessBoard().toMap();
 
-        Piece piece = model.get(position);
-        String symbol = piece.getSymbol().name();
-        String color = piece.getColor().name();
+        final Piece piece = model.get(position);
+        final String symbol = piece.getSymbol().name();
+        final String color = piece.getColor().name();
         BoardDto boardDto = new BoardDto(position, symbol, color);
         boardDao.update(boardDto);
     }

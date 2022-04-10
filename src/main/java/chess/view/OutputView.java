@@ -55,8 +55,10 @@ public class OutputView {
         System.out.println("다시 입력 바랍니다." + System.lineSeparator());
     }
 
-    public static void printStatus(final Color color, final double score) {
-        System.out.println(color.name() + " : " + score);
+    public static void printStatus(final Map<Color, Double> scores) {
+        for (Color color : scores.keySet()) {
+            System.out.println(color.name() + " : " + scores.get(color));
+        }
     }
 
     public static void printWinner(final Color color) {

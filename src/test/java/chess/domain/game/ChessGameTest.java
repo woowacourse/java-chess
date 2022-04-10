@@ -86,9 +86,9 @@ public class ChessGameTest {
     @DisplayName("점수를 계산한다.")
     void calculateScore() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        final double score = chessGame.calculateScore(Color.WHITE);
+        final Map<Color, Double> scores = chessGame.calculateScore();
+        final double actual = scores.get(Color.WHITE);
 
-        assertThat(score).isEqualTo(1.0);
-
+        assertThat(actual).isEqualTo(1.0);
     }
 }

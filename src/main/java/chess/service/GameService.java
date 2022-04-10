@@ -7,15 +7,15 @@ import chess.domain.state.State;
 
 public class GameService {
 
-    private GameDao gameDao;
+    private final GameDao gameDao;
 
-    public GameService(GameDao gameDao) {
+    public GameService(final GameDao gameDao) {
         this.gameDao = gameDao;
     }
 
     public void saveGame(ChessGame chessGame) {
-        State state = chessGame.getState();
-        String nowState = state.toString();
+        final State state = chessGame.getState();
+        final String nowState = state.toString();
 
         gameDao.save(nowState);
     }
@@ -26,18 +26,17 @@ public class GameService {
 
     public State loadState() {
         try {
-            String state = gameDao.findGameState();
+            final String state = gameDao.findGameState();
             return State.of(state);
         } catch (NullPointerException e) {
             return new Ready();
         }
     }
 
-    public void update(ChessGame chessGame) {
-        State state = chessGame.getState();
-        String nowState = state.toString();
-
-        int gameId = findGameId();
+    public void update(final ChessGame chessGame) {
+        final State state = chessGame.getState();
+        final String nowState = state.toString();
+        final int gameId = findGameId();
 
         gameDao.update(nowState, gameId);
     }
