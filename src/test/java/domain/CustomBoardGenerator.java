@@ -1,10 +1,10 @@
 package domain;
 
-import domain.board.BoardGenerator;
-import domain.piece.unit.Piece;
-import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
+import chess.domain.board.BoardGenerator;
+import chess.domain.piece.unit.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.XPosition;
+import chess.domain.position.YPosition;
 import java.util.HashMap;
 import java.util.Map;
 

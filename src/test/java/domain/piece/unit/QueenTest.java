@@ -1,9 +1,11 @@
 package domain.piece.unit;
 
+import static chess.domain.piece.property.Team.*;
 import static domain.PositionFixtures.*;
-import static domain.piece.property.Team.*;
 
-import domain.position.Position;
+import chess.domain.piece.unit.Piece;
+import chess.domain.piece.unit.Queen;
+import chess.domain.position.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +20,7 @@ class QueenTest {
     void moveQueen(Position target) {
         Piece piece = new Queen(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target, true)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {

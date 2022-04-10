@@ -1,22 +1,24 @@
 package domain;
 
+import static chess.domain.piece.property.Team.*;
 import static domain.PositionFixtures.*;
-import static domain.piece.property.Team.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.board.ChessBoard;
-import domain.board.ChessBoardGenerator;
-import domain.piece.unit.Bishop;
-import domain.piece.unit.Pawn;
-import domain.piece.unit.Piece;
-import domain.piece.unit.Rook;
-import domain.position.Position;
-import domain.classification.Result;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
+import chess.dto.GameStatus;
+import chess.domain.piece.unit.Bishop;
+import chess.domain.piece.unit.Pawn;
+import chess.domain.piece.unit.Piece;
+import chess.domain.piece.unit.Rook;
+import chess.domain.position.Position;
+import chess.domain.classification.Result;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessBoardTest {
@@ -212,14 +214,73 @@ class ChessBoardTest {
         return Stream.of(A4, B3, B4, C4);
     }
 
+    @ParameterizedTest
+    @MethodSource("attackRookPossiblePositions")
+    @DisplayName("Rook은 직선으로 공격할 수 있다.")
+    void checkRookAttack(Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(target, new Rook(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertDoesNotThrow(() -> chessBoard.move(source, target));
+    }
+
+    private static Stream<Position> attackRookPossiblePositions() {
+        return Stream.of(A4, D1, D8, E4);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveRookPossiblePositions")
+    @DisplayName("Rook 은 직선으로 이동할 수 있다.")
+    void checkRookMove(Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertDoesNotThrow(() -> chessBoard.move(source, target));
+    }
+
+    private static Stream<Position> moveRookPossiblePositions() {
+        return Stream.of(A4, D1, D8, H4);
+    }
+
+    @ParameterizedTest
+    @MethodSource("rookImpossiblePositions")
+    @DisplayName("Rook은 경로에 기물이 있다면 이동할 수 없다.")
+    void checkRookUnavailableMove(Position wayPoint, Position target) {
+        Position source = D4;
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(wayPoint, new Pawn(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+
+        assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> rookImpossiblePositions() {
+        return Stream.of(
+                Arguments.of(B4, A4),
+                Arguments.of(D2, D1),
+                Arguments.of(D5, D8),
+                Arguments.of(G4, H4)
+        );
+    }
+
     @Test
     @DisplayName("처음 각 팀의 점수는 38점이다.")
     void checkCurrentTeamScore() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
         assertAll(
-                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), WHITE), 38),
-                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), BLACK), 38)
+                () -> assertEquals(gameStatus.calculateTeamScore(chessBoard.getBoard(), WHITE), 38),
+                () -> assertEquals(gameStatus.calculateTeamScore(chessBoard.getBoard(), BLACK), 38)
         );
     }
 
@@ -230,8 +291,9 @@ class ChessBoardTest {
         customBoardGenerator.add(A1, new Pawn(WHITE));
         customBoardGenerator.add(A2, new Pawn(WHITE));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateTeamScore(chessBoard.getBoard(), WHITE)).isEqualTo(1.0);
+        assertThat(gameStatus.calculateTeamScore(chessBoard.getBoard(), WHITE)).isEqualTo(1.0);
     }
 
     @Test
@@ -242,8 +304,9 @@ class ChessBoardTest {
         customBoardGenerator.add(B2, new Pawn(WHITE));
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.WIN);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -254,18 +317,20 @@ class ChessBoardTest {
         customBoardGenerator.add(A7, new Pawn(BLACK));
         customBoardGenerator.add(B7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.LOSE);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.LOSE);
     }
 
     @Test
-    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부) ")
+    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부)")
     void checkScoreDraw() {
         CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
         customBoardGenerator.add(A1, new Pawn(WHITE));
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.DRAW);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.DRAW);
     }
 }

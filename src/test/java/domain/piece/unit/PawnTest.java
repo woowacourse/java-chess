@@ -1,14 +1,17 @@
 package domain.piece.unit;
 
+import static chess.domain.piece.property.Team.*;
 import static domain.PositionFixtures.*;
-import static domain.piece.property.Team.*;
 
-import domain.position.Position;
+import chess.domain.piece.unit.Pawn;
+import chess.domain.piece.unit.Piece;
+import chess.domain.position.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
@@ -16,14 +19,19 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("availableWhitePositions")
     @DisplayName("WhitePawn 은 앞으로 한 칸, 앞으로 두 칸(시작시), 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
-    void moveWhitePawn(Position target) {
+    void moveWhitePawn(Position target, boolean targetIsNull) {
         Piece piece = new Pawn(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target, targetIsNull)).isEqualTo(true);
     }
 
-    private static Stream<Position> availableWhitePositions() {
-        return Stream.of(A3, B3, B4, C3);
+    private static Stream<Arguments> availableWhitePositions() {
+        return Stream.of(
+                Arguments.of(A3, false),
+                Arguments.of(B3, true),
+                Arguments.of(B4, true),
+                Arguments.of(C3, false)
+        );
     }
 
     @ParameterizedTest
@@ -32,7 +40,7 @@ class PawnTest {
     void moveWhitePawnUnablePositions(Position target) {
         Piece piece = new Pawn(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(B2, target, false)).isEqualTo(false);
     }
 
     private static Stream<Position> unavailableWhitePositions() {
@@ -42,14 +50,19 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("availableBlackPositions")
     @DisplayName("BlackPawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
-    void moveBlackPawn(Position target) {
+    void moveBlackPawn(Position target, boolean targetIsNull) {
         Piece piece = new Pawn(BLACK);
 
-        Assertions.assertThat(piece.availableMove(B7, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B7, target, targetIsNull)).isEqualTo(true);
     }
 
-    private static Stream<Position> availableBlackPositions() {
-        return Stream.of(A6, B6, B5, C6);
+    private static Stream<Arguments> availableBlackPositions() {
+        return Stream.of(
+                Arguments.of(A6, false),
+                Arguments.of(B5, true),
+                Arguments.of(B6, true),
+                Arguments.of(C6, false)
+        );
     }
 
     @ParameterizedTest
@@ -58,7 +71,7 @@ class PawnTest {
     void moveBlackPawnUnablePositions(Position target) {
         Piece piece = new Pawn(BLACK);
 
-        Assertions.assertThat(piece.availableMove(B7, target)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(B7, target, false)).isEqualTo(false);
     }
 
     private static Stream<Position> unavailableBlackPositions() {
@@ -70,7 +83,7 @@ class PawnTest {
     void moveWhitePawnFirst() {
         Piece piece = new Pawn(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, B4)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, B4, true)).isEqualTo(true);
     }
 
     @Test
@@ -78,7 +91,7 @@ class PawnTest {
     void moveBlackPawnFirst() {
         Piece piece = new Pawn(BLACK);
 
-        Assertions.assertThat(piece.availableMove(B7, B5)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B7, B5, true)).isEqualTo(true);
     }
 
 
@@ -87,7 +100,7 @@ class PawnTest {
     void moveWhitePawnNotFirst() {
         Piece piece = new Pawn(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B3, B5)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(B3, B5, true)).isEqualTo(false);
     }
 
     @Test
@@ -95,6 +108,6 @@ class PawnTest {
     void moveBlackPawnNotFirst() {
         Piece piece = new Pawn(BLACK);
 
-        Assertions.assertThat(piece.availableMove(B6, B4)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(B6, B4, true)).isEqualTo(false);
     }
 }

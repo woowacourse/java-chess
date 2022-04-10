@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>ZERO CHESS</title>
+    <link href="/css/lobby.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>ZERO Chess</h1>
+<br><br>
+<form action="/chess/new" method="post">
+    <input type="text" name="gameName" placeholder="NEW GAME">
+    <input type="submit" value="NEW GAME START">
+</form>
+
+<br>
+<h2>CLICK ON THE ROOM</h2>
+<table border="2" width ="500" height="300" align = "center" class="game-list">
+    {{#games}}
+    <tr>
+       <td><a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a></td>
+    </tr>
+    {{/games}}
+</table>
+</body>
+</html>
