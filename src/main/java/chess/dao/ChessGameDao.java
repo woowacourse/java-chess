@@ -18,15 +18,17 @@ public class ChessGameDao {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    public void save(ChessGame chessGame) {
+    public int save(ChessGame chessGame) {
         final String sql = "insert into game (state) values (?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
             statement.executeUpdate();
+            return findRecentGame();
         } catch (SQLException e) {
             logger.warn(e.getMessage());
         }
+        return 0;
     }
 
     public int findRecentGame() {

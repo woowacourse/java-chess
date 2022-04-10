@@ -10,6 +10,7 @@ import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
+import spark.Session;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
@@ -34,7 +35,8 @@ public class ChessWebController {
 
     private void renderReady() {
         get("/", (req, res) -> {
-            Board board = chessService.ready();
+            Session session = req.session(true);
+            Board board = chessService.ready(session);
             Map<String, Object> model = board.toMap();
             return render(model);
         });
@@ -43,7 +45,8 @@ public class ChessWebController {
     private void renderStart() {
         get("/start", (req, res) -> {
             try {
-                Board board = chessService.start();
+                Session session = req.session(false);
+                Board board = chessService.start(session);
                 return render(board.toMap());
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
@@ -54,7 +57,8 @@ public class ChessWebController {
     private void renderMove() {
         post("/move", (req, res) -> {
             try {
-                Board board = chessService.move(req.queryParams("from"), req.queryParams("to"));
+                Session session = req.session(false);
+                Board board = chessService.move(session, req.queryParams("from"), req.queryParams("to"));
                 Map<String, Object> model = board.toMap();
                 model.putAll(renderWinner());
                 return render(model);
@@ -90,7 +94,8 @@ public class ChessWebController {
         get("/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                chessService.terminate();
+                Session session = req.session(false);
+                chessService.terminate(session);
                 model.put("terminate", TERMINATE_MESSAGE);
                 model.putAll(chessService.showBoard());
                 return render(model);
