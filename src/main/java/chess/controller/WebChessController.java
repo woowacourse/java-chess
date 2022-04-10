@@ -13,7 +13,6 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
-import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
 import chess.service.DbService;
 import chess.webview.ChessPieceImagePath;
@@ -56,8 +55,8 @@ public class WebChessController {
         DbService dbService = DbService.create(new DbGameDao(), new DbBoardDao());
 
         get("/applicationCommand", (req, res) -> {
-            Command command = Command.of(req.queryParams("command"));
-            doApplicationCommand(res, chessGame, dbService, command);
+            ApplicationCommand command = ApplicationCommand.of(req.queryParams("command"));
+            doApplicationCommand(res, chessGame, command);
             return null;
         });
 
@@ -82,26 +81,13 @@ public class WebChessController {
         });
     }
 
-    private static void doApplicationCommand(Response res, ChessGame chessGame, DbService dbService, Command command) {
-        if (Command.START.equals(command)) {
-            doStartCommand(res, chessGame, dbService);
+    private static void doApplicationCommand(Response res, ChessGame chessGame, ApplicationCommand command) {
+        if (ApplicationCommand.START.equals(command)) {
+            chessGame.setChessGameForStart();
+            res.redirect("/board");
             return;
         }
         stop();
-    }
-
-    private static void doStartCommand(Response res, ChessGame chessGame, DbService dbService) {
-        setChessGameForStart(chessGame, dbService);
-        res.redirect("/board");
-    }
-
-    private static void setChessGameForStart(ChessGame chessGame, DbService dbService) {
-        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(chessGame.getGameId());
-        if (gameInformationDto == null) {
-            dbService.saveInitData(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
-            return;
-        }
-        chessGame.initFromDb(gameInformationDto, dbService.getChessBoardInformation(chessGame.getGameId()));
     }
 
     public static Map<String, Object> makeBoardModel(ChessBoardDto chessBoardDto) {
