@@ -11,7 +11,7 @@ public class Rook extends UnpromotablePiece {
     private static final double SCORE = 5;
 
     private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY =
-            (rankMove, fileMove) -> fileMove == 0 || rankMove == 0;
+            (rankMove, fileMove) -> (fileMove == 0 && fileMove != 0) || (fileMove != 0 && rankMove == 0);
 
     public Rook(final Team team) {
         super(team);
