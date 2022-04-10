@@ -1,9 +1,11 @@
-package chess.controller;
+package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
 
+import chess.controller.FakeGameStateDao;
+import chess.controller.FakePieceDao;
 import chess.dto.PieceDto;
 import chess.dto.ScoreDto;
 import java.util.Map;

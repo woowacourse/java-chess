@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.service;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
