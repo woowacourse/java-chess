@@ -9,7 +9,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.position.Position;
-import chess.domain.state.State;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,47 +26,31 @@ public class ChessService {
     }
 
     private ChessGame initChessGame() {
-        final Map<Position, Piece> board = loadBoard();
+        final Map<Position, Piece> board = boardService.loadBoard();
         if (board.isEmpty()) {
             return new ChessGame(new NormalPiecesGenerator());
         }
-        return new ChessGame(loadState(), new ChessBoard(board));
-    }
-
-    private Map<Position, Piece> loadBoard() {
-        return boardService.loadBoard();
-    }
-
-    private State loadState() {
-        return gameService.loadState();
+        return new ChessGame(gameService.loadState(), new ChessBoard(board));
     }
 
     public Map<String, Object> ready() {
         final Map<String, Object> model = new HashMap<>();
-        model.putAll(findBoard());
+        model.putAll(boardService.findBoard());
 
         if (chessGame.isEndGameByPiece()) {
             model.put("winner", chessGame.getWinner() + " 승리!!");
-            deleteGame();
+            gameService.delete();
             chessGame.init(new NormalPiecesGenerator());
             return model;
         }
         return model;
     }
 
-    private Map<String, Piece> findBoard() {
-        return boardService.findBoard();
-    }
-
-    private void deleteGame() {
-        gameService.delete();
-    }
-
     public Map<String, Object> start() {
         final Map<String, Object> model = new HashMap<>();
         chessGame.playGameByCommand(new GameCommand("start"));
         save();
-        model.putAll(findBoard());
+        model.putAll(boardService.findBoard());
         return model;
     }
 
@@ -91,7 +74,7 @@ public class ChessService {
     public Map<String, Object> status() {
         final Map<String, Object> model = new HashMap<>();
         chessGame.playGameByCommand(new GameCommand("status"));
-        model.putAll(findBoard());
+        model.putAll(boardService.findBoard());
 
         final Map<Color, Double> scores = chessGame.calculateScore();
         model.put("white", "WHITE : " + scores.get(Color.WHITE));
@@ -101,13 +84,13 @@ public class ChessService {
 
     public void end() {
         chessGame.playGameByCommand(new GameCommand("end"));
-        deleteGame();
+        gameService.delete();
         chessGame.init(new NormalPiecesGenerator());
     }
 
     public Map<String, Object> error(final String errorMessage) {
         final Map<String, Object> model = new HashMap<>();
-        model.putAll(findBoard());
+        model.putAll(boardService.findBoard());
         model.put("error", errorMessage);
         return model;
     }

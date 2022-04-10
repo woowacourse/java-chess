@@ -22,11 +22,11 @@ public class BoardService {
         final Map<String, Piece> model = chessGame.getChessBoard().toMap();
         final List<BoardDto> boardDtos = new ArrayList<>();
 
-        for (final String key : model.keySet()) {
-            final Piece piece = model.get(key);
+        for (final String position : model.keySet()) {
+            final Piece piece = model.get(position);
             final String symbol = piece.getSymbol().name();
             final String color = piece.getColor().name();
-            BoardDto boardDto = new BoardDto(key, symbol, color);
+            BoardDto boardDto = new BoardDto(position, symbol, color);
             boardDtos.add(boardDto);
         }
         boardDao.save(boardDtos, gameId);
@@ -53,7 +53,7 @@ public class BoardService {
             final String positionName = boardDto.getPosition();
             final String symbol = boardDto.getSymbol();
             final String color = boardDto.getColor();
-            Position position = Position.of(positionName);
+            final Position position = Position.of(positionName);
             pieces.put(position, Piece.of(color, symbol));
         }
         return pieces;

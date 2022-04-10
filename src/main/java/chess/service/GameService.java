@@ -13,7 +13,7 @@ public class GameService {
         this.gameDao = gameDao;
     }
 
-    public void saveGame(ChessGame chessGame) {
+    public void saveGame(final ChessGame chessGame) {
         final State state = chessGame.getState();
         final String nowState = state.toString();
 
