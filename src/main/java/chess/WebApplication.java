@@ -58,9 +58,13 @@ public class WebApplication {
         get("/play", (req, res) -> {
             ChessBoardDao chessBoardDao = new ChessBoardDao();
             PlayerDao playerDao = new PlayerDao();
-            chessBoardDao.findAll();
 
             Map<String, String> board = chessBoardDao.findAll();
+            if (board.isEmpty()) {
+                res.redirect("/start");
+                return null;
+            }
+
             Map<String, Object> model = new HashMap<>();
             for (String position : board.keySet()) {
                 String piece = board.get(position);
