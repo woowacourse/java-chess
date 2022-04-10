@@ -55,8 +55,6 @@ public class ChessGame {
         changeTurn();
     }
 
-
-
     private void checkEnd() {
         if (isEnd()) {
             throw new IllegalArgumentException(GAME_END_EXCEPTION_MESSAGE);
