@@ -31,6 +31,10 @@ public class Board {
         board.replace(source, new Empty());
     }
 
+    public boolean isKingDead() {
+        return countKing() == 1;
+    }
+
     public long countKing() {
         return board.values()
                 .stream()

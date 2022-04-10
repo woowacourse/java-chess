@@ -39,6 +39,8 @@ const startGame = () => {
 }
 
 function drawBoard(body) {
+    alert("보드 그리기!");
+    console.log(body);
     Object.entries(body).forEach((entry) => {
         const block = document.getElementById(entry[0]);
         if (entry[1].includes('.')) {

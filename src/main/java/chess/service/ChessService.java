@@ -1,6 +1,5 @@
 package chess.service;
 
-import chess.model.ChessGame;
 import chess.model.GameResult;
 import chess.model.MoveType;
 import chess.model.Turn;
@@ -10,18 +9,21 @@ import chess.model.dao.PieceDao;
 import chess.model.dao.TurnDao;
 import chess.model.dto.MoveDto;
 import chess.model.dto.WebBoardDto;
+import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceFactory;
 import chess.model.position.Position;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
     private static final String NONE = "";
+
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
-    private ChessGame chessGame;
+    private Board board;
 
     public ChessService() {
         this.pieceDao = new PieceDao();
@@ -29,31 +31,38 @@ public class ChessService {
     }
 
     public WebBoardDto start() {
-        Board board = initBoard();
+        board = initBoard();
         initTurn();
-        chessGame = new ChessGame(board);
 
         return WebBoardDto.from(board);
     }
 
     public WebBoardDto move(MoveDto moveDto) {
-        Position source = Position.from(moveDto.getSource());
-        Position target = Position.from(moveDto.getTarget());
+        Piece sourcePiece = board.get(Position.from(moveDto.getSource()));
+        Piece targetPiece = board.get(Position.from(moveDto.getTarget()));
         Turn turn = Turn.from(turnDao.findOne());
+        validateCurrentTurn(turn, sourcePiece);
         try {
-            chessGame.move(source, target, turn);
-            String originalSourcePiece = pieceDao.findByPosition(moveDto.getSource());
-            pieceDao.updateByPosition(moveDto.getTarget(), originalSourcePiece);
-            pieceDao.updateByPosition(moveDto.getSource(), "none-.");
+            movePiece(moveDto, sourcePiece, targetPiece, turn);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        turnDao.update(turn.change().getThisTurn());
-        if (chessGame.isKingDead()) {
+        board = toBoard(pieceDao.findAll());
+        if (board.isKingDead()) {
             turnDao.update(turn.finish());
         }
 
-        return WebBoardDto.from(chessGame.getBoard());
+        return WebBoardDto.from(board);
+    }
+
+    private void movePiece(MoveDto moveDto, Piece sourcePiece, Piece targetPiece, Turn turn) {
+        if (canMove(moveDto, sourcePiece, targetPiece)) {
+            pieceDao.updateByPosition(moveDto.getTarget(), sourcePiece.getPieceName());
+            pieceDao.updateByPosition(moveDto.getSource(), "none-.");
+            turnDao.update(turn.change().getThisTurn());
+            return;
+        }
+        throw new IllegalArgumentException("기물을 이동할 수 없습니다.");
     }
 
     public String getTurn() {
@@ -61,11 +70,11 @@ public class ChessService {
     }
 
     public boolean isKingDead() {
-        return chessGame.isKingDead();
+        return board.isKingDead();
     }
 
     public GameResult getResult() {
-        return chessGame.getWinningResult();
+        return GameResult.from(board);
     }
 
     public void exitGame() {
@@ -80,16 +89,16 @@ public class ChessService {
             pieceDao.init(BoardFactory.create());
         }
 
-        return new Board(toBoard(pieceDao.findAll()));
+        return toBoard(pieceDao.findAll());
     }
 
-    private Map<Position, Piece> toBoard(Map<String, String> rawBoard) {
+    private Board toBoard(Map<String, String> rawBoard) {
 
-        return rawBoard.entrySet().stream()
+        return new Board(rawBoard.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> Position.from(entry.getKey()),
                         entry -> PieceFactory.create(entry.getValue()))
-                );
+                ));
     }
 
     private void initTurn() {
@@ -98,5 +107,26 @@ public class ChessService {
         if (turn.equals(NONE)) {
             turnDao.init();
         }
+    }
+
+    private void validateCurrentTurn(Turn thisTurn, Piece sourcePiece) {
+        if (!sourcePiece.isCurrentTurn(thisTurn)) {
+            throw new IllegalArgumentException("본인의 말을 움직여야 합니다.");
+        }
+    }
+
+    private boolean canMove(MoveDto moveDto, Piece sourcePiece, Piece targetPiece) {
+        Position sourcePosition = Position.from(moveDto.getSource());
+        Position targetPosition = Position.from(moveDto.getTarget());
+        MoveType moveType = MoveType.of(sourcePiece, targetPiece);
+
+        return sourcePiece.isMovable(sourcePosition, targetPosition, moveType)
+                && !hasBlock(sourcePosition, targetPosition, sourcePiece);
+    }
+
+    private boolean hasBlock(Position source, Position target, Piece sourcePiece) {
+        List<Position> positions = sourcePiece.getIntervalPosition(source, target);
+        return positions.stream()
+                .anyMatch(position -> !board.get(position).equals(new Empty()));
     }
 }
