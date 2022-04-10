@@ -14,10 +14,21 @@
             <h2 class="login-title">Welcome Chess</h2>
             <img src="images/black_k.png" class="icon-image">
         </div>
-        <form action="http://localhost:8080/board" method="post">
+        <form action="http://localhost:8080/board" onsubmit="return checkNameNotEmpty();" method="post">
             <input type="text" id="name" name="name" placeholder="닉네임">
             <button type="submit">입장</button>
         </form>
     </div>
 </body>
+<script type="text/javascript">
+    function checkNameNotEmpty() {
+        let name = document.getElementById('name').value.trim();
+        if (name === '' || name.length > 12) {
+            alert("닉네임은 1자 이상, 12자 이하로 입력하세요.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </html>
