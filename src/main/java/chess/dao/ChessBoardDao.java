@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoardDao {
 
@@ -56,20 +57,20 @@ public class ChessBoardDao {
         }
     }
 
-    public String findByPosition(String position) {
+    public Optional<String> findByPosition(String position) {
         final String sql = "select position, piece from board where position = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, position);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                return Optional.empty();
             }
-            return resultSet.getString("piece");
+            return Optional.ofNullable(resultSet.getString("piece"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     public void deleteAll() {

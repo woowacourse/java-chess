@@ -6,6 +6,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +32,9 @@ public class ChessBoardDaoTest {
         ChessGame chessGame = new ChessGame();
         Map<Position, Piece> initBoard = chessGame.start();
         chessBoardDao.save(initBoard);
-        String piece = chessBoardDao.findByPosition("A8");
+        Optional<String> piece = chessBoardDao.findByPosition("A8");
 
-        assertThat(piece).isEqualTo("R_BLACK");
+        assertThat(piece.orElseThrow()).isEqualTo("R_BLACK");
     }
 
     @Test
