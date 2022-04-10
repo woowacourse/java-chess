@@ -10,7 +10,7 @@ public class King extends UnpromotablePiece {
     private static final String SYMBOL = "k";
     private static final double SCORE = 0;
 
-    private static final BiPredicate<Integer, Integer> movingCondition =
+    private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY =
             (rankMove, fileMove) -> Math.abs(rankMove) <= 1 && Math.abs(fileMove) <= 1;
 
     public King(final Team team) {
@@ -21,7 +21,7 @@ public class King extends UnpromotablePiece {
     public boolean canMove(final Position sourcePosition,
                            final Position targetPosition,
                            final List<Position> otherPositions) {
-        return sourcePosition.canMove(targetPosition, movingCondition);
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY);
     }
 
     @Override

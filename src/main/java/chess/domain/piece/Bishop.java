@@ -10,7 +10,7 @@ public class Bishop extends UnpromotablePiece {
     static final String SYMBOL = "b";
     private static final double SCORE = 3;
 
-    static final BiPredicate<Integer, Integer> movingCondition =
+    private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY =
             (rankMove, fileMove) -> Math.abs(rankMove) == Math.abs(fileMove);
 
     public Bishop(final Team team) {
@@ -21,7 +21,7 @@ public class Bishop extends UnpromotablePiece {
     public boolean canMove(final Position sourcePosition,
                            final Position targetPosition,
                            final List<Position> otherPositions) {
-        return sourcePosition.canMove(targetPosition, movingCondition) &&
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY) &&
                 !sourcePosition.isOtherPieceInPathToTarget(targetPosition, otherPositions);
     }
 

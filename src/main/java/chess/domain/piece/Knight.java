@@ -10,7 +10,7 @@ public class Knight extends UnpromotablePiece {
     static final String SYMBOL = "n";
     private static final double SCORE = 2.5;
 
-    private static final BiPredicate<Integer, Integer> movingCondition = (rankMove, fileMove) ->
+    private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY = (rankMove, fileMove) ->
             (Math.abs(fileMove) == 2 && Math.abs(rankMove) == 1) ||
                     (Math.abs(fileMove) == 1 && Math.abs(rankMove) == 2);
 
@@ -22,7 +22,7 @@ public class Knight extends UnpromotablePiece {
     public boolean canMove(final Position sourcePosition,
                            final Position targetPosition,
                            final List<Position> otherPositions) {
-        return sourcePosition.canMove(targetPosition, movingCondition);
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY);
     }
 
     @Override
