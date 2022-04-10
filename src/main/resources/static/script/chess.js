@@ -3,7 +3,7 @@ const body = document.getElementsByTagName('body')[0]
 body.addEventListener('click', onClick)
 let squareIdList = [];
 
-const GAME_NAME = 'game';
+const GAME_NAME = '1';
 
 function onClick(event) {
     let target = event.target;

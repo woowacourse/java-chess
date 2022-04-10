@@ -1,9 +1,10 @@
 package chess.service.dto;
 
 public class ChessGameDto {
+    private int id;
+    private String name;
     private final String status;
     private final String turn;
-    private String name;
 
     public ChessGameDto(String status, String turn) {
         this.status = status;
@@ -16,6 +17,12 @@ public class ChessGameDto {
         this.name = name;
     }
 
+    public ChessGameDto(int id, String status, String turn) {
+        this.id = id;
+        this.status = status;
+        this.turn = turn;
+    }
+
     public String getName() {
         return name;
     }
@@ -26,5 +33,9 @@ public class ChessGameDto {
 
     public String getTurn() {
         return turn.toUpperCase();
+    }
+
+    public int getId() {
+        return id;
     }
 }

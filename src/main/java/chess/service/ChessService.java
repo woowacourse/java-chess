@@ -34,24 +34,24 @@ public class ChessService {
         this.gameDao = gameDao;
     }
 
-    public void initGame(String gameName) {
+    public void initGame(int gameId) {
         ChessGame chessGame = new ChessGame(new ChessInitializer(), Status.PLAYING);
-        boardDao.initBoard(gameName);
-        updateGame(chessGame, gameName);
+        boardDao.initBoard(gameId);
+        updateGame(chessGame, gameId);
     }
 
-    private void updateGame(ChessGame chessGame, String gameName) {
-        gameDao.update(new ChessGameDto(gameName, chessGame.getStatus().name(), chessGame.getTurn().name()));
+    private void updateGame(ChessGame chessGame, int id) {
+        gameDao.update(new ChessGameDto(id, chessGame.getStatus().name(), chessGame.getTurn().name()));
     }
 
-    private ChessGame getGameFromDao(String gameName) {
-        ChessGameDto game = gameDao.findByName(gameName);
-        BoardDto boardDto = getBoard(gameName);
+    private ChessGame getGameFromDao(int id) {
+        ChessGameDto game = gameDao.findById(id);
+        BoardDto boardDto = getBoard(id);
         return new ChessGame(new Board(boardDto), Color.valueOf(game.getTurn()), Status.valueOf(game.getStatus()));
     }
 
-    public BoardDto getBoard(String gameName) {
-        return boardDao.getBoardByGameId(gameName);
+    public BoardDto getBoard(int id) {
+        return boardDao.getBoardByGameId(id);
     }
 
     private BoardDto toBoardDto(Map<Square, Piece> board) {
@@ -66,9 +66,9 @@ public class ChessService {
         return new PieceWithSquareDto(squareName, pieceName, piece.getColor().name());
     }
 
-    public List<List<String>> getAllPieceLetter(String gameName) {
+    public List<List<String>> getAllPieceLetter(int id) {
         return Rank.getRanksInBoardOrder().stream()
-                .map(rank -> getPieceLetterInRank(getGameFromDao(gameName).getBoard(), rank))
+                .map(rank -> getPieceLetterInRank(getGameFromDao(id).getBoard(), rank))
                 .collect(Collectors.toList());
     }
 
@@ -79,39 +79,39 @@ public class ChessService {
                 .collect(Collectors.toList());
     }
 
-    public void move(String gameName, String from, String to) {
-        ChessGame chessGame = getGameFromDao(gameName);
+    public void move(int id, String from, String to) {
+        ChessGame chessGame = getGameFromDao(id);
         Square fromSquare = Square.of(from);
         Square toSquare = Square.of(to);
         chessGame.move(fromSquare, toSquare);
-        boardDao.update(toPieceDto(toSquare, chessGame.findPieceBySquare(toSquare)));
-        boardDao.update(toPieceDto(fromSquare, chessGame.findPieceBySquare(fromSquare)));
-        updateGame(chessGame, gameName);
+        boardDao.update(toPieceDto(toSquare, chessGame.findPieceBySquare(toSquare)), id);
+        boardDao.update(toPieceDto(fromSquare, chessGame.findPieceBySquare(fromSquare)), id);
+        updateGame(chessGame, id);
     }
 
-    public boolean isRunning(String gameName) {
-        return getGameFromDao(gameName).isPlaying();
+    public boolean isRunning(int id) {
+        return getGameFromDao(id).isPlaying();
     }
 
-    public boolean isGameEmpty(String gameName) {
-        return getGameFromDao(gameName).isEmpty();
+    public boolean isGameEmpty(int id) {
+        return getGameFromDao(id).isEmpty();
     }
 
-    public void endGame(String gameName) {
-        gameDao.updateStatus(new StatusDto(Status.EMPTY.name()), gameName);
-        boardDao.remove(gameName);
+    public void endGame(int id) {
+        gameDao.updateStatus(new StatusDto(Status.EMPTY.name()), id);
+        boardDao.remove(id);
     }
 
-    public GameResultDto getResult(String gameName) {
-        Color winner = getGameFromDao(gameName).findWinner();
+    public GameResultDto getResult(int id) {
+        Color winner = getGameFromDao(id).findWinner();
         if (winner.equals(Color.NOTHING)) {
-            return new GameResultDto(getScores(gameName), winner.name(), true);
+            return new GameResultDto(getScores(id), winner.name(), true);
         }
-        return new GameResultDto(getScores(gameName), winner.name(), false);
+        return new GameResultDto(getScores(id), winner.name(), false);
     }
 
-    private Map<String, Double> getScores(String gameName) {
-        return getGameFromDao(gameName).getPlayersScore().entrySet()
+    private Map<String, Double> getScores(int id) {
+        return getGameFromDao(id).getPlayersScore().entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
     }

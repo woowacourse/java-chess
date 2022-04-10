@@ -12,7 +12,7 @@ public final class ConsoleChessController {
     private static final int TO_INDEX = 1;
 
     private final ChessService service;
-    private final String gameName = "game";
+    private final int gameId = 1;
 
     public ConsoleChessController(ChessService service) {
         this.service = service;
@@ -21,7 +21,7 @@ public final class ConsoleChessController {
     public void run() {
         do {
             runUntilValid(this::executeByInput);
-        } while (service.isRunning(gameName));
+        } while (service.isRunning(gameId));
     }
 
     private void runUntilValid(Runnable runner) {
@@ -49,23 +49,23 @@ public final class ConsoleChessController {
 
     public void start(GameCommandRequest request) {
         OutputView.startGame();
-        service.initGame(gameName);
-        OutputView.printBoard(service.getAllPieceLetter(gameName));
+        service.initGame(gameId);
+        OutputView.printBoard(service.getAllPieceLetter(gameId));
     }
 
     public void move(GameCommandRequest request) {
         List<String> body = request.getBody();
-        service.move(gameName, body.get(FROM_INDEX), body.get(TO_INDEX));
-        OutputView.printBoard(service.getAllPieceLetter(gameName));
+        service.move(gameId, body.get(FROM_INDEX), body.get(TO_INDEX));
+        OutputView.printBoard(service.getAllPieceLetter(gameId));
     }
 
     public void status(GameCommandRequest request) {
-        OutputView.printWinner(service.getResult(gameName));
+        OutputView.printWinner(service.getResult(gameId));
         this.end(request);
     }
 
     public void end(GameCommandRequest request) {
-        service.endGame(gameName);
+        service.endGame(gameId);
         OutputView.printEndMessage();
     }
 }

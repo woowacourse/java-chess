@@ -11,22 +11,23 @@ import java.util.Map;
 public class GameDao {
 
     public void update(ChessGameDto dto) {
-        String sql = "update game set status = ?, turn = ? where name = ?";
+        String sql = "update game set status = ?, turn = ? where id = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             JdbcUtil.setStringsToStatement(statement,
-                    Map.of(1, dto.getStatus(), 2, dto.getTurn(), 3, dto.getName()));
+                    Map.of(1, dto.getStatus(), 2, dto.getTurn()));
+            statement.setInt(3, dto.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public ChessGameDto findByName(String name) {
-        String sql = "select name, status, turn from game where name = ?";
+    public ChessGameDto findById(int id) {
+        String sql = "select name, status, turn from game where id = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
+            statement.setInt(1, id);
             return getChessGameDto(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,11 +45,12 @@ public class GameDao {
         return new ChessGameDto(name, status, turn);
     }
 
-    public void updateStatus(StatusDto statusDto, String name) {
-        String sql = "update game set status = ? where name = ?";
+    public void updateStatus(StatusDto statusDto, int id) {
+        String sql = "update game set status = ? where id = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            JdbcUtil.setStringsToStatement(statement, Map.of(1, statusDto.getStatus(), 2, name));
+            JdbcUtil.setStringsToStatement(statement, Map.of(1, statusDto.getStatus()));
+            statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

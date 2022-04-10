@@ -1,19 +1,21 @@
 CREATE TABLE game
 (
-    name   varchar(20) not null,
-    status varchar(10) not null,
-    turn   varchar(10) not null,
-    primary key (name)
+    id     INT NOT NULL AUTO_INCREMENT UNIQUE,
+    name   VARCHAR(20) NOT NULL ,
+    status VARCHAR(10) NOT NULL ,
+    turn   VARCHAR(10) NOT NULL ,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE board
 (
-    piece_type  varchar(10) not null,
-    piece_color varchar(10) not null,
-    square      varchar(10) not null,
-    game_name   varchar(20) not null,
-    primary key (game_name, square),
-    foreign key (game_name) references game (name)
+    id          INT NOT NULL AUTO_INCREMENT UNIQUE,
+    piece_type  VARCHAR(10) NOT NULL ,
+    piece_color VARCHAR(10) NOT NULL ,
+    square      VARCHAR(10) NOT NULL ,
+    game_id     INT NOT NULL,
+    primary key (id),
+    foreign key (game_id) references game (id)
 );
 
 CREATE TABLE init_board
