@@ -43,7 +43,6 @@ public class End implements State {
 
     @Override
     public TeamScore getScore() {
-
         throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
