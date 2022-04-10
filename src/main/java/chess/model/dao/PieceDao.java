@@ -2,6 +2,7 @@ package chess.model.dao;
 
 import chess.model.board.Board;
 import chess.model.piece.Piece;
+import chess.model.position.Position;
 import chess.utils.DBConnector;
 
 import java.sql.Connection;
@@ -20,15 +21,17 @@ public class PieceDao {
 
     public void init(Board board) {
         String query = "insert into pieces (position, name) values (?, ?)";
-        board.getBoard().forEach(((position, piece) -> {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, position.getPosition());
-                preparedStatement.setString(2, getPieceName(piece));
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
+            for (Map.Entry<Position, Piece> entry : board.getBoard().entrySet()) {
+                preparedStatement.setString(1, entry.getKey().getPosition());
+                preparedStatement.setString(2, getPieceName(entry.getValue()));
                 preparedStatement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
-        }));
+            connection.commit();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public Map<String, String> findAll() {
