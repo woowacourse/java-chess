@@ -25,7 +25,7 @@ class NewGameTest {
 
         assertThatThrownBy(() -> game.play(new MoveEvent("a2 a4")))
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("아직 시작되지 않은 게임입니다.");
+                .hasMessage("아직 게임이 시작되지 않았습니다.");
     }
 
     @Test

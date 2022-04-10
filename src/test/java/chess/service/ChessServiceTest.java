@@ -75,7 +75,7 @@ class ChessServiceTest {
     void findGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
         assertThatThrownBy(() -> service.findGame(999999))
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("아직 시작되지 않은 게임입니다.");
+                .hasMessage("아직 게임이 시작되지 않았습니다.");
     }
 
     @Test
@@ -106,7 +106,7 @@ class ChessServiceTest {
     void playGame_메서드는_존재하지_않는_게임인_경우_예외를_발생시킨다() {
         assertThatThrownBy(() -> service.findGame(999999))
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("아직 시작되지 않은 게임입니다.");
+                .hasMessage("아직 게임이 시작되지 않았습니다.");
     }
 
     @Test
