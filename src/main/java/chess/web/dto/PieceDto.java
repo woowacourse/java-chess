@@ -16,7 +16,7 @@ public class PieceDto {
     }
 
     public static PieceDto from(Position position, Piece piece) {
-        return new PieceDto(position.toString(), piece.getColor().name(), piece.symbol());
+        return new PieceDto(position.ColumnRowString(), piece.getColor().name(), piece.symbol());
     }
 
     public String getPosition() {
