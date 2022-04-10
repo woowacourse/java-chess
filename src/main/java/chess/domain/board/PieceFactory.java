@@ -29,10 +29,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardFactory {
+public class PieceFactory {
 
-    public Map<Position, Piece> generateInitialPieces2() {
-        final HashMap<Position, Piece> initialPieces = new HashMap<>(64);
+    public Map<Position, Piece> generateInitialPieces() {
+        final Map<Position, Piece> initialPieces = new HashMap<>(64);
         final List<Rank> initialPieceRanks = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
         for (File file : File.values()) {
             create(initialPieces, initialPieceRanks, file);
@@ -40,7 +40,7 @@ public class BoardFactory {
         return initialPieces;
     }
 
-    private void create(final HashMap<Position, Piece> initialPieces, final List<Rank> initialPieceRanks,
+    private void create(final Map<Position, Piece> initialPieces, final List<Rank> initialPieceRanks,
                         final File file) {
         for (Rank rank : initialPieceRanks) {
             initialPieces.put(Position.of(file, rank), generate(file, rank));

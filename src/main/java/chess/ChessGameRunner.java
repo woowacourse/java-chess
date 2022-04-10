@@ -17,7 +17,6 @@ import chess.view.consoleview.input.CommandType;
 import chess.view.consoleview.output.OutputView;
 
 public class ChessGameRunner {
-    //TODO : view를 분리시키자.
 
     private static final String COMMAND_DELIMITER = " ";
     private static final int SOURCE_POSITION_INDEX = 1;

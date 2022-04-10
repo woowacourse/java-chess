@@ -21,8 +21,8 @@ public class Board {
     }
 
     public Board() {
-        this(new BoardFactory()
-                .generateInitialPieces2(), WHITE);
+        this(new PieceFactory()
+                .generateInitialPieces(), WHITE);
     }
 
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
