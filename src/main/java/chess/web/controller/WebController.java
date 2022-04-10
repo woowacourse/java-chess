@@ -42,7 +42,10 @@ public class WebController {
         //for Restart
         post("/restart", (req, res) -> {
             chessService.restart();
-            return render(executeAndGetModel(req, res), "game.html");
+            final Map<String, Object> model = executeAndGetModel(req, res);
+            model.put("roomId", req.queryParams("roomId"));
+
+            return render(model, "game.html");
         });
     }
 

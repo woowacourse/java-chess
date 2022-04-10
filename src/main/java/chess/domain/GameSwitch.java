@@ -9,6 +9,10 @@ public enum GameSwitch {
         return OFF;
     }
 
+    public GameSwitch on() {
+        return ON;
+    }
+
     public boolean isOn() {
         return this == ON;
     }

@@ -107,6 +107,10 @@ public class ChessGame {
         gameSwitch = gameSwitch.off();
     }
 
+    public void gameSwitchOn() {
+        gameSwitch = gameSwitch.on();
+    }
+
     public void end() {
         state = state.end();
     }
