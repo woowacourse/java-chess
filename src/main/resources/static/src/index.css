@@ -38,8 +38,8 @@ td[class*='click'] {
     background-color: antiquewhite;
     text-align: center;
     border-color: dimgrey;
-    display:table-cell;
-    vertical-align:middle;
+    display: table-cell;
+    vertical-align: middle;
     font-weight: bold;
     font-size: 40px;
 }

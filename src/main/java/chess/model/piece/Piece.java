@@ -7,7 +7,6 @@ import chess.model.position.Direction;
 import chess.model.position.Position;
 import chess.model.strategy.MoveStrategy;
 
-import java.net.SocketOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

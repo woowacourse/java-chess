@@ -14,11 +14,9 @@ const clickButton = () => {
 
     if (buttonText.includes("start")) {
         startGame();
-    }
-    else if(buttonText.includes("end")) {
+    } else if (buttonText.includes("end")) {
         endGame();
-    }
-    else if(buttonText.includes("status")) {
+    } else if (buttonText.includes("status")) {
         getStatus();
     }
 }
@@ -39,8 +37,6 @@ const startGame = () => {
 }
 
 function drawBoard(body) {
-    alert("보드 그리기!");
-    console.log(body);
     Object.entries(body).forEach((entry) => {
         const block = document.getElementById(entry[0]);
         if (entry[1].includes('.')) {
@@ -69,10 +65,10 @@ function drawTurnBox() {
     response
         .then(data => data.json())
         .then(body => {
-           turnBox.innerText = body +"팀 차례!";
-           if (body === "NONE") {
-               turnBox.innerText = "게임이 끝났습니다.";
-           }
+            turnBox.innerText = body + "팀 차례!";
+            if (body === "NONE") {
+                turnBox.innerText = "게임이 끝났습니다.";
+            }
         });
 }
 
