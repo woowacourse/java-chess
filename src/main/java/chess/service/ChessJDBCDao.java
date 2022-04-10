@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.dto.MoveRequestDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -115,7 +116,12 @@ public class ChessJDBCDao implements ChessDao {
     }
 
     @Override
-    public void move(String gameId, String from, String to, String piece) {
+    public void move(MoveRequestDto moveRequestDto) {
+        final String gameId = moveRequestDto.getGameId();
+        final String from = moveRequestDto.getFrom();
+        final String to = moveRequestDto.getTo();
+        final String piece = moveRequestDto.getPiece();
+
         deleteFromAndTo(gameId, from, to);
         insertTo(gameId, to, piece);
         changeTurn(gameId);

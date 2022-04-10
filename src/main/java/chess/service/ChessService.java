@@ -1,12 +1,16 @@
 package chess.service;
 
 import chess.domain.piece.Color;
+import chess.dto.MoveRequestDto;
+import chess.dto.MoveResultDto;
+import chess.dto.PositionDto;
+import java.util.List;
 import java.util.Map;
 
 public interface ChessService {
-    Map<String, String> getBoardByGameId(String gameId);
+    List<PositionDto> getBoardByGameId(String gameId);
 
-    boolean move(String gameId, String from, String to);
+    MoveResultDto move(MoveRequestDto moveRequestDto);
 
     boolean isFinished(String gameId);
 
