@@ -32,11 +32,11 @@ public class BoardDao {
                 setInsertStatement(pieces.indexOf(entry) + 1, board_id, statement, entry.getKey(), entry.getValue());
                 statement.executeUpdate();
             }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        DBConnector.closeDB(connection, statement);
     }
 
     private void setInsertStatement(int piece_id, int board_id, PreparedStatement statement, Square square,
@@ -56,10 +56,10 @@ public class BoardDao {
             statement = connection.prepareStatement(sql);
             statement.setInt(1, board_id);
             statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        DBConnector.closeDB(connection, statement);
     }
 
     public Board findAllPiecesOfBoard(int board_id, Connection connection) {
@@ -73,11 +73,11 @@ public class BoardDao {
             statement.setInt(1, board_id);
             resultSet = statement.executeQuery();
             insertPiecesFromDBToBoard(board, resultSet);
+            resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        DBConnector.closeDB(connection, statement, resultSet);
         return new Board(board);
     }
 

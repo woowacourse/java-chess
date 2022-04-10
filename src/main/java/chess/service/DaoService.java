@@ -1,5 +1,7 @@
 package chess.service;
 
+import java.sql.Connection;
+
 import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
 import chess.dao.DBConnector;
@@ -21,22 +23,29 @@ public class DaoService {
     }
 
     public void save(ChessGame game) {
-        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
-        chessGameDao.save(game, BOARD_ID, DBConnector.getConnection());
-        boardDao.save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
+        Connection connection = DBConnector.getConnection();
+        chessGameDao.remove(boardDao, BOARD_ID, connection);
+        chessGameDao.save(game, BOARD_ID, connection);
+        boardDao.save(game.getBoard(), BOARD_ID, connection);
+        DBConnector.closeConnection(connection);
     }
 
     public void update(ChessGame game) {
-        chessGameDao.update(game, BOARD_ID, DBConnector.getConnection());
-        boardDao.remove(BOARD_ID, DBConnector.getConnection());
-        boardDao.save(game.getBoard(), BOARD_ID, DBConnector.getConnection());
+        Connection connection = DBConnector.getConnection();
+        chessGameDao.update(game, BOARD_ID, connection);
+        boardDao.remove(BOARD_ID, connection);
+        boardDao.save(game.getBoard(), BOARD_ID, connection);
+        DBConnector.closeConnection(connection);
     }
 
     public void remove() {
-        chessGameDao.remove(BOARD_ID, DBConnector.getConnection());
+        Connection connection = DBConnector.getConnection();
+        chessGameDao.remove(boardDao, BOARD_ID, connection);
+        DBConnector.closeConnection(connection);
     }
 
     public ChessGame find() {
-        return chessGameDao.find(BOARD_ID, DBConnector.getConnection());
+        Connection connection = DBConnector.getConnection();
+        return chessGameDao.find(boardDao, BOARD_ID, connection);
     }
 }

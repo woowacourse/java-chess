@@ -3,6 +3,7 @@ package chess.dao;
 import static chess.TestUtils.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
+import java.sql.Connection;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
@@ -20,20 +21,22 @@ public class BoardDaoTest {
     private static final int TEST_BOARD_ID = 2;
     Map<Square, Piece> board;
     ChessGame chessGame;
+    Connection connection;
 
     @BeforeEach
     void setUp() {
         board = Map.of(new Square("a1"), WHITE_PAWN, new Square("a2"), BLACK_QUEEN);
         chessGame = new ChessGame(new Board(board), Color.WHITE);
-        new ChessGameDao().save(chessGame, TEST_BOARD_ID, DBConnector.getConnection());
+        connection = DBConnector.getConnection();
+        new ChessGameDao().save(chessGame, TEST_BOARD_ID, connection);
     }
 
     @Test
     @DisplayName("정상적으로 찾아지는지 확인")
     void findAllPiecesOfBoard() {
         final BoardDao boardDao = new BoardDao();
-        boardDao.save(chessGame.getBoard(), TEST_BOARD_ID, DBConnector.getConnection());
-        Board dbBoard = boardDao.findAllPiecesOfBoard(TEST_BOARD_ID, DBConnector.getConnection());
+        boardDao.save(chessGame.getBoard(), TEST_BOARD_ID, connection);
+        Board dbBoard = boardDao.findAllPiecesOfBoard(TEST_BOARD_ID, connection);
         assertThat(dbBoard.getBoard().get(new Square("a1"))).isEqualTo(WHITE_PAWN);
         assertThat(dbBoard.getBoard().get(new Square("a2"))).isEqualTo(BLACK_QUEEN);
 
@@ -41,6 +44,7 @@ public class BoardDaoTest {
 
     @AfterEach
     void reset() {
-        new ChessGameDao().remove(TEST_BOARD_ID, DBConnector.getConnection());
+        new ChessGameDao().remove(new BoardDao(), TEST_BOARD_ID, connection);
+        DBConnector.closeConnection(connection);
     }
 }

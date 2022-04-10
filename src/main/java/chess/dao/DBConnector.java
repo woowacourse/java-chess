@@ -2,8 +2,6 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class DBConnector {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -29,19 +27,8 @@ public class DBConnector {
         }
     }
 
-    public static void closeDB(Connection connection, PreparedStatement statement) {
+    public static void closeConnection(Connection connection) {
         try {
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void closeDB(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        try {
-            resultSet.close();
-            statement.close();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
