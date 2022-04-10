@@ -28,7 +28,8 @@ function onClick(event) {
     function postTwoCells() {
         if (squareIdList.length === 2) {
             makeAllCellsNotClicked()
-            postForm('/move/' + GAME_NAME, squareIdList)
+            let id = location.href.split("/").pop();
+            postForm('/move/' + id, squareIdList)
         }
     }
 
@@ -67,17 +68,24 @@ function onClick(event) {
 
     function onButtonClick() {
         const classList = target.classList
+        let id = location.href.split("/").pop();
         if (classList.contains('start-button')) {
-            location.href = "/new-board/" + GAME_NAME
+            location.href = "/new-board/" + id
         }
         if (classList.contains('status-button')) {
-            location.href = "/status/" + GAME_NAME
+            location.href = "/status/" + id
         }
         if (classList.contains('board-button')) {
-            location.href = "/board/" + GAME_NAME
+            location.href = "/board/" + id
         }
         if (classList.contains('end-button')) {
-            location.href = '/game-end/' + GAME_NAME
+            location.href = '/game-end/' + id
+        }
+        if (classList.contains('referrer-button')) {
+            location.href = document.referrer;
+        }
+        if (classList.contains('referrer-start-button')) {
+            location.href = "/new-board/" + document.referrer.split("/").pop();
         }
     }
 }

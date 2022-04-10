@@ -120,4 +120,8 @@ public class ChessService {
     public GamesDto getAllGames() {
         return gameDao.findAll();
     }
+
+    public void createGame(String name) {
+        gameDao.createGame(name);
+    }
 }

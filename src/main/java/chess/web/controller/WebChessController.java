@@ -33,6 +33,7 @@ public class WebChessController {
     private static final String FAIL = "FAIL";
     private static final int SERVER_ERROR = 500;
     private static final int SUCCESS = 200;
+    private static final int GAME_NAME_INDEX = 0;
 
     private final ChessService service;
 
@@ -44,11 +45,19 @@ public class WebChessController {
         get("/", this::redirectToBoard);
         get("/new-board/" + GAME_ID_KEY, this::requestInit);
         get("/board/" + GAME_ID_KEY, this::renderBoard);
+        post("/board", this::requestCreateGame);
         post("/move/" + GAME_ID_KEY, this::requestMove);
         get("/status/" + GAME_ID_KEY, this::renderStatus);
         get("/exception/" + MESSAGE, this::renderException);
         get("/game-end/" + GAME_ID_KEY, this::requestEndGame);
         exception(RuntimeException.class, this::handle);
+    }
+
+    private String requestCreateGame(Request req, Response res) {
+        String name = req.body().split(KEY_VALUE_DELIMITER)[VALUE_INDEX];
+        service.createGame(name.trim());
+        res.redirect("/");
+        return OK;
     }
 
     private String redirectToBoard(Request req, Response res) {
@@ -95,7 +104,7 @@ public class WebChessController {
 
     private String requestEndGame(Request req, Response res) {
         end(Integer.parseInt(req.params(GAME_ID_KEY)));
-        res.redirect(BOARD_PATH + req.params(GAME_ID_KEY));
+        res.redirect("/");
         return OK;
     }
 

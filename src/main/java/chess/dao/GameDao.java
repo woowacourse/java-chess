@@ -74,4 +74,15 @@ public class GameDao {
             throw new DaoException("체스 게임을 찾지 못했습니다.", e);
         }
     }
+
+    public void createGame(String name) {
+        String sql = "insert into game set name = ?";
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            JdbcUtil.setStringsToStatement(statement, Map.of(1, name));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("체스 게임을 만들지 못했습니다.", e);
+        }
+    }
 }
