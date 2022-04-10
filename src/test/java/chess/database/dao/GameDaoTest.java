@@ -4,36 +4,38 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import chess.database.dto.GameStateDto;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GameDaoTest {
 
     private static final String TEST_ROOM_NAME = "TESTING";
+    private static final String TEST_CREATION_ROOM_NAME = "TESTING2";
 
     private final JdbcGameDao dao = new JdbcGameDao();
 
+    @BeforeEach
+    void setUp() {
+        GameState state = new Ready();
+        dao.saveGame(GameStateDto.of(state), TEST_ROOM_NAME);
+    }
+
     @Test
-    @Order(1)
     @DisplayName("게임을 생성한다.")
     public void createGame() {
         GameState state = new Ready();
-        assertThatCode(() -> dao.saveGame(GameStateDto.of(state), TEST_ROOM_NAME))
+        assertThatCode(() -> dao.saveGame(GameStateDto.of(state), TEST_CREATION_ROOM_NAME))
             .doesNotThrowAnyException();
     }
 
     @Test
-    @Order(2)
     @DisplayName("방 이름으로 게임 상태와 턴 색깔을 조회한다.")
     public void insert() {
         // given
@@ -50,7 +52,6 @@ class GameDaoTest {
     }
 
     @Test
-    @Order(3)
     @DisplayName("방 이름으로 게임 상태와 턴 색깔을 수정한다.")
     public void update() {
         // given
@@ -67,10 +68,13 @@ class GameDaoTest {
         assertThat(colorString).isEqualTo("WHITE");
     }
 
-    @AfterAll
-    static void afterAll() {
+    @AfterEach
+    void afterAll() {
         JdbcConnector.query("DELETE FROM game WHERE room_name = ?")
             .parameters(TEST_ROOM_NAME)
+            .executeUpdate();
+        JdbcConnector.query("DELETE FROM game WHERE room_name = ?")
+            .parameters(TEST_CREATION_ROOM_NAME)
             .executeUpdate();
     }
 }

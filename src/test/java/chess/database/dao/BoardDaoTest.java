@@ -5,7 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -24,7 +25,6 @@ import chess.domain.board.Route;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BoardDaoTest {
 
     private static final String TEST_ROOM_NAME = "TESTING";
@@ -32,27 +32,26 @@ class BoardDaoTest {
 
     private final BoardDao dao = new JdbcBoardDao();
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         state = new Ready();
         JdbcGameDao gameDao = new JdbcGameDao();
         gameDao.saveGame(GameStateDto.of(state), TEST_ROOM_NAME);
+        Board board = Board.of(new InitialBoardGenerator());
+        dao.saveBoard(BoardDto.of(board.getPointPieces()), TEST_ROOM_NAME);
     }
 
     @Test
-    @Order(1)
     @DisplayName("말의 위치와 종류를 저장한다.")
     public void insert() {
         // given & when
         Board board = Board.of(new InitialBoardGenerator());
-        BoardGenerator generator = new InitialBoardGenerator();
         // then
         assertThatCode(() -> dao.saveBoard(BoardDto.of(board.getPointPieces()), TEST_ROOM_NAME))
             .doesNotThrowAnyException();
     }
 
     @Test
-    @Order(2)
     @DisplayName("말의 위치와 종류를 조회한다.")
     public void select() {
         // given
@@ -64,7 +63,6 @@ class BoardDaoTest {
     }
 
     @Test
-    @Order(3)
     @DisplayName("존재하지 않는 방을 조회하면 예외를 던진다.")
     public void selectMissingName() {
         // given & when
@@ -75,7 +73,6 @@ class BoardDaoTest {
     }
 
     @Test
-    @Order(4)
     @DisplayName("말의 위치를 움직인다.")
     public void update() {
         // given & when
@@ -87,7 +84,6 @@ class BoardDaoTest {
     }
 
     @Test
-    @Order(5)
     @DisplayName("말을 삭제한다.")
     public void delete() {
         // given & when
@@ -98,8 +94,8 @@ class BoardDaoTest {
             .doesNotThrowAnyException();
     }
 
-    @AfterAll
-    static void setDown() {
+    @AfterEach
+    void setDown() {
         JdbcConnector.query("DELETE FROM board WHERE room_name = ?")
             .parameters(TEST_ROOM_NAME)
             .executeUpdate();
