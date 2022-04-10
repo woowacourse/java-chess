@@ -106,7 +106,7 @@ public class GameDaoImpl implements GameDao {
             if (resultSet.next()) {
                 return resultSet.getString("turn");
             }
-            return null;
+            return "WHITE";
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,6 +131,25 @@ public class GameDaoImpl implements GameDao {
 
             if (resultSet.next()) {
                 return resultSet.getInt("id");
+            }
+
+            return assignNewId();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private int assignNewId() {
+        Connection connection = getConnection();
+        String sql = "select count(*) from game";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count(*)") + 1;
             }
 
             return 0;

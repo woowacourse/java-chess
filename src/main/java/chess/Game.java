@@ -1,11 +1,13 @@
 package chess;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import chess.model.PieceColor;
 import chess.model.Turn;
 
 public class Game {
 
-    private int ID_AUTO_INCREMENT;
+    private static final AtomicInteger ID_AUTO_INCREMENT = new AtomicInteger(0);
 
     private final String idWhitePlayer;
     private final String idBlackPlayer;
@@ -17,8 +19,7 @@ public class Game {
         this.idBlackPlayer = idBlackPlayer;
         this.turn = turn;
         if (id == 0) {
-            ID_AUTO_INCREMENT++;
-            this.id = ID_AUTO_INCREMENT;
+            this.id = ID_AUTO_INCREMENT.incrementAndGet();
             return;
         }
         this.id = id;

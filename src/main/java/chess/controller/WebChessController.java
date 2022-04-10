@@ -10,6 +10,7 @@ import chess.Game;
 import chess.dao.GameDaoImpl;
 import chess.dto.Request;
 import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.service.ChessGameService;
@@ -39,7 +40,9 @@ public class WebChessController {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int id = new GameDaoImpl().findByIds(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"));
-            Game game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"), id);
+            Game game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"),
+                new Turn(PieceColor.valueOf(new GameDaoImpl().findTurnById(id))), id);
+
             service.setGameDao(new GameDaoImpl(game));
             service.init(new Turn(), new DefaultArrangement());
             model.put("pieces", StringPieceMapByPiecesByPositions(service.getPiecesByPositions()));
