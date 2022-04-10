@@ -60,7 +60,7 @@ public class WebApplication {
     }
 
     private static void move(ChessGameService chessGameService) {
-        post("/move", (req, res) -> {
+        get("/move", (req, res) -> {
             Command command = new Command(List.of("move", req.queryParams("source"), req.queryParams("target")));
             try {
                 ChessGame chessGame = new ChessGame(chessGameService.getState());
