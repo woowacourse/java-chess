@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toMap;
 import chess.model.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceFactory;
+import chess.model.piece.PieceType;
 import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
 import chess.service.dto.BoardDto;
@@ -28,11 +28,7 @@ public final class Board {
 
     public Board(BoardDto boardDto) {
         this.board = boardDto.getPieces().stream()
-                .collect(toMap(dto -> Square.of(dto.getSquare()), PieceFactory::create));
-    }
-
-    public Map<Square, Piece> getPieces() {
-        return board;
+                .collect(toMap(dto -> Square.of(dto.getSquare()), PieceType::createPiece));
     }
 
     public Piece findPieceBySquare(Square square) {

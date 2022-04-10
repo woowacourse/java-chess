@@ -13,7 +13,7 @@ import chess.model.board.Board;
 import chess.model.board.ChessInitializer;
 import chess.model.board.Square;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceLetter;
+import chess.model.piece.PieceType;
 import chess.service.dto.BoardDto;
 import chess.service.dto.ChessGameDto;
 import chess.service.dto.GameResultDto;
@@ -62,7 +62,7 @@ public class ChessService {
 
     private PieceWithSquareDto toPieceDto(Square square, Piece piece) {
         String squareName = square.getName();
-        String pieceName = PieceLetter.getName(piece);
+        String pieceName = PieceType.getName(piece);
         return new PieceWithSquareDto(squareName, pieceName, piece.getColor().name());
     }
 
@@ -75,11 +75,10 @@ public class ChessService {
     private List<String> getPieceLetterInRank(Board board, Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> board.findPieceBySquare(Square.of(file, rank)))
-                .map(PieceLetter::getLetterByColor)
+                .map(PieceType::getLetterByColor)
                 .collect(Collectors.toList());
     }
 
-    //TODO
     public void move(String gameName, String from, String to) {
         ChessGame chessGame = getGameFromDao(gameName);
         Square fromSquare = Square.of(from);
