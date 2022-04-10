@@ -6,25 +6,19 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.converter.Converter;
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
 import chess.domain.board.Board;
-import chess.domain.board.coordinate.Coordinate;
-import chess.domain.game.ChessGame;
 import chess.domain.game.StatusCalculator;
-import chess.domain.piece.Team;
-import chess.dto.GameDto;
-import chess.service.BoardService;
-import chess.service.GameService;
-import java.util.HashMap;
+import chess.service.ChessService;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final BoardService boardService = new BoardService(new BoardDao());
-    private final GameService gameService = new GameService(new GameDao());
+    private final ChessService chessService = new ChessService(new BoardDao(), new GameDao());
 
     public void run() {
         port(8081);
@@ -36,10 +30,9 @@ public class WebChessController {
 
         get("/game/:id", (req, res) -> {
             int gameId = Integer.parseInt(req.params(":id"));
-            Board board = boardService.findBoard(gameId);
-            Map<String, Object> map = new HashMap<>();
-            map.putAll(board.toMap());
-            map.put("id", Integer.toString(gameId));
+            Board board = chessService.findBoardByGameId(gameId);
+
+            Map<String, Object> map = Converter.toMap(gameId, board);
             return new ModelAndView(map, "index.html");
         }, new HandlebarsTemplateEngine());
 
@@ -48,20 +41,8 @@ public class WebChessController {
             String to = req.queryParams("to");
 
             int gameId = Integer.parseInt(req.params(":id"));
-            Board board = boardService.findBoard(gameId);
-            GameDto gameDto = gameService.findById(gameId);
+            chessService.move(gameId, from, to);
 
-            ChessGame chessGame = new ChessGame(board, gameDto.getState());
-            chessGame.move(Coordinate.of(from), Coordinate.of(to));
-            if (chessGame.isFinished()) {
-                gameService.delete(gameId);
-                res.redirect("/");
-                return null;
-            }
-
-            gameService.changeTurn(gameDto.getState(), gameId);
-            boardService.update(board.findPiece(Coordinate.of(from)), from, gameId);
-            boardService.update(board.findPiece(Coordinate.of(to)), to, gameId);
             res.redirect("/game/" + gameId);
             return null;
         });
@@ -69,14 +50,9 @@ public class WebChessController {
         post("/start", (req, res) -> {
             String whiteUserName = req.queryParams("white_user_name");
             String blackUserName = req.queryParams("black_user_name");
-            int gameId = gameService.findGameId(whiteUserName, blackUserName);
 
-            if (gameId == 0) {
-                gameService.save(whiteUserName, blackUserName, Team.WHITE.name());
-                Board board = Board.create();
-                gameId = gameService.findGameId(whiteUserName, blackUserName);
-                boardService.save(board.toMap(), gameId);
-            }
+            chessService.start(whiteUserName, blackUserName);
+            int gameId = chessService.findGameIdByUserName(whiteUserName, blackUserName);
 
             res.redirect("/game/" + gameId);
             return null;
@@ -89,28 +65,23 @@ public class WebChessController {
 
         post("/game/:id/end", (req, res) -> {
             int gameId = Integer.parseInt(req.params(":id"));
-            gameService.delete(gameId);
+            chessService.endGame(gameId);
             res.redirect("/");
             return null;
         });
 
         get("/game/:id/status", (req, res) -> {
             int gameId = Integer.parseInt(req.params(":id"));
-            Board board = boardService.findBoard(gameId);
-            GameDto gameDto = gameService.findById(gameId);
 
-            ChessGame chessGame = new ChessGame(board, gameDto.getState());
-            StatusCalculator status = chessGame.status();
+            StatusCalculator status = chessService.createStatus(gameId);
+            Board board = chessService.findBoardByGameId(gameId);
 
-            Map<String, Object> map = new HashMap<>();
-            map.putAll(status.createStatus());
-            map.putAll(chessGame.getBoard().toMap());
-            map.put("id", Integer.toString(gameId));
+            Map<String, Object> map = Converter.toMap(gameId, board, status);
             return new ModelAndView(map, "index.html");
         }, new HandlebarsTemplateEngine());
 
         exception(Exception.class, (exception, request, response) -> {
-            response.status(400);
+            response.status(500);
             response.body(exception.getMessage());
         });
     }

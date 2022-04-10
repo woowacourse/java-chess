@@ -10,7 +10,7 @@ import java.util.List;
 public class ConsoleChessController {
 
     public static final int COMMAND_INDEX = 0;
-
+    
     public void run() {
         OutputView.printGameStart();
         ChessGame chessGame = new ChessGame();
