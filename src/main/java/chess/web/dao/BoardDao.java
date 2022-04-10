@@ -34,7 +34,7 @@ public class BoardDao {
             statement.setInt(1, boardId);
             try (final ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    color = Color.findByValue(resultSet.getString("turn"));
+                    color = Color.valueOf(resultSet.getString("turn").toUpperCase());
                 }
             }
         } catch (SQLException e) {

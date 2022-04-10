@@ -65,13 +65,13 @@ public final class OutputView {
 
     private static void printScore(Board board) {
         for (Color color : Color.values()) {
-            System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
+            System.out.println(color.text() + "의 점수: " + board.calculateScore(color));
         }
     }
 
     private static void printResult(Map<Result, Color> gameResult) {
         if (gameResult.containsKey(Result.WIN)) {
-            System.out.println(gameResult.get(Result.WIN).value() + "이 이기고 있습니다.");
+            System.out.println(gameResult.get(Result.WIN).text() + "이 이기고 있습니다.");
             return;
         }
         System.out.println("현재 무승부입니다.");
@@ -79,6 +79,6 @@ public final class OutputView {
 
     public static void printFinalResult(Board board) {
         printScore(board);
-        System.out.println(board.winnersColor().value() + "이 승리했습니다.");
+        System.out.println(board.winnersColor().text() + "이 승리했습니다.");
     }
 }

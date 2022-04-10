@@ -101,7 +101,7 @@ public final class Board {
 
     private void validateCorrectTurn(Piece piece) {
         if (!piece.isSameColor(turn)) {
-            throw new IllegalArgumentException("지금은 " + turn.value() + "의 턴입니다.");
+            throw new IllegalArgumentException("지금은 " + turn.text() + "의 턴입니다.");
         }
     }
 
