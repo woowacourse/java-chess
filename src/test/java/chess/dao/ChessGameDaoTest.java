@@ -36,7 +36,7 @@ public class ChessGameDaoTest {
     }
 
     @Test
-    @DisplayName("board_id로 찾아지는지 확인")
+    @DisplayName("update가 되는지 확인")
     void update() {
         final ChessGameDao chessGameDao = new ChessGameDao();
         chessGameDao.save(chessGame, TEST_BOARD_ID, DBConnector.getConnection());
