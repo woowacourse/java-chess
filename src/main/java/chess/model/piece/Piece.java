@@ -7,6 +7,7 @@ import chess.model.position.Direction;
 import chess.model.position.Position;
 import chess.model.strategy.MoveStrategy;
 
+import java.net.SocketOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,10 +66,6 @@ public abstract class Piece {
 
     public abstract String getName();
 
-    public String getPieceName() {
-        return (team.name() + "-" + getName()).toLowerCase();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,5 +77,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(team);
+    }
+
+    public Team getTeam() {
+        return this.team;
     }
 }

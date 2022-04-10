@@ -2,23 +2,28 @@ package chess.model.dao;
 
 import chess.model.board.Board;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceFactory;
-import chess.model.position.Position;
 import chess.utils.DBConnector;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PieceDao {
     private static final Connection connection = DBConnector.getConnection();
 
+    public static String getPieceName(Piece piece) {
+        return (piece.getTeam().name() + "-" + piece.getName()).toLowerCase();
+    }
+
     public void init(Board board) {
         String query = "insert into pieces (position, name) values (?, ?)";
         board.getBoard().forEach(((position, piece) -> {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, position.getPosition());
-                preparedStatement.setString(2, piece.getPieceName());
+                preparedStatement.setString(2, getPieceName(piece));
                 preparedStatement.executeUpdate();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

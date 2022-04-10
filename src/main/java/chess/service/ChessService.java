@@ -57,7 +57,7 @@ public class ChessService {
 
     private void movePiece(MoveDto moveDto, Piece sourcePiece, Piece targetPiece, Turn turn) {
         if (canMove(moveDto, sourcePiece, targetPiece)) {
-            pieceDao.updateByPosition(moveDto.getTarget(), sourcePiece.getPieceName());
+            pieceDao.updateByPosition(moveDto.getTarget(), PieceDao.getPieceName(sourcePiece));
             pieceDao.updateByPosition(moveDto.getSource(), "none-.");
             turnDao.update(turn.change().getThisTurn());
             return;
