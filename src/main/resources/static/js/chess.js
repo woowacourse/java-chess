@@ -241,7 +241,8 @@ function fetchMove(source, target) {
 }
 
 function fetchResult() {
-    fetch('http://localhost:8080/result', {
+    let boardId = document.getElementById("board-id").value;
+    fetch('http://localhost:8080/result?boardId=' + boardId, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -252,7 +253,8 @@ function fetchResult() {
 }
 
 function fetchFinalResult() {
-    fetch('http://localhost:8080/end', {
+    let boardId = document.getElementById("board-id").value;
+    fetch('http://localhost:8080/end?boardId=' + boardId, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',

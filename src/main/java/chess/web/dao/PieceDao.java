@@ -17,13 +17,13 @@ public class PieceDao {
 
     private static final String ERROR_DB_FAILED = "[ERROR] DB 연결에 문제가 발생했습니다.";
 
-    public void save(int boardId, PieceDto pieceDto) {
+    public void save(int boardId, String target, PieceDto pieceDto) {
         final String sql = "insert into piece (board_id, position , color, role) values (?, ?, ?, ?)";
 
         try (final Connection connection = DBConnector.getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, boardId);
-            statement.setString(2, pieceDto.getPosition());
+            statement.setString(2, target);
             statement.setString(3, pieceDto.getColor());
             statement.setString(4, pieceDto.getRole());
             statement.execute();

@@ -67,11 +67,11 @@ public class ChessController {
         });
 
         get("/result", (req, res) ->
-                gson.toJson(gameService.gameResult())
+                gson.toJson(gameService.gameResult(Integer.parseInt(req.queryParams("boardId"))))
         );
 
         get("/end", (req, res) ->
-                gson.toJson(gameService.gameFinalResult())
+                gson.toJson(gameService.gameFinalResult(Integer.parseInt(req.queryParams("boardId"))))
         );
     }
 
