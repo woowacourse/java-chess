@@ -29,10 +29,12 @@ public class ConsoleApplication {
         GameCommand gameCommand = GameCommand.of(command);
         if (gameCommand.isStart()) {
             chessGame.start();
+            OutputView.printChessBoard(chessGame.getBoard());
         }
         if (gameCommand.isMove()) {
             MoveLocation moveLocation = MoveLocation.of(command);
             chessGame.move(moveLocation.getSource(), moveLocation.getTarget());
+            OutputView.printChessBoard(chessGame.getBoard());
         }
         if (gameCommand.isStatus()) {
             OutputView.printScore(chessGame.status());

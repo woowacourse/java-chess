@@ -2,13 +2,11 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Location;
-
 import chess.domain.board.TeamScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.view.OutputView;
 import java.util.Map;
 
 public class ChessGame {
@@ -27,15 +25,12 @@ public class ChessGame {
             throw new IllegalStateException("[ERROR] 게임이 이미 실행 중 입니다.");
         }
         this.state = state.start();
-        Board board = state.getBoard();
-        OutputView.printChessBoard(board);
     }
 
     public void move(Location source, Location target) {
         Team team = state.getTeam();
         Piece targetPiece = state.move(team, source, target);
         this.state = state.getNextState(targetPiece);
-        OutputView.printChessBoard(state.getBoard());
     }
 
     public TeamScore status() {
@@ -61,6 +56,11 @@ public class ChessGame {
         return state;
     }
 
+    public Board getBoard() {
+        return state.getBoard();
+    }
+
+    //TODO
     public void setState(State state) {
         this.state = state;
     }

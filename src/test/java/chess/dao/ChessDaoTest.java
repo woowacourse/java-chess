@@ -2,21 +2,14 @@ package chess.dao;
 
 import chess.domain.board.Board;
 import chess.domain.state.Black;
-import java.sql.Connection;
+import chess.domain.state.White;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ChessDaoTest {
 
     @Test
-    void connection() {
-        ChessDao chessDao = new ChessDao();
-        Connection connection = Connector.getConnection();
-        Assertions.assertThat(connection).isNotNull();
-    }
-
-    @Test
-    void save() {
+    void saveState() {
         ChessDao chessDao = new ChessDao();
         chessDao.saveState(new Black(new Board()));
         String state = chessDao.getState();
@@ -24,8 +17,18 @@ class ChessDaoTest {
     }
 
     @Test
+    void update() {
+        ChessDao chessDao = new ChessDao();
+        chessDao.saveState(new Black(new Board()));
+        chessDao.updateState(new White(new Board()));
+        String state = chessDao.getState();
+        Assertions.assertThat(state).isEqualTo("white");
+    }
+
+    @Test
     void deleteAll() {
         ChessDao chessDao = new ChessDao();
         chessDao.deleteAll();
+        Assertions.assertThat(chessDao.getState()).isNull();
     }
 }

@@ -1,11 +1,9 @@
 package chess.dao;
 
-import chess.domain.board.Board;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.view.OutputView;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +13,7 @@ class BoardDaoTest {
     void addPiece() {
         BoardDao boardDao = new BoardDao();
         boardDao.addPiece("a1", new Rook(Team.WHITE));
+        Assertions.assertThat(boardDao.getPiece("a1")).isInstanceOf(Rook.class);
     }
 
     @Test
@@ -29,12 +28,6 @@ class BoardDaoTest {
     void deleteAll() {
         BoardDao boardDao = new BoardDao();
         boardDao.deleteAll();
-    }
-
-    @Test
-    void getBoardMap() {
-        BoardDao boardDao = new BoardDao();
-        Board board = new Board(boardDao.getBoardMap());
-        OutputView.printChessBoard(board);
+        Assertions.assertThat(boardDao.getBoardMap().size()).isEqualTo(0);
     }
 }
