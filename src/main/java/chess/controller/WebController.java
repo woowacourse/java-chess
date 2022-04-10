@@ -12,7 +12,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebController {
 
     public void run() {
-        ChessGameService chessGameService = new ChessGameService(new PieceDaoImpl(), new GameStateDaoImpl());
+        ChessGameService chessGameService = new ChessGameService(
+                PieceDaoImpl.getInstance(), GameStateDaoImpl.getInstance());
         ready(chessGameService);
         start(chessGameService);
         move(chessGameService);

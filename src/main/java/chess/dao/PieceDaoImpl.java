@@ -24,6 +24,9 @@ public class PieceDaoImpl implements PieceDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    private PieceDaoImpl() {
+    }
+
     private Connection getConnection() {
         Connection connection = null;
         try {

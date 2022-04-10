@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class PieceDaoImplTest {
 
-    final PieceDaoImpl pieceDaoImpl = new PieceDaoImpl();
+    final PieceDaoImpl pieceDaoImpl = PieceDaoImpl.getInstance();
 
     @Test
     @DisplayName("위치에 따른 기물들을 받아 위치, 팀, 이름을 DB에 저장할 수 있다.")

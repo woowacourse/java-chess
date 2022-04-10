@@ -20,6 +20,9 @@ public class GameStateDaoImpl implements GameStateDao {
         return INSTANCE;
     }
 
+    private GameStateDaoImpl() {
+    }
+
     private Connection getConnection() {
         Connection connection = null;
         try {
