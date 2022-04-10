@@ -85,6 +85,14 @@ public class WebApplication {
             return true;
         });
 
+        post("/game/save", (req, res) -> {
+            chessGameService.get()
+                .save();
+
+            res.redirect("/game/progress");
+            return true;
+        });
+
         post("/game/end", (req, res) -> {
             chessGameService.get()
                 .forceEnd();

@@ -13,8 +13,6 @@ import java.util.List;
 
 public class PieceDao {
 
-    private static final String NON_PIECE_EXCEPTION_MESSAGE = "해당위치에는 말이 없습니다.";
-
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
     public void save(Piece piece, String gameId) {
@@ -38,34 +36,6 @@ public class PieceDao {
         }
     }
 
-
-    public void deleteByPosition(String position, String gameId) {
-        final Connection connection = databaseConnector.getConnection();
-        final String sql = "delete from piece where position = ? and game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setString(2, gameId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateByPosition(String source, String target, String gameId) {
-        final Connection connection = databaseConnector.getConnection();
-        final String sql = "update piece set position = ? where position = ? and game_id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, target);
-            statement.setString(2, source);
-            statement.setString(3, gameId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Pieces findAllByGameId(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "select name, color, position from piece where game_id = ?";
@@ -83,26 +53,6 @@ public class PieceDao {
             e.printStackTrace();
         }
         return new Pieces(members);
-    }
-
-    public Piece findByPosition(String position, String gameId) {
-        final Connection connection = databaseConnector.getConnection();
-        final String sql = "select name, color, position from piece where position = ? and game_id = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, position);
-            statement.setString(2, gameId);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                throw new IllegalArgumentException(NON_PIECE_EXCEPTION_MESSAGE);
-            }
-            return PieceFactory.of(resultSet.getString("name"),
-                resultSet.getString("color"),
-                resultSet.getString("position"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void deleteAllByGameId(String gameId) {

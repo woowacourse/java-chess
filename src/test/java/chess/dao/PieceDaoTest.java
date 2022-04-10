@@ -47,26 +47,6 @@ public class PieceDaoTest {
     }
 
     @Test
-    void deleteByPosition() {
-        gameDao.create(gameId);
-
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
-
-        assertThatCode(() ->
-            pieceDao.deleteByPosition("a7", gameId))
-            .doesNotThrowAnyException();
-    }
-
-    @Test
-    void deleteByPosition_if_not_exist() {
-        gameDao.create(gameId);
-
-        assertThatCode(() ->
-            pieceDao.deleteByPosition("d5", gameId))
-            .doesNotThrowAnyException();
-    }
-
-    @Test
     void deleteAllByGameId() {
         gameDao.create(gameId);
         pieceDao.deleteAllByGameId(gameId);
@@ -74,16 +54,6 @@ public class PieceDaoTest {
         final List<Piece> pieces = pieceDao.findAllByGameId(gameId).getPieces();
 
         assertThat(pieces.size()).isEqualTo(0);
-    }
-
-    @Test
-    void updateByPosition() {
-        gameDao.create(gameId);
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
-
-        pieceDao.updateByPosition("a7", "a6", gameId);
-
-        assertThat(pieceDao.findByPosition("a6", gameId).getName()).isEqualTo("pawn");
     }
 
     @Test
@@ -96,14 +66,5 @@ public class PieceDaoTest {
         assertThat(pieces.size()).isNotEqualTo(0);
     }
 
-    @Test
-    void findByPosition() {
-        gameDao.create(gameId);
-        pieceDao.save(new Pawn(Color.BLACK, Position.of("a7")), gameId);
-
-        final Piece piece = pieceDao.findByPosition("a7", gameId);
-
-        assertThat(piece.getPosition().getPosition()).isEqualTo("a7");
-    }
 
 }

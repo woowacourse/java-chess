@@ -49,7 +49,6 @@ public class ChessGameService {
         return game.calculateGameResult();
     }
 
-
     public void cleanGame() {
         pieceDao.deleteAllByGameId(gameId);
         gameDao.deleteById(gameId);
@@ -71,9 +70,14 @@ public class ChessGameService {
         gameDao.updateTurnById(gameId, turn.nextTurn());
     }
 
+    public void save() {
+        Pieces chessmen  = game.getChessmen();
+        pieceDao.saveAll(chessmen.getPieces(), gameId);
+    }
+
     public void forceEnd() {
         boolean forceEndFlag = game.forceEnd(gameId);
         gameDao.updateForceEndFlagById(forceEndFlag, gameId);
-
     }
+
 }
