@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.view.console.OutputView;
+import chess.view.OutputView;
 import java.util.Map;
 
 public final class King extends Piece {

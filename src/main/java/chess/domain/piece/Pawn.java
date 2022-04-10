@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.view.console.OutputView;
+import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 

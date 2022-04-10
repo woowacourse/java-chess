@@ -1,4 +1,4 @@
-package chess.view.console;
+package chess.view;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;

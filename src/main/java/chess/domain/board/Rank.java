@@ -90,4 +90,8 @@ public enum Rank {
 
         return ranks;
     }
+
+    public int getRankNumber() {
+        return rankNumber;
+    }
 }
