@@ -32,9 +32,17 @@ public class ChessController {
             return render(model, "login.html");
         });
 
-        post("/board", (req, res) ->
-                render(playerService.login(req.queryParams("name")), "index.html")
-        );
+        post("/board", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            try {
+                model = playerService.login(req.queryParams("name"));
+            } catch (Exception e) {
+                res.status(400);
+                model.put("message", e.getMessage());
+                return render(model, "login.html");
+            }
+            return render(model, "index.html");
+        });
 
         get("/start", (req, res) ->
                 gson.toJson(gameService.startNewGame(Integer.parseInt(req.queryParams("playerId"))))
