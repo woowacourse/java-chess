@@ -164,7 +164,6 @@ public class ChessBoardTest {
             final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
 
             chessBoard.move(Position.of(from), Position.of(to));
-
             final Piece fromPiece = chessBoard.selectPiece(Position.of(from));
             final Piece toPiece = chessBoard.selectPiece(Position.of(to));
 
@@ -255,6 +254,8 @@ public class ChessBoardTest {
                 Map.entry(Position.of("c5"), Piece.of(Color.BLACK, Symbol.PAWN)),
                 Map.entry(Position.of("b8"), Piece.of(Color.BLACK, Symbol.PAWN))
         ));
+
+        PiecesGenerator.fillEmptyPiece(testPieces);
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
         final Color winner = chessBoard.getWinner();
 

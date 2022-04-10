@@ -2,11 +2,11 @@ package chess.dto;
 
 public class BoardDto {
 
-    private final String position;
-    private final String symbol;
-    private final String color;
+    private String position;
+    private String symbol;
+    private String color;
 
-    public BoardDto(final String position, final String symbol, final String color) {
+    public BoardDto(String position, String symbol, String color) {
         this.position = position;
         this.symbol = symbol;
         this.color = color;

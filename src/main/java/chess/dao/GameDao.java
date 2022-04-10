@@ -1,6 +1,6 @@
 package chess.dao;
 
-import static chess.dao.Connector.*;
+import static chess.dao.Connector.getConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
