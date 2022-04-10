@@ -17,8 +17,11 @@
     if ("{{kingDie}}") {
         alert("King 잡혔다!!");
     }
+    if ("{{score}}") {
+        alert('화이트팀 : ' + "{{score.whiteScore}}" + '\n블랙팀 : ' + "{{score.blackScore}}\n");
+    }
     if ("{{exit}}") {
-        alert('화이트팀 : ' + "{{score.whiteScore}}" + '\n블랙팀 : ' + "{{score.blackScore}}" + '\n게임 종료!!');
+        alert('게임 종료!!');
         document.location.href = "/";
     }
 </script>
