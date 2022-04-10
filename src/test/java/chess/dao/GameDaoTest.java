@@ -25,7 +25,7 @@ public class GameDaoTest {
     @Test
     void save() {
         assertThatCode(() -> {
-            gameDao.save("blackrunning");
+            gameDao.save("BlackRunning");
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());
@@ -33,7 +33,7 @@ public class GameDaoTest {
 
     @Test
     void findAGameId() {
-        gameDao.save("whiterunning");
+        gameDao.save("WhiteRunning");
 
         assertThat(gameDao.findGameId()).isInstanceOf(Integer.class);
 
@@ -42,10 +42,10 @@ public class GameDaoTest {
 
     @Test
     void findAGameState() {
-        gameDao.save("whiterunning");
+        gameDao.save("WhiteRunning");
         String state = gameDao.findGameState();
 
-        assertThat(state).isEqualTo("whiterunning");
+        assertThat(state).isEqualTo("WhiteRunning");
 
         gameDao.delete(gameDao.findGameId());
     }
@@ -53,8 +53,8 @@ public class GameDaoTest {
     @Test
     void update() {
         assertThatCode(() -> {
-            gameDao.save("blackrunning");
-            gameDao.update("blackrunning", gameDao.findGameId());
+            gameDao.save("BlackRunning");
+            gameDao.update("BlackRunning", gameDao.findGameId());
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());
@@ -62,7 +62,7 @@ public class GameDaoTest {
 
     @Test
     void delete() {
-        gameDao.save("blackrunning");
+        gameDao.save("BlackRunning");
 
         assertThatCode(() -> {
             gameDao.delete(gameDao.findGameId());

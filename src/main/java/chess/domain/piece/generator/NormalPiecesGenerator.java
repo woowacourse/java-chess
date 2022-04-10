@@ -67,11 +67,11 @@ public class NormalPiecesGenerator implements PiecesGenerator {
     }
 
     private static void createPawn() {
-        for (Position position : Pawn.BLACK_INIT_LOCATIONS) {
+        for (Position position : Position.getAllPositionsOfRow(Pawn.BLACK_INIT_ROW)) {
             pieces.put(position, Piece.of(Color.BLACK, Symbol.PAWN));
         }
 
-        for (Position position : Pawn.WHITE_INIT_LOCATIONS) {
+        for (Position position : Position.getAllPositionsOfRow(Pawn.WHITE_INIT_ROW)) {
             pieces.put(position, Piece.of(Color.WHITE, Symbol.PAWN));
         }
     }

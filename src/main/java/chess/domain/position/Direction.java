@@ -48,9 +48,7 @@ public enum Direction {
     }
 
     public static List<Direction> queenDirections() {
-        return List.of(
-                Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
-                Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        return kingDirections();
     }
 
     public static List<Direction> rookDirections() {

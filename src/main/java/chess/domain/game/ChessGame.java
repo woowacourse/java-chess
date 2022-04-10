@@ -54,7 +54,7 @@ public class ChessGame {
     }
 
     public Map<Color, Double> calculateScore() {
-        Map<Color, Double> scores = new HashMap<>();
+        final Map<Color, Double> scores = new HashMap<>();
         final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
 
         scores.put(Color.WHITE, calculator.calculate(Color.WHITE));

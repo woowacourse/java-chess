@@ -29,10 +29,10 @@ public class BoardDaoTest {
 
     @Test
     void save() {
-        gameDao.save("blackrunning");
+        gameDao.save("BlackRunning");
 
         assertThatCode(() -> {
-            boardDao.save(List.of(new BoardDto("a1", "rook", "black")), gameDao.findGameId());
+            boardDao.save(List.of(new BoardDto("a1", "ROOK", "BLACK")), gameDao.findGameId());
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());
@@ -40,8 +40,8 @@ public class BoardDaoTest {
 
     @Test
     void findAll() {
-        gameDao.save("whiterunning");
-        boardDao.save(List.of(new BoardDto("a1", "rook", "black")), gameDao.findGameId());
+        gameDao.save("WhiteRunning");
+        boardDao.save(List.of(new BoardDto("a1", "ROOK", "BLACK")), gameDao.findGameId());
         final List<BoardDto> boardDtos = boardDao.findAll();
 
         assertThat(boardDtos).isNotEmpty();
@@ -51,11 +51,11 @@ public class BoardDaoTest {
 
     @Test
     void update() {
-        gameDao.save("blackrunning");
-        boardDao.save(List.of(new BoardDto("a1", "rook", "black")), gameDao.findGameId());
+        gameDao.save("BlackRunning");
+        boardDao.save(List.of(new BoardDto("a1", "ROOK", "BLACK")), gameDao.findGameId());
 
         assertThatCode(() -> {
-            boardDao.update(new BoardDto("a1", "pawn", "white"));
+            boardDao.update(new BoardDto("a1", "PAWN", "WHITE"));
         }).doesNotThrowAnyException();
 
         gameDao.delete(gameDao.findGameId());

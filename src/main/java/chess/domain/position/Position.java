@@ -1,6 +1,8 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -73,6 +75,14 @@ public class Position {
         final int columnValue = position.column.getValue() - this.column.getValue();
         final int rowValue = position.row.getValue() - this.row.getValue();
         return Math.atan2(rowValue, columnValue);
+    }
+
+    public static List<Position> getAllPositionsOfRow(final Row row) {
+        final List<Position> pawnPositions = new ArrayList<>();
+        for (final Column column : Column.values()) {
+            pawnPositions.add(Position.of(column, row));
+        }
+        return pawnPositions;
     }
 
     @Override

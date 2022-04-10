@@ -47,7 +47,6 @@ public class GameController {
 
     private void printStatus(final ChessGame chessGame) {
 
-
         OutputView.printStatus(chessGame.calculateScore());
     }
 

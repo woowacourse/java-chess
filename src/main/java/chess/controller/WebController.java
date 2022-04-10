@@ -24,7 +24,7 @@ public class WebController {
 
     private void renderReady() {
         get("/", (req, res) ->
-            render(chessService.ready())
+                render(chessService.ready())
         );
     }
 
