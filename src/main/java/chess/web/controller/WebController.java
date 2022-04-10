@@ -32,6 +32,7 @@ public class WebController {
             checkGameState(req, res);
             final Map<String, Object> model = executeAndGetModel(req, res);
             model.put("roomId", req.queryParams("roomId"));
+            System.err.println("{{roomId}}로 뿌려줄 값 >> " + req.queryParams("roomId"));
             //TODO: roomId + model정보로 front가기 직전에 DB에 저장?
             return render(model, "game.html");
         });
@@ -75,6 +76,8 @@ public class WebController {
 
     private Map<String, Object> redirectWithErrorFlash(final Request req) {
         final Map<String, Object> currentModel = chessService.getModelToState().get();
+        // 에러가 날 때도, model + error 반환 전, roomId를 추가해줘야한다.
+        currentModel.put("roomId", req.queryParams("roomId"));
         if (req.session().attribute("errorFlash") != null) {
             currentModel.putAll(req.session().attribute("errorFlash"));
             req.session().removeAttribute("errorFlash");
