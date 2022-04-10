@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
+import java.util.Objects;
 
 public abstract class Piece {
     protected final Team team;
@@ -61,4 +62,21 @@ public abstract class Piece {
     public abstract double getScore();
 
     public abstract void checkPawnMovable(Direction direction, Piece targetPiece);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return isFirst == piece.isFirst && team == piece.team && name == piece.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, name, isFirst);
+    }
 }
