@@ -5,18 +5,18 @@ import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 public enum Symbol {
-    ROOK_BLACK("rb", 5.0, () -> PieceFactory.getInstance("rb")),
-    KNIGHT_BLACK("nb", 2.5, () -> PieceFactory.getInstance("rb")),
-    BISHOP_BLACK("bb", 3.0, () -> PieceFactory.getInstance("rb")),
-    QUEEN_BLACK("qb", 9.0, () -> PieceFactory.getInstance("qb")),
-    KING_BLACK("kb", 0.0, () -> PieceFactory.getInstance("kb")),
-    PAWN_BLACK("pb", 1.0, () -> PieceFactory.getInstance("pb")),
-    ROOK_WHITE("rw", 5.0, () -> PieceFactory.getInstance("rw")),
-    KNIGHT_WHITE("nw", 2.5, () -> PieceFactory.getInstance("nw")),
-    BISHOP_WHITE("bw", 3.0, () -> PieceFactory.getInstance("bw")),
-    QUEEN_WHITE("qw", 9.0, () -> PieceFactory.getInstance("qw")),
-    KING_WHITE("kw", 0.0, () -> PieceFactory.getInstance("kw")),
-    PAWN_WHITE("pw", 1.0, () -> PieceFactory.getInstance("pw"));
+    ROOK_BLACK("rb", 5.0, () -> new Rook(Color.BLACK)),
+    KNIGHT_BLACK("nb", 2.5, () -> new Knight(Color.BLACK)),
+    BISHOP_BLACK("bb", 3.0, () -> new Bishop(Color.BLACK)),
+    QUEEN_BLACK("qb", 9.0, () -> new Queen(Color.BLACK)),
+    KING_BLACK("kb", 0.0, () -> new King(Color.BLACK)),
+    PAWN_BLACK("pb", 1.0, () -> new Pawn(Color.BLACK)),
+    ROOK_WHITE("rw", 5.0, () -> new Rook(Color.WHITE)),
+    KNIGHT_WHITE("nw", 2.5, () -> new Knight(Color.WHITE)),
+    BISHOP_WHITE("bw", 3.0, () -> new Bishop(Color.WHITE)),
+    QUEEN_WHITE("qw", 9.0, () -> new Queen(Color.WHITE)),
+    KING_WHITE("kw", 0.0, () -> new King(Color.WHITE)),
+    PAWN_WHITE("pw", 1.0, () -> new Pawn(Color.WHITE));
 
     private final String viewValue;
     private final double score;

@@ -68,11 +68,12 @@ public final class BoardFactory {
     }
 
     public static Board newInstance(Map<String, String> boardByGameId, Color color) {
-        return new Board(boardByGameId.entrySet()
+        final Map<Position, Piece> board = boardByGameId.entrySet()
                 .stream()
                 .map(entry -> Map.entry(
                         Position.from(entry.getKey()),
                         PieceFactory.getInstance(entry.getValue())))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue)), color);
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+        return new Board(board, color);
     }
 }

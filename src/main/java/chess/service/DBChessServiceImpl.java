@@ -57,8 +57,7 @@ public class DBChessServiceImpl implements ChessService {
 
     @Override
     public Map<Color, Double> getScore(String gameId) {
-        final Map<String, String> boardByGameId = chessDao.getBoardByGameId(gameId);
-        final Board board = BoardFactory.newInstance(boardByGameId, Color.WHITE);
+        final Board board = findBoardByGameId(gameId);
         return board.getScore();
     }
 }
