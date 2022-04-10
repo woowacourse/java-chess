@@ -42,7 +42,6 @@ public class Ready implements State {
     @Override
     public Piece move(Team currentTeam, Location source, Location target) {
         throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
-
     }
 
     @Override

@@ -1,14 +1,21 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.board.File.*;
-import static chess.domain.board.Rank.*;
-import static chess.domain.piece.Team.*;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
+import static chess.domain.board.File.G;
+import static chess.domain.board.File.H;
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.TWO;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Board;
-import chess.domain.board.File;
-import chess.domain.board.Location;
-import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
