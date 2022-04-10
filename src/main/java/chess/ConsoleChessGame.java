@@ -5,7 +5,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.view.console.OutputView;
+import chess.view.OutputView;
 import java.util.HashMap;
 import java.util.Map;
 

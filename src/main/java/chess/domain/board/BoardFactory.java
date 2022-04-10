@@ -6,10 +6,9 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.dto.PositionDto;
-import chess.view.web.WebViewMapper;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,17 +22,12 @@ public final class BoardFactory {
     private static final int RANK_TWO = 2;
     private static final int RANK_ONE = 1;
     private static final Map<Position, Piece> INITIAL_BOARD = new HashMap<>();
-    public static final Map<String, String> INITIAL_BOARD_FOR_DB;
 
     static {
         setupOthersPieces(RANK_EIGHT, Color.BLACK);
         setupPawns(RANK_SEVEN, Color.BLACK);
         setupPawns(RANK_TWO, Color.WHITE);
         setupOthersPieces(RANK_ONE, Color.WHITE);
-
-        final List<PositionDto> parse = WebViewMapper.parse(new HashMap<>(INITIAL_BOARD));
-        INITIAL_BOARD_FOR_DB = parse.stream()
-                .collect(Collectors.toMap(PositionDto::getPosition, PositionDto::getPiece));
     }
 
     private static void setupOthersPieces(int rank, Color color) {
@@ -73,12 +67,12 @@ public final class BoardFactory {
         return new Board(board);
     }
 
-    public static Board newInstanceByDB(Map<String, String> boardByGameId, Color color) {
+    public static Board newInstance(Map<String, String> boardByGameId, Color color) {
         return new Board(boardByGameId.entrySet()
                 .stream()
                 .map(entry -> Map.entry(
                         Position.from(entry.getKey()),
-                        WebViewMapper.from(entry.getValue())))
+                        PieceFactory.getInstance(entry.getValue())))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue)), color);
     }
 }

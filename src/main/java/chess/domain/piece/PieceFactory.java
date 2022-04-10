@@ -9,7 +9,7 @@ public final class PieceFactory {
     private PieceFactory() {
     }
 
-    public static Piece from(String pieceName) {
+    public static Piece getInstance(String pieceName) {
         return CACHE.computeIfAbsent(pieceName.trim().toLowerCase(), Symbol::createPieceByName);
     }
 }

@@ -1,9 +1,9 @@
 package chess;
 
 import chess.domain.board.Position;
-import chess.view.console.Command;
-import chess.view.console.InputView;
-import chess.view.console.OutputView;
+import chess.view.Command;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public final class ConsoleApplication {
     public static void main(String[] args) {
