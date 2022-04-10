@@ -19,7 +19,7 @@ public class GameDao {
             statement.setInt(3, dto.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("체스 게임 정보를 수정하는 데 문제가 생겼습니다.", e);
         }
     }
 
@@ -30,8 +30,7 @@ public class GameDao {
             statement.setInt(1, id);
             return getChessGameDto(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new DaoException("체스 게임을 찾지 못했습니다.", e);
         }
     }
 
@@ -53,7 +52,7 @@ public class GameDao {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("체스 게임의 상태를 변경하지 못했습니다.", e);
         }
     }
 }

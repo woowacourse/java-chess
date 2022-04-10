@@ -21,7 +21,7 @@ public class BoardDao {
             statement.setInt(1, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("DB에 새로운 보드를 생성하지 못했습니다.", e);
         }
     }
 
@@ -33,7 +33,7 @@ public class BoardDao {
             ResultSet resultSet = statement.executeQuery();
             return getBoardDtoFromResultSet(resultSet);
         } catch (SQLException e) {
-            return null;
+            throw new DaoException("해당 게임에 있는 보드를 찾지 못했습니다.", e);
         }
     }
 
@@ -55,7 +55,7 @@ public class BoardDao {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("보드를 제거하는 도중 문제가 생겼습니다.", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class BoardDao {
             statement.setInt(4, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DaoException("기물 정보를 수정하던 도중 문제가 생겼습니다.", e);
         }
     }
 }
