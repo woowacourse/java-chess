@@ -26,8 +26,7 @@ public class BoardService {
             final Piece piece = model.get(position);
             final String symbol = piece.getSymbol().name();
             final String color = piece.getColor().name();
-            BoardDto boardDto = new BoardDto(position, symbol, color);
-            boardDtos.add(boardDto);
+            boardDtos.add(new BoardDto(position, symbol, color));
         }
         boardDao.save(boardDtos, gameId);
     }
@@ -53,8 +52,7 @@ public class BoardService {
             final String positionName = boardDto.getPosition();
             final String symbol = boardDto.getSymbol();
             final String color = boardDto.getColor();
-            final Position position = Position.of(positionName);
-            pieces.put(position, Piece.of(color, symbol));
+            pieces.put(Position.of(positionName), Piece.of(color, symbol));
         }
         return pieces;
     }

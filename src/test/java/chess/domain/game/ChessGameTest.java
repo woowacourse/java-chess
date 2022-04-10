@@ -36,7 +36,7 @@ public class ChessGameTest {
     @DisplayName("start 명령어로 게임을 시작하면 흰색 턴이다.")
     void playGameByCommandWithStart() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        final State state = chessGame.playGameByCommand(new GameCommand("start"));
+        final State state = chessGame.playGameByCommand(GameCommand.of("start"));
 
         assertThat(state).isInstanceOf(WhiteRunning.class);
     }
@@ -45,7 +45,7 @@ public class ChessGameTest {
     @DisplayName("end 명령어로 게임을 종료한다.")
     void playGameByCommandWithEnd() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        final State state = chessGame.playGameByCommand(new GameCommand("end"));
+        final State state = chessGame.playGameByCommand(GameCommand.of("end"));
 
         assertThat(state).isInstanceOf(Finish.class);
     }
@@ -54,9 +54,9 @@ public class ChessGameTest {
     @DisplayName("move 명령어를 사용하면 턴이 바뀐다.")
     void playGameByCommandWithMove() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        chessGame.playGameByCommand(new GameCommand("start"));
+        chessGame.playGameByCommand(GameCommand.of("start"));
 
-        final State state = chessGame.playGameByCommand(new GameCommand("move", "d4", "e3"));
+        final State state = chessGame.playGameByCommand(GameCommand.of("move", "d4", "e3"));
 
         assertThat(state).isInstanceOf(BlackRunning.class);
 
@@ -66,9 +66,9 @@ public class ChessGameTest {
     @DisplayName("status 명령어를 입력하면 게임 진행 상태이다.")
     void playGameByCommandWithStatus() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        chessGame.playGameByCommand(new GameCommand("start"));
+        chessGame.playGameByCommand(GameCommand.of("start"));
 
-        final State state = chessGame.playGameByCommand(new GameCommand("status"));
+        final State state = chessGame.playGameByCommand(GameCommand.of("status"));
 
         assertThat(state).isInstanceOf(Running.class);
     }
@@ -77,7 +77,7 @@ public class ChessGameTest {
     @DisplayName("킹이 없을 때, 게임이 종료됐는지 확인한다.")
     void isFinished() {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        chessGame.playGameByCommand(new GameCommand("start"));
+        chessGame.playGameByCommand(GameCommand.of("start"));
         final boolean finished = chessGame.isFinished();
 
         assertThat(finished).isEqualTo(false);

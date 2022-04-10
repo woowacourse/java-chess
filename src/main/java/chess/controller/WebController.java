@@ -12,9 +12,11 @@ public class WebController {
 
     private ChessService chessService;
 
-    public void run() {
-        chessService = new ChessService();
+    public WebController() {
+        this.chessService = new ChessService();
+    }
 
+    public void run() {
         renderReady();
         renderStart();
         renderMove();
@@ -75,7 +77,6 @@ public class WebController {
     private String renderError(String errorMessage) {
         return render(chessService.error(errorMessage));
     }
-
 
     private static String render(Map<String, Object> model) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));

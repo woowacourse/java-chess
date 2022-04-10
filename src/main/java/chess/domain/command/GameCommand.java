@@ -16,13 +16,17 @@ public class GameCommand {
     private final CommandType type;
     private final List<Position> movePositions = new ArrayList<>();
 
-    public GameCommand(final String... rawCommand) {
+    private GameCommand(final String... rawCommand) {
         type = CommandType.of(rawCommand[RAW_COMMAND_TYPE_INDEX]);
         validateCommand(rawCommand);
         if (type == CommandType.MOVE) {
             movePositions.add(Position.of(rawCommand[FROM_PARAMETER_INDEX]));
             movePositions.add(Position.of(rawCommand[TO_PARAMETER_INDEX]));
         }
+    }
+
+    public static GameCommand of(final String... rawCommand) {
+        return new GameCommand(rawCommand);
     }
 
     private void validateCommand(final String[] rawCommand) {

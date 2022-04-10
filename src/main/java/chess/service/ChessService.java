@@ -48,7 +48,7 @@ public class ChessService {
 
     public Map<String, Object> start() {
         final Map<String, Object> model = new HashMap<>();
-        chessGame.playGameByCommand(new GameCommand("start"));
+        chessGame.playGameByCommand(GameCommand.of("start"));
         save();
         model.putAll(boardService.findBoard());
         return model;
@@ -61,7 +61,7 @@ public class ChessService {
 
     public void move(final String from, final String to) {
         chessGame.playGameByCommand(
-                new GameCommand("move", from.toLowerCase(Locale.ROOT), to.toLowerCase(Locale.ROOT)));
+                GameCommand.of("move", from.toLowerCase(Locale.ROOT), to.toLowerCase(Locale.ROOT)));
         update(from, to);
     }
 
@@ -73,7 +73,7 @@ public class ChessService {
 
     public Map<String, Object> status() {
         final Map<String, Object> model = new HashMap<>();
-        chessGame.playGameByCommand(new GameCommand("status"));
+        chessGame.playGameByCommand(GameCommand.of("status"));
         model.putAll(boardService.findBoard());
 
         final Map<Color, Double> scores = chessGame.calculateScore();
@@ -83,7 +83,7 @@ public class ChessService {
     }
 
     public void end() {
-        chessGame.playGameByCommand(new GameCommand("end"));
+        chessGame.playGameByCommand(GameCommand.of("end"));
         gameService.delete();
         chessGame.init(new NormalPiecesGenerator());
     }

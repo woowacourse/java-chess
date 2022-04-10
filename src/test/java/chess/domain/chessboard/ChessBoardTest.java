@@ -143,7 +143,7 @@ public class ChessBoardTest {
 
             PiecesGenerator.fillEmptyPiece(pieces);
             final ChessBoard chessBoard = new ChessBoard(() -> pieces);
-            final GameCommand gameCommand = new GameCommand("move", "d4", "f2");
+            final GameCommand gameCommand = GameCommand.of("move", "d4", "f2");
 
             chessBoard.move(gameCommand.getFromPosition(), gameCommand.getToPosition());
 
@@ -179,7 +179,7 @@ public class ChessBoardTest {
         void pawn() {
             final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-            final GameCommand gameCommand = new GameCommand("move", "b2", "b4");
+            final GameCommand gameCommand = GameCommand.of("move", "b2", "b4");
 
             chessBoard.move(gameCommand.getFromPosition(), gameCommand.getToPosition());
             final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
@@ -196,7 +196,7 @@ public class ChessBoardTest {
         void pawnCannotMoveThrowException() {
             final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-            final GameCommand gameCommand = new GameCommand("move", "b2", "c3");
+            final GameCommand gameCommand = GameCommand.of("move", "b2", "c3");
 
             assertThatThrownBy(() -> chessBoard.move(gameCommand.getFromPosition(), gameCommand.getToPosition()))
                     .isInstanceOf(IllegalArgumentException.class)

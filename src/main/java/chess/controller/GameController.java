@@ -1,15 +1,11 @@
 package chess.controller;
 
-import chess.domain.chessboard.ChessBoard;
 import chess.domain.command.CommandType;
 import chess.domain.command.GameCommand;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
-import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Map;
 
 public class GameController {
 
@@ -30,7 +26,7 @@ public class GameController {
 
     private void requestCommand(final ChessGame chessGame) {
         try {
-            final GameCommand gameCommand = new GameCommand(InputView.inputCommand());
+            final GameCommand gameCommand = GameCommand.of(InputView.inputCommand());
             chessGame.playGameByCommand(gameCommand);
             checkStatus(chessGame, gameCommand);
         } catch (RuntimeException exception) {
@@ -51,9 +47,7 @@ public class GameController {
 
     private void printChessBoard(final ChessGame chessGame) {
         if (!chessGame.isFinished()) {
-            final ChessBoard chessBoard = chessGame.getChessBoard();
-            final Map<Position, Piece> pieces = chessBoard.getPieces();
-            OutputView.printChessBoard(pieces);
+            OutputView.printChessBoard(chessGame.getChessBoard().getPieces());
         }
     }
 

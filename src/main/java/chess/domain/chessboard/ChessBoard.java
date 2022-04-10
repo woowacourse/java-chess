@@ -20,7 +20,6 @@ public class ChessBoard {
 
     public ChessBoard(final PiecesGenerator piecesGenerator) {
         this.pieces = piecesGenerator.generate();
-//        fillEmptyPieceIfAbsent();
     }
 
     public ChessBoard(final Map<Position, Piece> pieces) {

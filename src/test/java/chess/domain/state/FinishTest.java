@@ -17,7 +17,7 @@ public class FinishTest {
     @DisplayName("종료상태에서 start 입력 시 하얀색의 시작상태가 발생한다.")
     void proceedStart() {
         final var state = new Finish();
-        final State actual = state.proceed(chessBoard, new GameCommand("start"));
+        final State actual = state.proceed(chessBoard, GameCommand.of("start"));
 
         assertThat(actual).isInstanceOf(WhiteRunning.class);
     }
@@ -28,7 +28,7 @@ public class FinishTest {
         final var state = new Finish();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("end")))
+                state.proceed(chessBoard, GameCommand.of("end")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }
@@ -39,7 +39,7 @@ public class FinishTest {
         final var state = new Finish();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b1", "b2")))
+                state.proceed(chessBoard, GameCommand.of("move", "b1", "b2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }
@@ -50,7 +50,7 @@ public class FinishTest {
         final var state = new Finish();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("status")))
+                state.proceed(chessBoard, GameCommand.of("status")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }

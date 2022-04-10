@@ -17,7 +17,7 @@ public class ReadyTest {
     @DisplayName("준비 상태에서 start 입력 시 시작 상태가 된다.")
     void proceedStart() {
         final var state = new Ready();
-        final var actual = state.proceed(chessBoard, new GameCommand("start"));
+        final var actual = state.proceed(chessBoard, GameCommand.of("start"));
 
         assertThat(actual).isInstanceOf(Running.class);
     }
@@ -26,7 +26,7 @@ public class ReadyTest {
     @DisplayName("준비 상태에서 end 입력 시 종료 상태가 된다.")
     void proceedEnd() {
         final var state = new Ready();
-        final var actual = state.proceed(chessBoard, new GameCommand("end"));
+        final var actual = state.proceed(chessBoard, GameCommand.of("end"));
 
         assertThat(actual).isInstanceOf(Finish.class);
     }
@@ -37,7 +37,7 @@ public class ReadyTest {
         final var state = new Ready();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b1", "b2")))
+                state.proceed(chessBoard, GameCommand.of("move", "b1", "b2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("준비 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }
@@ -48,7 +48,7 @@ public class ReadyTest {
         final var state = new Ready();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("status")))
+                state.proceed(chessBoard, GameCommand.of("status")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("준비 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }

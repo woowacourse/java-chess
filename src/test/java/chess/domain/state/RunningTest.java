@@ -19,7 +19,7 @@ public class RunningTest {
         final var state = new BlackRunning();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("start")))
+                state.proceed(chessBoard, GameCommand.of("start")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("시작 상태에서는 다시 시작할 수 없습니다.");
     }
@@ -28,7 +28,7 @@ public class RunningTest {
     @DisplayName("시작 상태에서 end 입력 시 종료 상태가 된다.")
     void proceedEnd() {
         final var state = new BlackRunning();
-        final var actual = state.proceed(chessBoard, new GameCommand("end"));
+        final var actual = state.proceed(chessBoard, GameCommand.of("end"));
 
         assertThat(actual).isInstanceOf(Finish.class);
     }
@@ -39,7 +39,7 @@ public class RunningTest {
         final var state = new BlackRunning();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b2", "b4")))
+                state.proceed(chessBoard, GameCommand.of("move", "b2", "b4")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("흰색 차례가 아닙니다.");
     }
@@ -49,7 +49,7 @@ public class RunningTest {
     void proceedStatus() {
         final var state = new BlackRunning();
 
-        assertThat(state.proceed(chessBoard, new GameCommand("status")))
+        assertThat(state.proceed(chessBoard, GameCommand.of("status")))
                 .isInstanceOf(BlackRunning.class);
     }
 }
