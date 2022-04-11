@@ -22,35 +22,42 @@ public abstract class Playing implements GameState {
     abstract Playing turn();
 
     public GameState move(String source, String destination) {
-        Piece sourcePiece = getPiece(Position.from(source));
-        Piece destinationPiece = getPiece(Position.from(destination));
-        validateMovePiece(sourcePiece, destinationPiece);
-        movePiece(sourcePiece, destinationPiece);
+        Position sourcePosition = Position.from(source);
+        Position destinationPosition = Position.from(destination);
+        validateMovePiece(sourcePosition, destinationPosition);
+
+        Piece destinationPiece = board.get(destinationPosition);
+        movePiece(sourcePosition, destinationPosition);
+
         if (destinationPiece.isKing()) {
             return finished();
         }
         return turn();
     }
 
-    private void validateMovePiece(Piece source, Piece destination) {
-        validateTeam(source);
-        List<Position> positions = source.findPath(destination.getPosition());
+    private void validateMovePiece(Position source, Position destination) {
+        Piece piece = getPiece(source);
+        validateTeam(piece);
+        List<Position> positions = piece.findPath(source, destination);
         validateMovingPath(source, destination, positions);
     }
 
-    private void validateMovingPath(Piece source, Piece destination, List<Position> positions) {
-        if (source.isSameTeam(destination)) {
+    private void validateMovingPath(Position source, Position destination, List<Position> positions) {
+        Piece sourcePiece = board.get(source);
+        Piece destinationPiece = board.get(destination);
+        if (sourcePiece.isSameTeam(destinationPiece)) {
             throw new IllegalArgumentException("목적지에 같은 팀 말이 있습니다.");
         }
-        if (isPawnAttemptKill(source, destination)){
-            validatePawnAttemptKill(destination);
+        if (isPawnAttemptKill(source, destination)) {
+            validatePawnAttemptKill(destinationPiece);
             return;
         }
         validateExistOtherPiece(positions);
     }
 
-    private boolean isPawnAttemptKill(Piece source, Piece destination) {
-        return source.isPawn() && isDiagonal(source.getPosition(), destination.getPosition());
+    private boolean isPawnAttemptKill(Position source, Position destination) {
+        Piece sourcePiece = board.get(source);
+        return sourcePiece.isPawn() && isDiagonal(source, destination);
     }
 
     private boolean isDiagonal(Position source, Position destination) {
@@ -76,14 +83,10 @@ public abstract class Playing implements GameState {
         }
     }
 
-    private void movePiece(Piece sourcePiece, Piece destinationPiece) {
-        changePiece(sourcePiece, destinationPiece);
-        sourcePiece.move(destinationPiece);
-    }
-
-    private void changePiece(Piece sourcePiece, Piece destinationPiece) {
-        board.put(destinationPiece.getPosition(), sourcePiece);
-        board.put(sourcePiece.getPosition(), new Blank(Team.NONE, sourcePiece.getPosition()));
+    private void movePiece(Position source, Position destination) {
+        Piece sourcePiece = board.get(source);
+        board.put(destination, sourcePiece);
+        board.put(source, new Blank(Team.NONE));
     }
 
     public Map<Position, Piece> getBoard() {
@@ -91,8 +94,8 @@ public abstract class Playing implements GameState {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public boolean isRunning() {
+        return true;
     }
 
     abstract void validateTeam(Piece piece);

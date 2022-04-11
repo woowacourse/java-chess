@@ -52,8 +52,7 @@ public class Score {
 
     private void addPawnNeighbors(Map<Position, Piece> board, Team team, Map<Column, Integer> pawnNeighbors, Column col) {
         for (Row row : Row.values()) {
-            String position =  col.getSymbol() + row.getSymbol();
-            Piece piece = board.get(Position.from(position));
+            Piece piece = board.get(Position.of(col, row));
             addCountPawnNeighbors(team, pawnNeighbors, col, piece);
         }
     }
@@ -67,8 +66,7 @@ public class Score {
     private float calculateTotalScore(Map<Position, Piece> board, Column col, Team team) {
         float totalScore = 0;
         for (Row row : Row.values()) {
-            String position = col.getSymbol() + row.getSymbol();
-            Piece piece = board.get(Position.from(position));
+            Piece piece = board.get(Position.of(col, row));
             totalScore = plusPieceScore(team, totalScore, piece);
         }
         return totalScore;
@@ -86,7 +84,7 @@ public class Score {
     }
 
     public float getTotalScoreBlackTeam() {
-        return scoreBoard.get(Team.WHITE);
+        return scoreBoard.get(Team.BLACK);
     }
 
     public Team getWinningTeam() {

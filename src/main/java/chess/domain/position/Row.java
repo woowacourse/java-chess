@@ -25,6 +25,14 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Row 값 입니다."));
     }
 
+    public static Row find(char value) {
+        int rowValue = Character.getNumericValue(value);
+        return Arrays.stream(values())
+                .filter(i -> i.value == rowValue)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Row 값 입니다."));
+    }
+
     public int getDifference(Row row) {
         return this.value - row.value;
     }

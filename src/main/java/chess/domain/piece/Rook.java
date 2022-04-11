@@ -7,19 +7,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final String SYMBOL = "P";
+    private static final String SYMBOL = "R";
     private static final float SCORE = 5.0f;
 
-    public Rook(Team team, Position position) {
-        super(team, SYMBOL, position, SCORE);
+    public Rook(Team team) {
+        super(team, SYMBOL, SCORE);
     }
 
     @Override
-    public List<Position> findPath(Position destination) {
-        Direction direction = findDirection(destination);
+    public List<Position> findPath(Position source, Position destination) {
+        Direction direction = findDirection(source, destination);
         return getPath(destination, direction,
-                position.getCol().plusColumn(direction.getXDegree()),
-                position.getRow().plusRow(direction.getYDegree()));
+                source.plusDirection(direction));
     }
 
     @Override

@@ -11,13 +11,11 @@ import java.util.List;
 public abstract class Piece {
     private final Team team;
     private final String symbol;
-    protected Position position;
     private final float score;
 
-    public Piece(Team team, String symbol, Position position, float score) {
+    public Piece(Team team, String symbol, float score) {
         this.team = team;
         this.symbol = team.getSymbol(symbol);
-        this.position = position;
         this.score = score;
     }
 
@@ -29,7 +27,7 @@ public abstract class Piece {
         return team == Team.BLACK;
     }
 
-    public abstract List<Position> findPath(Position destination);
+    public abstract List<Position> findPath(Position source, Position destination);
 
     public boolean isBlank() {
         return false;
@@ -39,27 +37,22 @@ public abstract class Piece {
         return false;
     }
 
-    public void move(Piece destination) {
-        position = destination.getPosition();
-    }
-
     public double getScore() {
         return score;
     }
 
-    protected List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
+    protected List<Position> getPath(Position destination, Direction direction, Position position) {
         List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
-            positions.add(Position.of(col, row));
-            col = col.plusColumn(direction.getXDegree());
-            row = row.plusRow(direction.getYDegree());
+        while (!destination.matchPosition(position)) {
+            positions.add(position);
+            position = position.plusDirection(direction);
         }
         return positions;
     }
 
-    protected Direction findDirection(Position destination) {
-        int colDifference = destination.getColDifference(position.getCol());
-        int rowDifference = destination.getRowDifference(position.getRow());
+    protected Direction findDirection(Position source, Position destination) {
+        int colDifference = destination.getColDifference(source.getCol());
+        int rowDifference = destination.getRowDifference(source.getRow());
         return Direction.find(rowDifference, colDifference, getDirections());
     }
 
@@ -73,10 +66,6 @@ public abstract class Piece {
         return false;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     public boolean isSameTeam(Piece piece) {
         return getTeam() == piece.getTeam();
     }
@@ -86,7 +75,6 @@ public abstract class Piece {
         return "Piece{" +
                 "team=" + team +
                 ", name='" + symbol + '\'' +
-                ", position=" + position +
                 '}';
     }
 }

@@ -28,7 +28,7 @@ public class ChessGameController {
 
     private void startGame(GameState gameState) {
         OutputView.printChessBoard(gameState.getBoard());
-        while (!gameState.isFinished()) {
+        while (gameState.isRunning()) {
             gameState = playCommand(gameState);
         }
         OutputView.printFinishedGame(gameState);

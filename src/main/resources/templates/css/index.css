@@ -1,0 +1,78 @@
+.black_board {
+    background-color: #8C5829;
+    border-collapse: collapse;
+    width: 80px;
+    height: 80px;
+}
+
+.white_board {
+    background-color: rgb(188, 145, 62);
+    border-collapse: collapse;
+    width: 80px;
+    height: 80px;
+}
+
+.black_board:hover {
+    background-color: #9f9f9f;
+}
+
+.white_board:hover {
+    background-color: #9f9f9f;
+}
+
+.table_board {
+    display: inline-block;
+    float: left;
+}
+
+body {
+    background-image: url('../img/wood.svg');
+}
+
+.scoreButton {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 190px;
+    margin-top: 50px;
+}
+
+.resetButton {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.endButton {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+
+p {
+    background-color: aliceblue;
+    margin-left: 40px;
+    border-radius: 3px 3px 3px 3px;
+    text-decoration: none;
+    text-align: center;
+}
