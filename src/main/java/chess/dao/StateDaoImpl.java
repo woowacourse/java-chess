@@ -7,17 +7,11 @@ import java.sql.SQLException;
 
 public class StateDaoImpl implements StateDao {
 
-    private final Connection connection;
-
-    public StateDaoImpl() {
-        this.connection = ConnectionManager.getConnection();
-    }
-
     @Override
     public void save(String name) {
         final String sql = "insert into state (name) values (?)";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final Connection connection = ConnectionManager.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -27,9 +21,9 @@ public class StateDaoImpl implements StateDao {
 
     public String find() {
         final String sql = "select name from state";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            final ResultSet resultSet = statement.executeQuery();
+        try (final Connection connection = ConnectionManager.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
             return resultSet.getString("name");
         } catch (SQLException e) {
@@ -41,8 +35,8 @@ public class StateDaoImpl implements StateDao {
     @Override
     public void delete() {
         final String sql = "delete from state";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final Connection connection = ConnectionManager.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,8 +46,8 @@ public class StateDaoImpl implements StateDao {
     @Override
     public void update(String now, String next) {
         final String sql = "update state set name = ? where name = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
+        try (final Connection connection = ConnectionManager.getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, next);
             statement.setString(2, now);
             statement.executeUpdate();

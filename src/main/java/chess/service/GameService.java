@@ -10,8 +10,8 @@ import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.Ready;
 import chess.model.state.State;
-import chess.service.converter.StateToString;
-import chess.service.converter.StringToState;
+import chess.service.converter.StateToStringConverter;
+import chess.service.converter.StringToStateConverter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class GameService {
     public BoardDto start() {
         deleteData();
         State state = new Ready();
-        stateDao.save(StateToString.convert(state));
+        stateDao.save(StateToStringConverter.convert(state));
         fromBoard(state.getBoard());
         return BoardDto.from(state.getBoard());
     }
@@ -54,10 +54,10 @@ public class GameService {
     private State proceed(MoveDto moveDto) {
         Board board = toBoard(squareDao.find());
         String nowStateName = stateDao.find();
-        State nowState = StringToState.convert(nowStateName, board);
+        State nowState = StringToStateConverter.convert(nowStateName, board);
 
         State nextState = nowState.proceed(moveDto.getCommand());
-        String nextStateName = StateToString.convert(nextState);
+        String nextStateName = StateToStringConverter.convert(nextState);
         stateDao.update(nowStateName, nextStateName);
 
         return nextState;
@@ -67,7 +67,7 @@ public class GameService {
         Board board = toBoard(squareDao.find());
         String nowStateName = stateDao.find();
         stateDao.update(nowStateName, command);
-        State nextState = StringToState.convert(stateDao.find(), board);
+        State nextState = StringToStateConverter.convert(stateDao.find(), board);
         return new ResultDto(nextState.getScore(), nextState.getWinner());
     }
 

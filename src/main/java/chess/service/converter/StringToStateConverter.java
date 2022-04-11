@@ -8,7 +8,7 @@ import chess.model.state.finished.Status;
 import chess.model.state.running.BlackTurn;
 import chess.model.state.running.WhiteTurn;
 
-public class StringToState {
+public class StringToStateConverter {
 
     public static State convert(String stateName, Board board) {
         if(stateName.equals("READY")) {

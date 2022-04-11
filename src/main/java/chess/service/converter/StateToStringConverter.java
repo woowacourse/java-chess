@@ -2,7 +2,7 @@ package chess.service.converter;
 
 import chess.model.state.State;
 
-public class StateToString {
+public class StateToStringConverter {
 
     public static String convert(State state) {
         if (state.isReady() || state.isWhiteTurn()) {
