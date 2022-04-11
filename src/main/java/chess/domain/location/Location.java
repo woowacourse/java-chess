@@ -14,8 +14,8 @@ public class Location {
     }
 
     private final File file;
-
     private final Rank rank;
+
     private Location(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
@@ -30,9 +30,16 @@ public class Location {
     }
 
     public static Location of(String location) {
+        checkLocationLength(location);
         String file = location.substring(0, 1);
         String rank = location.substring(1);
         return CACHE.get(toKey(File.of(file), Rank.of(rank)));
+    }
+
+    private static void checkLocationLength(String location) {
+        if (location.length() != 2) {
+            throw new IllegalArgumentException("[ERROR] 정확한 위치를 입력하세요.");
+        }
     }
 
     public LocationDiff computeDiff(Location target) {
@@ -48,5 +55,10 @@ public class Location {
 
     public Location copyOf() {
         return Location.of(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return file.getValue() + rank.getValue();
     }
 }

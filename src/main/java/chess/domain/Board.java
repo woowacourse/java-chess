@@ -21,27 +21,32 @@ import java.util.stream.Collectors;
 public class Board {
     private final Map<Location, Piece> chessBoard;
 
-    public Board() {
-        this.chessBoard = new LinkedHashMap<>();
-        initializeBoard();
+    public Board(Map<Location, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    private void initializeBoard() {
-        initializeEmptyBoard();
-
-        initializePieceExceptPawn(Rank.ONE, Team.WHITE);
-        initializePieceExceptPawn(Rank.EIGHT, Team.BLACK);
-
-        initializePawn(Rank.TWO, Team.WHITE);
-        initializePawn(Rank.SEVEN, Team.BLACK);
+    public static Board of() {
+        Map<Location, Piece> chessBoard = new LinkedHashMap<>();
+        initializeBoard(chessBoard);
+        return new Board(chessBoard);
     }
 
-    private void initializeEmptyBoard() {
+    private static void initializeBoard(Map<Location, Piece> chessBoard) {
+        initializeEmptyBoard(chessBoard);
+
+        initializePieceExceptPawn(chessBoard, Rank.ONE, Team.WHITE);
+        initializePieceExceptPawn(chessBoard, Rank.EIGHT, Team.BLACK);
+
+        initializePawn(chessBoard, Rank.TWO, Team.WHITE);
+        initializePawn(chessBoard, Rank.SEVEN, Team.BLACK);
+    }
+
+    private static void initializeEmptyBoard(Map<Location, Piece> chessBoard) {
         Rank.reverseValues().forEach(rank -> Arrays.stream(File.values())
                 .forEach(file -> chessBoard.put(Location.of(file, rank), new EmptyPiece())));
     }
 
-    private void initializePieceExceptPawn(Rank rank, Team team) {
+    private static void initializePieceExceptPawn(Map<Location, Piece> chessBoard, Rank rank, Team team) {
         chessBoard.put(Location.of(File.A, rank), new Rook(team));
         chessBoard.put(Location.of(File.B, rank), new Knight(team));
         chessBoard.put(Location.of(File.C, rank), new Bishop(team));
@@ -52,7 +57,7 @@ public class Board {
         chessBoard.put(Location.of(File.H, rank), new Rook(team));
     }
 
-    private void initializePawn(Rank rank, Team team) {
+    private static void initializePawn(Map<Location, Piece> chessBoard, Rank rank, Team team) {
         for (File file : File.values()) {
             chessBoard.put(Location.of(file, rank), new Pawn(team));
         }

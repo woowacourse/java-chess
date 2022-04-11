@@ -1,8 +1,19 @@
 package chess.domain;
 
-import static chess.domain.location.File.*;
-import static chess.domain.location.Rank.*;
-import static chess.domain.piece.Team.*;
+import static chess.domain.location.File.A;
+import static chess.domain.location.File.B;
+import static chess.domain.location.File.C;
+import static chess.domain.location.File.D;
+import static chess.domain.location.File.E;
+import static chess.domain.location.File.F;
+import static chess.domain.location.File.G;
+import static chess.domain.location.File.H;
+import static chess.domain.location.Rank.EIGHT;
+import static chess.domain.location.Rank.ONE;
+import static chess.domain.location.Rank.SEVEN;
+import static chess.domain.location.Rank.TWO;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.location.File;
@@ -27,7 +38,7 @@ public class BoardTest {
     @DisplayName("초기에 기물이 올바른 위치에 있는지 확인한다.")
     @MethodSource("pieceLocationParameter")
     void checkPieceInitialLocation(File file, Rank rank, Piece piece) {
-        Board board = new Board();
+        Board board = Board.of();
         assertThat(board.getPiece(file, rank)).isInstanceOf(piece.getClass());
     }
 
@@ -72,7 +83,7 @@ public class BoardTest {
     @Test
     @DisplayName("점수 계산하는 로직 확인")
     void getScore() {
-        TeamScore teamScore = new TeamScore(WHITE, new Board());
+        TeamScore teamScore = new TeamScore(WHITE, Board.of());
         assertThat(teamScore.getScore()).isEqualTo(38);
     }
 }

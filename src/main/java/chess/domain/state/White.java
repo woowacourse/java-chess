@@ -24,6 +24,11 @@ public class White extends Running {
     }
 
     @Override
+    public Team getTeam() {
+        return Team.WHITE;
+    }
+
+    @Override
     public void checkSourceColor(Piece piece) {
         if (!piece.isWhite()) {
             throw new IllegalArgumentException("[ERROR] 해당 말은 움직일 수 없습니다.");

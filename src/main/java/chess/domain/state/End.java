@@ -1,8 +1,9 @@
 package chess.domain.state;
 
 import chess.domain.Board;
-import chess.domain.location.Location;
 import chess.domain.TeamScore;
+import chess.domain.location.Location;
+import chess.domain.piece.Team;
 
 public class End implements State {
 
@@ -14,7 +15,7 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        return new White(Board.of());
     }
 
     @Override
@@ -40,5 +41,10 @@ public class End implements State {
     @Override
     public TeamScore getScore() {
         throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public Team getTeam() {
+        return Team.NONE;
     }
 }

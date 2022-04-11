@@ -1,0 +1,58 @@
+.chess {
+    width: 640px;
+    height: 640px;
+    display: grid;
+    border: 3px solid brown;
+    grid-template-rows: repeat(8, 80px);
+    margin: auto;
+}
+
+.rank {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+}
+
+.white-square {
+    background-color: white;
+}
+
+.brown-square {
+    background-color: cadetblue;
+}
+
+img {
+    height: 80px;
+    width: 80px;
+}
+
+.button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: mintcream;
+}
+
+#status {
+    display: block;
+    text-align: center;
+    font-size: 10px;
+}
+
+#command {
+    margin: auto;
+    text-align: center;
+}
+
+input {
+    border-radius: 5px;;
+}
+
+.locationInput {
+    background-color: lightsteelblue;
+}
+
+.location {
+    display: inline;
+    background-color: honeydew;
+    border: black 3px;
+}

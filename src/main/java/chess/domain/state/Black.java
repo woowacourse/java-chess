@@ -42,7 +42,12 @@ public class Black extends Running {
 
     @Override
     public TeamScore getScore() {
-        return new TeamScore(Team.BLACK,  getBoard());
+        return new TeamScore(Team.BLACK, getBoard());
+    }
+
+    @Override
+    public Team getTeam() {
+        return Team.BLACK;
     }
 
 }

@@ -68,10 +68,11 @@ public abstract class Running implements State {
             throw new IllegalArgumentException("[ERROR] 해당 위치까지 이동할 수 없습니다.");
         }
     }
+
     abstract void checkTarget(Piece piece);
 
     private void checkPawn(Piece sourcePiece, Piece targetPiece, LocationDiff locationDiff) {
-        if (sourcePiece.isPawn()){
+        if (sourcePiece.isPawn()) {
             checkPawnTargetLocation(targetPiece, locationDiff);
         }
     }
@@ -93,9 +94,13 @@ public abstract class Running implements State {
         Location routeLocation = source.copyOf();
         for (int i = 0; i < locationDiff.computeDistance() - 1; i++) {
             routeLocation = routeLocation.add(locationDiff.computeDirection());
-            if (!getBoard().isEmpty(routeLocation)) {
-                throw new IllegalArgumentException("[ERROR] 해당 경로를 지나갈 수 없습니다. ");
-            }
+            checkRouteLocationEmpty(routeLocation);
+        }
+    }
+
+    private void checkRouteLocationEmpty(Location routeLocation) {
+        if (!getBoard().isEmpty(routeLocation)) {
+            throw new IllegalArgumentException("[ERROR] 해당 경로를 지나갈 수 없습니다. ");
         }
     }
 
