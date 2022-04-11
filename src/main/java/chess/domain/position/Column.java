@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Column {
 
@@ -40,5 +41,14 @@ public enum Column {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }
         return of(indexAfterMove);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase(Locale.ROOT);
     }
 }
