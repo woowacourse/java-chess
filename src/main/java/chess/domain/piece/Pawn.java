@@ -8,7 +8,6 @@ public class Pawn extends Piece {
     private static final int ONE_SQUARE = 1;
     private static final int DOUBLE_STEP = 2;
     private static final int SINGLE_STEP = 1;
-    private static final int PAWN_SCORE = 1;
 
     public Pawn(Color color, Position position) {
         super(color, position);
@@ -53,11 +52,6 @@ public class Pawn extends Piece {
 
     private boolean isStartPawnPosition() {
         return getColor().isStartPawnPosition(getPosition());
-    }
-
-    @Override
-    public double score() {
-        return PAWN_SCORE;
     }
 
     @Override

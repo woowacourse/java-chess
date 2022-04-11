@@ -108,8 +108,6 @@ public abstract class Piece {
 
     protected abstract boolean isPossibleMovement(Position to, Collection<Piece> pieces);
 
-    public abstract double score();
-
     public abstract boolean isPawn();
 
     public abstract boolean isKing();

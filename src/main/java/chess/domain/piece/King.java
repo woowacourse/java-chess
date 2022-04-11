@@ -5,8 +5,6 @@ import java.util.Collection;
 
 public class King extends Piece {
 
-    private static final int KING_SCORE = 0;
-
     public King(Color color, Position position) {
         super(color, position);
     }
@@ -19,11 +17,6 @@ public class King extends Piece {
     @Override
     protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         return getPosition().isAdjacent(to);
-    }
-
-    @Override
-    public double score() {
-        return KING_SCORE;
     }
 
     @Override

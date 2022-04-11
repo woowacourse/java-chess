@@ -5,8 +5,6 @@ import java.util.Collection;
 
 public class Bishop extends Piece {
 
-    private static final int BISHOP_SCORE = 3;
-
     public Bishop(Color color, Position position) {
         super(color, position);
     }
@@ -19,11 +17,6 @@ public class Bishop extends Piece {
     @Override
     protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         return getPosition().isDiagonalWay(to);
-    }
-
-    @Override
-    public double score() {
-        return BISHOP_SCORE;
     }
 
     @Override

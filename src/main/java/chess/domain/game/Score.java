@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceScore;
 import chess.domain.position.Column;
 import java.util.Arrays;
 
@@ -38,7 +39,7 @@ public class Score {
     private static double getDefaultScore(Color color, ChessBoard chessBoard) {
         return chessBoard.getPieces().stream()
             .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::score)
+            .mapToDouble(piece -> PieceScore.findPieceScore(piece.getClass()))
             .sum();
     }
 
