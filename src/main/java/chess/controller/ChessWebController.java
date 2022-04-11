@@ -44,7 +44,7 @@ public class ChessWebController {
     }
 
     private void renderEnter() {
-        get("/enter", (req, res) -> {
+        post("/enter", (req, res) -> {
             String roomId = req.params("room");
             int gameId = chessService.saveGame(roomId);
             res.redirect("/ready/" + gameId);
@@ -53,18 +53,17 @@ public class ChessWebController {
     }
 
     private void renderReady() {
-        post("/ready", (req, res) -> {
-            Session session = req.session(true);
-            String roomId = req.queryParams("room");
-            session.attribute("room", roomId);
-            Board board = chessService.ready(session);
+        get("/ready/:id", (req, res) -> {
+            int gameId = Integer.parseInt(req.params(":id"));
+            Board board = chessService.ready(gameId);
             Map<String, Object> model = board.toMap();
+            model.put("id", gameId);
             return render(model, STARTED_PATH);
         });
     }
 
     private void renderStart() {
-        get("/start", (req, res) -> {
+        get("/start/:id", (req, res) -> {
             try {
                 Session session = req.session(false);
                 Board board = chessService.start(session);

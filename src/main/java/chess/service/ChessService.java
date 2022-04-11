@@ -33,11 +33,12 @@ public class ChessService {
     }
 
     public int saveGame(String roomId) {
-        if (isExistGame(roomId)) {
+        int gameId = findByRoomId(roomId);
+        if (gameId == 0) {
+            chessGameDao.save(roomId);
             return findByRoomId(roomId);
         }
-        chessGameDao.save(roomId);
-        return findByRoomId(roomId);
+        return gameId;
     }
 
     public int findByRoomId(String roomId) {
@@ -49,30 +50,18 @@ public class ChessService {
         return gameExistFlag == 1;
     }
 
-    public Board ready(Session session) {
-        int gameId = chessGameDao.findRecentGame();
-        String state = null;
-        try {
-            state = chessGameDao.findById(gameId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Board ready(int gameId) {
+        String state = chessGameDao.findById(gameId);
         if (gameId != 0 && !isEnded(state)) {
             Board board = getBoard(gameId);
             chessGame = toChessGame(board, state);
-            session.attribute("id", gameId);
             return board;
         }
         return chessGame.getBoard();
     }
 
     private Board getBoard(int gameId) {
-        Board board = null;
-        try {
-            board = new Board(boardDao.findGame(gameId));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Board board = new Board(boardDao.findGame(gameId));
         return board;
     }
 
