@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 public class GameDao {
 
+    private static final String INVALID_GAME_ID_EXCEPTION_MESSAGE = "유효하지 않은 게임 방 번호입니다.";
+
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
     public void create(String gameId) {
@@ -21,7 +23,7 @@ public class GameDao {
             statement.setString(2, Color.BLACK.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 
@@ -37,7 +39,7 @@ public class GameDao {
                 return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
         return true;
     }
@@ -51,13 +53,12 @@ public class GameDao {
             statement.setString(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("유효하지 않은 게임입니다.");
+                throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
             }
             return resultSet.getBoolean("force_end_flag");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
-        return false;
     }
 
     public Color findTurnById(String gameId) {
@@ -69,13 +70,12 @@ public class GameDao {
             statement.setString(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("유효하지 않은 게임입니다.");
+                throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
             }
             return Color.of(resultSet.getString("turn"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
-        return null;
     }
 
     public void updateTurnById(Color nextTurn, String gameId) {
@@ -87,7 +87,7 @@ public class GameDao {
             statement.setString(2, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 
@@ -100,7 +100,7 @@ public class GameDao {
             statement.setString(2, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 
@@ -112,7 +112,7 @@ public class GameDao {
             statement.setString(1, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 

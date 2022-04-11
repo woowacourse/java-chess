@@ -13,6 +13,9 @@ import java.util.List;
 
 public class PieceDao {
 
+    private static final String INVALID_PIECE_VALUE_EXCEPTION_MESSAGE = "유효하지 않은 입력입니다.";
+    private static final String INVALID_GAME_ID_EXCEPTION_MESSAGE = "유효하지 않은 게임 방 번호입니다.";
+
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
     public void saveAllByGameId(List<Piece> pieces, String gameId) {
@@ -30,7 +33,7 @@ public class PieceDao {
             statement.executeBatch();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_PIECE_VALUE_EXCEPTION_MESSAGE);
         }
     }
 
@@ -48,7 +51,7 @@ public class PieceDao {
                     resultSet.getString("position")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
         return new Pieces(members);
     }
@@ -61,7 +64,7 @@ public class PieceDao {
             statement.setString(1, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 }
