@@ -12,6 +12,9 @@ public class JdbcConnection {
 
     private static final Connection CONNECTION = initConnection();
 
+    private JdbcConnection() {
+    }
+
     private static Connection initConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
