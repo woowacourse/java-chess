@@ -3,6 +3,8 @@ package chess.web;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.web.dao.PieceDaoImpl;
+import chess.web.dao.TurnDaoImpl;
 import chess.web.dto.MoveDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
@@ -13,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class GameController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final GameService gameService = new GameService();
+    private final GameService gameService = new GameService(new PieceDaoImpl(), new TurnDaoImpl());
 
     public void run() {
 

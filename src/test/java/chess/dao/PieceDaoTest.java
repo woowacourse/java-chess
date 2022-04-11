@@ -6,7 +6,7 @@ import chess.domain.board.Color;
 import chess.domain.board.Pawn;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
-import chess.web.dao.PieceDao;
+import chess.web.dao.PieceDaoImpl;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
 
-    PieceDao pieceDao = new PieceDao();
+    PieceDaoImpl pieceDao = new PieceDaoImpl();
 
     @AfterEach
     void tearDown() {

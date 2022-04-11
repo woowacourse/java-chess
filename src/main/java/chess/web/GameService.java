@@ -15,8 +15,13 @@ import java.util.Map;
 public class GameService {
 
     private GameManager gameManager;
-    private final PieceDao pieceDao = new PieceDao();
-    private final TurnDao turnDao = new TurnDao();
+    private final PieceDao pieceDao;
+    private final TurnDao turnDao;
+
+    public GameService(PieceDao pieceDao, TurnDao turnDao) {
+        this.pieceDao = pieceDao;
+        this.turnDao = turnDao;
+    }
 
     public ChessDto start() {
         gameManager = new GameManager();

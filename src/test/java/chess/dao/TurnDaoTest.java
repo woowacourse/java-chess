@@ -3,13 +3,13 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.state.Turn;
-import chess.web.dao.TurnDao;
+import chess.web.dao.TurnDaoImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 class TurnDaoTest {
 
-    TurnDao turnDao = new TurnDao();
+    TurnDaoImpl turnDao = new TurnDaoImpl();
 
     @AfterEach
     void tearDown() {
