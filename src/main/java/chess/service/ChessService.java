@@ -10,10 +10,17 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.position.Position;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class ChessService {
+
+    private static final String WINNER_KEY = "winner";
+    private static final String WHITE_KEY = "white";
+    private static final String BLACK_KEY = "black";
+    private static final String ERROR_KEY = "error";
+    private static final String WHITE_SCORE_MESSAGE = "WHITE : ";
+    private static final String BLACK_SCORE_MESSAGE = "BLACK : ";
+    private static final String VICTORY_MESSAGE = " 승리!!";
 
     private final BoardService boardService;
     private final GameService gameService;
@@ -38,7 +45,7 @@ public class ChessService {
         model.putAll(boardService.findBoard());
 
         if (chessGame.isEndGameByPiece()) {
-            model.put("winner", chessGame.getWinner() + " 승리!!");
+            model.put(WINNER_KEY, chessGame.getWinner() + VICTORY_MESSAGE);
             gameService.delete();
             chessGame.init(new NormalPiecesGenerator());
             return model;
@@ -60,8 +67,7 @@ public class ChessService {
     }
 
     public void move(final String from, final String to) {
-        chessGame.playGameByCommand(
-                GameCommand.of("move", from.toLowerCase(Locale.ROOT), to.toLowerCase(Locale.ROOT)));
+        chessGame.playGameByCommand(GameCommand.of("move", from, to));
         update(from, to);
     }
 
@@ -77,8 +83,8 @@ public class ChessService {
         model.putAll(boardService.findBoard());
 
         final Map<Color, Double> scores = chessGame.calculateScore();
-        model.put("white", "WHITE : " + scores.get(Color.WHITE));
-        model.put("black", "BLACK : " + scores.get(Color.BLACK));
+        model.put(WHITE_KEY, WHITE_SCORE_MESSAGE + scores.get(Color.WHITE));
+        model.put(BLACK_KEY, BLACK_SCORE_MESSAGE + scores.get(Color.BLACK));
         return model;
     }
 
@@ -91,7 +97,7 @@ public class ChessService {
     public Map<String, Object> error(final String errorMessage) {
         final Map<String, Object> model = new HashMap<>();
         model.putAll(boardService.findBoard());
-        model.put("error", errorMessage);
+        model.put(ERROR_KEY, errorMessage);
         return model;
     }
 }
