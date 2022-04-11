@@ -20,19 +20,18 @@ public class ChessService {
     private static final String TERMINATE = "terminate";
     private static final String COMPLETE = "complete";
 
-    private ChessGame chessGame;
     private final ChessGameDao chessGameDao;
     private final BoardDao boardDao;
 
     public ChessService(ChessGameDao chessGameDao, BoardDao boardDao) {
         this.chessGameDao = chessGameDao;
         this.boardDao = boardDao;
-        chessGame = new Ready();
     }
 
     public int saveGame(String roomId) {
         int gameId = findByRoomId(roomId);
         if (gameId == 0) {
+            ChessGame chessGame = new Ready();
             chessGameDao.save(chessGame, roomId);
             return findByRoomId(roomId);
         }
@@ -50,17 +49,24 @@ public class ChessService {
 
     public Board ready(int gameId) {
         String state = chessGameDao.findById(gameId);
-        if (state == null && !isEnded(state)) {
-            Board board = getBoard(gameId);
-            chessGame = toChessGame(board, state);
-            return board;
+        if (state == null && isEnded(state)) {
+            ChessGame chessGame = new Ready();
+            return chessGame.getBoard();
         }
+        Board board = getBoard(gameId);
+        ChessGame chessGame = toChessGame(board, state);
         return chessGame.getBoard();
     }
 
     private Board getBoard(int gameId) {
         Board board = new Board(boardDao.findGame(gameId));
         return board;
+    }
+
+    private ChessGame getChessGame(int gameId) {
+        String state = chessGameDao.findById(gameId);
+        Board board = getBoard(gameId);
+        return toChessGame(board, state);
     }
 
     private ChessGame toChessGame(Board board, String state) {
@@ -78,6 +84,7 @@ public class ChessService {
     }
 
     public Board start(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         chessGame = chessGame.initBoard();
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
         for (Position position : board.keySet()) {
@@ -89,6 +96,7 @@ public class ChessService {
     }
 
     public Board move(int gameId, String from, String to) {
+        ChessGame chessGame = getChessGame(gameId);
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
         Piece piece = board.get(Position.valueOf(to));
@@ -97,7 +105,8 @@ public class ChessService {
         return chessGame.getBoard();
     }
 
-    public Map<String, Double> showStatus() {
+    public Map<String, Double> showStatus(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         Map<String, Double> scoreStatus = new HashMap<>();
         scoreStatus.put(Color.WHITE.name(), chessGame.calculateScore(Color.WHITE));
         scoreStatus.put(Color.BLACK.name(), chessGame.calculateScore(Color.BLACK));
@@ -105,19 +114,23 @@ public class ChessService {
     }
 
     public void terminate(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         chessGame = chessGame.end();
         chessGameDao.update(gameId, chessGame);
     }
 
-    public Color complete() {
+    public Color complete(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         return chessGame.judgeWinner();
     }
 
-    public boolean isComplete() {
+    public boolean isComplete(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         return chessGame.isFinish() && !chessGame.isTerminate();
     }
 
-    public Map<String, Object> showBoard() {
+    public Map<String, Object> showBoard(int gameId) {
+        ChessGame chessGame = getChessGame(gameId);
         return chessGame.getBoard().toMap();
     }
 }

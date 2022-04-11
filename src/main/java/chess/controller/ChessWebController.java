@@ -63,37 +63,37 @@ public class ChessWebController {
 
     private void renderStart() {
         get("/game/:id/start", (req, res) -> {
+            int gameId = Integer.parseInt(req.params(":id"));
             try {
-                int gameId = Integer.parseInt(req.params(":id"));
                 Board board = chessService.start(gameId);
                 Map<String, Object> model = board.toMap();
                 model.put("id", gameId);
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
-                return renderErrorMessage(exception.getMessage());
+                return renderErrorMessage(gameId, exception.getMessage());
             }
         });
     }
 
     private void renderMove() {
         post("/game/:id/move", (req, res) -> {
+            int gameId = Integer.parseInt(req.params(":id"));
             try {
-                int gameId = Integer.parseInt(req.params(":id"));
                 Board board = chessService.move(gameId, req.queryParams("from"), req.queryParams("to"));
                 Map<String, Object> model = board.toMap();
-                model.putAll(renderWinner());
+                model.putAll(renderWinner(gameId));
                 model.put("id", gameId);
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException | IllegalArgumentException exception) {
-                return renderErrorMessage(exception.getMessage());
+                return renderErrorMessage(gameId, exception.getMessage());
             }
         });
     }
 
-    private Map<String, Object> renderWinner() {
+    private Map<String, Object> renderWinner(int gameId) {
         Map<String, Object> winningMessage = new HashMap<>();
-        if (chessService.isComplete()) {
-            String winner = String.format(WINNING_MESSAGE, chessService.complete().name());
+        if (chessService.isComplete(gameId)) {
+            String winner = String.format(WINNING_MESSAGE, chessService.complete(gameId).name());
             winningMessage.put("complete", winner);
         }
         return winningMessage;
@@ -104,12 +104,12 @@ public class ChessWebController {
             int gameId = Integer.parseInt(req.params(":id"));
             Map<String, Object> model = new HashMap<>();
             try {
-                model.putAll(chessService.showBoard());
-                model.putAll(chessService.showStatus());
+                model.putAll(chessService.showBoard(gameId));
+                model.putAll(chessService.showStatus(gameId));
                 model.put("id", gameId);
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
-                return renderErrorMessage(exception.getMessage());
+                return renderErrorMessage(gameId, exception.getMessage());
             }
         });
     }
@@ -117,22 +117,23 @@ public class ChessWebController {
     private void renderEnd() {
         get("/game/:id/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            int gameId = Integer.parseInt(req.params(":id"));
             try {
-                int gameId = Integer.parseInt(req.params(":id"));
+                chessService.terminate(gameId);
                 model.put("terminate", TERMINATE_MESSAGE);
                 model.put("id", gameId);
-                model.putAll(chessService.showBoard());
+                model.putAll(chessService.showBoard(gameId));
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
-                return renderErrorMessage(exception.getMessage());
+                return renderErrorMessage(gameId, exception.getMessage());
             }
         });
     }
 
-    private String renderErrorMessage(String errorMessage) {
+    private String renderErrorMessage(int gameId, String errorMessage) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", errorMessage);
-        model.putAll(chessService.showBoard());
+        model.putAll(chessService.showBoard(gameId));
         return render(model, STARTED_PATH);
     }
 
