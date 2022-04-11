@@ -42,4 +42,12 @@ public class ChessGameService {
         boardDao.deleteById(gameId);
         gameDao.deleteById(gameId);
     }
+
+    public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
+        return gameDao.findIdByPlayers(idPlayerWhite, idPlayerBlack);
+    }
+
+    public String findTurnById(int gameId) {
+        return findTurnById(gameId);
+    }
 }

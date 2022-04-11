@@ -16,7 +16,7 @@ import chess.model.PieceColor;
 public class GameDaoImplTest {
 
     private static GameDao gameDao;
-    private static int id = 1;
+    private static final int id = 1;
 
     @BeforeEach
     void setUp() {

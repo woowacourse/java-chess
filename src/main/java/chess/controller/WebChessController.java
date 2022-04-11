@@ -8,11 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.Game;
-import chess.dao.GameDaoImpl;
 import chess.dto.Request;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.DefaultArrangement;
-import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.service.ChessGameService;
@@ -41,10 +39,10 @@ public class WebChessController {
     private void game(ChessGameService service) {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int id = new GameDaoImpl().findIdByPlayers(req.queryParams("idPlayerWhite"),
+            int id = service.findIdByPlayers(req.queryParams("idPlayerWhite"),
                 req.queryParams("idPlayerBlack"));
             game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"),
-                new Turn(PieceColor.valueOf(new GameDaoImpl().findTurnById(id))), id);
+                new Turn(service.findTurnById(id)), id);
 
             chessGame = service.init(game.getId(), new Turn(game.getTurn()), new DefaultArrangement());
             model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
