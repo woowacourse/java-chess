@@ -37,7 +37,7 @@ public class InMemoryBoardDao implements BoardDao {
     @Override
     public void update(PieceWithSquareDto replacePiece, int gameId) {
         BoardDto boardDto = boardTable.get(gameId);
-        for (int i = 0 ; i < boardDto.getPieces().size() ; i++) {
+        for (int i = 0; i < boardDto.getPieces().size(); i++) {
             replaceIfSquareEquals(replacePiece, boardDto, i);
         }
     }

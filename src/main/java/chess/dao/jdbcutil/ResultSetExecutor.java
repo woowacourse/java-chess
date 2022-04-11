@@ -13,7 +13,7 @@ public class ResultSetExecutor {
         this.resultSet = resultSet;
     }
 
-    public <T> T getFirst(ResultSetConverter<ResultSet, T> entityFunction) {
+    public <T> T getFirst(ResultSetFunction<ResultSet, T> entityFunction) {
         try (ResultSet resultSet = this.resultSet) {
             return applyFirst(entityFunction);
         } catch (SQLException e) {
@@ -21,7 +21,7 @@ public class ResultSetExecutor {
         }
     }
 
-    public <T> List<T> getAll(ResultSetConverter<ResultSet, T> entityFunction) {
+    public <T> List<T> getAll(ResultSetFunction<ResultSet, T> entityFunction) {
         try (ResultSet resultSet = this.resultSet) {
             return applyAll(entityFunction);
         } catch (SQLException e) {
@@ -29,14 +29,14 @@ public class ResultSetExecutor {
         }
     }
 
-    private  <T> T applyFirst(ResultSetConverter<ResultSet, T> entityFunction) throws SQLException {
+    private <T> T applyFirst(ResultSetFunction<ResultSet, T> entityFunction) throws SQLException {
         if (!resultSet.next()) {
             return null;
         }
         return entityFunction.convert(resultSet);
     }
 
-    private  <T> List<T> applyAll(ResultSetConverter<ResultSet, T> entityFunction) throws SQLException {
+    private <T> List<T> applyAll(ResultSetFunction<ResultSet, T> entityFunction) throws SQLException {
         List<T> entities = new ArrayList<>();
         while (resultSet.next()) {
             T entity = entityFunction.convert(resultSet);

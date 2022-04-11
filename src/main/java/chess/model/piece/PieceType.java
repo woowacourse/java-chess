@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 public enum PieceType {
-    KING (King.class, "k") {
+    KING(King.class, "k") {
         @Override
         public Piece getPiece(Color color) {
             return new King(color);

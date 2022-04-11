@@ -10,8 +10,6 @@ import chess.service.dto.GameResultDto;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

@@ -1,10 +1,10 @@
 package chess.service.dto;
 
 public class ChessGameDto {
-    private int id;
-    private String name;
     private final String status;
     private final String turn;
+    private int id;
+    private String name;
 
     public ChessGameDto(int id, String name, String status, String turn) {
         this.id = id;

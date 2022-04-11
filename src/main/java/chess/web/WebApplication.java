@@ -12,7 +12,8 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
         port(8080);
-        WebChessController controller = new WebChessController(new ChessService(new DatabaseBoardDao(), new DatabaseGameDao()));
+        WebChessController controller = new WebChessController(
+                new ChessService(new DatabaseBoardDao(), new DatabaseGameDao()));
         controller.run();
     }
 }

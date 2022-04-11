@@ -3,10 +3,7 @@ package chess.dao.jdbcutil;
 import chess.dao.JdbcException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class JdbcUtil {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
@@ -15,7 +12,7 @@ public class JdbcUtil {
 
     public static Connection getConnection() {
         loadDriver();
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {

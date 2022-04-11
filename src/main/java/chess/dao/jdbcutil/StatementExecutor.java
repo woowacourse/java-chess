@@ -49,7 +49,7 @@ public class StatementExecutor implements AutoCloseable {
         }
     }
 
-    public <T> List<T> findAll(ResultSetConverter<ResultSet, T> converter) {
+    public <T> List<T> findAll(ResultSetFunction<ResultSet, T> converter) {
         try (StatementExecutor executor = this) {
             ResultSet resultSet = executor.statement.executeQuery();
             return new ResultSetExecutor(resultSet).getAll(converter);
@@ -58,7 +58,7 @@ public class StatementExecutor implements AutoCloseable {
         }
     }
 
-    public <T> T findFirst(ResultSetConverter<ResultSet, T> converter) {
+    public <T> T findFirst(ResultSetFunction<ResultSet, T> converter) {
         try (StatementExecutor executor = this) {
             ResultSet resultSet = executor.statement.executeQuery();
             return new ResultSetExecutor(resultSet).getFirst(converter);
