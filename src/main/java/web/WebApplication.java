@@ -2,6 +2,7 @@ package web;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 
 import chess.domain.board.ChessBoard;
@@ -54,7 +55,7 @@ public class WebApplication {
             return loadChessBoard(chessGame);
         }, JSON_TRANSFORMER);
 
-        post("game/:id/move", (req, res) -> {
+        put("game/:id/move", (req, res) -> {
             MoveRequest moveReqeust = JSON_TRANSFORMER.getGson()
                 .fromJson(req.body(), MoveRequest.class);
             return CHESS_SERVICE.move(moveReqeust);

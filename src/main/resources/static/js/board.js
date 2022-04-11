@@ -89,7 +89,7 @@ async function move(from, to, id) {
     id: id
   };
   fetch("/game/" + gameId() + "/move", {
-    method: 'POST',
+    method: 'PUT',
     header: {
       'Content-Type': 'application/json'
     },
