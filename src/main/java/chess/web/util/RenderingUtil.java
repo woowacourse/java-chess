@@ -1,6 +1,6 @@
 package chess.web.util;
 
-import chess.domain.piece.Piece;
+import chess.dto.PieceDto;
 import chess.dto.PiecesDto;
 import chess.web.view.BoardView;
 import java.util.Map;
@@ -12,11 +12,11 @@ public class RenderingUtil {
     private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
 
     public static String render(PiecesDto piecesDto, String templatePath) {
-        Map<String, Piece> model = mapPiecesDtoToModel(piecesDto);
+        Map<String, PieceDto> model = mapPiecesDtoToModel(piecesDto);
         return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 
-    private static Map<String, Piece> mapPiecesDtoToModel(PiecesDto piecesDto) {
+    private static Map<String, PieceDto> mapPiecesDtoToModel(PiecesDto piecesDto) {
         return BoardView.of(piecesDto)
             .getBoardView();
     }

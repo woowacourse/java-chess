@@ -1,21 +1,16 @@
 package chess.dto;
 
-import chess.domain.piece.Pieces;
 import java.util.List;
 
 public class PiecesDto {
 
-    private final Pieces pieces;
+    private final List<PieceDto> pieces;
 
-    public PiecesDto() {
-        this.pieces = new Pieces(List.of());
-    }
-
-    public PiecesDto(Pieces pieces) {
+    public PiecesDto(List<PieceDto> pieces) {
         this.pieces = pieces;
     }
     
-    public Pieces getPieces() {
+    public List<PieceDto> getPieces() {
         return pieces;
     }
 }

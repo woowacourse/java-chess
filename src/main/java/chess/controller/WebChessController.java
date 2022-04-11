@@ -9,13 +9,11 @@ import static spark.Spark.staticFiles;
 import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
 import chess.dto.PiecesDto;
-
 import chess.service.ChessGameService;
-
 import chess.web.util.JsonTransformer;
 import chess.web.util.RenderingUtil;
 import chess.web.view.ResultView;
-
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
@@ -29,7 +27,7 @@ public class WebChessController {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            PiecesDto piecesDto = new PiecesDto();
+            PiecesDto piecesDto = new PiecesDto(List.of());
 
             return RenderingUtil.render(piecesDto, "index.html");
         });
