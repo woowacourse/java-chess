@@ -51,4 +51,9 @@ public class Score {
     public double getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return Double.toString(score);
+    }
 }

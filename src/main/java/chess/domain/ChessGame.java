@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class ChessGame {
 
+    private static final String WIN = "승";
+    private static final String LOSE = "패";
+    private static final int LOSE_SCORE = 0;
+
     private State state;
 
     public ChessGame() {
@@ -42,10 +46,6 @@ public class ChessGame {
         return state.isRightTurn(turn);
     }
 
-    public Score computeScore(Color color) {
-        return state.computeScore(color);
-    }
-
     public void loadTurn() {
         state.loadTurn();
     }
@@ -69,5 +69,28 @@ public class ChessGame {
 
     public Chessboard getChessBoard() {
         return state.getChessboard();
+    }
+
+    public Map<String, Object> createScore(Map<String, Object> model) {
+        Score whiteScore = state.computeScore(Color.WHITE);
+        Score blackScore = state.computeScore(Color.BLACK);
+
+        if (whiteScore.getScore() == LOSE_SCORE || blackScore.getScore() == LOSE_SCORE) {
+            return hasWinner(model, whiteScore);
+        }
+        model.put(Color.WHITE.name(), whiteScore);
+        model.put(Color.BLACK.name(), blackScore);
+        return model;
+    }
+
+    private Map<String, Object> hasWinner(Map<String, Object> model, Score whiteScore) {
+        if (whiteScore.getScore() == LOSE_SCORE) {
+            model.put(Color.WHITE.name(), LOSE);
+            model.put(Color.BLACK.name(), WIN);
+            return model;
+        }
+        model.put(Color.WHITE.name(), WIN);
+        model.put(Color.BLACK.name(), LOSE);
+        return model;
     }
 }

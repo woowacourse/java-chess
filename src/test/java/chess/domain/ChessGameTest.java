@@ -5,6 +5,9 @@ import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessGameTest {
@@ -15,7 +18,10 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
 
-        assertThat(chessGame.computeScore(Color.WHITE).getScore()).isEqualTo(38);
+        Map<String, Object> scores = chessGame.createScore(new HashMap<>());
+        Score score = (Score) scores.get(Color.WHITE.name());
+
+        assertThat(score.getScore()).isEqualTo(38);
     }
 
     @Test

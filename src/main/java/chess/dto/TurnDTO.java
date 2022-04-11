@@ -11,4 +11,8 @@ public class TurnDTO {
     public String getTurn() {
         return turn;
     }
+
+    public boolean isInitTurn(String turnName) {
+        return turn.equals(turnName);
+    }
 }

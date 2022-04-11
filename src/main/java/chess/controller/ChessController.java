@@ -2,10 +2,10 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.position.Positions;
-import chess.domain.piece.Color;
 import chess.view.OutputView;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import static chess.view.Command.*;
@@ -23,7 +23,7 @@ public class ChessController {
             String input = inputCommand();
             executeCommand(chessGame, input);
         }
-        OutputView.printFinalScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+        OutputView.printResult(chessGame.createScore(new HashMap<>()));
     }
 
     private void executeCommand(ChessGame chessGame, String input) {
@@ -31,7 +31,7 @@ public class ChessController {
             throw new IllegalArgumentException(EXCEPTION_WRONG_COMMAND);
         }
         if (STATUS.isValue(input)) {
-            OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            OutputView.printResult(chessGame.createScore(new HashMap<>()));
             return;
         }
         playTurn(chessGame, input);
