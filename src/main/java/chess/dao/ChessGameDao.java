@@ -17,18 +17,32 @@ public class ChessGameDao {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public int findByRoomId(String roomId) throws SQLException {
+        final String sql = "select id from game where room_id = ?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, roomId);
+        ResultSet resultSet = statement.executeQuery();
+        try (connection; statement; resultSet) {
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (SQLException exception) {
+            logger.warn(exception.getMessage());
+        }
+        return 0;
+    }
 
-    public int save(ChessGame chessGame) {
-        final String sql = "insert into game (state) values (?)";
+
+    public void save(String roomId) {
+        final String sql = "insert into game (room_id) values (?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
+            statement.setString(1, roomId);
             statement.executeUpdate();
-            return findRecentGame();
         } catch (SQLException e) {
             logger.warn(e.getMessage());
         }
-        return 0;
     }
 
     public int findRecentGame() {

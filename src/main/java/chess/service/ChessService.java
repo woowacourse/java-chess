@@ -32,6 +32,15 @@ public class ChessService {
         chessGame = new Ready();
     }
 
+    public int findByRoomId(String roomId) {
+        try {
+            return chessGameDao.findByRoomId(roomId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     public Board ready(Session session) {
         int gameId = chessGameDao.findRecentGame();
         String state = null;
@@ -46,8 +55,6 @@ public class ChessService {
             session.attribute("id", gameId);
             return board;
         }
-        int id = chessGameDao.save(chessGame);
-        session.attribute("id", id);
         return chessGame.getBoard();
     }
 
