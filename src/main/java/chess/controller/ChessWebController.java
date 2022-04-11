@@ -16,7 +16,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class ChessWebController {
 
     private static final String TERMINATE_MESSAGE = "게임이 종료되었습니다.";
-    private static final String TEMPLATE_PATH = "chess.html";
+    private static final String STARTED_PATH = "chess.html";
+    private static final String INDEX_PATH = "index.html";
     private static final String WINNING_MESSAGE = "%s가 이겼습니다!!";
 
     private final ChessService chessService;
@@ -26,6 +27,7 @@ public class ChessWebController {
     }
 
     public void run() {
+        renderEnter();
         renderReady();
         renderStart();
         renderMove();
@@ -33,12 +35,20 @@ public class ChessWebController {
         renderEnd();
     }
 
-    private void renderReady() {
+    private void renderEnter() {
         get("/", (req, res) -> {
             Session session = req.session(true);
+            Map<String, Object> model = new HashMap<>();
+            return render(model, INDEX_PATH);
+        });
+    }
+
+    private void renderReady() {
+        post("/ready", (req, res) -> {
+            Session session = req.session(false);
             Board board = chessService.ready(session);
             Map<String, Object> model = board.toMap();
-            return render(model);
+            return render(model, STARTED_PATH);
         });
     }
 
@@ -47,7 +57,7 @@ public class ChessWebController {
             try {
                 Session session = req.session(false);
                 Board board = chessService.start(session);
-                return render(board.toMap());
+                return render(board.toMap(), STARTED_PATH);
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -61,7 +71,7 @@ public class ChessWebController {
                 Board board = chessService.move(session, req.queryParams("from"), req.queryParams("to"));
                 Map<String, Object> model = board.toMap();
                 model.putAll(renderWinner());
-                return render(model);
+                return render(model, STARTED_PATH);
             } catch (IllegalStateException | IllegalArgumentException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -83,7 +93,7 @@ public class ChessWebController {
             try {
                 model.putAll(chessService.showBoard());
                 model.putAll(chessService.showStatus());
-                return render(model);
+                return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -98,7 +108,7 @@ public class ChessWebController {
                 chessService.terminate(session);
                 model.put("terminate", TERMINATE_MESSAGE);
                 model.putAll(chessService.showBoard());
-                return render(model);
+                return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -109,10 +119,11 @@ public class ChessWebController {
         Map<String, Object> model = new HashMap<>();
         model.put("error", errorMessage);
         model.putAll(chessService.showBoard());
-        return render(model);
+        return render(model, STARTED_PATH);
     }
 
-    private String render(Map<String, Object> model) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, TEMPLATE_PATH));
+    private String render(Map<String, Object> model, String tempalatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, tempalatePath));
     }
+
 }
