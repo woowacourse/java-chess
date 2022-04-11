@@ -44,7 +44,21 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void saveAll(List<PieceDto> pieceDtos) {
-        pieceDtos.forEach(this::save);
+        String sql = "insert into piece (position, type, color) values (?, ?, ?)";
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (PieceDto pieceDto : pieceDtos) {
+                statement.setString(1, pieceDto.getPosition());
+                statement.setString(2, pieceDto.getType());
+                statement.setString(3, pieceDto.getColor());
+                statement.addBatch();
+                statement.clearParameters();
+            }
+            statement.executeBatch();
+            statement.clearBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
