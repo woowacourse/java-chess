@@ -3,10 +3,9 @@ package chess.console.view.boardview;
 import static chess.domain.position.File.FILES_TOTAL_SIZE;
 import static chess.domain.position.Rank.RANKS_TOTAL_SIZE;
 
-import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.dto.ChessGameDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,9 +16,9 @@ public class BoardView {
 
     private final List<String> boardDisplay;
 
-    public BoardView(ChessGameDto chessGameDto) {
+    public BoardView(Pieces pieces) {
         boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
-            .mapToObj(rowIdx -> extractCurrentRowChessmen(chessGameDto.getChessGame(), rowIdx))
+            .mapToObj(rowIdx -> extractCurrentRowChessmen(pieces, rowIdx))
             .map(BoardView::initRowDisplay)
             .collect(Collectors.toList());
     }
@@ -30,8 +29,8 @@ public class BoardView {
             .collect(Collectors.joining());
     }
 
-    private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
-        return game.getChessmen()
+    private static List<Piece> extractCurrentRowChessmen(Pieces pieces, int rowIdx) {
+        return pieces
             .getPieces()
             .stream()
             .filter(piece -> toRowIdx(piece) == rowIdx)

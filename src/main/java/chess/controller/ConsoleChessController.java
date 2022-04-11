@@ -6,13 +6,12 @@ import static chess.console.view.InputView.requestStatusOrEndInput;
 
 import chess.console.view.OutputView;
 import chess.console.view.boardview.BoardView;
-import chess.domain.game.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
+import chess.domain.game.ChessGame;
 import chess.domain.game.GameResult;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
-import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
 import chess.dto.GameResultDto;
 
@@ -40,7 +39,7 @@ public class ConsoleChessController {
 
         ChessGame game = ChessGame.of(chessmenInitializer.init());
 
-        OutputView.printBoard(new BoardView(new ChessGameDto(game)));
+        OutputView.printBoard(new BoardView(game.getChessmen()));
 
         return game;
     }
@@ -48,7 +47,7 @@ public class ConsoleChessController {
     private ChessGame progressGameUntilEnd(ChessGame chessGame) {
         while (!chessGame.isEnd() && !playerWantToEndStatus) {
             chessGame = progressByCommand(chessGame, requestMoveOrEndOrStatusInput());
-            OutputView.printBoard(new BoardView(new ChessGameDto(chessGame)));
+            OutputView.printBoard(new BoardView(chessGame.getChessmen()));
         }
         return chessGame;
     }
