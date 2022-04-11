@@ -17,6 +17,16 @@ public final class WhiteTurn extends Running {
     }
 
     @Override
+    public boolean isWhiteTurn() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackTurn() {
+        return false;
+    }
+
+    @Override
     public State proceed(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isStatus()) {

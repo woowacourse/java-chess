@@ -23,7 +23,7 @@ class SquareDaoImplTest {
     @Test()
     void delete() {
         SquareDaoImpl squareDaoImpl = new SquareDaoImpl();
-        squareDaoImpl.save(Position.from("a1"), Piece.getPiece("BLACK_KING"));
+        squareDaoImpl.save(Position.from("a2"), Piece.getPiece("BLACK_KING"));
         squareDaoImpl.delete();
 
         assertThat(squareDaoImpl.find().size()).isEqualTo(0);

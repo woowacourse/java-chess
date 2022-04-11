@@ -29,6 +29,21 @@ public final class Ready implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
+    public boolean isWhiteTurn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackTurn() {
+        return false;
+    }
+
+    @Override
     public State proceed(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isStart()) {

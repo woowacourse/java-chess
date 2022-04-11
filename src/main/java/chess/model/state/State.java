@@ -19,4 +19,10 @@ public interface State {
     Map<Team, Double> getScore();
 
     Team getWinner();
+
+    boolean isReady();
+
+    boolean isWhiteTurn();
+
+    boolean isBlackTurn();
 }

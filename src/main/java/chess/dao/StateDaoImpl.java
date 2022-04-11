@@ -51,7 +51,7 @@ public class StateDaoImpl implements StateDao {
 
     @Override
     public void update(String now, String next) {
-        final String sql = "update state set name = ? where name =?";
+        final String sql = "update state set name = ? where name = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, next);

@@ -4,9 +4,9 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dao.StateDaoImpl;
 import chess.service.GameService;
 import chess.dao.SquareDaoImpl;
-import chess.dao.TurnDaoImpl;
 import chess.dto.MoveDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private final GameService gameService = new GameService(new SquareDaoImpl(), new TurnDaoImpl());
+    private final GameService gameService = new GameService(new SquareDaoImpl(), new StateDaoImpl());
     private final Gson gson = new Gson();
 
     public void run() {
@@ -27,13 +27,13 @@ public class WebChessController {
 
         get("/end", (req, res) -> gson.toJson(gameService.end()));
 
-        get("/status", (req, res) -> gson.toJson(gameService.status()));
+        get("/status", (req, res) -> gson.toJson(gameService.status("STATUS")));
 
         get("/load", (req, res) -> gson.toJson(gameService.load()));
 
         post("/move", (req, res) -> {
             MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
-            return gson.toJson(gameService.move(moveDto.getSource(), moveDto.getTarget()));
+            return gson.toJson(gameService.move(moveDto));
         });
 
         exception(Exception.class, (exception, req, res) -> {

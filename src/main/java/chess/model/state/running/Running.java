@@ -30,6 +30,11 @@ public abstract class Running implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
