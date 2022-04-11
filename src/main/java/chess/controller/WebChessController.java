@@ -56,7 +56,13 @@ public class WebChessController {
         });
 
         post("/inGameCommand", (req, res) -> {
-            return doInGameCommand(req, res, chessGame);
+            InGameCommand command = WebInputView.toInGameCommand(req.queryParams("command"));
+            if (InGameCommand.MOVE.equals(command)) {
+                doMoveCommand(req, chessGame, dbService);
+                return goFirstPageIfGameEnd(res, chessGame);
+            }
+            res.redirect("/status");
+            return null;
         });
 
         get("/status", (req, res) -> {
@@ -93,19 +99,14 @@ public class WebChessController {
         return boardModel;
     }
 
-    private static String doInGameCommand(Request req, Response res, ChessGame chessGame) {
-        InGameCommand command = WebInputView.toInGameCommand(req.queryParams("command"));
-        if (InGameCommand.MOVE.equals(command)) {
-            return doMoveCommand(req, res, chessGame);
-        }
-        res.redirect("/status");
-        return null;
-    }
-
-    private static String doMoveCommand(Request req, Response res, ChessGame chessGame) {
+    private static void doMoveCommand(Request req, ChessGame chessGame, DbService dbService) {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
-        chessGame.moveAndSave(source, target);
+        chessGame.move(source, target);
+        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
+    }
+
+    private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {
         if (chessGame.isGameEnd()) {
             return render(null, "../public/index.html");
         }

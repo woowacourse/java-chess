@@ -1,23 +1,17 @@
 package chess.domain;
 
-import chess.dao.DbBoardDao;
-import chess.dao.DbGameDao;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
-import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
-import chess.service.DbService;
 import java.util.Map;
 
 public class ChessGame {
     private ChessBoard chessBoard;
-    private final DbService dbService;
     private final int gameId;
 
     private ChessGame(int gameId) {
         this.gameId = gameId;
-        this.dbService = DbService.create(new DbGameDao(), new DbBoardDao());
     }
 
     public static ChessGame create(int gameId) {
@@ -40,11 +34,6 @@ public class ChessGame {
         chessBoard.move(sourcePosition, targetPosition);
     }
 
-    public void moveAndSave(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        move(sourcePosition, targetPosition);
-        dbService.saveDataToDb(gameId, chessBoard.getTurn(), getChessBoardInformation());
-    }
-
     public ChessStatusDto getStatusInformation() {
         return ChessStatusDto.of(chessBoard);
     }
@@ -55,5 +44,9 @@ public class ChessGame {
 
     public int getGameId() {
         return gameId;
+    }
+
+    public Team getTurn() {
+        return chessBoard.getTurn();
     }
 }
