@@ -21,33 +21,15 @@ import chess.webview.RowName;
 import chess.webview.TeamName;
 import chess.webview.WebInputView;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import spark.ModelAndView;
+import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
     private static final int GAME_ID = 1111;
-    private static final String IN_GAME_COMMAND_DELIMITER = " ";
-    private static final Map<Character, Integer> convertColumn = new HashMap<>();
-
-    static {
-        convertColumn.put('a', 1);
-        convertColumn.put('b', 2);
-        convertColumn.put('c', 3);
-        convertColumn.put('d', 4);
-        convertColumn.put('e', 5);
-        convertColumn.put('f', 6);
-        convertColumn.put('g', 7);
-        convertColumn.put('h', 8);
-    }
 
     public void run() {
         port(8082);
@@ -66,8 +48,7 @@ public class WebChessController {
         });
 
         post("/inGameCommand", (req, res) -> {
-            List<String> inputs = divideInGameCommandInput(req.queryParams("command"));
-            return doInGameCommand(res, chessGame, dbService, inputs);
+            return doInGameCommand(req, res, chessGame);
         });
 
         get("/status", (req, res) -> {
@@ -100,25 +81,23 @@ public class WebChessController {
         return boardModel;
     }
 
-    private static String doInGameCommand(Response res, ChessGame chessGame, DbService dbService, List<String> inputs) {
-        Command command = Command.of(inputs.get(COMMAND_INDEX));
-        if (Command.MOVE.equals(command)) {
-            ChessBoardPosition source = coordinateToChessBoardPosition(inputs.get(SOURCE_INDEX));
-            ChessBoardPosition target = coordinateToChessBoardPosition(inputs.get(TARGET_INDEX));
-            return doMoveCommand(res, chessGame, dbService, source, target);
+    private static String doInGameCommand(Request req, Response res, ChessGame chessGame) {
+        InGameCommand command = WebInputView.toInGameCommand(req.queryParams("command"));
+        if (InGameCommand.MOVE.equals(command)) {
+            return doMoveCommand(req, res, chessGame);
         }
         res.redirect("/status");
         return null;
     }
 
-    private static String doMoveCommand(Response res, ChessGame chessGame, DbService dbService, ChessBoardPosition source, ChessBoardPosition target) {
-        chessGame.move(source, target);
+    private static String doMoveCommand(Request req, Response res, ChessGame chessGame) {
+        ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
+        ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
+        chessGame.moveAndSave(source, target);
         if (chessGame.isGameEnd()) {
-            dbService.deleteAllData(chessGame.getGameId());
             chessGame.initialze();
             return render(null, "../public/index.html");
         }
-        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
         res.redirect("/board");
         return null;
     }
@@ -131,22 +110,6 @@ public class WebChessController {
         return model;
     }
 
-    private static List<String> divideInGameCommandInput(String command) {
-        return List.of(command.split(IN_GAME_COMMAND_DELIMITER));
-    }
-
-    private static ChessBoardPosition coordinateToChessBoardPosition(String coordinate) {
-        System.out.println(coordinate);
-        return ChessBoardPosition.of(extractColumn(coordinate), extractRow(coordinate));
-    }
-
-    private static int extractColumn(String input) {
-        return convertColumn.get(input.charAt(COLUMN_INDEX));
-    }
-
-    private static int extractRow(String input) {
-        return Character.getNumericValue(input.charAt(ROW_INDEX));
-    }
 
     private static String chessBoardToString(ChessBoardPosition chessBoardPosition) {
         return ColumnName.of(chessBoardPosition.getColumn()) + RowName.of(chessBoardPosition.getRow());

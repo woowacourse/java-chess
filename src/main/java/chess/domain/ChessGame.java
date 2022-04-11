@@ -10,8 +10,8 @@ import chess.service.DbService;
 
 public class ChessGame {
     private ChessBoard chessBoard;
-    private DbService dbService;
-    private int gameId;
+    private final DbService dbService;
+    private final int gameId;
 
     private ChessGame(int gameId) {
         this.chessBoard = ChessBoard.initialize();
@@ -21,6 +21,20 @@ public class ChessGame {
 
     public static ChessGame create(int gameId) {
         return new ChessGame(gameId);
+    }
+
+    public void initialze() {
+        dbService.deleteAllData(gameId);
+        this.chessBoard = ChessBoard.initialize();
+    }
+
+    public void setChessGameForStart() {
+        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(gameId);
+        if (gameInformationDto == null) {
+            dbService.saveInitData(gameId, chessBoard.getTurn(), getChessBoardInformation());
+            return;
+        }
+        initFromDb(gameInformationDto, dbService.getChessBoardInformation(gameId));
     }
 
     public ChessBoardDto getChessBoardInformation() {
@@ -35,6 +49,11 @@ public class ChessGame {
         chessBoard.move(sourcePosition, targetPosition);
     }
 
+    public void moveAndSave(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        move(sourcePosition, targetPosition);
+        dbService.saveDataToDb(gameId, chessBoard.getTurn(), getChessBoardInformation());
+    }
+
     public ChessStatusDto getStatusInformation() {
         return ChessStatusDto.of(chessBoard);
     }
@@ -47,25 +66,7 @@ public class ChessGame {
         return gameId;
     }
 
-    public void initialze() {
-        this.chessBoard = ChessBoard.initialize();
-    }
-
-    public Team getTurn() {
-        return chessBoard.getTurn();
-    }
-
     private void initFromDb(GameInformationDto gameInformationDto, ChessBoardDto chessBoardDto) {
-        gameId = gameInformationDto.getId();
         chessBoard.initFromDb(gameInformationDto, chessBoardDto);
-    }
-
-    public void setChessGameForStart() {
-        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(gameId);
-        if (gameInformationDto == null) {
-            dbService.saveInitData(gameId, chessBoard.getTurn(), getChessBoardInformation());
-            return;
-        }
-        initFromDb(gameInformationDto, dbService.getChessBoardInformation(gameId));
     }
 }
