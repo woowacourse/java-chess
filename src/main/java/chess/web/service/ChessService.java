@@ -41,12 +41,12 @@ public class ChessService {
     }
 
     private List<PieceDto> extractPieceDtos(Map<Position, Piece> board) {
-        List<PieceDto> pieceDtos = new ArrayList<>();
+        List<PieceDto> pieces = new ArrayList<>();
         for (Position position : board.keySet()) {
-            String positionStr = position.getFile().name() + position.getRank().getValue();
-            pieceDtos.add(PieceDto.of(positionStr, board.get(position)));
+            String positionName = position.getFile().name() + position.getRank().getValue();
+            pieces.add(PieceDto.of(positionName, board.get(position)));
         }
-        return pieceDtos;
+        return pieces;
     }
 
     public Map<Color, Double> getStatus() {
