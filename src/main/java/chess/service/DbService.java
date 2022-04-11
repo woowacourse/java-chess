@@ -41,4 +41,8 @@ public class DbService {
         dbGameDao.saveGame(GameInformationDto.of(gameId, turn));
         dbBoardDao.updateAll(gameId, chessBoardDto);
     }
+
+    public boolean hasData(int gameId) {
+        return !dbGameDao.getGameData(gameId).isEmpty();
+    }
 }

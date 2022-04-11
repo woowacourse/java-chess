@@ -66,7 +66,7 @@ public class DbGameDao {
             statement.setInt(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                return GameInformationDto.empty();
             }
             return GameInformationDto.of(resultSet.getInt("id"),
                     nameToTeam.get(resultSet.getString("turn")));

@@ -2,6 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.dto.ChessBoardDto;
@@ -32,8 +33,8 @@ class DbBoardDaoTest {
         final DbBoardDao dbBoardDao = new DbBoardDao();
         final Connection connection = dbBoardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
-        chessGame.initialze();
-        dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
+        chessGame.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
+        //dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
         dbBoardDao.updateAll(chessGame.getGameId(), chessGame.getChessBoardInformation());
     }
 

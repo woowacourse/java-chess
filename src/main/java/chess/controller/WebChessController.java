@@ -9,10 +9,13 @@ import static spark.Spark.stop;
 
 import chess.dao.DbBoardDao;
 import chess.dao.DbGameDao;
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
+import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
+import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
 import chess.service.DbService;
 import chess.webview.ChessPieceImagePath;
@@ -39,7 +42,12 @@ public class WebChessController {
 
         get("/applicationCommand", (req, res) -> {
             ApplicationCommand command = WebInputView.toApplicationCommand(req.queryParams("command"));
-            doApplicationCommand(res, chessGame, command);
+            if (ApplicationCommand.START.equals(command)) {
+                doStartCommand(chessGame, dbService);
+                res.redirect("/board");
+                return null;
+            }
+            stop();
             return null;
         });
 
@@ -63,13 +71,17 @@ public class WebChessController {
         });
     }
 
-    private static void doApplicationCommand(Response res, ChessGame chessGame, ApplicationCommand command) {
-        if (ApplicationCommand.START.equals(command)) {
-            chessGame.setChessGameForStart();
-            res.redirect("/board");
-            return;
+    private static void doStartCommand(ChessGame chessGame, DbService dbService) {
+        putDataIfStorageEmpty(chessGame.getGameId(), dbService);
+        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(chessGame.getGameId());
+        ChessBoardDto chessBoardDto = dbService.getChessBoardInformation(chessGame.getGameId());
+        chessGame.initialize(gameInformationDto.getTurn(), chessBoardDto.getMapInformation());
+    }
+
+    private static void putDataIfStorageEmpty(int gameId, DbService dbService) {
+        if (!dbService.hasData(gameId)) {
+            dbService.saveInitData(gameId, Team.WHITE, ChessBoardDto.of(ChessBoardInitLogic.initialize()));
         }
-        stop();
     }
 
     public static Map<String, Object> makeBoardModel(ChessBoardDto chessBoardDto) {
@@ -95,7 +107,6 @@ public class WebChessController {
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.moveAndSave(source, target);
         if (chessGame.isGameEnd()) {
-            chessGame.initialze();
             return render(null, "../public/index.html");
         }
         res.redirect("/board");

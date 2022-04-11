@@ -2,11 +2,13 @@ package chess.domain;
 
 import chess.dao.DbBoardDao;
 import chess.dao.DbGameDao;
+import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import chess.dto.GameInformationDto;
 import chess.dto.WebChessStatusDto;
 import chess.service.DbService;
+import java.util.Map;
 
 public class ChessGame {
     private ChessBoard chessBoard;
@@ -14,7 +16,6 @@ public class ChessGame {
     private final int gameId;
 
     private ChessGame(int gameId) {
-        this.chessBoard = ChessBoard.initialize();
         this.gameId = gameId;
         this.dbService = DbService.create(new DbGameDao(), new DbBoardDao());
     }
@@ -23,18 +24,8 @@ public class ChessGame {
         return new ChessGame(gameId);
     }
 
-    public void initialze() {
-        dbService.deleteAllData(gameId);
-        this.chessBoard = ChessBoard.initialize();
-    }
-
-    public void setChessGameForStart() {
-        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(gameId);
-        if (gameInformationDto == null) {
-            dbService.saveInitData(gameId, chessBoard.getTurn(), getChessBoardInformation());
-            return;
-        }
-        initFromDb(gameInformationDto, dbService.getChessBoardInformation(gameId));
+    public void initialize(Team turn, Map<ChessBoardPosition, ChessPiece> boardData) {
+        this.chessBoard = ChessBoard.initialize(turn, boardData);
     }
 
     public ChessBoardDto getChessBoardInformation() {
@@ -64,9 +55,5 @@ public class ChessGame {
 
     public int getGameId() {
         return gameId;
-    }
-
-    private void initFromDb(GameInformationDto gameInformationDto, ChessBoardDto chessBoardDto) {
-        chessBoard.initFromDb(gameInformationDto, chessBoardDto);
     }
 }
