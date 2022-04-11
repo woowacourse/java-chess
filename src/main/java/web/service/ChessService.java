@@ -58,8 +58,8 @@ public class ChessService {
             new Running(chessBoard, Color.from(gameResponse.getTurn())));
 
         try {
-            checkPossibleToDeletePiece(moveReqeust.to(), chessBoard, moveReqeust.getId());
             chessGame.execute(Command.move(moveReqeust.from(), moveReqeust.to()));
+            checkPossibleToDeletePiece(moveReqeust.to(), chessBoard, moveReqeust.getId());
             updatePiece(moveReqeust, chessGame);
             CHESS_GAME_DAO.updateTurn(moveReqeust.getId(), chessGame.currentTurn().name());
             return checkFinished(chessGame, moveReqeust.getId());
