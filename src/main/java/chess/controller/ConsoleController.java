@@ -3,55 +3,65 @@ package chess.controller;
 import java.util.List;
 import java.util.Map;
 
-import chess.Command;
+import chess.command.CommandType;
 import chess.domain.ChessGame;
-import chess.domain.Status;
+import chess.domain.Result;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class Controller {
+public class ConsoleController {
     private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
+    private static final String ERROR_CONSOLE_CANT_CONTINUE = "[ERROR] 콘솔에선 안되!";
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
 
-    private ChessGame game;
+    protected ChessGame game;
 
     public void run() {
         OutputView.announceStart();
 
-        while (true) {
-            inGame();
+        boolean keepGaming = true;
+        while (keepGaming) {
+            keepGaming = inGame();
         }
     }
 
-    private void inGame() {
+    private boolean inGame() {
         try {
-            executeCommand(InputView.requireCommand());
+            return executeCommand(InputView.requireCommand());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
+            return true;
         }
     }
 
-    private void executeCommand(Map.Entry<Command, List<Square>> commands) {
-        Command command = commands.getKey();
-        if (command == Command.START) {
+    private boolean executeCommand(Map.Entry<CommandType, List<Square>> commands) {
+        CommandType commandType = commands.getKey();
+        if (commandType == CommandType.START) {
             start();
+            return true;
         }
 
-        if (command == Command.MOVE) {
+        if (commandType == CommandType.MOVE) {
             move(commands);
+            return true;
         }
 
-        if (command == Command.END) {
-            System.exit(0);
+        if (commandType == CommandType.END) {
+            return false;
         }
 
-        if (command == Command.STATUS) {
+        if (commandType == CommandType.STATUS) {
             status();
-            System.exit(0);
+            return false;
         }
+
+        if (commandType == CommandType.CONTINUE) {
+            throw new IllegalArgumentException(ERROR_CONSOLE_CANT_CONTINUE);
+        }
+        return true;
     }
 
     private void start() {
@@ -62,8 +72,8 @@ public class Controller {
         OutputView.showBoard(game.getBoard());
     }
 
-    private void move(Map.Entry<Command, List<Square>> commands) {
-        checkGameStarted(game);
+    private void move(Map.Entry<CommandType, List<Square>> commands) {
+        checkGameStarted();
         if (game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
@@ -82,16 +92,16 @@ public class Controller {
     }
 
     private void status() {
-        checkGameStarted(game);
+        checkGameStarted();
         if (!game.isKingDie()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }
-        Status status = game.saveStatus();
-        OutputView.showScore(status, Color.WHITE);
-        OutputView.showScore(status, Color.BLACK);
+        Result result = game.saveStatus();
+        OutputView.showScore(result, Color.WHITE);
+        OutputView.showScore(result, Color.BLACK);
     }
 
-    private void checkGameStarted(ChessGame game) {
+    private void checkGameStarted() {
         if (game == null) {
             throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
         }

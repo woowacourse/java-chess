@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="chessboard.css">
+
+    <script>
+        function change_img(square, pieceColor, pieceType) {
+            document.getElementById(square).src = 'images/' + pieceType + '_' + pieceColor + '.png';
+        }
+    </script>
+</head>
+<body>
+<h1>♟️ 체스 게임</h1>
+<script>
+    if ("{{kingDie}}") {
+        alert("King 잡혔다!!");
+    }
+    if ("{{score}}") {
+        alert('화이트팀 : ' + "{{score.whiteScore}}" + '\n블랙팀 : ' + "{{score.blackScore}}\n");
+    }
+    if ("{{exit}}") {
+        alert('게임 종료!!');
+        document.location.href = "/";
+    }
+</script>
+<div>
+    에러메세지 : {{error.message}}
+</div>
+
+<br><br>
+
+<div class="board">
+    <!-- 1st -->
+    <div class="white"><img id="a8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="b8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="c8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="d8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="e8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="f8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="g8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="h8" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 2nd -->
+    <div class="black"><img id="a7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="b7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="c7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="d7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="e7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="f7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="g7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="h7" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 3rd -->
+    <div class="white"><img id="a6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="b6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="c6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="d6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="e6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="f6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="g6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="h6" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 4th -->
+    <div class="black"><img id="a5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="b5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="c5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="d5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="e5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="f5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="g5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="h5" class=" image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 5th -->
+    <div class="white"><img id="a4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="b4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="c4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="d4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="e4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="f4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="g4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="h4" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 6th -->
+    <div class="black"><img id="a3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="b3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="c3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="d3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="e3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="f3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="g3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="h3" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 7th -->
+    <div class="white"><img id="a2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="b2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="c2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="d2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="e2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="f2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="g2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="h2" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <!-- 8th -->
+    <div class="black"><img id="a1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="b1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="c1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="d1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="e1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="f1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="black"><img id="g1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+    <div class="white"><img id="h1" class="image-thumbnail" src="images/NONE_NONE.png"></div>
+
+</div>
+
+<br><br>
+
+<form action="/command" method="post">
+    > 새 게임 시작 : start<br>
+    > 게임 종료 : end<br>
+    > 게임 이동 : move source 위치 target 위치 - 예. move b2 b3<br>
+    > 결과 출력 : status<br>
+    > 이전 게임 이어하기 : continue<br>
+    <input type="text" name="command">
+    <input type="submit" value="실행">
+</form>
+
+<br><br>
+
+{{#infos}}
+<script>change_img("{{square}}", "{{piece.color}}", "{{piece.type}}")</script>
+{{/infos}}
+
+</body>
+</html>

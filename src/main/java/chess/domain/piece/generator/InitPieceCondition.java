@@ -1,14 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 
-public final class PieceCondition {
+public final class InitPieceCondition {
 
     private final File file;
     private final Rank rank;
 
-    PieceCondition(File file, Rank rank) {
+    InitPieceCondition(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }

@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 public enum Color {
-    BLACK("블랙"),
-    WHITE("화이트"),
-    NONE("");
+    BLACK("black"),
+    WHITE("white"),
+    NONE("none");
 
     private final String name;
 
@@ -16,6 +16,16 @@ public enum Color {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public static Color getColor(String name) {
+        if (BLACK.name.equals(name)) {
+            return BLACK;
+        }
+        if (WHITE.name.equals(name)) {
+            return WHITE;
+        }
+        return NONE;
     }
 
     public String getName() {
