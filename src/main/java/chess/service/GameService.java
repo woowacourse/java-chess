@@ -1,5 +1,7 @@
-package chess.dao;
+package chess.service;
 
+import chess.dao.SquareDao;
+import chess.dao.TurnDao;
 import chess.dto.BoardDto;
 import chess.dto.ResultDto;
 import chess.model.Team;

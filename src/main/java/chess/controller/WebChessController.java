@@ -4,7 +4,7 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dao.GameService;
+import chess.service.GameService;
 import chess.dao.SquareDaoImpl;
 import chess.dao.TurnDaoImpl;
 import chess.dto.MoveDto;
