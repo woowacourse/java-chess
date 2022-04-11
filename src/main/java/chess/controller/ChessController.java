@@ -51,4 +51,3 @@ public class ChessController {
         OutputView.printScore(chessGame.calculateScore());
     }
 }
-

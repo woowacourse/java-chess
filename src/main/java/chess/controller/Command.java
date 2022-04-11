@@ -34,4 +34,3 @@ public enum Command {
         controllerFunction.accept(chessGame, input);
     }
 }
-
