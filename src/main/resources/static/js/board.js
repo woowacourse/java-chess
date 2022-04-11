@@ -1,4 +1,5 @@
 let $chessBoard = document.querySelector(".chessBoard");
+const $gameId = document.querySelector("#gameId")
 const button = document.querySelector("button");
 let gameFinished = false;
 
@@ -7,10 +8,14 @@ createChessBoard();
 $chessBoard.addEventListener("click", clickPosition);
 button.addEventListener("click", restart);
 
+function gameId() {
+  return $gameId.value;
+}
+
 function createChessBoard() {
   chessBoardInit();
   updateBoard();
-  changeTurn();
+  turn();
 }
 
 function chessBoardInit() {
@@ -67,7 +72,7 @@ function clickPosition(event) {
   for (let i = 0; i < positions.length; i++) {
     if (positions[i].classList.contains("clicked")) {
       positions[i].classList.remove("clicked");
-      move(positions[i].id, event.target.closest("div").id);
+      move(positions[i].id, event.target.closest("div").id, gameId());
       return;
     }
   }
@@ -77,12 +82,13 @@ function clickPosition(event) {
   event.target.closest(".boardColumn").classList.toggle("clicked");
 }
 
-async function move(from, to) {
+async function move(from, to, id) {
   const data = {
     from: from,
-    to: to
+    to: to,
+    id: id
   };
-  fetch("/move", {
+  fetch("/game/" + gameId() + "/move", {
     method: 'POST',
     header: {
       'Content-Type': 'application/json'
@@ -104,7 +110,7 @@ async function move(from, to) {
     }
     if (obj.code === "200") {
       changeImg(from, to);
-      changeTurn();
+      turn();
       score();
     }
   })
@@ -120,9 +126,9 @@ function changeImg(fromPosition, toPosition) {
   to.appendChild(piece);
 }
 
-async function changeTurn() {
-  const turn = await fetch("/turn", {
-    method: 'POST',
+async function turn() {
+  const turn = await fetch("/game/" + gameId() + "/turn", {
+    method: 'GET',
     header: {
       'Content-Type': 'application/json'
     }
@@ -134,8 +140,8 @@ async function changeTurn() {
 }
 
 async function score() {
-  const score = await fetch("/score",{
-    method: 'POST',
+  const score = await fetch("/game/" + gameId() + "/score",{
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     }
@@ -143,8 +149,10 @@ async function score() {
     return res.json();
   });
   const scores = Object.values(score);
+  console.log(scores);
   const blackScoreMessage = document.querySelector(".black");
   blackScoreMessage.textContent = scores[1];
+
   const whiteScore = document.querySelector(".white");
   whiteScore.textContent = scores[0];
 }
@@ -160,14 +168,15 @@ function restart() {
     const turnMessage = document.querySelector(".currentTurn");
     turnMessage.textContent = " 현재 턴 :";
     initPieceImg();
-    changeTurn();
+    turn();
     score();
   });
 }
 
 async function updateBoard() {
-  const board = await fetch("/board", {
-    method: 'POST',
+  console.log(gameId());
+  const board = await fetch("/game/" + gameId() + "/board", {
+    method: 'GET',
     header: {
       'Content-Type': 'application/json'
     }
