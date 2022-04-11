@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class Position {
 
-    private static final int DEGREE_CORRECTION_VALUE = 180;
-
     private final File file;
     private final Rank rank;
 
@@ -26,10 +24,6 @@ public class Position {
 
     public boolean hasSameFileIdx(int targetFileIdx) {
         return file.getFileIdx() == targetFileIdx;
-    }
-
-    public boolean isSameFile(File targetFile) {
-        return file.hasSameFileIdx(file);
     }
 
     public int fileDifference(Position targetPosition) {
@@ -62,11 +56,6 @@ public class Position {
 
     public static Position from(int fileIdx, int rankIdx) {
         return PositionCache.getCache(fileIdx, rankIdx);
-    }
-
-    public double findRelativeDegree(Position target) {
-        return Math.round(Math.atan2(fileRawDifference(target), rankRawDifference(target))
-            * (DEGREE_CORRECTION_VALUE / Math.PI));
     }
 
     public File getFile() {
