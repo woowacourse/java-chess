@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Map;
@@ -21,9 +24,9 @@ public enum Symbol {
         this.value = value;
     }
 
-    public static String findBySymbol(Class<? extends Piece> piece2) {
+    public static String findBySymbol(Class<? extends Piece> otherPiece) {
         return Arrays.stream(values())
-            .filter(piece -> piece.piece.equals(piece2))
+            .filter(symbol -> symbol.piece.equals(otherPiece))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당 유형의 기물은 존재하지 않습니다."))
             .value;
@@ -31,9 +34,9 @@ public enum Symbol {
 
     public static String makePieceName(Position position, Map<Position, Piece> board) {
         Piece piece = board.get(position);
-        if (piece.isSameColor(Color.BLACK)) {
-            return "B" + Symbol.findBySymbol(piece.getClass());
+        if (piece.isSameColor(BLACK)) {
+            return BLACK.name() + Symbol.findBySymbol(piece.getClass());
         }
-        return "W" + Symbol.findBySymbol(piece.getClass());
+        return WHITE.name() + Symbol.findBySymbol(piece.getClass());
     }
 }
