@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service.dto;
 
 import chess.service.dto.ChessGameDto;
 import java.util.ArrayList;

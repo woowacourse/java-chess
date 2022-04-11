@@ -1,5 +1,6 @@
-package chess.dao;
+package chess.dao.jdbcutil;
 
+import chess.dao.JdbcException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class JdbcUtil {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new JdbcException("연결에 실패했습니다.", e);
         }
         return connection;
     }
@@ -27,14 +28,7 @@ public class JdbcUtil {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void setStringsToStatement(PreparedStatement statement, Map<Integer, String> params)
-            throws SQLException {
-        for (Entry<Integer, String> param : params.entrySet()) {
-            statement.setString(param.getKey(), param.getValue());
+            throw new JdbcException("드라이버 로드를 실패했습니다.", e);
         }
     }
 }

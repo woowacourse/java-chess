@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.dao.GamesDto;
+import chess.service.dto.GamesDto;
 import chess.model.ChessGame;
 import chess.model.Color;
 import chess.model.File;

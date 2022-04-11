@@ -1,9 +1,11 @@
-package chess.dao;
+package chess.dao.jdbcutil;
 
+import chess.dao.JdbcException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StatementExecutor implements AutoCloseable {
     private static final int START_INDEX = 1;
@@ -17,7 +19,7 @@ public class StatementExecutor implements AutoCloseable {
             this.connection = connection;
             this.statement = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            throw new DaoException("커넥션과 SQL 생성에 문제가 생겼습니다.", e);
+            throw new JdbcException("커넥션과 SQL 생성에 문제가 생겼습니다.", e);
         }
     }
 
@@ -26,7 +28,7 @@ public class StatementExecutor implements AutoCloseable {
             statement.setInt(paramIndex++, paramValue);
             return this;
         } catch (SQLException e) {
-            throw new DaoException("쿼리에 파라미터 삽입에 실패했습니다", e);
+            throw new JdbcException("쿼리에 파라미터 삽입에 실패했습니다", e);
         }
     }
 
@@ -35,7 +37,7 @@ public class StatementExecutor implements AutoCloseable {
             statement.setString(paramIndex++, paramValue);
             return this;
         } catch (SQLException e) {
-            throw new DaoException("쿼리에 파라미터 삽입에 실패했습니다", e);
+            throw new JdbcException("쿼리에 파라미터 삽입에 실패했습니다", e);
         }
     }
 
@@ -43,15 +45,25 @@ public class StatementExecutor implements AutoCloseable {
         try (StatementExecutor executor = this) {
             return executor.statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("업데이트를 실패했습니다.", e);
+            throw new JdbcException("업데이트를 실패했습니다.", e);
         }
     }
 
-    public ResultSet executeQuery() {
+    public <T> List<T> findAll(ResultSetConverter<ResultSet, T> converter) {
         try (StatementExecutor executor = this) {
-            return executor.statement.executeQuery();
+            ResultSet resultSet = executor.statement.executeQuery();
+            return new ResultSetExecutor(resultSet).getAll(converter);
         } catch (SQLException e) {
-            throw new DaoException("조회를 실패했습니다.", e);
+            throw new JdbcException("조회를 실패했습니다.", e);
+        }
+    }
+
+    public <T> T findFirst(ResultSetConverter<ResultSet, T> converter) {
+        try (StatementExecutor executor = this) {
+            ResultSet resultSet = executor.statement.executeQuery();
+            return new ResultSetExecutor(resultSet).getFirst(converter);
+        } catch (SQLException e) {
+            throw new JdbcException("단일 데이터 조회를 실패했습니다.", e);
         }
     }
 

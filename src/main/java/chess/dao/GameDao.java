@@ -1,15 +1,20 @@
 package chess.dao;
 
+import chess.dao.jdbcutil.JdbcUtil;
+import chess.dao.jdbcutil.StatementExecutor;
 import chess.service.dto.ChessGameDto;
+import chess.service.dto.GamesDto;
 import chess.service.dto.StatusDto;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameDao {
+
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String STATUS = "status";
+    private static final String TURN = "turn";
 
     public void update(ChessGameDto dto) {
         String sql = "update game set status = ?, turn = ? where id = ?";
@@ -22,24 +27,16 @@ public class GameDao {
 
     public ChessGameDto findById(int id) {
         String sql = "select id, name, status, turn from game where id = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return getChessGameDto(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("체스 게임을 찾지 못했습니다.", e);
-        }
+        return new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setInt(id)
+                .findFirst(this::getChessGameDto);
     }
 
     private ChessGameDto getChessGameDto(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String name = resultSet.getString("name");
-        String status = resultSet.getString("status");
-        String turn = resultSet.getString("turn");
+        int id = resultSet.getInt(ID);
+        String name = resultSet.getString(NAME);
+        String status = resultSet.getString(STATUS);
+        String turn = resultSet.getString(TURN);
         return new ChessGameDto(id, name, status, turn);
     }
 
@@ -53,17 +50,9 @@ public class GameDao {
 
     public GamesDto findAll() {
         String sql = "select id, name, status, turn from game";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            List<ChessGameDto> games = new ArrayList<>();
-            while (resultSet.next()) {
-                games.add(getChessGameDto(resultSet));
-            }
-            return new GamesDto(games);
-        } catch (SQLException e) {
-            throw new DaoException("체스 게임을 찾지 못했습니다.", e);
-        }
+        List<ChessGameDto> games = new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .findAll(this::getChessGameDto);
+        return new GamesDto(games);
     }
 
     public void createGame(String name) {
