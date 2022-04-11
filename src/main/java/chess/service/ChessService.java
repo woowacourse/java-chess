@@ -49,7 +49,7 @@ public class ChessService {
         Map<String, Object> model = new HashMap<>();
         for (Entry<Position, Piece> entry : board.getValue().entrySet()) {
             model.put(entry.getKey().getName()
-                    , new PieceDto(entry.getValue(), entry.getKey()));
+                    , PieceDto.of(entry.getValue(), entry.getKey()));
         }
         model.put(TURN_KEY, chessGame.getTurn().name());
         return model;
@@ -66,7 +66,7 @@ public class ChessService {
         return board.getValue()
                 .entrySet()
                 .stream()
-                .map(entry -> new PieceDto(entry.getValue(), entry.getKey()))
+                .map(entry -> PieceDto.of(entry.getValue(), entry.getKey()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
