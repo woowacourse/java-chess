@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.MoveResult;
 import chess.domain.piece.Piece;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public final class ConsoleChessGame {
             return;
         }
 
-        if (board.move(from, to)) {
+        if (board.move(from, to) == MoveResult.SUCCESS) {
             currentTurn = currentTurn.opposite();
         }
     }

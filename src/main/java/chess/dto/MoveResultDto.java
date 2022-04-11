@@ -1,16 +1,18 @@
 package chess.dto;
 
+import chess.domain.piece.MoveResult;
+
 public class MoveResultDto {
     private final String piece;
     private final String from;
     private final String to;
-    private final boolean result;
+    private final MoveResult moveResult;
 
-    public MoveResultDto(String piece, String from, String to, boolean result) {
+    public MoveResultDto(String piece, String from, String to, MoveResult moveResult) {
         this.piece = piece;
         this.from = from;
         this.to = to;
-        this.result = result;
+        this.moveResult = moveResult;
     }
 
     public String getPiece() {
@@ -25,8 +27,8 @@ public class MoveResultDto {
         return to;
     }
 
-    public boolean isResult() {
-        return result;
+    public MoveResult getMoveResult() {
+        return moveResult;
     }
 }
 

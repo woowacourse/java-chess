@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +22,10 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean movable(Position from, Position to, Board board) {
-        try {
-            validateDistance(from, to); // 1. dx,dy로 이동 가능한 8점 확인
-            validateTarget(board, to);  // 2. 목표 기물 확인
-            return true;
-        } catch (IllegalStateException exception) {
-            OutputView.printError(exception);
-            return false;
-        }
+    public MoveResult movable(Position from, Position to, Board board) {
+        validateDistance(from, to); // 1. dx,dy로 이동 가능한 8점 확인
+        validateTarget(board, to);  // 2. 목표 기물 확인
+        return MoveResult.SUCCESS;
     }
 
     private void validateDistance(Position from, Position to) {

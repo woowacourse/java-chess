@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.MoveResult;
 import chess.domain.piece.Piece;
 import java.util.EnumMap;
 import java.util.Map;
@@ -24,18 +25,28 @@ public final class Board {
         this.turn = turn;
     }
 
-    public boolean move(Position from, Position to) {
-        if (!board.get(from).isSameColor(turn)) {
-            return false;
-        }
+    public MoveResult move(Position from, Position to) {
+        turnCheck(from);
         final Piece piece = board.getOrDefault(from, Piece.EMPTY);
-        if (piece.movable(from, to, this)) {
-            board.put(to, piece);
-            board.remove(from);
-            changeTurn();
-            return true;
+        final MoveResult moveResult = piece.movable(from, to, this);
+        if (moveResult == MoveResult.FAIL) {
+            return MoveResult.FAIL;
         }
-        return false;
+
+        final Piece captured = board.getOrDefault(to, Piece.EMPTY);
+        board.put(to, piece);
+        board.remove(from);
+        changeTurn();
+        if (captured.isKing()) {
+            return MoveResult.END;
+        }
+        return MoveResult.SUCCESS;
+    }
+
+    private void turnCheck(Position from) {
+        if (!board.get(from).isSameColor(turn)) {
+            throw new IllegalStateException(turn + "이 둘 차례입니다 😅");
+        }
     }
 
     private void changeTurn() {

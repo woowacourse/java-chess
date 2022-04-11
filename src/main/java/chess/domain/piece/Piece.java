@@ -20,8 +20,8 @@ public abstract class Piece {
         }
 
         @Override
-        public boolean movable(Position from, Position to, Board board) {
-            return false;
+        public MoveResult movable(Position from, Position to, Board board) {
+            return MoveResult.FAIL;
         }
 
         @Override
@@ -41,7 +41,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean movable(Position from, Position to, Board board);
+    public abstract MoveResult movable(Position from, Position to, Board board);
 
     public abstract double getScore();
 

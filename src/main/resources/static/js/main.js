@@ -82,6 +82,18 @@ const setupSelected = (selectedSquare) => {
     from = selectedSquare.id;
 }
 
+const handleException = (response) => {
+    debugger
+    console.log(response);
+    if (!response.ok) {
+        console.log(response);
+        showFailMessage(response.statusText);
+        return;
+    }
+
+    return response;
+}
+
 /**
  * 두번째 클릭에 대한 ajax 및 기물 이동 처리
  * @param selectedSquare
@@ -97,13 +109,18 @@ const processMove = (selectedSquare) => {
         })
     })
         .then(res => res.json())
-        .then(moveResult => {
-            if (!moveResult.result) {
+        .then(json => {
+            if (json.ok !== undefined && json.ok === false) {
+                showFailMessage(json.message);
+                return;
+            }
+
+            if (json.moveResult === 'FAIL') {
                 showFailMessage();
                 return;
             }
-            removePieceFromSquare(document.getElementById(moveResult.from));
-            setupPieceToSquare(document.getElementById(moveResult.to), moveResult.piece);
+            removePieceFromSquare(document.getElementById(json.from));
+            setupPieceToSquare(document.getElementById(json.to), json.piece);
             setupScores();
             document.getElementById('move').play();
             gameOverProcess();
@@ -117,8 +134,11 @@ const processMove = (selectedSquare) => {
 /**
  * 기물 이동 실패 메시지 처리
  */
-const showFailMessage = () => {
-    document.querySelector('h2').innerText = '이동 실패.. 😅';
+const showFailMessage = (message) => {
+    if (message === undefined) {
+        message = '이동 실패.. 😅';
+    }
+    document.querySelector('h2').innerText = message;
     setTimeout(() => document.querySelector('h2').innerText = '', 2000);
 }
 

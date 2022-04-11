@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
@@ -22,17 +21,12 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean movable(Position from, Position to, Board board) {
-        try {
-            if (isCaptureMove(from, to, board)) {
-                return true;
-            }
-            validateDistance(from, to, board);
-            return true;
-        } catch (IllegalStateException exception) {
-            OutputView.printError(exception);
-            return false;
+    public MoveResult movable(Position from, Position to, Board board) {
+        if (isCaptureMove(from, to, board)) {
+            return MoveResult.SUCCESS;
         }
+        validateDistance(from, to, board);
+        return MoveResult.SUCCESS;
     }
 
     // 1. 대각 전진 + 타겟에 상대기물 있으면 바로 true 리턴

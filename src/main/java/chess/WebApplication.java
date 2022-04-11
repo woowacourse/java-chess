@@ -1,9 +1,11 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dto.ExceptionDto;
 import chess.dto.MoveRequestDto;
 import chess.service.ChessJDBCDao;
 import chess.service.ChessService;
@@ -32,6 +34,9 @@ public class WebApplication {
         get("/isFinished/:gameId", (req, res) -> GSON.toJson(CHESS_SERVICE.isFinished(req.params("gameId"))));
 
         post("/move", (req, res) -> GSON.toJson(CHESS_SERVICE.move(GSON.fromJson(req.body(), MoveRequestDto.class))));
+
+        exception(Exception.class,
+                (exception, req, res) -> res.body(GSON.toJson(new ExceptionDto(exception.getMessage()))));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
