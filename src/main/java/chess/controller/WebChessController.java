@@ -43,7 +43,6 @@ public class WebChessController {
         });
 
         get("/game/progress", (req, res) -> {
-            chessGameService.set(new ChessGameService(req.queryParams("gameId")));
             PiecesDto piecesDto = chessGameService.get()
                 .getCurrentGame();
 
