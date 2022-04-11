@@ -7,14 +7,13 @@ import java.util.Map;
 
 public class Blank extends Piece {
 
-    private final String symbol = "NONE";
-
     public Blank() {
         super(NONE);
     }
 
+    @Override
     public String getSymbol() {
-        return symbol;
+        return "NONE";
     }
 
     @Override

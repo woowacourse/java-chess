@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class King extends Piece {
 
-    private final String symbol = "KING";
     private final MoveStrategy moveStrategy;
 
     public King(final Team team) {
@@ -18,8 +17,9 @@ public class King extends Piece {
         this.moveStrategy = new SingleMove(team, Direction.ordinalDirection());
     }
 
+    @Override
     public String getSymbol() {
-        return symbol;
+        return "KING";
     }
 
     @Override

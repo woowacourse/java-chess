@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class Rook extends Piece {
 
-    private final String symbol = "ROOK";
     private final MoveStrategy moveStrategy;
 
     public Rook(Team team) {
@@ -18,8 +17,9 @@ public class Rook extends Piece {
         this.moveStrategy = new MultipleMove(team, Direction.cardinalDirection());
     }
 
+    @Override
     public String getSymbol() {
-        return symbol;
+        return "ROOK";
     }
 
     @Override

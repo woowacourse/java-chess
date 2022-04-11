@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class Queen extends Piece {
 
-    private final String symbol = "QUEEN";
     private final MoveStrategy moveStrategy;
 
     public Queen(final Team team) {
@@ -18,8 +17,9 @@ public class Queen extends Piece {
         this.moveStrategy = new MultipleMove(team, Direction.ordinalDirection());
     }
 
+    @Override
     public String getSymbol() {
-        return symbol;
+        return "QUEEN";
     }
 
     @Override

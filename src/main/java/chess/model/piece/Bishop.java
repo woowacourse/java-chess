@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
-    private final String symbol = "BISHOP";
     private final MoveStrategy moveStrategy;
 
     public Bishop(final Team team) {
@@ -18,8 +17,9 @@ public class Bishop extends Piece {
         this.moveStrategy = new MultipleMove(team, Direction.diagonalDirection());
     }
 
+    @Override
     public String getSymbol() {
-        return symbol;
+        return "BISHOP";
     }
 
     @Override

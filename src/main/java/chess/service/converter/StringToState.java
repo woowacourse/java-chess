@@ -4,6 +4,7 @@ import chess.model.board.Board;
 import chess.model.state.Ready;
 import chess.model.state.State;
 import chess.model.state.finished.End;
+import chess.model.state.finished.Status;
 import chess.model.state.running.BlackTurn;
 import chess.model.state.running.WhiteTurn;
 
@@ -21,6 +22,9 @@ public class StringToState {
         }
         if (stateName.equals("END")){
             return new End(board);
+        }
+        if (stateName.equals("STATUS")) {
+            return new Status(board);
         }
         throw new IllegalArgumentException("[ERROR] 일치하는 상태가 없습니다.");
     }

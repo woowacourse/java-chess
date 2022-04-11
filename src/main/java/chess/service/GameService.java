@@ -63,11 +63,12 @@ public class GameService {
         return nextState;
     }
 
-    public ResultDto status(String status) {
+    public ResultDto status(String command) {
         Board board = toBoard(squareDao.find());
-        String nowState = stateDao.find();
-        stateDao.update(nowState, status);
-        return new ResultDto(board.getScore(), board.getWinner());
+        String nowStateName = stateDao.find();
+        stateDao.update(nowStateName, command);
+        State nextState = StringToState.convert(stateDao.find(), board);
+        return new ResultDto(nextState.getScore(), nextState.getWinner());
     }
 
     public BoardDto load() {
