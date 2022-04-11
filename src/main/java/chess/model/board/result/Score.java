@@ -6,7 +6,6 @@ import static chess.model.Team.WHITE;
 import chess.model.Team;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +23,14 @@ public class Score {
         this.board = board;
     }
 
-    public Map<Team, Double> createScore() {
+    public Map<Team, Double> teams() {
         Map<Team, Double> scores = new HashMap<>();
-        scores.put(BLACK, calculateScore(BLACK, board) + calculatePawnPenalty(BLACK, board));
-        scores.put(WHITE, calculateScore(WHITE, board) + calculatePawnPenalty(WHITE, board));
+        scores.put(BLACK, team(BLACK, board) + pawnPenalty(BLACK, board));
+        scores.put(WHITE, team(WHITE, board) + pawnPenalty(WHITE, board));
         return scores;
     }
 
-    private Double calculateScore(Team team, Map<Position, Piece> board) {
+    private Double team(Team team, Map<Position, Piece> board) {
         return board.values()
                 .stream()
                 .filter(piece -> piece.isSameTeam(team))
@@ -39,7 +38,7 @@ public class Score {
                 .sum();
     }
 
-    private Double calculatePawnPenalty(Team team, Map<Position, Piece> board) {
+    private Double pawnPenalty(Team team, Map<Position, Piece> board) {
         List<Position> positionOfPawns = searchPositionOfPawns(team, board);
         return PAWN_PENALTY_SCORE * searchPenaltyPawns(positionOfPawns);
     }

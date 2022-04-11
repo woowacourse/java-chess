@@ -15,11 +15,12 @@ public class Winner {
         this.score = score;
     }
 
-    public Team pickFrom(Map<Team, Double> scores) {
-        if (scores.get(BLACK) > scores.get(WHITE)) {
+    public Team pickFrom() {
+        Map<Team, Double> teamScores = score.teams();
+        if (teamScores.get(BLACK) > teamScores.get(WHITE)) {
             return BLACK;
         }
-        if (scores.get(BLACK) < scores.get(WHITE)) {
+        if (teamScores.get(BLACK) < teamScores.get(WHITE)) {
             return WHITE;
         }
         return NONE;

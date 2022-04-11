@@ -64,14 +64,4 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
-
-    public Map<Team, Double> getScore() {
-        GameResult gameResult = new GameResult(board);
-        return gameResult.calculateScore();
-    }
-
-    public Team getWinner() {
-        GameResult gameResult = new GameResult(board);
-        return gameResult.pickWinnerTeam();
-    }
 }

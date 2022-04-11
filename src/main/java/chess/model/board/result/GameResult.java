@@ -15,11 +15,11 @@ public class GameResult {
         this.winner = new Winner(score);
     }
 
-    public Map<Team, Double> calculateScore() {
-        return score.createScore();
+    public Map<Team, Double> getTeamScores() {
+        return score.teams();
     }
 
     public Team pickWinnerTeam() {
-        return winner.pickFrom(score.createScore());
+        return winner.pickFrom();
     }
 }

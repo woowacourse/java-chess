@@ -21,7 +21,7 @@ public final class Status extends Finished {
 
     @Override
     public Map<Team, Double> getScore() {
-        return gameResult.calculateScore();
+        return gameResult.getTeamScores();
     }
 
     @Override
