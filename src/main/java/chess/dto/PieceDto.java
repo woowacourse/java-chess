@@ -23,4 +23,5 @@ public class PieceDto {
     public String getName() {
         return name;
     }
+
 }

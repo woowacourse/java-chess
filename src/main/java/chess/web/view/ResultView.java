@@ -27,4 +27,5 @@ public class ResultView {
     public Map<String, Object> getResultView() {
         return resultView;
     }
+
 }

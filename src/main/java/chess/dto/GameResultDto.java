@@ -23,4 +23,5 @@ public class GameResultDto {
     public double getBlackScore() {
         return blackScore;
     }
+
 }

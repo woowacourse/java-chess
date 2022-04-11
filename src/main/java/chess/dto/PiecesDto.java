@@ -9,8 +9,9 @@ public class PiecesDto {
     public PiecesDto(List<PieceDto> pieces) {
         this.pieces = pieces;
     }
-    
+
     public List<PieceDto> getPieces() {
         return pieces;
     }
+
 }
