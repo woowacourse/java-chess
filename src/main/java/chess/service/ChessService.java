@@ -96,6 +96,6 @@ public class ChessService {
 
     public Color getWinner() {
         Winner winner = new Winner(getPieces(getBoard().getSquares()));
-        return winner.getColor();
+        return winner.color();
     }
 }

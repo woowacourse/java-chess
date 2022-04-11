@@ -64,7 +64,7 @@ public class Running implements GameState {
     @Override
     public Color getWinTeamColor() {
         final Winner winner = new Winner(board.getValue());
-        return winner.getColor();
+        return winner.color();
     }
 
     @Override

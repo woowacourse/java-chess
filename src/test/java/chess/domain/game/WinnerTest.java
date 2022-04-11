@@ -25,7 +25,7 @@ class WinnerTest {
 
         Winner winner = new Winner(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.WHITE);
+        assertThat(winner.color()).isEqualTo(Color.WHITE);
     }
 
     @Test
@@ -36,7 +36,7 @@ class WinnerTest {
 
         Winner winner = new Winner(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.BLACK);
+        assertThat(winner.color()).isEqualTo(Color.BLACK);
     }
 
     @Test
@@ -48,6 +48,6 @@ class WinnerTest {
 
         Winner winner = new Winner(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.NONE);
+        assertThat(winner.color()).isEqualTo(Color.NONE);
     }
 }

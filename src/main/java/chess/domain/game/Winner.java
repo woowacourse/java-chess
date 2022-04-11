@@ -18,14 +18,14 @@ public class Winner {
         this.boardPieces = new HashMap(boardPieces);
     }
 
-    public Color getColor() {
+    public Color color() {
         if (isAllKingAlive()) {
             return Color.NONE;
         }
-        return judge();
+        return findAliveColor();
     }
 
-    private Color judge() {
+    private Color findAliveColor() {
         return boardPieces.values().stream()
             .filter(Piece::isKing)
             .map(Piece::getColor)
