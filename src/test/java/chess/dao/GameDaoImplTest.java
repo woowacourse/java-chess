@@ -2,8 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,18 +37,6 @@ public class GameDaoImplTest {
     void deleteById() {
         gameDao.save(new Game("white", "black", id));
         gameDao.deleteById(id);
-    }
-
-    @Test
-    @DisplayName("DB에 id가 존재하는지 검증한다.")
-    void findById() {
-        //when
-        gameDao.save(new Game("white", "black", id));
-
-        List<String> actual = gameDao.findById(id);
-        List<String> expected = List.of("white", "black");
-        //then
-        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

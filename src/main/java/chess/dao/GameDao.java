@@ -1,7 +1,5 @@
 package chess.dao;
 
-import java.util.List;
-
 import chess.Game;
 
 public interface GameDao {
@@ -10,9 +8,7 @@ public interface GameDao {
 
     void deleteById(int id);
 
-    List<String> findById(int id);
-
     String findTurnById(int id);
 
-    int findIdByPlayers(String idPlayerWhite, String idPlayerBlack);
+    int findIdByPlayerNames(String idPlayerWhite, String idPlayerBlack);
 }

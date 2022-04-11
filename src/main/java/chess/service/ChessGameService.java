@@ -44,7 +44,7 @@ public class ChessGameService {
     }
 
     public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
-        return gameDao.findIdByPlayers(idPlayerWhite, idPlayerBlack);
+        return gameDao.findIdByPlayerNames(idPlayerWhite, idPlayerBlack);
     }
 
     public String findTurnById(int gameId) {

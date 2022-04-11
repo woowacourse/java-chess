@@ -170,11 +170,6 @@ public class ChessGameServiceTest {
         }
 
         @Override
-        public List<String> findById(int id) {
-            return table.getOrDefault(game.getId(), List.of());
-        }
-
-        @Override
         public String findTurnById(int id) {
             if (table.containsKey(game.getId())) {
                 return table.get(game.getId()).get(2);
@@ -183,7 +178,7 @@ public class ChessGameServiceTest {
         }
 
         @Override
-        public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
+        public int findIdByPlayerNames(String idPlayerWhite, String idPlayerBlack) {
             return 0;
         }
     }
