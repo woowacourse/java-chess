@@ -43,7 +43,6 @@ public class ChessWebController {
     }
 
     public void run() {
-        staticFileLocation("/static");
         ChessGame chessGame = new ChessGame();
 
         get("/", (req, res) -> modelAndView(new LinkedHashMap<>(), VIEW), new HandlebarsTemplateEngine());
