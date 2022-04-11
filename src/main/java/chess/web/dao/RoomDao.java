@@ -86,14 +86,4 @@ public class RoomDao {
         statement.setInt(1, id);
         statement.executeUpdate();
     }
-
-    public void removeAll() throws SQLException {
-        final String sql = "delete from room";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.executeUpdate();
-    }
-
-    public void deleteById(int roomId) {
-
-    }
 }
