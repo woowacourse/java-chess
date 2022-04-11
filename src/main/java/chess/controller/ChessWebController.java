@@ -27,6 +27,7 @@ public class ChessWebController {
     }
 
     public void run() {
+        renderHome();
         renderEnter();
         renderReady();
         renderStart();
@@ -35,17 +36,25 @@ public class ChessWebController {
         renderEnd();
     }
 
-    private void renderEnter() {
+    private void renderHome() {
         get("/", (req, res) -> {
-            Session session = req.session(true);
             Map<String, Object> model = new HashMap<>();
             return render(model, INDEX_PATH);
         });
     }
 
+    private void renderEnter() {
+        get("/enter", (req, res) -> {
+            String roomId = req.params("room");
+            res.redirect("/ready/" + roomId);
+            return null;
+        });
+    }
+
     private void renderReady() {
-        post("/ready", (req, res) -> {
-            Session session = req.session(false);
+        post("/ready/:room", (req, res) -> {
+            Session session = req.session(true);
+            session.attribute("room",req.queryParams("room"));
             Board board = chessService.ready(session);
             Map<String, Object> model = board.toMap();
             return render(model, STARTED_PATH);
@@ -53,7 +62,7 @@ public class ChessWebController {
     }
 
     private void renderStart() {
-        get("/start", (req, res) -> {
+        get("/start:id", (req, res) -> {
             try {
                 Session session = req.session(false);
                 Board board = chessService.start(session);
@@ -65,7 +74,7 @@ public class ChessWebController {
     }
 
     private void renderMove() {
-        post("/move", (req, res) -> {
+        post("/move:id", (req, res) -> {
             try {
                 Session session = req.session(false);
                 Board board = chessService.move(session, req.queryParams("from"), req.queryParams("to"));
@@ -88,7 +97,7 @@ public class ChessWebController {
     }
 
     private void renderStatus() {
-        get("/status", (req, res) -> {
+        get("/status:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
                 model.putAll(chessService.showBoard());
