@@ -152,7 +152,7 @@ public class ChessGameTest {
     void calculateGameResult() {
         double actual = GameResult.calculate(chessGame.getChessmen())
             .getBlackScore();
-        double expected = new GameResultDto(BLACK, 38.0, 38.0)
+        double expected = new GameResultDto(BLACK.getName(), 38.0, 38.0)
             .getBlackScore();
 
         assertThat(actual).isEqualTo(expected);

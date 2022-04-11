@@ -66,7 +66,9 @@ public class ChessGameService {
 
     public GameResultDto calculateGameResult() {
         GameResult gameResult = GameResult.calculate(game.getChessmen());
-        return new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(), gameResult.getBlackScore());
+        return new GameResultDto(gameResult.getWinner().getName(),
+            gameResult.getWhiteScore(),
+            gameResult.getBlackScore());
     }
 
     public void cleanGame() {

@@ -95,7 +95,7 @@ public class ConsoleChessController {
     private void intermediateGameResult(ChessGame chessGame) {
         GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
 
-        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner().getName(), gameResult.getWhiteScore(),
             gameResult.getBlackScore());
 
         OutputView.printIntermediateGameResult(gameResultDto);
@@ -104,7 +104,7 @@ public class ConsoleChessController {
     private void forceQuitGameResult(ChessGame chessGame) {
         GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
 
-        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner().getName(), gameResult.getWhiteScore(),
             gameResult.getBlackScore());
 
         OutputView.printForceQuitStatus(gameResultDto);
@@ -113,7 +113,7 @@ public class ConsoleChessController {
     private void normalQuitGameResult(ChessGame chessGame) {
         GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
 
-        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner().getName(), gameResult.getWhiteScore(),
             gameResult.getBlackScore());
 
         OutputView.printStatus(gameResultDto);

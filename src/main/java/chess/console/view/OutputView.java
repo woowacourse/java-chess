@@ -62,7 +62,7 @@ public class OutputView {
     }
 
     public static void printStatus(GameResultDto dto) {
-        Color winnerColor = dto.getWinner();
+        String winnerColor = dto.getWinner();
         double whiteScore = dto.getWhiteScore();
         double blackScore = dto.getBlackScore();
 
