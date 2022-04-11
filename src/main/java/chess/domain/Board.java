@@ -28,10 +28,17 @@ public class Board {
     }
 
     private void validateMovement(PieceColor turnColor, MoveCommand command) {
+        validateKingIsAlive();
         validateSourceChoice(turnColor, command.from());
         validateTargetChoice(turnColor, command.to());
         validateMovable(command.from(), command.to());
         validateRoute(command.from(), command.to());
+    }
+
+    private void validateKingIsAlive() {
+        if (!hasBothKings()) {
+            throw new IllegalArgumentException("게임이 종료됐습니다.");
+        }
     }
 
     private void validateSourceChoice(PieceColor turnColor, Position source) {

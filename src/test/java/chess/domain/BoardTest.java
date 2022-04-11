@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static chess.domain.PiecesUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BoardTest {
@@ -46,6 +47,21 @@ public class BoardTest {
         Board board = new Board(pieces);
 
         assertThat(board.hasBothKings()).isFalse();
+    }
+
+    @Test
+    @DisplayName("King 이 하나라도 없는 경우 기물을 움직일 수 없는지")
+    void moveWithDeadKing() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(Position.of(Column.C, Row.RANK_2), BLACK_QUEEN);
+        pieces.put(Position.of(Column.C, Row.RANK_6), BLACK_PAWN);
+        pieces.put(Position.of(Column.C, Row.RANK_1), WHITE_KING);
+        pieces.put(Position.of(Column.A, Row.RANK_2), WHITE_PAWN);
+        Board board = new Board(pieces);
+
+        assertThatThrownBy(() -> board.movePiece(PieceColor.WHITE, MoveCommand.of("move c6 c5")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 종료됐습니다.");
     }
 
     @Test
