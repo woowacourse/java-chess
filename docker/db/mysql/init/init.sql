@@ -1,10 +1,6 @@
-CREATE TABLE `chess`.`state`
-(
-  `name` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`name`)
- )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `chess`.`state` (
+  `name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`name`));
 
 CREATE TABLE `chess`.`square`
 (
