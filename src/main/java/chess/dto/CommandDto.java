@@ -1,7 +1,5 @@
 package chess.dto;
 
-import chess.domain.command.Command;
-
 public class CommandDto {
 
     private static final int COMMAND_POSITION = 0;
@@ -9,11 +7,11 @@ public class CommandDto {
     private static final String COMMAND_INPUT_DELIMITER = " ";
 
     private final String fullCommand;
-    private final Command command;
+    private final String command;
 
     public CommandDto(String fullCommand) {
         this.fullCommand = fullCommand;
-        this.command = Command.of(extractCommand(fullCommand));
+        this.command = extractCommand(fullCommand);
     }
 
     private String extractCommand(String fullCommand) {
@@ -24,7 +22,7 @@ public class CommandDto {
         return fullCommand;
     }
 
-    public Command getCommand() {
+    public String getCommand() {
         return command;
     }
 

@@ -54,7 +54,7 @@ public class ConsoleChessController {
     }
 
     private ChessGame progressByCommand(ChessGame chessGame, CommandDto commandDto) {
-        Command command = commandDto.getCommand();
+        Command command = Command.of(commandDto.getCommand());
         if (command.isStatus()) {
             intermediateGameResult(chessGame);
             return chessGame;
