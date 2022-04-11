@@ -14,10 +14,10 @@ public enum Color {
     }
 
     public static Color from(String color) {
-        if (color.equals("WHITE")) {
+        if (color.equals(WHITE.name())) {
             return WHITE;
         }
-        if (color.equals("BLACK")) {
+        if (color.equals(BLACK.name())) {
             return BLACK;
         }
         throw new IllegalArgumentException("해당 색깔은 존재하지 않습니다.");
