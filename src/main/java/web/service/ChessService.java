@@ -50,19 +50,19 @@ public class ChessService {
             new Running(new ChessBoard(pieces), Color.from(chessGameResponse.getTurn())));
     }
 
-    public MoveResponse move(MoveRequest moveReqeust) throws SQLException {
+    public MoveResponse move(MoveRequest moveRequest) throws SQLException {
         ChessGameResponse gameResponse = CHESS_GAME_DAO.findByGameId(
-            String.valueOf(moveReqeust.getId()));
-        ChessBoard chessBoard = new ChessBoard(PIECE_DAO.findPieces(moveReqeust.getId()));
+            String.valueOf(moveRequest.getId()));
+        ChessBoard chessBoard = new ChessBoard(PIECE_DAO.findPieces(moveRequest.getId()));
         ChessGame chessGame = new ChessGame(
             new Running(chessBoard, Color.from(gameResponse.getTurn())));
 
         try {
-            chessGame.execute(Command.move(moveReqeust.from(), moveReqeust.to()));
-            checkPossibleToDeletePiece(moveReqeust.to(), chessBoard, moveReqeust.getId());
-            updatePiece(moveReqeust, chessGame);
-            CHESS_GAME_DAO.updateTurn(moveReqeust.getId(), chessGame.currentTurn().name());
-            return checkFinished(chessGame, moveReqeust.getId());
+            chessGame.execute(Command.move(moveRequest.from(), moveRequest.to()));
+            checkPossibleToDeletePiece(moveRequest.to(), chessBoard, moveRequest.getId());
+            updatePiece(moveRequest, chessGame);
+            CHESS_GAME_DAO.updateTurn(moveRequest.getId(), chessGame.currentTurn().name());
+            return checkFinished(chessGame, moveRequest.getId());
         } catch (Exception e) {
             return new MoveResponse("400", e.getMessage(), chessGame.currentTurn().name());
         }
