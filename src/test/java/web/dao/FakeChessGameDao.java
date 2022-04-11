@@ -1,8 +1,12 @@
 package web.dao;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.command.Command;
 import chess.domain.game.ChessGame;
-import java.sql.SQLException;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.state.Running;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +16,7 @@ import web.dto.ChessGameResponse;
 public class FakeChessGameDao implements ChessGameDao {
 
     private Map<Long, ChessGame> store = new HashMap<>();
+    private Color turn;
     private Long idx = 0L;
 
     @Override
@@ -47,8 +52,11 @@ public class FakeChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updateTurn(Long gameId, String turn) throws SQLException {
+    public void updateTurn(Long gameId, String turn) {
         ChessGame chessGame = store.get(gameId);
+        ChessBoard chessBoard = chessGame.chessBoard();
+        ChessGame newChessGame = new ChessGame(new Running(chessBoard, Color.from(turn)));
+        store.put(gameId, newChessGame);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package web.dao;
 
+import static chess.domain.piece.Color.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.game.ChessGame;
 import java.sql.SQLException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,6 +68,17 @@ class ChessGameDaoTest {
         Long gameId = chessGameDao.createGame(chessGame);
         chessGameDao.updateGameEnd(gameId);
 
-        assertThat(chessGameDao.findRunningGames()).hasSize(0);
+        assertThat(chessGameDao.findRunningGames()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("차례를 정상적으로 업데이트 하는지 확인")
+    void updateTurn() throws SQLException {
+        ChessGame chessGame = ChessGame.initChessGame();
+        Long gameId = chessGameDao.createGame(chessGame);
+        chessGameDao.updateTurn(gameId, BLACK.name());
+
+        assertThat(chessGameDao.findByGameId(String.valueOf(gameId)).getTurn()).isEqualTo(
+            BLACK.name());
     }
 }
