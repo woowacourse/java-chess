@@ -1,0 +1,18 @@
+.white {
+    width: 65px;
+    height: 65px;
+    background-color: #C1B2A4;
+    display: inline;
+}
+
+.black {
+    width: 65px;
+    height: 65px;
+    background-color: #51361A;
+    display: inline;
+}
+
+.row {
+    height: 65px;
+    display: flex;
+}

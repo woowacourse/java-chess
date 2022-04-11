@@ -26,6 +26,23 @@ class PawnTest {
         assertThat(actual).isFalse();
     }
 
+    @DisplayName("폰은 뒤로 이동할 수 없다.")
+    @Test
+    void movePiece_cannotMoveBack() {
+        // given
+        Board board = BoardFactory.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE),
+                PieceColor.WHITE);
+
+        boolean actual =  board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.TWO),
+                PieceColor.WHITE).isMoveSuccess();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
     @DisplayName("흰색 진영의 폰이 처음 이동하는 경우 두칸을 전진할 수 있다.")
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInWhiteTeam() {

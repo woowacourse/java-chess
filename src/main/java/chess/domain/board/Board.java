@@ -1,13 +1,15 @@
 package chess.domain.board;
 
+import static chess.domain.position.XAxis.getPositionsSameXAxisBetween;
+import static chess.domain.position.YAxis.getPositionsSameYAxisBetween;
+
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.direction.DiagonalDirection;
-import chess.domain.position.direction.HorizontalDirection;
-import chess.domain.position.direction.VerticalDirection;
+import chess.domain.position.direction.Direction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,15 +51,16 @@ public class Board {
 
     private boolean hasObstacle(Position from, Position to) {
         if (from.isSameXAxis(to)) {
-            return hasAnyPiece(HorizontalDirection.getPositionsSameYAxisBetween(from, to));
+            return hasAnyPiece(getPositionsSameYAxisBetween(from, to));
         }
 
         if (from.isSameYAxis(to)) {
-            return hasAnyPiece(VerticalDirection.getPositionsSameXAxisBetween(from, to));
+            return hasAnyPiece(getPositionsSameXAxisBetween(from, to));
         }
 
-        if (DiagonalDirection.isOnDiagonal(from, to)) {
-            return hasAnyPiece(DiagonalDirection.getPositionsSameDirectionDiagonalBetween(from, to));
+        Direction direction = new DiagonalDirection();
+        if (direction.isOnDirection(from, to)) {
+            return hasAnyPiece(Position.getPositionsSameDirectionDiagonalBetween(from, to));
         }
 
         return false;
@@ -147,5 +150,9 @@ public class Board {
                 .filter(piece -> piece.isPieceColor(pieceColor))
                 .filter(piece -> piece.isPieceType(PieceType.PAWN))
                 .count();
+    }
+
+    public Map<Position, AbstractPiece> getValue() {
+        return new HashMap<>(value);
     }
 }

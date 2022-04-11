@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.game.state.beforerunning.Ready;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
+import java.util.List;
 
 public class ChessGame {
 
@@ -11,6 +12,10 @@ public class ChessGame {
 
     public ChessGame() {
         this.state = new Ready();
+    }
+
+    public void updateState(State state) {
+        this.state = state;
     }
 
     public void startGame() {
@@ -31,5 +36,9 @@ public class ChessGame {
 
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    public List<Double> getScore() {
+        return List.of(state.calculateWhiteScore(), state.calculateBlackScore());
     }
 }

@@ -1,7 +1,6 @@
 package chess.domain.position.direction;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
@@ -19,7 +18,8 @@ class VerticalDirectionTest {
         Position position2 = Position.from(XAxis.C, YAxis.ONE);
 
         // when
-        boolean actual = VerticalDirection.isInVerticalRange(position1, position2, 2);
+        VerticalDirection verticalDirection = new VerticalDirection();
+        boolean actual = verticalDirection.isInVerticalRange(position1, position2, 2);
 
         // then
         assertThat(actual).isTrue();

@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.game.state.afterrunning.FinishedKing;
+import chess.domain.game.state.afterrunning.FinishedEnd;
 import chess.domain.game.state.beforerunning.Ready;
 import chess.domain.game.state.running.RunningWhite;
 import chess.domain.position.Position;
@@ -37,7 +37,7 @@ class ReadyTest {
         State actual = state.endGame();
 
         // then
-        assertThat(actual).isInstanceOf(FinishedKing.class);
+        assertThat(actual).isInstanceOf(FinishedEnd.class);
     }
 
     @DisplayName("Ready에서 move 메소드를 호출하면 예외가 발생한다.")

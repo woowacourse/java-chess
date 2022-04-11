@@ -12,7 +12,7 @@ public class ChessController {
         OutputView.printCommandGuide();
 
         while (!chessGame.isEnd()) {
-            Command command = InputView.inputCommand();
+            Command command = new Command(InputView.inputCommand());
             if (command.isStart()) {
                 chessGame.startGame();
                 OutputView.printBoard(chessGame.getBoard());

@@ -63,7 +63,8 @@ public class Position {
     }
 
     public boolean isInVerticalRangeAndSameXAxis(Position other, int range) {
-        return VerticalDirection.isInVerticalRange(this, other, range) && isSameXAxis(other);
+        VerticalDirection verticalDirection = new VerticalDirection();
+        return verticalDirection.isInVerticalRange(this, other, range) && isSameXAxis(other);
     }
 
     public boolean isFarFromMoreThanOne(Position other) {
@@ -73,12 +74,36 @@ public class Position {
         return xAxisDelta > 1 || yAxisDelta > 1;
     }
 
+    public static List<Position> getPositionsSameDirectionDiagonalBetween(Position from, Position to) {
+        int xAxisDelta = from.getXAxis().getValue() - to.getXAxis().getValue();
+        int yAxisDelta = from.getYAxis().getValue() - to.getYAxis().getValue();
+        int time = Math.abs(xAxisDelta);
+
+        int xDirection = -(xAxisDelta / time);
+        int yDirection = -(yAxisDelta / time);
+
+        return IntStream.range(1, time)
+                .mapToObj(idx -> getPositionWith(from, xDirection, yDirection, idx))
+                .collect(Collectors.toList());
+    }
+
+    private static Position getPositionWith(Position from, int xDir, int yDir, int idx) {
+        XAxis xAxis1 = XAxis.getByValue(from.getXAxis().getValue() + xDir * idx);
+        YAxis yAxis1 = YAxis.getByValue(from.getYAxis().getValue() + yDir * idx);
+
+        return Position.from(xAxis1, yAxis1);
+    }
+
     public XAxis getXAxis() {
         return xAxis;
     }
 
     public YAxis getYAxis() {
         return yAxis;
+    }
+
+    public boolean isFarOneOnXAxis(Position to) {
+        return Math.abs(this.yAxis.getValue() - to.yAxis.getValue()) == 1;
     }
 
     private static class Cache {

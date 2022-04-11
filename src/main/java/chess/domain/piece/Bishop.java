@@ -2,14 +2,16 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.domain.position.direction.DiagonalDirection;
+import chess.domain.position.direction.Direction;
+import java.util.List;
 
 public class Bishop extends AbstractPiece {
+
+    private final List<Direction> directions;
+
     public Bishop(PieceColor pieceColor) {
         super(pieceColor, PieceType.BISHOP);
-    }
-
-    private static boolean useBishopStrategy(Position from, Position to) {
-        return DiagonalDirection.isOnDiagonal(from, to);
+        this.directions = List.of(new DiagonalDirection());
     }
 
     @Override
@@ -18,7 +20,11 @@ public class Bishop extends AbstractPiece {
             return false;
         }
 
-        return useBishopStrategy(from, to);
+        return matchDirection(from, to);
     }
 
+    private boolean matchDirection(Position from, Position to) {
+        return directions.stream()
+                .anyMatch(direction -> direction.isOnDirection(from, to));
+    }
 }

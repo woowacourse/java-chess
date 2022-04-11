@@ -10,14 +10,16 @@ import chess.domain.position.YAxis;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class BoardDto {
     private static final String EMPTY_PIECE_DISPLAY_NAME = ".";
 
-    private final Board board;
+    private final Map<Position, AbstractPiece> board;
 
     public BoardDto(Board board) {
-        this.board = board;
+        this.board = board.getValue();
     }
 
     public String getBoardText() {
@@ -39,7 +41,7 @@ public class BoardDto {
     }
 
     private void generatePieceText(StringBuilder stringBuilder, YAxis yAxis, XAxis xAxis) {
-        board.find(Position.from(xAxis, yAxis))
+        Optional.ofNullable(board.get(Position.from(xAxis, yAxis)))
                 .ifPresentOrElse(
                         piece -> stringBuilder.append(generateExistingPieceName(piece)),
                         () -> generateNotFoundPieceName(stringBuilder)

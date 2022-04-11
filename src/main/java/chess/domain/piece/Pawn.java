@@ -3,15 +3,19 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import chess.domain.position.YAxis;
 import chess.domain.position.direction.DiagonalDirection;
+import chess.domain.position.direction.Direction;
 import chess.domain.position.direction.VerticalDirection;
+import java.util.List;
 
 public class Pawn extends AbstractPiece {
 
-    private static final int DEFAULT_MOVE_RANGE = 1;
     private static final int INITIAL_MOVE_RANGE = 2;
+
+    private final List<Direction> directions;
 
     public Pawn(PieceColor pieceColor) {
         super(pieceColor, PieceType.PAWN);
+        this.directions = List.of(new VerticalDirection());
     }
 
     @Override
@@ -20,7 +24,11 @@ public class Pawn extends AbstractPiece {
             return false;
         }
 
-        if (isInitialPosition(from)) {
+        return usePawnStrategy(from, to);
+    }
+
+    private boolean usePawnStrategy(Position from, Position to) {
+        if (isInitialPosition(from, getPieceColor())) {
             return getMovableIfInitialPosition(from, to);
         }
 
@@ -29,7 +37,10 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public boolean isAbleToAttack(Position from, Position to) {
-        boolean isDiagonalOneDistance = DiagonalDirection.isOnDiagonal(from, to) && VerticalDirection.isInVerticalRange(from, to, 1);
+        Direction diagonalDirection = new DiagonalDirection();
+        VerticalDirection verticalDirection = new VerticalDirection();
+        boolean isDiagonalOneDistance =
+                diagonalDirection.isOnDirection(from, to) && verticalDirection.isInVerticalRange(from, to, 1);
 
         if (isPieceColor(PieceColor.BLACK)) {
             return isDiagonalOneDistance && from.isUpperThan(to);
@@ -38,8 +49,12 @@ public class Pawn extends AbstractPiece {
         return isDiagonalOneDistance && from.isLowerThan(to);
     }
 
-    private boolean isInitialPosition(Position from) {
-        return from.isSameYAxis(YAxis.TWO) || from.isSameYAxis(YAxis.SEVEN);
+    private boolean isInitialPosition(Position from, PieceColor pieceColor) {
+        if (pieceColor == PieceColor.WHITE) {
+            return from.isSameYAxis(YAxis.TWO);
+        }
+
+        return from.isSameYAxis(YAxis.SEVEN);
     }
 
     private boolean getMovableIfInitialPosition(Position from, Position to) {
@@ -53,12 +68,12 @@ public class Pawn extends AbstractPiece {
     }
 
     private boolean getMovableIfNotInitialPosition(Position from, Position to) {
-        boolean inVerticalRange = from.isInVerticalRangeAndSameXAxis(to, DEFAULT_MOVE_RANGE);
-
-        if (isPieceColor(PieceColor.BLACK)) {
-            return from.isUpperThan(to) && inVerticalRange;
-        }
-
-        return from.isLowerThan(to) && inVerticalRange;
+        return directions.stream()
+                .anyMatch(direction -> {
+                    if (isPieceColor(PieceColor.BLACK)) {
+                        return direction.isOnDirection(from, to) && from.isFarOneOnXAxis(to) && from.isUpperThan(to);
+                    }
+                    return direction.isOnDirection(from, to) && from.isFarOneOnXAxis(to) && from.isLowerThan(to);
+                });
     }
 }

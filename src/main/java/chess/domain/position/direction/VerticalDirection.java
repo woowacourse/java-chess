@@ -1,16 +1,15 @@
 package chess.domain.position.direction;
 
 import chess.domain.position.Position;
-import chess.domain.position.XAxis;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class VerticalDirection {
+public class VerticalDirection implements Direction{
+    @Override
+    public boolean isOnDirection(Position from, Position to) {
+        return isOnVertical(from, to);
+    }
 
-    public static List<Position> getPositionsSameXAxisBetween(Position from, Position to) {
-        return XAxis.getBetween(from.getXAxis(), to.getXAxis()).stream()
-                .map(xAxis -> Position.from(xAxis, from.getYAxis()))
-                .collect(Collectors.toList());
+    public boolean isOnVertical(Position from, Position to) {
+        return from.isSameXAxis(to);
     }
 
     public static boolean isInVerticalRange(Position from, Position other, int range) {
