@@ -1,10 +1,7 @@
 package chess.service;
 
-import static java.util.stream.Collectors.toMap;
-
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.service.dto.GamesDto;
 import chess.model.ChessGame;
 import chess.model.Color;
 import chess.model.File;
@@ -18,6 +15,7 @@ import chess.model.piece.PieceType;
 import chess.service.dto.BoardDto;
 import chess.service.dto.ChessGameDto;
 import chess.service.dto.GameResultDto;
+import chess.service.dto.GamesDto;
 import chess.service.dto.PieceWithSquareDto;
 import chess.service.dto.StatusDto;
 import java.util.Arrays;

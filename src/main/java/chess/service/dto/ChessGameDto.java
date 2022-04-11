@@ -13,12 +13,6 @@ public class ChessGameDto {
         this.turn = turn;
     }
 
-    public ChessGameDto(String name, String status, String turn) {
-        this.status = status;
-        this.turn = turn;
-        this.name = name;
-    }
-
     public ChessGameDto(int id, String status, String turn) {
         this.id = id;
         this.status = status;

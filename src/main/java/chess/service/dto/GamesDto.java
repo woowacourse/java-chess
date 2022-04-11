@@ -1,6 +1,5 @@
 package chess.service.dto;
 
-import chess.service.dto.ChessGameDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,6 @@ public class GamesDto {
     }
 
     public List<ChessGameDto> getGames() {
-        return new ArrayList<>(games);
+        return games;
     }
 }
