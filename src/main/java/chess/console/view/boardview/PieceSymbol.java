@@ -1,4 +1,4 @@
-package chess.console.consoleview.boardview;
+package chess.console.view.boardview;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;

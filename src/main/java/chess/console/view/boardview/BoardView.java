@@ -1,4 +1,4 @@
-package chess.console.consoleview.boardview;
+package chess.console.view.boardview;
 
 import static chess.domain.position.File.FILES_TOTAL_SIZE;
 import static chess.domain.position.Rank.RANKS_TOTAL_SIZE;

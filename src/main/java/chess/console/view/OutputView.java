@@ -1,9 +1,9 @@
-package chess.console.consoleview;
+package chess.console.view;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
-import chess.console.consoleview.boardview.BoardView;
+import chess.console.view.boardview.BoardView;
 import chess.domain.piece.Color;
 import chess.dto.GameResultDto;
 

@@ -1,11 +1,11 @@
 package chess.controller;
 
-import static chess.console.consoleview.InputView.requestMoveOrEndOrStatusInput;
-import static chess.console.consoleview.InputView.requestStartOrEndInput;
-import static chess.console.consoleview.InputView.requestStatusOrEndInput;
+import static chess.console.view.InputView.requestMoveOrEndOrStatusInput;
+import static chess.console.view.InputView.requestStartOrEndInput;
+import static chess.console.view.InputView.requestStatusOrEndInput;
 
-import chess.console.consoleview.OutputView;
-import chess.console.consoleview.boardview.BoardView;
+import chess.console.view.OutputView;
+import chess.console.view.boardview.BoardView;
 import chess.domain.game.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
