@@ -43,12 +43,14 @@ public class ChessService {
 
     private void initializeBoardSquares(final SquareDto square) {
         final Position position = square.getPosition();
+        final String fileName = position.getFile().name().toLowerCase();
+        final int rankName = position.getRank().getValue();
         if (square.getPiece() == null) {
-            boardDao.updateBoardSquare(position.getRankAndFile(), null, null);
+            boardDao.updateBoardSquare(fileName + rankName, null, null);
             return;
         }
         final Piece piece = square.getPiece();
-        boardDao.updateBoardSquare(position.getRankAndFile(), piece.representative(), piece.getColorName());
+        boardDao.updateBoardSquare(fileName + rankName, piece.representative(), piece.getColorName());
     }
 
     private Map<Position, Piece> getPieces(List<SquareDto> squares) {

@@ -28,10 +28,9 @@ public enum PieceFactory {
     }
 
     private static PieceFactory get(String name) {
-        PieceFactory pieceFactory = Arrays.stream(values())
+        return Arrays.stream(values())
             .filter(piece -> piece.name.equals(name))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PIECE_NAME));
-        return pieceFactory;
     }
 }
