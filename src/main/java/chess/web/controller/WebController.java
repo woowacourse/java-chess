@@ -29,14 +29,8 @@ public class WebController {
         post("/room/delete/", this::deleteRoomAndRedirectIndex);
 
         post("/save", (req, res) -> {
-//            final Map<String, Object> currentModel = chessService.getModelToState().get();
-//             에러가 날 때도, model + error 반환 전, roomId를 추가해줘야한다.
-//            currentModel.put("roomId", req.queryParams("roomId"));
-
-            chessService.saveCurrentRoom(req);
-            //TODO save CurrentBoard
-            chessService.saveCurrentRoomBoard(req);
-            //TODO redirect inded
+            chessService.saveCurrentRoomAndBoard(req);
+            res.redirect("/");
             return null;
         });
 

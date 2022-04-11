@@ -38,8 +38,8 @@ public class BoardDao {
                 final String position = boardEntry.getKey();
                 final String piece = boardEntry.getValue();
                 preparedStatement.setInt(1, roomId);
-                preparedStatement.setString(2, piece);
-                preparedStatement.setString(3, position);
+                preparedStatement.setString(2, position);
+                preparedStatement.setString(3, piece);
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -116,6 +116,27 @@ public class BoardDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateBoard(final int roomId, final Map<String, String> board) {
+        final String sql = ""
+            + "update " + TABLE
+            + " set piece = ?"
+            + "  where roomId = ? AND position = ?";
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            for (final Entry<String, String> boardEntry : board.entrySet()) {
+                final String position = boardEntry.getKey();
+                final String piece = boardEntry.getValue();
+                preparedStatement.setString(1, piece);
+                preparedStatement.setInt(2, roomId);
+                preparedStatement.setString(3, position);
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("현재 board의 기물들 업데이트하는데 예외가 발생함.");
         }
     }
 }

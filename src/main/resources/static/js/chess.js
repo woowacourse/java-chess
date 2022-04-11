@@ -53,7 +53,7 @@ function getCommand(url, value) {
 }
 
 function createRoom() {
-    const roomName = window.prompt("방 제목을 입력해주세요.", "포돌이체스방");
+    const roomName = window.prompt("방 제목을 중복되지 않도록 입력해주세요.");
 
     let f = document.createElement("form");
     f.setAttribute("method", "post");

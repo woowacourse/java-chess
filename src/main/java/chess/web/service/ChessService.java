@@ -119,7 +119,7 @@ public class ChessService {
         roomDao.removeById(Integer.parseInt(id));
     }
 
-    public void saveCurrentRoom(final Request req) {
+    public void saveCurrentRoomAndBoard(final Request req) {
         final int roomId = Integer.parseInt(req.queryParams("roomId"));
         final int canJoin = Integer.parseInt(req.queryParams("canJoin"));
         String currentCamp = "BLACK";
@@ -127,6 +127,8 @@ public class ChessService {
             currentCamp = "WHITE";
         }
         roomDao.updateRoom(roomId, canJoin, currentCamp);
+        final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
+        boardDao.updateBoard(roomId, board);
     }
 
     public void saveCurrentRoomBoard(final Request req) {
