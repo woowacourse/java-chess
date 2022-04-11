@@ -11,53 +11,53 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.DBConnector;
+import chess.domain.ChessGame;
+import chess.domain.GameTurn;
+import chess.domain.board.InitialBoardGenerator;
 
 public class PieceDaoTest {
 
     @BeforeEach
     void initTable() {
         DBConnector dbConnector = new DBConnector();
-        String dropSql = "drop table piece";
-        String createSql = "create table piece(\n"
-                + "    position varchar(10) not null,\n"
-                + "    type varchar(10) not null,\n"
-                + "    color varchar(10) not null,\n"
-                + "    gameID varchar(10) not null,\n"
-                + "    primary key(position),\n"
-                + "    foreign key(gameID) references chessGame(gameID)\n"
-                + ");";
+        String deletePieceSql = "delete from piece where gameID = 'test'";
 
         try (Connection connection = dbConnector.getConnection();
-        PreparedStatement statement = connection.prepareStatement(dropSql)) {
+        PreparedStatement statement = connection.prepareStatement(deletePieceSql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        String deleteChessGameSql = "delete from chessGame where gameID = 'test'";
+
         try (Connection connection = dbConnector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(createSql)) {
+             PreparedStatement statement = connection.prepareStatement(deleteChessGameSql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        ChessGameDao chessGameDao = new ChessGameDao();
+        chessGameDao.save("test", new ChessGame(new InitialBoardGenerator(), GameTurn.WHITE));
     }
 
     @DisplayName("존재하는 게임에 대한 검색은 예외를 반환하지 않는다")
     @Test
     void findByGameID() {
         PieceDao pieceDao = new PieceDao();
-        pieceDao.save("yaho");
+        pieceDao.save("test");
 
-        assertThatNoException().isThrownBy(() -> pieceDao.findByGameID("yaho"));
+        assertThatNoException().isThrownBy(() -> pieceDao.findByGameID("test"));
     }
 
     @DisplayName("존재하지 않는 게임에 대한 검색은 예외를 반환한다")
     @Test
     void findByGameID_NoSuchGame() {
         PieceDao pieceDao = new PieceDao();
-        pieceDao.save("yaho");
+        pieceDao.save("test");
 
-        assertThatThrownBy(() -> pieceDao.findByGameID("yaahoo"))
+        assertThatThrownBy(() -> pieceDao.findByGameID("test1"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("헉.. 저장 안한거 아냐? 그런 게임은 없어!");
     }
