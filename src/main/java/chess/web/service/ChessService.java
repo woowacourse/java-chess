@@ -104,8 +104,11 @@ public class ChessService {
         return new HashMap(Map.of("rooms", roomDao.findAll()));
     }
 
-    public void createRoom(final String name) {
+    public void createRoomAndBoard(final String name) {
         roomDao.save(name);
+        final int roomId = roomDao.findIdByName(name);
+        final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
+        boardDao.save(roomId, board);
     }
 
     public void updateRoomName(final String id, final String roomName) {
@@ -124,5 +127,13 @@ public class ChessService {
             currentCamp = "WHITE";
         }
         roomDao.updateRoom(roomId, canJoin, currentCamp);
+    }
+
+    public void saveCurrentRoomBoard(final Request req) {
+        final int roomId = Integer.parseInt(req.queryParams("roomId"));
+//        boardDao.update(roomId);
+        final BoardDto boardDto = BoardDto.from(chessGame.getBoard());
+//        boardDao.update(roomId, boardDto);
+//        boardDao.save()
     }
 }

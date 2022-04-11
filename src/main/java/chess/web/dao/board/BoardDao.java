@@ -1,5 +1,6 @@
 package chess.web.dao.board;
 
+import chess.web.dto.BoardDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,6 +31,24 @@ public class BoardDao {
         return connection;
     }
 
+    public void save(final int roomId, final Map<String, String> board) {
+        final String sql = "" + "INSERT INTO " + TABLE + " (roomId, position, piece)" + "  VALUES (?,?,?)"; // 달라짐
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            for (final Entry<String, String> boardEntry : board.entrySet()) {
+                final String position = boardEntry.getKey();
+                final String piece = boardEntry.getValue();
+                preparedStatement.setInt(1, roomId);
+                preparedStatement.setString(2, piece);
+                preparedStatement.setString(3, position);
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("현재 board의 기물들 저장하는데 예외가 발생함.");
+        }
+    }
+
     public Map<String, String> findAll() {
         final String sql = ""
             + "SELECT position, piece"
@@ -56,6 +75,19 @@ public class BoardDao {
             + "  WHERE position = ?";
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
             addBatchEveryRow(board, preparedStatement);
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(final int roomId, final BoardDto board) {
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET piece = ?"
+            + "  WHERE position = ?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            addBatchEveryRow(board.getBoard(), preparedStatement);
             preparedStatement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();

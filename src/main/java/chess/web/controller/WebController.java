@@ -35,6 +35,7 @@ public class WebController {
 
             chessService.saveCurrentRoom(req);
             //TODO save CurrentBoard
+            chessService.saveCurrentRoomBoard(req);
             //TODO redirect inded
             return null;
         });
@@ -47,7 +48,6 @@ public class WebController {
             //TODO: roomId + model정보로 front가기 직전에 DB에 저장?
             return render(model, "game.html");
         });
-
 
         //for Error Redirect
         get("/game", (req, res) -> render(redirectWithErrorFlash(req), "game.html"));
@@ -63,7 +63,7 @@ public class WebController {
     }
 
     private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
-        chessService.createRoom(req.queryParams("roomName"));
+        chessService.createRoomAndBoard(req.queryParams("roomName"));
         res.redirect("/");
         return null;
     }

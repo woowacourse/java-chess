@@ -37,6 +37,23 @@ public class RoomDao {
         }
     }
 
+    public int findIdByName(final String name) {
+        final String sql = "" + "SELECT id" + "  FROM " + TABLE + "  WHERE name = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, name);
+            final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                statement.close();
+                resultSet.close();
+                return 0;
+            }
+            return resultSet.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public void removeById(final int id) {
         final String sql = "" + "DELETE" + "  FROM " + TABLE + "  WHERE id = ?";
         try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
