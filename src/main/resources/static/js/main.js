@@ -7,7 +7,6 @@ const gameId = urls[urls.length - 1];
 
 const moveUrl = `/move`;
 const scoreUrl = `/score/${gameId}`;
-const isFinishedUrl = `/isFinished/${gameId}`;
 const boardUrl = `/board/${gameId}`;
 /**
  * 페이지 첫 진입 시 => 기물 그리기 | 이벤트 적용 |점수 출력
@@ -16,7 +15,14 @@ const initialize = () => {
     fetch(boardUrl)
         .then(res => res.json())
         .then(board => board.forEach(boardDto =>
-            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)));
+            setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)))
+        .then(() => {
+            if (isGameOver()) {
+                gameOverProcess();
+                return;
+            }
+            document.getElementById('start').play();
+        });
 
     document.querySelectorAll('.square')
         .forEach(square => square.addEventListener('click', squareClick));
@@ -26,18 +32,6 @@ const initialize = () => {
     document.getElementById("newGame").addEventListener('click', (event) => {
         location.href = newGamemUrl;
     });
-
-    fetch(isFinishedUrl)
-        .then(res => res.json())
-        .then(result => {
-            if (result) {
-                document.querySelector('h2').innerHTML = 'GAME OVER';
-                document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
-                document.getElementById('finish').play();
-                return;
-            }
-            document.getElementById('start').play();
-        })
 }
 
 const setupPieceToSquare = (square, pieceName) => {
@@ -123,7 +117,7 @@ const processMove = (selectedSquare) => {
             setupPieceToSquare(document.getElementById(json.to), json.piece);
             setupScores();
             document.getElementById('move').play();
-            gameOverProcess();
+            checkIsGameOver();
         })
 
     document.querySelector('.selected').classList.remove('selected');
@@ -152,19 +146,23 @@ const removePieceFromSquare = (square) => {
     square.style.backgroundImage = '';
 }
 
+const checkIsGameOver = () => {
+    if (isGameOver()) {
+        gameOverProcess();
+    }
+}
+
 /**
  * 기물 이동 성공 시 마다, 게임 종료 여부 확인 및 이벤트 제거 처리
  */
 const gameOverProcess = () => {
-    fetch(isFinishedUrl)
-        .then(res => res.json())
-        .then(result => {
-            if (result) {
-                document.querySelector('h2').innerHTML = 'GAME OVER';
-                document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
-                document.getElementById('finish').play();
-            }
-        })
+    document.querySelector('h2').innerHTML = 'GAME OVER';
+    document.querySelectorAll('.square').forEach(e => e.removeEventListener('click', squareClick));
+    document.getElementById('finish').play();
+}
+
+const isGameOver = () => {
+    return 2 > [...document.querySelectorAll('.hasPiece')].filter(square => square.style.backgroundImage.includes('k')).length;
 }
 
 initialize();
