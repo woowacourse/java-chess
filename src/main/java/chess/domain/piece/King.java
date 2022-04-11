@@ -14,16 +14,26 @@ import java.util.List;
 
 public final class King extends AbstractOncePiece {
 
-    private static final List<Direction> directions = List
+    private static final List<Direction> DIRECTIONS = List
             .of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 0.0;
+    private static final PieceType PIECE_TYPE = PieceType.KING;
 
     public King(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS, PIECE_TYPE);
     }
 
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        String output = PIECE_TYPE.getOutput();
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 }

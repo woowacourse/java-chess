@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.board.BasicChessBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import java.util.HashMap;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +27,7 @@ class ReadyTest {
     void blackTurn() {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
-        State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
+        State blackTurn = whiteTurn.movePiece(Position.valueOf("a2"), Position.valueOf("a3"));
 
         assertThat(blackTurn).isInstanceOf(BlackTurn.class);
     }
@@ -33,9 +37,33 @@ class ReadyTest {
     void whiteBlackWhiteTurn() {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
-        State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
-        State whiteTurn2 = blackTurn.movePiece(Position.of("a7"), Position.of("a6"));
+        State blackTurn = whiteTurn.movePiece(Position.valueOf("a2"), Position.valueOf("a3"));
+        State whiteTurn2 = blackTurn.movePiece(Position.valueOf("a7"), Position.valueOf("a6"));
 
         assertThat(whiteTurn2).isInstanceOf(WhiteTurn.class);
+    }
+
+    @DisplayName("Black King이 없다면 WhiteWin으로 상태가 만들어진다.")
+    @Test
+    void whiteWinTest() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.valueOf("a1"), new King(Color.WHITE));
+        Board board = new Board(value);
+
+        State state = Ready.continueOf(Color.BLACK, board);
+
+        assertThat(state).isInstanceOf(WhiteWin.class);
+    }
+
+    @DisplayName("White King이 없다면 BlackWin으로 상태가 만들어진다.")
+    @Test
+    void blackWinTest() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.valueOf("a1"), new King(Color.BLACK));
+        Board board = new Board(value);
+
+        State state = Ready.continueOf(Color.WHITE, board);
+
+        assertThat(state).isInstanceOf(BlackWin.class);
     }
 }

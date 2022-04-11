@@ -15,4 +15,6 @@ public interface State {
     Map<Color, Score> getScore();
 
     boolean isFinished();
+
+    Color getTurn();
 }

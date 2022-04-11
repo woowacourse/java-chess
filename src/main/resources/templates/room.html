@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>알린의 체스 대기방</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/button.css">
+</head>
+<body>
+<center>
+    <div><h1>체스 게임 대기방</h1></div>
+    <div class="frame">
+        {{#gameNumbers}}
+        <button id="submit-{{.}}" type="button" onclick="location.href='/room/{{.}}'" class="w-btn w-btn-brown">{{.}}번
+            체스 게임 이동
+        </button>
+        <br>
+        {{/gameNumbers}}
+    </div>
+</center>
+</body>
+</html>

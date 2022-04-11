@@ -6,8 +6,7 @@ import java.util.Objects;
 
 public class Position {
 
-    // key의 형식은 "File.name() + Rank.name()"으로 한다.
-    private static final Map<String, Position> cachePosition = new HashMap<>(64);
+    private static final Map<String, Position> CACHE_POSITION = new HashMap<>(64);
 
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
@@ -21,23 +20,22 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position withFileAndRank(File file, Rank rank) {
-        String key = file.name() + rank.name();
-
-        if (!cachePosition.containsKey(key)) {
-            cachePosition.put(key, new Position(file, rank));
-        }
-        return cachePosition.get(key);
-    }
-
-    public static Position of(String input) {
+    public static Position valueOf(String input) {
         validateBlank(input);
         validateSize(input);
 
         File file = File.of(input.substring(FILE_INDEX, FILE_INDEX + 1));
         Rank rank = Rank.of(input.substring(RANK_INDEX, RANK_INDEX + 1));
 
-        return withFileAndRank(file, rank);
+        if (!CACHE_POSITION.containsKey(input)) {
+            CACHE_POSITION.put(input, new Position(file, rank));
+        }
+        return CACHE_POSITION.get(input);
+    }
+
+    public static Position withFileAndRank(File file, Rank rank) {
+        String key = file.getValue() + rank.getValue();
+        return valueOf(key);
     }
 
     private static void validateBlank(String input) {
@@ -95,6 +93,10 @@ public class Position {
 
     private boolean canMove(int x, int y) {
         return file.canMove(x) && rank.canMove(y);
+    }
+
+    public String getStringValue() {
+        return file.getValue() + rank.getValue();
     }
 
     @Override

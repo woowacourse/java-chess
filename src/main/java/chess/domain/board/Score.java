@@ -16,7 +16,7 @@ public class Score {
         }
     }
 
-    public double get() {
+    public double getScore() {
         return score;
     }
 }

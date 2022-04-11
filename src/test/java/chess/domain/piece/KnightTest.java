@@ -23,15 +23,15 @@ class KnightTest {
 
     static Stream<Arguments> knightMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d5"), Position.of("e7")),
-                Arguments.of(Position.of("d5"), Position.of("e3")),
-                Arguments.of(Position.of("d5"), Position.of("c7")),
-                Arguments.of(Position.of("d5"), Position.of("c3")),
-                Arguments.of(Position.of("d5"), Position.of("b6")),
-                Arguments.of(Position.of("d5"), Position.of("b4")),
-                Arguments.of(Position.of("d5"), Position.of("f6")),
-                Arguments.of(Position.of("d5"), Position.of("f4")),
-                Arguments.of(Position.of("e8"), Position.of("f6"))
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e7")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e3")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c7")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c3")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("b6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("b4")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("f6")),
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("f4")),
+                Arguments.of(Position.valueOf("e8"), Position.valueOf("f6"))
         );
     }
 
@@ -39,8 +39,8 @@ class KnightTest {
     @Test
     void moveNNWTrue() {
         Piece piece = new Knight(Color.BLACK);
-        Position source = Position.of("d5");
-        Position destination = Position.of("d6");
+        Position source = Position.valueOf("d5");
+        Position destination = Position.valueOf("d6");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

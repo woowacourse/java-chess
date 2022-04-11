@@ -9,6 +9,8 @@ import chess.domain.piece.Piece;
 
 public class OutputView {
 
+    private static final String EMPTY_TEXT = ".";
+
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -20,23 +22,30 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Piece piece = board.findPieceBy(Position.withFileAndRank(file, rank)).orElse(null);
-                System.out.print(PieceOutputText.of(piece));
+                System.out.print(getPieceOutput(piece));
             }
             System.out.println();
         }
         System.out.println();
     }
 
+    private static String getPieceOutput(Piece piece) {
+        if (piece == null) {
+            return EMPTY_TEXT;
+        }
+        return piece.getOutput();
+    }
+
     public static void printStatus(StatusResult status) {
-        System.out.println("블랙 진영의 점수는 " + status.getBlackScore().get() + "입니다.");
-        System.out.println("화이트 진영의 점수는 " + status.getWhiteScore().get() + "입니다.");
+        System.out.println("블랙 진영의 점수는 " + status.getBlackScore() + "입니다.");
+        System.out.println("화이트 진영의 점수는 " + status.getWhiteScore() + "입니다.");
 
         printWinner(status);
     }
 
     private static void printWinner(StatusResult status) {
-        double whiteScore = status.getWhiteScore().get();
-        double blackScore = status.getBlackScore().get();
+        double whiteScore = status.getWhiteScore();
+        double blackScore = status.getBlackScore();
 
         if (whiteScore > blackScore) {
             System.out.println("블랙 진영이 이기고 있습니다.");

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import java.util.Arrays;
 
 public enum Rank {
@@ -16,6 +17,8 @@ public enum Rank {
 
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 8;
+    private static final Rank BLACK_START_RANK = Rank.RANK_7;
+    private static final Rank WHITE_START_RANK = Rank.RANK_2;
 
     private final String value;
     private final int y;
@@ -32,12 +35,22 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }
 
+    public static Rank getStartRankOfPawn(Color color) {
+        if (color == Color.BLACK) {
+            return BLACK_START_RANK;
+
+        }
+        return WHITE_START_RANK;
+    }
+
     public Rank move(int y) {
         return findByY(this.y + y);
     }
 
+
     public boolean canMove(int y) {
-        return (MINIMUM <= this.y + y) && (this.y + y <= MAXIMUM);
+        int nextY = this.y + y;
+        return (MINIMUM <= nextY) && (nextY <= MAXIMUM);
     }
 
     private Rank findByY(int input) {
@@ -45,6 +58,10 @@ public enum Rank {
                 .filter(row -> row.y == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

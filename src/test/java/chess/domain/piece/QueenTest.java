@@ -23,22 +23,22 @@ class QueenTest {
 
     static Stream<Arguments> queenMoveTestSet() {
         return Stream.of(
-                Arguments.of(Position.of("d5"), Position.of("e5")), // 동
-                Arguments.of(Position.of("d5"), Position.of("h5")), // 동
-                Arguments.of(Position.of("d5"), Position.of("c5")), // 서
-                Arguments.of(Position.of("d5"), Position.of("a5")), // 서
-                Arguments.of(Position.of("d5"), Position.of("d4")), // 남
-                Arguments.of(Position.of("d5"), Position.of("d1")), // 남
-                Arguments.of(Position.of("d5"), Position.of("d6")), // 북
-                Arguments.of(Position.of("d5"), Position.of("d8")), // 북
-                Arguments.of(Position.of("d5"), Position.of("e6")), // 북동
-                Arguments.of(Position.of("d5"), Position.of("g8")), // 북동
-                Arguments.of(Position.of("d5"), Position.of("c6")), // 북서
-                Arguments.of(Position.of("d5"), Position.of("a8")), // 북서
-                Arguments.of(Position.of("d5"), Position.of("e4")), // 남동
-                Arguments.of(Position.of("d5"), Position.of("h1")), // 남동
-                Arguments.of(Position.of("d5"), Position.of("c4")), // 남서
-                Arguments.of(Position.of("d5"), Position.of("a2"))  // 남서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e5")), // 동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("h5")), // 동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c5")), // 서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a5")), // 서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d4")), // 남
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d1")), // 남
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d6")), // 북
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("d8")), // 북
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e6")), // 북동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("g8")), // 북동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c6")), // 북서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a8")), // 북서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("e4")), // 남동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("h1")), // 남동
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("c4")), // 남서
+                Arguments.of(Position.valueOf("d5"), Position.valueOf("a2"))  // 남서
         );
     }
 
@@ -46,8 +46,8 @@ class QueenTest {
     @Test
     void queenCanNotMove() {
         Piece piece = new Queen(Color.BLACK);
-        Position source = Position.of("d5");
-        Position destination = Position.of("e7");
+        Position source = Position.valueOf("d5");
+        Position destination = Position.valueOf("e7");
 
         assertThat(piece.canMove(source, destination)).isFalse();
     }

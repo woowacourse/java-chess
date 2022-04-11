@@ -1,6 +1,5 @@
 package chess.domain.command;
 
-import chess.domain.state.State;
 import java.util.Arrays;
 
 public enum Command {
@@ -41,9 +40,5 @@ public enum Command {
                 .filter(value -> value.command.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_INPUT_ERROR_MESSAGE));
-    }
-
-    public String get() {
-        return command;
     }
 }

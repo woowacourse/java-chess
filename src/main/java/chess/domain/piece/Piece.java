@@ -1,14 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.EAST;
-import static chess.domain.board.Direction.NORTH;
-import static chess.domain.board.Direction.NORTH_EAST;
-import static chess.domain.board.Direction.NORTH_WEST;
-import static chess.domain.board.Direction.SOUTH;
-import static chess.domain.board.Direction.SOUTH_EAST;
-import static chess.domain.board.Direction.SOUTH_WEST;
-import static chess.domain.board.Direction.WEST;
-
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
@@ -18,14 +9,12 @@ public abstract class Piece {
 
     protected final Color color;
     protected final List<Direction> directions;
+    protected final PieceType pieceType;
 
-    public Piece(Color color, List<Direction> directions) {
+    public Piece(Color color, List<Direction> directions, PieceType pieceType) {
         this.color = color;
         this.directions = directions;
-    }
-
-    public final boolean isSameType(Class<? extends Piece> type) {
-        return this.getClass() == type;
+        this.pieceType = pieceType;
     }
 
     public final boolean isSameColor(Color color) {
@@ -36,11 +25,23 @@ public abstract class Piece {
         return this.color == piece.color;
     }
 
+    public final String getColor() {
+        return color.name().toUpperCase();
+    }
+
+    public final String getType() {
+        return this.getClass().getSimpleName().toUpperCase();
+    }
+
+    public abstract boolean isPawn();
+
     public abstract boolean canMove(Position source, Position destination);
 
     public abstract Direction findDirection(Position source, Position destination);
 
     public abstract double getPoint();
+
+    public abstract String getOutput();
 
     @Override
     public boolean equals(Object o) {

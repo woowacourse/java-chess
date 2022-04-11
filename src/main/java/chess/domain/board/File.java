@@ -37,7 +37,8 @@ public enum File {
     }
 
     public boolean canMove(int x) {
-        return (MINIMUM <= this.x + x) && (this.x + x <= MAXIMUM);
+        int nextX = this.x + x;
+        return (MINIMUM <= nextX) && (nextX <= MAXIMUM);
     }
 
     private File findByX(int input) {
@@ -45,6 +46,10 @@ public enum File {
                 .filter(file -> file.x == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

@@ -10,7 +10,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +23,13 @@ class WhiteTurnTest {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
-        Position source = Position.of("a2");
-        Position destination = Position.of("a3");
+        Position source = Position.valueOf("a2");
+        Position destination = Position.valueOf("a3");
 
         whiteTurn.movePiece(source, destination);
 
         assertThat(board.findPieceBy(destination).get().isSameColor(Color.WHITE)).isTrue();
-        assertThat(board.findPieceBy(destination).get().isSameType(WhitePawn.class)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isPawn()).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")
@@ -39,8 +38,8 @@ class WhiteTurnTest {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
-        Position source = Position.of("a7");
-        Position destination = Position.of("a6");
+        Position source = Position.valueOf("a7");
+        Position destination = Position.valueOf("a6");
 
         assertThatThrownBy(() -> whiteTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -53,8 +52,8 @@ class WhiteTurnTest {
         Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
-        Position source = Position.of("d5");
-        Position destination = Position.of("a6");
+        Position source = Position.valueOf("d5");
+        Position destination = Position.valueOf("a6");
 
         assertThatThrownBy(() -> whiteTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -65,13 +64,13 @@ class WhiteTurnTest {
     @Test
     void testWhiteWin() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("d5"), new King(Color.BLACK));
-        value.put(Position.of("d4"), new Queen(Color.WHITE));
-        value.put(Position.of("a4"), new King(Color.WHITE));
+        value.put(Position.valueOf("d5"), new King(Color.BLACK));
+        value.put(Position.valueOf("d4"), new Queen(Color.WHITE));
+        value.put(Position.valueOf("a4"), new King(Color.WHITE));
         Board board = new Board(value);
 
         State whiteTurn = Ready.start(board);
-        State state = whiteTurn.movePiece(Position.of("d4"), Position.of("d5"));
+        State state = whiteTurn.movePiece(Position.valueOf("d4"), Position.valueOf("d5"));
 
         assertThat(state).isInstanceOf(WhiteWin.class);
     }

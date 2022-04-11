@@ -62,8 +62,8 @@ class CommandStateTest {
 
         Board board = chessGame.getBoard();
 
-        assertThat(board.findPieceBy(Position.of("a2"))).isEmpty();
-        assertThat(board.findPieceBy(Position.of("a3")).get()).isInstanceOf(Pawn.class);
+        assertThat(board.findPieceBy(Position.valueOf("a2"))).isEmpty();
+        assertThat(board.findPieceBy(Position.valueOf("a3")).get()).isInstanceOf(Pawn.class);
     }
 
     @Test

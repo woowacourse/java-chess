@@ -12,8 +12,13 @@ public abstract class AbstractPawnPiece extends Piece {
     public static final int ONCE_TIME = 1;
     public static final int TWICE_TIME = 2;
 
-    AbstractPawnPiece(Color color, List<Direction> directions) {
-        super(color, directions);
+    AbstractPawnPiece(Color color, List<Direction> directions, PieceType pieceType) {
+        super(color, directions, pieceType);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

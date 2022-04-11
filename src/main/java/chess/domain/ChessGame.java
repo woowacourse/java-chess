@@ -39,7 +39,7 @@ public class ChessGame {
             OutputView.printStatus(getStatus());
         }
         if (commandState.isMove()) {
-            state = state.movePiece(Position.of(getSource(input)), Position.of(getDestination(input)));
+            state = state.movePiece(Position.valueOf(getSource(input)), Position.valueOf(getDestination(input)));
             checkGameEnd();
         }
     }

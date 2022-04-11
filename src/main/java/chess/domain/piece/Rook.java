@@ -10,15 +10,25 @@ import java.util.List;
 
 public final class Rook extends AbstractStraightPiece {
 
-    private static final List<Direction> directions = List.of(NORTH, WEST, SOUTH, EAST);
+    private static final List<Direction> DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);
     private static final double POINT = 5.0;
+    private static final PieceType PIECE_TYPE = PieceType.ROOK;
 
     public Rook(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS, PIECE_TYPE);
     }
 
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public String getOutput() {
+        String output = PIECE_TYPE.getOutput();
+        if (color == Color.WHITE) {
+            return output.toLowerCase();
+        }
+        return output;
     }
 }
