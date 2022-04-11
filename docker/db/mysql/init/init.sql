@@ -14,12 +14,13 @@ CREATE TABLE room
 # room 생성 클릭 -> 서버상의 메모리board를 받아와 -> roomId와 함께 저장하여 생성
 create table board
 (
-    id int not null auto_increment,
+    id       int         not null auto_increment,
     roomId   int         not null,
     position VARCHAR(5)  NOT NULL,
     piece    VARCHAR(20) NOT NULL,
     PRIMARY KEY (id),
     foreign key (roomId) REFERENCES room (id)
+    ON DELETE CASCADE
 );
 
 
