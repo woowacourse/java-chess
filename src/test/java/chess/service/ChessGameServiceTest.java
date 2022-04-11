@@ -41,8 +41,7 @@ public class ChessGameServiceTest {
     @BeforeEach
     void setUp() {
         GameDao gameDao = new fakeGameDao(new Game("white", "black", 1));
-        chessGameService = new ChessGameService(new fakeBoardDao());
-        chessGameService.setGameDao(gameDao);
+        chessGameService = new ChessGameService(gameDao, new fakeBoardDao());
     }
 
     @AfterEach
@@ -156,6 +155,7 @@ public class ChessGameServiceTest {
     }
 
     private static class fakeGameDao implements GameDao {
+
         private final Game game;
         private final Map<Integer, List<String>> table = new LinkedHashMap<>();
 
@@ -194,7 +194,7 @@ public class ChessGameServiceTest {
         }
 
         @Override
-        public int findByIds(String idPlayerWhite, String idPlayerBlack) {
+        public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
             return 0;
         }
     }

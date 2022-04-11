@@ -100,7 +100,7 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public int findByIds(String idPlayerWhite, String idPlayerBlack) {
+    public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
         Connection connection = getConnection();
         String sql = "select id from game where id_white_player = ? and id_black_player = ?";
         try {

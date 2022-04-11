@@ -14,14 +14,11 @@ import chess.model.Turn;
 
 public class ChessGameService {
     private final BoardDao boardDao;
-    private GameDao gameDao;
+    private final GameDao gameDao;
 
-    public ChessGameService(BoardDao boardDao) {
-        this.boardDao = boardDao;
-    }
-
-    public void setGameDao(GameDao gameDao) {
+    public ChessGameService(GameDao gameDao, BoardDao boardDao) {
         this.gameDao = gameDao;
+        this.boardDao = boardDao;
     }
 
     public void save(Game game, ChessGame chessGame) {
