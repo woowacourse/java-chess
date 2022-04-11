@@ -12,7 +12,7 @@ class SquareDaoImplTest {
     @DisplayName("데이터가 저장되는지 확인한다.")
     @Test()
     void save() {
-        SquareDaoImpl squareDaoImpl = new SquareDaoImpl();
+        SquareDaoImpl squareDaoImpl = new SquareDaoImpl(new DataSourceImpl());
         squareDaoImpl.delete();
         squareDaoImpl.save(Position.from("a1"), Piece.getPiece("BLACK_KING"));
 
@@ -22,7 +22,7 @@ class SquareDaoImplTest {
     @DisplayName("데이터가 삭제되는지 확인한다.")
     @Test()
     void delete() {
-        SquareDaoImpl squareDaoImpl = new SquareDaoImpl();
+        SquareDaoImpl squareDaoImpl = new SquareDaoImpl(new DataSourceImpl());
         squareDaoImpl.save(Position.from("a2"), Piece.getPiece("BLACK_KING"));
         squareDaoImpl.delete();
 
@@ -32,7 +32,7 @@ class SquareDaoImplTest {
     @DisplayName("데이터가 최신화 되는지 확인한다.")
     @Test()
     void update() {
-        SquareDaoImpl squareDaoImpl = new SquareDaoImpl();
+        SquareDaoImpl squareDaoImpl = new SquareDaoImpl(new DataSourceImpl());
         squareDaoImpl.save(Position.from("a1"), Piece.getPiece("BLACK_KING"));
         squareDaoImpl.update("a1", Piece.getPiece("BLACK_PAWN"));
 

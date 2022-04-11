@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionManager {
+public class DataSourceImpl implements DataSource {
 
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public static Connection getConnection() {
+    @Override
+    public Connection connection() {
         loadDriver();
         Connection connection = null;
         try {

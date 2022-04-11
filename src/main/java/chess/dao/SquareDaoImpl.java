@@ -11,9 +11,15 @@ import java.util.Map;
 
 public class SquareDaoImpl implements SquareDao {
 
+    private final DataSource dataSource;
+
+    public SquareDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public void save(Position position, Piece piece) {
         final String sql = "insert into square (position, team, symbol) values (?, ?, ?)";
-        try (final Connection connection = ConnectionManager.getConnection();
+        try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, position.getKey());
             statement.setString(2, piece.getTeam());
@@ -26,11 +32,10 @@ public class SquareDaoImpl implements SquareDao {
 
     public Map<String, String> find() {
         final String sql = "select position, team, symbol from square";
-        try (final Connection connection = ConnectionManager.getConnection();
+        try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql);
              final ResultSet resultSet = statement.executeQuery()) {
-            final Map<String, String> squares = createFrom(resultSet);
-            return squares;
+            return createFrom(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +53,7 @@ public class SquareDaoImpl implements SquareDao {
 
     public void delete() {
         final String sql = "delete from square";
-        try (final Connection connection = ConnectionManager.getConnection();
+        try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -58,7 +63,7 @@ public class SquareDaoImpl implements SquareDao {
 
     public void update(String position, Piece piece) {
         final String sql = "update square set team = ?, symbol = ? where position = ?";
-        try (final Connection connection = ConnectionManager.getConnection();
+        try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, piece.getTeam());
             statement.setString(2, piece.getSymbol());

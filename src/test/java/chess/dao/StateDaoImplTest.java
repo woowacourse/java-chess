@@ -11,7 +11,7 @@ class StateDaoImplTest {
     @DisplayName("데이터가 저장되는지 확인한다.")
     @Test()
     void save() {
-        StateDao stateDao = new StateDaoImpl();
+        StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
         stateDao.save("BLACK_TURN");
 
         assertThat(stateDao.find()).isEqualTo("BLACK_TURN");
@@ -20,7 +20,7 @@ class StateDaoImplTest {
     @DisplayName("데이터가 삭제되는지 확인한다.")
     @Test()
     void delete() {
-        StateDao stateDao = new StateDaoImpl();
+        StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
         stateDao.delete();
         stateDao.save("WHITE_TURN");
         stateDao.delete();
@@ -33,7 +33,7 @@ class StateDaoImplTest {
     @DisplayName("데이터가 최신화 되는지 확인한다.")
     @Test()
     void update() {
-        StateDao stateDao = new StateDaoImpl();
+        StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
         stateDao.delete();
         stateDao.save("WHITE_TURN");
         stateDao.update("WHITE_TURN", "BLACK_TURN");
