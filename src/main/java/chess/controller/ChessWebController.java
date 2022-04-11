@@ -133,6 +133,7 @@ public class ChessWebController {
     private String renderErrorMessage(int gameId, String errorMessage) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", errorMessage);
+        model.put("id", gameId);
         model.putAll(chessService.showBoard(gameId));
         return render(model, STARTED_PATH);
     }
@@ -140,5 +141,4 @@ public class ChessWebController {
     private String render(Map<String, Object> model, String tempalatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, tempalatePath));
     }
-
 }
