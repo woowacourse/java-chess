@@ -58,20 +58,21 @@ public class BoardDao {
         }
     }
 
-    public Map<Position, Piece> findGame(int id) throws SQLException {
+    public Map<Position, Piece> findGame(int id) {
         Map<Position, Piece> board = new HashMap<>();
         final String sql = "select position, piece, color from board where game_id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        try (connection; statement; resultSet) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Position position = Position.valueOf(resultSet.getString("position"));
                 Color color = Color.of(resultSet.getString("color"));
                 Piece piece = PieceMapper.of(resultSet.getString("piece"), color);
                 board.put(position, piece);
             }
+        } catch (SQLException e) {
+            logger.warn(e.getMessage());
         }
         return board;
     }

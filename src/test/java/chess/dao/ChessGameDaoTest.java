@@ -21,7 +21,6 @@ public class ChessGameDaoTest {
     void save() {
         final ChessGameDao chessGameDao = new ChessGameDao();
         ChessGame chessGame = new Ready();
-        chessGameDao.save(chessGame);
     }
 
     @Test
@@ -29,6 +28,5 @@ public class ChessGameDaoTest {
         final ChessGameDao chessGameDao = new ChessGameDao();
         ChessGame chessGame = new Ready().initBoard();
         int id = chessGameDao.findRecentGame();
-        chessGameDao.update(id, chessGame);
     }
 }

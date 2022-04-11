@@ -85,17 +85,18 @@ public class ChessGameDao {
         }
     }
 
-    public String findById(int id) throws SQLException {
+    public String findById(int id) {
         final String sql = "select state from game where id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        try (connection; statement; resultSet) {
-            if (!resultSet.next()) {
-                return null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("state");
             }
-            return resultSet.getString("state");
+        } catch (SQLException e) {
+            logger.warn(e.getMessage());
         }
+        return null;
     }
 }
