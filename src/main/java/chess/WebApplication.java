@@ -1,22 +1,25 @@
 package chess;
 
-import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.staticFiles;
 
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.ChessController;
 
 public class WebApplication {
 
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        staticFiles.location("/static");
+        port(8080);
+
+        ChessController chessController = new ChessController();
+        chessController.run();
+        chessController.start();
+        chessController.runMain();
+        chessController.board();
+        chessController.turn();
+        chessController.move();
+        chessController.status();
+        chessController.end();
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
 }

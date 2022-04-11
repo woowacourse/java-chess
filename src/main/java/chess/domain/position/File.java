@@ -4,24 +4,23 @@ import java.util.Arrays;
 
 public enum File {
 
-    A(0),
-    B(1),
-    C(2),
-    D(3),
-    E(4),
-    F(5),
-    G(6),
-    H(7);
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
-    public static final char FIRST_FILE_VALUE = 'a';
     private final int value;
 
     File(final int value) {
         this.value = value;
     }
 
-    public static File from(final char value) {
-        return from(value - FIRST_FILE_VALUE);
+    public static File from(final String value) {
+        return File.from(Integer.parseInt(value));
     }
 
     public static File from(final int value) {
@@ -37,5 +36,9 @@ public enum File {
 
     public File move(final int distance) {
         return from(value + distance);
+    }
+
+    public String getValue() {
+        return Integer.toString(value);
     }
 }

@@ -19,15 +19,15 @@ public enum Rank {
         this.value = value;
     }
 
+    public static Rank from(final String value) {
+        return Rank.from(Integer.parseInt(value));
+    }
+
     public static Rank from(final int value) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다."));
-    }
-
-    public static Rank from(final String value) {
-        return Rank.from(Integer.parseInt(value));
     }
 
     public int calculateDistance(final Rank rank) {
@@ -36,6 +36,10 @@ public enum Rank {
 
     public Rank move(final int distance) {
         return from(value + distance);
+    }
+
+    public String getValue() {
+        return Integer.toString(value);
     }
 
 }

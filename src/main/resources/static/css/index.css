@@ -1,0 +1,122 @@
+
+body {
+    font-family: 'BMHANNAPro', monospace;
+}
+
+@font-face {
+    font-family: 'BMHANNAPro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    color:#ff6781;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.turnMessage {
+    color:#ff6781;
+    font-size: 1.2em;
+    display: flex;
+    margin-left: 21vw;
+    margin-top: 0.5vw;
+}
+
+body {
+    background-color:#FCF6F5;
+}
+
+button {
+    font-family: 'BMHANNAPro', monospace;
+    background:#ff6781;
+    color:#FCF6F5;
+    border:none;
+    position:relative;
+    height:40px;
+    font-size:1.3em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.start {
+    margin-left: 46vw;
+    margin-bottom: -2.5vw;
+}
+.end {
+    margin-left: 58vw;
+    margin-bottom: 1vw;
+}
+.status {
+    margin-bottom: -2.5vw;
+    margin-left: 32vw;
+}
+
+button:hover{
+    background:#FCF6F5;
+    color:#ff6781;
+}
+
+button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #ff6781;
+    transition:400ms ease all;
+}
+
+button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.chessBoard {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #ffc0cb;
+    margin: auto;
+    width: 35vw;
+    height: 35vw;
+}
+
+.chessRow {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.chessColumn {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.chessRow > .chessColumn > img {
+    width: 100%;
+    height: 100%;
+}
+
+.clicked {
+    background-color: #FCE77D !important;
+}
