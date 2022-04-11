@@ -3,6 +3,7 @@ package chess.dao;
 import chess.db.DBConnector;
 import chess.domain.piece.PieceColor;
 import chess.dto.GameDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,11 @@ public class GameDaoImplTest {
     @BeforeEach
     void setUp() {
         gameDao = new GameDaoImpl(new DBConnector());
+        gameDao.removeAll();
+    }
+
+    @AfterEach
+    void clearData() {
         gameDao.removeAll();
     }
 

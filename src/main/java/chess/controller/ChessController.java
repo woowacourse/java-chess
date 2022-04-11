@@ -4,6 +4,7 @@ import chess.dao.GameDaoImpl;
 import chess.dao.PieceDaoImpl;
 import chess.db.DBConnector;
 import chess.domain.command.MoveCommand;
+import chess.dto.ErrorResponseDto;
 import chess.serviece.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -48,7 +49,8 @@ public class ChessController {
         exception(Exception.class, (exception, request, response) -> {
             System.out.println(exception.getMessage());
             response.status(500);
-            response.body(exception.getMessage());
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(exception.getMessage());
+            response.body(gson.toJson(errorResponseDto));
         });
     }
 

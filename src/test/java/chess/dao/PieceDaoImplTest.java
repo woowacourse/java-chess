@@ -3,6 +3,7 @@ package chess.dao;
 import chess.db.DBConnector;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,11 @@ public class PieceDaoImplTest {
     @BeforeEach
     void setUp() {
         pieceDao = new PieceDaoImpl(new DBConnector());
+        pieceDao.removeAll();
+    }
+
+    @AfterEach
+    void clearData() {
         pieceDao.removeAll();
     }
 

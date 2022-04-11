@@ -1,5 +1,7 @@
 package chess.db;
 
+import chess.util.SqlConnectionException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ public class JdbcConnector {
             Class.forName(JDBC_DRIVER);
         } catch (final Exception e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Driver 로딩을 실패했습니다.");
+            throw new SqlConnectionException("Driver 로딩을 실패했습니다.", e);
         }
     }
 
@@ -30,7 +32,7 @@ public class JdbcConnector {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Connection 연결에 실패했습니다.");
+            throw new SqlConnectionException("Connection 연결에 실패했습니다.", e);
         }
     }
 }

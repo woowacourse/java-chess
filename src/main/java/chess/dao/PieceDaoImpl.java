@@ -3,6 +3,7 @@ package chess.dao;
 import chess.db.DBConnector;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
+import chess.util.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +29,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("piece 데이터를 REMOVE 하지 못 했습니다.", e);
         }
     }
 
@@ -39,6 +41,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("piece 데이터를 REMOVE 하지 못 했습니다.", e);
         }
     }
 
@@ -58,6 +61,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.clearBatch();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("piece 데이터를 INSERT 하지 못 했습니다.", e);
         }
     }
 
@@ -72,15 +76,16 @@ public class PieceDaoImpl implements PieceDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("piece 데이터를 SELECT 하지 못 했습니다.", e);
         }
     }
 
     @Override
     public List<PieceDto> findAll() {
         final String sql = "select * from piece";
-        List<PieceDto> pieces = new ArrayList<>();
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+            List<PieceDto> pieces = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 pieces.add(
@@ -91,10 +96,11 @@ public class PieceDaoImpl implements PieceDao {
                         )
                 );
             }
+            return pieces;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("piece 데이터를 SELECT 하지 못 했습니다.", e);
         }
-        return pieces;
     }
 
     @Override
@@ -107,6 +113,7 @@ public class PieceDaoImpl implements PieceDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("position 데이터를 UPDATE 하지 못 했습니다.", e);
         }
     }
 }

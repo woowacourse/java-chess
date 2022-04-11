@@ -16,6 +16,10 @@ function getChess() {
                 setButton(obj.status);
             }
             setPieces(obj.pieces);
+        },
+        error(request) {
+            let obj = JSON.parse(request.responseText);
+            alert(obj.message);
         }
     });
 }
@@ -63,6 +67,10 @@ function start() {
             setGameStatus(obj.status);
             setButton(obj.status);
             setPieces(obj.pieces);
+        },
+        error(request) {
+            let obj = JSON.parse(request.responseText);
+            alert(obj.message);
         }
     });
 }
@@ -98,7 +106,8 @@ function move(position) {
             document.getElementById(sourcePosition).innerHTML = "";
         },
         error(request) {
-            alert(request.responseText);
+            let obj = JSON.parse(request.responseText);
+            alert(obj.message);
         }
     });
     positions = []
@@ -120,6 +129,10 @@ function showScore() {
                 message += score.winnerName + " 진영이 이기고 있습니다.";
             }
             alert(message);
+        },
+        error(request) {
+            let obj = JSON.parse(request.responseText);
+            alert(obj.message);
         }
     });
 }
@@ -142,6 +155,10 @@ function end() {
             alert(message);
             setGameStatus("finished");
             setButton("finished");
+        },
+        error(request) {
+            let obj = JSON.parse(request.responseText);
+            alert(obj.message);
         }
     });
 }

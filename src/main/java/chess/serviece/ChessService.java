@@ -10,6 +10,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import chess.dto.*;
+import chess.util.SqlQueryException;
 
 import java.util.List;
 import java.util.Map;
@@ -26,20 +27,26 @@ public class ChessService {
     }
 
     public ChessResponseDto initializeGame() {
-        pieceDao.removeAll();
-        gameDao.removeAll();
+        try {
+            pieceDao.removeAll();
+            gameDao.removeAll();
 
-        pieceDao.saveAll(getInitPieceDtos());
-        gameDao.save(GameDto.from(PieceColor.WHITE, true));
-
+            pieceDao.saveAll(getInitPieceDtos());
+            gameDao.save(GameDto.from(PieceColor.WHITE, true));
+        } catch (SqlQueryException e) {
+            throw new IllegalArgumentException("게임을 초기화할 수 없습니다.");
+        }
         return getChess();
     }
 
     public ChessResponseDto getChess() {
-        List<PieceDto> pieceDtos = pieceDao.findAll();
-        GameDto gameDto = gameDao.find();
-
-        return new ChessResponseDto(pieceDtos, gameDto.getTurn(), gameDto.getStatus());
+        try {
+            List<PieceDto> pieceDtos = pieceDao.findAll();
+            GameDto gameDto = gameDao.find();
+            return new ChessResponseDto(pieceDtos, gameDto.getTurn(), gameDto.getStatus());
+        } catch (SqlQueryException e) {
+            throw new IllegalArgumentException("체스 정보를 읽어올 수 없습니다.");
+        }
     }
 
     private List<PieceDto> getInitPieceDtos() {
@@ -51,21 +58,29 @@ public class ChessService {
     }
 
     public ChessResponseDto movePiece(MoveCommand moveCommand) {
-        ChessGame game = getGame();
-        game.proceedWith(moveCommand);
-        pieceDao.remove(moveCommand.to());
-        pieceDao.update(moveCommand.from(), moveCommand.to());
-        gameDao.update(GameDto.from(game.getTurnColor(), game.isRunning()));
-        return getChess();
+        try {
+            ChessGame game = getGame();
+            game.proceedWith(moveCommand);
+            pieceDao.remove(moveCommand.to());
+            pieceDao.update(moveCommand.from(), moveCommand.to());
+            gameDao.update(GameDto.from(game.getTurnColor(), game.isRunning()));
+            return getChess();
+        } catch (SqlQueryException e) {
+            throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+        }
     }
 
     private ChessGame getGame() {
-        List<PieceDto> pieceDtos = pieceDao.findAll();
-        GameDto gameDto = gameDao.find();
-        Map<Position, Piece> pieces = pieceDtos.stream()
-                .map(PieceDto::toPieceEntry)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return new ChessGame(pieces, PieceColor.find(gameDto.getTurn()));
+        try {
+            List<PieceDto> pieceDtos = pieceDao.findAll();
+            GameDto gameDto = gameDao.find();
+            Map<Position, Piece> pieces = pieceDtos.stream()
+                    .map(PieceDto::toPieceEntry)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            return new ChessGame(pieces, PieceColor.find(gameDto.getTurn()));
+        } catch (SqlQueryException e) {
+            throw new IllegalArgumentException("게임 정보를 불러올 수 없습니다.");
+        }
     }
 
     public ScoresDto getScore() {
@@ -75,7 +90,11 @@ public class ChessService {
     }
 
     public ScoresDto finishGame() {
-        gameDao.updateStatus(GameStatusDto.FINISHED);
-        return getScore();
+        try {
+            gameDao.updateStatus(GameStatusDto.FINISHED);
+            return getScore();
+        } catch (SqlQueryException e) {
+            throw new IllegalArgumentException("게임을 종료시킬 수 없습니다.");
+        }
     }
 }

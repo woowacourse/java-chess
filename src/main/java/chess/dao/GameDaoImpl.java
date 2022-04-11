@@ -3,6 +3,7 @@ package chess.dao;
 import chess.db.DBConnector;
 import chess.dto.GameDto;
 import chess.dto.GameStatusDto;
+import chess.util.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,7 @@ public class GameDaoImpl implements GameDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("game 데이터를 REMOVE 하지 못 했습니다.", e);
         }
     }
 
@@ -38,6 +40,7 @@ public class GameDaoImpl implements GameDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("game 데이터를 INSERT 하지 못 했습니다.", e);
         }
     }
 
@@ -51,6 +54,7 @@ public class GameDaoImpl implements GameDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("game 데이터를 UPDATE 하지 못 했습니다.", e);
         }
     }
 
@@ -63,6 +67,7 @@ public class GameDaoImpl implements GameDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("status 데이터를 UPDATE 하지 못 했습니다.", e);
         }
     }
 
@@ -78,7 +83,7 @@ public class GameDaoImpl implements GameDao {
             return new GameDto(resultSet.getString("turn"), resultSet.getString("status"));
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SqlQueryException("game 을 SELECT 하지 못 했습니다.", e);
         }
-        return null;
     }
 }
