@@ -10,10 +10,8 @@ import chess.domain.game.state.Ready;
 import chess.domain.game.state.WhiteTurn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import spark.Session;
 
 public class ChessService {
 
@@ -35,7 +33,7 @@ public class ChessService {
     public int saveGame(String roomId) {
         int gameId = findByRoomId(roomId);
         if (gameId == 0) {
-            chessGameDao.save(roomId);
+            chessGameDao.save(chessGame, roomId);
             return findByRoomId(roomId);
         }
         return gameId;
@@ -52,7 +50,7 @@ public class ChessService {
 
     public Board ready(int gameId) {
         String state = chessGameDao.findById(gameId);
-        if (gameId != 0 && !isEnded(state)) {
+        if (state == null && !isEnded(state)) {
             Board board = getBoard(gameId);
             chessGame = toChessGame(board, state);
             return board;
@@ -79,25 +77,23 @@ public class ChessService {
         return state.equals(TERMINATE) || state.equals(COMPLETE);
     }
 
-    public Board start(Session session) {
+    public Board start(int gameId) {
         chessGame = chessGame.initBoard();
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
-        int id = session.attribute("id");
         for (Position position : board.keySet()) {
             Piece piece = board.get(position);
-            boardDao.save(position.toString(), piece.getName(), piece.getColorValue(), id);
+            boardDao.save(position.toString(), piece.getName(), piece.getColorValue(), gameId);
         }
-        chessGameDao.update(id, chessGame);
+        chessGameDao.update(gameId, chessGame);
         return chessGame.getBoard();
     }
 
-    public Board move(Session session, String from, String to) {
+    public Board move(int gameId, String from, String to) {
         chessGame = chessGame.movePiece(Position.valueOf(from), Position.valueOf(to));
         Map<Position, Piece> board = chessGame.getBoard().getBoard();
-        int id = session.attribute("id");
         Piece piece = board.get(Position.valueOf(to));
-        boardDao.update(from, to, piece.getName(), piece.getColorValue(), id);
-        chessGameDao.update(id, chessGame);
+        boardDao.update(from, to, piece.getName(), piece.getColorValue(), gameId);
+        chessGameDao.update(gameId, chessGame);
         return chessGame.getBoard();
     }
 
@@ -108,10 +104,9 @@ public class ChessService {
         return scoreStatus;
     }
 
-    public void terminate(Session session) {
+    public void terminate(int gameId) {
         chessGame = chessGame.end();
-        int id = session.attribute("id");
-        chessGameDao.update(id, chessGame);
+        chessGameDao.update(gameId, chessGame);
     }
 
     public Color complete() {

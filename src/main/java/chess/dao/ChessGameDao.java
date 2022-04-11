@@ -46,11 +46,12 @@ public class ChessGameDao {
     }
 
 
-    public void save(String roomId) {
-        final String sql = "insert into game (room_id) values (?)";
+    public void save(ChessGame chessGame, String roomId) {
+        final String sql = "insert into game (state, room_id) values (?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, roomId);
+            statement.setString(1, chessGame.getClass().getSimpleName().toLowerCase());
+            statement.setString(2, roomId);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.warn(e.getMessage());

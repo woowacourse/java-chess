@@ -10,7 +10,6 @@ import chess.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
-import spark.Session;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
@@ -45,15 +44,15 @@ public class ChessWebController {
 
     private void renderEnter() {
         post("/enter", (req, res) -> {
-            String roomId = req.params("room");
+            String roomId = req.queryParams("room");
             int gameId = chessService.saveGame(roomId);
-            res.redirect("/ready/" + gameId);
+            res.redirect("/game/" + gameId);
             return null;
         });
     }
 
     private void renderReady() {
-        get("/ready/:id", (req, res) -> {
+        get("/game/:id", (req, res) -> {
             int gameId = Integer.parseInt(req.params(":id"));
             Board board = chessService.ready(gameId);
             Map<String, Object> model = board.toMap();
@@ -63,11 +62,13 @@ public class ChessWebController {
     }
 
     private void renderStart() {
-        get("/start/:id", (req, res) -> {
+        get("/game/:id/start", (req, res) -> {
             try {
-                Session session = req.session(false);
-                Board board = chessService.start(session);
-                return render(board.toMap(), STARTED_PATH);
+                int gameId = Integer.parseInt(req.params(":id"));
+                Board board = chessService.start(gameId);
+                Map<String, Object> model = board.toMap();
+                model.put("id", gameId);
+                return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
             }
@@ -75,12 +76,13 @@ public class ChessWebController {
     }
 
     private void renderMove() {
-        post("/move", (req, res) -> {
+        post("/game/:id/move", (req, res) -> {
             try {
-                Session session = req.session(false);
-                Board board = chessService.move(session, req.queryParams("from"), req.queryParams("to"));
+                int gameId = Integer.parseInt(req.params(":id"));
+                Board board = chessService.move(gameId, req.queryParams("from"), req.queryParams("to"));
                 Map<String, Object> model = board.toMap();
                 model.putAll(renderWinner());
+                model.put("id", gameId);
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException | IllegalArgumentException exception) {
                 return renderErrorMessage(exception.getMessage());
@@ -98,11 +100,13 @@ public class ChessWebController {
     }
 
     private void renderStatus() {
-        get("/status", (req, res) -> {
+        get("/game/:id/status", (req, res) -> {
+            int gameId = Integer.parseInt(req.params(":id"));
             Map<String, Object> model = new HashMap<>();
             try {
                 model.putAll(chessService.showBoard());
                 model.putAll(chessService.showStatus());
+                model.put("id", gameId);
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {
                 return renderErrorMessage(exception.getMessage());
@@ -111,12 +115,12 @@ public class ChessWebController {
     }
 
     private void renderEnd() {
-        get("/terminate", (req, res) -> {
+        get("/game/:id/terminate", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                Session session = req.session(false);
-                chessService.terminate(session);
+                int gameId = Integer.parseInt(req.params(":id"));
                 model.put("terminate", TERMINATE_MESSAGE);
+                model.put("id", gameId);
                 model.putAll(chessService.showBoard());
                 return render(model, STARTED_PATH);
             } catch (IllegalStateException exception) {

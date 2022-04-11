@@ -11,27 +11,26 @@
 <div id="app">
     <h1>♟️ 체스</h1>
     <section>
-        <form action="/start" method="get">
+        <form action="/game/{{id}}/start" method="get">
             <button>Start</button>
         </form>
-        <form action="/move" method="post">
+        <form action="/game/{{id}}/move" method="post">
             움직일 말<input name="from" type="text">
             도달할 곳<input name="to" type="text">
             <input type="submit">
         </form>
-        <form action="/status" method="get">
+        <form action="/game/{{id}}/status" method="get">
             <button id="status">Status</button>
         </form>
-        {{#this}}
         <span>White 점수 : {{WHITE}} Black 점수 : {{BLACK}}</span>
-        <form action="/terminate" method="get">
+        <form action="/game/{{id}}/terminate" method="get">
             <button>End</button>
             <span>{{terminate}}</span>
         </form>
         <span>{{error}}</span>
         <span>{{complete}}</span>
     </section>
-
+    {{#this}}
     <section class="chess-ui">
         <div class="black-square">
             {{#a8}}
