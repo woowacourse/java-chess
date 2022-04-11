@@ -48,6 +48,6 @@ public class ChessGameService {
     }
 
     public String findTurnById(int gameId) {
-        return findTurnById(gameId);
+        return gameDao.findTurnById(gameId);
     }
 }
