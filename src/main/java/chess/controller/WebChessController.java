@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static chess.MappingUtil.*;
+import static chess.controller.RenderEngine.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;
@@ -15,8 +16,6 @@ import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Turn;
 import chess.service.ChessGameService;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
@@ -36,16 +35,14 @@ public class WebChessController {
     }
 
     private void index() {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/", (req, res) -> renderWithNoModel("index.html"));
     }
 
     private void game(ChessGameService service) {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int id = new GameDaoImpl().findIdByPlayers(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"));
+            int id = new GameDaoImpl().findIdByPlayers(req.queryParams("idPlayerWhite"),
+                req.queryParams("idPlayerBlack"));
             game = new Game(req.queryParams("idPlayerWhite"), req.queryParams("idPlayerBlack"),
                 new Turn(PieceColor.valueOf(new GameDaoImpl().findTurnById(id))), id);
 
@@ -105,7 +102,7 @@ public class WebChessController {
         post("/init", (req, res) -> {
             service.deleteById(game.getId());
             chessGame = service.init(game.getId(), new Turn(), new DefaultArrangement());
-            return render(Map.of(), "index.html");
+            return renderWithNoModel("index.html");
         });
     }
 
@@ -116,13 +113,6 @@ public class WebChessController {
     }
 
     private void end() {
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
-
-    private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        get("/end", (req, res) -> renderWithNoModel("index.html"));
     }
 }
