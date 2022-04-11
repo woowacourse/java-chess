@@ -23,6 +23,6 @@ public class CheckmateBoardGenerator implements BoardGenerator {
         board.put(Position.of(Column.D, Row.SIX), new Rook(Team.BLACK));
         board.put(Position.of(Column.C, Row.SIX), new Rook(Team.BLACK));
         board.put(Position.of(Column.E, Row.SIX), new Queen(Team.BLACK));
-        return new Board(board);
+        return new Board(board, Team.WHITE);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.state;
+package chess.domain.game;
 
 import java.util.Arrays;
 

@@ -5,12 +5,9 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final int COMMAND_INDEX = 0;
-    public static final int FROM_POSITION_INDEX = 1;
-    public static final int TO_POSITION_INDEX = 2;
     private static final int COMMAND_MIN_COUNT = 1;
     private static final int COMMAND_MAX_COUNT = 3;
-    private static final String SEPERATOR = " ";
+    private static final String SEPARATOR = " ";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -18,11 +15,11 @@ public class InputView {
 
     public static List<String> inputCommand() {
         try {
-            List<String> inputs = List.of(scanner.nextLine().split(SEPERATOR, -1));
+            List<String> inputs = List.of(scanner.nextLine().split(SEPARATOR, -1));
             validInputs(inputs);
             return inputs;
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return inputCommand();
         }
     }

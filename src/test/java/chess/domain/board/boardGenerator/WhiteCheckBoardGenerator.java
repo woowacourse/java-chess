@@ -22,6 +22,6 @@ public class WhiteCheckBoardGenerator implements BoardGenerator {
         board.put(Position.of(Column.A, Row.EIGHT), new Rook(Team.WHITE));
         board.put(Position.of(Column.D, Row.EIGHT), new King(Team.WHITE));
         board.put(Position.of(Column.B, Row.SIX), new Bishop(Team.BLACK));
-        return new Board(board);
+        return new Board(board, Team.WHITE);
     }
 }

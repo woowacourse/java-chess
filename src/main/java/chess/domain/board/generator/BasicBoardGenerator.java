@@ -17,16 +17,15 @@ import java.util.Map;
 
 public class BasicBoardGenerator implements BoardGenerator {
 
-    private final Map<Position, Piece> board = new HashMap<>();
-
     @Override
     public Board create() {
-        initBlackPieces();
-        initWhitePieces();
-        return new Board(board);
+        Map<Position, Piece> board = new HashMap<>();
+        initBlackPieces(board);
+        initWhitePieces(board);
+        return new Board(board, Team.WHITE);
     }
 
-    private void initBlackPieces() {
+    private void initBlackPieces(Map<Position, Piece> board) {
         board.put(Position.of(Column.A, Row.EIGHT), new Rook(Team.BLACK));
         board.put(Position.of(Column.B, Row.EIGHT), new Knight(Team.BLACK));
         board.put(Position.of(Column.C, Row.EIGHT), new Bishop(Team.BLACK));
@@ -36,10 +35,10 @@ public class BasicBoardGenerator implements BoardGenerator {
         board.put(Position.of(Column.G, Row.EIGHT), new Knight(Team.BLACK));
         board.put(Position.of(Column.H, Row.EIGHT), new Rook(Team.BLACK));
 
-        initOneLine(Row.SEVEN, new Pawn(Team.BLACK));
+        initOneLine(board, Row.SEVEN, new Pawn(Team.BLACK));
     }
 
-    private void initWhitePieces() {
+    private void initWhitePieces(Map<Position, Piece> board) {
         board.put(Position.of(Column.A, Row.ONE), new Rook(Team.WHITE));
         board.put(Position.of(Column.B, Row.ONE), new Knight(Team.WHITE));
         board.put(Position.of(Column.C, Row.ONE), new Bishop(Team.WHITE));
@@ -49,10 +48,10 @@ public class BasicBoardGenerator implements BoardGenerator {
         board.put(Position.of(Column.G, Row.ONE), new Knight(Team.WHITE));
         board.put(Position.of(Column.H, Row.ONE), new Rook(Team.WHITE));
 
-        initOneLine(Row.TWO, new Pawn(Team.WHITE));
+        initOneLine(board, Row.TWO, new Pawn(Team.WHITE));
     }
 
-    private void initOneLine(Row row, Piece piece) {
+    private void initOneLine(Map<Position, Piece> board, Row row, Piece piece) {
         for (Column column : Column.values()) {
             board.put(Position.of(column, row), piece);
         }

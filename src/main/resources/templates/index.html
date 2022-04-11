@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-Hello World!!
+<center>
+    <img src="/images/chess_index.png" id="logo"/>
+    <br/>
+
+    <form method="get" action="/board" id="existForm" enctype="text/plain">
+        <input type="text" name="id" id="inputId" placeholder="방 번호 입력"/>
+        <button type="submit" form="existForm">기존 게임 시작하기</button>
+    </form>
+    <br/>
+
+    <form method="post" action="/new" id="newForm" enctype="text/plain">
+        <button type="submit" form="newForm">새 게임 시작하기</button>
+    </form>
+</center>
 </body>
 </html>

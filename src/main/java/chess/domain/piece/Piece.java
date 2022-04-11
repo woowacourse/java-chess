@@ -44,6 +44,14 @@ public abstract class Piece {
         return info.getScore();
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public PieceInfo getInfo() {
+        return info;
+    }
+
     public void validArrive(Piece to, Direction direction) {
         if (Objects.nonNull(to) && isSameTeam(to)) {
             throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
