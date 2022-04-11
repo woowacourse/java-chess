@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    protected final Notation notation;
+    private final Notation notation;
     private final Color color;
     private final MoveStrategy moveStrategy;
 
@@ -36,14 +36,6 @@ public abstract class Piece {
         }
     }
 
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,5 +47,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(notation, color);
+    }
+
+    public final Color getColor() {
+        return color;
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
@@ -10,17 +11,25 @@ import java.util.Map;
 
 public final class ChessGame {
 
-    private static final int FROM = 1;
-    private static final int TO = 2;
+    private static final int FROM = 0;
+    private static final int TO = 1;
 
-    private State state = new Ready();
+    private State state;
+
+    public ChessGame(final State state) {
+        this.state = state;
+    }
+
+    public ChessGame() {
+        state = new Ready();
+    }
 
     public void start() {
         state = state.start();
     }
 
     public void end() {
-        state = state.exit();
+        state = state.end();
     }
 
     public Map<Position, Piece> getBoard() {
@@ -34,11 +43,19 @@ public final class ChessGame {
         state = state.move(from, to);
     }
 
-    public Status status() {
-        return state.status();
+    public void move(final Position from, final Position to) {
+        state = state.move(from, to);
     }
 
-    public boolean isExit() {
-        return state.isExit();
+    public Status status() {
+        return new Status(
+                state.getWinner(),
+                Map.of(Color.WHITE, state.score(Color.WHITE)),
+                Map.of(Color.BLACK, state.score(Color.BLACK))
+        );
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
     }
 }

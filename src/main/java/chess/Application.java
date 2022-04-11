@@ -1,5 +1,6 @@
 package chess;
 
+import chess.controller.Command;
 import chess.domain.ChessGame;
 import chess.view.Enter;
 import chess.view.Input;
@@ -12,9 +13,10 @@ public final class Application {
 
         final var chessGame = new ChessGame();
 
-        while (!chessGame.isExit()) {
+        while (!chessGame.isEnd()) {
             command(chessGame);
         }
+        Output.printStatus(chessGame.status());
     }
 
     private static void command(final ChessGame chessGame) {

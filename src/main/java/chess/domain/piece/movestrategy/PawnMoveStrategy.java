@@ -1,13 +1,13 @@
 package chess.domain.piece.movestrategy;
 
+import chess.domain.board.Direction;
 import chess.domain.board.MoveOrder;
 import chess.domain.piece.Color;
-import chess.domain.board.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
 
-public class PawnMoveStrategy extends MoveStrategy {
+public final class PawnMoveStrategy extends MoveStrategy {
 
     private static final int WHITE_INIT_RANK = 2;
     private static final int BLACK_INIT_RANK = 7;

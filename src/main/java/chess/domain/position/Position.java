@@ -19,8 +19,7 @@ public final class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        final String position = file.getFile() + rank.getRank();
-
+        final String position = file.getName() + rank.getRank();
         return from(position);
     }
 

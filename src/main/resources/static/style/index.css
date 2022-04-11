@@ -1,0 +1,36 @@
+* {
+  padding: 0px;
+  margins: 0px;
+}
+
+.black-square {
+  background-color: white;
+  color: slategrey;
+}
+
+.white-square {
+  background-color: slategrey;
+  color: white;
+}
+
+table {
+  border: 4px solid slategrey;
+}
+
+td {
+  height: 90px;
+  width: 90px;
+}
+
+.piece {
+  height: 90px;
+  width: 90px;
+}
+
+.button {
+  margin-bottom: 8px;
+}
+
+button {
+   width: 150px;
+}

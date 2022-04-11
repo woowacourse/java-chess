@@ -22,8 +22,7 @@ public class BoardTest {
                 Position.from("d4"), new King(Color.WHITE),
                 Position.from("a5"), new King(Color.BLACK)
         )));
-        assertThat(board.hasKing(Color.BLACK)).isTrue();
-        assertThat(board.hasKing(Color.WHITE)).isTrue();
+        assertThat(board.isRemovedKing()).isFalse();
     }
 
     @Test

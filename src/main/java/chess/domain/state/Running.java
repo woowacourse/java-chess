@@ -1,11 +1,10 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardCalculator;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public class Running extends State {
+public final class Running extends CalculableState {
 
     private final Color currentColor;
 
@@ -15,7 +14,7 @@ public class Running extends State {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean isEnd() {
         return false;
     }
 
@@ -25,21 +24,23 @@ public class Running extends State {
     }
 
     @Override
-    public Status status() {
-        final var boardCalculator = new BoardCalculator(board.getValue());
-        return new Status(Result.from(Color.EMPTY), boardCalculator.sumScore(Color.WHITE), boardCalculator.sumScore(Color.BLACK));
+    public Result getWinner() {
+        return Result.EMPTY;
+    }
+
+    @Override
+    public State end() {
+        return new End(Color.EMPTY, board);
     }
 
     @Override
     public State move(final Position from, final Position to) {
         checkPosition(currentColor, from, to);
         board.move(from, to);
-        final var nextColor = currentColor.next();
-
-        if (board.hasKing(nextColor)) {
-            return new Running(nextColor, board);
+        if (board.isRemovedKing()) {
+            return new End(currentColor, board);
         }
-        return new Finish(currentColor, board);
+        return new Running(currentColor.next(), board);
     }
 
     private void checkPosition(final Color color, final Position from, final Position to) {
@@ -49,7 +50,6 @@ public class Running extends State {
 
     private void checkFromPosition(final Position from, final Color color) {
         final var piece = board.getPiece(from);
-
         if (piece == null) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }

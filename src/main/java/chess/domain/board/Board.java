@@ -1,13 +1,15 @@
 package chess.domain.board;
 
+import chess.domain.piece.Notation;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 import java.util.Collections;
 import java.util.Map;
 
 public final class Board {
+
+    private static final int INIT_KING_COUNT = 2;
 
     private final Map<Position, Piece> value;
 
@@ -27,10 +29,11 @@ public final class Board {
         value.put(to, value.remove(from));
     }
 
-    public boolean hasKing(final Color color) {
-        return value.values().stream()
-                .filter(Piece::isKing)
-                .anyMatch(piece -> piece.isSameColor(color));
+    public boolean isRemovedKing() {
+        final var kingCount = value.values().stream()
+                .filter(piece -> piece.getNotation() == Notation.KING)
+                .count();
+        return kingCount != INIT_KING_COUNT;
     }
 
     public Piece getPiece(final Position position) {

@@ -5,7 +5,7 @@ import chess.domain.board.Direction;
 
 import java.util.List;
 
-public class DefaultMoveStrategy extends MoveStrategy {
+public final class DefaultMoveStrategy extends MoveStrategy {
 
     public DefaultMoveStrategy(final List<Direction> directions) {
         super(directions);

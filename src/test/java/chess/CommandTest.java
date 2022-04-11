@@ -1,5 +1,6 @@
 package chess;
 
+import chess.controller.Command;
 import chess.domain.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

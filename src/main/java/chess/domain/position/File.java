@@ -27,7 +27,7 @@ public enum File {
 
     public static File from(final String name) {
         return Arrays.stream(File.values())
-                .filter(file -> file.name.equals(name))
+                .filter(file -> file.name.equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
@@ -41,11 +41,11 @@ public enum File {
 
     public static List<File> sorted() {
         return Arrays.stream(File.values())
-                .sorted(Comparator.comparing(File::getFile))
+                .sorted(Comparator.comparing(File::getName))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public String getFile() {
+    public String getName() {
         return name;
     }
 
