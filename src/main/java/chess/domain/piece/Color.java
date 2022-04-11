@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public enum Color {
 
-    WHITE("백색"),
-    BLACK("흑색"),
+    WHITE("white"),
+    BLACK("black"),
     NONE("없음");
 
     private final String name;
