@@ -2,6 +2,7 @@ package chess.web.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,15 +19,61 @@ import chess.web.dto.RoomDto;
 import chess.web.utils.Converter;
 
 public class ChessService {
+    private static final int MAX_RANK = 8;
+    private static final int MIN_RANK = 1;
+    private static final char MIN_FILE = 'a';
+    private static final char MAX_FILE = 'h';
+
     private ChessGame chessGame = new ChessGame();
     private final PieceDao pieceDao = new PieceDao();
     private final RoomDao roomDao = new RoomDao();
 
-    public List<PieceDto> initializeData(int roomId) throws SQLException {
+    public Map<String, Object> initializeRoomData(int roomId) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+        List<PieceDto> pieces = initializePieceData(roomId);
+        putRowPieces(pieces, model);
+        putScore(model, pieces);
+        return model;
+    }
+
+    public List<PieceDto> initializePieceData(int roomId) throws SQLException {
         List<PieceDto> pieces = pieceDao.findAllByRoomId(roomId);
         Player player = roomDao.findTurnById(roomId);
         chessGame = ChessGame.of(ChessBoard.of(pieces), player);
         return pieces;
+    }
+
+    private void putRowPieces(List<PieceDto> pieces, Map<String, Object> model) {
+        for (int i = MAX_RANK; i >= MIN_RANK; i--) {
+            List<PieceDto> columnPieces = putColumnPieces(pieces, i);
+            model.put("pieces" + i, columnPieces);
+        }
+    }
+
+    private List<PieceDto> putColumnPieces(List<PieceDto> pieces, int rank) {
+        List<PieceDto> columnPieces = new ArrayList<>();
+
+        for (char currentFile = MIN_FILE; currentFile <= MAX_FILE; currentFile++) {
+            String position = currentFile + String.valueOf(rank);
+            PieceDto pieceDto = pieces.stream()
+                .filter(piece -> piece.getPosition().equals(position))
+                .findFirst()
+                .orElse(PieceDto.of(position, "", ""));
+            columnPieces.add(pieceDto);
+        }
+        return columnPieces;
+    }
+
+    private void putScore(Map<String, Object> model, List<PieceDto> pieces) {
+        if (!pieces.isEmpty()) {
+            Map<Color, Double> status = getStatus();
+            model.put("blackScore", status.get(Color.Black));
+            model.put("WhiteScore", status.get(Color.White));
+        }
+    }
+
+    public Map<Color, Double> getStatus() {
+        return chessGame.getState().status();
     }
 
     public void start(int roomId) throws SQLException {
@@ -47,10 +94,6 @@ public class ChessService {
             pieces.add(PieceDto.of(positionName, board.get(position)));
         }
         return pieces;
-    }
-
-    public Map<Color, Double> getStatus() {
-        return chessGame.getState().status();
     }
 
     public void move(String command, int roomId) throws SQLException {
