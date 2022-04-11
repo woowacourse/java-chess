@@ -32,20 +32,6 @@ public class ChessGameDao {
         return 0;
     }
 
-    public int isExistGame(String roomId) {
-        final String sql = "select exists(select * from game where room_id = ?)";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setString(1, roomId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.getInt("");
-        } catch (SQLException exception) {
-            logger.warn(exception.getMessage());
-        }
-        return 0;
-    }
-
-
     public void save(ChessGame chessGame, String roomId) {
         final String sql = "insert into game (state, room_id) values (?, ?)";
         try (Connection connection = getConnection();

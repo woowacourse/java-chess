@@ -42,34 +42,20 @@ public class ChessService {
         return chessGameDao.findByRoomId(roomId);
     }
 
-    private boolean isExistGame(String roomId) {
-        int gameExistFlag = chessGameDao.isExistGame(roomId);
-        return gameExistFlag == 1;
-    }
-
     public Board ready(int gameId) {
         String state = chessGameDao.findById(gameId);
-        if (state == null && isEnded(state)) {
+        if (state == null) {
             ChessGame chessGame = new Ready();
             return chessGame.getBoard();
         }
-        Board board = getBoard(gameId);
-        ChessGame chessGame = toChessGame(board, state);
+        ChessGame chessGame = getChessGame(gameId);
         return chessGame.getBoard();
-    }
-
-    private Board getBoard(int gameId) {
-        Board board = new Board(boardDao.findGame(gameId));
-        return board;
     }
 
     private ChessGame getChessGame(int gameId) {
         String state = chessGameDao.findById(gameId);
-        Board board = getBoard(gameId);
-        return toChessGame(board, state);
-    }
+        Board board = new Board(boardDao.findGame(gameId));
 
-    private ChessGame toChessGame(Board board, String state) {
         if (BLACK_TURN.equals(state)) {
             return new BlackTurn(board);
         }
