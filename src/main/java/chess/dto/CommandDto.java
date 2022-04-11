@@ -9,13 +9,9 @@ public class CommandDto {
     private final String fullCommand;
     private final String command;
 
-    public CommandDto(String fullCommand) {
+    public CommandDto(String fullCommand, String command) {
         this.fullCommand = fullCommand;
-        this.command = extractCommand(fullCommand);
-    }
-
-    private String extractCommand(String fullCommand) {
-        return fullCommand.split(COMMAND_INPUT_DELIMITER)[COMMAND_POSITION];
+        this.command = command;
     }
 
     public String getFullCommand() {

@@ -34,7 +34,7 @@ public class InputView {
     public static CommandDto requestMoveOrEndOrStatusInput() {
         String input = scanner.nextLine();
         validateMoveOrEndOrStatus(input);
-        return new CommandDto(input);
+        return new CommandDto(input, input.split(COMMAND_INPUT_DELIMITER)[COMMAND_POSITION]);
     }
 
     private static void validateMoveOrEndOrStatus(String input) {
