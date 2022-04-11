@@ -32,7 +32,10 @@ public class BoardDao {
     }
 
     public void save(final int roomId, final Map<String, String> board) {
-        final String sql = "" + "INSERT INTO " + TABLE + " (roomId, position, piece)" + "  VALUES (?,?,?)"; // 달라짐
+        final String sql = ""
+            + "INSERT INTO "
+            + TABLE + " (roomId, position, piece)"
+            + "  VALUES (?,?,?)";
         try (final PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
             for (final Entry<String, String> boardEntry : board.entrySet()) {
                 final String position = boardEntry.getKey();

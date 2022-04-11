@@ -4,15 +4,15 @@ public class Room {
     private final long id;
     private final String name;
     private final int canJoin;
-    private final String white;
+    private final String currentCamp;
 
     public Room(final long id, final String name, final int canJoin, final String white) {
         this.id = id;
         this.name = name;
         this.canJoin = canJoin;
-        this.white = white;
+        this.currentCamp = white;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -25,8 +25,8 @@ public class Room {
         return canJoin;
     }
 
-    public String getWhite() {
-        return white;
+    public String getCurrentCamp() {
+        return currentCamp;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Room {
             "id=" + id +
             ", name='" + name + '\'' +
             ", canJoin=" + canJoin +
-            ", white='" + white + '\'' +
+            ", white='" + currentCamp + '\'' +
             '}';
     }
 }

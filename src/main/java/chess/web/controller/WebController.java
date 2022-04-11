@@ -38,14 +38,11 @@ public class WebController {
             checkGameState(req, res);
             final Map<String, Object> model = executeAndGetModel(req, res);
             model.put("roomId", req.queryParams("roomId"));
-            System.err.println("{{roomId}}로 뿌려줄 값 >> " + req.queryParams("roomId"));
-            //TODO: roomId + model정보로 front가기 직전에 DB에 저장?
             return render(model, "game.html");
         });
 
         //for Error Redirect
         get("/game", (req, res) -> render(redirectWithErrorFlash(req), "game.html"));
-        //save
         //for Restart
         post("/restart", (req, res) -> {
             chessService.restart();
@@ -86,11 +83,12 @@ public class WebController {
 
     private Map<String, Object> redirectWithErrorFlash(final Request req) {
         final Map<String, Object> currentModel = chessService.getModelToState().get();
-        // 에러가 날 때도, model + error 반환 전, roomId를 추가해줘야한다.
-        currentModel.put("roomId", req.queryParams("roomId"));
         if (req.session().attribute("errorFlash") != null) {
             currentModel.putAll(req.session().attribute("errorFlash"));
+            currentModel.put("roomId", req.session().attribute("roomId"));
+
             req.session().removeAttribute("errorFlash");
+            req.session().removeAttribute("roomId");
             return currentModel;
         }
         return currentModel;
@@ -111,6 +109,9 @@ public class WebController {
         error.put("hasError", true);
         error.put("errorMessage", e.getMessage());
         req.session().attribute("errorFlash", error);
+        // 추가..
+        System.err.println(">>>>> session에 넣는 roomId" + req.queryParams("roomId"));
+        req.session().attribute("roomId", req.queryParams("roomId"));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

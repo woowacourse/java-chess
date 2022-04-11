@@ -1,6 +1,11 @@
 package chess.web.service;
 
 import chess.console.ChessGame;
+import chess.domain.Camp;
+import chess.domain.board.Position;
+import chess.domain.piece.NullPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceProperty;
 import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
 import chess.web.dao.room.RoomDao;
@@ -10,6 +15,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import spark.Request;
 
 public class ChessService {
@@ -28,13 +34,42 @@ public class ChessService {
     }
 
     public void restart() {
+        //추가 재시작시, 스위치 꺼지면 올려야한다.
+        if (chessGame.isEndInGameOff()) {
+            chessGame.gameSwitchOn();
+        }
         chessGame.run();
     }
 
     public Map<String, Object> executeCommand(final Request req) {
         String command = extractCommandFrom(req);
         final WebGameCommand webgameCommand = WebGameCommand.from(command);
+        final int roomId = Integer.parseInt(req.queryParams("roomId"));
+
+        if (webgameCommand == WebGameCommand.START) {
+            chessGame.changeBoard(convertToGameBoard(boardDao.findAll()), roomDao.findById(roomId).getCurrentCamp());
+        }
+
         return webgameCommand.execute(command, chessGame, getModelToState());
+    }
+
+    private Map<Position, Piece> convertToGameBoard(final Map<String, String> board) {
+        return board.entrySet()
+            .stream()
+            .collect(Collectors.toMap(
+                e -> Position.from(e.getKey()),
+                e -> findPieceBy(e.getValue()))
+            );
+    }
+
+    private Piece findPieceBy(final String value) {
+        if (value.equals("null")) {
+            return new NullPiece(null);
+        }
+        final String[] splitPiece = value.split("_");
+        final Camp camp = Camp.getCamp(splitPiece[0]);
+        final String pieceStr = splitPiece[1];
+        return PieceProperty.createPieceWith(pieceStr, camp);
     }
 
     private String extractCommandFrom(final Request req) {
@@ -60,9 +95,9 @@ public class ChessService {
     private void processWhenEnd(final HashMap<String, Object> model) {
         if (isEndInRunning()) {
             model.put("message", "현재 게임이 종료되었습니다.");
+            model.put("isRunning", false);
             model.put("isWhite", chessGame.getCamp().isWhite());
             model.put("status", chessGame.calculateStatus());
-            model.put("isRunning", false);
             model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
         }
     }
@@ -129,13 +164,5 @@ public class ChessService {
         roomDao.updateRoom(roomId, canJoin, currentCamp);
         final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
         boardDao.updateBoard(roomId, board);
-    }
-
-    public void saveCurrentRoomBoard(final Request req) {
-        final int roomId = Integer.parseInt(req.queryParams("roomId"));
-//        boardDao.update(roomId);
-        final BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-//        boardDao.update(roomId, boardDto);
-//        boardDao.save()
     }
 }

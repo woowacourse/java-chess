@@ -21,7 +21,7 @@ public class PieceDto {
 
         return new PieceDto("w_" + character);
     }
-
+    
     public String getName() {
         return name;
     }

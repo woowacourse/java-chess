@@ -84,6 +84,10 @@ public class ChessGame {
         state = state.run();
     }
 
+    public void runWithCurrentState() {
+        state = state.runWithCurrentState();
+    }
+
     public void move(final Positions movePositions) {
         state = state.move(movePositions);
     }
@@ -164,5 +168,9 @@ public class ChessGame {
 
     public List<Position> findKingCheckMatedPosition() {
         return state.getKingCheckmatedPositions();
+    }
+
+    public void changeBoard(final Map<Position, Piece> board, final String camp) {
+        state.changeBoard(board, camp);
     }
 }

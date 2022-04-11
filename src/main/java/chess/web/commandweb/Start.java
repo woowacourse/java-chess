@@ -17,7 +17,10 @@ public final class Start implements WebCommandGenerator {
         if (chessGame.isEndInGameOff()) {
             chessGame.gameSwitchOn();
         }
-        chessGame.run();
+
+//        chessGame.run(); // new Board()로 new Running 하는 체제임.
+        // -> 여기 들어오기 전에, chessGame에 db에서 받아온 것을 반영한 상태 -> new Board가 아니라 현재 Board로 new Runnning
+        chessGame.runWithCurrentState();
 
         return returnModelToState.get();
     }

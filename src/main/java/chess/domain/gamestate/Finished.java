@@ -103,4 +103,14 @@ public class Finished implements State {
     public Camp getCamp() {
         return Camp.NONE;
     }
+
+    @Override
+    public void changeBoard(final Map<Position, Piece> board, final String camp) {
+        throw new IllegalStateException("진행중이 아닐 때는 외부 board를 입력할 수 없습니다.");
+    }
+
+    @Override
+    public State runWithCurrentState() {
+        throw new IllegalStateException("진행중이 아닐 때는, 현재 정보를 가져와 run할 수 없습니다.");
+    }
 }

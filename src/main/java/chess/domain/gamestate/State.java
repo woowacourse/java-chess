@@ -38,6 +38,10 @@ public interface State {
 
     boolean isAllKingCheckmated(List<Position> positions);
 
+    void changeBoard(Map<Position, Piece> board, final String camp);
+
+    State runWithCurrentState();
+
     Map<Position, Piece> getBoard();
 
     Camp getCamp();

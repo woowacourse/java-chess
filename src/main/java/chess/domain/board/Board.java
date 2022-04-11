@@ -19,10 +19,14 @@ public final class Board {
     private static final String CANT_MOVE_TO_SAME_CAMP = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
     private static final String CANT_MOVE_EMPTY_PIECE = "빈 기물을 움직일 수 없습니다.";
 
-    private final Map<Position, Piece> board;
+    private Map<Position, Piece> board;
 
     public Board() {
-        this.board = BoardFactory.generate();
+        this(BoardFactory.generate());
+    }
+
+    public Board(final Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public boolean checkNotKnight(final Position position) {
@@ -117,7 +121,6 @@ public final class Board {
             .filter(it -> it.getValue().isSameCampWith(camp.switchCamp()))
             .collect(Collectors.toList());
 
-
         return flattedMovableKingPositions.stream()
             .filter(position -> oppositeEntry.stream()
                 .anyMatch(opposite -> canMoveOppositePieceToKing(position, opposite)))
@@ -148,13 +151,12 @@ public final class Board {
 
         // 추가1) pawn은 직선은 제외시킨다.(대각선의 position만 검사) canMove는 거리만 판단하고 board에서 기물이냐(capture)/빈칸이냐에 따라서 canMove canCapute하는데
         // -> 여기서는 무조건 capture의 상황이므로 대각선 폰이면서 && 대각선만 검사 canMove검사 대상이 된다..
-        if (oppositePiece.getPieceProperty() == PieceProperty.PAWN ) {
+        if (oppositePiece.getPieceProperty() == PieceProperty.PAWN) {
             return fromOppositeTokingPositions.isDiagonalMove() && oppositePiece.canMove(fromOppositeTokingPositions);
-
         }
 
         // 추가2) knight의경우 장애물 검증은 빼고 물어본다.
-        if (oppositePiece.getPieceProperty() == PieceProperty.KNIGHT ) {
+        if (oppositePiece.getPieceProperty() == PieceProperty.KNIGHT) {
             return oppositePiece.canMove(fromOppositeTokingPositions);
         }
 
@@ -189,6 +191,10 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return new TreeMap<>(board);
+    }
+
+    public Board changeBoard(final Map<Position, Piece> board) {
+        return new Board(board);
     }
 }
 

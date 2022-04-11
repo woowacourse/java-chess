@@ -18,7 +18,7 @@ public class Running implements State {
     private static final String PAWN_CANT_MOVE_DIAGONAL_WHEN_BLANK = "폰이 대각선으로 움직이는 경우, 타겟이 있을 때만 가능합니다.";
     private static final String PAWN_CANT_MOVE_LINEAR_WHEN_TARGET_PIECE_EXIST = "폰이 앞으로 움직이는 경우, 타겟이 없을 때만 가능합니다.";
 
-    private final Board board;
+    private Board board;
     private final Camp camp;
 
     public Running(Board board) {
@@ -179,5 +179,15 @@ public class Running implements State {
     @Override
     public Camp getCamp() {
         return camp;
+    }
+
+    @Override
+    public void changeBoard(final Map<Position, Piece> board, final String camp) {
+        this.board = this.board.changeBoard(board);
+    }
+
+    @Override
+    public State runWithCurrentState() {
+        return new Running(board, camp);
     }
 }
