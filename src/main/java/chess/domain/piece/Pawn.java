@@ -28,9 +28,8 @@ public class Pawn extends Piece {
 
         if (isFirstMove(from) && directions.contains(direction)) {
             Position additionalPosition = position.toDirection(direction);
-            return position.equals(to) || additionalPosition.equals(to);
+            return position == to || additionalPosition == to;
         }
-
         return position.equals(to);
     }
 

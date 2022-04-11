@@ -11,7 +11,6 @@ public class GameController {
 
     public void run() {
         final ChessGame chessGame = new ChessGame(new NormalPiecesGenerator());
-
         play(chessGame);
     }
 

@@ -51,11 +51,10 @@ public abstract class Piece {
 
         try {
             direction = Direction.getDirection(from, to);
+            return directions.contains(direction);
         } catch (IllegalArgumentException e) {
             return false;
         }
-
-        return directions.contains(direction);
     }
 
     public final boolean isBlack() {

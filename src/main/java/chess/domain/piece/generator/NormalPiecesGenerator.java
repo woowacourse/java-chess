@@ -24,6 +24,7 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         createBishop();
         createKnight();
         createPawn();
+        PiecesGenerator.fillEmptyPiece(pieces);
     }
 
     private static void createKing() {
@@ -78,7 +79,6 @@ public class NormalPiecesGenerator implements PiecesGenerator {
 
     @Override
     public Map<Position, Piece> generate() {
-        PiecesGenerator.fillEmptyPiece(pieces);
         return new HashMap<>(pieces);
     }
 }

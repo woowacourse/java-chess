@@ -76,7 +76,7 @@ public class ChessBoard {
     }
 
     private void validateRoute(final Position position, final Position toPosition) {
-        if (position.equals(toPosition)) {
+        if (position == toPosition) {
             return;
         }
 

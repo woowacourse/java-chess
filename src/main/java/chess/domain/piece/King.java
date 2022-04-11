@@ -23,7 +23,7 @@ public final class King extends Piece {
         final Direction direction = Direction.getDirection(from, to);
         final Position position = from.toDirection(direction);
 
-        return position.equals(to);
+        return position == to;
     }
 
     @Override
