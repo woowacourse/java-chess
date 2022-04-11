@@ -60,7 +60,7 @@ public class RoomDao {
             return new Room(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
-                resultSet.getBoolean("canJoin"),
+                resultSet.getInt("canJoin"),
                 resultSet.getString("currentCamp")
             );
         } catch (SQLException e) {
@@ -81,7 +81,7 @@ public class RoomDao {
                 rooms.add(new Room(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getBoolean("canJoin"),
+                    resultSet.getInt("canJoin"),
                     resultSet.getString("currentCamp")
                 ));
             }
@@ -127,6 +127,23 @@ public class RoomDao {
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, currentCamp);
             preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateRoom(final int roomId,
+                           final int canJoin,
+                           final String currentCamp) {
+        final String sql = ""
+            + "UPDATE " + TABLE
+            + "  SET canJoin = ? , currentCamp = ?"
+            + "  WHERE id = ?";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setInt(1, canJoin);
+            preparedStatement.setString(2, currentCamp);
+            preparedStatement.setInt(3, roomId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

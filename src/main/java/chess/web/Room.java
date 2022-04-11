@@ -3,16 +3,16 @@ package chess.web;
 public class Room {
     private final long id;
     private final String name;
-    private final boolean canJoin;
+    private final int canJoin;
     private final String white;
 
-    public Room(final long id, final String name, final boolean canJoin, final String white) {
+    public Room(final long id, final String name, final int canJoin, final String white) {
         this.id = id;
         this.name = name;
         this.canJoin = canJoin;
         this.white = white;
     }
-
+    
     public long getId() {
         return id;
     }
@@ -21,7 +21,7 @@ public class Room {
         return name;
     }
 
-    public boolean isCanJoin() {
+    public int getCanJoin() {
         return canJoin;
     }
 

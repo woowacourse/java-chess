@@ -28,6 +28,17 @@ public class WebController {
         post("/room/update/", this::updateRoomNameAndRedirectIndex);
         post("/room/delete/", this::deleteRoomAndRedirectIndex);
 
+        post("/save", (req, res) -> {
+//            final Map<String, Object> currentModel = chessService.getModelToState().get();
+//             에러가 날 때도, model + error 반환 전, roomId를 추가해줘야한다.
+//            currentModel.put("roomId", req.queryParams("roomId"));
+
+            chessService.saveCurrentRoom(req);
+            //TODO save CurrentBoard
+            //TODO redirect inded
+            return null;
+        });
+
         post("/:command", (req, res) -> {
             checkGameState(req, res);
             final Map<String, Object> model = executeAndGetModel(req, res);
@@ -37,8 +48,10 @@ public class WebController {
             return render(model, "game.html");
         });
 
+
         //for Error Redirect
         get("/game", (req, res) -> render(redirectWithErrorFlash(req), "game.html"));
+        //save
         //for Restart
         post("/restart", (req, res) -> {
             chessService.restart();

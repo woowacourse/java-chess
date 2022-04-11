@@ -91,26 +91,25 @@
             {{#isRunning }}
             <form action="/end" method="post">
                 <input name="command" value="end" type="hidden">
-                <input name="roomId" value="{{id}}" type="hidden">
+                <input name="roomId" value="{{roomId}}" type="hidden">
                 <input class="form" name="end" type="submit" value="종료">
             </form>
             <form action="/save" method="post">
-                <input name="command" value="save" type="hidden">
-                <input name="roomId" value="{{id}}" type="hidden">
+                <!--                <input name="command" value="save" type="hidden">-->
+                <input name="roomId" value="{{roomId}}" type="hidden">
                 <input name="canJoin" value="1" type="hidden">
                 <input class="form" name="save" type="submit" value="임시 저장">
             </form>
             {{else}}
             <form action="/save" method="post">
-                <input name="command" value="save" type="hidden">
-                <input name="roomId" value="{{id}}" type="hidden">
+                <input name="roomId" value="{{roomId}}" type="hidden">
                 <input name="canJoin" value="0" type="hidden">
                 <input class="form" name="save" type="submit" value="결과 저장">
             </form>
             {{/isRunning}}
             <form action="/restart" method="post">
                 <input name="command" value="start" type="hidden">
-                <input name="roomId" value="{{id}}" type="hidden">
+                <input name="roomId" value="{{roomId}}" type="hidden">
                 <input class="form" name="restart" type="submit" value="재시작">
             </form>
         </div>
