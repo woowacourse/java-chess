@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.List;
 
 import chess.domain.piece.move.Direction;
+import chess.dto.Arguments;
 
 public class Route {
 
@@ -22,6 +23,11 @@ public class Route {
         validateSize(arguments);
         return new Route(Point.of(arguments.get(ARGUMENT_FROM_INDEX)),
             Point.of(arguments.get(ARGUMENT_TO_INDEX)));
+    }
+
+    public static Route of(Arguments argumentsObject) {
+        List<String> arguments = argumentsObject.getArguments();
+        return of(arguments);
     }
 
     private static void validateSize(List<String> arguments) {

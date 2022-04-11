@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title> 체스 게임 </title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="/src/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div id="main-container">
+        <h1> 체스 게임 </h1>
+
+        <section id="chess-ui">
+            <table id="chess-board">
+                <script>
+                    loadBoardBackground();
+                    {{#each board}}
+                    drawPiece({{@key.horizontal}}, {{@key.vertical}}, '{{this.type}}', '{{this.color}}');
+                    {{/each}}
+                </script>
+
+            </table>
+        </section>
+        <section id="main-command">
+            <h3 id="turn">
+                <script> drawTurn('{{color}}'); </script>
+            </h3>
+            <form id="start_form" action="/start" method="get" class="main-form">
+                <input type="submit" value="start" class="button">
+            </form>
+
+            <form id="status_form" action="/status" method="get" class="main-form">
+                <input type="submit" value="status" class="button">
+            </form>
+
+            <form id="end_form" action="/end" method="get" class="main-form">
+                <input type="submit" value="end" class="button">
+            </form>
+        </section>
+
+        <section>
+            {{#each score}}
+            {{@key}}
+            {{this}}
+            {{/each}}
+        </section>
+    </div>
+
+</div>
+<script>setUpMain('{{state}}');</script>
+</body>
+</html>

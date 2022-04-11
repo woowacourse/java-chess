@@ -1,16 +1,20 @@
 package chess.domain.game;
 
-import java.util.List;
-
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.dto.Response;
+import chess.dto.Arguments;
 
 public class Ready extends GameState {
 
+    private static final String STATE = "READY";
+
     public Ready() {
         super(Board.of(new InitialBoardGenerator()), Color.WHITE);
+    }
+
+    public Ready(Board board, Color color) {
+        super(board, color);
     }
 
     @Override
@@ -24,22 +28,17 @@ public class Ready extends GameState {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+    public GameState move(Arguments arguments) {
+        throw new UnsupportedOperationException("[ERROR] 아직 게임이 시작되지 않았습니다..");
     }
 
     @Override
-    public GameState status() {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+    public String getState() {
+        return STATE;
     }
 
     @Override
     public boolean isRunnable() {
         return true;
-    }
-
-    @Override
-    public Response getResponse() {
-        throw new UnsupportedOperationException("[ERROR] 준비상태에서는 점수를 얻을 수 없습니다.");
     }
 }

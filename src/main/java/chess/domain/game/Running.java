@@ -1,22 +1,21 @@
 package chess.domain.game;
 
-import java.util.List;
-
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Route;
-import chess.dto.BoardResponse;
-import chess.dto.Response;
+import chess.dto.Arguments;
 
 public class Running extends GameState {
 
-    Running(Board board, Color turnColor) {
+    private static final String STATE = "RUNNING";
+
+    public Running(Board board, Color turnColor) {
         super(board, turnColor);
     }
 
     @Override
     public GameState start() {
-        throw new UnsupportedOperationException("[ERROR] 이미 게임이 시작되었습니다.");
+        throw new UnsupportedOperationException("[ERROR] 이미 게임이 진행중입니다.");
     }
 
     @Override
@@ -25,7 +24,7 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
+    public GameState move(Arguments arguments) {
         board = board.move(Route.of(arguments), turnColor);
         if (board.isKingDead()) {
             return new Finished(board, turnColor);
@@ -34,17 +33,12 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState status() {
-        return new Status(board, turnColor);
+    public String getState() {
+        return STATE;
     }
 
     @Override
     public boolean isRunnable() {
         return true;
-    }
-
-    @Override
-    public Response getResponse() {
-        return BoardResponse.of(board.getPointPieces(), turnColor);
     }
 }

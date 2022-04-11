@@ -6,10 +6,11 @@ import java.util.Objects;
 
 public class LineNumber {
 
-    private static final int RADIX = 10;
     public static final int MIN = 1;
     public static final int MAX = 8;
+
     private static final Map<Integer, LineNumber> LINE_NUMBER_CACHE = new HashMap<>();
+    private static final int RADIX = 10;
 
     private final int number;
 

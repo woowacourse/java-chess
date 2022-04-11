@@ -1,4 +1,4 @@
-package chess.dao;
+package practice;
 
 import static org.assertj.core.api.Assertions.*;
 

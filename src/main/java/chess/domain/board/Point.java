@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.database.dto.PointDto;
 import chess.domain.piece.move.Direction;
 
 public class Point {
@@ -48,6 +49,10 @@ public class Point {
         }
     }
 
+    public static Point of(PointDto pointDto) {
+        return of(pointDto.getHorizontal(), pointDto.getVertical());
+    }
+
     public int subtractHorizontal(Point other) {
         return horizontal.subtract(other.horizontal);
     }
@@ -63,6 +68,14 @@ public class Point {
 
     public boolean isInRangeNext(int dx, int dy) {
         return horizontal.isInRangeNext(dx) && vertical.isInRangeNext(dy);
+    }
+
+    public int getHorizontal() {
+        return horizontal.getNumber();
+    }
+
+    public int getVertical() {
+        return vertical.getNumber();
     }
 
     @Override

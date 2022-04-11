@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,9 +11,9 @@ import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.dto.BoardResponse;
-import chess.dto.Response;
+import chess.dto.Arguments;
 
 class RunningTest {
 
@@ -39,7 +38,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 running 상태로 변한다.")
     void moveToRunningTest() {
-        List<String> arguments = List.of("a2", "a3");
+        Arguments arguments = Arguments.ofArray(new String[] {"a2", "a3"}, 0);
         GameState gameState = new Running(BoardFixtures.INITIAL, Color.WHITE);
 
         GameState movedState = gameState.move(arguments);
@@ -50,7 +49,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 king이 죽으면 종료 상태로 변한다.")
     void moveToFinishTest() {
-        List<String> arguments = List.of("e1", "e8");
+        Arguments arguments = Arguments.ofArray(new String[] {"e1", "e8"}, 0);
         GameState gameState = new Running(BoardFixtures.create(Map.of(
             Point.of("e8"), new King(Color.BLACK),
             Point.of("e1"), new Queen(Color.WHITE)
@@ -59,16 +58,6 @@ class RunningTest {
         GameState movedState = gameState.move(arguments);
 
         assertThat(movedState).isInstanceOf(Finished.class);
-    }
-
-    @Test
-    @DisplayName("status 상태로 변한다.")
-    void turnIntoStatusState() {
-        GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
-
-        GameState changed = state.status();
-
-        assertThat(changed).isInstanceOf(Status.class);
     }
 
     @Test
@@ -82,12 +71,13 @@ class RunningTest {
     }
 
     @Test
-    @DisplayName("진행상태에서는 응답을 얻을 수 있다.")
+    @DisplayName("진행상태에서는 보드의 정보를 얻을 수 있다.")
     void gettingResponse() {
         GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
 
-        Response response = state.getResponse();
+        Map<Point, Piece> pointPieces = state.getPointPieces();
 
-        assertThat(response).isInstanceOf(BoardResponse.class);
+        assertThat(pointPieces).hasSize(64);
+
     }
 }

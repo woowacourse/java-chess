@@ -1,10 +1,12 @@
 package chess.domain.game;
 
-import java.util.List;
+import java.util.Map;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
-import chess.dto.Response;
+import chess.domain.board.Point;
+import chess.domain.piece.Piece;
+import chess.dto.Arguments;
 
 public abstract class GameState {
 
@@ -22,9 +24,19 @@ public abstract class GameState {
 
     public abstract boolean isRunnable();
 
-    public abstract GameState move(List<String> arguments);
+    public abstract GameState move(Arguments arguments);
 
-    public abstract GameState status();
+    public abstract String getState();
 
-    public abstract Response getResponse();
+    public Map<Point, Piece> getPointPieces() {
+        return board.getPointPieces();
+    }
+
+    public String getColor() {
+        return turnColor.name();
+    }
+
+    public Map<Color, Double> getColorScore() {
+        return board.calculateScore();
+    }
 }

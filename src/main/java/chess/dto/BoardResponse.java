@@ -1,43 +1,26 @@
 package chess.dto;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import chess.domain.Color;
-import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 import chess.domain.piece.Piece;
-import chess.view.PieceRepresentation;
 
-public class BoardResponse extends Response {
+public class BoardResponse {
 
-    public static final int DECIMAL = 10;
+    private final List<PieceResponse> pieceResponses;
 
-    private BoardResponse(Map<String, String> information, String metaInformation) {
-        super(information, metaInformation);
+    public BoardResponse(List<PieceResponse> pieceResponses) {
+        this.pieceResponses = pieceResponses;
     }
 
-    public static Response of(Map<Point, Piece> pointPieces, Color turnColor) {
-        return new BoardResponse(toInformation(pointPieces), turnColor.name());
-    }
-
-    private static Map<String, String> toInformation(Map<Point, Piece> pointPieces) {
-        Map<String, String> information = new HashMap<>();
-        for (int i = LineNumber.MIN; i <= LineNumber.MAX; i++) {
-            information.putAll(toLine(pointPieces, i));
-        }
-        return information;
-    }
-
-    private static Map<String, String> toLine(Map<Point, Piece> pointPieces, int i) {
-        Map<String, String> lineInformation = new HashMap<>();
-        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            lineInformation.put(toKey(i, j), PieceRepresentation.convertType(pointPieces.get(Point.of(j, i))));
-        }
-        return lineInformation;
-    }
-
-    private static String toKey(int i, int j) {
-        return String.valueOf(i * DECIMAL + j);
+    public static BoardResponse of(Map<Point, Piece> pointPieces) {
+        return new BoardResponse(
+            pointPieces.entrySet()
+                .stream()
+                .map(entry -> PieceResponse.of(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList())
+        );
     }
 }

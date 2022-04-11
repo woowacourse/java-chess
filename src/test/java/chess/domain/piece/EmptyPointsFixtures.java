@@ -20,9 +20,9 @@ public class EmptyPointsFixtures {
             .collect(Collectors.toList());
     }
 
-    private static List<Point> createLine(int i) {
+    private static List<Point> createLine(int verticalIndex) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-            .mapToObj(j -> Point.of(i, j))
+            .mapToObj(horizontalIndex -> Point.of(verticalIndex, horizontalIndex))
             .collect(Collectors.toList());
     }
 

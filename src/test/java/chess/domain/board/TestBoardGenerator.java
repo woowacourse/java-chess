@@ -16,15 +16,15 @@ public class TestBoardGenerator implements BoardGenerator {
 
     @Override
     public Map<Point, Piece> generate() {
-        for (int i = 1; i <= 8; i++) {
-            generateLine(i);
+        for (int verticalIndex = LineNumber.MIN; verticalIndex <= LineNumber.MAX; verticalIndex++) {
+            generateLine(verticalIndex);
         }
         return Map.copyOf(custom);
     }
 
-    private void generateLine(int i) {
-        for (int j = 1; j <= 8; j++) {
-            Point point = Point.of(i, j);
+    private void generateLine(int verticalIndex) {
+        for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
+            Point point = Point.of(verticalIndex, horizontalIndex);
             custom.computeIfAbsent(point, ignored -> Empty.getInstance());
         }
     }

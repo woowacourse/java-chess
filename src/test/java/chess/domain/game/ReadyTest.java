@@ -2,10 +2,10 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.dto.Arguments;
 
 class ReadyTest {
 
@@ -36,20 +36,11 @@ class ReadyTest {
     @Test
     @DisplayName("준비상태에서는 이동할 수 없다.")
     void throwsExceptionWithTryingToMove() {
-        List<String> ignored = List.of("a1", "a2");
+        Arguments ignored = Arguments.ofArray(new String[] {"a1", "a2"}, 0);
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
             .isThrownBy(() -> state.move(ignored));
-    }
-
-    @Test
-    @DisplayName("준비상태에서는 점수를 확인할 수 없다.")
-    void throwsExceptionWithTryingToStatus() {
-        GameState state = new Ready();
-
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-            .isThrownBy(state::status);
     }
 
     @Test
@@ -60,14 +51,5 @@ class ReadyTest {
         boolean isRunnable = state.isRunnable();
 
         assertThat(isRunnable).isTrue();
-    }
-
-    @Test
-    @DisplayName("준비상태에서는 응답을 얻을 수 없다.")
-    void throwsExceptionWithGettingResponse() {
-        GameState state = new Ready();
-
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-            .isThrownBy(state::getResponse);
     }
 }

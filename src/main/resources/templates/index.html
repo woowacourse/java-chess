@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title> 체스 게임 </title>
+    <link rel="stylesheet" href="/src/index.css">
+<!--    <link rel="stylesheet" href="../static/src/index.css">-->
+    <script src="/src/index.js"></script>
 </head>
 <body>
-Hello World!!
+<div id="app">
+
+    <section id="index-container">
+        <h1> 체스 게임 </h1>
+        <form action="/create" method="get" id="create_form">
+            <input type="text" name="room_name" id="room_name" class="input"/>
+            <input type="submit" value="시작하기" id="create_button" class="button">
+        </form>
+        <br/>
+        <form action="/enter" method="get" id="enter_form">
+            <input type="text" name="room_name" id="game_id" class="input">
+            <input type="submit" value="이어하기" class="button">
+        </form>
+    </section>
+</div>
+<script> setUpIndex(); </script>
 </body>
 </html>
