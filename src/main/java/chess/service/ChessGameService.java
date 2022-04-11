@@ -3,11 +3,12 @@ package chess.service;
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
 import chess.domain.ChessGame;
+import chess.domain.command.MoveCommand;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pieces;
 import chess.dto.GameResultDto;
-import chess.dto.MovePositionCommandDto;
+import chess.dto.MoveCommandDto;
 import chess.dto.PiecesDto;
 import java.util.List;
 
@@ -66,8 +67,10 @@ public class ChessGameService {
         game = ChessGame.of(chessmen);
     }
 
-    public void move(String from, String to) {
-        game.moveChessmen(new MovePositionCommandDto(from, to));
+    public void move(MoveCommandDto moveCommandDto) {
+        String from = moveCommandDto.getSource();
+        String to = moveCommandDto.getTarget();
+        game.moveChessmen(new MoveCommand(from, to));
     }
 
     public void save() {

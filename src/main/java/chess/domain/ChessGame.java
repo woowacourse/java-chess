@@ -1,11 +1,11 @@
 package chess.domain;
 
+import chess.domain.command.MoveCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.dto.GameResultDto;
-import chess.dto.MovePositionCommandDto;
 import java.util.List;
 
 public class ChessGame {
@@ -44,9 +44,9 @@ public class ChessGame {
         return new ChessGame();
     }
 
-    public void moveChessmen(MovePositionCommandDto dto) {
-        Piece sourcePiece = chessmen.extractPiece(Position.of(dto.getSource()));
-        Position toPosition = Position.of(dto.getTarget());
+    public void moveChessmen(MoveCommand moveCommand) {
+        Piece sourcePiece = chessmen.extractPiece(Position.of(moveCommand.getSource()));
+        Position toPosition = Position.of(moveCommand.getTarget());
 
         checkEnd();
         validateTurn(sourcePiece);

@@ -6,6 +6,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dto.MoveCommandDto;
 import chess.dto.PiecesDto;
 import chess.service.ChessGameService;
 import chess.web.util.JsonTransformer;
@@ -70,9 +71,10 @@ public class WebChessController {
             JSONObject jObject = new JSONObject(req.body());
             String from = jObject.getString("from");
             String to = jObject.getString("to");
+            MoveCommandDto movePositionCommandDto = new MoveCommandDto(from, to);
 
             chessGameService.get()
-                .move(from, to);
+                .move(movePositionCommandDto);
 
             res.redirect("/game/progress");
             return true;

@@ -8,11 +8,11 @@ import chess.console.consoleview.OutputView;
 import chess.console.consoleview.boardview.BoardView;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
+import chess.domain.command.MoveCommand;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
-import chess.dto.MovePositionCommandDto;
 
 public class ConsoleChessController {
 
@@ -72,7 +72,7 @@ public class ConsoleChessController {
     }
 
     private ChessGame move(ChessGame chessGame, String command) {
-        chessGame.moveChessmen(new MovePositionCommandDto(command));
+        chessGame.moveChessmen(new MoveCommand(command));
         turn = turn.nextTurn();
         return chessGame;
     }

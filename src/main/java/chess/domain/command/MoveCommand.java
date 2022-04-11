@@ -1,6 +1,6 @@
-package chess.dto;
+package chess.domain.command;
 
-public class MovePositionCommandDto {
+public class MoveCommand {
 
     private static final int SOURCE_POSITION = 1;
     private static final int TARGET_POSITION = 2;
@@ -10,13 +10,13 @@ public class MovePositionCommandDto {
     private final String source;
     private final String target;
 
-    public MovePositionCommandDto(String command) {
+    public MoveCommand(String command) {
         String[] commandInput = command.split(COMMAND_INPUT_DELIMITER);
         this.source = commandInput[SOURCE_POSITION];
         this.target = commandInput[TARGET_POSITION];
     }
 
-    public MovePositionCommandDto(String source, String target) {
+    public MoveCommand(String source, String target) {
         this.source = source;
         this.target = target;
     }
