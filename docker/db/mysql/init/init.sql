@@ -1,3 +1,6 @@
+drop table board;
+drop table game;
+
 create table game
 (
     id int not null,
@@ -16,6 +19,3 @@ create table board
     primary key (id),
     foreign key (game_id) references game (id)
 );
-
-drop table board;
-drop table game;
