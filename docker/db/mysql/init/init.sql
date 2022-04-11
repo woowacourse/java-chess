@@ -1,6 +1,8 @@
-CREATE TABLE `chess`.`state` (
+CREATE TABLE `chess`.`state`
+(
   `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`name`));
+  PRIMARY KEY (`name`)
+);
 
 CREATE TABLE `chess`.`square`
 (
