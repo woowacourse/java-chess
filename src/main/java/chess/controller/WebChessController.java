@@ -24,13 +24,15 @@ public class WebChessController {
     private ChessGame chessGame;
 
     public void run(ChessGameService service) {
-        index();
-        game(service);
-        move(service);
-        status(service);
-        save(service);
-        init(service);
-        end();
+        path("/", () -> {
+            index();
+            game(service);
+            save(service);
+            init(service);
+            move();
+            status();
+            end();
+        });
     }
 
     private void index() {
@@ -54,7 +56,7 @@ public class WebChessController {
         });
     }
 
-    private void move(ChessGameService service) {
+    private void move() {
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
@@ -65,7 +67,7 @@ public class WebChessController {
                 model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
                 model.put("color", chessGame.getTurnColor());
                 if (chessGame.isFinished()) {
-                    return finish(service, model);
+                    return finish(model);
                 }
 
                 return render(model, "game.html");
@@ -73,13 +75,13 @@ public class WebChessController {
             } catch (RuntimeException e) {
                 model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
                 model.put("color", chessGame.getTurnColor());
-                model.put("error", e.getMessage());
+                model.put("error", "[ERROR] 적절하지 않은 입력입니다.");
                 return render(model, "game.html");
             }
         });
     }
 
-    private void status(ChessGameService service) {
+    private void status() {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", StringPieceMapByPiecesByPositions(chessGame.getBoardValue()));
@@ -107,7 +109,7 @@ public class WebChessController {
         });
     }
 
-    private String finish(ChessGameService service, Map<String, Object> model) {
+    private String finish(Map<String, Object> model) {
         model.put("score", chessGame.getScore());
         model.put("color", chessGame.getTurnColor());
         return render(model, "finish.html");
