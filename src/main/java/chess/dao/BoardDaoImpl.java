@@ -12,12 +12,12 @@ import java.util.Map;
 public class BoardDaoImpl implements BoardDao {
 
     @Override
-    public void save(int gameId, Map<String, String> boardMap) {
+    public void save(int gameId, Map<String, String> piecesByPositions) {
         String sql = "insert into board (game_id, position, piece) values (?, ?, ?)";
         Connection connection = getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            for (Map.Entry<String, String> entry : boardMap.entrySet()) {
+            for (Map.Entry<String, String> entry : piecesByPositions.entrySet()) {
                 statement.setInt(1, gameId);
                 statement.setString(2, entry.getKey());
                 statement.setString(3, entry.getValue());
