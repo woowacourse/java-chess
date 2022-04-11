@@ -1,5 +1,9 @@
 package web.dao;
 
+import static chess.domain.piece.Color.*;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -15,10 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import web.DBConnectionSetUp;
 
@@ -27,144 +28,11 @@ public class PieceDaoImpl implements PieceDao {
     private static final String INVALID_PIECE_DB_ERROR = "기물 정보가 DB에 잘못 저장되어 있습니다.";
 
     @Override
-    public List<Piece> load() throws SQLException {
-        String query = "select * from pieces";
-
+    public Map<Position, Piece> findPieces(Long gameId) throws SQLException {
+        String query = "SELECT * FROM pieces WHERE game_id = ?";
         Connection con = DBConnectionSetUp.getConnection();
         PreparedStatement pstmt = con.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        try (con; pstmt; rs) {
-            List<Piece> newPiece = new ArrayList<>();
-            while (rs.next()) {
-                String name = rs.getString("piece_name");
-                String positionValue = rs.getString("position");
-                Position position = ChessBoardPosition.from(positionValue);
-                newPiece.add(daoToPiece(name, position));
-            }
-            return newPiece;
-        }
-    }
-
-    private Piece daoToPiece(String name, Position position) {
-        Color color = Color.WHITE;
-        if ("B".equals(name.substring(0, 1))) {
-            color = Color.BLACK;
-        }
-        if ("R".equals(name.substring(1, 2))) {
-            return new Rook(color, position);
-        }
-        if ("N".equals(name.substring(1, 2))) {
-            return new Knight(color, position);
-        }
-        if ("B".equals(name.substring(1, 2))) {
-            return new Bishop(color, position);
-        }
-        if ("Q".equals(name.substring(1, 2))) {
-            return new Queen(color, position);
-        }
-        if ("K".equals(name.substring(1, 2))) {
-            return new King(color, position);
-        }
-        if ("P".equals(name.substring(1, 2))) {
-            return new Pawn(color, position);
-        }
-        throw new IllegalArgumentException(INVALID_PIECE_DB_ERROR);
-    }
-
-    @Override
-    public void savePiece(String position, Piece piece) {
-        String query = "insert into pieces values (?, ?)";
-        Connection con = DBConnectionSetUp.getConnection();
-        try (con; PreparedStatement pstmt = con.prepareStatement(query)) {
-            String symbol = Symbol.findBySymbol(piece.getClass());
-            if (piece.isSameColor(Color.BLACK)) {
-                pstmt.setString(1, position);
-                pstmt.setString(2, "B" + symbol);
-            }
-            if (piece.isSameColor(Color.WHITE)) {
-                pstmt.setString(1, position);
-                pstmt.setString(2, "W" + symbol);
-            }
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("기물의 위치는 중복될 수 없습니다.");
-        }
-    }
-
-    @Override
-    public void removeAll() throws SQLException {
-        delete("pieces");
-    }
-
-    private void delete(String tableName) throws SQLException {
-        String query = "truncate table " + tableName;
-        Connection con = DBConnectionSetUp.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-
-        try (con; pstmt) {
-            pstmt.executeUpdate();
-        }
-    }
-
-    @Override
-    public void initTurn() throws SQLException {
-        delete("turn");
-        String query = "insert into turn values (?)";
-        Connection con = DBConnectionSetUp.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-
-        try (con; pstmt) {
-            pstmt.setString(1, Color.WHITE.name());
-            pstmt.executeUpdate();
-        }
-    }
-
-    @Override
-    public void deletePiece(String position) {
-        String query = "delete from pieces where position = ?";
-        Connection con = DBConnectionSetUp.getConnection();
-
-        try (con; PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, position);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
-        }
-    }
-
-    @Override
-    public void updateTurn(Color color) throws SQLException {
-        delete("turn");
-        String query = "insert into turn values (?)";
-        Connection con = DBConnectionSetUp.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-
-        try (con; pstmt) {
-            pstmt.setString(1, color.name());
-            pstmt.executeUpdate();
-        }
-    }
-
-    @Override
-    public String findTurn() throws SQLException {
-        String query = "select * from turn";
-        Connection con = DBConnectionSetUp.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-
-        try (con; pstmt; rs) {
-            if (!rs.next()) {
-                return null;
-            }
-            return rs.getString("turn");
-        }
-    }
-
-    @Override
-    public Map<Position, Piece> findPieces() throws SQLException {
-        String query = "select * from pieces";
-        Connection con = DBConnectionSetUp.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setLong(1, gameId);
         ResultSet rs = pstmt.executeQuery();
 
         try (con; pstmt; rs) {
@@ -174,6 +42,65 @@ public class PieceDaoImpl implements PieceDao {
                 result.put(position, daoToPiece(rs.getString("piece_name"), position));
             }
             return result;
+        }
+    }
+
+    private Piece daoToPiece(String name, Position position) {
+        Color color = from(name.substring(0, 5));
+        if ("R".equals(name.substring(5, 6))) {
+            return new Rook(color, position);
+        }
+        if ("N".equals(name.substring(5, 6))) {
+            return new Knight(color, position);
+        }
+        if ("B".equals(name.substring(5, 6))) {
+            return new Bishop(color, position);
+        }
+        if ("Q".equals(name.substring(5, 6))) {
+            return new Queen(color, position);
+        }
+        if ("K".equals(name.substring(5, 6))) {
+            return new King(color, position);
+        }
+        if ("P".equals(name.substring(5, 6))) {
+            return new Pawn(color, position);
+        }
+        throw new IllegalArgumentException(INVALID_PIECE_DB_ERROR);
+    }
+
+    @Override
+    public void savePiece(String position, Piece piece, Long gameId) {
+        String query = "INSERT INTO pieces (position, piece_name, game_id) VALUES (?, ?, ?)";
+        Connection con = DBConnectionSetUp.getConnection();
+        try (con; PreparedStatement pstmt = con.prepareStatement(query)) {
+            String symbol = Symbol.findBySymbol(piece.getClass());
+            if (piece.isSameColor(BLACK)) {
+                pstmt.setString(1, position);
+                pstmt.setString(2, BLACK.name() + symbol);
+                pstmt.setLong(3, gameId);
+            }
+            if (piece.isSameColor(WHITE)) {
+                pstmt.setString(1, position);
+                pstmt.setString(2, WHITE.name() + symbol);
+                pstmt.setLong(3, gameId);
+            }
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("기물의 위치는 중복될 수 없습니다.");
+        }
+    }
+
+    @Override
+    public void deletePiece(String position, Long id) {
+        String query = "DELETE FROM pieces WHERE position = ? AND game_id = ?";
+        Connection con = DBConnectionSetUp.getConnection();
+
+        try (con; PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, position);
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
         }
     }
 }
