@@ -12,7 +12,10 @@ import chess.exception.DataAccessException;
 
 public class BoardDao {
 
-    private final DBConnection dbConnection = new DBConnection();
+    private final String URL = "jdbc:mysql://localhost:3306/chess";
+    private final String USER = "user";
+    private final String PASSWORD = "password";
+    private final DBConnection dbConnection = new DBConnection(URL, USER, PASSWORD);
 
     public void updateBoardSquare(final String position, final String piece, final String color) {
         final String query = "UPDATE board SET piece = ? , color = ? WHERE position=?";

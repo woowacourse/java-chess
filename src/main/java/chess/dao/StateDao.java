@@ -10,7 +10,10 @@ import chess.exception.DataAccessException;
 
 public class StateDao {
 
-    private final DBConnection dbConnection = new DBConnection();
+    private final String URL = "jdbc:mysql://localhost:3306/chess";
+    private final String USER = "user";
+    private final String PASSWORD = "password";
+    private final DBConnection dbConnection = new DBConnection(URL, USER, PASSWORD);
 
     public void updateState(final String gameState, final String color) {
         final String query = "UPDATE state SET game_state = ? , color = ?";
