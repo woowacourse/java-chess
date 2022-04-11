@@ -17,16 +17,28 @@ public class ChessGameDao {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public int findByRoomId(String roomId) throws SQLException {
+    public int findByRoomId(String roomId) {
         final String sql = "select id from game where room_id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, roomId);
-        ResultSet resultSet = statement.executeQuery();
-        try (connection; statement; resultSet) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setString(1, roomId);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");
             }
+        } catch (SQLException exception) {
+            logger.warn(exception.getMessage());
+        }
+        return 0;
+    }
+
+    public int isExistGame(String roomId) {
+        final String sql = "select exists(select * from game where room_id = ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setString(1, roomId);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("");
         } catch (SQLException exception) {
             logger.warn(exception.getMessage());
         }

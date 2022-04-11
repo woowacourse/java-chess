@@ -32,13 +32,21 @@ public class ChessService {
         chessGame = new Ready();
     }
 
-    public int findByRoomId(String roomId) {
-        try {
-            return chessGameDao.findByRoomId(roomId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
+    public int saveGame(String roomId) {
+        if (isExistGame(roomId)) {
+            return findByRoomId(roomId);
         }
+        chessGameDao.save(roomId);
+        return findByRoomId(roomId);
+    }
+
+    public int findByRoomId(String roomId) {
+        return chessGameDao.findByRoomId(roomId);
+    }
+
+    private boolean isExistGame(String roomId) {
+        int gameExistFlag = chessGameDao.isExistGame(roomId);
+        return gameExistFlag == 1;
     }
 
     public Board ready(Session session) {
