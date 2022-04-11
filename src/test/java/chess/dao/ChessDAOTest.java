@@ -6,6 +6,7 @@ import chess.dto.ChessDTO;
 import chess.dto.GameDTO;
 import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,15 +21,20 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class ChessDAOTest {
 
-    GameDAO gameDAO;
-    GameDTO gameDTO;
-    int gameId;
+    private GameDAO gameDAO;
+    private ChessDAO chessDAO;
+    private ChessDTO chessDTO;
+    private int gameId;
 
     @BeforeEach
     void setUp() {
         gameDAO = new GameDAO();
-        gameDTO = new GameDTO("green", "lawn");
+        GameDTO gameDTO = new GameDTO("green", "lawn");
         gameDAO.saveGameInformation(gameDTO, new TurnDTO("white"));
+
+        chessDAO = new ChessDAO();
+        chessDTO = new ChessDTO("white", "pawn", "a2");
+
         gameId = gameDAO.findGameIdByUser(gameDTO);
     }
 
@@ -40,9 +46,6 @@ class ChessDAOTest {
     @Test
     @DisplayName("보드 테이블에 기물 저장")
     void saveGame() {
-        ChessDAO chessDAO = new ChessDAO();
-        ChessDTO chessDTO = new ChessDTO("white", "pawn", "a2");
-
         assertThatNoException().isThrownBy(() -> chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId)));
     }
 
@@ -52,7 +55,6 @@ class ChessDAOTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
         List<ChessDTO> testDTOs = new ArrayList<>();
-        ChessDAO chessDAO = new ChessDAO();
 
         Map<String, Piece> board = chessGame.getChessBoard().toModel();
         for (String position : board.keySet()) {
@@ -67,10 +69,8 @@ class ChessDAOTest {
     @Test
     @DisplayName("기물 삭제")
     void deletePiece() {
-        ChessDAO chessDAO = new ChessDAO();
-        ChessDTO chessDTO = new ChessDTO("white", "pawn", "a2");
-
         chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId));
+
         assertThatNoException().isThrownBy(() -> chessDAO.deletePiece("a2", new GameIdDTO(gameId)));
     }
 }
