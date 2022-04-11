@@ -3,6 +3,7 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.domain.GameManager;
 import chess.service.GameService;
 import chess.dao.PieceDaoImpl;
 import chess.dao.TurnDaoImpl;
@@ -16,7 +17,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class GameController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final GameService gameService = new GameService(new PieceDaoImpl(), new TurnDaoImpl());
+    private final GameService gameService = new GameService(new GameManager(), new PieceDaoImpl(), new TurnDaoImpl());
 
     public void run() {
 

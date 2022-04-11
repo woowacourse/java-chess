@@ -18,7 +18,8 @@ public class GameService {
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
 
-    public GameService(PieceDao pieceDao, TurnDao turnDao) {
+    public GameService(GameManager gameManager, PieceDao pieceDao, TurnDao turnDao) {
+        this.gameManager = gameManager;
         this.pieceDao = pieceDao;
         this.turnDao = turnDao;
     }
