@@ -6,27 +6,28 @@ import java.util.function.BiPredicate;
 
 public class Queen extends UnpromotablePiece {
 
+    private static final String NAME = "Queen";
     static final String SYMBOL = "q";
     private static final double SCORE = 9;
 
-    private static final BiPredicate<Integer, Integer> movingCondition =
-            Bishop.movingCondition.or(Rook.movingCondition);
+    private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY = (rankMove, fileMove) ->
+            Math.abs(rankMove) == Math.abs(fileMove) || (fileMove == 0 || rankMove == 0);
 
-    public Queen(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+
+    public Queen(final Team team) {
+        super(team);
     }
 
-    @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
-
-        return new Queen(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY) &&
+                !sourcePosition.isOtherPieceInPathToTarget(targetPosition, otherPositions);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;
@@ -40,5 +41,10 @@ public class Queen extends UnpromotablePiece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

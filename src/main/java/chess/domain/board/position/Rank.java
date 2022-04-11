@@ -53,4 +53,13 @@ public enum Rank {
         }
         return this;
     }
+
+    public boolean isPieceInitialRank() {
+        return this == ONE || this == TWO || this == SEVEN || this == EIGHT;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

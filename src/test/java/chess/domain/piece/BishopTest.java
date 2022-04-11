@@ -1,52 +1,37 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Team.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.position.Position;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
-    @Test
-    @DisplayName("이동경로에 기물이 존재하지 않으면 목표 지점에 이동한다.")
-    void move() {
+    @ParameterizedTest
+    @DisplayName("이동 경로에 이동할 수 있는지 반환한다.")
+    @MethodSource("provideTargetPositionAndOtherPositions")
+    void canMove(final Position targetPosition, final List<Position> otherPositions, final boolean expected) {
         //given
-        final Bishop Bishop = new Bishop(TeamColor.BLACK, Position.from("a1"));
-        final Position targetPosition = Position.from("c3");
-        final Piece moved = Bishop.move(new ArrayList<>(), targetPosition);
+        final Position sourcePosition = Position.from("a1");
+        final Piece piece = new Bishop(BLACK);
         //when
-        final boolean actual = moved.matchesPosition(targetPosition);
+        final boolean actual = piece.canMove(sourcePosition, targetPosition, otherPositions);
         //then
-        assertThat(actual).isTrue();
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("이동경로에 기물이 존재하면 예외를 발생시킨다.")
-    void moveException() {
-        //given
-        final Bishop Bishop = new Bishop(TeamColor.BLACK, Position.from("a1"));
-        final List<Piece> pieces = Collections.singletonList(new Knight(TeamColor.BLACK, Position.from("b2")));
-        final Position targetPosition = Position.from("c3");
-        //when, then
-        assertThatThrownBy(() -> Bishop.move(pieces, targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 기물이 존재합니다.");
-    }
-
-    @Test
-    @DisplayName("목표 지점이 갈 수 없는 곳이면 예외를 발생시킨다.")
-    void moveExceptionTarget() {
-        //given
-        final Bishop Bishop = new Bishop(TeamColor.BLACK, Position.from("a1"));
-        final Position targetPosition = Position.from("a2");
-        //when, then
-        assertThatThrownBy(() -> Bishop.move(new ArrayList<>(), targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+    private static Stream<Arguments> provideTargetPositionAndOtherPositions() {
+        return Stream.of(
+                Arguments.of(Position.from("c3"), Collections.emptyList(), true),
+                Arguments.of(Position.from("c4"), Collections.emptyList(), false),
+                Arguments.of(Position.from("c3"), Collections.singletonList(Position.from("b2")), false)
+        );
     }
 }

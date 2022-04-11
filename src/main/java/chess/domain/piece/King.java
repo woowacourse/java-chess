@@ -6,25 +6,27 @@ import java.util.function.BiPredicate;
 
 public class King extends UnpromotablePiece {
 
+    private static final String NAME = "King";
     private static final String SYMBOL = "k";
     private static final double SCORE = 0;
 
-    private static final BiPredicate<Integer, Integer> movingCondition =
+    private static final BiPredicate<Integer, Integer> MOVEMENT_STRATEGY =
             (rankMove, fileMove) -> Math.abs(rankMove) <= 1 && Math.abs(fileMove) <= 1;
 
-    public King(final TeamColor teamColor, final Position position) {
-        super(teamColor, position);
+    public King(final Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition);
-        return new King(teamColor, targetPosition);
+    public boolean canMove(final Position sourcePosition,
+                           final Position targetPosition,
+                           final List<Position> otherPositions) {
+        return sourcePosition.canMove(targetPosition, MOVEMENT_STRATEGY);
     }
 
     @Override
     public String getSymbol() {
-        if (teamColor.isBlack()) {
+        if (team.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;
@@ -38,5 +40,10 @@ public class King extends UnpromotablePiece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

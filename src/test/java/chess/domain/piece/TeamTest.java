@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class TeamColorTest {
+class TeamTest {
 
     @ParameterizedTest
     @DisplayName("Rank 값을 받아 팀 컬러를 반환한다.")
     @CsvSource(value = {"ONE, WHITE", "TWO, WHITE", "SEVEN, BLACK", "EIGHT, BLACK"})
-    void findByRank(final Rank rank, final TeamColor expected) {
+    void findByRank(final Rank rank, final Team expected) {
         //when
-        TeamColor actual = TeamColor.findByRank(rank);
+        Team actual = Team.findByRank(rank);
         //then
         assertThat(actual).isEqualTo(expected);
     }
@@ -27,7 +27,7 @@ class TeamColorTest {
         //given
         Rank rank = Rank.FIVE;
         //when, then
-        assertThatThrownBy(() -> TeamColor.findByRank(rank))
+        assertThatThrownBy(() -> Team.findByRank(rank))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("팀 컬러를 식별할 수 있는 Rank는 1,2,7,8 입니다.");
     }

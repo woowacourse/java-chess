@@ -1,10 +1,10 @@
 package chess.domain.board.position;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Position {
 
@@ -12,13 +12,7 @@ public class Position {
     private static final int RANK_INDEX = 1;
     private static final String RANK_FILE_DELIMITER = "";
 
-    private static final List<Position> ALL_POSITIONS;
-
-    static {
-        ALL_POSITIONS = Arrays.stream(File.values())
-                .flatMap(Position::generatePositionOf)
-                .collect(Collectors.toUnmodifiableList());
-    }
+    private static final Map<String, Position> CACHE = new HashMap<>(64);
 
     private final File file;
     private final Rank rank;
@@ -28,21 +22,12 @@ public class Position {
         this.rank = rank;
     }
 
-    private static Stream<Position> generatePositionOf(final File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> new Position(file, rank));
-    }
-
     public static Position of(final File file, final Rank rank) {
-        return ALL_POSITIONS.stream()
-                .filter(position -> position.file == file)
-                .filter(position -> position.rank == rank)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("위치 정보가 유효하지 않습니다."));
+        return CACHE.computeIfAbsent(file.toString() + rank.toString(), ignored -> new Position(file, rank));
     }
 
     public static Position from(final String positionValue) {
-        validatePositionValue(positionValue);
+        validatePosition2Value(positionValue);
 
         final String[] rankAndFile = positionValue.split(RANK_FILE_DELIMITER);
         final String rank = rankAndFile[RANK_INDEX];
@@ -51,42 +36,35 @@ public class Position {
         return of(File.from(file), Rank.from(rank));
     }
 
-    private static void validatePositionValue(final String positionValue) {
+    private static void validatePosition2Value(final String positionValue) {
         if (positionValue.length() != 2) {
             throw new IllegalArgumentException("위치 정보가 유효하지 않습니다.");
         }
     }
 
-    public void validateTargetPosition(final Position targetPosition,
-                                       final BiPredicate<Integer, Integer> movingCondition) {
+    public boolean canMove(final Position targetPosition,
+                           final BiPredicate<Integer, Integer> movingCondition) {
         final int differenceOfFile = this.file.calculateDifference(targetPosition.file);
         final int differenceOfRank = this.rank.calculateDifference(targetPosition.rank);
-
-        if (!movingCondition.test(differenceOfFile, differenceOfRank)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
+        return movingCondition.test(differenceOfFile, differenceOfRank);
     }
 
-    public void checkOtherPiecesInTarget(final Position targetPosition, final List<Position> otherPositions) {
-        if (otherPositions.stream()
-                .anyMatch(other -> other == targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-    }
-
-    public void checkOtherPiecesInPathToTarget(final Position targetPosition, final List<Position> positions) {
+    public boolean isOtherPieceInPathToTarget(final Position targetPosition, final List<Position> otherPositions) {
         Position currentPosition = this;
+        List<Position> passingPath = new ArrayList<>();
+
         while (currentPosition != targetPosition) {
-            currentPosition.checkOtherPiecesInCurrentPosition(positions);
+            passingPath.add(currentPosition);
             currentPosition = currentPosition.nextPosition(targetPosition);
         }
+
+        return passingPath.stream()
+                .anyMatch(path -> path.hasSame(otherPositions));
     }
 
-    private void checkOtherPiecesInCurrentPosition(final List<Position> positions) {
-        if (positions.stream()
-                .anyMatch(another -> this == another)) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
-        }
+    private boolean hasSame(final List<Position> others) {
+        return others.stream()
+                .anyMatch(other -> this == other);
     }
 
     private Position nextPosition(final Position targetPosition) {
@@ -101,5 +79,10 @@ public class Position {
 
     public boolean isInRank(final Rank rank) {
         return this.rank == rank;
+    }
+
+    @Override
+    public String toString() {
+        return file.toString() + rank.toString();
     }
 }
