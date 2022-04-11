@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import static chess.domain.position.File.FILES_TOTAL_SIZE;
 

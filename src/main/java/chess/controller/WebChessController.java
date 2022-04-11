@@ -6,11 +6,16 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
 import chess.dto.PiecesDto;
+
 import chess.service.ChessGameService;
+
 import chess.web.util.JsonTransformer;
 import chess.web.util.RenderingUtil;
+import chess.web.view.ResultView;
+
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
@@ -49,9 +54,8 @@ public class WebChessController {
             res.type("application/json");
             JsonTransformer jsonTransformer = new JsonTransformer();
 
-            Map<String, Object> model = chessGameService.get()
-                .calculateGameResult()
-                .getGameResultMap();
+            GameResultDto gameResultDto = chessGameService.get().calculateGameResult();
+            Map<String, Object> model = ResultView.of(gameResultDto).getResultView();
 
             return jsonTransformer.render(model);
         });

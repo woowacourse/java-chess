@@ -3,9 +3,9 @@ package chess.console.consoleview;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
+import chess.console.consoleview.boardview.BoardView;
 import chess.domain.piece.Color;
 import chess.dto.GameResultDto;
-import chess.console.consoleview.boardview.BoardView;
 
 public class OutputView {
 
@@ -62,7 +62,7 @@ public class OutputView {
     }
 
     public static void printStatus(GameResultDto dto) {
-        Color winnerColor = dto.winnerColor();
+        Color winnerColor = dto.getWinner();
         double whiteScore = dto.getWhiteScore();
         double blackScore = dto.getBlackScore();
 

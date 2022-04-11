@@ -6,13 +6,15 @@ import static chess.console.consoleview.InputView.requestStatusOrEndInput;
 
 import chess.console.consoleview.OutputView;
 import chess.console.consoleview.boardview.BoardView;
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
+import chess.domain.game.GameResult;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
+import chess.dto.GameResultDto;
 
 public class ConsoleChessController {
 
@@ -91,15 +93,30 @@ public class ConsoleChessController {
     }
 
     private void intermediateGameResult(ChessGame chessGame) {
-        OutputView.printIntermediateGameResult(chessGame.calculateGameResult());
+        GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
+
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+            gameResult.getBlackScore());
+
+        OutputView.printIntermediateGameResult(gameResultDto);
     }
 
     private void forceQuitGameResult(ChessGame chessGame) {
-        OutputView.printForceQuitStatus(chessGame.calculateGameResult());
+        GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
+
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+            gameResult.getBlackScore());
+
+        OutputView.printForceQuitStatus(gameResultDto);
     }
 
     private void normalQuitGameResult(ChessGame chessGame) {
-        OutputView.printStatus(chessGame.calculateGameResult());
+        GameResult gameResult = GameResult.calculate(chessGame.getChessmen());
+
+        GameResultDto gameResultDto = new GameResultDto(gameResult.getWinner(), gameResult.getWhiteScore(),
+            gameResult.getBlackScore());
+
+        OutputView.printStatus(gameResultDto);
     }
 
 }

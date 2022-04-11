@@ -6,6 +6,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.command.MoveCommand;
+import chess.domain.game.ChessGame;
+import chess.domain.game.GameResult;
 import chess.domain.piece.ChessmenInitializer;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -13,7 +15,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.dto.GameResultDto;import java.util.List;
+import chess.dto.GameResultDto;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -147,7 +150,7 @@ public class ChessGameTest {
     @DisplayName("최초의 게임 점수는 각각 38.0점이다.")
     @Test
     void calculateGameResult() {
-        double actual = chessGame.calculateGameResult()
+        double actual = GameResult.calculate(chessGame.getChessmen())
             .getBlackScore();
         double expected = new GameResultDto(BLACK, 38.0, 38.0)
             .getBlackScore();

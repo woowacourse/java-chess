@@ -3,7 +3,7 @@ package chess.console.consoleview.boardview;
 import static chess.domain.position.File.FILES_TOTAL_SIZE;
 import static chess.domain.position.Rank.RANKS_TOTAL_SIZE;
 
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
