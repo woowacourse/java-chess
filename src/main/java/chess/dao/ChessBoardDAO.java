@@ -1,25 +1,33 @@
 package chess.dao;
 
-import chess.DBConnector;
 import chess.dto.ChessDTO;
 import chess.dto.GameIdDTO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoardDAO implements BoardDAO {
 
+    private final Connection connection;
+
+    public ChessBoardDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void savePieces(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO) {
-        try (Connection connection = DBConnector.getConnection()) {
-            savePiece(chessDTOS, gameIdDTO, connection);
-        } catch (Exception e) {
+        try {
+            savePiece(chessDTOS, gameIdDTO);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void savePiece(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO, Connection connection) throws SQLException {
+    private void savePiece(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO) throws SQLException {
         final String sql = "insert into board(game_id, piece, position, color) values (?, ?, ?, ?)";
         for (ChessDTO chessDto : chessDTOS) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -36,7 +44,7 @@ public class ChessBoardDAO implements BoardDAO {
     public List<ChessDTO> findAllPiece(GameIdDTO gameIdDTO) {
         final String sql = "select * from board where game_id = (?)";
 
-        try (Connection connection = DBConnector.getConnection()) {
+        try {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, gameIdDTO.getId());
                 ResultSet resultSet = statement.executeQuery();
@@ -63,7 +71,7 @@ public class ChessBoardDAO implements BoardDAO {
     public void deletePiece(String position, GameIdDTO gameIdDTO) {
         final String sql = "delete from board where position = (?) and game_id = (?)";
 
-        try (Connection connection = DBConnector.getConnection()) {
+        try {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, position);
                 statement.setInt(2, gameIdDTO.getId());

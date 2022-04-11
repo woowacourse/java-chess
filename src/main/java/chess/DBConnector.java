@@ -11,22 +11,12 @@ public class DBConnector {
     private DBConnector() {
     }
 
-    private static void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Connection getConnection() {
-        loadDriver();
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return connection;
+        throw new RuntimeException("데이터베이스 연결을 실패했습니다.");
     }
 }

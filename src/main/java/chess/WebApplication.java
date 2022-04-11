@@ -13,6 +13,7 @@ public class WebApplication {
     public static void main(String[] args) {
         port(8081);
         staticFileLocation("/static");
-        new ChessWebController(new ChessService(new ChessBoardDAO(), new ChessGameDAO())).run();
+        new ChessWebController(new ChessService(new ChessBoardDAO(DBConnector.getConnection()),
+                new ChessGameDAO(DBConnector.getConnection()))).run();
     }
 }

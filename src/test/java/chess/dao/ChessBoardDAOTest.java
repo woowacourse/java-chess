@@ -6,7 +6,6 @@ import chess.dto.ChessDTO;
 import chess.dto.GameDTO;
 import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,13 +27,13 @@ class ChessBoardDAOTest {
 
     @BeforeEach
     void setUp() {
-        chessGameDAO = new ChessGameDAO();
+        TestDBConnector testDBConnector = new TestDBConnector();
+        chessGameDAO = new ChessGameDAO(testDBConnector.getConnection());
         GameDTO gameDTO = new GameDTO("green", "lawn");
         chessGameDAO.saveGame(gameDTO, new TurnDTO("white"));
 
-        chessBoardDAO = new ChessBoardDAO();
+        chessBoardDAO = new ChessBoardDAO(testDBConnector.getConnection());
         chessDTO = new ChessDTO("white", "pawn", "a2");
-
         gameId = chessGameDAO.findGameIdByUser(gameDTO);
     }
 

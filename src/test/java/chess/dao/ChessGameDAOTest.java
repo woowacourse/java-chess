@@ -3,13 +3,13 @@ package chess.dao;
 import chess.dto.GameDTO;
 import chess.dto.GameIdDTO;
 import chess.dto.TurnDTO;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class ChessGameDAOTest {
 
@@ -21,7 +21,8 @@ class ChessGameDAOTest {
 
     @BeforeEach
     void setUp() {
-        chessGameDAO = new ChessGameDAO();
+        TestDBConnector testDBConnector = new TestDBConnector();
+        chessGameDAO = new ChessGameDAO(testDBConnector.getConnection());
         gameDTO = new GameDTO("green", "lawn");
         chessGameDAO.saveGame(gameDTO, new TurnDTO("white"));
         gameId = chessGameDAO.findGameIdByUser(gameDTO);
@@ -35,7 +36,6 @@ class ChessGameDAOTest {
     @Test
     @DisplayName("게임 정보 저장")
     void saveGame() {
-        chessGameDAO = new ChessGameDAO();
         GameDTO gameTestDTO = new GameDTO("greengreen", "lawn");
 
         assertThatNoException().isThrownBy(() -> chessGameDAO.saveGame(gameTestDTO, new TurnDTO("white")));
