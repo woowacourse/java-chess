@@ -76,18 +76,6 @@ const setupSelected = (selectedSquare) => {
     from = selectedSquare.id;
 }
 
-const handleException = (response) => {
-    debugger
-    console.log(response);
-    if (!response.ok) {
-        console.log(response);
-        showFailMessage(response.statusText);
-        return;
-    }
-
-    return response;
-}
-
 /**
  * 두번째 클릭에 대한 ajax 및 기물 이동 처리
  * @param selectedSquare
@@ -108,16 +96,17 @@ const processMove = (selectedSquare) => {
                 showFailMessage(json.message);
                 return;
             }
-
             if (json.moveResult === 'FAIL') {
                 showFailMessage();
                 return;
+            }
+            if (json.moveResult === 'END') {
+                gameOverProcess();
             }
             removePieceFromSquare(document.getElementById(json.from));
             setupPieceToSquare(document.getElementById(json.to), json.piece);
             setupScores();
             document.getElementById('move').play();
-            checkIsGameOver();
         })
 
     document.querySelector('.selected').classList.remove('selected');
@@ -144,12 +133,6 @@ const removePieceFromSquare = (square) => {
     square.classList.remove('hasPiece');
     square.dataset.piece = '';
     square.style.backgroundImage = '';
-}
-
-const checkIsGameOver = () => {
-    if (isGameOver()) {
-        gameOverProcess();
-    }
 }
 
 /**

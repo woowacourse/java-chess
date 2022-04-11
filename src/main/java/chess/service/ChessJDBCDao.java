@@ -19,7 +19,7 @@ public class ChessJDBCDao implements ChessDao {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
         return connection;
     }
@@ -44,7 +44,7 @@ public class ChessJDBCDao implements ChessDao {
                 result = resultSet.getInt("isExists");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
         return result > 0;
     }
@@ -61,7 +61,7 @@ public class ChessJDBCDao implements ChessDao {
                 board.put(resultSet.getString("position"), resultSet.getString("piece"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
         return board;
     }
@@ -80,7 +80,7 @@ public class ChessJDBCDao implements ChessDao {
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
     }
 
@@ -92,7 +92,7 @@ public class ChessJDBCDao implements ChessDao {
             preparedStatement.setString(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class ChessJDBCDao implements ChessDao {
                 board.put(resultSet.getString("position"), resultSet.getString("piece"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
 
         return board;
@@ -137,7 +137,7 @@ public class ChessJDBCDao implements ChessDao {
             preparedStatement.setString(3, to);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
     }
 
@@ -151,7 +151,7 @@ public class ChessJDBCDao implements ChessDao {
             preparedStatement.setString(3, piece);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
     }
 
@@ -168,7 +168,7 @@ public class ChessJDBCDao implements ChessDao {
                 turn = resultSet.getInt("turn");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
         return turn;
     }
@@ -183,7 +183,7 @@ public class ChessJDBCDao implements ChessDao {
             preparedStatement.setString(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessSQLException(e.getMessage());
         }
     }
 
