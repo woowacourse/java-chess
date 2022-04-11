@@ -123,13 +123,13 @@ public class GameDaoImpl implements GameDao {
 
     private int assignNewId() {
         Connection connection = getConnection();
-        String sql = "select count(*) from game";
+        String sql = "select id from game order by id desc LIMIT 1";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getInt("count(*)") + 1;
+                return resultSet.getInt("id") + 1;
             }
 
             return 0;
