@@ -9,10 +9,10 @@ import chess.dao.GameDao;
 import chess.model.ChessGame;
 import chess.model.PieceArrangement.PieceArrangement;
 import chess.model.PieceArrangement.SavedPieceArrangement;
-import chess.model.PieceColor;
 import chess.model.Turn;
 
 public class ChessGameService {
+
     private final BoardDao boardDao;
     private final GameDao gameDao;
 
@@ -30,7 +30,7 @@ public class ChessGameService {
         if (findById(gameId).isEmpty()) {
             return new ChessGame(turn, pieceArrangement);
         }
-        return new ChessGame(new Turn(PieceColor.valueOf(gameDao.findTurnById(gameId))),
+        return new ChessGame(new Turn(gameDao.findTurnById(gameId)),
             new SavedPieceArrangement(findById(gameId)));
     }
 

@@ -2,11 +2,9 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.sql.Connection;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,36 +15,20 @@ import chess.model.PieceArrangement.DefaultArrangement;
 
 public class BoardDaoImplTest {
 
-    private static BoardDao boardDao;
-    private static GameDao gameDao;
-
-    @BeforeEach
-    void setUp() {
-        gameDao = new GameDaoImpl();
-        boardDao = new BoardDaoImpl();
-    }
+    private static final BoardDao boardDao = new BoardDaoImpl();
+    private static final GameDao gameDao = new GameDaoImpl();
+    private static final int gameId = 1;
 
     @AfterEach
     void tearDown() {
-        gameDao.deleteById(1);
-    }
-
-    @Test
-    @DisplayName("Connection 동작을 검증한다.")
-    void connection() {
-
-        //when
-        Connection connection = boardDao.getConnection();
-
-        //then
-        assertThat(connection).isNotNull();
+        gameDao.deleteById(gameId);
     }
 
     @Test
     @DisplayName("DB에 현재 기물 위치, 피스 정보를 저장한다.")
     void save() {
         Board board = new Board(new DefaultArrangement());
-        gameDao.save(new Game("white", "black", 1));
+        gameDao.save(new Game("white", "black", gameId));
 
         assertThatCode(() -> boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues())))
@@ -58,7 +40,7 @@ public class BoardDaoImplTest {
     void deleteById() {
         //given
         Board board = new Board(new DefaultArrangement());
-        gameDao.save(new Game("white", "black", 1));
+        gameDao.save(new Game("white", "black", gameId));
         boardDao.save(1,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues()));
 
@@ -74,7 +56,7 @@ public class BoardDaoImplTest {
     void find() {
         //given
         GameDao gameDao = new GameDaoImpl();
-        gameDao.save(new Game("white", "black", 1));
+        gameDao.save(new Game("white", "black", gameId));
         int gameId = 1;
 
         Board board = new Board(new DefaultArrangement());

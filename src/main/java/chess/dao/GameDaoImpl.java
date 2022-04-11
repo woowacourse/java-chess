@@ -1,7 +1,6 @@
 package chess.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,24 +11,9 @@ import chess.Game;
 
 public class GameDaoImpl implements GameDao {
 
-    private static final String URL = "jdbc:mysql://localhost:13306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
-    @Override
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
     @Override
     public void save(Game game) {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         deleteById(game.getId());
         String sql = "insert into game (id, id_white_player, id_black_player, turn) values (?, ?, ?, ?)";
         try {
@@ -46,7 +30,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public void deleteById(int id) {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         new BoardDaoImpl().deleteById(id);
         String sql = "delete from game where id = " + "'" + id + "'";
         try {
@@ -59,7 +43,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public List<String> findById(int id) {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         String sql = "select id_white_player, id_black_player from game where id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -81,7 +65,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public String findTurnById(int id) {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         String sql = "select turn from game where id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -101,7 +85,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public int findIdByPlayers(String idPlayerWhite, String idPlayerBlack) {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         String sql = "select id from game where id_white_player = ? and id_black_player = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -122,7 +106,7 @@ public class GameDaoImpl implements GameDao {
     }
 
     private int assignNewId() {
-        Connection connection = getConnection();
+        Connection connection = JdbcConnection.getConnection();
         String sql = "select id from game order by id desc LIMIT 1";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);

@@ -2,7 +2,6 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -26,16 +25,6 @@ public class GameDaoImplTest {
     @AfterEach
     void tearDown() {
         gameDao.deleteById(id);
-    }
-
-    @Test
-    @DisplayName("Connection 동작을 검증한다.")
-    void connection() {
-        //when
-        Connection connection = gameDao.getConnection();
-
-        //then
-        assertThat(connection).isNotNull();
     }
 
     @Test

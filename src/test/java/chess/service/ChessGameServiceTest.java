@@ -4,7 +4,6 @@ import static chess.model.File.*;
 import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -136,11 +135,6 @@ public class ChessGameServiceTest {
         public void deleteById(int gameId) {
             table.remove(gameId);
         }
-
-        @Override
-        public Connection getConnection() {
-            return null;
-        }
     }
 
     public static class testPieceArrangement implements PieceArrangement {
@@ -161,11 +155,6 @@ public class ChessGameServiceTest {
 
         public fakeGameDao(Game game) {
             this.game = game;
-        }
-
-        @Override
-        public Connection getConnection() {
-            return null;
         }
 
         @Override
