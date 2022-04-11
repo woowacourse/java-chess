@@ -1,6 +1,8 @@
 package chess;
 
 import chess.controller.ChessWebController;
+import chess.dao.ChessBoardDAO;
+import chess.dao.ChessGameDAO;
 import chess.service.ChessService;
 
 import static spark.Spark.port;
@@ -11,6 +13,6 @@ public class WebApplication {
     public static void main(String[] args) {
         port(8081);
         staticFileLocation("/static");
-        new ChessWebController(new ChessService()).run();
+        new ChessWebController(new ChessService(new ChessBoardDAO(), new ChessGameDAO())).run();
     }
 }

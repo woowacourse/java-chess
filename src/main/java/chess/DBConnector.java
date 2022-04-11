@@ -29,31 +29,4 @@ public class DBConnector {
         }
         return connection;
     }
-
-    public static void closeConnection(Connection connection) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void closeConnection(Connection connection, PreparedStatement statement) {
-        try {
-            connection.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void closeConnection(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        try {
-            connection.close();
-            statement.close();
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

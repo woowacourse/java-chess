@@ -19,34 +19,34 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
-class ChessDAOTest {
+class ChessBoardDAOTest {
 
-    private GameDAO gameDAO;
-    private ChessDAO chessDAO;
+    private ChessGameDAO chessGameDAO;
+    private ChessBoardDAO chessBoardDAO;
     private ChessDTO chessDTO;
     private int gameId;
 
     @BeforeEach
     void setUp() {
-        gameDAO = new GameDAO();
+        chessGameDAO = new ChessGameDAO();
         GameDTO gameDTO = new GameDTO("green", "lawn");
-        gameDAO.saveGameInformation(gameDTO, new TurnDTO("white"));
+        chessGameDAO.saveGame(gameDTO, new TurnDTO("white"));
 
-        chessDAO = new ChessDAO();
+        chessBoardDAO = new ChessBoardDAO();
         chessDTO = new ChessDTO("white", "pawn", "a2");
 
-        gameId = gameDAO.findGameIdByUser(gameDTO);
+        gameId = chessGameDAO.findGameIdByUser(gameDTO);
     }
 
     @AfterEach
     void delete() {
-        gameDAO.deleteGame(new GameIdDTO(gameId));
+        chessGameDAO.deleteGame(new GameIdDTO(gameId));
     }
 
     @Test
     @DisplayName("보드 테이블에 기물 저장")
     void saveGame() {
-        assertThatNoException().isThrownBy(() -> chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId)));
+        assertThatNoException().isThrownBy(() -> chessBoardDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId)));
     }
 
     @Test
@@ -61,16 +61,16 @@ class ChessDAOTest {
             testDTOs.add(new ChessDTO(board.get(position).getColor(),
                     board.get(position).getPiece(), position));
         }
-        chessDAO.savePieces(testDTOs, new GameIdDTO(gameId));
+        chessBoardDAO.savePieces(testDTOs, new GameIdDTO(gameId));
 
-        assertThat(chessDAO.findAllPiece(new GameIdDTO(gameId)).size()).isEqualTo(32);
+        assertThat(chessBoardDAO.findAllPiece(new GameIdDTO(gameId)).size()).isEqualTo(32);
     }
 
     @Test
     @DisplayName("기물 삭제")
     void deletePiece() {
-        chessDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId));
+        chessBoardDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId));
 
-        assertThatNoException().isThrownBy(() -> chessDAO.deletePiece("a2", new GameIdDTO(gameId)));
+        assertThatNoException().isThrownBy(() -> chessBoardDAO.deletePiece("a2", new GameIdDTO(gameId)));
     }
 }
