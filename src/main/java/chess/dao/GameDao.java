@@ -8,21 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameDao {
 
     public void update(ChessGameDto dto) {
         String sql = "update game set status = ?, turn = ? where id = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            JdbcUtil.setStringsToStatement(statement,
-                    Map.of(1, dto.getStatus(), 2, dto.getTurn()));
-            statement.setInt(3, dto.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("체스 게임 정보를 수정하는 데 문제가 생겼습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setString(dto.getStatus())
+                .setString(dto.getTurn())
+                .setInt(dto.getId())
+                .executeUpdate();
     }
 
     public ChessGameDto findById(int id) {
@@ -50,14 +45,10 @@ public class GameDao {
 
     public void updateStatus(StatusDto statusDto, int id) {
         String sql = "update game set status = ? where id = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            JdbcUtil.setStringsToStatement(statement, Map.of(1, statusDto.getStatus()));
-            statement.setInt(2, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("체스 게임의 상태를 변경하지 못했습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setString(statusDto.getStatus())
+                .setInt(id)
+                .executeUpdate();
     }
 
     public GamesDto findAll() {
@@ -77,12 +68,8 @@ public class GameDao {
 
     public void createGame(String name) {
         String sql = "insert into game set name = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            JdbcUtil.setStringsToStatement(statement, Map.of(1, name));
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("체스 게임을 만들지 못했습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setString(name)
+                .executeUpdate();
     }
 }

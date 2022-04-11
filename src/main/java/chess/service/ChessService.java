@@ -45,26 +45,8 @@ public class ChessService {
         gameDao.update(new ChessGameDto(id, chessGame.getStatus().name(), chessGame.getTurn().name()));
     }
 
-    private ChessGame getGameFromDao(int id) {
-        ChessGameDto game = gameDao.findById(id);
-        BoardDto boardDto = getBoard(id);
-        return new ChessGame(new Board(boardDto), Color.valueOf(game.getTurn()), Status.valueOf(game.getStatus()));
-    }
-
     public BoardDto getBoard(int id) {
         return boardDao.getBoardByGameId(id);
-    }
-
-    private BoardDto toBoardDto(Map<Square, Piece> board) {
-        return new BoardDto(board.keySet().stream()
-                .map(square -> toPieceDto(square, board.get(square)))
-                .collect(Collectors.toList()));
-    }
-
-    private PieceWithSquareDto toPieceDto(Square square, Piece piece) {
-        String squareName = square.getName();
-        String pieceName = PieceType.getName(piece);
-        return new PieceWithSquareDto(squareName, pieceName, piece.getColor().name());
     }
 
     public List<List<String>> getAllPieceLetter(int id) {
@@ -90,8 +72,20 @@ public class ChessService {
         updateGame(chessGame, id);
     }
 
+    private PieceWithSquareDto toPieceDto(Square square, Piece piece) {
+        String squareName = square.getName();
+        String pieceName = PieceType.getName(piece);
+        return new PieceWithSquareDto(squareName, pieceName, piece.getColor().name());
+    }
+
     public boolean isRunning(int id) {
         return getGameFromDao(id).isPlaying();
+    }
+
+    private ChessGame getGameFromDao(int id) {
+        ChessGameDto game = gameDao.findById(id);
+        BoardDto boardDto = getBoard(id);
+        return new ChessGame(new Board(boardDto), Color.valueOf(game.getTurn()), Status.valueOf(game.getStatus()));
     }
 
     public boolean isGameEmpty(int id) {

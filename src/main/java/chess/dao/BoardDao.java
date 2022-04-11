@@ -12,17 +12,19 @@ import java.util.Map;
 
 public class BoardDao {
 
+    private static final String PIECE_COLOR = "piece_color";
+    private static final String PIECE_TYPE = "piece_type";
+    private static final String SQUARE = "square";
+    private static final String EXCEPTION_MESSAGE_REMOVE = "보드를 제거하는 도중 문제가 생겼습니다.";
+    private static final String EXCEPTION_MESSAGE_UPDATE = "기물 정보를 수정하던 도중 문제가 생겼습니다.";
+
     public void initBoard(int gameId) {
         String sql = "insert into board (game_id, piece_type, piece_color, square)\n"
                 + "select ?, init.piece_type, init.piece_color, init.square from init_board as init\n"
                 + "on duplicate key update piece_type = init.piece_type, piece_color = init.piece_color";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, gameId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("DB에 새로운 보드를 생성하지 못했습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setInt(gameId)
+                .executeUpdate();
     }
 
     public BoardDto getBoardByGameId(int id) {
@@ -40,9 +42,9 @@ public class BoardDao {
     private BoardDto getBoardDtoFromResultSet(ResultSet resultSet) throws SQLException {
         List<PieceWithSquareDto> pieces = new ArrayList<>();
         while (resultSet.next()) {
-            String color = resultSet.getString("piece_color");
-            String type = resultSet.getString("piece_type");
-            String square = resultSet.getString("square");
+            String color = resultSet.getString(PIECE_COLOR);
+            String type = resultSet.getString(PIECE_TYPE);
+            String square = resultSet.getString(SQUARE);
             pieces.add(new PieceWithSquareDto(square, type, color));
         }
         return new BoardDto(pieces);
@@ -50,25 +52,18 @@ public class BoardDao {
 
     public void remove(int id) {
         String sql = "delete from board where game_id = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("보드를 제거하는 도중 문제가 생겼습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setInt(id)
+                .executeUpdate();
     }
 
     public void update(PieceWithSquareDto piece, int gameId) {
         String sql = "update board set piece_type = ?, piece_color = ? where square = ? and game_id = ?";
-        try (Connection connection = JdbcUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
-            JdbcUtil.setStringsToStatement(statement,
-                    Map.of(1, piece.getType(), 2, piece.getColor(), 3, piece.getSquare()));
-            statement.setInt(4, gameId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("기물 정보를 수정하던 도중 문제가 생겼습니다.", e);
-        }
+        new StatementExecutor(JdbcUtil.getConnection(), sql)
+                .setString(piece.getType())
+                .setString(piece.getColor())
+                .setString(piece.getSquare())
+                .setInt(gameId)
+                .executeUpdate();
     }
 }
