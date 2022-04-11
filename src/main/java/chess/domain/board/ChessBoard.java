@@ -15,6 +15,10 @@ public class ChessBoard {
             .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
     }
 
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
     public static ChessBoard createChessBoard() {
         return new ChessBoard(BoardInitializer.init());
     }
@@ -60,8 +64,6 @@ public class ChessBoard {
     public Collection<Piece> getPieces() {
         return board.values();
     }
-
-
 
     public Color getWinner() {
         if (!isGameEnd()) {
