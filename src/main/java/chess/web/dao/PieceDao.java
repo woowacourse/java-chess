@@ -31,22 +31,6 @@ public class PieceDao {
         return pieces;
     }
 
-    public List<PieceDto> findAll() throws SQLException{
-        final String sql = "select position, name, imagePath from piece";
-        List<PieceDto> pieces = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            PieceDto pieceDto = PieceDto.of(
-                resultSet.getString("position"),
-                resultSet.getString("name"),
-                resultSet.getString("imagePath")
-            );
-            pieces.add(pieceDto);
-        }
-        return pieces;
-    }
-
     public int save(PieceDto pieceDto, int roomId) throws SQLException {
         final String sql = "insert into piece (position, name, imagePath, roomId) values (?, ?, ?, ?)";
         final PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -72,22 +56,9 @@ public class PieceDao {
         return Collections.unmodifiableList(ids);
     }
 
-    public void remove(int id) throws SQLException {
-        final String sql = "delete from piece where id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
-        statement.executeUpdate();
-    }
-
     public void update(List<PieceDto> pieces, int roomId) throws SQLException {
         removeAllByRoomId(roomId);
         saveAll(pieces, roomId);
-    }
-
-    public void removeAll() throws SQLException {
-        final String sql = "delete from piece";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.executeUpdate();
     }
 
     public void removeAllByRoomId(int roomId) throws SQLException {

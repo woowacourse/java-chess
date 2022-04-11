@@ -34,19 +34,6 @@ public class RoomDao {
         return 0;
     }
 
-    public RoomDto findById(int roomId) throws SQLException {
-        final String sql = "select id, name, turn from room where id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, roomId);
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
-        return RoomDto.of(
-            resultSet.getInt("id"),
-            resultSet.getString("name"),
-            resultSet.getString("turn")
-        );
-    }
-
     public Player findTurnById(int roomId) throws SQLException {
         final String sql = "select turn from room where id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
