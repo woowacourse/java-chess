@@ -1,11 +1,12 @@
-package chess.web;
+package chess.controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.web.dao.PieceDaoImpl;
-import chess.web.dao.TurnDaoImpl;
-import chess.web.dto.MoveDto;
+import chess.service.GameService;
+import chess.dao.PieceDaoImpl;
+import chess.dao.TurnDaoImpl;
+import chess.dto.MoveDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;

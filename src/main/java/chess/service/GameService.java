@@ -1,15 +1,15 @@
-package chess.web;
+package chess.service;
 
 import chess.domain.GameManager;
 import chess.domain.board.Board;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.Turn;
-import chess.web.dao.PieceDao;
-import chess.web.dao.TurnDao;
-import chess.web.dto.ChessDto;
-import chess.web.dto.MoveDto;
-import chess.web.dto.StatusDto;
+import chess.dao.PieceDao;
+import chess.dao.TurnDao;
+import chess.dto.ChessDto;
+import chess.dto.MoveDto;
+import chess.dto.StatusDto;
 import java.util.Map;
 
 public class GameService {

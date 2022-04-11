@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.dto;
 
 import chess.domain.board.Color;
 import chess.domain.position.Result;

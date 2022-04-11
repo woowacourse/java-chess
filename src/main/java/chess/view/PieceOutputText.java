@@ -1,4 +1,4 @@
-package chess.console.view;
+package chess.view;
 
 import chess.domain.board.Color;
 import chess.domain.board.Piece;

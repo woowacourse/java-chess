@@ -1,12 +1,13 @@
-package chess.console.command;
+package chess.view.command;
 
-import chess.console.view.OutputView;
+import chess.view.OutputView;
 import chess.domain.GameManager;
 
-public final class Status implements Command {
+public final class Start implements Command {
+
     @Override
     public void execute(GameManager gameManager) {
-        OutputView.printStatus(gameManager.getStatus());
+        OutputView.printBoard(gameManager.getBoard());
     }
 
     @Override

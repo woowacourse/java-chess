@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.dto;
 
 import chess.domain.position.Position;
 import java.util.Objects;

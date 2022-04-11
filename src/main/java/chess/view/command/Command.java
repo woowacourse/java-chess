@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.view.command;
 
 import chess.domain.GameManager;
 

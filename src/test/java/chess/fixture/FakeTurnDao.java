@@ -1,7 +1,7 @@
-package chess.web;
+package chess.fixture;
 
 import chess.domain.state.Turn;
-import chess.web.dao.TurnDao;
+import chess.dao.TurnDao;
 
 public class FakeTurnDao implements TurnDao {
 

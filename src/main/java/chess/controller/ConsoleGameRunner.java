@@ -1,9 +1,9 @@
-package chess.console;
+package chess.controller;
 
-import chess.console.command.Command;
-import chess.console.command.CommandFactory;
-import chess.console.view.InputView;
-import chess.console.view.OutputView;
+import chess.view.command.Command;
+import chess.view.command.CommandFactory;
+import chess.view.InputView;
+import chess.view.OutputView;
 import chess.domain.GameManager;
 
 public final class ConsoleGameRunner {

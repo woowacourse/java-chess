@@ -1,13 +1,15 @@
-package chess.web;
+package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Piece;
 import chess.domain.board.PieceFactory;
 import chess.domain.position.Position;
-import chess.web.dto.ChessDto;
-import chess.web.dto.PieceDto;
-import chess.web.dto.PositionDto;
+import chess.dto.ChessDto;
+import chess.dto.PieceDto;
+import chess.dto.PositionDto;
+import chess.fixture.FakePieceDao;
+import chess.fixture.FakeTurnDao;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

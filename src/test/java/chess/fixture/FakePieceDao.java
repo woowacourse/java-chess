@@ -1,8 +1,8 @@
-package chess.web;
+package chess.fixture;
 
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
-import chess.web.dao.PieceDao;
+import chess.dao.PieceDao;
 import java.util.HashMap;
 import java.util.Map;
 

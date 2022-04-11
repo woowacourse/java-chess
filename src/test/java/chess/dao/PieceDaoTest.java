@@ -6,7 +6,6 @@ import chess.domain.board.Color;
 import chess.domain.board.Pawn;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
-import chess.web.dao.PieceDaoImpl;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;

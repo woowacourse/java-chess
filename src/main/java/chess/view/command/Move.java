@@ -1,6 +1,6 @@
-package chess.console.command;
+package chess.view.command;
 
-import chess.console.view.OutputView;
+import chess.view.OutputView;
 import chess.domain.GameManager;
 
 public final class Move implements Command {
