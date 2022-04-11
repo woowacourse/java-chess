@@ -68,7 +68,7 @@ public class ChessGameService {
     }
 
     public void initGame() {
-        gameDao.create(gameId);
+        gameDao.saveById(gameId);
         Pieces chessmen = chessmenInitializer.init();
         pieceDao.saveAllByGameId(chessmen.getPieces(), gameId);
 

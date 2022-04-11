@@ -13,7 +13,7 @@ public class GameDao {
 
     DatabaseConnector databaseConnector = new DatabaseConnector();
 
-    public void create(String gameId) {
+    public void saveById(String gameId) {
         final Connection connection = databaseConnector.getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
 

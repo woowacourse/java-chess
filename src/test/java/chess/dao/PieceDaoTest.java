@@ -27,7 +27,7 @@ public class PieceDaoTest {
         final ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         final List<Piece> pieces = chessmenInitializer.init().getPieces();
 
-        gameDao.create(gameId);
+        gameDao.saveById(gameId);
 
         assertThatCode(() ->
             pieceDao.saveAllByGameId(pieces, gameId))
@@ -36,7 +36,7 @@ public class PieceDaoTest {
 
     @Test
     void deleteAllByGameId() {
-        gameDao.create(gameId);
+        gameDao.saveById(gameId);
         pieceDao.deleteAllByGameId(gameId);
 
         final List<Piece> pieces = pieceDao.findAllByGameId(gameId).getPieces();
