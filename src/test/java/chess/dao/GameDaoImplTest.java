@@ -3,7 +3,6 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +11,8 @@ import chess.model.PieceColor;
 
 public class GameDaoImplTest {
 
-    private static GameDao gameDao;
+    private static final GameDao gameDao = new GameDaoImpl();
     private static final int id = 1;
-
-    @BeforeEach
-    void setUp() {
-        gameDao = new GameDaoImpl();
-    }
 
     @AfterEach
     void tearDown() {

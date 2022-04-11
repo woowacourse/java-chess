@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,18 +33,14 @@ import chess.model.piece.Rook;
 public class ChessGameServiceTest {
 
     private static final ChessGame chessGame = new ChessGame(new Turn(), new DefaultArrangement());
-    private static final Game game = new Game("white", "black", 1);
-    private static ChessGameService chessGameService;
-
-    @BeforeEach
-    void setUp() {
-        GameDao gameDao = new fakeGameDao(new Game("white", "black", 1));
-        chessGameService = new ChessGameService(gameDao, new fakeBoardDao());
-    }
+    private static final int gameId = 1;
+    private static final Game game = new Game("white", "black", gameId);
+    private static final GameDao gameDao = new fakeGameDao(game);
+    private static final ChessGameService chessGameService = new ChessGameService(gameDao, new fakeBoardDao());
 
     @AfterEach
     void tearDown() {
-        chessGameService.deleteById(1);
+        chessGameService.deleteById(gameId);
     }
 
     @Test

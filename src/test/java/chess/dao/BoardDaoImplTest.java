@@ -30,7 +30,7 @@ public class BoardDaoImplTest {
         Board board = new Board(new DefaultArrangement());
         gameDao.save(new Game("white", "black", gameId));
 
-        assertThatCode(() -> boardDao.save(1,
+        assertThatCode(() -> boardDao.save(gameId,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues())))
             .doesNotThrowAnyException();
     }
@@ -41,14 +41,14 @@ public class BoardDaoImplTest {
         //given
         Board board = new Board(new DefaultArrangement());
         gameDao.save(new Game("white", "black", gameId));
-        boardDao.save(1,
+        boardDao.save(gameId,
             MappingUtil.StringPieceMapByPiecesByPositions(board.getValues()));
 
         //when
-        boardDao.deleteById(1);
+        boardDao.deleteById(gameId);
 
         //then
-        assertThat(boardDao.findById(1)).isEmpty();
+        assertThat(boardDao.findById(gameId)).isEmpty();
     }
 
     @Test
@@ -57,7 +57,6 @@ public class BoardDaoImplTest {
         //given
         GameDao gameDao = new GameDaoImpl();
         gameDao.save(new Game("white", "black", gameId));
-        int gameId = 1;
 
         Board board = new Board(new DefaultArrangement());
         Map<String, String> expected = MappingUtil.StringPieceMapByPiecesByPositions(board.getValues());
