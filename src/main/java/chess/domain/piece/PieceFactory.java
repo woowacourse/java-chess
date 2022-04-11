@@ -30,6 +30,27 @@ public class PieceFactory {
     private final static Piece BLACK_PAWN = new Piece(PAWN, BLACK, new BlackPawnMovingPattern(Movement.getBlackPawnMoving()));
     private final static Piece WHITE_PAWN = new Piece(PAWN, WHITE, new WhitePawnMovingPattern(Movement.getWhitePawnMoving()));
 
+    private static final Map<String, Piece> PIECE_CACHE = new HashMap<>();
+
+    static {
+        PIECE_CACHE.put(parsePieceToString(BLACK, ROOK), BLACK_ROOK);
+        PIECE_CACHE.put(parsePieceToString(WHITE, ROOK), WHITE_ROOK);
+        PIECE_CACHE.put(parsePieceToString(BLACK, KNIGHT), BLACK_KNIGHT);
+        PIECE_CACHE.put(parsePieceToString(WHITE, KNIGHT), WHITE_KNIGHT);
+        PIECE_CACHE.put(parsePieceToString(BLACK, BISHOP), BLACK_BISHOP);
+        PIECE_CACHE.put(parsePieceToString(WHITE, BISHOP), WHITE_BISHOP);
+        PIECE_CACHE.put(parsePieceToString(BLACK, QUEEN), BLACK_QUEEN);
+        PIECE_CACHE.put(parsePieceToString(WHITE, QUEEN), WHITE_QUEEN);
+        PIECE_CACHE.put(parsePieceToString(BLACK, KING), BLACK_KING);
+        PIECE_CACHE.put(parsePieceToString(WHITE, KING), WHITE_KING);
+        PIECE_CACHE.put(parsePieceToString(BLACK, PAWN), BLACK_PAWN);
+        PIECE_CACHE.put(parsePieceToString(WHITE, PAWN), WHITE_PAWN);
+    }
+
+    private static String parsePieceToString(PieceColor color, PieceType type) {
+        return color.name() + type.name();
+    }
+
     public static Map<Position, Piece> createChessPieces() {
         Map<Position, Piece> pieces = new HashMap<>();
 
@@ -86,41 +107,9 @@ public class PieceFactory {
     }
 
     public static Piece find(PieceType type, PieceColor color) {
-        if (type == PAWN && color.isBlack()) {
-            return BLACK_PAWN;
-        }
-        if (type == PAWN && color.isWhite()) {
-            return WHITE_PAWN;
-        }
-        if (type == KNIGHT && color.isBlack()) {
-            return BLACK_KNIGHT;
-        }
-        if (type == KNIGHT && color.isWhite()) {
-            return WHITE_KNIGHT;
-        }
-        if (type == ROOK && color.isBlack()) {
-            return BLACK_ROOK;
-        }
-        if (type == ROOK && color.isWhite()) {
-            return WHITE_ROOK;
-        }
-        if (type == QUEEN && color.isBlack()) {
-            return BLACK_QUEEN;
-        }
-        if (type == QUEEN && color.isWhite()) {
-            return WHITE_QUEEN;
-        }
-        if (type == KING && color.isBlack()) {
-            return BLACK_KING;
-        }
-        if (type == KING && color.isWhite()) {
-            return WHITE_KING;
-        }
-        if (type == BISHOP && color.isBlack()) {
-            return BLACK_BISHOP;
-        }
-        if (type == BISHOP && color.isWhite()) {
-            return WHITE_BISHOP;
+        String key = parsePieceToString(color, type);
+        if (PIECE_CACHE.containsKey(key)) {
+            return PIECE_CACHE.get(key);
         }
         throw new IllegalArgumentException("해당 특징의 Piece 를 찾을 수 없습니다.");
     }
