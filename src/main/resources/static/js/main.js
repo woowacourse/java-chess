@@ -16,6 +16,7 @@ const initialize = () => {
         .then(res => res.json())
         .then(board => board.forEach(boardDto =>
             setupPieceToSquare(document.getElementById(boardDto.position), boardDto.piece)))
+        .then(() => setupScores())
         .then(() => {
             if (isGameOver()) {
                 gameOverProcess();
@@ -26,8 +27,6 @@ const initialize = () => {
 
     document.querySelectorAll('.square')
         .forEach(square => square.addEventListener('click', squareClick));
-
-    setupScores();
 
     document.getElementById("newGame").addEventListener('click', (event) => {
         location.href = newGamemUrl;
