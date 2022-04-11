@@ -2,7 +2,6 @@ package chess.domain.direction;
 
 import chess.domain.board.coordinate.Coordinate;
 import java.util.Arrays;
-import java.util.List;
 
 public enum Direction {
     UP(0, 1),
@@ -30,36 +29,6 @@ public enum Direction {
     Direction(int columnVector, int rowVector) {
         this.columnVector = columnVector;
         this.rowVector = rowVector;
-    }
-
-    public static List<Direction> blackPawnDirection() {
-        return List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
-    }
-
-    public static List<Direction> whitePawnDirection() {
-        return List.of(UP, UP_LEFT, UP_RIGHT);
-    }
-
-    public static List<Direction> bishopDirection() {
-        return List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
-    }
-
-    public static List<Direction> knightDirection() {
-        return List.of(UP_UP_LEFT, UP_UP_RIGHT, DOWN_DOWN_LEFT, DOWN_DOWN_RIGHT,
-                LEFT_LEFT_UP, LEFT_LEFT_DOWN, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN);
-    }
-
-    public static List<Direction> queenDirection() {
-        return List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
-
-    }
-
-    public static List<Direction> kingDirection() {
-        return List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
-    }
-
-    public static List<Direction> rookDirection() {
-        return List.of(UP, DOWN, LEFT, RIGHT);
     }
 
     public static Direction of(Coordinate from, Coordinate to) {

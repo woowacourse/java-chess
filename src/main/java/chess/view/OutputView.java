@@ -4,7 +4,6 @@ import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import java.util.Map;
 
 public class OutputView {
@@ -28,11 +27,11 @@ public class OutputView {
 
     private static void printBoardInSameRow(Map<Coordinate, Piece> value, Row row) {
         for (Column column : Column.values()) {
-            System.out.print(value.get(Coordinate.of(column, row)).getSymbol());
+            System.out.print(value.get(Coordinate.of(column, row)).getSymbolByTeam());
         }
     }
 
-    public static void printStatus(Map<Team, Double> status) {
+    public static void printStatus(Map<String, Double> status) {
         status.forEach((team, count) -> System.out.println(team + " : " + count + "점"));
     }
 }

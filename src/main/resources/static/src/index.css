@@ -1,0 +1,52 @@
+body {
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1, h3 {
+    text-align: center;
+}
+
+row {
+    display: flex;
+    flex-direction: row;
+}
+
+column {
+    display: flex;
+    flex-direction: column;
+}
+
+.chess-ui {
+    width: 640px;
+    border: 4px solid slategrey;
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+}
+
+.white-square {
+    background-color: slategrey;
+    color: white;
+}
+
+.white-square.selected {
+    background-color: rosybrown;
+}
+
+.black-square {
+    background-color: white;
+    color: slategrey;
+}
+
+.black-square.selected {
+    background-color: rosybrown;
+}
+
+img {
+    width: 100%;
+}

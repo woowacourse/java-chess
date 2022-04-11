@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.InitialBoard;
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class ChessGameTest {
     void start() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        assertThat(chessGame.getValue()).isEqualTo(InitialBoard.initialize());
+        assertThat(chessGame.getBoard().getValue()).isEqualTo(InitialBoard.initialize());
     }
 
     @Test
@@ -24,10 +23,10 @@ public class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
         chessGame.move(Coordinate.of("a2"), Coordinate.of("a4"));
-        Team team = chessGame.getValue()
+        String team = chessGame.getBoard().getValue()
                 .get(Coordinate.of("a4"))
                 .getTeam();
-        assertThat(team).isEqualTo(Team.WHITE);
+        assertThat(team).isEqualTo("WHITE");
     }
 
     @Test
@@ -37,10 +36,11 @@ public class ChessGameTest {
         chessGame.start();
         chessGame.move(Coordinate.of("a2"), Coordinate.of("a4"));
         chessGame.move(Coordinate.of("a7"), Coordinate.of("a5"));
-        Team team = chessGame.getValue()
+        String team = chessGame.getBoard()
+                .getValue()
                 .get(Coordinate.of("a5"))
                 .getTeam();
-        assertThat(team).isEqualTo(Team.BLACK);
+        assertThat(team).isEqualTo("BLACK");
     }
 
     @Test

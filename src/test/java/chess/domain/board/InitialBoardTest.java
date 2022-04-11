@@ -31,14 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -68,32 +61,31 @@ class InitialBoardTest {
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
                 Arguments.arguments(Arrays.asList(A, H),
-                        Arrays.asList(EIGHT), new Rook(ROOK, BLACK)),
+                        Arrays.asList(EIGHT), Piece.of(ROOK.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(A, H),
-                        Arrays.asList(ONE), new Rook(ROOK, WHITE)),
+                        Arrays.asList(ONE), Piece.of(ROOK.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(B, G),
-                        Arrays.asList(EIGHT), new Knight(KNIGHT, BLACK)),
+                        Arrays.asList(EIGHT), Piece.of(KNIGHT.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(B, G),
-                        Arrays.asList(ONE), new Knight(KNIGHT, WHITE)),
+                        Arrays.asList(ONE), Piece.of(KNIGHT.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(C, F),
-                        Arrays.asList(EIGHT), new Bishop(BISHOP, BLACK)),
+                        Arrays.asList(EIGHT), Piece.of(BISHOP.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(C, F),
-                        Arrays.asList(ONE), new Bishop(BISHOP, WHITE)),
+                        Arrays.asList(ONE), Piece.of(BISHOP.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(D),
-                        Arrays.asList(EIGHT), new Queen(QUEEN, BLACK)),
+                        Arrays.asList(EIGHT), Piece.of(QUEEN.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(D),
-                        Arrays.asList(ONE), new Queen(QUEEN, WHITE)),
+                        Arrays.asList(ONE), Piece.of(QUEEN.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(E),
-                        Arrays.asList(EIGHT), new King(KING, BLACK)),
+                        Arrays.asList(EIGHT), Piece.of(KING.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(E),
-                        Arrays.asList(ONE), new King(KING, WHITE)),
+                        Arrays.asList(ONE), Piece.of(KING.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(Column.values()),
-                        Arrays.asList(SEVEN), new Pawn(PAWN, BLACK)),
+                        Arrays.asList(SEVEN), Piece.of(PAWN.name(), BLACK.name())),
                 Arguments.arguments(Arrays.asList(Column.values()),
-                        Arrays.asList(TWO), new Pawn(PAWN, WHITE)),
+                        Arrays.asList(TWO), Piece.of(PAWN.name(), WHITE.name())),
                 Arguments.arguments(Arrays.asList(Column.values()),
-                        Arrays.asList(THREE, FOUR, FIVE, SIX), new Empty(EMPTY, NONE))
-
+                        Arrays.asList(THREE, FOUR, FIVE, SIX), Piece.of(EMPTY.name(), NONE.name()))
         );
     }
 }

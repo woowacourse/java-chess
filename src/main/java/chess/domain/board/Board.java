@@ -1,18 +1,18 @@
 package chess.domain.board;
 
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.Team;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int BOTH_KING_ALIVE = 2;
 
     private final Map<Coordinate, Piece> value;
 
-    private Board(Map<Coordinate, Piece> value) {
+    public Board(Map<Coordinate, Piece> value) {
         this.value = value;
     }
 
@@ -43,7 +43,7 @@ public class Board {
 
     private void swapPiece(Coordinate from, Coordinate to) {
         Piece piece = findPiece(from);
-        value.put(from, new Empty(Symbol.EMPTY, Team.NONE));
+        value.put(from, Piece.of(Symbol.EMPTY.name(), Team.NONE.name()));
         value.put(to, piece);
     }
 
@@ -56,5 +56,11 @@ public class Board {
 
     public Map<Coordinate, Piece> getValue() {
         return value;
+    }
+
+    public Map<String, Piece> toMap() {
+        return value.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }

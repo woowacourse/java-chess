@@ -37,7 +37,7 @@ public enum Function {
         biConsumer.accept(chessGame, commands);
     }
 
-    public boolean isStatus() {
-        return this == STATUS;
+    public boolean isNotStatus() {
+        return this != STATUS;
     }
 }

@@ -1,19 +1,24 @@
 package chess.domain.piece;
 
+import static chess.domain.direction.Direction.DOWN_LEFT;
+import static chess.domain.direction.Direction.DOWN_RIGHT;
+import static chess.domain.direction.Direction.UP_LEFT;
+import static chess.domain.direction.Direction.UP_RIGHT;
+
 import chess.domain.direction.Direction;
 import chess.domain.piece.movestrategy.MoveStrategy;
 import chess.domain.piece.movestrategy.RepeatableMoveStrategy;
+import java.util.List;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
-    public Bishop(Symbol symbol, Team team) {
+    Bishop(Symbol symbol, Team team) {
         super(symbol, team);
     }
 
     @Override
-    public boolean hasNotDirection(Direction direction) {
-        return !Direction.bishopDirection()
-                .contains(direction);
+    public List<Direction> direction() {
+        return List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
     }
 
     @Override

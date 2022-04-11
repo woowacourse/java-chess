@@ -29,7 +29,7 @@ public class WhiteTurnTest {
     void move_white() {
         State whiteTurn = new WhiteTurn(Board.create());
         State blackTurn = whiteTurn.move(Coordinate.of("a2"), Coordinate.of("a4"));
-        Piece piece = blackTurn.getValue().get(Coordinate.of("a4"));
+        Piece piece = blackTurn.getBoard().getValue().get(Coordinate.of("a4"));
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 

@@ -11,18 +11,6 @@ public class Coordinate {
     private static final int BLACK_PAWN_START_ROW = 7;
     private static final int WHITE_PAWN_START_ROW = 2;
 
-    static {
-        for (Column column : Column.values()) {
-            cache(column);
-        }
-    }
-
-    private static void cache(Column column) {
-        for (Row row : Row.values()) {
-            CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
-        }
-    }
-
     private final Column column;
     private final Row row;
 
@@ -31,17 +19,19 @@ public class Coordinate {
         this.row = row;
     }
 
-    public static Coordinate of(String value) {
-        Coordinate coordinate = CACHE.get(value);
-        if (Objects.isNull(coordinate)) {
-            throw new IllegalArgumentException("잘못된 좌표가 존재합니다. (a1 ~ h8) 사이의 값만 입력해주세요.");
-        }
-        return coordinate;
-    }
-
     public static Coordinate of(Column column, Row row) {
         String key = column.getName() + row.getValue();
-        return of(key);
+        Coordinate coordinate = CACHE.get(key);
+        if (Objects.isNull(coordinate)) {
+            CACHE.put(key, new Coordinate(column, row));
+        }
+        return CACHE.get(key);
+    }
+
+    public static Coordinate of(String value) {
+        Column column = Column.of(value.substring(0, 1));
+        Row row = Row.of(value.substring(1, 2));
+        return of(column, row);
     }
 
     public Coordinate next(Direction direction) {
@@ -79,5 +69,10 @@ public class Coordinate {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public String toString() {
+        return column.toString() + row.toString();
     }
 }

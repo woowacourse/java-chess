@@ -3,7 +3,6 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class WhiteTurn implements State {
 
@@ -40,12 +39,12 @@ public class WhiteTurn implements State {
     }
 
     @Override
-    public Map<Coordinate, Piece> getValue() {
-        return board.getValue();
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public Board getBoard() {
+        return board;
     }
 }

@@ -2,14 +2,18 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class Start implements State {
 
+    private final Board board;
+
+    public Start() {
+        this.board = Board.create();
+    }
+
     @Override
     public State start() {
-        return new WhiteTurn(Board.create());
+        return new WhiteTurn(getBoard());
     }
 
     @Override
@@ -28,7 +32,7 @@ public class Start implements State {
     }
 
     @Override
-    public Map<Coordinate, Piece> getValue() {
-        throw new IllegalStateException("게임을 시작하지 않았습니다.");
+    public Board getBoard() {
+        return board;
     }
 }

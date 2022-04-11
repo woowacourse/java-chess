@@ -3,7 +3,6 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class BlackTurn implements State {
 
@@ -45,7 +44,7 @@ public class BlackTurn implements State {
     }
 
     @Override
-    public Map<Coordinate, Piece> getValue() {
-        return board.getValue();
+    public Board getBoard() {
+        return board;
     }
 }

@@ -20,6 +20,13 @@ public enum Column {
         this.value = value;
     }
 
+    public static Column of(String value) {
+        return Arrays.stream(values())
+                .filter(column -> column.name.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 column은 존재하지 않습니다."));
+    }
+
     public Column move(int distance) {
         return Arrays.stream(values())
                 .filter(column -> column.value == this.value + distance)
@@ -37,5 +44,10 @@ public enum Column {
 
     public int gap(Column column) {
         return column.value - value;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

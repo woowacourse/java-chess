@@ -2,15 +2,18 @@ package chess.domain.piece;
 
 import chess.domain.direction.Direction;
 import chess.domain.piece.movestrategy.MoveStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Empty extends Piece {
-    public Empty(Symbol symbol, Team team) {
+public final class Empty extends Piece {
+
+    Empty(Symbol symbol, Team team) {
         super(symbol, team);
     }
 
     @Override
-    public boolean hasNotDirection(Direction direction) {
-        return false;
+    public List<Direction> direction() {
+        return new ArrayList<>();
     }
 
     @Override

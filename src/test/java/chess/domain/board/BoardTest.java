@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +55,7 @@ public class BoardTest {
     @DisplayName("왕이 한명이라도 죽으면 false를 반환")
     void is_both_king_not_alive() {
         Board board = Board.create();
-        board.getValue().put(Coordinate.of("e1"), new Empty(Symbol.EMPTY, Team.NONE));
+        board.getValue().put(Coordinate.of("e1"), Piece.of(Symbol.EMPTY.name(), Team.NONE.name()));
 
         assertThat(board.isBothKingAlive()).isFalse();
     }

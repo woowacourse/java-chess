@@ -1,8 +1,7 @@
 package chess.domain.game.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
-import chess.domain.piece.Piece;
-import java.util.Map;
 
 public interface State {
 
@@ -12,7 +11,7 @@ public interface State {
 
     State end();
 
-    Map<Coordinate, Piece> getValue();
+    Board getBoard();
 
     boolean isFinished();
 }
