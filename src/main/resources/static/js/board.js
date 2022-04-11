@@ -106,6 +106,7 @@ async function move(from, to, id) {
       gameFinished = true;
       document.querySelector(".currentTurn").textContent = " 승자 :";
       alert(obj.turn + " 승리!");
+      location.href = "/";
       return;
     }
     if (obj.code === "200") {
