@@ -19,7 +19,7 @@ public final class Board {
     private static final String CANT_MOVE_TO_SAME_CAMP = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
     private static final String CANT_MOVE_EMPTY_PIECE = "빈 기물을 움직일 수 없습니다.";
 
-    private Map<Position, Piece> board;
+    private final Map<Position, Piece> board;
 
     public Board() {
         this(BoardFactory.generate());

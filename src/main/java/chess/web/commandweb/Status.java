@@ -10,9 +10,6 @@ public final class Status implements WebCommandGenerator {
                                        final ChessGame chessGame,
                                        final Supplier<Map<String, Object>> returnModelToState) {
         chessGame.status();
-
-//        returnModelToState.get();
-
         chessGame.run();
         return null;
     }

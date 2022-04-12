@@ -36,8 +36,7 @@ public final class Move implements WebCommandGenerator {
         if (chessGame.isAnyMovablePositionKingCheckmated(kingCheckMatedPositions)) {
             model.put("message", "현재 턴의 킹이 체크되었습니다");
             if (chessGame.isAllMovablePositionKingCheckMated(kingCheckMatedPositions)) {
-                //chessGame.gameSwitchOff(); // 스위치를 꺼버리면, finished를 안간다.
-                chessGame.end(); //  finished상태를 만들어야 -> 출력꾸러미에서 finished를 인식해서 작동함. 스위치 바로 오프하면 안됨.
+                chessGame.end();
                 model.put("message", "현재 턴의 킹이 체크메이트 되어 게임을 종료합니다.");
                 model.put("isRunning", false);
             }

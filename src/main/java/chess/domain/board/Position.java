@@ -32,10 +32,6 @@ public class Position implements Comparable<Position> {
         return CACHE.computeIfAbsent(column.name() + row.name(), ignored -> new Position(column, row));
     }
 
-    public int columnDirectedDistance(Position otherPosition) {
-        return column.directedDistance(otherPosition.column);
-    }
-
     public int columnDistance(Position otherPosition) {
         return column.distance(otherPosition.column);
     }
@@ -97,12 +93,6 @@ public class Position implements Comparable<Position> {
 
     public boolean isSameRow(final Row row) {
         return this.row == row;
-    }
-
-    public double computeUnitDirectionVector(final Position after) {
-        final int yVector = this.rowDirectedDistance(after);
-        final int xVector = this.columnDistance(after);
-        return Math.atan2(yVector, xVector);
     }
 
     public Column getColumn() {

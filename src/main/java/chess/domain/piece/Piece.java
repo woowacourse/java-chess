@@ -96,6 +96,6 @@ public abstract class Piece {
                                                   final Position nextPosition) {
         return initPosition.pathTo(nextPosition)
             .stream()
-            .allMatch(position -> isNullPiece.test(position));
+            .allMatch(isNullPiece);
     }
 }

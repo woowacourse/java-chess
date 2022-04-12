@@ -22,7 +22,7 @@ public class ChessService {
 
     private final RoomDao roomDao;
     private final BoardDao boardDao;
-    private ChessGame chessGame;
+    private final ChessGame chessGame;
 
     public ChessService(final RoomDao roomDao, final BoardDao boardDao) {
         this.roomDao = roomDao;
@@ -94,18 +94,20 @@ public class ChessService {
         if (isEndInRunning()) {
             model.put("message", "현재 게임이 종료되었습니다.");
             model.put("isRunning", false);
-            model.put("isWhite", chessGame.getCamp().isWhite());
-            model.put("status", chessGame.calculateStatus());
-            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+            putCommonInfoTo(model);
         }
+    }
+
+    private void putCommonInfoTo(final HashMap<String, Object> model) {
+        model.put("isWhite", chessGame.getCamp().isWhite());
+        model.put("status", chessGame.calculateStatus());
+        model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
     }
 
     private void processWhenRunning(final HashMap<String, Object> model) {
         if (chessGame.isRunning()) {
             setCurrentStateToModelMessage(model);
-            model.put("isWhite", chessGame.getCamp().isWhite());
-            model.put("status", chessGame.calculateStatus());
-            model.put("board", BoardDto.from(chessGame.getBoard()).getBoard());
+            putCommonInfoTo(model);
         }
     }
 
@@ -127,10 +129,6 @@ public class ChessService {
 
     public boolean isEndInGameOff() {
         return chessGame.isEndInGameOff();
-    }
-
-    public boolean isNotExistGame() {
-        return chessGame == null;
     }
 
     public HashMap<String, Object> getRooms() {

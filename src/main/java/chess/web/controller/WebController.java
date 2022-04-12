@@ -11,6 +11,7 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
@@ -22,34 +23,23 @@ public class WebController {
     }
 
     public void run() {
-        get("/", (req, res) -> render(chessService.getRooms(), "index.html"));
+        get("/", goToMainWithRooms());
         post("/room/create", this::createRoomAndRedirectIndex);
         post("/room/update/", this::updateRoomNameAndRedirectIndex);
         post("/room/delete/", this::deleteRoomAndRedirectIndex);
 
-        post("/save", (req, res) -> {
-            chessService.saveCurrentRoomAndBoard(req);
-            res.redirect("/");
-            return null;
-        });
+        post("/save", saveAndGoToMain());
+        post("/:command", this::processCommand);
+        get("/game", redirectToGameWithError());
+        post("/restart", restartGame());
+    }
 
-        post("/:command", (req, res) -> {
-            checkGameState(req, res);
-            final Map<String, Object> model = executeAndGetModel(req, res);
-            model.put("roomId", req.queryParams("roomId"));
-            return render(model, "game.html");
-        });
+    private Route goToMainWithRooms() {
+        return (req, res) -> render(chessService.getRooms(), "index.html");
+    }
 
-        //for Error Redirect
-        get("/game", (req, res) -> render(redirectWithErrorFlash(req), "game.html"));
-        //for Restart
-        post("/restart", (req, res) -> {
-            chessService.restart();
-            final Map<String, Object> model = executeAndGetModel(req, res);
-            model.put("roomId", req.queryParams("roomId"));
-
-            return render(model, "game.html");
-        });
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     private Map<String, Object> createRoomAndRedirectIndex(final Request req, final Response res) {
@@ -68,6 +58,27 @@ public class WebController {
         chessService.removeRoom(req.queryParams("roomId"));
         res.redirect("/");
         return null;
+    }
+
+    private Route saveAndGoToMain() {
+        return (req, res) -> {
+            chessService.saveCurrentRoomAndBoard(req);
+            res.redirect("/");
+            return null;
+        };
+    }
+
+    private String processCommand(final Request req, final Response res) {
+        checkGameState(res);
+        final Map<String, Object> model = executeAndGetModel(req, res);
+        model.put("roomId", req.queryParams("roomId"));
+        return render(model, "game.html");
+    }
+
+    private void checkGameState(final Response res) {
+        if (chessService.isEndInGameOff()) {
+            res.redirect("/");
+        }
     }
 
     private Map<String, Object> executeAndGetModel(final Request req, final Response res) {
@@ -93,27 +104,24 @@ public class WebController {
         return currentModel;
     }
 
-    private void checkGameState(final Request req, final Response res) {
-        if (chessService.isNotExistGame()) {
-            res.redirect("/");
-        }
-
-        if (chessService.isEndInGameOff()) {
-            res.redirect("/");
-        }
-    }
-
     private void addErrorFlashToSessionForRedirect(final Request req, final RuntimeException e) {
         Map<String, Object> error = new HashMap<>();
         error.put("hasError", true);
         error.put("errorMessage", e.getMessage());
         req.session().attribute("errorFlash", error);
-        // 추가..
-        System.err.println(">>>>> session에 넣는 roomId" + req.queryParams("roomId"));
         req.session().attribute("roomId", req.queryParams("roomId"));
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private Route restartGame() {
+        return (req, res) -> {
+            chessService.restart();
+            final Map<String, Object> model = executeAndGetModel(req, res);
+            model.put("roomId", req.queryParams("roomId"));
+            return render(model, "game.html");
+        };
+    }
+
+    private Route redirectToGameWithError() {
+        return (req, res) -> render(redirectWithErrorFlash(req), "game.html");
     }
 }
