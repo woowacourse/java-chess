@@ -1,6 +1,5 @@
 package chess.model.piece;
 
-
 import java.util.Arrays;
 
 public enum PieceType {

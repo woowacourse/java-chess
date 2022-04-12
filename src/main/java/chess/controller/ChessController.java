@@ -1,10 +1,9 @@
 package chess.controller;
 
 import chess.ChessService;
-import chess.Room;
 import chess.dto.BoardDto;
-import chess.dto.RoomsDto;
 import chess.dto.ResponseDto;
+import chess.dto.RoomsDto;
 import chess.dto.ScoreDto;
 import org.eclipse.jetty.http.HttpStatus;
 

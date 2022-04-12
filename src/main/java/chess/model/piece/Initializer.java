@@ -27,7 +27,7 @@ public class Initializer {
 
 
     private static void initMajorPieces(Color color, Rank rank, List<File> files,
-                                 Map<Square, Piece> startingMembers) {
+                                        Map<Square, Piece> startingMembers) {
         List<Piece> majorPiecesLineup = majorPiecesLineup(color);
         for (int i = 0; i < majorPiecesLineup.size(); i++) {
 
@@ -36,7 +36,7 @@ public class Initializer {
     }
 
     private static void initPawns(Color color, Rank rank, List<File> files,
-                           Map<Square, Piece> startingMembers) {
+                                  Map<Square, Piece> startingMembers) {
         for (int i = 0; i < LINE_RANGE; i++) {
             startingMembers.put(Square.of(files.get(i), rank), new Pawn(color));
         }
@@ -62,7 +62,7 @@ public class Initializer {
     }
 
     private static void fillSquareByFile(Rank rank,
-                                  Map<Square, Piece> startingMembers) {
+                                         Map<Square, Piece> startingMembers) {
         for (File file : File.values()) {
             Square square = Square.of(file, rank);
             checkEmpty(square, startingMembers);
@@ -70,7 +70,7 @@ public class Initializer {
     }
 
     private static void checkEmpty(Square square,
-                            Map<Square, Piece> startingMembers) {
+                                   Map<Square, Piece> startingMembers) {
         if (!startingMembers.containsKey(square)) {
             startingMembers.put(square, new Empty());
         }

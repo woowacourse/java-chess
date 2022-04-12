@@ -21,11 +21,11 @@ public class Square {
         this.boardId = boardId;
     }
 
-    public  Square(File file, Rank rank) {
+    public Square(File file, Rank rank) {
         this(0, file, rank, 0);
     }
 
-    public  Square(File file, Rank rank, int boardId) {
+    public Square(File file, Rank rank, int boardId) {
         this(0, file, rank, boardId);
     }
 
