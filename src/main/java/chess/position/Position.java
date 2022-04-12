@@ -82,15 +82,21 @@ public class Position {
     }
 
     private static boolean isExist(final String position, final Position cachedPositions) {
-        String substring = position.substring(0, COLUMN_END_INDEX);
-        if (substring.charAt(0) >= 97 && substring.charAt(0) <= 122) {
-            substring = String.valueOf(substring.charAt(0) - 'a' + 1);
-        }
-        final int column = Integer.parseInt(substring);
+        String columnString = position.substring(0, COLUMN_END_INDEX);
+        columnString = convertToNumberIfAlphabet(columnString);
+
+        final int column = Integer.parseInt(columnString);
         final int row = Integer.parseInt(position.substring(COLUMN_END_INDEX, ROW_END_INDEX));
 
         return cachedPositions.column == Column.of(column) &&
                 cachedPositions.row == Row.of(row);
+    }
+
+    private static String convertToNumberIfAlphabet(String alphabet) {
+        if (alphabet.charAt(0) >= 97 && alphabet.charAt(0) <= 122) {
+            alphabet = String.valueOf(alphabet.charAt(0) - 'a' + 1);
+        }
+        return alphabet;
     }
 
     private boolean isValidPosition(Position from, Position to, Direction direction) {
