@@ -7,14 +7,14 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import chess.dao.DbBoardDao;
-import chess.dao.DbGameDao;
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
-import chess.service.DbService;
+import chess.service.StorageService;
 import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
 import chess.webview.RowName;
@@ -35,12 +35,12 @@ public class WebChessController {
         port(8082);
         staticFiles.location("/public");
         ChessGame chessGame = ChessGame.create(GAME_ID);
-        DbService dbService = DbService.create(new DbGameDao(), new DbBoardDao());
+        StorageService storageService = StorageService.create(new GameDao(), new BoardDao());
 
         get("/applicationCommand", (req, res) -> {
             ApplicationCommand command = WebInputView.toApplicationCommand(req.queryParams("command"));
             if (ApplicationCommand.START.equals(command)) {
-                doStartCommand(chessGame, dbService);
+                doStartCommand(chessGame, storageService);
                 res.redirect("/board");
                 return null;
             }
@@ -49,13 +49,13 @@ public class WebChessController {
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(dbService.getChessBoardData(chessGame.getGameId())), "board.html");
+            return render(makeBoardModel(storageService.getChessBoardData(chessGame.getGameId())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
             InGameCommand command = WebInputView.toInGameCommand(req.queryParams("command"));
             if (InGameCommand.MOVE.equals(command)) {
-                doMoveCommand(req, chessGame, dbService);
+                doMoveCommand(req, chessGame, storageService);
                 return goFirstPageIfGameEnd(res, chessGame);
             }
             res.redirect("/status");
@@ -73,16 +73,16 @@ public class WebChessController {
         });
     }
 
-    private static void doStartCommand(ChessGame chessGame, DbService dbService) {
-        putDataIfStorageEmpty(chessGame.getGameId(), dbService);
-        Team turn = dbService.loadGameTurn(chessGame.getGameId());
-        Map<ChessBoardPosition, ChessPiece> mapData = dbService.getChessBoardData(chessGame.getGameId());
+    private static void doStartCommand(ChessGame chessGame, StorageService storageService) {
+        putDataIfStorageEmpty(chessGame.getGameId(), storageService);
+        Team turn = storageService.loadGameTurn(chessGame.getGameId());
+        Map<ChessBoardPosition, ChessPiece> mapData = storageService.getChessBoardData(chessGame.getGameId());
         chessGame.initialize(turn, mapData);
     }
 
-    private static void putDataIfStorageEmpty(int gameId, DbService dbService) {
-        if (!dbService.hasData(gameId)) {
-            dbService.saveInitData(gameId, Team.WHITE, ChessBoardInitLogic.initialize());
+    private static void putDataIfStorageEmpty(int gameId, StorageService storageService) {
+        if (!storageService.hasData(gameId)) {
+            storageService.saveInitData(gameId, Team.WHITE, ChessBoardInitLogic.initialize());
         }
     }
 
@@ -94,11 +94,11 @@ public class WebChessController {
         return boardModel;
     }
 
-    private static void doMoveCommand(Request req, ChessGame chessGame, DbService dbService) {
+    private static void doMoveCommand(Request req, ChessGame chessGame, StorageService storageService) {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.move(source, target);
-        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardData());
+        storageService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardData());
     }
 
     private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {

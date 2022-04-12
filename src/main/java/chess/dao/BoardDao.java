@@ -1,13 +1,15 @@
 package chess.dao;
 
-import chess.dto.GameData;
+import chess.dto.BoardData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DbGameDao {
+public class BoardDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -31,13 +33,17 @@ public class DbGameDao {
         }
     }
 
-    public void saveGame(GameData gameData) {
+    public void updateAll(int gameId, List<BoardData> boardDatas) {
+        deleteAll(gameId);
+        saveAll(gameId, boardDatas);
+    }
+
+    public void deleteAll(int gameId) {
         final Connection connection = getConnection();
-        final String sql = "insert into game (id, turn) values (?, ?)";
+        final String sql = "delete from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, gameData.getGameId());
-            statement.setString(2, gameData.getTurn());
+            statement.setInt(1, gameId);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,47 +51,44 @@ public class DbGameDao {
         }
     }
 
-    public String getTurn(int gameId) {
+    private void saveAll(int gameId, List<BoardData> boardDatas) {
+        for (BoardData boardData : boardDatas) {
+            save(gameId, boardData);
+        }
+    }
+
+    private void save(int gameId, BoardData boardData) {
         final Connection connection = getConnection();
-        final String sql = "select turn from game where id = ?";
+        final String sql = "insert into board (game_id, type, y, x) values (?, ?, ?, ?)";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, gameId);
+            statement.setString(2, boardData.getChessPieceType());
+            statement.setInt(3, boardData.getColumn());
+            statement.setInt(4, boardData.getRow());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<BoardData> findAll(int gameId) {
+        List<BoardData> boardDatas = new ArrayList<>();
+        final Connection connection = getConnection();
+        final String sql = "select * from board where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return "";
+            while (resultSet.next()) {
+                boardDatas.add(BoardData.of(resultSet.getString("type"),
+                        resultSet.getInt("y"), resultSet.getInt("x")));
             }
-            return resultSet.getString("turn");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    public void updateGameData(GameData gameData) {
-        final Connection connection = getConnection();
-        final String sql = "update game set turn = ? where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, gameData.getTurn());
-            statement.setInt(2, gameData.getGameId());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void deleteGameData(int gameId) {
-        final Connection connection = getConnection();
-        final String sql = "delete from game where id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, gameId);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return boardDatas;
     }
 }

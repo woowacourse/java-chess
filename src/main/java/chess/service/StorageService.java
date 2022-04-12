@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.dao.DbBoardDao;
-import chess.dao.DbGameDao;
+import chess.dao.BoardDao;
+import chess.dao.GameDao;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
@@ -11,39 +11,39 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DbService {
-    private final DbGameDao dbGameDao;
-    private final DbBoardDao dbBoardDao;
+public class StorageService {
+    private final GameDao gameDao;
+    private final BoardDao boardDao;
 
-    private DbService(DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        this.dbGameDao = dbGameDao;
-        this.dbBoardDao = dbBoardDao;
+    private StorageService(GameDao gameDao, BoardDao boardDao) {
+        this.gameDao = gameDao;
+        this.boardDao = boardDao;
     }
 
-    public static DbService create(DbGameDao dbGameDao, DbBoardDao dbBoardDao) {
-        return new DbService(dbGameDao, dbBoardDao);
+    public static StorageService create(GameDao gameDao, BoardDao boardDao) {
+        return new StorageService(gameDao, boardDao);
     }
 
     public Map<ChessBoardPosition, ChessPiece> getChessBoardData(int gameId) {
-        return toMapData(dbBoardDao.findAll(gameId));
+        return toMapData(boardDao.findAll(gameId));
     }
 
     public void saveDataToDb(int gameId, Team turn, Map<ChessBoardPosition, ChessPiece> mapData) {
-        dbGameDao.updateGameData(toGameData(gameId, turn));
-        dbBoardDao.updateAll(gameId, toBoardDatas(mapData));
+        gameDao.updateGameData(toGameData(gameId, turn));
+        boardDao.updateAll(gameId, toBoardDatas(mapData));
     }
 
     public Team loadGameTurn(int gameId) {
-        return Team.of(dbGameDao.getTurn(gameId));
+        return Team.of(gameDao.getTurn(gameId));
     }
 
     public void saveInitData(int gameId, Team turn, Map<ChessBoardPosition, ChessPiece> mapData) {
-        dbGameDao.saveGame(toGameData(gameId, turn));
-        dbBoardDao.updateAll(gameId, toBoardDatas(mapData));
+        gameDao.saveGame(toGameData(gameId, turn));
+        boardDao.updateAll(gameId, toBoardDatas(mapData));
     }
 
     public boolean hasData(int gameId) {
-        return !dbGameDao.getTurn(gameId).isEmpty();
+        return !gameDao.getTurn(gameId).isEmpty();
     }
 
     private GameData toGameData(int gameId, Team turn) {
