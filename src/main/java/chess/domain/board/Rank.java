@@ -36,6 +36,13 @@ public enum Rank {
         return from(Integer.parseInt(input.trim()));
     }
 
+    public static Rank fromOrdinal(String input) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.toString().equalsIgnoreCase(input))
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
+    }
+
     public static Rank from(Position position) {
         return Arrays.stream(values())
                 .filter(position::isSameRank)
@@ -82,5 +89,9 @@ public enum Rank {
         }
 
         return ranks;
+    }
+
+    public int getRankNumber() {
+        return rankNumber;
     }
 }

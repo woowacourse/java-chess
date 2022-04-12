@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="shortcut icon" href="/img/favicon.png"/>
+    <link rel="stylesheet" href="/css/button.css">
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<h1>방 번호를 입력해주세요 ♟</h1>
+<input type="number" id="gameIdInput"/>
+<div>
+    <button type="button" class="button-30" id="gameEnterButton">입장하기</button>
+</div>
+<h2></h2>
+<script>
+    document.getElementById('gameEnterButton').addEventListener('click', () => {
+        const inputGameId = Number(document.getElementById('gameIdInput').value);
+
+        if (Number.isInteger(inputGameId) && inputGameId > 0) {
+            location.href = `/game/${inputGameId}`;
+            return;
+        }
+
+        document.querySelector('h2').innerText = '양의 정수만 입력 가능합니다 😅';
+        setTimeout(() => document.querySelector('h2').innerText = '', 2000);
+    })
+</script>
 </body>
 </html>

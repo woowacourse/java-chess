@@ -13,14 +13,15 @@ public abstract class Piece {
     private static final String CAN_NOT_MOVE_TO_THE_DIRECTION = "이동할 수 없는 방향입니다";
 
     private static class Empty extends Piece {
+        public static final String EMPTY_PIECE_STRING = ".";
 
         public Empty() {
             super(Color.EMPTY);
         }
 
         @Override
-        public boolean movable(Position from, Position to, Board board) {
-            return false;
+        public MoveResult movable(Position from, Position to, Board board) {
+            return MoveResult.FAIL;
         }
 
         @Override
@@ -28,17 +29,23 @@ public abstract class Piece {
             return 0;
         }
 
+        @Override
+        public String getName() {
+            return EMPTY_PIECE_STRING;
+        }
     }
 
-    private final Color color;
+    protected final Color color;
 
     public Piece(Color color) {
         this.color = color;
     }
 
-    public abstract boolean movable(Position from, Position to, Board board);
+    public abstract MoveResult movable(Position from, Position to, Board board);
 
     public abstract double getScore();
+
+    public abstract String getName();
 
     protected void validateAngle(List<Integer> validAngles, Position from, Position to) {
         if (!validAngles.contains(angle(from, to))) {

@@ -27,4 +27,11 @@ public enum Color {
 
         return EMPTY;
     }
+
+    public static Color fromInt(int number) {
+        if (number == 0) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

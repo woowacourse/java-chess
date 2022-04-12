@@ -2,8 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.view.OutputView;
+import chess.domain.board.Rank;
 import java.util.List;
+import java.util.Map;
 
 public final class Pawn extends Piece {
     private static final List<List<Integer>> PAWN_CAPTURE_MOVE = List.of(List.of(1, 1), List.of(-1, 1));
@@ -11,28 +12,21 @@ public final class Pawn extends Piece {
     private static final List<List<Integer>> PAWN_BASIC_MOVE = List.of(List.of(0, 1));
     private static final String FAILED_TO_MOVE_PAWN = "폰 이동에 실패했습니다";
     private static final String ILLEGAL_MOVE_FOR_PAWN = "폰이 이동할 수 있는 지점이 아닙니다";
-    private static final double SCORE = 1.0;
-
-    private boolean isFirstMove = true;
+    private static final Map<Color, Symbol> SYMBOL = Map.of(
+            Color.WHITE, Symbol.PAWN_WHITE,
+            Color.BLACK, Symbol.PAWN_BLACK);
 
     public Pawn(Color color) {
         super(color);
     }
 
     @Override
-    public boolean movable(Position from, Position to, Board board) {
-        try {
-            if (isCaptureMove(from, to, board)) {
-                isFirstMove = false;
-                return true;
-            }
-            validateDistance(from, to, board);
-            isFirstMove = false;
-            return true;
-        } catch (IllegalStateException exception) {
-            OutputView.printError(exception);
-            return false;
+    public MoveResult movable(Position from, Position to, Board board) {
+        if (isCaptureMove(from, to, board)) {
+            return MoveResult.SUCCESS;
         }
+        validateDistance(from, to, board);
+        return MoveResult.SUCCESS;
     }
 
     // 1. 대각 전진 + 타겟에 상대기물 있으면 바로 true 리턴
@@ -52,7 +46,7 @@ public final class Pawn extends Piece {
     }
 
     private void validateDistance(Position from, Position to, Board board) {
-        if (isFirstMove) {
+        if (isFirstMove(from)) {
             validateFirstMove(from, to, board);
             return;
         }
@@ -83,13 +77,25 @@ public final class Pawn extends Piece {
         }
     }
 
-    @Override
-    public double getScore() {
-        return SCORE;
+    private boolean isFirstMove(Position from) {
+        if (this.isBlack()) {
+            return from.isSameRank(Rank.SEVEN);
+        }
+        return from.isSameRank(Rank.TWO);
     }
 
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return Symbol.getScore(SYMBOL.get(this.color));
+    }
+
+    @Override
+    public String getName() {
+        return Symbol.getName(SYMBOL.get(this.color));
     }
 }

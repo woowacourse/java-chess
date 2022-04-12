@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h2, h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#board {
+    margin: 0 auto;
+    width: 550px;
+    height: 550px;
+    box-shadow: 5px 5px 15px 5px gray;
+}
+
+.rank {
+    flex-direction: row;
+    display: flex;
+    height: calc(550px / 8);
+}
+
+.square {
+    flex: 1;
+    font-size: 0.3rem;
+    color: gray;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: burlywood;
+}
+
+.selected {
+    border: 5px solid pink;
+}
+
+.hasPiece {
+    cursor: pointer;
+}
+
+#board .rank:nth-child(2n -1) .square:nth-child(2n -1) {
+    background-color: antiquewhite;
+}
+
+#board .rank:nth-child(2n) .square:nth-child(2n) {
+    background-color: antiquewhite;
+}

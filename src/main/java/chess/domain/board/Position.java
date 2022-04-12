@@ -88,6 +88,10 @@ public final class Position {
         return this.rank == rank;
     }
 
+    public String getName() {
+        return file.getFileName() + rank.getRankNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

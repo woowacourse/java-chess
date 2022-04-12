@@ -81,4 +81,8 @@ public enum File {
 
         return files;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
 }
