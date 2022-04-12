@@ -7,6 +7,7 @@ import chess.dao.BoardDao;
 import chess.dao.DbBoardDao;
 import chess.dao.DbPieceDao;
 import chess.dao.PieceDao;
+import chess.dto.BoardDto;
 import chess.dto.PieceDto;
 import chess.game.Board;
 import chess.game.Game;
@@ -63,23 +64,24 @@ public class ChessService {
         return !game.isFinished();
     }
 
+    public BoardDto getBoard() {
+        final int boardId = boardDao.findLastlyUsedBoard();
+        final Map<Position, Piece> pieces = pieceDao.findAllByBoardId(boardId);
+        return BoardDto.toDto(pieces);
+    }
+
     public Map<Color, Double> getResult() {
-        final Board board = Board.of(getBoard());
+        final Board board = Board.of(getPieces());
         return board.createBoardScore();
     }
 
-    public Map<Position, Piece> getBoard() {
-        final int boardId = boardDao.findLastlyUsedBoard();
-        return pieceDao.findAllByBoardId(boardId);
-    }
-
     public Result getStatusResult() {
-        final Board board = Board.of(getBoard());
+        final Board board = Board.of(getPieces());
         return new Result(board.createBoardScore(), getWinningColor());
     }
 
     public Result getFinalResult() {
-        final Board board = Board.of(getBoard());
+        final Board board = Board.of(getPieces());
 
         return new Result(board.createBoardScore(), getWinnerColor());
     }
@@ -122,6 +124,10 @@ public class ChessService {
         pieceDao.saveAll(boardId, game.getBoard().getValue());
     }
 
+    private Map<Position, Piece> getPieces() {
+        final int boardId = boardDao.findLastlyUsedBoard();
+        return pieceDao.findAllByBoardId(boardId);
+    }
 
     private void update(final int boardId, final Game game, final List<String> splitInput) {
         final Map<Position, Piece> value = game.getBoard().getValue();

@@ -31,7 +31,7 @@ public class GameController {
     }
 
     public ModelAndView printBoard(final Request request, final Response response) {
-        final BoardDto boardDto = BoardDto.toDto(chessService.getBoard());
+        final BoardDto boardDto = chessService.getBoard();
         Map<String, Object> model = new HashMap<>();
         model.put("board", boardDto);
         return new ModelAndView(model, "index.html");
