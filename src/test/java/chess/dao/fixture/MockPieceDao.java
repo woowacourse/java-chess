@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MockPieceDao implements PieceDao {
 
-    private final Map<Map<Integer, Integer>, PieceDto> piece = new HashMap<>();
+    private Map<Map<Integer, Integer>, PieceDto> piece = new HashMap<>();
 
     @Override
     public void save(final int boardId, final PieceDto pieceDto) {
@@ -70,8 +70,41 @@ public class MockPieceDao implements PieceDao {
                 ));
     }
 
+    @Override
+    public void updatePieceByPosition(final int boardId, final String from, final PieceDto dto) {
+        final Map<Integer, Integer> key = piece.entrySet().stream()
+                .filter(entry -> entry.getValue().getPosition().equals(from))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        piece.put(key, dto);
+
+    }
+
+    @Override
+    public void deletePieceByPosition(final int boardId, final String to) {
+        final Map<Integer, Integer> key = piece.entrySet().stream()
+                .filter(entry -> entry.getValue().getPosition().equals(to))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        piece.remove(key);
+    }
+
     public Map<Map<Integer, Integer>, PieceDto> getPiece() {
         return piece;
+    }
+
+    public PieceDto getPieceDtoByKey(String position) {
+        final Map<Integer, Integer> key = piece.entrySet().stream()
+                .filter(entry -> entry.getValue().getPosition().equals(position))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        return piece.get(key);
     }
 
     private Piece getPiece(final String name) {

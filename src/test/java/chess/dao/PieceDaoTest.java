@@ -7,6 +7,7 @@ import chess.dao.fixture.MockPieceDao;
 import chess.dto.PieceDto;
 import chess.game.Board;
 import chess.piece.Bishop;
+import chess.piece.King;
 import chess.piece.Piece;
 import chess.piece.detail.Color;
 import chess.position.Position;
@@ -49,6 +50,39 @@ class PieceDaoTest {
         pieceDao.saveAll(boardId, value);
 
         assertThat(pieceDao.findAllByBoardId(boardId).size()).isEqualTo(value.size());
+    }
+
+    @Test
+    void deletePieceByPosition() {
+        final MockPieceDao pieceDao = new MockPieceDao();
+        final BoardDao boardDao = new MockBoardDao();
+        final Map<Position, Piece> value = Board.create().getValue();
+        boardDao.save(Color.WHITE);
+        final int boardId = boardDao.findLastlyUsedBoard();
+        pieceDao.saveAll(boardId, value);
+
+        pieceDao.deletePieceByPosition(boardId, "12");
+        final int expected = value.size() - 1;
+
+        assertThat(pieceDao.findAllByBoardId(boardId).size()).isEqualTo(expected);
+    }
+
+    @Test
+    void updatePieceByPosition() {
+        final MockPieceDao pieceDao = new MockPieceDao();
+        final BoardDao boardDao = new MockBoardDao();
+        final Map<Position, Piece> value = Board.create().getValue();
+        boardDao.save(Color.WHITE);
+        final int boardId = boardDao.findLastlyUsedBoard();
+        pieceDao.saveAll(boardId, value);
+        final Piece pieceKing = new King(Color.BLACK);
+        final PieceDto pieceDto = PieceDto.toDto(pieceKing, Position.of("e7"));
+
+        pieceDao.deletePieceByPosition(boardId, "57");
+        pieceDao.updatePieceByPosition(boardId, "58", pieceDto);
+
+        final PieceDto resultPieceDto = pieceDao.getPieceDtoByKey("57");
+        assertThat(resultPieceDto.getName()).isEqualTo("BLACK-KING");
     }
 
     @Test
