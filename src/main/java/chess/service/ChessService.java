@@ -49,10 +49,6 @@ public class ChessService {
         Piece sourcePiece = chessGame.getBoard().findPiece(Position.valueOf(source));
         chessGame.movePiece(source, target);
         boardDao.updateBoardSquare(source, target, sourcePiece.representative(), sourcePiece.getColorName());
-        if (chessGame.isFinish()) {
-            stateDao.updateState(chessGame.getState(), Color.NONE.name());
-            return;
-        }
         stateDao.updateState(chessGame.getState(), chessGame.getTurn().name());
     }
 

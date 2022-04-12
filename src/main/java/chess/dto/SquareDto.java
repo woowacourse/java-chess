@@ -5,27 +5,27 @@ import chess.domain.position.Position;
 
 public class SquareDto {
 
-    private final Position position;
-    private Piece piece;
+    private final String position;
+    private String piece;
     private String pieceName;
     private String pieceColor;
 
     public SquareDto(final Position position) {
-        this.position = position;
+        final String fileName = position.getFile().name().toLowerCase();
+        final int rankName = position.getRank().getValue();
+        this.position = fileName + rankName;
     }
 
     public SquareDto(final Position position, final Piece piece) {
-        this.position = position;
-        this.piece = piece;
+        final String fileName = position.getFile().name().toLowerCase();
+        final int rankName = position.getRank().getValue();
+        this.position = fileName + rankName;
+        this.piece = piece.representative();
         this.pieceName = piece.representative().toUpperCase();
         this.pieceColor = piece.getColorName();
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public Piece getPiece() {
+    public String getPiece() {
         return piece;
     }
 
