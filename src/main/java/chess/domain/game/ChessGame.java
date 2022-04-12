@@ -19,7 +19,11 @@ public class ChessGame {
         state = new Waiting();
     }
 
-    public void start(Map<Position, Piece> pieces, Color color) {
+    public ChessGame(final GameState gameState) {
+        state = gameState;
+    }
+
+    public void start(final Map<Position, Piece> pieces, final Color color) {
         final Board board = new Board(pieces);
         state = new Running(board, color);
     }
