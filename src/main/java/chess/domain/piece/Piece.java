@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,7 +15,7 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public Piece transfer(Position to, List<Piece> pieces) {
+    public Piece transfer(Position to, Collection<Piece> pieces) {
         if (position.equals(to)) {
             throw new IllegalArgumentException("동일한 위치로 기물을 움직일 수 없습니다.");
         }
@@ -31,7 +30,7 @@ public abstract class Piece {
         return createNewPiece(to);
     }
 
-    private boolean hasObstacleBetweenPositions(Position to, List<Piece> pieces) {
+    private boolean hasObstacleBetweenPositions(Position to, Collection<Piece> pieces) {
         if (!position.hasLinearPath(to)) {
             return false;
         }
@@ -40,7 +39,7 @@ public abstract class Piece {
             .anyMatch(position -> hasPieceByPosition(position, pieces));
     }
 
-    private boolean hasSameColorTargetPiece(Position to, List<Piece> pieces) {
+    private boolean hasSameColorTargetPiece(Position to, Collection<Piece> pieces) {
         if (!hasPieceByPosition(to, pieces)) {
             return false;
         }
@@ -49,14 +48,14 @@ public abstract class Piece {
         return isSameColor(targetPiece.getColor());
     }
 
-    private Piece findPieceByPosition(Position position, List<Piece> pieces) {
+    private Piece findPieceByPosition(Position position, Collection<Piece> pieces) {
         return pieces.stream()
             .filter(piece -> piece.isSamePosition(position))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
     }
 
-    private boolean hasPieceByPosition(Position position, List<Piece> pieces) {
+    private boolean hasPieceByPosition(Position position, Collection<Piece> pieces) {
         return pieces.stream()
             .anyMatch(piece -> piece.isSamePosition(position));
     }
@@ -77,16 +76,8 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
-    public boolean isSameFile(File file) {
-        return position.isSameFile(file);
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
+    public boolean isSameFile(Column column) {
+        return position.isSameFile(column);
     }
 
     @Override
@@ -115,7 +106,9 @@ public abstract class Piece {
 
     protected abstract Piece createNewPiece(Position to);
 
-    protected abstract boolean isPossibleMovement(Position to, List<Piece> pieces);
+    protected abstract boolean isPossibleMovement(Position to, Collection<Piece> pieces);
 
-    public abstract BigDecimal getPoint();
+    public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 }

@@ -8,10 +8,11 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
-import chess.domain.position.Position;
+import chess.domain.position.ChessBoardPosition;
 import chess.domain.state.Ready;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +60,7 @@ class ChessGameTest {
     @DisplayName("승자를 정상적으로 가져오는지 확인")
     void winner() {
         ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
-            List.of(new King(Color.WHITE, Position.from("a1"))))));
+            List.of(new King(Color.WHITE, ChessBoardPosition.from("a1"))))));
 
         chessGame.start();
         chessGame.execute(Command.from("move a1 a2"));
@@ -71,16 +72,16 @@ class ChessGameTest {
     @DisplayName("점수를 정상적으로 가져오는지 확인")
     void score() {
         ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
-            List.of(new Rook(Color.WHITE, Position.from("e5")),
-                new Knight(Color.WHITE, Position.from("e6")),
-                new Knight(Color.WHITE, Position.from("e7")),
-                new Bishop(Color.BLACK, Position.from("a7")),
-                new Bishop(Color.BLACK, Position.from("a8"))))));
+            List.of(new Rook(Color.WHITE, ChessBoardPosition.from("e5")),
+                new Knight(Color.WHITE, ChessBoardPosition.from("e6")),
+                new Knight(Color.WHITE, ChessBoardPosition.from("e7")),
+                new Bishop(Color.BLACK, ChessBoardPosition.from("a7")),
+                new Bishop(Color.BLACK, ChessBoardPosition.from("a8"))))));
 
         chessGame.start();
         Score score = chessGame.score();
 
-        assertThat(score.getBlackScore()).isEqualTo(new BigDecimal("6.0"));
-        assertThat(score.getWhiteScore()).isEqualTo(new BigDecimal("10.0"));
+        assertThat(score.getBlackScore()).isEqualTo(6.0);
+        assertThat(score.getWhiteScore()).isEqualTo(10.0);
     }
 }

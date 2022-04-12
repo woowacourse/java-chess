@@ -1,0 +1,78 @@
+h1 {
+  color:#333d79;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+button {
+  background:#e09a2b;
+  color:#fcf6f5;
+  border:none;
+  position:relative;
+  height:40px;
+  font-size:1.3em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: -2vw;
+  margin-left: 57vw;
+}
+
+body {
+  background-color:#fcf6f5;
+}
+
+.score {
+  color: black;
+  font-size: 1.2em;
+  display: flex;
+  margin-left: 32vw;
+}
+
+.turnMessage {
+  color:#333d79;
+  font-size: 1.1em;
+  display: flex;
+  margin-left: 16vw;
+  margin-top: 0.5vw;
+}
+
+.chessBoard {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #000000;
+  margin: auto;
+  width: 35vw;
+  height: 35vw;
+}
+
+.boardRow {
+  width: 100%;
+  height: 12.5%;
+  display: flex;
+  flex-direction: row;
+}
+
+.boardColumn {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.boardRow > .boardColumn > img {
+  width: 100%;
+  height: 100%;
+}
+
+.clicked {
+  background-color: #fce77d !important;
+}

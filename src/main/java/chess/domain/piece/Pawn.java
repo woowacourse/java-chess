@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 public class Pawn extends Piece {
 
@@ -20,7 +19,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         if (!isForward(to)) {
             return false;
         }
@@ -56,12 +55,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return BigDecimal.ONE;
+    public boolean isPawn() {
+        return true;
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public boolean isKing() {
+        return false;
     }
 }

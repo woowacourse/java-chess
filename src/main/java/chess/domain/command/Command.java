@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.position.Position;
+import chess.domain.position.ChessBoardPosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,13 @@ public class Command {
         return new Command(commandType, positions);
     }
 
+    public static Command move(String from, String to) {
+        List<String> positions = new ArrayList<>();
+        positions.add(from);
+        positions.add(to);
+        return new Command(CommandType.MOVE, positions);
+    }
+
     public boolean isStart() {
         return commandType == CommandType.START;
     }
@@ -53,10 +61,10 @@ public class Command {
     }
 
     public Position from() {
-        return Position.from(commandArguments.get(POSITION_FROM));
+        return ChessBoardPosition.from(commandArguments.get(POSITION_FROM));
     }
 
     public Position to() {
-        return Position.from(commandArguments.get(POSITION_TO));
+        return ChessBoardPosition.from(commandArguments.get(POSITION_TO));
     }
 }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.position.Position;
+import chess.domain.position.ChessBoardPosition;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class GameEndTest {
     @Test
     @DisplayName("move 메서드 호출 시 예외 발생")
     void throwExceptionCallMove() {
-        assertThatThrownBy(() -> gameEnd.move(Position.from("e5"), Position.from("e6")))
+        assertThatThrownBy(() -> gameEnd.move(ChessBoardPosition.from("e5"), ChessBoardPosition.from("e6")))
             .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -63,7 +63,7 @@ class GameEndTest {
     @DisplayName("winner 호출 시 정상적으로 우승자 반환")
     void winner() {
         GameEnd gameEnd = new GameEnd(new ChessBoard(
-            List.of(new King(Color.WHITE, Position.from("a1")))), Color.WHITE);
+            List.of(new King(Color.WHITE, ChessBoardPosition.from("a1")))), Color.WHITE);
 
         assertThat(gameEnd.winner()).isEqualTo(Color.WHITE);
     }

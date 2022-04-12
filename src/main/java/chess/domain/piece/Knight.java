@@ -1,12 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 public class Knight extends Piece {
 
-    private static final String KING_SCORE = "2.5";
     private static final int MOVE_ONE_STEP_RULE = 1;
     private static final int MOVE_TWO_STEP_RULE = 2;
 
@@ -20,7 +18,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         int horizontalDistance = getPosition().getHorizontalDistance(to);
         int verticalDistance = getPosition().getVerticalDistance(to);
         return (horizontalDistance == MOVE_ONE_STEP_RULE && verticalDistance == MOVE_TWO_STEP_RULE) ||
@@ -28,7 +26,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return new BigDecimal(KING_SCORE);
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 }

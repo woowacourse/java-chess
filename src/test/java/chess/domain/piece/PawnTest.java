@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import static chess.domain.position.File.*;
-import static chess.domain.position.File.E;
-import static chess.domain.position.Rank.*;
+import static chess.domain.position.Column.*;
+import static chess.domain.position.Column.E;
+import static chess.domain.position.Row.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;

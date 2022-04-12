@@ -2,21 +2,21 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-
-    public static final String SAME_FILE_PAWN_SCORE = "0.5";
 
     private final Map<Position, Piece> board;
 
     public ChessBoard(List<Piece> pieces) {
         this.board = pieces.stream()
             .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
+    }
+
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public static ChessBoard createChessBoard() {
@@ -61,38 +61,8 @@ public class ChessBoard {
             .anyMatch(piece -> piece.isSameColor(color));
     }
 
-    public List<Piece> getPieces() {
-        return new ArrayList<>(board.values());
-    }
-
-    public BigDecimal getScore(Color color) {
-        return getDefaultScore(color).subtract(getDeductionOfPawn(color));
-    }
-
-    private BigDecimal getDefaultScore(Color color) {
-        return getPieces().stream()
-            .filter(piece -> piece.isSameColor(color))
-            .map(Piece::getPoint)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private BigDecimal getDeductionOfPawn(Color color) {
-        return new BigDecimal(SAME_FILE_PAWN_SCORE).multiply(new BigDecimal(numberOfPawn(color)));
-    }
-
-    private long numberOfPawn(Color color) {
-        return Arrays.stream(File.values())
-            .mapToLong(file -> numberOfPawnEachFile(color, file))
-            .filter(numberOfPawn -> numberOfPawn > 1)
-            .sum();
-    }
-
-    private long numberOfPawnEachFile(Color color, File file) {
-        return getPieces().stream()
-            .filter(Piece::isPawn)
-            .filter(piece -> piece.isSameColor(color))
-            .filter(piece -> piece.isSameFile(file))
-            .count();
+    public Collection<Piece> getPieces() {
+        return board.values();
     }
 
     public Color getWinner() {
@@ -103,5 +73,9 @@ public class ChessBoard {
             return Color.WHITE;
         }
         return Color.BLACK;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }

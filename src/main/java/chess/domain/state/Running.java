@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 public class Running extends ChessGameState {
 
-    protected Running(ChessBoard chessBoard, Color color) {
+    public Running(ChessBoard chessBoard, Color color) {
         super(chessBoard, color);
     }
 

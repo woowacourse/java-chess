@@ -1,10 +1,10 @@
 package console.view;
 
+import chess.domain.piece.Symbol;
 import chess.domain.board.ChessBoard;
 import chess.domain.game.Score;
 import chess.domain.piece.*;
 import chess.domain.position.*;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class OutputView {
@@ -26,29 +26,29 @@ public class OutputView {
         printChessBoard(chessBoard.getPieces());
     }
 
-    private static void printChessBoard(List<Piece> pieces) {
-        for (Rank rank : Rank.orderedValues()) {
-            printEachColumn(pieces, rank);
+    private static void printChessBoard(Collection<Piece> pieces) {
+        for (Row row : Row.reversOrderedValues()) {
+            printEachColumn(pieces, row);
         }
         System.out.println();
     }
 
-    private static void printEachColumn(List<Piece> pieces, Rank rank) {
-        for (File file : File.orderedValues()) {
-            printEachRow(pieces, rank, file);
+    private static void printEachColumn(Collection<Piece> pieces, Row row) {
+        for (Column column : Column.orderedValues()) {
+            printEachRow(pieces, row, column);
         }
         System.out.println();
     }
 
-    private static void printEachRow(List<Piece> pieces, Rank rank, File file) {
-        Position position = new Position(file, rank);
+    private static void printEachRow(Collection<Piece> pieces, Row row, Column column) {
+        Position position = new Position(column, row);
         Optional<Piece> pieceOptional = findByPosition(pieces, position);
         pieceOptional.ifPresentOrElse(
             piece -> System.out.print(pieceSymbol(piece)),
             () -> System.out.print(BLANK));
     }
 
-    private static Optional<Piece> findByPosition(List<Piece> pieces, Position position) {
+    private static Optional<Piece> findByPosition(Collection<Piece> pieces, Position position) {
         return pieces.stream()
             .filter(piece -> piece.isSamePosition(position))
             .findFirst();
@@ -62,10 +62,8 @@ public class OutputView {
     }
 
     public static void printScores(Score score) {
-        BigDecimal whiteScore = score.getWhiteScore();
-        BigDecimal blackScore = score.getBlackScore();
-        System.out.printf("WHITE 점수: %s %n", whiteScore.toPlainString());
-        System.out.printf("BLACK 점수: %s %n", blackScore.toPlainString());
+        System.out.printf("WHITE 점수: %s %n", score.getWhiteScore());
+        System.out.printf("BLACK 점수: %s %n", score.getBlackScore());
     }
 
     public static void printWinner(Color winnerColor) {

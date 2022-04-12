@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 public class King extends Piece {
 
@@ -16,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Collection<Piece> pieces) {
         return getPosition().isAdjacent(to);
     }
 
@@ -26,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    public BigDecimal getPoint() {
-        return BigDecimal.ZERO;
+    public boolean isPawn() {
+        return false;
     }
 }

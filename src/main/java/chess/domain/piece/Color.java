@@ -1,16 +1,26 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 
 public enum Color {
 
-    BLACK(Rank.SEVEN), WHITE(Rank.TWO);
+    BLACK(Row.SEVEN), WHITE(Row.TWO);
 
-    private final Rank rankOfStartPawn;
+    private final Row rowOfStartPawn;
 
-    Color(Rank rankOfStartPawn) {
-        this.rankOfStartPawn = rankOfStartPawn;
+    Color(Row rowOfStartPawn) {
+        this.rowOfStartPawn = rowOfStartPawn;
+    }
+
+    public static Color from(String color) {
+        if (color.equals(WHITE.name())) {
+            return WHITE;
+        }
+        if (color.equals(BLACK.name())) {
+            return BLACK;
+        }
+        throw new IllegalArgumentException("해당 색깔은 존재하지 않습니다.");
     }
 
     public boolean isForward(Position from, Position to) {
@@ -28,6 +38,6 @@ public enum Color {
     }
 
     public boolean isStartPawnPosition(Position position) {
-        return position.isSameRank(rankOfStartPawn);
+        return position.isSameRow(rowOfStartPawn);
     }
 }

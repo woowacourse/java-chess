@@ -1,11 +1,10 @@
 package chess.domain.board;
 
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
+import static chess.domain.position.Column.*;
+import static chess.domain.position.Row.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import java.math.BigDecimal;
@@ -158,46 +157,6 @@ class ChessBoardTest {
         assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
             new Pawn(Color.WHITE, new Position(E, FIVE))
         );
-    }
-
-    @Test
-    @DisplayName("기물들 기본 점수 계산")
-    void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
-                new Rook(Color.WHITE, new Position(D, FIVE)),
-                new Bishop(Color.WHITE, new Position(D, SIX)),
-                new Knight(Color.WHITE, new Position(D, SEVEN)),
-                new Queen(Color.WHITE, new Position(D, EIGHT)),
-                new King(Color.WHITE, new Position(D, ONE)),
-                new Pawn(Color.BLACK, new Position(E, EIGHT)),
-                new Rook(Color.BLACK, new Position(E, THREE)),
-                new Bishop(Color.BLACK, new Position(E, SEVEN)),
-                new Knight(Color.BLACK, new Position(E, SIX)),
-                new Queen(Color.BLACK, new Position(E, FIVE)),
-                new King(Color.BLACK, new Position(E, FOUR))));
-
-        assertAll(() -> {
-            assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(new BigDecimal("20.5"));
-            assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(new BigDecimal("20.5"));
-        });
-    }
-
-    @Test
-    @DisplayName("동일한 기물들 기본 점수 계산")
-    void calculateSameFilePawnScore() {
-        ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
-                new Pawn(Color.WHITE, new Position(D, FIVE)),
-                new Pawn(Color.WHITE, new Position(D, SIX)),
-                new Rook(Color.WHITE, new Position(D, SEVEN)),
-                new Pawn(Color.BLACK, new Position(D, THREE)),
-                new Pawn(Color.BLACK, new Position(E, THREE))));
-
-        assertAll(() -> {
-            assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(new BigDecimal("6.5"));
-            assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(new BigDecimal("2.0"));
-        });
     }
 
     @Test
