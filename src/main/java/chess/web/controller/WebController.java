@@ -32,9 +32,9 @@ public class WebController {
         post("/room/delete/", this::deleteRoomAndRedirectIndex);
 
         post("/save", saveAndGoToMain());
+        post("/restart", restartGame());
         post("/:command", this::processCommand);
         get("/game", redirectToGameWithError());
-        post("/restart", restartGame());
     }
 
     private Route goToMainWithRooms() {
@@ -117,9 +117,10 @@ public class WebController {
 
     private Route restartGame() {
         return (req, res) -> {
+            final String roomId = req.queryParams("roomId");
             chessService.restart();
             final Map<String, Object> model = executeAndGetModel(req, res);
-            model.put("roomId", req.queryParams("roomId"));
+            model.put("roomId", roomId);
             return render(model, "game.html");
         };
     }

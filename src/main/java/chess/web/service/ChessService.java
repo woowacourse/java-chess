@@ -34,6 +34,7 @@ public class ChessService {
         if (chessGame.isEndInGameOff()) {
             chessGame.gameSwitchOn();
         }
+
         chessGame.run();
     }
 
@@ -131,7 +132,7 @@ public class ChessService {
         return chessGame.isEndInGameOff();
     }
 
-    public HashMap<String, Object> getRooms() {
+    public Map<String, Object> getRooms() {
         return new HashMap(Map.of("rooms", roomDao.findAll()));
     }
 
