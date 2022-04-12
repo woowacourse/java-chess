@@ -43,11 +43,6 @@ public class ChessService {
     }
 
     public Board ready(int gameId) {
-        String state = chessGameDao.findById(gameId);
-        if (state == null) {
-            ChessGame chessGame = new Ready();
-            return chessGame.getBoard();
-        }
         ChessGame chessGame = getChessGame(gameId);
         return chessGame.getBoard();
     }
@@ -63,10 +58,6 @@ public class ChessService {
             return new WhiteTurn(board);
         }
         return new Ready();
-    }
-
-    private boolean isEnded(String state) {
-        return state.equals(TERMINATE) || state.equals(COMPLETE);
     }
 
     public Board start(int gameId) {

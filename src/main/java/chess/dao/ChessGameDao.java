@@ -44,22 +44,6 @@ public class ChessGameDao {
         }
     }
 
-    public int findRecentGame() {
-        final String sql = "select id from game order by id desc limit 1";
-        try (final Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-            if (!resultSet.next()) {
-                return 0;
-            }
-            return resultSet.getInt("id");
-
-        } catch (SQLException e) {
-            logger.warn(e.getMessage());
-        }
-        return 0;
-    }
-
     public void update(int id, ChessGame chessGame) {
         final String sql = "update game set state = ? where id = ?";
         try (Connection connection = getConnection();
