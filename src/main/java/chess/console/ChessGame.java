@@ -1,13 +1,11 @@
 package chess.console;
 
-import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.Camp;
 import chess.domain.GameSwitch;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
-import chess.domain.command.GameCommand;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;
@@ -22,35 +20,6 @@ public class ChessGame {
     public ChessGame() {
         state = new Ready();
         gameSwitch = GameSwitch.ON;
-    }
-
-    public void start() {
-        OutputView.printStartMessage();
-        while (gameSwitch.isOn()) {
-            playGame();
-            checkKingState();
-        }
-    }
-
-    private void playGame() {
-        final String command = InputView.inputCommand();
-        final GameCommand gameCommand = GameCommand.from(command);
-        gameCommand.execute(command, this, printBoardInfoToState());
-    }
-
-    private void checkKingState() {
-        if (!isRunning()) {
-            return;
-        }
-        if (isKingChecked()) {
-            OutputView.printKingCheckedMessage();
-            return;
-        }
-
-        final List<Position> kingCheckmatedPositions = state.getKingCheckmatedPositions();
-        if (isAnyMovablePositionKingCheckmated(kingCheckmatedPositions)) {
-            checkAllKingCheckMated(kingCheckmatedPositions);
-        }
     }
 
     public boolean isAnyMovablePositionKingCheckmated(final List<Position> positions) {
@@ -119,23 +88,6 @@ public class ChessGame {
         state = state.end();
     }
 
-    private Runnable printBoardInfoToState() {
-        return () -> {
-            if (isRunning()) {
-                OutputView.printBoard(getBoard());
-            }
-            if (isStatusInRunning()) {
-                OutputView.printStatus(calculateStatus());
-            }
-            if (isEndInRunning()) {
-                OutputView.printFinalStatus(calculateStatus());
-            }
-            if (isEndInGameOff()) {
-                OutputView.printEndMessage();
-            }
-        };
-    }
-
     public boolean isStatusInRunning() {
         if (isEndInGameOff()) {
             return false;
@@ -172,5 +124,9 @@ public class ChessGame {
 
     public void changeBoard(final Map<Position, Piece> board, final String camp) {
         state.changeBoard(board, camp);
+    }
+
+    public List<Position> getKingCheckmatedPositions() {
+        return state.getKingCheckmatedPositions();
     }
 }
