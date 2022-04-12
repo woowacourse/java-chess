@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Rook extends LinearMovePiece {
     public Rook(Color color) {
-        super(color, PieceType.Rook);
+        super(color, PieceType.ROOK);
     }
 
     @Override

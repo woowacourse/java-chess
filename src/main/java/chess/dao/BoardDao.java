@@ -16,13 +16,14 @@ public class BoardDao {
     public void saveBoard(BoardDto boardDto) throws SQLException {
         Objects.requireNonNull(boardDto);
         Connection connection = getConnection();
-        String query = "INSERT INTO chessboard VALUES (?, ?, ?)";
+        String query = "INSERT INTO chessboard VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         for (GridDto grid : boardDto.getBoard()) {
             pstmt.setString(1, grid.getPosition());
-            pstmt.setString(2, grid.getPiece());
-            pstmt.setInt(3, grid.getMoveCount());
+            pstmt.setString(2, grid.getPieceType());
+            pstmt.setString(3, grid.getColor());
+            pstmt.setInt(4, grid.getMoveCount());
             pstmt.addBatch();
         }
 
@@ -56,7 +57,7 @@ public class BoardDao {
         try (connection; stmt; rs) {
             while (rs.next()) {
                 Position position = Position.of(rs.getString("position"));
-                Piece piece = PieceFactory.of(rs.getString("piece"), rs.getInt("moveCount"));
+                Piece piece = PieceFactory.of(rs.getString("pieceType"), rs.getString("color"), rs.getInt("moveCount"));
                 chessBoard.put(position, piece);
             }
         } catch (SQLException e) {

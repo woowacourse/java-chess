@@ -47,7 +47,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'get',
             url: '/move',
-            dataType:  'json',
+            dataType: 'json',
             data: "from=" + from + "&to=" + to,
             error: function (res) {
                 alert(res.responseText);
@@ -69,8 +69,9 @@ function printChessBoardAndStatus(response) {
 
     chessBoardDto['grids'].forEach(function (item) {
         var piece = document.createElement("img");
-        piece.src = "../img/piece/" + item.piece + ".png";
-        piece.id = item.piece;
+        var pieceName = item.pieceType + item.color;
+        piece.src = "../img/piece/" + pieceName + ".png";
+        piece.id = pieceName;
         piece.className = "piece";
         $("#" + item.position).append(piece);
     });
@@ -78,14 +79,14 @@ function printChessBoardAndStatus(response) {
     let scores = response["result"]["scores"];
     scores.forEach(function (item) {
         if (item.color == "WHITE") {
-            $("#white-score").text(item.score+" pt");
+            $("#white-score").text(item.score + " pt");
         }
         if (item.color == "BLACK") {
-            $("#black-score").text(item.score+" pt");
+            $("#black-score").text(item.score + " pt");
         }
     });
 
     let turn = response["turn"];
-    $("#turn").text(turn+"  Turn");
+    $("#turn").text(turn + "  Turn");
 
 }

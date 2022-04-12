@@ -11,14 +11,20 @@ public abstract class Piece {
     protected final PieceType pieceType;
     protected int moveCount;
 
-    public Piece(Color color, PieceType pieceType){
+    public Piece(Color color, PieceType pieceType) {
         this.color = color;
         this.pieceType = pieceType;
         this.moveCount = 0;
     }
 
-    public Piece setMoveCount(int moveCount) {
-        this.moveCount = moveCount;
+    public Piece(Piece piece, int moveCount) {
+        this.color = piece.color;
+        this.pieceType = piece.pieceType;
+        this.moveCount=moveCount;
+    }
+
+    public Piece setMoveCount(int moveCount){
+        this.moveCount=moveCount;
         return this;
     }
 
@@ -67,8 +73,12 @@ public abstract class Piece {
 
     public abstract double score();
 
-    public String getPieceName() {
-        return (pieceType.name() + color.name()).toLowerCase();
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor(){
+        return color;
     }
 
     public int getMoveCount() {
