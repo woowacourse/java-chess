@@ -92,11 +92,14 @@ public class ChessService {
         if (values.size() == 1) {
             return Color.NONE;
         }
-        final Optional<Map.Entry<Color, Double>> max = result.entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue());
 
-        return max.get().getKey();
+        final Color winningColor = result.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElseThrow(() -> new NoSuchElementException("결과가 존재하지 않습니다."));
+
+        return winningColor;
     }
 
     public Color getWinnerColor() {
