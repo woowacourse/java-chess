@@ -15,7 +15,7 @@ class ChessBoardTest {
         ChessBoardPosition source = ChessBoardPosition.of(1, 2);
         ChessBoardPosition target = ChessBoardPosition.of(1, 4);
         chessBoard.move(source, target);
-        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoard.getMapInformation();
+        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoard.getBoardData();
         assertThat(!mapInfo.containsKey(source) && mapInfo.containsKey(target)).isTrue();
     }
 
@@ -53,7 +53,7 @@ class ChessBoardTest {
         chessBoard.move(ChessBoardPosition.of(1, 2), ChessBoardPosition.of(1, 4));
         chessBoard.move(ChessBoardPosition.of(2, 7), ChessBoardPosition.of(2, 5));
         chessBoard.move(ChessBoardPosition.of(1, 4), ChessBoardPosition.of(2, 5));
-        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoard.getMapInformation();
+        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoard.getBoardData();
         assertThat(mapInfo.keySet().size() == 31
                 && chessBoard.pickChessPiece(ChessBoardPosition.of(2, 5))
                 .isSameTeam(Team.WHITE)).isTrue();

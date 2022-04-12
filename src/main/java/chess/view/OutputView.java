@@ -38,16 +38,16 @@ public class OutputView {
         }
     }
 
-    private static void printRow(Map<ChessBoardPosition, ChessPiece> mapInformation, int row) {
+    private static void printRow(Map<ChessBoardPosition, ChessPiece> boardData, int row) {
         for (int column : columns) {
-            printSector(mapInformation, row, column);
+            printSector(boardData, row, column);
         }
     }
 
-    private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, int column) {
+    private static void printSector(Map<ChessBoardPosition, ChessPiece> boardData, int row, int column) {
         ChessBoardPosition target = ChessBoardPosition.of(column, row);
-        if (mapInformation.containsKey(target)) {
-            printChessPiece(mapInformation.get(target));
+        if (boardData.containsKey(target)) {
+            printChessPiece(boardData.get(target));
             return;
         }
         System.out.print(EMPTY_SPACE);

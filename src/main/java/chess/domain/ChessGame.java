@@ -20,8 +20,8 @@ public class ChessGame {
         this.chessBoard = ChessBoard.initialize(turn, boardData);
     }
 
-    public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation() {
-        return chessBoard.getMapInformation();
+    public Map<ChessBoardPosition, ChessPiece> getChessBoardData() {
+        return chessBoard.getBoardData();
     }
 
     public boolean isGameEnd() {

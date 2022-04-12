@@ -49,7 +49,7 @@ public class WebChessController {
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(dbService.getChessBoardInformation(chessGame.getGameId())), "board.html");
+            return render(makeBoardModel(dbService.getChessBoardData(chessGame.getGameId())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
@@ -76,7 +76,7 @@ public class WebChessController {
     private static void doStartCommand(ChessGame chessGame, DbService dbService) {
         putDataIfStorageEmpty(chessGame.getGameId(), dbService);
         Team turn = dbService.loadGameTurn(chessGame.getGameId());
-        Map<ChessBoardPosition, ChessPiece> mapData = dbService.getChessBoardInformation(chessGame.getGameId());
+        Map<ChessBoardPosition, ChessPiece> mapData = dbService.getChessBoardData(chessGame.getGameId());
         chessGame.initialize(turn, mapData);
     }
 
@@ -98,7 +98,7 @@ public class WebChessController {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.move(source, target);
-        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
+        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardData());
     }
 
     private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {

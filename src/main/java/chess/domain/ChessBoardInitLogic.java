@@ -15,23 +15,23 @@ public class ChessBoardInitLogic {
     private ChessBoardInitLogic() {}
 
     public static Map<ChessBoardPosition, ChessPiece> initialize() {
-        Map<ChessBoardPosition, ChessPiece> mapInformation = new HashMap<>();
-        initializeTeam(mapInformation, Team.BLACK);
-        initializeTeam(mapInformation, Team.WHITE);
-        return mapInformation;
+        Map<ChessBoardPosition, ChessPiece> boardData = new HashMap<>();
+        initializeTeam(boardData, Team.BLACK);
+        initializeTeam(boardData, Team.WHITE);
+        return boardData;
     }
 
-    private static void initializeTeam(Map<ChessBoardPosition, ChessPiece> mapInformation, Team team) {
-        addChessPieces(mapInformation, Pawn.create(team));
-        addChessPieces(mapInformation, Knight.create(team));
-        addChessPieces(mapInformation, Bishop.create(team));
-        addChessPieces(mapInformation, Rook.create(team));
-        addChessPieces(mapInformation, Queen.create(team));
-        addChessPieces(mapInformation, King.create(team));
+    private static void initializeTeam(Map<ChessBoardPosition, ChessPiece> boardData, Team team) {
+        addChessPieces(boardData, Pawn.create(team));
+        addChessPieces(boardData, Knight.create(team));
+        addChessPieces(boardData, Bishop.create(team));
+        addChessPieces(boardData, Rook.create(team));
+        addChessPieces(boardData, Queen.create(team));
+        addChessPieces(boardData, King.create(team));
     }
 
-    private static void addChessPieces(Map<ChessBoardPosition, ChessPiece> mapInformation,
-                                       Map<ChessBoardPosition, ChessPiece> chessPieces) {
-        mapInformation.putAll(chessPieces);
+    private static void addChessPieces(Map<ChessBoardPosition, ChessPiece> boardData,
+                                       Map<ChessBoardPosition, ChessPiece> additionalBoardData) {
+        boardData.putAll(additionalBoardData);
     }
 }

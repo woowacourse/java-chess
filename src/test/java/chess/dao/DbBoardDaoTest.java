@@ -39,7 +39,7 @@ class DbBoardDaoTest {
         dbBoardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
-        dbBoardDao.updateAll(chessGame.getGameId(), toBoardDatas(chessGame.getChessBoardInformation()));
+        dbBoardDao.updateAll(chessGame.getGameId(), toBoardDatas(chessGame.getChessBoardData()));
     }
 
     @Test

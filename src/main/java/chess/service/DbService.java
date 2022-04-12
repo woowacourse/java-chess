@@ -24,7 +24,7 @@ public class DbService {
         return new DbService(dbGameDao, dbBoardDao);
     }
 
-    public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation(int gameId) {
+    public Map<ChessBoardPosition, ChessPiece> getChessBoardData(int gameId) {
         return toMapData(dbBoardDao.findAll(gameId));
     }
 

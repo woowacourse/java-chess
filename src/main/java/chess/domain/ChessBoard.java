@@ -20,20 +20,20 @@ public class ChessBoard {
     private static final String UNVALID_SOURCE_POSITION_EXCEPTION = "[ERROR] sourcePosition에 체스 기물이 없습니다.";
     private static final String SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION = "[ERROR] targetPosition에 같은 팀 체스 기물이 있습니다.";
     private static final String IMPOSSIBLE_TO_KILL_EXCEPTION = "[ERROR] 잡을 수 없는 위치에 있는 말입니다.";
-    private final Map<ChessBoardPosition, ChessPiece> mapInformation;
+    private final Map<ChessBoardPosition, ChessPiece> boardData;
     private Team turn;
 
     private ChessBoard(Team turn, final Map<ChessBoardPosition, ChessPiece> boardData) {
         this.turn = turn;
-        this.mapInformation = boardData;
+        this.boardData = boardData;
     }
 
     public static ChessBoard initialize(Team turn, Map<ChessBoardPosition, ChessPiece> boardData) {
         return new ChessBoard(turn, boardData);
     }
 
-    public Map<ChessBoardPosition, ChessPiece> getMapInformation() {
-        return mapInformation;
+    public Map<ChessBoardPosition, ChessPiece> getBoardData() {
+        return boardData;
     }
 
     public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
@@ -47,11 +47,11 @@ public class ChessBoard {
     }
 
     ChessPiece pickChessPiece(ChessBoardPosition sourcePosition) {
-        return mapInformation.keySet()
+        return boardData.keySet()
                 .stream()
                 .filter(it -> it.equals(sourcePosition))
                 .findFirst()
-                .map(mapInformation::get)
+                .map(boardData::get)
                 .orElse(null);
     }
 
@@ -73,7 +73,7 @@ public class ChessBoard {
     }
 
     private void isBoardSpaceEmpty(ChessBoardPosition chessBoardPosition) {
-        if (mapInformation.containsKey(chessBoardPosition)) {
+        if (boardData.containsKey(chessBoardPosition)) {
             throw new IllegalArgumentException(OBSTACLE_IN_PATH_EXCEPTION);
         }
     }
@@ -95,13 +95,13 @@ public class ChessBoard {
         if (!chessPiece.isKillMovement(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(IMPOSSIBLE_TO_KILL_EXCEPTION);
         }
-        mapInformation.remove(targetPosition, chessPiece);
+        boardData.remove(targetPosition, chessPiece);
     }
 
     private void moveChessPiece(ChessPiece chessPiece, ChessBoardPosition sourcePosition,
                                 ChessBoardPosition targetPosition) {
-        mapInformation.remove(sourcePosition);
-        mapInformation.put(targetPosition, chessPiece);
+        boardData.remove(sourcePosition);
+        boardData.put(targetPosition, chessPiece);
     }
 
     private void nextTurn() {
@@ -113,56 +113,56 @@ public class ChessBoard {
     }
 
     public boolean isKingDie() {
-        int kingNumber = (int) mapInformation.keySet()
+        int kingNumber = (int) boardData.keySet()
                 .stream()
-                .map(mapInformation::get)
+                .map(boardData::get)
                 .filter(King.class::isInstance)
                 .count();
         return kingNumber != 2;
     }
 
     public Double calculateScore(Team team) {
-        Map<ChessBoardPosition, ChessPiece> specificTeamInformation = extractSpecificTeamInformation(team);
-        return calculateOptimizeScore(specificTeamInformation);
+        Map<ChessBoardPosition, ChessPiece> specificTeamBoardData = extractSpecificTeamBoardData(team);
+        return calculateOptimizeScore(specificTeamBoardData);
     }
 
-    private Map<ChessBoardPosition, ChessPiece> extractSpecificTeamInformation(Team team) {
-        return mapInformation.entrySet()
+    private Map<ChessBoardPosition, ChessPiece> extractSpecificTeamBoardData(Team team) {
+        return boardData.entrySet()
                 .stream()
                 .filter(it -> it.getValue().isSameTeam(team))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private Double calculateOptimizeScore(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        double score = specificTeamInformation.values()
+    private Double calculateOptimizeScore(Map<ChessBoardPosition, ChessPiece> specificTeamBoardData) {
+        double score = specificTeamBoardData.values()
                 .stream()
                 .mapToDouble(ChessPiece::score)
                 .sum();
-        return score - calculatePawnPenalty(specificTeamInformation);
+        return score - calculatePawnPenalty(specificTeamBoardData);
     }
 
-    private Double calculatePawnPenalty(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        return countPenaltyPawn(specificTeamInformation) * PAWN_SAME_COLUMN_PENALTY;
+    private Double calculatePawnPenalty(Map<ChessBoardPosition, ChessPiece> specificTeamBoardData) {
+        return countPenaltyPawn(specificTeamBoardData) * PAWN_SAME_COLUMN_PENALTY;
     }
 
-    private int countPenaltyPawn(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        return countPawnInSameColumn(specificTeamInformation)
+    private int countPenaltyPawn(Map<ChessBoardPosition, ChessPiece> specificTeamBoardData) {
+        return countPawnInSameColumn(specificTeamBoardData)
                 .stream()
                 .filter(it -> it > PAWN_PENALTY_CONDITION)
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
-    private List<Integer> countPawnInSameColumn(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        List<Integer> pawnColumns = collectPawnColumns(specificTeamInformation);
+    private List<Integer> countPawnInSameColumn(Map<ChessBoardPosition, ChessPiece> specificTeamBoardData) {
+        List<Integer> pawnColumns = collectPawnColumns(specificTeamBoardData);
         return IntStream.rangeClosed(MIN_BOARD_INDEX, MAX_BOARD_INDEX)
                 .boxed()
                 .map(it -> Collections.frequency(pawnColumns, it))
                 .collect(Collectors.toList());
     }
 
-    private List<Integer> collectPawnColumns(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        return specificTeamInformation.entrySet()
+    private List<Integer> collectPawnColumns(Map<ChessBoardPosition, ChessPiece> specificTeamBoardData) {
+        return specificTeamBoardData.entrySet()
                 .stream()
                 .filter(it -> it.getValue() instanceof Pawn)
                 .map(it -> it.getKey().getColumn())
