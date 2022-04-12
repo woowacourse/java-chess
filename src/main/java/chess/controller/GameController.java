@@ -8,6 +8,9 @@ import chess.service.GameService;
 import chess.dao.PieceDaoImpl;
 import chess.dao.TurnDaoImpl;
 import chess.dto.MoveDto;
+import chess.util.DataSource;
+import chess.util.DataSourceImpl;
+import chess.util.JdbcContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +20,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class GameController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final GameService gameService = new GameService(new GameManager(), new PieceDaoImpl(), new TurnDaoImpl());
+    private final GameService gameService = gameService();
 
     public void run() {
 
@@ -45,5 +48,11 @@ public class GameController {
 
     private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private GameService gameService() {
+        DataSource dataSource = new DataSourceImpl();
+        JdbcContext jdbcContext = new JdbcContext(dataSource);
+        return new GameService(new GameManager(), new PieceDaoImpl(jdbcContext), new TurnDaoImpl(jdbcContext));
     }
 }

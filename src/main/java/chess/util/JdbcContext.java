@@ -7,7 +7,11 @@ import java.sql.SQLException;
 
 public class JdbcContext {
 
-    private final DataSource dataSource = new DataSource();
+    private final DataSource dataSource;
+
+    public JdbcContext(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void executeUpdate(StatementStrategy statementStrategy) {
         try (Connection connection = dataSource.getConnection();

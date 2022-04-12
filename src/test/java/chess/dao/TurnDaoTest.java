@@ -3,12 +3,20 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.state.Turn;
+import chess.util.DataSourceImpl;
+import chess.util.JdbcContext;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class TurnDaoTest {
 
-    TurnDaoImpl turnDao = new TurnDaoImpl();
+    static TurnDaoImpl turnDao;
+
+    @BeforeAll
+    static void beforeAll() {
+        turnDao = new TurnDaoImpl(new JdbcContext(new DataSourceImpl()));
+    }
 
     @AfterEach
     void tearDown() {

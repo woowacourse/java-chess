@@ -5,6 +5,7 @@ plugins {
 version '1.0-SNAPSHOT'
 
 repositories {
+    maven { url 'https://jitpack.io' }
     mavenCentral()
 }
 
@@ -13,9 +14,11 @@ dependencies {
     implementation 'com.sparkjava:spark-template-handlebars:2.7.1'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+    compile("mysql:mysql-connector-java:8.0.21")
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    implementation 'com.github.woowacourse-projects:mission-utils:1.0.0'
 }
 
 java {

@@ -14,7 +14,12 @@ import java.util.Map;
 
 public class PieceDaoImpl implements PieceDao{
 
-    private final JdbcContext jdbcContext = new JdbcContext();
+    private final JdbcContext jdbcContext;
+
+    public PieceDaoImpl(final JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
+
 
     public void savePieces(Map<Position, Piece> board) {
         String sql = "insert into piece (color, piece_type, position_column, position_row) values (?, ?, ?, ?)";

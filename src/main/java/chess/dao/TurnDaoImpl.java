@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 
 public class TurnDaoImpl implements TurnDao{
 
-    private final JdbcContext jdbcContext = new JdbcContext();
+    private final JdbcContext jdbcContext;
+
+    public TurnDaoImpl(final JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
 
     public Turn findCurrentTurn() {
         String sql = "select current_turn from game";

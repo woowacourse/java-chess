@@ -6,14 +6,22 @@ import chess.domain.board.Color;
 import chess.domain.board.Pawn;
 import chess.domain.board.Piece;
 import chess.domain.position.Position;
+import chess.fixture.TestDataSource;
+import chess.util.JdbcContext;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
 
-    PieceDaoImpl pieceDao = new PieceDaoImpl();
+    static PieceDaoImpl pieceDao;
+
+    @BeforeAll
+    static void beforeAll() {
+        pieceDao = new PieceDaoImpl(new JdbcContext(new TestDataSource()));
+    }
 
     @AfterEach
     void tearDown() {
