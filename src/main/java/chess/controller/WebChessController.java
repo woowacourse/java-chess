@@ -41,7 +41,8 @@ public class WebChessController {
     public void preprocess() {
         post("/preprocess", (req, res) -> {
             try {
-                String roomId = RequestParser.from(req.body()).getRoomID();
+                String roomId = RequestParser.from(req.body())
+                        .getRoomID();
                 return searchSavedGame(roomId);
             } catch (IllegalArgumentException exception) {
                 return new ModelAndView(Map.of("exception", exception.getMessage()), "index_exception.html");
