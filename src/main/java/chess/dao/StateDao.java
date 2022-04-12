@@ -15,6 +15,17 @@ public class StateDao {
     private final String PASSWORD = "password";
     private final DBConnection dbConnection = new DBConnection(URL, USER, PASSWORD);
 
+    public void updateState(final String gameState) {
+        final String query = "UPDATE state SET game_state = ?";
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, gameState);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("[DATABASE_ERROR] 체스 상태 업데이트 실패");
+        }
+    }
+
     public void updateState(final String gameState, final String color) {
         final String query = "UPDATE state SET game_state = ? , color = ?";
         try (Connection connection = dbConnection.getConnection();
