@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.piece.Color;
+import chess.dto.BoardDto;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
@@ -34,7 +35,7 @@ public class ChessWebController {
         final Map<String, Object> model = new HashMap<>();
         final Map<Color, Double> scores = chessService.getGameScores();
 
-        model.put("board", chessService.getBoard());
+        model.put("board", new BoardDto(chessService.getPieces()));
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
 

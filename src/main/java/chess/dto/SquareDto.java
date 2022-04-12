@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 
 public class SquareDto {
@@ -15,22 +14,11 @@ public class SquareDto {
         this.position = position;
     }
 
-    public SquareDto(final String position) {
-        this(Position.valueOf(position));
-    }
-
     public SquareDto(final Position position, final Piece piece) {
         this.position = position;
         this.piece = piece;
         this.pieceName = piece.representative().toUpperCase();
         this.pieceColor = piece.getColorName();
-    }
-
-    public SquareDto(final String position, final String piece, final String color) {
-        this.position = Position.valueOf(position);
-        this.piece = PieceFactory.create(piece, color);
-        this.pieceName = this.piece.representative().toUpperCase();
-        this.pieceColor = color;
     }
 
     public Position getPosition() {
