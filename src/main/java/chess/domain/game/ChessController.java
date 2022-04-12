@@ -6,6 +6,7 @@ import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 import chess.dto.*;
 import chess.mapper.Command;
+import chess.service.GameService;
 import org.eclipse.jetty.http.HttpStatus;
 
 import java.util.Arrays;

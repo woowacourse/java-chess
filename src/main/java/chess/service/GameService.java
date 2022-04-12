@@ -1,14 +1,17 @@
-package chess.domain.game;
+package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.PieceDao;
 import chess.dao.PositionDao;
+import chess.domain.game.ChessBoard;
+import chess.domain.game.ConsoleBoard;
+import chess.domain.game.Initializer;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
-import chess.dto.RoomsDto;
 import chess.dto.RoomDto;
+import chess.dto.RoomsDto;
 import chess.dto.StatusDto;
 
 import java.util.*;
