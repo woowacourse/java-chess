@@ -58,7 +58,7 @@ public class ChessPositionDao implements PositionDao<Position> {
         preparedStatement.setInt(3, boardId);
         final ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) {
-            throw new IllegalArgumentException("위치가 존재하지 않습니다.");
+            throw new IllegalArgumentException(column.name() + row.value() + "의 위치가 존재하지 않습니다.");
         }
 
         return resultSet;

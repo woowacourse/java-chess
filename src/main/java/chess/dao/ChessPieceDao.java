@@ -103,7 +103,7 @@ public class ChessPieceDao implements PieceDao<Piece> {
             preparedStatement.setString(3, color.name());
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("쿼리가 잘못됐습니다.");
+                throw new IllegalArgumentException("쿼리가 올바르지 않습니다.");
             }
 
             return resultSet.getInt("total_count");

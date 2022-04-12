@@ -23,7 +23,7 @@ public class ChessMemberDao implements MemberDao<Member> {
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("저장에 실패하였습니다.");
+                throw new IllegalArgumentException(boardId + "의 " + name + "멤버 저장에 실패하였습니다.");
             }
 
             return new Member(generatedKeys.getInt(1), name, boardId);

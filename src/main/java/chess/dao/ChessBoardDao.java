@@ -31,7 +31,7 @@ public class ChessBoardDao implements BoardDao<ChessBoard> {
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
+                throw new IllegalArgumentException(board.getRoomTitle() + " 보드를 찾을 수 없습니다.");
             }
 
             return new ChessBoard(generatedKeys.getInt(1), board.getRoomTitle(), board.getTurn());
@@ -46,7 +46,7 @@ public class ChessBoardDao implements BoardDao<ChessBoard> {
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
+                throw new IllegalArgumentException(id + " 보드를 찾을 수 없습니다.");
             }
 
             return makeBoard(resultSet, new ChessMemberDao(connectionManager));
