@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 public enum StateType {
 
-    READY("ready", Ready::new),
+    READY("Ready", Ready::new),
     WHITE_TURN("WhiteTurn", WhiteTurn::new),
     BLACK_TURN("BlackTurn", BlackTurn::new),
     END("End", End::new),
