@@ -2,9 +2,12 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Location;
+import chess.domain.board.TeamScore;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.view.OutputView;
+import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -22,20 +25,19 @@ public class ChessGame {
             throw new IllegalStateException("[ERROR] 게임이 이미 실행 중 입니다.");
         }
         this.state = state.start();
-        Board board = state.getBoard();
-        OutputView.printChessBoard(board);
     }
 
     public void move(Location source, Location target) {
-        this.state = state.move(source, target);
-        OutputView.printChessBoard(state.getBoard());
+        Team team = state.getTeam();
+        Piece targetPiece = state.move(team, source, target);
+        this.state = state.getNextState(targetPiece);
     }
 
-    public void status() {
+    public TeamScore status() {
         if (!isRunning()) {
             throw new IllegalStateException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
-        OutputView.printScore(state.getScore());
+        return state.getScore();
     }
 
     public void end() {
@@ -43,5 +45,23 @@ public class ChessGame {
             throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
         }
         this.state = state.end();
+    }
+
+    public Map<String, Piece> toMap() {
+        Board board = state.getBoard();
+        return board.toMap();
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public Board getBoard() {
+        return state.getBoard();
+    }
+
+    //TODO
+    public void setState(State state) {
+        this.state = state;
     }
 }

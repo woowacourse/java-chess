@@ -4,6 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.Location;
 import chess.domain.board.TeamScore;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+
 public class End implements State {
 
     private final Board board;
@@ -14,12 +17,13 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        board.initializeBoard();
+        return new White(board);
     }
 
     @Override
     public State end() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
@@ -33,12 +37,27 @@ public class End implements State {
     }
 
     @Override
-    public State move(Location source, Location target) {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+    public Piece move(Team team, Location source, Location target) {
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
     public TeamScore getScore() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public Team getTeam() {
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public State getNextState(Piece piece) {
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public String getName() {
+        return "end";
     }
 }

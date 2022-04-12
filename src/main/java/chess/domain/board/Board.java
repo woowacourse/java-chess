@@ -18,14 +18,17 @@ import java.util.stream.Collectors;
 public class Board {
     private final Map<Location, Piece> chessBoard;
 
-    public Board() {
-        this.chessBoard = new LinkedHashMap<>();
-        initializeBoard();
+    public Board(Map<Location, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    private void initializeBoard() {
+    public Board() {
+        this.chessBoard = new LinkedHashMap<>();
         initializeEmptyBoard();
+    }
 
+    public void initializeBoard() {
+        initializeEmptyBoard();
         initializePiece(Rank.ONE, Team.WHITE);
         initializePiece(Rank.EIGHT, Team.BLACK);
 
@@ -66,13 +69,8 @@ public class Board {
         return chessBoard.get(location);
     }
 
-
     public Map<Location, Piece> getBoard() {
         return chessBoard;
-    }
-
-    public boolean isEmpty(Location location) {
-        return chessBoard.get(location).isEmpty();
     }
 
     public void move(Location source, Location target) {
@@ -105,6 +103,12 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    private double computeScore(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
     private double computeDuplicatePawnScore(List<Piece> pieceList) {
         if (countPawn(pieceList) > 1) {
             return countPawn(pieceList) * 0.5;
@@ -118,16 +122,16 @@ public class Board {
                 .count();
     }
 
-    private double computeScore(List<Piece> pieces) {
-        return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
     public List<Piece> getPiecesByRank(Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Location.of(file, rank))
                 .map(chessBoard::get)
                 .collect(Collectors.toList());
+    }
+
+    public Map<String, Piece> toMap() {
+        return chessBoard.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().getLocationString(), Map.Entry::getValue));
     }
 }

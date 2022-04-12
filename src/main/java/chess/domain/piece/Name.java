@@ -7,7 +7,7 @@ public enum Name {
     BISHOP("b"),
     QUEEN("q"),
     KING("k"),
-    NONE(".");
+    EMPTY(".");
 
     private final String name;
 

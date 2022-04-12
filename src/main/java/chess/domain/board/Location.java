@@ -49,4 +49,8 @@ public class Location {
     public Location copyOf() {
         return Location.of(file, rank);
     }
+
+    public String getLocationString() {
+        return file.toString() + rank.toString();
+    }
 }

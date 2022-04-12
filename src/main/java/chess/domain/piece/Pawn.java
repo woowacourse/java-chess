@@ -7,6 +7,8 @@ import chess.domain.board.LocationDiff;
 
 public class Pawn extends Piece {
     private static final double SCORE = 1;
+    private static final int FIRST_MAX_DISTANCE = 2;
+    private static final int MAX_DISTANCE = 1;
 
     public Pawn(Team team) {
         super(team, Name.PAWN);
@@ -31,11 +33,10 @@ public class Pawn extends Piece {
     public boolean isMovableDistance(LocationDiff locationDiff) {
         Direction direction = locationDiff.computeDirection();
         int distance = locationDiff.computeDistance();
-
         if ((direction == D || direction == Direction.U) && isFirst()) {
-            return distance <= 2;
+            return distance <= FIRST_MAX_DISTANCE;
         }
-        return distance <= 1;
+        return distance <= MAX_DISTANCE;
     }
 
     @Override
