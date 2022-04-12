@@ -28,6 +28,7 @@ public class ConsoleController {
     private void playGame(final ChessGame chessGame) {
         final String command = inputView.inputCommand();
         final GameCommand gameCommand = GameCommand.from(command);
+        System.out.println(">>>>>" + command);
         gameCommand.execute(command, chessGame, printBoardInfoToState(chessGame));
     }
 

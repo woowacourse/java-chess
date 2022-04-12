@@ -3,10 +3,10 @@ package chess.web.service;
 import chess.domain.board.Position;
 import chess.domain.chessgame.Camp;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.command.GameCommand;
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;
-import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
 import chess.web.dao.room.RoomDao;
 import chess.web.dto.BoardDto;
@@ -40,13 +40,13 @@ public class ChessService {
 
     public Map<String, Object> executeCommand(final Request req) {
         String command = extractCommandFrom(req);
-        final WebGameCommand webgameCommand = WebGameCommand.from(command);
+        final GameCommand webgameCommand = GameCommand.from(command);
         updateGame(req, webgameCommand);
         return webgameCommand.execute(command, chessGame, getModelToState());
     }
 
-    private void updateGame(final Request req, final WebGameCommand webgameCommand) {
-        if (webgameCommand == WebGameCommand.START) {
+    private void updateGame(final Request req, final GameCommand webgameCommand) {
+        if (webgameCommand == GameCommand.START) {
             final int roomId = Integer.parseInt(req.queryParams("roomId"));
             chessGame.changeBoard(convertToGameBoard(boardDao.findAll()),
                 roomDao.findById(roomId).getCurrentCamp());
@@ -133,7 +133,7 @@ public class ChessService {
     }
 
     public Map<String, Object> getRooms() {
-        return new HashMap(Map.of("rooms", roomDao.findAll()));
+        return Map.of("rooms", roomDao.findAll());
     }
 
     public void createRoomAndBoard(final String name) {
