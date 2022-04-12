@@ -41,7 +41,7 @@ class ChessRoomDaoTest {
     @Test
     void findAll() {
         dao.save(new Room("왕허접만", boardId));
-        final List<Room> boards = dao.findAll();
+        final List<Room> boards = dao.findAllWithRunning();
 
         assertThat(boards.size()).isEqualTo(2);
     }

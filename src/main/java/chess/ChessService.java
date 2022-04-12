@@ -39,15 +39,14 @@ public class ChessService {
         this.chessRoomDao = chessRoomDao;
     }
 
-    public Board init(String roomTitle, String member1, String member2) {
+    public Room init(String roomTitle, String member1, String member2) {
         Board board = chessBoardDao.init(new Board(new Running()), Initializer.initialize());
-        chessRoomDao.save(new Room(roomTitle, List.of(new Member(member1), new Member(member2)), board.getId()));
-        return board;
+        return chessRoomDao.save(new Room(roomTitle, List.of(new Member(member1), new Member(member2)), board.getId()));
     }
 
     public RoomsDto getRooms() {
         List<RoomDto> roomsDto = new ArrayList<>();
-        List<Room> rooms = chessRoomDao.findAll();
+        List<Room> rooms = chessRoomDao.findAllWithRunning();
         for (Room room : rooms) {
             roomsDto.add(
                     new RoomDto(room.getId(), room.getTitle(), room.getMembers().get(0), room.getMembers().get(1)));
@@ -66,14 +65,25 @@ public class ChessService {
                 room.getMembers().get(1));
     }
 
-    public void move(String source, String target, int boardId) {
-        Square sourceSquare = chessSquareDao.getBySquareAndBoardId(Square.fromString(source), boardId);
-        Square targetSquare = chessSquareDao.getBySquareAndBoardId(Square.fromString(target), boardId);
+    public void move(String source, String target, int roomId) {
+        Room room = chessRoomDao.getById(roomId);
+        Square sourceSquare = chessSquareDao.getBySquareAndBoardId(Square.fromString(source), room.getBoardId());
+        Square targetSquare = chessSquareDao.getBySquareAndBoardId(Square.fromString(target), room.getBoardId());
         Piece piece = chessPieceDao.findBySquareId(sourceSquare.getId());
-        checkMovable(sourceSquare, targetSquare, piece, boardId);
+        checkMovable(sourceSquare, targetSquare, piece, room.getBoardId());
         chessPieceDao.deletePieceBySquareId(targetSquare.getId());
         chessPieceDao.updatePieceSquareId(sourceSquare.getId(), targetSquare.getId());
         chessPieceDao.save(new Empty(), sourceSquare.getId());
+        checkKingDead(room.getBoardId());
+    }
+
+    private void checkKingDead(int boardId) {
+        long kingCount = chessPieceDao.getAllPiecesByBoardId(boardId).stream()
+                .filter(Piece::isKing)
+                .count();
+        if (kingCount != PROPER_KING_COUNT) {
+            chessBoardDao.finishGame(boardId);
+        }
     }
 
     private void checkMovable(Square sourceSquare, Square targetSquare, Piece piece, int boardId) {
@@ -103,15 +113,9 @@ public class ChessService {
         }
     }
 
-    public boolean isEnd(int boardId) {
-        long kingCount = chessPieceDao.getAllPiecesByBoardId(boardId).stream()
-                .filter(Piece::isKing)
-                .count();
-
-        if(kingCount != PROPER_KING_COUNT) {
-            chessBoardDao.deleteById(boardId);
-        }
-        return kingCount != PROPER_KING_COUNT;
+    public boolean isEnd(int roomId) {
+        Room room = chessRoomDao.getById(roomId);
+        return chessBoardDao.isEnd(room.getBoardId());
     }
 
     public ScoreDto status(int roomId) {
@@ -144,6 +148,7 @@ public class ChessService {
     }
 
     public void end(int roomId) {
-        chessBoardDao.deleteById(roomId);
+        Room room = chessRoomDao.getById(roomId);
+        chessBoardDao.finishGame(room.getBoardId());
     }
 }

@@ -19,13 +19,13 @@ public class ChessController {
         return chessService.getBoard(roomId);
     }
 
-    public ResponseDto move(int boardId, String source, String target) {
+    public ResponseDto move(int roomId, String source, String target) {
         try {
-            chessService.move(source, target, boardId);
+            chessService.move(source, target, roomId);
         } catch (IllegalArgumentException e) {
-            return ResponseDto.of(HttpStatus.BAD_REQUEST_400, e.getMessage(), chessService.isEnd(boardId));
+            return ResponseDto.of(HttpStatus.BAD_REQUEST_400, e.getMessage(), chessService.isEnd(roomId));
         }
-        return ResponseDto.of(HttpStatus.OK_200, null, chessService.isEnd(boardId));
+        return ResponseDto.of(HttpStatus.OK_200, null, chessService.isEnd(roomId));
     }
 
     public ScoreDto score(int roomId) {

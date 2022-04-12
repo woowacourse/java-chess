@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RoomDao<T> {
 
-    List<T> findAll();
+    List<T> findAllWithRunning();
 
     int deleteAll();
 

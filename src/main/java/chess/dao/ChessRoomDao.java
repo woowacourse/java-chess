@@ -1,8 +1,6 @@
 package chess.dao;
 
 import chess.Room;
-import chess.model.Board;
-import chess.model.status.StatusType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,9 +17,12 @@ public class ChessRoomDao implements RoomDao<Room> {
 
 
     @Override
-    public List<Room> findAll() {
+    public List<Room> findAllWithRunning() {
         return connectionManager.executeQuery(connection -> {
-            final String sql = "SELECT * FROM room";
+            final String sql = "SELECT * FROM room "
+                    + "JOIN board b "
+                    + "ON room.board_id=b.id "
+                    + "WHERE b.status='running'";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
             final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);

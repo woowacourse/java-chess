@@ -3,6 +3,7 @@ package chess.dao;
 import chess.model.Board;
 import chess.model.piece.Piece;
 import chess.model.square.Square;
+import chess.model.status.End;
 import chess.model.status.StatusType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,6 +87,31 @@ public class ChessBoardDao implements BoardDao<Board> {
                 chessPieceDao.save(startingPieces.get(square), squareId);
             }
             return savedBoard;
+        });
+    }
+
+    @Override
+    public int finishGame(int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "UPDATE board SET status=? where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, new End().name());
+            preparedStatement.setInt(2, boardId);
+            return preparedStatement.executeUpdate();
+        });
+    }
+
+    @Override
+    public boolean isEnd(int boardId) {
+        return connectionManager.executeQuery(connection -> {
+            String sql = "SELECT status FROM board where id=?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, boardId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new IllegalArgumentException("그런 보드 없습니다. 방 id: " + boardId);
+            }
+            return resultSet.getString("status").equals(new End().name());
         });
     }
 }
