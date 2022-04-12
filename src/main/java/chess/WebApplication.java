@@ -21,7 +21,7 @@ public class WebApplication {
         ChessController controller = new ChessController();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("boards", controller.getBoards());
+            model.put("boards", controller.getRooms());
             return render(model, "home.html");
         });
 

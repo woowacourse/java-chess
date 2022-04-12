@@ -7,7 +7,7 @@ import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
-import chess.dto.BoardsDto;
+import chess.dto.RoomsDto;
 import chess.dto.RoomDto;
 import chess.dto.StatusDto;
 
@@ -100,12 +100,12 @@ public final class GameService {
         boardDao.deleteById(roomId);
     }
 
-    public BoardsDto getBoards() {
+    public RoomsDto getRooms() {
         List<RoomDto> boardsDto = new ArrayList<>();
         List<ChessBoard> boards = boardDao.findAll();
         for (ChessBoard board : boards) {
             boardsDto.add(new RoomDto(board.getId(), board.getRoomTitle(), board.getMembers().get(0), board.getMembers().get(1)));
         }
-        return new BoardsDto(boardsDto);
+        return new RoomsDto(boardsDto);
     }
 }

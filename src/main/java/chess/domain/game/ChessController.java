@@ -68,7 +68,7 @@ public class ChessController {
         gameService.end(roomId);
     }
 
-    public BoardsDto getBoards() {
-        return gameService.getBoards();
+    public RoomsDto getRooms() {
+        return gameService.getRooms();
     }
 }
