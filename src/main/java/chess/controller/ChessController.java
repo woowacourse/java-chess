@@ -40,11 +40,12 @@ public class ChessController {
 
     private boolean isCommandStart(String command) {
         validateStartOrEndCommand(command);
-        return Command.of(command).equals(Command.START);
+        return ApplicationCommand.of(command).equals(ApplicationCommand.START);
     }
 
     private void validateStartOrEndCommand(String command) {
-        if (Command.of(command) != Command.START && Command.of(command) != Command.END) {
+        if (ApplicationCommand.of(command) != ApplicationCommand.START
+                && ApplicationCommand.of(command) != ApplicationCommand.END) {
             throw new IllegalArgumentException(ONLY_START_OR_END_COMMAND_EXCEPTION);
         }
     }
@@ -69,10 +70,10 @@ public class ChessController {
     }
 
     private void inGameCommand(ChessGame chessGame, List<String> command) {
-        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.STATUS)) {
+        if (InGameCommand.of(command.get(COMMAND_INDEX)).equals(InGameCommand.STATUS)) {
             statusCommand(chessGame);
         }
-        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.MOVE)) {
+        if (InGameCommand.of(command.get(COMMAND_INDEX)).equals(InGameCommand.MOVE)) {
             moveCommand(chessGame, command);
         }
     }
