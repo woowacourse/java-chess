@@ -25,14 +25,14 @@ public class OutputView {
     private static final String CHECK_KING_MESSAGE = "현재 킹이 check된 상황입니다.";
     private static final String CHECKMATE_KING_MESSAGE = "현재 킹이 어느 한 곳에서 checkmated된 상황입니다.";
 
-    public static void printStartMessage() {
+    public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_START_COMMAND_NAME, START_COMMAND);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_END_COMMAND_NAME, END_COMMAND);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_MOVE_COMMAND_NAME, GAME_MOVE_COMMAND);
     }
 
-    public static void printBoard(Map<Position, Piece> board) {
+    public void printBoard(Map<Position, Piece> board) {
         int count = 0;
         for (Position position : board.keySet()) {
             final Piece piece = board.get(position);
@@ -45,32 +45,32 @@ public class OutputView {
         }
     }
 
-    private static String makeBoardContentString(Piece piece) {
+    private String makeBoardContentString(Piece piece) {
         if (piece.isBlack()) {
             return piece.getCharacter().toUpperCase();
         }
         return piece.getCharacter();
     }
 
-    public static void printStatus(final StatusScore statusScore) {
+    public void printStatus(final StatusScore statusScore) {
         System.out.printf(RESULT_SCORE_FORMAT, statusScore.getWhite(), statusScore.getBlack());
     }
 
-    public static void printFinalStatus(final StatusScore statusScore) {
+    public void printFinalStatus(final StatusScore statusScore) {
         System.out.println(CURRENT_GAME_END_MESSAGE);
         System.out.printf(RESULT_SCORE_FORMAT, statusScore.getWhite(), statusScore.getBlack());
         System.out.println(statusScore.getGameResultMessage() + RESULT_MESSAGE_SUFFIX);
     }
 
-    public static void printEndMessage() {
+    public void printEndMessage() {
         System.out.println(CHESS_GAME_END_MESSAGE);
     }
 
-    public static void printKingCheckedMessage() {
+    public void printKingCheckedMessage() {
         System.out.println(CHECK_KING_MESSAGE);
     }
 
-    public static void printKingCheckmatedMessage(
+    public void printKingCheckmatedMessage(
         final List<Position> kingCheckmatedPositions) {
         System.out.println(CHECKMATE_KING_MESSAGE);
         for (Position kingCheckmatedPosition : kingCheckmatedPositions) {
@@ -78,7 +78,7 @@ public class OutputView {
         }
     }
 
-    public static void printALLKingCheckmatedMessage() {
+    public void printALLKingCheckmatedMessage() {
         System.out.println("킹의 모든 포지션이 check된 상황인 checkmate입니다. 게임을 종료합니다.");
     }
 }

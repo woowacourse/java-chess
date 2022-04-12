@@ -1,5 +1,6 @@
-package chess.console;
+package chess.console.controller;
 
+import chess.console.ChessGame;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.board.Position;
@@ -17,7 +18,6 @@ public class ConsoleController {
 
     public void start() {
         final ChessGame chessGame = new ChessGame();
-//        OutputView.printStartMessage();
         outputView.printStartMessage();
         while (!chessGame.isEndInGameOff()) {
             playGame(chessGame);
@@ -34,16 +34,16 @@ public class ConsoleController {
     private Runnable printBoardInfoToState(final ChessGame chessGame) {
         return () -> {
             if (chessGame.isRunning()) {
-                OutputView.printBoard(chessGame.getBoard());
+                outputView.printBoard(chessGame.getBoard());
             }
             if (chessGame.isStatusInRunning()) {
-                OutputView.printStatus(chessGame.calculateStatus());
+                outputView.printStatus(chessGame.calculateStatus());
             }
             if (chessGame.isEndInRunning()) {
-                OutputView.printFinalStatus(chessGame.calculateStatus());
+                outputView.printFinalStatus(chessGame.calculateStatus());
             }
             if (chessGame.isEndInGameOff()) {
-                OutputView.printEndMessage();
+                outputView.printEndMessage();
             }
         };
     }
@@ -53,14 +53,23 @@ public class ConsoleController {
             return;
         }
         if (chessGame.isKingChecked()) {
-            OutputView.printKingCheckedMessage();
+            outputView.printKingCheckedMessage();
             return;
         }
 
         final List<Position> kingCheckmatedPositions = chessGame.getKingCheckmatedPositions();
         if (chessGame.isAnyMovablePositionKingCheckmated(kingCheckmatedPositions)) {
-            chessGame.checkAllKingCheckMated(kingCheckmatedPositions);
+            checkAllKingCheckMated(chessGame, kingCheckmatedPositions);
         }
+    }
+
+    public void checkAllKingCheckMated(final ChessGame chessGame, final List<Position> positions) {
+        if (chessGame.isAllKingCheckmated(positions)) {
+            outputView.printALLKingCheckmatedMessage();
+            chessGame.gameSwitchOff();
+            return;
+        }
+        outputView.printKingCheckmatedMessage(positions);
     }
 
 }

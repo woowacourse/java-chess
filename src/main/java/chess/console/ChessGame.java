@@ -1,6 +1,5 @@
 package chess.console;
 
-import chess.console.view.OutputView;
 import chess.domain.Camp;
 import chess.domain.GameSwitch;
 import chess.domain.StatusScore;
@@ -26,22 +25,12 @@ public class ChessGame {
         return positions.size() > 0;
     }
 
-    //console용 (void)
-    public void checkAllKingCheckMated(final List<Position> positions) {
-        if (isAllKingCheckmated(positions)) {
-            OutputView.printALLKingCheckmatedMessage();
-            gameSwitchOff();
-            return;
-        }
-        OutputView.printKingCheckmatedMessage(positions);
-    }
-
     //web용 (boolean -> 로직(gameSwitchOff();) 실행은 호출부로 가서 하도록 빼자.
     public boolean isAllMovablePositionKingCheckMated(final List<Position> positions) {
         return isAllKingCheckmated(positions);
     }
 
-    private boolean isAllKingCheckmated(final List<Position> positions) {
+    public boolean isAllKingCheckmated(final List<Position> positions) {
         return state.isAllKingCheckmated(positions);
     }
 

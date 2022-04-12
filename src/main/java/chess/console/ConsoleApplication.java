@@ -1,5 +1,6 @@
 package chess.console;
 
+import chess.console.controller.ConsoleController;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 
