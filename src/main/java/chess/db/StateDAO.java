@@ -27,8 +27,6 @@ public class StateDAO extends CommonDAO {
         super();
     }
 
-    ;
-
     public Color findColor() {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(FIND_COLOR_SQL);
