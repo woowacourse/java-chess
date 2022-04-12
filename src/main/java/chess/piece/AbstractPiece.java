@@ -9,7 +9,7 @@ import chess.position.Position;
 public abstract class AbstractPiece implements Piece {
 
     private final Name name;
-    protected final Color color;
+    private final Color color;
 
     AbstractPiece(final Name name, final Color color) {
         this.name = name;
@@ -44,6 +44,16 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public Direction getDirection(final Position from, final Position to) {
         return Direction.NONE;
+    }
+
+    @Override
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    @Override
+    public boolean isWhite() {
+        return color == Color.WHITE;
     }
 
     @Override

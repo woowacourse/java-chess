@@ -25,12 +25,12 @@ public class Pawn extends AbstractPiece {
         final Position from = command.getFrom();
         final Position to = command.getTo();
 
-        if (color == WHITE) {
+        if (isWhite()) {
             return Direction.getWhitePawnDirections().stream()
                     .anyMatch(direction -> canWhiteMove(from, to, direction));
         }
 
-        if (color == BLACK) {
+        if (isBlack()) {
             return Direction.getBlackPawnDirections().stream()
                     .anyMatch(direction -> canBlackMove(from, to, direction));
         }
