@@ -4,10 +4,7 @@ import chess.dao.*;
 import chess.domain.member.Member;
 import chess.domain.pieces.Color;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
-import chess.dto.BoardsDto;
-import chess.dto.ResponseDto;
-import chess.dto.StatusDto;
+import chess.dto.*;
 import chess.mapper.Command;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -32,8 +29,8 @@ public class ChessController {
         );
     }
 
-    public int startGame(String roomTitle, String member1, String member2) {
-        final ChessBoard board = new ChessBoard(roomTitle, Color.WHITE, List.of(new Member(member1), new Member(member2)));
+    public int startGame(RequestDto requestDto) {
+        final ChessBoard board = new ChessBoard(requestDto.getTitle(), Color.WHITE, List.of(new Member(requestDto.getFirstMemberName()), new Member(requestDto.getSecondMemberName())));
         return gameService.saveBoard(board, new BoardInitializer()).getId();
     }
 
