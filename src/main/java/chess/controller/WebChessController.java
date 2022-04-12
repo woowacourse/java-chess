@@ -9,6 +9,7 @@ import static spark.Spark.stop;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.Team;
@@ -65,7 +66,10 @@ public class WebChessController {
     }
 
     private static void doStartCommand(ChessGame chessGame, StorageService storageService) {
-        storageService.saveDataIfStorageEmpty(chessGame.getGameId());
+        if (!storageService.hasData(chessGame.getGameId())) {
+            storageService.saveInitData(chessGame.getGameId(), Team.WHITE, ChessBoardInitLogic.initialize());
+        }
+
         Team turn = storageService.loadGameTurn(chessGame.getGameId());
         Map<ChessBoardPosition, ChessPiece> mapData = storageService.loadChessBoardData(chessGame.getGameId());
         chessGame.initialize(turn, mapData);
