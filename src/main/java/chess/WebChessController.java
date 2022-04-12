@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import static spark.Spark.get;
@@ -28,7 +29,14 @@ public class WebChessController {
             res.status(200);
             return gson.toJson(webChessService.loadGame(chessGame));
         });
-        get("/move", (req, res) -> gson.toJson(webChessService.move(chessGame, req)));
+        get("/move", (req, res) -> {
+            try {
+                return gson.toJson(webChessService.move(chessGame, req));
+            }catch(Exception e){
+                res.status(500);
+                return gson.toJson(e.getMessage());
+            }
+        });
         get("/end", (req, res) -> gson.toJson(webChessService.endGame(chessGame)));
     }
 }
