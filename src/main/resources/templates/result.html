@@ -10,6 +10,8 @@
 <center>
     <h1>♟ 웹 체스 게임 ♟</h1>
     <h1>♟ 우승자 : {{winner}}</h1>
-    <input type="button" value="다시 시작하기" onClick="location.href='/restart'"><br>
+    <form action="/start" method="post">
+        <input type="submit" value="다시 시작하기">
+    </form>
 </center>
 </body>

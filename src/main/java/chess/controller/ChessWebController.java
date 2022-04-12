@@ -20,18 +20,30 @@ public class ChessWebController {
     public void run() {
         staticFileLocation("/static");
 
-        get("/", this::start);
-        post("/restart", this::restart);
-        post("/move", this::move);
-        get("/result", this::result);
+        get("/", this::redirect);
+        get("/chess", this::viewGame);
+        post("/start", this::startNewGame);
+        post("/move", this::movePiece);
+        get("/result", this::viewResult);
         exception(Exception.class, this::handleException);
     }
 
-    private String start(Request request, Response response) {
-        if (chessService.isGameWaiting() || chessService.isGameFinish()) {
-            chessService.startInitializedGame();
+    private String redirect(final Request request, final Response response) {
+        if (chessService.isGameWaiting()) {
+            response.redirect("/start");
+            return null;
         }
 
+        if (chessService.isGameFinish()) {
+            response.redirect("/result");
+            return null;
+        }
+
+        response.redirect("/chess");
+        return null;
+    }
+
+    private String viewGame(final Request request, final Response response) {
         final Map<String, Object> model = new HashMap<>();
         final Map<Color, Double> scores = chessService.getGameScores();
 
@@ -42,38 +54,36 @@ public class ChessWebController {
         return render(model, "game.html");
     }
 
-    private String restart(Request request, Response response) {
+    private String startNewGame(final Request request, final Response response) {
         chessService.startInitializedGame();
-        response.redirect("/");
+
+        response.redirect("/chess");
         return null;
     }
 
-    private String move(Request request, Response response) {
+    private String movePiece(final Request request, final Response response) {
         final String source = request.queryMap().get("source").value();
         final String target = request.queryMap().get("target").value();
 
         chessService.movePiece(source, target);
 
-        if (chessService.isGameFinish()) {
-            response.redirect("/result");
-            return null;
-        }
         response.redirect("/");
         return null;
     }
 
-    private String result(Request request, Response response) {
+    private String viewResult(final Request request, final Response response) {
         final Map<String, Object> model = new HashMap<>();
         model.put("winner", chessService.getWinner());
+
         return render(model, "result.html");
     }
 
-    private void handleException(Exception exception, Request request, Response response) {
+    private void handleException(final Exception exception, final Request request, final Response response) {
         response.status(400);
         response.body(exception.getMessage());
     }
 
-    private String render(Object model, String templatePath) {
+    private String render(final Object model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
