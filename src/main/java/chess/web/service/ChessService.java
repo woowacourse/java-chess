@@ -1,8 +1,8 @@
 package chess.web.service;
 
-import chess.console.ChessGame;
-import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.chessgame.Camp;
+import chess.domain.chessgame.ChessGame;
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;

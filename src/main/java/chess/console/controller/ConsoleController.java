@@ -1,9 +1,9 @@
 package chess.console.controller;
 
-import chess.console.ChessGame;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.board.Position;
+import chess.domain.chessgame.ChessGame;
 import chess.domain.command.GameCommand;
 import java.util.List;
 
@@ -71,5 +71,4 @@ public class ConsoleController {
         }
         outputView.printKingCheckmatedMessage(positions);
     }
-
 }

@@ -1,10 +1,10 @@
 package chess.domain.gamestate;
 
-import chess.domain.Camp;
-import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.chessgame.Camp;
+import chess.domain.chessgame.StatusScore;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;

@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.board.UnitDirectVector;
+import chess.domain.chessgame.Camp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;

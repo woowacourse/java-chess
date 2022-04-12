@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
+import chess.domain.chessgame.Camp;
 
 public abstract class NotNullPiece extends Piece {
 

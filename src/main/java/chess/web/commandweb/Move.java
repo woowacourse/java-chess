@@ -1,8 +1,8 @@
 package chess.web.commandweb;
 
-import chess.console.ChessGame;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.chessgame.ChessGame;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;

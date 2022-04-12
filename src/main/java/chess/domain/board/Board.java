@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.Camp;
+import chess.domain.chessgame.Camp;
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;

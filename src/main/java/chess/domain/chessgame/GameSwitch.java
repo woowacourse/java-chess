@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chessgame;
 
 public enum GameSwitch {
     ON,

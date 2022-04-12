@@ -1,8 +1,5 @@
-package chess.console;
+package chess.domain.chessgame;
 
-import chess.domain.Camp;
-import chess.domain.GameSwitch;
-import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.gamestate.Ready;
@@ -25,7 +22,6 @@ public class ChessGame {
         return positions.size() > 0;
     }
 
-    //web용 (boolean -> 로직(gameSwitchOff();) 실행은 호출부로 가서 하도록 빼자.
     public boolean isAllMovablePositionKingCheckMated(final List<Position> positions) {
         return isAllKingCheckmated(positions);
     }

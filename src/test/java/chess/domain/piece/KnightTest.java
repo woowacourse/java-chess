@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Camp;
+import chess.domain.chessgame.Camp;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;

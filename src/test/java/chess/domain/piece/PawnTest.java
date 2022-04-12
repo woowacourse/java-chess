@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Camp;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.domain.chessgame.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

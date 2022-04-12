@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import static chess.domain.Camp.BLACK;
-import static chess.domain.Camp.WHITE;
+import static chess.domain.chessgame.Camp.BLACK;
+import static chess.domain.chessgame.Camp.WHITE;
 
-import chess.domain.Camp;
+import chess.domain.chessgame.Camp;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

@@ -1,6 +1,6 @@
 package chess.web.commandweb;
 
-import chess.console.ChessGame;
+import chess.domain.chessgame.ChessGame;
 import java.util.Map;
 import java.util.function.Supplier;
 

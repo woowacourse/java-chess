@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
+import chess.domain.chessgame.Camp;
 import java.util.Arrays;
 import java.util.function.Function;
 

@@ -1,7 +1,7 @@
 package chess.console.view;
 
-import chess.domain.StatusScore;
 import chess.domain.board.Position;
+import chess.domain.chessgame.StatusScore;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;

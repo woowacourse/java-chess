@@ -6,10 +6,10 @@ import static chess.domain.board.UnitDirectVector.RIGHT;
 import static chess.domain.board.UnitDirectVector.TOP;
 import static chess.domain.piece.PieceProperty.ROOK;
 
-import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.board.UnitDirectVector;
+import chess.domain.chessgame.Camp;
 import java.util.List;
 import java.util.function.Consumer;
 

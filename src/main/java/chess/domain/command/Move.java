@@ -1,7 +1,7 @@
 package chess.domain.command;
 
-import chess.console.ChessGame;
 import chess.domain.board.Positions;
+import chess.domain.chessgame.ChessGame;
 
 public final class Move implements CommandGenerator {
     @Override
