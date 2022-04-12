@@ -39,7 +39,8 @@ class BoardDaoTest {
     void initBoard() {
         BoardInitializer boardInitializer = new BoardInitializer();
         final ChessBoard edenFightingBoard = new ChessBoard("에덴파이팅");
-        dao.init(edenFightingBoard, boardInitializer.initialize());
+        ChessBoard board = dao.init(edenFightingBoard, boardInitializer.initialize());
+        assertThat(board.getRoomTitle()).isEqualTo("에덴파이팅");
     }
 
     @Test
