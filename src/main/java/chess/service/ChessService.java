@@ -1,9 +1,13 @@
 package chess.service;
 
+import static chess.game.MoveCommand.FROM_POSITION_INDEX;
+import static chess.game.MoveCommand.TO_POSITION_INDEX;
+
 import chess.dao.BoardDao;
 import chess.dao.DbBoardDao;
 import chess.dao.DbPieceDao;
 import chess.dao.PieceDao;
+import chess.dto.PieceDto;
 import chess.game.Board;
 import chess.game.Game;
 import chess.piece.Piece;
@@ -48,7 +52,7 @@ public class ChessService {
         final int boardId = boardDao.findLastlyUsedBoard();
         final Game game = createGame(boardId);
         game.run(splitInput.get(0), splitInput);
-        save(boardId, game);
+        update(boardId, game, splitInput);
     }
 
     public boolean isRunning() {
@@ -106,17 +110,14 @@ public class ChessService {
         pieceDao.saveAll(boardId, game.getBoard().getValue());
     }
 
-    private void save(final int boardId, final Game game) {
-        updatePiece(boardId, game.getBoard().getValue());
-        updateBoard(boardId, game.getTurn());
-    }
 
-    private void updateBoard(final int boardId, final Color turn) {
-        boardDao.updateById(boardId, turn);
-    }
+    private void update(final int boardId, final Game game, final List<String> splitInput) {
+        final Map<Position, Piece> value = game.getBoard().getValue();
+        final Position to = Position.of(splitInput.get(TO_POSITION_INDEX));
+        final Piece piece = value.get(to);
 
-    private void updatePiece(final int boardId, final Map<Position, Piece> board) {
-        pieceDao.deleteAllById(boardId);
-        pieceDao.saveAll(boardId, board);
+        boardDao.updateById(boardId, game.getTurn());
+        pieceDao.deletePieceByPosition(boardId, splitInput.get(TO_POSITION_INDEX));
+        pieceDao.updatePieceByPosition(boardId, splitInput.get(FROM_POSITION_INDEX), PieceDto.toDto(piece, to));
     }
 }

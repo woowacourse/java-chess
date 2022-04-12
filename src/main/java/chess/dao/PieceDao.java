@@ -18,4 +18,8 @@ public interface PieceDao {
     boolean isExist();
 
     Map<Position, Piece> load();
+
+    void updatePieceByPosition(int boardId, String from, PieceDto toDto);
+
+    void deletePieceByPosition(int boardId, String to);
 }

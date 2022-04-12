@@ -112,6 +112,37 @@ public class DbPieceDao implements PieceDao {
         }
     }
 
+    @Override
+    public void updatePieceByPosition(final int boardId, final String from, final PieceDto pieceDto) {
+        final String sql = "update piece set position = ? where board_id = ? and position = ?";
+
+        try (Connection connection = DbConnector.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            System.err.println("##########프롬:" + from);
+            System.err.println("##########투:" + pieceDto.getPosition());
+            statement.setString(1, pieceDto.getPosition());
+            statement.setInt(2, boardId);
+            statement.setString(3, from);
+            statement.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deletePieceByPosition(final int boardId, final String from) {
+        final String sql = "delete from piece where board_id = ? and position = ?";
+
+        try (Connection connection = DbConnector.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, boardId);
+            statement.setString(2, from);
+            statement.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Piece getPiece(final ResultSet resultSet) throws SQLException {
         return Pieces.valueOf(
                 resultSet.getString("name")
