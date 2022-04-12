@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.web.Room;
-import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,19 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RoomDaoTest {
-    private static final int CURRENT_CREATE_ROOM_ID = 28;
+    
     private RoomDao roomDao;
 
     @BeforeEach
     void setUp() {
-        roomDao = new RoomDao();
-    }
-
-    @DisplayName("room 테이블에 대한 connection 생성한다.")
-    @Test
-    void connection() {
-        final Connection connection = roomDao.getConnection();
-        assertThat(connection).isNotNull();
+        roomDao = new FakeRoomDao();
     }
 
     @DisplayName("room 테이블에 데이터를 생성한다.")
@@ -41,9 +33,7 @@ class RoomDaoTest {
     void findById() {
         roomDao.save("방이름");
 
-        final Room room = roomDao.findById(CURRENT_CREATE_ROOM_ID);
-
-        System.out.println(room);
+        final Room room = roomDao.findById(1);
 
         assertThat(room.getName()).isEqualTo("방이름");
     }
@@ -59,9 +49,29 @@ class RoomDaoTest {
         assertThat(rooms).isNotEmpty();
     }
 
+    @DisplayName("현재 room에 대한 id로 방이름인 name을 변경할 수 있다.")
+    @Test
+    void update_name_by_id() {
+        roomDao.save("방이름");
+
+        roomDao.updateNameById(1, "바뀐 방이름");
+
+        assertThat(roomDao.findById(1).getName()).isEqualTo("바뀐 방이름");
+    }
+
+    @DisplayName("현재 room에 대한 id로 방이름을 제외한 모든 정보를 변경할 수 있다.")
+    @Test
+    void update_room_by_id() {
+        roomDao.save("방이름");
+
+        roomDao.updateRoom(1, 0, "BLACK");
+
+        assertThat(roomDao.findById(1).getCurrentCamp()).isEqualTo("BLACK");
+    }
+
 
     @AfterEach
     void tearDown() {
-        roomDao.removeById(CURRENT_CREATE_ROOM_ID);
+        roomDao.removeById(1);
     }
 }

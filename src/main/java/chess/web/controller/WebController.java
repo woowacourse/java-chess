@@ -4,7 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.web.dao.board.BoardDao;
-import chess.web.dao.room.RoomDao;
+import chess.web.dao.room.RoomDaoImpl;
 import chess.web.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class WebController {
     private final ChessService chessService;
 
     public WebController() {
-        chessService = new ChessService(new RoomDao(), new BoardDao());
+        chessService = new ChessService(new RoomDaoImpl(), new BoardDao());
         chessService.init();
     }
 

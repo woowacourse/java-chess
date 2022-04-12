@@ -60,3 +60,4 @@ docker/db/mysql/data/
 /src/test/java/chess/web/dao/board/BoardDaoTest.java
 /src/test/java/chess/web/dao/board/
 /src/test/java/chess/web/
+/src/main/java/chess/web/dao/member/

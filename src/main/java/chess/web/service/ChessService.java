@@ -8,7 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;
 import chess.web.commandweb.WebGameCommand;
 import chess.web.dao.board.BoardDao;
-import chess.web.dao.room.RoomDao;
+import chess.web.dao.room.RoomDaoImpl;
 import chess.web.dto.BoardDto;
 import chess.web.dto.MoveReqDto;
 import com.google.gson.Gson;
@@ -20,12 +20,12 @@ import spark.Request;
 
 public class ChessService {
 
-    private final RoomDao roomDao;
+    private final RoomDaoImpl roomDaoImpl;
     private final BoardDao boardDao;
     private ChessGame chessGame;
 
-    public ChessService(final RoomDao roomDao, final BoardDao boardDao) {
-        this.roomDao = roomDao;
+    public ChessService(final RoomDaoImpl roomDaoImpl, final BoardDao boardDao) {
+        this.roomDaoImpl = roomDaoImpl;
         this.boardDao = boardDao;
     }
 
@@ -44,13 +44,16 @@ public class ChessService {
     public Map<String, Object> executeCommand(final Request req) {
         String command = extractCommandFrom(req);
         final WebGameCommand webgameCommand = WebGameCommand.from(command);
-        final int roomId = Integer.parseInt(req.queryParams("roomId"));
-
-        if (webgameCommand == WebGameCommand.START) {
-            chessGame.changeBoard(convertToGameBoard(boardDao.findAll()), roomDao.findById(roomId).getCurrentCamp());
-        }
-
+        updateGame(req, webgameCommand);
         return webgameCommand.execute(command, chessGame, getModelToState());
+    }
+
+    private void updateGame(final Request req, final WebGameCommand webgameCommand) {
+        if (webgameCommand == WebGameCommand.START) {
+            final int roomId = Integer.parseInt(req.queryParams("roomId"));
+            chessGame.changeBoard(convertToGameBoard(boardDao.findAll()),
+                roomDaoImpl.findById(roomId).getCurrentCamp());
+        }
     }
 
     private Map<Position, Piece> convertToGameBoard(final Map<String, String> board) {
@@ -136,22 +139,22 @@ public class ChessService {
     }
 
     public HashMap<String, Object> getRooms() {
-        return new HashMap(Map.of("rooms", roomDao.findAll()));
+        return new HashMap(Map.of("rooms", roomDaoImpl.findAll()));
     }
 
     public void createRoomAndBoard(final String name) {
-        roomDao.save(name);
-        final int roomId = roomDao.findIdByName(name);
+        roomDaoImpl.save(name);
+        final int roomId = roomDaoImpl.findIdByName(name);
         final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
         boardDao.save(roomId, board);
     }
 
     public void updateRoomName(final String id, final String roomName) {
-        roomDao.updateNameById(Integer.parseInt(id), roomName);
+        roomDaoImpl.updateNameById(Integer.parseInt(id), roomName);
     }
 
     public void removeRoom(final String id) {
-        roomDao.removeById(Integer.parseInt(id));
+        roomDaoImpl.removeById(Integer.parseInt(id));
     }
 
     public void saveCurrentRoomAndBoard(final Request req) {
@@ -161,7 +164,7 @@ public class ChessService {
         if (chessGame.getCamp().isWhite()) {
             currentCamp = "WHITE";
         }
-        roomDao.updateRoom(roomId, canJoin, currentCamp);
+        roomDaoImpl.updateRoom(roomId, canJoin, currentCamp);
         final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
         boardDao.updateBoard(roomId, board);
     }
