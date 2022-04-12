@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class MockPieceDao implements PieceDao {
 
+    // TODO: boardId, pieceId 들고 있는 클래스로 분리
     private Map<Map<Integer, Integer>, PieceDto> piece = new HashMap<>();
 
     @Override

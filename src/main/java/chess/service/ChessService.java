@@ -14,13 +14,11 @@ import chess.game.Game;
 import chess.game.Result;
 import chess.piece.Piece;
 import chess.piece.detail.Color;
-import chess.piece.detail.Name;
 import chess.position.Position;
 import chess.status.Ready;
 import chess.status.Running;
 import chess.view.Command;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ChessService {
 
@@ -105,14 +103,10 @@ public class ChessService {
     public Color getWinnerColor() {
         final int boardId = boardDao.findLastlyUsedBoard();
         final Map<Position, Piece> pieces = pieceDao.findAllByBoardId(boardId);
-        final List<Piece> winPiece = pieces.values().stream()
-                .filter(value -> value.getName() == Name.KING)
-                .collect(Collectors.toList());
+        final Color color = boardDao.findTurnById(boardId);
+        final Game game = new Game(new Running(pieces, color));
 
-        if (winPiece.get(0).getColor() == Color.WHITE) {
-            return Color.WHITE;
-        }
-        return Color.BLACK;
+        return game.getWinColor();
     }
 
     private Game createGame(final int boardId) {

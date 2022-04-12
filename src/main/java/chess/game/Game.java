@@ -75,7 +75,8 @@ public class Game {
     }
 
     public Color getWinColor() {
-        return winColor;
+        final Board board = state.getBoard();
+        return board.getWinColor();
     }
 
     public Board getBoard() {

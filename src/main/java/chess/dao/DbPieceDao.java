@@ -118,8 +118,6 @@ public class DbPieceDao implements PieceDao {
 
         try (Connection connection = DbConnector.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            System.err.println("##########프롬:" + from);
-            System.err.println("##########투:" + pieceDto.getPosition());
             statement.setString(1, pieceDto.getPosition());
             statement.setInt(2, boardId);
             statement.setString(3, from);

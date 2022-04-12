@@ -58,6 +58,18 @@ public class Board {
         return score;
     }
 
+    public Color getWinColor() {
+        if (!isKingDead()) {
+            throw new IllegalStateException("게임이 끝나지 않아 우승자를 가릴 수 없습니다.");
+        }
+
+        return value.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .map(Piece::getColor)
+                .orElseThrow(() -> new IllegalStateException("우승한 팀이 존재하지 않습니다"));
+    }
+
     private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
