@@ -10,6 +10,7 @@ import chess.dao.PieceDao;
 import chess.dto.PieceDto;
 import chess.game.Board;
 import chess.game.Game;
+import chess.game.Result;
 import chess.piece.Piece;
 import chess.piece.detail.Color;
 import chess.piece.detail.Name;
@@ -70,6 +71,17 @@ public class ChessService {
     public Map<Position, Piece> getBoard() {
         final int boardId = boardDao.findLastlyUsedBoard();
         return pieceDao.findAllByBoardId(boardId);
+    }
+
+    public Result getStatusResult() {
+        final Board board = Board.of(getBoard());
+        return new Result(board.createBoardScore(), getWinningColor());
+    }
+
+    public Result getFinalResult() {
+        final Board board = Board.of(getBoard());
+
+        return new Result(board.createBoardScore(), getWinnerColor());
     }
 
     public Color getWinningColor() {

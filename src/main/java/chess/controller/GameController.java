@@ -3,7 +3,7 @@ package chess.controller;
 import chess.dto.BoardDto;
 import chess.dto.ResponseDto;
 import chess.dto.ResultDto;
-import chess.piece.detail.Color;
+import chess.game.Result;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
@@ -48,20 +48,17 @@ public class GameController {
     }
 
     public ModelAndView status(final Request request, final Response response) {
-        final Map<Color, Double> result = chessService.getResult();
-        final Color winningColor = chessService.getWinningColor();
+        final Result result = chessService.getStatusResult();
         Map<String, Object> model = new HashMap<>();
-        model.put("result", new ResultDto(result, winningColor));
+        model.put("result", ResultDto.toDto(result));
 
         return new ModelAndView(model, "result.html");
     }
 
     public ModelAndView result(final Request request, final Response response) {
-        final Map<Color, Double> result = chessService.getResult();
-        final Color winnerColor = chessService.getWinnerColor();
+        final Result result = chessService.getFinalResult();
         Map<String, Object> model = new HashMap<>();
-
-        model.put("result", new ResultDto(result, winnerColor));
+        model.put("result", ResultDto.toDto(result));
 
         return new ModelAndView(model, "result.html");
     }
