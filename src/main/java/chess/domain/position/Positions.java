@@ -6,6 +6,7 @@ import java.util.Map;
 public class Positions {
 
     private static final Map<String, Position> CACHE = new HashMap<>();
+    private static final String NOT_EXIST_POSITION = "존재하지 않는 위치입니다.";
 
     static {
         for (Rank rank : Rank.values()) {
@@ -23,6 +24,9 @@ public class Positions {
     }
 
     public static Position findPosition(String rankFile) {
+        if (CACHE.get(rankFile) == null) {
+            throw new RuntimeException(NOT_EXIST_POSITION);
+        }
         return CACHE.get(rankFile);
     }
 }
