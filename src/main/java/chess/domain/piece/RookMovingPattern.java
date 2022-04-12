@@ -1,22 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.game.Color;
 import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Map;
 
-public class Rook extends LinearMovePiece {
-    public Rook(Color color) {
-        super(color, PieceType.ROOK);
-    }
-
-    @Override
-    protected String baseSignature() {
-        return "r";
-    }
-
-    @Override
+public class RookMovingPattern extends LinearMovingPattern {
     public boolean isMovable(Map<Position, Piece> board, Position source, Position target) {
         int distanceX = Math.abs(source.calculateDisplacementXTo(target));
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
@@ -32,18 +20,4 @@ public class Rook extends LinearMovePiece {
         return distanceX * distanceY == 0;
     }
 
-    @Override
-    public List<Position> findRoute(Position source, Position target) {
-        return findLinearRoute(source, target);
-    }
-
-    @Override
-    public double score() {
-        return 5;
-    }
-
-    @Override
-    public boolean isRook() {
-        return true;
-    }
 }

@@ -28,12 +28,14 @@ public class WebChessService {
         if (isGameExists) {
             Board chessBoard = Board.of(boardDao.getBoard());
             Color turn = chessGameDao.getTurn();
-            chessGameDto = chessGame.load(chessBoard, turn);
+            chessGame.load(chessBoard, turn);
+            chessGameDto = chessGame.createGameDto();
             chessGameDao.updateGame(chessGameDto);
         }
 
         if (!isGameExists) {
-            chessGameDto = chessGame.start();
+            chessGame.start();
+            chessGameDto = chessGame.createGameDto();
             chessGameDao.saveGame(chessGameDto);
         }
 
@@ -44,7 +46,8 @@ public class WebChessService {
 
     public ChessGameDto move(ChessGame chessGame, Request req) throws SQLException {
         RequestDto requestDto = new RequestDto(Command.MOVE, req);
-        ChessGameDto chessGameDto = chessGame.move(requestDto);
+        chessGame.move(requestDto);
+        ChessGameDto chessGameDto = chessGame.createGameDto();
 
         chessGameDao.updateGame(chessGameDto);
         boardDao.deleteBoard();
@@ -54,8 +57,10 @@ public class WebChessService {
         return chessGameDto;
     }
 
-    public ChessGameDto endGame(ChessGame chessGame) throws SQLException{
-        ChessGameDto chessGameDto = chessGame.end();
+    public ChessGameDto endGame(ChessGame chessGame) throws SQLException {
+        chessGame.end();
+        ChessGameDto chessGameDto = chessGame.createGameDto();
+
         boardDao.deleteBoard();
         chessGameDao.deleteGame();
 

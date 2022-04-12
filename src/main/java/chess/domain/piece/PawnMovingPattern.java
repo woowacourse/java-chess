@@ -6,34 +6,29 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Pawn extends LinearMovePiece {
-
-    public Pawn(Color color) {
-        super(color, PieceType.PAWN);
-    }
-
-    @Override
-    protected String baseSignature() {
-        return "p";
-    }
-
-    @Override
+public class PawnMovingPattern implements MovingPattern {
     public boolean isMovable(Map<Position, Piece> board, Position source, Position target) {
-        return isForwardDoubleMove(source, target) || isStraightMove(board, source, target) || isDiagonalMove(board, source, target);
+        return isForwardDoubleMove(board, source, target) || isStraightMove(board, source, target) || isDiagonalMove(board, source, target);
     }
 
-    private boolean isForwardDoubleMove(Position source, Position target) {
+    private boolean isForwardDoubleMove(Map<Position, Piece> board, Position source, Position target) {
         int displacementX = source.calculateDisplacementXTo(target);
         int displacementY = source.calculateDisplacementYTo(target);
 
+        Piece sourcePiece = board.get(source);
+        Color color = sourcePiece.getColor();
+
         return displacementY == 2 * color.direction()
                 && displacementX == 0
-                && isNeverDisplaced();
+                && sourcePiece.isNeverDisplaced();
     }
 
     private boolean isStraightMove(Map<Position, Piece> board, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
+        Color color = sourcePiece.getColor();
         Color enemy = color.nextTurn();
+
         int displacementX = source.calculateDisplacementXTo(target);
         int displacementY = source.calculateDisplacementYTo(target);
 
@@ -43,8 +38,11 @@ public class Pawn extends LinearMovePiece {
     }
 
     private boolean isDiagonalMove(Map<Position, Piece> board, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
+        Color color = sourcePiece.getColor();
         Color enemy = color.nextTurn();
+
         int displacementX = source.calculateDisplacementXTo(target);
         int displacementY = source.calculateDisplacementYTo(target);
 
@@ -53,24 +51,8 @@ public class Pawn extends LinearMovePiece {
                 && targetPiece.isSameColor(enemy);
     }
 
-    @Override
     public List<Position> findRoute(Position source, Position target) {
-        return findLinearRoute(source, target);
-    }
-
-    @Override
-    public double score() {
-        return 1;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return moveCount == 1;
+        return List.of();
     }
 }
 

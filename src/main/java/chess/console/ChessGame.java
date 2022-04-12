@@ -54,7 +54,7 @@ public final class ChessGame {
 
     private void checkPromotion(Position target) {
         if (board.isPromotable(target)) {
-            board.promoteTo(target, new Queen(turn));
+            board.promoteTo(target, new Piece(turn, PieceType.QUEEN, new QueenMovingPattern(),0));
         }
     }
 

@@ -24,10 +24,10 @@ public enum Color {
 
     public String correctSignature(String signature) {
         if (this == BLACK) {
-            return signature.toUpperCase(Locale.ROOT);
+            return signature.toUpperCase();
         }
         if (this == WHITE) {
-            return signature.toLowerCase(Locale.ROOT);
+            return signature.toLowerCase();
         }
         return signature;
     }

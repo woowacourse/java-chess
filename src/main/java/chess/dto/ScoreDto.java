@@ -1,19 +1,17 @@
-package chess.domain.game;
+package chess.dto;
 
-public class Score {
+import chess.domain.game.Color;
+
+public class ScoreDto {
     private final Color color;
     private final double score;
 
-    public Score(Color color, double score) {
+    public ScoreDto(Color color, double score) {
         this.color = color;
         this.score = score;
     }
 
     public double getScore() {
         return score;
-    }
-
-    public boolean isSameColorWith(Color color) {
-        return this.color == color;
     }
 }

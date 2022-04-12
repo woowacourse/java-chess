@@ -1,11 +1,13 @@
 package chess.domain.game;
 
-import chess.domain.piece.Blank;
+import chess.domain.piece.BlankPattern;
 import chess.domain.piece.InitialPieces;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
+import chess.dto.ResultDto;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +41,7 @@ public class Board {
     private static void fillRankWithBlank(Map<Position, Piece> pieces, PositionY positionY) {
         Arrays.stream(PositionX.values())
                 .map(positionX -> Position.of(positionX, positionY))
-                .forEach(position -> pieces.put(position, new Blank()));
+                .forEach(position -> pieces.put(position, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0)));
     }
 
     public boolean isCastable(Color turn, Position source, Position target) {
@@ -81,10 +83,10 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        board.replace(source, new Blank());
+        board.replace(source, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(source.displacedOf(2, 0), sourcePiece.displaced());
 
-        board.replace(target, new Blank());
+        board.replace(target, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(target.displacedOf(-2, 0), targetPiece.displaced());
     }
 
@@ -92,10 +94,10 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        board.replace(source, new Blank());
+        board.replace(source, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(source.displacedOf(-2, 0), sourcePiece.displaced());
 
-        board.replace(target, new Blank());
+        board.replace(target, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(target.displacedOf(3, 0), targetPiece.displaced());
     }
 
@@ -120,9 +122,9 @@ public class Board {
         Color enemy = turn.nextTurn();
         Position enPassantPosition = target.displacedOf(0, enemy.direction());
 
-        board.replace(source, new Blank());
+        board.replace(source, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(target, sourcePiece.displaced());
-        board.replace(enPassantPosition, new Blank());
+        board.replace(enPassantPosition, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
     }
 
     public void movePieceIfValid(Color turn, Position source, Position target) {
@@ -170,7 +172,7 @@ public class Board {
 
     public void movePiece(Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        board.replace(source, new Blank());
+        board.replace(source, new Piece(Color.NONE, PieceType.BLANK, new BlankPattern(), 0));
         board.replace(target, sourcePiece.displaced());
     }
 
@@ -183,8 +185,8 @@ public class Board {
         board.replace(target, piece);
     }
 
-    public Result createResult() {
-        return new Result(Map.of(Color.WHITE, calculateScoreOf(Color.WHITE), Color.BLACK, calculateScoreOf(Color.BLACK)));
+    public ResultDto createResult() {
+        return new ResultDto(Map.of(Color.WHITE, calculateScoreOf(Color.WHITE), Color.BLACK, calculateScoreOf(Color.BLACK)));
     }
 
     public double calculateScoreOf(Color color) {

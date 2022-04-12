@@ -70,7 +70,7 @@ function printChessBoardAndStatus(response) {
     chessBoardDto['grids'].forEach(function (item) {
         var piece = document.createElement("img");
         var pieceName = item.pieceType + item.color;
-        piece.src = "../img/piece/" + pieceName + ".png";
+        piece.src = "../img/piece/" + pieceName.toLowerCase() + ".png";
         piece.id = pieceName;
         piece.className = "piece";
         $("#" + item.position).append(piece);

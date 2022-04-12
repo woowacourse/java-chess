@@ -1,14 +1,13 @@
 package chess.domain.game;
 
-import chess.domain.game.Board;
-import chess.domain.game.Color;
-import chess.domain.game.Result;
-
-import chess.domain.piece.Queen;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.QueenMovingPattern;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
-import chess.dto.RequestDto;
 import chess.dto.ChessGameDto;
+import chess.dto.RequestDto;
+import chess.dto.ResultDto;
 
 public class ChessGame {
     private static final Color START_PLAYER = Color.WHITE;
@@ -21,7 +20,7 @@ public class ChessGame {
         playing = false;
     }
 
-    public ChessGameDto start() {
+    public void start() {
         if (playing) {
             throw new IllegalStateException("게임을 시작할 수 없습니다.");
         }
@@ -29,19 +28,16 @@ public class ChessGame {
         board = Board.initialBoard();
         turn = START_PLAYER;
 
-        return load(board, turn);
+        load(board, turn);
     }
 
-    public ChessGameDto load(Board board, Color turn) {
+    public void load(Board board, Color turn) {
         this.board = board;
         this.playing = true;
         this.turn = turn;
-
-        Result result = board.createResult();
-        return new ChessGameDto(new BoardDto(board.getBoard()), result, turn);
     }
 
-    public ChessGameDto move(RequestDto requestDto) {
+    public void move(RequestDto requestDto) {
         if (!playing) {
             throw new IllegalStateException("게임이 실행중이 아닙니다.");
         }
@@ -52,37 +48,35 @@ public class ChessGame {
         boolean isCastable = board.isCastable(turn, source, target);
         boolean isEnPassantAvailable = board.isEnPassantAvailable(turn, source, target);
 
-        if(isCastable){
+        if (isCastable) {
             board.castle(source, target);
         }
-        if(!isCastable && isEnPassantAvailable){
+        if (!isCastable && isEnPassantAvailable) {
             board.doEnPassant(turn, source, target);
         }
-        if(!isCastable && !isEnPassantAvailable){
+        if (!isCastable && !isEnPassantAvailable) {
             board.movePieceIfValid(turn, source, target);
         }
 
         checkPromotion(target);
         turn = turn.nextTurn();
-
-        Result result = board.createResult();
-
-        if (result.isGameFinished()) {
-            playing = false;
-        }
-
-        return new ChessGameDto(new BoardDto(board.getBoard()), result, turn);
     }
 
     private void checkPromotion(Position target) {
         if (board.isPromotable(target)) {
-            board.promoteTo(target, new Queen(turn));
+            board.promoteTo(target, new Piece(turn, PieceType.QUEEN, new QueenMovingPattern(), 0));
         }
     }
 
-    public ChessGameDto end() {
+    public void end() {
         playing = false;
-        Result result = board.createResult();
+    }
+
+    public ChessGameDto createGameDto() {
+        ResultDto result = board.createResult();
+        if (result.isGameFinished()) {
+            playing = false;
+        }
         return new ChessGameDto(new BoardDto(board.getBoard()), result, turn);
     }
 }

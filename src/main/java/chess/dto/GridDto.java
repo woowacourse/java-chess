@@ -13,8 +13,8 @@ public class GridDto {
 
     public GridDto(Position position, Piece piece) {
         this.position = position.getPositionName();
-        this.pieceType = piece.getPieceType().name().toLowerCase();
-        this.color = piece.getColor().name().toLowerCase();
+        this.pieceType = piece.getPieceType().name();
+        this.color = piece.getColor().name();
         this.moveCount = piece.getMoveCount();
     }
 

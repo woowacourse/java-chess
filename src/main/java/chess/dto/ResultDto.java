@@ -1,22 +1,21 @@
-package chess.domain.game;
+package chess.dto;
 
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.game.Color;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Result {
-    private final List<Score> scores;
+public class ResultDto {
+    private final List<ScoreDto> scores;
     private final Color winner;
     private final boolean isDraw;
     private final boolean isGameFinished;
 
-    public Result(Map<Color, Double> scores) {
+    public ResultDto(Map<Color, Double> scores) {
         this.scores = scores.keySet()
                 .stream()
-                .map(color -> new Score(color, scores.get(color)))
+                .map(color -> new ScoreDto(color, scores.get(color)))
                 .collect(Collectors.toList());
 
         this.winner = decideWinner(scores);
@@ -24,7 +23,7 @@ public class Result {
         this.isDraw = isDraw(scores);
 
         this.isGameFinished = this.scores.stream()
-                .map(Score::getScore)
+                .map(ScoreDto::getScore)
                 .anyMatch(score -> Double.compare(score, 0) == 0);
     }
 
@@ -39,12 +38,6 @@ public class Result {
         double whiteScore = scores.get(Color.WHITE);
         double blackScore = scores.get(Color.BLACK);
         return Double.compare(whiteScore, blackScore) == 0;
-    }
-
-    public double getScoresOf(Color color) {
-        Score targetScore = scores.stream().filter(score -> score.isSameColorWith(color))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색상입니다."));
-        return targetScore.getScore();
     }
 
     public boolean isGameFinished() {

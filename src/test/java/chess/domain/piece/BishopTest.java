@@ -19,7 +19,7 @@ public class BishopTest {
     @CsvSource(value = {"BLACK:B", "WHITE:b"}, delimiter = ':')
     @DisplayName("Bishop 의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Bishop bishop = new Bishop(color);
+        Piece bishop = new Piece(color, PieceType.BISHOP, new BishopMovingPattern(), 0);
 
         assertThat(bishop.signature()).isEqualTo(pieceName);
     }
@@ -27,28 +27,28 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
-        Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.F, PositionY.RANK_2);
+        Piece bishop = new Piece(Color.BLACK, PieceType.BISHOP, new BishopMovingPattern(), 0);
+        Position source = Position.of(PositionX.C, PositionY.RANK_5);
+        Position target = Position.of(PositionX.F, PositionY.RANK_2);
         assertThat(bishop.isMovable(new HashMap<>(), source, target)).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
-        Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.G, PositionY.RANK_6);
+        Piece bishop = new Piece(Color.BLACK, PieceType.BISHOP, new BishopMovingPattern(), 0);
+        Position source = Position.of(PositionX.C, PositionY.RANK_5);
+        Position target = Position.of(PositionX.G, PositionY.RANK_6);
         assertThat(bishop.isMovable(new HashMap<>(), source, target)).isFalse();
     }
 
     @Test
     @DisplayName("Bishop 이 움직이는 경로를 얻어오는지")
     void findRoute() {
-        Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.F, PositionY.RANK_2);
+        Piece bishop = new Piece(Color.BLACK, PieceType.BISHOP, new BishopMovingPattern(), 0);
+        Position source = Position.of(PositionX.C, PositionY.RANK_5);
+        Position target = Position.of(PositionX.F, PositionY.RANK_2);
         List<Position> route = bishop.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(PositionX.D, PositionY.RANK_4), new Position(PositionX.E, PositionY.RANK_3));
+        assertThat(route).containsExactly(Position.of(PositionX.D, PositionY.RANK_4), Position.of(PositionX.E, PositionY.RANK_3));
     }
 }

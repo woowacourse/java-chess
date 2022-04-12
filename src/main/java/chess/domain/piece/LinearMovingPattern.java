@@ -1,18 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.game.Color;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class LinearMovePiece extends Piece {
-    public LinearMovePiece(Color color, PieceType pieceType) {
-        super(color, pieceType);
-    }
-
-    protected List<Position> findLinearRoute(Position source, Position target) {
+public abstract class LinearMovingPattern implements MovingPattern {
+    public List<Position> findRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
 
         int routeLength = source.calculateMaxLinearLengthTo(target);
@@ -26,15 +21,5 @@ public abstract class LinearMovePiece extends Piece {
         return route;
     }
 
-    @Override
-    protected abstract String baseSignature();
-
-    @Override
     public abstract boolean isMovable(Map<Position, Piece> board, Position source, Position target);
-
-    @Override
-    public abstract List<Position> findRoute(Position source, Position target);
-
-    @Override
-    public abstract double score();
 }
