@@ -1,0 +1,9 @@
+
+#end-wrap {
+    width: fit-content;
+    margin: auto;
+}
+
+#end-wrap #end {
+    color: red;
+}

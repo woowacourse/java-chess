@@ -1,5 +1,6 @@
 package chess.db.dao;
 
+import chess.controller.Command;
 import chess.domain.ChessGame;
 import chess.dto.ChessGameDto;
 import chess.db.entity.ChessGameEntity;
@@ -72,7 +73,7 @@ public class ChessGameDao {
         return null;
     }
 
-    public void move(final int chessGameId, final String nextState) {
+    public void modify(final int chessGameId, final String nextState) {
         connection = dbConnector.getConnection();
         String sql = "UPDATE chess_game SET state = ? WHERE id = ?";
         try {

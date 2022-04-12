@@ -48,6 +48,10 @@ public enum Command {
         operate(chessGame, commands);
     }
 
+    public static void end(final ChessGame chessGame) {
+        execute(END.command, chessGame);
+    }
+
     private static void operate(final ChessGame chessGame, final String[] commands) {
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))

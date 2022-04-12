@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/src/command.css">
     <link rel="stylesheet" href="/src/exception.css">
     <link rel="stylesheet" href="/src/status.css">
+    <link rel="stylesheet" href="/src/end.css">
 </head>
 <body>
     <div id="chess-game">
@@ -112,6 +113,11 @@
             <div id="status">
                 <p>{{status}}</p>
             </div>
+        </div>
+        <div id="end-wrap">
+            <a id="end" name="end" href="/chess-game/{{chessGameId}}/end">
+                현재 게임 종료
+            </a>
         </div>
     </div>
 </body>

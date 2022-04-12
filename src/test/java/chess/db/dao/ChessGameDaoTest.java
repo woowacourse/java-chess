@@ -46,7 +46,7 @@ class ChessGameDaoTest {
         ChessGameDao chessGameDao = new ChessGameDao();
         int chessGameId = chessGameDao.save(new ChessGame());
 
-        assertThatCode(() -> chessGameDao.move(chessGameId, "nextState"))
+        assertThatCode(() -> chessGameDao.modify(chessGameId, "nextState"))
                 .doesNotThrowAnyException();
 
         chessGameDao.delete(chessGameId);

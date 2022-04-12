@@ -34,9 +34,14 @@ public class ChessGameRepository {
 
     public void move(final int chessGameId, final ChessGame chessGame) {
         String nextState = StateType.getType(chessGame.getState());
-        chessGameDao.move(chessGameId, nextState);
+        chessGameDao.modify(chessGameId, nextState);
 
         movePieces(chessGame, chessGameId);
+    }
+
+    public void end(final int chessGameId, final ChessGame chessGame) {
+        String endState = StateType.getType(chessGame.getState());
+        chessGameDao.modify(chessGameId, endState);
     }
 
     private void savePieces(final ChessGame chessGame, final int chessGameId) {

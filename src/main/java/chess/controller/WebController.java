@@ -46,6 +46,12 @@ public class WebController {
             Response response = move(req.body(), chessGameId);
             return render(response, CHESS_TEMPLATE_PATH);
         });
+
+        get("/chess-game/:id/end", (req, res) -> {
+            int chessGameId = Integer.parseInt(req.params("id"));
+            Response response = end(chessGameId);
+            return render(response, CHESS_TEMPLATE_PATH);
+        });
     }
 
     private void config() {
@@ -64,6 +70,17 @@ public class WebController {
         try {
             Command.move(getCommands(body), chessGame);
             repository.move(chessGameId, chessGame);
+            return Response.init(chessGameId, chessGame);
+        } catch (Exception exception) {
+            return Response.exception(chessGameId, chessGame, exception.getMessage());
+        }
+    }
+
+    private Response end(final int chessGameId) {
+        ChessGame chessGame = getChessGame(chessGameId);
+        try {
+            Command.end(chessGame);
+            repository.end(chessGameId, chessGame);
             return Response.init(chessGameId, chessGame);
         } catch (Exception exception) {
             return Response.exception(chessGameId, chessGame, exception.getMessage());
