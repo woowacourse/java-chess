@@ -22,8 +22,8 @@ public class BoardDao {
     public void deleteAll() {
         final String query = "delete from board";
         try (Connection connection = dbConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("[DATABASE_ERROR] 체스 말 삭제 실패");
         }
@@ -32,11 +32,11 @@ public class BoardDao {
     public void insertBoardSquare(final String position, final String piece, final String color) {
         final String query = "INSERT INTO board(position, piece, color) VALUES (?, ?, ?)";
         try (Connection connection = dbConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, position);
-            statement.setString(2, piece);
-            statement.setString(3, color);
-            statement.executeUpdate();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, position);
+            preparedStatement.setString(2, piece);
+            preparedStatement.setString(3, color);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("[DATABASE_ERROR] 체스 말 삽입 실패");
         }
@@ -45,12 +45,12 @@ public class BoardDao {
     public void updateBoardSquare(final String source, final String target, final String piece, final String color) {
         final String query = "update board set piece = ?, color = ?, position = ? where position = ?";
         try (Connection connection = dbConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, piece);
-            statement.setString(2, color);
-            statement.setString(3, target);
-            statement.setString(4, source);
-            statement.executeUpdate();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, piece);
+            preparedStatement.setString(2, color);
+            preparedStatement.setString(3, target);
+            preparedStatement.setString(4, source);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("[DATABASE_ERROR] 체스 말 업데이트 실패");
         }
@@ -60,8 +60,8 @@ public class BoardDao {
         final String query = "SELECT * FROM board";
         final Map<Position, Piece> squares = new HashMap<>();
         try (Connection connection = dbConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             addSquares(squares, resultSet);
             return squares;
         } catch (SQLException e) {
