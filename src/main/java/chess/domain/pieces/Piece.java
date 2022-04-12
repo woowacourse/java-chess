@@ -6,9 +6,6 @@ import java.util.Objects;
 
 public final class Piece {
 
-    private static final String WHITE_SYMBOL = "white";
-    private static final String BLACK_SYMBOL = "black";
-
     private final Integer id;
     private final Color color;
     private final Type type;
