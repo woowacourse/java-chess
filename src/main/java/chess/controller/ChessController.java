@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.ChessService;
+import chess.Room;
 import chess.dto.BoardDto;
 import chess.dto.RoomsDto;
 import chess.dto.ResponseDto;
@@ -37,7 +38,7 @@ public class ChessController {
     }
 
     public int startGame(String roomTitle, String member1, String member2) {
-        return chessService.init(roomTitle, member1, member2);
+        return chessService.init(roomTitle, member1, member2).getId();
     }
 
     public void end(int roomId) {

@@ -46,11 +46,11 @@ public class ChessService {
         this.chessMemberDao = chessMemberDao;
     }
 
-    public int init(String roomTitle, String member1, String member2) {
+    public Room init(String roomTitle, String member1, String member2) {
         Board board = chessBoardDao.init(new Board(new Running()), Initializer.initialize());
         Room room = chessRoomDao.save(new Room(roomTitle, board.getId()));
         chessMemberDao.saveAll(List.of(new Member(member1), new Member(member2)), room.getId());
-        return room.getId();
+        return room;
     }
 
     public RoomsDto getRooms() {
