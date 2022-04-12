@@ -1,7 +1,9 @@
 package chess.controller;
 
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
+import chess.domain.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -52,6 +54,7 @@ public class ChessController {
 
     private void playChessGame() {
         ChessGame chessGame = ChessGame.create(GAME_ID);
+        chessGame.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
         sendDataForPrintCurrentChessBoard(chessGame);
 
         while (!chessGame.isGameEnd()) {
