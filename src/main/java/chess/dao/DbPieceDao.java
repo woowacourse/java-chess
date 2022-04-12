@@ -24,7 +24,7 @@ public class DbPieceDao implements PieceDao {
             return resultSet.next();
         } catch (final SQLException e) {
             e.printStackTrace();
-            return false;
+            throw new IllegalCallerException("DB에 연결할 수 없습니다.");
         }
     }
 
