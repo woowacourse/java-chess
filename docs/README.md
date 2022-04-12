@@ -32,9 +32,9 @@
 - [x] fk 제약조건 걸어주기
 - [x] jdbcTemplet을 사용하여 dao중복코드 제거
     - getConnection() 및 URL 등 상수 추출
+- [x] console ChessGame에서 view를 추출하여 console Controller 생성후 Web과 공통로직만 가지도록 ChessGame 리팩토링하기
 - [ ] custom sqlerror exception
 - [ ] room name 중복에 대한 제약조건 걸어주기
-- [ ] console ChessGame에서 view를 추출하여 console Controller 생성후 Web과 공통로직만 가지도록 ChessGame 리팩토링하기
 - [ ] 입장 불가한 방들에 대해 기록보기(History) 제공해주기
 - [ ] king checkmate 검사후 바로 종료가 아니라, 현재의 말로서 상대 기물을 잡을 수 있다면 게임 종료시키지 않기
 
