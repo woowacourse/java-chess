@@ -7,10 +7,12 @@ import static spark.Spark.staticFiles;
 import chess.controller.ChessController;
 import chess.dao.BoardDao;
 import chess.dao.ChessBoardDao;
+import chess.dao.ChessMemberDao;
 import chess.dao.ChessRoomDao;
 import chess.dao.ConnectionManager;
 import chess.dao.ChessPieceDao;
 import chess.dao.ChessSquareDao;
+import chess.dao.MemberDao;
 import chess.dao.PieceDao;
 import chess.dao.RoomDao;
 import chess.dao.SquareDao;
@@ -37,7 +39,8 @@ public class ChessApplication {
         SquareDao<Square> chessSquareDao = new ChessSquareDao(connectionManager);
         PieceDao<Piece> chessPieceDao = new ChessPieceDao(connectionManager);
         RoomDao<Room> chessRoomDao = new ChessRoomDao(connectionManager);
-        ChessService chessService = new ChessService(chessBoardDao, chessSquareDao, chessPieceDao, chessRoomDao);
+        MemberDao<Member> chessMemberDao = new ChessMemberDao(connectionManager);
+        ChessService chessService = new ChessService(chessBoardDao, chessSquareDao, chessPieceDao, chessRoomDao, chessMemberDao);
         chessController = new ChessController(chessService);
     }
 

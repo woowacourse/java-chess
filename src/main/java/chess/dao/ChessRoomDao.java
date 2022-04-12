@@ -25,13 +25,11 @@ public class ChessRoomDao implements RoomDao<Room> {
                     + "WHERE b.status='running'";
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            final ChessMemberDao chessMemberDao = new ChessMemberDao(connectionManager);
             List<Room> rooms = new ArrayList<>();
             while (resultSet.next()) {
                 rooms.add(new Room(
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
-                        chessMemberDao.getAllByRoomId(resultSet.getInt("id")),
                         resultSet.getInt("board_id"))
                 );
             }
@@ -62,11 +60,9 @@ public class ChessRoomDao implements RoomDao<Room> {
                 throw new IllegalArgumentException("방이 없습니다. 방 제목: " + room.getTitle());
             }
             int roomId = generatedKeys.getInt(1);
-            chessMemberDao.saveAll(room.getMembers(), roomId);
             return new Room(
                     roomId,
                     room.getTitle(),
-                    chessMemberDao.getAllByRoomId(roomId),
                     room.getBoardId());
         });
     }
@@ -78,14 +74,12 @@ public class ChessRoomDao implements RoomDao<Room> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            final ChessMemberDao chessMemberDao = new ChessMemberDao(new ConnectionManager());
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("그런 방 없습니다. 방 id: " + roomId);
             }
             return new Room(
                     resultSet.getInt("id"),
                     resultSet.getString("title"),
-                    chessMemberDao.getAllByRoomId(roomId),
                     resultSet.getInt("board_id"));
         });
     }

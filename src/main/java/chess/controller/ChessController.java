@@ -37,7 +37,7 @@ public class ChessController {
     }
 
     public int startGame(String roomTitle, String member1, String member2) {
-        return chessService.init(roomTitle, member1, member2).getId();
+        return chessService.init(roomTitle, member1, member2);
     }
 
     public void end(int roomId) {

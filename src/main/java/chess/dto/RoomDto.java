@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.Member;
+import java.util.List;
 
 public class RoomDto {
 
@@ -9,11 +10,11 @@ public class RoomDto {
     private final String whiteMember;
     private final String blackMember;
 
-    public RoomDto(int roomId, String roomTitle, Member whiteMember, Member blackMember) {
+    public RoomDto(int roomId, String roomTitle, List<Member> members) {
         this.roomId = roomId;
         this.roomTitle = roomTitle;
-        this.whiteMember = whiteMember.getName();
-        this.blackMember = blackMember.getName();
+        this.whiteMember = members.get(0).getName();
+        this.blackMember = members.get(1).getName();
     }
 
     public int getRoomId() {

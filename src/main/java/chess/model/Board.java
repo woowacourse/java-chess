@@ -1,9 +1,6 @@
 package chess.model;
 
-import chess.Member;
 import chess.model.status.Status;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Board {
 
