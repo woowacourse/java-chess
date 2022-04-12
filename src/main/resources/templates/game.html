@@ -7,10 +7,23 @@
 </head>
 <body>
 <div class="chess-game">
-  <h2>체스 게임</h2>
-  <button id="start-btn" type="button" onclick="startGame()">게임 시작</button>
+  <h1>🏁체스 게임🏁</h1>
+  <input type="text" id="game-name" placeholder="게임 이름을 입력해주세요." size="30">
+  <button id="start-btn" type="button" onclick="startGame()">새로하기</button>
+  <br>
+  <input type="text" id="load-game-name" placeholder="게임 이름을 입력해주세요." size="30">
+  <button id="load-btn">게임 불러오기</button>
+
+  <h3 id="current-turn">현재턴: </h3>
+  <form>
+    <input id="current" placeholder="출발 위치 (ex. b7)">
+    <input id="destination" placeholder="도착 위치 (ex. b5)">
+    <button id="move-btn" type="button" onclick="move()">이동</button>
+  </form>
+  <br>
   <button id="status-btn" type="button" disabled="true" onclick="findStatus()">점수 보기</button>
   <button id="end-btn" type="button" disabled="true" onclick="finishGame()">게임 종료</button>
+
   <div class="chess-board">
     <!-- rank 8 -->
     <div class="chess-board-row">
@@ -102,6 +115,6 @@
     </div>
   </div>
 </div>
-<script src="/js/index.js"></script>
+<script src="/js/game.js"></script>
 </body>
 </html>

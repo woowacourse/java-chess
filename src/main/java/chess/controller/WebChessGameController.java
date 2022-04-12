@@ -5,6 +5,8 @@ import static spark.Spark.post;
 
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -21,18 +23,12 @@ public class WebChessGameController {
     }
 
     public void run() {
-        get("/", (request, response) -> render(new HashMap<>(), "index.html"));
+        get("/", (request, response) -> render(new HashMap<>(), "game.html"));
 
-        get("/start", (request, response) -> {
-            return gson.toJson(chessGameService.initializeChessGame().getChessMap());
-        });
-
-        get("/status", (request, response) -> {
-            return gson.toJson(chessGameService.findStatus());
-        });
-
-        get("/end", (request, response) -> {
-            return gson.toJson(chessGameService.finishGame());
+        post("/new-game", (request, response) -> {
+            final JsonElement jsonElement = JsonParser.parseString(request.body());
+            final String gameName = jsonElement.getAsJsonObject().get("gameName").getAsString();
+            return gson.toJson(chessGameService.createNewChessGame(gameName));
         });
     }
 

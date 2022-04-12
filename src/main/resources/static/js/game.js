@@ -1,18 +1,42 @@
+let chessGameName = "";
+let isRunning = "";
+
 async function startGame() {
   const startButton = document.getElementById("start-btn");
   const endButton = document.getElementById("end-btn");
   const statusButton = document.getElementById("status-btn");
+  const gameName = document.getElementById("game-name");
 
   startButton.disabled = true;
   endButton.disabled = false;
   statusButton.disabled = false;
-  const chessMap = await createChessMap();
+  gameName.disabled = true;
+
+  const chessMap = await newGame(gameName.value);
+
   setChessMap(chessMap);
 }
 
-async function createChessMap() {
-  return await fetch("/start")
-  .then((response) => response.json());
+async function newGame(gameName) {
+  if (gameName === '') {
+    alert("게임 이름을 입력해주세요.");
+    return;
+  }
+
+  let chessGame = await fetch("/new-game", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      gameName: gameName
+    }),
+  });
+  chessGame = await chessGame.json();
+  chessGameName = chessGame.chessGameName;
+  isRunning = chessGame.isRunning;
+  document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
+  return chessGame.chessMap;
 }
 
 function setChessMap(chessMap) {
@@ -53,8 +77,8 @@ function toPieceImageName(mapValue) {
 }
 
 async function findStatus() {
-  const status = await fetch("/status")
-  .then((response) => response.json());
+  let status = await fetch("/status/" + chessGameName)
+  status = await status.json();
 
   const whitePlayerScore = status.whitePlayerScore;
   const blackPlayerScore = status.blackPlayerScore;
@@ -89,4 +113,22 @@ async function finishGame() {
       + blackPlayerResult);
 
   window.location.href = "/";
+}
+
+async function move() {
+  const current = document.getElementById("current").value;
+  const destination = document.getElementById("destination").value;
+  await fetch("/move", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      current: current,
+      destination: destination
+    }),
+  }).then((response) => console.log(response));
+
+  document.getElementById("current").value = "";
+  document.getElementById("destination").value = "";
 }

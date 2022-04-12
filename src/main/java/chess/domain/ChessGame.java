@@ -111,4 +111,8 @@ public class ChessGame {
         }
         return whitePlayer;
     }
+
+    public Team getTurn() {
+        return turn;
+    }
 }

@@ -1,15 +1,15 @@
 package chess.dao;
 
+import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.player.Team;
 import chess.domain.position.Position;
-import chess.dto.PieceDto;
 import chess.utils.SQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGameDao {
@@ -20,57 +20,59 @@ public class ChessGameDao {
         this.connection = SQLConnection.getConnection();
     }
 
-    public List<PieceDto> findAllPiece() {
-        final String sql = "select * from piece";
-        final List<PieceDto> pieces = new ArrayList<>();
+    public int findChessGameIdByName(final String gameName) {
+        final String sql = "select id from chess_game where name = (?)";
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, gameName);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                final String position = resultSet.getString("position");
-                final String name = resultSet.getString("name");
-                pieces.add(new PieceDto(position, name));
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return pieces;
+        throw new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다.");
     }
 
-    public void initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
-        resetPieces();
-        savePieces(whitePlayer);
-        savePieces(blackPlayer);
-        updateTurn("WHITE");
+    public void createNewChessGame(final ChessGame chessGame, final String gameName) {
+        saveChessGame(gameName, chessGame.getTurn());
+        final int chessGameId = findChessGameIdByName(gameName);
+        savePieces(chessGame.getCurrentPlayer(), chessGameId);
+        savePieces(chessGame.getOpponentPlayer(), chessGameId);
     }
 
-    public void resetPieces() {
-        final String sql = "delete from piece";
+    private void saveChessGame(final String gameName, final Team turn) {
+        final String sql = "insert into chess_game (name, turn) values (?, ?)";
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, gameName);
+            preparedStatement.setString(2, turn.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void savePieces(final Player player) {
-        final String sql = "insert into piece (position, name, team) values (?, ?, ?)";
+    public void savePieces(final Player player, final int chessGameId) {
+        final String sql = "insert into piece (position, name, team, chess_game_id) values (?, ?, ?, ?)";
         try {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             final List<Piece> pieces = player.findAll();
-            savePiece(player, preparedStatement, pieces);
+            saveEachPiece(player, preparedStatement, pieces, chessGameId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void savePiece(final Player player, final PreparedStatement preparedStatement, final List<Piece> pieces)
+    private void saveEachPiece(final Player player, final PreparedStatement preparedStatement, final List<Piece> pieces,
+            int chessGameId)
             throws SQLException {
         for (Piece piece : pieces) {
             preparedStatement.setString(1, toPositionString(piece.getPosition()));
             preparedStatement.setString(2, String.valueOf(piece.getName()));
             preparedStatement.setString(3, player.getTeamName());
+            preparedStatement.setInt(4, chessGameId);
             preparedStatement.executeUpdate();
         }
     }
@@ -79,16 +81,5 @@ public class ChessGameDao {
         final char file = position.getFile().getValue();
         final int rank = position.getRank().getValue();
         return String.valueOf(file) + rank;
-    }
-
-    private void updateTurn(final String turn) {
-        final String sql = "insert into chess_game (turn) values (?)";
-        try {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, turn);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
