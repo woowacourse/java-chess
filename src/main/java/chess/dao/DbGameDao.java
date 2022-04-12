@@ -1,28 +1,16 @@
 package chess.dao;
 
-import chess.domain.Team;
+import chess.dto.GameData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DbGameDao {
     private static final String URL = "jdbc:mysql://localhost:3306/chess";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
-    private static final Map<String, Team> nameToTeam = new HashMap<>();
-    private static final Map<Team, String> teamToName = new HashMap<>();
-
-    static {
-        nameToTeam.put("white", Team.WHITE);
-        nameToTeam.put("black", Team.BLACK);
-
-        teamToName.put(Team.WHITE, "white");
-        teamToName.put(Team.BLACK, "black");
-    }
 
     public Connection getConnection() {
         loadDriver();
@@ -43,13 +31,13 @@ public class DbGameDao {
         }
     }
 
-    public void saveGame(int gameId, String turn) {
+    public void saveGame(GameData gameData) {
         final Connection connection = getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, gameId);
-            statement.setString(2, turn);
+            statement.setInt(1, gameData.getGameId());
+            statement.setString(2, gameData.getTurn());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,13 +62,13 @@ public class DbGameDao {
         }
     }
 
-    public void updateGameData(int gameId, String turn) {
+    public void updateGameData(GameData gameData) {
         final Connection connection = getConnection();
         final String sql = "update game set turn = ? where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, turn);
-            statement.setInt(2, gameId);
+            statement.setString(1, gameData.getTurn());
+            statement.setInt(2, gameData.getGameId());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

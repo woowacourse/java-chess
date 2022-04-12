@@ -14,7 +14,6 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
-import chess.dto.GameData;
 import chess.service.DbService;
 import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
@@ -83,8 +82,7 @@ public class WebChessController {
 
     private static void putDataIfStorageEmpty(int gameId, DbService dbService) {
         if (!dbService.hasData(gameId)) {
-            GameData gameData = GameData.of(gameId, Team.of(Team.WHITE));
-            dbService.saveInitData(gameData, ChessBoardInitLogic.initialize());
+            dbService.saveInitData(gameId, Team.WHITE, ChessBoardInitLogic.initialize());
         }
     }
 
@@ -100,8 +98,7 @@ public class WebChessController {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.move(source, target);
-        GameData gameData = GameData.of(chessGame.getGameId(), Team.of(chessGame.getTurn()));
-        dbService.saveDataToDb(gameData, chessGame.getChessBoardInformation());
+        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
     }
 
     private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {
