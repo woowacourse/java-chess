@@ -49,7 +49,7 @@ public class WebChessController {
         });
 
         get("/board", (req, res) -> {
-            return render(makeBoardModel(storageService.getChessBoardData(chessGame.getGameId())), "board.html");
+            return render(makeBoardModel(storageService.loadChessBoardData(chessGame.getGameId())), "board.html");
         });
 
         post("/inGameCommand", (req, res) -> {
@@ -74,16 +74,10 @@ public class WebChessController {
     }
 
     private static void doStartCommand(ChessGame chessGame, StorageService storageService) {
-        putDataIfStorageEmpty(chessGame.getGameId(), storageService);
+        storageService.saveDataIfStorageEmpty(chessGame.getGameId());
         Team turn = storageService.loadGameTurn(chessGame.getGameId());
-        Map<ChessBoardPosition, ChessPiece> mapData = storageService.getChessBoardData(chessGame.getGameId());
+        Map<ChessBoardPosition, ChessPiece> mapData = storageService.loadChessBoardData(chessGame.getGameId());
         chessGame.initialize(turn, mapData);
-    }
-
-    private static void putDataIfStorageEmpty(int gameId, StorageService storageService) {
-        if (!storageService.hasData(gameId)) {
-            storageService.saveInitData(gameId, Team.WHITE, ChessBoardInitLogic.initialize());
-        }
     }
 
     public static Map<String, Object> makeBoardModel(Map<ChessBoardPosition, ChessPiece> mapData) {

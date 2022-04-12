@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
@@ -24,7 +25,7 @@ public class StorageService {
         return new StorageService(gameDao, boardDao);
     }
 
-    public Map<ChessBoardPosition, ChessPiece> getChessBoardData(int gameId) {
+    public Map<ChessBoardPosition, ChessPiece> loadChessBoardData(int gameId) {
         return toMapData(boardDao.findAll(gameId));
     }
 
@@ -42,7 +43,13 @@ public class StorageService {
         boardDao.updateAll(gameId, toBoardDatas(mapData));
     }
 
-    public boolean hasData(int gameId) {
+    public void saveDataIfStorageEmpty(int gameId) {
+        if (!hasData(gameId)) {
+            saveInitData(gameId, Team.WHITE, ChessBoardInitLogic.initialize());
+        }
+    }
+
+    private boolean hasData(int gameId) {
         return !gameDao.getTurn(gameId).isEmpty();
     }
 
