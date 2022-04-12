@@ -62,7 +62,7 @@ public class WebController {
     private Response move(final String body, final int chessGameId) {
         ChessGame chessGame = getChessGame(chessGameId);
         try {
-            Command.execute(getCommands(body), chessGame);
+            Command.move(getCommands(body), chessGame);
             repository.move(chessGameId, chessGame);
             return Response.init(chessGameId, chessGame);
         } catch (Exception exception) {

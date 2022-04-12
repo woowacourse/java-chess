@@ -40,6 +40,14 @@ public enum Command {
         execute(START.command, chessGame);
     }
 
+    public static void move(final String input, final ChessGame chessGame) {
+        String[] commands = input.split(DELIMITER);
+        if (!commands[COMMAND_LOCATION].equals(MOVE.command)) {
+            throw new IllegalArgumentException("'move source위치 target위치' 의 형식으로 입력해주세요.");
+        }
+        operate(chessGame, commands);
+    }
+
     private static void operate(final ChessGame chessGame, final String[] commands) {
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))

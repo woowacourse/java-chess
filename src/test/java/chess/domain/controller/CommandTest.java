@@ -98,4 +98,14 @@ class CommandTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료됐습니다.");
     }
+
+    @Test
+    @DisplayName("move 요청 시 move 명령어를 올바르게 입력하지 않은 경우 예외 처리")
+    void invalidMoveCommand() {
+        ChessGame chessGame = new ChessGame();
+
+        assertThatThrownBy(() -> Command.move("mov a2 a4", chessGame))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("'move source위치 target위치' 의 형식으로 입력해주세요.");
+    }
 }
