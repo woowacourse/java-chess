@@ -3,16 +3,14 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.db.BoardDAO;
 import chess.db.StateDAO;
 import chess.domain.command.Command;
 import chess.domain.command.CommandConverter;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import chess.domain.state.State;
 import chess.web.BoardDTO;
 import chess.web.RequestParser;
+import chess.web.WebChessGame;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import spark.ModelAndView;
@@ -23,14 +21,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebChessController {
 
     private final BoardDTO boardDTO = BoardDTO.buildModel();
-    private BoardDAO boardDAO;
-    private StateDAO stateDAO;
-
-    private State getState(StateDAO stateDAO, BoardDAO boardDAO) {
-        Color color = stateDAO.findColor();
-        Map<Position, Piece> pieces = boardDAO.findAllPieces();
-        return State.create(pieces, color);
-    }
+    private final WebChessGame webChessGame = new WebChessGame();
 
     public void inputGameID() {
         get("/", (req, res) ->
@@ -51,18 +42,15 @@ public class WebChessController {
     }
 
     private ModelAndView searchSavedGame(String roomId) {
-        stateDAO = new StateDAO(roomId);
-        boardDAO = new BoardDAO(roomId);
-        if (stateDAO.isSaved()) {
-            State now = getState(stateDAO, boardDAO);
-            boardDTO.update(now.getBoard());
-            return loadFromSave(now);
+        webChessGame.searchSavedGame(roomId, boardDTO);
+        if (webChessGame.isSaved()) {
+            return loadFromSave(webChessGame.getColor());
         }
         return new ModelAndView(Map.of(), "new_game.html");
     }
 
-    private ModelAndView loadFromSave(State now) {
-        if (now.isWhite()) {
+    private ModelAndView loadFromSave(Color color) {
+        if (color == Color.WHITE) {
             return new ModelAndView(boardDTO.getData(), "white.html");
         }
         return new ModelAndView(boardDTO.getData(), "black.html");
@@ -81,11 +69,8 @@ public class WebChessController {
     private ModelAndView initializeGame(Request req) {
         State now = State.create();
         State next = now.proceed(CommandConverter.convertCommand(RequestParser.from(req.body()).getCommand()));
-        boardDTO.update(next.getBoard());
-        if (next.isRunning()) {
-            stateDAO.initializeID();
-            stateDAO.initializeColor();
-            boardDAO.initializePieces(next);
+        webChessGame.initializeGame(boardDTO, next);
+        if (webChessGame.isSaved()) {
             return new ModelAndView(boardDTO.getData(), "white.html");
         }
         return new ModelAndView(Map.of(), "finished_before_start.html");
@@ -93,51 +78,37 @@ public class WebChessController {
 
     public void runTurn() {
         post("/move", (req, res) -> {
-            State now = getState(stateDAO, boardDAO);
+            State now = webChessGame.getState();
             try {
                 Command command = CommandConverter.convertCommand(RequestParser.from(req.body()).getCommand());
-                return executeOneTurn(res, command);
+                State next = webChessGame.executeOneTurn(command, boardDTO);
+                return executeOneTurn(res, command, next);
             } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException exception) {
                 return handleRunningException(now, exception.getMessage());
             }
         }, new HandlebarsTemplateEngine());
     }
 
-    private ModelAndView executeOneTurn(Response res, Command command) {
-        State now = getState(stateDAO, boardDAO);
-        State next = now.proceed(command);
+    private ModelAndView executeOneTurn(Response res, Command command, State next) {
         if (next.isFinished()) {
-            boardDTO.update(next.getBoard());
-            return killGame(res);
+            res.redirect("/finished");
+            return null;
         }
         if (command.isStatus()) {
-            return continueToStatus(next);
+            return continueToStatus();
         }
-        return endTurn(next, command);
+        return endTurn(next);
     }
 
-    private ModelAndView continueToStatus(State next) {
-        boardDTO.updateWithScore(next.getBoard(), next.generateScore());
+    private ModelAndView continueToStatus() {
         return new ModelAndView(boardDTO.getData(), "status.html");
     }
 
-    private ModelAndView endTurn(State next, Command command) {
-        boardDTO.update(next.getBoard());
-        movePieceIntoDB(next, command);
+    private ModelAndView endTurn(State next) {
         if (!next.isWhite()) {
-            stateDAO.convertColor(Color.BLACK);
             return new ModelAndView(boardDTO.getData(), "black.html");
         }
-        stateDAO.convertColor(Color.WHITE);
         return new ModelAndView(boardDTO.getData(), "white.html");
-    }
-
-    private void movePieceIntoDB(State next, Command command) {
-        Position from = command.getFromPosition();
-        Position to = command.getToPosition();
-        boardDAO.delete(from);
-        boardDAO.delete(to);
-        boardDAO.insert(to, next.getBoard().findPiece(to));
     }
 
     private ModelAndView handleRunningException(State now, String message) {
@@ -150,7 +121,7 @@ public class WebChessController {
 
     public void backwardToMove() {
         post("/backwardToMove", (req, res) -> {
-            State now = getState(stateDAO, boardDAO);
+            State now = webChessGame.getState();
             if (now.isWhite()) {
                 return new ModelAndView(boardDTO.getData(), "white.html");
             }
@@ -171,20 +142,10 @@ public class WebChessController {
     }
 
     public void saveGame() {
-        post("/saved", (req, res) -> {
-            return new ModelAndView(boardDTO.getData(), "saved.html");
-        }, new HandlebarsTemplateEngine());
+        post("/saved", (req, res) -> new ModelAndView(boardDTO.getData(), "saved.html"), new HandlebarsTemplateEngine());
     }
 
     public void terminateGame() {
-        get("/finished", (req, res) -> {
-            return new ModelAndView(boardDTO.getData(), "finished.html");
-        }, new HandlebarsTemplateEngine());
-    }
-
-    private ModelAndView killGame(Response res) {
-        stateDAO.terminateDB();
-        res.redirect("/finished");
-        return null;
+        get("/finished", (req, res) -> new ModelAndView(boardDTO.getData(), "finished.html"), new HandlebarsTemplateEngine());
     }
 }
