@@ -28,12 +28,9 @@ public class TestDBConnector {
     private void createDatabase() {
         final String sql = "create database if not exists test_chess;";
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "1234")) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+                "root", "1234")) {
+            updateQuery(connection, sql);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,12 +44,9 @@ public class TestDBConnector {
                 "  `turn` varchar(15) NOT NULL,\n" +
                 "  PRIMARY KEY (`id`)\n" +
                 ");";
+
         try (Connection connection = getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            updateQuery(connection, sql);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,12 +63,17 @@ public class TestDBConnector {
                 "  KEY `game_id` (`game_id`),\n" +
                 "  CONSTRAINT `game_id` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                 ");";
+
         try (Connection connection = getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            updateQuery(connection, sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateQuery(Connection connection, String sql) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

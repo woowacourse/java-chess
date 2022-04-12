@@ -23,7 +23,7 @@ class ChessBoardDAOTest {
     private ChessGameDAO chessGameDAO;
     private ChessBoardDAO chessBoardDAO;
     private ChessDTO chessDTO;
-    private int gameId;
+    private GameIdDTO gameId;
 
     @BeforeEach
     void setUp() {
@@ -39,13 +39,14 @@ class ChessBoardDAOTest {
 
     @AfterEach
     void delete() {
-        chessGameDAO.deleteGame(new GameIdDTO(gameId));
+        chessGameDAO.deleteGame(new GameIdDTO(gameId.getId()));
     }
 
     @Test
     @DisplayName("보드 테이블에 기물 저장")
     void saveGame() {
-        assertThatNoException().isThrownBy(() -> chessBoardDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId)));
+        assertThatNoException().isThrownBy(() -> chessBoardDAO.savePieces(List.of(chessDTO),
+                new GameIdDTO(gameId.getId())));
     }
 
     @Test
@@ -60,16 +61,16 @@ class ChessBoardDAOTest {
             testDTOs.add(new ChessDTO(board.get(position).getColor(),
                     board.get(position).getPiece(), position));
         }
-        chessBoardDAO.savePieces(testDTOs, new GameIdDTO(gameId));
+        chessBoardDAO.savePieces(testDTOs, new GameIdDTO(gameId.getId()));
 
-        assertThat(chessBoardDAO.findAllPiece(new GameIdDTO(gameId)).size()).isEqualTo(32);
+        assertThat(chessBoardDAO.findAllPiece(new GameIdDTO(gameId.getId())).size()).isEqualTo(32);
     }
 
     @Test
     @DisplayName("기물 삭제")
     void deletePiece() {
-        chessBoardDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId));
+        chessBoardDAO.savePieces(List.of(chessDTO), new GameIdDTO(gameId.getId()));
 
-        assertThatNoException().isThrownBy(() -> chessBoardDAO.deletePiece("a2", new GameIdDTO(gameId)));
+        assertThatNoException().isThrownBy(() -> chessBoardDAO.deletePiece("a2", new GameIdDTO(gameId.getId())));
     }
 }

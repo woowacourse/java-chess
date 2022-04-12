@@ -6,6 +6,7 @@ import chess.dto.GameIdDTO;
 import java.util.List;
 
 public interface BoardDAO {
+
     void savePieces(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO);
 
     List<ChessDTO> findAllPiece(GameIdDTO gameIdDTO);

@@ -35,7 +35,7 @@ public class ChessService {
     }
 
     public GameIdDTO findGameIdByUser(String whiteUser, String blackUser) {
-        return new GameIdDTO(chessGameDAO.findGameIdByUser(new GameDTO(whiteUser, blackUser)));
+        return chessGameDAO.findGameIdByUser(new GameDTO(whiteUser, blackUser));
     }
 
     public void initGame(ChessGame chessGame, int id) {
@@ -45,14 +45,13 @@ public class ChessService {
         if (!turn.isInitTurn(INIT_TURN) && !chessGame.isRightTurn(turn.getTurn())) {
             chessGame.loadTurn();
         }
-
         if (turn.isInitTurn(INIT_TURN)) {
             initBoard(chessGame.toBoardModel(), new GameIdDTO(id));
         }
     }
 
     private TurnDTO findTurn(GameIdDTO gameIdDTO) {
-        return new TurnDTO(chessGameDAO.findTurn(gameIdDTO));
+        return chessGameDAO.findTurn(gameIdDTO);
     }
 
     private void initBoard(Map<String, Piece> board, GameIdDTO gameIdDTO) {

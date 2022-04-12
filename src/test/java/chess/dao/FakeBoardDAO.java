@@ -10,7 +10,6 @@ public class FakeBoardDAO implements BoardDAO {
     private final Map<Integer, Map<String, String>> pieces = new HashMap<>();
     private int id = 0;
 
-
     @Override
     public void savePieces(List<ChessDTO> chessDTOS, GameIdDTO gameIdDTO) {
         for (ChessDTO chessDto : chessDTOS) {
@@ -28,21 +27,29 @@ public class FakeBoardDAO implements BoardDAO {
     public List<ChessDTO> findAllPiece(GameIdDTO gameIdDTO) {
         List<ChessDTO> boards = new ArrayList<>();
         for (Integer id : pieces.keySet()) {
-            if (pieces.get(id).get("gameId").equals(Integer.toString(gameIdDTO.getId()))) {
-                boards.add(new ChessDTO(pieces.get(id).get("color"),
-                        pieces.get(id).get("piece"), pieces.get(id).get("position")));
-            }
+            toDTO(gameIdDTO, boards, id);
         }
         return boards;
+    }
+
+    private void toDTO(GameIdDTO gameIdDTO, List<ChessDTO> boards, Integer id) {
+        if (pieces.get(id).get("gameId").equals(Integer.toString(gameIdDTO.getId()))) {
+            boards.add(new ChessDTO(pieces.get(id).get("color"),
+                    pieces.get(id).get("piece"), pieces.get(id).get("position")));
+        }
     }
 
     @Override
     public void deletePiece(String position, GameIdDTO gameIdDTO) {
         for (int id : pieces.keySet()) {
-            if (pieces.get(id).get("gameId").equals(Integer.toString(gameIdDTO.getId()))
-                    && pieces.get(id).get("position").equals(position)) {
-                pieces.remove(id);
-            }
+            deleteByCondition(position, gameIdDTO, id);
+        }
+    }
+
+    private void deleteByCondition(String position, GameIdDTO gameIdDTO, int id) {
+        if (pieces.get(id).get("gameId").equals(Integer.toString(gameIdDTO.getId()))
+                && pieces.get(id).get("position").equals(position)) {
+            pieces.remove(id);
         }
     }
 }

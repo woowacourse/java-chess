@@ -17,7 +17,7 @@ class ChessGameDAOTest {
 
     private ChessGameDAO chessGameDAO;
     private GameDTO gameDTO;
-    private int gameId;
+    private GameIdDTO gameId;
 
     @BeforeEach
     void setUp() {
@@ -30,7 +30,7 @@ class ChessGameDAOTest {
 
     @AfterEach
     void delete() {
-        chessGameDAO.deleteGame(new GameIdDTO(gameId));
+        chessGameDAO.deleteGame(new GameIdDTO(gameId.getId()));
     }
 
     @Test
@@ -39,51 +39,51 @@ class ChessGameDAOTest {
         GameDTO gameTestDTO = new GameDTO("greengreen", "lawn");
 
         assertThatNoException().isThrownBy(() -> chessGameDAO.saveGame(gameTestDTO, new TurnDTO("white")));
-        int id = chessGameDAO.findGameIdByUser(gameTestDTO);
-        chessGameDAO.deleteGame(new GameIdDTO(id));
+        GameIdDTO id = chessGameDAO.findGameIdByUser(gameTestDTO);
+        chessGameDAO.deleteGame(new GameIdDTO(id.getId()));
     }
 
     @Test
     @DisplayName("경기를 진행하고 있는 유저의 이름으로 game id 검색")
     void findGameIdByUser() {
-        int gameId = chessGameDAO.findGameIdByUser(gameDTO);
-        if (gameId == 0) {
+        GameIdDTO gameId = chessGameDAO.findGameIdByUser(gameDTO);
+        if (gameId.getId() == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
 
-        assertThat(gameId).isEqualTo(chessGameDAO.findGameIdByUser(gameDTO));
+        assertThat(gameId.getId()).isEqualTo(chessGameDAO.findGameIdByUser(gameDTO).getId());
     }
 
     @Test
     @DisplayName("game id가 일치하는 게임 정보 삭제")
     void deleteGame() {
-        int gameId = chessGameDAO.findGameIdByUser(gameDTO);
-        if (gameId == 0) {
+        GameIdDTO gameId = chessGameDAO.findGameIdByUser(gameDTO);
+        if (gameId.getId() == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
 
-        assertThatNoException().isThrownBy(() -> chessGameDAO.deleteGame(new GameIdDTO(gameId)));
+        assertThatNoException().isThrownBy(() -> chessGameDAO.deleteGame(new GameIdDTO(gameId.getId())));
     }
 
     @Test
     @DisplayName("game id에 해당하는 turn 업데이트")
     void updateTurn() {
-        int gameId = chessGameDAO.findGameIdByUser(gameDTO);
-        if (gameId == 0) {
+        GameIdDTO gameId = chessGameDAO.findGameIdByUser(gameDTO);
+        if (gameId.getId() == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
 
-        assertThatNoException().isThrownBy(() -> chessGameDAO.updateTurn(new GameIdDTO(gameId), "black"));
+        assertThatNoException().isThrownBy(() -> chessGameDAO.updateTurn(new GameIdDTO(gameId.getId()), "black"));
     }
 
     @Test
     @DisplayName("game id의 turn 찾기")
     void findTurn() {
-        int gameId = chessGameDAO.findGameIdByUser(gameDTO);
-        if (gameId == 0) {
+        GameIdDTO gameId = chessGameDAO.findGameIdByUser(gameDTO);
+        if (gameId.getId() == 0) {
             throw new IllegalArgumentException(NOT_EXIST_GAME);
         }
 
-        assertThat(chessGameDAO.findTurn(new GameIdDTO(gameId))).isEqualTo("white");
+        assertThat(chessGameDAO.findTurn(new GameIdDTO(gameId.getId())).getTurn()).isEqualTo("white");
     }
 }

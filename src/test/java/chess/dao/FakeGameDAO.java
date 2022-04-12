@@ -23,18 +23,19 @@ public class FakeGameDAO implements GameDAO {
     }
 
     @Override
-    public int findGameIdByUser(GameDTO gameDTO) {
+    public GameIdDTO findGameIdByUser(GameDTO gameDTO) {
         for (int id : games.keySet()) {
-            if (games.get(id).get("white").equals(gameDTO.getWhiteUserName()) && (games.get(id).get("black").equals(gameDTO.getBlackUserName()))) {
-                return id;
+            if (games.get(id).get("white").equals(gameDTO.getWhiteUserName()) &&
+                    (games.get(id).get("black").equals(gameDTO.getBlackUserName()))) {
+                return new GameIdDTO(id);
             }
         }
-        return 0;
+        return new GameIdDTO(0);
     }
 
     @Override
-    public String findTurn(GameIdDTO gameIdDTO) {
-        return games.get(gameIdDTO.getId()).get("turn");
+    public TurnDTO findTurn(GameIdDTO gameIdDTO) {
+        return new TurnDTO(games.get(gameIdDTO.getId()).get("turn"));
     }
 
     @Override
