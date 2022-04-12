@@ -12,25 +12,6 @@ public class GameDao {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
-    public Connection getConnection() {
-        loadDriver();
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void loadDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void saveGame(GameData gameData) {
         final Connection connection = getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
@@ -86,6 +67,25 @@ public class GameDao {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }
+    }
+
+    private Connection getConnection() {
+        loadDriver();
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    private void loadDriver() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (final Exception e) {
+            e.printStackTrace();
         }
     }
 }

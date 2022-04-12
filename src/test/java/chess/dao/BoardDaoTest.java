@@ -27,16 +27,8 @@ class BoardDaoTest {
     }
 
     @Test
-    void connection() {
-        final BoardDao boardDao = new BoardDao();
-        final Connection connection = boardDao.getConnection();
-        assertThat(connection).isNotNull();
-    }
-
-    @Test
     void updateAll() {
         final BoardDao boardDao = new BoardDao();
-        boardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
         chessGame.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
         boardDao.updateAll(chessGame.getGameId(), toBoardDatas(chessGame.getChessBoardData()));
@@ -46,7 +38,6 @@ class BoardDaoTest {
     void findAll() {
         GameDao gameDao = new GameDao();
         final BoardDao boardDao = new BoardDao();
-        final Connection connection = boardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
         gameDao.saveGame(GameData.of(1111, Team.of(Team.WHITE)));
         List<BoardData> boardDatas = boardDao.findAll(chessGame.getGameId());
