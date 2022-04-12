@@ -1,4 +1,4 @@
-package chess.status;
+package chess.state;
 
 import static chess.piece.detail.Color.BLACK;
 import static chess.piece.detail.Color.WHITE;

@@ -15,8 +15,8 @@ import chess.game.Result;
 import chess.piece.Piece;
 import chess.piece.detail.Color;
 import chess.position.Position;
-import chess.status.Ready;
-import chess.status.Running;
+import chess.state.Ready;
+import chess.state.Running;
 import chess.view.Command;
 import java.util.*;
 

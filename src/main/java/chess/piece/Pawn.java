@@ -1,8 +1,5 @@
 package chess.piece;
 
-import static chess.piece.detail.Color.BLACK;
-import static chess.piece.detail.Color.WHITE;
-
 import chess.game.MoveCommand;
 import chess.piece.detail.Color;
 import chess.piece.detail.Direction;
