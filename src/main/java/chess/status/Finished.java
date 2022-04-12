@@ -33,26 +33,6 @@ public final class Finished extends AbstractState {
     }
 
     @Override
-    public boolean canMove() {
-        return false;
-    }
-
-    @Override
-    public Board getBoard() {
-        return board;
-    }
-
-    @Override
-    public boolean isGameEnd() {
-        return true;
-    }
-
-    @Override
-    public Color getTurn() {
-        return turn;
-    }
-
-    @Override
     public Map<Color, Double> getStatus() {
         throw new IllegalCallerException("게임이 종료되어 상태를 불러올 수 없습니다.");
     }

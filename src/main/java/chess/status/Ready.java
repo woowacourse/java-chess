@@ -31,28 +31,13 @@ public final class Ready extends AbstractState {
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
     public void move(final MoveCommand moveCommand) {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
     }
 
     @Override
-    public boolean canMove() {
-        return false;
-    }
-
-    @Override
     public Board getBoard() {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
-    }
-
-    @Override
-    public boolean isGameEnd() {
-        return false;
     }
 
     @Override
@@ -67,6 +52,6 @@ public final class Ready extends AbstractState {
 
     @Override
     public void load(final Map<Position, Piece> board) {
-        throw new IllegalCallerException("불가능");
+        throw new IllegalCallerException("게임이 시작되지 않아 보드를 불러올 수 없습니다.");
     }
 }

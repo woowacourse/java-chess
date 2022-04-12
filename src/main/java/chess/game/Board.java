@@ -10,7 +10,6 @@ import chess.piece.detail.Direction;
 import chess.position.Column;
 import chess.position.Position;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Board {
 

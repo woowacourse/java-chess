@@ -42,19 +42,8 @@ public final class Running extends AbstractState {
     }
 
     @Override
-    public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand, turn);
-        reverseColor(this.turn);
-    }
-
-    @Override
     public boolean canMove() {
         return true;
-    }
-
-    @Override
-    public Board getBoard() {
-        return board;
     }
 
     @Override
@@ -63,17 +52,9 @@ public final class Running extends AbstractState {
     }
 
     @Override
-    public Color getTurn() {
-        return turn;
-    }
-
-    private void reverseColor(final Color color) {
-        if (WHITE == color) {
-            this.turn = BLACK;
-        }
-        if (BLACK == color) {
-            this.turn = WHITE;
-        }
+    public void move(final MoveCommand moveCommand) {
+        board.move(moveCommand, turn);
+        reverseColor(this.turn);
     }
 
     @Override
@@ -85,5 +66,14 @@ public final class Running extends AbstractState {
     @Override
     public void load(final Map<Position, Piece> value) {
         board = Board.of(value);
+    }
+
+    private void reverseColor(final Color color) {
+        if (WHITE == color) {
+            this.turn = BLACK;
+        }
+        if (BLACK == color) {
+            this.turn = WHITE;
+        }
     }
 }

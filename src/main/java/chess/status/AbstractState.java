@@ -1,14 +1,9 @@
 package chess.status;
 
 import chess.game.Board;
-import chess.game.MoveCommand;
-import chess.piece.Piece;
 import chess.piece.detail.Color;
-import chess.position.Position;
-import chess.view.Command;
-import java.util.Map;
 
-public class AbstractState implements State{
+public abstract class AbstractState implements State {
 
     protected Board board;
     protected Color turn;
@@ -22,18 +17,8 @@ public class AbstractState implements State{
     }
 
     @Override
-    public State turn(final Command command) {
-        return null;
-    }
-
-    @Override
     public boolean isRunning() {
-        return false;
-    }
-
-    @Override
-    public void move(final MoveCommand moveCommand) {
-
+        return true;
     }
 
     @Override
@@ -42,27 +27,17 @@ public class AbstractState implements State{
     }
 
     @Override
-    public Board getBoard() {
-        return null;
+    public boolean isGameEnd() {
+        return board.isKingDead();
     }
 
     @Override
-    public boolean isGameEnd() {
-        return false;
+    public Board getBoard() {
+        return board;
     }
 
     @Override
     public Color getTurn() {
-        return null;
-    }
-
-    @Override
-    public Map<Color, Double> getStatus() {
-        return null;
-    }
-
-    @Override
-    public void load(final Map<Position, Piece> board) {
-
+        return turn;
     }
 }
