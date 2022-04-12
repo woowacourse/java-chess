@@ -3,11 +3,12 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoardInitLogic;
+import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.Team;
-import chess.dto.ChessBoardDto;
-import chess.dto.GameInformationDto;
+import chess.domain.piece.ChessPiece;
 import java.sql.Connection;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class DbBoardDaoTest {
     @BeforeAll
     static  void setUp() {
         DbGameDao dbGameDao = new DbGameDao();
-        dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
+        dbGameDao.saveGame(1111, Team.of(Team.WHITE));
     }
 
     @Test
@@ -44,9 +45,9 @@ class DbBoardDaoTest {
         final DbBoardDao dbBoardDao = new DbBoardDao();
         final Connection connection = dbBoardDao.getConnection();
         ChessGame chessGame = ChessGame.create(1111);
-        dbGameDao.saveGame(GameInformationDto.of(1111, Team.WHITE));
-        ChessBoardDto chessBoardDto = dbBoardDao.findAll(chessGame.getGameId());
-        assertThat(chessBoardDto.isEmpty()).isTrue();
+        dbGameDao.saveGame(1111, Team.of(Team.WHITE));
+        Map<ChessBoardPosition, ChessPiece> mapData = dbBoardDao.findAll(chessGame.getGameId());
+        assertThat(mapData).isEmpty();
     }
 
     @AfterEach

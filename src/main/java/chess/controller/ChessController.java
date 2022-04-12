@@ -78,7 +78,7 @@ public class ChessController {
     }
 
     private void statusCommand(ChessGame chessGame) {
-        OutputView.printStatus(chessGame.getStatusInformation());
+        OutputView.printStatus(chessGame.getTeamScore(), chessGame.getWinner());
     }
 
     private void moveCommand(ChessGame chessGame, List<String> command) {

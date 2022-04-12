@@ -14,15 +14,13 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
-import chess.dto.ChessBoardDto;
-import chess.dto.GameInformationDto;
-import chess.dto.WebChessStatusDto;
+import chess.dto.GameData;
 import chess.service.DbService;
 import chess.webview.ChessPieceImagePath;
 import chess.webview.ColumnName;
 import chess.webview.RowName;
-import chess.webview.TeamName;
 import chess.webview.WebInputView;
+import chess.webview.WebOutputView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -66,8 +64,7 @@ public class WebChessController {
         });
 
         get("/status", (req, res) -> {
-            WebChessStatusDto webChessStatusDto = chessGame.getStatusInformationForWeb();
-            Map<String, Object> model = makeStatusModel(webChessStatusDto);
+            Map<String, Object> model = WebOutputView.makeStatusModel(chessGame.getTeamScore(), chessGame.getWinner());
             return render(model, "status.html");
         });
 
@@ -79,21 +76,21 @@ public class WebChessController {
 
     private static void doStartCommand(ChessGame chessGame, DbService dbService) {
         putDataIfStorageEmpty(chessGame.getGameId(), dbService);
-        GameInformationDto gameInformationDto = dbService.loadGameInformationDto(chessGame.getGameId());
-        ChessBoardDto chessBoardDto = dbService.getChessBoardInformation(chessGame.getGameId());
-        chessGame.initialize(gameInformationDto.getTurn(), chessBoardDto.getMapInformation());
+        Team turn = dbService.loadGameTurn(chessGame.getGameId());
+        Map<ChessBoardPosition, ChessPiece> mapData = dbService.getChessBoardInformation(chessGame.getGameId());
+        chessGame.initialize(turn, mapData);
     }
 
     private static void putDataIfStorageEmpty(int gameId, DbService dbService) {
         if (!dbService.hasData(gameId)) {
-            dbService.saveInitData(gameId, Team.WHITE, ChessBoardDto.of(ChessBoardInitLogic.initialize()));
+            GameData gameData = GameData.of(gameId, Team.of(Team.WHITE));
+            dbService.saveInitData(gameData, ChessBoardInitLogic.initialize());
         }
     }
 
-    public static Map<String, Object> makeBoardModel(ChessBoardDto chessBoardDto) {
-        Map<ChessBoardPosition, ChessPiece> mapInfo = chessBoardDto.getMapInformation();
+    public static Map<String, Object> makeBoardModel(Map<ChessBoardPosition, ChessPiece> mapData) {
         Map<String, Object> boardModel = new HashMap<>();
-        for (Entry<ChessBoardPosition, ChessPiece> entry : mapInfo.entrySet()) {
+        for (Entry<ChessBoardPosition, ChessPiece> entry : mapData.entrySet()) {
             boardModel.put(chessBoardToString(entry.getKey()), ChessPieceImagePath.of(entry.getValue()));
         }
         return boardModel;
@@ -103,7 +100,8 @@ public class WebChessController {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.move(source, target);
-        dbService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardInformation());
+        GameData gameData = GameData.of(chessGame.getGameId(), Team.of(chessGame.getTurn()));
+        dbService.saveDataToDb(gameData, chessGame.getChessBoardInformation());
     }
 
     private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {
@@ -113,15 +111,6 @@ public class WebChessController {
         res.redirect("/board");
         return null;
     }
-
-    private static Map<String, Object> makeStatusModel(WebChessStatusDto webChessStatusDto) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("blackScore", webChessStatusDto.getBlackScore());
-        model.put("whiteScore", webChessStatusDto.getWhiteScore());
-        model.put("winner", TeamName.of(webChessStatusDto.getWinner()));
-        return model;
-    }
-
 
     private static String chessBoardToString(ChessBoardPosition chessBoardPosition) {
         return ColumnName.of(chessBoardPosition.getColumn()) + RowName.of(chessBoardPosition.getRow());

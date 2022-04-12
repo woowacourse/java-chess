@@ -9,7 +9,6 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.dto.ChessBoardDto;
 import chess.view.ChessPieceName;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -46,9 +45,9 @@ public class DbBoardDao {
         }
     }
 
-    public void updateAll(int gameId, ChessBoardDto chessBoardDto) {
+    public void updateAll(int gameId, Map<ChessBoardPosition, ChessPiece> mapData) {
         deleteAll(gameId);
-        saveAll(gameId, chessBoardDto.getMapInformation());
+        saveAll(gameId, mapData);
     }
 
     public void deleteAll(int gameId) {
@@ -86,7 +85,7 @@ public class DbBoardDao {
         }
     }
 
-    public ChessBoardDto findAll(int gameId) {
+    public Map<ChessBoardPosition, ChessPiece> findAll(int gameId) {
         Map<ChessBoardPosition, ChessPiece> mapInfo = new HashMap<>();
         final Connection connection = getConnection();
         final String sql = "select * from board where game_id = ?";
@@ -102,7 +101,7 @@ public class DbBoardDao {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return ChessBoardDto.of(mapInfo);
+        return mapInfo;
     }
 
     private ChessPiece makeProperChessPiece(String type) {

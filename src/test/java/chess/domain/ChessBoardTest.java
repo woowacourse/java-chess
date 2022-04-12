@@ -88,11 +88,4 @@ class ChessBoardTest {
         double score = chessBoard.calculateScore(Team.WHITE);
         assertThat(score).isEqualTo(37.0);
     }
-
-    @Test
-    @DisplayName("우승팀을 반환한다")
-    void judgeWinnerTest() {
-        ChessBoard chessBoard = ChessBoard.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
-        assertThat(chessBoard.judgeWinner()).isEqualTo(Team.BLACK);
-    }
 }

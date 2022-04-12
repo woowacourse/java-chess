@@ -1,9 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
-import chess.dto.ChessBoardDto;
-import chess.dto.ChessStatusDto;
-import chess.dto.WebChessStatusDto;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
@@ -22,8 +20,8 @@ public class ChessGame {
         this.chessBoard = ChessBoard.initialize(turn, boardData);
     }
 
-    public ChessBoardDto getChessBoardInformation() {
-        return ChessBoardDto.of(chessBoard.getMapInformation());
+    public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation() {
+        return chessBoard.getMapInformation();
     }
 
     public boolean isGameEnd() {
@@ -34,19 +32,27 @@ public class ChessGame {
         chessBoard.move(sourcePosition, targetPosition);
     }
 
-    public ChessStatusDto getStatusInformation() {
-        return ChessStatusDto.of(chessBoard);
-    }
-
-    public WebChessStatusDto getStatusInformationForWeb() {
-        return WebChessStatusDto.of(chessBoard);
-    }
-
     public int getGameId() {
         return gameId;
     }
 
     public Team getTurn() {
         return chessBoard.getTurn();
+    }
+
+    public Map<Team, Double> getTeamScore() {
+        Map<Team, Double> teamScore = new HashMap<>();
+        teamScore.put(Team.WHITE, chessBoard.calculateScore(Team.WHITE));
+        teamScore.put(Team.BLACK, chessBoard.calculateScore(Team.BLACK));
+        return teamScore;
+    }
+
+    public Team getWinner() {
+        double whiteTeamScore = chessBoard.calculateScore(Team.WHITE);
+        double blackTeamScore = chessBoard.calculateScore(Team.BLACK);
+        if (whiteTeamScore > blackTeamScore) {
+            return Team.WHITE;
+        }
+        return Team.BLACK;
     }
 }

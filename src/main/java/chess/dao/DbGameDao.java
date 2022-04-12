@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.Team;
-import chess.dto.GameInformationDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,13 +43,13 @@ public class DbGameDao {
         }
     }
 
-    public void saveGame(GameInformationDto gameInformationDto) {
+    public void saveGame(int gameId, String turn) {
         final Connection connection = getConnection();
         final String sql = "insert into game (id, turn) values (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, gameInformationDto.getId());
-            statement.setString(2, teamToName.get(gameInformationDto.getTurn()));
+            statement.setInt(1, gameId);
+            statement.setString(2, turn);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,30 +57,29 @@ public class DbGameDao {
         }
     }
 
-    public GameInformationDto getGameData(int gameId) {
+    public String getTurn(int gameId) {
         final Connection connection = getConnection();
-        final String sql = "select * from game where id = ?";
+        final String sql = "select turn from game where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, gameId);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                return GameInformationDto.empty();
+                return "";
             }
-            return GameInformationDto.of(resultSet.getInt("id"),
-                    nameToTeam.get(resultSet.getString("turn")));
+            return resultSet.getString("turn");
         } catch (SQLException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public void updateGameData(int gameId, GameInformationDto gameInformationDto) {
+    public void updateGameData(int gameId, String turn) {
         final Connection connection = getConnection();
         final String sql = "update game set turn = ? where id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, teamToName.get(gameInformationDto.getTurn()));
+            statement.setString(1, turn);
             statement.setInt(2, gameId);
             statement.execute();
         } catch (SQLException e) {
@@ -98,7 +96,7 @@ public class DbGameDao {
             statement.setInt(1, gameId);
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

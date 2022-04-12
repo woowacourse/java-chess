@@ -2,9 +2,11 @@ package chess.service;
 
 import chess.dao.DbBoardDao;
 import chess.dao.DbGameDao;
+import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
-import chess.dto.ChessBoardDto;
-import chess.dto.GameInformationDto;
+import chess.domain.piece.ChessPiece;
+import chess.dto.GameData;
+import java.util.Map;
 
 public class DbService {
     private final DbGameDao dbGameDao;
@@ -19,30 +21,25 @@ public class DbService {
         return new DbService(dbGameDao, dbBoardDao);
     }
 
-    public ChessBoardDto getChessBoardInformation(int gameId) {
+    public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation(int gameId) {
         return dbBoardDao.findAll(gameId);
     }
 
-    public void deleteAllData(int gameId) {
-        dbBoardDao.deleteAll(gameId);
-        dbGameDao.deleteGameData(gameId);
+    public void saveDataToDb(GameData gameData, Map<ChessBoardPosition, ChessPiece> mapData) {
+        dbGameDao.updateGameData(gameData.getGameId(), gameData.getTurn());
+        dbBoardDao.updateAll(gameData.getGameId(), mapData);
     }
 
-    public void saveDataToDb(int gameId, Team turn, ChessBoardDto chessBoardDto) {
-        dbGameDao.updateGameData(gameId, GameInformationDto.of(gameId, turn));
-        dbBoardDao.updateAll(gameId, chessBoardDto);
+    public Team loadGameTurn(int gameId) {
+        return Team.of(dbGameDao.getTurn(gameId));
     }
 
-    public GameInformationDto loadGameInformationDto(int gameId) {
-        return dbGameDao.getGameData(gameId);
-    }
-
-    public void saveInitData(int gameId, Team turn, ChessBoardDto chessBoardDto) {
-        dbGameDao.saveGame(GameInformationDto.of(gameId, turn));
-        dbBoardDao.updateAll(gameId, chessBoardDto);
+    public void saveInitData(GameData gameData, Map<ChessBoardPosition, ChessPiece> mapData) {
+        dbGameDao.saveGame(gameData.getGameId(), gameData.getTurn());
+        dbBoardDao.updateAll(gameData.getGameId(), mapData);
     }
 
     public boolean hasData(int gameId) {
-        return !dbGameDao.getGameData(gameId).isEmpty();
+        return !dbGameDao.getTurn(gameId).isEmpty();
     }
 }

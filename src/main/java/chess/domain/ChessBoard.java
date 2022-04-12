@@ -169,15 +169,6 @@ public class ChessBoard {
                 .collect(Collectors.toList());
     }
 
-    public Team judgeWinner() {
-        double whiteTeamScore = calculateScore(Team.WHITE);
-        double blackTeamScore = calculateScore(Team.BLACK);
-        if (whiteTeamScore > blackTeamScore) {
-            return Team.WHITE;
-        }
-        return Team.BLACK;
-    }
-
     public Team getTurn() {
         return turn;
     }
