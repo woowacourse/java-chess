@@ -19,7 +19,6 @@ import chess.webview.WebInputView;
 import chess.webview.WebOutputView;
 import java.util.Map;
 import spark.Request;
-import spark.Response;
 
 public class WebChessController {
     private static final int GAME_ID = 1111;
@@ -33,29 +32,19 @@ public class WebChessController {
         get("/applicationCommand", (req, res) -> {
             ApplicationCommand command = WebInputView.toApplicationCommand(req.queryParams("command"));
             if (ApplicationCommand.START.equals(command)) {
-                doStartCommand(chessGame, storageService);
-                res.redirect("/board");
-                return null;
+                start(chessGame, storageService);
+                return WebOutputView.goBoardPage(storageService.loadChessBoardData(chessGame.getGameId()));
             }
             stop();
             return null;
         });
 
-        get("/board", (req, res) -> {
-            return WebOutputView.goBoardPage(storageService.loadChessBoardData(chessGame.getGameId()));
-        });
-
         post("/inGameCommand", (req, res) -> {
             InGameCommand command = WebInputView.toInGameCommand(req.queryParams("command"));
             if (InGameCommand.MOVE.equals(command)) {
-                doMoveCommand(req, chessGame, storageService);
-                return goFirstPageIfGameEnd(res, chessGame);
+                move(req, chessGame, storageService);
+                return goFirstPageIfGameEnd(chessGame, storageService);
             }
-            res.redirect("/status");
-            return null;
-        });
-
-        get("/status", (req, res) -> {
             return WebOutputView.goStatusPage(chessGame.getTeamScore(), chessGame.getWinner());
         });
 
@@ -65,7 +54,7 @@ public class WebChessController {
         });
     }
 
-    private static void doStartCommand(ChessGame chessGame, StorageService storageService) {
+    private static void start(ChessGame chessGame, StorageService storageService) {
         if (!storageService.hasData(chessGame.getGameId())) {
             storageService.saveInitData(chessGame.getGameId(), Team.WHITE, ChessBoardInitLogic.initialize());
         }
@@ -75,18 +64,17 @@ public class WebChessController {
         chessGame.initialize(turn, mapData);
     }
 
-    private static void doMoveCommand(Request req, ChessGame chessGame, StorageService storageService) {
+    private static void move(Request req, ChessGame chessGame, StorageService storageService) {
         ChessBoardPosition source = WebInputView.extractSource(req.queryParams("command"));
         ChessBoardPosition target = WebInputView.extractTarget(req.queryParams("command"));
         chessGame.move(source, target);
         storageService.saveDataToDb(chessGame.getGameId(), chessGame.getTurn(), chessGame.getChessBoardData());
     }
 
-    private static String goFirstPageIfGameEnd(Response res, ChessGame chessGame) {
+    private static String goFirstPageIfGameEnd(ChessGame chessGame, StorageService storageService) {
         if (chessGame.isGameEnd()) {
             return WebOutputView.goInitialPage();
         }
-        res.redirect("/board");
-        return null;
+        return WebOutputView.goBoardPage(storageService.loadChessBoardData(chessGame.getGameId()));
     }
 }
