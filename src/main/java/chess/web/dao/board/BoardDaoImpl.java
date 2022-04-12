@@ -1,7 +1,6 @@
 package chess.web.dao.board;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,22 +10,13 @@ import java.util.Map.Entry;
 
 public class BoardDaoImpl implements BoardDao {
 
-    private static final String URL = "jdbc:mysql://localhost:13306/chess";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
     private static final String TABLE = "board";
     private static final String POSITION_COLUMN = "position";
     private static final String PIECE_COLUMN = "piece";
+    private final Connection connection;
 
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public BoardDaoImpl(final Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -35,7 +25,7 @@ public class BoardDaoImpl implements BoardDao {
             + "INSERT INTO "
             + TABLE + " (roomId, position, piece)"
             + "  VALUES (?,?,?)";
-        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             for (final Entry<String, String> boardEntry : board.entrySet()) {
                 final String position = boardEntry.getKey();
                 final String piece = boardEntry.getValue();
@@ -57,7 +47,7 @@ public class BoardDaoImpl implements BoardDao {
             + "SELECT position, piece"
             + "  FROM " + TABLE;
         final Map<String, String> board = new HashMap<>();
-        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+        try (final PreparedStatement statement = connection.prepareStatement(sql);
              final ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 board.put(
@@ -77,7 +67,7 @@ public class BoardDaoImpl implements BoardDao {
             + "update " + TABLE
             + " set piece = ?"
             + "  where roomId = ? AND position = ?";
-        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             addBatch(roomId, board, preparedStatement);
             preparedStatement.executeBatch();
         } catch (SQLException e) {

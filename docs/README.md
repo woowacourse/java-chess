@@ -29,9 +29,12 @@
 ### 적용 예정 사항
 
 - [x] try-with-resource
-- [ ] fk 제약조건 걸어주기
+- [x] fk 제약조건 걸어주기
+- [x] jdbcTemplet을 사용하여 dao중복코드 제거
+    - getConnection() 및 URL 등 상수 추출
 - [ ] custom exception
-- [ ] jdbcTemple에서 dao중복코드 제거
+- [ ] room name 중복에 대한 제약조건 걸어주기
+- [ ] console ChessGame에서 view를 추출하여 console Controller 생성후 ChessGame만 공통으로 사용하기
 
 ## 목표
 

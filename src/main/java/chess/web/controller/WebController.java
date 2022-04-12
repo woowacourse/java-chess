@@ -3,9 +3,11 @@ package chess.web.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.web.dao.JdbcTemplate;
 import chess.web.dao.board.BoardDaoImpl;
 import chess.web.dao.room.RoomDaoImpl;
 import chess.web.service.ChessService;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -19,7 +21,8 @@ public class WebController {
     private final ChessService chessService;
 
     public WebController() {
-        chessService = new ChessService(new RoomDaoImpl(), new BoardDaoImpl());
+        final Connection connection = JdbcTemplate.getConnection();
+        chessService = new ChessService(new RoomDaoImpl(connection), new BoardDaoImpl(connection));
     }
 
     public void run() {

@@ -1,8 +1,8 @@
 package chess.web.dao.room;
 
 import chess.web.Room;
+import chess.web.dao.JdbcTemplate;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,28 +11,20 @@ import java.util.List;
 
 public class RoomDaoImpl implements RoomDao {
 
-    private static final String URL = "jdbc:mysql://localhost:13306/chess";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
     private static final String TABLE = "room";
+    private final Connection connection;
 
-
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    public RoomDaoImpl(final Connection connection) {
+        this.connection = connection;
     }
+
 
     @Override
     public void save(final String name) {
         final String sql = ""
             + "INSERT INTO " + TABLE + " (name)"
             + "  VALUES (?)";
-        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.executeUpdate(); // CRUD마다 달라짐.
         } catch (SQLException e) {
@@ -47,7 +39,7 @@ public class RoomDaoImpl implements RoomDao {
             + "SELECT id"
             + "  FROM " + TABLE
             + "  WHERE name = ?";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement statement = JdbcTemplate.getConnection().prepareStatement(sql)) {
             statement.setString(1, name);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
@@ -68,7 +60,7 @@ public class RoomDaoImpl implements RoomDao {
             + "DELETE"
             + "  FROM " + TABLE
             + "  WHERE id = ?";
-        try (final PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (final PreparedStatement statement = JdbcTemplate.getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -82,7 +74,7 @@ public class RoomDaoImpl implements RoomDao {
             + "SELECT id, name, canJoin, currentCamp"
             + "  FROM " + TABLE
             + "  WHERE id = ?";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement statement = JdbcTemplate.getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             final ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) {
@@ -108,7 +100,7 @@ public class RoomDaoImpl implements RoomDao {
             + "SELECT id, name, canJoin, currentCamp"
             + "  FROM " + TABLE;
         final List<Room> rooms = new ArrayList<>();
-        try (final PreparedStatement statement = getConnection().prepareStatement(sql);
+        try (final PreparedStatement statement = JdbcTemplate.getConnection().prepareStatement(sql);
         ) {
             final ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -131,7 +123,7 @@ public class RoomDaoImpl implements RoomDao {
             + "UPDATE " + TABLE
             + "  SET name = ?"
             + "  WHERE id = ?";
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = JdbcTemplate.getConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
@@ -148,7 +140,7 @@ public class RoomDaoImpl implements RoomDao {
             + "UPDATE " + TABLE
             + "  SET canJoin = ? , currentCamp = ?"
             + "  WHERE id = ?";
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = JdbcTemplate.getConnection().prepareStatement(sql)) {
             preparedStatement.setInt(1, canJoin);
             preparedStatement.setString(2, currentCamp);
             preparedStatement.setInt(3, roomId);
