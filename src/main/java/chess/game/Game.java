@@ -20,7 +20,6 @@ public class Game {
     private static final int MINIMUM_SPLIT_INPUT_SIZE = 1;
 
     private State state;
-    private Map<Color, Double> result;
     private Color winColor;
 
     public Game(final State state) {
@@ -47,7 +46,6 @@ public class Game {
 
         if (state.canMove()) {
             state.move(MoveCommand.of(inputs.get(FROM_POSITION_INDEX) + " " + inputs.get(TO_POSITION_INDEX)));
-            result = state.getStatus();
         }
 
         if (state.isGameEnd()) {
