@@ -7,7 +7,7 @@ import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceProperty;
 import chess.web.commandweb.WebGameCommand;
-import chess.web.dao.board.BoardDao;
+import chess.web.dao.board.BoardDaoImpl;
 import chess.web.dao.room.RoomDaoImpl;
 import chess.web.dto.BoardDto;
 import chess.web.dto.MoveReqDto;
@@ -21,12 +21,12 @@ import spark.Request;
 public class ChessService {
 
     private final RoomDaoImpl roomDaoImpl;
-    private final BoardDao boardDao;
+    private final BoardDaoImpl boardDaoImpl;
     private ChessGame chessGame;
 
-    public ChessService(final RoomDaoImpl roomDaoImpl, final BoardDao boardDao) {
+    public ChessService(final RoomDaoImpl roomDaoImpl, final BoardDaoImpl boardDaoImpl) {
         this.roomDaoImpl = roomDaoImpl;
-        this.boardDao = boardDao;
+        this.boardDaoImpl = boardDaoImpl;
     }
 
     public void init() {
@@ -51,7 +51,7 @@ public class ChessService {
     private void updateGame(final Request req, final WebGameCommand webgameCommand) {
         if (webgameCommand == WebGameCommand.START) {
             final int roomId = Integer.parseInt(req.queryParams("roomId"));
-            chessGame.changeBoard(convertToGameBoard(boardDao.findAll()),
+            chessGame.changeBoard(convertToGameBoard(boardDaoImpl.findAll()),
                 roomDaoImpl.findById(roomId).getCurrentCamp());
         }
     }
@@ -146,7 +146,7 @@ public class ChessService {
         roomDaoImpl.save(name);
         final int roomId = roomDaoImpl.findIdByName(name);
         final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
-        boardDao.save(roomId, board);
+        boardDaoImpl.save(roomId, board);
     }
 
     public void updateRoomName(final String id, final String roomName) {
@@ -166,6 +166,6 @@ public class ChessService {
         }
         roomDaoImpl.updateRoom(roomId, canJoin, currentCamp);
         final Map<String, String> board = BoardDto.from(chessGame.getBoard()).getBoard();
-        boardDao.updateBoard(roomId, board);
+        boardDaoImpl.updateBoard(roomId, board);
     }
 }
