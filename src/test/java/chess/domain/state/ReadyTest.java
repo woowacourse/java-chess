@@ -30,7 +30,7 @@ class ReadyTest {
         @DisplayName("Ready 상태에서 move를 하는 경우")
     void checkMoveException() {
         assertThatThrownBy(() -> new Ready()
-                .move(new Position(0, 0), new Position(0, 1)))
+                .move(Position.of(0, 0), Position.of(0, 1)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

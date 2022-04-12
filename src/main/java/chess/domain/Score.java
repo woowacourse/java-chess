@@ -38,10 +38,11 @@ public class Score {
 
     private static long countSameColumnPawn(Map<Position, Piece> pieces, int column, Color color) {
         long count = Chessboard.SIZE.stream()
-                .filter(row -> pieces.containsKey(new Position(row, column)))
-                .filter(row -> pieces.get(new Position(row, column)).isColor(color)
-                        && pieces.get(new Position(row, column)).isSameType(Pawn.class))
+                .filter(row -> pieces.containsKey(Position.of(row, column)))
+                .filter(row -> pieces.get(Position.of(row, column)).isColor(color)
+                        && pieces.get(Position.of(row, column)).isSameType(Pawn.class))
                 .count();
+
         if (count < DUPLICATE) {
             return 0;
         }

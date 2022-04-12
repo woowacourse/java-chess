@@ -40,7 +40,7 @@ class PlayTest {
     void checkMove() {
         Play play = Play.from(new Turn());
 
-        assertThat(play.move(new Position(6, 0), new Position(5, 0)).getClass())
+        assertThat(play.move(Position.of(6, 0), Position.of(5, 0)).getClass())
                 .isEqualTo(Play.class);
     }
 

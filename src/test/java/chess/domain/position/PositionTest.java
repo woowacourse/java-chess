@@ -22,9 +22,9 @@ class PositionTest {
 
     private static Stream<Arguments> positionInput() {
         return Stream.of(
-                Arguments.of("8", "a", new Position(0, 0)),
-                Arguments.of("5", "d", new Position(3, 3)),
-                Arguments.of("1", "h", new Position(7, 7))
+                Arguments.of("8", "a", Position.of(0, 0)),
+                Arguments.of("5", "d", Position.of(3, 3)),
+                Arguments.of("1", "h", Position.of(7, 7))
         );
     }
 

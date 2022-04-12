@@ -17,8 +17,8 @@ public class PawnTest {
     void checkDiagonalWhenWhiteTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
-                new Position(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isMovableDiagonal(Position.of(4, 4),
+                Position.of(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -27,8 +27,8 @@ public class PawnTest {
     void checkDiagonalWhenWhiteFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
-                new Position(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isMovableDiagonal(Position.of(4, 4),
+                Position.of(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -37,8 +37,8 @@ public class PawnTest {
     void checkDiagonalWhenBlackTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
-                new Position(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isMovableDiagonal(Position.of(4, 4),
+                Position.of(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -47,8 +47,8 @@ public class PawnTest {
     void checkDiagonalWhenBlackFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
-                new Position(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isMovableDiagonal(Position.of(4, 4),
+                Position.of(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -57,7 +57,7 @@ public class PawnTest {
     void checkPositionWhenWhiteFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovablePosition(new Position(6, 6), new Position(6 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(6, 6), Position.of(6 + a, 6 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -67,7 +67,7 @@ public class PawnTest {
     void checkPositionWhenWhiteFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovablePosition(new Position(6, 6), new Position(6 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(6, 6), Position.of(6 + a, 6 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 
@@ -77,7 +77,7 @@ public class PawnTest {
     void checkPositionWhenBlackFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovablePosition(new Position(1, 1), new Position(1 + a, 1 + b),
+        assertThat(pawn.isMovablePosition(Position.of(1, 1), Position.of(1 + a, 1 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -87,7 +87,7 @@ public class PawnTest {
     void checkPositionWhenBlackFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovablePosition(new Position(1, 1), new Position(1 + a, 1 + b),
+        assertThat(pawn.isMovablePosition(Position.of(1, 1), Position.of(1 + a, 1 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 
@@ -97,7 +97,7 @@ public class PawnTest {
     void checkPositionWhenWhiteTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovablePosition(new Position(7, 6), new Position(7 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(7, 6), Position.of(7 + a, 6 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -107,7 +107,7 @@ public class PawnTest {
     void checkPositionWhenWhiteTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovablePosition(new Position(7, 6), new Position(7 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(7, 6), Position.of(7 + a, 6 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 
@@ -117,7 +117,7 @@ public class PawnTest {
     void checkPositionWhenBlackTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovablePosition(new Position(2, 6), new Position(2 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(2, 6), Position.of(2 + a, 6 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -127,7 +127,7 @@ public class PawnTest {
     void checkPositionWhenBlackTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovablePosition(new Position(2, 6), new Position(2 + a, 6 + b),
+        assertThat(pawn.isMovablePosition(Position.of(2, 6), Position.of(2 + a, 6 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 

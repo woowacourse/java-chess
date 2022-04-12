@@ -3,18 +3,17 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
 
-    private static final int SOURCE = 0;
-    private static final int TARGET = 1;
-    private static final int ROW = 0;
-    private static final int COLUMN = 1;
+    protected static final String SOURCE = "source";
+    protected static final String TARGET = "target";
 
-    private final double score;
     protected final Color color;
+    private final double score;
     private final String piece;
 
     public Piece(double score, Color color) {
@@ -39,29 +38,32 @@ public abstract class Piece {
         return source.findPossiblePosition(direction).isSamePosition(target);
     }
 
-    public boolean isMovableLine(List<Position> positions, List<Direction> move,
-                                                 Map<Position, Piece> board) {
-
-        Position source = positions.get(SOURCE);
-        Position target = positions.get(TARGET);
-
+    public boolean isMovableLine(Map<String, Position> positions, List<Direction> move, Map<Position, Piece> board) {
         return move.stream()
-                .anyMatch(unit -> isMovableByRecursion(source.findPossiblePosition(unit.row(), unit.column()),
-                        target, List.of(unit.row(), unit.column()), board));
+                .anyMatch(unit -> isMovableByRecursion(new HashMap<>(positions), unit, board));
     }
 
-    private boolean isMovableByRecursion(Position source, Position target, List<Integer> unit,
-                                                  Map<Position, Piece> board) {
-        if (source.isOverRange()) {
-            return false;
-        }
-        if (!source.isSamePosition(target) && board.containsKey(source)) {
+    private boolean isMovableByRecursion(Map<String, Position> positions, Direction unit, Map<Position, Piece> board) {
+        Position source = positions.get(SOURCE).findPossiblePosition(unit.row(), unit.column());
+        Position target = positions.get(TARGET);
+        if (isImpossiblePosition(board, source, target)) {
             return false;
         }
         if (source.isSamePosition(target)) {
             return true;
         }
-        return isMovableByRecursion(source.findPossiblePosition(unit.get(ROW), unit.get(COLUMN)), target, unit, board);
+        positions.put(SOURCE, source);
+        return isMovableByRecursion(positions, unit, board);
+    }
+
+    private boolean isImpossiblePosition(Map<Position, Piece> board, Position source, Position target) {
+        if (source.isOverRange()) {
+            return true;
+        }
+        if (!source.isSamePosition(target) && board.containsKey(source)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isColor(Color color) {
@@ -75,11 +77,6 @@ public abstract class Piece {
     public String getColor() {
         return color.name().toLowerCase();
     }
-
-
-
-
-
 
     public double getScore() {
         return score;

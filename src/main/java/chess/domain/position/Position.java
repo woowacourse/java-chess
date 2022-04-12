@@ -14,13 +14,17 @@ public class Position {
     private final int row;
     private final int column;
 
-    public Position(int row, int column) {
+    private Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
     public static Position of(String rank, String file) {
         return new Position(Rank.findRow(rank), File.findColumn(file));
+    }
+
+    public static Position of(int row, int column) {
+        return new Position(row, column);
     }
 
     public boolean isFirstPosition(Color color) {

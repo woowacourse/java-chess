@@ -40,7 +40,7 @@ class FinishTest {
     @DisplayName("Finish 상태에서 move를 하는 경우")
     void checkMoveException() {
         assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create()))
-                .move(new Position(0, 0), new Position(0, 1)))
+                .move(Position.of(0, 0), Position.of(0, 1)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

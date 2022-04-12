@@ -17,7 +17,7 @@ class RookTest {
     void checkPositionWhenTrue(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
 
-        assertThat(rook.isMovablePosition(new Position(3, 3), new Position(3 + a, 3 + b),
+        assertThat(rook.isMovablePosition(Position.of(3, 3), Position.of(3 + a, 3 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -27,7 +27,7 @@ class RookTest {
     void checkPositionWhenFalse(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
 
-        assertThat(rook.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(rook.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 

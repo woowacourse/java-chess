@@ -29,7 +29,7 @@ class ScoreTest {
     @Test
     @DisplayName("king 점수 계산 확인")
     void checkKingScore() {
-        Map<Position, Piece> boardCache = Map.of(new Position(0, 4), new King(Color.WHITE));
+        Map<Position, Piece> boardCache = Map.of(Position.of(0, 4), new King(Color.WHITE));
 
         assertThat(Score.create(boardCache, Color.WHITE).getScore()).isEqualTo(0);
     }
