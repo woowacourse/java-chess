@@ -19,7 +19,6 @@ public class WebController {
 
     public WebController() {
         chessService = new ChessService(new RoomDaoImpl(), new BoardDaoImpl());
-        chessService.init();
     }
 
     public void run() {
