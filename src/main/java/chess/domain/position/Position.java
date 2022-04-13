@@ -56,6 +56,10 @@ public class Position {
         return Math.toDegrees(Math.atan2(deltaX, deltaY));
     }
 
+    public static List<Position> getAllPositions() {
+        return List.copyOf(Cache.cache);
+    }
+
     public boolean hasSameXAxisAs(Position other) {
         return this.xAxis.equals(other.xAxis);
     }

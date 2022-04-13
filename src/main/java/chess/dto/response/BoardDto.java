@@ -3,12 +3,10 @@ package chess.dto.response;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.XAxis;
-import chess.domain.position.YAxis;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class BoardDto {
     private final Map<PositionDto, PieceDto> board;
@@ -20,32 +18,23 @@ public class BoardDto {
     public static BoardDto from(Board board) {
         Map<PositionDto, PieceDto> value = new HashMap<>();
 
-        for (YAxis yAxis : YAxis.values()) {
-            for (XAxis xAxis : XAxis.values()) {
-                Position position = Position.of(xAxis, yAxis);
-                PositionDto positionDto = PositionDto.from(position);
-                board.find(position).ifPresent(piece -> value.put(positionDto, PieceDto.from(piece)));
-            }
+        for (Position position : Position.getAllPositions()) {
+            PositionDto positionDto = PositionDto.from(position);
+            board.find(position).ifPresent(piece -> value.put(positionDto, PieceDto.from(piece)));
         }
 
         return new BoardDto(value);
     }
 
     public static BoardDto from(Map<Position, Piece> boardValue) {
-        Map<PositionDto, PieceDto> value = new HashMap<>();
+        Map<PositionDto, PieceDto> dtoValue = boardValue.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entrySet -> PositionDto.from(entrySet.getKey()),
+                        entrySet -> PieceDto.from(entrySet.getValue())
+                ));
 
-        for (YAxis yAxis : YAxis.values()) {
-            for (XAxis xAxis : XAxis.values()) {
-                Position position = Position.of(xAxis, yAxis);
-                Piece piece = boardValue.get(position);
-
-                if (!Objects.isNull(piece)) {
-                    value.put(PositionDto.from(position), PieceDto.from(piece));
-                }
-            }
-        }
-
-        return new BoardDto(value);
+        return new BoardDto(dtoValue);
     }
 
     public Board toBoard() {
