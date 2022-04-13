@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +19,7 @@ public class RoomDao {
         final PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         statement.setString(1, roomDto.getName());
         statement.setString(2, roomDto.getPlayer());
-        try {
-            statement.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException exception) {
-            throw new IllegalArgumentException("방 이름이 중복됩니다.");
-        }
+        statement.executeUpdate();
         ResultSet result = statement.getGeneratedKeys();
 
         if (result.next()) {

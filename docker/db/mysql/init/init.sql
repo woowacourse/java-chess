@@ -1,6 +1,6 @@
 create table room (
     id      int not null AUTO_INCREMENT,
-    name    varchar (30) UNIQUE not null,
+    name    varchar (30) not null,
     turn    varchar (10) not null,
     primary key (id)
 );
