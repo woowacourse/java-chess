@@ -33,8 +33,7 @@ public class ChessGameService {
     }
 
     public StatusDto findStatus(final String gameName) {
-        final int chessGameId = chessGameDao.findChessGameIdByName(gameName)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));
+        final int chessGameId = findChessGameIdByGameName(gameName);
         final ChessGameUpdateDto gameUpdateDto = chessGameDao.findChessGame(chessGameId);
         final ChessGame chessGame = ChessGame.of(gameUpdateDto);
 
@@ -42,5 +41,10 @@ public class ChessGameService {
         final GameResult whitePlayerResult = gameResult.get(0);
         final GameResult blackPlayerResult = gameResult.get(1);
         return StatusDto.of(whitePlayerResult, blackPlayerResult);
+    }
+
+    private int findChessGameIdByGameName(String gameName) {
+        return chessGameDao.findChessGameIdByName(gameName)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));
     }
 }
