@@ -1,5 +1,7 @@
 package chess.domain.player;
 
+import java.util.stream.Stream;
+
 public enum Team {
 
     WHITE("화이트"),
@@ -9,6 +11,13 @@ public enum Team {
 
     Team(String name) {
         this.name = name;
+    }
+
+    public static Team from(final String teamName) {
+        return Stream.of(Team.values())
+                .filter(team -> team.name.equals(teamName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 팀이 존재하지 않습니다."));
     }
 
     public String getName() {

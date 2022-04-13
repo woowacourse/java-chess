@@ -3,6 +3,7 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dto.ErrorMessageDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -26,9 +27,19 @@ public class WebChessGameController {
         get("/", (request, response) -> render(new HashMap<>(), "game.html"));
 
         post("/new-game", (request, response) -> {
-            final JsonElement jsonElement = JsonParser.parseString(request.body());
-            final String gameName = jsonElement.getAsJsonObject().get("gameName").getAsString();
-            return gson.toJson(chessGameService.createNewChessGame(gameName));
+            try {
+                final JsonElement jsonElement = JsonParser.parseString(request.body());
+                final String gameName = jsonElement.getAsJsonObject().get("gameName").getAsString();
+                return gson.toJson(chessGameService.createNewChessGame(gameName));
+            } catch (Exception e) {
+                response.status();
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
+        });
+
+        get("/status/:chessGameName", (request, response) -> {
+            final String chessGameName = request.params(":chessGameName");
+            return gson.toJson(chessGameService.findStatus(chessGameName));
         });
     }
 

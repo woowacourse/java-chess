@@ -7,12 +7,12 @@ async function startGame() {
   const statusButton = document.getElementById("status-btn");
   const gameName = document.getElementById("game-name");
 
+  const chessMap = await newGame(gameName.value);
+
   startButton.disabled = true;
   endButton.disabled = false;
   statusButton.disabled = false;
   gameName.disabled = true;
-
-  const chessMap = await newGame(gameName.value);
 
   setChessMap(chessMap);
 }
@@ -31,9 +31,17 @@ async function newGame(gameName) {
     body: JSON.stringify({
       gameName: gameName
     }),
+  })
+  .then((response) => response.json())
+  .then((response) => {
+    if (response.gameName === undefined) {
+      alert(response.message);
+      throw new Error(response.message);
+    }
   });
+
   chessGame = await chessGame.json();
-  chessGameName = chessGame.chessGameName;
+  chessGameName = chessGame.gameName;
   isRunning = chessGame.isRunning;
   document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
   return chessGame.chessMap;

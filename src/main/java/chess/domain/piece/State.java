@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.stream.Stream;
+
 public enum State {
 
     PAWN('P', 1),
@@ -15,6 +17,13 @@ public enum State {
     State(char name, double score) {
         this.name = name;
         this.score = score;
+    }
+
+    public static State from(final String name) {
+        return Stream.of(State.values())
+                .filter(state -> state.name == name.charAt(0))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 체스말이 없습니다."));
     }
 
     public char getName() {
