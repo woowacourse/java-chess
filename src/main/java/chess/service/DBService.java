@@ -28,7 +28,6 @@ public class DBService {
         } catch (IllegalArgumentException e) {
             chessGame = loadNewChessGame();
         }
-        chessGame.startGame();
         return chessGame;
     }
 

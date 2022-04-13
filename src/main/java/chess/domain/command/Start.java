@@ -13,7 +13,6 @@ public class Start extends Command {
 
     public boolean execute(ChessGame chessGame) {
         checkInGame(chessGame);
-        chessGame.startGame();
         OutputView.showBoard(chessGame.getBoard());
         return true;
     }

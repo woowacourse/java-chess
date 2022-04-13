@@ -13,11 +13,9 @@ public final class ChessGame {
     public ChessGame(BoardGenerator boardGenerator, GameTurn gameTurn) {
         this.board = new Board(boardGenerator);
         this.turn = gameTurn;
-    }
-
-    public void startGame() {
-        if (turn.equals(GameTurn.READY))
-        this.turn = GameTurn.WHITE;
+        if (turn.equals(GameTurn.READY)) {
+            this.turn = GameTurn.WHITE;
+        }
     }
 
     public void move(Square source, Square target) {

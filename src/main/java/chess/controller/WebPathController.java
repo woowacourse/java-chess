@@ -106,7 +106,6 @@ public class WebPathController {
 
     private ChessGame getSavedGame(String gameID) {
         ChessGame chessGame = DBService.loadSavedChessGame(gameID, DBService.getTurn(gameID));
-        chessGame.startGame();
         return chessGame;
     }
 
