@@ -1,17 +1,18 @@
 package chess.controller;
 
+import chess.consoleview.InputView;
+import chess.consoleview.OutputView;
 import chess.domain.game.ChessGame;
-import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
-import chess.view.dto.BoardDto;
-import chess.view.dto.ConsoleCommandDto;
+import chess.dto.request.ConsoleCommandDto;
+import chess.dto.response.BoardDto;
+import chess.dto.response.PieceColorDto;
+import chess.dto.response.ScoreResultDto;
 
-public class ChessController {
+public class ConsoleController {
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = ChessGame.create();
 
         OutputView.printCommandGuide();
 
@@ -49,6 +50,7 @@ public class ChessController {
     private void executeStart(ChessGame chessGame) {
         chessGame.startGame();
 
+        printCurrentTurn(chessGame);
         OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
     }
 
@@ -57,12 +59,15 @@ public class ChessController {
         Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
         chessGame.movePiece(fromPosition, toPosition);
 
+        printCurrentTurn(chessGame);
         OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
     }
 
-    private void executeStatus(ChessGame chessGame) {
-        ScoreResult scoreResult = chessGame.showStatus();
+    private void printCurrentTurn(ChessGame chessGame) {
+        OutputView.printCurrentTurn(PieceColorDto.from(chessGame));
+    }
 
-        OutputView.printScore(scoreResult);
+    private void executeStatus(ChessGame chessGame) {
+        OutputView.printScore(ScoreResultDto.from(chessGame));
     }
 }

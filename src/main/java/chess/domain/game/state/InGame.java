@@ -16,28 +16,44 @@ public abstract class InGame implements GameState {
 
     @Override
     public GameState start() {
-        throw new IllegalStateException("이미 게임 중 이므로 게임을 시작할 수 없습니다.");
+        return new ReadyToStart();
     }
 
     @Override
     public GameState move(Position from, Position to) {
         Board board = getBoard();
-        MoveResult moveResult = board.executeCommand(from, to, getCurrentPieceColor());
+        validateKingDie(board);
 
+        MoveResult moveResult = board.executeCommand(from, to, getCurrentPieceColor());
         if (!moveResult.isMoveSuccess()) {
             throw new IllegalStateException("말을 이동하는 것에 실패했습니다.");
-        }
-
-        if (moveResult.equals(MoveResult.KILL_KING)) {
-            return new ReadyToStart();
         }
 
         return getNextTurnState();
     }
 
+    private void validateKingDie(Board board) {
+        if (!board.hasKing(PieceColor.WHITE) || !board.hasKing(PieceColor.BLACK)) {
+            throw new IllegalStateException("킹이 죽었으므로 더이상 게임을 진행할 수 없습니다.");
+        }
+    }
+
     protected abstract PieceColor getCurrentPieceColor();
 
     protected abstract GameState getNextTurnState();
+
+    @Override
+    public PieceColor getWinColor() {
+        if (!board.hasKing(PieceColor.WHITE)) {
+            return PieceColor.BLACK;
+        }
+
+        if (!board.hasKing(PieceColor.BLACK)) {
+            return PieceColor.WHITE;
+        }
+
+        throw new IllegalStateException("아직 양쪽의 킹이 모두 살아있습니다.");
+    }
 
     @Override
     public ScoreResult status() {

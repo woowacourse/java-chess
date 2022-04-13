@@ -5,7 +5,7 @@ import chess.domain.piece.PieceColor;
 
 public class BlackTurn extends InGame {
 
-    protected BlackTurn(Board board) {
+    public BlackTurn(Board board) {
         super(board);
     }
 
@@ -17,5 +17,10 @@ public class BlackTurn extends InGame {
     @Override
     protected GameState getNextTurnState() {
         return new WhiteTurn(getBoard());
+    }
+
+    @Override
+    public boolean isWhiteTurn() {
+        return false;
     }
 }

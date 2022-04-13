@@ -18,11 +18,11 @@ class RookMovingStrategyTest {
     void isNotMovable_withSamePosition() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
+        Optional<Piece> bishop = board.find(Position.of(XAxis.C, YAxis.ONE));
 
         // when
         boolean actual = bishop.get()
-                .isAbleToMove(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.C, YAxis.ONE));
+                .isAbleToMove(Position.of(XAxis.C, YAxis.ONE), Position.of(XAxis.C, YAxis.ONE));
 
         // then
         assertThat(actual).isFalse();
@@ -33,10 +33,10 @@ class RookMovingStrategyTest {
     void isMovable_withSameYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
+        Optional<Piece> rook = board.find(Position.of(XAxis.A, YAxis.ONE));
 
         // when
-        boolean actual = rook.get().isAbleToMove(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO));
+        boolean actual = rook.get().isAbleToMove(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -47,10 +47,10 @@ class RookMovingStrategyTest {
     void isMovable_withSameXAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
+        Optional<Piece> rook = board.find(Position.of(XAxis.A, YAxis.ONE));
 
         // when
-        boolean actual = rook.get().isAbleToMove(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.B, YAxis.ONE));
+        boolean actual = rook.get().isAbleToMove(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.B, YAxis.ONE));
 
         // then
         assertThat(actual).isTrue();
@@ -61,10 +61,10 @@ class RookMovingStrategyTest {
     void isNotMovable_withDifferentXAxisDifferentYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
+        Optional<Piece> rook = board.find(Position.of(XAxis.A, YAxis.ONE));
 
         // when
-        boolean actual = rook.get().isAbleToMove(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.B, YAxis.TWO));
+        boolean actual = rook.get().isAbleToMove(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.B, YAxis.TWO));
 
         // then
         assertThat(actual).isFalse();

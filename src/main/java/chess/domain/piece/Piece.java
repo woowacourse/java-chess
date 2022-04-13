@@ -53,4 +53,12 @@ public class Piece {
     public PieceColor getPieceColor() {
         return pieceColor;
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "pieceType=" + pieceType +
+                ", pieceColor=" + pieceColor +
+                '}';
+    }
 }

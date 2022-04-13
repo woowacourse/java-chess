@@ -28,6 +28,10 @@ public enum YAxis {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Y좌표입니다."));
     }
 
+    public static YAxis getByValue(String value) {
+        return getByValue(Integer.parseInt(value));
+    }
+
     public static List<YAxis> getBetween(YAxis from, YAxis to) {
         int startValue = Math.min(from.getValue(), to.getValue());
         int endValue = Math.max(from.getValue(), to.getValue());
@@ -43,5 +47,9 @@ public enum YAxis {
 
     public int getValue() {
         return value;
+    }
+
+    public String getValueAsString() {
+        return Integer.toString(value);
     }
 }

@@ -16,7 +16,7 @@ class PositionTest {
         // given
         XAxis aXAxis = XAxis.A;
         YAxis oneYAxis = YAxis.ONE;
-        Position position = Position.from(aXAxis, oneYAxis);
+        Position position = Position.of(aXAxis, oneYAxis);
 
         // when & then
         assertThat(position).isNotNull();
@@ -37,8 +37,8 @@ class PositionTest {
     @Test
     void cache() {
         // given
-        Position position = Position.from(XAxis.A, YAxis.ONE);
-        Position samePosition = Position.from(XAxis.A, YAxis.ONE);
+        Position position = Position.of(XAxis.A, YAxis.ONE);
+        Position samePosition = Position.of(XAxis.A, YAxis.ONE);
 
         // when & then
         assertThat(position).isSameAs(samePosition);
@@ -48,8 +48,8 @@ class PositionTest {
     @Test
     void isSameXAxis_returnsTrueIfBothXAxisSame() {
         // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.A, YAxis.TWO);
+        Position position1 = Position.of(XAxis.A, YAxis.ONE);
+        Position position2 = Position.of(XAxis.A, YAxis.TWO);
 
         // when
         boolean actual = position1.hasSameXAxisAs(position2);
@@ -62,8 +62,8 @@ class PositionTest {
     @Test
     void isSameYAxis_returnsTrueIfBothYAxisSame() {
         // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.B, YAxis.ONE);
+        Position position1 = Position.of(XAxis.A, YAxis.ONE);
+        Position position2 = Position.of(XAxis.B, YAxis.ONE);
 
         // when
         boolean actual = position1.hasSameYAxisAs(position2);
@@ -76,8 +76,8 @@ class PositionTest {
     @Test
     void isInVerticalRange_returnsTrue() {
         // given
-        Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.C, YAxis.ONE);
+        Position position1 = Position.of(XAxis.A, YAxis.TWO);
+        Position position2 = Position.of(XAxis.C, YAxis.ONE);
 
         // when
         boolean actual = position1.isVerticalDistanceShorterThan(position2, 2);
@@ -90,16 +90,16 @@ class PositionTest {
     @Test
     void getPositionsSameDirectionDiagonalBetween() {
         // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.D, YAxis.FOUR);
+        Position position1 = Position.of(XAxis.A, YAxis.ONE);
+        Position position2 = Position.of(XAxis.D, YAxis.FOUR);
 
         // when
         List<Position> positions = position1.getPositionsSameDirectionDiagonalBetween(position2);
 
         // then
         assertThat(positions).containsAll(List.of(
-                Position.from(XAxis.B, YAxis.TWO),
-                Position.from(XAxis.C, YAxis.THREE)
+                Position.of(XAxis.B, YAxis.TWO),
+                Position.of(XAxis.C, YAxis.THREE)
         ));
     }
 
@@ -118,8 +118,8 @@ class PositionTest {
     void getDegree_returnsDegreeWithTwoPositions(String fromXAxis, String fromYAxis, String toXAxis, String toYAxis,
                                                  double expected) {
         // given
-        Position position1 = Position.from(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
-        Position position2 = Position.from(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
+        Position position1 = Position.of(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
+        Position position2 = Position.of(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
 
         // when
         double actual = Position.calculateDegree(position1, position2);

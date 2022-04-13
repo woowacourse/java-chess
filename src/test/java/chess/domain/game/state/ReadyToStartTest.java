@@ -44,7 +44,7 @@ class ReadyToStartTest {
 
         // when & then
         assertThatThrownBy(
-                () -> readyToStart.move(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO)))
+                () -> readyToStart.move(Position.of(XAxis.A, YAxis.ONE), Position.of(XAxis.A, YAxis.TWO)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임중이 아니므로 말을 이동할 수 없습니다.");
     }

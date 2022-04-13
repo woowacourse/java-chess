@@ -20,11 +20,11 @@ class KnightMovingStrategyTest {
     void isMovable_withSevenShape(String xAxisName, String yAxisName) {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
+        Optional<Piece> knight = board.find(Position.of(XAxis.B, YAxis.ONE));
 
         // when
-        boolean actual = knight.get().isAbleToMove(Position.from(XAxis.B, YAxis.ONE),
-                Position.from(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
+        boolean actual = knight.get().isAbleToMove(Position.of(XAxis.B, YAxis.ONE),
+                Position.of(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
 
         // then
         assertThat(actual).isTrue();
@@ -36,11 +36,11 @@ class KnightMovingStrategyTest {
     void isNotMovable_withNotSevenShape(String xAxisName, String yAxisName) {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<Piece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
+        Optional<Piece> knight = board.find(Position.of(XAxis.B, YAxis.ONE));
 
         // when
-        boolean actual = knight.get().isAbleToMove(Position.from(XAxis.B, YAxis.ONE),
-                Position.from(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
+        boolean actual = knight.get().isAbleToMove(Position.of(XAxis.B, YAxis.ONE),
+                Position.of(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
 
         // then
         assertThat(actual).isFalse();

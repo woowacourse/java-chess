@@ -26,6 +26,10 @@ public class Board {
         return new Board(initBoard());
     }
 
+    public static Board from(Map<Position, Piece> value) {
+        return new Board(value);
+    }
+
     private static Map<Position, Piece> initBoard() {
         Map<Position, Piece> value = new HashMap<>();
 
@@ -40,20 +44,20 @@ public class Board {
 
     private static void initializePawns(Map<Position, Piece> value, YAxis yAxis, PieceColor pieceColor) {
         for (XAxis xAxis : XAxis.values()) {
-            value.put(Position.from(xAxis, yAxis), PieceFactory.createPawn(pieceColor));
+            value.put(Position.of(xAxis, yAxis), PieceFactory.createPawn(pieceColor));
         }
     }
 
     private static void initializeSpecialPieces(Map<Position, Piece> value, YAxis yAxis,
                                                 PieceColor pieceColor) {
-        value.put(Position.from(XAxis.A, yAxis), PieceFactory.createRook(pieceColor));
-        value.put(Position.from(XAxis.B, yAxis), PieceFactory.createNight(pieceColor));
-        value.put(Position.from(XAxis.C, yAxis), PieceFactory.createBishop(pieceColor));
-        value.put(Position.from(XAxis.D, yAxis), PieceFactory.createQueen(pieceColor));
-        value.put(Position.from(XAxis.E, yAxis), PieceFactory.createKing(pieceColor));
-        value.put(Position.from(XAxis.F, yAxis), PieceFactory.createBishop(pieceColor));
-        value.put(Position.from(XAxis.G, yAxis), PieceFactory.createNight(pieceColor));
-        value.put(Position.from(XAxis.H, yAxis), PieceFactory.createRook(pieceColor));
+        value.put(Position.of(XAxis.A, yAxis), PieceFactory.createRook(pieceColor));
+        value.put(Position.of(XAxis.B, yAxis), PieceFactory.createNight(pieceColor));
+        value.put(Position.of(XAxis.C, yAxis), PieceFactory.createBishop(pieceColor));
+        value.put(Position.of(XAxis.D, yAxis), PieceFactory.createQueen(pieceColor));
+        value.put(Position.of(XAxis.E, yAxis), PieceFactory.createKing(pieceColor));
+        value.put(Position.of(XAxis.F, yAxis), PieceFactory.createBishop(pieceColor));
+        value.put(Position.of(XAxis.G, yAxis), PieceFactory.createNight(pieceColor));
+        value.put(Position.of(XAxis.H, yAxis), PieceFactory.createRook(pieceColor));
     }
 
     public Optional<Piece> find(Position position) {
@@ -150,7 +154,6 @@ public class Board {
         return !Objects.isNull(otherPiece) && otherPiece.isSameColorAs(piece);
     }
 
-
     public int getDuplicatedPawnCountByXAxis(PieceColor pieceColor, XAxis xAxis) {
         List<Position> positions = Position.getPositionsByXAxis(xAxis);
         int count = countPawnByPositions(pieceColor, positions);
@@ -175,5 +178,22 @@ public class Board {
                 .stream()
                 .filter(piece -> piece.isSameColorAs(pieceColor))
                 .collect(Collectors.toSet());
+    }
+
+    public boolean hasKing(PieceColor pieceColor) {
+        return findPiecesByPieceColor(pieceColor)
+                .stream()
+                .anyMatch(Piece::isKing);
+    }
+
+    public Map<Position, Piece> getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "value=" + value +
+                '}';
     }
 }

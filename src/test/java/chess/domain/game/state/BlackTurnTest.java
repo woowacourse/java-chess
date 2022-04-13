@@ -8,7 +8,6 @@ import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +21,14 @@ class BlackTurnTest {
         blackTurn = new BlackTurn(initializedBoard);
     }
 
-    @DisplayName("start 메소드는 예외를 던진다.")
+    @DisplayName("start 메소드는 ReadyToStart를 반환한다.")
     @Test
-    void start_throwsException() {
+    void start_returnsReadyToStart() {
+        // given & when
+        GameState actual = blackTurn.start();
+
         // when & then
-        Assertions.assertThatThrownBy(blackTurn::start)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("이미 게임 중 이므로 게임을 시작할 수 없습니다.");
+        assertThat(actual).isInstanceOf(ReadyToStart.class);
     }
 
     @DisplayName("status 메소드는 ScoreResult 를 생성하여 반환한다.")
@@ -56,29 +56,31 @@ class BlackTurnTest {
     void move_throwsExceptionOnFailed() {
         // when & then
         assertThatThrownBy(
-                () -> blackTurn.move(Position.from(XAxis.A, YAxis.EIGHT), Position.from(XAxis.A, YAxis.SEVEN)))
+                () -> blackTurn.move(Position.of(XAxis.A, YAxis.EIGHT), Position.of(XAxis.A, YAxis.SEVEN)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("말을 이동하는 것에 실패했습니다.");
     }
 
-    @DisplayName("move 메소드 호출 시 백색 킹이 죽었다면 ReadyToStart 를 생성하여 반환한다.")
+    @DisplayName("한쪽 킹이 죽었다면 기물을 움직일 수 없다.")
     @Test
-    void move_returnsNewReadyToStartOnKilledKing() {
+    void move_throwsExceptionWhenKingIsKilled() {
         // when
-        blackTurn.move(Position.from(XAxis.B, YAxis.EIGHT), Position.from(XAxis.C, YAxis.SIX));
-        blackTurn.move(Position.from(XAxis.C, YAxis.SIX), Position.from(XAxis.B, YAxis.FOUR));
-        blackTurn.move(Position.from(XAxis.B, YAxis.FOUR), Position.from(XAxis.C, YAxis.TWO));
-        GameState actual = blackTurn.move(Position.from(XAxis.C, YAxis.TWO), Position.from(XAxis.E, YAxis.ONE));
+        blackTurn.move(Position.of(XAxis.B, YAxis.EIGHT), Position.of(XAxis.C, YAxis.SIX));
+        blackTurn.move(Position.of(XAxis.C, YAxis.SIX), Position.of(XAxis.B, YAxis.FOUR));
+        blackTurn.move(Position.of(XAxis.B, YAxis.FOUR), Position.of(XAxis.C, YAxis.TWO));
+        blackTurn.move(Position.of(XAxis.C, YAxis.TWO), Position.of(XAxis.E, YAxis.ONE));
 
         // then
-        assertThat(actual).isInstanceOf(ReadyToStart.class);
+        assertThatThrownBy(() -> blackTurn.move(Position.of(XAxis.A, YAxis.SEVEN), Position.of(XAxis.A, YAxis.SIX)))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("킹이 죽었으므로 더이상 게임을 진행할 수 없습니다.");
     }
 
     @DisplayName("move 메소드 호출 시 말이 움직이기만 했다면 WhiteTurn 을 생성하여 반환한다.")
     @Test
     void move_returnsNewWhiteTurn() {
         // when
-        GameState actual = blackTurn.move(Position.from(XAxis.B, YAxis.EIGHT), Position.from(XAxis.C, YAxis.SIX));
+        GameState actual = blackTurn.move(Position.of(XAxis.B, YAxis.EIGHT), Position.of(XAxis.C, YAxis.SIX));
 
         // then
         assertThat(actual).isInstanceOf(WhiteTurn.class);

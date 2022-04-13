@@ -28,6 +28,10 @@ public enum XAxis {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 X좌표입니다."));
     }
 
+    public static XAxis getByValue(String value) {
+        return getByValue(Integer.parseInt(value));
+    }
+
     public static List<XAxis> getBetween(XAxis from, XAxis to) {
         int startValue = Math.min(from.getValue(), to.getValue());
         int endValue = Math.max(from.getValue(), to.getValue());
@@ -43,5 +47,9 @@ public enum XAxis {
 
     public int getValue() {
         return value;
+    }
+
+    public String getValueAsString() {
+        return Integer.toString(value);
     }
 }

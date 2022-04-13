@@ -9,7 +9,7 @@ public class WhiteTurn extends InGame {
         super(Board.createInitializedBoard());
     }
 
-    protected WhiteTurn(Board board) {
+    public WhiteTurn(Board board) {
         super(board);
     }
 
@@ -21,5 +21,10 @@ public class WhiteTurn extends InGame {
     @Override
     protected GameState getNextTurnState() {
         return new BlackTurn(getBoard());
+    }
+
+    @Override
+    public boolean isWhiteTurn() {
+        return true;
     }
 }
