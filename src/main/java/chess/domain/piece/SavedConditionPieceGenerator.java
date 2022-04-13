@@ -14,17 +14,17 @@ public enum SavedConditionPieceGenerator {
     NONE("NONE"::equals, color -> new None(Color.find(color)));
 
     private final Predicate<String> condition;
-    private final Function<String, Piece> of;
+    private final Function<String, Piece> colorOf;
 
-    SavedConditionPieceGenerator(Predicate<String> condition, Function<String, Piece> of) {
+    SavedConditionPieceGenerator(Predicate<String> condition, Function<String, Piece> colorOf) {
         this.condition = condition;
-        this.of = of;
+        this.colorOf = colorOf;
     }
 
     public static Piece generatePiece(String type, String color) {
         return Arrays.stream(SavedConditionPieceGenerator.values())
                 .filter(piece -> piece.condition.test(type))
-                .map(piece -> piece.of.apply(color))
+                .map(piece -> piece.colorOf.apply(color))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

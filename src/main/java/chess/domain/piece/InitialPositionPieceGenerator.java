@@ -17,17 +17,17 @@ public enum InitialPositionPieceGenerator {
     NONE((column, row) -> new InitialPiecePositionChecker(column, row).isNone(), row -> new None(getColor(row)));
 
     private final BiPredicate<Column, Row> condition;
-    private final Function<Row, Piece> of;
+    private final Function<Row, Piece> colorOf;
 
-    InitialPositionPieceGenerator(BiPredicate<Column, Row> condition, Function<Row, Piece> of) {
+    InitialPositionPieceGenerator(BiPredicate<Column, Row> condition, Function<Row, Piece> colorOf) {
         this.condition = condition;
-        this.of = of;
+        this.colorOf = colorOf;
     }
 
     public static Piece generatePiece(Column column, Row row) {
         return Arrays.stream(InitialPositionPieceGenerator.values())
                 .filter(piece -> piece.condition.test(column, row))
-                .map(piece -> piece.of.apply(row))
+                .map(piece -> piece.colorOf.apply(row))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
