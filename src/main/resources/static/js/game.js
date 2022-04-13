@@ -8,7 +8,9 @@ async function startGame() {
   const gameName = document.getElementById("game-name");
 
   const chessMap = await newGame(gameName.value);
-
+  if (chessMap == null) {
+    return;
+  }
   startButton.disabled = true;
   endButton.disabled = false;
   statusButton.disabled = false;
@@ -23,7 +25,8 @@ async function newGame(gameName) {
     return;
   }
 
-  let chessGame = await fetch("/new-game", {
+  let chessGame = "";
+  await fetch("/new-game", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,16 +34,19 @@ async function newGame(gameName) {
     body: JSON.stringify({
       gameName: gameName
     }),
-  })
-  .then((response) => response.json())
-  .then((response) => {
-    if (response.gameName === undefined) {
-      alert(response.message);
-      throw new Error(response.message);
+  }).then(async (response) => {
+    if (response.status === 400) {
+      let message = await response.json();
+      message = message.message;
+      throw new Error(message);
+    } else {
+      chessGame = await response.json();
     }
-  });
+  }).catch(response => alert(response.message));
 
-  chessGame = await chessGame.json();
+  if (chessGame === "") {
+    return;
+  }
   chessGameName = chessGame.gameName;
   isRunning = chessGame.isRunning;
   document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
@@ -93,9 +99,14 @@ async function findStatus() {
   const whitePlayerResult = status.whitePlayerResult;
   const blackPlayerResult = status.blackPlayerResult;
 
-  alert("[White 팀] 점수 : " + whitePlayerScore + ", 결과 : " + whitePlayerResult
-      + "\n[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
-      + blackPlayerResult);
+  const result = "[White 팀] 점수 : " + whitePlayerScore + ", 결과 : "
+      + whitePlayerResult
+      + "<br>[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
+      + blackPlayerResult;
+
+  alert("현재 점수를 표시합니다.");
+
+  document.getElementById("result").innerHTML = result;
 }
 
 async function finishGame() {
@@ -103,24 +114,29 @@ async function finishGame() {
   const statusButton = document.getElementById("status-btn");
   const endButton = document.getElementById("end-btn");
 
+  const status = await fetch("/finish")
+  .then((response) => response.json());
+
   startButton.disabled = false;
   statusButton.disabled = true;
   endButton.disabled = true;
-
-  const status = await fetch("/end")
-  .then((response) => response.json());
 
   const whitePlayerScore = status.whitePlayerScore;
   const blackPlayerScore = status.blackPlayerScore;
   const whitePlayerResult = status.whitePlayerResult;
   const blackPlayerResult = status.blackPlayerResult;
 
-  alert("게임이 종료되었습니다.");
-  alert("[White 팀] 점수 : " + whitePlayerScore + ", 결과 : " + whitePlayerResult
-      + "\n[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
-      + blackPlayerResult);
 
-  window.location.href = "/";
+  const result = "[White 팀] 점수 : " + whitePlayerScore + ", 결과 : "
+      + whitePlayerResult
+      + "<br>[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
+      + blackPlayerResult;
+
+  alert("게임이 종료되었습니다.");
+
+  document.getElementById("result").innerHTML = result;
+
+  location.href = "/";
 }
 
 async function move() {
