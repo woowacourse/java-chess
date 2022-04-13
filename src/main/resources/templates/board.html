@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <style>
+        .body {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #chessboard td {
+            width: 60px;
+            height: 60px;
+            padding: 5px;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .position:hover {
+            background-color: aquamarine;
+        }
+
+        .black {
+            background-color: #B475C2;
+        }
+
+        .white {
+            background-color: #FFFFFF;
+        }
+
+        .choose {
+            background-color: aquamarine;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="body">
+
+    <h2> {{game.gameId}}번 체스방
+        {{#if game.finished}}
+        (종료)
+        {{else}}
+        (진행중)
+        {{/if}}
+    </h2>
+
+    {{#unless game.finished}}
+    <h3>현재 플레이어 턴 : {{game.currentTurnColor}}</h3>
+    {{/unless}}
+
+    <div style="display: inline-block;">
+        <table id="chessboard" border=5 cellspacing=0>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div id="moveFormDiv" style="display:none;">
+        <form id="moveForm" method="post" action="/games/{{game.gameId}}/move">
+            <input id="source" name="source" type="text" value="">
+            <input id="target" name="target" type="text" value="">
+            <input type="submit" value="이동">
+        </form>
+    </div>
+
+    {{#unless game.finished}}
+    {{#if promotable}}
+    <p>폰으로 프로모션하고 싶은 기물을 선택하세요.</p>
+    <form id="promotionForm" method="post" action="/games/{{game.gameId}}/promotion">
+        <input type="radio" name="pieceName" value="Queen" checked="checked">퀸
+        <input type="radio" name="pieceName" value="Bishop">비숍
+        <input type="radio" name="pieceName" value="Rook">룩
+        <input type="radio" name="pieceName" value="Knight">나이트
+        <input type="submit" value="선택 결정하기!">
+    </form>
+    {{/if}}
+    {{/unless}}
+
+    <br>
+
+    <button type="button" onclick=calculateScores()>점수 계산하기</button>
+
+    <br>
+
+    <div id="optionDiv">
+        <button type="button" onclick="location.href='/';">목록으로 돌아가기</button>
+        {{#unless game.finished}}
+        <button type="button" onclick="location.href='/games/{{game.gameId}}/end';">게임 종료하기</button>
+        {{/unless}}
+    </div>
+</div>
+</body>
+<script>
+    window.onload = function(){createChessBoard();};
+
+    let positions;
+
+    function createChessBoard() {
+        positions = {
+            {{#each game.playersDto.playerDtos as |player color|}}
+                {{#each player.pieces as |piece positionDto|}}
+                    "{{positionDto.position}}" : "{{color}}#{{piece}}",
+                {{/each}}
+            {{/each}}
+        }
+
+        positions = convertPieceNameToHtmlEntity(positions);
+
+        let html = "";
+
+        for (let i = 0; i < 8; i++) {
+            let row = String.fromCharCode('8'.charCodeAt() - i);
+            html += "<tr>";
+            for (let j = 0; j < 8; j++) {
+                let column = String.fromCharCode('a'.charCodeAt() + j);
+                let position = column + row;
+
+                let color = 'black'
+                if ((i + j) % 2 !== 0) {
+                    color = 'white'
+                }
+
+                let piece = "";
+                if (positions.hasOwnProperty(position)) {
+                    piece = positions[position]
+                }
+
+                html += `<td id="${position}" class="position ${color}" onclick="movePiece(this.id)">${piece}</td>`;
+            }
+            html += "</tr>";
+        }
+
+        const $chessboard = document.getElementById("chessboard");
+        $chessboard.innerHTML = html;
+
+        document.getElementById("source").value = ""
+        document.getElementById("target").value = ""
+    }
+
+    function convertPieceNameToHtmlEntity(positions) {
+        let pieces = {
+            "White#King": "&#9812",
+            "White#Queen": "&#9813",
+            "White#Rook": "&#9814",
+            "White#Bishop": "&#9815",
+            "White#Knight": "&#9816",
+            "White#Pawn": "&#9817",
+            "Black#King": "&#9818",
+            "Black#Queen": "&#9819",
+            "Black#Rook": "&#9820",
+            "Black#Bishop": "&#9821",
+            "Black#Knight": "&#9822",
+            "Black#Pawn": "&#9823",
+        }
+
+        for (const [key, value] of Object.entries(positions)) {
+            positions[key] = pieces[value];
+        }
+
+        return positions;
+    }
+
+    function movePiece(position) {
+        let source = document.getElementById("source").value
+        if (!source) {
+            if (!positions.hasOwnProperty(position)) {
+                return;
+            }
+            document.getElementById("source").value = position
+            document.getElementById(position).className += ' choose';
+            return;
+        }
+
+        if (source === position) {
+            document.getElementById("source").value = ""
+            document.getElementById(position).classList.remove("choose")
+            return;
+        }
+
+        document.getElementById("target").value = position
+
+        document.getElementById("moveForm").submit()
+    }
+
+    function calculateScores() {
+        $.ajax({
+            url: "/games/{{game.gameId}}/status",
+            type: "get",
+            success(data) {
+                let obj = JSON.parse(data);
+                let scoreMessage = "";
+                for (const [color, score] of Object.entries(obj.playerScores)) {
+                    scoreMessage += `${color}의 점수는 ${score}입니다.\n`
+                }
+                alert(scoreMessage);
+            }
+        })
+    }
+
+</script>
+</html>

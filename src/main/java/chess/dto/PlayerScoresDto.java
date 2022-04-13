@@ -8,9 +8,9 @@ import chess.domain.Color;
 
 public class PlayerScoresDto {
 
-    private final Map<ColorDto, Double> playerScores;
+    private final Map<String, Double> playerScores;
 
-    private PlayerScoresDto(final Map<ColorDto, Double> playerScores) {
+    private PlayerScoresDto(final Map<String, Double> playerScores) {
         this.playerScores = playerScores;
     }
 
@@ -18,17 +18,12 @@ public class PlayerScoresDto {
         return new PlayerScoresDto(playerScores.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> ColorDto.toDto(entry.getKey()),
+                        entry -> entry.getKey().getName(),
                         Entry::getValue
                 )));
     }
 
     public Map<String, Double> getPlayerScores() {
-        return playerScores.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getColorName(),
-                        Entry::getValue
-                ));
+        return playerScores;
     }
 }

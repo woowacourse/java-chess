@@ -1,5 +1,6 @@
 package chess.domain.piece.movable;
 
+import chess.domain.Color;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.constant.PieceDirections;
@@ -25,6 +26,16 @@ public class Pawn extends AbstractPiece {
         super(PIECE_TYPE, pieceDirections);
         this.maximumCountToMove = movableCount;
         this.pieceDirections = pieceDirections;
+    }
+
+    public static Pawn getPawnByColor(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE_PAWN;
+        }
+        if (color == Color.BLACK) {
+            return BLACK_PAWN;
+        }
+        throw new IllegalArgumentException("해당 색상의 폰은 생성할 수 없습니다.");
     }
 
     public static Pawn getWhitePawn() {

@@ -31,11 +31,11 @@ class PlayersTest {
     @BeforeEach
     void setUp() {
         players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(
+                Player.of(Color.WHITE, new HashMap<>(Map.of(
                         Position.from("a2"), Pawn.getWhitePawn(),
                         Position.from("d1"), Queen.getInstance()
                 ))),
-                new Player(Color.BLACK, new HashMap<>(Map.of(
+                Player.of(Color.BLACK, new HashMap<>(Map.of(
                         Position.from("a7"), Pawn.getBlackPawn(),
                         Position.from("b3"), Pawn.getBlackPawn(),
                         Position.from("d2"), Pawn.getBlackPawn())
@@ -46,8 +46,8 @@ class PlayersTest {
     @DisplayName("플레이어의 색상은 중복될 수 없어야 한다.")
     @Test
     void playerColorDuplicatedException() {
-        final Player player1 = new Player(Color.WHITE, Collections.emptyMap());
-        final Player player2 = new Player(Color.WHITE, Collections.emptyMap());
+        final Player player1 = Player.of(Color.WHITE, Collections.emptyMap());
+        final Player player2 = Player.of(Color.WHITE, Collections.emptyMap());
 
         assertThatThrownBy(() -> new Players(player1, player2))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -109,7 +109,7 @@ class PlayersTest {
     @CsvSource(value = {"a7,false", "a8,true"})
     void isPlayerAbleToPromotePawn(final String position, final boolean expected) {
         final Players players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(Position.from(position), Pawn.getWhitePawn()))));
+                Player.of(Color.WHITE, new HashMap<>(Map.of(Position.from(position), Pawn.getWhitePawn()))));
         final boolean actual = players.isPlayerAbleToPromotePawn(Color.WHITE);
         assertThat(actual).isEqualTo(expected);
     }
@@ -119,7 +119,7 @@ class PlayersTest {
     void promotePawn() {
         final Position position = Position.from("a8");
         final Players players = new Players(
-                new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn()))));
+                Player.of(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn()))));
         players.promotePawn(Color.WHITE, "Queen");
 
         final Map<Position, Piece> playerPieces = players.getPiecesByPlayer(Color.WHITE);
@@ -131,8 +131,8 @@ class PlayersTest {
     @MethodSource("provideForIsOnlyOneKingLeft")
     void isOnlyOneKingLeft(final Piece piece, final boolean expected) {
         final Players players = new Players(
-                new Player(Color.WHITE, Map.of(Position.from("a1"), King.getInstance())),
-                new Player(Color.BLACK, Map.of(Position.from("a8"), piece)));
+                Player.of(Color.WHITE, Map.of(Position.from("a1"), King.getInstance())),
+                Player.of(Color.BLACK, Map.of(Position.from("a8"), piece)));
         final boolean actual = players.isOnlyOneKingLeft();
         assertThat(actual).isEqualTo(expected);
     }

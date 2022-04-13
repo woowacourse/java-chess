@@ -130,7 +130,12 @@ public class Players {
                         player -> player.calculateScore(scoreCalculator)
                 ));
     }
+
     public Map<Position, Piece> getPiecesByPlayer(final Color color) {
         return findPlayerByColor(color).getPieces();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

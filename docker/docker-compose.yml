@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  master_db:
+    image: mysql:8.0.28
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chess
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: Asia/Seoul
+    volumes:
+      - ./db/master_db/mysql/data:/var/lib/mysql
+      - ./db/master_db/mysql/config:/etc/mysql/conf.d
+      - ./db/master_db/mysql/init:/docker-entrypoint-initdb.d
+  test_db:
+    image: mysql:8.0.28
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - "13307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chess
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: Asia/Seoul
+    volumes:
+      - ./db/test_db/mysql/data:/var/lib/mysql
+      - ./db/test_db/mysql/config:/etc/mysql/conf.d
+      - ./db/test_db/mysql/init:/docker-entrypoint-initdb.d

@@ -30,3 +30,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker/db/master_db/mysql/data/
+docker/db/master_db/mysql/init/*
+!docker/db/master_db/mysql/init/init.sql
+docker/db/test_db/mysql/data/
+docker/db/test_db/mysql/init/*
+!docker/db/test_db/mysql/init/init.sql

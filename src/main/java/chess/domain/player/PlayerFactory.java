@@ -49,7 +49,7 @@ public class PlayerFactory {
         for (char i = 0; i < 8; i++) {
             blackPieces.put(Position.of((char) ('a' + i), '7'), Pawn.getBlackPawn());
         }
-        return new Player(BLACK, blackPieces);
+        return Player.of(BLACK, blackPieces);
     }
 
     private Player createWhitePlayer() {
@@ -66,6 +66,6 @@ public class PlayerFactory {
         for (char i = 0; i < 8; i++) {
             whitePieces.put(Position.of((char) ('a' + i), '2'), Pawn.getWhitePawn());
         }
-        return new Player(WHITE, whitePieces);
+        return Player.of(WHITE, whitePieces);
     }
 }

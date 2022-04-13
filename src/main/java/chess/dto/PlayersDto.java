@@ -9,21 +9,21 @@ import chess.domain.player.Players;
 
 public class PlayersDto {
 
-    private final Map<ColorDto, PlayerDto> playerDtos;
+    private final Map<String, PlayerDto> playerDtos;
 
-    private PlayersDto(final Map<ColorDto, PlayerDto> playerDtos) {
+    private PlayersDto(final Map<String, PlayerDto> playerDtos) {
         this.playerDtos = playerDtos;
     }
 
     public static PlayersDto toDto(final Players players) {
         return new PlayersDto(Arrays.stream(Color.values())
                 .collect(Collectors.toMap(
-                        ColorDto::toDto,
+                        Color::getName,
                         color -> PlayerDto.toDto(players.getPiecesByPlayer(color)))
                 ));
     }
 
-    public Map<ColorDto, PlayerDto> getPlayerDtos() {
+    public Map<String, PlayerDto> getPlayerDtos() {
         return playerDtos;
     }
 }
