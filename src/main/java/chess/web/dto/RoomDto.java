@@ -22,6 +22,10 @@ public class RoomDto {
         return new RoomDto(number, name, Player.valueOf(player));
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     public String getName() {
         return name;
     }
