@@ -51,6 +51,7 @@ public class ChessGame {
             return capture(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
         }
         currentPlayer.move(currentPosition, destinationPosition);
+        turn = turn.next();
         return currentPlayer.findAll();
     }
 

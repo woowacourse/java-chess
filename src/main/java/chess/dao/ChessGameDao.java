@@ -154,4 +154,51 @@ public class ChessGameDao {
             throw new IllegalArgumentException("게임을 삭제할 수 없습니다.");
         }
     }
+
+    public void updateGameTurn(final int gameId, final Team nextTurn) {
+        final String sql = "update chess_game set turn = (?) where id = (?)";
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nextTurn.getName());
+            preparedStatement.setInt(2, gameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePiece(final int gameId, final String current, final String destination,
+            final String currentTeam, final String opponentTeam) {
+        deletePieceByGameIdAndPositionAndTeam(gameId, destination, opponentTeam);
+        updatePiecePositionByGameId(gameId, current, destination, currentTeam);
+    }
+
+    private void deletePieceByGameIdAndPositionAndTeam(final int gameId, final String position, final String team) {
+        final String sql = "delete from piece where chess_game_id = (?) and position = (?) and team = (?)";
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setString(2, position);
+            preparedStatement.setString(3, team);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("해당 위치의 체스말을 삭제할 수 없습니다.");
+        }
+    }
+
+    private void updatePiecePositionByGameId(final int gameId, final String current, final String destination,
+            final String team) {
+        final String sql = "update piece set position = (?) where chess_game_id = (?) and position = (?) and team = (?)";
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, destination);
+            preparedStatement.setInt(2, gameId);
+            preparedStatement.setString(3, current);
+            preparedStatement.setString(4, team);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

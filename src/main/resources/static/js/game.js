@@ -58,6 +58,9 @@ function setChessMap(chessMap) {
     for (let rank = 1; rank <= 8; rank++) {
       const eachDiv = document.getElementById(toFileName(file) + rank);
       let mapValue = chessMap[8 - rank][file];
+      if (eachDiv.hasChildNodes()) {
+        eachDiv.removeChild(eachDiv.firstChild);
+      }
       if (mapValue === ".") {
         continue;
       }
@@ -147,17 +150,33 @@ async function deleteAndFinishGame() {
 async function move() {
   const current = document.getElementById("current").value;
   const destination = document.getElementById("destination").value;
-  await fetch("/move", {
+
+  let chessGame = await fetch("/move", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      chessGameName: chessGameName,
       current: current,
       destination: destination
     }),
-  }).then((response) => console.log(response));
+  });
+  chessGame = await chessGame.json();
+
+  const chessMap = chessGame.chessMap;
+  isRunning = chessGame.isRunning;
 
   document.getElementById("current").value = "";
   document.getElementById("destination").value = "";
+
+  if (isRunning !== true) {
+    alert("상대방의 킹이 죽었습니다. 게임이 종료되었습니다.");
+    location.href = "/finish/" + chessGameName;
+    return;
+  }
+
+  document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
+
+  setChessMap(chessMap);
 }

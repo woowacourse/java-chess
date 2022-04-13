@@ -1,22 +1,26 @@
 package chess.dto;
 
-import chess.domain.position.Position;
-
 public class MovePositionDto {
 
+    private final String chessGameName;
     private final String current;
     private final String destination;
 
-    public MovePositionDto(String current, String destination) {
+    public MovePositionDto(String chessGameName, String current, String destination) {
+        this.chessGameName = chessGameName;
         this.current = current;
         this.destination = destination;
     }
 
-    public Position getCurrent() {
-        return new Position(current);
+    public String getCurrent() {
+        return current;
     }
 
-    public Position getDestination() {
-        return new Position(destination);
+    public String getDestination() {
+        return destination;
+    }
+
+    public String getChessGameName() {
+        return chessGameName;
     }
 }

@@ -7,6 +7,7 @@ import chess.domain.generator.BlackGenerator;
 import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
+import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
 import chess.dto.ChessGameUpdateDto;
 import chess.dto.StatusDto;
@@ -33,10 +34,7 @@ public class ChessGameService {
     }
 
     public StatusDto findStatus(final String gameName) {
-        final int chessGameId = findChessGameIdByGameName(gameName);
-        final ChessGameUpdateDto gameUpdateDto = chessGameDao.findChessGame(chessGameId);
-        final ChessGame chessGame = ChessGame.of(gameUpdateDto);
-
+        final ChessGame chessGame = findGameByName(gameName);
         final List<GameResult> gameResult = chessGame.findGameResult();
         final GameResult whitePlayerResult = gameResult.get(0);
         final GameResult blackPlayerResult = gameResult.get(1);
@@ -45,14 +43,32 @@ public class ChessGameService {
 
     public StatusDto finishGame(final String gameName) {
         final StatusDto status = findStatus(gameName);
-        final int chessGameId = findChessGameIdByGameName(gameName);
-        chessGameDao.deletePieces(chessGameId);
-        chessGameDao.deleteChessGame(chessGameId);
+        final int gameId = findGameIdByGameName(gameName);
+        chessGameDao.deletePieces(gameId);
+        chessGameDao.deleteChessGame(gameId);
         return status;
     }
 
-    private int findChessGameIdByGameName(String gameName) {
+    public ChessGameDto move(final String gameName, final String current, final String destination) {
+        final int gameId = findGameIdByGameName(gameName);
+        final ChessGame chessGame = findGameByName(gameName);
+        final Player currentPlayer = chessGame.getCurrentPlayer();
+        final Player opponentPlayer = chessGame.getOpponentPlayer();
+        chessGame.move(currentPlayer, opponentPlayer, new Position(current), new Position(destination));
+        chessGameDao.updateGameTurn(gameId, chessGame.getTurn());
+        chessGameDao.updatePiece(gameId, current, destination, currentPlayer.getTeamName(),
+                opponentPlayer.getTeamName());
+        return ChessGameDto.of(chessGame, gameName);
+    }
+
+    private int findGameIdByGameName(final String gameName) {
         return chessGameDao.findChessGameIdByName(gameName)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));
+    }
+
+    private ChessGame findGameByName(final String gameName) {
+        final int chessGameId = findGameIdByGameName(gameName);
+        final ChessGameUpdateDto gameUpdateDto = chessGameDao.findChessGame(chessGameId);
+        return ChessGame.of(gameUpdateDto);
     }
 }

@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.dto.ErrorMessageDto;
+import chess.dto.MovePositionDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -45,6 +46,14 @@ public class WebChessGameController {
         get("/finish/:chessGameName", (request, response) -> {
             final String chessGameName = request.params(":chessGameName");
             return gson.toJson(chessGameService.finishGame(chessGameName));
+        });
+
+        post("/move", (request, response) -> {
+            final MovePositionDto movePositionDto = gson.fromJson(request.body(), MovePositionDto.class);
+            final String chessGameName = movePositionDto.getChessGameName();
+            final String current = movePositionDto.getCurrent();
+            final String destination = movePositionDto.getDestination();
+            return gson.toJson(chessGameService.move(chessGameName, current, destination));
         });
     }
 
