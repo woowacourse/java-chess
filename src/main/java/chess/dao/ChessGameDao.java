@@ -56,6 +56,7 @@ public class ChessGameDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new IllegalArgumentException("게임을 저장할 수 없습니다.");
         }
     }
 
