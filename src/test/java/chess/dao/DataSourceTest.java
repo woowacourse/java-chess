@@ -10,7 +10,11 @@ class DataSourceTest {
     @DisplayName("DB와 연결이 되는지 확인한다.")
     @Test
     void getConnection() {
-        DataSource dataSource = new DataSourceImpl();
+        final String url = "jdbc:mysql://localhost:3306/chess";
+        final String user = "user";
+        final String password = "password";
+
+        DataSource dataSource = new DataSourceImpl(url, user, password);
         assertThat(dataSource.connection()).isNotNull();
     }
 }

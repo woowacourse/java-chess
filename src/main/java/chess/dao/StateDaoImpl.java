@@ -23,6 +23,7 @@ public class StateDaoImpl implements StateDao {
         try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             String stateName = StateToStringConverter.convert(state);
+            System.out.println(stateName);
             statement.setString(1, stateName);
             statement.executeUpdate();
         } catch (SQLException e) {
