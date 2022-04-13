@@ -1,10 +1,10 @@
 package chess;
 
-import chess.controller.ConsoleGameController;
+import chess.controller.ConsoleGameRunner;
 
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        new ConsoleGameController().run();
+        new ConsoleGameRunner().run();
     }
 }
