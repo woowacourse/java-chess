@@ -26,9 +26,9 @@ public class WebChessController {
         get("/", (req, res) -> new ModelAndView(new HashMap<>(), "board.html")
                 , new HandlebarsTemplateEngine());
 
-        get("/start", (req, res) -> gson.toJson(gameService.start()));
+        post("/start", (req, res) -> gson.toJson(gameService.start()));
 
-        get("/end", (req, res) -> gson.toJson(gameService.end()));
+        post("/end", (req, res) -> gson.toJson(gameService.end()));
 
         get("/status", (req, res) -> gson.toJson(gameService.status()));
 

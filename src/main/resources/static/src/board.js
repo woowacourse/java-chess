@@ -11,13 +11,17 @@ async function startChess() {
     while (session.hasChildNodes()) {
         session.removeChild(session.firstChild);
     }
-    let board = await fetch("/start");
+    let board = await fetch("/start", {
+        method: "POST",
+    });
     board = await board.json();
     putPieceInSquare(board);
 }
 
 async function endChess() {
-    let board = await fetch("/end");
+    let board = await fetch("/end", {
+        method: "POST",
+    });
     board = await board.json();
     removePieceInSquare(board);
 }
@@ -87,15 +91,19 @@ async function printResult() {
     const whiteScore = document.createElement("div");
     const blackScore = document.createElement("div");
     const winner = document.createElement("div");
-    const newStart = document.createElement("div");
     whiteScore.innerHTML = "화이트 점수 : " + board.score.WHITE;
     blackScore.innerHTML = "블랙 점수 : " + board.score.BLACK;
     winner.innerHTML = "승자 : " + board.winner;
-    newStart.innerHTML = "게임이 종료 되었습니다. 재시작 하려면 Start 버튼을 눌러주세요.";
     session.appendChild(whiteScore);
     session.appendChild(blackScore);
     session.appendChild(winner);
-    session.appendChild(newStart);
+}
+
+async function removeResult() {
+    let session = document.getElementById("result-session");
+    while(session.hasChildNodes()) {
+        session.removeChild(session.firstChild);
+    }
 }
 
 button.addEventListener("click", function () {
@@ -110,8 +118,13 @@ button.addEventListener("click", function () {
 });
 
 status_button.addEventListener("click", function () {
-    button.innerText = "Start";
-    printResult();
+    if (status_button.innerText === "Status") {
+        status_button.innerText = "Close";
+        printResult();
+        return;
+    }
+    status_button.innerText = "Status";
+    removeResult();
 });
 
 load_button.addEventListener("click", function () {
