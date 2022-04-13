@@ -43,6 +43,14 @@ public class ChessGameService {
         return StatusDto.of(whitePlayerResult, blackPlayerResult);
     }
 
+    public StatusDto finishGame(final String gameName) {
+        final StatusDto status = findStatus(gameName);
+        final int chessGameId = findChessGameIdByGameName(gameName);
+        chessGameDao.deletePieces(chessGameId);
+        chessGameDao.deleteChessGame(chessGameId);
+        return status;
+    }
+
     private int findChessGameIdByGameName(String gameName) {
         return chessGameDao.findChessGameIdByName(gameName)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));

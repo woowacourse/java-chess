@@ -109,13 +109,21 @@ async function findStatus() {
   document.getElementById("result").innerHTML = result;
 }
 
-async function finishGame() {
+let endButton = document.getElementById("end-btn");
+endButton.addEventListener("click", async function () {
+  if (confirm("현재 게임을 삭제하시겠습니까?")) {
+    await deleteAndFinishGame();
+  }
+  location.href = "/";
+});
+
+async function deleteAndFinishGame() {
+  let status = await fetch("/finish/" + chessGameName)
+  status = await status.json();
+
   const startButton = document.getElementById("start-btn");
   const statusButton = document.getElementById("status-btn");
   const endButton = document.getElementById("end-btn");
-
-  const status = await fetch("/finish")
-  .then((response) => response.json());
 
   startButton.disabled = false;
   statusButton.disabled = true;
@@ -126,7 +134,6 @@ async function finishGame() {
   const whitePlayerResult = status.whitePlayerResult;
   const blackPlayerResult = status.blackPlayerResult;
 
-
   const result = "[White 팀] 점수 : " + whitePlayerScore + ", 결과 : "
       + whitePlayerResult
       + "<br>[Black 팀] 점수 : " + blackPlayerScore + ", 결과 : "
@@ -135,8 +142,6 @@ async function finishGame() {
   alert("게임이 종료되었습니다.");
 
   document.getElementById("result").innerHTML = result;
-
-  location.href = "/";
 }
 
 async function move() {

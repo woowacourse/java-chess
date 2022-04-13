@@ -130,4 +130,28 @@ public class ChessGameDao {
         }
         return Optional.empty();
     }
+
+    public void deletePieces(final int chessGameId) {
+        final String sql = "delete from piece where chess_game_id = (?)";
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, chessGameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("체스말을 삭제할 수 없습니다.");
+        }
+    }
+
+    public void deleteChessGame(final int chessGameId) {
+        final String sql = "delete from chess_game where id = (?)";
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, chessGameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("게임을 삭제할 수 없습니다.");
+        }
+    }
 }

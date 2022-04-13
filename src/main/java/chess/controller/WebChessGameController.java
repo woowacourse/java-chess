@@ -32,7 +32,7 @@ public class WebChessGameController {
                 final String gameName = jsonElement.getAsJsonObject().get("gameName").getAsString();
                 return gson.toJson(chessGameService.createNewChessGame(gameName));
             } catch (Exception e) {
-                response.status();
+                response.status(400);
                 return gson.toJson(new ErrorMessageDto(e.getMessage()));
             }
         });
@@ -40,6 +40,11 @@ public class WebChessGameController {
         get("/status/:chessGameName", (request, response) -> {
             final String chessGameName = request.params(":chessGameName");
             return gson.toJson(chessGameService.findStatus(chessGameName));
+        });
+
+        get("/finish/:chessGameName", (request, response) -> {
+            final String chessGameName = request.params(":chessGameName");
+            return gson.toJson(chessGameService.finishGame(chessGameName));
         });
     }
 
