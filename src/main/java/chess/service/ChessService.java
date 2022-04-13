@@ -70,10 +70,6 @@ public class ChessService {
         gameDao.updateTurnToBlack(gameId);
     }
 
-    public BoardDto getBoard(String gameId) {
-        return boardDao.getBoard(gameId);
-    }
-
     public PieceColorDto getCurrentTurn(String gameId) {
         return PieceColorDto.from(generateChessGame(gameId));
     }
@@ -92,5 +88,17 @@ public class ChessService {
         ChessGameDto chessGameDto = gameDao.getGame(gameId);
 
         return ChessGame.of(boardDto.toBoard(), chessGameDto.getCurrentTurnAsPieceColor());
+    }
+
+    public BoardDto getBoard(String gameId) {
+        return boardDao.getBoard(gameId);
+    }
+
+    @Override
+    public String toString() {
+        return "ChessService{" +
+                "gameDao=" + gameDao +
+                ", boardDao=" + boardDao +
+                '}';
     }
 }

@@ -5,13 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameDaoTest {
+class GameDaoImplTest {
     private static final String TEST_GAME_ID = "TEST-GAME-ID";
-    private GameDao gameDao;
+    private GameDaoImpl gameDao;
 
     @BeforeEach
     void setUp() {
-        gameDao = new GameDao();
+        gameDao = new GameDaoImpl();
     }
 
     @DisplayName("새로운 게임을 game 테이블에 생성한다.")

@@ -11,7 +11,7 @@ public class ChessGameDto {
         this.currentTurn = currentTurn;
     }
 
-    public static ChessGameDto from(String gameId, String turn) {
+    public static ChessGameDto of(String gameId, String turn) {
         return new ChessGameDto(gameId, PieceColorDto.from(turn));
     }
 

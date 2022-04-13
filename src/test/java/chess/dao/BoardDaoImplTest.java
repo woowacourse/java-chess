@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardDaoTest {
+class BoardDaoImplTest {
     private static final String GAME_ID = "test-game";
     private static final XAxis X_AXIS = XAxis.A;
     private static final YAxis Y_AXIS = YAxis.ONE;
@@ -26,13 +26,13 @@ class BoardDaoTest {
     private static final PieceType PIECE_TYPE = PieceType.PAWN;
     private static final PieceColor PIECE_COLOR = PieceColor.WHITE;
 
-    private BoardDao boardDao;
+    private BoardDaoImpl boardDao;
 
     @BeforeEach
     void setUp() {
-        boardDao = new BoardDao();
+        boardDao = new BoardDaoImpl();
 
-        GameDao gameDao = new GameDao();
+        GameDaoImpl gameDao = new GameDaoImpl();
         gameDao.createGame(GAME_ID);
     }
 
@@ -84,7 +84,7 @@ class BoardDaoTest {
 
     @AfterEach
     void tearDown() {
-        GameDao gameDao = new GameDao();
+        GameDaoImpl gameDao = new GameDaoImpl();
         gameDao.deleteGame(GAME_ID);
     }
 }

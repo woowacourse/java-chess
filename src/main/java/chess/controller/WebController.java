@@ -3,8 +3,8 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dao.BoardDao;
-import chess.dao.GameDao;
+import chess.dao.BoardDaoImpl;
+import chess.dao.GameDaoImpl;
 import chess.domain.position.Position;
 import chess.dto.request.UpdatePiecePositionDto;
 import chess.dto.response.BoardDto;
@@ -23,7 +23,7 @@ public class WebController {
     private final ChessService chessService;
 
     public WebController() {
-        this.chessService = ChessService.of(new GameDao(), new BoardDao());
+        this.chessService = ChessService.of(new GameDaoImpl(), new BoardDaoImpl());
     }
 
     public void run() {
