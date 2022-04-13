@@ -1,4 +1,4 @@
-package chess.service.converter;
+package chess.dao.converter;
 
 import chess.model.state.State;
 

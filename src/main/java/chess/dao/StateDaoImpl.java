@@ -2,8 +2,8 @@ package chess.dao;
 
 import chess.model.board.Board;
 import chess.model.state.State;
-import chess.service.converter.StateToStringConverter;
-import chess.service.converter.StringToStateConverter;
+import chess.dao.converter.StateToStringConverter;
+import chess.dao.converter.StringToStateConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
