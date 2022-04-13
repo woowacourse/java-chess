@@ -8,6 +8,7 @@ import chess.dao.DataSource;
 import chess.dao.DataSourceImpl;
 import chess.dao.SquareDaoImpl;
 import chess.dao.StateDaoImpl;
+import chess.repository.GameRepositoryImpl;
 import chess.service.GameService;
 
 public class WebApplication {
@@ -17,7 +18,8 @@ public class WebApplication {
         staticFileLocation("/static");
         DataSource dataSource = new DataSourceImpl();
 
-        GameService gameService = new GameService(new SquareDaoImpl(dataSource), new StateDaoImpl(dataSource));
+        GameService gameService = new GameService(
+                new GameRepositoryImpl(new SquareDaoImpl(dataSource), new StateDaoImpl(dataSource)));
         WebChessController webChessController = new WebChessController(gameService);
         webChessController.run();
     }

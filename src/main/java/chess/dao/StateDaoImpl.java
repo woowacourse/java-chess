@@ -1,5 +1,9 @@
 package chess.dao;
 
+import chess.model.board.Board;
+import chess.model.state.State;
+import chess.service.converter.StateToStringConverter;
+import chess.service.converter.StringToStateConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,24 +18,26 @@ public class StateDaoImpl implements StateDao {
     }
 
     @Override
-    public void save(String name) {
+    public void save(State state) {
         final String sql = "insert into state (name) values (?)";
         try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
+            String stateName = StateToStringConverter.convert(state);
+            statement.setString(1, stateName);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public String find() {
+    public State find(Board board) {
         final String sql = "select name from state";
         try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql);
              final ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
-            return resultSet.getString("name");
+            String stateName = resultSet.getString("name");
+            return StringToStateConverter.convert(stateName, board);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,12 +56,14 @@ public class StateDaoImpl implements StateDao {
     }
 
     @Override
-    public void update(String now, String next) {
+    public void update(State now, State next) {
         final String sql = "update state set name = ? where name = ?";
         try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, next);
-            statement.setString(2, now);
+            String nextStateName = StateToStringConverter.convert(next);
+            String nowStateName = StateToStringConverter.convert(now);
+            statement.setString(1, nextStateName);
+            statement.setString(2, nowStateName);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

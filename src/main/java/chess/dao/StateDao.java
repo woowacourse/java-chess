@@ -1,12 +1,15 @@
 package chess.dao;
 
+import chess.model.board.Board;
+import chess.model.state.State;
+
 public interface StateDao {
 
-    void save(String name);
+    void save(State state);
 
-    String find();
+    State find(Board board);
 
     void delete();
 
-    void update(String white_turn, String black_turn);
+    void update(State now, State next);
 }

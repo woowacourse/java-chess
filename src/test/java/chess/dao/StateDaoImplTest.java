@@ -3,6 +3,10 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.board.Board;
+import chess.model.state.State;
+import chess.model.state.running.BlackTurn;
+import chess.model.state.running.WhiteTurn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +16,10 @@ class StateDaoImplTest {
     @Test()
     void save() {
         StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
-        stateDao.save("BLACK_TURN");
+        stateDao.save(new BlackTurn(Board.init()));
+        State state = stateDao.find(Board.init());
 
-        assertThat(stateDao.find()).isEqualTo("BLACK_TURN");
+        assertThat(state.isBlackTurn()).isTrue();
     }
 
     @DisplayName("데이터가 삭제되는지 확인한다.")
@@ -22,10 +27,10 @@ class StateDaoImplTest {
     void delete() {
         StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
         stateDao.delete();
-        stateDao.save("WHITE_TURN");
+        stateDao.save(new WhiteTurn(Board.init()));
         stateDao.delete();
 
-        assertThatThrownBy(stateDao::find)
+        assertThatThrownBy(() -> stateDao.find(Board.init()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 데이터가 없습니다.");
     }
@@ -35,9 +40,10 @@ class StateDaoImplTest {
     void update() {
         StateDao stateDao = new StateDaoImpl(new DataSourceImpl());
         stateDao.delete();
-        stateDao.save("WHITE_TURN");
-        stateDao.update("WHITE_TURN", "BLACK_TURN");
+        stateDao.save(new WhiteTurn(Board.init()));
+        stateDao.update(new WhiteTurn(Board.init()), new BlackTurn(Board.init()));
+        State state = stateDao.find(Board.init());
 
-        assertThat(stateDao.find()).isEqualTo("BLACK_TURN");
+        assertThat(state.isBlackTurn()).isTrue();
     }
 }

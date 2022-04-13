@@ -1,96 +1,56 @@
 package chess.service;
 
-import chess.dao.SquareDao;
-import chess.dao.StateDao;
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.dto.ResultDto;
 import chess.model.board.Board;
-import chess.model.piece.Piece;
-import chess.model.position.Position;
 import chess.model.state.Ready;
 import chess.model.state.State;
-import chess.service.converter.StateToStringConverter;
-import chess.service.converter.StringToStateConverter;
-import java.util.HashMap;
-import java.util.Map;
+import chess.model.state.finished.Status;
+import chess.model.state.running.WhiteTurn;
+import chess.repository.GameRepository;
 
 public class GameService {
 
-    private final SquareDao squareDao;
-    private final StateDao stateDao;
+    private final GameRepository gameRepository;
 
-    public GameService(final SquareDao squareDao, final StateDao stateDao) {
-        this.squareDao = squareDao;
-        this.stateDao = stateDao;
+    public GameService(final GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
 
     public BoardDto start() {
-        deleteData();
-        State state = new Ready();
-        stateDao.save(StateToStringConverter.convert(state));
-        fromBoard(state.getBoard());
+        State state = new WhiteTurn(Board.init());
+        gameRepository.deleteGameData();
+        gameRepository.initGameData(state);
         return BoardDto.from(state.getBoard());
     }
 
     public BoardDto end() {
-        Board board = toBoard(squareDao.find());
-        deleteData();
+        Board board = gameRepository.getBoard();
+        gameRepository.deleteGameData();
         return BoardDto.from(board.getBoard());
     }
 
     public BoardDto move(MoveDto moveDto) {
-        String source = moveDto.getSource();
-        String target = moveDto.getTarget();
-
         State state = proceed(moveDto);
-
-        squareDao.update(source, state.getBoard().get(Position.from(source)));
-        squareDao.update(target, state.getBoard().get(Position.from(target)));
-
         return BoardDto.from(state.getBoard());
     }
 
     private State proceed(MoveDto moveDto) {
-        Board board = toBoard(squareDao.find());
-        String nowStateName = stateDao.find();
-        State nowState = StringToStateConverter.convert(nowStateName, board);
-
+        State nowState = gameRepository.getState();
         State nextState = nowState.proceed(moveDto.getCommand());
-        String nextStateName = StateToStringConverter.convert(nextState);
-        stateDao.update(nowStateName, nextStateName);
-
+        gameRepository.saveGameData(nextState, moveDto);
         return nextState;
     }
 
-    public ResultDto status(String command) {
-        Board board = toBoard(squareDao.find());
-        String nowStateName = stateDao.find();
-        stateDao.update(nowStateName, command);
-        State nextState = StringToStateConverter.convert(stateDao.find(), board);
-        return new ResultDto(nextState.getScore(), nextState.getWinner());
+    public ResultDto status() {
+        Board board = gameRepository.getBoard();
+        State status = new Status(board);
+        return new ResultDto(status.getScore(), status.getWinner());
     }
 
     public BoardDto load() {
-        Board board = toBoard(squareDao.find());
+        Board board = gameRepository.getBoard();
         return BoardDto.from(board.getBoard());
-    }
-
-    private void deleteData() {
-        squareDao.delete();
-        stateDao.delete();
-    }
-
-    private void fromBoard(Map<Position, Piece> board) {
-        board.keySet()
-                .forEach(position -> squareDao.save(position, board.get(position)));
-    }
-
-    private Board toBoard(Map<String, String> squares) {
-        Map<Position, Piece> board = new HashMap<>();
-        for (String key : squares.keySet()) {
-            board.put(Position.from(key), Piece.getPiece(squares.get(key)));
-        }
-        return Board.from(board);
     }
 }

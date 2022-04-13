@@ -30,7 +30,7 @@ public class WebChessController {
 
         get("/end", (req, res) -> gson.toJson(gameService.end()));
 
-        get("/status", (req, res) -> gson.toJson(gameService.status("STATUS")));
+        get("/status", (req, res) -> gson.toJson(gameService.status()));
 
         get("/load", (req, res) -> gson.toJson(gameService.load()));
 
