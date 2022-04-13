@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>체스 게임</title>
+  <link rel="stylesheet" href="../src/index.css">
+</head>
+<body>
+<div id="app">
+  <h1>♟️ 체스 게임 ♟</h1>
+
+  <section class="chess-ui">
+    {{#this}}
+
+    <div id="a8" class="white-square">
+      {{#a8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a8}}
+    </div>
+    <div id="b8" class="black-square">
+      {{#b8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b8}}
+    </div>
+    <div id="c8" class="white-square">
+      {{#c8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c8}}
+    </div>
+    <div id="d8" class="black-square">
+      {{#d8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d8}}
+    </div>
+    <div id="e8" class="white-square">
+      {{#e8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e8}}
+    </div>
+    <div id="f8" class="black-square">
+      {{#f8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f8}}
+    </div>
+    <div id="g8" class="white-square">
+      {{#g8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g8}}
+    </div>
+    <div id="h8" class="black-square">
+      {{#h8}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h8}}
+    </div>
+
+
+    <div id="a7" class="black-square">
+      {{#a7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a7}}
+    </div>
+    <div id="b7" class="white-square">
+      {{#b7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b7}}
+    </div>
+    <div id="c7" class="black-square">
+      {{#c7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c7}}
+    </div>
+    <div id="d7" class="white-square">
+      {{#d7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d7}}
+    </div>
+    <div id="e7" class="black-square">
+      {{#e7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e7}}
+    </div>
+    <div id="f7" class="white-square">
+      {{#f7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f7}}
+    </div>
+    <div id="g7" class="black-square">
+      {{#g7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g7}}
+    </div>
+    <div id="h7" class="white-square pawn">
+      {{#h7}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h7}}
+    </div>
+
+
+    <div id="a6" class="white-square">
+      {{#a6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a6}}
+    </div>
+    <div id="b6" class="black-square">
+      {{#b6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b6}}
+    </div>
+    <div id="c6" class="white-square">
+      {{#c6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c6}}
+    </div>
+    <div id="d6" class="black-square">
+      {{#d6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d6}}
+    </div>
+    <div id="e6" class="white-square">
+      {{#e6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e6}}
+    </div>
+    <div id="f6" class="black-square">
+      {{#f6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f6}}
+    </div>
+    <div id="g6" class="white-square">
+      {{#g6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g6}}
+    </div>
+    <div id="h6" class="black-square">
+      {{#h6}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h6}}
+    </div>
+
+
+    <div id="a5" class="black-square">
+      {{#a5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a5}}
+    </div>
+    <div id="b5" class="white-square">
+      {{#b5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b5}}
+    </div>
+    <div id="c5" class="black-square">
+      {{#c5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c5}}
+    </div>
+    <div id="d5" class="white-square">
+      {{#d5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d5}}
+    </div>
+    <div id="e5" class="black-square">
+      {{#e5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e5}}
+    </div>
+    <div id="f5" class="white-square">
+      {{#f5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f5}}
+    </div>
+    <div id="g5" class="black-square">
+      {{#g5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g5}}
+    </div>
+    <div id="h5" class="white-square pawn">
+      {{#h5}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h5}}
+    </div>
+
+
+    <div id="a4" class="white-square">
+      {{#a4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a4}}
+    </div>
+    <div id="b4" class="black-square">
+      {{#b4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b4}}
+    </div>
+    <div id="c4" class="white-square">
+      {{#c4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c4}}
+    </div>
+    <div id="d4" class="black-square">
+      {{#d4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d4}}
+    </div>
+    <div id="e4" class="white-square">
+      {{#e4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e4}}
+    </div>
+    <div id="f4" class="black-square">
+      {{#f4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f4}}
+    </div>
+    <div id="g4" class="white-square">
+      {{#g4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g4}}
+    </div>
+    <div id="h4" class="black-square">
+      {{#h4}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h4}}
+    </div>
+
+
+    <div id="a3" class="black-square">
+      {{#a3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a3}}
+    </div>
+    <div id="b3" class="white-square">
+      {{#b3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b3}}
+    </div>
+    <div id="c3" class="black-square">
+      {{#c3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c3}}
+    </div>
+    <div id="d3" class="white-square">
+      {{#d3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d3}}
+    </div>
+    <div id="e3" class="black-square">
+      {{#e3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e3}}
+    </div>
+    <div id="f3" class="white-square">
+      {{#f3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f3}}
+    </div>
+    <div id="g3" class="black-square">
+      {{#g3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g3}}
+    </div>
+    <div id="h3" class="white-square pawn">
+      {{#h3}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h3}}
+    </div>
+
+
+    <div id="a2" class="white-square">
+      {{#a2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a2}}
+    </div>
+    <div id="b2" class="black-square">
+      {{#b2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b2}}
+    </div>
+    <div id="c2" class="white-square">
+      {{#c2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c2}}
+    </div>
+    <div id="d2" class="black-square">
+      {{#d2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d2}}
+    </div>
+    <div id="e2" class="white-square">
+      {{#e2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e2}}
+    </div>
+    <div id="f2" class="black-square">
+      {{#f2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f2}}
+    </div>
+    <div id="g2" class="white-square">
+      {{#g2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g2}}
+    </div>
+    <div id="h2" class="black-square">
+      {{#h2}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h2}}
+    </div>
+
+
+    <div id="a1" class="black-square">
+      {{#a1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/a1}}
+    </div>
+    <div id="b1" class="white-square">
+      {{#b1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/b1}}
+    </div>
+    <div id="c1" class="black-square">
+      {{#c1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/c1}}
+    </div>
+    <div id="d1" class="white-square">
+      {{#d1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/d1}}
+    </div>
+    <div id="e1" class="black-square">
+      {{#e1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/e1}}
+    </div>
+    <div id="f1" class="white-square">
+      {{#f1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/f1}}
+    </div>
+    <div id="g1" class="black-square">
+      {{#g1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/g1}}
+    </div>
+    <div id="h1" class="white-square pawn">
+      {{#h1}}
+      <img src="../images/woodstyle/{{name}}_{{color}}.png" class="{{name}}-img"/>
+      {{/h1}}
+    </div>
+    {{/this}}
+  </section>
+
+  <div class="chess-status">
+
+    <div class="start">
+      <form action="/game/start" method="post">
+        <button type="submit" formmethod="post">start</button>
+      </form>
+    </div>
+
+    <div class="end">
+      <form action="/game/end" method="post">
+        <button type="submit" formmethod="post">end</button>
+      </form>
+    </div>
+
+    <div class="status" id="status">
+      <button id="btn">status</button>
+      <br>
+      <label>
+        현재 상태: 승자: <a class="winner-name">없음</a> , 백색팀: <a class="white-score">??</a>점, 흑색팀: <a class="black-score">??</a>점
+      </label>
+    </div>
+
+    <div class="save">
+      <form action="/game/save" method="post">
+        <button type="submit" formmethod="post">save</button>
+      </form>
+    </div>
+
+    <div class="exit" id="exit">
+      <form action="/game/exit" method="post">
+        <button type="submit">exit</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+<script>
+
+  const section = document.querySelector("section");
+  const buttonElement = document.getElementById('btn');
+
+  buttonElement.addEventListener('click', function (event) {
+    fetch("/game/status")
+    .then((res) => res.json())
+    .then((json) => {
+          let winnerName = document.getElementsByClassName("winner-name")[0];
+          let whiteScore = document.getElementsByClassName("white-score")[0];
+          let blackScore = document.getElementsByClassName("black-score")[0];
+
+          winnerName.innerText = json.result.winner;
+          whiteScore.innerText = json.result.whiteScore;
+        blackScore.innerText = json.result.blackScore;
+        }
+    )
+  })
+
+  let fromInput;
+  let toInput;
+
+  section.addEventListener("mousedown", (event) => {
+    fromInput = findTagId(event);
+  })
+
+  section.addEventListener("mouseup", (event) => {
+
+    toInput = findTagId(event);
+
+    fetch("/game/move", {
+      method: "post",
+      redirect: 'follow',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        from: fromInput,
+        to: toInput
+      }),
+    })
+    .then(status)
+    .then(() => window.location.href = '/game/progress')
+    .catch(error => {
+      alert(error.message)
+    })
+  })
+
+  function findTagId(event) {
+    if (event.target.nodeName === 'IMG') {
+      return event.target.parentNode.id;
+    }
+    return event.target.id;
+  }
+
+  function status(res) {
+    if (!res.ok) {
+      return res.text().then(text => {
+        throw new Error(text)
+      })
+    }
+  }
+
+</script>
+
+
+</html>

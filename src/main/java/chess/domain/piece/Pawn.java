@@ -2,23 +2,27 @@ package chess.domain.piece;
 
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.PositionConverter;
+import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    private static final String NAME = "Pawn";
-
-    private static final double DEFAULT_SCORE = 1;
-
-    public static final char BLACK_INIT_RANK = '7';
-    public static final char WHITE_INIT_RANK = '2';
+    private static final PieceType PIECE_TYPE = PieceType.PAWN;
 
     private static final int MOVABLE_RANK_DIFFERENCE = 1;
     private static final int JUMPABLE_RANK_DIFFERENCE = 2;
 
+    public static final double DEFAULT_SCORE = 1;
+    public static final double PENALTY_RATE = 0.5;
+
+    public static final Rank BLACK_INIT_RANK = Rank.SEVEN;
+    public static final Rank WHITE_INIT_RANK = Rank.TWO;
+
     private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
+
+
+
 
     public Pawn(Color color, Position position) {
         super(color, position);
@@ -74,7 +78,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteInJumpablePosition(int curRankIdx) {
-        return PositionConverter.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return Rank.isMappedRankIdx(WHITE_INIT_RANK.getRawRank(), curRankIdx);
     }
 
     private boolean validateBlackMovable(Position toPosition) {
@@ -94,7 +98,7 @@ public final class Pawn extends Piece {
 
 
     private boolean isBlackInJumpablePosition(int curRankIdx) {
-        return PositionConverter.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return Rank.isMappedRankIdx(BLACK_INIT_RANK.getRawRank(), curRankIdx);
     }
 
     @Override
@@ -134,7 +138,7 @@ public final class Pawn extends Piece {
 
     @Override
     public String getName() {
-        return NAME;
+        return PIECE_TYPE.getName();
     }
 
     @Override

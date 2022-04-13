@@ -17,12 +17,12 @@ public class PositionTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("범위를 벗어한 위치 정보를 입력하는 경우 예외가 발생한다.")
+    @DisplayName("범위를 벗어한 파일 정보를 입력하는 경우 예외가 발생한다.")
     @Test
     void of_exceptionOnInvalidRange() {
         assertThatCode(() -> Position.of("z0"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
+                .hasMessage("유효하지 않은 파일입니다. (파일은 a~h까지 입력 가능합니다.)");
     }
 
 }

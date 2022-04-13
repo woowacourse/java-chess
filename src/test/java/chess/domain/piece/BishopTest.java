@@ -63,11 +63,11 @@ public class BishopTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("비숍의 name은 Bishop")
+    @DisplayName("비숍의 name은 bishop")
     @Test
     void getName() {
         String actual = new Bishop(Color.BLACK, Position.of("a1")).getName();
-        String expected = "Bishop";
+        String expected = "bishop";
 
         assertThat(actual).isEqualTo(expected);
     }

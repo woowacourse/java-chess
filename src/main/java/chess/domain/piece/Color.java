@@ -1,9 +1,18 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Color {
 
-    WHITE,
-    BLACK;
+    WHITE("white"),
+    BLACK("black"),
+    NONE("없음");
+
+    private final String name;
+
+    Color(String name) {
+        this.name = name;
+    }
 
     public boolean isSameColor(Color color) {
         return this == color;
@@ -24,6 +33,16 @@ public enum Color {
         return WHITE;
     }
 
+    public static Color of(String name) {
+        return Arrays.stream(values())
+            .filter(x -> x.name.equals(name))
+            .findFirst()
+            .orElse(NONE);
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 
 

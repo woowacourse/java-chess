@@ -1,22 +1,19 @@
 package chess.dto;
 
-import chess.domain.piece.Color;
-
 public class GameResultDto {
 
-    private final Color winnerColor;
-
+    private final String winner;
     private final double whiteScore;
     private final double blackScore;
 
-    public GameResultDto(Color winner, double whiteScore, double blackScore) {
-        this.winnerColor = winner;
+    public GameResultDto(String winner, double whiteScore, double blackScore) {
+        this.winner = winner;
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
-    public Color winnerColor() {
-        return winnerColor;
+    public String getWinner() {
+        return winner;
     }
 
     public double getWhiteScore() {
