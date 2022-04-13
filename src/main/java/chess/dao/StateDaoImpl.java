@@ -26,7 +26,7 @@ public class StateDaoImpl implements StateDao {
             statement.setString(1, stateName);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 저장 실패");
         }
     }
 
@@ -39,9 +39,8 @@ public class StateDaoImpl implements StateDao {
             String stateName = resultSet.getString("name");
             return StringToStateConverter.convert(stateName, board);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 조회 실패");
         }
-        throw new IllegalArgumentException("[ERROR] 데이터가 없습니다.");
     }
 
     @Override
@@ -51,7 +50,7 @@ public class StateDaoImpl implements StateDao {
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 삭제 실패");
         }
     }
 
@@ -66,7 +65,7 @@ public class StateDaoImpl implements StateDao {
             statement.setString(2, nowStateName);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 최신화 실패");
         }
     }
 }

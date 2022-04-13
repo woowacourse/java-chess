@@ -26,7 +26,7 @@ public class SquareDaoImpl implements SquareDao {
             statement.setString(3, piece.getSymbol());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 저장 실패");
         }
     }
 
@@ -37,9 +37,8 @@ public class SquareDaoImpl implements SquareDao {
              final ResultSet resultSet = statement.executeQuery()) {
             return createFrom(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 조회 실패");
         }
-        throw new IllegalArgumentException("[ERROR] 저장된 데이터를 가져 올 수 없습니다.");
     }
 
     private Map<String, String> createFrom(ResultSet resultSet) throws SQLException {
@@ -57,7 +56,7 @@ public class SquareDaoImpl implements SquareDao {
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 삭제 실패");
         }
     }
 
@@ -70,7 +69,7 @@ public class SquareDaoImpl implements SquareDao {
             statement.setString(3, position);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] 데이터 최신화 실패");
         }
     }
 }
