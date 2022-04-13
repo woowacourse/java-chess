@@ -13,13 +13,11 @@ public class DataSourceImpl implements DataSource {
     @Override
     public Connection connection() {
         loadDriver();
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException("[ERROR] DB 연결 실패");
         }
-        return connection;
     }
 
     private static void loadDriver() {
