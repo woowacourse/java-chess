@@ -15,7 +15,7 @@ public class PieceDao {
     private final Connection connection = DBConnector.getConnection();
 
     public List<PieceDto> findAllByRoomId(int roomId) throws SQLException {
-        final String sql = "select position, name, imagePath from piece where roomId = ?";
+        final String sql = "select position, name, imagePath, state from piece where roomId = ?";
         List<PieceDto> pieces = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, roomId);
@@ -24,7 +24,8 @@ public class PieceDao {
             PieceDto pieceDto = PieceDto.of(
                 resultSet.getString("position"),
                 resultSet.getString("name"),
-                resultSet.getString("imagePath")
+                resultSet.getString("imagePath"),
+                resultSet.getString("state")
             );
             pieces.add(pieceDto);
         }
@@ -32,12 +33,13 @@ public class PieceDao {
     }
 
     public int save(PieceDto pieceDto, int roomId) throws SQLException {
-        final String sql = "insert into piece (position, name, imagePath, roomId) values (?, ?, ?, ?)";
+        final String sql = "insert into piece (position, name, imagePath, state, roomId) values (?, ?, ?, ?, ?)";
         final PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         statement.setString(1, pieceDto.getPosition());
         statement.setString(2, pieceDto.getName());
         statement.setString(3, pieceDto.getImageName());
-        statement.setInt(4, roomId);
+        statement.setString(4, pieceDto.getState());
+        statement.setInt(5, roomId);
         statement.executeUpdate();
         ResultSet result = statement.getGeneratedKeys();
 
@@ -83,5 +85,25 @@ public class PieceDao {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, roomId);
         statement.executeUpdate();
+    }
+
+    public void updatePawnState(String position) throws SQLException {
+        if (isStartedPawn(position)) {
+            final String sql = "update piece set state = ? where position = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, "Moved");
+            statement.setString(2, position);
+            statement.executeUpdate();
+        }
+    }
+
+    private boolean isStartedPawn(String position) throws SQLException {
+        final String sql = "select name, state from piece where position = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, position);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        String name = resultSet.getString("name") + resultSet.getString("state");
+        return name.equalsIgnoreCase("p");
     }
 }

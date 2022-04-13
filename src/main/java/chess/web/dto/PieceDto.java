@@ -7,19 +7,21 @@ public class PieceDto {
     private final String position;
     private final String name;
     private final String imageName;
+    private final String state;
 
-    private PieceDto(String position, String name, String imageName) {
+    private PieceDto(String position, String name, String imageName, String state) {
         this.position = position;
         this.name = name;
         this.imageName = imageName;
+        this.state = state;
     }
 
     public static PieceDto of(String position, Piece piece) {
-        return new PieceDto(position, piece.getName(), Converter.imagePathFrom(piece));
+        return new PieceDto(position, piece.getName(), Converter.imagePathFrom(piece), "");
     }
 
-    public static PieceDto of(String position, String name, String imageName) {
-        return new PieceDto(position, name, imageName);
+    public static PieceDto of(String position, String name, String imageName, String state) {
+        return new PieceDto(position, name, imageName, state);
     }
 
     public String getPosition() {
@@ -32,6 +34,10 @@ public class PieceDto {
 
     public String getImageName() {
         return imageName;
+    }
+
+    public String getState() {
+        return state;
     }
 
     @Override

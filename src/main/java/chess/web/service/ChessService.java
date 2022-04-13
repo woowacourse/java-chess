@@ -58,7 +58,7 @@ public class ChessService {
             PieceDto pieceDto = pieces.stream()
                 .filter(piece -> piece.getPosition().equals(position))
                 .findFirst()
-                .orElse(PieceDto.of(position, "", ""));
+                .orElse(PieceDto.of(position, "", "", ""));
             columnPieces.add(pieceDto);
         }
         return columnPieces;
@@ -108,13 +108,14 @@ public class ChessService {
 
     private void moveByCommand(String command) throws SQLException {
         String[] positions = command.split(",");
-        updateDB(positions);
         updateChessGame(positions);
+        updateDB(positions);
     }
 
     private void updateDB(String[] positions) throws SQLException {
         pieceDao.deleteByPosition(positions[1]);
         pieceDao.updatePosition(positions[0], positions[1]);
+        pieceDao.updatePawnState(positions[1]);
     }
 
     private void updateChessGame(String[] positions) {

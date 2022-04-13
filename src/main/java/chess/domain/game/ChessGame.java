@@ -53,8 +53,4 @@ public class ChessGame {
     public GameState getState() {
         return state;
     }
-
-    public Player getPlayer() {
-        return state.getPlayer();
-    }
 }

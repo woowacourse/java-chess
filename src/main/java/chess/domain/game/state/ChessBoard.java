@@ -34,7 +34,7 @@ public class ChessBoard {
         Map<Position, Piece> board = new HashMap<>();
         for (PieceDto piece : pieces) {
             String position = piece.getPosition();
-            board.put(Converter.positionFrom(position), PieceFactory.createBy(piece.getName()));
+            board.put(Converter.positionFrom(position), PieceFactory.createBy(piece.getName(), piece.getState()));
         }
         return new ChessBoard(board);
     }
