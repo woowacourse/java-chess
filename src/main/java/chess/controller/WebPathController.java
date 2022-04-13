@@ -7,7 +7,6 @@ import chess.domain.ChessGame;
 import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
-import chess.dto.BoardDto;
 import chess.service.DBService;
 import spark.ModelAndView;
 import spark.Route;
@@ -105,8 +104,7 @@ public class WebPathController {
     }
 
     private ChessGame getSavedGame(String gameID) {
-        ChessGame chessGame = DBService.loadSavedChessGame(gameID, DBService.getTurn(gameID));
-        return chessGame;
+        return DBService.loadSavedChessGame(gameID, DBService.getTurn(gameID));
     }
 
     public Route showResult() {
@@ -124,8 +122,7 @@ public class WebPathController {
     }
 
     private void addBoardStatus(Map<String, Object> model, ChessGame chessGame) {
-        BoardDto boardDto = new BoardDto(chessGame.getBoard());
-        model.putAll(boardDto.getBoard());
+        model.putAll(chessGame.getEmojis());
         model.put("message", "누가 이기나 보자구~!");
     }
 

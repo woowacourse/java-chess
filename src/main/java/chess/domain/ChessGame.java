@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.position.Square;
@@ -44,6 +47,12 @@ public final class ChessGame {
 
     public boolean isInGame() {
         return turn != GameTurn.READY;
+    }
+
+    public Map<String, String> getEmojis() {
+        return board.getBoard().entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getName(), entry -> entry.getValue().getEmoji()));
     }
 
     public Board getBoard() {
