@@ -1,17 +1,15 @@
 package chess.domain.game.state;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 public class Started implements State {
 
     private final Color turn;
-    private final Board board;
 
-    public Started(final Color turn, final Board board) {
+    public Started(final Color turn) {
         this.turn = turn;
-        this.board = board;
     }
 
     @Override
@@ -25,21 +23,21 @@ public class Started implements State {
     }
 
     @Override
-    public State move(final Position from, final Position to) {
+    public State move(final Board board, final Position from, final Position to) {
         board.isMovable(from, to, turn);
 
-        if (board.isCheckmate(to)) {
+        if (board.isGameOver(to)) {
             board.move(from, to);
             return new Ended();
         }
 
         board.move(from, to);
-        return new Started(turn.getOpposite(), board);
+        return new Started(turn.getOpposite());
     }
 
     @Override
     public State status() {
-        return new Started(turn, board);
+        return new Started(turn);
     }
 
     @Override

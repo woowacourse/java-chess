@@ -3,7 +3,8 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
+import chess.domain.board.BasicBoardFactory;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUp() {
-        ready = new Ready(new Board());
+        ready = new Ready();
     }
 
     @Test
@@ -29,9 +30,10 @@ class ReadyTest {
 
     @Test
     void move() {
-        Position from = Position.create("b2");
-        Position to = Position.create("b3");
-        assertThatThrownBy(() -> ready.move(from, to))
+        Board board = new Board(new BasicBoardFactory());
+        Position from = Position.from("b2");
+        Position to = Position.from("b3");
+        assertThatThrownBy(() -> ready.move(board, from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] start를 하지 않아 move 할 수 없습니다.");
     }

@@ -4,11 +4,8 @@ import chess.domain.position.Position;
 
 public final class EmptyPiece extends Piece {
 
-    private static final String NAME = ".";
-    private static final double SCORE = 0;
-
     public EmptyPiece() {
-        super(Color.NONE, NAME);
+        super(Color.NONE, Type.EMPTY);
     }
 
     @Override
@@ -17,27 +14,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public boolean isSameColor(final Color color) {
-        return false;
-    }
-
-    @Override
     public boolean isJumpable() {
-        return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
         return false;
     }
 }

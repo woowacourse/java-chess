@@ -16,8 +16,8 @@ class PawnPieceTest {
     @DisplayName("target에 기물이 없는 경우 앞으로 move 할 수 있는지 확인한다.")
     void canMoveForwardWhite(String source, String target) {
         Piece pawn = new PawnPiece(Color.WHITE);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(pawn.isRightMovement(from, to, true));
     }
@@ -27,8 +27,8 @@ class PawnPieceTest {
     @DisplayName("target에 기물이 있는 경우 대각선으로 move 할 수 있는지 확인한다.")
     void canMoveDiagonalWhite(String source, String target) {
         Piece pawn = new PawnPiece(Color.WHITE);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(pawn.isRightMovement(from, to, false));
     }
@@ -38,8 +38,8 @@ class PawnPieceTest {
     @DisplayName("target에 기물이 없는 경우 앞으로 move 할 수 있는지 확인한다.")
     void canMoveForwardBlack(String source, String target) {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(pawn.isRightMovement(from, to, true));
     }
@@ -49,8 +49,8 @@ class PawnPieceTest {
     @DisplayName("target에 기물이 있는 경우 대각선으로 move 할 수 있는지 확인한다.")
     void canMoveDiagonalBlack(String source, String target) {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(pawn.isRightMovement(from, to, false));
     }
@@ -59,8 +59,8 @@ class PawnPieceTest {
     @DisplayName("초기 위치에서 앞으로 두칸 move할 수 있는지 확인한다.")
     void canMoveTwiceWhite() {
         Piece pawn = new PawnPiece(Color.WHITE);
-        Position from = Position.create("a2");
-        Position to = Position.create("a4");
+        Position from = Position.from("a2");
+        Position to = Position.from("a4");
 
         assertTrue(pawn.isRightMovement(from, to, true));
     }
@@ -69,8 +69,8 @@ class PawnPieceTest {
     @DisplayName("초기 위치에서 앞으로 두칸 move할 수 있는지 확인한다.")
     void canMoveTwiceBlack() {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create("a7");
-        Position to = Position.create("a5");
+        Position from = Position.from("a7");
+        Position to = Position.from("a5");
 
         assertTrue(pawn.isRightMovement(from, to, true));
     }
@@ -80,8 +80,8 @@ class PawnPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMoveWhite(String source, String target) {
         Piece pawn = new PawnPiece(Color.WHITE);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertFalse(pawn.isRightMovement(from, to, false));
     }
@@ -91,8 +91,8 @@ class PawnPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMoveBlack(String source, String target) {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertFalse(pawn.isRightMovement(from, to, false));
     }
@@ -101,8 +101,8 @@ class PawnPieceTest {
     @DisplayName("폰은 target 위치에 기물이 없을 때 대각선으로 이동할 수 없다.")
     void cantMoveDiagonalWhenEmptyTarget() {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create("b7");
-        Position to = Position.create("c6");
+        Position from = Position.from("b7");
+        Position to = Position.from("c6");
 
         assertFalse(pawn.isRightMovement(from, to, true));
     }
@@ -111,8 +111,8 @@ class PawnPieceTest {
     @DisplayName("폰은 target 위치에 기물이 있을 때 앞으로 이동할 수 없다.")
     void cantMoveForwardWhenTarget() {
         Piece pawn = new PawnPiece(Color.BLACK);
-        Position from = Position.create("b7");
-        Position to = Position.create("b6");
+        Position from = Position.from("b7");
+        Position to = Position.from("b6");
 
         assertFalse(pawn.isRightMovement(from, to, false));
     }

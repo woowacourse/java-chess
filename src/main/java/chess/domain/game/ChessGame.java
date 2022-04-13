@@ -1,36 +1,35 @@
 package chess.domain.game;
 
-import chess.domain.Board;
-import chess.domain.result.Score;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import chess.domain.game.state.Ready;
+import chess.domain.board.Board;
 import chess.domain.game.state.State;
-import java.util.Map;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
+import chess.domain.result.Score;
 
 public class ChessGame {
 
-    private State state;
     private final Board board;
+    private State state;
 
-    public ChessGame() {
-        this.board = new Board();
-        this.state = new Ready(board);
+    public ChessGame(final State state, final Board board) {
+        this.board = board;
+        this.state = state;
     }
 
     public void start() {
         state = state.start();
     }
 
-    public void move(final Position from, final Position to) {
-        state = state.move(from, to);
-    }
-    public void status() {
-        state = state.status();
-    }
-
     public void end() {
         state = state.end();
+    }
+
+    public void move(final Position from, final Position to) {
+        state = state.move(board, from, to);
+    }
+
+    public void status() {
+        state = state.status();
     }
 
     public Score calculateMyScore() {
@@ -49,15 +48,15 @@ public class ChessGame {
         return state.isStarted();
     }
 
-    public String getTurnName() {
-        return state.getTurn().getName();
+    public State getState() {
+        return state;
     }
 
-    public String getOppositeTurnName() {
-        return state.getTurn().getOpposite().getName();
+    public Board getBoard() {
+        return board;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
+    public Color getTurn() {
+        return state.getTurn();
     }
 }

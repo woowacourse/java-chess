@@ -15,8 +15,8 @@ class KnightPieceTest {
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece knight = new KnightPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertTrue(knight.isRightMovement(from, to, false));
     }
@@ -26,8 +26,8 @@ class KnightPieceTest {
     @DisplayName("move 할 수 없는지 확인한다.")
     void cantMove(String source, String target) {
         Piece knight = new KnightPiece(Color.BLACK);
-        Position from = Position.create(source);
-        Position to = Position.create(target);
+        Position from = Position.from(source);
+        Position to = Position.from(target);
 
         assertFalse(knight.isRightMovement(from, to, false));
     }

@@ -50,4 +50,8 @@ public enum Row {
             return null;
         }
     }
+
+    public String getName() {
+        return String.valueOf(value);
+    }
 }

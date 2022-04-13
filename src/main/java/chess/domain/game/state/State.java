@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -9,7 +10,7 @@ public interface State {
 
     State end();
 
-    State move(final Position from, final Position to);
+    State move(final Board board, final Position from, final Position to);
 
     State status();
 

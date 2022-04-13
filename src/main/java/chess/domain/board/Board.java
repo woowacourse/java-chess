@@ -1,17 +1,12 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.piece.BishopPiece;
+import chess.domain.position.Direction;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.KingPiece;
-import chess.domain.piece.KnightPiece;
-import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.QueenPiece;
-import chess.domain.piece.RookPiece;
+import chess.domain.piece.Type;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,44 +16,10 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private static final int INITIAL_CAPACITY = 64;
-    private static final int START_EMPTY_ROW = 6;
-    private static final int END_EMPTY_ROW = 3;
-
     private final Map<Position, Piece> board;
 
-    public Board() {
-        this.board = new LinkedHashMap<>(INITIAL_CAPACITY);
-        initialPieces(board);
-    }
-
-    private void initialPieces(final Map<Position, Piece> board) {
-        putPiecesWithoutPawn(board, Row.EIGHT, Color.BLACK);
-        putPiecesOnRow(board, Row.SEVEN, new PawnPiece(Color.BLACK));
-
-        for (int i = START_EMPTY_ROW; i >= END_EMPTY_ROW; i--) {
-            putPiecesOnRow(board, Row.of(i), new EmptyPiece());
-        }
-
-        putPiecesOnRow(board, Row.TWO, new PawnPiece(Color.WHITE));
-        putPiecesWithoutPawn(board, Row.ONE, Color.WHITE);
-    }
-
-    private void putPiecesWithoutPawn(final Map<Position, Piece> board, final Row row, final Color color) {
-        board.put(new Position(Column.A, row), new RookPiece(color));
-        board.put(new Position(Column.B, row), new KnightPiece(color));
-        board.put(new Position(Column.C, row), new BishopPiece(color));
-        board.put(new Position(Column.D, row), new QueenPiece(color));
-        board.put(new Position(Column.E, row), new KingPiece(color));
-        board.put(new Position(Column.F, row), new BishopPiece(color));
-        board.put(new Position(Column.G, row), new KnightPiece(color));
-        board.put(new Position(Column.H, row), new RookPiece(color));
-    }
-
-    private void putPiecesOnRow(final Map<Position, Piece> board, final Row row, final Piece piece) {
-        for (Column column : Column.values()) {
-            board.put(new Position(column, row), piece);
-        }
+    public Board(final BoardFactory boardFactory) {
+        this.board = boardFactory.create();
     }
 
     public void isMovable(final Position from, final Position to, final Color turn) {
@@ -86,7 +47,7 @@ public class Board {
     }
 
     private void checkTurn(final Piece source, final Color turn) {
-        if (!source.isSameColor(turn)) {
+        if (!source.isSame(turn)) {
             throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
         }
     }
@@ -98,7 +59,7 @@ public class Board {
     }
 
     private void checkTargetColor(final Piece target, final Color turn) {
-        if (target.isSameColor(turn)) {
+        if (target.isSame(turn)) {
             throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
         }
     }
@@ -115,7 +76,7 @@ public class Board {
         if (next.equals(to)) {
             return false;
         }
-        if (!board.get(next).isEmpty()) {
+        if (!board.get(next).isSame(Type.EMPTY)) {
             return true;
         }
         return isBlocked(next, to);
@@ -128,8 +89,8 @@ public class Board {
         return Direction.of(fileDistance, rowDistance);
     }
 
-    public boolean isCheckmate(final Position to) {
-        return board.get(to).isKing();
+    public boolean isGameOver(final Position to) {
+        return board.get(to).isSame(Type.KING);
     }
 
     public void move(final Position from, final Position to) {
@@ -140,15 +101,15 @@ public class Board {
     public List<Piece> findPieceNotPawn(final Color color) {
         return board.values()
                 .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> !piece.isPawn())
+                .filter(piece -> piece.isSame(color))
+                .filter(piece -> !piece.isSame(Type.PAWN))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Piece> findPawnOnSameColumn(final Color color, final Column column) {
         return findPieceOnSameColumn(column).stream()
-                .filter(piece -> piece.isSameColor(color))
-                .filter(Piece::isPawn)
+                .filter(piece -> piece.isSame(color))
+                .filter(piece -> piece.isSame(Type.PAWN))
                 .collect(Collectors.toUnmodifiableList());
     }
 

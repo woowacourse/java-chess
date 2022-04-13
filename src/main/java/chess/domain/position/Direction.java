@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.position;
 
-import chess.domain.position.Column;
-import chess.domain.position.Row;
 import java.util.Arrays;
 
 public enum Direction {

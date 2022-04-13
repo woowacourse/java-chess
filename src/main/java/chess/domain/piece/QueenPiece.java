@@ -1,19 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QueenPiece extends Piece {
 
-    private static final String NAME = "Q";
-    private static final double SCORE = 9.0;
-
     private final List<Direction> movableDirections;
 
     public QueenPiece(final Color color) {
-        super(color, NAME);
+        super(color, Type.QUEEN);
         this.movableDirections = new ArrayList<>(
                 List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH,
                         Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
@@ -31,7 +28,7 @@ public class QueenPiece extends Piece {
     }
 
     @Override
-    public double getScore() {
-        return SCORE;
+    public boolean isJumpable() {
+        return false;
     }
 }
