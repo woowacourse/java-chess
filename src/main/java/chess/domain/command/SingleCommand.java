@@ -5,22 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum SingleCommand implements Command {
-    START("start"),
-    END("end"),
-    STATUS("status");
+    START,
+    END,
+    STATUS;
 
-    private final String prefix;
-
-    SingleCommand(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public static Command from(List<String> input) {
-        return Arrays.stream(SingleCommand.values())
-                .filter(each -> each.prefix.equals(input.get(0)))
-                .findAny()
-                .orElseThrow(IllegalArgumentException::new);
-    }
+    private static final String CANNOT_HAVE_POSITION = "현재 토큰에서는 위치 정보를 불러올 수 없습니다.";
 
     @Override
     public boolean isStart() {
@@ -39,11 +28,11 @@ public enum SingleCommand implements Command {
 
     @Override
     public Position getFromPosition() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANNOT_HAVE_POSITION);
     }
 
     @Override
     public Position getToPosition() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANNOT_HAVE_POSITION);
     }
 }

@@ -40,4 +40,22 @@ public class Queen extends Piece {
     public boolean isQueen() {
         return true;
     }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_queen.png";
+        }
+        return "black_queen.png";
+    }
+
+    @Override
+    public double getScore() {
+        return 9.0;
+    }
+
+    @Override
+    public String getName() {
+        return "Queen";
+    }
 }

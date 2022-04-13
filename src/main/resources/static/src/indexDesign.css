@@ -1,0 +1,32 @@
+h2 {
+  text-align: center;
+  font-weight: bold;
+}
+
+table {
+    margin: auto;
+    alignment: center;
+    border: black;
+}
+
+td.black-box {
+    background-color: saddlebrown;
+    width: 3rem;
+    height: 3rem;
+}
+
+td.white-box {
+    background-color: beige;
+    width: 3rem;
+    height: 3rem;
+}
+
+.piece {
+    alignment: center;
+    width: 3rem;
+    height: 3rem;
+}
+
+div {
+    text-align; center;
+}

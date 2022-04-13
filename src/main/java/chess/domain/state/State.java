@@ -21,6 +21,10 @@ public abstract class State {
         return new Ready(BoardInitializer.generate());
     }
 
+    public static State create(Map<Position, Piece> board, Color color) {
+        return new Running(board, color);
+    }
+
     public static State create(Map<Position, Piece> board) {
         return new Ready(board);
     }
@@ -43,8 +47,11 @@ public abstract class State {
         throw new IllegalStateException(CANNOT_GET_COLOR);
     }
 
-
     public Board getBoard() {
         return board;
+    }
+
+    public Color getColor() {
+        throw new IllegalStateException(CANNOT_GET_COLOR);
     }
 }

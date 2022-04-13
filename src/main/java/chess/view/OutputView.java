@@ -42,9 +42,9 @@ public class OutputView {
     }
 
     private void displaySymbol(Board board, int i, int j) {
-        Optional<Piece> nullablePiece = board.findPiece(new Position(i, j));
-        if (nullablePiece.isPresent()) {
-            System.out.print(PieceView.from(nullablePiece.get()));
+        Position nowPosition = new Position(i, j);
+        if (board.getPieces().containsKey(nowPosition)) {
+            System.out.print(PieceView.from(board.findPiece(nowPosition)));
             return;
         }
         System.out.print("ꕤ");

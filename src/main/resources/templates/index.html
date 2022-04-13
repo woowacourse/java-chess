@@ -2,9 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Alpha Chess</title>
+    <link rel="stylesheet" href="/src/indexDesign.css">
 </head>
 <body>
-Hello World!!
+<h2>Chess Game</h2>
+<table>
+    <tr>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+        <td class="white-box">
+        </td>
+        <td class="black-box">
+        </td>
+    </tr>
+</table>
+<center>
+    방의 제목을 입력하세요.
+<br />
+저장된 방이라면 저장된 게임을 불러오고, 새로운 방이라면 새로운 게임을 생성합니다.
+    <form action="preprocess" method="post" enctype="text/plain">
+        입력 <input name="command" type="text">  <button type="submit"> 제출 </button>
+    </form>
+<br />
+    저장하신 목록입니다.
+    {{users}}
+</center>
 </body>
 </html>

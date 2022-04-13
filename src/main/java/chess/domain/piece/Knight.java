@@ -27,12 +27,30 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Direction matchDirection(Position from, Position to) {
+    protected Direction matchDirection(Position from, Position to) {
         return DirectionDecider.generateUnitPosition(DIRECTIONS, from, to);
     }
 
     @Override
     public boolean isKnight() {
         return true;
+    }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_knight.png";
+        }
+        return "black_knight.png";
+    }
+
+    @Override
+    public double getScore() {
+        return 2.5;
+    }
+
+    @Override
+    public String getName() {
+        return "Knight";
     }
 }

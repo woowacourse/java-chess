@@ -43,7 +43,7 @@ public class Running extends State {
     }
 
     private void validateMoveOpponent(Command command) {
-        if (board.isSameColor(command.getFromPosition(), this.color.invert())) {
+        if (board.findPiece(command.getFromPosition()).isSameColor(this.color.invert())) {
             throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
         }
     }
@@ -68,5 +68,10 @@ public class Running extends State {
     @Override
     public boolean isWhite() {
         return this.color == Color.WHITE;
+    }
+
+    @Override
+    public Color getColor() {
+        return this.color;
     }
 }

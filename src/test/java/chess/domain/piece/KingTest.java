@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.board.Board;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

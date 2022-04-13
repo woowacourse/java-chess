@@ -35,4 +35,22 @@ public class Rook extends Piece {
     public boolean isRook() {
         return true;
     }
+
+    @Override
+    public String getImage() {
+        if (this.color == Color.WHITE) {
+            return "white_rook.png";
+        }
+        return "black_rook.png";
+    }
+
+    @Override
+    public double getScore() {
+        return 5.0;
+    }
+
+    @Override
+    public String getName() {
+        return "Rook";
+    }
 }

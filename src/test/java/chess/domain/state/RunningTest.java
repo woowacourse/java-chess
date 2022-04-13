@@ -54,7 +54,7 @@ public class RunningTest {
 				.proceed(
 						new MoveCommand(new Position(2, 2), new Position(3, 2)));
 
-		assertThat(state.getBoard().findPiece(new Position(3, 2)).get())
+		assertThat(state.getBoard().findPiece(new Position(3, 2)))
 				.isInstanceOf(Pawn.class);
 	}
 
@@ -122,7 +122,7 @@ public class RunningTest {
 				.proceed(
 						new MoveCommand(new Position(7, 2), new Position(6, 2)));
 
-		assertThat(state.getBoard().findPiece(new Position(6, 2)).get())
+		assertThat(state.getBoard().findPiece(new Position(6, 2)))
 				.isInstanceOf(King.class);
 	}
 
