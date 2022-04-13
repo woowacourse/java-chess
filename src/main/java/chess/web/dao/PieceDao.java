@@ -56,12 +56,29 @@ public class PieceDao {
         return Collections.unmodifiableList(ids);
     }
 
-    public void update(List<PieceDto> pieces, int roomId) throws SQLException {
-        removeAllByRoomId(roomId);
-        saveAll(pieces, roomId);
+    public void removeAllByRoomId(int roomId) throws SQLException {
+        final String sql = "delete from piece where roomId = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, roomId);
+        statement.executeUpdate();
     }
 
-    public void removeAllByRoomId(int roomId) throws SQLException {
+    public void deleteByPosition(String position) throws SQLException {
+        final String sql = "delete from piece where position = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, position);
+        statement.executeUpdate();
+    }
+
+    public void updatePosition(String from, String to) throws SQLException {
+        final String sql = "update piece set position = ? where position = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, to);
+        statement.setString(2, from);
+        statement.executeUpdate();
+    }
+
+    public void deleteByRoomId(int roomId) throws SQLException {
         final String sql = "delete from piece where roomId = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, roomId);

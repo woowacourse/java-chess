@@ -97,17 +97,30 @@ public class ChessService {
     }
 
     public void move(String command, int roomId) throws SQLException {
-        Map<Position, Piece> pieces = moveByCommand(command);
-        pieceDao.update(extractPieceDtos(pieces), roomId);
+        moveByCommand(command);
+        if (chessGame.isFinished()) {
+            pieceDao.deleteByRoomId(roomId);
+            return;
+        }
         Player player = roomDao.findTurnById(roomId);
         roomDao.updateById(player.change(), roomId);
     }
 
-    private Map<Position, Piece> moveByCommand(String command) {
+    private void moveByCommand(String command) throws SQLException {
         String[] positions = command.split(",");
+        updateDB(positions);
+        updateChessGame(positions);
+    }
+
+    private void updateDB(String[] positions) throws SQLException {
+        pieceDao.deleteByPosition(positions[1]);
+        pieceDao.updatePosition(positions[0], positions[1]);
+    }
+
+    private void updateChessGame(String[] positions) {
         Position from = getPositionFrom(positions[0]);
         Position to = getPositionFrom(positions[1]);
-        return chessGame.move(from, to);
+        chessGame.move(from, to);
     }
 
     private static Position getPositionFrom(String position) {

@@ -8,7 +8,7 @@ create table room (
 create table piece (
     id          int not null AUTO_INCREMENT,
     name        varchar (1) not null ,
-    position    varchar (2) not null ,
+    position    varchar (2) unique not null ,
     imagePath   varchar (30) not null,
     roomId      int not null,
     primary key (id),
