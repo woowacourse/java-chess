@@ -17,7 +17,7 @@ public class DataSourceImpl implements DataSource {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("[ERROR] DB 연결 실패");
         }
         return connection;
     }
@@ -25,8 +25,8 @@ public class DataSourceImpl implements DataSource {
     private static void loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("[ERROR] 드라이버 로드 실패");
         }
     }
 }
