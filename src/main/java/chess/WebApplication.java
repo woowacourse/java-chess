@@ -2,20 +2,20 @@ package chess;
 
 import static spark.Spark.*;
 
-import chess.controller.WebController;
+import chess.controller.WebPathController;
 
 public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
         port(8080);
 
-        WebController webController = new WebController();
+        WebPathController webPathController = new WebPathController();
 
-        get("/", webController.ready());
-        get("/findgame", webController.askGameID());
-        post("/findgame", webController.findGame());
-        get("/ingame", webController.runGame());
-        post("/ingame", webController.movePiece());
-        get("/status", webController.showResult());
+        get("/", webPathController.ready());
+        get("/findgame", webPathController.askGameID());
+        post("/findgame", webPathController.findGame());
+        get("/ingame", webPathController.runGame());
+        post("/ingame", webPathController.movePiece());
+        get("/status", webPathController.showResult());
     }
 }

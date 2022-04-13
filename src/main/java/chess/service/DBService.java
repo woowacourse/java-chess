@@ -1,7 +1,7 @@
-package chess;
+package chess.service;
 
-import chess.dao.ChessGameDao;
-import chess.dao.PieceDao;
+import chess.db.ChessGameDao;
+import chess.db.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.GameResult;
 import chess.domain.GameTurn;
@@ -10,11 +10,11 @@ import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.SavedBoardGenerator;
 import chess.domain.position.Square;
 
-public class Service {
+public class DBService {
     private final ChessGameDao chessGameDao;
     private final PieceDao pieceDao;
 
-    public Service() {
+    public DBService() {
         this.chessGameDao = new ChessGameDao();
         this.pieceDao = new PieceDao();
     }

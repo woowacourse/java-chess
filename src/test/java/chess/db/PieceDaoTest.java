@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.DBConnector;
 import chess.domain.ChessGame;
 import chess.domain.GameTurn;
 import chess.domain.board.InitialBoardGenerator;

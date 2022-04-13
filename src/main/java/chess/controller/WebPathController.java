@@ -3,26 +3,27 @@ package chess.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.Service;
 import chess.domain.ChessGame;
 import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.dto.BoardDto;
+import chess.service.DBService;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebController {
+public class WebPathController {
     private static final String PATH_READY = "/ready.html";
     private static final String PATH_FIND_GAME = "/findgame.html";
     private static final String PATH_IN_GAME = "/ingame.html";
     private static final String PATH_FINISHED = "/finished.html";
     private static final String PATH_STATUS = "/status.html";
-    private final Service service;
 
-    public WebController() {
-        this.service = new Service();
+    private final DBService DBService;
+
+    public WebPathController() {
+        this.DBService = new DBService();
     }
 
     public Route ready() {
@@ -60,9 +61,9 @@ public class WebController {
             String gameID = request.queryParams("gameID");
             Map<String, Object> model = addGameID(gameID);
 
-            ChessGame chessGame = service.loadGame(gameID);
-            service.startGame(gameID, chessGame);
-            service.loadPieces(gameID);
+            ChessGame chessGame = DBService.loadGame(gameID);
+            DBService.startGame(gameID, chessGame);
+            DBService.loadPieces(gameID);
 
             addBoardStatus(model, chessGame);
 
@@ -82,8 +83,8 @@ public class WebController {
 
             try {
                 chessGame.move(new Square(source), new Square(target));
-                service.movePiece(gameID, source, target);
-                service.updateTurn(gameID, chessGame);
+                DBService.movePiece(gameID, source, target);
+                DBService.updateTurn(gameID, chessGame);
 
                 addBoardStatus(model, chessGame);
             } catch (IllegalArgumentException e) {
@@ -104,7 +105,7 @@ public class WebController {
     }
 
     private ChessGame getSavedGame(String gameID) {
-        ChessGame chessGame = service.loadSavedChessGame(gameID, service.getTurn(gameID));
+        ChessGame chessGame = DBService.loadSavedChessGame(gameID, DBService.getTurn(gameID));
         chessGame.startGame();
         return chessGame;
     }
@@ -114,7 +115,7 @@ public class WebController {
             String gameID = request.queryParams("gameID");
             Map<String, Object> model = addGameID(gameID);
 
-            GameResult gameResult = service.getGameResult(gameID);
+            GameResult gameResult = DBService.getGameResult(gameID);
             model.put("whiteScore", gameResult.calculateScore(Color.WHITE));
             model.put("blackScore", gameResult.calculateScore(Color.BLACK));
             model.put("message", "수고하셨습니다 ^0^");

@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.DBConnector;
 import chess.domain.piece.Color;
 import chess.domain.piece.InitialPositionPieceGenerator;
 import chess.domain.piece.Piece;

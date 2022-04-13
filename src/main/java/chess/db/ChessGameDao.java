@@ -1,11 +1,10 @@
-package chess.dao;
+package chess.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import chess.DBConnector;
 import chess.domain.ChessGame;
 
 public class ChessGameDao {
