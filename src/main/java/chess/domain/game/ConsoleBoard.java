@@ -10,14 +10,14 @@ import chess.domain.position.Row;
 
 import java.util.*;
 
-public final class Board {
+public final class ConsoleBoard {
 
     private static final double PAWN_PENALTY_SCORE = 0.5;
     private static final int KING_TOTAL_COUNT = 2;
 
     private final Map<Position, Piece> pieces;
 
-    public Board(final Initializer initializer) {
+    public ConsoleBoard(final Initializer initializer) {
         pieces = initializer.initialize();
     }
 
@@ -28,11 +28,11 @@ public final class Board {
         return Optional.empty();
     }
 
-    public boolean move(final Position sourcePosition, final Position targetPosition) {
+    public void move(final Position sourcePosition, final Position targetPosition) {
         final Piece piece = findPiece(sourcePosition);
-        validateTargetNotSameColor(targetPosition, piece);
-
-        return movePiece(sourcePosition, targetPosition, piece);
+        validateMovement(sourcePosition, targetPosition);
+        pieces.remove(sourcePosition);
+        pieces.put(targetPosition, piece);
     }
 
     private Piece findPiece(final Position sourcePosition) {
@@ -43,21 +43,24 @@ public final class Board {
         return wrappedPiece.get();
     }
 
+    public void validateMovement(Position sourcePosition, Position targetPosition) {
+        validateNotEquals(sourcePosition, targetPosition);
+        validateTargetNotSameColor(targetPosition, findPiece(sourcePosition));
+        findPiece(sourcePosition).validateMovement(sourcePosition, targetPosition);
+        checkPawnMovement(sourcePosition, targetPosition, findPiece(sourcePosition));
+        validatePathEmpty(sourcePosition, targetPosition);
+    }
+
+    private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
+        }
+    }
+
     private void validateTargetNotSameColor(final Position targetPosition, final Piece piece) {
         if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
             throw new IllegalArgumentException("목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.");
         }
-    }
-
-    private boolean movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        final boolean movable = piece.isMovable(sourcePosition, targetPosition);
-        if (movable) {
-            checkPawnMovement(sourcePosition, targetPosition, piece);
-            validatePathEmpty(sourcePosition, targetPosition);
-            pieces.remove(sourcePosition);
-            pieces.put(targetPosition, piece);
-        }
-        return movable;
     }
 
     private void validatePathEmpty(final Position source, final Position target) {
@@ -112,7 +115,7 @@ public final class Board {
         return calculateDefaultScore(color) - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
     }
 
-    private double calculateDefaultScore(Color color) {
+    private double calculateDefaultScore(final Color color) {
         return pieces.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
@@ -134,6 +137,13 @@ public final class Board {
                 .count();
     }
 
+    public Map<Result, Color> calculateFinalWinner() {
+        if (isKingAlive(Color.WHITE) && isKingAlive(Color.BLACK)) {
+            return calculateScoreWinner();
+        }
+        return calculateWinnerWithKing();
+    }
+
     public Map<Result, Color> calculateScoreWinner() {
         Map<Result, Color> gameResult = new HashMap<>();
         if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
@@ -143,13 +153,6 @@ public final class Board {
             gameResult.put(Result.WIN, Color.BLACK);
         }
         return gameResult;
-    }
-
-    public Map<Result, Color> calculateFinalWinner() {
-        if (isKingAlive(Color.WHITE) && isKingAlive(Color.BLACK)) {
-            return calculateScoreWinner();
-        }
-        return calculateWinnerWithKing();
     }
 
     private Map<Result, Color> calculateWinnerWithKing() {
@@ -163,7 +166,7 @@ public final class Board {
         return gameResult;
     }
 
-    private boolean isKingAlive(Color color) {
+    private boolean isKingAlive(final Color color) {
         return pieces.values()
                 .stream()
                 .anyMatch(piece -> piece.isKing() && piece.isSameColor(color));

@@ -5,26 +5,37 @@ import java.util.*;
 public final class Position {
 
     private static final int AROUND_DISTANCE = 1;
+    private static final int COLUMN_ROW_LENGTH = 2;
     private static final Map<String, Position> caches = new HashMap<>();
 
+    private final Integer id;
     private final Column column;
     private final Row row;
+    private final Integer boardId;
 
-    private Position(final Column column, final Row row) {
+    public Position(final Integer id, final Column column, final Row row, final Integer boardId) {
+        this.id = id;
         this.column = column;
         this.row = row;
+        this.boardId = boardId;
+    }
+
+    public Position(final Column column, final Row row) {
+        this(null, column, row, null);
+    }
+
+    public Position(final Column column, final Row row, final int boardId) {
+        this(null, column, row, boardId);
     }
 
     public static Position of(final String value) {
         validateValue(value);
-        if (!caches.containsKey(value)) {
-            caches.put(value, new Position(Column.of(value.substring(0, 1)), Row.of(value.substring(1))));
-        }
+        caches.computeIfAbsent(value, it -> new Position(Column.of(value.substring(0, 1)), Row.of(value.substring(1))));
         return caches.get(value);
     }
 
     private static void validateValue(final String value) {
-        if (value.length() != 2) {
+        if (value.length() != COLUMN_ROW_LENGTH) {
             throw new IllegalArgumentException("위치는 열과 행으로 이루어져야 합니다.");
         }
     }
@@ -78,6 +89,22 @@ public final class Position {
         return calculateByDirection(target, direction);
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getBoardId() {
+        return boardId;
+    }
+
     private List<Position> calculateByDirection(final Position target, final Direction direction) {
         if (direction.isVertical()) {
             return verticalPaths(target);
@@ -93,8 +120,8 @@ public final class Position {
 
     private List<Position> verticalPaths(final Position target) {
         final List<Position> positions = new ArrayList<>();
-        for (Row row : row.rowPaths(target.row)) {
-            positions.add(Position.valueOf(this.column, row));
+        for (Row pathsRow : row.rowPaths(target.row)) {
+            positions.add(Position.valueOf(this.column, pathsRow));
         }
         return positions;
     }
@@ -128,5 +155,10 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public String toString() {
+        return row.value() + column.name();
     }
 }

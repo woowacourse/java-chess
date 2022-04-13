@@ -6,12 +6,24 @@ import java.util.Objects;
 
 public final class Piece {
 
+    private final Integer id;
     private final Color color;
     private final Type type;
+    private final Integer positionId;
 
-    public Piece(final Color color, final Type type) {
+    public Piece(Integer id, Color color, Type type, Integer positionId) {
+        this.id = id;
         this.color = color;
         this.type = type;
+        this.positionId = positionId;
+    }
+
+    public Piece(Color color, Type type, int positionId) {
+        this(null, color, type, positionId);
+    }
+
+    public Piece(final Color color, final Type type) {
+        this(null, color, type, null);
     }
 
     public String symbol() {
@@ -21,19 +33,24 @@ public final class Piece {
         return type.symbol().value();
     }
 
-    public boolean isMovable(final Position source, final Position target) {
+    public void validateMovement(final Position source, final Position target) {
         final boolean movable = type.isMovable(source, target);
         if (movable && type.isPawn()) {
-            return checkPawnDirection(source, target);
+            checkPawnDirection(source, target);
+            return;
         }
-        return movable;
+        if (!movable) {
+            throw new IllegalArgumentException("기물의 움직임이 아닙니다.");
+        }
     }
 
-    private boolean checkPawnDirection(final Position source, final Position target) {
-        if (color.isBlack()) {
-            return source.isAbove(target);
+    private void checkPawnDirection(final Position source, final Position target) {
+        if (color.isBlack() && !source.isAbove(target)) {
+            throw new IllegalArgumentException("검정말은 아래로 움직여야합니다.");
         }
-        return source.isBelow(target);
+        if (color.isWhite() && !source.isBelow(target)) {
+            throw new IllegalArgumentException("흰말은 위로 움직여야 합니다.");
+        }
     }
 
     public boolean isPawn() {
@@ -54,6 +71,22 @@ public final class Piece {
 
     public double score() {
         return type.score();
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getPositionId() {
+        return positionId;
     }
 
     @Override

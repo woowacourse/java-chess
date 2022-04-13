@@ -34,7 +34,7 @@ public final class Knight implements Type {
 
     @Override
     public double score() {
-        return 2.5;
+        return Symbol.KNIGHT.score();
     }
 
     @Override

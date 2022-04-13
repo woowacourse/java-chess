@@ -21,7 +21,7 @@ public final class Queen implements Type {
 
     @Override
     public double score() {
-        return 9;
+        return Symbol.QUEEN.score();
     }
 
     @Override

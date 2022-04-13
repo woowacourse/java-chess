@@ -26,7 +26,7 @@ public final class GameMachine {
         printFinalResult(game);
     }
 
-    private Game play(Game game, final String command) {
+    private Game play(final Game game, final String command) {
         if (Command.isStart(command)) {
             return makeGame();
         }
@@ -45,7 +45,7 @@ public final class GameMachine {
         return game;
     }
 
-    private void movePiece(Game game, final List<String> commands) {
+    private void movePiece(final Game game, final List<String> commands) {
         if (game == null) {
             OutputView.announceNotStarted();
             return;
@@ -58,7 +58,7 @@ public final class GameMachine {
         OutputView.printBoard(game);
     }
 
-    private void movePieceOnBoard(Game game, final List<String> commands) {
+    private void movePieceOnBoard(final Game game, final List<String> commands) {
         try {
             game.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         } catch (IllegalArgumentException e) {
@@ -66,8 +66,8 @@ public final class GameMachine {
         }
     }
 
-    private void printFinalResult(Game game) {
-        if(game != null) {
+    private void printFinalResult(final Game game) {
+        if (game != null) {
             OutputView.printFinalResult(game);
         }
     }

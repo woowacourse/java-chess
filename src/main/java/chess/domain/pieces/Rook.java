@@ -21,7 +21,7 @@ public final class Rook implements Type {
 
     @Override
     public double score() {
-        return 5;
+        return Symbol.ROOK.score();
     }
 
     @Override

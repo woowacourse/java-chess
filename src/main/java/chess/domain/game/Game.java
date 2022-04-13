@@ -11,11 +11,11 @@ public final class Game {
 
     private static final Color FIRST_TURN = Color.WHITE;
 
-    private final Board board;
+    private final ConsoleBoard board;
     private Color turn = FIRST_TURN;
 
     public Game(final Initializer initializer) {
-        board = new Board(initializer);
+        board = new ConsoleBoard(initializer);
     }
 
     public Optional<Piece> piece(final Position position) {
@@ -27,7 +27,8 @@ public final class Game {
         final Position targetPosition = Position.of(target);
         validateNotEquals(sourcePosition, targetPosition);
         validateCorrectTurn(sourcePosition);
-        changeTurn(board.move(sourcePosition, targetPosition));
+        board.move(sourcePosition, targetPosition);
+        changeTurn();
     }
 
     private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
@@ -43,10 +44,8 @@ public final class Game {
         }
     }
 
-    private void changeTurn(final boolean moveSuccess) {
-        if (moveSuccess) {
-            turn = Color.opposite(turn);
-        }
+    private void changeTurn() {
+        turn = Color.opposite(turn);
     }
 
     public boolean isEnd() {

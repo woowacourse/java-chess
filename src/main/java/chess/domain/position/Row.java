@@ -46,6 +46,13 @@ public enum Row {
         }
     }
 
+    public static Row findRow(int value) {
+        return Arrays.stream(values())
+                .filter(row -> row.value == value)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public boolean isSame(final Row row) {
         return this == row;
     }

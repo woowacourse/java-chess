@@ -52,7 +52,7 @@ public final class Pawn implements Type {
 
     @Override
     public double score() {
-        return 1;
+        return Symbol.PAWN.score();
     }
 
     @Override

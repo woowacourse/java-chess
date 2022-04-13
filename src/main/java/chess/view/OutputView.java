@@ -58,7 +58,7 @@ public class OutputView {
         printResult(board.calculateScoreWinner());
     }
 
-    private static void printScore(Game game) {
+    private static void printScore(final Game game) {
         for (Color color : Color.values()) {
             System.out.println(color.value() + "의 점수: " + game.calculateScore(color));
         }

@@ -25,7 +25,11 @@ class KnightTest {
                 Arguments.of(Position.of("a1"), Position.of("b3"), true),
                 Arguments.of(Position.of("a1"), Position.of("a4"), false),
                 Arguments.of(Position.of("b3"), Position.of("c1"), true),
-                Arguments.of(Position.of("b3"), Position.of("c4"), false)
+                Arguments.of(Position.of("b3"), Position.of("c4"), false),
+                Arguments.of(Position.of("b3"), Position.of("d2"), true),
+                Arguments.of(Position.of("c3"), Position.of("a2"), true),
+                Arguments.of(Position.of("c3"), Position.of("a4"), true),
+                Arguments.of(Position.of("b3"), Position.of("a1"), true)
         );
     }
 }

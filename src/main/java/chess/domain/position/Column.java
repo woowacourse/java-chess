@@ -29,6 +29,13 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 컬럼입니다."));
     }
 
+    public static Column findColumn(final int value) {
+        return Arrays.stream(values())
+                .filter(column -> column.value == value)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public boolean isSame(final Column column) {
         return this == column;
     }

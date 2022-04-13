@@ -39,10 +39,31 @@
 - [x] 사용자의 입력에 따라 게임이 시작하거나 종료될 수 있다.
 
 ### 3단계
+
 - [x] King이 잡혔을 때 게임을 종료해야 한다.
 - [x] 체스 게임은 현재 남아 있는 말에 대한 점수를 구할 수 있어야 한다.
-  - [x] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
-  - [x] pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+    - [x] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+    - [x] pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
 - [x] 각 진영의 점수를 비교하여 현재의 승패를 구한다.
 - [x] 수를 번갈아가면서 둔다.
 
+### 4단계
+
+- [X] 체스 초기상태 웹뷰에 띄우기
+- [x] input form 으로 move 명령어 적용하기 (뷰하고 백앤드하고 통합)
+    - [x] move 명령 시 예외 메시지 뷰로 던져주기
+- [x] 클릭으로 move 하는 기능 (Rest API)
+    - [x] move 명령 시 예외 메시지 뷰로 던져주기
+    - [x] response 에 게임 종료 여부 추가
+    - [x] 게임 종료 시 게임이 종료됐다는 alert 띄우기
+- [x] status 버튼 만들기
+- [x] 체스판, 말 이미지 적용
+- [x] 종료버튼 만들기
+
+### 5단계
+
+- [x] 모든 Position 은 DB에 저장되어야 한다. (64개)
+- [x] if movable, update query and delete origin record
+- [x] if status, get all positions and pieces
+- [x] if end, destroy the room
+- [x] create a room and create members
