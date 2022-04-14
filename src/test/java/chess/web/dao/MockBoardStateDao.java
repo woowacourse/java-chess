@@ -3,7 +3,7 @@ package chess.web.dao;
 import chess.domain.state.StateType;
 import chess.web.dto.BoardStateDto;
 
-public class BoardStateDaoForTest implements BoardStateDao {
+public class MockBoardStateDao implements BoardStateDao {
 
     private BoardStateDto boardStateDto = null;
 

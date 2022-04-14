@@ -11,7 +11,7 @@ class PieceDaoTest {
     @DisplayName("기물을 저장한다.")
     @Test
     void 기물을_저장한다() {
-        final PieceDaoForTest pieceDao = new PieceDaoForTest();
+        final MockPieceDao pieceDao = new MockPieceDao();
 
         pieceDao.save(new PieceDto("P", "a2", "black"));
 
@@ -21,7 +21,7 @@ class PieceDaoTest {
     @DisplayName("기물 정보를 변경한다.")
     @Test
     void 기물_정보를_변경한다() {
-        final PieceDaoForTest pieceDao = new PieceDaoForTest();
+        final MockPieceDao pieceDao = new MockPieceDao();
         PieceDto pieceDto = new PieceDto("p", "a2", "white");
 
         pieceDao.save(new PieceDto("P", "a2", "black"));
@@ -33,7 +33,7 @@ class PieceDaoTest {
     @DisplayName("기물을 전부 가져온다.")
     @Test
     void 기물을_전부_가져온다() {
-        final PieceDaoForTest pieceDao = new PieceDaoForTest();
+        final MockPieceDao pieceDao = new MockPieceDao();
 
         pieceDao.save(new PieceDto("P", "a2", "black"));
         pieceDao.save(new PieceDto("p", "b2", "white"));
@@ -44,7 +44,7 @@ class PieceDaoTest {
     @DisplayName("기물을 전부 삭제한다.")
     @Test
     void 기물을_전부_삭제한다() {
-        final PieceDaoForTest pieceDao = new PieceDaoForTest();
+        final MockPieceDao pieceDao = new MockPieceDao();
 
         pieceDao.save(new PieceDto("P", "a2", "black"));
         pieceDao.save(new PieceDto("p", "b2", "white"));

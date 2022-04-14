@@ -6,12 +6,12 @@ import chess.domain.state.StateType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardDaoStateTest {
+class BoardStateDaoTest {
 
     @DisplayName("보드 상태를 저장한다.")
     @Test
     void 보드_상태를_저장한다() {
-        final BoardStateDaoForTest boardStateDao = new BoardStateDaoForTest();
+        final MockBoardStateDao boardStateDao = new MockBoardStateDao();
 
         boardStateDao.save(StateType.READY);
 
@@ -21,7 +21,7 @@ class BoardDaoStateTest {
     @DisplayName("보드 상태를 변경한다.")
     @Test
     void 보드_상태를_변경한다() {
-        final BoardStateDaoForTest boardStateDao = new BoardStateDaoForTest();
+        final MockBoardStateDao boardStateDao = new MockBoardStateDao();
 
         boardStateDao.save(StateType.READY);
         boardStateDao.update(StateType.WHITE_TURN);
@@ -32,7 +32,7 @@ class BoardDaoStateTest {
     @DisplayName("보드 상태를 가져온다.")
     @Test
     void 보드_상태를_가져온다() {
-        final BoardStateDaoForTest boardStateDao = new BoardStateDaoForTest();
+        final MockBoardStateDao boardStateDao = new MockBoardStateDao();
 
         boardStateDao.save(StateType.READY);
 
@@ -42,7 +42,7 @@ class BoardDaoStateTest {
     @DisplayName("보드 상태를 전부 삭제한다.")
     @Test
     void 보드_상태를_전부_삭제한다() {
-        final BoardStateDaoForTest boardStateDao = new BoardStateDaoForTest();
+        final MockBoardStateDao boardStateDao = new MockBoardStateDao();
 
         boardStateDao.save(StateType.READY);
         boardStateDao.deleteAll();

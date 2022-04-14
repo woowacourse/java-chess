@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PieceDaoForTest implements PieceDao {
+public class MockPieceDao implements PieceDao {
 
     private final Map<String, PieceDto> pieces = new HashMap<>();
 
