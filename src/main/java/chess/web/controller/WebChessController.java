@@ -1,5 +1,8 @@
 package chess.web.controller;
 
+import static spark.Spark.exception;
+import static spark.Spark.get;
+
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.position.Position;
@@ -12,13 +15,30 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
+    public static final String INDEX_PATH = "/";
+    public static final String MOVE_PATH = "/move";
+    public static final String START_PATH = "/start";
+    public static final String RESULT_PATH = "/result";
+
     private final WebChessService webChessService;
 
     public WebChessController() {
         this.webChessService = new WebChessService();
     }
 
-    public String indexModel(Response res) {
+    public void run() {
+        get(INDEX_PATH, (req, res) -> rendIndexPage(res));
+
+        get(MOVE_PATH, this::movePiece);
+
+        get(START_PATH, (req, res) -> startChess(res));
+
+        get(RESULT_PATH, (req, res) -> rendResultPage());
+
+        exception(Exception.class, (exception, request, response) -> response.body(rendExceptionMessage(exception)));
+    }
+
+    public String rendIndexPage(Response res) {
         checkRunning(res);
 
         Map<String, Object> model = new HashMap<>();
@@ -31,7 +51,7 @@ public class WebChessController {
 
     private void checkRunning(Response res) {
         if (webChessService.isNotRunning()) {
-            res.redirect("/start");
+            res.redirect(START_PATH);
         }
     }
 
@@ -45,25 +65,25 @@ public class WebChessController {
 
         checkFinished(res, chessGame);
 
-        res.redirect("/");
+        res.redirect(INDEX_PATH);
         return null;
     }
 
     private void checkFinished(Response res, ChessGame chessGame) {
         if (chessGame.isFinished()) {
             webChessService.updateState(chessGame);
-            res.redirect("/winner");
+            res.redirect(RESULT_PATH);
         }
     }
 
     public String startChess(Response res) {
         webChessService.startChessGame();
 
-        res.redirect("/");
+        res.redirect(INDEX_PATH);
         return null;
     }
 
-    public String getWinnerModel() {
+    public String rendResultPage() {
         ChessGame chessGame = webChessService.getChessGame();
         checkFinished(chessGame);
 
@@ -77,12 +97,12 @@ public class WebChessController {
     }
 
     private void checkFinished(ChessGame chessGame) {
-        if(!chessGame.isFinished()) {
+        if (!chessGame.isFinished()) {
             chessGame.end();
         }
     }
 
-    public String getExceptionModel(Exception exception) {
+    public String rendExceptionMessage(Exception exception) {
         Map<String, Object> model = new HashMap<>();
         model.put("error-message", exception.getMessage());
         model.put("pieces", webChessService.getPieces());
