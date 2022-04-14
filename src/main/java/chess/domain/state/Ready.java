@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Status;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
 import java.util.function.ObjDoubleConsumer;
 
@@ -13,8 +14,9 @@ public class Ready extends State {
         this(new Board(new BoardInitializer()));
     }
 
-    Ready(final Board board) {
+    public Ready(final Board board) {
         this.board = board;
+        this.stateType = StateType.READY;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class Ready extends State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(board);
     }
 
     @Override

@@ -3,18 +3,24 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.PieceInfo;
 
 import java.util.Objects;
 
 public class Bishop extends Piece {
 
-    private static final double SCORE = 3;
-
     public Bishop(final Color color) {
-        super(color);
+        super(color, getPieceInfo(color));
     }
 
-    private static boolean isBishopMoving(final Position from, final Position to) {
+    private static PieceInfo getPieceInfo(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceInfo.BLACK_BISHOP;
+        }
+        return PieceInfo.WHITE_BISHOP;
+    }
+
+    private boolean isBishopMoving(final Position from, final Position to) {
         return Direction.isDiagonal(from, to);
     }
 
@@ -38,11 +44,6 @@ public class Bishop extends Piece {
     @Override
     public boolean isKing() {
         return false;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override

@@ -1,0 +1,24 @@
+
+#command-wrap {
+    padding-top: 30px;
+}
+
+#command-wrap #command-form {
+    width: 400px;
+    margin: auto;
+}
+
+#command-wrap input {
+    height: 40px;
+}
+
+#command-wrap input[type="text"] {
+    box-sizing: border-box;
+    width: 68%;
+    float: left;
+}
+
+#command-wrap input[type="submit"] {
+    width: 30%;
+    float: right;
+}

@@ -3,18 +3,24 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.PieceInfo;
 
 import java.util.Objects;
 
 public class King extends Piece {
 
-    private static final double SCORE = 0;
-
     public King(final Color color) {
-        super(color);
+        super(color, getPieceInfo(color));
     }
 
-    private static boolean isKingMoving(final Position from, final Position to) {
+    private static PieceInfo getPieceInfo(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceInfo.BLACK_KING;
+        }
+        return PieceInfo.WHITE_KING;
+    }
+
+    private boolean isKingMoving(final Position from, final Position to) {
         Direction direction = Direction.getDirection(from, to);
 
         return Direction.kingStep().contains(direction);
@@ -41,11 +47,6 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override

@@ -6,7 +6,7 @@ import chess.view.Enterable;
 import chess.view.Input;
 import chess.view.Output;
 
-public class ChessController {
+public class ConsoleController {
 
     private static final Enterable enterable = new Enter();
 

@@ -17,50 +17,20 @@ public class RookTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
 
-    @DisplayName("룩 앞으로 전진")
+    @DisplayName("룩이 이동할 수 있는 범위로 이동")
     @ParameterizedTest
-    @ValueSource(strings = {"a4", "a7"})
-    void forward(String toPosition) {
+    @ValueSource(strings = {"d5", "e6", "f5", "e4", "c5", "e7", "g5", "e3"})
+    void checkMovingRange(String to) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkMovingRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("룩 뒤로 이동")
-    @ParameterizedTest
-    @ValueSource(strings = {"e4", "e3"})
-    void back(String toPosition) {
-        Piece rook = new Rook(Color.WHITE);
-
-        assertThatCode(() -> rook.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("룩 오른쪽으로 이동")
-    @ParameterizedTest
-    @ValueSource(strings = {"b3", "h3"})
-    void right(String toPosition) {
-        Piece rook = new Rook(Color.WHITE);
-
-        assertThatCode(() -> rook.checkMovingRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("룩 왼쪽으로 이동")
-    @ParameterizedTest
-    @ValueSource(strings = {"d5", "a5"})
-    void left(String toPosition) {
-        Piece rook = new Rook(Color.WHITE);
-
-        assertThatCode(() -> rook.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("룩이 이동할 수 없는 범위로 이동 시 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"e5", "c5", "c3", "e3"})
-    void isRookMovingException(String toPosition) {
+    void checkMovingRangeException(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
         assertThatThrownBy(() -> rook.checkMovingRange(emptyBoard, Position.from("d4"), Position.from(toPosition)))

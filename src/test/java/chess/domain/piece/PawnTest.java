@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,7 @@ public class PawnTest {
     private static final Board emptyBoard = new Board(HashMap::new);
 
     @Test
-    @DisplayName("흰색 폰 한 칸 앞으로 전진")
+    @DisplayName("흰색 폰이 이동할 수 있는 범위로 이동")
     void forwardWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
 
@@ -25,71 +27,42 @@ public class PawnTest {
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("흰색 폰 두 칸 앞으로 전진 시 예외 발생")
-    void invalidForwardWhiteTwo() {
+    @DisplayName("흰색 폰이 이동할 수 없는 범위로 이동 시 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"f6", "f5", "f4", "e4", "d4", "d5", "d6"})
+    void forwardWhiteException(String to) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a1"), Position.from("a3")))
+        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
-    @Test
-    @DisplayName("흰색 첫 이동 시 폰 두 칸 앞으로 전진 가능")
-    void forwardWhiteTwo() {
+    @DisplayName("시작 위치에 있는 흰색 폰이 이동할 수 있는 범위로 이동")
+    @ParameterizedTest
+    @ValueSource(strings = {"a3", "a4"})
+    void forwardToInitialPositionWhite(String to) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatCode(() -> pawn.checkMovingRange(emptyBoard, Position.from("a2"), Position.from("a4")))
+        assertThatCode(() -> pawn.checkMovingRange(emptyBoard, Position.from("a2"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("흰색 폰이 앞으로 한 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
-    void forwardWhiteOneStep() {
+    @DisplayName("흰색 폰이 첫 시작 위치에서 움직인 곳에 다른 기물이 있는 경우 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"a3", "a4"})
+    void forwardToInitialPositionWhiteException(String to) {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a3"), new Pawn(Color.BLACK))));
+        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from(to), new Pawn(Color.BLACK))));
 
-        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a3")))
+        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
     @Test
-    @DisplayName("흰색 폰이 앞으로 두 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
-    void forwardWhiteTwoStep() {
-        Pawn pawn = new Pawn(Color.WHITE);
-
-        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a4"), new Pawn(Color.BLACK))));
-
-        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a4")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("흰색 폰 뒤로 이동 시 예외 발생")
-    void backWhite() {
-        Pawn pawn = new Pawn(Color.WHITE);
-
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a4"), Position.from("a3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("흰색 폰 대각선으로 이동 시 예외 발생")
-    void forwardWhiteDiagonal() {
-        Pawn pawn = new Pawn(Color.WHITE);
-
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a2"), Position.from("b3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("흰색 폰 대각선에 검정 폰이 있는경우 이동 가능")
+    @DisplayName("흰색 폰 대각선에 검정 폰이 있는 경우 이동 가능")
     void moveDiagonalWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
 
@@ -100,7 +73,17 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("검정 폰 앞으로 한 칸 전진")
+    @DisplayName("흰색 폰 대각선에 검정 폰이 없는 경우 이동 시 예외 발생")
+    void moveDiagonalWhiteException() {
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a2"), Position.from("b3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("검은색 폰이 이동할 수 있는 범위로 이동")
     void forwardBlack() {
         Pawn pawn = new Pawn(Color.BLACK);
 
@@ -108,54 +91,59 @@ public class PawnTest {
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("검정 폰 두 칸 앞으로 전진 시 예외 발생")
-    void invalidForwardBlackTwo() {
+    @DisplayName("검은색 폰이 이동할 수 없는 범위로 이동 시 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"d4", "d5", "d6", "e6", "f6", "f5", "f4"})
+    void forwardBlackException() {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a8"), Position.from("a6")))
+        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("e5"), Position.from("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
-    @Test
-    @DisplayName("검정 폰 첫 이동 시 폰 두 칸 앞으로 전진 가능")
-    void forwardBlackTwo() {
+    @DisplayName("시작 위치에 있는 검은색 폰이 이동할 수 있는 범위로 이동")
+    @ParameterizedTest
+    @ValueSource(strings = {"a6", "a5"})
+    void forwardToInitialPositionBlack(String to) {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThatCode(() -> pawn.checkMovingRange(emptyBoard, Position.from("a7"), Position.from("a5")))
+        assertThatCode(() -> pawn.checkMovingRange(emptyBoard, Position.from("a7"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("검정 폰 뒤로 이동 시 예외 발생")
-    void backBlack() {
-        Pawn pawn = new Pawn(Color.BLACK);
+    @DisplayName("검은색 폰이 첫 시작 위치에서 움직인 곳에 다른 기물이 있는 경우 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"a6", "a5"})
+    void forwardToInitialPositionBlackException(String to) {
+        Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a5"), Position.from("a6")))
+        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from(to), new Pawn(Color.BLACK))));
+
+        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a7"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("검정 폰 대각선으로 이동 시 예외 발생")
-    void forwardBlackDiagonal() {
-        Pawn pawn = new Pawn(Color.BLACK);
-
-        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("a7"), Position.from("b6")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
+                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
     @Test
     @DisplayName("검정 폰 대각선에 흰색 폰이 있는 경우 이동가능")
-    void MoveDiagonal() {
+    void moveDiagonalBlack() {
         Pawn pawn = new Pawn(Color.BLACK);
 
         final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("c6"), new Pawn(Color.WHITE))));
 
         assertThatCode(() -> pawn.checkMovingRange(mockBoard, Position.from("d7"), Position.from("c6")))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("검정 폰 대각선에 흰색 폰이 없는 경우 이동 시 예외 발생")
+    void moveDiagonalBlackException() {
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        assertThatThrownBy(() -> pawn.checkMovingRange(emptyBoard, Position.from("d7"), Position.from("c6")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
     @Test

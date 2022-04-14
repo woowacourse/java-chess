@@ -3,13 +3,14 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
-public class WhiteTurn extends Turn {
+public class WhiteTurn extends Running {
 
     private static final Color color = Color.WHITE;
 
-    WhiteTurn(final Board board) {
-        super(board);
+    public WhiteTurn(final Board board) {
+        super(board, StateType.WHITE_TURN);
     }
 
     @Override

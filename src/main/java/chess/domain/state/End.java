@@ -1,10 +1,17 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
 import java.util.function.ObjDoubleConsumer;
 
 public class End extends State {
+
+    public End(final Board board) {
+        this.board = board;
+        this.stateType = StateType.END;
+    }
 
     @Override
     public State start() {

@@ -1,0 +1,31 @@
+
+.game-title {
+    font-size: 40px;
+    font-weight: bold;
+    width: fit-content;
+    margin: auto;
+}
+
+#chess-board {
+    margin: auto;
+    width: 400px;
+    border: solid black 5px;
+}
+
+#chess-board tr {
+    height: 50px;
+}
+
+#chess-board td {
+    padding: 0px;
+    text-align: center;
+    font-size: 40px;
+}
+
+#chess-board .white {
+    background-color: #ffffff;
+}
+
+#chess-board .black {
+    background-color: #d9d9d9;
+}

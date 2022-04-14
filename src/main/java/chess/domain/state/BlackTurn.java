@@ -3,13 +3,14 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.dto.StateType;
 
-public class BlackTurn extends Turn {
+public class BlackTurn extends Running {
 
     private static final Color color = Color.BLACK;
 
-    BlackTurn(final Board board) {
-        super(board);
+    public BlackTurn(final Board board) {
+        super(board, StateType.BLACK_TURN);
     }
 
     @Override

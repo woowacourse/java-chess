@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="/src/board.css">
+    <link rel="stylesheet" href="/src/command.css">
+    <link rel="stylesheet" href="/src/exception.css">
+    <link rel="stylesheet" href="/src/status.css">
+    <link rel="stylesheet" href="/src/end.css">
+</head>
+<body>
+    <div id="chess-game">
+        <div>
+            <p class="game-title">CHESS GAME</p>
+        </div>
+        <div id="chess-board-wrap">
+            {{#board}}
+            <table id="chess-board">
+                <tr>
+                    <td class="white">{{a8}}</td>
+                    <td class="black">{{b8}}</td>
+                    <td class="white">{{c8}}</td>
+                    <td class="black">{{d8}}</td>
+                    <td class="white">{{e8}}</td>
+                    <td class="black">{{f8}}</td>
+                    <td class="white">{{g8}}</td>
+                    <td class="black">{{h8}}</td>
+                </tr>
+                <tr>
+                    <td class="black">{{a7}}</td>
+                    <td class="white">{{b7}}</td>
+                    <td class="black">{{c7}}</td>
+                    <td class="white">{{d7}}</td>
+                    <td class="black">{{e7}}</td>
+                    <td class="white">{{f7}}</td>
+                    <td class="black">{{g7}}</td>
+                    <td class="white">{{h7}}</td>
+                </tr>
+                <tr>
+                    <td class="white">{{a6}}</td>
+                    <td class="black">{{b6}}</td>
+                    <td class="white">{{c6}}</td>
+                    <td class="black">{{d6}}</td>
+                    <td class="white">{{e6}}</td>
+                    <td class="black">{{f6}}</td>
+                    <td class="white">{{g6}}</td>
+                    <td class="black">{{h6}}</td>
+                </tr>
+                <tr>
+                    <td class="black">{{a5}}</td>
+                    <td class="white">{{b5}}</td>
+                    <td class="black">{{c5}}</td>
+                    <td class="white">{{d5}}</td>
+                    <td class="black">{{e5}}</td>
+                    <td class="white">{{f5}}</td>
+                    <td class="black">{{g5}}</td>
+                    <td class="white">{{h5}}</td>
+                </tr>
+                <tr>
+                    <td class="white">{{a4}}</td>
+                    <td class="black">{{b4}}</td>
+                    <td class="white">{{c4}}</td>
+                    <td class="black">{{d4}}</td>
+                    <td class="white">{{e4}}</td>
+                    <td class="black">{{f4}}</td>
+                    <td class="white">{{g4}}</td>
+                    <td class="black">{{h4}}</td>
+                </tr>
+                <tr>
+                    <td class="black">{{a3}}</td>
+                    <td class="white">{{b3}}</td>
+                    <td class="black">{{c3}}</td>
+                    <td class="white">{{d3}}</td>
+                    <td class="black">{{e3}}</td>
+                    <td class="white">{{f3}}</td>
+                    <td class="black">{{g3}}</td>
+                    <td class="white">{{h3}}</td>
+                </tr>
+                <tr>
+                    <td class="white">{{a2}}</td>
+                    <td class="black">{{b2}}</td>
+                    <td class="white">{{c2}}</td>
+                    <td class="black">{{d2}}</td>
+                    <td class="white">{{e2}}</td>
+                    <td class="black">{{f2}}</td>
+                    <td class="white">{{g2}}</td>
+                    <td class="black">{{h2}}</td>
+                </tr>
+                <tr>
+                    <td class="black">{{a1}}</td>
+                    <td class="white">{{b1}}</td>
+                    <td class="black">{{c1}}</td>
+                    <td class="white">{{d1}}</td>
+                    <td class="black">{{e1}}</td>
+                    <td class="white">{{f1}}</td>
+                    <td class="black">{{g1}}</td>
+                    <td class="white">{{h1}}</td>
+                </tr>
+            </table>
+            {{/board}}
+        </div>
+        <div id="command-wrap">
+            <form id="command-form" action="/chess-game/{{chessGameId}}/move" method="post">
+                <input type="text" id="command" name="command" autocomplete="off" autofocus required />
+                <input type="submit" value="실행" />
+            </form>
+        </div>
+        <div id="exception-message-wrap">
+            <p>{{exceptionMessage}}</p>
+        </div>
+        <div id="status-wrap">
+            <div id="status">
+                <p>{{status}}</p>
+            </div>
+        </div>
+        <div id="end-wrap">
+            <a id="end" name="end" href="/chess-game/{{chessGameId}}/end">
+                현재 게임 종료
+            </a>
+        </div>
+    </div>
+</body>
+</html>

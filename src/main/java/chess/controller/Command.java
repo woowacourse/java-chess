@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.dto.BoardDto;
 import chess.view.Output;
 
 import java.util.Arrays;
@@ -35,6 +36,22 @@ public enum Command {
         printBoard(chessGame);
     }
 
+    public static void start(final ChessGame chessGame) {
+        execute(START.command, chessGame);
+    }
+
+    public static void move(final String input, final ChessGame chessGame) {
+        String[] commands = input.split(DELIMITER);
+        if (!commands[COMMAND_LOCATION].equals(MOVE.command)) {
+            throw new IllegalArgumentException("'move source위치 target위치' 의 형식으로 입력해주세요.");
+        }
+        operate(chessGame, commands);
+    }
+
+    public static void end(final ChessGame chessGame) {
+        execute(END.command, chessGame);
+    }
+
     private static void operate(final ChessGame chessGame, final String[] commands) {
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))
@@ -46,7 +63,7 @@ public enum Command {
 
     private static void printBoard(final ChessGame chessGame) {
         if (!chessGame.isEnded()) {
-            Output.printBoard(chessGame.getBoard());
+            Output.printBoard(BoardDto.from(chessGame.getBoard()));
         }
     }
 

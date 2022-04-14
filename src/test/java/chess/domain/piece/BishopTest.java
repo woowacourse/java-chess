@@ -17,20 +17,20 @@ public class BishopTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
 
-    @DisplayName("비숍 대각선 한 칸 이동")
+    @DisplayName("비숍이 이동할 수 있는 범위로 이동")
     @ParameterizedTest
-    @ValueSource(strings = {"a2", "c2", "a4", "c4"})
-    void diagonal(String to) {
+    @ValueSource(strings = {"a2", "c2", "d1", "a4", "c4", "d5"})
+    void checkMovingRange(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
         assertThatCode(() -> bishop.checkMovingRange(emptyBoard, Position.from("b3"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("비숍 대각선이 아닌 방향으로 이동 시 예외 발생")
+    @DisplayName("비숍이 이동할 수 없는 범위로 이동 시 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"a3", "b2", "b4", "c3", "c5"})
-    void notDiagonal(String to) {
+    void checkMovingRangeException(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
         assertThatThrownBy(() -> bishop.checkMovingRange(emptyBoard, Position.from("b3"), Position.from(to)))

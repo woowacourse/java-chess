@@ -53,6 +53,10 @@ public class Position {
         return Position.of(coordinateX, coordinateY);
     }
 
+    public boolean isEqualCoordinateX(final Position position) {
+        return getCoordinateX().equals(position.getCoordinateX());
+    }
+
     public CoordinateX getCoordinateX() {
         return coordinateX;
     }
@@ -63,6 +67,10 @@ public class Position {
 
     public int getCoordinateY() {
         return coordinateY.getOrder();
+    }
+
+    public String getPosition() {
+        return coordinateX.getName() + getCoordinateY();
     }
 
     @Override

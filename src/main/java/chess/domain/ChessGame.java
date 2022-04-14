@@ -13,22 +13,18 @@ public class ChessGame {
     private static final int FROM = 1;
     private static final int TO = 2;
 
-    private State state = new Ready();
+    private State state;
+
+    public ChessGame() {
+        this(new Ready());
+    }
+
+    public ChessGame(final State state) {
+        this.state = state;
+    }
 
     public void start() {
         state = state.start();
-    }
-
-    public void end() {
-        state = state.end();
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return state.getBoard();
-    }
-
-    public boolean isEnded() {
-        return state.isEnded();
     }
 
     public void move(final String[] positions) {
@@ -38,7 +34,23 @@ public class ChessGame {
         state = state.move(from, to);
     }
 
+    public void end() {
+        state = state.end();
+    }
+
     public void status(final ObjDoubleConsumer<String> printScore) {
         state.status(printScore);
+    }
+
+    public boolean isEnded() {
+        return state.isEnded();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
+    }
+
+    public State getState() {
+        return state;
     }
 }

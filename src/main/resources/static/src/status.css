@@ -1,0 +1,10 @@
+
+#status-wrap #status {
+    width: fit-content;
+    margin: auto;
+}
+
+#status-wrap #status p {
+    font-size: 20px;
+    font-weight: bold;
+}

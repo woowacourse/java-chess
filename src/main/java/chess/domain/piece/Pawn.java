@@ -5,15 +5,21 @@ import chess.domain.piece.strategy.BlackPawnMoving;
 import chess.domain.piece.strategy.Movable;
 import chess.domain.piece.strategy.WhitePawnMoving;
 import chess.domain.position.Position;
+import chess.dto.PieceInfo;
 
 import java.util.Objects;
 
 public class Pawn extends Piece {
 
-    private static final double SCORE = 1;
-
     public Pawn(final Color color) {
-        super(color);
+        super(color, getPieceInfo(color));
+    }
+
+    private static PieceInfo getPieceInfo(final Color color) {
+        if (color == Color.BLACK) {
+            return PieceInfo.BLACK_PAWN;
+        }
+        return PieceInfo.WHITE_PAWN;
     }
 
     private boolean isPawnMoving(final Board board, final Position from, final Position to) {
@@ -50,11 +56,6 @@ public class Pawn extends Piece {
     @Override
     public boolean isKing() {
         return false;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override
