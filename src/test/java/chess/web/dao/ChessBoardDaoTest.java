@@ -5,8 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.property.PieceNameAndColor;
-import chess.web.dao.ChessBoardDao;
+import chess.web.dto.PieceDto;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ public class ChessBoardDaoTest {
         for (Position position : initBoard.keySet()) {
             chessBoardDao.save(position, initBoard.get(position));
         }
-        Optional<PieceNameAndColor> piece = chessBoardDao.findByPosition("A8");
+        Optional<PieceDto> piece = chessBoardDao.findByPosition("A8");
 
         assertThat(piece.orElseThrow().toString()).isEqualTo("R_BLACK");
     }

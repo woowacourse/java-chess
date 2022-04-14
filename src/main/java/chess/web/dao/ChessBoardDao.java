@@ -2,7 +2,7 @@ package chess.web.dao;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.property.PieceNameAndColor;
+import chess.web.dto.PieceDto;
 import chess.web.jdbc.JdbcTemplate;
 import chess.web.jdbc.SelectJdbcTemplate;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(sql);
     }
 
-    public Optional<PieceNameAndColor> findByPosition(String position) {
+    public Optional<PieceDto> findByPosition(String position) {
         SelectJdbcTemplate jdbcTemplate = new SelectJdbcTemplate() {
             @Override
             public void setParameters(PreparedStatement statement) throws SQLException {
@@ -45,7 +45,7 @@ public class ChessBoardDao {
         final String sql = "select position, piece from board where position = ?";
         Object result = jdbcTemplate.executeQuery(sql);
 
-        return Optional.ofNullable(PieceNameAndColor.of(result.toString()));
+        return Optional.ofNullable(PieceDto.of(result.toString()));
     }
 
     public void deleteAll() {
