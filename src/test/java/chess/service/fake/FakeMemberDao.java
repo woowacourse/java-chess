@@ -1,6 +1,6 @@
 package chess.service.fake;
 
-import chess.Member;
+import chess.model.member.Member;
 import chess.dao.MemberDao;
 import java.util.List;
 

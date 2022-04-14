@@ -3,9 +3,9 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.Member;
-import chess.Room;
-import chess.model.Board;
+import chess.model.member.Member;
+import chess.model.room.Room;
+import chess.model.board.Board;
 import chess.model.status.Running;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;

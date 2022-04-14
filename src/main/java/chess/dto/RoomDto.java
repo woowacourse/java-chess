@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.Member;
+import chess.model.member.Member;
 import java.util.List;
 
 public class RoomDto {

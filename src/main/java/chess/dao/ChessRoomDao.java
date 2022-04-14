@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.Room;
+import chess.model.room.Room;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;

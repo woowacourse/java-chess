@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.ConsoleBoard;
+import chess.model.board.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;

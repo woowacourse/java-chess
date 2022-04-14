@@ -1,4 +1,4 @@
-package chess;
+package chess.model.member;
 
 public class Member {
 

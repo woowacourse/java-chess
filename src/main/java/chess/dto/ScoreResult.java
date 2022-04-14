@@ -1,4 +1,4 @@
-package chess.model;
+package chess.dto;
 
 import chess.model.piece.Color;
 import chess.model.piece.Piece;

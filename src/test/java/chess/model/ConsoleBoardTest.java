@@ -3,6 +3,8 @@ package chess.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.dto.ScoreResult;
+import chess.model.board.ConsoleBoard;
 import chess.model.piece.Color;
 import chess.model.piece.Piece;
 import chess.model.square.File;

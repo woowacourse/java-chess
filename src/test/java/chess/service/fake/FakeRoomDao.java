@@ -1,6 +1,6 @@
 package chess.service.fake;
 
-import chess.Room;
+import chess.model.room.Room;
 import chess.dao.RoomDao;
 import java.util.List;
 

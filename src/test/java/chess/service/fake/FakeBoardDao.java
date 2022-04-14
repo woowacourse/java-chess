@@ -1,7 +1,7 @@
 package chess.service.fake;
 
 import chess.dao.BoardDao;
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.square.Square;
 import chess.model.status.Running;

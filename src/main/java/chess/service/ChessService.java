@@ -1,4 +1,4 @@
-package chess;
+package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.MemberDao;
@@ -9,7 +9,9 @@ import chess.dto.BoardDto;
 import chess.dto.RoomsDto;
 import chess.dto.RoomDto;
 import chess.dto.ScoreDto;
-import chess.model.Board;
+import chess.model.board.Board;
+import chess.model.member.Member;
+import chess.model.room.Room;
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Initializer;

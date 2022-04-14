@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.Member;
+import chess.model.member.Member;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;

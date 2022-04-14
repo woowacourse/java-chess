@@ -2,8 +2,7 @@ package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.ChessService;
-import chess.Room;
+import chess.model.room.Room;
 import chess.dto.RoomsDto;
 import chess.service.fake.FakeBoardDao;
 import chess.service.fake.FakeMemberDao;

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.square.Square;
 import java.util.Map;

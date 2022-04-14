@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.piece.Initializer;
 import chess.model.status.Ready;
 import chess.model.status.Running;

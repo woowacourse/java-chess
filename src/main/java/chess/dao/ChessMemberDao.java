@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.Member;
+import chess.model.member.Member;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;

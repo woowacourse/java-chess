@@ -3,7 +3,7 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;

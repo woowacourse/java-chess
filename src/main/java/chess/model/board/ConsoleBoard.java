@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.board;
 
+import chess.dto.ScoreResult;
 import chess.model.piece.Bishop;
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
