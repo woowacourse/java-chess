@@ -23,7 +23,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebChessController {
     private static final int PORT_NUMBER = 8080;
     private static final int BAD_REQUEST = 400;
-    private static final String VIEW = "index.html";
+    private static final String VIEW_PAGE = "index.html";
     private static final String SOURCE_POSITION_PARAMETER_KEY = "from";
     private static final String TARGET_POSITION_PARAMETER_KEY = "to";
     private static final String CHESS_BOARD_KEY = "chessboard";
@@ -45,8 +45,8 @@ public class WebChessController {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
-            return new ModelAndView(model, VIEW);
-        }, new HandlebarsTemplateEngine());
+            return render(model);
+        });
 
         get("/start", (req, res) -> {
             gameState = gameState.start();
@@ -54,8 +54,8 @@ public class WebChessController {
 
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
-            return new ModelAndView(model, VIEW);
-        }, new HandlebarsTemplateEngine());
+            return render(model);
+        });
 
         get("/end", (req, res) -> {
             gameState = new Ready();
@@ -63,8 +63,8 @@ public class WebChessController {
 
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
-            return new ModelAndView(model, VIEW);
-        }, new HandlebarsTemplateEngine());
+            return render(model);
+        });
 
         post("/move", (req, res) -> {
             MoveRequest moveRequest = MoveRequest.of(req.body());
@@ -80,16 +80,16 @@ public class WebChessController {
                 gameState = new Ready();
             }
             chessService.updateChessGame(gameState);
-            return new ModelAndView(model, VIEW);
-        }, new HandlebarsTemplateEngine());
+            return render(model);
+        });
 
         get("/status", (req, res) -> {
             gameState = gameState.status();
             Map<String, Object> model = new HashMap<>();
             model.put(CHESS_BOARD_KEY, getChessBoard());
             model.put(STATUS_KEY, getStatus());
-            return new ModelAndView(model, VIEW);
-        }, new HandlebarsTemplateEngine());
+            return render(model);
+        });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(BAD_REQUEST);
@@ -113,5 +113,9 @@ public class WebChessController {
         ChessBoard chessBoard = gameState.getChessBoard();
         Team winner = gameState.findWinner();
         return ChessStatusDto.of(chessBoard, winner);
+    }
+
+    private String render(Map<String, Object> model) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, VIEW_PAGE));
     }
 }
