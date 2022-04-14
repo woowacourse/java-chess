@@ -7,6 +7,7 @@ public class MoveCommand {
     private static final int COMMAND_INDEX = 0;
     public static final int FROM_POSITION_INDEX = 1;
     public static final int TO_POSITION_INDEX = 2;
+
     private final Position from;
     private final Position to;
 

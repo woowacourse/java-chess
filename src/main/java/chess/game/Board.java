@@ -16,6 +16,7 @@ public class Board {
     public static final int MINIMUM_BOARD_INDEX = 1;
     public static final int MAXIMUM_BOARD_INDEX = 8;
     private static final int MINIMUM_PIECE_COUNT = 1;
+
     private final Map<Position, Piece> value;
 
     private Board(final Map<Position, Piece> value) {
@@ -26,10 +27,14 @@ public class Board {
         return new Board(BoardInitializer.init());
     }
 
+    public static Board of(final Map<Position, Piece> pieces) {
+        return new Board(pieces);
+    }
+
     public void move(final MoveCommand moveCommand, Color color) {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
-        final Piece piece = getIfExist(from)
+        final Piece piece = Optional.ofNullable(value.get(from))
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
         validateSameTeam(from, to);
         validateColor(piece, color);
@@ -46,18 +51,23 @@ public class Board {
         return kingCount == MINIMUM_PIECE_COUNT;
     }
 
-    public Map<Color, Double> getBoardScore() {
+    public Map<Color, Double> createBoardScore() {
         final Map<Color, Double> score = new EnumMap<>(Color.class);
         score.put(BLACK, calculateScore(BLACK));
         score.put(WHITE, calculateScore(WHITE));
         return score;
     }
 
-    private Optional<Piece> getIfExist(Position from) {
-        if (!value.containsKey(from)) {
-            return Optional.empty();
+    public Color getWinColor() {
+        if (!isKingDead()) {
+            throw new IllegalStateException("게임이 끝나지 않아 우승자를 가릴 수 없습니다.");
         }
-        return Optional.of(value.get(from));
+
+        return value.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .map(Piece::getColor)
+                .orElseThrow(() -> new IllegalStateException("우승한 팀이 존재하지 않습니다"));
     }
 
     private void validateSameTeam(final Position from, final Position to) {

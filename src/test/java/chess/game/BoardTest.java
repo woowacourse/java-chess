@@ -75,7 +75,7 @@ class BoardTest {
     @DisplayName("남아있는 말에 따라 점수를 계산한다.")
     void score() {
         final Board board = Board.create();
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(38);
     }
@@ -89,7 +89,7 @@ class BoardTest {
         board.move(MoveCommand.of("a5 a6"), Color.WHITE);
         board.move(MoveCommand.of("a6 b7"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(37);
     }
@@ -103,7 +103,7 @@ class BoardTest {
         board.move(MoveCommand.of("c4 b6"), Color.WHITE);
         board.move(MoveCommand.of("b6 a8"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(33);
     }
@@ -118,7 +118,7 @@ class BoardTest {
         board.move(MoveCommand.of("c5 a6"), Color.WHITE);
         board.move(MoveCommand.of("a6 b8"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(35.5);
     }
@@ -132,7 +132,7 @@ class BoardTest {
         board.move(MoveCommand.of("b5 d6"), Color.WHITE);
         board.move(MoveCommand.of("d6 c8"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(35);
     }
@@ -147,7 +147,7 @@ class BoardTest {
         board.move(MoveCommand.of("a5 c6"), Color.WHITE);
         board.move(MoveCommand.of("c6 d8"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(29);
     }
@@ -161,7 +161,7 @@ class BoardTest {
         board.move(MoveCommand.of("a5 a6"), Color.WHITE);
         board.move(MoveCommand.of("a6 b7"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.WHITE)).isEqualTo(37);
     }
@@ -181,7 +181,7 @@ class BoardTest {
         board.move(MoveCommand.of("c6 b7"), Color.WHITE);
         board.move(MoveCommand.of("b7 a8"), Color.WHITE);
 
-        final Map<Color, Double> boardScore = board.getBoardScore();
+        final Map<Color, Double> boardScore = board.createBoardScore();
 
         assertThat(boardScore.get(Color.WHITE)).isEqualTo(36.5);
     }

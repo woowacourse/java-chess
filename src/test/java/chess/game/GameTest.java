@@ -2,7 +2,7 @@ package chess.game;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.status.Ready;
+import chess.state.Ready;
 import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

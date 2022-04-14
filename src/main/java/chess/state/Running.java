@@ -1,23 +1,27 @@
-package chess.status;
+package chess.state;
 
 import static chess.piece.detail.Color.BLACK;
 import static chess.piece.detail.Color.WHITE;
 
 import chess.game.Board;
 import chess.game.MoveCommand;
+import chess.piece.Piece;
 import chess.piece.detail.Color;
+import chess.position.Position;
 import chess.view.Command;
 import java.util.Map;
 
-public final class Running implements State {
+public final class Running extends AbstractState {
 
     private static final Color FIRST_TURN_COLOR = WHITE;
 
-    private final Board board;
-    private Color turn = FIRST_TURN_COLOR;
 
     Running() {
-        this.board = Board.create();
+        super(Board.create(), FIRST_TURN_COLOR);
+    }
+
+    public Running(final Map<Position, Piece> value, final Color turn) {
+        super(Board.of(value), turn);
     }
 
     @Override
@@ -27,7 +31,7 @@ public final class Running implements State {
         }
 
         if (command.isEnd()) {
-            return new Finished();
+            return new Finished(board, turn);
         }
         return this;
     }
@@ -38,19 +42,8 @@ public final class Running implements State {
     }
 
     @Override
-    public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand, turn);
-        reverseColor(this.turn);
-    }
-
-    @Override
     public boolean canMove() {
         return true;
-    }
-
-    @Override
-    public Board getBoard() {
-        return board;
     }
 
     @Override
@@ -59,9 +52,20 @@ public final class Running implements State {
     }
 
     @Override
-    public Color getTurn() {
-        reverseColor(turn);
-        return turn;
+    public void move(final MoveCommand moveCommand) {
+        board.move(moveCommand, turn);
+        reverseColor(this.turn);
+    }
+
+    @Override
+    public Map<Color, Double> getStatus() {
+        return board.createBoardScore();
+    }
+
+
+    @Override
+    public void load(final Map<Position, Piece> value) {
+        board = Board.of(value);
     }
 
     private void reverseColor(final Color color) {
@@ -71,10 +75,5 @@ public final class Running implements State {
         if (BLACK == color) {
             this.turn = WHITE;
         }
-    }
-
-    @Override
-    public Map<Color, Double> getStatus() {
-        return board.getBoardScore();
     }
 }

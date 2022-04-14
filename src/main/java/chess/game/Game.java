@@ -3,8 +3,12 @@ package chess.game;
 import static chess.game.MoveCommand.FROM_POSITION_INDEX;
 import static chess.game.MoveCommand.TO_POSITION_INDEX;
 
+import chess.piece.Piece;
 import chess.piece.detail.Color;
-import chess.status.State;
+import chess.position.Position;
+import chess.state.Ready;
+import chess.state.Running;
+import chess.state.State;
 import chess.view.Command;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +18,7 @@ public class Game {
 
     private static final int MAXIMUM_SPLIT_INPUT_SIZE = 3;
     private static final int MINIMUM_SPLIT_INPUT_SIZE = 1;
+
     private State state;
     private Color winColor;
 
@@ -44,10 +49,19 @@ public class Game {
         }
 
         if (state.isGameEnd()) {
-            winColor = state.getTurn();
+            winColor = state.getTurn().reverse();
             state = state.turn(Command.END);
         }
         return Collections.emptyMap();
+    }
+
+    public void restart() {
+        state = Ready.start(Command.START);
+    }
+
+    public void end(final String input) {
+        final Command command = Command.of(input);
+        state.turn(command);
     }
 
     private void validate(final Command command, final List<String> input) {
@@ -61,10 +75,27 @@ public class Game {
     }
 
     public Color getWinColor() {
-        return winColor;
+        final Board board = state.getBoard();
+        return board.getWinColor();
     }
 
     public Board getBoard() {
         return state.getBoard();
+    }
+
+    public Map<Color, Double> getResult() {
+        return state.getStatus();
+    }
+
+    public void load(final Color turn, final Map<Position, Piece> board) {
+        this.state = new Running(board, turn);
+    }
+
+    public Color getTurn() {
+        return state.getTurn();
+    }
+
+    public boolean isFinished() {
+        return state.isGameEnd();
     }
 }

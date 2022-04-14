@@ -1,8 +1,8 @@
 package chess;
 
 import chess.game.Game;
-import chess.status.Ready;
-import chess.status.State;
+import chess.state.Ready;
+import chess.state.State;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

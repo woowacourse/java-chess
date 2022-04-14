@@ -2,9 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="/js/index.js"></script>
 </head>
 <body>
-Hello World!!
+
+<div align="center">
+    <h1>Play Chess!</h1>
+    <table class="chess-board">
+        {{#board}}
+        {{#value}}
+        <tr>
+            {{#this}}
+            <td id="{{position}}" class="{{background}}" onclick="clicked(this.id)">
+                <img src="images/{{name}}.png" style="width:7vw; height: 7vw;"/>
+            </td>
+            {{/this}}
+        </tr>
+        {{/value}}
+        {{/board}}
+    </table>
+    <br/>
+    <form action="/status" method="get">
+        <button>진행 상황 출력</button>
+    </form>
+    <div class="result">
+        {{#each result}}
+        <h1> {{@key}} : {{this}} </h1>
+        {{/each}}
+    </div>
+
+    <form action="/restart" method="get">
+        <button> 게임 재시작</button>
+    </form>
+</div>
+
 </body>
 </html>
+
+<script>
+
+</script>
+

@@ -14,6 +14,10 @@ public interface Piece {
 
     Direction getDirection(Position from, Position to);
 
+    boolean isBlack();
+
+    boolean isWhite();
+
     boolean isPawn();
 
     boolean isKnight();

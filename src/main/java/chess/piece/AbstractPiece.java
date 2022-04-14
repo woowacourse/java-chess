@@ -9,7 +9,7 @@ import chess.position.Position;
 public abstract class AbstractPiece implements Piece {
 
     private final Name name;
-    protected final Color color;
+    private final Color color;
 
     AbstractPiece(final Name name, final Color color) {
         this.name = name;
@@ -47,6 +47,16 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    @Override
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
+    @Override
     public boolean isPawn() {
         return false;
     }
@@ -59,5 +69,13 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "name=" + name +
+                ", color=" + color +
+                '}';
     }
 }
