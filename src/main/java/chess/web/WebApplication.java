@@ -1,26 +1,13 @@
 package chess.web;
 
-import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.web.controller.ChessController;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.PlayerDao;
-import chess.domain.game.ChessGame;
-import chess.domain.game.state.ChessBoard;
-import chess.domain.game.state.Player;
-import chess.domain.game.state.RunningGame;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import chess.domain.piece.position.File;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Rank;
-import chess.domain.piece.property.Color;
-import chess.web.controller.Request;
-import java.util.HashMap;
-import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -30,128 +17,19 @@ public class WebApplication {
         port(8082);
         staticFileLocation("/static");
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "start.html");
-        });
+        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        PlayerDao playerDao = new PlayerDao();
+        ChessController chessController = new ChessController(chessBoardDao, playerDao);
 
-        get("/start", (req, res) -> {
-            ChessBoardDao chessBoardDao = new ChessBoardDao();
-            PlayerDao playerDao = new PlayerDao();
+        get("/", (req, res) -> render(chessController.root(req, res)));
+        get("/start", (req, res) -> render(chessController.start(req, res)));
+        get("/play", (req, res) -> render(chessController.play(req, res)));
+        get("/end", (req, res) -> render(chessController.end(req, res)));
 
-            ChessGame chessGame = new ChessGame();
-            chessGame.start();
-
-            //전부 지우고 다시 채운다.
-            chessBoardDao.deleteAll();
-            Map<Position, Piece> chessBoard = chessGame.getBoard();
-            for (Position position : chessBoard.keySet()) {
-                chessBoardDao.save(position, chessBoard.get(position));
-            }
-            playerDao.deleteAll();
-            playerDao.save(Color.of(chessGame.getTurn()));
-
-            res.redirect("/play");
-            return null;
-        });
-
-        get("/play", (req, res) -> {
-            ChessBoardDao chessBoardDao = new ChessBoardDao();
-            PlayerDao playerDao = new PlayerDao();
-
-            Map<String, String> board = chessBoardDao.findAll();
-            if (board.isEmpty()) {
-                res.redirect("/start");
-                return null;
-            }
-
-            Map<String, Object> model = new HashMap<>();
-            for (String position : board.keySet()) {
-                String piece = board.get(position);
-                model.put(position, PieceFactory.of(position, piece));
-            }
-
-            Player player = playerDao.findAll();
-            model.put("turn", player.name());
-
-            //에러메시지 세션
-            if (req.session().attribute("ERROR_MESSAGE") != null) {
-                model.putAll(req.session().attribute("ERROR_MESSAGE"));
-                req.session().removeAttribute("ERROR_MESSAGE");
-            }
-
-            return render(model, "index.html");
-        });
-
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            if (req.session().attribute("WINNER_MESSAGE") != null) {
-                model.putAll(req.session().attribute("WINNER_MESSAGE"));
-                req.session().removeAttribute("WINNER_MESSAGE");
-            }
-            return render(model, "end.html");
-        });
-
-        post("/move", (req, res) -> {
-            ChessBoardDao chessBoardDao = new ChessBoardDao();
-            PlayerDao playerDao = new PlayerDao();
-
-            Map<String, String> board = chessBoardDao.findAll();
-            Map<Position, Piece> chessBoard = new HashMap<>();
-
-            for (String position : board.keySet()) {
-                Position currentPosition = Position.of(File.of(position.substring(0, 1).toUpperCase()),
-                        Rank.of(position.substring(1, 2)));
-
-                Piece currentPiece = PieceFactory.of(position, board.get(position));
-                chessBoard.put(currentPosition, currentPiece);
-            }
-            ChessGame chessGame = ChessGame.of(new RunningGame(ChessBoard.of(chessBoard), playerDao.findAll()));
-
-            final Request request = Request.of(req.body());
-            String command = request.command();
-
-            //command a2a4
-            String source = command.substring(0, 2);
-            String target = command.substring(2, 4);
-            chessGame.move(Position.of(source), Position.of(target));
-
-            //전부 지우고 다시 채운다.
-            chessBoardDao.deleteAll();
-            chessBoard = chessGame.getBoard();
-            for (Position position : chessBoard.keySet()) {
-                chessBoardDao.save(position, chessBoard.get(position));
-            }
-            playerDao.deleteAll();
-            playerDao.save(Color.of(chessGame.getTurn()));
-
-            res.redirect("/play");
-            return null;
-        });
-
-        exception(Exception.class, (exception, request, response) -> {
-            String errorMessage = exception.getMessage();
-            if (errorMessage.equals("이미 종료된 게임입니다.")) {
-                PlayerDao playerDao = new PlayerDao();
-                Map<String, Object> winner = new HashMap<>();
-                winner.put("hasWinner", true);
-                winner.put("winnerMessage", "게임이 종료되었습니다. 새 게임을 시작해주세요!!!");
-                request.session().attribute("WINNER_MESSAGE", winner);
-
-                response.redirect("/end");
-                return;
-            }
-
-            Map<String, Object> error = new HashMap<>();
-            error.put("hasError", true);
-            error.put("errorMessage", errorMessage);
-            request.session().attribute("ERROR_MESSAGE", error);
-
-            response.redirect("/play");
-        });
+        post("/move", (req, res) -> render(chessController.move(req, res)));
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static String render(ModelAndView modelAndView) {
+        return new HandlebarsTemplateEngine().render(modelAndView);
     }
 }
