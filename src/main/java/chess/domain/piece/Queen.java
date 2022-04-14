@@ -14,4 +14,9 @@ public class Queen extends Piece {
     public boolean isMovable(final Position source, final Position target) {
         return source.isDiagonal(target) || source.isCross(target);
     }
+
+    @Override
+    public String representative() {
+        return "Queen";
+    }
 }

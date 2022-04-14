@@ -3,7 +3,9 @@ package chess.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -23,7 +25,7 @@ public class ChessController {
     }
 
     static void start(final ChessGame chessGame, final String optionInput) {
-        chessGame.start();
+        chessGame.start(BoardFactory.getInitialPieces(), Color.WHITE);
         OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 
@@ -49,4 +51,3 @@ public class ChessController {
         OutputView.printScore(chessGame.calculateScore());
     }
 }
-

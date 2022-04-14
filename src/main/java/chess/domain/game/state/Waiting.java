@@ -12,6 +12,7 @@ public class Waiting implements GameState {
     private static final String UNSUPPORTED_CALCULATING = "[ERROR] 대기중이라 점수를 계산할 수 없습니다";
     private static final String UNSUPPORTED_GET_WINNER = "[ERROR] 대기중이라 우승팀을 구할 수 없습니다";
     private static final String UNSUPPORTED_GET_BOARD = "[ERROR] 대기중이라 보드를 가져올 수 없습니다";
+    private static final String UNSUPPORTED_GET_TURN = "[ERROR] 대기중이라 턴을 불러올 수 없습니다.";
 
     @Override
     public GameState movePiece(Position source, Position target) {
@@ -39,7 +40,17 @@ public class Waiting implements GameState {
     }
 
     @Override
+    public Color getTurn() {
+        throw new UnsupportedOperationException(UNSUPPORTED_GET_TURN);
+    }
+
+    @Override
     public Board board() {
         throw new UnsupportedOperationException(UNSUPPORTED_GET_BOARD);
+    }
+
+    @Override
+    public String representative() {
+        return "Waiting";
     }
 }

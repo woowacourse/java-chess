@@ -80,4 +80,8 @@ public class Position {
     public File getFile() {
         return file;
     }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

@@ -30,7 +30,7 @@ public class Board {
         return findPiece(position).getColor();
     }
 
-    private Piece findPiece(final Position position) {
+    public Piece findPiece(final Position position) {
         if (!value.containsKey(position)) {
             throw new IllegalStateException(NOT_EXIST_PIECE);
         }

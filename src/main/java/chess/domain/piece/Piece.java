@@ -45,4 +45,10 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public String getColorName() {
+        return color.name();
+    }
+
+    public abstract String representative();
 }

@@ -14,4 +14,9 @@ public class Rook extends Piece {
     public boolean isMovable(final Position source, final Position target) {
         return source.isCross(target);
     }
+
+    @Override
+    public String representative() {
+        return "Rook";
+    }
 }

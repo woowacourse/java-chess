@@ -18,14 +18,14 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-class ScoreCalculatorTest {
+class ScoreTest {
 
     @ParameterizedTest
     @DisplayName("보드의 상황에 따라 점수를 잘 계산하는지 확인한다")
     @EnumSource(value = Color.class, names = {"BLACK", "WHITE"})
     void calculateScore(Color color) {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(BoardFactory.getInitialPieces());
-        Map<Color, Double> score = scoreCalculator.calculateAllTeamScore();
+        Score scoreCalculator = new Score(BoardFactory.getInitialPieces());
+        Map<Color, Double> score = scoreCalculator.getAllTeamScore();
 
         assertThat(score.get(color)).isEqualTo(38);
     }
@@ -37,8 +37,8 @@ class ScoreCalculatorTest {
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new Pawn(Color.WHITE));
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new Pawn(Color.WHITE));
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(initialPieces);
-        Map<Color, Double> score = scoreCalculator.calculateAllTeamScore();
+        Score scoreCalculator = new Score(initialPieces);
+        Map<Color, Double> score = scoreCalculator.getAllTeamScore();
 
         assertThat(score.get(Color.WHITE)).isEqualTo(1);
     }
@@ -54,8 +54,8 @@ class ScoreCalculatorTest {
         initialPieces.put(Position.valueOf(File.B, Rank.FOUR), new Pawn(Color.WHITE));
         initialPieces.put(Position.valueOf(File.C, Rank.TWO), new Pawn(Color.WHITE));
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(initialPieces);
-        Map<Color, Double> score = scoreCalculator.calculateAllTeamScore();
+        Score scoreCalculator = new Score(initialPieces);
+        Map<Color, Double> score = scoreCalculator.getAllTeamScore();
 
         assertThat(score.get(Color.WHITE)).isEqualTo(3.5);
     }

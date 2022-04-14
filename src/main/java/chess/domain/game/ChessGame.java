@@ -3,12 +3,12 @@ package chess.domain.game;
 import java.util.Map;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.game.state.End;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Running;
 import chess.domain.game.state.Waiting;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class ChessGame {
@@ -19,9 +19,13 @@ public class ChessGame {
         state = new Waiting();
     }
 
-    public void start() {
-        final Board board = new Board(BoardFactory.getInitialPieces());
-        state = new Running(board, Color.WHITE);
+    public ChessGame(final GameState gameState) {
+        state = gameState;
+    }
+
+    public void start(final Map<Position, Piece> pieces, final Color color) {
+        final Board board = new Board(pieces);
+        state = new Running(board, color);
     }
 
     public void movePiece(final String source, final String target) {
@@ -52,7 +56,15 @@ public class ChessGame {
         return state.getWinTeamColor();
     }
 
+    public Color getTurn() {
+        return state.getTurn();
+    }
+
     public Board getBoard() {
         return state.board();
+    }
+
+    public String getState() {
+        return state.representative();
     }
 }

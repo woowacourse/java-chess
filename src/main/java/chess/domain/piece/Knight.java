@@ -22,4 +22,9 @@ public class Knight extends Piece {
     public boolean isKnight() {
         return true;
     }
+
+    @Override
+    public String representative() {
+        return "Knight";
+    }
 }

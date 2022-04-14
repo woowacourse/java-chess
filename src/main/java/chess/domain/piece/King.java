@@ -29,4 +29,9 @@ public class King extends Piece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public String representative() {
+        return "King";
+    }
 }
