@@ -5,7 +5,6 @@ import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.Color;
-import chess.web.controller.Request;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.PlayerDao;
 import java.util.Map;
@@ -28,10 +27,7 @@ public class ChessGameService {
         saveAll(chessGame);
     }
 
-    public void move(ChessGame chessGame, String body) {
-        Request request = Request.of(body);
-        String command = request.command();
-
+    public void move(ChessGame chessGame, String command) {
         String source = command.substring(0, 2);
         String target = command.substring(2, 4);
 
