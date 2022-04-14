@@ -134,7 +134,7 @@ public class ChessService {
     public ScoreDto status(int roomId) {
         Map<String, Double> statusDto = Color.getPlayerColors().stream()
                 .collect(Collectors.toMap(Enum::name, color -> calculateScore(roomId, color)));
-        return ScoreDto.of(statusDto);
+        return ScoreDto.from(statusDto);
     }
 
     public double calculateScore(int roomId, final Color color) {

@@ -66,7 +66,7 @@ public final class ConsoleBoard {
     }
 
     public ScoreResult calculateScore() {
-        return ScoreResult.of(board);
+        return ScoreResult.from(board);
     }
 
     public Status checkAliveTwoKings() {

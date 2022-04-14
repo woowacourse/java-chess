@@ -13,12 +13,12 @@ public class ScoreDto {
     private final String winner;
     private final Map<String, Double> score;
 
-    public ScoreDto(String winner, Map<String, Double> score) {
+    private ScoreDto(String winner, Map<String, Double> score) {
         this.winner = winner;
         this.score = score;
     }
 
-    public static ScoreDto of(Map<String, Double> status) {
+    public static ScoreDto from(Map<String, Double> status) {
         String winner = findWinnerName(status);
         return new ScoreDto(winner, status);
     }
@@ -51,13 +51,13 @@ public class ScoreDto {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{");
         for (String color : score.keySet()) {
-            sb.append("\"").append(color).append("\" : ").append(score.get(color)).append(",");
+            stringBuilder.append("\"").append(color).append("\" : ").append(score.get(color)).append(",");
         }
-        sb.append("\"").append("winner").append("\" : ").append("\"").append(winner).append("\"");
-        sb.append("}");
-        return sb.toString();
+        stringBuilder.append("\"").append("winner").append("\" : ").append("\"").append(winner).append("\"");
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }
