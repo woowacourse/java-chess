@@ -21,7 +21,7 @@ public abstract class Piece {
     public List<Position> move(Position source, Position target) {
         Direction direction = direction(source, target);
         List<Position> positions = new Navigation(source, target).route(direction);
-        return positions.subList(0, positions.indexOf(target));
+        return positions.subList(SUBLIST_START_INDEX, positions.indexOf(target));
     }
 
     protected Direction direction(Position source, Position target) {
