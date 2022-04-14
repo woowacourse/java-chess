@@ -20,14 +20,14 @@ public class PieceDaoTest {
     @Test
     void savePiece() {
         PieceDao pieceDao = new PieceDao();
-        PieceDto pieceDto = new PieceDto("first Game", "a2", "p", "WHITE");
+        PieceDto pieceDto = new PieceDto(1, "a2", "p", "WHITE");
         assertDoesNotThrow(() -> pieceDao.save(pieceDto));
     }
 
     @Test
     void findByGameName(){
         PieceDao pieceDao = new PieceDao();
-        List<PieceDto> pieces = pieceDao.findByGameName("mygame");
-        assertThat(pieces.size()).isEqualTo(64);
+        List<PieceDto> pieces = pieceDao.findByGameId(1);
+        assertThat(pieces.size()).isEqualTo(1);
     }
 }

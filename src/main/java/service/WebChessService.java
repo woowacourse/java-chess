@@ -74,19 +74,19 @@ public class WebChessService {
     public void save(String gameName) {
         String player = chessGame.getCurrentPlayer().name();
         ChessGameDto chessGameDto = new ChessGameDto(gameName, player);
-        chessGameDao.save(chessGameDto);
+        chessGameDto = chessGameDao.save(chessGameDto);
         for (Position position : chessGame.getChessBoard().getBoard().keySet()) {
             String positionSymbol = position.getPosition();
             Piece piece = chessGame.getChessBoard().findPiece(position);
             String piecePlayer = piece.getPlayer().name();
-            PieceDto pieceDto = new PieceDto(gameName, positionSymbol, piece.symbol(), piecePlayer);
+            PieceDto pieceDto = new PieceDto(chessGameDto.getId(), positionSymbol, piece.symbol(), piecePlayer);
             pieceDao.save(pieceDto);
         }
     }
 
     public ChessGame load(String gameName) {
         ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
-        List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
+        List<PieceDto> pieceDtoList = pieceDao.findByGameId(chessGameDto.getId());
         Map<Position, Piece> board = createBoard(pieceDtoList);
         ChessBoard chessBoard = new ChessBoard(board);
         return new ChessGame(chessBoard, Player.valueOf(chessGameDto.getPlayer()));
@@ -110,7 +110,8 @@ public class WebChessService {
     }
 
     public void delete(String gameName) {
-        pieceDao.delete(gameName);
+        ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
+        pieceDao.delete(chessGameDto.getId());
         chessGameDao.delete(gameName);
     }
 }

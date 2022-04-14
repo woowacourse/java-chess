@@ -34,7 +34,7 @@ public class ChessGameDao {
         }
     }
 
-    public void save(ChessGameDto chessGameDto) {
+    public ChessGameDto save(ChessGameDto chessGameDto) {
         final Connection connection = getConnection();
         final String sql = "insert into game (name, player) values (?, ?)";
         try {
@@ -42,6 +42,7 @@ public class ChessGameDao {
             statement.setString(1, chessGameDto.getName());
             statement.setString(2, chessGameDto.getPlayer());
             statement.executeUpdate();
+            return findByName(chessGameDto.getName());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -51,15 +52,16 @@ public class ChessGameDao {
 
     public ChessGameDto findByName(String name) {
         final Connection connection = getConnection();
-        final String sql = "select name, player from game where name = ?";
+        final String sql = "select id, name, player from game where name = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                int id = Integer.parseInt(resultSet.getString("id"));
                 String findName = resultSet.getString("name");
                 String player = resultSet.getString("player");
-                return new ChessGameDto(findName, player);
+                return new ChessGameDto(id, findName, player);
             }
             return null;
         } catch (SQLException e) {

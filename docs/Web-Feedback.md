@@ -11,8 +11,8 @@
     - [ ] `ChassGame`을 필드로 가지고 있는다면 여러 사용자가 동시에 게임을 할 경우에 문제가 발생할 수 있다.
         - 어떤 문제가 발생할 수 있을까?
         - 두개이상의 게임을 실행하게되면 하나의 ChessGame이 적용되어 동시 접근하게됨. 즉, 개별적으로 게임 불가.
-- [ ] `game` DB
-    - [ ] `name` -> `id` auto_increment 컬럼 추가하여 id로 구분
+- [x] `game` DB
+    - [x] `name` -> `id` auto_increment 컬럼 추가하여 id로 구분
 - [ ] 게임 방 기능 구현
 - [x] `Direction`
     - [x] 코드 추가를 통해 `MovableRangePiece`, `SpecificLocationPiece` 클래스 제거

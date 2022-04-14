@@ -2,20 +2,24 @@ package domain.dto;
 
 public class PieceDto {
 
-    private String gameName;
+    private int gameId;
     private String type;
     private String player;
     private String position;
 
-    public PieceDto(String gameName, String position, String type, String player) {
-        this.gameName = gameName;
+    public PieceDto(int gameId, String position, String type, String player) {
+        this.gameId = gameId;
         this.type = type;
         this.player = player;
         this.position = position;
     }
 
-    public String getGameName() {
-        return gameName;
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     public String getType() {

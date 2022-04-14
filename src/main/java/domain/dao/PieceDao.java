@@ -36,10 +36,10 @@ public class PieceDao {
 
     public void save(PieceDto pieceDto) {
         final Connection connection = getConnection();
-        final String sql = "insert into piece (game_name, position, type, player) values (?,?,?,?)";
+        final String sql = "insert into piece (game_id, position, type, player) values (?,?,?,?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, pieceDto.getGameName());
+            statement.setString(1, Integer.toString(pieceDto.getGameId()));
             statement.setString(2, pieceDto.getPosition());
             statement.setString(3, pieceDto.getType());
             statement.setString(4, pieceDto.getPlayer());
@@ -50,16 +50,16 @@ public class PieceDao {
         }
     }
 
-    public List<PieceDto> findByGameName(String game_name) {
+    public List<PieceDto> findByGameId(int gameId) {
         List<PieceDto> pieceDtos = new ArrayList<>();
         final Connection connection = getConnection();
-        final String sql = "select * from piece where game_name = ?";
+        final String sql = "select * from piece where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, game_name);
+            statement.setString(1, Integer.toString(gameId));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                pieceDtos.add(new PieceDto(resultSet.getString("game_name"),
+                pieceDtos.add(new PieceDto(Integer.parseInt(resultSet.getString("game_id")),
                     resultSet.getString("position"),
                     resultSet.getString("type"),
                     resultSet.getString("player")));
@@ -71,12 +71,12 @@ public class PieceDao {
         }
     }
 
-    public void delete(String gameName) {
+    public void delete(int gameId) {
         final Connection connection = getConnection();
-        final String sql = "delete from piece where game_name = ?";
+        final String sql = "delete from piece where game_id = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, gameName);
+            statement.setString(1, Integer.toString(gameId));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

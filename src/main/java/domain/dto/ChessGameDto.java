@@ -2,10 +2,17 @@ package domain.dto;
 
 public class ChessGameDto {
 
+    private int id;
     private String name;
     private String player;
 
     public ChessGameDto(String name, String player) {
+        this.name = name;
+        this.player = player;
+    }
+
+    public ChessGameDto(int id, String name, String player) {
+        this.id = id;
         this.name = name;
         this.player = player;
     }
@@ -24,5 +31,13 @@ public class ChessGameDto {
 
     public void setPlayer(String player) {
         this.player = player;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

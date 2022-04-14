@@ -9,10 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ChessGameDaoTest {
-    @BeforeEach
-    void beforeEach(){
 
-    }
     @Test
     void saveChessGame() {
         ChessGameDao chessGameDao = new ChessGameDao();
