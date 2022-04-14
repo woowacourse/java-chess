@@ -179,8 +179,9 @@ public class ChessBoardTest {
     @DisplayName("플레이어 별 점수 계산이 가능하며 초기 점수는 38점이다.")
     void calculateScoreByPlayer() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
+        Score score = new Score(chessBoard);
 
-        assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(38);
+        assertThat(score.white()).isEqualTo(38);
     }
 
     @Test
@@ -189,8 +190,9 @@ public class ChessBoardTest {
         board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
         board.put(Position.of(File.C, Rank.THREE), new Pawn(Player.WHITE));
         ChessBoard chessBoard = new ChessBoard(board);
+        Score score = new Score(chessBoard);
 
-        assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(1);
+        assertThat(score.white()).isEqualTo(1);
     }
 
     @Test

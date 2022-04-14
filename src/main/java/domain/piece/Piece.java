@@ -1,10 +1,9 @@
 package domain.piece;
 
+import domain.Navigation;
 import domain.Player;
 import domain.direction.Direction;
-import domain.position.File;
 import domain.position.Position;
-import domain.position.Rank;
 import java.util.List;
 
 public abstract class Piece {
@@ -20,27 +19,22 @@ public abstract class Piece {
     }
 
     public List<Position> move(Position source, Position target) {
-        List<Position> positions = getDirections().stream()
-            .map(direction -> calculateAvailablePosition(source, direction))
-            .filter(list -> list.contains(target))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
+        Direction direction = direction(source, target);
+        List<Position> positions = new Navigation(source, target).route(direction);
         return positions.subList(SUBLIST_START_INDEX, positions.indexOf(target));
     }
 
-    protected abstract List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction);
+    protected Direction direction(Position source, Position target) {
+        int file = target.getFile() - source.getFile();
+        int rank = target.getRank() - source.getRank();
+        Direction direction = Direction.calculateDirection(file, rank);
+        if (!getDirections().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 해당 기물이 이동할 수 없는 위치입니다.");
+        }
+        return direction;
+    }
 
     protected abstract List<Direction> getDirections();
-
-    protected Position createPositionByDirection(final Position source, final Direction direction) {
-        int rank = source.getRank() + direction.getRank();
-        int file = source.getFile() + direction.getFile();
-        if (File.isFileRange(file) && Rank.isRankRange(rank)) {
-            return Position.of(File.of(file), Rank.of(rank));
-        }
-        return null;
-    }
 
     public abstract double score(boolean isSeveralPawn);
 
@@ -66,6 +60,10 @@ public abstract class Piece {
 
     public boolean isSamePlayer(final Piece comparePiece) {
         return comparePiece.isSamePlayer(player);
+    }
+
+    public String symbol() {
+        return pieceSymbol.symbol();
     }
 
     public String symbolByPlayer() {

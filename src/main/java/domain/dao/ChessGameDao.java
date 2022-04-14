@@ -1,5 +1,6 @@
-package chess.dao;
+package domain.dao;
 
+import domain.dto.ChessGameDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDao {
+public class ChessGameDao {
 
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "user";
@@ -33,76 +34,66 @@ public class MemberDao {
         }
     }
 
-    public void save(final Member member) {
+    public ChessGameDto save(ChessGameDto chessGameDto) {
         final Connection connection = getConnection();
-        final String sql = "insert into member (id,name) values (?,?)";
+        final String sql = "insert into game (name, player) values (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, member.getId());
-            statement.setString(2, member.getName());
+            statement.setString(1, chessGameDto.getName());
+            statement.setString(2, chessGameDto.getPlayer());
             statement.executeUpdate();
+            return findByName(chessGameDto.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ChessGameDto findByName(String name) {
+        final Connection connection = getConnection();
+        final String sql = "select id, name, player from game where name = ?";
+        try {
+            final PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int id = Integer.parseInt(resultSet.getString("id"));
+                String findName = resultSet.getString("name");
+                String player = resultSet.getString("player");
+                return new ChessGameDto(id, findName, player);
+            }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public Member findById(String id) {
+    public List<String> findAllName() {
+        List<String> names = new ArrayList<>();
         final Connection connection = getConnection();
-        final String sql = "select id, name from member where id = ?";
+        final String sql = "select name from game";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
+            while (resultSet.next()) {
+                names.add(resultSet.getString("name"));
             }
-            return new Member(
-                resultSet.getString("id"),
-                resultSet.getString("name")
-            );
+            return names;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public List<Member> findAll() {
-        final List<Member> members = new ArrayList<>();
+    public void delete(String gameName) {
         final Connection connection = getConnection();
-        final String sql = "select id, name from member";
+        final String sql = "delete from game where name = ?";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            members.add(new Member(
-                resultSet.getString("id"),
-                resultSet.getString("name")
-            ));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return members;
-    }
-
-    public Member findWithRoleById(String id) {
-        final Connection connection = getConnection();
-        final String sql = "select member.id, name, role from member join role on member.id = role.id where member.id = ?";
-        try {
-            final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
-            return new Member(
-                resultSet.getString("id"),
-                resultSet.getString("name"),
-                new Role(resultSet.getString("role"))
-            );
+            statement.setString(1, gameName);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

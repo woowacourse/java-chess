@@ -76,6 +76,24 @@
 - [x] `KnightTest` - DisplayName 수정
 - [x] `PawnTest` - 첫 이동 시 두 칸이동에 대한 테스트 없음.
 
+## 3차 피드백
+
+- [x] `Piece`
+    - [x] `calculateAvailablePosition` 함수 리팩터링
+        - `move()`메서드가 해당 로직을 `Navigator`객체에게 위임.
+    - [x] `createPositionByDirection` 함수 리팩터링
+        - `Position` 객체에 메세지를 보내는 것은 어떨지.
+        - `Position` - `createNextPosition()` 함수로 역할 위임.
+- [x] `ChessBoard`
+    - [x] 체스보드 역할 비중이 크기 때문에 `Score`객체를 통해 분리하는 것은 어떨지.
+
+## 추가 작성 목록
+
+- `Navigator`의 `route()` 메서드에서 List<Position>을 반환받아 sublist를 통해 가공해야함.
+    - 이 반환 메서드 리팩터링 필요.
+    - `Pawn`은 target 위치까지 검증이 필요함(공격 : 상대편, 이동 : 빈칸)
+    - 이외의 `Piece`는 현재 위치는 같은 색깔만 아니면 됨.
+
 ## 참고 자료
 
 - [Null Object Pattern](https://johngrib.github.io/wiki/pattern/null-object/)

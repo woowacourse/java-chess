@@ -1,6 +1,7 @@
 package domain.chessgame;
 
 import domain.Player;
+import domain.Score;
 import domain.Status;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -15,6 +16,11 @@ public class ChessGame {
         this.currentPlayer = Player.WHITE;
     }
 
+    public ChessGame(final ChessBoard chessBoard, Player player) {
+        this.chessBoard = chessBoard;
+        this.currentPlayer = player;
+    }
+
     public void move(final Position source, final Position target) {
         validateTurn(source);
         chessBoard.move(source, target);
@@ -22,8 +28,9 @@ public class ChessGame {
     }
 
     public Status status() {
-        double whiteScore = chessBoard.calculateScoreByPlayer(Player.WHITE);
-        double blackScore = chessBoard.calculateScoreByPlayer(Player.BLACK);
+        Score score = new Score(chessBoard);
+        double whiteScore = score.white();
+        double blackScore = score.black();
         return new Status(whiteScore, blackScore);
     }
 
@@ -48,5 +55,9 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }
