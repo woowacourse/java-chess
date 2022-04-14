@@ -8,7 +8,10 @@ public enum StateType {
 
     READY("ready", chessBoard -> new Ready()),
     WHITE_TURN("whiteTurn", WhiteTurn::new),
-    BLACK_TURN("blackTurn", BlackTurn::new)
+    BLACK_TURN("blackTurn", BlackTurn::new),
+    WHITE_WIN("whiteWin", WhiteWin::new),
+    BLACK_WIN("blackWin", BlackWin::new),
+    END("end", End::new)
     ;
 
     private final String notation;
