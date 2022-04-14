@@ -121,7 +121,7 @@ public class WebChessGame {
             return backInitialPage(e.getMessage());
         }
         final Map<String, Object> model = new HashMap<>();
-        state = Start.initState("start");
+        state = Start.of();
         for (final String command : commands) {
             state = proceed(command, model);
         }
