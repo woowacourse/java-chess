@@ -3,8 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.Position;
+import chess.domain.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class RookTest {
     void setUp() {
         whiteRook = new Rook(Color.WHITE);
     }
-    
+
     @Test
     @DisplayName("Rook이 세로로 움직일 수 있는 경우 True를 반환한다")
     void isMovableColumnTest() {

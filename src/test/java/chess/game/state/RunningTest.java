@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.File;
-import chess.domain.Rank;
 import chess.domain.Position;
-import chess.domain.game.state.End;
+import chess.domain.Rank;
 import chess.domain.game.state.ChessGame;
+import chess.domain.game.state.End;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
 import chess.domain.piece.Color;
@@ -82,9 +82,30 @@ public class RunningTest {
 
     @Test
     @DisplayName("King이 잡히지 않은 상황에서, 승자를 판정하려고 하면 예외가 발생한다")
-    void judgeWinner() {
+    void judgeWinnerException() {
         assertThatThrownBy(() -> state.judgeWinner())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 킹이 잡혀야 게임의 승패가 결정됩니다.");
+    }
+
+    @Test
+    @DisplayName("king이 잡힌 경우에, 승자를 판정한다")
+    void judgeWinner() {
+        ChessGame newState = new Ready().initBoard()
+                .movePiece(Position.valueOf(File.D, Rank.TWO),
+                        Position.valueOf(File.D, Rank.FOUR))
+                .movePiece(Position.valueOf(File.E, Rank.SEVEN),
+                        Position.valueOf(File.E, Rank.FIVE))
+                .movePiece(Position.valueOf(File.D, Rank.ONE),
+                        Position.valueOf(File.D, Rank.THREE))
+                .movePiece(Position.valueOf(File.E, Rank.FIVE),
+                        Position.valueOf(File.D, Rank.FOUR))
+                .movePiece(Position.valueOf(File.D, Rank.THREE),
+                        Position.valueOf(File.E, Rank.THREE))
+                .movePiece(Position.valueOf(File.A, Rank.SEVEN),
+                        Position.valueOf(File.A, Rank.SIX))
+                .movePiece(Position.valueOf(File.E, Rank.THREE),
+                        Position.valueOf(File.E, Rank.EIGHT));
+        assertThat(newState.judgeWinner()).isEqualTo(Color.WHITE);
     }
 }

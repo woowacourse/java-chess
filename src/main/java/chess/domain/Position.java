@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Position {
@@ -43,6 +44,10 @@ public final class Position {
         return valueOf(makeKey(abscissa, ordinate));
     }
 
+    public static List<String> values() {
+        return List.copyOf(CACHE.keySet());
+    }
+
     public boolean isSameFile(Position position) {
         return file == position.file;
     }
@@ -74,5 +79,9 @@ public final class Position {
 
     public File getFile() {
         return file;
+    }
+
+    public String toString() {
+        return file.toString().toLowerCase() + rank.getValue();
     }
 }

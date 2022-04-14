@@ -39,4 +39,12 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public String getColorValue() {
+        return color.toString();
+    }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

@@ -37,4 +37,23 @@ public final class PieceMapper {
         }
         return letter.toUpperCase();
     }
+
+    public static Piece of(String pieceName, Color color) {
+        if (Pawn.class.getSimpleName().equals(pieceName)) {
+            return new Pawn(color);
+        }
+        if (Bishop.class.getSimpleName().equals(pieceName)) {
+            return new Bishop(color);
+        }
+        if (Knight.class.getSimpleName().equals(pieceName)) {
+            return new Knight(color);
+        }
+        if (King.class.getSimpleName().equals(pieceName)) {
+            return new King(color);
+        }
+        if (Queen.class.getSimpleName().equals(pieceName)) {
+            return new Queen(color);
+        }
+        return new Rook(color);
+    }
 }

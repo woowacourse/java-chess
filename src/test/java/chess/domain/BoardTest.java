@@ -29,8 +29,8 @@ public class BoardTest {
         Position fromPosition = Position.valueOf(File.A, Rank.THREE);
         Position toPosition = Position.valueOf(File.A, Rank.FOUR);
         assertThatThrownBy(() -> board.movePiece(fromPosition, toPosition))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 입력한 위치에 말이 존재하지 않습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 입력한 위치에 말이 존재하지 않습니다.");
     }
 
     @Test
@@ -62,8 +62,8 @@ public class BoardTest {
         Position toPosition = Position.valueOf(File.B, Rank.THREE);
 
         assertThatThrownBy(() -> board.movePiece(fromPosition, toPosition))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 해당 위치는 말이 움직일 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 위치는 말이 움직일 수 없습니다.");
     }
 
     @Test
@@ -89,9 +89,9 @@ public class BoardTest {
         Board board = new Board(testBoard);
 
         assertThatThrownBy(() -> board.movePiece(Position.valueOf(File.A, Rank.ONE),
-            Position.valueOf(File.B, Rank.THREE)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 잡을 수 없는 말 입니다.");
+                Position.valueOf(File.B, Rank.THREE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 잡을 수 없는 말 입니다.");
     }
 
     @Test
