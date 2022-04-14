@@ -2,21 +2,16 @@ package chess.web.dao;
 
 import chess.domain.state.StateType;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BoardStateDaoImpl implements BoardStateDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-
     private final Connection connection;
 
     public BoardStateDaoImpl() {
-        connection = getConnection();
+        connection = DbConnector.getConnection();
     }
 
     @Override
@@ -69,17 +64,7 @@ public class BoardStateDaoImpl implements BoardStateDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalArgumentException("해당 기물을 삭제할 수 없습니다.");
+            throw new IllegalArgumentException("해당 상태를 삭제할 수 없습니다.");
         }
-    }
-
-    private Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("DB에 연결할 수 없습니다.");
-        }
-        return connection;
     }
 }
