@@ -27,7 +27,7 @@ public class Position {
         if (File.isFileRange(file) && Rank.isRankRange(rank)) {
             return Position.of(File.of(file), Rank.of(rank));
         }
-        return null;
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 체스 판의 위치입니다.");
     }
 
     @Override

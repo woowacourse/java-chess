@@ -22,5 +22,5 @@
 - [ ] `Piece`
     - [ ] subList가 꼭 필요한가
     - [x] 미사용 상수 제거
-- [ ] `Position`
+- [x] `Position`
     - `null 반환`이 아닌 `예외` 적용
