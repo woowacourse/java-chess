@@ -41,7 +41,7 @@ function checkStatus() {
             document.getElementById("statusResult")
                 .innerHTML = "검은말 : " + data.BLACK + "<br >"
                 + "흰말 : " + data.WHITE + "<br >"
-                + data.winner;
+                + "우승자 : " + data.winner;
         });
     });
 }
