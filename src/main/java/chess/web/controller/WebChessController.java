@@ -1,134 +1,98 @@
 package chess.web.controller;
 
-import chess.domain.Board;
-import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.domain.generator.EmptyBoardGenerator;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import chess.domain.state.State;
-import chess.domain.state.StateType;
-import chess.web.dao.BoardStateDao;
-import chess.web.dao.PieceDao;
-import chess.web.dto.PieceDto;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 
-    private static final int BOARD_START_INDEX = 0;
-    private static final int BOARD_END_INDEX = 7;
+    private final WebChessService webChessService;
 
-    private final BoardStateDao boardStateDao;
-    private final PieceDao pieceDao;
-    private ChessGame chessGame;
-
-    public WebChessController(ChessGame chessGame, BoardStateDao boardStateDao, PieceDao pieceDao) {
-        this.chessGame = chessGame;
-        this.boardStateDao = boardStateDao;
-        this.pieceDao = pieceDao;
+    public WebChessController() {
+        this.webChessService = new WebChessService();
     }
 
-    public Map<String, Object> indexModel() {
-        List<PieceDto> pieceDtos = pieceDao.selectAll();
-        Board board = getBoardFromDtos(pieceDtos);
-        State state = boardStateDao.selectState().newState(new ChessBoard(board));
-        chessGame = new ChessGame(state);
+    public String indexModel(Response res) {
+        checkRunning(res);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("pieces", pieceDtos);
-        model.put("black-score", chessGame.score(Color.BLACK));
-        model.put("white-score", chessGame.score(Color.WHITE));
-        return model;
+        model.put("pieces", webChessService.getPieces());
+        model.put("black-score", webChessService.getScore(Color.BLACK));
+        model.put("white-score", webChessService.getScore(Color.WHITE));
+
+        return render(model, "index.html");
     }
 
-    private Board getBoardFromDtos(List<PieceDto> pieceDtos) {
-        Board board = new Board(new EmptyBoardGenerator().generate().getBoard());
-        for (PieceDto pieceDto : pieceDtos) {
-            board.place(new Position(pieceDto.getPosition()),
-                    PieceType.from(pieceDto.getPieceType()).newPiece(Color.from(pieceDto.getColor())));
+    private void checkRunning(Response res) {
+        if (webChessService.isNotRunning()) {
+            res.redirect("/start");
         }
-        return board;
     }
 
-    public void movePiece(Request req, Response res) {
+    public String movePiece(Request req, Response res) {
+        ChessGame chessGame = webChessService.getChessGame();
         chessGame.move(req.queryParams("source"), req.queryParams("target"));
-        if (chessGame.isFinished()) {
-            res.redirect("/winner");
-        }
 
         Position source = new Position(req.queryParams("source"));
         Position target = new Position(req.queryParams("target"));
-        updateChessGame(source, target);
+        webChessService.updateChessGame(chessGame, source, target);
+
+        checkFinished(res, chessGame);
+
+        res.redirect("/");
+        return null;
     }
 
-    private void updateChessGame(Position source, Position target) {
-        boardStateDao.update(chessGame.getStateType());
-        pieceDao.update(new PieceDto(chessGame.board().findPiece(target), target));
-        pieceDao.update(new PieceDto(chessGame.board().findPiece(source), source));
-    }
-
-    public void startChess() {
-        chessGame.start();
-
-        Board board = chessGame.board();
-        initChessBoard(board);
-
-        boardStateDao.save(chessGame.getStateType());
-    }
-
-    private void initChessBoard(Board board) {
-        for (int rankIndex = BOARD_START_INDEX; rankIndex <= BOARD_END_INDEX; rankIndex++) {
-            initOneRank(board, rankIndex);
+    private void checkFinished(Response res, ChessGame chessGame) {
+        if (chessGame.isFinished()) {
+            webChessService.updateState(chessGame);
+            res.redirect("/winner");
         }
     }
 
-    private void initOneRank(Board board, int rankIndex) {
-        for (int fileIndex = BOARD_START_INDEX; fileIndex <= BOARD_END_INDEX; fileIndex++) {
-            Position position = new Position(fileIndex, rankIndex);
-            Piece piece = board.findPiece(position);
-            pieceDao.save(new PieceDto(piece, position));
-        }
+    public String startChess(Response res) {
+        webChessService.startChessGame();
+
+        res.redirect("/");
+        return null;
     }
 
-    public Map<String, Object> getWinnerModel() {
-        endChessGame();
-        deleteChessGame();
+    public String getWinnerModel() {
+        ChessGame chessGame = webChessService.getChessGame();
+        checkFinished(chessGame);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("black-score", chessGame.score(Color.WHITE));
-        model.put("white-score", chessGame.score(Color.BLACK));
+        model.put("black-score", webChessService.getScore(Color.WHITE));
+        model.put("white-score", webChessService.getScore(Color.BLACK));
         model.put("winner", chessGame.result().toString());
-        return model;
+
+        webChessService.endChessGame();
+        return render(model, "winner.html");
     }
 
-    private void endChessGame() {
-        if (!chessGame.isFinished()) {
+    private void checkFinished(ChessGame chessGame) {
+        if(!chessGame.isFinished()) {
             chessGame.end();
         }
     }
 
-    private void deleteChessGame() {
-        boardStateDao.deleteAll();
-        pieceDao.deleteAll();
-    }
-
-    public Map<String, Object> getExceptionModel(Exception exception) {
+    public String getExceptionModel(Exception exception) {
         Map<String, Object> model = new HashMap<>();
         model.put("error-message", exception.getMessage());
-        model.put("pieces", pieceDao.selectAll());
-        model.put("black-score", chessGame.score(Color.WHITE));
-        model.put("white-score", chessGame.score(Color.BLACK));
-        return model;
+        model.put("pieces", webChessService.getPieces());
+        model.put("black-score", webChessService.getScore(Color.WHITE));
+        model.put("white-score", webChessService.getScore(Color.BLACK));
+
+        return render(model, "index.html");
     }
 
-    public boolean isNotRunning() {
-        return !chessGame.isRunning()
-                && (boardStateDao.selectState() != StateType.BLACK_TURN && boardStateDao.selectState() != StateType.WHITE_TURN);
+    private String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
