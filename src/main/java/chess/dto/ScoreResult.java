@@ -13,10 +13,6 @@ public class ScoreResult {
 
     private static final int PAWN_SAME_LINE_COUNT = 2;
     private static final double PAWN_SAME_LINE_POINT = 0.5;
-    private static final String CANNOT_FOUND_WINNER_ERROR_MESSAGE = "우승자를 찾을 수 없습니다.";
-    private static final String DRAW_MESSAGE = "무승부";
-    private static final String WHITE_WIN = "WHITE 승";
-    private static final String BLACK_WIN = "BLACK 승";
 
     private final Map<Color, Double> scoreResult;
 
@@ -31,30 +27,8 @@ public class ScoreResult {
         return new ScoreResult(scoreResult);
     }
 
-    public String findWinnerName() {
-        final double subtractedScore = Color.getPlayerColors().stream()
-                .mapToDouble(scoreResult::get)
-                .reduce((x, y) -> x - y)
-                .orElseThrow(() -> new IllegalArgumentException(CANNOT_FOUND_WINNER_ERROR_MESSAGE));
-        return findWinner(subtractedScore);
-    }
-
-    public Set<Color> keySet() {
-        return scoreResult.keySet();
-    }
-
     public Double get(Color color) {
         return scoreResult.get(color);
-    }
-
-    private String findWinner(final Double subtractedScore) {
-        if (subtractedScore.equals(0.0)) {
-            return DRAW_MESSAGE;
-        }
-        if (subtractedScore < 0) {
-            return BLACK_WIN;
-        }
-        return WHITE_WIN;
     }
 
     private static double pawnScore(Map<Square, Piece> whitePawns) {
