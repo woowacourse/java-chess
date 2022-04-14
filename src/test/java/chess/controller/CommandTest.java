@@ -1,8 +1,9 @@
-package chess.vo;
+package chess.controller;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -69,5 +70,38 @@ class CommandTest {
     @DisplayName("isStatus 메서드 검증")
     void isStatus(Command command, boolean expected) {
         assertThat(command.isStatus()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("MOVE일 때 getSource 검증")
+    void getSource() {
+        //given
+        String input = "move a2 a4";
+        Command command = Command.MoveStatusEnd(input);
+
+        //then
+        Assertions.assertThat(command.getSource(input)).isEqualTo("a2");
+    }
+
+    @Test
+    @DisplayName("MOVE일 때 getTarget 검증")
+    void getTarget() {
+        //given
+        String input = "move a2 a4";
+        Command command = Command.MoveStatusEnd(input);
+
+        //then
+        Assertions.assertThat(command.getTarget(input)).isEqualTo("a4");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"START", "STATUS", "END"})
+    @DisplayName("MOVE가 아닐 때 getSource를 호출하면 예외를 던진다.")
+    void getPositions_exception(Command command) {
+        String input = "move a2 a4";
+
+        Assertions.assertThatThrownBy(() -> command.getSource(input))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage(Command.ERROR_NOT_ALLOWED);
     }
 }

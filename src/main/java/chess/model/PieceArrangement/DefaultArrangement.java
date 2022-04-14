@@ -1,4 +1,4 @@
-package chess.model.boardinitializer;
+package chess.model.PieceArrangement;
 
 import static chess.model.PieceColor.*;
 import static chess.model.Rank.*;
@@ -21,7 +21,7 @@ import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 
-public class defaultInitializer implements BoardInitializer {
+public class DefaultArrangement implements PieceArrangement {
 
     public static final Rank PAWN_WHITE_INIT_RANK = TWO;
     public static final Rank PAWN_BLACK_INIT_RANK = SEVEN;
@@ -52,7 +52,7 @@ public class defaultInitializer implements BoardInitializer {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(Position.of(rank, file), Pawn.colorOf(color));
+            result.put(Position.of(file, rank), Pawn.colorOf(color));
         }
     }
 
@@ -60,7 +60,7 @@ public class defaultInitializer implements BoardInitializer {
         ListIterator<Piece> piecesIterator = INIT_PIECE_FUNCTION.apply(color).listIterator();
 
         for (File file : File.values()) {
-            result.put(Position.of(rank, file), piecesIterator.next());
+            result.put(Position.of(file, rank), piecesIterator.next());
         }
     }
 }

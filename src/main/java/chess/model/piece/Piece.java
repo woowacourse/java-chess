@@ -25,6 +25,10 @@ public abstract class Piece {
 
     abstract String getConcreteEmblem();
 
+    public boolean isFriendly(Piece other) {
+        return other.isSameColor(pieceColor);
+    }
+
     public boolean isSameColor(PieceColor PieceColor) {
         return this.pieceColor == PieceColor;
     }

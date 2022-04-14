@@ -1,45 +1,38 @@
 package chess.dto;
 
-import java.util.Objects;
-
-import chess.model.Position;
-import chess.vo.Command;
+import chess.controller.Command;
 
 public class Request {
 
-    private static final String ERROR_NOT_MOVE_ILLEGAL = "[ERROR] MOVE 커맨드가 아니면 사용할 수 없습니다.";
-
     private final Command command;
-    private final Position source;
-    private final Position target;
+    private final String input;
 
-    public Request(Command command, Position source, Position target) {
+    private Request(String input, Command command) {
         this.command = command;
-        this.source = source;
-        this.target = target;
+        this.input = input;
     }
 
-    public Request(Command command) {
-        this.command = command;
-        this.source = null;
-        this.target = null;
+    public static Request toStart(String input) {
+        return new Request(input, Command.startEnd(input));
     }
 
-    public Command getCommand() {
-        return command;
+    public static Request toPlay(String input) {
+        return new Request(input, Command.MoveStatusEnd(input));
     }
 
-    public Position getSource() {
-        if (Objects.isNull(source)) {
-            throw new IllegalStateException(ERROR_NOT_MOVE_ILLEGAL);
-        }
-        return source;
+    public boolean isEnd() {
+        return command.isEnd();
     }
 
-    public Position getTarget() {
-        if (Objects.isNull(target)) {
-            throw new IllegalStateException(ERROR_NOT_MOVE_ILLEGAL);
-        }
-        return target;
+    public boolean isStatus() {
+        return command.isStatus();
+    }
+
+    public String getSource() {
+        return command.getSource(input);
+    }
+
+    public String getTarget() {
+        return command.getTarget(input);
     }
 }

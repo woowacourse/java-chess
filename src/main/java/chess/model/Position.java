@@ -1,9 +1,7 @@
 package chess.model;
 
-import static java.lang.String.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,32 +10,34 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-    private static final int INDEX_FILE = 0;
-    private static final int INDEX_RANK = 1;
-    private static final Map<Rank, Map<File, Position>> CACHE = new HashMap<>();
+    static final String ERROR_INVALID_POSITION_INPUT = "[ERROR]: 올바르지 않은 위치 입력입니다.";
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
     static {
-        for (Rank rank : Rank.values()) {
-            CACHE.put(rank, Arrays.stream(File.values())
-                .collect(toUnmodifiableMap(file -> file, file -> new Position(rank, file))));
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                CACHE.put(file.getValue() + rank.getValue(), new Position(file, rank));
+            }
         }
     }
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    private Position(Rank rank, File file) {
-        this.rank = rank;
+    private Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(Rank rank, File file) {
-        return CACHE.get(rank).get(file);
+    public static Position of(File file, Rank rank) {
+        return CACHE.get(file.getValue() + rank.getValue());
     }
 
-    public static Position of(String rankFile) {
-        return CACHE.get(Rank.of(valueOf(rankFile.charAt(INDEX_RANK))))
-            .get(File.of(valueOf(rankFile.charAt(INDEX_FILE))));
+    public static Position of(String fileRank) {
+        if (!CACHE.containsKey(fileRank)) {
+            throw new IllegalArgumentException(ERROR_INVALID_POSITION_INPUT);
+        }
+        return CACHE.get(fileRank);
     }
 
     public boolean isRankOf(Rank otherRank) {
@@ -83,19 +83,19 @@ public class Position {
 
     private List<Position> straightVerticalFiles(List<File> files) {
         return files.stream()
-            .map(file -> Position.of(this.rank, file))
+            .map(file -> Position.of(file, this.rank))
             .collect(Collectors.toList());
     }
 
     private List<Position> straightHorizontalRanks(List<Rank> ranks) {
         return ranks.stream()
-            .map(rank -> Position.of(rank, this.file))
+            .map(rank -> Position.of(this.file, rank))
             .collect(Collectors.toList());
     }
 
     private List<Position> positionsBetweenTwoFiles(List<File> files, Rank rank) {
         return files.stream()
-            .map(file -> Position.of(rank, file))
+            .map(file -> Position.of(file, rank))
             .collect(toList());
     }
 

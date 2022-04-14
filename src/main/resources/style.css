@@ -1,0 +1,146 @@
+h1 {
+    text-align: center;
+}
+
+form {
+    display: inline;
+}
+
+button, input {
+    border-style: solid;
+    border-width: 0px 0px 3px;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-style: normal;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all 200ms ease-in-out 0s;
+    white-space: nowrap;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    padding: 10px 30px 10px;
+    font-size: 18px;
+}
+
+button {
+    border-color: #333;
+    background-color: #444;
+}
+
+button:hover, button:focus, button:active {
+    background-color: #666;
+    border-color: #555;
+}
+
+input {
+    color: #000000;
+}
+
+div.center {
+    text-align: center;
+}
+
+div.left {
+    width: 55%;
+    float: left;
+}
+
+div.right {
+    width: 45%;
+    float: right;
+}
+
+div.status {
+    margin-top: 30px;
+    font-size: 18px;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+label, p.winner {
+    font-size: 18px;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+img.piece {
+    width: 50px;
+    height: 70px;
+}
+
+div.file1 {
+    left: 25px;
+}
+
+div.file2 {
+    left: 125px;
+}
+
+div.file3 {
+    left: 225px;
+}
+
+div.file4 {
+    left: 325px;
+}
+
+div.file5 {
+    left: 425px;
+}
+
+div.file6 {
+    left: 525px;
+}
+
+div.file7 {
+    left: 625px;
+}
+
+div.file8 {
+    left: 725px;
+}
+
+div.rank8 {
+    position: absolute;
+    top: 25px;
+}
+
+div.rank7 {
+    position: absolute;
+    top: 125px;
+}
+
+div.rank6 {
+    position: absolute;
+    top: 225px;
+}
+
+div.rank5 {
+    position: absolute;
+    top: 325px;
+}
+
+div.rank4 {
+    position: absolute;
+    top: 425px;
+}
+
+div.rank3 {
+    position: absolute;
+    top: 525px;
+}
+
+div.rank2 {
+    position: absolute;
+    top: 625px;
+}
+
+div.rank1 {
+    position: absolute;
+    top: 725px;
+}

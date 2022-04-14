@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="/style.css">
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<h1>WEB CHESS GAME!</h1>
+<div class="center">
+    <form action="/game" method="post">
+        <p><label>백색 말 사용자 아이디 입력 : <input type="text" name="idPlayerWhite"></label></p>
+        <p><label>흑색 말 사용자 아이디 입력 : <input type="text" name="idPlayerBlack"></label></p>
+        <input type="submit" value="시작 하기">
+    </form>
+
+    <form action="/end" method="get">
+        <button>종료</button>
+    </form>
+    <br><br>
+    <img src="/images/chessBoardIndexPage.png" alt="ChessBoard" width="800" height="800">
+</div>
 </body>
+
 </html>

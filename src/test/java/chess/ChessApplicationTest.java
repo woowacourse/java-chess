@@ -14,12 +14,12 @@ class ChessApplicationTest extends NsTest {
     private static final String NEXT_LINE = System.lineSeparator();
 
     @Test
-    @DisplayName("입력 명령어가 예외일 경우")
+    @DisplayName("입력 명령어가 status일 경우 예외를 던진다.")
     void command_exception() {
         assertSimpleTest(() ->
             assertThatThrownBy(() -> runException("status"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 이 명령문은 존재하지 않습니다."));
+                .hasMessageContaining("[ERROR] 이 명령어는 존재하지 않습니다."));
     }
 
     @Test
@@ -61,7 +61,7 @@ class ChessApplicationTest extends NsTest {
         assertSimpleTest(() ->
             assertThatThrownBy(() -> runException("start", "start"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 이 명령문은 존재하지 않습니다."));
+                .hasMessageContaining("[ERROR] 이 명령어는 존재하지 않습니다."));
     }
 
     @Test
@@ -105,7 +105,7 @@ class ChessApplicationTest extends NsTest {
         assertSimpleTest(() ->
             assertThatThrownBy(() -> runException("start", "move a0 a4"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 이 명령문은 존재하지 않습니다."));
+                .hasMessageContaining("[ERROR] 이 명령어는 존재하지 않습니다."));
     }
 
     @Test

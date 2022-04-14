@@ -1,48 +1,49 @@
 package chess.controller;
 
-import static chess.vo.Command.*;
+import static chess.view.InputView.*;
+import static chess.view.OutputView.*;
 
 import chess.dto.Request;
-import chess.model.Board;
-import chess.model.TurnDecider;
-import chess.model.boardinitializer.defaultInitializer;
-import chess.view.InputView;
+import chess.model.ChessGame;
+import chess.model.PieceArrangement.DefaultArrangement;
+import chess.model.Position;
+import chess.model.Turn;
 import chess.view.OutputView;
 
 public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        Board board = new Board(new TurnDecider(), new defaultInitializer());
+        ChessGame game = new ChessGame(new Turn(), new DefaultArrangement());
+        Request request = Request.toStart(inputCommand());
 
-        if (InputView.inputCommandInStart() == END) {
+        if (request.isEnd()) {
             return;
         }
 
-        OutputView.printChessGameBoard(board.getValues());
-        playChess(board);
+        printChessGameBoard(game.getBoardValue());
+        playChess(game);
     }
 
-    private void playChess(Board board) {
-        while (!board.isFinished()) {
-            Request request = InputView.inputCommandInGaming();
-
-            if (request.getCommand().isEnd()) {
+    private void playChess(ChessGame game) {
+        while (!game.isFinished()) {
+            Request request = Request.toPlay(inputCommand());
+            if (request.isEnd()) {
                 break;
             }
 
-            doMoveOrStatus(board, request);
+            doMoveOrStatus(game, request);
         }
-        OutputView.printScore(board.calculateScore());
+        OutputView.printScore(game.getScore());
     }
 
-    private void doMoveOrStatus(Board board, Request request) {
-        if (request.getCommand().isStatus()) {
-            OutputView.printScore(board.calculateScore());
+    private void doMoveOrStatus(ChessGame game, Request request) {
+        if (request.isStatus()) {
+            OutputView.printScore(game.getScore());
             return;
         }
 
-        board.move(request.getSource(), request.getTarget());
-        OutputView.printChessGameBoard(board.getValues());
+        game.move(Position.of(request.getSource()), Position.of(request.getTarget()));
+        printChessGameBoard(game.getBoardValue());
     }
 }

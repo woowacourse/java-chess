@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/style.css">
+    <title>체스</title>
+</head>
+<body>
+<h1>WEB CHESS GAME!</h1>
+
+<div class="right">
+    <form action="/save" method="post">
+        <button>저장</button>
+    </form>
+
+    <form action="/end" method="get">
+        <button>종료</button>
+    </form>
+
+    <form action="/init" method="post">
+        <button>판 초기화</button>
+    </form>
+
+    <form action="/move" method="post">
+        <p><label>Source : &nbsp;&nbsp;<input type="text" name="source"></label></p>
+        <p><label>Target : <input type="text" name="target"></label></p>
+        <input type="submit" value="이동">
+    </form>
+
+    <form action="/status" method="get">
+        <button>현재 점수</button>
+    </form>
+
+    <div class="status">
+        현재 점수: {{score}}<br>
+        현재 차례: {{color}}<br>
+        {{error}}
+    </div>
+</div>
+
+<div class="left">
+    {{#pieces}}
+    <div style="position: relative;">
+        <img src="/images/ChessBoardWithIndex.png" alt="ChessBoard" width="890" height="890">
+        <div class="rank8 file1"><img src="/images/{{this.a8}}.png" alt="{{this.a8}}" class="piece"></div>
+        <div class="rank8 file2"><img src="/images/{{this.b8}}.png" alt="{{this.b8}}" class="piece"></div>
+        <div class="rank8 file3"><img src="/images/{{this.c8}}.png" alt="{{this.c8}}" class="piece"></div>
+        <div class="rank8 file4"><img src="/images/{{this.d8}}.png" alt="{{this.d8}}" class="piece"></div>
+        <div class="rank8 file5"><img src="/images/{{this.e8}}.png" alt="{{this.e8}}" class="piece"></div>
+        <div class="rank8 file6"><img src="/images/{{this.f8}}.png" alt="{{this.f8}}" class="piece"></div>
+        <div class="rank8 file7"><img src="/images/{{this.g8}}.png" alt="{{this.g8}}" class="piece"></div>
+        <div class="rank8 file8"><img src="/images/{{this.h8}}.png" alt="{{this.h8}}" class="piece"></div>
+
+        <div class="rank7 file1"><img src="/images/{{this.a7}}.png" alt="{{this.a7}}" class="piece"></div>
+        <div class="rank7 file2"><img src="/images/{{this.b7}}.png" alt="{{this.b7}}" class="piece"></div>
+        <div class="rank7 file3"><img src="/images/{{this.c7}}.png" alt="{{this.c7}}" class="piece"></div>
+        <div class="rank7 file4"><img src="/images/{{this.d7}}.png" alt="{{this.d7}}" class="piece"></div>
+        <div class="rank7 file5"><img src="/images/{{this.e7}}.png" alt="{{this.e7}}" class="piece"></div>
+        <div class="rank7 file6"><img src="/images/{{this.f7}}.png" alt="{{this.f7}}" class="piece"></div>
+        <div class="rank7 file7"><img src="/images/{{this.g7}}.png" alt="{{this.g7}}" class="piece"></div>
+        <div class="rank7 file8"><img src="/images/{{this.h7}}.png" alt="{{this.h7}}" class="piece"></div>
+
+        <div class="rank6 file1"><img src="/images/{{this.a6}}.png" alt="{{this.a6}}" class="piece"></div>
+        <div class="rank6 file2"><img src="/images/{{this.b6}}.png" alt="{{this.b6}}" class="piece"></div>
+        <div class="rank6 file3"><img src="/images/{{this.c6}}.png" alt="{{this.c6}}" class="piece"></div>
+        <div class="rank6 file4"><img src="/images/{{this.d6}}.png" alt="{{this.d6}}" class="piece"></div>
+        <div class="rank6 file5"><img src="/images/{{this.e6}}.png" alt="{{this.e6}}" class="piece"></div>
+        <div class="rank6 file6"><img src="/images/{{this.f6}}.png" alt="{{this.f6}}" class="piece"></div>
+        <div class="rank6 file7"><img src="/images/{{this.g6}}.png" alt="{{this.g6}}" class="piece"></div>
+        <div class="rank6 file8"><img src="/images/{{this.h6}}.png" alt="{{this.h6}}" class="piece"></div>
+
+        <div class="rank5 file1"><img src="/images/{{this.a5}}.png" alt="{{this.a5}}" class="piece"></div>
+        <div class="rank5 file2"><img src="/images/{{this.b5}}.png" alt="{{this.b5}}" class="piece"></div>
+        <div class="rank5 file3"><img src="/images/{{this.c5}}.png" alt="{{this.c5}}" class="piece"></div>
+        <div class="rank5 file4"><img src="/images/{{this.d5}}.png" alt="{{this.d5}}" class="piece"></div>
+        <div class="rank5 file5"><img src="/images/{{this.e5}}.png" alt="{{this.e5}}" class="piece"></div>
+        <div class="rank5 file6"><img src="/images/{{this.f5}}.png" alt="{{this.f5}}" class="piece"></div>
+        <div class="rank5 file7"><img src="/images/{{this.g5}}.png" alt="{{this.g5}}" class="piece"></div>
+        <div class="rank5 file8"><img src="/images/{{this.h5}}.png" alt="{{this.h5}}" class="piece"></div>
+
+        <div class="rank4 file1"><img src="/images/{{this.a4}}.png" alt="{{this.a4}}" class="piece"></div>
+        <div class="rank4 file2"><img src="/images/{{this.b4}}.png" alt="{{this.b4}}" class="piece"></div>
+        <div class="rank4 file3"><img src="/images/{{this.c4}}.png" alt="{{this.c4}}" class="piece"></div>
+        <div class="rank4 file4"><img src="/images/{{this.d4}}.png" alt="{{this.d4}}" class="piece"></div>
+        <div class="rank4 file5"><img src="/images/{{this.e4}}.png" alt="{{this.e4}}" class="piece"></div>
+        <div class="rank4 file6"><img src="/images/{{this.f4}}.png" alt="{{this.f4}}" class="piece"></div>
+        <div class="rank4 file7"><img src="/images/{{this.g4}}.png" alt="{{this.g4}}" class="piece"></div>
+        <div class="rank4 file8"><img src="/images/{{this.h4}}.png" alt="{{this.h4}}" class="piece"></div>
+
+        <div class="rank3 file1"><img src="/images/{{this.a3}}.png" alt="{{this.a3}}" class="piece"></div>
+        <div class="rank3 file2"><img src="/images/{{this.b3}}.png" alt="{{this.b3}}" class="piece"></div>
+        <div class="rank3 file3"><img src="/images/{{this.c3}}.png" alt="{{this.c3}}" class="piece"></div>
+        <div class="rank3 file4"><img src="/images/{{this.d3}}.png" alt="{{this.d3}}" class="piece"></div>
+        <div class="rank3 file5"><img src="/images/{{this.e3}}.png" alt="{{this.e3}}" class="piece"></div>
+        <div class="rank3 file6"><img src="/images/{{this.f3}}.png" alt="{{this.f3}}" class="piece"></div>
+        <div class="rank3 file7"><img src="/images/{{this.g3}}.png" alt="{{this.g3}}" class="piece"></div>
+        <div class="rank3 file8"><img src="/images/{{this.h3}}.png" alt="{{this.h3}}" class="piece"></div>
+
+        <div class="rank2 file1"><img src="/images/{{this.a2}}.png" alt="{{this.a2}}" class="piece"></div>
+        <div class="rank2 file2"><img src="/images/{{this.b2}}.png" alt="{{this.b2}}" class="piece"></div>
+        <div class="rank2 file3"><img src="/images/{{this.c2}}.png" alt="{{this.c2}}" class="piece"></div>
+        <div class="rank2 file4"><img src="/images/{{this.d2}}.png" alt="{{this.d2}}" class="piece"></div>
+        <div class="rank2 file5"><img src="/images/{{this.e2}}.png" alt="{{this.e2}}" class="piece"></div>
+        <div class="rank2 file6"><img src="/images/{{this.f2}}.png" alt="{{this.f2}}" class="piece"></div>
+        <div class="rank2 file7"><img src="/images/{{this.g2}}.png" alt="{{this.g2}}" class="piece"></div>
+        <div class="rank2 file8"><img src="/images/{{this.h2}}.png" alt="{{this.h2}}" class="piece"></div>
+
+        <div class="rank1 file1"><img src="/images/{{this.a1}}.png" alt="{{this.a1}}" class="piece"></div>
+        <div class="rank1 file2"><img src="/images/{{this.b1}}.png" alt="{{this.b1}}" class="piece"></div>
+        <div class="rank1 file3"><img src="/images/{{this.c1}}.png" alt="{{this.c1}}" class="piece"></div>
+        <div class="rank1 file4"><img src="/images/{{this.d1}}.png" alt="{{this.d1}}" class="piece"></div>
+        <div class="rank1 file5"><img src="/images/{{this.e1}}.png" alt="{{this.e1}}" class="piece"></div>
+        <div class="rank1 file6"><img src="/images/{{this.f1}}.png" alt="{{this.f1}}" class="piece"></div>
+        <div class="rank1 file7"><img src="/images/{{this.g1}}.png" alt="{{this.g1}}" class="piece"></div>
+        <div class="rank1 file8"><img src="/images/{{this.h1}}.png" alt="{{this.h1}}" class="piece"></div>
+    </div>
+    {{/pieces}}
+</div>
+
+</body>
+
+
+</html>
