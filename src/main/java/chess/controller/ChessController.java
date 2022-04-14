@@ -29,7 +29,7 @@ public class ChessController {
     }
 
     public ScoreDto score(int roomId) {
-        return chessService.status(roomId);
+        return ScoreDto.from(chessService.status(roomId));
     }
 
     public RoomsDto getRooms() {

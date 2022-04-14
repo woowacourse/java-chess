@@ -131,10 +131,9 @@ public class ChessService {
         return chessBoardDao.isEnd(room.getBoardId());
     }
 
-    public ScoreDto status(int roomId) {
-        Map<String, Double> statusDto = Color.getPlayerColors().stream()
+    public Map<String, Double> status(int roomId) {
+         return Color.getPlayerColors().stream()
                 .collect(Collectors.toMap(Enum::name, color -> calculateScore(roomId, color)));
-        return ScoreDto.from(statusDto);
     }
 
     public double calculateScore(int roomId, final Color color) {
