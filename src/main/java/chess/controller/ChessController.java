@@ -1,11 +1,12 @@
 package chess.controller;
 
-import chess.view.Command;
 import chess.domain.ChessGame;
-import chess.domain.piece.Color;
+import chess.domain.position.Positions;
 import chess.view.OutputView;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import static chess.view.Command.*;
 import static chess.view.InputView.inputCommand;
@@ -13,7 +14,7 @@ import static chess.view.OutputView.printStartMessage;
 
 public class ChessController {
 
-    private static final String ERROR_WRONG_COMMAND = "잘못된 명령어 입력입니다.";
+    private static final String EXCEPTION_WRONG_COMMAND = "잘못된 명령어 입력입니다.";
 
     public void run() {
         printStartMessage();
@@ -22,15 +23,15 @@ public class ChessController {
             String input = inputCommand();
             executeCommand(chessGame, input);
         }
-        OutputView.printFinalScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+        OutputView.printResult(chessGame.createScore(new HashMap<>()));
     }
 
     private void executeCommand(ChessGame chessGame, String input) {
         if (!isExistCommand(input)) {
-            throw new IllegalArgumentException(ERROR_WRONG_COMMAND);
+            throw new IllegalArgumentException(EXCEPTION_WRONG_COMMAND);
         }
         if (STATUS.isValue(input)) {
-            OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            OutputView.printResult(chessGame.createScore(new HashMap<>()));
             return;
         }
         playTurn(chessGame, input);
@@ -41,12 +42,18 @@ public class ChessController {
             chessGame.start();
         }
         if (MOVE.isValue(input)) {
-            chessGame.move(Command.toMoveSourceFormat(input), Command.toMoveTargetFormat(input));
+            executeMove(chessGame, input);
         }
         if (END.isValue(input)) {
             chessGame.end();
         }
         OutputView.printBoard(chessGame.getChessBoard());
+    }
+
+    private void executeMove(ChessGame chessGame, String input) {
+        StringTokenizer tokenizer = new StringTokenizer(input);
+        tokenizer.nextToken();
+        chessGame.move(Positions.findPosition(tokenizer.nextToken()), Positions.findPosition(tokenizer.nextToken()));
     }
 
     private boolean isExistCommand(String input) {

@@ -17,7 +17,7 @@ class KingTest {
     void checkKingPosition(int a, int b) {
         King king = new King(Color.BLACK);
 
-        assertThat(king.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(king.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -27,7 +27,7 @@ class KingTest {
     void checkPositionWhenFalse(int a, int b) {
         King king = new King(Color.BLACK);
 
-        assertThat(king.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(king.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 

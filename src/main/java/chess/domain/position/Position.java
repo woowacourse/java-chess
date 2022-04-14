@@ -14,13 +14,17 @@ public class Position {
     private final int row;
     private final int column;
 
-    public Position(int row, int column) {
+    private Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
     public static Position of(String rank, String file) {
         return new Position(Rank.findRow(rank), File.findColumn(file));
+    }
+
+    public static Position of(int row, int column) {
+        return new Position(row, column);
     }
 
     public boolean isFirstPosition(Color color) {
@@ -42,7 +46,8 @@ public class Position {
     }
 
     public boolean isOverRange() {
-        return row < MINIMUM_INDEX || column < MINIMUM_INDEX || row > MAXIMUM_INDEX || column > MAXIMUM_INDEX;
+        return row < MINIMUM_INDEX || column < MINIMUM_INDEX
+                || row > MAXIMUM_INDEX || column > MAXIMUM_INDEX;
     }
 
     public int gapTwoPositionRow(Position position) {
@@ -72,5 +77,18 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return File.findFile(column) + Rank.findRank(row);
+    }
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
     }
 }

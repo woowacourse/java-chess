@@ -17,7 +17,7 @@ class KnightTest {
     void checkPositionWhenTrue(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
 
-        assertThat(knight.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(knight.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -27,7 +27,7 @@ class KnightTest {
     void checkPositionWhenFalse(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
 
-        assertThat(knight.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(knight.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 

@@ -13,7 +13,7 @@ class TurnTest {
     void checkWhiteTurn() {
         Turn turn = new Turn();
 
-        assertThat(turn.isRightTurn(Color.WHITE)).isTrue();
+        assertThat(turn.isRightTurn(Color.WHITE.name())).isTrue();
     }
 
     @Test
@@ -22,6 +22,6 @@ class TurnTest {
         Turn turn = new Turn();
         turn.nextTurn();
 
-        assertThat(turn.isRightTurn(Color.BLACK)).isTrue();
+        assertThat(turn.isRightTurn(Color.BLACK.name())).isTrue();
     }
 }

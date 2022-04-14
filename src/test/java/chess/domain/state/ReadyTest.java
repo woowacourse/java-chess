@@ -30,7 +30,7 @@ class ReadyTest {
         @DisplayName("Ready 상태에서 move를 하는 경우")
     void checkMoveException() {
         assertThatThrownBy(() -> new Ready()
-                .move(new Position(0, 0), new Position(0, 1)))
+                .move(Position.of(0, 0), Position.of(0, 1)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -49,5 +49,21 @@ class ReadyTest {
 
         assertThatThrownBy(() -> ready.computeScore(Color.WHITE))
                 .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("현재 턴을 String으로 확인")
+    void checkTurnString() {
+        Ready ready = new Ready();
+
+        assertThat(ready.turn()).isEqualTo("blank");
+    }
+
+    @Test
+    @DisplayName("running 중인지 확인")
+    void isRunning() {
+        Ready ready = new Ready();
+
+        assertThat(ready.isRunning()).isFalse();
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.Score;
 import chess.domain.Turn;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 public class Ready implements State {
 
+    private static final String EXCEPTION_MOVE_IMPOSSIBLE = "Ready 상태에서 움직일 수 없습니다.";
+    private static final String EXCEPTION_COMPUTE_SCORE_IMPOSSIBLE = "Ready 상태에서 점수를 계산할 수 없습니다.";
+
     private final Map<Position, Piece> chessboard;
     private final Turn turn;
 
@@ -21,12 +25,12 @@ public class Ready implements State {
 
     @Override
     public State start() {
-        return new Play(turn);
+        return Play.from(turn);
     }
 
     @Override
     public State move(Position source, Position target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EXCEPTION_MOVE_IMPOSSIBLE);
     }
 
     @Override
@@ -40,8 +44,33 @@ public class Ready implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
-        throw new UnsupportedOperationException();
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isRightTurn(String turn) {
+        return false;
+    }
+
+    @Override
+    public Score computeScore(Color color) {
+        throw new UnsupportedOperationException(EXCEPTION_COMPUTE_SCORE_IMPOSSIBLE);
+    }
+
+    @Override
+    public void loadTurn() {
+        throw new UnsupportedOperationException(EXCEPTION_TURN_LOAD);
+    }
+
+    @Override
+    public State loadBoard(Map<String, Piece> pieces) {
+        return new Ready();
+    }
+
+    @Override
+    public String turn() {
+        return INIT_TURN;
     }
 
     @Override

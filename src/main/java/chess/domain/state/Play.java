@@ -1,34 +1,39 @@
 package chess.domain.state;
 
+import chess.domain.Score;
 import chess.domain.Turn;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
+import java.util.Map;
+
 public class Play implements State {
+
+    private static final String EXCEPTION_START_IMPOSSIBLE = "Play 상태에서 start할 수 없습니다.";
 
     private final Chessboard chessboard;
     private final Turn turn;
 
-    public Play(Turn turn) {
-        this.turn = turn;
-        this.chessboard = Chessboard.create();
-    }
-
-    public Play(Turn turn, Chessboard chessboard) {
+    private Play(Turn turn, Chessboard chessboard) {
         this.turn = turn;
         this.chessboard = chessboard;
     }
 
+    public static Play from(Turn turn) {
+        return new Play(turn, Chessboard.create());
+    }
+
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EXCEPTION_START_IMPOSSIBLE);
     }
 
     @Override
     public State move(Position source, Position target) {
         chessboard.movePiece(source, target, turn);
-        if (chessboard.isKing(target)) {
+        if (chessboard.isKingNotAlive()) {
             return new Finish(chessboard);
         }
         turn.nextTurn();
@@ -46,8 +51,33 @@ public class Play implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
+    public boolean isRightTurn(String team) {
+        return turn.isRightTurn(team);
+    }
+
+    @Override
+    public void loadTurn() {
+        turn.nextTurn();
+    }
+
+    @Override
+    public Play loadBoard(Map<String, Piece> pieces) {
+        return new Play(turn, Chessboard.load(pieces));
+    }
+
+    @Override
+    public Score computeScore(Color color) {
         return chessboard.computeScore(color);
+    }
+
+    @Override
+    public String turn() {
+        return turn.getColor();
     }
 
     @Override

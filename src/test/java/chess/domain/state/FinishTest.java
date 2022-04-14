@@ -25,21 +25,22 @@ class FinishTest {
     void checkScore() {
         Finish finish = new Finish(new Chessboard(BoardCache.create()));
 
-        assertThat(finish.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(finish.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 
     @Test
     @DisplayName("Finish 상태에서 start를 하는 경우")
     void checkStartException() {
-        assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create())).start())
-                .isInstanceOf(UnsupportedOperationException.class);
+        Finish finish = new Finish(new Chessboard(BoardCache.create()));
+
+        assertThat(finish.start()).isInstanceOf(Play.class);
     }
 
     @Test
     @DisplayName("Finish 상태에서 move를 하는 경우")
     void checkMoveException() {
         assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create()))
-                .move(new Position(0, 0), new Position(0, 1)))
+                .move(Position.of(0, 0), Position.of(0, 1)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -48,5 +49,21 @@ class FinishTest {
     void checkFinishException() {
         assertThatThrownBy(() -> new Finish(new Chessboard(BoardCache.create())).end())
                 .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("현재 턴을 String으로 확인")
+    void checkTurnString() {
+        Finish finish = new Finish(Chessboard.create());
+
+        assertThat(finish.turn()).isEqualTo("blank");
+    }
+
+    @Test
+    @DisplayName("running 중인지 확인")
+    void isRunning() {
+        Finish finish = new Finish(Chessboard.create());
+
+        assertThat(finish.isRunning()).isFalse();
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 import java.util.LinkedHashMap;
@@ -9,10 +10,10 @@ import java.util.Map;
 public class BoardCache {
 
     private static final Map<Position, Piece> CACHE = new LinkedHashMap<>();
-    private static final int BLACK_PIECE = 0;
-    private static final int BLACK_PAWN = 1;
-    private static final int WHITE_PIECE = 6;
-    private static final int WHITE_PAWN = 7;
+    private static final String BLACK_PIECE = "8";
+    private static final String BLACK_PAWN = "7";
+    private static final String WHITE_PIECE = "2";
+    private static final String WHITE_PAWN = "1";
 
     static {
         initializePiece(BLACK_PIECE, Color.BLACK);
@@ -21,24 +22,27 @@ public class BoardCache {
         initializePiece(WHITE_PAWN, Color.WHITE);
     }
 
+    private BoardCache() {
+    }
+
     public static Map<Position, Piece> create() {
         return new LinkedHashMap<>(CACHE);
     }
 
-    private static void initializePiece(int row, Color color) {
-        CACHE.put(new Position(row, 0), new Rook(color));
-        CACHE.put(new Position(row, 1), new Knight(color));
-        CACHE.put(new Position(row, 2), new Bishop(color));
-        CACHE.put(new Position(row, 3), new Queen(color));
-        CACHE.put(new Position(row, 4), new King(color));
-        CACHE.put(new Position(row, 5), new Bishop(color));
-        CACHE.put(new Position(row, 6), new Knight(color));
-        CACHE.put(new Position(row, 7), new Rook(color));
+    private static void initializePiece(String row, Color color) {
+        CACHE.put(Position.of(row, "a"), new Rook(color));
+        CACHE.put(Position.of(row, "b"), new Knight(color));
+        CACHE.put(Position.of(row, "c"), new Bishop(color));
+        CACHE.put(Position.of(row, "d"), new Queen(color));
+        CACHE.put(Position.of(row, "e"), new King(color));
+        CACHE.put(Position.of(row, "f"), new Bishop(color));
+        CACHE.put(Position.of(row, "g"), new Knight(color));
+        CACHE.put(Position.of(row, "h"), new Rook(color));
     }
 
-    private static void initializePiecePawn(int row, Color color) {
-        for (int index = 0; index < Chessboard.SIZE.size(); index++) {
-            CACHE.put(new Position(row, index), new Pawn(color));
+    private static void initializePiecePawn(String row, Color color) {
+        for (File file : File.values()) {
+            CACHE.put(Position.of(row, file.file()), new Pawn(color));
         }
     }
 }

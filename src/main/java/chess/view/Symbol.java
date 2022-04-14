@@ -11,7 +11,7 @@ public enum Symbol {
     QUEEN(piece -> piece.isSameType(Queen.class), "q"),
     ROOK(piece -> piece.isSameType(Rook.class), "r"),
     BISHOP(piece -> piece.isSameType(Bishop.class), "b"),
-    KNIGHT(piece -> piece.isSameType(Knight.class), "k"),
+    KNIGHT(piece -> piece.isSameType(Knight.class), "n"),
     PAWN(piece -> piece.isSameType(Pawn.class),"p");
 
     private static final String NOT_EXIST_PIECE = "존재하지 않는 기물입니다.";
@@ -31,7 +31,10 @@ public enum Symbol {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PIECE));
     }
 
-    public String symbol() {
+    public String symbol(Piece piece) {
+        if (piece.isColor(Color.BLACK)) {
+            return this.symbol.toUpperCase();
+        }
         return this.symbol;
     }
 }

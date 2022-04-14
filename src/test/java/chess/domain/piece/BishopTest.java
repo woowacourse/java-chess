@@ -17,7 +17,7 @@ public class BishopTest {
     void checkPositionWhenTrue(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
 
-        assertThat(bishop.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(bishop.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -27,7 +27,7 @@ public class BishopTest {
     void checkPositionWhenFalse(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
 
-        assertThat(bishop.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(bishop.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
 

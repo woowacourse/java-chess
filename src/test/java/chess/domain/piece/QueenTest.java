@@ -17,7 +17,7 @@ public class QueenTest {
     void checkQueenPositionDiagonal(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
 
-        assertThat(queen.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+        assertThat(queen.isMovablePosition(Position.of(4, 4), Position.of(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
 
@@ -27,8 +27,8 @@ public class QueenTest {
     void checkQueenPositionUpDownLeftRight(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
 
-        assertThat(queen.isMovablePosition(new Position(4, 4),
-                new Position(4 + a, 4 + b), Chessboard.create().getBoard())).isTrue();
+        assertThat(queen.isMovablePosition(Position.of(4, 4),
+                Position.of(4 + a, 4 + b), Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -37,8 +37,8 @@ public class QueenTest {
     void checkBishopPositionWhenFalse(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
 
-        assertThat(queen.isMovablePosition(new Position(4, 4),
-                new Position(4 + a, 4 + b), Chessboard.create().getBoard())).isFalse();
+        assertThat(queen.isMovablePosition(Position.of(4, 4),
+                Position.of(4 + a, 4 + b), Chessboard.create().getBoard())).isFalse();
     }
 
     @Test

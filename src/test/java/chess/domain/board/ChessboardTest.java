@@ -17,8 +17,8 @@ public class ChessboardTest {
     void checkSamePosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(0, 0),
-                new Position(0, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(Position.of(0, 0),
+                Position.of(0, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("현재 위치와 같은 위치로 이동할 수 없습니다.");
     }
@@ -28,8 +28,8 @@ public class ChessboardTest {
     void checkBlankTarget() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(2, 0),
-                new Position(3, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(Position.of(2, 0),
+                Position.of(3, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동하려는 위치에 기물이 없습니다.");
     }
@@ -40,8 +40,8 @@ public class ChessboardTest {
         Chessboard chessboard = Chessboard.create();
         Turn turn = new Turn();
 
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0),
-                new Position(1, 1), turn))
+        assertThatThrownBy(() -> chessboard.movePiece(Position.of(1, 0),
+                Position.of(1, 1), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("같은편의 기물을 공격할 수 없습니다.");
     }
@@ -51,16 +51,8 @@ public class ChessboardTest {
     void checkMovablePosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.isMovablePosition(new Position(6, 0),
-                new Position(5, 0))).isTrue();
-    }
-
-    @Test
-    @DisplayName("기물이 king인지 확인")
-    void isKing() {
-        Chessboard chessboard = Chessboard.create();
-
-        assertThat(chessboard.isKing(new Position(7, 4))).isTrue();
+        assertThat(chessboard.isMovablePosition(Position.of(6, 0),
+                Position.of(5, 0))).isTrue();
     }
 
     @Test
@@ -84,7 +76,7 @@ public class ChessboardTest {
     void checkScoreSum() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.computeScore(Color.WHITE)).isEqualTo(38);
+        assertThat(chessboard.computeScore(Color.WHITE).getScore()).isEqualTo(38);
     }
 
     @Test
@@ -92,6 +84,6 @@ public class ChessboardTest {
     void checkGetPosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.getPiece(0, 0).getClass()).isEqualTo(Rook.class);
+        assertThat(chessboard.findPiece(0, 0).getClass()).isEqualTo(Rook.class);
     }
 }
