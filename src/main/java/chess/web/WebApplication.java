@@ -2,13 +2,13 @@ package chess.web;
 
 import static spark.Spark.staticFileLocation;
 
-import chess.web.controller.WebChessController;
+import chess.web.controller.ChessController;
 
 public class WebApplication {
     public static void main(String[] args) {
         staticFileLocation("/static");
 
-        WebChessController webChessController = new WebChessController();
+        ChessController webChessController = new ChessController();
         webChessController.run();
     }
 }

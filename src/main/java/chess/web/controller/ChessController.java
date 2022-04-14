@@ -6,6 +6,7 @@ import static spark.Spark.get;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.position.Position;
+import chess.web.service.ChessService;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -13,17 +14,17 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebChessController {
+public class ChessController {
 
     public static final String INDEX_PATH = "/";
     public static final String MOVE_PATH = "/move";
     public static final String START_PATH = "/start";
     public static final String RESULT_PATH = "/result";
 
-    private final WebChessService webChessService;
+    private final ChessService webChessService;
 
-    public WebChessController() {
-        this.webChessService = new WebChessService();
+    public ChessController() {
+        this.webChessService = new ChessService();
     }
 
     public void run() {

@@ -1,4 +1,4 @@
-package chess.web.controller;
+package chess.web.service;
 
 import chess.domain.Board;
 import chess.domain.ChessBoard;
@@ -17,7 +17,7 @@ import chess.web.dao.PieceDaoImpl;
 import chess.web.dto.PieceDto;
 import java.util.List;
 
-public class WebChessService {
+public class ChessService {
 
     private static final int BOARD_START_INDEX = 0;
     private static final int BOARD_END_INDEX = 7;
@@ -25,7 +25,7 @@ public class WebChessService {
     private final BoardStateDao boardStateDao;
     private final PieceDao pieceDao;
 
-    public WebChessService() {
+    public ChessService() {
         this.boardStateDao = new BoardStateDaoImpl();
         this.pieceDao = new PieceDaoImpl();
     }
