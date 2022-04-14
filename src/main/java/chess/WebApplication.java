@@ -46,7 +46,8 @@ public class WebApplication {
         });
 
         get("/play/:gameName", (req, res) -> {
-            Map<String, Object> model = webChessController.modelBoard();
+//            Map<String, Object> model = webChessController.modelBoard();
+            Map<String, Object> model = webChessController.status();
             model.put("gameName", req.params(":gameName"));
             return render(model, "chess.html");
         });
@@ -66,7 +67,6 @@ public class WebApplication {
 
         get("/status", (req, res) -> {
             Map<String, Object> model = webChessController.status();
-            model.put("state", "status");
             return render(model, "chess.html");
         });
 

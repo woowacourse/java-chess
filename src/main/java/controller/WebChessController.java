@@ -32,8 +32,9 @@ public class WebChessController {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessGame = new ChessGame(chessBoard);
     }
+
     public void start2(String gameName) {
-        if(chessGameDao.findByName(gameName) != null){
+        if (chessGameDao.findByName(gameName) != null) {
             chessGame = new ChessGame(load2(gameName));
             return;
         }
@@ -55,9 +56,14 @@ public class WebChessController {
     public Map<String, Object> status() {
         Map<String, Object> model = modelBoard();
         Status status = chessGame.status();
-        model.put("winner", status.winner());
+        Player player = status.winner();
         model.put("whiteScore", status.getWhiteScore());
         model.put("blackScore", status.getBlackScore());
+        if (player == null) {
+            model.put("winner", "무승부");
+            return model;
+        }
+        model.put("winner", status.winner() + " 승리");
         return model;
     }
 
