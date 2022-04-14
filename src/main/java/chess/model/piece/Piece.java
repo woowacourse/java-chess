@@ -77,4 +77,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(team);
     }
+
+    public Team getTeam() {
+        return this.team;
+    }
 }

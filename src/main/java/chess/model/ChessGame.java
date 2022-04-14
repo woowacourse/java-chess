@@ -31,7 +31,7 @@ public class ChessGame {
         return GameResult.from(board);
     }
 
-    private void move(Position source, Position target, Turn thisTurn) {
+    public void move(Position source, Position target, Turn thisTurn) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         validateCurrentTurn(thisTurn, sourcePiece);
@@ -64,4 +64,3 @@ public class ChessGame {
         return board;
     }
 }
-

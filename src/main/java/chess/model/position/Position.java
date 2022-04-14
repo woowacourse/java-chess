@@ -46,23 +46,24 @@ public class Position implements Comparable<Position> {
         return file.absMinus(other.file);
     }
 
-    public boolean isLastFile() {
-        return file.equals(File.H);
-    }
-
-    public boolean isTwoStepAway(Position position) {
-        return rank.absMinus(position.rank) == 2;
-    }
-
-    public Position getUpVerticalPosition(int distance) {
-        return new Position(file, rank.getNext(distance));
-    }
-
     public Position getNext(Direction direction) {
         File nextFile = file.getNext(direction.getFileGap());
         Rank nextRank = rank.getNext(direction.getRankGap());
 
         return Position.of(nextFile, nextRank);
+    }
+
+    public boolean isInitPawn(Direction direction) {
+        return (direction == Direction.N && rank == Rank.TWO)
+                || (direction == Direction.S && rank == Rank.SEVEN);
+    }
+
+    public boolean isLastFile() {
+        return file.equals(File.H);
+    }
+
+    public String getPosition() {
+        return file.getValue() + rank.getValue();
     }
 
     public int getFileGapDividedByGcd(Position other) {
@@ -129,16 +130,19 @@ public class Position implements Comparable<Position> {
         return Objects.hash(rank, file);
     }
 
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
+    }
+
     public Rank getRank() {
         return rank;
     }
 
     public File getFile() {
         return file;
-    }
-
-    public boolean isInitPawn(Direction direction) {
-        return (direction == Direction.N && rank == Rank.TWO)
-                || (direction == Direction.S && rank == Rank.SEVEN);
     }
 }

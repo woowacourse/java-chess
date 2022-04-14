@@ -1,0 +1,67 @@
+.white-box {
+    width: 80px;
+    height: 80px;
+    background-color: antiquewhite;
+}
+
+.black-box {
+    width: 80px;
+    height: 80px;
+    background-color: dimgrey;
+}
+
+td[class*='click'] {
+    background-color: maroon;
+}
+
+.button {
+    width: 360px;
+    height: 80px;
+    background-color: antiquewhite;
+    color: dimgrey;
+    border-color: dimgrey;
+    font-weight: bold;
+    font-size: 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+#game-info-section {
+    display: block;
+    height: 100%;
+    margin: auto;
+}
+
+#turn-box {
+    width: 360px;
+    height: 300px;
+    background-color: antiquewhite;
+    text-align: center;
+    border-color: dimgrey;
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+#piece-image {
+    width: 75px;
+    height: 75px;
+}
+
+#quit {
+    display: block;
+    vertical-align: center;
+    width: 100px;
+    height: 50px;
+    background-color: antiquewhite;
+    border-color: dimgrey;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top: 50px;
+}
+
+#page {
+    display: flex;
+}
+
