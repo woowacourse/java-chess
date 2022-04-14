@@ -23,7 +23,6 @@ public class ChessService {
 
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
-    private Board board;
 
     public ChessService() {
         this.pieceDao = new PieceDao();
@@ -31,15 +30,15 @@ public class ChessService {
     }
 
     public WebBoardDto start() {
-        board = initBoard();
+        Board board = initBoard();
         initTurn();
 
         return WebBoardDto.from(board);
     }
 
     public WebBoardDto move(MoveDto moveDto) {
-        Piece sourcePiece = board.get(Position.from(moveDto.getSource()));
-        Piece targetPiece = board.get(Position.from(moveDto.getTarget()));
+        Piece sourcePiece = PieceFactory.create(pieceDao.findByPosition(moveDto.getSource()));
+        Piece targetPiece = PieceFactory.create(pieceDao.findByPosition(moveDto.getTarget()));
         Turn turn = Turn.from(turnDao.findOne());
         validateCurrentTurn(turn, sourcePiece);
         try {
@@ -47,7 +46,7 @@ public class ChessService {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        board = toBoard(pieceDao.findAll());
+        Board board = toBoard(pieceDao.findAll());
         if (board.isKingDead()) {
             turnDao.update(turn.finish());
         }
@@ -70,10 +69,12 @@ public class ChessService {
     }
 
     public boolean isKingDead() {
+        Board board = toBoard(pieceDao.findAll());
         return board.isKingDead();
     }
 
     public GameResult getResult() {
+        Board board = toBoard(pieceDao.findAll());
         return GameResult.from(board);
     }
 
@@ -125,6 +126,7 @@ public class ChessService {
     }
 
     private boolean hasBlock(Position source, Position target, Piece sourcePiece) {
+        Board board = toBoard(pieceDao.findAll());
         List<Position> positions = sourcePiece.getIntervalPosition(source, target);
         return positions.stream()
                 .anyMatch(position -> !board.get(position).equals(new Empty()));
