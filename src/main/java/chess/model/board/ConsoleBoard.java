@@ -26,6 +26,7 @@ public final class ConsoleBoard {
 
     private static final int LINE_RANGE = 8;
     private static final int KING_COUNT = 2;
+
     private final Map<Square, Piece> board;
     private Status status;
 

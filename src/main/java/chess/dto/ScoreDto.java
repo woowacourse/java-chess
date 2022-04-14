@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class ScoreDto {
 
-    private final String winner;
-    private final Map<String, Double> score;
-
     private static final String CANNOT_FOUND_WINNER_ERROR_MESSAGE = "우승자를 찾을 수 없습니다.";
     private static final String DRAW_MESSAGE = "무승부";
     private static final String WHITE_WIN = "WHITE 승";
     private static final String BLACK_WIN = "BLACK 승";
+
+    private final String winner;
+    private final Map<String, Double> score;
 
     public ScoreDto(String winner, Map<String, Double> score) {
         this.winner = winner;
