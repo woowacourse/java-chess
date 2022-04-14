@@ -68,7 +68,7 @@ public class WebChessGame {
     private String gameStart(final CommandDao commandDao) {
         final Map<String, Object> model = new HashMap<>();
         try {
-            commandDao.init();
+            commandDao.deleteAll();
         } catch (final RuntimeException e) {
             return backInitialPage(e.getMessage());
         }

@@ -23,9 +23,9 @@ class CommandDaoTest {
     }
 
     @Test
-    void init() {
+    void deleteAll() {
         final CommandDao commandDao = new CommandDao();
-        commandDao.init();
+        commandDao.deleteAll();
         final List<String> commands = commandDao.findAll();
         assertThat(commands).isEmpty();
     }
@@ -33,7 +33,7 @@ class CommandDaoTest {
     @Test
     void findAll() {
         final CommandDao commandDao = new CommandDao();
-        commandDao.init();
+        commandDao.deleteAll();
         commandDao.save("start");
         final List<String> commands = commandDao.findAll();
         assertThat(commands).isNotEmpty();

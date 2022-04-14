@@ -60,7 +60,7 @@ public class CommandDao {
         return commands;
     }
 
-    public void init() {
+    public void deleteAll() {
         final String sql = "delete from command";
         try (final Connection connection = getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql);
