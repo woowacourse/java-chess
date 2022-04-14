@@ -73,7 +73,7 @@ public class WebChessGame {
         } catch (final RuntimeException e) {
             return backInitialPage(e.getMessage());
         }
-        state = Start.initState("start");
+        state = Start.of();
         model.put("squares", showChessBoard(state.getBoard()));
         model.put("player", "White");
         model.put("message", "게임을 시작합니다.");
