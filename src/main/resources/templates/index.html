@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Klay's Chess Game</title>
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 <body>
-Hello World!!
+    <div class="header center-object">
+        <a class="center-object" href ="/"><h1 class="main-message">초간단 체스게임♞</h1></a>
+    </div>
+    <h2 class="main-message center-object">게임 목록</h2>
+    <div>
+        {{#each this.games}}
+        <a class="center-object" href ="/board/{{this.id}}"><h2>{{this.name}}</h2></a>
+        {{/each}}
+    </div>
+    <div class="center-object">
+        <form action="/board" method="post"  enctype="text/plain">
+            <label for="name">새로운 게임 이름: </label>
+            <input type="text" name="name" id="name" required>
+            <input type="submit">
+        </form>
+    </div>
 </body>
 </html>

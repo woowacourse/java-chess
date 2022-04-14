@@ -20,6 +20,9 @@ public abstract class Piece {
     public abstract double getPointValue();
 
     public boolean movable(final Square source, Square target, MoveType moveType) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("같은 위치로는 이동 불가능합니다.");
+        }
         return this.strategy.movable(source, target, moveType);
     }
 
@@ -49,6 +52,10 @@ public abstract class Piece {
 
     public boolean isEnemy(Piece targetPiece) {
         return color.isEnemy(targetPiece.color);
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override

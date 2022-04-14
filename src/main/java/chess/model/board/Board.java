@@ -1,10 +1,14 @@
 package chess.model.board;
 
+import static java.util.stream.Collectors.toMap;
+
 import chess.model.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
+import chess.service.dto.BoardDto;
 import java.util.Map;
 
 public final class Board {
@@ -14,7 +18,7 @@ public final class Board {
 
     private final Map<Square, Piece> board;
 
-    private Board(Map<Square, Piece> board) {
+    public Board(Map<Square, Piece> board) {
         this.board = board;
     }
 
@@ -22,8 +26,9 @@ public final class Board {
         this(boardInitializer.initPieces());
     }
 
-    public Map<Square, Piece> getBoard() {
-        return board;
+    public Board(BoardDto boardDto) {
+        this.board = boardDto.getPieces().stream()
+                .collect(toMap(dto -> Square.of(dto.getSquare()), PieceType::createPiece));
     }
 
     public Piece findPieceBySquare(Square square) {
@@ -46,6 +51,9 @@ public final class Board {
 
     private MoveType getMoveType(Piece sourcePiece, Square targetSquare) {
         Piece targetPiece = findPieceBySquare(targetSquare);
+        if (targetPiece.isAlly(sourcePiece)) {
+            throw new IllegalArgumentException("동료를 공격할 수 없습니다.");
+        }
         return MoveType.of(sourcePiece.isEnemy(targetPiece));
     }
 
@@ -96,5 +104,10 @@ public final class Board {
                 .filter(square -> sourceSquare.isSameFile(square) && sourceSquare.isDifferent(square))
                 .map(board::get)
                 .anyMatch(piece -> piece.isPawn() && piece.isAlly(sourcePiece));
+    }
+
+    public boolean has(Piece piece) {
+        return board.values().stream()
+                .anyMatch(piece::equals);
     }
 }

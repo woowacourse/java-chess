@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klay's Chess Game</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <script src="/script/chessBoardInit.js"></script>
+</head>
+<body>
+    </br>
+    <div class="header center-object">
+        <a class="center-object" href ="/"><h1 class="main-message">초간단 체스게임♞(홈으로)</h1></a>
+    </div>
+    <div id="board-div" class="center-object">
+        <table id="game__chess-table">
+            <tr>
+                <td class="cell white-cell" id="a8"></td>
+                <td class="cell black-cell" id="b8"></td>
+                <td class="cell white-cell" id="c8"></td>
+                <td class="cell black-cell" id="d8"></td>
+                <td class="cell white-cell" id="e8"></td>
+                <td class="cell black-cell" id="f8"></td>
+                <td class="cell white-cell" id="g8"></td>
+                <td class="cell black-cell" id="h8"></td>
+            </tr>
+            <tr>
+                <td class="cell black-cell" id="a7"></td>
+                <td class="cell white-cell" id="b7"></td>
+                <td class="cell black-cell" id="c7"></td>
+                <td class="cell white-cell" id="d7"></td>
+                <td class="cell black-cell" id="e7"></td>
+                <td class="cell white-cell" id="f7"></td>
+                <td class="cell black-cell" id="g7"></td>
+                <td class="cell white-cell" id="h7"></td>
+            </tr>
+            <tr>
+                <td class="cell white-cell" id="a6"></td>
+                <td class="cell black-cell" id="b6"></td>
+                <td class="cell white-cell" id="c6"></td>
+                <td class="cell black-cell" id="d6"></td>
+                <td class="cell white-cell" id="e6"></td>
+                <td class="cell black-cell" id="f6"></td>
+                <td class="cell white-cell" id="g6"></td>
+                <td class="cell black-cell" id="h6"></td>
+            </tr>
+            <tr>
+                <td class="cell black-cell" id="a5"></td>
+                <td class="cell white-cell" id="b5"></td>
+                <td class="cell black-cell" id="c5"></td>
+                <td class="cell white-cell" id="d5"></td>
+                <td class="cell black-cell" id="e5"></td>
+                <td class="cell white-cell" id="f5"></td>
+                <td class="cell black-cell" id="g5"></td>
+                <td class="cell white-cell" id="h5"></td>
+            </tr>
+            <tr>
+                <td class="cell white-cell" id="a4"></td>
+                <td class="cell black-cell" id="b4"></td>
+                <td class="cell white-cell" id="c4"></td>
+                <td class="cell black-cell" id="d4"></td>
+                <td class="cell white-cell" id="e4"></td>
+                <td class="cell black-cell" id="f4"></td>
+                <td class="cell white-cell" id="g4"></td>
+                <td class="cell black-cell" id="h4"></td>
+            </tr>
+            <tr>
+                <td class="cell black-cell" id="a3"></td>
+                <td class="cell white-cell" id="b3"></td>
+                <td class="cell black-cell" id="c3"></td>
+                <td class="cell white-cell" id="d3"></td>
+                <td class="cell black-cell" id="e3"></td>
+                <td class="cell white-cell" id="f3"></td>
+                <td class="cell black-cell" id="g3"></td>
+                <td class="cell white-cell" id="h3"></td>
+            </tr>
+            <tr>
+                <td class="cell white-cell" id="a2"></td>
+                <td class="cell black-cell" id="b2"></td>
+                <td class="cell white-cell" id="c2"></td>
+                <td class="cell black-cell" id="d2"></td>
+                <td class="cell white-cell" id="e2"></td>
+                <td class="cell black-cell" id="f2"></td>
+                <td class="cell white-cell" id="g2"></td>
+                <td class="cell black-cell" id="h2"></td>
+            </tr>
+            <tr>
+                <td class="cell black-cell" id="a1"></td>
+                <td class="cell white-cell" id="b1"></td>
+                <td class="cell black-cell" id="c1"></td>
+                <td class="cell white-cell" id="d1"></td>
+                <td class="cell black-cell" id="e1"></td>
+                <td class="cell white-cell" id="f1"></td>
+                <td class="cell black-cell" id="g1"></td>
+                <td class="cell white-cell" id="h1"></td>
+            </tr>
+        </table>
+        {{#each this.pieces}}
+            <script>fillSquare("{{this.square}}", "{{this.type}}", "{{this.color}}")</script>
+        {{/each}}
+    </div>
+    </br>
+    <div class="center-object board-buttons">
+        <button class="button start-button">
+            다시하기
+        </button>
+        <button class="button status-button">
+            게임 중단하고 결과보기
+        </button>
+        <button class="button end-button">
+            게임 종료하기
+        </button>
+    </div>
+</body>
+<script src="/script/chess.js"></script>
+</html>
