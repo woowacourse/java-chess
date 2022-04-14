@@ -1,6 +1,7 @@
 package chess.service;
 
-import chess.dao.ChessDao;
+import chess.dao.ChessPieceDao;
+import chess.dao.ChessGameDao;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
@@ -22,16 +23,19 @@ public class ChessService {
     private static final String CHESSGAME_STATE_PATH = "chess.domain.state.";
     private static final String NO_CHESS_PIECE_TYPE_EXCEPTION = "[ERROR] DB에 저장된 체스피스를 찾을 수 없습니다.";
     private static final String NO_STATE_TYPE_EXCEPTION = "[ERROR] DB에 저장된 게임 상태를 찾을 수 없습니다.";
-    private final ChessDao chessDao;
+
+    private final ChessPieceDao chessPieceDao;
+    private final ChessGameDao chessGameDao;
 
     public ChessService() {
-        this.chessDao = new ChessDao();
+        this.chessPieceDao = new ChessPieceDao();
+        this.chessGameDao = new ChessGameDao();
     }
 
     public GameState findChessGame() {
         try {
-            String state = chessDao.findState();
-            Map<String, List<String>> board = chessDao.getChessBoard();
+            String state = chessGameDao.findStateName();
+            Map<String, List<String>> board = chessPieceDao.findAll();
             ChessBoard chessBoard = toChessBoard(board);
             return toGameState(state, chessBoard);
         } catch (IllegalArgumentException e) {
@@ -76,22 +80,23 @@ public class ChessService {
     }
 
     public void createChessGame(GameState gameState) {
-        chessDao.saveGameState(gameState);
-        chessDao.saveChessBoard(gameState.getChessBoard());
+        chessGameDao.save(gameState);
+        int chessGameId = chessGameDao.findId();
+        chessPieceDao.saveAll(chessGameId, gameState.getChessBoard().getBoard());
     }
 
     public void deleteChessGame() {
-        chessDao.deleteChessBoard();
-        chessDao.deleteGameState();
+        chessPieceDao.deleteAll();
+        chessGameDao.delete();
     }
 
     public void updateChessBoard(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        chessDao.deleteChessPieceByPosition(targetPosition.getRow(), targetPosition.getColumn());
-        chessDao.updateChessBoard(sourcePosition.getRow(), sourcePosition.getColumn(),
+        chessPieceDao.deleteByPosition(targetPosition.getRow(), targetPosition.getColumn());
+        chessPieceDao.update(sourcePosition.getRow(), sourcePosition.getColumn(),
                 targetPosition.getRow(), targetPosition.getColumn());
     }
 
     public void updateChessGame(GameState gameState) {
-        chessDao.updateGameState(gameState);
+        chessGameDao.update(gameState);
     }
 }
