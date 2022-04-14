@@ -33,9 +33,4 @@ public abstract class Finished extends Started {
     public final boolean isFinished() {
         return true;
     }
-
-    @Override
-    public StateType getStateType() {
-        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
-    }
 }

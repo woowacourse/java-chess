@@ -17,4 +17,9 @@ public class End extends Finished {
 
         return Result.of(whiteScore, blackScore);
     }
+
+    @Override
+    public StateType getStateType() {
+        return StateType.END;
+    }
 }
