@@ -1,16 +1,18 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceName.NULL_PIECE;
+import static chess.domain.piece.PieceProperty.NULL_PIECE;
 
-import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import chess.domain.chessgame.Camp;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class NullPiece extends Piece {
 
     private static final String CANT_MOVE_EMPTY_PIECE = "빈 기물을 움직일 수 없습니다.";
-    private static final int SCORE = 0;
 
     public NullPiece(final Camp camp) {
         super(camp, NULL_PIECE);
@@ -27,29 +29,22 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    protected boolean canMove(final Position beforePosition, final Position afterPosition) {
+    public boolean canMove(final Position beforePosition, final Position afterPosition) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 
     @Override
-    public void capture(final Position beforePosition,
-                        final Position afterPosition,
-                        final Consumer<Piece> moveFunction) {
+    public boolean canMove(final Positions positions) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override
     public boolean isNullPiece() {
         return true;
+    }
+
+    @Override
+    public List<UnitDirectVector> getPossibleDirections() {
+        return Collections.emptyList();
     }
 }

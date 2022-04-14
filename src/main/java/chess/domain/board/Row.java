@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Row {
-    ONE(0),
-    TWO(1),
-    THREE(2),
-    FOUR(3),
-    FIVE(4),
-    SIX(5),
-    SEVEN(6),
-    EIGHT(7),
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
     ;
+
+    private static final int ROW_FLIP_CRITERIA = 9;
+    private static final String INVALID_ROW_MESSAGE = "존재하지 않는 행입니다.";
 
     private final int number;
 
@@ -21,26 +24,26 @@ public enum Row {
         this.number = number;
     }
 
-    public static Row from(String rawRow) {
-        return from(Integer.parseInt(rawRow) - 1);
+    public static Row from(char number) {
+        return from(Character.getNumericValue(number));
     }
 
     private static Row from(int value) {
         return Arrays.stream(values())
             .filter(row -> row.number == value)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_ROW_MESSAGE));
     }
 
     public Row flip() {
         return Arrays.stream(Row.values())
-            .filter(it -> it.number == (7 - number))
+            .filter(it -> it.number == (ROW_FLIP_CRITERIA - number))
             .findFirst()
             .orElseThrow();
     }
 
     public int directedDistance(Row otherRow) {
-        return number - otherRow.number;
+        return otherRow.number - number;
     }
 
     public int distance(Row otherRow) {
@@ -68,5 +71,18 @@ public enum Row {
             path.add(Row.from(i));
         }
         return path;
+    }
+
+    public Row nextWith(final UnitDirectVector direction) {
+        return Row.from(direction.nextRowNumber(number));
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        final int nextRowNumber = direction.nextRowNumber(number);
+        return ONE.number <= nextRowNumber && nextRowNumber <= EIGHT.number;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

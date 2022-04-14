@@ -5,47 +5,51 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0, "a"),
-    B(1, "b"),
-    C(2, "c"),
-    D(3, "d"),
-    E(4, "e"),
-    F(5, "f"),
-    G(6, "g"),
-    H(7, "h"),
+    A(1, 'a'),
+    B(2, 'b'),
+    C(3, 'c'),
+    D(4, 'd'),
+    E(5, 'e'),
+    F(6, 'f'),
+    G(7, 'g'),
+    H(8, 'h'),
     ;
 
-    private final int number;
-    private final String name;
+    private static final int COLUMN_FLIP_CRITERIA = 9;
+    private static final String INVALID_COLUMN_MESSAGE = "존재하지 않는 열입니다.";
 
-    Column(final int number, String name) {
+    private final int number;
+    private final char name;
+
+    Column(final int number, char name) {
         this.number = number;
         this.name = name;
     }
 
-    public static Column from(String rawColumn) {
-        return Arrays.stream(values())
-            .filter(column -> column.name.equals(rawColumn))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+    private static Column from(int number) {
+        return from((char) (number + 96));
     }
 
-    private static Column from(int value) {
+    public static Column from(char name) {
         return Arrays.stream(values())
-            .filter(column -> column.number == value)
+            .filter(column -> column.name == name)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_MESSAGE));
     }
 
     public Column flip() {
         return Arrays.stream(Column.values())
-            .filter(it -> it.number == (7 - number))
+            .filter(it -> it.number == (COLUMN_FLIP_CRITERIA - number))
             .findFirst()
             .orElseThrow();
     }
 
+    public int directedDistance(Column otherColumn) {
+        return otherColumn.number - number;
+    }
+
     public int distance(Column otherColumn) {
-        return Math.abs(number - otherColumn.number);
+        return Math.abs(directedDistance(otherColumn));
     }
 
     public List<Column> pathTo(Column otherColumn) {
@@ -69,5 +73,18 @@ public enum Column {
             path.add(Column.from(i));
         }
         return path;
+    }
+
+    public Column nextWith(final UnitDirectVector direction) {
+        return Column.from(direction.nextColumnNumber(number));
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        final int nextColumnNumber = direction.nextColumnNumber(number);
+        return A.number <= nextColumnNumber && nextColumnNumber <= H.number;
+    }
+
+    public char getName() {
+        return name;
     }
 }

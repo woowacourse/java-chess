@@ -1,16 +1,16 @@
 package chess.domain.gamestate;
 
-import chess.domain.Camp;
-import chess.domain.GameResult;
-import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.chessgame.Camp;
+import chess.domain.chessgame.StatusScore;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 
 public interface State {
 
-    State start();
+    State run();
 
     State move(Positions positions);
 
@@ -18,13 +18,31 @@ public interface State {
 
     Camp switchCamp();
 
-    State end();
+    State status();
 
     StatusScore calculateStatus();
 
-    Map<Position, Piece> getBoard();
+    State end();
 
-    GameResult calculateResult();
+    State ready();
+
+    boolean isKingChecked();
+
+    List<Position> getKingCheckmatedPositions();
 
     boolean isRunning();
+
+    boolean isStatus();
+
+    boolean isFinished();
+
+    boolean isAllKingCheckmated(List<Position> positions);
+
+    void changeBoard(Map<Position, Piece> board, final String camp);
+
+    State runWithCurrentState();
+
+    Map<Position, Piece> getBoard();
+
+    Camp getCamp();
 }

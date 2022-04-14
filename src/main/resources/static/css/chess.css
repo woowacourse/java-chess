@@ -1,0 +1,406 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    margin: 0 auto;
+    color: #152447;
+    background-color: #fefbf7;
+}
+
+section {
+    width: 100%;
+    background-color: #fefbf7;
+    position: relative;
+}
+
+a {
+    all: unset;
+}
+
+a:link {
+    text-decoration: none;
+    color: #152246;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #152246FF;
+}
+
+a:active {
+    text-decoration: none;
+    color: #152246FF;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #152246FF;
+}
+
+.inner {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0.3rem;
+    overflow: hidden;
+}
+
+/*text-align: center;*/
+
+@media only screen and (min-width: 1200px) {
+    .inner {
+        max-width: 1200px;
+    }
+}
+
+header {
+    width: 100%;
+    height: 63px;
+}
+
+.head-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head-container .head-brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 2rem;
+}
+
+.head-container .head-start {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 2rem;
+
+}
+
+
+.skill-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+
+.user-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.skill {
+    width: 25%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+
+.skill-icon {
+    font-size: 2.5rem;
+    margin: 0 7px;
+}
+
+.create-style {
+    color: #65abff;
+}
+
+.history-style {
+    color: #efd81d;
+}
+
+.start-style {
+    color: #3fb27f;
+}
+
+.skill-title {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0 1rem;
+}
+
+.skill-name {
+    font-weight: bold;
+    color: #152447;
+    margin-bottom: 0.2rem;
+}
+
+.message-error {
+    font-weight: bold;
+    color: red;
+    margin-bottom: 0.2rem;
+}
+
+.skill-usage {
+    font-size: 0.9rem;
+    color: #000000;
+}
+
+/*텍스트*/
+
+.message {
+    width: 100%;
+    font-weight: bold;
+    color: #ff5b5b;
+}
+
+.roadmap-container {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.roadmap-title-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roadmap-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #152447;
+}
+
+.slide-prev {
+    font-size: 1.5rem;
+}
+
+.slide-next {
+    font-size: 1.5rem;
+}
+
+.arrow-container {
+    display: flex;
+}
+
+.class-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+}
+
+.class-card {
+    width: 150px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+    border-radius: 8px;
+    margin: 10px 10px;
+    background-color: #ffffff;
+}
+
+.class-image {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    height: 103px;
+}
+
+.class-container {
+    width: 100%;
+    padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.class-skill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.class-type {
+    font-size: 0.8rem;
+    color: #152246FF;
+}
+
+.class-update {
+    font-size: 0.6rem;
+    color: #324cf4;
+    background-color: rgb(232, 241, 255);
+    padding: 0.2rem;
+}
+
+.class-delete {
+    font-size: 0.6rem;
+    color: #f43232;
+    background-color: rgb(255, 205, 205);
+    padding: 0.2rem;
+}
+
+
+.class-join {
+    font-size: 0.9rem;
+    color: #000000;
+    background-color: rgba(148, 148, 148, 0.15);
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.class-cant-join {
+    font-size: 0.9rem;
+    color: #ff0000;
+    background-color: rgba(148, 148, 148, 0.15);
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.class-title-container {
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.class-title {
+    font-size: 1.0rem;
+    /*width: 100%;*/
+    line-height: 1.6rem;
+}
+
+
+.user-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.user {
+    width: 220px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+
+.user-icon {
+    font-size: 2.0rem;
+    margin: 0 3px;
+}
+
+.turn-style {
+    font-size: 1.5rem;
+    color: #152246;
+    margin: 0 2rem;
+}
+
+.message-container {
+    width: 60%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 9px;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+
+.message-title {
+    width: 100%;
+    margin-left: 2rem;
+}
+
+.form {
+    font-size: 1rem;
+    color: #152246;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 2px solid #152246;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+
+    margin: 0 1rem;
+}
+
+.title {
+    text-align: center;
+}
+
+
+/*board*/
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.button-form-container {
+    width: 20px;
+    margin-top: 0.5rem;
+}
+
+.board-container {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1.0rem;
+}
+
+.board-row-container {
+    width: 100%;
+}
+
+.board-column-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0rem;
+    justify-content: center;
+}
+
+.board-column {
+    width: 60px;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+    border-radius: 4px;
+    margin: -2px 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.piece-image {
+    width: 45px;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.board-column-white {
+    background-color: papayawhip;
+}
+
+.board-column-black {
+    background-color: #ccb1a8;
+}

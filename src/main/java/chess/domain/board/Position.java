@@ -12,6 +12,7 @@ public class Position implements Comparable<Position> {
     private static final HashMap<String, Position> CACHE = new HashMap<>(64);
     private static final int NO_SIZE = 0;
     private static final int SIZE_START_INDEX = 0;
+    private static final String NOT_VALID_POSITION_INPUT = "정상적인 이동경로가 아닙니다. 다시 입력해주세요!";
 
     private final Column column;
     private final Row row;
@@ -21,9 +22,9 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position from(String rawPosition) {
-        final Column column = Column.from(rawPosition.substring(0, 1));
-        final Row row = Row.from(rawPosition.substring(1));
+    public static Position from(String position) {
+        final Column column = Column.from(position.charAt(0));
+        final Row row = Row.from(position.charAt(1));
         return Position.of(column, row);
     }
 
@@ -35,12 +36,12 @@ public class Position implements Comparable<Position> {
         return column.distance(otherPosition.column);
     }
 
-    public int rowDistance(Position otherPosition) {
-        return row.distance(otherPosition.row);
-    }
-
     public int rowDirectedDistance(Position otherPosition) {
         return row.directedDistance(otherPosition.row);
+    }
+
+    public int rowDistance(Position otherPosition) {
+        return row.distance(otherPosition.row);
     }
 
     public Position flipHorizontally() {
@@ -79,10 +80,19 @@ public class Position implements Comparable<Position> {
             .collect(Collectors.toList());
     }
 
-    private List<Position> getDiagonalPositions(final List<Row> rowPath, final List<Column> columnPath) {
+    private List<Position> getDiagonalPositions(final List<Row> rowPath,
+                                                final List<Column> columnPath) {
+        //대각선 움직임이 클릭/입력은 잘못할 수도 있다. ->  예외처리 추가
+        if (rowPath.size() != columnPath.size()) {
+            throw new IllegalArgumentException(NOT_VALID_POSITION_INPUT);
+        }
         return IntStream.range(SIZE_START_INDEX, rowPath.size())
             .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
             .collect(Collectors.toList());
+    }
+
+    public boolean isSameRow(final Row row) {
+        return this.row == row;
     }
 
     public Column getColumn() {
@@ -120,6 +130,28 @@ public class Position implements Comparable<Position> {
     @Override
     public String toString() {
         return "" + column + row;
+    }
+
+    public Position calculatePossibleAfterPosition(final UnitDirectVector direction) {
+        final Column nextColumn = column.nextWith(direction);
+        final Row nextRow = row.nextWith(direction);
+        return Position.of(nextColumn, nextRow);
+
+    }
+
+    public boolean isValidNextPosition(final UnitDirectVector direction) {
+        if (!column.isNextValid(direction)) {
+            return false;
+        }
+        return row.isNextValid(direction);
+    }
+
+    public boolean isNextValid(final UnitDirectVector direction) {
+        return isValidNextPosition(direction);
+    }
+
+    public Position calculatePossibleAfterPositions(final UnitDirectVector direction) {
+        return calculatePossibleAfterPosition(direction);
     }
 }
 

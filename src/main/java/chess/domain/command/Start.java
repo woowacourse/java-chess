@@ -1,13 +1,29 @@
 package chess.domain.command;
 
-import chess.domain.ChessGame;
-import chess.view.OutputView;
+import chess.domain.chessgame.ChessGame;
+import java.util.Map;
+import java.util.function.Supplier;
 
-public final class Start implements CommandStrategy {
+public final class Start implements CommandGenerator {
+
     @Override
-    public void execute(final String command, final ChessGame chessGame) {
-        chessGame.start();
+    public void execute(final String command,
+                        final ChessGame chessGame,
+                        final Runnable printBoardInfoToState) {
+        chessGame.run();
 
-        OutputView.printBoard(chessGame.getBoard());
+        printBoardInfoToState.run();
+    }
+
+    @Override
+    public Map<String, Object> execute(final String command,
+                                       final ChessGame chessGame,
+                                       final Supplier<Map<String, Object>> returnModelToState) {
+        if (chessGame.isEndInGameOff()) {
+            chessGame.gameSwitchOn();
+        }
+        chessGame.runWithCurrentState();
+
+        return returnModelToState.get();
     }
 }

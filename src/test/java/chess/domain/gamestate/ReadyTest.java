@@ -16,7 +16,7 @@ public class ReadyTest {
     void ready_start_running() {
         State state = new Ready();
 
-        assertThat(state.start()).isInstanceOf(Running.class);
+        assertThat(state.run()).isInstanceOf(Running.class);
     }
 
     @DisplayName("Ready 상태에서 move 명령 호출시 예외 발생")

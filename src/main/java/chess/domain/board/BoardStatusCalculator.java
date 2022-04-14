@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceProperty;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class BoardStatusCalculator {
 
     private List<Piece> collectPiecesWithoutPawnIn(List<Piece> pieces) {
         return pieces.stream()
-            .filter(piece -> piece.pieceName() != PieceName.PAWN)
+            .filter(piece -> piece.getPieceProperty() != PieceProperty.PAWN)
             .collect(Collectors.toList());
     }
 
@@ -62,7 +62,7 @@ public class BoardStatusCalculator {
 
     private List<Piece> collectPawnsIn(List<Piece> pieces) {
         return pieces.stream()
-            .filter(it -> it.pieceName() == PieceName.PAWN)
+            .filter(it -> it.getPieceProperty() == PieceProperty.PAWN)
             .collect(Collectors.toList());
     }
 }

@@ -1,17 +1,26 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceName.KING;
+import static chess.domain.board.UnitDirectVector.BOTTOM;
+import static chess.domain.board.UnitDirectVector.BOTTOM_LEFT;
+import static chess.domain.board.UnitDirectVector.BOTTOM_RIGHT;
+import static chess.domain.board.UnitDirectVector.LEFT;
+import static chess.domain.board.UnitDirectVector.RIGHT;
+import static chess.domain.board.UnitDirectVector.TOP;
+import static chess.domain.board.UnitDirectVector.TOP_LEFT;
+import static chess.domain.board.UnitDirectVector.TOP_RIGHT;
+import static chess.domain.piece.PieceProperty.KING;
 
-import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.board.UnitDirectVector;
+import chess.domain.chessgame.Camp;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class King extends NotNullPiece {
 
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE = 1;
-    private static final double SCORE = 0;
 
     public King(Camp camp) {
         super(camp, KING);
@@ -35,7 +44,7 @@ public final class King extends NotNullPiece {
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
+    public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         if (columnDistance + rowDistance == MOVABLE_DISTANCE) {
@@ -44,7 +53,8 @@ public final class King extends NotNullPiece {
         return columnDistance == MOVABLE_DISTANCE && rowDistance == MOVABLE_DISTANCE;
     }
 
-    private boolean canMove(final Positions positions) {
+    @Override
+    public boolean canMove(final Positions positions) {
         int columnDistance = positions.calculateColumnDistance();
         int rowDistance = positions.calculateRowDistance();
         if (columnDistance + rowDistance == MOVABLE_DISTANCE) {
@@ -54,17 +64,10 @@ public final class King extends NotNullPiece {
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
-    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
-        move(positions, moveFunction);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
+    public List<UnitDirectVector> getPossibleDirections() {
+        return List.of(
+            TOP, BOTTOM, RIGHT, LEFT,
+            TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+        );
     }
 }

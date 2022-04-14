@@ -1,10 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/css/chess.css"/>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="/css/chess.css">
+    <script
+            src="https://kit.fontawesome.com/f92cdbaedc.js"
+            crossorigin="anonymous"
+    ></script>
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <title>포돌이 체스에 오신 것을 환영합니다.</title>
+    <style>
+        .fake-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
+
 <body>
-Hello World!!
+<header>
+    <div class="inner">
+        <div class="head-container">
+            <div class="head-brand">
+                <a href="/">포돌이 체스</a>
+            </div>
+            <div class="head-start">
+                <a href="https://github.com/is2js/java-chess/tree/step2">깃허브</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- button section -->
+<section>
+    <div class="inner">
+        <div class="title"><h1>돌범의 포돌이체스에 오신 것을 환영합니다.</h1></div>
+        <div class="user-container">
+            <div class="skill" onclick="createRoom();">
+                <i class="fas fa-plus skill-icon create-style"></i>
+                <div class="skill-title">
+                    <div class="skill-name">방 생성</div>
+                    <div class="skill-usage">Create</div>
+                </div>
+            </div>
+            <div class="skill">
+                <i class="far fa-clipboard skill-icon history-style"></i>
+                <div class="skill-title">
+                    <div class="skill-name">지난 기록</div>
+                    <div class="skill-usage">History</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- room section -->
+<section>
+    <div class="inner">
+        <!--rooms(title + room list)-->
+        <div class="roadmap-container">
+            <!--rooms title container(title + arrow)-->
+            <div class="roadmap-title-container">
+                <!--room title -->
+                <div class="roadmap-title">
+
+                    <!--room list -->
+                    <ul class="class-list">
+                        {{#rooms}}
+                        <!--first room -->
+                        <li class="class-card">
+                            <!--room image-->
+                            <img alt="room" class="class-image"
+                                 src="img/room.jpg"/>
+                            <!--room content-->
+                            <div class="class-container">
+                                <!--room id +  수정/삭제 -->
+                                <div class="class-skill">
+                                    <div class="class-type">{{id}}번방</div>
+
+                                    <div class="class-update" onclick="updateRoomName('{{id}}');">수정</div>
+                                    <div class="class-delete" onclick="deleteRoom('{{id}}');">삭제</div>
+
+                                </div>
+                                <!--room title + enter-->
+                                <div class="class-title-container">
+                                    <div class="class-title">{{name}}</div>
+                                    {{#if canJoin}}
+                                    <div class="class-join" onclick="postToCommand('{{id}}', 'start');">입 장</div>
+                                    {{else}}
+                                    <div class="class-cant-join">종료(입장 불가)</div>
+                                    {{/if}}
+                                </div>
+                            </div>
+
+                        </li>
+                        {{/rooms}}
+                        <!-- 2nd room -->
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer></footer>
+
+<script src="/js/chess.js"></script>
 </body>
 </html>
