@@ -94,7 +94,7 @@ public class ChessController {
         model.put("winner", chessGame.result().toString());
 
         webChessService.end();
-        return render(model, "winner.html");
+        return render(model, "result.html");
     }
 
     private void checkFinished(ChessGame chessGame) {
