@@ -1,8 +1,9 @@
 package chess.domain;
 
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,14 +19,21 @@ public class Score {
         this.value = value;
     }
 
-    public static Score of(Map<Position, AbstractPiece> pieces) {
-        double pawnsScore = calculatePawnScore(pieces);
-        double scoreExceptPawn = calculateScoreExceptPawn(pieces);
+    public static Score of(Map<Position, Piece> pieces) {
+        if (hasKing(pieces)) {
+            double pawnsScore = calculatePawnScore(pieces);
+            double scoreExceptPawn = calculateScoreExceptPawn(pieces);
 
-        return new Score(pawnsScore + scoreExceptPawn);
+            return new Score(pawnsScore + scoreExceptPawn);
+        }
+        return new Score(0);
     }
 
-    private static double calculatePawnScore(Map<Position, AbstractPiece> pieces) {
+    private static boolean hasKing(Map<Position, Piece> pieces) {
+        return pieces.values().stream().anyMatch(Piece::isKing);
+    }
+
+    private static double calculatePawnScore(Map<Position, Piece> pieces) {
         List<Position> pawnPositions = findPawnPositionsOf(pieces);
         Map<Row, List<Position>> pawnPositionsByRow = Position.groupByRow(pawnPositions);
 
@@ -35,13 +43,14 @@ public class Score {
                 .sum();
     }
 
-    private static List<Position> findPawnPositionsOf(Map<Position, AbstractPiece> pieces) {
-        return pieces.keySet().stream()
+    private static List<Position> findPawnPositionsOf(Map<Position, Piece> pieces) {
+        return pieces.keySet()
+                .stream()
                 .filter(position -> pieces.get(position).isPawn())
                 .collect(Collectors.toList());
     }
 
-    private static double calculateScoreOnSameRow(Map<Position, AbstractPiece> pieces, List<Position> positions) {
+    private static double calculateScoreOnSameRow(Map<Position, Piece> pieces, List<Position> positions) {
         if (positions.size() > PENALTY_SIZE_STANDARD) {
             return positions.stream()
                     .mapToDouble(position -> pieces.get(position).score() * PENALTY_MULTIPLIER)
@@ -52,11 +61,11 @@ public class Score {
                 .sum();
     }
 
-    private static double calculateScoreExceptPawn(Map<Position, AbstractPiece> pieces) {
+    private static double calculateScoreExceptPawn(Map<Position, Piece> pieces) {
         return pieces.values()
                 .stream()
                 .filter(piece -> !piece.isPawn())
-                .mapToDouble(AbstractPiece::score)
+                .mapToDouble(Piece::score)
                 .sum();
     }
 

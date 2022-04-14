@@ -1,8 +1,9 @@
 package chess.dto;
 
-import chess.domain.piece.PieceColor;
 import chess.domain.Score;
 import chess.domain.WinResult;
+import chess.domain.piece.PieceColor;
+
 import java.util.Map;
 
 public class StatusDto {

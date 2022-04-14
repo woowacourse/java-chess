@@ -1,0 +1,52 @@
+.button {
+    height: 70px;
+    width: 100px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: x-large;
+}
+
+.selectable {
+    text-align: center;
+    pointer-events: auto;
+}
+
+.non_selectable {
+    text-align: center;
+    pointer-events: none;
+}
+
+.board_square {
+    height: 80px;
+    width: 80px;
+}
+
+.light_board {
+    background-color: rgb(232, 203, 156);
+}
+
+.dark_board {
+    background-color: rgb(177, 134, 74);
+}
+
+.light_board:hover {
+    background-color: rgb(107, 134, 74);
+}
+
+.dark_board:hover {
+    background-color: rgb(107, 134, 74);
+}
+
+.board_table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+.piece {
+    height: 75px;
+    width: 75px;
+    display: block;
+    margin: auto;
+}

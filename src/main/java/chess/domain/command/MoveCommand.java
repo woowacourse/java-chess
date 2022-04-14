@@ -22,6 +22,12 @@ public class MoveCommand {
         return new MoveCommand(from, to);
     }
 
+    public static MoveCommand of(String source, String target) {
+        Position from = Position.of(source);
+        Position to = Position.of(target);
+        return new MoveCommand(from, to);
+    }
+
     public Position from() {
         return from;
     }
