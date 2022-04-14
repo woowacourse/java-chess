@@ -65,6 +65,11 @@ public abstract class Play implements GameState {
     }
 
     @Override
+    public boolean isPlay() {
+        return true;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

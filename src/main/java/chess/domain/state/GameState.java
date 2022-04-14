@@ -15,6 +15,8 @@ public interface GameState {
 
     Team findWinner();
 
+    boolean isPlay();
+
     boolean isFinished();
 
     boolean isEnd();

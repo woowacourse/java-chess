@@ -36,6 +36,11 @@ public class Ready implements GameState {
     }
 
     @Override
+    public boolean isPlay() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

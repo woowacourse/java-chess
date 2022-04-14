@@ -11,6 +11,8 @@ import chess.domain.state.Finish;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.domain.state.WhiteTurn;
+import chess.dto.ChessStatusDto;
+import chess.dto.web.ChessBoardDto;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -21,6 +23,9 @@ import java.util.Map.Entry;
 public class ChessService {
     private static final String CHESSPIECE_CLASS_PATH = "chess.domain.piece.";
     private static final String CHESSGAME_STATE_PATH = "chess.domain.state.";
+    private static final String CHESS_BOARD_KEY = "chessboard";
+    private static final String FINISH_MESSAGE_KEY = "finishMessage";
+    private static final String STATUS_KEY = "status";
     private static final String NO_CHESS_PIECE_TYPE_EXCEPTION = "[ERROR] DB에 저장된 체스피스를 찾을 수 없습니다.";
     private static final String NO_STATE_TYPE_EXCEPTION = "[ERROR] DB에 저장된 게임 상태를 찾을 수 없습니다.";
 
@@ -79,24 +84,62 @@ public class ChessService {
         }
     }
 
-    public void createChessGame(GameState gameState) {
+    public ChessBoardDto createChessGame() {
+        GameState gameState = new WhiteTurn(ChessBoard.create());
         chessGameDao.save(gameState);
         int chessGameId = chessGameDao.findId();
         chessPieceDao.saveAll(chessGameId, gameState.getChessBoard().getBoard());
+        return ChessBoardDto.of(gameState.getChessBoard());
     }
 
-    public void deleteChessGame() {
+    public ChessBoardDto deleteChessGame() {
         chessPieceDao.deleteAll();
         chessGameDao.delete();
+        return ChessBoardDto.empty();
     }
 
-    public void updateChessBoard(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+    public Map<String, Object> updateChessBoard(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        GameState gameState = findChessGame();
+        gameState.move(sourcePosition, targetPosition);
+
         chessPieceDao.deleteByPosition(targetPosition.getRow(), targetPosition.getColumn());
         chessPieceDao.update(sourcePosition.getRow(), sourcePosition.getColumn(),
                 targetPosition.getRow(), targetPosition.getColumn());
+        updateChessGame(gameState);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put(CHESS_BOARD_KEY, ChessBoardDto.of(gameState.getChessBoard()));
+        result.putAll(getFinishStatus(gameState));
+        return result;
     }
 
-    public void updateChessGame(GameState gameState) {
+    private void updateChessGame(GameState gameState) {
         chessGameDao.update(gameState);
+    }
+
+    public ChessBoardDto getChessBoard() {
+        GameState chessGame = findChessGame();
+        return ChessBoardDto.of(chessGame.getChessBoard());
+    }
+
+    private Map<String, Object> getFinishStatus(GameState gameState) {
+        if (!gameState.isFinished()) {
+            return new HashMap<>();
+        }
+        Map<String, Object> finishStatus = new HashMap<>();
+        finishStatus.put(STATUS_KEY, getStatus());
+        finishStatus.put(FINISH_MESSAGE_KEY, true);
+        return finishStatus;
+    }
+
+    public Map<String, Object> getStatus() {
+        GameState gameState = findChessGame();
+        ChessBoard chessBoard = gameState.getChessBoard();
+        Team winner = gameState.findWinner();
+
+        Map<String, Object> result = new HashMap<>();
+        result.put(CHESS_BOARD_KEY, ChessBoardDto.of(gameState.getChessBoard()));
+        result.put(STATUS_KEY, ChessStatusDto.of(chessBoard, winner));
+        return result;
     }
 }

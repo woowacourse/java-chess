@@ -7,12 +7,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.controller.request.MoveRequest;
-import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.Team;
-import chess.domain.state.GameState;
-import chess.domain.state.Ready;
-import chess.dto.ChessStatusDto;
 import chess.dto.web.ChessBoardDto;
 import chess.service.ChessService;
 import java.util.HashMap;
@@ -27,15 +22,11 @@ public class WebChessController {
     private static final String SOURCE_POSITION_PARAMETER_KEY = "from";
     private static final String TARGET_POSITION_PARAMETER_KEY = "to";
     private static final String CHESS_BOARD_KEY = "chessboard";
-    private static final String FINISH_MESSAGE_KEY = "finishMessage";
-    private static final String STATUS_KEY = "status";
 
     private final ChessService chessService;
-    private GameState gameState;
 
     public WebChessController() {
         this.chessService = new ChessService();
-        this.gameState = chessService.findChessGame();
     }
 
     public void run() {
@@ -44,25 +35,24 @@ public class WebChessController {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put(CHESS_BOARD_KEY, getChessBoard());
+            ChessBoardDto chessBoardDto = chessService.getChessBoard();
+            model.put(CHESS_BOARD_KEY, chessBoardDto);
             return render(model);
         });
 
         get("/start", (req, res) -> {
-            gameState = gameState.start();
-            chessService.createChessGame(gameState);
+            ChessBoardDto chessBoardDto = chessService.createChessGame();
 
             Map<String, Object> model = new HashMap<>();
-            model.put(CHESS_BOARD_KEY, getChessBoard());
+            model.put(CHESS_BOARD_KEY, chessBoardDto);
             return render(model);
         });
 
         get("/end", (req, res) -> {
-            gameState = new Ready();
-            chessService.deleteChessGame();
+            ChessBoardDto chessBoardDto = chessService.deleteChessGame();
 
             Map<String, Object> model = new HashMap<>();
-            model.put(CHESS_BOARD_KEY, getChessBoard());
+            model.put(CHESS_BOARD_KEY, chessBoardDto);
             return render(model);
         });
 
@@ -70,24 +60,13 @@ public class WebChessController {
             MoveRequest moveRequest = MoveRequest.of(req.body());
             ChessBoardPosition sourcePosition = ChessBoardPosition.from(moveRequest.get(SOURCE_POSITION_PARAMETER_KEY));
             ChessBoardPosition targetPosition = ChessBoardPosition.from(moveRequest.get(TARGET_POSITION_PARAMETER_KEY));
-            gameState = gameState.move(sourcePosition, targetPosition);
-            chessService.updateChessBoard(sourcePosition, targetPosition);
 
-            Map<String, Object> model = new HashMap<>();
-            model.put(CHESS_BOARD_KEY, getChessBoard());
-            if (gameState.isFinished()) {
-                model.putAll(getFinishStatus());
-                gameState = new Ready();
-            }
-            chessService.updateChessGame(gameState);
+            Map<String, Object> model = new HashMap<>(chessService.updateChessBoard(sourcePosition, targetPosition));
             return render(model);
         });
 
         get("/status", (req, res) -> {
-            gameState = gameState.status();
-            Map<String, Object> model = new HashMap<>();
-            model.put(CHESS_BOARD_KEY, getChessBoard());
-            model.put(STATUS_KEY, getStatus());
+            Map<String, Object> model = new HashMap<>(chessService.getStatus());
             return render(model);
         });
 
@@ -95,24 +74,6 @@ public class WebChessController {
             response.status(BAD_REQUEST);
             response.body(exception.getMessage());
         });
-    }
-
-    private ChessBoardDto getChessBoard() {
-        ChessBoard chessBoard = gameState.getChessBoard();
-        return ChessBoardDto.of(chessBoard);
-    }
-
-    private Map<String, Object> getFinishStatus() {
-        Map<String, Object> finishStatus = new HashMap<>();
-        finishStatus.put(STATUS_KEY, getStatus());
-        finishStatus.put(FINISH_MESSAGE_KEY, true);
-        return finishStatus;
-    }
-
-    private ChessStatusDto getStatus() {
-        ChessBoard chessBoard = gameState.getChessBoard();
-        Team winner = gameState.findWinner();
-        return ChessStatusDto.of(chessBoard, winner);
     }
 
     private String render(Map<String, Object> model) {

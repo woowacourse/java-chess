@@ -26,6 +26,10 @@ public class ChessBoardDto {
         return String.valueOf(chessBoardPosition.getColumn()) + chessBoardPosition.getRow();
     }
 
+    public static ChessBoardDto empty() {
+        return new ChessBoardDto(new HashMap<>());
+    }
+
     public Map<String, ChessPieceDto> getBoardDto() {
         return boardDto;
     }
