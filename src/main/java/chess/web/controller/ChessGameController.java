@@ -14,7 +14,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class ChessController {
+public class ChessGameController {
 
     public static final String ERROR_MESSAGE = "ERROR_MESSAGE";
     public static final String WINNER_MESSAGE = "WINNER_MESSAGE";
@@ -23,7 +23,7 @@ public class ChessController {
     private final PlayerDao playerDao;
     private final ChessGameService service;
 
-    public ChessController(ChessBoardDao chessBoardDao, PlayerDao playerDao, ChessGameService service) {
+    public ChessGameController(ChessBoardDao chessBoardDao, PlayerDao playerDao, ChessGameService service) {
         this.chessBoardDao = chessBoardDao;
         this.playerDao = playerDao;
         this.service = service;
