@@ -1,22 +1,24 @@
 package chess.domain;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.position.Square;
 
 public final class ChessGame {
-    private static final String ERROR_MESSAGE_TURN = "[ERROR] 순서 지키시지?!";
+    private static final String ERROR_MESSAGE_TURN = "순서 지키시지?!";
 
     private Board board;
     private GameTurn turn;
 
-    public ChessGame(BoardGenerator boardGenerator) {
+    public ChessGame(BoardGenerator boardGenerator, GameTurn gameTurn) {
         this.board = new Board(boardGenerator);
-        this.turn = GameTurn.READY;
-    }
-
-    public void startGame() {
-        turn = GameTurn.WHITE;
+        this.turn = gameTurn;
+        if (turn.equals(GameTurn.READY)) {
+            this.turn = GameTurn.WHITE;
+        }
     }
 
     public void move(Square source, Square target) {
@@ -47,7 +49,17 @@ public final class ChessGame {
         return turn != GameTurn.READY;
     }
 
+    public Map<String, String> getEmojis() {
+        return board.getBoard().entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getName(), entry -> entry.getValue().getEmoji()));
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public GameTurn getTurn() {
+        return turn;
     }
 }

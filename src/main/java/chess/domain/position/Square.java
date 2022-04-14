@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Square {
@@ -10,7 +11,8 @@ public class Square {
     private final Row row;
 
     public Square(String position) {
-        this(Column.find(position.charAt(FILE_INDEX)), Row.find(position.charAt(RANK_INDEX)));
+        this(Column.find(position.toLowerCase(Locale.ROOT).charAt(FILE_INDEX)),
+                Row.find(position.toLowerCase(Locale.ROOT).charAt(RANK_INDEX)));
     }
 
     public Square(Column column, Row row) {
@@ -30,6 +32,10 @@ public class Square {
 
     public boolean checkFile(Column column) {
         return this.column == column;
+    }
+
+    public String getName() {
+        return column.name() + row.getIndex();
     }
 
     @Override

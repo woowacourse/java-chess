@@ -12,8 +12,8 @@ import chess.domain.position.Movement;
 import chess.domain.position.Square;
 
 public final class Board {
-    private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 허걱... 거긴 못가... 미안..";
-    private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 길이 막혔다...!";
+    private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "허걱... 거긴 못가... 미안..";
+    private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "길이 막혔다...!";
 
     private final Map<Square, Piece> board;
 

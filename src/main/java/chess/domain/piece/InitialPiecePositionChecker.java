@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.domain.position.Column;
 import chess.domain.position.Row;
 
-public final class PieceTypeChecker {
+public final class InitialPiecePositionChecker {
 
     private final Column column;
     private final Row row;
 
-    PieceTypeChecker(Column column, Row row) {
+    InitialPiecePositionChecker(Column column, Row row) {
         this.column = column;
         this.row = row;
     }

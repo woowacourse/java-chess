@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/style.css">
+    <title>야호의 체스 - 결과는?! 두구두구!!</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="score">
+    화이트 팀 : {{whiteScore}} 점
+</div>
+<div class="score">
+    블랙 팀 : {{blackScore}} 점
+</div>
+<form action="/ingame" method="get" class="inlineBtn">
+    <input type="text" name="gameID" class="invisible" value={{gameID}} />
+    <input type="submit" value="RESTART" class="btn" id="restart">
+</form>
+<form action="/" method="get" class="inlineBtn">
+    <input type="submit" value="END" class="btn" id="end">
+</form>
+</body>
+</html>

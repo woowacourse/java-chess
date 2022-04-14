@@ -21,7 +21,7 @@ public class InitialBoardGenerator implements BoardGenerator {
 
     private static void createRow(Map<Square, Piece> board, Row row) {
         for (Column column : Column.values()) {
-            board.put(new Square(column, row), Piece.from(column, row));
+            board.put(new Square(column, row), Piece.createByPosition(column, row));
         }
     }
 }

@@ -12,6 +12,7 @@ import chess.domain.position.Square;
 
 public final class GameResult {
     private static final double PAWN_PENALTY_SCORE = 0.5;
+
     private final Board board;
 
     public GameResult(Board board) {

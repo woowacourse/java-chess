@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     public static void showScore(GameResult gameResult, Color color) {
-        System.out.printf(RESULT_FORMAT, color.getName(), gameResult.calculateScore(color));
+        System.out.printf(RESULT_FORMAT, color.getValue(), gameResult.calculateScore(color));
     }
 
     public static void printMessage(String message) {

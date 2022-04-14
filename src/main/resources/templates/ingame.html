@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/style.css">
+    <title>야호의 체스 - 쉿! 게임 중이에요^0^</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<span class="message">{{message}}</span>
+<form action="/" method="get" class="inlineBtn">
+    <input type="submit" value="SAVE" class="btn" id="end"/>
+</form>
+<table class="chess-board">
+    <tbody>
+    <tr>
+        <td class="light">{{A8}}</td>
+        <td class="dark">{{B8}}</td>
+        <td class="light">{{C8}}</td>
+        <td class="dark">{{D8}}</td>
+        <td class="light">{{E8}}</td>
+        <td class="dark">{{F8}}</td>
+        <td class="light">{{G8}}</td>
+        <td class="dark">{{H8}}</td>
+        <th>8</th>
+    </tr>
+    <tr>
+        <td class="dark">{{A7}}</td>
+        <td class="light">{{B7}}</td>
+        <td class="dark">{{C7}}</td>
+        <td class="light">{{D7}}</td>
+        <td class="dark">{{E7}}</td>
+        <td class="light">{{F7}}</td>
+        <td class="dark">{{G7}}</td>
+        <td class="light">{{H7}}</td>
+        <th>7</th>
+    </tr>
+    <tr>
+        <td class="light">{{A6}}</td>
+        <td class="dark">{{B6}}</td>
+        <td class="light">{{C6}}</td>
+        <td class="dark">{{D6}}</td>
+        <td class="light">{{E6}}</td>
+        <td class="dark">{{F6}}</td>
+        <td class="light">{{G6}}</td>
+        <td class="dark">{{H6}}</td>
+        <th>6</th>
+    </tr>
+    <tr>
+        <td class="dark">{{A5}}</td>
+        <td class="light">{{B5}}</td>
+        <td class="dark">{{C5}}</td>
+        <td class="light">{{D5}}</td>
+        <td class="dark">{{E5}}</td>
+        <td class="light">{{F5}}</td>
+        <td class="dark">{{G5}}</td>
+        <td class="light">{{H5}}</td>
+        <th>5</th>
+    </tr>
+    <tr>
+        <td class="light">{{A4}}</td>
+        <td class="dark">{{B4}}</td>
+        <td class="light">{{C4}}</td>
+        <td class="dark">{{D4}}</td>
+        <td class="light">{{E4}}</td>
+        <td class="dark">{{F4}}</td>
+        <td class="light">{{G4}}</td>
+        <td class="dark">{{H4}}</td>
+        <th>4</th>
+    </tr>
+    <tr>
+        <td class="dark">{{A3}}</td>
+        <td class="light">{{B3}}</td>
+        <td class="dark">{{C3}}</td>
+        <td class="light">{{D3}}</td>
+        <td class="dark">{{E3}}</td>
+        <td class="light">{{F3}}</td>
+        <td class="dark">{{G3}}</td>
+        <td class="light">{{H3}}</td>
+        <th>3</th>
+    </tr>
+    <tr>
+        <td class="light">{{A2}}</td>
+        <td class="dark">{{B2}}</td>
+        <td class="light">{{C2}}</td>
+        <td class="dark">{{D2}}</td>
+        <td class="light">{{E2}}</td>
+        <td class="dark">{{F2}}</td>
+        <td class="light">{{G2}}</td>
+        <td class="dark">{{H2}}</td>
+        <th>2</th>
+    </tr>
+    <tr>
+        <td class="dark">{{A1}}</td>
+        <td class="light">{{B1}}</td>
+        <td class="dark">{{C1}}</td>
+        <td class="light">{{D1}}</td>
+        <td class="dark">{{E1}}</td>
+        <td class="light">{{F1}}</td>
+        <td class="dark">{{G1}}</td>
+        <td class="light">{{H1}}</td>
+        <th>1</th>
+    </tr>
+    <tr>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+        <th>e</th>
+        <th>f</th>
+        <th>g</th>
+        <th>h</th>
+        <th></th>
+    </tbody>
+</table>
+<form action="/ingame" method="post" class="textBoxWrapper">
+    <input type="text" name="gameID" class="invisible" value={{gameID}} />
+    FROM : <input type="text" name="source" class="textBox"/>
+    TO : <input type="text" name="target" class="textBox"/>
+    <input type="submit" value="MOVE" class="btn" id="move"/>
+</form>
+<br>
+</body>
+</html>

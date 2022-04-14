@@ -8,8 +8,8 @@ import chess.domain.position.UnitDirection;
 
 public final class Knight extends MovingUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 나이트는 색상을 가져야합니다.";
-    private static final String BLACK_KNIGHT = "♘";
-    private static final String WHITE_KNIGHT = "♞";
+    private static final String BLACK_KNIGHT = "♞";
+    private static final String WHITE_KNIGHT = "♘";
     private static final List<UnitDirection> MOVABLE_DIRECTIONS;
 
     static {

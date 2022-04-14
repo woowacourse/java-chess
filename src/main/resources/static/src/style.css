@@ -1,0 +1,111 @@
+body {
+    font-family: 'BMHANNAPro', monospace;
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%, -50%);
+}
+
+@font-face {
+    font-family: 'BMHANNAPro';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#welcomeMessage {
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#start {
+    margin-left: 20px;
+    float: right;
+}
+
+#continue {
+    width: fit-content;
+    margin: 20px auto;
+    display: block;
+}
+
+.gameIDBox {
+    width: 350px;
+}
+
+#find {
+    margin-left: 20px;
+    float: right;
+}
+
+#home {
+    width: fit-content;
+    margin: 20px auto;
+    display: block;
+}
+
+.endBox {
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 50px;
+}
+
+#end {
+    float: right;
+}
+
+input {
+    font-size: 50px;
+    padding: 0 20px;
+}
+
+.chess-board { border-spacing: 0; border-collapse: collapse; text-align: center; margin: 20px; }
+.chess-board th { padding: .5em; font-size: 35px; }
+.chess-board td { border: 0 solid; width: 80px; height: 80px; font-size: 70px; }
+.chess-board .light { background: #ffffe1; }
+.chess-board .dark { background: #e0e0ff; }
+
+.btn {
+    font-family: 'BMHANNAPro', monospace;
+    background-color: #bdb4fa;
+    box-shadow: 0 5px 0 0 #9b92d8;
+    border: 0;
+}
+
+.btn:hover {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    box-shadow: 0 0 0 0 #cec5fb;
+}
+
+.textBoxWrapper {
+    font-size: 50px;
+}
+
+.textBox {
+    width: 75px;
+}
+
+#move {
+    float: right;
+}
+
+.inlineBtn {
+    display: inline;
+}
+
+.score {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+#restart {
+    float: left;
+    margin-right: 50px;
+}
+
+.invisible {
+    display: none;
+}

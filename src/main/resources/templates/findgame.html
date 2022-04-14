@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/style.css">
+    <title>야호의 체스 - 어디로 입장하실텐가?!</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id="welcomeMessage">
+    {{message}}
+</div>
+<form action="/findgame" method="post" class="textBoxWrapper">
+    GAME ID : <input type="text" name="gameID" class="gameIDBox"/>
+    <input type="submit" value="FIND" class="btn" id="find"/>
+</form>
+<form action="/" method="get">
+    <input type="submit" value="HOME" class="btn" id="home">
+</form>
+</body>
+</html>

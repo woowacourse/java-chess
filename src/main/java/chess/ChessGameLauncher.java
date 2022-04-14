@@ -2,10 +2,11 @@ package chess;
 
 import java.util.List;
 
-import chess.command.Command;
-import chess.command.CommandType;
 import chess.domain.ChessGame;
+import chess.domain.GameTurn;
 import chess.domain.board.InitialBoardGenerator;
+import chess.domain.command.Command;
+import chess.domain.command.CommandType;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -13,7 +14,7 @@ public final class ChessGameLauncher {
 
     void run() {
         OutputView.announceStart();
-        ChessGame chessGame = new ChessGame(new InitialBoardGenerator());
+        ChessGame chessGame = new ChessGame(new InitialBoardGenerator(), GameTurn.READY);
         boolean running = true;
         while (running) {
             running = execute(chessGame);
