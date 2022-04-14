@@ -1,0 +1,91 @@
+body {
+    background-image: url("../images/wood.svg");
+}
+
+h1{
+    text-align: center;
+    color: aliceblue;
+}
+
+.board {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chess-board {
+    margin: 50px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px;
+}
+
+.btn {
+    margin: auto;
+    display: block;
+    width: 300px;
+    font-size: 50px;
+    padding: 30px 20px 30px 20px;
+    border-radius: 5px;
+    background: rgb(204, 204, 204);
+}
+
+.score {
+    top: 50px;
+    left: 100px;
+    /* 상자 폭과 높이 지정 */
+    width: 300px;
+    height: 50px;
+    /* 상자 배경색 */
+    background-color: rgb(204, 204, 204);
+    font-size: 30px;
+    /* 바깥 여백 */
+    margin: 50px;
+    /* 안쪽 여백 */
+    padding: 20px 20px 40px 20px; /* 위 오른 아래 왼 */
+}
+
+table {
+    width: 700px;
+    height: 700px;
+    margin:auto;
+}
+
+img {
+    width: 60px;
+    display: block;
+    margin: auto;
+}
+
+#a8, #c8, #e8, #g8,
+#b7, #d7, #f7, #h7,
+#a6, #c6, #e6, #g6,
+#b5, #d5, #f5, #h5,
+#a4, #c4, #e4, #g4,
+#b3, #d3, #f3, #h3,
+#a2, #c2, #e2, #g2,
+#b1, #d1, #f1, #h1
+{
+    background-color: rgb(204, 204, 204);
+    width: 60px;
+    height: 60px;
+}
+
+#b8, #d8, #f8, #h8,
+#a7, #c7, #e7, #g7,
+#b6, #d6, #f6, #h6,
+#a5, #c5, #e5, #g5,
+#b4, #d4, #f4, #h4,
+#a3, #c3, #e3, #g3,
+#b2, #d2, #f2, #h2,
+#a1, #c1, #e1, #g1
+{
+    background-color: burlywood;
+    width: 60px;
+    height: 60px;
+}

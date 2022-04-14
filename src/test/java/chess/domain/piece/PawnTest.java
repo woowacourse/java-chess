@@ -34,8 +34,8 @@ public class PawnTest {
         board.putPiece(Position.of(File.c, Rank.Six), new Pawn(Color.White));
         board.putPiece(Position.of(File.e, Rank.Six), new Pawn(Color.White));
 
-        board.putPiece(Position.of(File.a, Rank.Two), new Pawn(Color.White));
         board.putPiece(Position.of(File.a, Rank.Three), new Pawn(Color.Black));
+        board.putPiece(Position.of(File.a, Rank.Two), new Pawn(Color.White));
 
         board.putPiece(Position.of(File.h, Rank.Four), new Pawn(Color.Black));
         board.putPiece(Position.of(File.h, Rank.Two), new Pawn(Color.White));

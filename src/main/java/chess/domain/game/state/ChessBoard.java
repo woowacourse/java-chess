@@ -12,12 +12,32 @@ import chess.domain.game.state.position.Rank;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.property.Color;
+import chess.web.dto.PieceDto;
+import chess.web.utils.Converter;
 
 public class ChessBoard {
     private static final int DUPLICATED_NUMBER = 2;
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board;
+
+    public ChessBoard() {
+        board = new HashMap<>();
+    }
+
+    private ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
+    public static ChessBoard of(List<PieceDto> pieces) {
+        Map<Position, Piece> board = new HashMap<>();
+        for (PieceDto piece : pieces) {
+            String position = piece.getPosition();
+            board.put(Converter.positionFrom(position), PieceFactory.createBy(piece.getName(), piece.getState()));
+        }
+        return new ChessBoard(board);
+    }
 
     public void move(Position source, Position target) {
         Piece sourcePiece = getPiece(source);

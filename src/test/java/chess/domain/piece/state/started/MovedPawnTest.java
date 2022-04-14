@@ -54,6 +54,21 @@ class MovedPawnTest {
             );
     }
 
+    @Test
+    @DisplayName("현재 상태에서 가능한 Positions 을 가져와야 한다.")
+    void findMovablePositions1() {
+        initBoard();
+        board.put(Position.of(File.d, Rank.Five), new Pawn(Color.Black));
+        sourcePiece.updateState();
+        List<Position> positions = sourcePiece.findMovablePositions(source, board);
+        assertThat(positions)
+            .hasSize(2)
+            .contains(
+                Position.of(File.c, Rank.Five),
+                Position.of(File.e, Rank.Five)
+            );
+    }
+
     void initBoard() {
         board = new HashMap<>();
         source = Position.of(File.d, Rank.Four);

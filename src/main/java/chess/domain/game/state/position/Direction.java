@@ -35,19 +35,6 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> knight() {
-        List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UpUpRight);
-        directions.add(Direction.UpRightRight);
-        directions.add(Direction.DownRightRight);
-        directions.add(Direction.DownDownRight);
-        directions.add(Direction.DownDownLeft);
-        directions.add(Direction.DownLeftLeft);
-        directions.add(Direction.UpLeftLeft);
-        directions.add(Direction.UpUpLeft);
-        return directions;
-    }
-
     public static List<Direction> upDownLeftRight() {
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.Up);

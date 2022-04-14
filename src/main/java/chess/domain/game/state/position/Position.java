@@ -15,7 +15,7 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
-        return POOL.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
+        return POOL.computeIfAbsent(file.name() + rank.getValue(), ignored -> new Position(file, rank));
     }
 
     public boolean isBlocked(Direction direction) {

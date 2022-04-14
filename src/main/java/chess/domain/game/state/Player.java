@@ -16,6 +16,14 @@ public enum Player {
         this.color = color;
     }
 
+    public static Player getName(String name) {
+        if (name.equals(White.name())) {
+            return White;
+        }
+
+        return Black;
+    }
+
     public boolean hasPiece(Piece piece) {
         return piece.isSameColor(this.color);
     }

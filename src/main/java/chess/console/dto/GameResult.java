@@ -1,10 +1,10 @@
-package chess.dto;
+package chess.console.dto;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.Piece;
 import chess.domain.game.state.position.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
 public class GameResult {

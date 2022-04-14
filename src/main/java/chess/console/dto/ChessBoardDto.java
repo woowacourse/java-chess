@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.console.dto;
 
 import java.util.HashMap;
 import java.util.Map;

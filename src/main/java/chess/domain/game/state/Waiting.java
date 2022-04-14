@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -12,12 +15,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.game.state.position.File;
-import chess.domain.game.state.position.Position;
-import chess.domain.game.state.position.Rank;
 import chess.domain.piece.property.Color;
 
-public class StartedGame implements GameState {
+public class Waiting implements GameState {
 
     private final ChessBoard board = new ChessBoard();
 
@@ -27,7 +27,7 @@ public class StartedGame implements GameState {
         initializePieces(Rank.One, Color.White);
         initializePawn();
 
-        return new RunningGame(board, Player.White);
+        return new Running(board, Player.White);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class StartedGame implements GameState {
 
     @Override
     public GameState end() {
-        return new EndGame();
+        return new End();
     }
 
     @Override
@@ -53,6 +53,11 @@ public class StartedGame implements GameState {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return Player.White;
     }
 
     private void initializePieces(Rank rank, Color color) {

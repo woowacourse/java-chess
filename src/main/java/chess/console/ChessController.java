@@ -1,12 +1,12 @@
-package chess;
+package chess.console;
 
 import java.util.NoSuchElementException;
 
+import chess.console.dto.ChessBoardDto;
+import chess.console.dto.GameResult;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import chess.domain.game.ChessGame;
-import chess.dto.ChessBoardDto;
-import chess.dto.GameResult;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ChessController {
 
@@ -26,17 +26,20 @@ public class ChessController {
         try {
             String input = InputView.requestCommand();
             GameResult gameResult = Command.act(input, chessGame);
-
-            if (gameResult.isBoard()) {
-                OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
-            }
-            if (gameResult.isScore()) {
-                OutputView.printScore(gameResult.getScore());
-            }
+            printOutputView(gameResult);
         } catch (NoSuchElementException
             | IllegalArgumentException
             | UnsupportedOperationException exception) {
             OutputView.printErrorMessage(exception.getMessage());
+        }
+    }
+
+    private void printOutputView(GameResult gameResult) {
+        if (gameResult.isBoard()) {
+            OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
+        }
+        if (gameResult.isScore()) {
+            OutputView.printScore(gameResult.getScore());
         }
     }
 }
