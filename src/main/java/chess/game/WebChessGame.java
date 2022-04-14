@@ -16,8 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebChessGame {
 
@@ -27,7 +26,7 @@ public class WebChessGame {
         CommandDao commandDao = new CommandDao();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render( model,"start.html");
+            return render(model, "start.html");
         });
 
         post("/start", (req, res) -> gameStart(commandDao));
@@ -67,8 +66,12 @@ public class WebChessGame {
     }
 
     private String gameStart(final CommandDao commandDao) {
-        commandDao.init();
         final Map<String, Object> model = new HashMap<>();
+        try {
+            commandDao.init();
+        } catch (final RuntimeException e) {
+            return backInitialPage(e.getMessage());
+        }
         state = Start.initState("start");
         model.put("squares", showChessBoard(state.getBoard()));
         model.put("player", "White");
@@ -76,9 +79,15 @@ public class WebChessGame {
         return render(model, "game.html");
     }
 
+    private String backInitialPage(final String message) {
+        final Map<String, Object> model = new HashMap<>();
+        model.put("message", message);
+        return render(model, "start.html");
+    }
+
     private List<Square> showChessBoard(final Map<Position, Piece> board) {
         final List<Square> squares = new ArrayList<>();
-        for(final Position position : board.keySet()) {
+        for (final Position position : board.keySet()) {
             addPiece(position, board.get(position), squares);
         }
         return squares;
@@ -90,36 +99,46 @@ public class WebChessGame {
         }
     }
 
-    private String gameProceed(Request req, CommandDao commandDao) {
+    private String gameProceed(final Request req, final CommandDao commandDao) {
         final Map<String, Object> model = new HashMap<>();
         model.put("player", playerName(state.getPlayer()));
-        commandDao.save(req.queryParams("command"));
-        model.put("commands", commandDao.findAll());
-        state = proceed(req.queryParams("command"), model);
-        model.put("squares", showChessBoard(state.getBoard()));
-        if (state.isRunning()) {
-            return render(model, "game.html");
+        try {
+            commandDao.save(req.queryParams("command"));
+            model.put("commands", commandDao.findAll());
+            state = proceed(req.queryParams("command"), model);
+            model.put("squares", showChessBoard(state.getBoard()));
+        } catch (final RuntimeException e) {
+            return backInitialPage(e.getMessage());
         }
-        return render(model, "finished.html");
+        return gameState(model);
     }
 
-    private String reload(CommandDao commandDao) {
-        final List<String> commands = commandDao.findAll();
+    private String reload(final CommandDao commandDao) {
+        final List<String> commands;
+        try {
+            commands = commandDao.findAll();
+        } catch (final RuntimeException e) {
+            return backInitialPage(e.getMessage());
+        }
         final Map<String, Object> model = new HashMap<>();
         state = Start.initState("start");
-        model.put("commands", commandDao.findAll());
-        for (String command : commands) {
+        for (final String command : commands) {
             state = proceed(command, model);
         }
+        model.put("commands", commands);
         model.put("player", playerName(state.getPlayer()));
         model.put("squares", showChessBoard(state.getBoard()));
+        return gameState(model);
+    }
+
+    private String gameState(final Map<String, Object> model) {
         if (state.isRunning()) {
             return render(model, "game.html");
         }
         return render(model, "finished.html");
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private static String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
