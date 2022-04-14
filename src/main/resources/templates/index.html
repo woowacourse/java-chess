@@ -9,13 +9,13 @@
 
 <body>
     <div class="chess-game">
-        <h1>혼돈의 체스 게임</h1>
+        <h1>♗혼돈의 체스 게임♗</h1>
         <div>
             Black 진영 점수 VS White 진영 점수
             <div class="score">{{black-score}}&nbsp;&nbsp;&nbsp;&nbsp;{{white-score}}</div>
         </div>
         <p class="error-message">
-            오류 : {{error-message}}
+            {{error-message}}
         </p>
         <section class="chess-board">
             {{#pieces}}
@@ -24,7 +24,7 @@
             </div>
             {{/pieces}}
         </section>
-        </br>
+        <br>
         <section>
             <form action="/move" method="get" enctype="text/plain">
                 <div>
@@ -34,7 +34,7 @@
                     <input type="submit" value="이동">
                 </div>
             </form>
-            </br>
+            <br>
             <form action="/result" method="get">
                 <input type="submit" value="게임 종료">
             </form>
