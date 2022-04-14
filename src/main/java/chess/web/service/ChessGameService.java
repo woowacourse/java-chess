@@ -27,10 +27,7 @@ public class ChessGameService {
         saveAll(chessGame);
     }
 
-    public void move(ChessGame chessGame, String command) {
-        String source = command.substring(0, 2);
-        String target = command.substring(2, 4);
-
+    public void move(ChessGame chessGame, String source, String target) {
         chessGame.move(Position.of(source), Position.of(target));
         removeAll();
         saveAll(chessGame);

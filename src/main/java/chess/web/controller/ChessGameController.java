@@ -70,7 +70,7 @@ public class ChessGameController {
         ChessGame chessGame = ChessGame.of(new RunningGame(service.createChessBoard(), playerDao.findAll()));
         String turn = chessGame.getTurn();
         try {
-            service.move(chessGame, req.queryParams("command"));
+            service.move(chessGame, req.queryParams("source"), req.queryParams("target"));
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
             error.put("hasError", true);
