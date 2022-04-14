@@ -13,22 +13,23 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <form action="/start" method="get">
+      <form action="/play" method="post">
+        <input class="name-box" type="text" name="gameName"/>
         <input class="btn btn-default" type="submit" value="Start"/>
       </form>
     </div>
   </div>
-  <div class="row">
-    <form action="/load" method="post">
-      <select name="gameName">
-        <option value="">저장된 게임명 선택</option>
-        {{#each names}}
-        <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
-      <input class="btn btn-default" type="submit" value="Load"/>
-    </form>
-  </div>
+<!--  <div class="row">-->
+<!--    <form action="/load" method="post">-->
+<!--      <select name="gameName">-->
+<!--        <option value="">저장된 게임명 선택</option>-->
+<!--        {{#each names}}-->
+<!--        <option value="{{this}}">{{this}}</option>-->
+<!--        {{/each}}-->
+<!--      </select>-->
+<!--      <input class="btn btn-default" type="submit" value="Load"/>-->
+<!--    </form>-->
+<!--  </div>-->
 </div>
 </body>
 </html>

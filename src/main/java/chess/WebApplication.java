@@ -18,11 +18,24 @@ public class WebApplication {
         staticFileLocation("/static");
         WebChessController webChessController = new WebChessController();
 
+        // 첫 화면
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<String> names = webChessController.findAllGameName();
-            model.put("names", names);
+//            List<String> names = webChessController.findAllGameName();
+//            model.put("names", names);
             return render(model, "index.html");
+        });
+
+        // 게임 시작 시 이름 입력
+        // 1. 이름이 존재하면 게임 이어하기
+        // 2. 이름이 없다면 새로운 게임 시작하기
+        post("/play", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            // 게임 이름 가져오기
+            String gameName = req.queryParams("gameName");
+            webChessController.start2(gameName);
+            res.redirect("/play/" + req.queryParams("gameName"));
+            return null;
         });
 
         get("/play", (req, res) -> {
@@ -65,7 +78,7 @@ public class WebApplication {
                 res.redirect("/end");
                 return null;
             }
-            res.redirect("/play");
+            res.redirect("/play/" + req.queryParams("gameName"));
             return null;
         });
 
@@ -76,7 +89,7 @@ public class WebApplication {
                 webChessController.delete(gameName);
             }
             webChessController.save(gameName);
-            res.redirect("/play");
+            res.redirect("/play/"+gameName);
             return null;
         });
 

@@ -4,7 +4,7 @@
 
 - [ ] `WebApplication`
     - [ ] 이동 로직 코드 `WebChessController` 내부로 이동
-    - [ ] 하나의 라우터로 완전한 기능을 제공해야 하는 부분이 개별적으로 분리됨.
+    - [x] 하나의 라우터로 완전한 기능을 제공해야 하는 부분이 개별적으로 분리됨.
         - `GET /` 게임 생성 화면에서 게임 이름을 입력 받아 `POST /save`를 호출하여 게임이 없으면 게임 생성 및 시작 처리
         - `GET /play/:gameName`으로 redirect
     - [ ] `GET /play/:gameName` 게임 불러올 때마다 점수도 함께 응답하면 어떤지

@@ -32,6 +32,15 @@ public class WebChessController {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessGame = new ChessGame(chessBoard);
     }
+    public void start2(String gameName) {
+        if(chessGameDao.findByName(gameName) != null){
+            chessGame = new ChessGame(load2(gameName));
+            return;
+        }
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
+        chessGame = new ChessGame(chessBoard);
+        save(gameName);
+    }
 
     public Map<String, Object> modelBoard() {
         Map<String, Object> model = new HashMap<>();
@@ -80,6 +89,13 @@ public class WebChessController {
         Map<Position, Piece> board = createBoard(pieceDtoList);
         ChessBoard chessBoard = new ChessBoard(board);
         changeBoard(Player.valueOf(chessGameDto.getPlayer()), chessBoard);
+    }
+
+    public ChessBoard load2(String gameName) {
+        ChessGameDto chessGameDto = chessGameDao.findByName(gameName);
+        List<PieceDto> pieceDtoList = pieceDao.findByGameName(gameName);
+        Map<Position, Piece> board = createBoard(pieceDtoList);
+        return new ChessBoard(board);
     }
 
     public Map<Position, Piece> createBoard(List<PieceDto> pieceDtoList) {
