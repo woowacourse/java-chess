@@ -2,21 +2,19 @@ package chess.controller;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum ApplicationCommand {
     START("start"),
-    END("end"),
-    MOVE("move"),
-    STATUS("status");
+    END("end");
 
-    private static final String UNVALID_COMMAND = "[ERROR] 유효하지 않은 명령입니다.";
+    private static final String UNVALID_COMMAND = "[ERROR] start 혹은 end 명령을 입력하세요.";
     private final String commandName;
 
-    Command(String commandName) {
+    ApplicationCommand(String commandName) {
         this.commandName = commandName;
     }
 
-    public static Command of(String commandName) {
-        return Arrays.stream(Command.values())
+    public static ApplicationCommand of(String commandName) {
+        return Arrays.stream(ApplicationCommand.values())
                 .filter(it -> it.commandName.equals(commandName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(UNVALID_COMMAND));

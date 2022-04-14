@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.strategy.ContinuousMovingStrategy;
+import chess.domain.strategy.MovingStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,15 @@ public class Queen extends ChessPiece {
     private static final double SCORE = 9.0;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static final MovingStrategy queenMovingStrategy = new ContinuousMovingStrategy(
+            List.of(ChessBoardPosition.ofDirection(EAST, NORTH),
+                    ChessBoardPosition.ofDirection(EAST, SOUTH),
+                    ChessBoardPosition.ofDirection(WEST, NORTH),
+                    ChessBoardPosition.ofDirection(WEST, SOUTH),
+                    ChessBoardPosition.ofDirection(EAST, STAY),
+                    ChessBoardPosition.ofDirection(WEST, STAY),
+                    ChessBoardPosition.ofDirection(STAY, NORTH),
+                    ChessBoardPosition.ofDirection(STAY, SOUTH)));
 
     static {
         blackTeamInitialPosition.put(ChessBoardPosition.of(COLUMN, BLACK_TEAM_ROW), new Queen(Team.BLACK));
@@ -26,15 +36,11 @@ public class Queen extends ChessPiece {
     }
 
     Queen(Team team) {
-        super(team, SCORE, new ContinuousMovingStrategy(
-                List.of(ChessBoardPosition.ofDirection(EAST, NORTH),
-                        ChessBoardPosition.ofDirection(EAST, SOUTH),
-                        ChessBoardPosition.ofDirection(WEST, NORTH),
-                        ChessBoardPosition.ofDirection(WEST, SOUTH),
-                        ChessBoardPosition.ofDirection(EAST, STAY),
-                        ChessBoardPosition.ofDirection(WEST, STAY),
-                        ChessBoardPosition.ofDirection(STAY, NORTH),
-                        ChessBoardPosition.ofDirection(STAY, SOUTH))));
+        super(team, SCORE, queenMovingStrategy);
+    }
+
+    public static Queen of(Team team) {
+        return new Queen(team);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

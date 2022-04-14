@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
+import chess.domain.strategy.MovingStrategy;
 import chess.domain.strategy.PawnMovingStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,8 @@ public class Pawn extends ChessPiece {
     private static final double SCORE = 1;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPawn = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPawn = new HashMap<>();
+    private static final MovingStrategy blackPawnMovingStrategy;
+    private static final MovingStrategy whitePawnMovingStrategy;
     private static final List<Integer> initialColumn = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
     static {
@@ -37,21 +40,26 @@ public class Pawn extends ChessPiece {
             blackTeamInitialPosition.add(ChessBoardPosition.of(column, BLACK_TEAM_ROW));
             whiteTeamInitialPosition.add(ChessBoardPosition.of(column, WHITE_TEAM_ROW));
         }
+        blackPawnMovingStrategy = new PawnMovingStrategy(blackTeamAbleMovement, blackTeamKillMovement, blackTeamInitialPosition);
+        whitePawnMovingStrategy = new PawnMovingStrategy(whiteTeamAbleMovement, whiteTeamKillMovement, whiteTeamInitialPosition);
 
         for (int column : initialColumn) {
             blackTeamInitialPawn.put(ChessBoardPosition.of(column, BLACK_TEAM_ROW)
-                    , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement, blackTeamInitialPosition));
+                    , new Pawn(Team.BLACK, blackPawnMovingStrategy));
             whiteTeamInitialPawn.put(ChessBoardPosition.of(column, WHITE_TEAM_ROW)
-                    , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement, whiteTeamInitialPosition));
+                    , new Pawn(Team.WHITE, whitePawnMovingStrategy));
         }
     }
 
-    Pawn(Team team,
-         List<ChessBoardPosition> blackTeamAbleMovement,
-         List<ChessBoardPosition> whiteTeamAbleMovement,
-         List<ChessBoardPosition> killMovement,
-         List<ChessBoardPosition> initialPosition) {
-        super(team, SCORE, new PawnMovingStrategy(blackTeamAbleMovement, whiteTeamAbleMovement, killMovement, initialPosition));
+    Pawn(Team team, MovingStrategy movingStrategy) {
+        super(team, SCORE, movingStrategy);
+    }
+
+    public static Pawn of(Team team) {
+        if (Team.BLACK.isSame(team)) {
+            return new Pawn(team, blackPawnMovingStrategy);
+        }
+        return new Pawn(team, whitePawnMovingStrategy);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
+import chess.domain.strategy.MovingStrategy;
 import chess.domain.strategy.NoPathMovingStrategy;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,15 @@ public class Knight extends ChessPiece {
     private static final double SCORE = 2.5;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static final MovingStrategy knightMovingStrategy = new NoPathMovingStrategy(
+            List.of(ChessBoardPosition.of(2*EAST, NORTH)
+                    , ChessBoardPosition.ofDirection(2*EAST, SOUTH)
+                    , ChessBoardPosition.ofDirection(2*WEST, NORTH)
+                    , ChessBoardPosition.ofDirection(2*WEST, SOUTH)
+                    , ChessBoardPosition.ofDirection(EAST, 2*NORTH)
+                    , ChessBoardPosition.ofDirection(EAST, 2*SOUTH)
+                    , ChessBoardPosition.ofDirection(WEST, 2*NORTH)
+                    , ChessBoardPosition.ofDirection(WEST, 2*SOUTH)));
 
     static {
         blackTeamInitialPosition.put(ChessBoardPosition.of(LEFT_KNIGHT_COLUMN, BLACK_TEAM_ROW), new Knight(Team.BLACK));
@@ -29,16 +39,11 @@ public class Knight extends ChessPiece {
     }
 
     Knight(Team team) {
-        super(team, SCORE, new NoPathMovingStrategy(
-                List.of(ChessBoardPosition.of(2*EAST, NORTH)
-                , ChessBoardPosition.ofDirection(2*EAST, SOUTH)
-                , ChessBoardPosition.ofDirection(2*WEST, NORTH)
-                , ChessBoardPosition.ofDirection(2*WEST, SOUTH)
-                , ChessBoardPosition.ofDirection(EAST, 2*NORTH)
-                , ChessBoardPosition.ofDirection(EAST, 2*SOUTH)
-                , ChessBoardPosition.ofDirection(WEST, 2*NORTH)
-                , ChessBoardPosition.ofDirection(WEST, 2*SOUTH))
-        ));
+        super(team, SCORE, knightMovingStrategy);
+    }
+
+    public static Knight of(Team team) {
+        return new Knight(team);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

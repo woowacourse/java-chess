@@ -3,8 +3,6 @@ package chess.view;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
-import chess.dto.ChessBoardDto;
-import chess.dto.ChessStatusDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,24 +31,23 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printCurrentChessBoard(ChessBoardDto chessBoardDto) {
-        Map<ChessBoardPosition, ChessPiece> mapInformation = chessBoardDto.getMapInformation();
+    public static void printCurrentChessBoard(Map<ChessBoardPosition, ChessPiece> mapData) {
         for (int row : rows) {
-            printRow(mapInformation, row);
+            printRow(mapData, row);
             System.out.println();
         }
     }
 
-    private static void printRow(Map<ChessBoardPosition, ChessPiece> mapInformation, int row) {
+    private static void printRow(Map<ChessBoardPosition, ChessPiece> boardData, int row) {
         for (int column : columns) {
-            printSector(mapInformation, row, column);
+            printSector(boardData, row, column);
         }
     }
 
-    private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, int column) {
+    private static void printSector(Map<ChessBoardPosition, ChessPiece> boardData, int row, int column) {
         ChessBoardPosition target = ChessBoardPosition.of(column, row);
-        if (mapInformation.containsKey(target)) {
-            printChessPiece(mapInformation.get(target));
+        if (boardData.containsKey(target)) {
+            printChessPiece(boardData.get(target));
             return;
         }
         System.out.print(EMPTY_SPACE);
@@ -64,10 +61,10 @@ public class OutputView {
         System.out.print(ChessPieceName.of(chessPiece));
     }
 
-    public static void printStatus(ChessStatusDto chessStatusDto) {
-        for (Entry<Team, Double> entry : chessStatusDto.getTeamScore().entrySet()) {
+    public static void printStatus(Map<Team, Double> teamScore, Team winner) {
+        for (Entry<Team, Double> entry : teamScore.entrySet()) {
             System.out.println(entry.getKey() + TEAM_SCORE_DELIMITER + entry.getValue());
         }
-        System.out.printf(WINNER_FORMAT, chessStatusDto.getWinner());
+        System.out.printf(WINNER_FORMAT, winner);
     }
 }

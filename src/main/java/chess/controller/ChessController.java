@@ -1,8 +1,9 @@
 package chess.controller;
 
+import chess.domain.ChessBoardInitLogic;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.dto.ChessBoardDto;
+import chess.domain.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class ChessController {
     private static final int ROW_INDEX = 1;
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
     private static final String ONLY_START_OR_END_COMMAND_EXCEPTION = "[ERROR] start, end 명령 중 하나를 입력해주세요";
+    private static final int GAME_ID = 0;
 
     static {
         convertColumn.put('a', 1);
@@ -40,17 +42,19 @@ public class ChessController {
 
     private boolean isCommandStart(String command) {
         validateStartOrEndCommand(command);
-        return Command.of(command).equals(Command.START);
+        return ApplicationCommand.of(command).equals(ApplicationCommand.START);
     }
 
     private void validateStartOrEndCommand(String command) {
-        if (Command.of(command) != Command.START && Command.of(command) != Command.END) {
+        if (ApplicationCommand.of(command) != ApplicationCommand.START
+                && ApplicationCommand.of(command) != ApplicationCommand.END) {
             throw new IllegalArgumentException(ONLY_START_OR_END_COMMAND_EXCEPTION);
         }
     }
 
     private void playChessGame() {
-        ChessGame chessGame = ChessGame.create();
+        ChessGame chessGame = ChessGame.create(GAME_ID);
+        chessGame.initialize(Team.WHITE, ChessBoardInitLogic.initialize());
         sendDataForPrintCurrentChessBoard(chessGame);
 
         while (!chessGame.isGameEnd()) {
@@ -60,7 +64,7 @@ public class ChessController {
     }
 
     private void sendDataForPrintCurrentChessBoard(ChessGame chessGame) {
-        OutputView.printCurrentChessBoard(ChessBoardDto.of(chessGame.getChessBoardInformation()));
+        OutputView.printCurrentChessBoard(chessGame.getChessBoardData());
     }
 
     private void doTurn(ChessGame chessGame) {
@@ -69,16 +73,16 @@ public class ChessController {
     }
 
     private void inGameCommand(ChessGame chessGame, List<String> command) {
-        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.STATUS)) {
+        if (InGameCommand.of(command.get(COMMAND_INDEX)).equals(InGameCommand.STATUS)) {
             statusCommand(chessGame);
         }
-        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.MOVE)) {
+        if (InGameCommand.of(command.get(COMMAND_INDEX)).equals(InGameCommand.MOVE)) {
             moveCommand(chessGame, command);
         }
     }
 
     private void statusCommand(ChessGame chessGame) {
-        OutputView.printStatus(chessGame.getStatusInformation());
+        OutputView.printStatus(chessGame.getTeamScore(), chessGame.getWinner());
     }
 
     private void moveCommand(ChessGame chessGame, List<String> command) {
