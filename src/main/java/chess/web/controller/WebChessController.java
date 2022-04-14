@@ -61,7 +61,7 @@ public class WebChessController {
 
         Position source = new Position(req.queryParams("source"));
         Position target = new Position(req.queryParams("target"));
-        webChessService.updateChessGame(chessGame, source, target);
+        webChessService.move(chessGame, source, target);
 
         checkFinished(res, chessGame);
 
@@ -77,7 +77,7 @@ public class WebChessController {
     }
 
     public String startChess(Response res) {
-        webChessService.startChessGame();
+        webChessService.start();
 
         res.redirect(INDEX_PATH);
         return null;
@@ -92,7 +92,7 @@ public class WebChessController {
         model.put("white-score", webChessService.getScore(Color.BLACK));
         model.put("winner", chessGame.result().toString());
 
-        webChessService.endChessGame();
+        webChessService.end();
         return render(model, "winner.html");
     }
 

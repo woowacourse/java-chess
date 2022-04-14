@@ -30,7 +30,7 @@ public class WebChessService {
         this.pieceDao = new PieceDaoImpl();
     }
 
-    public void startChessGame() {
+    public void start() {
         boardStateDao.save(StateType.WHITE_TURN);
 
         ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
@@ -51,12 +51,12 @@ public class WebChessService {
         }
     }
 
-    public void endChessGame() {
+    public void end() {
         boardStateDao.deleteAll();
         pieceDao.deleteAll();
     }
 
-    public void updateChessGame(ChessGame chessGame, Position source, Position target) {
+    public void move(ChessGame chessGame, Position source, Position target) {
         updateState(chessGame);
         pieceDao.update(new PieceDto(chessGame.board().findPiece(target), target));
         pieceDao.update(new PieceDto(chessGame.board().findPiece(source), source));
@@ -81,12 +81,12 @@ public class WebChessService {
         return board;
     }
 
-    public List<PieceDto> getPieces() {
-        return pieceDao.selectAll();
+    private StateType getStateType() {
+        return boardStateDao.selectState();
     }
 
-    public StateType getStateType() {
-        return boardStateDao.selectState();
+    public List<PieceDto> getPieces() {
+        return pieceDao.selectAll();
     }
 
     public double getScore(Color color) {
