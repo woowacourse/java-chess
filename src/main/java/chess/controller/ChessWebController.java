@@ -29,11 +29,6 @@ public class ChessWebController {
     }
 
     private String redirect(final Request request, final Response response) {
-        if (chessService.isGameWaiting()) {
-            response.redirect("/start");
-            return null;
-        }
-
         if (chessService.isGameFinish()) {
             response.redirect("/result");
             return null;
@@ -45,13 +40,20 @@ public class ChessWebController {
 
     private String viewGame(final Request request, final Response response) {
         final Map<String, Object> model = new HashMap<>();
-        final Map<Color, Double> scores = chessService.getGameScores();
+        addInformation(model);
 
+        return render(model, "game.html");
+    }
+
+    private void addInformation(final Map<String, Object> model) {
+        if(chessService.isGameWaiting()) {
+            model.put("isGameWaiting", true);
+            return;
+        }
+        final Map<Color, Double> scores = chessService.getGameScores();
         model.put("board", new BoardDto(chessService.getPieces()));
         model.put("black", scores.get(Color.BLACK));
         model.put("white", scores.get(Color.WHITE));
-
-        return render(model, "game.html");
     }
 
     private String startNewGame(final Request request, final Response response) {
