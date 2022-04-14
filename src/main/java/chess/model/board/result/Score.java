@@ -30,6 +30,14 @@ public class Score {
         return scores;
     }
 
+    public Double white() {
+        return team(WHITE, board) + pawnPenalty(WHITE, board);
+    }
+
+    public Double black() {
+        return team(BLACK, board) + pawnPenalty(BLACK, board);
+    }
+
     private Double team(Team team, Map<Position, Piece> board) {
         return board.values()
                 .stream()

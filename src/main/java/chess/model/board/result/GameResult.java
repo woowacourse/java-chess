@@ -20,6 +20,6 @@ public class GameResult {
     }
 
     public Team pickWinnerTeam() {
-        return winner.pickFrom();
+        return winner.team();
     }
 }
