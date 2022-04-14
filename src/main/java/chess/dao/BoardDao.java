@@ -42,6 +42,17 @@ public class BoardDao {
         }
     }
 
+    public void deleteBoardSquare(String position) {
+        final String query = "delete from board where position = ?";
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, position);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("[DATABASE_ERROR] 체스 말 삭제 실패");
+        }
+    }
+
     public void updateBoardSquare(final String source, final String target, final String piece, final String color) {
         final String query = "update board set piece = ?, color = ?, position = ? where position = ?";
         try (Connection connection = dbConnection.getConnection();

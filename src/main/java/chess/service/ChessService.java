@@ -53,6 +53,7 @@ public class ChessService {
         final ChessGame chessGame = createChessGameWithState();
         Piece sourcePiece = chessGame.getBoard().findPiece(Position.valueOf(source));
         chessGame.movePiece(source, target);
+        boardDao.deleteBoardSquare(target);
         boardDao.updateBoardSquare(source, target, sourcePiece.representative(), sourcePiece.getColorName());
         if (chessGame.isFinish()) {
             stateDao.updateState(chessGame.getState());
