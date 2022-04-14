@@ -3,25 +3,20 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.domain.ChessBoard;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessPieceDaoTest {
 
     ChessPieceDao chessPieceDao = new ChessPieceDao();
-    int chessGameId;
-
-    @BeforeEach
-    void before() {
-        ChessGameDao chessGameDao = new ChessGameDao();
-        chessGameId = chessGameDao.findId();
-    }
 
     @Test
     @DisplayName("DB에 저장된 체스 피스를 전체를 저장한다.")
     void save() {
         ChessBoard chessBoard = ChessBoard.create();
+        ChessGameDao chessGameDao = new ChessGameDao();
+        int chessGameId = chessGameDao.findId();
+
         assertThatNoException().isThrownBy(() -> chessPieceDao.saveAll(chessGameId, chessBoard.getBoard()));
     }
 
