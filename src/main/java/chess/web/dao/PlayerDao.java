@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.web.dao;
 
 import chess.domain.game.state.Player;
 import chess.domain.piece.property.Color;

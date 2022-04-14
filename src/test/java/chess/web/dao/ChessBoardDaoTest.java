@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.web.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.PieceNameAndColor;
+import chess.web.dao.ChessBoardDao;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

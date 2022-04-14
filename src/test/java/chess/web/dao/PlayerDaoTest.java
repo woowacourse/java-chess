@@ -1,9 +1,10 @@
-package chess.dao;
+package chess.web.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.game.state.Player;
 import chess.domain.piece.property.Color;
+import chess.web.dao.PlayerDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

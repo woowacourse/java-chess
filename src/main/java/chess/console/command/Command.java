@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.console.command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.position.Rank;
-import chess.dto.GameResult;
+import chess.web.dto.GameResult;
 
 public enum Command {
     STATUS(Pattern.compile("^(status)$"), (chessGame, ignored) -> GameResult.ofScore(chessGame.status())),

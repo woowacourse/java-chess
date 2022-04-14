@@ -1,4 +1,4 @@
-package chess;
+package chess.web;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -6,8 +6,8 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.dao.ChessBoardDao;
-import chess.dao.PlayerDao;
+import chess.web.dao.ChessBoardDao;
+import chess.web.dao.PlayerDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.ChessBoard;
 import chess.domain.game.state.Player;
