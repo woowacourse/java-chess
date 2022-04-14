@@ -59,6 +59,7 @@ public class ChessGame {
             Position destinationPosition) {
         currentPlayer.capture(currentPosition, destinationPosition);
         opponentPlayer.remove(destinationPosition);
+        turn = turn.next();
         return currentPlayer.findAll();
     }
 
