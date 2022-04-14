@@ -49,6 +49,11 @@ public class ChessGameService {
         return status;
     }
 
+    public ChessGameDto loadChessGame(final String gameName) {
+        final ChessGame chessGame = findGameByName(gameName);
+        return ChessGameDto.of(chessGame, gameName);
+    }
+
     public ChessGameDto move(final String gameName, final String current, final String destination) {
         final int gameId = findGameIdByGameName(gameName);
         final ChessGame chessGame = findGameByName(gameName);
@@ -61,14 +66,14 @@ public class ChessGameService {
         return ChessGameDto.of(chessGame, gameName);
     }
 
-    private int findGameIdByGameName(final String gameName) {
-        return chessGameDao.findChessGameIdByName(gameName)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));
-    }
-
     private ChessGame findGameByName(final String gameName) {
         final int chessGameId = findGameIdByGameName(gameName);
         final ChessGameUpdateDto gameUpdateDto = chessGameDao.findChessGame(chessGameId);
         return ChessGame.of(gameUpdateDto);
+    }
+
+    private int findGameIdByGameName(final String gameName) {
+        return chessGameDao.findChessGameIdByName(gameName)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 게임이 존재하지 않습니다."));
     }
 }

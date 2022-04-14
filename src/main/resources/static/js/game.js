@@ -48,7 +48,6 @@ async function newGame(gameName) {
     return;
   }
   chessGameName = chessGame.gameName;
-  isRunning = chessGame.isRunning;
   document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
   return chessGame.chessMap;
 }
@@ -179,4 +178,57 @@ async function move() {
   document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
 
   setChessMap(chessMap);
+}
+
+async function loadGame() {
+  const loadGameName = document.getElementById("load-game-name");
+  const startButton = document.getElementById("start-btn");
+  const endButton = document.getElementById("end-btn");
+  const statusButton = document.getElementById("status-btn");
+
+  const chessMap = await loadChessMap(loadGameName.value);
+
+  if (chessMap == null) {
+    return;
+  }
+
+  startButton.disabled = true;
+  endButton.disabled = false;
+  statusButton.disabled = false;
+  loadGameName.disabled = true;
+
+  setChessMap(chessMap);
+}
+
+async function loadChessMap(loadGameName) {
+  if (loadGameName === '') {
+    alert("게임 이름을 입력해주세요.");
+    return;
+  }
+
+  let chessGame = "";
+  await fetch("/load", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      gameName: loadGameName
+    }),
+  }).then(async (response) => {
+    if (response.status === 400) {
+      let message = await response.json();
+      message = message.message;
+      throw new Error(message);
+    } else {
+      chessGame = await response.json();
+    }
+  }).catch(response => alert(response.message));
+
+  if (chessGame === "") {
+    return;
+  }
+  chessGameName = chessGame.gameName;
+  document.getElementById("current-turn").innerHTML = "현재 턴: " + chessGame.turn;
+  return chessGame.chessMap;
 }

@@ -55,6 +55,17 @@ public class WebChessGameController {
             final String destination = movePositionDto.getDestination();
             return gson.toJson(chessGameService.move(chessGameName, current, destination));
         });
+
+        post("/load", (request, response) -> {
+            try {
+                final JsonElement jsonElement = JsonParser.parseString(request.body());
+                final String gameName = jsonElement.getAsJsonObject().get("gameName").getAsString();
+                return gson.toJson(chessGameService.loadChessGame(gameName));
+            } catch (Exception e) {
+                response.status(400);
+                return gson.toJson(new ErrorMessageDto(e.getMessage()));
+            }
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
