@@ -3,15 +3,11 @@ package chess.web.service;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Rank;
 import chess.domain.piece.property.Color;
 import chess.web.controller.Request;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.PlayerDao;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameService {
@@ -45,19 +41,7 @@ public class ChessGameService {
     }
 
     public ChessBoard createChessBoard() {
-        Map<String, String> board = chessBoardDao.findAll();
-        Map<Position, Piece> chessBoard = new HashMap<>();
-
-        for (String position : board.keySet()) {
-            Position currentPosition = Position.of(
-                    File.of(position.substring(0, 1).toUpperCase()),
-                    Rank.of(position.substring(1, 2)));
-
-            Piece currentPiece = PieceFactory.of(position, board.get(position));
-            chessBoard.put(currentPosition, currentPiece);
-        }
-
-        return ChessBoard.of(chessBoard);
+        return ChessBoard.of(chessBoardDao.findAll());
     }
 
     private void removeAll() {

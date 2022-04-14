@@ -51,7 +51,7 @@ public class ChessBoardDaoTest {
             chessBoardDao.save(position, initBoard.get(position));
         }
         chessBoardDao.deleteAll();
-        final Map<String, String> board = chessBoardDao.findAll();
+        final Map<Position, Piece> board = chessBoardDao.findAll();
 
         assertThat(board).isEmpty();
     }

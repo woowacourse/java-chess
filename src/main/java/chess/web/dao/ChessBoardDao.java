@@ -1,6 +1,7 @@
 package chess.web.dao;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.position.Position;
 import chess.web.dto.PieceDto;
 import chess.web.jdbc.JdbcTemplate;
@@ -59,8 +60,8 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(sql);
     }
 
-    public Map<String, String> findAll() {
-        final Map<String, String> board = new HashMap<>();
+    public Map<Position, Piece> findAll() {
+        final Map<Position, Piece> board = new HashMap<>();
         SelectJdbcTemplate jdbcTemplate = new SelectJdbcTemplate() {
             @Override
             public void setParameters(PreparedStatement statement) throws SQLException {
@@ -70,7 +71,9 @@ public class ChessBoardDao {
             @Override
             public Object mapRow(ResultSet resultSet) throws SQLException {
                 while (resultSet.next()) {
-                    board.put(resultSet.getString("position"), resultSet.getString("piece"));
+                    String position = resultSet.getString("position");
+                    String piece = resultSet.getString("piece");
+                    board.put(Position.of(resultSet.getString("position")), PieceFactory.of(position, piece));
                 }
                 return null;
             }

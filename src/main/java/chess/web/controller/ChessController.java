@@ -3,7 +3,8 @@ package chess.web.controller;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Player;
 import chess.domain.game.state.RunningGame;
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Piece;
+import chess.domain.piece.position.Position;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.PlayerDao;
 import chess.web.service.ChessGameService;
@@ -40,16 +41,16 @@ public class ChessController {
     }
 
     public ModelAndView play(Request req, Response res) {
-        Map<String, String> board = chessBoardDao.findAll();
+        Map<Position, Piece> board = chessBoardDao.findAll();
         if (board.isEmpty()) {
             res.redirect("/start");
             return null;
         }
 
         Map<String, Object> model = new HashMap<>();
-        for (String position : board.keySet()) {
-            String piece = board.get(position);
-            model.put(position, PieceFactory.of(position, piece));
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            model.put(position.toString(), piece);
         }
 
         Player player = playerDao.findAll();
