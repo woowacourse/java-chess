@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="/src/index.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <h1>♟️체스</h1>
+
+    <section class="winner">
+        <div>
+            {{#hasWinner}}
+            <h1>{{winnerMessage}}</h1>
+            {{/hasWinner}}
+        </div>
+    </section>
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan=2">새 게임 버튼을 눌러주세요.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="/start">새 게임</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+
+</html>

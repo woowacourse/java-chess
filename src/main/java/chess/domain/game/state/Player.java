@@ -16,6 +16,13 @@ public enum Player {
         this.color = color;
     }
 
+    public static Player of(Color color) {
+        return Arrays.stream(Player.values())
+                .filter(player -> player.color == color)
+                .findFirst()
+                .orElseThrow();
+    }
+
     public boolean isMyPiece(Piece piece) {
         return piece.isSameColor(this.color);
     }

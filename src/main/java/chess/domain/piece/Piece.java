@@ -36,7 +36,11 @@ public abstract class Piece {
         return name.getName();
     }
 
-    public Color getColor() {
+    public String getColor() {
+        return color.name();
+    }
+
+    public Color color() {
         return color;
     }
 
@@ -55,5 +59,10 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return name + "_" + color;
     }
 }

@@ -19,4 +19,6 @@ public interface GameState {
     boolean isFinished();
 
     Map<Position, Piece> getBoard();
+
+    String getTurn();
 }

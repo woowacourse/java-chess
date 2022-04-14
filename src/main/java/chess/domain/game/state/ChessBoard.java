@@ -20,7 +20,19 @@ public class ChessBoard {
     public static final int DUPLICATION_COUNT_STANDARD = 2;
     public static final double DUPLICATED_PAWN_SCORE = 0.5;
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    private Map<Position, Piece> board;
+
+    public ChessBoard() {
+        this.board = new HashMap<>();
+    }
+
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
+    public static ChessBoard of(Map<Position, Piece> board) {
+        return new ChessBoard(board);
+    }
 
     public void move(Position source, Position target) {
         validateExist(source);
@@ -71,13 +83,13 @@ public class ChessBoard {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
+        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.color());
     }
 
     private void changePosition(Position source, Position target) {
         Piece sourcePiece = getPiece(source);
         if (sourcePiece.getClass().equals(StartedPawn.class)) {
-            sourcePiece = new MovedPawn(sourcePiece.getColor());
+            sourcePiece = new MovedPawn(sourcePiece.color());
         }
 
         board.put(target, sourcePiece);

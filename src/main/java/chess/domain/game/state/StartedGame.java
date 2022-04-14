@@ -47,6 +47,11 @@ public class StartedGame implements GameState {
     }
 
     @Override
+    public String getTurn() {
+        return Color.WHITE.name();
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

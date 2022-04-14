@@ -1,16 +1,27 @@
 package chess.domain.game;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartedGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGame {
-    private GameState state = new StartedGame();
+    private GameState state;
+
+    public ChessGame() {
+        this.state = new StartedGame();
+    }
+
+    private ChessGame(GameState state) {
+        this.state = state;
+    }
+
+    public static ChessGame of(GameState state) {
+        return new ChessGame(state);
+    }
 
     public Map<Position, Piece> start() {
         state = state.start();
@@ -33,5 +44,13 @@ public class ChessGame {
 
     public Map<Color, Double> status() {
         return state.status();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
+    }
+
+    public String getTurn() {
+        return state.getTurn();
     }
 }

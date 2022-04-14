@@ -56,4 +56,9 @@ public class RunningGame extends StartedGame {
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
+
+    @Override
+    public String getTurn() {
+        return player.name();
+    }
 }

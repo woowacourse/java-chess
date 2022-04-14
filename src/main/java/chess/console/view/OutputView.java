@@ -1,8 +1,8 @@
-package chess.view;
+package chess.console.view;
 
 import chess.domain.piece.property.Color;
-import chess.dto.ChessBoardDto;
-import chess.dto.PositionDto;
+import chess.web.dto.ChessBoardDto;
+import chess.web.dto.PositionDto;
 import java.util.Map;
 import java.util.stream.IntStream;
 

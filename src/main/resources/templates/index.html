@@ -1,10 +1,586 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="/src/index.js"></script>
 </head>
+
 <body>
-Hello World!!
+<div id="app">
+    <h1>♟️체스</h1>
+
+    <section class="error">
+        <div>
+            {{#hasError}}
+            <h1>{{errorMessage}}</h1>
+            {{/hasError}}
+        </div>
+    </section>
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan=2">아래 2개 중 선택하세요.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="/start">새 게임</a>
+            </td>
+            <td>
+                <a href="/play">이전 게임 이어서 하기</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan="1">현재 턴</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {{#turn}}
+                <img src="images/{{turn}}_turn.png" class="img"/>
+                {{/turn}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <section class="chess-ui">
+
+        {{#this}}
+        <div class="black-square" id="a8">
+            {{#A8}}
+            <img src="images/{{name}}_{{color}}.png" class="img"/>
+            {{/A8}}
+            {{^A8}}
+            <img src="images/empty.png" class="img" />
+            {{/A8}}
+        </div>
+        <div class="white-square" id="b8">
+            {{#B8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B8}}
+            {{^B8}}
+            <img src="images/empty.png" class="img" />
+            {{/B8}}
+        </div>
+        <div class="black-square" id="c8">
+            {{#C8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C8}}
+            {{^C8}}
+            <img src="images/empty.png" class="img" />
+            {{/C8}}
+        </div>
+        <div class="white-square" id="d8">
+            {{#D8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D8}}
+            {{^D8}}
+            <img src="images/empty.png" class="img" />
+            {{/D8}}
+        </div>
+        <div class="black-square" id="e8">
+            {{#E8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E8}}
+            {{^E8}}
+            <img src="images/empty.png" class="img" />
+            {{/E8}}
+        </div>
+        <div class="white-square" id="f8">
+            {{#F8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F8}}
+            {{^F8}}
+            <img src="images/empty.png" class="img" />
+            {{/F8}}
+        </div>
+        <div class="black-square" id="g8">
+            {{#G8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G8}}
+            {{^G8}}
+            <img src="images/empty.png" class="img" />
+            {{/G8}}
+        </div>
+        <div class="white-square" id="h8">
+            {{#H8}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H8}}
+            {{^H8}}
+            <img src="images/empty.png" class="img" />
+            {{/H8}}
+        </div>
+
+        <div class="white-square" id="a7">
+            {{#A7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A7}}
+            {{^A7}}
+            <img src="images/empty.png" class="img" />
+            {{/A7}}
+        </div>
+        <div class="black-square" id="b7">
+            {{#B7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B7}}
+            {{^B7}}
+            <img src="images/empty.png" class="img" />
+            {{/B7}}
+        </div>
+        <div class="white-square" id="c7">
+            {{#C7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C7}}
+            {{^C7}}
+            <img src="images/empty.png" class="img" />
+            {{/C7}}
+        </div>
+        <div class="black-square" id="d7">
+            {{#D7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D7}}
+            {{^D7}}
+            <img src="images/empty.png" class="img" />
+            {{/D7}}
+        </div>
+        <div class="white-square" id="e7">
+            {{#E7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E7}}
+            {{^E7}}
+            <img src="images/empty.png" class="img" />
+            {{/E7}}
+        </div>
+        <div class="black-square" id="f7">
+            {{#F7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F7}}
+            {{^F7}}
+            <img src="images/empty.png" class="img" />
+            {{/F7}}
+        </div>
+        <div class="white-square" id="g7">
+            {{#G7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G7}}
+            {{^G7}}
+            <img src="images/empty.png" class="img" />
+            {{/G7}}
+        </div>
+        <div class="black-square" id="h7">
+            {{#H7}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H7}}
+            {{^H7}}
+            <img src="images/empty.png" class="img" />
+            {{/H7}}
+        </div>
+
+        <div class="black-square" id="a6">
+            {{#A6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A6}}
+            {{^A6}}
+            <img src="images/empty.png" class="img" />
+            {{/A6}}
+        </div>
+        <div class="white-square" id="b6">
+            {{#B6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B6}}
+            {{^B6}}
+            <img src="images/empty.png" class="img" />
+            {{/B6}}
+        </div>
+        <div class="black-square" id="c6">
+            {{#C6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C6}}
+            {{^C6}}
+            <img src="images/empty.png" class="img" />
+            {{/C6}}
+        </div>
+        <div class="white-square" id="d6">
+            {{#D6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D6}}
+            {{^D6}}
+            <img src="images/empty.png" class="img" />
+            {{/D6}}
+        </div>
+        <div class="black-square" id="e6">
+            {{#E6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E6}}
+            {{^E6}}
+            <img src="images/empty.png" class="img" />
+            {{/E6}}
+        </div>
+        <div class="white-square" id="f6">
+            {{#F6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F6}}
+            {{^F6}}
+            <img src="images/empty.png" class="img" />
+            {{/F6}}
+        </div>
+        <div class="black-square" id="g6">
+            {{#G6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G6}}
+            {{^G6}}
+            <img src="images/empty.png" class="img" />
+            {{/G6}}
+        </div>
+        <div class="white-square" id="h6">
+            {{#H6}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H6}}
+            {{^H6}}
+            <img src="images/empty.png" class="img" />
+            {{/H6}}
+        </div>
+
+        <div class="white-square" id="a5">
+            {{#A5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A5}}
+            {{^A5}}
+            <img src="images/empty.png" class="img" />
+            {{/A5}}
+        </div>
+        <div class="black-square" id="b5">
+            {{#B5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B5}}
+            {{^B5}}
+            <img src="images/empty.png" class="img" />
+            {{/B5}}
+        </div>
+        <div class="white-square" id="c5">
+            {{#C5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C5}}
+            {{^C5}}
+            <img src="images/empty.png" class="img" />
+            {{/C5}}
+        </div>
+        <div class="black-square" id="d5">
+            {{#D5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D5}}
+            {{^D5}}
+            <img src="images/empty.png" class="img" />
+            {{/D5}}
+        </div>
+        <div class="white-square" id="e5">
+            {{#E5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E5}}
+            {{^E5}}
+            <img src="images/empty.png" class="img" />
+            {{/E5}}
+        </div>
+        <div class="black-square" id="f5">
+            {{#F5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F5}}
+            {{^F5}}
+            <img src="images/empty.png" class="img" />
+            {{/F5}}
+        </div>
+        <div class="white-square" id="g5">
+            {{#G5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G5}}
+            {{^G5}}
+            <img src="images/empty.png" class="img" />
+            {{/G5}}
+        </div>
+        <div class="black-square" id="h5">
+            {{#H5}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H5}}
+            {{^H5}}
+            <img src="images/empty.png" class="img" />
+            {{/H5}}
+        </div>
+
+        <div class="black-square" id="a4">
+            {{#A4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A4}}
+            {{^A4}}
+            <img src="images/empty.png" class="img" />
+            {{/A4}}
+        </div>
+        <div class="white-square" id="b4">
+            {{#B4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B4}}
+            {{^B4}}
+            <img src="images/empty.png" class="img" />
+            {{/B4}}
+        </div>
+        <div class="black-square" id="c4">
+            {{#C4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C4}}
+            {{^C4}}
+            <img src="images/empty.png" class="img" />
+            {{/C4}}
+        </div>
+        <div class="white-square" id="d4">
+            {{#D4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D4}}
+            {{^D4}}
+            <img src="images/empty.png" class="img" />
+            {{/D4}}
+        </div>
+        <div class="black-square" id="e4">
+            {{#E4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E4}}
+            {{^E4}}
+            <img src="images/empty.png" class="img" />
+            {{/E4}}
+        </div>
+        <div class="white-square" id="f4">
+            {{#F4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F4}}
+            {{^F4}}
+            <img src="images/empty.png" class="img" />
+            {{/F4}}
+        </div>
+        <div class="black-square" id="g4">
+            {{#G4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G4}}
+            {{^G4}}
+            <img src="images/empty.png" class="img" />
+            {{/G4}}
+        </div>
+        <div class="white-square" id="h4">
+            {{#H4}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H4}}
+            {{^H4}}
+            <img src="images/empty.png" class="img" />
+            {{/H4}}
+        </div>
+
+        <div class="white-square" id="a3">
+            {{#A3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A3}}
+            {{^A3}}
+            <img src="images/empty.png" class="img" />
+            {{/A3}}
+        </div>
+        <div class="black-square" id="b3">
+            {{#B3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B3}}
+            {{^B3}}
+            <img src="images/empty.png" class="img" />
+            {{/B3}}
+        </div>
+        <div class="white-square" id="c3">
+            {{#C3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C3}}
+            {{^C3}}
+            <img src="images/empty.png" class="img" />
+            {{/C3}}
+        </div>
+        <div class="black-square" id="d3">
+            {{#D3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D3}}
+            {{^D3}}
+            <img src="images/empty.png" class="img" />
+            {{/D3}}
+        </div>
+        <div class="white-square" id="e3">
+            {{#E3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E3}}
+            {{^E3}}
+            <img src="images/empty.png" class="img" />
+            {{/E3}}
+        </div>
+        <div class="black-square" id="f3">
+            {{#F3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F3}}
+            {{^F3}}
+            <img src="images/empty.png" class="img" />
+            {{/F3}}
+        </div>
+        <div class="white-square" id="g3">
+            {{#G3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G3}}
+            {{^G3}}
+            <img src="images/empty.png" class="img" />
+            {{/G3}}
+        </div>
+        <div class="black-square" id="h3">
+            {{#H3}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H3}}
+            {{^H3}}
+            <img src="images/empty.png" class="img" />
+            {{/H3}}
+        </div>
+
+        <div class="black-square" id="a2">
+            {{#A2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A2}}
+            {{^A2}}
+            <img src="images/empty.png" class="img" />
+            {{/A2}}
+        </div>
+        <div class="white-square" id="b2">
+            {{#B2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B2}}
+            {{^B2}}
+            <img src="images/empty.png" class="img" />
+            {{/B2}}
+        </div>
+        <div class="black-square" id="c2">
+            {{#C2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C2}}
+            {{^C2}}
+            <img src="images/empty.png" class="img" />
+            {{/C2}}
+        </div>
+        <div class="white-square" id="d2">
+            {{#D2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D2}}
+            {{^D2}}
+            <img src="images/empty.png" class="img" />
+            {{/D2}}
+        </div>
+        <div class="black-square" id="e2">
+            {{#E2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E2}}
+            {{^E2}}
+            <img src="images/empty.png" class="img" />
+            {{/E2}}
+        </div>
+        <div class="white-square" id="f2">
+            {{#F2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F2}}
+            {{^F2}}
+            <img src="images/empty.png" class="img" />
+            {{/F2}}
+        </div>
+        <div class="black-square" id="g2">
+            {{#G2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G2}}
+            {{^G2}}
+            <img src="images/empty.png" class="img" />
+            {{/G2}}
+        </div>
+        <div class="white-square" id="h2">
+            {{#H2}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H2}}
+            {{^H2}}
+            <img src="images/empty.png" class="img" />
+            {{/H2}}
+        </div>
+
+        <div class="white-square" id="a1">
+            {{#A1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/A1}}
+            {{^A1}}
+            <img src="images/empty.png" class="img" />
+            {{/A1}}
+        </div>
+        <div class="black-square" id="b1">
+            {{#B1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/B1}}
+            {{^B1}}
+            <img src="images/empty.png" class="img" />
+            {{/B1}}
+        </div>
+        <div class="white-square" id="c1">
+            {{#C1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/C1}}
+            {{^C1}}
+            <img src="images/empty.png" class="img" />
+            {{/C1}}
+        </div>
+        <div class="black-square" id="d1">
+            {{#D1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/D1}}
+            {{^D1}}
+            <img src="images/empty.png" class="img" />
+            {{/D1}}
+        </div>
+        <div class="white-square" id="e1">
+            {{#E1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/E1}}
+            {{^E1}}
+            <img src="images/empty.png" class="img" />
+            {{/E1}}
+        </div>
+        <div class="black-square" id="f1">
+            {{#F1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/F1}}
+            {{^F1}}
+            <img src="images/empty.png" class="img" />
+            {{/F1}}
+        </div>
+        <div class="white-square" id="g1">
+            {{#G1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/G1}}
+            {{^G1}}
+            <img src="images/empty.png" class="img" />
+            {{/G1}}
+        </div>
+        <div class="black-square" id="h1">
+            {{#H1}}
+            <img src="images/{{name}}_{{color}}.png" class="img" />
+            {{/H1}}
+            {{^H1}}
+            <img src="images/empty.png" class="img" />
+            {{/H1}}
+        </div>
+        {{/this}}
+
+    </section>
+</div>
 </body>
+
 </html>
