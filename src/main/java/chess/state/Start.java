@@ -35,6 +35,6 @@ public final class Start extends Running {
 
     @Override
     public Player getPlayer() {
-        return Player.BLACK;
+        return Player.WHITE;
     }
 }

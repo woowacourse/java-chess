@@ -75,7 +75,7 @@ public class WebChessGame {
         }
         state = Start.of();
         model.put("squares", showChessBoard(state.getBoard()));
-        model.put("player", "White");
+        model.put("player", playerName(state.getPlayer()));
         model.put("message", "게임을 시작합니다.");
         return render(model, "game.html");
     }
@@ -102,16 +102,20 @@ public class WebChessGame {
 
     private String gameProceed(final Request req, final CommandDao commandDao) {
         final Map<String, Object> model = new HashMap<>();
-        model.put("player", playerName(state.getPlayer()));
         try {
             commandDao.save(req.queryParams("command"));
             model.put("commands", commandDao.findAll());
             state = proceed(req.queryParams("command"), model);
+            model.put("player", nextTurnPlayerName(state.getPlayer()));
             model.put("squares", showChessBoard(state.getBoard()));
         } catch (final RuntimeException e) {
             return backInitialPage(e.getMessage());
         }
         return gameState(model);
+    }
+
+    private String nextTurnPlayerName(final Player player) {
+        return player.getOpponentName();
     }
 
     private String reload(final CommandDao commandDao) {
