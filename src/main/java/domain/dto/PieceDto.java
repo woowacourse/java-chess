@@ -18,10 +18,6 @@ public class PieceDto {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
-    }
-
     public String getType() {
         return type;
     }

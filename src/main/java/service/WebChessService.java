@@ -38,17 +38,7 @@ public class WebChessService {
         save(gameName);
     }
 
-    public Map<String, Object> modelBoard() {
-        Map<String, Object> model = new HashMap<>();
-        Map<Position, Piece> board = chessGame.getChessBoard().getBoard();
-        for (Position position : board.keySet()) {
-            model.put(position.getPosition(), board.get(position).symbolByPlayer());
-        }
-        model.put("player", chessGame.getCurrentPlayer());
-        return model;
-    }
-
-    public Map<String, Object> status() {
+    public Map<String, Object> boardStatus() {
         Map<String, Object> model = modelBoard();
         Status status = chessGame.status();
         Player player = status.winner();
@@ -59,6 +49,16 @@ public class WebChessService {
             return model;
         }
         model.put("winner", status.winner() + " 승리");
+        return model;
+    }
+
+    private Map<String, Object> modelBoard() {
+        Map<String, Object> model = new HashMap<>();
+        Map<Position, Piece> board = chessGame.getChessBoard().getBoard();
+        for (Position position : board.keySet()) {
+            model.put(position.getPosition(), board.get(position).symbolByPlayer());
+        }
+        model.put("player", chessGame.getCurrentPlayer());
         return model;
     }
 
@@ -79,7 +79,8 @@ public class WebChessService {
             String positionSymbol = position.getPosition();
             Piece piece = chessGame.getChessBoard().findPiece(position);
             String piecePlayer = piece.getPlayer().name();
-            PieceDto pieceDto = new PieceDto(chessGameDto.getId(), positionSymbol, piece.symbol(), piecePlayer);
+            PieceDto pieceDto = new PieceDto(chessGameDto.getId(), positionSymbol, piece.symbol(),
+                piecePlayer);
             pieceDao.save(pieceDto);
         }
     }
@@ -92,7 +93,7 @@ public class WebChessService {
         return new ChessGame(chessBoard, Player.valueOf(chessGameDto.getPlayer()));
     }
 
-    public Map<Position, Piece> createBoard(List<PieceDto> pieceDtoList) {
+    private Map<Position, Piece> createBoard(List<PieceDto> pieceDtoList) {
         Map<Position, Piece> board = new HashMap<>();
         for (PieceDto pieceDto : pieceDtoList) {
             String[] position = pieceDto.getPosition().split(SPLIT_REGEX);

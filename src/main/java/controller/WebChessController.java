@@ -4,7 +4,6 @@ import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import domain.chessgame.ChessGame;
 import java.util.HashMap;
 import java.util.Map;
 import service.WebChessService;
@@ -34,7 +33,7 @@ public class WebChessController {
         });
 
         get("/play/:gameName", (req, res) -> {
-            Map<String, Object> model = webChessService.status();
+            Map<String, Object> model = webChessService.boardStatus();
             model.put("gameName", req.params(":gameName"));
             return render(model, "chess.html");
         });

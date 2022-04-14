@@ -45,13 +45,13 @@ public enum Direction {
         return straight(file, rank);
     }
 
-    public static Direction diagonal(int file, int rank) {
+    private static Direction diagonal(int file, int rank) {
         file = file / Math.abs(file);
         rank = rank / Math.abs(rank);
         return Direction.valueOf(file, rank);
     }
 
-    public static Direction straight(int file, int rank) {
+    private static Direction straight(int file, int rank) {
         if (file == 0) {
             rank = rank / Math.abs(rank);
         }
