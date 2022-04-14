@@ -1,9 +1,21 @@
-.chess-board {
+.chess-game {
     width: 480px;
+    text-align: center;
+}
+
+.chess-board {
     border: 4px solid saddlebrown;
     display: grid;
     grid-template-columns: repeat(8, 60px);
     grid-template-rows: repeat(8, 60px);
+}
+
+.score {
+    font-size: 30px;
+}
+
+.error-message {
+    color: red;
 }
 
 .a1, .c1, .e1, .g1, .b2, .d2, .f2, .h2,
