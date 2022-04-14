@@ -3,8 +3,10 @@ package chess.controller;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.controller.request.MoveRequest;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
@@ -64,9 +66,10 @@ public class WebChessController {
             return new ModelAndView(model, VIEW);
         }, new HandlebarsTemplateEngine());
 
-        get("/move", (req, res) -> {
-            ChessBoardPosition sourcePosition = ChessBoardPosition.from(req.queryParams(SOURCE_POSITION_PARAMETER_KEY));
-            ChessBoardPosition targetPosition = ChessBoardPosition.from(req.queryParams(TARGET_POSITION_PARAMETER_KEY));
+        post("/move", (req, res) -> {
+            MoveRequest moveRequest = MoveRequest.of(req.body());
+            ChessBoardPosition sourcePosition = ChessBoardPosition.from(moveRequest.get(SOURCE_POSITION_PARAMETER_KEY));
+            ChessBoardPosition targetPosition = ChessBoardPosition.from(moveRequest.get(TARGET_POSITION_PARAMETER_KEY));
             gameState = gameState.move(sourcePosition, targetPosition);
             chessService.updateChessBoard(sourcePosition, targetPosition);
 
