@@ -20,6 +20,7 @@ import static spark.Spark.*;
 
 public class WebChessGame {
 
+    private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
     private State state;
 
     public void run() {
@@ -139,6 +140,6 @@ public class WebChessGame {
     }
 
     private static String render(final Map<String, Object> model, final String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 }
