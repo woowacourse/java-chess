@@ -32,10 +32,33 @@ public enum Direction {
 
     public static Direction valueOf(final int file, final int rank) {
         return Arrays.stream(Direction.values())
-            .filter(direction -> direction.file  == file)
+            .filter(direction -> direction.file == file)
             .filter(direction -> direction.rank == rank)
             .findFirst()
-            .orElseThrow(()->new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다.")) ;
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다."));
+    }
+
+    public static Direction calculateDirection(final int file, final int rank) {
+        if (Math.abs(file) == Math.abs(rank)) {
+            return diagonal(file, rank);
+        }
+        return straight(file, rank);
+    }
+
+    public static Direction diagonal(int file, int rank) {
+        file = file / Math.abs(file);
+        rank = rank / Math.abs(rank);
+        return Direction.valueOf(file, rank);
+    }
+
+    public static Direction straight(int file, int rank) {
+        if (file == 0) {
+            rank = rank / Math.abs(rank);
+        }
+        if (rank == 0) {
+            file = file / Math.abs(file);
+        }
+        return Direction.valueOf(file, rank);
     }
 
     public int getFile() {

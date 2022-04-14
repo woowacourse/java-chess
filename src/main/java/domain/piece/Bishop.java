@@ -4,7 +4,7 @@ import domain.Player;
 import domain.direction.Direction;
 import java.util.List;
 
-public class Bishop extends MovableRangePiece {
+public class Bishop extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(
         Direction.NORTHEAST,

@@ -13,8 +13,8 @@
 - [ ] `game` DB
     - [ ] `name` -> `id` auto_increment 컬럼 추가하여 id로 구분
 - [ ] 게임 방 기능 구현
-- [ ] `Direction`
-    - [ ] 코드 추가를 통해 `MovableRangePiece`, `SpecificLocationPiece` 클래스 제거
+- [x] `Direction`
+    - [x] 코드 추가를 통해 `MovableRangePiece`, `SpecificLocationPiece` 클래스 제거
         - `Direction.diagonal(file, rank)`, `Direction.straight(finle, rank)`
 - [ ] `Pawn`
     - [ ] `getDirectitons`를 통해 `move()` override 없이 구현

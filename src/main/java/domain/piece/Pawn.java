@@ -7,7 +7,7 @@ import domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends SpecificLocationPiece {
+public class Pawn extends Piece {
 
     private static final int WHITE_START_LINE = 2;
     private static final int BLACK_START_LINE = 7;

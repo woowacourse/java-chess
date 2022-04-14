@@ -24,7 +24,15 @@ public abstract class Piece {
         return positions.subList(0, positions.indexOf(target));
     }
 
-    protected abstract Direction direction(Position source, Position target);
+    protected Direction direction(Position source, Position target) {
+        int file = target.getFile() - source.getFile();
+        int rank = target.getRank() - source.getRank();
+        Direction direction = Direction.calculateDirection(file, rank);
+        if (!getDirections().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 해당 기물이 이동할 수 없는 위치입니다.");
+        }
+        return direction;
+    }
 
     protected abstract List<Direction> getDirections();
 
@@ -53,9 +61,11 @@ public abstract class Piece {
     public boolean isSamePlayer(final Piece comparePiece) {
         return comparePiece.isSamePlayer(player);
     }
-    public String symbol(){
+
+    public String symbol() {
         return pieceSymbol.symbol();
     }
+
     public String symbolByPlayer() {
         return pieceSymbol.symbol(player);
     }

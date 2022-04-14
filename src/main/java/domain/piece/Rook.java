@@ -4,7 +4,7 @@ import domain.Player;
 import domain.direction.Direction;
 import java.util.List;
 
-public class Rook extends MovableRangePiece {
+public class Rook extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(
         Direction.EAST,
