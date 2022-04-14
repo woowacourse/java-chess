@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -7,12 +8,29 @@ import java.util.Objects;
 import static java.util.stream.Collectors.groupingBy;
 
 public final class Position {
+    private final static Map<String, Position> cache=new HashMap<>();
+
     private final PositionX positionX;
     private final PositionY positionY;
 
-    public Position(PositionX positionX, PositionY positionY) {
+    private Position(PositionX positionX, PositionY positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    public static Position of(String position) {
+        PositionX posX = PositionX.of(position.substring(0,1));
+        PositionY posY = PositionY.of(position.substring(1));
+
+        return cache.computeIfAbsent(position, ignored -> new Position(posX, posY));
+    }
+
+    public static Position of(PositionX positionX, PositionY positionY) {
+        return Position.of(toKey(positionX, positionY));
+    }
+
+    private static String toKey(PositionX positionX, PositionY positionY) {
+        return positionX.getName() + positionY.getName();
     }
 
     public static Map<PositionX, List<Position>> groupByPositionX(List<Position> pawnPositions) {
@@ -45,7 +63,11 @@ public final class Position {
     }
 
     public boolean isEndRank() {
-        return (positionY.isFirstOrLastRank());
+        return positionY.isFirstOrLastRank();
+    }
+
+    public String getPositionName() {
+        return positionX.getName() + positionY.getName();
     }
 
     @Override
