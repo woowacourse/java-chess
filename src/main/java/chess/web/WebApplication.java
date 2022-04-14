@@ -8,6 +8,7 @@ import static spark.Spark.staticFileLocation;
 import chess.web.controller.ChessController;
 import chess.web.dao.ChessBoardDao;
 import chess.web.dao.PlayerDao;
+import chess.web.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -19,7 +20,8 @@ public class WebApplication {
 
         ChessBoardDao chessBoardDao = new ChessBoardDao();
         PlayerDao playerDao = new PlayerDao();
-        ChessController chessController = new ChessController(chessBoardDao, playerDao);
+        ChessGameService service = new ChessGameService(chessBoardDao, playerDao);
+        ChessController chessController = new ChessController(chessBoardDao, playerDao, service);
 
         get("/", (req, res) -> render(chessController.root(req, res)));
         get("/start", (req, res) -> render(chessController.start(req, res)));
