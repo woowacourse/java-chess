@@ -16,9 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BoardDao {
-    private static final String URL = "jdbc:mysql://localhost:3307/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -75,5 +72,16 @@ public class BoardDao {
             logger.warn(e.getMessage());
         }
         return board;
+    }
+
+    public void delete(int gameId) {
+        final String sql = "delete from board where game_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, gameId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            logger.warn(exception.getMessage());
+        }
     }
 }

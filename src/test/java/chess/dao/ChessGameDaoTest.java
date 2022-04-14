@@ -21,12 +21,7 @@ public class ChessGameDaoTest {
     void save() {
         final ChessGameDao chessGameDao = new ChessGameDao();
         ChessGame chessGame = new Ready();
-    }
-
-    @Test
-    void update() {
-        final ChessGameDao chessGameDao = new ChessGameDao();
-        ChessGame chessGame = new Ready().initBoard();
-        int id = chessGameDao.findRecentGame();
+        chessGameDao.save(chessGame, "asdf");
+        assertThat(chessGameDao.findByRoomId("asdf")).isNotNull();
     }
 }

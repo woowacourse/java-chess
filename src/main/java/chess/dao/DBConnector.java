@@ -12,6 +12,7 @@ public class DBConnector {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
     private static final Logger logger = LoggerFactory.getLogger(DBConnector.class);
+
     public static Connection getConnection() {
         Connection connection = null;
         try {

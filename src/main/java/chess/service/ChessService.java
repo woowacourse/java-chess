@@ -93,7 +93,12 @@ public class ChessService {
     public void terminate(int gameId) {
         ChessGame chessGame = getChessGame(gameId);
         chessGame = chessGame.end();
+        deleteBoard(gameId);
         chessGameDao.update(gameId, chessGame);
+    }
+
+    public void deleteBoard(int gameId) {
+        boardDao.delete(gameId);
     }
 
     public Color complete(int gameId) {

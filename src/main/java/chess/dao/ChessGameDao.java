@@ -11,9 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ChessGameDao {
-    private static final String URL = "jdbc:mysql://localhost:3307/chess";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
