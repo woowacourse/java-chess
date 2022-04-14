@@ -171,7 +171,10 @@ async function move() {
 
   if (isRunning !== true) {
     alert("상대방의 킹이 죽었습니다. 게임이 종료되었습니다.");
-    location.href = "/finish/" + chessGameName;
+    if (confirm("현재 게임을 삭제하시겠습니까?")) {
+      await deleteAndFinishGame();
+    }
+    location.href = "/";
     return;
   }
 
