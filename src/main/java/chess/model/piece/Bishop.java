@@ -10,13 +10,16 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
-    private static final double SCORE = 3;
-
     private final MoveStrategy moveStrategy;
 
     public Bishop(final Team team) {
         super(team);
         this.moveStrategy = new MultipleMove(team, Direction.diagonalDirection());
+    }
+
+    @Override
+    public String getSymbol() {
+        return "BISHOP";
     }
 
     @Override
@@ -37,6 +40,6 @@ public class Bishop extends Piece {
 
     @Override
     public double score() {
-        return SCORE;
+        return 3;
     }
 }

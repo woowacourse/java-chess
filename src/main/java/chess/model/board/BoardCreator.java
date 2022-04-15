@@ -48,7 +48,7 @@ public class BoardCreator {
 
     private static void createBlankIn(final Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
-            board.put(Position.of(rank, file), new Blank(NONE));
+            board.put(Position.of(rank, file), new Blank());
         }
     }
 

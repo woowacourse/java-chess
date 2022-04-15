@@ -1,7 +1,7 @@
 package chess.model.state.running;
 
+import chess.model.Team;
 import chess.model.board.Board;
-import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.State;
@@ -30,12 +30,22 @@ public abstract class Running implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
 
     @Override
-    public GameResult getScore() {
-        throw new IllegalArgumentException("[ERROR] 아직 게임이 종료되지 않아 점수를 계산 할 수 없습니다.");
+    public Map<Team, Double> getScores() {
+        throw new IllegalArgumentException("[ERROR] 아직 게임이 종료되지 않아 점수를 확인 할 수 없습니다.");
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new IllegalArgumentException("[ERROR] 아직 게임이 종료되지 않아 승자를 확인 할 수 없습니다.");
     }
 }

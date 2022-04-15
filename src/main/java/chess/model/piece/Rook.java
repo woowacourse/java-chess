@@ -10,13 +10,16 @@ import java.util.Map;
 
 public class Rook extends Piece {
 
-    private static final double SCORE = 5;
-
     private final MoveStrategy moveStrategy;
 
     public Rook(Team team) {
         super(team);
         this.moveStrategy = new MultipleMove(team, Direction.cardinalDirection());
+    }
+
+    @Override
+    public String getSymbol() {
+        return "ROOK";
     }
 
     @Override
@@ -37,6 +40,6 @@ public class Rook extends Piece {
 
     @Override
     public double score() {
-        return SCORE;
+        return 5;
     }
 }

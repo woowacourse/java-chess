@@ -1,14 +1,17 @@
 package chess.model.state.finished;
 
+import chess.model.Team;
 import chess.model.board.Board;
-import chess.model.board.GameResult;
+import chess.model.board.result.GameResult;
+import java.util.Map;
 
 public final class Status extends Finished {
 
-    private final Board board;
+    private final GameResult gameResult;
 
     public Status(Board board) {
-        this.board = board;
+        super(board);
+        this.gameResult = new GameResult(board.getBoard());
     }
 
     @Override
@@ -17,7 +20,12 @@ public final class Status extends Finished {
     }
 
     @Override
-    public GameResult getScore() {
-        return board.calculateScore();
+    public Map<Team, Double> getScores() {
+        return gameResult.getTeamScores();
+    }
+
+    @Override
+    public Team getWinner() {
+        return gameResult.pickWinnerTeam();
     }
 }

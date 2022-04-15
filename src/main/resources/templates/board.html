@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/board.css">
+</head>
+
+<body>
+<div id="app">
+    <h1>♟ 체스 게임</h1>
+    <section>
+        <div id="form">
+            <button id="button">Start</button>
+            <button id="status-button">Status</button>
+            <button id="load-button">Load</button>
+        </div>
+    </section>
+    <section id="result-session"></section>
+    <section class="chess-ui">
+        {{#this}}
+        <div onclick="clickPosition(id)" id="a8" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="b8" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="c8" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="d8" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="e8" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="f8" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="g8" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="h8" class="white-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a7" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="b7" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="c7" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="d7" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="e7" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="f7" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="g7" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="h7" class="black-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a6" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="b6" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="c6" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="d6" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="e6" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="f6" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="g6" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="h6" class="white-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a5" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="b5" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="c5" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="d5" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="e5" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="f5" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="g5" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="h5" class="black-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a4" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="b4" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="c4" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="d4" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="e4" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="f4" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="g4" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="h4" class="white-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a3" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="b3" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="c3" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="d3" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="e3" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="f3" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="g3" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="h3" class="black-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a2" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="b2" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="c2" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="d2" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="e2" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="f2" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="g2" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="h2" class="white-square piece"></div>
+
+        <div onclick="clickPosition(id)" id="a1" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="b1" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="c1" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="d1" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="e1" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="f1" class="black-square piece"></div>
+        <div onclick="clickPosition(id)" id="g1" class="white-square piece"></div>
+        <div onclick="clickPosition(id)" id="h1" class="black-square piece"></div>
+        {{/this}}
+    </section>
+</div>
+<script src="/src/board.js"></script>
+</body>
+
+</html>

@@ -1,13 +1,19 @@
 package chess.model.piece;
 
-import chess.model.Team;
+import static chess.model.Team.NONE;
+
 import chess.model.position.Position;
 import java.util.Map;
 
 public class Blank extends Piece {
 
-    public Blank(final Team team) {
-        super(team);
+    public Blank() {
+        super(NONE);
+    }
+
+    @Override
+    public String getSymbol() {
+        return "NONE";
     }
 
     @Override

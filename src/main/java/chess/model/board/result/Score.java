@@ -1,31 +1,44 @@
-package chess.model.board;
+package chess.model.board.result;
 
 import static chess.model.Team.BLACK;
-import static chess.model.Team.NONE;
 import static chess.model.Team.WHITE;
 
 import chess.model.Team;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-public class GameResult {
+public class Score {
 
-    public static final double PAWN_PENALTY_SCORE = -0.5;
-    public static final int DUPLICATE_CHECK_PAWN_COUNT = 2;
-    private final Map<Team, Double> scores = new HashMap<>();
+    private static final double PAWN_PENALTY_SCORE = -0.5;
+    private static final int DUPLICATE_CHECK_PAWN_COUNT = 2;
 
-    public void createScoreResult(final Map<Position, Piece> board) {
-        scores.put(BLACK, calculateScore(BLACK, board) + calculatePawnPenalty(BLACK, board));
-        scores.put(WHITE, calculateScore(WHITE, board) + calculatePawnPenalty(WHITE, board));
+    private final Map<Position, Piece> board;
+
+    public Score(final Map<Position, Piece> board) {
+        this.board = board;
     }
 
-    private Double calculateScore(Team team, Map<Position, Piece> board) {
+    public Map<Team, Double> teams() {
+        Map<Team, Double> scores = new HashMap<>();
+        scores.put(BLACK, team(BLACK, board) + pawnPenalty(BLACK, board));
+        scores.put(WHITE, team(WHITE, board) + pawnPenalty(WHITE, board));
+        return scores;
+    }
+
+    public Double white() {
+        return team(WHITE, board) + pawnPenalty(WHITE, board);
+    }
+
+    public Double black() {
+        return team(BLACK, board) + pawnPenalty(BLACK, board);
+    }
+
+    private Double team(Team team, Map<Position, Piece> board) {
         return board.values()
                 .stream()
                 .filter(piece -> piece.isSameTeam(team))
@@ -33,7 +46,7 @@ public class GameResult {
                 .sum();
     }
 
-    private Double calculatePawnPenalty(Team team, Map<Position, Piece> board) {
+    private Double pawnPenalty(Team team, Map<Position, Piece> board) {
         List<Position> positionOfPawns = searchPositionOfPawns(team, board);
         return PAWN_PENALTY_SCORE * searchPenaltyPawns(positionOfPawns);
     }
@@ -55,19 +68,5 @@ public class GameResult {
     private LongStream calculateSameRankCount(Position position, List<Position> positionOfPawns) {
         return LongStream.of(positionOfPawns.stream()
                 .filter(otherPosition -> otherPosition.isSameFile(position)).count());
-    }
-
-    public Map<Team, Double> getScores() {
-        return Collections.unmodifiableMap(scores);
-    }
-
-    public Team pickWinner() {
-        if (scores.get(BLACK) > scores.get(WHITE)) {
-            return BLACK;
-        }
-        if (scores.get(BLACK) < scores.get(WHITE)) {
-            return WHITE;
-        }
-        return NONE;
     }
 }

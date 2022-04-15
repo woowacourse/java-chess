@@ -10,13 +10,16 @@ import java.util.Map;
 
 public class King extends Piece {
 
-    private static final double SCORE = 0;
-
     private final MoveStrategy moveStrategy;
 
     public King(final Team team) {
         super(team);
         this.moveStrategy = new SingleMove(team, Direction.ordinalDirection());
+    }
+
+    @Override
+    public String getSymbol() {
+        return "KING";
     }
 
     @Override
@@ -37,6 +40,6 @@ public class King extends Piece {
 
     @Override
     public double score() {
-        return SCORE;
+        return 0;
     }
 }

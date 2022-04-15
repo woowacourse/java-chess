@@ -3,10 +3,12 @@ package chess.model.board;
 import static chess.model.Team.NONE;
 
 import chess.model.Team;
+import chess.model.board.result.GameResult;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -15,8 +17,16 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board() {
-        this.board = BoardCreator.create();
+    private Board(final Map<Position, Piece> board) {
+        this.board = new HashMap<>(board);
+    }
+
+    public static Board init() {
+        return new Board(BoardCreator.create());
+    }
+
+    public static Board from(final Map<Position, Piece> board) {
+        return new Board(board);
     }
 
     public void checkSameTeam(Team team, Position source) {
@@ -29,7 +39,7 @@ public class Board {
         checkPieceIn(source);
         checkPieceCanMove(source, target);
         board.put(target, board.get(source));
-        board.put(source, new Blank(NONE));
+        board.put(source, new Blank());
     }
 
     private void checkPieceIn(final Position source) {
@@ -49,12 +59,6 @@ public class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .count() < KING_COUNT_IN_BOARD;
-    }
-
-    public GameResult calculateScore() {
-        GameResult gameResult = new GameResult();
-        gameResult.createScoreResult(board);
-        return gameResult;
     }
 
     public Map<Position, Piece> getBoard() {

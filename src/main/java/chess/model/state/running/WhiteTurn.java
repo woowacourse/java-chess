@@ -17,13 +17,23 @@ public final class WhiteTurn extends Running {
     }
 
     @Override
+    public boolean isWhiteTurn() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackTurn() {
+        return false;
+    }
+
+    @Override
     public State proceed(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isStatus()) {
             return new Status(board);
         }
         if (command.isEnd()) {
-            return new End();
+            return new End(board);
         }
         if (command.isMove()) {
             movePieceFrom(inputs);
@@ -39,7 +49,7 @@ public final class WhiteTurn extends Running {
 
     private State createStateByBoard() {
         if (board.isKingDead()) {
-            return new End();
+            return new End(board);
         }
         return new BlackTurn(board);
     }

@@ -30,6 +30,9 @@ public class MultipleMove implements MoveStrategy {
     }
 
     private List<Position> createMovablePositions(Position source, Direction direction, Map<Position, Piece> board) {
+        if (!source.movableTo(direction)) {
+            return new ArrayList<>();
+        }
         List<Position> positions = new ArrayList<>();
         Position nextPosition = source.createPositionTo(direction);
         while (board.get(nextPosition).isSameTeam(NONE) && nextPosition.movableTo(direction)) {
