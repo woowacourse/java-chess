@@ -8,7 +8,6 @@ public class StatusResult {
     private final Map<Color, Double> scoreByColor;
     private final Result result;
 
-
     public StatusResult(Map<Color, Double> scoreByColor, Result result) {
         this.scoreByColor = scoreByColor;
         this.result = result;

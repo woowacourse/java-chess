@@ -1,8 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.movePattern.AbstractSingleMovePattern;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.board.movePattern.AbstractSingleMovePattern;
 import java.util.List;
 
 public final class Knight extends Piece {
@@ -17,7 +17,7 @@ public final class Knight extends Piece {
     };
 
     public Knight(Color color) {
-        super(color);
+        super(color, "knight");
     }
 
     @Override
@@ -34,4 +34,5 @@ public final class Knight extends Piece {
     public double getPoint() {
         return POINT;
     }
+
 }

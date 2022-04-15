@@ -1,21 +1,24 @@
-package chess.console;
+package chess.controller;
 
-import chess.GameManager;
-import chess.console.command.Command;
-import chess.console.command.CommandFactory;
-import chess.console.view.InputView;
-import chess.console.view.OutputView;
+import chess.view.command.Command;
+import chess.view.command.CommandFactory;
+import chess.view.InputView;
+import chess.view.OutputView;
+import chess.domain.GameManager;
 
 public final class ConsoleGameRunner {
 
     public void run() {
         OutputView.printStartMessage();
-
         GameManager gameManager = new GameManager();
         Command currentCommand = initializeCommand();
         currentCommand.execute(gameManager);
 
-        while (!(currentCommand.isEnd() && gameManager.isFinished())) {
+        while (!currentCommand.isEnd()) {
+            if (gameManager.isFinished()) {
+                currentCommand.execute(gameManager);
+                break;
+            }
             currentCommand = inputCommandAndExecute(gameManager);
         }
     }

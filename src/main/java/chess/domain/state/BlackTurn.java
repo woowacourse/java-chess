@@ -1,8 +1,8 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.domain.board.Color;
+import chess.domain.position.Position;
 
 final class BlackTurn extends Running {
 
@@ -14,8 +14,13 @@ final class BlackTurn extends Running {
     public State movePiece(Position src, Position dest) {
         board.move(src, dest, Color.BLACK);
         if (!board.hasKing(Color.WHITE)) {
-            return new BlackWin();
+            return new BlackWin(board);
         }
         return new WhiteTurn(board);
+    }
+
+    @Override
+    public Turn currentTurn() {
+        return Turn.BLACK_TURN;
     }
 }

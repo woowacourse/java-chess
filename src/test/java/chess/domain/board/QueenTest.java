@@ -1,15 +1,14 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.position.Position;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 
@@ -39,7 +38,8 @@ class QueenTest {
                 Arguments.of(Position.of("d5"), Position.of("e4")), // 남동
                 Arguments.of(Position.of("d5"), Position.of("h1")), // 남동
                 Arguments.of(Position.of("d5"), Position.of("c4")), // 남서
-                Arguments.of(Position.of("d5"), Position.of("a2"))  // 남서
+                Arguments.of(Position.of("d5"), Position.of("a2")),  // 남서
+                Arguments.of(Position.of("e1"), Position.of("h4"))
         );
     }
 

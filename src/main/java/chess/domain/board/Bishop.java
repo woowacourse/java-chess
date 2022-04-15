@@ -1,8 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.movePattern.AbstractStraightMovePattern;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.board.movePattern.AbstractStraightMovePattern;
 import java.util.List;
 
 public final class Bishop extends Piece {
@@ -17,7 +17,7 @@ public final class Bishop extends Piece {
     };
 
     public Bishop(Color color) {
-        super(color);
+        super(color, "bishop");
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chess.domain.board.movePattern;
 
-import chess.domain.position.Position;
 import chess.domain.board.Color;
+import chess.domain.position.Position;
 
 public abstract class AbstractPawnMovePattern implements MovePattern {
 

@@ -1,6 +1,6 @@
-package chess.console.command;
+package chess.view.command;
 
-import chess.GameManager;
+import chess.domain.GameManager;
 
 public interface Command {
 

@@ -1,7 +1,7 @@
-package chess.console.command;
+package chess.view.command;
 
-import chess.GameManager;
-import chess.console.view.OutputView;
+import chess.view.OutputView;
+import chess.domain.GameManager;
 
 public final class Move implements Command {
 
@@ -20,8 +20,13 @@ public final class Move implements Command {
 
     @Override
     public void execute(GameManager gameManager) {
+        if (gameManager.isFinished()) {
+            OutputView.printResult(gameManager.getStatus().getResult());
+            return;
+        }
+
         gameManager.move(source, destination);
-        OutputView.printBoard(gameManager);
+        OutputView.printBoard(gameManager.getBoard());
     }
 
     @Override

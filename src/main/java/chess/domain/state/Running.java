@@ -1,10 +1,10 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.position.Position;
-import chess.domain.position.Result;
 import chess.domain.board.Color;
 import chess.domain.board.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.Result;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ abstract class Running implements State {
     public abstract State movePiece(Position src, Position dest);
 
     @Override
-    public final Map<Color, Double> getScore() {
+    public final Map<Color, Double> getScores() {
         double whiteScore = board.calculateScore(Color.WHITE);
         double blackScore = board.calculateScore(Color.BLACK);
 
