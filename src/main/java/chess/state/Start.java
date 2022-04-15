@@ -7,16 +7,19 @@ import static chess.state.Command.*;
 
 public final class Start extends Running {
 
-    public Start(final Board board) {
-        super(board);
-        initBoard();
+    private Start() {
+        super(new Board());
+    }
+
+    public static State of() {
+        return new Start();
     }
 
     public static State initState(final String command) {
-        if (!END.isUserInput(command)) {
+        if (!START.isUserInput(command)) {
             throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않았습니다.");
         }
-        return new Start(new Board());
+        return new Start();
     }
 
     @Override
@@ -30,9 +33,8 @@ public final class Start extends Running {
         throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
     }
 
-    private void initBoard() {
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
+    @Override
+    public Player getPlayer() {
+        return Player.WHITE;
     }
 }

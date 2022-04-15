@@ -22,9 +22,6 @@ public class KingTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
@@ -42,7 +39,7 @@ public class KingTest {
     @CsvSource(value = {"SIX,D", "FOUR,D", "FIVE,C", "FIVE,E", "SIX,E", "FOUR,E", "SIX,C", "FOUR,C"})
     void canMove_true(Rank rank, File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece king = new King(Player.BLACK, "K");
+        final Piece king = new King(Player.BLACK, Symbol.KING);
         final boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();

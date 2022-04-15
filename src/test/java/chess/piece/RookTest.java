@@ -21,9 +21,6 @@ class RookTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
@@ -31,7 +28,7 @@ class RookTest {
     @CsvSource(value = {"SEVEN,D", "ONE,D"})
     void canMove_false(final Rank rank, final File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece rook = new Rook(Player.BLACK, "R");
+        final Piece rook = new Rook(Player.BLACK, Symbol.ROOK);
         final boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isFalse();
@@ -42,7 +39,7 @@ class RookTest {
     @CsvSource(value = {"FOUR,H", "FOUR,A", "TWO,D", "SIX,D"})
     void canMove_true(final Rank rank, final File file) {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece rook = new Rook(Player.BLACK, "R");
+        final Piece rook = new Rook(Player.BLACK, Symbol.ROOK);
         final boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();

@@ -22,9 +22,6 @@ class PawnTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
-        board.createBlackPieces();
-        board.createWhitePieces();
     }
 
     @DisplayName("한 칸 움직일 수 있으면 true를 반환한다.")
@@ -42,7 +39,7 @@ class PawnTest {
     @Test
     void canMove_one_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), chessBoard);
 
         assertThat(actual).isFalse();
@@ -63,7 +60,7 @@ class PawnTest {
     @Test
     void canMove_two_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), chessBoard);
 
         assertThat(actual).isFalse();
@@ -73,7 +70,7 @@ class PawnTest {
     @Test
     void canMove_side_true() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), chessBoard);
 
         assertThat(actual).isTrue();
@@ -83,7 +80,7 @@ class PawnTest {
     @Test
     void canMove_side_false() {
         final Map<Position, Piece> chessBoard = board.getBoard();
-        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final Piece pawn = new Pawn(Player.BLACK, Symbol.PAWN);
         final boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), chessBoard);
 
         assertThat(actual).isFalse();

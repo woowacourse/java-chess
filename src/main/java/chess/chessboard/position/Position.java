@@ -30,6 +30,10 @@ public final class Position {
         return direction.createMovablePosition(rank, file);
     }
 
+    public String getPosition() {
+        return String.valueOf(file.getName()) + rank.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

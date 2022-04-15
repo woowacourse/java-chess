@@ -7,9 +7,6 @@ import chess.chessboard.position.Rank;
 
 import java.util.HashMap;
 
-import static chess.game.Player.BLACK;
-import static chess.game.Player.WHITE;
-
 public final class Score {
 
     private static final double DEDUCTION_PAWNS_IN_SAME_FILE = 0.5;
@@ -23,21 +20,21 @@ public final class Score {
     }
 
     public void calculateScore(final Board board) {
-        scores.put(WHITE, calculateScore(board, WHITE));
-        scores.put(BLACK, calculateScore(board, BLACK));
+        scores.put(Player.WHITE, calculateScore(board, Player.WHITE));
+        scores.put(Player.BLACK, calculateScore(board, Player.BLACK));
     }
 
     private double calculateScore(final Board board, final Player player) {
         double score = STARTING_COUNT;
-        for (Rank rank : Rank.values()) {
-            score = scoresInRank(board, player, score, rank);
+        for (File file : File.values()) {
+            score = scoresInFile(board, player, score, file);
         }
         return score;
     }
 
-    private double scoresInRank(final Board board, final Player player, double score, final Rank rank) {
+    private double scoresInFile(final Board board, final Player player, double score, final File file) {
         int pawnCountInFile = STARTING_COUNT;
-        for (File file : File.values()) {
+        for (Rank rank : Rank.values()) {
             score = addScoreOfPiece(board, player, score, Position.of(rank, file));
             pawnCountInFile += addPawnCount(board, player, Position.of(rank, file));
         }
@@ -48,7 +45,7 @@ public final class Score {
     }
 
     private int addPawnCount(final Board board, final Player player, final Position position) {
-        if (board.isSamePlayerIn(position, player) || board.isPawn(position)) {
+        if (board.isSamePlayerIn(position, player) && board.isPawn(position)) {
             return COUNTS;
         }
         return NONE_SUM;

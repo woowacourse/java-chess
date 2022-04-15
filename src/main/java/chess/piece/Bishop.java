@@ -11,7 +11,7 @@ import static chess.chessboard.position.Direction.*;
 public final class Bishop extends Piece {
 
     private static final double SCORE = 3;
-    public Bishop(final Player player, final String symbol) {
+    public Bishop(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

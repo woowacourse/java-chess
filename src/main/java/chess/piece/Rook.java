@@ -14,7 +14,7 @@ public final class Rook extends Piece {
 
     private static final double SCORE = 5;
 
-    public Rook(final Player player, final String symbol) {
+    public Rook(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

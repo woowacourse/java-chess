@@ -14,7 +14,7 @@ public final class King extends Piece {
 
     private static final double SCORE = 0;
 
-    public King(final Player player, final String symbol) {
+    public King(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

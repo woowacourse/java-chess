@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/src/board.css"/>
+    <meta charset="UTF-8">
+    <title>체스 게임 종료</title>
+    <link rel="stylesheet" href="src/board.css"/>
+</head>
+<body>
+    <div class="chess">
+        <img src ="images/chessBoard.png" id="chessBoard"/>
+        <div class="pieces">
+            {{#squares}}
+            <img src="images/{{symbol}}.png" id="{{position}}"/>
+            {{/squares}}
+        </div>
+        <form action="/result" method="post">
+            <input type="submit" value="결과 출력">
+        </form>
+        <form action="/" method="get">
+            <input type="submit" value="처음으로"/>
+        </form>
+    </div>
+
+</body>
+</html>

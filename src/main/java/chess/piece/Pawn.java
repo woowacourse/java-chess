@@ -15,7 +15,7 @@ public final class Pawn extends Piece {
 
     private static final double SCORE = 1;
 
-    public Pawn(final Player player, final String symbol) {
+    public Pawn(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

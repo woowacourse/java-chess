@@ -13,7 +13,7 @@ public final class Queen extends Piece {
 
     private static final double SCORE = 9;
 
-    public Queen(final Player player, final String symbol) {
+    public Queen(final Player player, final Symbol symbol) {
         super(player, symbol);
     }
 

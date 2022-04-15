@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/src/board.css"/>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="src/board.css"/>
+</head>
+<body>
+    <div class="chess">
+        <img src ="images/chessBoard.png" id="chessBoard"/>
+        <div class="pieces">
+            {{#squares}}
+            <img src="images/{{symbol}}.png" id="{{position}}"/>
+            {{/squares}}
+        </div>
+        <form action="/game" method="post">
+            <br />
+            {{player}} 차례입니다.
+            <br />
+            > 게임 종료 : end
+            <br />
+            > 이동 : move source위치 target위치 - 예. move b2 b3
+            <br />
+            > 게임이 종료되면 아무키나 입력하세요.
+            <br />
+            <br />
+            {{message}}
+            <br />
+            입력하세요: <input type="text" name="command" />
+            <input type="submit" />
+        </form>
+        <br />
+        실행한 명령어 목록
+        <div>
+        {{commands}}<br />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,63 +1,19 @@
 package chess.chessboard;
 
-import chess.chessboard.position.File;
 import chess.chessboard.position.Position;
-import chess.chessboard.position.Rank;
 import chess.game.Player;
 import chess.piece.*;
 
 import java.util.*;
 
-import static chess.chessboard.position.File.*;
 import static chess.game.Player.*;
-import static chess.chessboard.position.Rank.*;
 
 public final class Board {
 
     private final Map<Position, Piece> board;
 
     public Board() {
-        board = new HashMap<>();
-    }
-
-    public void initBoard() {
-        for (final Rank rank : Rank.values()) {
-            createBlankIn(rank);
-        }
-    }
-
-    private void createBlankIn(final Rank rank) {
-        for (File file : File.values()) {
-            board.put(Position.of(rank, file), new Blank(NONE, "."));
-        }
-    }
-
-    public void createBlackPieces() {
-        board.put(Position.of(EIGHT, A), new Rook(BLACK, "R"));
-        board.put(Position.of(EIGHT, B), new Knight(BLACK, "N"));
-        board.put(Position.of(EIGHT, C), new Bishop(BLACK, "B"));
-        board.put(Position.of(EIGHT, D), new Queen(BLACK, "Q"));
-        board.put(Position.of(EIGHT, E), new King(BLACK, "K"));
-        board.put(Position.of(EIGHT, F), new Bishop(BLACK, "B"));
-        board.put(Position.of(EIGHT, G), new Knight(BLACK, "N"));
-        board.put(Position.of(EIGHT, H), new Rook(BLACK, "R"));
-        for (final File file : File.values()) {
-            board.put(Position.of(SEVEN, file), new Pawn(BLACK, "P"));
-        }
-    }
-
-    public void createWhitePieces() {
-        board.put(Position.of(ONE, A), new Rook(WHITE, "r"));
-        board.put(Position.of(ONE, B), new Knight(WHITE, "n"));
-        board.put(Position.of(ONE, C), new Bishop(WHITE, "b"));
-        board.put(Position.of(ONE, D), new Queen(WHITE, "q"));
-        board.put(Position.of(ONE, E), new King(WHITE, "k"));
-        board.put(Position.of(ONE, F), new Bishop(WHITE, "b"));
-        board.put(Position.of(ONE, G), new Knight(WHITE, "n"));
-        board.put(Position.of(ONE, H), new Rook(WHITE, "r"));
-        for (final File file : File.values()) {
-            board.put(Position.of(TWO, file), new Pawn(WHITE, "p"));
-        }
+        board = PieceFactory.initBoard();
     }
 
     public Map<Position, Piece> getBoard() {
@@ -69,7 +25,7 @@ public final class Board {
         checkNoneInSource(piece);
         checkMovable(source, target, piece);
         board.put(target, board.get(source));
-        board.put(source, new Blank(NONE, "."));
+        board.put(source, new Blank(NONE, Symbol.BLANK));
     }
 
     private void checkMovable(final Position source, final Position target, final Piece piece) {
