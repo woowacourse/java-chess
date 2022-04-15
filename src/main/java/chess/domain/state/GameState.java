@@ -1,14 +1,21 @@
 package chess.domain.state;
 
-import chess.domain.Command;
+import chess.domain.ChessBoardPosition;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
-import java.util.List;
 
 public interface GameState {
-    GameState execute(Command command, List<String> input);
+    GameState start();
+
+    GameState end();
+
+    GameState move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
+
+    GameState status();
 
     Team findWinner();
+
+    boolean isPlay();
 
     boolean isFinished();
 

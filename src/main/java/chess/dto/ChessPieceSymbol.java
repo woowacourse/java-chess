@@ -36,7 +36,7 @@ public enum ChessPieceSymbol {
         return chessPieceSymbol.symbol;
     }
 
-    private static ChessPieceSymbol of(ChessPiece chessPiece) {
+    public static ChessPieceSymbol of(ChessPiece chessPiece) {
         return Arrays.stream(values())
                 .filter(it -> it.chessPiece.apply(chessPiece))
                 .findFirst()

@@ -1,8 +1,9 @@
-package chess.dto;
+package chess.dto.console;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.piece.ChessPiece;
+import chess.dto.ChessPieceSymbol;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

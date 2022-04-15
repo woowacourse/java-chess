@@ -1,35 +1,43 @@
 package chess.domain.state;
 
-import chess.domain.Command;
+import chess.domain.ChessBoardPosition;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
-import java.util.List;
+import chess.domain.piece.ChessPiece;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Ready implements GameState {
-    private final ChessBoard chessBoard;
-
-    public Ready(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
+    private static final String READY_INVALID_OPERATION_EXCEPTION = "[ERROR] 게임 대기 상태에서는 실행할 수 없습니다.";
 
     @Override
-    public GameState execute(Command command, List<String> input) {
-        isExecutable(command);
-        if (command.isEnd()) {
-            return new End();
-        }
+    public GameState start() {
         return new WhiteTurn(ChessBoard.create());
     }
 
-    private void isExecutable(Command command) {
-        if (command.isMove() || command.isStatus()) {
-            throw new IllegalArgumentException("[ERROR] start 또는 end 중에서 입력해주세요.");
-        }
+    @Override
+    public GameState end() {
+        return new End();
+    }
+
+    @Override
+    public GameState move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        throw new UnsupportedOperationException(READY_INVALID_OPERATION_EXCEPTION);
+    }
+
+    @Override
+    public GameState status() {
+        throw new UnsupportedOperationException(READY_INVALID_OPERATION_EXCEPTION);
     }
 
     @Override
     public Team findWinner() {
-        throw new IllegalArgumentException("[ERROR] 현재 상태에서 실행할 수 없습니다.");
+        throw new UnsupportedOperationException(READY_INVALID_OPERATION_EXCEPTION);
+    }
+
+    @Override
+    public boolean isPlay() {
+        return false;
     }
 
     @Override
@@ -44,6 +52,7 @@ public class Ready implements GameState {
 
     @Override
     public ChessBoard getChessBoard() {
-        return chessBoard;
+        Map<ChessBoardPosition, ChessPiece> board = new HashMap<>();
+        return new ChessBoard(board);
     }
 }

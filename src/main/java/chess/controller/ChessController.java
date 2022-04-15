@@ -11,7 +11,7 @@ import chess.domain.Command;
 import chess.domain.Team;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
-import chess.dto.ChessBoardDto;
+import chess.dto.console.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ChessController {
 
     public void run() {
         printChessGameStart();
-        GameState gameState = new Ready(ChessBoard.create());
+        GameState gameState = new Ready();
         while (!gameState.isEnd()) {
             gameState = executeCommand(gameState);
             gameState = refresh(gameState);
@@ -30,10 +30,10 @@ public class ChessController {
         try {
             List<String> input = requestCommandInput();
             Command command = Command.of(input);
-            gameState = gameState.execute(command, input);
+            gameState = command.execute(gameState, input);
             displayCommandResult(command, gameState);
             return gameState;
-        } catch (IllegalArgumentException exception) {
+        } catch (RuntimeException exception) {
             printExceptionMessage(exception.getMessage());
             return executeCommand(gameState);
         }
@@ -57,7 +57,7 @@ public class ChessController {
 
     private GameState refresh(GameState gameState) {
         if (gameState.isFinished()) {
-            return new Ready(ChessBoard.create());
+            return new Ready();
         }
         return gameState;
     }
