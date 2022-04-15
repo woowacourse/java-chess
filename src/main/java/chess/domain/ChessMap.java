@@ -7,6 +7,7 @@ import java.util.List;
 public class ChessMap {
 
     private static final char BLANK = '.';
+    private static final int CHESS_LENGTH = 8;
 
     private final char[][] chessMap;
 
@@ -24,23 +25,24 @@ public class ChessMap {
     }
 
     private static char[][] initializeChessMap() {
-        return new char[][]{
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-                {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK},
-        };
+        char[][] chessMap = new char[CHESS_LENGTH][CHESS_LENGTH];
+        for (int rank = 0; rank < CHESS_LENGTH; rank++) {
+            markBlank(chessMap, rank);
+        }
+        return chessMap;
+    }
+
+    private static void markBlank(char[][] chessMap, int rank) {
+        for (int file = 0; file < CHESS_LENGTH; file++) {
+            chessMap[rank][file] = BLANK;
+        }
     }
 
     private static void markWhitePieces(final char[][] chessMap, final List<Piece> whitePieces) {
         for (Piece piece : whitePieces) {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank().getValue();
-            final int file = position.getFile().getValue();
+            final int file = position.getFile().getValue() - 'a';
             chessMap[rank][file] = Character.toLowerCase(piece.getName());
         }
     }
@@ -49,7 +51,7 @@ public class ChessMap {
         for (Piece piece : blackPieces) {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank().getValue();
-            final int file = position.getFile().getValue();
+            final int file = position.getFile().getValue() - 'a';
             chessMap[rank][file] = piece.getName();
         }
     }

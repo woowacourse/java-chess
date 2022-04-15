@@ -1,8 +1,16 @@
 package chess.domain.player;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.State;
 import chess.domain.position.Position;
 import chess.domain.generator.Generator;
 import chess.domain.piece.Piece;
+import chess.dto.PieceDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +28,40 @@ public class Player {
 
     public Player(Generator generator, Team team) {
         this(generator.generate(), team);
+    }
+
+    public static Player of(final List<PieceDto> piecesDto, final Team team) {
+        final List<Piece> pieces = toPieces(piecesDto);
+        return new Player(pieces, team);
+    }
+
+    private static List<Piece> toPieces(final List<PieceDto> piecesDto) {
+        List<Piece> pieces = new ArrayList<>();
+        for (PieceDto pieceDto : piecesDto) {
+            final State state = State.from(pieceDto.getName());
+            final Position position = new Position(pieceDto.getPosition());
+            pieces.add(createPieceByState(state, position));
+        }
+        return pieces;
+    }
+
+    private static Piece createPieceByState(State state, Position position) {
+        if (state == State.BISHOP) {
+            return new Bishop(position);
+        }
+        if (state == State.KING) {
+            return new King(position);
+        }
+        if (state == State.KNIGHT) {
+            return new Knight(position);
+        }
+        if (state == State.PAWN) {
+            return new Pawn(position);
+        }
+        if (state == State.QUEEN) {
+            return new Queen(position);
+        }
+        return new Rook(position);
     }
 
     public boolean hasPiece(final Position position) {

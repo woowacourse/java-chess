@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>체스</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="chess-game">
+  <h1>🏁체스 게임🏁</h1>
+  <input type="text" id="game-name" placeholder="게임 이름을 입력해주세요." size="30">
+  <button id="start-btn" type="button" onclick="startGame()">새로하기</button>
+  <br>
+  <input type="text" id="load-game-name" placeholder="게임 이름을 입력해주세요." size="30">
+  <button id="load-btn" onclick="loadGame()">게임 불러오기</button>
+
+  <h3 id="current-turn">현재턴: </h3>
+  <h3 id="result"></h3>
+  <form>
+    <input id="current" placeholder="출발 위치 (ex. b7)">
+    <input id="destination" placeholder="도착 위치 (ex. b5)">
+    <button id="move-btn" type="button" onclick="move()">이동</button>
+  </form>
+  <br>
+  <button id="status-btn" type="button" disabled="true" onclick="findStatus()">점수 보기</button>
+  <button id="end-btn" type="button" disabled="true">게임 종료</button>
+
+  <div class="chess-board">
+    <!-- rank 8 -->
+    <div class="chess-board-row">
+      <div id="a8" class="white piece-cell"></div>
+      <div id="b8" class="black piece-cell"></div>
+      <div id="c8" class="white piece-cell"></div>
+      <div id="d8" class="black piece-cell"></div>
+      <div id="e8" class="white piece-cell"></div>
+      <div id="f8" class="black piece-cell"></div>
+      <div id="g8" class="white piece-cell"></div>
+      <div id="h8" class="black piece-cell"></div>
+    </div>
+    <!-- rank 7 -->
+    <div class="chess-board-row">
+      <div id="a7" class="black piece-cell"></div>
+      <div id="b7" class="white piece-cell"></div>
+      <div id="c7" class="black piece-cell"></div>
+      <div id="d7" class="white piece-cell"></div>
+      <div id="e7" class="black piece-cell"></div>
+      <div id="f7" class="white piece-cell"></div>
+      <div id="g7" class="black piece-cell"></div>
+      <div id="h7" class="white piece-cell"></div>
+    </div>
+    <!-- rank 6 -->
+    <div class="chess-board-row">
+      <div id="a6" class="white piece-cell"></div>
+      <div id="b6" class="black piece-cell"></div>
+      <div id="c6" class="white piece-cell"></div>
+      <div id="d6" class="black piece-cell"></div>
+      <div id="e6" class="white piece-cell"></div>
+      <div id="f6" class="black piece-cell"></div>
+      <div id="g6" class="white piece-cell"></div>
+      <div id="h6" class="black piece-cell"></div>
+    </div>
+    <!-- rank 5 -->
+    <div class="chess-board-row">
+      <div id="a5" class="black piece-cell"></div>
+      <div id="b5" class="white piece-cell"></div>
+      <div id="c5" class="black piece-cell"></div>
+      <div id="d5" class="white piece-cell"></div>
+      <div id="e5" class="black piece-cell"></div>
+      <div id="f5" class="white piece-cell"></div>
+      <div id="g5" class="black piece-cell"></div>
+      <div id="h5" class="white piece-cell"></div>
+    </div>
+    <!-- rank 4 -->
+    <div class="chess-board-row">
+      <div id="a4" class="white piece-cell"></div>
+      <div id="b4" class="black piece-cell"></div>
+      <div id="c4" class="white piece-cell"></div>
+      <div id="d4" class="black piece-cell"></div>
+      <div id="e4" class="white piece-cell"></div>
+      <div id="f4" class="black piece-cell"></div>
+      <div id="g4" class="white piece-cell"></div>
+      <div id="h4" class="black piece-cell"></div>
+    </div>
+    <!-- rank 3 -->
+    <div class="chess-board-row">
+      <div id="a3" class="black piece-cell"></div>
+      <div id="b3" class="white piece-cell"></div>
+      <div id="c3" class="black piece-cell"></div>
+      <div id="d3" class="white piece-cell"></div>
+      <div id="e3" class="black piece-cell"></div>
+      <div id="f3" class="white piece-cell"></div>
+      <div id="g3" class="black piece-cell"></div>
+      <div id="h3" class="white piece-cell"></div>
+    </div>
+    <!-- rank 2 -->
+    <div class="chess-board-row">
+      <div id="a2" class="white piece-cell"></div>
+      <div id="b2" class="black piece-cell"></div>
+      <div id="c2" class="white piece-cell"></div>
+      <div id="d2" class="black piece-cell"></div>
+      <div id="e2" class="white piece-cell"></div>
+      <div id="f2" class="black piece-cell"></div>
+      <div id="g2" class="white piece-cell"></div>
+      <div id="h2" class="black piece-cell"></div>
+    </div>
+    <!-- rank 1 -->
+    <div class="chess-board-row">
+      <div id="a1" class="black piece-cell"></div>
+      <div id="b1" class="white piece-cell"></div>
+      <div id="c1" class="black piece-cell"></div>
+      <div id="d1" class="white piece-cell"></div>
+      <div id="e1" class="black piece-cell"></div>
+      <div id="f1" class="white piece-cell"></div>
+      <div id="g1" class="black piece-cell"></div>
+      <div id="h1" class="white piece-cell"></div>
+    </div>
+  </div>
+</div>
+<script src="/js/game.js"></script>
+</body>
+</html>

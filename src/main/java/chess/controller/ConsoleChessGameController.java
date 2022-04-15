@@ -11,7 +11,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessGameController {
+public class ConsoleChessGameController {
 
     public void run() {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
