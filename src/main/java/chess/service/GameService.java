@@ -4,7 +4,6 @@ import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.dto.ResultDto;
 import chess.model.board.Board;
-import chess.model.state.Ready;
 import chess.model.state.State;
 import chess.model.state.finished.Status;
 import chess.model.state.running.WhiteTurn;
@@ -46,7 +45,7 @@ public class GameService {
     public ResultDto status() {
         Board board = gameRepository.getBoard();
         State status = new Status(board);
-        return new ResultDto(status.getScore(), status.getWinner());
+        return new ResultDto(status.getScores(), status.getWinner());
     }
 
     public BoardDto load() {

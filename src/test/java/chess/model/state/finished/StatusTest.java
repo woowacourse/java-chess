@@ -4,8 +4,6 @@ import static chess.model.Team.BLACK;
 import static chess.model.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.board.Board;
-import chess.model.position.Position;
 import chess.model.state.Ready;
 import chess.model.state.State;
 import java.util.List;
@@ -24,8 +22,8 @@ class StatusTest {
         state = state.proceed(List.of("move", "b4", "c5"));
         state = state.proceed(List.of("status"));
 
-        double blackScore = state.getScore().get(BLACK);
-        double whiteScore = state.getScore().get(WHITE);
+        double blackScore = state.getScores().get(BLACK);
+        double whiteScore = state.getScores().get(WHITE);
         assertThat(blackScore * 100 / 100.0).isEqualTo(37.0);
         assertThat(whiteScore * 100 / 100.0).isEqualTo(37.0);
     }
@@ -44,8 +42,8 @@ class StatusTest {
         state = state.proceed(List.of("move", "b6", "a8"));
         state = state.proceed(List.of("status"));
 
-        double blackScore = state.getScore().get(BLACK);
-        double whiteScore = state.getScore().get(WHITE);
+        double blackScore = state.getScores().get(BLACK);
+        double whiteScore = state.getScores().get(WHITE);
         assertThat(blackScore * 100 / 100.0).isEqualTo(33.0);
         assertThat(whiteScore * 100 / 100.0).isEqualTo(38.0);
     }

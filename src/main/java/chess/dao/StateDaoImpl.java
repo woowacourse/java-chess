@@ -4,10 +4,11 @@ import chess.dao.converter.StateToStringConverter;
 import chess.dao.converter.StringToStateConverter;
 import chess.model.board.Board;
 import chess.model.state.State;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StateDaoImpl implements StateDao {
 
@@ -29,76 +30,61 @@ public class StateDaoImpl implements StateDao {
 
     private String getStateName() {
         final String sql = "select name from state";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql);
-             final ResultSet resultSet = statement.executeQuery()) {
-            resultSet.next();
-            return resultSet.getString("name");
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 조회 실패");
-        }
-    }
-
-    private void insert(State state) {
-        final String sql = "insert into state (name) values (?)";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            String stateName = StateToStringConverter.convert(state);
-            statement.setString(1, stateName);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 저장 실패");
-        }
+        return executeResult(sql, "name");
     }
 
     private boolean hasState() {
         final String sql = "select count(*) as cnt from state";
-        int count = 0;
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-            resultSet.next();
-            count = resultSet.getInt("cnt");
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 조회 실패");
-        }
-        return count == 1;
+        String count = executeResult(sql, "cnt");
+        return count.equals("1");
+    }
+
+    private void insert(State state) {
+        final String sql = "insert into state (name) values (?)";
+        String stateName = StateToStringConverter.convert(state);
+        executeStatement(sql, List.of(stateName));
     }
 
     private void update(String nowStateName, State next) {
         final String sql = "update state set name = ? where name = ?";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            String nextStateName = StateToStringConverter.convert(next);
-            statement.setString(1, nextStateName);
-            statement.setString(2, nowStateName);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 최신화 실패");
-        }
+        String nextStateName = StateToStringConverter.convert(next);
+        executeStatement(sql, List.of(nextStateName, nowStateName));
     }
 
     public State find(Board board) {
         final String sql = "select name from state";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql);
-             final ResultSet resultSet = statement.executeQuery()) {
-            resultSet.next();
-            String stateName = resultSet.getString("name");
-            return StringToStateConverter.convert(stateName, board);
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 조회 실패");
-        }
+        String stateName = executeResult(sql, "name");
+        return StringToStateConverter.convert(stateName, board);
     }
 
     @Override
     public void delete() {
         final String sql = "delete from state";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
+        executeStatement(sql, new ArrayList<>());
+    }
+
+    private void executeStatement(String sql, List<String> conditions) {
+        try (final PreparedStatement statement = dataSource.connection().prepareStatement(sql)) {
+            setQuery(statement, conditions);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("[ERROR] 데이터 삭제 실패");
+        }
+    }
+
+    private void setQuery(PreparedStatement statement, List<String> conditions) throws SQLException {
+        for (int index = 0; index < conditions.size(); index++) {
+            statement.setString(index + 1, conditions.get(index));
+        }
+    }
+
+    private String executeResult(String sql, String column) {
+        try (final PreparedStatement statement = dataSource.connection().prepareStatement(sql);
+             final ResultSet resultSet = statement.executeQuery()) {
+            resultSet.next();
+            return resultSet.getString(column);
+        } catch (SQLException e) {
+            throw new RuntimeException("[ERROR] 데이터 조회 실패");
         }
     }
 }
