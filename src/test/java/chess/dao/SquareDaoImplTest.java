@@ -38,7 +38,7 @@ class SquareDaoImplTest {
     void update() {
         SquareDaoImpl squareDaoImpl = new SquareDaoImpl(new FakeDataSource());
         squareDaoImpl.save(Position.from("a1"), Piece.getPiece("BLACK_KING"));
-        squareDaoImpl.update("a1", Piece.getPiece("BLACK_PAWN"));
+        squareDaoImpl.save(Position.from("a1"), Piece.getPiece("BLACK_PAWN"));
 
         assertThat(squareDaoImpl.find().get("a1")).isEqualTo("BLACK_PAWN");
     }

@@ -42,7 +42,7 @@ class StateDaoImplTest {
         StateDao stateDao = new StateDaoImpl(new FakeDataSource());
         stateDao.delete();
         stateDao.save(new WhiteTurn(Board.init()));
-        stateDao.update(new WhiteTurn(Board.init()), new BlackTurn(Board.init()));
+        stateDao.save(new BlackTurn(Board.init()));
         State state = stateDao.find(Board.init());
 
         assertThat(state.isBlackTurn()).isTrue();

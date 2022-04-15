@@ -11,6 +11,4 @@ public interface SquareDao {
     Map<String, String> find();
 
     void delete();
-
-    void update(String position, Piece piece);
 }

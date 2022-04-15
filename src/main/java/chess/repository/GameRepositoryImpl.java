@@ -26,15 +26,14 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     public void saveGameData(State nextState, MoveDto moveDto) {
-        State nowState = this.getState();
-        stateDao.update(nowState, nextState);
+        stateDao.save(nextState);
 
         String source = moveDto.getSource();
         String target = moveDto.getTarget();
         Map<Position, Piece> squares = nextState.getBoard();
 
-        squareDao.update(source, squares.get(Position.from(source)));
-        squareDao.update(target, squares.get(Position.from(target)));
+        squareDao.save(Position.from(source), squares.get(Position.from(source)));
+        squareDao.save(Position.from(target), squares.get(Position.from(target)));
     }
 
     public void deleteGameData() {

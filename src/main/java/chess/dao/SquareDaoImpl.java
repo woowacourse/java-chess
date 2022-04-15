@@ -18,6 +18,27 @@ public class SquareDaoImpl implements SquareDao {
     }
 
     public void save(Position position, Piece piece) {
+        if (hasPiece(position)) {
+            update(position, piece);
+            return;
+        }
+        insert(position, piece);
+    }
+
+    private void update(Position position, Piece piece) {
+        final String sql = "update square set team = ?, symbol = ? where position = ?";
+        try (final Connection connection = dataSource.connection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, piece.getTeam());
+            statement.setString(2, piece.getSymbol());
+            statement.setString(3, position.getKey());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("[ERROR] 데이터 최신화 실패");
+        }
+    }
+
+    private void insert(Position position, Piece piece) {
         final String sql = "insert into square (position, team, symbol) values (?, ?, ?)";
         try (final Connection connection = dataSource.connection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -28,6 +49,21 @@ public class SquareDaoImpl implements SquareDao {
         } catch (SQLException e) {
             throw new RuntimeException("[ERROR] 데이터 저장 실패");
         }
+    }
+
+    private boolean hasPiece(Position position) {
+        final String sql = "select count(position) as cnt from square where position = ?";
+        int count = 0;
+        try (final Connection connection = dataSource.connection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, position.getKey());
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt("cnt");
+        } catch (SQLException e) {
+            throw new RuntimeException("[ERROR] 데이터 조회 실패");
+        }
+        return count == 1;
     }
 
     public Map<String, String> find() {
@@ -57,19 +93,6 @@ public class SquareDaoImpl implements SquareDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("[ERROR] 데이터 삭제 실패");
-        }
-    }
-
-    public void update(String position, Piece piece) {
-        final String sql = "update square set team = ?, symbol = ? where position = ?";
-        try (final Connection connection = dataSource.connection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, piece.getTeam());
-            statement.setString(2, piece.getSymbol());
-            statement.setString(3, position);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("[ERROR] 데이터 최신화 실패");
         }
     }
 }

@@ -23,9 +23,4 @@ public class FakeSquareDao implements SquareDao {
     public void delete() {
         values = new HashMap<>();
     }
-
-    @Override
-    public void update(String position, Piece piece) {
-        values.put(position, piece.getTeam() + "_" + piece.getSymbol());
-    }
 }

@@ -10,6 +10,4 @@ public interface StateDao {
     State find(Board board);
 
     void delete();
-
-    void update(State now, State next);
 }

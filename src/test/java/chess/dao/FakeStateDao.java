@@ -23,9 +23,4 @@ public class FakeStateDao implements StateDao {
     public void delete() {
         name = null;
     }
-
-    @Override
-    public void update(State now, State next) {
-        this.name = StateToStringConverter.convert(next);
-    }
 }
