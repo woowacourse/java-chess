@@ -1,15 +1,16 @@
-package chess.controller;
+package chess.console.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.dto.CommandRequest;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.dto.CommandRequest;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
+import chess.domain.state.Ready;
 
 public class ChessController {
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new ChessGame(new Ready());
 
         OutputView.printStartMessage();
         while (!chessGame.isFinished()) {
@@ -25,7 +26,7 @@ public class ChessController {
             CommandRequest commandRequest = InputView.inputCommand();
             Command command = commandRequest.getCommand();
 
-            command.excute(chessGame, commandRequest.getSource(), commandRequest.getTarget());
+            command.execute(chessGame, commandRequest.getSource(), commandRequest.getTarget());
         } catch (IllegalArgumentException | UnsupportedOperationException e) {
             OutputView.printErrorMessage(e.getMessage());
             playChess(chessGame);

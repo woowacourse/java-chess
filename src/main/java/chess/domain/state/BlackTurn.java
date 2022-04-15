@@ -11,7 +11,7 @@ public class BlackTurn extends Running {
 
     @Override
     public State move(String source, String target) {
-        if (!chessBoard.isTurn(source, Color.BLACK)) {
+        if (chessBoard.isTurn(source, Color.WHITE)) {
             throw new IllegalArgumentException("white 진영의 차례가 아닙니다.");
         }
 
@@ -22,5 +22,10 @@ public class BlackTurn extends Running {
         }
 
         return new WhiteTurn(chessBoard);
+    }
+
+    @Override
+    public StateType getStateType() {
+        return StateType.BLACK_TURN;
     }
 }

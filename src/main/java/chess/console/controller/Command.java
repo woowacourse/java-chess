@@ -1,8 +1,8 @@
-package chess.controller;
+package chess.console.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.view.OutputView;
+import chess.console.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -44,7 +44,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령입니다."));
     }
 
-    public void excute(ChessGame chessGame, String source, String target) {
+    public void execute(ChessGame chessGame, String source, String target) {
         consumer.accept(chessGame, List.of(source, target));
     }
 }

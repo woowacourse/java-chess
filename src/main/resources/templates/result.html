@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>혼돈의 체스 게임 결과</title>
+    <link rel="stylesheet" href="/src/index.css">
+</head>
+
+<body>
+<div class="chess-game">
+    <h1>♗혼돈의 체스 게임 결과♗</h1>
+    <div>
+        Black 진영 점수 VS White 진영 점수
+        <div class="score">{{black-score}}&nbsp;&nbsp;&nbsp;&nbsp;{{white-score}}</div>
+    </div>
+    <br>
+    <div>
+        승자는? {{winner}} 입니다.
+    </div>
+    <br>
+    <form action="/start" method="get">
+        <input type="submit" value="게임 다시 시작">
+    </form>
+</div>
+</body>
+
+</html>

@@ -20,6 +20,10 @@ public class ChessBoard {
         this.board = board;
     }
 
+    public void init() {
+        board.init();
+    }
+
     public void move(String source, String target) {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);

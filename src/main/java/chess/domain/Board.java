@@ -19,6 +19,21 @@ public class Board {
         this.board = board;
     }
 
+    public void init() {
+        for (BoardSetting boardSetting : BoardSetting.values()) {
+            fillPieces(boardSetting);
+        }
+    }
+
+    private void fillPieces(BoardSetting boardSetting) {
+        Piece piece = boardSetting.getPiece();
+        List<Position> positions = boardSetting.getPositions();
+
+        for (Position position : positions) {
+            place(position, piece);
+        }
+    }
+
     public void movePiece(Position source, Position target) {
         place(target, findPiece(source));
         place(source, new EmptyPiece());

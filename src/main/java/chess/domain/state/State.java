@@ -11,9 +11,13 @@ public interface State {
 
     State move(String source, String target);
 
+    boolean isRunning();
+
     boolean isFinished();
 
     Result winner();
 
     ChessBoard chessBoard();
+
+    StateType getStateType();
 }

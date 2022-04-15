@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>혼돈의 체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+    <div class="chess-game">
+        <h1>♗혼돈의 체스 게임♗</h1>
+        <div>
+            Black 진영 점수 VS White 진영 점수
+            <div class="score">{{black-score}}&nbsp;&nbsp;&nbsp;&nbsp;{{white-score}}</div>
+        </div>
+        <p class="error-message">
+            {{error-message}}
+        </p>
+        <section class="chess-board">
+            {{#pieces}}
+            <div class="{{position}}">
+                <img src="images/{{color}}_{{pieceType}}.png" class="img" />
+            </div>
+            {{/pieces}}
+        </section>
+        <br>
+        <section>
+            <form action="/move" method="get" enctype="text/plain">
+                <div>
+                    <label>기물 이동하기</label>
+                    <input placeholder="이동할 말의 위치" name="source" type="text" required>
+                    <input placeholder="이동하고 싶은 위치" name="target" type="text" required>
+                    <input type="submit" value="이동">
+                </div>
+            </form>
+            <br>
+            <form action="/result" method="get">
+                <input type="submit" value="게임 종료">
+            </form>
+        </section>
+    </div>
 </body>
+
 </html>

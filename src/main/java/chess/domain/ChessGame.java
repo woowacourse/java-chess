@@ -1,14 +1,14 @@
 package chess.domain;
 
-import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.domain.state.StateType;
 
 public class ChessGame {
 
     private State state;
 
-    public ChessGame() {
-        this.state = new Ready();
+    public ChessGame(State state) {
+        this.state = state;
     }
 
     public void start() {
@@ -21,6 +21,10 @@ public class ChessGame {
 
     public void move(String source, String target) {
         state = state.move(source, target);
+    }
+
+    public boolean isRunning() {
+        return state.isRunning();
     }
 
     public boolean isFinished() {
@@ -39,5 +43,9 @@ public class ChessGame {
     public Board board() {
         ChessBoard chessBoard = state.chessBoard();
         return chessBoard.getBoard();
+    }
+
+    public StateType getStateType() {
+        return state.getStateType();
     }
 }
