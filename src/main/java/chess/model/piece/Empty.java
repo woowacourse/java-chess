@@ -1,22 +1,25 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.board.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
 
-public class Empty extends AbstractPiece {
+public class Empty extends Piece {
 
-    private static final String NAME = ".";
     private static final double POINT = 0;
 
     public Empty() {
         super(Color.EMPTY);
     }
 
+    public Empty(int id, int squareId) {
+        super(id, Color.EMPTY, squareId);
+    }
+
     @Override
     public String name() {
-        return NAME;
+        return PieceType.empty.name();
     }
 
     @Override
@@ -25,8 +28,13 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(ConsoleBoard consoleBoard, Square source, Square target) {
         return false;
+    }
+
+    @Override
+    public List<Square> getRoute(Square source, Square target) {
+        return null;
     }
 
     @Override

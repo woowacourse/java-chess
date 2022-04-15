@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <script type="text/javascript" src="/src/home.js"></script>
+</head>
+<body>
+<div align="center">
+    <div>
+        <h3>방 만들기</h3>
+        <form id="roomForm" enctype="text/plain" action="/room" method="POST">
+            <div>
+                <label> 방이름
+                    <input type="text" id="roomName" name="roomName"/>
+                </label>
+            </div>
+            <div>
+                <label> 흰&nbsp;말
+                    <input type="text" id="whiteName" name="whiteName"/>
+                </label>
+            </div>
+            <div>
+                <label> 검정말
+                    <input type="text" id="blackName" name="blackName"/>
+                </label>
+            </div>
+        </form>
+        <button id="makeButton" onclick="makeRoom()">방만들기</button>
+    </div>
+    <div>
+        <h3>방 목록</h3>
+        {{#rooms}}
+        <table>
+            {{#roomsDto}}
+            {{#this}}
+            <tr>
+                <td>
+                    <a href="/room/{{roomId}}">{{roomTitle}}</a>
+                    {{whiteMember}}
+                    {{blackMember}}
+                </td>
+            </tr>
+            {{/this}}
+            {{/roomsDto}}
+        </table>
+        {{/rooms}}
+    </div>
+</div>
+</body>
+</html>

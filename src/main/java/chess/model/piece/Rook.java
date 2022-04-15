@@ -5,16 +5,19 @@ import java.util.List;
 
 public class Rook extends LinearMovingPiece {
 
-    private static final String NAME = "r";
     private static final double POINT = 5;
 
     public Rook(Color color) {
         super(color);
     }
 
+    public Rook(int id, Color color, int squareId) {
+        super(id, color, squareId);
+    }
+
     @Override
     public String name() {
-        return NAME;
+        return PieceType.r.name();
     }
 
     @Override

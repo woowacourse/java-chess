@@ -5,16 +5,19 @@ import java.util.List;
 
 public class Queen extends LinearMovingPiece {
 
-    private static final String NAME = "q";
     private static final double POINT = 9;
 
     public Queen(Color color) {
         super(color);
     }
 
+    public Queen(int id, Color color, int squareId) {
+        super(id, color, squareId);
+    }
+
     @Override
     public String name() {
-        return NAME;
+        return PieceType.q.name();
     }
 
     @Override

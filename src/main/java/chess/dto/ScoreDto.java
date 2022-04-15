@@ -1,22 +1,41 @@
 package chess.dto;
 
 import chess.model.piece.Color;
-import chess.model.util.ScoreResult;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ScoreDto {
 
+    private static final String CANNOT_FOUND_WINNER_ERROR_MESSAGE = "우승자를 찾을 수 없습니다.";
+
     private final String winner;
     private final Map<String, Double> score;
 
-    public ScoreDto(ScoreResult scoreResult) {
-        this.winner = scoreResult.findWinnerName();
-        Map<String, Double> score = new HashMap<>();
-        for (Color color : scoreResult.keySet()) {
-            score.put(color.name(), scoreResult.get(color));
-        }
+    private ScoreDto(String winner, Map<String, Double> score) {
+        this.winner = winner;
         this.score = score;
+    }
+
+    public static ScoreDto from(Map<String, Double> status) {
+        String winner = findWinnerName(status);
+        return new ScoreDto(winner, status);
+    }
+
+    private static String findWinnerName(Map<String, Double> status) {
+        final double subtractedScore = Color.getPlayerColors().stream()
+                .mapToDouble(color -> status.get(color.name()))
+                .reduce((x, y) -> x - y)
+                .orElseThrow(() -> new IllegalArgumentException(CANNOT_FOUND_WINNER_ERROR_MESSAGE));
+        return findWinner(subtractedScore);
+    }
+
+    private static String findWinner(final Double subtractedScore) {
+        if (subtractedScore.equals(0.0)) {
+            return Color.EMPTY.name();
+        }
+        if (subtractedScore < 0) {
+            return Color.BLACK.name();
+        }
+        return Color.WHITE.name();
     }
 
     public String getWinner() {
@@ -25,5 +44,17 @@ public class ScoreDto {
 
     public Map<String, Double> getScore() {
         return score;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{");
+        for (String color : score.keySet()) {
+            stringBuilder.append("\"").append(color).append("\" : ").append(score.get(color)).append(",");
+        }
+        stringBuilder.append("\"").append("winner").append("\" : ").append("\"").append(winner).append("\"");
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }

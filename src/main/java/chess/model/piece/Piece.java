@@ -1,35 +1,101 @@
 package chess.model.piece;
 
-import chess.model.Board;
+import chess.model.board.ConsoleBoard;
 import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
 
-public interface Piece {
+public abstract class Piece {
 
-    boolean isBlack();
+    private final int id;
+    protected final Color color;
+    private final int squareId;
 
-    String name();
+    protected Piece(int id, Color color, int squareId) {
+        this.id = id;
+        this.color = color;
+        this.squareId = squareId;
+    }
 
-    boolean movable(Square source, Square target);
+    protected Piece(Color color) {
+        this(0, color, 0);
+    }
 
-    boolean movable(Board board, Square source, Square target);
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
 
-    boolean canMoveWithoutObstacle(Board board, Square source, Square target);
+    public boolean movable(ConsoleBoard consoleBoard, Square source, Square target) {
+        return movable(source, target);
+    }
 
-    List<Direction> getDirection();
+    abstract boolean movable(Square source, Square target);
 
-    boolean isNotAlly(Piece target);
+    public boolean movable(Piece targetPiece, Square source, Square target) {
+        return movable(source, target);
+    }
 
-    boolean isNotEmpty();
+    public boolean isNotAlly(Piece target) {
+        return this.color != target.color();
+    }
 
-    double getPoint();
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
+    }
 
-    boolean isPawn();
+    public Color color() {
+        return color;
+    }
 
-    boolean isKing();
+    public abstract boolean isNotEmpty();
 
-    boolean isSameColor(Color color);
+    abstract List<Direction> getDirection();
 
-    Color color();
+    public abstract double getPoint();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract String name();
+
+    public abstract boolean canMoveWithoutObstacle(ConsoleBoard board, Square source, Square target);
+
+    public abstract List<Square> getRoute(Square source, Square target);
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSquareId() {
+        return squareId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Piece piece = (Piece) o;
+
+        if (id != piece.id) {
+            return false;
+        }
+        if (squareId != piece.squareId) {
+            return false;
+        }
+        return color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + squareId;
+        return result;
+    }
 }

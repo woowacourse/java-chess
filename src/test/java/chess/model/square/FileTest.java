@@ -1,9 +1,9 @@
 package chess.model.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import chess.model.square.File;
 import org.junit.jupiter.api.Test;
 
 class FileTest {

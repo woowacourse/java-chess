@@ -1,71 +1,46 @@
 package chess.controller;
 
+import chess.service.ChessService;
 import chess.dto.BoardDto;
+import chess.dto.ResponseDto;
+import chess.dto.RoomsDto;
 import chess.dto.ScoreDto;
-import chess.model.Board;
-import chess.model.piece.Piece;
-import chess.model.square.File;
-import chess.model.square.Rank;
-import chess.model.square.Square;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import org.eclipse.jetty.http.HttpStatus;
 
 public class ChessController {
 
-    private final Board board;
+    private final ChessService chessService;
 
-    public ChessController() {
-        this.board = new Board();
+    public ChessController(ChessService chessService) {
+        this.chessService = chessService;
     }
 
-    public BoardDto startGame() {
-        board.startGame();
-        return new BoardDto(toBoardDto(board));
+    public BoardDto getBoard(int roomId) {
+        return chessService.getBoard(roomId);
     }
 
-    public BoardDto move(String source, String target) {
-        board.move(source, target);
-        return new BoardDto(toBoardDto(board));
-    }
-
-    public ScoreDto score() {
-        return new ScoreDto(board.calculateScore());
-    }
-
-    public boolean isEnd() {
-        return board.isEnd();
-    }
-
-    public void finishGame() {
-        board.finishGame();
-    }
-
-    private List<List<String>> toBoardDto(Board board) {
-        List<List<String>> boardDto = new ArrayList<>();
-        List<Rank> ranks = Arrays.asList(Rank.values());
-        Collections.reverse(ranks);
-        for (Rank rank : ranks) {
-            boardDto.add(makeLineByFile(board, rank));
+    public ResponseDto move(int roomId, String source, String target) {
+        try {
+            chessService.move(source, target, roomId);
+        } catch (IllegalArgumentException e) {
+            return ResponseDto.of(HttpStatus.BAD_REQUEST_400, e.getMessage(), chessService.isEnd(roomId));
         }
-        return boardDto;
+        return ResponseDto.of(HttpStatus.OK_200, null, chessService.isEnd(roomId));
     }
 
-    private List<String> makeLineByFile(Board board, Rank rank) {
-        List<String> tempLine = new ArrayList<>();
-        for (File file : File.values()) {
-            Piece piece = board.get(Square.of(file, rank));
-            tempLine.add(toPieceDto(piece));
-        }
-        return tempLine;
+    public ScoreDto score(int roomId) {
+        return ScoreDto.from(chessService.status(roomId));
     }
 
-    private String toPieceDto(Piece piece) {
-        if (piece.isBlack()) {
-            return piece.name().toUpperCase(Locale.ROOT);
-        }
-        return piece.name();
+    public RoomsDto getRooms() {
+        return chessService.getRooms();
+    }
+
+    public int startGame(String roomTitle, String member1, String member2) {
+        return chessService.init(roomTitle, member1, member2).getId();
+    }
+
+    public void end(int roomId) {
+        chessService.end(roomId);
     }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+
+    <link rel="stylesheet" href="/src/index.css">
+    <script type="text/javascript" src="/src/index.js"></script>
+</head>
+<body>
+<div align="center">
+    <a href="/"><img src="/images/home.png" style="width:7vw; height: 7vw;"></a>
+    <h1>♟산체스♟</h1>
+    {{#board}}
+    <h2> 방제: {{roomTitle}}</h2>
+    <input id="roomId" type="hidden" value={{roomId}}/>
+    <p>
+        {{blackMemberName}}
+    </p>
+
+    <table class="chess-board" border="1">
+        {{#dto}}
+        <tr>
+            {{#this}}
+            {{#this}}
+            <td id={{position}} class="{{background}}" onclick="clicked(this.id)">
+                <img src="/images/{{imagePath}}" style="width:7vw; height: 7vw;"/>
+            </td>
+            {{/this}}
+            {{/this}}
+        </tr>
+        {{/dto}}
+    </table>
+    <p>
+        {{whiteMemberName}}
+    </p>
+    {{/board}}
+</div>
+<br/>
+<div align="center">
+    <button id="btn" onclick="checkStatus()">status</button>
+    <p id="statusResult">
+    </p>
+    <form action="/room/{{roomId}}/end" method="POST">
+        <input type="submit" value="end"/>
+    </form>
+</div>
+</body>
+</html>

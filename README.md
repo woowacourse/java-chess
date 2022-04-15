@@ -42,3 +42,22 @@ Map<Location, Piece>
 
 ### Piece
 해당 말의 종류와 진영
+
+## 4단계
+- [X] 체스 초기상태 웹뷰에 띄우기
+- [x] input form 으로 move 명령어 적용하기 (뷰하고 백앤드하고 통합)
+    - [x] move 명령 시 예외 메시지 뷰로 던져주기
+- [x] 클릭으로 move 하는 기능 (Rest API)
+    - [x] move 명령 시 예외 메시지 뷰로 던져주기
+    - [x] response 에 게임 종료 여부 추가
+    - [x] 게임 종료 시 게임이 종료됐다는 alert 띄우기
+- [x] status 버튼 만들기
+- [x] 체스판, 말 이미지 적용
+- [x] 종료버튼 만들기
+
+## 5단계
+- [x] 모든 Position 은 DB에 저장되어야 한다. (64개)
+- [x] if movable, update query and delete origin record
+- [x] if status, get all positions and pieces
+- [x] if end, destroy the room
+- [x] create a room and create members

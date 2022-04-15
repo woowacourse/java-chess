@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게임 결과</title>
+    <script>
+        function calculate(score) {
+
+        }
+
+    </script>
+</head>
+<body>
+<table>
+    {{#result}}
+    {{#each score}}
+    <tr>
+        <td>{{@key}}</td>
+        <td>{{this}}</td>
+
+    </tr>
+    {{/each}}
+    {{/result}}
+</table>
+{{#result}}
+<p> 우승자 : {{winner}} </p>
+{{/result}}
+<br>
+<a href="/">홈으로 갈게~ㅎ</a>
+</body>
+</html>
