@@ -4,7 +4,7 @@ import static chess.domain.board.position.File.C;
 import static chess.domain.board.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.board.position.Positions;
+import chess.domain.board.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,7 +24,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceTeam.WHITE);
 
         //when
-        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
+        boolean actual = queen.isMovable(Position.of(C, THREE), Position.of(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -38,7 +38,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceTeam.WHITE);
 
         //when
-        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
+        boolean actual = queen.isMovable(Position.of(C, THREE), Position.of(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

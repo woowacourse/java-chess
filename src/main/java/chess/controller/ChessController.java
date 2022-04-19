@@ -1,26 +1,23 @@
 package chess.controller;
 
-import static java.lang.System.err;
-
 import chess.constant.Command;
 import chess.domain.board.ChessBoard;
-import chess.domain.board.factory.BoardFactory;
-import chess.domain.board.factory.RegularBoardFactory;
-import chess.dto.Request;
-import chess.turndecider.GameFlow;
+import chess.dto.request.Request;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.turndecider.AlternatingGameFlow;
+
+import static java.lang.System.err;
 
 public class ChessController {
 
+    private final ChessBoard chessBoard;
+
+    public ChessController(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
     public void run() {
         OutputView.printInitMessage();
-
-        BoardFactory boardFactory = RegularBoardFactory.getInstance();
-
-        GameFlow gameFlow = new AlternatingGameFlow();
-        ChessBoard chessBoard = new ChessBoard(boardFactory.create(), gameFlow);
         Command beginCommand = InputView.inputStartCommand();
 
         if (beginCommand.isEnd()) {
@@ -40,7 +37,7 @@ public class ChessController {
             }
 
             if (request.getCommand().isStatus()) {
-                OutputView.printCurrentTeamScore(chessBoard.calculateScore());
+                OutputView.printCurrentTeamScore(chessBoard.currentState().getName(), chessBoard.calculateScore());
                 continue;
             }
 

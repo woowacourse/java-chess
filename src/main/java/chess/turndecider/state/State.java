@@ -9,4 +9,6 @@ public interface State {
     State nextState(boolean isGameFinished);
 
     boolean isRunning();
+
+    String getName();
 }

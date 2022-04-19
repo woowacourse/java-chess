@@ -1,14 +1,13 @@
 package chess.view;
 
-import static java.lang.System.*;
-
-import chess.domain.board.position.Positions;
-import java.util.Map;
-
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
+
+import java.util.Map;
+
+import static java.lang.System.out;
 
 public class OutputView {
 
@@ -34,13 +33,13 @@ public class OutputView {
 
     private static void printFilePieces(Map<Position, Piece> piecesByPositions, Rank rank) {
         for (File file : File.values()) {
-            Position searchPosition = Positions.findPositionBy(file, rank);
+            Position searchPosition = Position.of(file, rank);
             Piece piece = piecesByPositions.get(searchPosition);
             out.print(piece.getEmblem());
         }
     }
 
-    public static void printCurrentTeamScore(double score) {
-        out.println("현재 팀의 스코어는 " + score + " 입니다.");
+    public static void printCurrentTeamScore(String currentTeam, double score) {
+        out.printf("현재 팀 [%s]의 스코어는 %.1f 입니다." + NEXT_LINE, currentTeam, score);
     }
 }

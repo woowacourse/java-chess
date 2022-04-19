@@ -20,5 +20,10 @@ public class FixedGameFlow implements GameFlow {
     public boolean isRunning() {
         return true;
     }
+
+    @Override
+    public State currentState() {
+        return currentState;
+    }
 }
 

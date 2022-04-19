@@ -5,7 +5,6 @@ import static chess.domain.piece.PieceTeam.EMPTY;
 import static chess.domain.piece.PieceTeam.WHITE;
 
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Positions;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.King;
@@ -136,7 +135,7 @@ public class StringBoardFactory extends BoardFactory {
 
             String pieceSymbol = String.valueOf(stringRank.charAt(fileCount - 1));
             Piece createdPiece = createPiece(pieceSymbol);
-            Position createdPosition = Positions.findPositionBy(fileCount, rankCount);
+            Position createdPosition = Position.of(fileCount, rankCount);
 
             board.put(createdPosition, createdPiece);
         }

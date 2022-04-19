@@ -1,12 +1,11 @@
 package chess.domain.board.position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Position {
+
+    private static final List<Position> positionPool = new ArrayList<>();
 
     private final File file;
     private final Rank rank;
@@ -14,6 +13,38 @@ public class Position {
     Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(File file, Rank rank) {
+        Position findPosition = findPosition(file, rank);
+
+        if (findPosition == null) {
+            Position createdPosition = new Position(file, rank);
+            positionPool.add(createdPosition);
+
+            return createdPosition;
+        }
+
+        return findPosition;
+    }
+
+    public static Position of(int file, int rank) {
+        return of(File.of(file), Rank.of(rank));
+    }
+
+    public static Position of(String fileRank) {
+        File file = File.of(fileRank.substring(0, 1));
+        Rank rank = Rank.of(fileRank.substring(1, 2));
+
+        return of(file, rank);
+    }
+
+    private static Position findPosition(File file, Rank rank) {
+        return positionPool
+                .stream()
+                .filter(position -> position.file == file && position.rank == rank)
+                .findAny()
+                .orElse(null);
     }
 
     public int rankDisplacement(Position other) {
@@ -71,17 +102,17 @@ public class Position {
         List<Position> positions = new ArrayList<>();
 
         if (isOnlyMoveFile(rankIterator)) {
-            fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, this.rank)));
+            fileIterator.forEachRemaining(file -> positions.add(Position.of(file, this.rank)));
             return positions;
         }
 
         if (isOnlyMoveRank(fileIterator)) {
-            rankIterator.forEachRemaining(rank -> positions.add(Positions.findPositionBy(this.file, rank)));
+            rankIterator.forEachRemaining(rank -> positions.add(Position.of(this.file, rank)));
             return positions;
         }
 
         while (rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, rankIterator.next())));
+            fileIterator.forEachRemaining(file -> positions.add(Position.of(file, rankIterator.next())));
         }
 
         return getPositionsAllDirectional(positions);
@@ -99,6 +130,14 @@ public class Position {
 
     private boolean isOnlyMoveFile(ListIterator<Rank> rankIterator) {
         return !rankIterator.hasNext();
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

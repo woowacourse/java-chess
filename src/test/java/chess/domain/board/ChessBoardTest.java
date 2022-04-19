@@ -73,7 +73,7 @@ public class ChessBoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
+            .map(file -> piecesByPositions.get(Position.of(file, TWO)))
             .collect(Collectors.toList());
 
         assertThat(actual).isEqualTo(expected);
@@ -87,7 +87,7 @@ public class ChessBoardTest {
 
         //when
         List<Piece> actual = Arrays.stream(File.values())
-                .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
+                .map(file -> piecesByPositions.get(Position.of(file, TWO)))
                 .collect(Collectors.toList());
 
         List<Piece> expected = Arrays.stream(File.values())
@@ -101,7 +101,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("체스 말이 없는 곳에서 이동 시키면 예외를 던진다.")
     void move_exception() {
-        assertThatThrownBy(() -> chessBoard.movePiece(Positions.findPositionBy(A, THREE), Positions.findPositionBy(B, THREE)))
+        assertThatThrownBy(() -> chessBoard.movePiece(Position.of(A, THREE), Position.of(B, THREE)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
     }
@@ -110,11 +110,11 @@ public class ChessBoardTest {
     @DisplayName("체스 말이 입력한 target으로 정상 이동했는지 확인한다.")
     void move_test() {
         //when
-        chessBoard.movePiece(Positions.findPositionBy(A, TWO), Positions.findPositionBy(A, THREE));
+        chessBoard.movePiece(Position.of(A, TWO), Position.of(A, THREE));
         Map<Position, Piece> piecesByPositions = chessBoard.getBoard();
 
         //then
-        assertThat(piecesByPositions.get(Positions.findPositionBy(A, THREE))).isEqualTo(new Pawn(WHITE));
+        assertThat(piecesByPositions.get(Position.of(A, THREE))).isEqualTo(new Pawn(WHITE));
     }
 
     @ParameterizedTest
@@ -122,7 +122,7 @@ public class ChessBoardTest {
     @DisplayName("퀸은 경로에 다른 기물 있으면 이동할 수 없다")
     void isBlocked(Rank rank, File file) {
         assertThatThrownBy(() ->
-            chessBoard.movePiece(Positions.findPositionBy(C, ONE), Positions.findPositionBy(file, rank))
+            chessBoard.movePiece(Position.of(C, ONE), Position.of(file, rank))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -131,16 +131,16 @@ public class ChessBoardTest {
     @DisplayName("나이트는 경로에 다른 기물 있으면 이동할 수 있다")
     void isNonBlocked(Rank rank, File file) {
         assertDoesNotThrow(() ->
-            chessBoard.movePiece(Positions.findPositionBy(B, ONE), Positions.findPositionBy(file, rank))
+            chessBoard.movePiece(Position.of(B, ONE), Position.of(file, rank))
         );
     }
 
     @DisplayName("기물이 다른 기물의 이동경로를 막고 있다면 이동이 불가하다")
     @Test
     void isBlockedAfterNightMoved() {
-        chessBoard.movePiece(Positions.findPositionBy(B, ONE), Positions.findPositionBy(C, THREE));
+        chessBoard.movePiece(Position.of(B, ONE), Position.of(C, THREE));
         assertThatThrownBy(() ->
-            chessBoard.movePiece(Positions.findPositionBy(C, TWO), Positions.findPositionBy(C, FOUR))
+            chessBoard.movePiece(Position.of(C, TWO), Position.of(C, FOUR))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -148,15 +148,15 @@ public class ChessBoardTest {
     @Test
     void isMyTeam() {
         assertThatThrownBy(() ->
-            chessBoard.movePiece(Positions.findPositionBy(A, ONE), Positions.findPositionBy(A, TWO))
+            chessBoard.movePiece(Position.of(A, ONE), Position.of(A, TWO))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰을 A2 에서 A4로 이동시켰다면 A4에는 폰이 있다")
     @Test
     void move_pawn_and_now_pawn_is_at_target_pos() {
-        chessBoard.movePiece(Positions.findPositionBy(A, TWO), Positions.findPositionBy(A, FOUR));
-        Piece findPiece = chessBoard.getBoard().get(Positions.findPositionBy(A, FOUR));
+        chessBoard.movePiece(Position.of(A, TWO), Position.of(A, FOUR));
+        Piece findPiece = chessBoard.getBoard().get(Position.of(A, FOUR));
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
@@ -180,7 +180,7 @@ public class ChessBoardTest {
 
         assertThat(chessBoard.isGamePlaying()).isTrue();
 
-        chessBoard.movePiece(Positions.findPositionBy(B, SEVEN), Positions.findPositionBy(A, EIGHT)); // 흰 폰 이동
+        chessBoard.movePiece(Position.of(B, SEVEN), Position.of(A, EIGHT)); // 흰 폰 이동
 
         assertThat(chessBoard.isGamePlaying()).isFalse();
     }
