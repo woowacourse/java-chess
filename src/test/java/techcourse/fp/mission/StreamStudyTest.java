@@ -2,6 +2,7 @@ package techcourse.fp.mission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fp.mission.StreamStudy;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,11 @@
 package techcourse.fp.mission;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import fp.mission.Calculator;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 class CalculatorTest {
 
