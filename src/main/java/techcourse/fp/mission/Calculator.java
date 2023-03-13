@@ -1,4 +1,4 @@
-package fp.mission;
+package techcourse.fp.mission;
 
 import java.util.List;
 

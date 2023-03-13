@@ -1,4 +1,4 @@
-package fp.study;
+package techcourse.fp.study;
 
 import java.util.List;
 import java.util.function.Consumer;
