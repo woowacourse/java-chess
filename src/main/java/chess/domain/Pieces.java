@@ -53,20 +53,9 @@ public final class Pieces {
         pieceList.add(Piece.of('e', 0, Shape.KING));
     }
 
-    public List<Piece> getPieces() {
-        return pieces;
+    public long getShapeCount(final Shape shape) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameShape(shape))
+                .count();
     }
-
-    //    public static Pieces createBlackPieces() {
-//        List<Piece> pieceList = new ArrayList<>();
-//        makeBlackPieces(pieceList);
-//        return new Pieces(pieceList);
-//    }
-
-//    private static void makeBlackPieces(List<Piece> pieceList) {
-//        for (int file = FIRST_FILE_OF_BLACK; file >= LAST_FILE_OF_BLACK; file--) {
-//            makePiece(pieceList, file);
-//        }
-//    }
-
 }

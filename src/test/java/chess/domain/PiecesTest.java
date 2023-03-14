@@ -17,44 +17,32 @@ class PiecesTest {
         // then
         Assertions.assertAll(
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.PAWN)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.PAWN);
                     assertThat(count).isEqualTo(8);
                 },
 
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.BISHOP)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.ROOK)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.ROOK);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.KNIGHT)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.KING)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.KING);
                     assertThat(count).isEqualTo(1);
                 },
 
                 () -> {
-                    long count = pieces.getPieces().stream()
-                            .filter(piece -> piece.getShape() == Shape.QUEEN)
-                            .count();
+                    long count = pieces.getShapeCount(Shape.QUEEN);
                     assertThat(count).isEqualTo(1);
                 }
         );

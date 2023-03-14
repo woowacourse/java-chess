@@ -13,8 +13,8 @@ public class Piece {
          return new Piece(Position.from(rank, file), shape);
     }
 
-    public Shape getShape() {
-        return shape;
+    public boolean isSameShape(Shape shape) {
+        return this.shape == shape;
     }
 
     @Override
