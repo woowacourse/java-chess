@@ -1,22 +1,31 @@
 package chess.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Arrays;
+import java.util.List;
 
 class PieceTest {
-
     @Test
-    @DisplayName("말은 종류를 입력받아 생성된다.")
-    void create() {
+    @DisplayName("기물들을 생성한다.")
+    void createInitialPieces() {
         // given
-        Role role = Role.PAWN;
+        Side side = new Side(Color.BLACK);
 
         // when
-        Piece piece = new Piece(role);
+        List<Piece> pieces = Piece.createInitialPieces(side);
 
         // expected
-        assertThat(piece).isNotNull();
+        Role[] values = Role.values();
+        Arrays.stream(values).forEach(
+                role -> {
+                    long count = pieces.stream()
+                            .filter(piece -> piece.getRole().equals(role))
+                            .count();
+                    Assertions.assertThat(count).isEqualTo(role.getCount());
+                }
+        );
     }
 }
