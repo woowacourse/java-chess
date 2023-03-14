@@ -3,8 +3,8 @@ package chess.model.board;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Board {
 
@@ -15,15 +15,29 @@ public class Board {
     }
 
     public static Board create() {
-        List<Square> squares = stream(File.values())
-            .flatMap(Board::createSquare)
-            .collect(toUnmodifiableList());
+        final List<Square> squares = createSquares();
 
         return new Board(squares);
     }
 
-    private static Stream<Square> createSquare(final File file) {
-        return stream(Rank.values())
-            .map(rank -> new Square(rank, file));
+    private static List<Square> createSquares() {
+        final List<Square> squares = new ArrayList<>();
+
+        for (File file : File.values()) {
+            createSquare(squares, file);
+        }
+
+        return squares;
+    }
+
+    private static void createSquare(final List<Square> squares, final File file) {
+        for (Rank rank : Rank.values()) {
+            final Position position = new Position(file, rank);
+            squares.add(new EmptySquare(position));
+        }
+    }
+
+    public List<Square> getSquares() {
+        return List.copyOf(squares);
     }
 }
