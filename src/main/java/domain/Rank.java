@@ -1,3 +1,5 @@
+package domain;
+
 public enum Rank {
     EIGHT(0, "8"),
     SEVEN(1, "7"),
