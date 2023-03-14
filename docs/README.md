@@ -10,8 +10,8 @@
   - [ ] 좌표를 가지고 있다. (Coordinate)
     - [x] x좌표 (1 ~ 8) (Row)
       - [x] [예외 처리] 1~8의 범위를 벗어난 경우 예외 처리
-    - [ ] y좌표 (a ~ h) (Column)
-      - [ ] [예외 처리] a~h의 범위를 벗어난 경우 예외 처리
+    - [x] y좌표 (a ~ h) (Column)
+      - [x] [예외 처리] a~h의 범위를 벗어난 경우 예외 처리
   - [ ] 팀 종류를 가지고 있다. (Team enum class -> White or Black)
     - [ ] 해당 인스턴스가 White 팀인지 알려준다.
 - [ ] 맵 (ChessBoard -> List<Piece>)
