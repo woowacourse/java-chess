@@ -14,12 +14,15 @@ public enum InitRank {
         this.types = types;
     }
 
-    public static List<Type> from(InitRank initRank) {
+    public static InitRank from(InitRank initRank) {
         return Arrays.stream(values())
                 .filter(value -> value == initRank)
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new)
-                .types;
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    public List<Type> getTypes() {
+        return types;
     }
 
 }

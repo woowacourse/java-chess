@@ -13,7 +13,7 @@ public class Rank {
     }
 
     public static Rank initRankToRank(final InitRank initRank, final Color color) {
-        return new Rank(InitRank.from(initRank).stream()
+        return new Rank(InitRank.from(initRank).getTypes().stream()
                 .map((type -> Piece.of(type, color)))
                 .collect(Collectors.toList()));
     }
