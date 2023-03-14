@@ -8,6 +8,6 @@ class SquareTest {
 
     @Test
     void createSquare() {
-        assertDoesNotThrow(() -> new Square(File.A, Rank.ONE));
+        assertDoesNotThrow(() -> Square.of(File.A, Rank.ONE));
     }
 }
