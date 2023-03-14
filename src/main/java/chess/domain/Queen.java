@@ -1,6 +1,6 @@
 package chess.domain;
 
-public class Queen {
+public class Queen implements Piece {
 
     private static final Queen blackQueen;
     private static final Queen whiteQueen;

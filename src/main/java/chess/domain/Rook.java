@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook {
+public class Rook implements Piece {
     private static final List<Rook> blackRooks = new ArrayList<>();
     private static final List<Rook> whiteRooks = new ArrayList<>();
 

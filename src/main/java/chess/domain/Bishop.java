@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop {
+public class Bishop implements Piece {
 
     private static final List<Bishop> blackBishops = new ArrayList<>();
     private static final List<Bishop> whiteBishops = new ArrayList<>();

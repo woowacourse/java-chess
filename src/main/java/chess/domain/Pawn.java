@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Pawn {
+public final class Pawn implements Piece {
     private static final List<Pawn> blackPawns = new ArrayList<>();
     private static final List<Pawn> whitePawns = new ArrayList<>();
 

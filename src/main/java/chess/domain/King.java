@@ -1,6 +1,6 @@
 package chess.domain;
 
-public class King {
+public class King implements Piece {
 
     private static final King blackKing;
     private static final King whiteKing;
