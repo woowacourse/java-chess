@@ -1,5 +1,8 @@
 package chess;
 
+import chess.piece.ChessPiece;
+import chess.piece.Position;
+import chess.piece.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,7 @@ class ChessPieceTest {
     void test_Constructor() {
         //given
         final Team team = Team.BLACK;
-        final Position position = new Position(1,1);
+        final Position position = new Position(1, 1);
 
         //when & then
         Assertions.assertDoesNotThrow(() -> new ChessPiece(team, position) {
