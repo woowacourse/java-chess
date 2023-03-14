@@ -13,9 +13,11 @@ class RankTest {
 
     @Test
     void 행을_생성한다() {
-        Rank rank = new Rank(RankCoordinate.ONE, List.of(new Square(FileCoordinate.C, Piece.BISHOP)));
+        Rank rank = new Rank(RankCoordinate.ONE,
+                List.of(new Square(FileCoordinate.C, new Piece(PieceType.BISHOP, Color.BLACK))));
 
         Square square = rank.getSquareByCoordinate(FileCoordinate.C);
-        assertThat(square.getPiece()).isEqualTo(Piece.BISHOP);
+        Piece piece = square.getPiece();
+        assertThat(piece.getPieceType()).isEqualTo(PieceType.BISHOP);
     }
 }
