@@ -15,4 +15,8 @@ public enum File {
     File(int number) {
         this.number = number;
     }
+
+    public int distance(File other) {
+        return Math.abs(this.number - other.number);
+    }
 }

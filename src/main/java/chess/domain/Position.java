@@ -45,4 +45,8 @@ public class Position {
     public int hashCode() {
         return hash(file, rank);
     }
+
+    public boolean isDiagonalEqual(Position other) {
+        return this.file.distance(other.file) == this.rank.distance(other.rank);
+    }
 }
