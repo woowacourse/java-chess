@@ -1,6 +1,6 @@
 package chessgame;
 
-public class King {
+public class King implements Pieces{
     private static final String ORIGINAL_NAME = "k";
 
     private final String name;

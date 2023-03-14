@@ -1,6 +1,6 @@
 package chessgame;
 
-public class Pawn {
+public class Pawn implements Pieces{
     private static final String ORIGINAL_NAME = "p";
 
     private final String name;

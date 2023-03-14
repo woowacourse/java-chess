@@ -1,6 +1,6 @@
 package chessgame;
 
-public class Rook {
+public class Rook implements Pieces{
     private static final String ORIGINAL_NAME = "r";
 
     private final String name;

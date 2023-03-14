@@ -1,6 +1,6 @@
 package chessgame;
 
-public class Bishop {
+public class Bishop implements Pieces{
     private static final String ORIGINAL_NAME = "b";
 
     private final String name;
