@@ -26,15 +26,14 @@
 
 - [x] Rank와 Column을 필드로 가진다
 
-## Player (abstract)
-
-- [] COLOR(Black/White)를 가진다
-- [] COLOR에 따라 1열, 2열을 설정한다
-
 ### BlackPlayer
-- [] 1열과 2열에 해당하는 Rank를 가진다(8,7)
+
+- [x] COLOR로 Black을 가진다
+- [x] 1열과 2열에 해당하는 Rank를 가진다(8,7)
 
 ### WhitePlayer
+
+- [x] COLOR로 White를 가진다
 - [] 1열과 2열에 해당하는 Rank를 가진다(1,2)
 
 ## PieceGenerator
@@ -46,10 +45,8 @@
 ## Piece (abstract)
 
 - [x] 상수로 COLOR를 필드로 가진다 (White/Black)
-- [x] 상수로 InitialPositions라는 초기 위치 객체를 가지고 있다
+- [ ] COLOR에 따라 출력값을 결정한다(ex.P/p)
 - [x] Piece 종류에따라 움직일 수 있다(move method)
-- TODO: 이동시 위치값을 어떻게 할지 고민한다
-- rank와 column를 필드로 가진다
 
 ## InitialPositions 
 - [x] 기물들의 초기 위치 값을 나타낸다
