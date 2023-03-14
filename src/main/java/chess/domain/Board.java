@@ -6,7 +6,7 @@ public class Board {
 
     private final List<Rank> ranks;
 
-    public Board(List<Rank> ranks) {
+    Board(List<Rank> ranks) {
         this.ranks = ranks;
     }
 

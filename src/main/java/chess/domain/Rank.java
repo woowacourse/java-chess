@@ -7,7 +7,7 @@ public class Rank {
     private final RankCoordinate rankCoordinate;
     private final List<Square> squares;
 
-    public Rank(RankCoordinate rankCoordinate, List<Square> squares) {
+    Rank(RankCoordinate rankCoordinate, List<Square> squares) {
         this.rankCoordinate = rankCoordinate;
         this.squares = squares;
     }
