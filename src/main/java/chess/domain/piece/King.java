@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.PiecePosition;
+
 public class King extends Piece {
 
-    public King(final int rank, final int file, final Color color) {
-        super(rank, file, color);
+    protected King(final PiecePosition position, final Color color) {
+        super(position, color);
     }
 }
