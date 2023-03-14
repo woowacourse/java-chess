@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.PieceType;
 import java.util.Arrays;
 
@@ -30,15 +31,14 @@ public enum PieceTypeView {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
+    public String getMessage(Color color) {
+        if (color == Color.BLACK) {
+            return this.blackTeamView;
+        }
+        return this.whiteTeamView;
+    }
+
     private PieceType getPieceType() {
         return pieceType;
-    }
-
-    public String getWhiteTeamView() {
-        return whiteTeamView;
-    }
-
-    public String getBlackTeamView() {
-        return blackTeamView;
     }
 }

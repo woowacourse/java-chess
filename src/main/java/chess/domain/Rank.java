@@ -18,4 +18,8 @@ public class Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 열 위치를 입력했습니다."));
     }
+
+    public List<Square> getSquares() {
+        return List.copyOf(squares);
+    }
 }
