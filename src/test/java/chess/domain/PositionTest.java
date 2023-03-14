@@ -11,7 +11,7 @@ class PositionTest {
     @DisplayName("Postion이 정상적으로 생성되어야 한다.")
     void create_Success() {
         // given
-        Position position = new Position(4, 6);
+        Position position = Position.of(4, 6);
 
         // expect
         assertThat(position.getX())

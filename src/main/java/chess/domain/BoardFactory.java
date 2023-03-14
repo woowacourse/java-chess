@@ -36,7 +36,7 @@ public class BoardFactory {
         List<Square> squares = new ArrayList<>();
         for (int index = 0; index < CHESSMEN.length; index++) {
             Piece piece = new Piece(CHESSMEN[index], team);
-            Position position = new Position(index, y);
+            Position position = Position.of(index, y);
             squares.add(new Square(piece, position));
         }
         return squares;
@@ -46,7 +46,7 @@ public class BoardFactory {
         List<Square> squares = new ArrayList<>();
         for (int x = 0; x < 8; x++) {
             Piece piece = new Piece(role, team);
-            Position position = new Position(x, y);
+            Position position = Position.of(x, y);
             squares.add(new Square(piece, position));
         }
         return squares;
