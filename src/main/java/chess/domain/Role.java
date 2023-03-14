@@ -6,5 +6,6 @@ public enum Role {
     ROOK,
     BISHOP,
     KNIGHT,
-    PAWN
+    PAWN,
+    EMPTY
 }
