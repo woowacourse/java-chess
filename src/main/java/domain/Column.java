@@ -38,7 +38,15 @@ public enum Column {
         }
     }
 
+    public static int findSize() {
+        return values().length;
+    }
+
     public int getIndex() {
         return index;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Column.findSize());
     }
 }
