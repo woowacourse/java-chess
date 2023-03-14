@@ -1,7 +1,7 @@
 package chess.model.board;
 
+import chess.model.Type;
 import chess.model.piece.Piece;
-import chess.model.piece.Type;
 
 public class EmptySquare implements Square {
 
@@ -23,11 +23,11 @@ public class EmptySquare implements Square {
 
     @Override
     public Square removePiece() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+        return new EmptySquare(position);
     }
 
     @Override
     public Type getType() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+        return DefaultType.EMPTY;
     }
 }

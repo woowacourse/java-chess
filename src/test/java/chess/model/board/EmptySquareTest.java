@@ -7,9 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.model.piece.Color;
-import chess.model.piece.Piece;
-import chess.model.piece.Type;
+import chess.model.piece.PieceType;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ class EmptySquareTest {
         final Square pieceSquare = emptySquare.receivePiece(WHITE_PAWN);
 
         // then
-        assertThat(pieceSquare.getType()).isSameAs(Type.PAWN);
+        assertThat(pieceSquare.getType()).isSameAs(PieceType.PAWN);
     }
 
     @Test
@@ -51,15 +50,16 @@ class EmptySquareTest {
     @DisplayName("removePiece()를 호출하면 예외가 발생한다")
     void removePiece_whenCall_thenFail() {
         // when, then
-        assertThatThrownBy(emptySquare::removePiece)
-            .isInstanceOf(UnsupportedOperationException.class);
+        assertThat(emptySquare.removePiece())
+            .extracting("position", InstanceOfAssertFactories.type(Position.class))
+            .isEqualTo(A1);
     }
 
     @Test
     @DisplayName("getType()을 호출하면 예외가 발생한다.")
     void getType_whenCall_thenFail() {
         // when, then
-        assertThatThrownBy(emptySquare::getType)
-            .isInstanceOf(UnsupportedOperationException.class);
+        assertThat(emptySquare.getType())
+                .isEqualTo(DefaultType.EMPTY);
     }
 }

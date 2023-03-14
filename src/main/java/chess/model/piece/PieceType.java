@@ -1,6 +1,8 @@
 package chess.model.piece;
 
-public enum Type {
+import chess.model.Type;
+
+public enum PieceType implements Type {
 
     PAWN,
     BISHOP,

@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.Type;
+
 public class Piece {
 
     private final Color color;

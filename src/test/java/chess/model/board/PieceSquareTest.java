@@ -7,7 +7,7 @@ import static chess.model.board.PieceFixture.WHITE_BISHOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.model.piece.Type;
+import chess.model.piece.PieceType;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +37,7 @@ class PieceSquareTest {
         // then
         assertAll(
             () -> assertThat(nextSquare).isExactlyInstanceOf(PieceSquare.class),
-            () -> assertThat(nextSquare.getType()).isSameAs(Type.KNIGHT)
+            () -> assertThat(nextSquare.getType()).isSameAs(PieceType.KNIGHT)
         );
     }
 

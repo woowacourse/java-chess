@@ -11,7 +11,7 @@ class PieceTest {
     @Test
     @DisplayName("기물이 정상적으로 생성되는지 확인한다.")
     void constructor_givenColorAndType_thenSuccess() {
-        final Piece piece = assertDoesNotThrow(() -> new Piece(Color.WHITE, Type.PAWN));
+        final Piece piece = assertDoesNotThrow(() -> new Piece(Color.WHITE, PieceType.PAWN));
 
         assertThat(piece).isExactlyInstanceOf(Piece.class);
     }

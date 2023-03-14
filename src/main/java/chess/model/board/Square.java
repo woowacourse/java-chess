@@ -1,8 +1,8 @@
 package chess.model.board;
 
 
+import chess.model.Type;
 import chess.model.piece.Piece;
-import chess.model.piece.Type;
 
 public interface Square {
 
