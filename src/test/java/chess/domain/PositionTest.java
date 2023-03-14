@@ -15,38 +15,38 @@ final class PositionTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "-1,0",
-            "8,0"
+            "i,0",
+            "j,0"
     })
-    @DisplayName("rank가 0~7 아닌 경우 예외가 발생한다.")
-    void validateRangeOfRank(final int rank, final int file) {
+    @DisplayName("rank가 a~h가 아닌 경우 예외가 발생한다.")
+    void validateRangeOfRank(final char rank, final int file) {
         assertThatThrownBy(() -> new Position(rank, file))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물 위치는 최소 0 최대 7");
+                .hasMessage("기물의 가로 위치는 a부터 h까지 놓을 수 있습니다.");
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "0,-1",
-            "0,8"
+            "a,-1",
+            "h,8"
     })
     @DisplayName("file이 0~7 아닌 경우 예외가 발생한다.")
-    void validateRangeOfFile(final int rank, final int file) {
+    void validateRangeOfFile(final char rank, final int file) {
         assertThatThrownBy(() -> new Position(rank, file))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물 위치는 최소 0 최대 7");
+                .hasMessage("기물의 세로 위치는 최소 0부터 최대 7까지 놓을 수 있습니다.");
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "0,0",
-            "1,5",
-            "7,3",
-            "2,1",
-            "3,6"
+            "a,0",
+            "b,5",
+            "c,3",
+            "d,1",
+            "e,6"
     })
-    @DisplayName("포지션이 rank, file이 0~7 인경우 생성된다.")
-    void checkSuccessCreatePosition(final int rank, final int file) {
+    @DisplayName("포지션이 rank, file이 a~h이고, 0~7인 경우 생성된다.")
+    void checkSuccessCreatePosition(final char rank, final int file) {
         assertAll(
                 () -> assertThat(new Position(rank, file))
                         .extracting("rank")
