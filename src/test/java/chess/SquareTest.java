@@ -11,12 +11,12 @@ class SquareTest {
 
     @ParameterizedTest(name = "file과 rank에 해당하는 Sqaure를 생성할 수 있다.")
     @MethodSource("fileAndRankProvider")
-    void createSquareSuccessTest(File file, Rank rank){
-        Assertions.assertDoesNotThrow(() ->new Square(file, rank));
+    void createSquareSuccessTest(File file, Rank rank) {
+        Assertions.assertDoesNotThrow(() -> new Square(file, rank));
     }
 
     // 코드 리팩토링 예정
-    static Stream<Arguments> fileAndRankProvider(){
+    static Stream<Arguments> fileAndRankProvider() {
         return Stream.of(
                 Arguments.arguments(File.A, Rank.ONE),
                 Arguments.arguments(File.B, Rank.ONE),

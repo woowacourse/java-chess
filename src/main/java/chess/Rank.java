@@ -1,6 +1,6 @@
 package chess;
 
-public enum Rank{
+public enum Rank {
     ONE,
     TWO,
     THREE,
@@ -8,6 +8,5 @@ public enum Rank{
     FIVE,
     SIX,
     SEVEN,
-    EIGHT
-    ;
+    EIGHT;
 }

@@ -12,12 +12,12 @@ public class PieceTest {
     // 리펙토링
     @ParameterizedTest(name = "각 체스 기물을 생성할 수 있다.")
     @MethodSource("pieceProvider")
-    void createPieceSuccessTest(Piece piece){
+    void createPieceSuccessTest(Piece piece) {
         Assertions.assertThat(piece)
                 .isNotNull();
     }
 
-    static Stream<Arguments> pieceProvider(){
+    static Stream<Arguments> pieceProvider() {
         return Stream.of(
                 Arguments.arguments(new Pawn(Camp.WHITE)),
                 Arguments.arguments(new Knight(Camp.WHITE)),
