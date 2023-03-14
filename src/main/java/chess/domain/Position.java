@@ -5,10 +5,14 @@ public final class Position {
     private final char rank;
     private final int file;
 
-    public Position(final char rank, final int file) {
+    private Position(final char rank, final int file) {
         validatePosition(rank, file);
         this.rank = rank;
         this.file = file;
+    }
+
+    public static Position from(final char rank, final int file) {
+        return new Position(rank, file);
     }
 
     private void validatePosition(final char rank, final int file) {
@@ -34,5 +38,13 @@ public final class Position {
 
     private static boolean isPieceFileOutOfRange(int piecePosition) {
         return piecePosition < 0 || 7 < piecePosition;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
     }
 }

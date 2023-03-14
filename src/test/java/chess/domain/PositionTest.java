@@ -20,7 +20,7 @@ final class PositionTest {
     })
     @DisplayName("rank가 a~h가 아닌 경우 예외가 발생한다.")
     void validateRangeOfRank(final char rank, final int file) {
-        assertThatThrownBy(() -> new Position(rank, file))
+        assertThatThrownBy(() -> Position.from(rank, file))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물의 가로 위치는 a부터 h까지 놓을 수 있습니다.");
     }
@@ -32,7 +32,7 @@ final class PositionTest {
     })
     @DisplayName("file이 0~7 아닌 경우 예외가 발생한다.")
     void validateRangeOfFile(final char rank, final int file) {
-        assertThatThrownBy(() -> new Position(rank, file))
+        assertThatThrownBy(() -> Position.from(rank, file))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물의 세로 위치는 최소 0부터 최대 7까지 놓을 수 있습니다.");
     }
@@ -48,10 +48,10 @@ final class PositionTest {
     @DisplayName("포지션이 rank, file이 a~h이고, 0~7인 경우 생성된다.")
     void checkSuccessCreatePosition(final char rank, final int file) {
         assertAll(
-                () -> assertThat(new Position(rank, file))
+                () -> assertThat(Position.from(rank, file))
                         .extracting("rank")
                         .isEqualTo(rank),
-                () -> assertThat(new Position(rank, file))
+                () -> assertThat(Position.from(rank, file))
                         .extracting("file")
                         .isEqualTo(file)
         );
