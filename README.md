@@ -27,7 +27,7 @@
     - [x] square 리스트를 갖는다.
 
 - Board
-    - [ ] row 리스트를 갖는다.
+    - [x] row 리스트를 갖는다.
 
 - Game
     - [ ] board를 갖는다.
