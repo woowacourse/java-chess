@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class Movement {
-    private static final int STOP = 0;
+    private static final int NON_INCREMENT = 0;
     private final int fileIncrement;
     private final int rankIncrement;
 
@@ -16,9 +16,13 @@ public class Movement {
     }
 
     private void validate(int fileIncrement, int rankIncrement) {
-        if (fileIncrement == STOP && rankIncrement == STOP) {
+        if (fileIncrement == NON_INCREMENT && rankIncrement == NON_INCREMENT) {
             throw new IllegalArgumentException("잘못된 움직임입니다.");
         }
+    }
+
+    public boolean isUpward() {
+        return this.rankIncrement > 0 && this.fileIncrement == NON_INCREMENT;
     }
 
     @Override
@@ -32,6 +36,5 @@ public class Movement {
     @Override
     public int hashCode() {
         return Objects.hash(fileIncrement, rankIncrement);
-
     }
 }
