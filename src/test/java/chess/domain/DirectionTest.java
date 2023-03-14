@@ -15,4 +15,12 @@ class DirectionTest {
         assertThat(oldDirection.flipHorizontal())
             .isEqualTo(newDirection);
     }
+    
+    @DisplayName("좌우 대칭 할 수 있다.")
+    @ParameterizedTest(name = "{0}을 좌우 대칭하면 {1}이다.")
+    @CsvSource({"UP,UP", "DOWN,DOWN", "LEFT,RIGHT", "RIGHT,LEFT"})
+    void flipVertical(Direction oldDirection, Direction newDirection) {
+        assertThat(oldDirection.flipVertical())
+            .isEqualTo(newDirection);
+    }
 }
