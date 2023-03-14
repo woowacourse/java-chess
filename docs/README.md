@@ -79,7 +79,7 @@
 
 ### Queen (Piece)
 
-- [] Queen의 초기 위치값(d)을 채운다
+- [x] Queen의 초기 위치값(d)을 채운다
 - todo: move override , rank와 column를 필드로 가진다
 
 ### King (Piece)
