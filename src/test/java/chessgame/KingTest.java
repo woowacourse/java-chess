@@ -11,7 +11,7 @@ public class KingTest {
     @DisplayName("블랙팀이면, 이름이 대문자로 바뀌어서 저장되는지 확인한다.")
     void Should_UpperCaseName_When_BlackTeam() {
         String name = "k";
-        King king = new King(Team.BLACK.calculate(name));
+        King king = King.from(Team.BLACK);
         assertThat(king.toString()).isEqualTo(name.toUpperCase());
     }
 
@@ -19,7 +19,7 @@ public class KingTest {
     @DisplayName("화이트팀이면, 이름이 소문자로 바뀌어서 저장되는지 확인한다.")
     void Should_LowerCaseName_When_WhiteTeam() {
         String name = "K";
-        King king = new King(Team.WHITE.calculate(name));
+        King king = King.from(Team.WHITE);
         assertThat(king.toString()).isEqualTo(name.toLowerCase());
     }
 }

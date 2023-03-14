@@ -1,9 +1,16 @@
 package chessgame;
 
 public class Queen {
+    private static final String ORIGINAL_NAME = "q";
+
     private final String name;
-    public Queen(String name) {
+
+    private Queen(String name) {
         this.name = name;
+    }
+
+    public static Queen from(Team team) {
+        return new Queen(team.calculate(ORIGINAL_NAME));
     }
 
     @Override
