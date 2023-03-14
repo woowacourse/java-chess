@@ -13,7 +13,7 @@
     - [x] y좌표 (a ~ h) (Column)
       - [x] [예외 처리] a~h의 범위를 벗어난 경우 예외 처리
   - [ ] 팀 종류를 가지고 있다. (Team enum class -> White or Black)
-    - [ ] 해당 인스턴스가 White 팀인지 알려준다.
+    - [x] 해당 인스턴스가 White 팀인지 알려준다.
 - [ ] 맵 (ChessBoard -> List<Piece>)
   - [ ] 체스판을 초기화할 때 말들이 생성된다.
 - [ ] 각 기물 객체 Matcher (PieceMatcher)
