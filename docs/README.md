@@ -4,13 +4,13 @@
 - [] Square를 가지는 List를 필드로 가진다 
 
 ## Rank 
-- [] 체스보드의 1부터 8까지의 행을 나타낸다
+- [x] ChessBoard의 1부터 8까지의 행을 나타낸다
 
 ## Column
-- [] 체스보드의 a부터 h까지의 열을 나타낸다
+- [] ChessBoard의 a부터 h까지의 열을 나타낸다
 
 ## Square
-- [] 체스보드의 한 칸에 해당하고
+- [] ChessBoard의 한 칸에 해당하고
 - [] Rank와 Column, Piece을 필드로 가진다
 
 ## Piece (abstract)
