@@ -1,12 +1,14 @@
 package chess.model.board;
 
+import chess.model.piece.Piece;
+
 public class Square {
 
-    private final Rank rank;
-    private final File file;
+    private final Position position;
+    private final Piece piece;
 
-    public Square(final Rank rank, final File file) {
-        this.rank = rank;
-        this.file = file;
+    public Square(final Position position, final Piece piece) {
+        this.position = position;
+        this.piece = piece;
     }
 }
