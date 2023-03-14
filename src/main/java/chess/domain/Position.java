@@ -1,42 +1,48 @@
 package chess.domain;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Position {
+
+    private static final Map<Integer, Position> CACHE;
+    private static final int LOWER_BOUNDARY = 1;
+    private static final int UPPER_BOUNDARY = 8;
+
+    static {
+        final Map<Integer, Position> positions = new HashMap<>();
+        for (int x = LOWER_BOUNDARY; x <= UPPER_BOUNDARY; x++) {
+            for (int y = LOWER_BOUNDARY; y <= UPPER_BOUNDARY; y++) {
+                positions.put(getKey(x, y), new Position(x, y));
+            }
+        }
+        CACHE = positions;
+    }
+
+    private static int getKey(final int x, final int y) {
+        return (x - LOWER_BOUNDARY) * UPPER_BOUNDARY + y;
+    }
 
     private final int x;
     private final int y;
 
-    public Position(final int x, final int y) {
-        validate(x, y);
+    private Position(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
 
-    private void validate(final int x, final int y) {
+    public static Position of(final int x, final int y) {
+        validate(x, y);
+        return CACHE.get(getKey(x, y));
+    }
+
+    private static void validate(final int x, final int y) {
         if (!isRangeValid(x) || !isRangeValid(y)) {
-            throw new IllegalArgumentException("좌표의 값은 1 ~ 8 사이여야 합니다.");
+            throw new IllegalArgumentException("좌표의 값은 " + LOWER_BOUNDARY +  " ~ " +  UPPER_BOUNDARY + " 사이여야 합니다.");
         }
     }
 
-    private boolean isRangeValid(final int value) {
-        return value >= 1 && value <= 8;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Position position = (Position) o;
-        return x == position.x && y == position.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
+    private static boolean isRangeValid(final int value) {
+        return value >= LOWER_BOUNDARY && value <= UPPER_BOUNDARY;
     }
 }
