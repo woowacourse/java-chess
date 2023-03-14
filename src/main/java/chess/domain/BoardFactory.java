@@ -1,11 +1,11 @@
 package chess.domain;
 
+import static chess.domain.Role.PAWN;
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 import static chess.domain.Role.BISHOP;
 import static chess.domain.Role.KING;
 import static chess.domain.Role.KNIGHT;
-import static chess.domain.Role.PAWN;
 import static chess.domain.Role.QUEEN;
 import static chess.domain.Role.ROOK;
 
@@ -22,9 +22,13 @@ public class BoardFactory {
     public static List<Square> create() {
         List<Square> squares = new ArrayList<>();
         squares.addAll(generateChessmen(WHITE, 0));
-        squares.addAll(generatePawns(WHITE, 1));
+        squares.addAll(generateSquare(PAWN, WHITE, 1));
+        squares.addAll(generateSquare(Role.EMPTY, Team.EMPTY, 2));
+        squares.addAll(generateSquare(Role.EMPTY, Team.EMPTY, 3));
+        squares.addAll(generateSquare(Role.EMPTY, Team.EMPTY, 4));
+        squares.addAll(generateSquare(Role.EMPTY, Team.EMPTY, 5));
+        squares.addAll(generateSquare(PAWN, BLACK, 6));
         squares.addAll(generateChessmen(BLACK, 7));
-        squares.addAll(generatePawns(BLACK, 6));
         return squares;
     }
 
@@ -38,10 +42,10 @@ public class BoardFactory {
         return squares;
     }
 
-    private static List<Square> generatePawns(Team team, int y) {
+    private static List<Square> generateSquare(Role role, Team team, int y) {
         List<Square> squares = new ArrayList<>();
         for (int x = 0; x < 8; x++) {
-            Piece piece = new Piece(PAWN, team);
+            Piece piece = new Piece(role, team);
             Position position = new Position(x, y);
             squares.add(new Square(piece, position));
         }
