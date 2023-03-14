@@ -7,6 +7,10 @@ public class Piece {
         this.name = name;
     }
 
+    public Piece() {
+        this(".");
+    }
+
     public String getName() {
         return name;
     }
