@@ -1,4 +1,4 @@
-package piece.coordinate;
+package chess.piece.coordinate;
 
 import java.util.Objects;
 

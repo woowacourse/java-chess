@@ -1,6 +1,6 @@
-package piece;
+package chess.piece;
 
-import piece.coordinate.Coordinate;
+import chess.piece.coordinate.Coordinate;
 
 public class Rook extends Piece {
     public Rook(Team team, int row, char column) {

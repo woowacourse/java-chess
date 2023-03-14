@@ -1,6 +1,6 @@
-package piece;
+package chess.piece;
 
-import piece.coordinate.Coordinate;
+import chess.piece.coordinate.Coordinate;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;

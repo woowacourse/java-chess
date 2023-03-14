@@ -1,5 +1,8 @@
-package piece.coordinate;
+package chess.piece;
 
+import chess.piece.Bishop;
+import chess.piece.Piece;
+import chess.piece.Team;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -8,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class CoordinateTest {
+class BishopTest {
     @Test
-    void 좌표는_row와_column값을_받아서_생성한다() {
-        Coordinate coordinate = new Coordinate(1, 'a');
-        assertThat(coordinate).isNotNull();
+    void Bishop은_자신의_심볼을_반환한다() {
+        Piece bishop = new Bishop(Team.WHITE, 1, 'a');
+        assertThat(bishop.symbol()).isEqualTo('b');
     }
 }

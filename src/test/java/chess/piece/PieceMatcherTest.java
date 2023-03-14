@@ -1,10 +1,10 @@
-package piece;
+package chess.piece;
 
-import org.assertj.core.api.Assertions;
+import chess.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import piece.coordinate.Coordinate;
+import chess.piece.coordinate.Coordinate;
 
 import static org.assertj.core.api.Assertions.*;
 
