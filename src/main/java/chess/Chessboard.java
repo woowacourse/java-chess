@@ -1,10 +1,13 @@
 package chess;
 
+import chess.piece.Empty;
+import chess.piece.Piece;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Chessboard {
-    private final Map<Square,Piece> board;
+    private final Map<Square, Piece> board;
 
     public Chessboard(){
         this.board = new HashMap<>();
@@ -15,7 +18,7 @@ public class Chessboard {
 
     private void putFile(File file) {
         for(Rank rank:Rank.values()){
-            board.put(new Square(file,rank),new Piece());
+            board.put(new Square(file,rank),new Empty());
         }
     }
 

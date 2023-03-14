@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Piece;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
