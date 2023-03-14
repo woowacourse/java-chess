@@ -16,10 +16,9 @@ graph TD
     
     ChessGame --> Board
 
-    Board --> Rank
-    
-    Rank --> Piece
-    
+    Board --> Piece
+    Board --> Position
+  
     Piece --> Pawn
     Piece --> Rook
     Piece --> Knight
@@ -37,6 +36,12 @@ graph TD
 - [ ] 커맨드를 통해 게임 진행 상태를 바꿀 수 있다.
 
 ### 체스판
+
+- [ ] 기물의 위치 상태를 가진다.
+
+### 위치
+
+- [ ] 위치 정보를 가진다.
 
 ### 기물
 
