@@ -29,17 +29,17 @@ class ColumnTest {
         String value = "z";
 
         //then
-        assertThatThrownBy(()->Column.validateValue(value))
+        assertThatThrownBy(() -> Column.validateValue(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("존재하지 않는 Column입니다");
     }
 
     @Test
-    void 입력한값이_Column에_존재하면_아무일도_일어나지_않는다(){
+    void 입력한값이_Column에_존재하면_아무일도_일어나지_않는다() {
         //given, when
         String value = "a";
 
         //then
-        assertDoesNotThrow(()->Column.validateValue(value));
+        assertDoesNotThrow(() -> Column.validateValue(value));
     }
 }

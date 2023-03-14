@@ -33,7 +33,7 @@ public enum Rank {
         boolean isValidRank = Arrays.stream(Rank.values())
                 .anyMatch(rank -> rank.value.equals(value));
 
-        if(!isValidRank){
+        if (!isValidRank) {
             throw new IllegalArgumentException("존재하지 않는 Rank입니다");
         }
     }

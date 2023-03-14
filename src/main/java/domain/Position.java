@@ -8,4 +8,10 @@ public class Position {
         this.rank = rank;
         this.column = column;
     }
+
+
+    @Override
+    public String toString() {
+        return column.name() + rank.name();
+    }
 }

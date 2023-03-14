@@ -12,8 +12,8 @@ public enum Column {
     D(3, "d"),
     E(4, "e"),
     F(5, "f"),
-    G(6,"g"),
-    H(7,"h");
+    G(6, "g"),
+    H(7, "h");
 
     private final int index;
     private final String value;
@@ -33,7 +33,7 @@ public enum Column {
         boolean isValidRank = Arrays.stream(Column.values())
                 .anyMatch(column -> column.value.equals(value));
 
-        if(!isValidRank){
+        if (!isValidRank) {
             throw new IllegalArgumentException("존재하지 않는 Column입니다");
         }
     }
