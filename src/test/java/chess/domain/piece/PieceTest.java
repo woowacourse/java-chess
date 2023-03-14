@@ -16,7 +16,7 @@ class PieceTest {
     @Test
     void 위치와_색상을_가지고_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new Piece(PiecePosition.of(1, 'a'), Color.WHITE) {
+        assertDoesNotThrow(() -> new Piece(Staunton.KING, PiecePosition.of(1, 'a'), Color.WHITE) {
         });
     }
 }
