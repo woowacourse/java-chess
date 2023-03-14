@@ -9,14 +9,14 @@ public class Square {
     private final Rank rank;
 
     static {
-        CACHE = new HashMap<>();
+        CACHE = new LinkedHashMap<>();
         for (File file : File.values()) {
             CACHE.put(file, createFile(file));
         }
     }
 
     private static Map<Rank, Square> createFile(final File file) {
-        Map<Rank, Square> ranks = new HashMap<>();
+        Map<Rank, Square> ranks = new LinkedHashMap<>();
         for (Rank rank : Rank.values()) {
             ranks.put(rank, new Square(file, rank));
         }
