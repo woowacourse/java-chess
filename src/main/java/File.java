@@ -1,19 +1,21 @@
 import java.util.Arrays;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
     private final String text;
+    private final int order;
 
-    File(String text) {
+    File(String text, int order) {
         this.text = text;
+        this.order = order;
     }
 
     public static File from(String rankText) {
@@ -25,5 +27,9 @@ public enum File {
 
     public String getText() {
         return text;
+    }
+
+    public int calculateIncrement(File targetFile) {
+        return targetFile.order - this.order;
     }
 }
