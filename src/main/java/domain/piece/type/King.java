@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Direction;
 import domain.piece.Piece;
@@ -23,22 +24,27 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate) {
+    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+        List<Integer> currentCoordinate = currentSquare.toCoordinate();
         Integer file = currentCoordinate.get(FILE);
         Integer rank = currentCoordinate.get(RANK);
 
-        Set<List<Integer>> movableCoordinate = new HashSet<>();
+        List<Square> movableSquares = new ArrayList<>();
 
         for (Direction direction : movableDirection) {
-            int fileCoordinate = file + direction.getFile();
-            int rankCoordinate = rank + direction.getRank();
-
-            if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
-                continue;
+            ArrayList<Square> squares = new ArrayList<>();
+            for (int i = 1; i < 8; i++) {
+                int fileCoordinate = file + (i * direction.getFile());
+                int rankCoordinate = rank + (i * direction.getRank());
+                if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
+                    continue;
+                }
+                squares.add(new Square(fileCoordinate, rankCoordinate));
             }
-
-            movableCoordinate.add(List.of(fileCoordinate, rankCoordinate));
+            if (squares.contains(targetSquare)) {
+                movableSquares = squares;
+            }
         }
-        return movableCoordinate;
+        return movableSquares;
     }
 }

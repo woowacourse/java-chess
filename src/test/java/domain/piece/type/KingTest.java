@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.board.Square;
 import domain.piece.Camp;
 
 class KingTest {
@@ -17,12 +18,8 @@ class KingTest {
     @DisplayName("King이 이동할 수 있는 칸의 좌표를 반환한다.")
     void kingMoveTest() {
         King king = new King(Camp.WHITE);
-        assertThat(king.fetchMovableCoordinate(List.of(0, 3))).contains(
-                List.of(0, 2),
-                List.of(0, 4),
-                List.of(1, 2),
-                List.of(1, 3),
-                List.of(1, 4)
+        assertThat(king.fetchMovableCoordinate(new Square(0, 3), new Square(1,4))).contains(
+                new Square(1,4)
         );
     }
 }

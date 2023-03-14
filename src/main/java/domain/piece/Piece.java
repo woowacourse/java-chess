@@ -3,6 +3,8 @@ package domain.piece;
 import java.util.List;
 import java.util.Set;
 
+import domain.board.Square;
+
 public abstract class Piece {
     private final Camp camp;
 
@@ -17,7 +19,7 @@ public abstract class Piece {
         return camp.equals(Camp.WHITE);
     }
 
-    abstract public Set<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate);
+    abstract public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare);
 
     public boolean isPawn() {
         return false;

@@ -1,5 +1,9 @@
 package domain.piece.type;
 
+import java.util.List;
+import java.util.Set;
+
+import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
 
@@ -11,5 +15,10 @@ public class Knight extends Piece {
     @Override
     public boolean isKnight() {
         return true;
+    }
+
+    @Override
+    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+        return null;
     }
 }
