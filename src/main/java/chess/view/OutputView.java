@@ -28,4 +28,12 @@ public class OutputView {
         return pieceType;
     }
 
+    public void printError(Exception e) {
+        System.out.println(e.getMessage());
+    }
+
+    public void printInitialMessage() {
+        System.out.println("체스 게임을 시작합니다.");
+        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+    }
 }

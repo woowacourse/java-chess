@@ -21,7 +21,7 @@
 
 #### InputView
 
-- [ ] start 와 end 를 입력 받는다.
+- [x] start 와 end 를 입력 받는다.
 
 #### OutputView
 
