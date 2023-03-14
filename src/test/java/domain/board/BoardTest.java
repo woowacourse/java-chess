@@ -29,7 +29,7 @@ class BoardTest {
         final List<Position> queensPosition = Position.of("D1", "D8");
 
         //when
-        final Map<Position, Piece> pieces = board.getBoard();
+        final Map<Position, Piece> pieces = board.getPieces();
 
         //then
         assertThat(rooksPosition).map(pieces::get).allSatisfy(piece -> assertThat(piece).isInstanceOf(Rook.class));

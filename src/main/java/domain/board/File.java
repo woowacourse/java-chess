@@ -26,4 +26,8 @@ public enum File {
             throw new IllegalArgumentException(INVALID_FILE);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

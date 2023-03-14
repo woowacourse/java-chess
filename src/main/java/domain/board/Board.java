@@ -75,7 +75,7 @@ public final class Board {
         kingsPosition.forEach(position -> board.put(position, King.create(position)));
     }
 
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(board);
     }
 }

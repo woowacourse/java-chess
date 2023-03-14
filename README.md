@@ -8,7 +8,7 @@
 
 ### InputView
 
-- [ ] 게임 시작은 start, 종료는 end를 입력한다.
+- [x] 게임 시작은 start, 종료는 end를 입력한다.
 
 ### OutputView
 
