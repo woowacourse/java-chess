@@ -24,4 +24,8 @@ public class ChessBoard {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
     }
+
+    public Map<PiecePosition, Piece> pieces() {
+        return pieces;
+    }
 }
