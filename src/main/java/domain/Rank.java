@@ -1,5 +1,10 @@
 package domain;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Rank {
     EIGHT(0, "8"),
     SEVEN(1, "7"),
@@ -8,7 +13,7 @@ public enum Rank {
     FOUR(4, "4"),
     THREE(5, "3"),
     TWO(6, "2"),
-    ONE(7,"1");
+    ONE(7, "1");
 
     private final int index;
     private final String value;
@@ -16,5 +21,11 @@ public enum Rank {
     Rank(int index, String value) {
         this.index = index;
         this.value = value;
+    }
+
+    public static List<Rank> getOrderedRanks() {
+        return Arrays.stream(Rank.values())
+                .sorted(Comparator.comparingInt(rank -> rank.index))
+                .collect(Collectors.toList());
     }
 }
