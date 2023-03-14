@@ -14,4 +14,8 @@ public enum Role {
     Role(final String initial) {
         this.initial = initial;
     }
+
+    public String getInitial() {
+        return initial;
+    }
 }

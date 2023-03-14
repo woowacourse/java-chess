@@ -16,6 +16,10 @@ public class Piece {
         this.camp = Camp.EMPTY;
     }
 
+    public String getRole() {
+        return role.getInitial();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -31,5 +35,9 @@ public class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(role, camp);
+    }
+
+    public Camp getCamp() {
+        return camp;
     }
 }

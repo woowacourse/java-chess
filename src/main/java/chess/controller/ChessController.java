@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.GameCommand;
+import chess.domain.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -19,6 +20,10 @@ public class ChessController {
 
     private void start() {
         final GameCommand gameCommand = readGameCommand();
+        if (gameCommand.isStart()) {
+            final Board board = new Board();
+            outputView.printChessBoard(board.getPieces());
+        }
     }
 
     private GameCommand readGameCommand() {

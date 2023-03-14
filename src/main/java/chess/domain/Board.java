@@ -90,4 +90,8 @@ public class Board {
     public Piece getPiece(final Square square) {
         return board.get(square);
     }
+
+    public List<Piece> getPieces() {
+        return new ArrayList<>(board.values());
+    }
 }

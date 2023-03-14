@@ -13,4 +13,8 @@ public class GameCommand {
             throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
         }
     }
+
+    public boolean isStart() {
+        return gameCommand.equals("start");
+    }
 }
