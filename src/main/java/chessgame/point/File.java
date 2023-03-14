@@ -1,18 +1,18 @@
 package chessgame.point;
 
 public enum File {
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
-    ONE(1);
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h");
 
-    private final int file;
+    private final String file;
 
-    File(int file) {
+    File(String file) {
         this.file = file;
     }
 }

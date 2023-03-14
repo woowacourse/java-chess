@@ -1,18 +1,18 @@
 package chessgame.point;
 
 public enum Rank {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
 
-    private final String rank;
+    private final int rank;
 
-    Rank(String rank) {
+    Rank(int rank) {
         this.rank = rank;
     }
 }
