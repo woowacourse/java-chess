@@ -16,7 +16,7 @@ public class InputView {
         try {
             inputCommand = SCANNER.nextLine();
             validateInputCommand(inputCommand);
-            return inputCommand.equals("start");
+            return isInputCommandStart(inputCommand);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getStartCommandResult();
@@ -24,8 +24,17 @@ public class InputView {
     }
 
     private static void validateInputCommand(String inputCommand) {
-        if (!inputCommand.equals("start") && !inputCommand.equals("end")) {
+        if (!isInputCommandStart(inputCommand) && !isInputCommandEnd(inputCommand)) {
             throw new IllegalArgumentException("start 또는 end만 입력할 수 있습니다.");
         }
     }
+
+    private static boolean isInputCommandStart(String inputCommand) {
+        return inputCommand.equals("start");
+    }
+
+    private static boolean isInputCommandEnd(String inputCommand) {
+        return inputCommand.equals("end");
+    }
+
 }
