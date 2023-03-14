@@ -14,6 +14,8 @@ public final class Pieces {
     private static final int LAST_FILE_OF_WHITE = 1;
     private static final int FIRST_FILE_OF_BLACK = 7;
     private static final int LAST_FILE_OF_BLACK = 6;
+    private static final char QUEEN_DEFAULT_RANK_POSITION = 'd';
+    private static final char KING_DEFAULT_RANK_POSITION = 'e';
 
     private final List<Piece> pieces;
 
@@ -29,8 +31,9 @@ public final class Pieces {
 
     private static void makeWhitePieces(final List<Piece> pieceList) {
         Deque<Character> deque = new ArrayDeque<>(List.of('r', 'n', 'b'));
-        makePiece(deque, pieceList);
-        makePawns(pieceList, 1);
+        makeRookAndBishopAndKnight(deque, pieceList);
+        makePawns(pieceList, LAST_FILE_OF_WHITE);
+        makeQueenAndKing(pieceList, FIRST_FILE_OF_WHITE);
     }
 
     private static void makePawns(final List<Piece> pieceList, final int file) {
@@ -39,18 +42,24 @@ public final class Pieces {
         }
     }
 
-    private static void makePiece(final Deque<Character> deque, final List<Piece> pieceList) {
-        for (int rank = FIRST_RANK; rank < MIDDLE_RANK; rank++) {
-            if (!deque.isEmpty()) {
-                Character shapeValue = deque.pollFirst();
-                Shape shape = Shape.findByWhiteName(shapeValue);
-                pieceList.add(Piece.of((char) rank, 0, shape));
-                pieceList.add(Piece.of((char) (201 - rank), 0, shape));
-            }
+    private static void makeRookAndBishopAndKnight(final Deque<Character> deque, final List<Piece> pieceList) {
+        for (int frontPosition = FIRST_RANK; frontPosition < MIDDLE_RANK; frontPosition++) {
+            Character shapeValue = deque.pollFirst();
+            Shape shape = Shape.findByWhiteName(shapeValue);
+            addPiecePairs(pieceList, frontPosition, shape);
         }
+    }
 
-        pieceList.add(Piece.of('d', 0, Shape.QUEEN));
-        pieceList.add(Piece.of('e', 0, Shape.KING));
+    private static void addPiecePairs(List<Piece> pieceList, int frontPosition, Shape shape) {
+        pieceList.add(Piece.of((char) frontPosition, FIRST_FILE_OF_WHITE, shape));
+
+        int backPosition = FIRST_RANK + LAST_RANK - frontPosition;
+        pieceList.add(Piece.of((char) backPosition, FIRST_FILE_OF_WHITE, shape));
+    }
+
+    private static void makeQueenAndKing(final List<Piece> pieceList, final int file) {
+        pieceList.add(Piece.of(QUEEN_DEFAULT_RANK_POSITION, file, Shape.QUEEN));
+        pieceList.add(Piece.of(KING_DEFAULT_RANK_POSITION, file, Shape.KING));
     }
 
     public long getShapeCount(final Shape shape) {
