@@ -1,5 +1,6 @@
 package chessgame.domain;
 
+import java.util.Collections;
 import java.util.Map;
 
 import chessgame.domain.piece.Piece;
@@ -11,6 +12,10 @@ public class Board {
 
     public Board(Map<Point, Piece> board) {
         this.board = board;
+    }
+
+    public Map<Point,Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 
     @Override
