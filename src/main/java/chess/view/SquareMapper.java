@@ -2,30 +2,31 @@ package chess.view;
 
 import chess.domain.Role;
 import chess.domain.Team;
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
-public enum SquareMapper {
-    KING(Role.KING, "k"),
-    QUEEN(Role.QUEEN, "q"),
-    ROOK(Role.ROOK, "r"),
-    BISHOP(Role.BISHOP,"b"),
-    KNIGHT(Role.KNIGHT, "n"),
-    PAWN(Role.PAWN, "p");
+public class SquareMapper {
+    private static final Map<Role, String> mapper = new EnumMap<>(Role.class);
 
-    private final Role role;
-    private final String value;
+    private SquareMapper() {
+    }
 
-    SquareMapper(Role role, String value) {
-        this.role = role;
-        this.value = value;
+    static {
+        mapper.put(Role.PAWN, "p");
+        mapper.put(Role.KNIGHT, "n");
+        mapper.put(Role.BISHOP, "b");
+        mapper.put(Role.ROOK, "r");
+        mapper.put(Role.QUEEN, "q");
+        mapper.put(Role.KING, "k");
+        mapper.put(Role.EMPTY, ".");
     }
 
     public static String map(Team team, Role role) {
-        return Arrays.stream(values())
-                .filter(typeMapper -> typeMapper.role.equals(role))
-                .map(squareMapper -> convertString(team, squareMapper.value))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 타입이 없습니다."));
+        if (!mapper.containsKey(role)) {
+            throw new IllegalArgumentException("[ERROR] 일치하는 기물이 없습니다.");
+        }
+        String value = mapper.get(role);
+        return convertString(team, value);
     }
 
     private static String convertString(Team team, String value) {
