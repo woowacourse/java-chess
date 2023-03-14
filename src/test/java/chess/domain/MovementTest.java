@@ -45,4 +45,22 @@ public class MovementTest extends AbstractTestFixture {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("양방향이 존재하면 안됩니다");
     }
+
+    @DisplayName("같은 움직임인지 확인한다")
+    @Test
+    void isSameWith() {
+        Movement movement1 = createMovement(RIGHT, UP, RIGHT);
+        Movement movement2 = createMovement(RIGHT, RIGHT, UP);
+
+        assertThat(movement1.isSameWith(movement2)).isTrue();
+    }
+
+    @DisplayName("다른 움직임인지 확인한다")
+    @Test
+    void isNotSameWith() {
+        Movement movement1 = createMovement(RIGHT, UP);
+        Movement movement2 = createMovement(RIGHT, RIGHT, UP, UP);
+
+        assertThat(movement1.isSameWith(movement2)).isFalse();
+    }
 }

@@ -42,4 +42,11 @@ public class Movement {
         }
         return dx1 * dy2 == dx2 * dy1;
     }
+
+    public boolean isSameWith(Movement movement) {
+        if (directions.size() != movement.directions.size()) {
+            return false;
+        }
+        return directions.containsAll(movement.directions);
+    }
 }
