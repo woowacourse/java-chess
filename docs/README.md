@@ -16,7 +16,6 @@
 - [x] ChessBoard의 a부터 h까지의 열을 나타낸다
 - [x] 인덱스의 오름차순으로 정렬한 List<Column>를 반환한다
 - [x] 입력한 값이 Column에 존재하는 Value인지 유효성 검사
--
 
 ## Square
 
@@ -30,18 +29,17 @@
 ## Player (abstract)
 
 - [] COLOR(Black/White)를 가진다
-- 
 - [] COLOR에 따라 1열, 2열을 설정한다
 
 ### BlackPlayer
-- 1열과 2열에 해당하는 Rank를 가진다(8,7)
+- [] 1열과 2열에 해당하는 Rank를 가진다(8,7)
 
 ### WhitePlayer
-- 1열과 2열에 해당하는 Rank를 가진다(1,2)
+- [] 1열과 2열에 해당하는 Rank를 가진다(1,2)
 
 ## PieceGenerator
 
-- 상수로 각 기물이 몇개 생성해야하는지 가지고 있다
+- [x] 상수로 각 기물이 몇개 생성해야하는지 가지고 있다
 - [ ] 첫번째 열 기물들을 생성해 반환한다 (Rook, Knight, Bishop ... )
 - [ ] 두번째 열 기물들을 생성해 반환한다 (Pawn * 8)
 
