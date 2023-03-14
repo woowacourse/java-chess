@@ -1,7 +1,7 @@
 package chess.model.board;
 
-import static chess.model.piece.Color.BLACK;
-import static chess.model.piece.Color.WHITE;
+import static chess.model.piece.PieceColor.BLACK;
+import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
 import static chess.model.piece.PieceType.KING;
 import static chess.model.piece.PieceType.KNIGHT;
@@ -9,7 +9,7 @@ import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.QUEEN;
 import static chess.model.piece.PieceType.ROOK;
 
-import chess.model.piece.Color;
+import chess.model.piece.PieceColor;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import java.util.LinkedList;
@@ -65,20 +65,20 @@ public class Board {
         initializeBackPieces(squares, BLACK, BLACK_BACK_START_POSITION);
     }
 
-    private static void initializeBackPieces(final List<Square> squares, final Color color, int position) {
+    private static void initializeBackPieces(final List<Square> squares, final PieceColor pieceColor, int position) {
         for (PieceType pieceType : INITIAL_BACK_PIECES) {
             final Square square = squares.get(position);
-            final Piece piece = new Piece(color, pieceType);
+            final Piece piece = new Piece(pieceColor, pieceType);
 
             squares.remove(position);
             squares.add(position++, square.receivePiece(piece));
         }
     }
 
-    private static void initializeFrontPieces(final List<Square> squares, final Color color, int position) {
+    private static void initializeFrontPieces(final List<Square> squares, final PieceColor pieceColor, int position) {
         for (PieceType pieceType : INITIAL_FRONT_PIECES) {
             final Square square = squares.get(position);
-            final Piece piece = new Piece(color, pieceType);
+            final Piece piece = new Piece(pieceColor, pieceType);
 
             squares.remove(position);
             squares.add(position++, square.receivePiece(piece));

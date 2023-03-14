@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.Color;
 import chess.model.Type;
 import chess.model.piece.Piece;
 
@@ -29,5 +30,10 @@ public class EmptySquare implements Square {
     @Override
     public Type getType() {
         return DefaultType.EMPTY;
+    }
+
+    @Override
+    public Color getColor() {
+        return DefaultColor.EMPTY;
     }
 }

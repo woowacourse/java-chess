@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.Color;
 import chess.model.Type;
 import chess.model.piece.Piece;
 
@@ -31,5 +32,10 @@ public class PieceSquare implements Square {
     @Override
     public Type getType() {
         return piece.getType();
+    }
+
+    @Override
+    public Color getColor() {
+        return piece.getColor();
     }
 }
