@@ -1,6 +1,7 @@
 package domain.piece;
 
 import java.util.List;
+import java.util.Set;
 
 public abstract class Piece {
     private final Camp camp;
@@ -16,7 +17,7 @@ public abstract class Piece {
         return camp.equals(Camp.WHITE);
     }
 
-    abstract public List<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate);
+    abstract public Set<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate);
 
     public boolean isPawn() {
         return false;

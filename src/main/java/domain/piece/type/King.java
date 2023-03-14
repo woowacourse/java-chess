@@ -2,7 +2,9 @@ package domain.piece.type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import domain.piece.Camp;
 import domain.piece.Direction;
@@ -21,11 +23,11 @@ public class King extends Piece {
     }
 
     @Override
-    public List<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate) {
+    public Set<List<Integer>> fetchMovableCoordinate(List<Integer> currentCoordinate) {
         Integer file = currentCoordinate.get(FILE);
         Integer rank = currentCoordinate.get(RANK);
 
-        List<List<Integer>> movableCoordinate = new ArrayList<>();
+        Set<List<Integer>> movableCoordinate = new HashSet<>();
 
         for (Direction direction : movableDirection) {
             int fileCoordinate = file + direction.getFile();
