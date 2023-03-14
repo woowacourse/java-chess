@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class Rank {
     }
 
     public List<Piece> getRank() {
-        return rank;
+        return new ArrayList<>(rank);
     }
 
 }
