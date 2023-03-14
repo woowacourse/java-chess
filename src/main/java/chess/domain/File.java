@@ -13,7 +13,7 @@ public enum File {
     private final String file;
     private final int index;
 
-    File(String file, int index) {
+    File(final String file, final int index) {
         this.file = file;
         this.index = index;
     }

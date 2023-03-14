@@ -13,7 +13,7 @@ public enum Rank {
     private final String rank;
     private final int index;
 
-    Rank(String rank, int index) {
+    Rank(final String rank, final int index) {
         this.rank = rank;
         this.index = index;
     }
