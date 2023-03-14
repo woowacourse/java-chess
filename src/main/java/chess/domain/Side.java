@@ -3,7 +3,8 @@ package chess.domain;
 public enum Side {
 
     BLACK,
-    WHITE;
+    WHITE,
+    NEUTRALITY;
 
     public boolean isWhite() {
         return this == WHITE;
@@ -11,5 +12,9 @@ public enum Side {
 
     public boolean isBlack() {
         return this == BLACK;
+    }
+
+    public boolean isNeutrality() {
+        return this == NEUTRALITY;
     }
 }
