@@ -42,9 +42,10 @@ classDiagram
 
 ### Position
 
-- [ ] Rank, File로 위치 정보를 생성한다.
-    - [ ] row정보는 Rank인스턴스로 나타낸다.
-    - [ ] col정보는 File인스턴스로 나타낸다.
+- [x] File, Rank로 위치 정보를 생성한다.
+    - [x] col정보는 File인스턴스로 나타낸다.
+    - [x] row정보는 Rank인스턴스로 나타낸다.
+- [x] File, Rank의 증분을 계산한다.
 
 ### Piece
 
