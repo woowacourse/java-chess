@@ -7,4 +7,8 @@ public abstract class Piece {
     protected Piece(TeamColor teamColor) {
         this.teamColor = teamColor;
     }
+
+    public boolean isBlack() {
+        return teamColor == TeamColor.BLACK;
+    }
 }

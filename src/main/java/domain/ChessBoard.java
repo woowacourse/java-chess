@@ -63,4 +63,8 @@ public class ChessBoard {
             chessBoard.put(WHITE_SQUARES.get(i), WHITE_PIECES.get(i));
         }
     }
+
+    public Piece find(Square square) {
+        return chessBoard.get(square);
+    }
 }

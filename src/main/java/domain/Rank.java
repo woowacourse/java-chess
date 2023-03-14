@@ -1,5 +1,5 @@
 package domain;
 
 public enum Rank {
-    ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT
+    EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO, ONE
 }
