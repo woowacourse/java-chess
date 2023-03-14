@@ -1,14 +1,14 @@
 import java.util.Arrays;
 
 public enum File {
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h");
 
     private final String text;
 
@@ -16,9 +16,9 @@ public enum File {
         this.text = text;
     }
 
-    public static File from(String fileText) {
+    public static File from(String rankText) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getText().equals(fileText))
+                .filter(rank -> rank.getText().equals(rankText))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file입니다."));
     }
