@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import chess.domain.square.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

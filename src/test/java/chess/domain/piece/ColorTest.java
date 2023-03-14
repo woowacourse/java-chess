@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
