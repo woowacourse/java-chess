@@ -9,7 +9,7 @@
 
 ## Column
 - [x] ChessBoard의 a부터 h까지의 열을 나타낸다
-- [] 인덱스의 오름차순으로 정렬한 List<Column>를 반환한다
+- [x] 인덱스의 오름차순으로 정렬한 List<Column>를 반환한다
 
 ## Square
 - [] ChessBoard의 한 칸에 해당한다

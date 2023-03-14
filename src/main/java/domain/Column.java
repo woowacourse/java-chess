@@ -1,5 +1,10 @@
 package domain;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Column {
     A(0, "a"),
     B(1, "b"),
@@ -16,5 +21,11 @@ public enum Column {
     Column(int index, String value) {
         this.index = index;
         this.value = value;
+    }
+
+    public static List<Column> getOrderedColumns() {
+        return Arrays.stream(Column.values())
+                .sorted(Comparator.comparingInt(column -> column.index))
+                .collect(Collectors.toList());
     }
 }
