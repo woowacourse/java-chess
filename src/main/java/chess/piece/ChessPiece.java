@@ -3,10 +3,8 @@ package chess.piece;
 public abstract class ChessPiece {
 
     private final Team team;
-    private final Position position;
 
-    public ChessPiece(final Team team, final Position position) {
+    public ChessPiece(final Team team) {
         this.team = team;
-        this.position = position;
     }
 }

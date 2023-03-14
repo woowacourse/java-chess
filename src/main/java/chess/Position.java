@@ -1,7 +1,8 @@
-package chess.piece;
+package chess;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class Position {
 
@@ -11,6 +12,19 @@ public class Position {
     public Position(final int file, final int rank) {
         this.file = File.from(file);
         this.rank = Rank.from(rank);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 
     private enum Rank{
