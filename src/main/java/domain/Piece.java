@@ -34,4 +34,12 @@ public class Piece {
         return CACHE.get(createKey(type, color));
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
 }
