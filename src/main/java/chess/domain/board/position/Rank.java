@@ -1,4 +1,6 @@
-package chess.domain.piece.position;
+package chess.domain.board.position;
+
+import java.util.Objects;
 
 public class Rank {
 
@@ -19,5 +21,18 @@ public class Rank {
 
     public static Rank from(final int rank) {
         return new Rank(rank);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rank)) return false;
+        final Rank rank1 = (Rank) o;
+        return rank == rank1.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank);
     }
 }

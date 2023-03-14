@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.Rank;
+import chess.domain.board.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -36,5 +37,16 @@ class RankTest {
     void 정상_생성(final int rank) {
         // when & then
         assertDoesNotThrow(() -> Rank.from(rank));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
+    void 값이_같으면_동등하다(final int value) {
+        // given
+        final Rank rank1 = Rank.from(value);
+        final Rank rank2 = Rank.from(value);
+
+        // when & then
+        assertThat(rank1).isEqualTo(rank2);
     }
 }

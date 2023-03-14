@@ -1,5 +1,6 @@
-package chess.domain.piece.position;
+package chess.domain.board.position;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class File {
@@ -20,5 +21,18 @@ public class File {
 
     public static File from(final char file) {
         return new File(file);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof File)) return false;
+        final File file1 = (File) o;
+        return file == file1.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file);
     }
 }

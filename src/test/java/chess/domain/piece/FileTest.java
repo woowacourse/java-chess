@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.File;
+import chess.domain.board.position.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -28,5 +29,16 @@ class FileTest {
     void a_부터_h_사이에_포함되는_문자인_경우_정상_생성(final char file) {
         // when & then
         assertDoesNotThrow(() -> File.from(file));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'})
+    void 값이_같으면_동등하다(final char value) {
+        // given
+        final File file1 = File.from(value);
+        final File file2 = File.from(value);
+
+        // when & then
+        assertThat(file1).isEqualTo(file2);
     }
 }
