@@ -15,11 +15,11 @@ public class Rook extends Piece {
         return isSameFileOrder(sourcePosition, targetPosition) || isSameRankOrder(sourcePosition, targetPosition);
     }
 
-    private static boolean isSameRankOrder(final Position sourcePosition, final Position targetPosition) {
+    private boolean isSameRankOrder(final Position sourcePosition, final Position targetPosition) {
         return sourcePosition.getRankOrder() == targetPosition.getRankOrder();
     }
 
-    private static boolean isSameFileOrder(final Position sourcePosition, final Position targetPosition) {
+    private boolean isSameFileOrder(final Position sourcePosition, final Position targetPosition) {
         return sourcePosition.getFileOrder() == targetPosition.getFileOrder();
     }
 }
