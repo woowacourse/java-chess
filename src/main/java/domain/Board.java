@@ -15,4 +15,8 @@ public class Board {
             ranks.add(new Rank(row, TOTAL_COL_COUNT));
         }
     }
+
+    public List<Rank> getRanks() {
+        return ranks;
+    }
 }
