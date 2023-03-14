@@ -1,6 +1,6 @@
 package domain;
 
 public enum Color {
-    BLACK, WHITE
+    BLACK, WHITE, NONE
 
 }
