@@ -1,7 +1,7 @@
 package piece;
 
 public enum Team {
-    BLACK,WHITE;
+    BLACK,WHITE,EMPTY;
     
     
     public boolean isWhiteTeam() {
