@@ -27,10 +27,10 @@ public enum File {
         return values.get(values.size() - index);
     }
 
-    public static File findFile(char value) {
+    public static File findFile(int fileCoordinate) {
         return Arrays.stream(File.values())
-                .filter(file -> file.value == value)
+                .filter(file -> file.ordinal() == fileCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("af"));
+                .orElseThrow(() -> new IllegalArgumentException("adfa"));
     }
 }

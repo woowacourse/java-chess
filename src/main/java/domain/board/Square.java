@@ -1,6 +1,7 @@
 package domain.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,11 @@ public class Square {
     public Square(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public Square(int fileCoordinate, int rankCoordinate) {
+        this.file = File.findFile(fileCoordinate);
+        this.rank = Rank.findRank(rankCoordinate);
     }
 
     public List<Integer> toCoordinate() {

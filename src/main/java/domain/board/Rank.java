@@ -18,10 +18,10 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Rank findRank(int value) {
+    public static Rank findRank(int rankCoordinate) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == value)
+                .filter(rank -> rank.ordinal() == rankCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("af"));
+                .orElseThrow(() -> new IllegalArgumentException("adfa"));
     }
 }
