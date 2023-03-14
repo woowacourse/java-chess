@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardTest {
+class PiecePointsTest {
 
     @Test
-    @DisplayName("체스판이 생성될 때 모든 기물이 배치된다.")
+    @DisplayName("기물이 기본 위치에 배치된다.")
     void initialChessBoardTest() {
-        Board board = new Board();
+        PiecePoints piecePoints = new PiecePoints();
 
-        assertThat(board.getPiecePoint()).hasSize(32);
+        assertThat(piecePoints.getPiecePoint()).hasSize(32);
     }
 }

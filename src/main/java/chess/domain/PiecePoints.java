@@ -14,11 +14,11 @@ import chess.domain.point.Rank;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class Board {
+public final class PiecePoints {
 
     private final Map<Point, Piece> piecePoint = new LinkedHashMap<>();
 
-    public Board() {
+    public PiecePoints() {
         setUpNobilityPiece(Rank.ONE, Camp.WHITE);
         setUpNobilityPiece(Rank.EIGHT, Camp.BLACK);
         setUpPawn(Rank.TWO, Camp.WHITE);
