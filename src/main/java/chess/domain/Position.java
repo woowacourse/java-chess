@@ -15,7 +15,6 @@ public class Position {
     }
     
     public static Position from(String position) {
-        // TODO : String 검증
         List<String> parsedPosition = parsing(position);
         File file = File.findByLabel(parsedPosition.get(0));
         Rank rank = Rank.findByLabel(parsedPosition.get(1));

@@ -24,6 +24,6 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(value -> value.label.equals(label))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
     }
 }
