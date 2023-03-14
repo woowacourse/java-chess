@@ -6,7 +6,8 @@ public enum Role {
     BISHOP("B"),
     KNIGHT("N"),
     ROCK("R"),
-    PAWN("P");
+    PAWN("P"),
+    EMPTY("E");
 
     private final String initial;
 

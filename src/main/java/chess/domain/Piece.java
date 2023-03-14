@@ -11,6 +11,11 @@ public class Piece {
         this.camp = camp;
     }
 
+    public Piece() {
+        this.role = Role.EMPTY;
+        this.camp = Camp.EMPTY;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

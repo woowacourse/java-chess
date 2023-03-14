@@ -11,7 +11,7 @@ public class Square {
     public Square(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
-        this.piece = null;
+        this.piece = new Piece();
     }
 
     public Square(final Rank rank, final File file, final Piece piece) {
