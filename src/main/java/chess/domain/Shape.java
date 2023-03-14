@@ -18,4 +18,11 @@ public enum Shape {
         this.whiteName = whiteName;
         this.blackName = blackName;
     }
+
+    public static Shape findByWhiteName(char whiteName) {
+        return Arrays.stream(values())
+                .filter(shape -> shape.whiteName == whiteName)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+    }
 }
