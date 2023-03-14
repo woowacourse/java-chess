@@ -1,5 +1,5 @@
 package chess.piece;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
 }
