@@ -1,6 +1,7 @@
 package chess.domain;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,6 @@ public class PieceTest {
         Piece piece = new Piece(true);
         Piece otherPiece = new Piece(false);
 
-        Assertions.assertThat(piece.hasSameColor(otherPiece)).isFalse();
+        assertThat(piece.hasSameColor(otherPiece)).isFalse();
     }
 }
