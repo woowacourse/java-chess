@@ -4,7 +4,7 @@ import chess.piece.Piece;
 import chess.piece.PieceMatcher;
 import chess.piece.Team;
 import chess.piece.coordinate.Coordinate;
-import chess.piece.coordinate.InitialSymbols;
+import chess.piece.InitialSymbols;
 
 import java.util.List;
 import java.util.stream.Collectors;
