@@ -24,6 +24,3 @@
 - Board
     - [x] 보드는 키가 Square이고 값이 Piece인 Map을 갖는다.
     - [x] 체스 게임을 할 수 있는 체스판을 초기화한다.
-
-- Game
-    - [ ] board를 갖는다.
