@@ -10,9 +10,9 @@ public class Position {
         this.rank = rank;
     }
 
-    public void move(final File file, final Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    public void move(final int fileMovingCount, final int rankMovingCount) {
+        this.file = file.getAddedFile(fileMovingCount);
+        this.rank = rank.getAddedRank(rankMovingCount);
     }
 
     public File getFile() {
