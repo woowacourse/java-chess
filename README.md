@@ -1,7 +1,20 @@
-# java-chess
+# 기능목록
 
-체스 미션 저장소
+## 1단계
 
-## 우아한테크코스 코드리뷰
+### 도메인
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+#### piece
+
+- [x] 이름을 가진다.
+
+#### Row
+
+- [ ] 8개의 a->h 까지의 칸을 가진다
+- [ ] 각 칸에는 Piece 가 들어갈 수 있다
+
+#### Board
+
+- [ ] Piece 들의 위치를 초기화 한다.
+- [ ] Board 는 Row 의 위치를 정의한다.
+- [ ] 보드는 자신의 판 정보를 반환할 수 있다.
