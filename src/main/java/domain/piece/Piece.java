@@ -1,4 +1,8 @@
-package domain;
+package domain.piece;
+
+import domain.Color;
+import domain.InitialColumns;
+import domain.Square;
 
 public abstract class Piece {
 
