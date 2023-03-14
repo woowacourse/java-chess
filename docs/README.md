@@ -1,7 +1,7 @@
 # 기능 목록
 
 ## ChessBoard
-- [] Square를 가지는 List를 필드로 가진다 
+- [] Square를 가지는 List를 필드로 가진다
 
 ## Rank 
 - [x] ChessBoard의 1부터 8까지의 행을 나타낸다
@@ -10,8 +10,11 @@
 - [x] ChessBoard의 a부터 h까지의 열을 나타낸다
 
 ## Square
-- [] ChessBoard의 한 칸에 해당하고
-- [] Rank와 Column, Piece을 필드로 가진다
+- [] ChessBoard의 한 칸에 해당한다
+- [x] Index, Piece, name(ex. a7)을 필드로 가진다
+
+## Position
+- [x] Rank와 Column을 필드로 가진다
 
 ## Piece (abstract)
 - [] Color를 필드로 가진다 (White/Black)
