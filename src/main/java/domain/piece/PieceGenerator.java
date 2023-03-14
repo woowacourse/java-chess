@@ -16,52 +16,59 @@ public class PieceGenerator {
     private final static List<Column> initialColumnsOfQueen = List.of(Column.D);
     private final static List<Column> initialColumnsOfKing = List.of(Column.E);
 
-    public static List<Piece> findFirstRowPieces(Color color) {
+    private final Color color;
+
+    public PieceGenerator(Color color) {
+        this.color = color;
+    }
+
+    public List<Piece> findFirstRowPieces() {
         List<Piece> firstRow = new ArrayList<>(SIZE_OF_COLUMN);
-        initRook(color, firstRow);
-        initKnight(color, firstRow);
-        initBishop(color, firstRow);
-        initQueen(color, firstRow);
-        initKing(color, firstRow);
+        initRook(firstRow);
+        initKnight(firstRow);
+        initBishop(firstRow);
+        initQueen(firstRow);
+        initKing(firstRow);
 
         return firstRow;
     }
 
-    private static void initRook(Color color, List<Piece> firstRow) {
+    private void initRook(List<Piece> firstRow) {
         initialColumnsOfRook.forEach(column ->
                 firstRow.add(column.getIndex(), new Rook(color)));
     }
 
-    private static void initKnight(Color color, List<Piece> firstRow) {
+    private void initKnight(List<Piece> firstRow) {
         initialColumnsOfKnight.forEach(column ->
                 firstRow.add(column.getIndex(), new Knight(color)));
     }
 
-    private static void initBishop(Color color, List<Piece> firstRow) {
+    private void initBishop(List<Piece> firstRow) {
         initialColumnsOfBishop.forEach(column ->
                 firstRow.add(column.getIndex(), new Bishop(color)));
     }
 
-    private static void initQueen(Color color, List<Piece> firstRow) {
+    private void initQueen(List<Piece> firstRow) {
         initialColumnsOfQueen.forEach(column ->
                 firstRow.add(column.getIndex(), new Queen(color)));
     }
 
-    private static void initKing(Color color, List<Piece> firstRow) {
+    private void initKing(List<Piece> firstRow) {
         initialColumnsOfKing.forEach(column ->
                 firstRow.add(column.getIndex(), new King(color)));
     }
 
-    public static List<Piece> findSecondRowPieces(Color color) {
+    public List<Piece> findSecondRowPieces() {
         List<Piece> secondRow = new ArrayList<>(SIZE_OF_COLUMN);
-        initPawn(color, secondRow);
+        initPawn(secondRow);
 
         return secondRow;
     }
 
-    private static void initPawn(Color color, List<Piece> secondRow) {
+    private void initPawn(List<Piece> secondRow) {
         for (Column column : initialColumnsOfPawn) {
             secondRow.add(column.getIndex(), new Pawn(color));
         }
     }
+
 }
