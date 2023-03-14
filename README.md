@@ -69,6 +69,10 @@ classDiagram
     - [ ] 상대방의 말 위치로 이동한 경우, 상대방 말은 죽고 이동한 말이 그 위치를 대체한다.
         - [ ] 해당 위치의 Piece는 EmptyPiece로 대체한다.
 
+### Movement
+
+- [x] 어느 방향으로도 움직이지 않으면 예외가 발생한다.
+
 ### File (enum)
 
 - [x] Source file과 Target file간 거리 차이를 반환한다.
