@@ -10,7 +10,7 @@
 
 #### Position
 
-- [ ] File과 Rank를 갖는다.
+- [x] File과 Rank를 갖는다.
 
 #### Board
 
