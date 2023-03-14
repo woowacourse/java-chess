@@ -21,6 +21,15 @@ public class MovementTest extends AbstractTestFixture {
         assertThat(movement2.isSameWith(movement.flipHorizontal())).isTrue();
     }
 
+    @DisplayName("좌우 대칭 할 수 있다.")
+    @Test
+    void flipVertical() {
+        Movement movement = createMovement(RIGHT, RIGHT, UP);
+        Movement movement2 = createMovement(LEFT, LEFT, UP);
+
+        assertThat(movement2.isSameWith(movement.flipVertical())).isTrue();
+    }
+
     @DisplayName("기울기가 같은지 알 수 있다")
     @Test
     void isSameAngle() {

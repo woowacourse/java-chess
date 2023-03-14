@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -53,8 +54,16 @@ public class Movement {
     }
 
     public Movement flipHorizontal() {
+        return flip(Direction::flipHorizontal);
+    }
+
+    public Movement flipVertical() {
+        return flip(Direction::flipVertical);
+    }
+
+    public Movement flip(Function<Direction, Direction> directionFlipper) {
         List<Direction> directions = this.directions.stream()
-            .map(Direction::flipHorizontal)
+            .map(directionFlipper)
             .collect(Collectors.toUnmodifiableList());
         return new Movement(directions);
     }
