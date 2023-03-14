@@ -12,6 +12,6 @@ class EmptyTest {
     @Test
     void Empty은_자신의_심볼을_반환한다() {
         Piece empty = new Empty(Team.WHITE, 1, 'a');
-        assertThat(empty.symbol()).isEqualTo('.');
+        assertThat(empty.symbol()).isEqualTo('e');
     }
 }
