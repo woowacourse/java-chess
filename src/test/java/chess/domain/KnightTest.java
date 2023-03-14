@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Test;
 public class KnightTest {
 
     @Test
-    void 나이트의_이름이_대문자일때_흰색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new Knight("N", Side.WHITE))
+    void 타입이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Knight(Type.EMPTY, Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("흰색 진영일때는 대문자 이름이 올 수 없습니다.");
+                .hasMessage("나이트의 타입이 잘못되었습니다.");
     }
 
     @Test
-    void 나이트의_이름이_소문자일때_검정색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new Knight("n", Side.BLACK))
+    void 진영이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Knight(Type.KNIGHT, Side.NEUTRALITY))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("검정색 진영일때는 소문자 이름이 올 수 없습니다.");
+                .hasMessage("나이트는 중립적인 기물이 아닙니다.");
     }
 }

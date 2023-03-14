@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Test;
 public class EmptyTest {
 
     @Test
-    void 엠티의_이름이_점이_아닌경우_예외를_던진다() {
-        assertThatThrownBy(() -> new Empty(" ", Side.NEUTRALITY))
+    void 타입이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Empty(Type.PAWN, Side.NEUTRALITY))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Empty의 이름은 점이여야 합니다.");
+                .hasMessage("Empty의 타입이 잘못되었습니다.");
     }
 
     @Test
-    void 엠티의_진영이_중립이_아닌경우_예외를_던진다() {
-        assertThatThrownBy(() -> new Empty(".", Side.BLACK))
+    void 진영이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Empty(Type.EMPTY, Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Empty의 진영은 중립이여야 합니다.");
+                .hasMessage("Empty는 진영을 가질 수 없습니다.");
     }
 }

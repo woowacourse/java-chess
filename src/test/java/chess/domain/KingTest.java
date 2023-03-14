@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Test;
 public class KingTest {
 
     @Test
-    void 킹의_이름이_대문자일때_흰색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new King("K", Side.WHITE))
+    void 타입이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new King(Type.EMPTY, Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("흰색 진영일때는 대문자 이름이 올 수 없습니다.");
+                .hasMessage("킹의 타입이 잘못되었습니다.");
     }
 
     @Test
-    void 킹의_이름이_소문자일때_검정색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new King("k", Side.BLACK))
+    void 진영이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new King(Type.KING, Side.NEUTRALITY))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("검정색 진영일때는 소문자 이름이 올 수 없습니다.");
+                .hasMessage("킹은 중립적인 기물이 아닙니다.");
     }
 }

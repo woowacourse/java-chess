@@ -5,22 +5,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.EnumSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class BishopTest {
 
     @Test
-    void 비숍의_이름이_대문자일때_흰색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new Bishop("B", Side.WHITE))
+    void 타입이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Bishop(Type.EMPTY, Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("흰색 진영일때는 대문자 이름이 올 수 없습니다.");
+                .hasMessage("비숍의 타입이 잘못되었습니다.");
     }
 
     @Test
-    void 비숍의_이름이_소문자일때_검정색_진영이라면_예외를_던진다() {
-        assertThatThrownBy(() -> new Bishop("b", Side.BLACK))
+    void 진영이_잘못되면_예외를_던진다() {
+        assertThatThrownBy(() -> new Bishop(Type.BISHOP, Side.NEUTRALITY))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("검정색 진영일때는 소문자 이름이 올 수 없습니다.");
+                .hasMessage("비숍은 중립적인 기물이 아닙니다.");
     }
 }

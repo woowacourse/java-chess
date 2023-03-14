@@ -2,14 +2,14 @@ package chess.domain;
 
 public abstract class Piece {
 
-    private final String name;
+    private final Type type;
     private final Side side;
 
-    public Piece(final String name, final Side side) {
-        validate(name, side);
-        this.name = name;
+    public Piece(final Type type, final Side side) {
+        validate(type, side);
+        this.type = type;
         this.side = side;
     }
 
-    protected abstract void validate(final String name, final Side side);
+    protected abstract void validate(final Type type, final Side side);
 }

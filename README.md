@@ -18,7 +18,7 @@ graph TD
 
     Board --> Piece
     Board --> Position
-  
+    
     Piece --> Pawn
     Piece --> Rook
     Piece --> Knight
@@ -45,7 +45,7 @@ graph TD
 
 ### 기물
 
-- [x] 이름을 가진다.
+- [x] 타입을 가진다.
 - [x] 진영을 가진다.
 
 ### 입력
