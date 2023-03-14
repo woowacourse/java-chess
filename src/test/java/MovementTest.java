@@ -1,5 +1,8 @@
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,4 +23,13 @@ class MovementTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 움직임입니다.");
     }
+
+    @DisplayName("위 방향의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"0,1,true", "0,-1,false"})
+    void shouldReturnTrueWhenMovementDirectionIsUpwardOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        Assertions.assertThat(movement.isUpward()).isEqualTo(result);
+    }
+
 }
