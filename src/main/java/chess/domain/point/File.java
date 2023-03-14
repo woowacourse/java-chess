@@ -1,4 +1,4 @@
-package chess.point;
+package chess.domain.point;
 
 public enum File {
     ONE,
