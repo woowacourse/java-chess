@@ -24,7 +24,7 @@
         - [x] 빈 piece를 가질 수 있다.
 
 - Row
-    - [ ] square 리스트를 갖는다.
+    - [x] square 리스트를 갖는다.
 
 - Board
     - [ ] row 리스트를 갖는다.
