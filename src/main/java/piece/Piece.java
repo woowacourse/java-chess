@@ -1,6 +1,6 @@
 package piece;
 
-import coordinate.Coordinate;
+import piece.coordinate.Coordinate;
 
 public abstract class Piece {
     

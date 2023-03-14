@@ -1,4 +1,4 @@
-package coordinate;
+package piece.coordinate;
 
 public class Column {
     private final char column;

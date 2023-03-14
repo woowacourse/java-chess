@@ -1,4 +1,4 @@
-package coordinate;
+package piece.coordinate;
 
 public class Row {
     private static final int MIN_ROW = 1;

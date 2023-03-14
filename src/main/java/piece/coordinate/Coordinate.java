@@ -1,4 +1,4 @@
-package coordinate;
+package piece.coordinate;
 
 public class Coordinate {
     private final Row row;
