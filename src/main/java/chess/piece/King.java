@@ -6,7 +6,7 @@ import java.util.List;
 
 public class King extends ChessPiece {
 
-    private King(final Team team) {
+    public King(final Team team) {
         super(team);
     }
 
