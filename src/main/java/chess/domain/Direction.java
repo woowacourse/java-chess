@@ -2,7 +2,21 @@ package chess.domain;
 
 public enum Direction {
     RIGHT,
-    UP,
+    UP {
+        @Override
+        public Direction flipHorizontal() {
+            return DOWN;
+        }
+    },
     LEFT,
-    DOWN
+    DOWN {
+        @Override
+        public Direction flipHorizontal() {
+            return UP;
+        }
+    };
+
+    public Direction flipHorizontal() {
+        return this;
+    }
 }
