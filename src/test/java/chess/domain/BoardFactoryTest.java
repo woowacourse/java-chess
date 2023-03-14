@@ -16,7 +16,7 @@ class BoardFactoryTest {
 
         // expect
         assertThat(squares)
-                .hasSize(32);
+                .hasSize(64);
     }
 
     @Test
