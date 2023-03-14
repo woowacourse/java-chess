@@ -4,6 +4,7 @@ import static domain.piece.Camp.BLACK;
 import static domain.piece.Camp.WHITE;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +93,20 @@ public class ChessBoard {
         for (Square initialBlackPawnSquare : initialBlackPawnSquares) {
             board.put(initialBlackPawnSquare, new Pawn(BLACK));
         }
+    }
+
+    public Square toSquare(int fileCoordinate, int rankCoordinate) {
+        File targetFile = Arrays.stream(File.values())
+                .filter(file -> file.ordinal() == fileCoordinate)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("adfa"));
+
+        Rank targetRank = Arrays.stream(Rank.values())
+                .filter(rank -> rank.ordinal() == rankCoordinate)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("adfa"));
+
+        return new Square(targetFile, targetRank);
     }
 
     public Map<Square, Piece> getBoard() {
