@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.domain.Direction.DOWN;
 import static chess.domain.Direction.LEFT;
 import static chess.domain.Direction.RIGHT;
 import static chess.domain.Direction.UP;
@@ -10,6 +11,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class MovementTest extends AbstractTestFixture {
+
+    @DisplayName("상하 대칭 할 수 있다.")
+    @Test
+    void flipHorizontal() {
+        Movement movement = createMovement(RIGHT, UP, UP);
+        Movement movement2 = createMovement(RIGHT, DOWN, DOWN);
+
+        assertThat(movement2.isSameWith(movement.flipHorizontal())).isTrue();
+    }
 
     @DisplayName("기울기가 같은지 알 수 있다")
     @Test

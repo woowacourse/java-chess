@@ -1,7 +1,9 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Movement {
 
@@ -9,7 +11,7 @@ public class Movement {
 
     public Movement(List<Direction> directions) {
         validate(directions);
-        this.directions = directions;
+        this.directions = new ArrayList<>(directions);
     }
 
     private void validate(List<Direction> directions) {
@@ -48,5 +50,12 @@ public class Movement {
             return false;
         }
         return directions.containsAll(movement.directions);
+    }
+
+    public Movement flipHorizontal() {
+        List<Direction> directions = this.directions.stream()
+            .map(Direction::flipHorizontal)
+            .collect(Collectors.toUnmodifiableList());
+        return new Movement(directions);
     }
 }
