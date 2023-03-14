@@ -28,4 +28,13 @@ public enum Column {
                 .sorted(Comparator.comparingInt(column -> column.index))
                 .collect(Collectors.toList());
     }
+
+    public static void validateValue(String value) {
+        boolean isValidRank = Arrays.stream(Column.values())
+                .anyMatch(column -> column.value.equals(value));
+
+        if(!isValidRank){
+            throw new IllegalArgumentException("존재하지 않는 Column입니다");
+        }
+    }
 }
