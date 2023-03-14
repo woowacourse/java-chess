@@ -37,4 +37,12 @@ public class Point {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+            "rank=" + rank +
+            ", file=" + file +
+            '}';
+    }
 }
