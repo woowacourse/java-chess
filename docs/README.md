@@ -34,7 +34,7 @@
 ### WhitePlayer
 
 - [x] COLOR로 White를 가진다
-- [] 1열과 2열에 해당하는 Rank를 가진다(1,2)
+- [x] 1열과 2열에 해당하는 Rank를 가진다(1,2)
 
 ## PieceGenerator
 
