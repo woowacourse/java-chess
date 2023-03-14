@@ -13,7 +13,7 @@ class KingTest {
 
     @Test
     @DisplayName("initialPosition() : 팀에 따라서 킹의 초기 위치는 달라질 수 있다.")
-    void test_initialPosition() throws Exception {
+    void test_initialPosition(){
         //given
         final List<Position> kingWhitePositions = King.initialPosition(Team.WHITE);
         final List<Position> kingBlackPositions = King.initialPosition(Team.BLACK);
