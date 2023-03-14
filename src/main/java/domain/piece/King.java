@@ -1,15 +1,17 @@
 package domain.piece;
 
-public final class King extends Piece{
+import domain.board.Position;
+
+public final class King extends Piece {
 
     private static final String NAME = "K";
 
-    private King() {
-        super(NAME);
+    private King(final Position position) {
+        super(NAME, position);
     }
 
-    public static Piece create() {
-        return new King();
+    public static Piece create(final Position position) {
+        return new King(position);
     }
 
     @Override

@@ -1,13 +1,36 @@
 package domain.piece;
 
-abstract class Piece implements Moveable{
+import domain.board.Position;
+import java.util.Objects;
+
+public abstract class Piece implements Moveable {
     private final String name;
 
-    Piece(final String name) {
+    private final Position position;
+
+    Piece(final String name, final Position position) {
         this.name = name;
+        this.position = position;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Piece)) {
+            return false;
+        }
+        final Piece piece = (Piece) o;
+        return Objects.equals(name, piece.name) && Objects.equals(position, piece.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, position);
     }
 }

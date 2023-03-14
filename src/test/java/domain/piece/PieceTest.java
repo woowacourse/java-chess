@@ -1,9 +1,8 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.Assertions;
+import domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +12,12 @@ class PieceTest {
     @Test
     void kingName() {
         //given
-        final Piece king = King.create();
-        final Piece queen = Queen.create();
-        final Piece knight = Knight.create();
-        final Piece bishop = Bishop.create();
-        final Piece rook = Rook.create();
-        final Piece pawn = Pawn.create();
+        final Piece king = King.create(Position.from("a1"));
+        final Piece queen = Queen.create(Position.from("a1"));
+        final Piece knight = Knight.create(Position.from("a1"));
+        final Piece bishop = Bishop.create(Position.from("a1"));
+        final Piece rook = Rook.create(Position.from("a1"));
+        final Piece pawn = Pawn.create(Position.from("a1"));
 
         //when
 
