@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -21,4 +22,26 @@ class RankTest {
         //then
         assertThat(Rank.getOrderedRanks()).isEqualTo(orderedRanks);
     }
+
+    @Test
+    void 입력한값이_Rank에_존재하지않는경우_예외() {
+        //given,when
+        String value = "9";
+
+        //then
+        assertThatThrownBy(()->Rank.validateValue(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("존재하지 않는 Rank입니다");
+    }
+
+    @Test
+    void 입력한값이_Rank에_존재하면_아무일도_일어나지_않는다(){
+        //given, when
+        String value = "1";
+
+        //then
+        assertDoesNotThrow(()->Rank.validateValue(value));
+
+    }
+
 }
