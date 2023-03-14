@@ -25,4 +25,15 @@ public enum File {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 더한 파일 값이 존재하지 않습니다."));
     }
+
+    public static File findByValue(int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 파일 값이 존재하지 않습니다."));
+    }
+
+    public static int length() {
+        return values().length;
+    }
 }
