@@ -1,5 +1,7 @@
 package domain.board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Square {
@@ -9,6 +11,13 @@ public class Square {
     public Square(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public List<Integer> toCoordinate() {
+        ArrayList<Integer> coordinate = new ArrayList<>();
+        coordinate.add(file.ordinal());
+        coordinate.add(rank.ordinal());
+        return coordinate;
     }
 
     @Override
