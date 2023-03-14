@@ -7,7 +7,7 @@ public enum Role {
     KNIGHT("N"),
     ROCK("R"),
     PAWN("P"),
-    EMPTY("E");
+    EMPTY(".");
 
     private final String initial;
 
