@@ -1,14 +1,16 @@
 package chess.model.board;
 
+
 import chess.model.piece.Piece;
+import chess.model.piece.Type;
 
-public class Square {
+public interface Square {
 
-    private final Position position;
-    private final Piece piece;
+    Type getType();
 
-    public Square(final Position position, final Piece piece) {
-        this.position = position;
-        this.piece = piece;
-    }
+    Square receivePiece(final Piece piece);
+
+    Square movePiece(final Position position);
+
+    Square removePiece();
 }
