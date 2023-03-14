@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardFactory {
-    private static final Role[] CHESSMEN = {ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK};
+    private static final Role[] CHESSMEN = {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK};
 
     private BoardFactory() {
 
