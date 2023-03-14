@@ -9,4 +9,6 @@ public abstract class Piece {
         this.color = color;
         this.initialPositions = initialPositions;
     }
+
+    abstract public void move(Square start, Square destination);
 }

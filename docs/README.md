@@ -3,6 +3,7 @@
 ## ChessBoard
 
 - [] Square를 가지는 List를 필드로 가진다
+- [] 초기 맵을 설정한다
 
 ## Rank
 
@@ -26,19 +27,44 @@
 
 - [x] Rank와 Column을 필드로 가진다
 
+## Player (abstract)
+
+- [] COLOR(Black/White)를 가진다
+- 
+- [] COLOR에 따라 1열, 2열을 설정한다
+
+### BlackPlayer
+- 1열과 2열에 해당하는 Rank를 가진다(8,7)
+
+### WhitePlayer
+- 1열과 2열에 해당하는 Rank를 가진다(1,2)
+
+## PieceGenerator
+
+- 상수로 각 기물이 몇개 생성해야하는지 가지고 있다
+- [ ] 첫번째 열 기물들을 생성해 반환한다 (Rook, Knight, Bishop ... )
+- [ ] 두번째 열 기물들을 생성해 반환한다 (Pawn * 8)
+
 ## Piece (abstract)
 
-- [] Color를 필드로 가진다 (White/Black)
-- [] Piece 종류에따라 움직일 수 있다(move method)
+- [x] 상수로 COLOR를 필드로 가진다 (White/Black)
+- [x] 상수로 InitialPositions라는 초기 위치 객체를 가지고 있다
+- [x] Piece 종류에따라 움직일 수 있다(move method)
 - TODO: 이동시 위치값을 어떻게 할지 고민한다
-    - rank와 column를 필드로 가진다
+- rank와 column를 필드로 가진다
+
+## InitialPositions 
+- [x] 기물들의 초기 위치 값을 나타낸다
+- [x] List<Column>을 일급컬렉션으로 가진다
 
 ### Pawn (Piece)
 
+- [ ] 폰 객체를 나타낸다
 - todo: move override , rank와 column를 필드로 가진다
 
 ### Rook (Piece)
 
+- [ ] 룩 객체를 나타낸다
 - todo: move override , rank와 column를 필드로 가진다
 
 ### Bishop (Piece)
