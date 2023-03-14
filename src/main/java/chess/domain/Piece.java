@@ -1,17 +1,27 @@
 package chess.domain;
 
 public class Piece {
-    private final String name;
+    private final PieceType type;
+    private final Color color;
 
-    public Piece(String name) {
-        this.name = name;
+    public Piece(PieceType pieceType, Color color) {
+        type = pieceType;
+        this.color = color;
+    }
+
+    public Piece(String type, Color color) {
+        this(PieceType.from(type), color);
     }
 
     public Piece() {
-        this(".");
+        this(PieceType.EMPTY, Color.NONE);
     }
 
-    public String getName() {
-        return name;
+    public PieceType getType() {
+        return type;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

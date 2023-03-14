@@ -12,13 +12,13 @@ public class PieceTest {
     @Test
     void 피스_이름_가져오기_테스트() {
         //given
-        Piece piece = new Piece("p");
+        Piece piece = new Piece("p", Color.WHITE);
 
         //when
-        String name = piece.getName();
+        PieceType result = piece.getType();
 
         //then
-        assertThat(name).isEqualTo("p");
+        assertThat(result).isEqualTo(PieceType.PAWN);
     }
 
 }
