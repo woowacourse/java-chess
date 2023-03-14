@@ -1,8 +1,5 @@
 package techcourse.fp.chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Rook extends Piece {
 
     public Rook(final Side side) {
@@ -10,23 +7,19 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> findMovablePositions(final Position basePosition) {
-        List<Position> movablePositions = new ArrayList<>();
-        File currentFile = basePosition.getFile();
-        Rank currentRank = basePosition.getRank();
-
-        for (File file : File.values()) {
-            if (file != currentFile) {
-                movablePositions.add(Position.of(file, currentRank));
-            }
+    public boolean isMovable(final Position sourcePosition, final Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            return false;
         }
 
-        for (Rank rank : Rank.values()) {
-            if (rank != currentRank) {
-                movablePositions.add(Position.of(currentFile, rank));
-            }
-        }
+        return isSameFileOrder(sourcePosition, targetPosition) || isSameRankOrder(sourcePosition, targetPosition);
+    }
 
-        return movablePositions;
+    private static boolean isSameRankOrder(final Position sourcePosition, final Position targetPosition) {
+        return sourcePosition.getRankOrder() == targetPosition.getRankOrder();
+    }
+
+    private static boolean isSameFileOrder(final Position sourcePosition, final Position targetPosition) {
+        return sourcePosition.getFileOrder() == targetPosition.getFileOrder();
     }
 }

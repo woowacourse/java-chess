@@ -1,7 +1,5 @@
 package techcourse.fp.chess.domain;
 
-import java.util.List;
-
 public abstract class Piece {
 
     private final Side side;
@@ -10,5 +8,5 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract List<Position> findMovablePositions(final Position basePosition);
+    public abstract boolean isMovable(final Position sourcePosition, final Position targetPosition);
 }

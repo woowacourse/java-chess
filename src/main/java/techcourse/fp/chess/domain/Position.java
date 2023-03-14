@@ -16,12 +16,12 @@ public final class Position {
         return new Position(file, rank);
     }
 
-    public File getFile() {
-        return file;
+    public int getFileOrder() {
+        return file.getOrder();
     }
 
-    public Rank getRank() {
-        return rank;
+    public int getRankOrder() {
+        return rank.getOrder();
     }
 
     @Override
