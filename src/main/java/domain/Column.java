@@ -37,4 +37,8 @@ public enum Column {
             throw new IllegalArgumentException("존재하지 않는 Column입니다");
         }
     }
+
+    public int getIndex() {
+        return index;
+    }
 }

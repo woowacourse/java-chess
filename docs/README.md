@@ -40,8 +40,8 @@
 ## PieceGenerator
 
 - [x] 상수로 각 기물이 몇개 생성해야하는지 가지고 있다
-- [ ] 첫번째 열 기물들을 생성해 반환한다 (Rook, Knight, Bishop ... )
-- [ ] 두번째 열 기물들을 생성해 반환한다 (Pawn * 8)
+- [] 첫번째 열 기물들을 생성해 반환한다 (Rook, Knight, Bishop ... )
+- [x] 두번째 열 기물들을 생성해 반환한다 (Pawn * 8)
 
 ## Piece (abstract)
 

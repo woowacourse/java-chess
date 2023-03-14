@@ -7,11 +7,9 @@ import domain.Square;
 public abstract class Piece {
 
     private final Color color;
-    private final InitialColumns initialPositions;
 
-    public Piece(Color color, InitialColumns initialPositions) {
+    public Piece(Color color) {
         this.color = color;
-        this.initialPositions = initialPositions;
     }
 
     abstract public void move(Square start, Square destination);
