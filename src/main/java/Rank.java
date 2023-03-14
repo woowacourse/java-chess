@@ -1,29 +1,35 @@
 import java.util.Arrays;
 
 public enum Rank {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8);
 
     private final String text;
+    private final int order;
 
-    Rank(String text) {
+    Rank(String text, int order) {
         this.text = text;
+        this.order = order;
     }
 
-    public static Rank from(String rankText) {
+    public static Rank from(String fileText) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getText().equals(rankText))
+                .filter(file -> file.getText().equals(fileText))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank입니다."));
     }
 
     public String getText() {
         return text;
+    }
+
+    public int calculateIncrement(Rank targetRank) {
+        return targetRank.order - this.order;
     }
 }
