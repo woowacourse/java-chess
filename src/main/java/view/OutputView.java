@@ -1,8 +1,8 @@
 package view;
 
 import domain.Board;
+import domain.Piece;
 import domain.Rank;
-import domain.Square;
 
 public class OutputView {
 
@@ -16,8 +16,8 @@ public class OutputView {
 
     private StringBuilder makeRank(Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Square square : rank.getSquare()) {
-            stringBuilder.append(PieceTypeMapper.getTarget(square.getPiece()));
+        for (Piece piece : rank.getPieces()) {
+            stringBuilder.append(PieceTypeMapper.getTarget(piece));
         }
         stringBuilder.append(System.lineSeparator());
         return stringBuilder;

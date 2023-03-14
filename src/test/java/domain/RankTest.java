@@ -12,6 +12,6 @@ class RankTest {
     void getSquare() {
         Rank rank = new Rank(0, 8);
 
-        assertThat(rank.getSquare()).hasSize(8);
+        assertThat(rank.getPieces()).hasSize(8);
     }
 }

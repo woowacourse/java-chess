@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Rank {
 
-    private final List<Square> squares;
+    private final List<Piece> pieces;
 
-    public Rank(int rowNumber, int totalColCount) {
-        this.squares = new ArrayList<>();
+    public Rank(int row, int totalColCount) {
+        this.pieces = new ArrayList<>();
         for (int col = 0; col < totalColCount; col++) {
-            this.squares.add(new Square(rowNumber, col));
+            this.pieces.add(BoardInitialImage.getPieceByCoordinate(row, col));
         }
     }
 
-    public List<Square> getSquare() {
-        return squares;
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }
