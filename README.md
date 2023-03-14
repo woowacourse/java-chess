@@ -6,7 +6,7 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
-현## 도메인 다이어그램
+## 도메인 다이어그램
 
 ```mermaid
 graph TD
