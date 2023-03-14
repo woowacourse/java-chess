@@ -21,4 +21,8 @@ public enum File {
     public int distanceTo(final File other) {
         return Math.abs(position - other.position);
     }
+
+    public int getPosition() {
+        return position;
+    }
 }

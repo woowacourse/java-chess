@@ -22,4 +22,8 @@ public enum Rank {
     public int distanceTo(final Rank other) {
         return Math.abs(position - other.position);
     }
+
+    public int getPosition() {
+        return position;
+    }
 }

@@ -23,4 +23,12 @@ public class Square {
     private static Integer toKey(final Rank rank, final File file) {
         return Objects.hash(rank, file);
     }
+
+    public int getRank() {
+        return rank.getPosition();
+    }
+
+    public File getFile() {
+        return file;
+    }
 }
