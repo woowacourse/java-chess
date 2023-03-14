@@ -6,6 +6,7 @@
 ## Rank 
 - [x] ChessBoard의 1부터 8까지의 행을 나타낸다
 - [x] 인덱스의 오름차순으로 정렬한 List<Rank>를 반환한다
+- [x] 입력한 값이 Rank에 존재하는 Value인지 유효성 검사
 
 ## Column
 - [x] ChessBoard의 a부터 h까지의 열을 나타낸다

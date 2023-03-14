@@ -28,4 +28,13 @@ public enum Rank {
                 .sorted(Comparator.comparingInt(rank -> rank.index))
                 .collect(Collectors.toList());
     }
+
+    public static void validateValue(String value) {
+        boolean isValidRank = Arrays.stream(Rank.values())
+                .anyMatch(rank -> rank.value.equals(value));
+
+        if(!isValidRank){
+            throw new IllegalArgumentException("존재하지 않는 Rank입니다");
+        }
+    }
 }
