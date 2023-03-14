@@ -33,14 +33,12 @@ public class King extends Piece {
 
         for (Direction direction : movableDirection) {
             ArrayList<Square> squares = new ArrayList<>();
-            for (int i = 1; i < 8; i++) {
-                int fileCoordinate = file + (i * direction.getFile());
-                int rankCoordinate = rank + (i * direction.getRank());
-                if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
-                    continue;
-                }
-                squares.add(new Square(fileCoordinate, rankCoordinate));
+            int fileCoordinate = file + direction.getFile();
+            int rankCoordinate = rank + direction.getRank();
+            if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
+                continue;
             }
+            squares.add(new Square(fileCoordinate, rankCoordinate));
             if (squares.contains(targetSquare)) {
                 movableSquares = squares;
             }
