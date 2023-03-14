@@ -1,8 +1,6 @@
 package chess;
 
-public class King implements PieceType {
-
-    private static final int UPPER_BOUND_OF_MOVABLE_DISTANCE = 1;
+public class Queen implements PieceType {
 
     @Override
     public boolean isMovable(final Position startPosition, final Position endPosition) {
@@ -12,8 +10,6 @@ public class King implements PieceType {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
-        return Math.abs(diffFile) <= UPPER_BOUND_OF_MOVABLE_DISTANCE
-                && Math.abs(diffRank) <= UPPER_BOUND_OF_MOVABLE_DISTANCE;
+        return (Math.abs(diffFile) == Math.abs(diffRank)) || (diffFile * diffRank == 0);
     }
-
 }
