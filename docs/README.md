@@ -7,7 +7,7 @@
 - [x] ChessBoard의 1부터 8까지의 행을 나타낸다
 
 ## Column
-- [] ChessBoard의 a부터 h까지의 열을 나타낸다
+- [x] ChessBoard의 a부터 h까지의 열을 나타낸다
 
 ## Square
 - [] ChessBoard의 한 칸에 해당하고
