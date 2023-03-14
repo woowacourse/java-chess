@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 public abstract class Piece {
 
-    private final Position position;
+    protected Position position;
 
     public Piece(final Position position) {
         this.position = position;

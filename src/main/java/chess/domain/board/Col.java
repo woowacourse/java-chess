@@ -3,25 +3,30 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Col {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    private final String column;
+    private final char column;
 
-    Col(final String column) {
+    Col(final char column) {
         this.column = column;
     }
 
-    public static Col from(final String column) {
+    public static Col from(final char column) {
         return Arrays.stream(Col.values())
-                .filter(col -> col.column.equals(column))
+                .filter(col -> col.column == column)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
+    }
+
+    public int calculateAbsSubstitutionOfPosition(final int arrivePosition) {
+        int newColPosition = Math.abs(this.column - arrivePosition);
+        return newColPosition;
     }
 }
