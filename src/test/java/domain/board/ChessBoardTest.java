@@ -18,6 +18,17 @@ class ChessBoardTest {
         assertDoesNotThrow(ChessBoard::new);
     }
 
+
+    @Test
+    @DisplayName("좌표를 입력받아 해당 square를 반환한다.")
+    void toSquare() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Square square = chessBoard.toSquare(1, 1);
+
+        assertThat(square).isEqualTo(new Square(File.B, Rank.TWO));
+    }
+
     @Nested
     @DisplayName("기물이 정상적으로 놓여지는지 확인한다.")
     class InitializeTest {
