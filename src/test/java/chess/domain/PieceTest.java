@@ -10,13 +10,13 @@ class PieceTest {
 
     @ParameterizedTest
     @DisplayName("Piece가 정상적으로 생성되어야 한다.")
-    @EnumSource(Type.class)
-    void create_success(Type input) {
+    @EnumSource(Role.class)
+    void create_success(Role input) {
         // given
         Piece piece = new Piece(input, Team.BLACK);
 
         // expect
-        assertThat(piece.getType())
+        assertThat(piece.getRole())
                 .isEqualTo(input);
     }
 }

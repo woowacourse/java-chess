@@ -12,12 +12,12 @@ class SquareTest {
     @DisplayName("Square가 정상적으로 생성되어야 한다.")
     void create_Success() {
         // given
-        Square square = new Square(new Piece(Type.PAWN, Team.BLACK), new Position(0, 0));
+        Square square = new Square(new Piece(Role.PAWN, Team.BLACK), new Position(0, 0));
 
         // expect
         assertAll(
                 () -> assertThat(square.getTeam()).isEqualTo(Team.BLACK),
-                () -> assertThat(square.getType()).isEqualTo(Type.PAWN),
+                () -> assertThat(square.getRole()).isEqualTo(Role.PAWN),
                 () -> assertThat(square.getPosition()).isEqualTo(new Position(0, 0))
         );
     }

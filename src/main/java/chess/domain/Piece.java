@@ -3,16 +3,16 @@ package chess.domain;
 import java.util.Objects;
 
 public class Piece {
-    private final Type type;
+    private final Role role;
     private final Team team;
 
-    public Piece(Type type, Team team) {
-        this.type = type;
+    public Piece(Role role, Team team) {
+        this.role = role;
         this.team = team;
     }
 
-    public Type getType() {
-        return type;
+    public Role getRole() {
+        return role;
     }
 
     public Team getTeam() {
@@ -28,11 +28,11 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return type == piece.type && team == piece.team;
+        return role == piece.role && team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, team);
+        return Objects.hash(role, team);
     }
 }

@@ -2,18 +2,18 @@ package chess.domain;
 
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
-import static chess.domain.Type.BISHOP;
-import static chess.domain.Type.KING;
-import static chess.domain.Type.KNIGHT;
-import static chess.domain.Type.PAWN;
-import static chess.domain.Type.QUEEN;
-import static chess.domain.Type.ROOK;
+import static chess.domain.Role.BISHOP;
+import static chess.domain.Role.KING;
+import static chess.domain.Role.KNIGHT;
+import static chess.domain.Role.PAWN;
+import static chess.domain.Role.QUEEN;
+import static chess.domain.Role.ROOK;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardFactory {
-    private static final Type[] CHESSMEN = {ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK};
+    private static final Role[] CHESSMEN = {ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK};
 
     private BoardFactory() {
 

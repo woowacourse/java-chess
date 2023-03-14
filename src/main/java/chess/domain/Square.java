@@ -19,8 +19,8 @@ public class Square {
         return position;
     }
 
-    public Type getType() {
-        return piece.getType();
+    public Role getRole() {
+        return piece.getRole();
     }
 
     @Override

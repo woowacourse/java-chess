@@ -16,7 +16,7 @@ public class SquareResponse {
     }
 
     public static SquareResponse of(Square square) {
-        String symbol = SquareMapper.map(square.getTeam(), square.getType());
+        String symbol = SquareMapper.map(square.getTeam(), square.getRole());
         Position position = square.getPosition();
         return new SquareResponse(symbol, position.getX(), position.getY());
     }
