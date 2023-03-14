@@ -12,7 +12,6 @@
 graph TD
 A[piece] --> B[shape];
 A[piece] --> C[position];
-A[piece] --> D[color];
 C --> E[file];
 C --> F[rank];
 
@@ -34,8 +33,34 @@ G[outputView]
 
 ## Domain
 
+### Players
+
+- [ ] white player와 black player를 가진다.
+
+### Player
+
+- [ ] 기물들을 관리하는 객체를 가진다.
+- [ ] 진영(white, black)을 가진다.
+
+### Pieces
+
+- [ ] 기물들을 가진다.
+- [ ] 진영에 따라 기물들을 생성한다.
+  - [ ] 폰을 8개 생성한다.
+  - [ ] 킹, 퀸을 1개씩 생성한다.
+  - [ ] 비숍, 룩, 나이트를 2개씩 생성한다.
+
+### Piece
+
+- [x] 좌표를 가진다.
+- [x] 모양을 가진다.
+
+### Shape
+
+- [x] 기물 모양을 관리한다.
+
 ### Position
 
-- [x] 가로(rank), 세로(file) 를 가진다
-  - [x] 가로는 a~h, 세로는 최소 0, 최대 7 까지의 값을 가진다
-  - [x] 가로가 a~h, 세로가 0~7 범위를 벗어나면 예외가 발생한다
+- [x] 가로(rank), 세로(file) 를 가진다.
+  - [x] 가로는 a~h, 세로는 최소 0, 최대 7 까지의 값을 가진다.
+  - [x] 가로가 a~h, 세로가 0~7 범위를 벗어나면 예외가 발생한다.

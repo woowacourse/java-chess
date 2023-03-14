@@ -2,7 +2,7 @@ package chess.ui;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -23,17 +23,17 @@ public class InputView {
         }
     }
 
-    private static void validateInputCommand(String inputCommand) {
+    private static void validateInputCommand(final String inputCommand) {
         if (!isInputCommandStart(inputCommand) && !isInputCommandEnd(inputCommand)) {
             throw new IllegalArgumentException("start 또는 end만 입력할 수 있습니다.");
         }
     }
 
-    private static boolean isInputCommandStart(String inputCommand) {
+    private static boolean isInputCommandStart(final String inputCommand) {
         return inputCommand.equals("start");
     }
 
-    private static boolean isInputCommandEnd(String inputCommand) {
+    private static boolean isInputCommandEnd(final String inputCommand) {
         return inputCommand.equals("end");
     }
 
