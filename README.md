@@ -41,6 +41,10 @@
 - [x] rank와 file은 0이상 7이하의 정수여야 한다.
 - [x] 위치를 이동한다.
 
+### 팀
+- [x] BLACK, WHITE 두 팀이 있다.
+- [x] 같은 팀인지 판단한다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
