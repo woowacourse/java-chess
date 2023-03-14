@@ -5,9 +5,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chessgame.point.Rank;
-import chessgame.point.Point;
-import chessgame.point.File;
+import chessgame.domain.point.Rank;
+import chessgame.domain.point.Point;
+import chessgame.domain.point.File;
 
 class PointTest {
     @Test

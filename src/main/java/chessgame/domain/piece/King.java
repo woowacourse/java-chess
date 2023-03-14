@@ -1,6 +1,8 @@
-package chessgame;
+package chessgame.domain.piece;
 
-public class King implements Pieces{
+import chessgame.domain.Team;
+
+public class King implements Piece {
     private static final String ORIGINAL_NAME = "k";
 
     private final String name;

@@ -1,6 +1,8 @@
-package chessgame;
+package chessgame.domain.piece;
 
-public class Bishop implements Pieces{
+import chessgame.domain.Team;
+
+public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
 
     private final String name;

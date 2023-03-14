@@ -1,4 +1,4 @@
-package chessgame.point;
+package chessgame.domain.point;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,16 +10,16 @@ public class Point {
     private final File file;
     private final Rank rank;
 
-    private Point(File file, Rank rank) {
+    private Point(chessgame.domain.point.File file, chessgame.domain.point.Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Point of(File file, Rank rank) {
+    public static Point of(chessgame.domain.point.File file, chessgame.domain.point.Rank rank) {
         return cache.computeIfAbsent(toKey(file, rank), ignore -> new Point(file, rank));
     }
 
-    private static String toKey(File file, Rank rank) {
+    private static String toKey(chessgame.domain.point.File file, chessgame.domain.point.Rank rank) {
         return file.name() + rank.name();
     }
 

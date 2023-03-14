@@ -1,4 +1,4 @@
-package chessgame.point;
+package chessgame.domain.point;
 
 public enum Rank {
     EIGHT(8),

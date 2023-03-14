@@ -5,6 +5,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chessgame.domain.Team;
+import chessgame.domain.piece.King;
+
 public class KingTest {
 
     @Test

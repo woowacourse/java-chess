@@ -1,14 +1,15 @@
-package chessgame;
+package chessgame.domain;
 
 import java.util.Map;
 
-import chessgame.point.Point;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.point.Point;
 
 public class Board {
 
-    private final Map<Point, Pieces> board;
+    private final Map<Point, Piece> board;
 
-    public Board(Map<Point, Pieces> board) {
+    public Board(Map<Point, Piece> board) {
         this.board = board;
     }
 

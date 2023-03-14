@@ -1,16 +1,24 @@
-package chessgame;
+package chessgame.util;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import chessgame.point.File;
-import chessgame.point.Point;
-import chessgame.point.Rank;
+import chessgame.domain.Team;
+import chessgame.domain.piece.Bishop;
+import chessgame.domain.piece.King;
+import chessgame.domain.piece.Knight;
+import chessgame.domain.piece.Pawn;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.piece.Queen;
+import chessgame.domain.piece.Rook;
+import chessgame.domain.point.File;
+import chessgame.domain.point.Point;
+import chessgame.domain.point.Rank;
 
 public class ChessBoardFactory {
-    public static Map<Point, Pieces> create() {
-        Map<Point, Pieces> initialBoard = new LinkedHashMap<>();
+    public static Map<Point, Piece> create() {
+        Map<Point, Piece> initialBoard = new LinkedHashMap<>();
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
@@ -20,7 +28,8 @@ public class ChessBoardFactory {
 
         return initialBoard;
     }
-    private static Pieces generateInitialPiece(Rank rank,int idx){
+
+    private static Piece generateInitialPiece(Rank rank, int idx) {
         if (rank == Rank.EIGHT) {
             return getPieces(Team.BLACK).get(idx);
         }
@@ -39,8 +48,9 @@ public class ChessBoardFactory {
 
         return null;
     }
-    private static List<Pieces> getPieces(Team team) {
-        List<Pieces> pieces = List.of(Rook.from(team),
+
+    private static List<Piece> getPieces(Team team) {
+        List<Piece> pieces = List.of(Rook.from(team),
             Knight.from(team),
             Bishop.from(team),
             Queen.from(team),
