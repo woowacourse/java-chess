@@ -5,14 +5,10 @@ import java.util.List;
 public abstract class Piece {
 
     private final Side side;
-    private Position position;
 
-    protected Piece(Side side, Position position) {
+    protected Piece(final Side side) {
         this.side = side;
-        this.position = position;
     }
 
-    public abstract List<Position> findMovablePositions();
-
-    public abstract void move(Position targetPosition);
+    public abstract List<Position> findMovablePositions(final Position basePosition);
 }
