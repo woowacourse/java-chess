@@ -16,19 +16,23 @@ A[piece] --> C[position];
 C --> E[file];
 C --> F[rank];
 
+H[player] --> D;
+I[players] --> H;
 G[outputView]
 ```
 
 ## View
 
 ### In
-- [ ] start 또는 end 입력
-  - [ ] start 입력시 시작
-  - [ ] end 입력시 끝
+
+- [x] start 또는 end 입력
+  - [x] start 입력시 시작
+  - [x] end 입력시 끝
 
 ### Out
-- [ ] `체스 게임을 시작합니다.` 출력
-- [ ] `게임 시작은 start, 종료는 end 명령을 입력하세요.` 출력
+
+- [x] `체스 게임을 시작합니다.` 출력
+- [x] `게임 시작은 start, 종료는 end 명령을 입력하세요.` 출력
 - [ ] 체스 판 출력
   - [ ] 가로 8칸, 세로 8칸
 
@@ -36,12 +40,12 @@ G[outputView]
 
 ### Players
 
-- [ ] white player와 black player를 가진다.
+- [x] white player와 black player를 가진다.
 
 ### Player
 
-- [ ] 기물들을 관리하는 객체를 가진다.
-- [ ] 진영(white, black)을 가진다.
+- [x] 기물들을 관리하는 객체를 가진다.
+- [x] 진영(white, black)을 가진다.
 
 ### Pieces
 
