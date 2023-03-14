@@ -26,8 +26,8 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
     }
 
-    public int calculateAbsSubstitutionOfPosition(final int arrivePosition) {
-        int newRowPosition = Math.abs(this.row - arrivePosition);
+    public int calculateSubstitutionFromArrivalPosition(final int arrivePosition) {
+        int newRowPosition = arrivePosition - this.row;
         return newRowPosition;
     }
 }

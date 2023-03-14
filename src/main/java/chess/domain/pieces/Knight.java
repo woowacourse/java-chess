@@ -30,8 +30,8 @@ public class Knight extends Piece {
         Row myRow = this.position.row;
         Col myCol = this.position.col;
 
-        int absOfRow = myRow.calculateAbsSubstitutionOfPosition(arrivalRow);
-        int absOfCol = myCol.calculateAbsSubstitutionOfPosition(arrivalCol);
+        int absOfRow = Math.abs(myRow.calculateSubstitutionFromArrivalPosition(arrivalRow));
+        int absOfCol = Math.abs(myCol.calculateSubstitutionFromArrivalPosition(arrivalCol));
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         return possibleSubPosition.contains(newPosition);

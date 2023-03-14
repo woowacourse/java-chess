@@ -25,8 +25,8 @@ public enum Col {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
     }
 
-    public int calculateAbsSubstitutionOfPosition(final int arrivePosition) {
-        int newColPosition = Math.abs(this.column - arrivePosition);
+    public int calculateSubstitutionFromArrivalPosition(final int arrivePosition) {
+        int newColPosition = arrivePosition - this.column;
         return newColPosition;
     }
 }
