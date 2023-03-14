@@ -14,7 +14,7 @@ class FileTest {
     class distanceTo {
         @Nested
         @DisplayName("다른 File 객체가 주어지면")
-        class withAnotherFile {
+        class with_another_file {
             final File from = File.A;
             final File other = File.D;
 

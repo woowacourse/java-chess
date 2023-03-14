@@ -14,7 +14,7 @@ class RankTest {
     class distanceTo {
         @Nested
         @DisplayName("다른 Rank 객체가 주어지면")
-        class withAnotherRank {
+        class with_another_rank {
             final Rank from = Rank.FOUR;
             final Rank other = Rank.EIGHT;
 

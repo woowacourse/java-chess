@@ -14,7 +14,7 @@ class PawnTest {
     class of {
         @Nested
         @DisplayName("진영이 주어지면")
-        class givenTeam {
+        class given_team {
             @Test
             @DisplayName("해당 진영의 Pawn을 8개 생성한다")
             void it_returns_pawns() {
