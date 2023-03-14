@@ -10,8 +10,8 @@ class PositionTest {
         Position sourcePosition = Position.of("a", "1");
         Position targetPosition = Position.of("d", "6");
 
-        Increment increment = sourcePosition.calculateIncrement(targetPosition);
-        Assertions.assertThat(increment).isEqualTo(new Increment(3, 5));
+        Movement increment = sourcePosition.calculateIncrement(targetPosition);
+        Assertions.assertThat(increment).isEqualTo(new Movement(3, 5));
     }
 
 }

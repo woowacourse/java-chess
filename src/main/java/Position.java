@@ -13,9 +13,9 @@ public final class Position {
         return new Position(file, rank);
     }
 
-    public Increment calculateIncrement(Position targetPosition) {
+    public Movement calculateIncrement(Position targetPosition) {
         int fileIncrement = this.file.calculateIncrement(targetPosition.file);
         int rankIncrement = this.rank.calculateIncrement(targetPosition.rank);
-        return new Increment(fileIncrement, rankIncrement);
+        return new Movement(fileIncrement, rankIncrement);
     }
 }
