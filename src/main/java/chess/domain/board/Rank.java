@@ -1,18 +1,37 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+
 public enum Rank {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
     private final int value;
 
     Rank(final int value) {
         this.value = value;
+    }
+
+    public Rank plus() {
+        int rankPlused = this.value + 1;
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.value == rankPlused)
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    public Rank minus() {
+        int rankMinused = this.value - 1;
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.value == rankMinused)
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
     }
 }
