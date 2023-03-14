@@ -11,7 +11,8 @@
 ## Column
 - [x] ChessBoard의 a부터 h까지의 열을 나타낸다
 - [x] 인덱스의 오름차순으로 정렬한 List<Column>를 반환한다
-
+- [x] 입력한 값이 Column에 존재하는 Value인지 유효성 검사
+- 
 ## Square
 - [] ChessBoard의 한 칸에 해당한다
 - [x] Index, Piece, name(ex. a7)을 필드로 가진다
