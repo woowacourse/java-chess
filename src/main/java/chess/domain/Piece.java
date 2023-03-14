@@ -9,4 +9,16 @@ public abstract class Piece {
         this.color = color;
         this.position = new Position(file, rank);
     }
+
+    public boolean isSameColor(final Color otherColor) {
+        return this.color == otherColor;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
 }
