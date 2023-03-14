@@ -20,4 +20,12 @@ public class FileTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 file입니다.");
     }
+
+    @DisplayName("source file과 target file의 거리 차이를 반환한다.")
+    @Test
+    void shouldReturnDifferenceBetweenSourceAndTargetWhenInputTargetToSource() {
+        File sourceFile = File.from("d");
+        File targetFile = File.from("g");
+        assertThat(sourceFile.calculateIncrement(targetFile)).isEqualTo(3);
+    }
 }
