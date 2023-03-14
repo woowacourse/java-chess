@@ -72,4 +72,48 @@ public final class Position {
                 ", file=" + rank +
                 '}';
     }
+
+    public boolean isFileEquals(final Position target) {
+        return file.equals(target.file);
+    }
+
+    public boolean isRankEquals(final Position target) {
+        return rank.equals(target.rank);
+    }
+
+    public boolean isFileOver(final Position target) {
+        return file.isOver(target.file);
+    }
+
+    public boolean isRankOver(final Position target) {
+        return rank.isOver(target.rank);
+    }
+
+    public static Position maxRank(final Position source, final Position target) {
+        if (source.isRankOver(target)) {
+            return source;
+        }
+        return target;
+    }
+
+    public static Position minRank(final Position source, final Position target) {
+        if (source.isRankOver(target)) {
+            return target;
+        }
+        return source;
+    }
+
+    public static Position maxFile(final Position source, final Position target) {
+        if (source.isFileOver(target)) {
+            return source;
+        }
+        return target;
+    }
+
+    public static Position minFile(final Position source, final Position target) {
+        if (source.isFileOver(target)) {
+            return target;
+        }
+        return source;
+    }
 }

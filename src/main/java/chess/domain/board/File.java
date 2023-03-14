@@ -33,4 +33,8 @@ public enum File {
                 .findAny()
                 .orElseThrow(IllegalStateException::new);
     }
+
+    public boolean isOver(final File file) {
+        return value > file.value;
+    }
 }

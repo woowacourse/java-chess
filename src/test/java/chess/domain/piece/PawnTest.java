@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
-    private static final Position B5 = new Position(File.B, Rank.FIVE);
-    private static final Position A4 = new Position(File.A, Rank.FOUR);
-    private static final Position B6 = new Position(File.B, Rank.SIX);
-    private static final Position B2 = new Position(File.B, Rank.TWO);
-    private static final Position B4 = new Position(File.B, Rank.FOUR);
-    private static final Position B7 = new Position(File.B, Rank.SEVEN);
-    private static final Position B3 = new Position(File.B, Rank.THREE);
-    private static final Position E4 = new Position(File.E, Rank.FOUR);
+    public static final Position B5 = new Position(File.B, Rank.FIVE);
+    public static final Position A4 = new Position(File.A, Rank.FOUR);
+    public static final Position B6 = new Position(File.B, Rank.SIX);
+    public static final Position B2 = new Position(File.B, Rank.TWO);
+    public static final Position B4 = new Position(File.B, Rank.FOUR);
+    public static final Position B7 = new Position(File.B, Rank.SEVEN);
+    public static final Position B3 = new Position(File.B, Rank.THREE);
+    public static final Position E4 = new Position(File.E, Rank.FOUR);
 
     @Test
     void computePath_Black() {

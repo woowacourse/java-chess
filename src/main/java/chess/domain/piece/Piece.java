@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class Piece {
 
-    private final Color color;
+    protected final Color color;
 
     public Piece(final Color color) {
         this.color = color;

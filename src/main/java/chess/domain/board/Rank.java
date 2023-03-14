@@ -34,4 +34,8 @@ public enum Rank {
                 .findAny()
                 .orElseThrow(IllegalStateException::new);
     }
+
+    public boolean isOver(final Rank rank) {
+        return value > rank.value;
+    }
 }
