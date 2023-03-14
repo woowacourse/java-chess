@@ -10,7 +10,7 @@ public abstract class Piece {
     private final Coordinate coordinate;
     
     protected Piece(Team team, int row, char column) {
-        this(team,new Coordinate(row,column));
+        this(team, new Coordinate(row, column));
     }
     
     protected Piece(Team team, Coordinate coordinate) {

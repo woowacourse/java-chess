@@ -16,6 +16,7 @@
     - [x] 해당 인스턴스가 White 팀인지 알려준다.
 - [ ] 맵 (ChessBoard -> List<RowPieces>)
   - [ ] 체스판을 초기화할 때 말들이 생성된다.
-- [ ] 한 행의 기물들 (RowPieces)
+- [x] 한 행의 기물들 (RowPieces)
+  - [x] 해당 행에 위치할 기물들을 초기화한다.
 - [x] 각 기물 객체 Matcher (PieceMatcher)
   - [x] 심볼마다 매칭되는 기물을 가지고 온다.
