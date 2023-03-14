@@ -15,11 +15,11 @@ public enum Rank {
 
     private final char value;
 
-    Rank(char value) {
+    Rank(final char value) {
         this.value = value;
     }
 
-    public static Rank from(char value) {
+    public static Rank from(final char value) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
