@@ -1,7 +1,12 @@
 package chess.domain;
 
+import chess.domain.exception.IllegalPieceMoveException;
+
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Position {
     private static final Map<File, Map<Rank, Position>> cache = new EnumMap<>(File.class);
@@ -34,6 +39,72 @@ public class Position {
     public static Position of(File file, Rank rank) {
         Map<Rank, Position> rankToPosition = cache.get(file);
         return rankToPosition.get(rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
+
+    public List<Position> createStraightPath(Position destination) {
+        validateStraight(destination);
+        if (isDiagonal(destination)) {
+            return createDiagonalPath(destination);
+        }
+        return createCrossPath(destination);
+    }
+
+    private boolean isDiagonal(Position destination) {
+        int rankDifference = rank.getDifference(destination.rank);
+        int fileDifference = file.getDifference(destination.file);
+        return Math.abs(rankDifference) == Math.abs(fileDifference);
+    }
+
+    private List<Position> createCrossPath(Position destination) {
+        if (getRankDifference(destination) == 0) {
+            return createFilePath(destination);
+        }
+        return createRankPath(destination);
+    }
+
+
+    private List<Position> createFilePath(Position destination) {
+        List<File> files = file.createPath(destination.file);
+        return files.stream()
+                .map(it -> Position.of(it, rank))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> createRankPath(Position destination) {
+        List<Rank> ranks = rank.createPath(destination.rank);
+        return ranks.stream()
+                .map(it -> Position.of(file, it))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> createDiagonalPath(Position destination) {
+        List<Rank> ranks = rank.createPath(destination.rank);
+        List<File> files = file.createPath(destination.file);
+        ArrayList<Position> result = new ArrayList<>();
+        for (int i = 0; i < ranks.size(); i++) {
+            result.add(Position.of(files.get(i), ranks.get(i)));
+        }
+        return result;
+    }
+
+    private void validateStraight(Position destination) {
+        int rankDifference = getRankDifference(destination);
+        int fileDifference = getFileDifference(destination);
+        if (rankDifference == 0 || fileDifference == 0) {
+            return;
+        }
+        if (Math.abs(rankDifference) == Math.abs(fileDifference)) {
+            return;
+        }
+        throw new IllegalPieceMoveException();
     }
 
     public int getRankDifference(Position other) {

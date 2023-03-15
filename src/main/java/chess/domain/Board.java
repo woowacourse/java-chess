@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.dto.PieceResponse;
+import chess.domain.exception.IllegalPieceMoveException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,21 @@ public class Board {
         for (File file : File.values()) {
             piecePosition.put(Position.of(file, rank), new Piece(PieceType.PAWN, color));
         }
+    }
+
+    public void movePiece(Position origin, Position destination) {
+        if (piecePosition.get(origin) == null) {
+            throw new IllegalPieceMoveException();
+        }
+
+        if (!piecePosition.get(origin).canJump()) {
+            checkPath(origin, destination);
+        }
+
+    }
+
+    private void checkPath(Position origin, Position destination) {
+
     }
 
     public List<List<PieceResponse>> getPiecePosition() {

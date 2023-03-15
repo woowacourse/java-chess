@@ -21,19 +21,23 @@ public class Piece {
         this(PieceType.EMPTY, Color.NONE);
     }
 
-    public PieceType getType() {
-        return type;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     public void move(int x, int y, Piece piece) {
         moveState = moveState.move(x, color.colorDirection(y), piece.isSameColor(color));
     }
 
     private ColorCompareResult isSameColor(Color color) {
         return ColorCompareResult.of(this.color, color);
+    }
+
+    public boolean canJump() {
+        return moveState.canJump();
+    }
+
+    public PieceType getType() {
+        return type;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
