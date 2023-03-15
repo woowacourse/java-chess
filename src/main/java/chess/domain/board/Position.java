@@ -16,6 +16,10 @@ public class Position {
         return new Position(rank, file);
     }
 
+    public int calculateRankGap(final Position target) {
+        return this.rank.calculateGap(target.rank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
