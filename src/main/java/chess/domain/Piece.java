@@ -14,6 +14,10 @@ public abstract class Piece {
         return this.color == otherColor;
     }
 
+    public boolean isBlack() {
+        return color.isBlack();
+    }
+
     public Color getColor() {
         return color;
     }
