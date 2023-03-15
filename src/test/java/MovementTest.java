@@ -39,4 +39,12 @@ class MovementTest {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         Assertions.assertThat(movement.isDownward()).isEqualTo(result);
     }
+
+    @DisplayName("2칸 이내의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"2,0,true", "0,1,true", "2,2,true", "-2,2,true", "-3,1,false"})
+    void shouldReturnTrueWhenMovementDirectionIsUnderTwoStepsOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        Assertions.assertThat(movement.isUnderTwoSteps()).isEqualTo(result);
+    }
 }
