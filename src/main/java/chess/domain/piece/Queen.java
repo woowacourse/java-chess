@@ -92,4 +92,9 @@ public final class Queen extends Piece {
         path.remove(source);
         return path;
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.QUEEN;
+    }
 }

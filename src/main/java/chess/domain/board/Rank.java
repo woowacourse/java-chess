@@ -19,6 +19,13 @@ public enum Rank {
         this.value = value;
     }
 
+    public static Rank from(final int value) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException());
+    }
+
     public Rank plus() {
         int rankPlused = this.value + 1;
         return Arrays.stream(Rank.values())

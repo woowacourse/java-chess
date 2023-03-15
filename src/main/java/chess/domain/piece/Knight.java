@@ -17,4 +17,9 @@ public final class Knight extends Piece {
         }
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.KNIGHT;
+    }
 }

@@ -41,4 +41,6 @@ public abstract class Piece {
     public boolean equalsColor(final Color color) {
         return this.color == color;
     }
+
+    public abstract Kind getKind();
 }

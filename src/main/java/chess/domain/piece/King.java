@@ -24,4 +24,9 @@ public final class King extends Piece {
 
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.KING;
+    }
 }

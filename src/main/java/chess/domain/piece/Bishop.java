@@ -46,4 +46,9 @@ public final class Bishop extends Piece {
 
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.BISHOP;
+    }
 }

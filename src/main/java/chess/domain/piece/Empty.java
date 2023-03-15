@@ -25,4 +25,9 @@ public final class Empty extends Piece {
     public boolean isEmpty() {
         return true;
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.EMPTY;
+    }
 }

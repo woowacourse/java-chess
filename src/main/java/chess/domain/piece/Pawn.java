@@ -80,4 +80,9 @@ public final class Pawn extends Piece {
         }
         return !isEmptyPosition.get(target);
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.PAWN;
+    }
 }

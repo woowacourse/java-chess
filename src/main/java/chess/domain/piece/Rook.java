@@ -51,4 +51,9 @@ public final class Rook extends Piece {
         path.remove(source);
         return path;
     }
+
+    @Override
+    public Kind getKind() {
+        return Kind.ROOK;
+    }
 }
