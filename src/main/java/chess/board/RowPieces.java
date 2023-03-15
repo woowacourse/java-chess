@@ -28,7 +28,7 @@ public class RowPieces {
     private static List<Piece> initRowPieces(int rowNum) {
         return IntStream.rangeClosed(MIN_COLUMN_INDEX, MAX_COLUMN_INDEX)
                 .mapToObj(columnIndex -> parsePiece(rowNum, columnIndex))
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
     
     private static Piece parsePiece(int rowNum, int columnIndex) {
