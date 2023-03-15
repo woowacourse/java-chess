@@ -1,5 +1,6 @@
 package chess.domain.square;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -92,16 +93,53 @@ class SquareTest {
 
         @Test
         @DisplayName("차이가 1이면 true를 반환한다.")
-        void name1() {
+        void difference_is_one() {
             final Square target = Square.of(File.A, Rank.SIX);
             assertThat(square.isRankDifferenceOne(target)).isTrue();
         }
 
         @Test
         @DisplayName("차이가 1이 아니면 false를 반환한다.")
-        void name2() {
+        void difference_is_not_one() {
             final Square target = Square.of(File.A, Rank.SEVEN);
             assertThat(square.isRankDifferenceOne(target)).isFalse();
+        }
+    }
+
+    @Nested
+    @DisplayName("이동 테스트")
+    class MoveTest {
+
+        @Test
+        @DisplayName("File 범위를 벗어난 경우 이동이 불가능하다.")
+        void file_out_of_bound1() {
+            final Square square = Square.of(File.A, Rank.THREE);
+            assertThatThrownBy(() -> square.move(Direction.LEFT))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("File 범위를 벗어난 경우 이동이 불가능하다.")
+        void file_out_of_bound2() {
+            final Square square = Square.of(File.H, Rank.THREE);
+            assertThatThrownBy(() -> square.move(Direction.RIGHT))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("Rank 범위를 벗어난 경우 이동이 불가능하다.")
+        void rank_out_of_bound1() {
+            final Square square = Square.of(File.C, Rank.ONE);
+            assertThatThrownBy(() -> square.move(Direction.DOWN))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("Rank 범위를 벗어난 경우 이동이 불가능하다.")
+        void rank_out_of_bound2() {
+            final Square square = Square.of(File.C, Rank.EIGHT);
+            assertThatThrownBy(() -> square.move(Direction.UP))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

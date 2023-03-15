@@ -26,6 +26,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
     }
 
+    public File move(int difference) {
+        return File.from((char) (value + difference));
+    }
+
     public char getValue() {
         return value;
     }

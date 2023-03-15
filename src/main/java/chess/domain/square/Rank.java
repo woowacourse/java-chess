@@ -38,6 +38,10 @@ public enum Rank {
         return Math.abs(value - rank.value) == 1;
     }
 
+    public Rank move(int difference) {
+        return Rank.from((char) (value + difference));
+    }
+
     public char getValue() {
         return value;
     }
