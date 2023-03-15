@@ -10,6 +10,7 @@ public class InputView {
 
     public static void printGameStartMessage() {
         printMessage(GAME_START_MESSAGE);
+        readInitialGameCommand();
     }
 
     public static void readInitialGameCommand() {
