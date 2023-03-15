@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileTest {
@@ -12,8 +13,8 @@ class FileTest {
     @Test
     @DisplayName("a~h가 아닌 File을 검색하면 예외가 발생한다")
     void search_file_exception() {
-        assertThrows(IllegalArgumentException.class,
-                () -> File.from('i'));
+        assertThatThrownBy(() -> File.from('i'))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
