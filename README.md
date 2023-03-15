@@ -115,7 +115,7 @@ classDiagram
 - [x] 이동할 수 있는지 확인한다.
     - [x] 수직 방향으로만 움직일 수 있다.
     - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
-- [ ] 입력 받은 Target position으로 가는 경로를 반환한다.
+- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
 ### Game
 - [x] 각각의 Rank와 File을 표현하도록 체스판을 초기화한다.
