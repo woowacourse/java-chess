@@ -6,8 +6,11 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Board {
     
@@ -19,7 +22,7 @@ public class Board {
     
     
     public static Board create() {
-        Map<Position, Piece> board = new HashMap<>();
+        Map<Position, Piece> board = new TreeMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 Position position = Position.from(file.getLabel() + rank.getLabel());
@@ -49,6 +52,23 @@ public class Board {
             }
         }
         
+    }
+    
+    public Map<Position, Piece> getBoard() {
+        //TODO:얘를 그대로 남겨도 될까..
+        return this.board;
+    }
+    
+    public void printList() {
+        List<Piece> piecesAt = getPiecesAt(Rank.EIGHT);
+        piecesAt.forEach(System.out::println);
+    }
+    
+    public List<Piece> getPiecesAt(Rank rank) {
+        return this.board.entrySet().stream()
+                .filter(e -> e.getKey().isRank(rank.getIndex()))
+                .map(Entry::getValue)
+                .collect(Collectors.toList());
     }
     
 }

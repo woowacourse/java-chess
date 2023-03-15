@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Position {
+public class Position implements Comparable<Position> {
     //TODO : 캐싱?
     
     private final File file;
@@ -23,7 +23,7 @@ public class Position {
         return new Position(file, rank);
     }
     
-    public static List<String> parsing(final String position) {
+    private static List<String> parsing(final String position) {
         return Arrays.stream(position.split("")).collect(Collectors.toList());
     }
     
@@ -48,6 +48,29 @@ public class Position {
         }
         final Position position = (Position) o;
         return file == position.file && rank == position.rank;
+    }
+    
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
+    
+    @Override
+    public int compareTo(final Position o) {
+        int thisRank = this.getRank().getIndex();
+        int otherRank = o.getRank().getIndex();
+        if (thisRank < otherRank) {
+            return -1;
+        }
+        if (thisRank > otherRank) {
+            return 1;
+        }
+        int thisFile = this.getFile().getIndex();
+        int otherFile = o.getFile().getIndex();
+        return Integer.compare(thisFile, otherFile);
     }
     
     public File getFile() {
