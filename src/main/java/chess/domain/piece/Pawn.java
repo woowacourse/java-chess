@@ -4,6 +4,7 @@ import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
+import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Pawn extends Piece {
     private final List<Direction> directions;
 
     public Pawn(TeamColor color) {
-        super(color);
+        super(color, PieceName.PAWN);
         this.directions = getDirectionsByColor();
     }
 

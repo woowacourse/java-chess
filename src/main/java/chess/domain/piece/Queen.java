@@ -4,6 +4,7 @@ import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.Position;
 import chess.domain.TeamColor;
+import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Queen extends Piece {
     }
 
     public Queen(final TeamColor color) {
-        super(color);
+        super(color, PieceName.QUEEN);
     }
 
     @Override
