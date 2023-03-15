@@ -91,4 +91,14 @@ public class MovementTest extends AbstractTestFixture {
 
         assertThat(destination).isEqualTo(createPosition("C,FOUR"));
     }
+
+    @DisplayName("단위 움직임을 찾을 수 있다")
+    @Test
+    void getUnitMovement() {
+        Movement movement = createMovement(RIGHT, RIGHT, RIGHT, UP, UP, UP);
+        Movement unitMovement = movement.getUnitMovement();
+
+        assertThat(createMovement(RIGHT, UP).isSameWith(unitMovement))
+                .isTrue();
+    }
 }
