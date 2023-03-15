@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceTest;
 import java.util.List;
 
 public abstract class AbstractTestFixture {

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static chess.domain.Direction.DOWN;
 import static chess.domain.Direction.LEFT;
@@ -6,6 +6,8 @@ import static chess.domain.Direction.RIGHT;
 import static chess.domain.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.AbstractTestFixture;
+import chess.domain.Move;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class PieceTest extends AbstractTestFixture {
 
-    static class PieceImplement extends Piece {
+    public static class PieceImplement extends Piece {
 
         public PieceImplement(boolean isWhite, boolean isFinite, List<Move> moves) {
             super(isWhite, isFinite, moves);
