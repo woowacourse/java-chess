@@ -1,6 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
+import chessgame.domain.point.Point;
 
 public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
@@ -15,8 +16,12 @@ public class Rook implements Piece {
         return new Rook(team.calculate(ORIGINAL_NAME));
     }
 
-    @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean isMovable(Point source, Point target) {
+        return source.isHorizontal(target) || source.isVertical(target);
     }
 }

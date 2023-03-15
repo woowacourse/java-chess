@@ -10,9 +10,13 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
-    private final int rank;
+    private final int value;
 
-    Rank(int rank) {
-        this.rank = rank;
+    Rank(int value) {
+        this.value = value;
+    }
+
+    public int distance(Rank target) {
+        return this.value - target.value;
     }
 }

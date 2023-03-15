@@ -1,6 +1,7 @@
 package chessgame.domain.piece;
 
 import chessgame.domain.Team;
+import chessgame.domain.point.Point;
 
 public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
@@ -18,5 +19,10 @@ public class Bishop implements Piece {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean isMovable(Point source, Point target) {
+        return source.isDiagonal(target);
     }
 }
