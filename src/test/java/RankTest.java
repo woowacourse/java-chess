@@ -29,7 +29,7 @@ public class RankTest {
         assertThat(sourceRank.calculateIncrement(targetRank)).isEqualTo(3);
     }
 
-    @DisplayName("source rank의 오른쪽 값을 반환한다.")
+    @DisplayName("source rank의 위쪽 값을 반환한다.")
     @Test
     void shouldReturnNextRankWhenRequest() {
         assertThat(Rank.ONE.getNext()).isEqualTo(Rank.TWO);
@@ -39,6 +39,20 @@ public class RankTest {
     @Test
     void shouldThrowExceptionWhenLastRankRequestGetNext() {
         assertThatThrownBy(() -> Rank.EIGHT.getNext())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("인덱스를 벗어난 움직임입니다.");
+    }
+
+    @DisplayName("source rank의 아래 값을 반환한다.")
+    @Test
+    void shouldReturnPreviousRankWhenRequest() {
+        assertThat(Rank.SIX.getPrevious()).isEqualTo(Rank.FIVE);
+    }
+
+    @DisplayName("rank가 1에서 이전 위치를 가져오려고 하면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenFirstRankRequestGetPrevious() {
+        assertThatThrownBy(() -> Rank.ONE.getPrevious())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인덱스를 벗어난 움직임입니다.");
     }
