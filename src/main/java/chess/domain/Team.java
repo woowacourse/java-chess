@@ -2,7 +2,7 @@ package chess.domain;
 
 public enum Team {
 
-	BLACK, WHITE, NULL;
+	BLACK, WHITE;
 
 	public boolean isBlack(){
 		return this.equals(BLACK);

@@ -6,8 +6,8 @@ import chess.domain.Team;
 
 public class Pawn implements Piece {
 
-	private final Movement movement;
 	private final Team team;
+	private final Movement movement;
 	private boolean hasMoved;
 
 	public Pawn(final Team team) {

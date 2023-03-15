@@ -35,9 +35,9 @@
 
 ### Piece
 
-- [ ] 말은 Pawn, Bishop, Knight, Rook, Queen, King 으로 구성
-- [ ] 말은 흑 또는 백
-- [ ] 좌표를 입력받아서 움직일 수 있는지 확인
+- [X] 말은 Pawn, Bishop, Knight, Rook, Queen, King 으로 구성
+- [X] 말은 흑 또는 백
+- [X] 좌표를 입력받아서 움직일 수 있는지 확인
 
 ### Movement
 
