@@ -1,9 +1,9 @@
 package chess.cache;
 
-import chess.Color;
-import chess.Piece;
-import chess.PieceType;
-import chess.Position;
+import chess.domain.Color;
+import chess.domain.Piece;
+import chess.domain.PieceType;
+import chess.domain.Position;
 
 import java.util.HashMap;
 import java.util.Map;
