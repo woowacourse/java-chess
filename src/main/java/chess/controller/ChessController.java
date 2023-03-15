@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.Rank;
 import chess.domain.chessboard.Square;
 import chess.util.Retryable;
 import chess.view.InputView;
@@ -29,21 +28,23 @@ public final class ChessController {
 
     private List<List<String>> getChessBoardMark(final ChessBoard chessBoard) {
         List<List<String>> currentChessBoardMark = new ArrayList<>();
-        for (Rank rank : chessBoard.getRanks()) {
-            List<String> currentRank = getRankMark(rank);
-            currentChessBoardMark.add(currentRank);
+
+        List<Square> squares = chessBoard.getSquares();
+
+        for (int rank = 0; rank < squares.size(); rank += 8) {
+            currentChessBoardMark.add(getRankMark(squares.subList(rank, rank+8)));
+
         }
 
         Collections.reverse(currentChessBoardMark);
         return currentChessBoardMark;
     }
 
-    private static List<String> getRankMark(final Rank rank) {
+    private static List<String> getRankMark(final List<Square> rank) {
         List<String> currentRank = new ArrayList<>();
-        for (Square square : rank.getSquares()) {
+        for (Square square : rank) {
             currentRank.add(SquareMark.getMarkBySquare(square));
         }
         return currentRank;
     }
-
 }

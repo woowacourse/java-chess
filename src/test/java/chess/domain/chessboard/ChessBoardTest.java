@@ -12,19 +12,16 @@ import org.junit.jupiter.api.Test;
 class ChessBoardTest {
 
     @Test
-    void 체스판은_8줄의_랭크를_가진다() {
+    void 체스판은_64개의_스퀘어를_가진다() {
         assertThat(new ChessBoard())
-                .extracting("ranks")
-                .asInstanceOf(InstanceOfAssertFactories.list(Rank.class))
-                .hasSize(8);
+                .extracting("squares")
+                .asInstanceOf(InstanceOfAssertFactories.list(Square.class))
+                .hasSize(64);
     }
 
     @Test
     void 체스판은_각_기물을_규칙에_맞게_배치한다() {
         assertThat(new ChessBoard())
-                .extracting("ranks")
-                .asInstanceOf(InstanceOfAssertFactories.list(Rank.class))
-                .first()
                 .extracting("squares")
                 .asInstanceOf(InstanceOfAssertFactories.list(Square.class))
                 .first()
