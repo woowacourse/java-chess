@@ -11,5 +11,9 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public String getName() {
+        return type.getSymbol(side);
+    }
+
     protected abstract void validate(final Type type, final Side side);
 }
