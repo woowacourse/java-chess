@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.board.RowPieces;
 import chess.piece.Piece;
+import chess.piece.Team;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,11 +39,11 @@ public class OutputView {
     
     private static String parsePieceToDisplay(Piece piece) {
         String symbol = String.valueOf(piece.symbol());
-        if (piece.isWhiteTeam()) {
+        if (piece.isSameTeam(Team.WHITE)) {
             return symbol.toUpperCase();
         }
         
-        if (piece.isBlackTeam()) {
+        if (piece.isSameTeam(Team.BLACK)) {
             return symbol;
         }
         

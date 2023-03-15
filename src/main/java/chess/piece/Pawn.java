@@ -23,22 +23,26 @@ public class Pawn extends Piece {
     }
     
     private boolean isPawnMovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {
-        System.out.println(isOutOfMovementRadius(subtractedRow, subtractedColumn));
-        if (isOutOfMovementRadius(subtractedRow, subtractedColumn)) {
+        if (isOutOfMovementRadius(targetPiece,subtractedRow, subtractedColumn)) {
             return false;
         }
         
         return isDifferentTeam(targetPiece);
     }
     
-    private boolean isOutOfMovementRadius(int subtractedRow, int subtractedColumn) {
+    private boolean isOutOfMovementRadius(Piece targetPiece, int subtractedRow, int subtractedColumn) {
         // 1. 가로 방향 방지
         // 2. 뒤로 가기 방지
         // 3. 대각선 방지
         // 3. 첫 이동 시, 두 칸 앞으로 허용
-        if (isWhiteTeam()) {
-            
-            if (isWhitePawnStraightDirection(subtractedRow, subtractedColumn)) {
+        if (isSameTeam(Team.WHITE)) {
+            if (isWhitePawnTwoStraightDirection(subtractedRow,subtractedColumn)){
+                if (coordinate().isWhitePawnStartRow() && targetPiece.isSameTeam(Team.EMPTY)){
+                    return false;
+                }
+                return true;
+            }
+            if (isWhitePawnOneStraightDirection(subtractedRow, subtractedColumn)) {
                 return false;
             }
             
@@ -48,8 +52,14 @@ public class Pawn extends Piece {
             return true;
         }
         
-        if (isBlackTeam()) {
-            if (isBlackPawnStraightDirection(subtractedRow, subtractedColumn)) {
+        if (isSameTeam(Team.BLACK)) {
+            if (isBlackPawnTwoStraightDirection(subtractedRow,subtractedColumn)) {
+                if (coordinate().isBlackPawnStartRow() && targetPiece.isSameTeam(Team.EMPTY)) {
+                    return false;
+                }
+                return true;
+            }
+            if (isBlackPawnOneStraightDirection(subtractedRow, subtractedColumn)) {
                 return false;
             }
             
@@ -61,11 +71,11 @@ public class Pawn extends Piece {
         return true;
     }
     
-    private boolean isWhitePawnStraightDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isWhitePawnOneStraightDirection(int subtractedRow, int subtractedColumn) {
         return subtractedRow == 1 && subtractedColumn == 0;
     }
     
-    private boolean isBlackPawnStraightDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isBlackPawnOneStraightDirection(int subtractedRow, int subtractedColumn) {
         return subtractedRow == -1 && subtractedColumn == 0;
     }
     
@@ -75,5 +85,13 @@ public class Pawn extends Piece {
     
     private boolean isBlackPawnDiagonalDirection(int subtractedRow, int subtractedColumn) {
         return subtractedRow == -1 && Math.abs(subtractedColumn) == 1;
+    }
+    
+    private boolean isWhitePawnTwoStraightDirection(int subtractedRow, int subtractedColumn) {
+        return subtractedRow == 2 && subtractedColumn == 0;
+    }
+    
+    private boolean isBlackPawnTwoStraightDirection(int subtractedRow, int subtractedColumn) {
+        return subtractedRow == -2 && subtractedColumn == 0;
     }
 }

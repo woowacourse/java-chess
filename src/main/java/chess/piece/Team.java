@@ -38,11 +38,7 @@ public enum Team {
         return rowNum < MIN_ROW_NUM || rowNum > MAX_ROW_NUM;
     }
     
-    public boolean isWhiteTeam() {
-        return this == WHITE;
-    }
-    
-    public boolean isBlackTeam() {
-        return this == BLACK;
+    public boolean isSameTeam(Team otherTeam) {
+        return this == otherTeam;
     }
 }

@@ -22,12 +22,8 @@ public abstract class Piece {
     
     public abstract boolean isMovable(Piece targetPiece);
     
-    public boolean isWhiteTeam() {
-        return team.isWhiteTeam();
-    }
-    
-    public boolean isBlackTeam() {
-        return team.isBlackTeam();
+    public boolean isSameTeam(Team otherTeam) {
+        return this.team.isSameTeam(otherTeam);
     }
     
     protected int calculateRowOrColumnDistance(Piece targetPiece, int rowOrColumnIndex) {

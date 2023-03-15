@@ -31,6 +31,14 @@ public class Row {
         return this.row - targetRow.row;
     }
     
+    public boolean isBlackPawnStartRow() {
+        return row == 2;
+    }
+    
+    public boolean isWhitePawnStartRow() {
+        return row == 7;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

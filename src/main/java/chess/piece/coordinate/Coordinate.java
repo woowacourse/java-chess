@@ -26,6 +26,14 @@ public class Coordinate {
         return List.of(rowDistance, columnDistance);
     }
     
+    public boolean isBlackPawnStartRow() {
+        return row.isBlackPawnStartRow();
+    }
+    
+    public boolean isWhitePawnStartRow() {
+        return row.isWhitePawnStartRow();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
