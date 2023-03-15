@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 public final class Pawn extends Piece {
@@ -15,15 +16,15 @@ public final class Pawn extends Piece {
     }
 
     public List<Position> getPath(Position sourcePosition, Position targetPosition) {
-        Movement movement = targetPosition.calculateIncrement(sourcePosition);
-//        if (isMovable(movement)) {
-//
-//        }
-        throw new IllegalArgumentException("Pawn이 움직일 수 없는 위치입니다.");
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+        if (movement.isOneStep()) {
+            return Collections.emptyList();
+        }
+        return sourcePosition.getPath(targetPosition);
     }
 
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
-        Movement movement = sourcePosition.calculateIncrement(targetPosition);
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
         if (isWhite()) {
             return isMovableForWhite(targetPiece, movement, sourcePosition);
         }

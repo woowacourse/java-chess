@@ -3,17 +3,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
-
-//    @DisplayName("White 진영의 Pawn이 위로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
-//    @Test
-//    void shouldHasNoPositionWhenGetPath() {
-//        Pawn pawn = Pawn.createOfWhite();
-//        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("b", "3"));
-//        assertThat(path).hasSize(0);
-//    }
 
     @DisplayName("White 진영인 경우 - target position이 source position보다 rank가 1높고, target position이 비어있으면 true를 반환한다.")
     @Test
@@ -113,5 +107,69 @@ public class PawnTest {
                 Position.of(sourceFile, sourceRank),
                 Position.of(targetFile, targetRank));
         assertThat(movable).isEqualTo(result);
+    }
+
+    @DisplayName("White 진영의 Pawn이 위로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldHasNoPositionWhenGetPathWhitePawn() {
+        Pawn pawn = Pawn.createOfWhite();
+        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("b", "3"));
+        assertThat(path).hasSize(0);
+    }
+
+    @DisplayName("White 진영의 Pawn이 위로 두 칸 이동할 때 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenWhitePawnMoveTwoSteps() {
+        Pawn pawn = Pawn.createOfWhite();
+        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("b", "4"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "3"));
+    }
+
+    @DisplayName("White 진영의 Pawn이 오른쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldReturnPathWhenWhitePawnMoveRightUpward() {
+        Pawn pawn = Pawn.createOfWhite();
+        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("c", "3"));
+        assertThat(path).hasSize(0);
+    }
+
+    @DisplayName("White 진영의 Pawn이 왼쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldReturnPathWhenWhitePawnMoveLeftUpward() {
+        Pawn pawn = Pawn.createOfWhite();
+        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("c", "1"));
+        assertThat(path).hasSize(0);
+    }
+
+    @DisplayName("Black 진영의 Pawn이 아래로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldHasNoPositionWhenGetPathBlackPawn() {
+        Pawn pawn = Pawn.createOfBlack();
+        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("b", "6"));
+        assertThat(path).hasSize(0);
+    }
+
+    @DisplayName("Black 진영의 Pawn이 아래로 두 칸 이동할 때 경로를 반환한다.")
+    @Test
+    void shouldReturnPathWhenBlackPawnMoveTwoSteps() {
+        Pawn pawn = Pawn.createOfBlack();
+        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("b", "5"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "6"));
+    }
+
+    @DisplayName("Black 진영의 Pawn이 오른쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldReturnPathWhenBLackPawnMoveRightDownward() {
+        Pawn pawn = Pawn.createOfBlack();
+        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("c", "6"));
+        assertThat(path).hasSize(0);
+    }
+
+    @DisplayName("Black 진영의 Pawn이 왼쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
+    @Test
+    void shouldReturnPathWhenBlackPawnMoveLeftDownward() {
+        Pawn pawn = Pawn.createOfBlack();
+        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("a", "6"));
+        assertThat(path).hasSize(0);
     }
 }
