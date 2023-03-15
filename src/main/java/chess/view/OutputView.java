@@ -55,4 +55,8 @@ public class OutputView {
         }
         return result;
     }
+
+    public void printException(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

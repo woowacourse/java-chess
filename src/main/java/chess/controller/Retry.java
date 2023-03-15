@@ -1,9 +1,8 @@
-package chess.domain.controller;
+package chess.controller;
 
 public final class Retry {
 
     public static final String RETRY_FAIL_MESSAGE = "재입력 횟수를 초과하여 게임을 종료합니다.";
-    public static final String EXCEPTION_MESSAGE = "재입력 횟수를 초과하였습니다.";
 
     private final int count;
 
