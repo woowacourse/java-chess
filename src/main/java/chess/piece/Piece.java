@@ -11,4 +11,8 @@ public abstract class Piece {
         this.color = color;
         this.position = position;
     }
+
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
 }
