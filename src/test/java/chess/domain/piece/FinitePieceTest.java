@@ -27,7 +27,7 @@ public class FinitePieceTest extends AbstractTestFixture {
         Move move2 = createMove(RIGHT, RIGHT, UP);
 
         Piece piece = createPiece(move, move2);
-        assertThat(piece.hasMove(move)).isTrue();
+        assertThat(piece.canMove(move)).isTrue();
     }
 
     @DisplayName("가능하지 않은 수인지 판단한다(기물:유한, 수:무한)")
@@ -36,7 +36,7 @@ public class FinitePieceTest extends AbstractTestFixture {
         Move move = createMove(UP, RIGHT);
 
         Piece piece = createPiece(move);
-        assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
+        assertThat(piece.canMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
     }
 
     @DisplayName("가능하지 않은 수인지 판단한다")
@@ -45,7 +45,7 @@ public class FinitePieceTest extends AbstractTestFixture {
         Move move = createMove(UP, RIGHT);
 
         Piece piece = createPiece(move);
-        assertThat(piece.hasMove(createMove(LEFT))).isFalse();
+        assertThat(piece.canMove(createMove(LEFT))).isFalse();
     }
 
     public Piece createPiece(Move... moves) {
