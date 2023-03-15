@@ -5,7 +5,6 @@ import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
-import chess.model.piece.PieceType;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;

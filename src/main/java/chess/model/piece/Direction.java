@@ -46,8 +46,12 @@ public enum Direction {
         );
     }
 
-    public static List<Direction> pawn() {
+    public static List<Direction> whitePawn() {
         return List.of(NORTH);
+    }
+
+    public static List<Direction> blackPawn() {
+        return List.of(SOUTH);
     }
 
     public static List<Direction> king() {

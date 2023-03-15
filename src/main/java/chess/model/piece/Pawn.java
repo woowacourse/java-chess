@@ -6,14 +6,24 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final List<Direction> directions = Direction.pawn();
-
+    private static final List<Direction> white = Direction.whitePawn();
+    private static final List<Direction> black = Direction.blackPawn();
+    
     public Pawn(final Color color) {
         super(color, PieceType.PAWN);
     }
 
     @Override
     boolean movable(final Distance distance) {
-        return false;
+        if (PieceColor.WHITE.equals(this.color)) {
+            return isMovableByColor(white, distance);
+        }
+
+        return isMovableByColor(black, distance);
+    }
+
+    private boolean isMovableByColor(final List<Direction> target, final Distance distance) {
+        return target.stream()
+                .anyMatch(direction -> direction.match(distance.rank(), distance.file()));
     }
 }

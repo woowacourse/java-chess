@@ -14,6 +14,7 @@ public class King extends Piece {
 
     @Override
     boolean movable(final Distance distance) {
-        return false;
+        return directions.stream()
+                .anyMatch(direction -> direction.match(distance.rank(), distance.file()));
     }
 }

@@ -1,0 +1,30 @@
+package chess.model.piece;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.model.position.Distance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+class QueenTest {
+
+    private static final Queen WHITE_QUEEN = new Queen(PieceColor.BLACK);
+
+    @ParameterizedTest(name = "QUEEN이 ({0}, {1})로 이동할 때 movable 결과가 {2}로 나온다.")
+    @CsvSource({"0,3,true", "3,0,true", "-4,-4,true", "6,-6,true", "3,3,true", "-3,3,true"})
+    void queen_givenRankAndFile_thenReturnIfMovable(
+            final int rank,
+            final int file,
+            final boolean result
+    ) {
+        // given
+        final Queen queen = WHITE_QUEEN;
+        final Distance distance = new Distance(rank, file);
+
+        // when
+        final boolean movable = queen.movable(distance);
+
+        // then
+        assertThat(movable).isEqualTo(result);
+    }
+}

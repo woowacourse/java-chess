@@ -1,5 +1,7 @@
 package chess.model.position;
 
+import chess.model.piece.Direction;
+
 public class Distance {
 
     private static final int FILE_MAX_SIZE = 8;
@@ -14,5 +16,13 @@ public class Distance {
 
     public int convertToIndex() {
         return (file * FILE_MAX_SIZE) + rank;
+    }
+
+    public int rank() {
+        return rank;
+    }
+
+    public int file() {
+        return file;
     }
 }
