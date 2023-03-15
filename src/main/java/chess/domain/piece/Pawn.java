@@ -14,36 +14,69 @@ public final class Pawn extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        Set<Position> path = new HashSet<>();
+        Set<Position> movablePath = new HashSet<>();
         if (color.isBlack()) {
-            path.add(source.getDownStraight());
-            path.add(source.getLeftDownDiagonal());
-            path.add(source.getRightDownDiagonal());
-            if (source.isBlackPawnInitRank()) {
-                path.add(source.getDownStraight().getDownStraight());
-            }
-            if (!path.contains(target)) {
-                throw new IllegalArgumentException();
-            }
-            path = Set.of(target);
+            validateIsMovableForBlack(source, target, movablePath);
+            return generateTargetPathForBlack(source, target);
         }
         if (color.isWhite()) {
-            path.add(source.getUpStraight());
-            path.add(source.getLeftUpDiagonal());
-            path.add(source.getRightUpDiagonal());
-            if (source.isWhitePawnInitRank()) {
-                path.add(source.getUpStraight().getUpStraight());
-            }
-            if (!path.contains(target)) {
-                throw new IllegalArgumentException();
-            }
-            path = Set.of(target);
+            validateIsMovableForWhite(source, target, movablePath);
+            return generateTargetPathForWhite(source, target);
         }
-        return path;
+        throw new IllegalArgumentException();
+    }
+
+    private Set<Position> generateTargetPathForBlack(final Position source, final Position target) {
+        Set<Position> targetPath = new HashSet<>();
+        if (target == source.getDownStraight().getDownStraight()) {
+            targetPath.add(source.getDownStraight());
+            targetPath.add(source.getDownStraight().getDownStraight());
+        }
+        targetPath.add(target);
+        return targetPath;
+    }
+
+    private Set<Position> generateTargetPathForWhite(final Position source, final Position target) {
+        Set<Position> targetPath = new HashSet<>();
+        if (target == source.getUpStraight().getUpStraight()) {
+            targetPath.add(source.getUpStraight());
+            targetPath.add(source.getUpStraight().getUpStraight());
+        }
+        targetPath.add(target);
+        return targetPath;
+    }
+
+    private void validateIsMovableForWhite(final Position source, final Position target, final Set<Position> movablePath) {
+        movablePath.add(source.getUpStraight());
+        movablePath.add(source.getLeftUpDiagonal());
+        movablePath.add(source.getRightUpDiagonal());
+        if (source.isWhitePawnInitRank()) {
+            movablePath.add(source.getUpStraight().getUpStraight());
+        }
+        if (!movablePath.contains(target)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateIsMovableForBlack(final Position source, final Position target, final Set<Position> movablePath) {
+        movablePath.add(source.getDownStraight());
+        movablePath.add(source.getLeftDownDiagonal());
+        movablePath.add(source.getRightDownDiagonal());
+        if (source.isBlackPawnInitRank()) {
+            movablePath.add(source.getDownStraight().getDownStraight());
+        }
+        if (!movablePath.contains(target)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
-    public boolean canMove(final Map<Position, Boolean> isExists, final Position source, final Position target) {
-        return false;
+    public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
+        if (source.isFileEquals(target)) {
+            return isEmptyPosition.keySet()
+                    .stream()
+                    .allMatch(isEmptyPosition::get);
+        }
+        return !isEmptyPosition.get(target);
     }
 }

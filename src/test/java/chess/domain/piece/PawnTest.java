@@ -5,6 +5,8 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,6 +20,10 @@ class PawnTest {
     public static final Position B7 = new Position(File.B, Rank.SEVEN);
     public static final Position B3 = new Position(File.B, Rank.THREE);
     public static final Position E4 = new Position(File.E, Rank.FOUR);
+    public static final Position C4 = new Position(File.C, Rank.FOUR);
+    public static final Position C5 = new Position(File.C, Rank.FIVE);
+    public static final Position C6 = new Position(File.C, Rank.SIX);
+    public static final Position D5 = new Position(File.D, Rank.FIVE);
 
     @Test
     void computePath_Black() {
@@ -81,5 +87,51 @@ class PawnTest {
 
     @Test
     void canMove() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        final var source = C4;
+        final var target = D5;
+
+        assertThat(pawn.canMove(Map.of(target, false), source, target)).isTrue();
+    }
+
+    @Test
+    void canMove3() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        final var source = C4;
+        final var target = C5;
+
+        assertThat(pawn.canMove(Map.of(target, true), source, target)).isTrue();
+    }
+
+    @Test
+    void canMove2() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        final var source = C4;
+        final var target = D5;
+
+        assertThat(pawn.canMove(Map.of(target, true), source, target)).isFalse();
+    }
+
+    @Test
+    void canMove4() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        final var source = C4;
+        final var target = D5;
+
+        assertThat(pawn.canMove(Map.of(target, false), source, target)).isTrue();
+    }
+
+    @Test
+    void canMove5() {
+        final var pawn = new Pawn(Color.WHITE);
+
+        final var source = C4;
+        final var target = C6;
+
+        assertThat(pawn.canMove(Map.of(C5, true, C6, false), source, target)).isFalse();
     }
 }

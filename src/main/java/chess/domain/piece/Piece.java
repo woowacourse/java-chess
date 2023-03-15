@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,7 +22,13 @@ public abstract class Piece {
         }
     }
 
-    public abstract boolean canMove(Map<Position, Boolean> isExists, Position source, Position target);
+    public boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
+        HashMap<Position, Boolean> defensiveCopied = new HashMap<>(isEmptyPosition);
+        defensiveCopied.remove(target);
+        return defensiveCopied.keySet()
+                .stream()
+                .allMatch(defensiveCopied::get);
+    }
 
     public boolean isEmpty() {
         return false;

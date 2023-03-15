@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public final class Queen extends Piece {
@@ -64,11 +63,6 @@ public final class Queen extends Piece {
         positions.add(target);
         positions.remove(source);
         return positions;
-    }
-
-    @Override
-    public boolean canMove(final Map<Position, Boolean> isExists, final Position source, final Position target) {
-        return false;
     }
 
     private Set<Position> getRankPath(final Position source, final Position target) {

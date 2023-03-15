@@ -17,7 +17,7 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public boolean canMove(final Map<Position, Boolean> isExists, final Position source, final Position target) {
+    public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
         throw new UnsupportedOperationException();
     }
 
