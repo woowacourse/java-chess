@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
@@ -13,7 +15,7 @@ class PositionTest {
         Position sourcePosition = Position.of("a", "1");
         Position targetPosition = Position.of("d", "6");
 
-        Movement increment = sourcePosition.calculateIncrement(targetPosition);
+        Movement increment = sourcePosition.calculateMovement(targetPosition);
         assertThat(increment).isEqualTo(new Movement(3, 5));
     }
 
@@ -23,5 +25,17 @@ class PositionTest {
     void shouldReturnIsEqualRankBetweenSourcePositionAndParameterRankWhenInput(String sourceRank, Rank targetRank, boolean result) {
         Position position = Position.of("a", sourceRank);
         assertThat(position.hasRankOf(targetRank)).isEqualTo(result);
+    }
+
+    @DisplayName("source position부터 target position까지 각 기물이 이동할 수 있는 경로에 따라 알맞은 List<position>을 반환한다.")
+    @Test
+    void shouldReturnPathToTargetPositionWhenMovePerpendicular() {
+        Position sourcePosition = Position.of("c", "2");
+        Position targetPosition = Position.of("c", "5");
+
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+
+        List<Position> path = sourcePosition.getPath(targetPosition, movement);
+        assertThat(path).containsExactly(Position.of("c", "3"), Position.of("c", "4"));
     }
 }
