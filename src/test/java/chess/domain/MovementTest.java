@@ -18,7 +18,7 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement = createMovement(RIGHT, UP, UP);
         Movement movement2 = createMovement(RIGHT, DOWN, DOWN);
 
-        assertThat(movement2.isSameWith(movement.flipHorizontal())).isTrue();
+        assertThat(movement.flipHorizontal()).isEqualTo(movement2);
     }
 
     @DisplayName("좌우 대칭 할 수 있다.")
@@ -27,7 +27,7 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement = createMovement(RIGHT, RIGHT, UP);
         Movement movement2 = createMovement(LEFT, LEFT, UP);
 
-        assertThat(movement2.isSameWith(movement.flipVertical())).isTrue();
+        assertThat(movement.flipVertical()).isEqualTo(movement2);
     }
 
     @DisplayName("기울기가 같은지 알 수 있다")
@@ -70,7 +70,7 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement1 = createMovement(RIGHT, UP, RIGHT);
         Movement movement2 = createMovement(RIGHT, RIGHT, UP);
 
-        assertThat(movement1.isSameWith(movement2)).isTrue();
+        assertThat(movement1).isEqualTo(movement2);
     }
 
     @DisplayName("다른 움직임인지 확인한다")
@@ -79,7 +79,7 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement1 = createMovement(RIGHT, UP);
         Movement movement2 = createMovement(RIGHT, RIGHT, UP, UP);
 
-        assertThat(movement1.isSameWith(movement2)).isFalse();
+        assertThat(movement1).isNotEqualTo(movement2);
     }
 
     @DisplayName("목적지를 찾을 수 있다")
@@ -97,7 +97,6 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement = createMovement(RIGHT, UP, RIGHT, UP, RIGHT, UP);
         Movement unitMovement = movement.getUnitMovement();
 
-        assertThat(createMovement(RIGHT, UP).isSameWith(unitMovement))
-                .isTrue();
+        assertThat(createMovement(RIGHT, UP)).isEqualTo(unitMovement);
     }
 }

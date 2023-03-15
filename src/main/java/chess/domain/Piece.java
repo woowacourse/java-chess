@@ -28,8 +28,8 @@ public abstract class Piece {
 
     private boolean compareMovement(Movement pieceMovement, Movement movement) {
         if (isFinite) {
-            return pieceMovement.isSameWith(movement);
+            return pieceMovement.equals(movement);
         }
-        return pieceMovement.isSameWith(movement.getUnitMovement());
+        return pieceMovement.equals(movement.getUnitMovement());
     }
 }

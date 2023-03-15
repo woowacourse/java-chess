@@ -2,7 +2,9 @@ package chess.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -13,7 +15,9 @@ public class Movement {
 
     public Movement(List<Direction> directions) {
         validate(directions);
-        this.directions = new ArrayList<>(directions);
+        this.directions = directions.stream()
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.toList());
     }
 
     private void validate(List<Direction> directions) {
@@ -58,13 +62,6 @@ public class Movement {
         return dx1 * dy2 == dx2 * dy1;
     }
 
-    public boolean isSameWith(Movement movement) {
-        if (directions.size() != movement.directions.size()) {
-            return false;
-        }
-        return directions.containsAll(movement.directions);
-    }
-
     public Movement flipHorizontal() {
         return flip(Direction::flipHorizontal);
     }
@@ -76,7 +73,7 @@ public class Movement {
     private Movement flip(Function<Direction, Direction> directionFlipper) {
         List<Direction> directions = this.directions.stream()
                 .map(directionFlipper)
-                .collect(Collectors.toUnmodifiableList()); // 왜 unmodifiableList?
+                .collect(Collectors.toList());
         return new Movement(directions);
     }
 
@@ -135,5 +132,24 @@ public class Movement {
             result.add(direction);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Movement movement = (Movement) o;
+
+        return Objects.equals(directions, movement.directions);
+    }
+
+    @Override
+    public int hashCode() {
+        return directions != null ? directions.hashCode() : 0;
     }
 }
