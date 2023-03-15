@@ -1,7 +1,7 @@
 package chess.dto;
 
 import chess.domain.Position;
-import chess.domain.Square;
+import chess.domain.piece.Piece;
 import chess.view.SquareMapper;
 
 public class SquareResponse {
@@ -15,9 +15,8 @@ public class SquareResponse {
         this.y = y;
     }
 
-    public static SquareResponse of(Square square) {
-        String symbol = SquareMapper.map(square.getTeam(), square.getRole());
-        Position position = square.getPosition();
+    public static SquareResponse of(Position position, Piece piece) {
+        String symbol = SquareMapper.map(piece.getTeam(), piece.getRole());
         return new SquareResponse(symbol, position.getX(), position.getY());
     }
 

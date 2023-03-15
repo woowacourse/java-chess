@@ -8,12 +8,14 @@ import static chess.domain.Role.QUEEN;
 import static chess.domain.Role.ROOK;
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
-import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.IntFunction;
-import java.util.stream.IntStream;
 
 public class BoardFactory {
     private static final List<Role> CHESSMEN = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
@@ -23,22 +25,24 @@ public class BoardFactory {
 
     }
 
-    public static List<Square> create() {
-        List<Square> squares = new ArrayList<>();
-        squares.addAll(generateRow(index -> new Piece(CHESSMEN.get(index), WHITE), 0));
-        squares.addAll(generateRow(ignore -> new Piece(PAWN, WHITE), 1));
-        squares.addAll(generateRow(ignore -> Piece.EMPTY_PIECE, 2));
-        squares.addAll(generateRow(ignore -> Piece.EMPTY_PIECE, 3));
-        squares.addAll(generateRow(ignore -> Piece.EMPTY_PIECE, 4));
-        squares.addAll(generateRow(ignore -> Piece.EMPTY_PIECE, 5));
-        squares.addAll(generateRow(ignore -> new Piece(PAWN, BLACK), 6));
-        squares.addAll(generateRow(index -> new Piece(CHESSMEN.get(index), BLACK), 7));
+    public static Map<Position, Piece> create() {
+        Map<Position, Piece> squares = new HashMap<>();
+        squares.putAll(generateRow(index -> PieceFactory.of(CHESSMEN.get(index), WHITE), 0));
+        squares.putAll(generateRow(ignore -> PieceFactory.of(PAWN, WHITE), 1));
+        squares.putAll(generateRow(ignore -> Empty.INSTANCE, 2));
+        squares.putAll(generateRow(ignore -> Empty.INSTANCE, 3));
+        squares.putAll(generateRow(ignore -> Empty.INSTANCE, 4));
+        squares.putAll(generateRow(ignore -> Empty.INSTANCE, 5));
+        squares.putAll(generateRow(ignore -> PieceFactory.of(PAWN, BLACK), 6));
+        squares.putAll(generateRow(index -> PieceFactory.of(CHESSMEN.get(index), BLACK), 7));
         return squares;
     }
 
-    private static List<Square> generateRow(IntFunction<Piece> function, int y) {
-        return IntStream.range(0, BOARD_ROW_SIZE)
-                .mapToObj(value -> new Square(function.apply(value), Position.of(value, y)))
-                .collect(toList());
+    private static Map<Position, Piece> generateRow(IntFunction<Piece> function, int y) {
+        Map<Position, Piece> squares = new HashMap<>();
+        for (int i = 0; i < BOARD_ROW_SIZE; i++) {
+            squares.put(Position.of(i, y), function.apply(i));
+        }
+        return squares;
     }
 }

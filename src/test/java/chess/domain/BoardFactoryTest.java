@@ -1,8 +1,16 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.List;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +20,10 @@ class BoardFactoryTest {
     @DisplayName("체스판에서 빈 칸을 포함한 말들의 개수가 64개다.")
     void create_Success() {
         // given
-        List<Square> squares = BoardFactory.create();
+        Map<Position, Piece> board = BoardFactory.create();
 
         // expect
-        assertThat(squares)
+        assertThat(board)
                 .hasSize(64);
     }
 
@@ -23,48 +31,44 @@ class BoardFactoryTest {
     @DisplayName("체스판에 말들이 정확하게 생성되어야 한다.")
     void create_Correctly() {
         // given
-        List<Square> squares = BoardFactory.create();
+        Map<Position, Piece> squares = BoardFactory.create();
 
-        // expect
-        assertThat(squares)
-                .contains(
-                        new Square(new Piece(Role.ROOK, Team.WHITE), Position.of(0, 0)),
-                        new Square(new Piece(Role.KNIGHT, Team.WHITE), Position.of(1, 0)),
-                        new Square(new Piece(Role.BISHOP, Team.WHITE), Position.of(2, 0)),
-                        new Square(new Piece(Role.QUEEN, Team.WHITE), Position.of(3, 0)),
-                        new Square(new Piece(Role.KING, Team.WHITE), Position.of(4, 0)),
-                        new Square(new Piece(Role.BISHOP, Team.WHITE), Position.of(5, 0)),
-                        new Square(new Piece(Role.KNIGHT, Team.WHITE), Position.of(6, 0)),
-                        new Square(new Piece(Role.ROOK, Team.WHITE), Position.of(7, 0)),
+        assertAll(
+                () -> assertThat(squares).containsEntry(Position.of(0, 0), new Rook(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(1, 0), new Knight(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(2, 0), new Bishop(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(3, 0), new Queen(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(4, 0), new King(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(5, 0), new Bishop(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(6, 0), new Knight(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(7, 0), new Rook(Team.WHITE)),
 
-                        new Square(new Piece(Role.ROOK, Team.BLACK), Position.of(0, 7)),
-                        new Square(new Piece(Role.KNIGHT, Team.BLACK), Position.of(1, 7)),
-                        new Square(new Piece(Role.BISHOP, Team.BLACK), Position.of(2, 7)),
-                        new Square(new Piece(Role.QUEEN, Team.BLACK), Position.of(3, 7)),
-                        new Square(new Piece(Role.KING, Team.BLACK), Position.of(4, 7)),
-                        new Square(new Piece(Role.BISHOP, Team.BLACK), Position.of(5, 7)),
-                        new Square(new Piece(Role.KNIGHT, Team.BLACK), Position.of(6, 7)),
-                        new Square(new Piece(Role.ROOK, Team.BLACK), Position.of(7, 7)),
+                () -> assertThat(squares).containsEntry(Position.of(0, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(1, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(2, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(3, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(4, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(5, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(6, 1), new Pawn(Team.WHITE)),
+                () -> assertThat(squares).containsEntry(Position.of(7, 1), new Pawn(Team.WHITE)),
 
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(0, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(1, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(2, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(3, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(4, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(5, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(6, 1)),
-                        new Square(new Piece(Role.PAWN, Team.WHITE), Position.of(7, 1)),
+                () -> assertThat(squares).containsEntry(Position.of(0, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(1, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(2, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(3, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(4, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(5, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(6, 6), new Pawn(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(7, 6), new Pawn(Team.BLACK)),
 
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(0, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(1, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(2, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(3, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(4, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(5, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(6, 6)),
-                        new Square(new Piece(Role.PAWN, Team.BLACK), Position.of(7, 6))
-                );
+                () -> assertThat(squares).containsEntry(Position.of(0, 7), new Rook(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(1, 7), new Knight(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(2, 7), new Bishop(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(3, 7), new Queen(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(4, 7), new King(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(5, 7), new Bishop(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(6, 7), new Knight(Team.BLACK)),
+                () -> assertThat(squares).containsEntry(Position.of(7, 7), new Rook(Team.BLACK))
+        );
     }
-
-
 }
