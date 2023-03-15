@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,5 +32,31 @@ class PositionTest {
         Assertions.assertThatThrownBy(() -> Position.of(x, y))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 잘못된 위치 값 입니다.");
+    }
+
+    @Test
+    @DisplayName("거리가 정확히 계산되어야 한다.")
+    void getDistanceTo_Success() {
+        // given
+        Position source = Position.of(4, 4);
+        Position target = Position.of(5, 5);
+
+        // expect
+        assertThat(source.getDistanceTo(target))
+                .isEqualTo(1);
+    }
+
+    @Test
+    void getRouteBetweenSourceAndTargetPosition() {
+        // given
+        Position source = Position.of(3, 3);
+        Position target = Position.of(6, 0);
+
+        // when
+        List<Position> routes = source.getBetweenPositions(target);
+
+        // then
+        assertThat(routes)
+                .containsExactly(Position.of(4, 2), Position.of(5, 1));
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Position;
 import chess.domain.Role;
 import chess.domain.Team;
 
@@ -8,5 +9,10 @@ public class Empty extends Piece {
 
     private Empty() {
         super(Role.EMPTY, Team.EMPTY);
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target) {
+        return false;
     }
 }
