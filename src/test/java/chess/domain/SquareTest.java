@@ -32,4 +32,56 @@ class SquareTest {
         // expected
         assertThat(square).isSameAs(sameSquare);
     }
+
+    @Test
+    @DisplayName("대상 Square가 직선 위치인지 확인한다.")
+    void isStraight() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.ONE);
+        Square targetSquare1 = Square.of(File.A, Rank.EIGHT);
+        Square targetSquare2 = Square.of(File.H, Rank.ONE);
+
+        // expected
+        assertThat(sourceSquare.isStraight(targetSquare1)).isTrue();
+        assertThat(sourceSquare.isStraight(targetSquare2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("대상 Square가 대각선 위치인지 확인한다.")
+    void isDiagonal() {
+        // given
+        Square sourceSquare = Square.of(File.C, Rank.THREE);
+        Square targetSquare1 = Square.of(File.H, Rank.EIGHT);
+        Square targetSquare2 = Square.of(File.A, Rank.FIVE);
+
+        // expected
+        assertThat(sourceSquare.isDiagonal(targetSquare1)).isTrue();
+        assertThat(sourceSquare.isDiagonal(targetSquare2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("대상 Square가 나이트로 갈 수 있는 위치인지 확인한다.")
+    void isKnightMovable() {
+        // given
+        Square sourceSquare = Square.of(File.C, Rank.THREE);
+        Square targetSquare1 = Square.of(File.A, Rank.FOUR);
+        Square targetSquare2 = Square.of(File.D, Rank.FIVE);
+
+        // expected
+        assertThat(sourceSquare.isKnightMovable(targetSquare1)).isTrue();
+        assertThat(sourceSquare.isKnightMovable(targetSquare2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("대상 Square가 같은 File인지 확인한다.")
+    void isSameFile() {
+        // given
+        Square sourceSquare = Square.of(File.A, Rank.ONE);
+        Square targetSquare1 = Square.of(File.A, Rank.TWO);
+        Square targetSquare2 = Square.of(File.A, Rank.EIGHT);
+
+        // expected
+        assertThat(sourceSquare.isSameFile(targetSquare1)).isTrue();
+        assertThat(sourceSquare.isSameFile(targetSquare2)).isTrue();
+    }
 }
