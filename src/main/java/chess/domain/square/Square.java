@@ -6,7 +6,9 @@ import java.util.Map;
 
 public final class Square {
 
-    private static final Map<String, Square> cache = new HashMap<>(64);
+    private static final int TOTAL_SQUARE_COUNT = 8 * 8;
+
+    private static final Map<String, Square> cache = new HashMap<>(TOTAL_SQUARE_COUNT);
     private final File file;
     private final Rank rank;
 
@@ -26,11 +28,19 @@ public final class Square {
         return square;
     }
 
-    public boolean isSameFile(Square other) {
+    public boolean isSameFile(final Square other) {
         return file == other.file;
     }
 
-    public boolean isSameRank(Square other) {
+    public boolean isSameRank(final Square other) {
         return rank == other.rank;
+    }
+
+    public boolean isRankBiggerThan(final Square other) {
+        return rank.isBiggerThan(other.rank);
+    }
+
+    public boolean isRankLowerThan(final Square other) {
+        return rank.isLowerThan(other.rank);
     }
 }
