@@ -3,7 +3,6 @@ package domain.position;
 import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,5 +41,109 @@ class PositionTest {
         assertThat(setPosition)
                 .containsAll(expectedPositions)
                 .hasSize(64);
+    }
+
+    @Test
+    @DisplayName("위쪽에 있는 Position을 반환할 수 있다.")
+    void moveUpTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveUp();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(5, 4));
+    }
+
+    @Test
+    @DisplayName("아래쪽에 있는 Position을 반환할 수 있다.")
+    void moveDownTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveDown();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(3, 4));
+    }
+
+    @Test
+    @DisplayName("왼쪽에 있는 Position을 반환할 수 있다.")
+    void moveLeftTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveLeft();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(4, 3));
+    }
+
+    @Test
+    @DisplayName("오른쪽에 있는 Position을 반환할 수 있다.")
+    void moveRightTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveRight();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(4, 5));
+    }
+
+    @Test
+    @DisplayName("왼쪽위 대각선에 있는 Position을 반환할 수 있다.")
+    void moveUpLeftTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveUpLeft();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(5, 3));
+    }
+
+    @Test
+    @DisplayName("오른쪽위 대각선에 있는 Position을 반환할 수 있다.")
+    void moveUpRightTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveUpRight();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(5, 5));
+    }
+
+    @Test
+    @DisplayName("왼쪽 아래 대각선에 있는 Position을 반환할 수 있다.")
+    void moveDownLeftTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveDownLeft();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(3, 3));
+    }
+
+    @Test
+    @DisplayName("오른쪽 아래 대각선에 있는 Position을 반환할 수 있다.")
+    void moveDownRightTest() {
+        // given
+        Position position = Position.of(4, 4);
+
+        // when
+        Position newPosition = position.moveDownRight();
+
+        // then
+        assertThat(newPosition).isSameAs(Position.of(3, 5));
     }
 }

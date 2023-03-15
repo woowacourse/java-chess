@@ -36,6 +36,38 @@ public final class Position {
         return new ArrayList<>(cache.values());
     }
 
+    public Position moveUp() {
+        return Position.of(row + 1, column);
+    }
+
+    public Position moveDown() {
+        return Position.of(row - 1, column);
+    }
+
+    public Position moveLeft() {
+        return Position.of(row, column - 1);
+    }
+
+    public Position moveRight() {
+        return Position.of(row, column + 1);
+    }
+
+    public Position moveUpLeft() {
+        return Position.of(row + 1, column - 1);
+    }
+
+    public Position moveUpRight() {
+        return Position.of(row + 1, column + 1);
+    }
+
+    public Position moveDownLeft() {
+        return Position.of(row - 1, column - 1);
+    }
+
+    public Position moveDownRight() {
+        return Position.of(row - 1, column + 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
