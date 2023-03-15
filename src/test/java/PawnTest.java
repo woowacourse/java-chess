@@ -88,12 +88,27 @@ public class PawnTest {
     @DisplayName("White 진영인 경우 - 위쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"c,2,b,3,true", "c,2,d,3,true", "c,2,c,3,false"})
-    void shouldReturnTrueWhenMoveToOpponentPiece(
+    void shouldReturnTrueWhenMoveToOpponentPieceWhitePawn(
             String sourceFile, String sourceRank,
             String targetFile, String targetRank,
             boolean result) {
-        Pawn whitePawn = Pawn.createOfWhite();
-        boolean movable = whitePawn.isMovable(
+        Pawn sourcePawn = Pawn.createOfWhite();
+        boolean movable = sourcePawn.isMovable(
+                Pawn.createOfBlack(),
+                Position.of(sourceFile, sourceRank),
+                Position.of(targetFile, targetRank));
+        assertThat(movable).isEqualTo(result);
+    }
+
+    @DisplayName("Black 진영인 경우 - 아래쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"c,7,b,6,true", "c,7,d,6,true", "c,7,c,6,false"})
+    void shouldReturnTrueWhenMoveToOpponentPieceBlackPawn(
+            String sourceFile, String sourceRank,
+            String targetFile, String targetRank,
+            boolean result) {
+        Pawn sourcePawn = Pawn.createOfBlack();
+        boolean movable = sourcePawn.isMovable(
                 Pawn.createOfBlack(),
                 Position.of(sourceFile, sourceRank),
                 Position.of(targetFile, targetRank));
