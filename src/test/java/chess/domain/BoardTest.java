@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,5 +40,41 @@ class BoardTest {
 
         assertThat(board.getPiece(square))
                 .isEqualTo(piece);
+    }
+
+    @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")
+    @Test
+    void Should_Move_When_NoPieceOnPath() {
+        final Board board = new Board();
+        final Square source = new Square(File.A, Rank.TWO);
+        final Square target = new Square(File.A, Rank.THREE);
+
+        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+
+        assertThat(isMovable).isTrue();
+    }
+
+    @DisplayName("Source부터 Target까지의 경로 상에 피스가 있을 경우 이동할 수 없다.")
+    @Test
+    void Should_DontMove_When_PieceOnPath() {
+        final Board board = new Board();
+        final Square source = new Square(File.A, Rank.ONE);
+        final Square target = new Square(File.A, Rank.TWO);
+
+        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+
+        assertThat(isMovable).isFalse();
+    }
+
+    @DisplayName("Target에 상대 피스가 있을 경우 이동할 수 있다.")
+    @Test
+    void Should_Move_When_OtherCampPieceOnTarget() {
+        final Board board = new Board();
+        final Square source = new Square(File.A, Rank.TWO);
+        final Square target = new Square(File.A, Rank.SEVEN);
+
+        final boolean isMovable = board.isTherePieceFromSourceToTarget(source, target);
+
+        assertThat(isMovable).isTrue();
     }
 }

@@ -21,6 +21,31 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    public boolean isTherePieceFromSourceToTarget(final Square source, final Square target) {
+        final Move move = Move.calculateDirection(source, target);
+        return isTherePiece(source, target, move) && isOtherCamp(source, target);
+    }
+
+    private boolean isOtherCamp(final Square source, final Square target) {
+        final Camp sourceCamp = board.get(source).getCamp();
+        final Camp targetCamp = board.get(target).getCamp();
+
+        return !sourceCamp.equals(targetCamp) || sourceCamp.equals(Camp.EMPTY);
+    }
+
+    private boolean isTherePiece(final Square source, final Square target, final Move move) {
+        final Square nextSquare = source.nextSquare(source, move.getFile(), move.getRank());
+        final boolean isNextSquareEmpty = board.get(nextSquare).equals(new Piece(Role.EMPTY, Camp.EMPTY));
+        final boolean isNextSquareTarget = nextSquare.equals(target);
+        if (isNextSquareTarget) {
+            return true;
+        }
+        if (isNextSquareEmpty) {
+            return isTherePiece(nextSquare, target, move);
+        }
+        return false;
+    }
+
     private LinkedHashMap<Square, Piece> initializeBoard() {
         final LinkedHashMap<Square, Piece> board = new LinkedHashMap<>();
         final List<Piece> pieces = generatePieces();

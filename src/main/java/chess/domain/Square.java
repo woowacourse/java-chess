@@ -51,13 +51,10 @@ public class Square {
         return getRank() + rankWeight == targetRank;
     }
 
-    public Square nextSquare(final Square target, final int fileWeight, final int rankWeight) {
-        final int targetFile = target.getFile();
-        final int targetRank = target.getRank();
+    public Square nextSquare(final Square source, final int fileWeight, final int rankWeight) {
+        final int sourceFile = source.getFile() + fileWeight;
+        final int sourceRank = source.getRank() + rankWeight;
 
-        if (isAbleFile(targetFile, fileWeight) && isAbleRank(targetRank, rankWeight)) {
-            return new Square(file.findFile(targetFile), rank.findRank(targetRank));
-        }
-        return null;
+        return new Square(file.findFile(sourceFile), rank.findRank(sourceRank));
     }
 }
