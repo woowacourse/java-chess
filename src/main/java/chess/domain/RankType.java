@@ -7,10 +7,10 @@ public enum RankType {
     ;
 
     public static RankType of(RankCoordinate rankCoordinate) {
-        if (rankCoordinate == RankCoordinate.ONE || rankCoordinate == RankCoordinate.EIGHT) {
+        if (rankCoordinate.isSideRank()) {
             return RankType.SIDE_RANK;
         }
-        if (rankCoordinate == RankCoordinate.TWO || rankCoordinate == RankCoordinate.SEVEN) {
+        if (rankCoordinate.isPawnRank()) {
             return RankType.PAWN_RANK;
         }
         return RankType.EMPTY_RANK;

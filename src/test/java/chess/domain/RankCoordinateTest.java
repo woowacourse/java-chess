@@ -22,4 +22,16 @@ class RankCoordinateTest {
     void Black팀의_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
         assertThat(rankCoordinate.isBlackRank()).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:true", "TWO:false", "THREE:false", "EIGHT:true"}, delimiter = ':')
+    void Side_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
+        assertThat(rankCoordinate.isSideRank()).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SEVEN:true", "EIGHT:false", "TWO:true", "SIX:false"}, delimiter = ':')
+    void Pawn_랭크인지_확인할_수_있다(RankCoordinate rankCoordinate, boolean expect) {
+        assertThat(rankCoordinate.isPawnRank()).isEqualTo(expect);
+    }
 }
