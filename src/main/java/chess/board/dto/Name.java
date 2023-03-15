@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.board.dto;
 
 public enum Name {
     KING("k", "K"),

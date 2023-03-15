@@ -1,9 +1,8 @@
-package chess.piece.dto;
+package chess.board.dto;
 
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;
-import chess.piece.Name;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
