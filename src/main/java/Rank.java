@@ -39,4 +39,11 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
     }
+
+    public Rank getPrevious() {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.order == this.order - 1)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
+    }
 }

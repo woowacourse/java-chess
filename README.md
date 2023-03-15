@@ -92,10 +92,14 @@ classDiagram
 ### File (enum)
 
 - [x] Source file과 Target file간 거리 차이를 반환한다.
+- [x] 다음 순서의 값을 반환한다.
+- [x] 이전 순서의 값을 반환한다.
 
 ### Rank (enum)
 
 - [x] Source rank와 Target rank간 거리 차이를 반환한다.
+- [x] 다음 순서의 값을 반환한다.
+- [x] 이전 순서의 값을 반환한다.
 
 ## 우아한테크코스 코드리뷰
 
