@@ -1,6 +1,6 @@
 package chess.domain.chessboard;
 
-import chess.domain.chessboard.state.Pawn;
+import chess.domain.chessboard.state.piece.Pawn;
 import chess.domain.chessboard.state.Team;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
