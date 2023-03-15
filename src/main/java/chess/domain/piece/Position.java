@@ -15,6 +15,18 @@ public final class Position {
         return new Position(this.rank + rankMove, this.file + fileMove);
     }
 
+    public static Position empty() {
+        return new Position(-1, -1);
+    }
+
+    public boolean isOverBoard(final int boardSize) {
+        return rank < 0 || rank >= boardSize || file < 0 || file >= boardSize;
+    }
+
+    public boolean isEmpty() {
+        return this.equals(empty());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
