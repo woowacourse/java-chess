@@ -28,6 +28,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다."));
     }
 
+    public static File getFile(final int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다."));
+    }
+
     public int index() {
         return this.index;
     }

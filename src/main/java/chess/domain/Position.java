@@ -34,4 +34,14 @@ public class Position {
     public static Position of(final File file, final Rank rank) {
         return CACHE.get(getKey(rank, file));
     }
+
+    public Position move(final MovePattern movePattern) {
+        final int nextFileIndex = this.file.index() + movePattern.getFileVector();
+        final int nextRankIndex = this.rank.index() + movePattern.getRankVector();
+
+        final File nextFile = File.getFile(nextFileIndex);
+        final Rank nextRank = Rank.getRank(nextRankIndex);
+
+        return Position.of(nextFile, nextRank);
+    }
 }
