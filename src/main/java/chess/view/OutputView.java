@@ -3,6 +3,7 @@ package chess.view;
 import chess.Chessboard;
 import chess.File;
 import chess.Rank;
+import chess.Square;
 import chess.piece.Piece;
 import chess.piece.PieceType;
 
@@ -19,7 +20,7 @@ public class OutputView {
     private void printRankAt(Chessboard chessboard, Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (File file : File.values()) {
-            Piece piece = chessboard.getPieceAt(file, rank);
+            Piece piece = chessboard.getPieceAt(new Square(file, rank));
             stringBuilder.append(PieceRenderer.getPieceName(piece));
         }
         System.out.println(stringBuilder);
