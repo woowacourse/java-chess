@@ -4,7 +4,9 @@ import java.util.Map;
 
 import chessgame.domain.Board;
 import chessgame.domain.piece.Piece;
+import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
+import chessgame.domain.point.Rank;
 
 public class OutputView {
 
@@ -16,22 +18,17 @@ public class OutputView {
     }
 
     public void printChessBoard(Board board) {
-        int count = 0;
         Map<Point, Piece> chessBoard = board.getBoard();
-        for (Point point : board.getBoard().keySet()) {
-            Piece value = chessBoard.get(point);
-            printPiece(value, ++count);
-        }
-    }
 
-    private void printPiece(Piece value, int count) {
-        if (value == null) {
-            System.out.print(".");
-        }
-        if (value != null) {
-            System.out.print(value);
-        }
-        if (count % 8 == 0) {
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                Point point = Point.of(file, rank);
+                if(chessBoard.containsKey(point)){
+                    System.out.print(chessBoard.get(point));
+                } else {
+                    System.out.print(".");
+                }
+            }
             System.out.println();
         }
     }

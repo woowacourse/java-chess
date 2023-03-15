@@ -1,6 +1,6 @@
 package chessgame.util;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +18,16 @@ import chessgame.domain.point.Rank;
 
 public class ChessBoardFactory {
     public static Map<Point, Piece> create() {
-        Map<Point, Piece> initialBoard = new LinkedHashMap<>();
+        Map<Point, Piece> initialBoard = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                initialBoard.put(Point.of(file, rank), generateInitialPiece(rank, File.valueOf(file.name()).ordinal()));
+                Piece initialPiece = generateInitialPiece(rank, File.valueOf(file.name()).ordinal());
+                if (initialPiece != null) {
+                    initialBoard.put(Point.of(file, rank), initialPiece);
+                }
             }
         }
-
         return initialBoard;
     }
 
@@ -33,24 +35,20 @@ public class ChessBoardFactory {
         if (rank == Rank.EIGHT) {
             return getPieces(Team.BLACK).get(idx);
         }
-
         if (rank == Rank.SEVEN) {
             return Pawn.from(Team.BLACK);
         }
-
         if (rank == Rank.TWO) {
             return Pawn.from(Team.WHITE);
         }
-
         if (rank == Rank.ONE) {
             return getPieces(Team.WHITE).get(idx);
         }
-
         return null;
     }
 
     private static List<Piece> getPieces(Team team) {
-        List<Piece> pieces = List.of(Rook.from(team),
+        return List.of(Rook.from(team),
             Knight.from(team),
             Bishop.from(team),
             Queen.from(team),
@@ -58,6 +56,5 @@ public class ChessBoardFactory {
             Bishop.from(team),
             Knight.from(team),
             Rook.from(team));
-        return pieces;
     }
 }

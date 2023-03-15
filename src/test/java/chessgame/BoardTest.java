@@ -13,4 +13,10 @@ class BoardTest {
     void Should_NotThrowException_When_ConstructBord() {
         Assertions.assertDoesNotThrow(() -> new Board(ChessBoardFactory.create()));
     }
+
+    @Test
+    @DisplayName("")
+    void check(){
+
+    }
 }
