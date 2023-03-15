@@ -1,14 +1,14 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Role;
+import chess.domain.Team;
 import java.util.Objects;
 
-public class Piece {
-    public static final Piece EMPTY_PIECE = new Piece(Role.EMPTY, Team.EMPTY);
+public abstract class Piece {
+    protected final Role role;
+    protected final Team team;
 
-    private final Role role;
-    private final Team team;
-
-    public Piece(Role role, Team team) {
+    protected Piece(Role role, Team team) {
         this.role = role;
         this.team = team;
     }
@@ -30,11 +30,11 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return role == piece.role && team == piece.team;
+        return team == piece.team && role == piece.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(role, team);
+        return Objects.hash(team, role);
     }
 }
