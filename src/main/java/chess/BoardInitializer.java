@@ -1,6 +1,8 @@
 package chess;
 
-import chess.piece.*;
+import chess.piece.Camp;
+import chess.piece.Piece;
+import chess.piece.PieceType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,14 @@ import static chess.piece.PieceType.*;
 
 public class BoardInitializer {
 
-    private BoardInitializer(){}
+    private BoardInitializer() {
+    }
+
     private static final List<PieceType> ARRANGEMENT_WITHOUT_PAWN;
 
     static {
         ARRANGEMENT_WITHOUT_PAWN = List.of(
-              ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
+                ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
         );
     }
 

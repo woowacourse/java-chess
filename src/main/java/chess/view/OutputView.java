@@ -11,8 +11,8 @@ import java.util.Arrays;
 public class OutputView {
 
     public void printChessBoard(Chessboard chessboard) {
-        for(Rank rank:Rank.values()) {
-            printRankAt(chessboard,rank);
+        for (Rank rank : Rank.values()) {
+            printRankAt(chessboard, rank);
         }
     }
 

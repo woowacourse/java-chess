@@ -9,16 +9,15 @@ public enum PieceType {
     BISHOP(Bishop::new),
     QUEEN(Queen::new),
     KING(King::new),
-    EMPTY(Empty::new)
-    ;
+    EMPTY(Empty::new);
 
     private final Function<Camp, Piece> expression;
 
-    PieceType(Function<Camp, Piece> expression){
+    PieceType(Function<Camp, Piece> expression) {
         this.expression = expression;
     }
 
-    public Piece createPiece(Camp camp){
+    public Piece createPiece(Camp camp) {
         return this.expression.apply(camp);
     }
 }

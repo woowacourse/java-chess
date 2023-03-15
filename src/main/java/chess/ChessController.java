@@ -7,16 +7,16 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(){
+    public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
     }
 
-    public void run(){
+    public void run() {
         Chessboard chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
         inputView.printStartChess();
-        while(!inputView.requestCommend().equals("end")){
+        while (!inputView.requestCommend().equals("end")) {
             outputView.printChessBoard(chessboard);
         }
     }
