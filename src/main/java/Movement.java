@@ -25,6 +25,10 @@ public class Movement {
         return this.rankIncrement == NON_INCREMENT || this.fileIncrement == NON_INCREMENT;
     }
 
+    public boolean isDiagonal() {
+        return Math.abs(this.rankIncrement) == Math.abs(this.fileIncrement);
+    }
+
     public boolean isDownward() {
         return this.rankIncrement < 0 && this.fileIncrement == NON_INCREMENT;
     }
