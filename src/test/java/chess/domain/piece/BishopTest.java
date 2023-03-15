@@ -34,9 +34,9 @@ class BishopTest {
     @Test
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void getPassingPathFailTest() {
-        final Piece quuenPiece = new Bishop(C, EIGHT, Color.BLACK);
+        final Piece bishop = new Bishop(C, EIGHT, Color.BLACK);
 
-        assertThatThrownBy(() -> quuenPiece.getPassingPositions(new Position(E, FOUR)))
+        assertThatThrownBy(() -> bishop.getPassingPositions(new Position(E, FOUR)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
