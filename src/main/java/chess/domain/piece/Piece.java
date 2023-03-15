@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Path;
+import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.List;
 
 public abstract class Piece {

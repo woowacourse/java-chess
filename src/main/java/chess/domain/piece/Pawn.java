@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Direction;
+import chess.domain.Path;
+import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 

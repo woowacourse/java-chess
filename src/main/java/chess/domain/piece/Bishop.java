@@ -1,18 +1,21 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Direction;
+import chess.domain.Path;
+import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Bishop extends Piece {
 
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.NORTH_EAST,
-                Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        directions = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
-    public Queen(final TeamColor color) {
+    public Bishop(final TeamColor color) {
         super(color);
     }
 

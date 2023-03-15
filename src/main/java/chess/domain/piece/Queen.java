@@ -1,9 +1,13 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Direction;
+import chess.domain.Path;
+import chess.domain.Position;
+import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece {
+public class Queen extends Piece {
 
     private static final List<Direction> directions;
 
@@ -12,16 +16,15 @@ public class King extends Piece {
                 Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
-    public King(final TeamColor color) {
+    public Queen(final TeamColor color) {
         super(color);
     }
-
 
     @Override
     public List<Path> findMovablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
         for (Direction direction : directions) {
-            paths.add(Path.ofSinglePath(current, direction));
+            paths.add(Path.ofMultiPath(current, direction));
         }
         return paths;
     }
