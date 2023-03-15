@@ -5,11 +5,11 @@ import java.util.List;
 
 public class WayPointsWithCondition {
 
-    private final List<PiecePosition> path;
+    private final List<PiecePosition> wayPoints;
     private final Condition condition;
 
-    private WayPointsWithCondition(final List<PiecePosition> path, final Condition condition) {
-        this.path = path;
+    private WayPointsWithCondition(final List<PiecePosition> wayPoints, final Condition condition) {
+        this.wayPoints = wayPoints;
         this.condition = condition;
     }
 
@@ -17,16 +17,16 @@ public class WayPointsWithCondition {
         return new WayPointsWithCondition(Collections.emptyList(), Condition.IMPOSSIBLE);
     }
 
-    public static WayPointsWithCondition possible(final List<PiecePosition> path) {
-        return new WayPointsWithCondition(path, Condition.POSSIBLE);
+    public static WayPointsWithCondition possible(final List<PiecePosition> wayPoints) {
+        return new WayPointsWithCondition(wayPoints, Condition.POSSIBLE);
     }
 
     public static WayPointsWithCondition onlyEnemy() {
         return new WayPointsWithCondition(Collections.emptyList(), Condition.ONLY_DESTINATION_ENEMY);
     }
 
-    public List<PiecePosition> path() {
-        return path;
+    public List<PiecePosition> wayPoints() {
+        return wayPoints;
     }
 
     public Condition condition() {
