@@ -13,25 +13,25 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class RankTest {
 
-    @ParameterizedTest(name = "A 부터 H 사이 값이 아니라면 예외를 던진다. 입력: {0}")
-    @ValueSource(strings = {"", "I", "허브"})
-    void A_부터_H_사이_값이_아니라면_예외를_던진다(final String command) {
+    @ParameterizedTest(name = "1 부터 8 사이 값이 아니라면 예외를 던진다. 입력: {0}")
+    @ValueSource(strings = {"", "0", "9", "가비"})
+    void _1_부터_8_사이_값이_아니라면_예외를_던진다(final String command) {
         // expect
         assertThatThrownBy(() -> Rank.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("랭크는 A ~ H 사이의 값이어야 합니다.");
+                .hasMessage("랭크는 1 ~ 8 사이의 값이어야 합니다.");
     }
 
-    @ParameterizedTest(name = "A 부터 H 사이 값을 입력받으면 Rank를 반환한다 입력: {0}, 결과: {1}")
-    @CsvSource({"A, A", "H, H"})
-    void A_부터_H_사이_값을_입력받으면_Rank를_반환한다(final String command, final Rank rank) {
+    @ParameterizedTest(name = "1 부터 8 사이 값을 입력받으면 Rank을 반환한다 입력: {0}, 출력: {1}")
+    @CsvSource({"1, ONE", "8, EIGHT"})
+    void _1_부터_8_사이_값을_입력받으면_Rank을_반환한다(final String command, final Rank rank) {
         // expect
         assertThat(Rank.from(command)).isEqualTo(rank);
     }
 
     @ParameterizedTest(name = "입력받은 랭크와의 차이를 반환한다. 시작: {0}, 도착: {1}, 결과: {2}")
-    @CsvSource({"A, D, -3", "B, B, 0", "H, G, 1"})
-    void 입력받은_랭크와_차이를_반환한다(final Rank source, final Rank target, final int result) {
+    @CsvSource({"ONE, SEVEN, -6", "TWO, TWO, 0", "SEVEN, FOUR, 3"})
+    void 입력받은_랭크와의_차이를_반환한다(final Rank source, final Rank target, final int result) {
         // expect
         assertThat(source.calculateGap(target)).isEqualTo(result);
     }

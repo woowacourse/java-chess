@@ -30,35 +30,35 @@ public class Board {
 
     public static Board initialize() {
         final Map<Position, Piece> result = new HashMap<>();
-        result.putAll(initializePiece(Color.WHITE, File.ONE));
-        result.putAll(initializePawn(Color.WHITE, File.TWO));
-        result.putAll(initializeEmptyPiece(List.of(File.THREE, File.FOUR, File.FIVE, File.SIX)));
-        result.putAll(initializePawn(Color.BLACK, File.SEVEN));
-        result.putAll(initializePiece(Color.BLACK, File.EIGHT));
+        result.putAll(initializePiece(Color.WHITE, Rank.ONE));
+        result.putAll(initializePawn(Color.WHITE, Rank.TWO));
+        result.putAll(initializeEmptyPiece(List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)));
+        result.putAll(initializePawn(Color.BLACK, Rank.SEVEN));
+        result.putAll(initializePiece(Color.BLACK, Rank.EIGHT));
         return new Board(result);
     }
 
-    private static Map<Position, Piece> initializePiece(final Color color, final File file) {
+    private static Map<Position, Piece> initializePiece(final Color color, final Rank rank) {
         final List<Piece> pieces = List.of(
                 Rook.from(color), Knight.from(color), Bishop.from(color), Queen.from(color),
                 King.from(color), Bishop.from(color), Knight.from(color), Rook.from(color)
         );
-        final List<Rank> ranks = Arrays.stream(Rank.values()).collect(toList());
+        final List<File> files = Arrays.stream(File.values()).collect(toList());
 
         return IntStream.range(0, pieces.size())
                 .boxed()
-                .collect(toMap(index -> Position.of(ranks.get(index), file), pieces::get));
+                .collect(toMap(index -> Position.of(files.get(index), rank), pieces::get));
     }
 
-    private static Map<Position, Piece> initializePawn(final Color color, final File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> Position.of(rank, file))
+    private static Map<Position, Piece> initializePawn(final Color color, final Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Position.of(file, rank))
                 .collect(toMap(Function.identity(), ignore -> Pawn.from(color)));
     }
 
-    private static Map<Position, Piece> initializeEmptyPiece(final List<File> files) {
-        return files.stream()
-                .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> Position.of(rank, file)))
+    private static Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
+        return ranks.stream()
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
                 .collect(toMap(Function.identity(), ignore -> Empty.create()));
     }
 

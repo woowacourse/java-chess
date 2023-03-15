@@ -4,24 +4,24 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    private Position(final Rank rank, final File file) {
-        this.rank = rank;
+    private Position(final File file, final Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(final Rank rank, final File file) {
-        return new Position(rank, file);
-    }
-
-    public int calculateRankGap(final Position target) {
-        return this.rank.calculateGap(target.rank);
+    public static Position of(final File file, final Rank rank) {
+        return new Position(file, rank);
     }
 
     public int calculateFileGap(final Position target) {
-        return this.file.calculateGap(target.file);
+        return file.calculateGap(target.file);
+    }
+
+    public int calculateRankGap(final Position target) {
+        return rank.calculateGap(target.rank);
     }
 
     @Override
@@ -33,11 +33,11 @@ public class Position {
             return false;
         }
         final Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 }

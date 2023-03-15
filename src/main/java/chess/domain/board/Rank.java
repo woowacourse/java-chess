@@ -3,14 +3,14 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Rank {
-    A("A", 1),
-    B("B", 2),
-    C("C", 3),
-    D("D", 4),
-    E("E", 5),
-    F("F", 6),
-    G("G", 7),
-    H("H", 8),
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
     ;
 
     private final String command;
@@ -25,10 +25,10 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(value -> value.command.equalsIgnoreCase(command))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("랭크는 A ~ H 사이의 값이어야 합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("랭크는 1 ~ 8 사이의 값이어야 합니다."));
     }
 
     public int calculateGap(final Rank target) {
-        return this.position - target.position;
+        return position - target.position;
     }
 }

@@ -32,8 +32,8 @@ public class BoardTest {
         final Map<Position, Piece> result = board.getBoard();
 
         // then
-        final List<PieceType> pieces = Arrays.stream(File.values())
-                .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> Position.of(rank, file)))
+        final List<PieceType> pieces = Arrays.stream(Rank.values())
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.of(rank, file)))
                 .map(result::get)
                 .map(Piece::type)
                 .collect(toList());

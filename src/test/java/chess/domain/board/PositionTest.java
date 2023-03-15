@@ -14,30 +14,30 @@ public class PositionTest {
     @Test
     void Rank_와_File_을_받아_정상적으로_생성된다() {
         // expect
-        assertThatNoException().isThrownBy(() -> Position.of(Rank.A, File.ONE));
+        assertThatNoException().isThrownBy(() -> Position.of(File.A, Rank.ONE));
     }
 
     @Test
-    void 입력받는_포지션과의_랭크_차이를_반환한다() {
+    void 입력받는_포지션과의_파일_차이를_반환한다() {
         // given
-        final Position source = Position.of(Rank.A, File.FOUR);
-        final Position target = Position.of(Rank.G, File.FIVE);
+        final Position source = Position.of(File.A, Rank.FOUR);
+        final Position target = Position.of(File.G, Rank.FIVE);
 
         // when
-        final int result = source.calculateRankGap(target);
+        final int result = source.calculateFileGap(target);
 
         // then
         assertThat(result).isEqualTo(-6);
     }
 
     @Test
-    void 입력받는_포지션과의_파일_차이를_반환한다() {
+    void 입력받는_포지션과의_랭크_차이를_반환한다() {
         // given
-        final Position source = Position.of(Rank.A, File.FOUR);
-        final Position target = Position.of(Rank.G, File.FIVE);
+        final Position source = Position.of(File.A, Rank.FOUR);
+        final Position target = Position.of(File.G, Rank.FIVE);
 
         // when
-        final int result = source.calculateFileGap(target);
+        final int result = source.calculateRankGap(target);
 
         // then
         assertThat(result).isEqualTo(-1);
