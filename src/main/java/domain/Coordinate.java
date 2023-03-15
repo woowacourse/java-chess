@@ -16,23 +16,21 @@ public class Coordinate {
         return new Coordinate(this.row + row, this.col + col);
     }
 
+    public Coordinate minusWithAbsoluteValue(Coordinate otherCoordinate) {
+        return new Coordinate(Math.abs(otherCoordinate.row - this.row), Math.abs(otherCoordinate.col - this.col));
+    }
+
+    @Deprecated
     public boolean isSameRow(Coordinate otherCoordinate) {
         return getInclination(otherCoordinate) == 0;
     }
 
+    @Deprecated
     public boolean isSameCol(Coordinate otherCoordinate) {
         return Double.isInfinite(getInclination(otherCoordinate));
     }
 
-    public boolean hasInclinationOfOne(Coordinate otherCoordinate) {
-        return getInclination(otherCoordinate) == 1;
-    }
-
-    public boolean hasInclinationOfMinusOne(Coordinate otherCoordinate) {
-        return getInclination(otherCoordinate) == -1;
-    }
-
-    private double getInclination(Coordinate otherCoordinate) {
+    public double getInclination(Coordinate otherCoordinate) {
         return (this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
 
