@@ -33,6 +33,6 @@ public class Knight extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return false;
+        return isDifferentTeam(piece) && from.inLShape(to);
     }
 }
