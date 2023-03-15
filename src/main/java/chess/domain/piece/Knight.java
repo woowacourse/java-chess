@@ -4,7 +4,11 @@ import chess.domain.Color;
 
 public class Knight extends Piece {
     
-    public Knight(final Color color) {
+    private Knight(final Color color) {
         super(color);
+    }
+    
+    public static Knight create(final Color color) {
+        return new Knight(color);
     }
 }

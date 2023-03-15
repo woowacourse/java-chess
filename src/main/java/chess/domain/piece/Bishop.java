@@ -4,7 +4,11 @@ import chess.domain.Color;
 
 public class Bishop extends Piece {
     
-    public Bishop(final Color color) {
+    private Bishop(final Color color) {
         super(color);
+    }
+    
+    public static Bishop create(final Color color) {
+        return new Bishop(color);
     }
 }
