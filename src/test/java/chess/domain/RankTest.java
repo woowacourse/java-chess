@@ -55,4 +55,15 @@ class RankTest {
             assertThat(betweenRanks).containsExactly(SIX, FIVE, FOUR, THREE);
         }
     }
+
+    @ParameterizedTest
+    @CsvSource({"FOUR, true", "SIX, false"})
+    @DisplayName("낮은지 확인해서 반환한다.")
+    void isLowerThanTest(final Rank otherRank, final boolean expected) {
+        final Rank rank = FIVE;
+
+        final boolean actual = rank.isUpperThan(otherRank);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }

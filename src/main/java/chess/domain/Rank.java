@@ -63,4 +63,8 @@ public enum Rank {
     private Rank findByIndex(final int index) {
         return RANK_BY_INDEX.get(index);
     }
+
+    public boolean isUpperThan(final Rank otherRank) {
+        return this.index > otherRank.index;
+    }
 }

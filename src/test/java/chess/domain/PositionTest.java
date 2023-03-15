@@ -89,4 +89,16 @@ class PositionTest {
                 Arguments.of(new Position(B, SEVEN), List.of(new Position(D, FIVE), new Position(C, SIX)))
         );
     }
+
+    @ParameterizedTest
+    @CsvSource({"FOUR, true", "SIX, false"})
+    @DisplayName("Rank가 앞인지 확인한다.")
+    void isUpperRankTest(final Rank otherRank, final boolean expected) {
+        final Position position = new Position(D, FIVE);
+        final Position otherPosition = new Position(D, otherRank);
+
+        final boolean actual = position.isUpperRankThan(otherPosition);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }

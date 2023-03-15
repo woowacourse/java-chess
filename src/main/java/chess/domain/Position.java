@@ -80,6 +80,10 @@ public class Position {
         return passingPositions;
     }
 
+    public boolean isUpperRankThan(final Position otherPosition) {
+        return this.rank.isUpperThan(otherPosition.rank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
