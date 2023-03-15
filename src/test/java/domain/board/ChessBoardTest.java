@@ -1,7 +1,7 @@
 package domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -94,4 +94,17 @@ class ChessBoardTest {
             assertThat(piece.isWhite()).isTrue();
         }
     }
+
+    @Test
+    @DisplayName("기물을 음직인다.")
+    void moveTest() {
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.initialize();
+        Square currentSquare = new Square(File.A, Rank.TWO);
+        Square targetSquare = new Square(File.A, Rank.FOUR);
+        Piece piece = chessBoard.getBoard().get(currentSquare);
+        chessBoard.move(currentSquare, targetSquare);
+        assertThat(chessBoard.getBoard().get(targetSquare)).isEqualTo(piece);
+    }
+
 }
