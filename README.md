@@ -43,6 +43,7 @@ G[outputView]
 ### Players
 
 - [x] white player와 black player를 가진다.
+- [x] white 플레이어와 black 플레이어의 모든 position 반환한다.
 
 ### Player
 

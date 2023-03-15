@@ -2,8 +2,8 @@ package chess.domain;
 
 public final class Position {
 
-    private final int rank;
-    private final char file;
+    private int rank;
+    private char file;
 
     private Position(final int rank, final char file) {
         validatePosition(rank, file);
@@ -13,6 +13,14 @@ public final class Position {
 
     public static Position from(final int rank, final char file) {
         return new Position(rank, file);
+    }
+
+    public void moveRank(final int movingRank) {
+        this.rank += movingRank;
+    }
+
+    public void moveFile(final int movingFile) {
+        this.file += movingFile;
     }
 
     private void validatePosition(final int rank, final char file) {
