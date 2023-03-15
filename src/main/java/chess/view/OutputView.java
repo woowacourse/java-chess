@@ -28,5 +28,6 @@ public class OutputView {
             }
             System.out.print(".");
         }
+        System.out.println();
     }
 }
