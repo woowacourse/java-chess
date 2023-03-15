@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public final class Position {
 
+    private static final int FILE_OFFSET = 0;
+    private static final int RANK_OFFSET = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -47,16 +50,26 @@ public final class Position {
         return Math.abs(thisFile - otherFile) + Math.abs(thisRank - otherRank);
     }
 
+    public Position moveDown(Position source, int distance) {
+        final char movedRank = (char) (source.getRank() - distance);
+        return Positions.from(String.valueOf((char) source.getFile()) + movedRank);
+    }
+
+    public Position moveUp(Position source, int distance) {
+        final char movedRank = (char) (source.getRank() + distance);
+        return Positions.from(String.valueOf((char) source.getFile()) + movedRank);
+    }
+
     public String getName() {
         return file.getName() + rank.getName();
     }
 
     private int getFile() {
-        return this.getName().charAt(0);
+        return this.getName().charAt(FILE_OFFSET);
     }
 
-    private int getRank() {
-        return this.getName().charAt(1);
+    public int getRank() {
+        return this.getName().charAt(RANK_OFFSET);
     }
 
     @Override

@@ -5,6 +5,7 @@ import domain.position.Position;
 public final class Knight extends Piece {
 
     private static final String NAME = "N";
+    private static final int KNIGHT_MOVABLE_DISTANCE = 3;
 
     public Knight(Team team) {
         super(NAME, team);
@@ -12,6 +13,8 @@ public final class Knight extends Piece {
 
     @Override
     public boolean isMovable(final Position source, final Position destination) {
-        return false;
+        return source.getDistance(destination) == KNIGHT_MOVABLE_DISTANCE &&
+                !source.isStraight(destination) &&
+                !source.isStraight(destination);
     }
 }
