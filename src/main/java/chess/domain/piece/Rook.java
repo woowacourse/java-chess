@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+
 public class Rook extends Piece {
 
     private static final Rook WHITE = new Rook(Color.WHITE);
@@ -14,5 +16,15 @@ public class Rook extends Piece {
             return WHITE;
         }
         return BLACK;
+    }
+
+    @Override
+    protected boolean isValidMove(final Position start, final Position end) {
+        return false;
+    }
+
+    @Override
+    protected boolean isValidTarget(final Piece target) {
+        return false;
     }
 }
