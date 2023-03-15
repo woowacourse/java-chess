@@ -9,22 +9,22 @@ public abstract class Piece {
 
     private final boolean isWhite;
     private final boolean isFinite;
-    private final Set<Movement> movements;
+    private final Set<Move> moves;
 
-    public Piece(boolean isWhite, boolean isFinite, List<Movement> movements) {
+    public Piece(boolean isWhite, boolean isFinite, List<Move> moves) {
         this.isWhite = isWhite;
         this.isFinite = isFinite;
-        this.movements = movements.stream()
-                .flatMap(this::flipMovement)
+        this.moves = moves.stream()
+                .flatMap(this::flipMove)
                 .collect(Collectors.toSet());
     }
 
-    private Stream<Movement> flipMovement(Movement movement) {
+    private Stream<Move> flipMove(Move move) {
         return Stream.of(
-                movement,
-                movement.flipHorizontal(),
-                movement.flipVertical(),
-                movement.flipHorizontal().flipVertical()
+                move,
+                move.flipHorizontal(),
+                move.flipVertical(),
+                move.flipHorizontal().flipVertical()
         );
     }
 
@@ -32,18 +32,18 @@ public abstract class Piece {
         return isWhite == otherPiece.isWhite;
     }
 
-    public boolean hasMovement(Movement movement) {
-        boolean hasMovement = false;
-        for (Movement pieceMovement : movements) {
-            hasMovement = hasMovement || compareMovement(pieceMovement, movement);
+    public boolean hasMove(Move move) {
+        boolean hasMove = false;
+        for (Move pieceMove : moves) {
+            hasMove = hasMove || compareMove(pieceMove, move);
         }
-        return hasMovement;
+        return hasMove;
     }
 
-    private boolean compareMovement(Movement pieceMovement, Movement movement) {
+    private boolean compareMove(Move pieceMove, Move move) {
         if (isFinite) {
-            return pieceMovement.equals(movement);
+            return pieceMove.equals(move);
         }
-        return pieceMovement.equals(movement.getUnitMovement());
+        return pieceMove.equals(move.getUnitMove());
     }
 }

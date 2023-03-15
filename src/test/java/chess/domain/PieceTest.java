@@ -15,8 +15,8 @@ public class PieceTest extends AbstractTestFixture {
 
     static class PieceImplement extends Piece {
 
-        public PieceImplement(boolean isWhite, boolean isFinite, List<Movement> movements) {
-            super(isWhite, isFinite, movements);
+        public PieceImplement(boolean isWhite, boolean isFinite, List<Move> moves) {
+            super(isWhite, isFinite, moves);
         }
     }
 
@@ -35,43 +35,43 @@ public class PieceTest extends AbstractTestFixture {
         assertThat(piece.hasSameColor(otherPiece)).isFalse();
     }
 
-    @DisplayName("가능한 움직임인지 판단한다(유한)")
+    @DisplayName("가능한 수인지 판단한다(유한)")
     @Test
-    void isValidMovementFinite() {
-        Movement movement = createMovement(UP, UP, RIGHT);
-        Movement movement2 = createMovement(RIGHT, RIGHT, UP);
+    void isValidMoveFinite() {
+        Move move = createMove(UP, UP, RIGHT);
+        Move move2 = createMove(RIGHT, RIGHT, UP);
 
-        Piece piece = createPiece(true, true, movement, movement2);
-        assertThat(piece.hasMovement(movement)).isTrue();
+        Piece piece = createPiece(true, true, move, move2);
+        assertThat(piece.hasMove(move)).isTrue();
     }
 
-    @DisplayName("가능한 움직임인지 판단한다(무한)")
+    @DisplayName("가능한 수인지 판단한다(무한)")
     @Test
-    void isValidMovementInfinite() {
-        Movement movement = createMovement(UP, RIGHT);
+    void isValidMoveInfinite() {
+        Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, false, movement);
-        assertThat(piece.hasMovement(createMovement(UP, RIGHT, UP, RIGHT))).isTrue();
+        Piece piece = createPiece(true, false, move);
+        assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isTrue();
     }
 
-    @DisplayName("가능하지 않은 움직임인지 판단한다(기물:유한, 움직임:무한)")
+    @DisplayName("가능하지 않은 수인지 판단한다(기물:유한, 수:무한)")
     @Test
-    void isInvalidMovementFinite() {
-        Movement movement = createMovement(UP, RIGHT);
+    void isInvalidMoveFinite() {
+        Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, true, movement);
-        assertThat(piece.hasMovement(createMovement(UP, RIGHT, UP, RIGHT))).isFalse();
+        Piece piece = createPiece(true, true, move);
+        assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
     }
 
-    @DisplayName("1사분면의 움직임으로 모든 사분면의 움직임을 만든다")
+    @DisplayName("1사분면의 수으로 모든 사분면의 수을 만든다")
     @Test
-    void flipMovements() {
-        Movement movement = createMovement(UP, RIGHT);
+    void flipMoves() {
+        Move move = createMove(UP, RIGHT);
 
-        Piece piece = createPiece(true, true, movement);
-        assertThat(piece.hasMovement(createMovement(UP, RIGHT))).isTrue();
-        assertThat(piece.hasMovement(createMovement(UP, LEFT))).isTrue();
-        assertThat(piece.hasMovement(createMovement(DOWN, LEFT))).isTrue();
-        assertThat(piece.hasMovement(createMovement(DOWN, RIGHT))).isTrue();
+        Piece piece = createPiece(true, true, move);
+        assertThat(piece.hasMove(createMove(UP, RIGHT))).isTrue();
+        assertThat(piece.hasMove(createMove(UP, LEFT))).isTrue();
+        assertThat(piece.hasMove(createMove(DOWN, LEFT))).isTrue();
+        assertThat(piece.hasMove(createMove(DOWN, RIGHT))).isTrue();
     }
 }

@@ -9,11 +9,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Movement {
+public class Move {
 
     private final List<Direction> directions;
 
-    public Movement(List<Direction> directions) {
+    public Move(List<Direction> directions) {
         validate(directions);
         this.directions = directions.stream()
                 .sorted(Comparator.naturalOrder())
@@ -46,7 +46,7 @@ public class Movement {
                 .count();
     }
 
-    public boolean isSameAngle(Movement movement) {
+    public boolean isSameAngle(Move move) {
         int dx1 = 0;
         int dy1 = 0;
         for (Direction direction : directions) {
@@ -55,26 +55,26 @@ public class Movement {
         }
         int dx2 = 0;
         int dy2 = 0;
-        for (Direction direction : movement.directions) {
+        for (Direction direction : move.directions) {
             dx2 += direction.getDx();
             dy2 += direction.getDy();
         }
         return dx1 * dy2 == dx2 * dy1;
     }
 
-    public Movement flipHorizontal() {
+    public Move flipHorizontal() {
         return flip(Direction::flipHorizontal);
     }
 
-    public Movement flipVertical() {
+    public Move flipVertical() {
         return flip(Direction::flipVertical);
     }
 
-    private Movement flip(Function<Direction, Direction> directionFlipper) {
+    private Move flip(Function<Direction, Direction> directionFlipper) {
         List<Direction> directions = this.directions.stream()
                 .map(directionFlipper)
                 .collect(Collectors.toList());
-        return new Movement(directions);
+        return new Move(directions);
     }
 
     public Position findDestination(Position position) {
@@ -85,7 +85,7 @@ public class Movement {
         return destination;
     }
 
-    public Movement getUnitMovement() {
+    public Move getUnitMove() {
         List<Direction> horizontalDirections = getHorizontalDirections();
         List<Direction> verticalDirections = getVerticalDirections();
         long gcd = getGCD(horizontalDirections.size(), verticalDirections.size());
@@ -94,7 +94,7 @@ public class Movement {
         List<Direction> unitDirections = new ArrayList<>();
         unitDirections.addAll(repeatFirst(horizontalDirections, unitHorizontalCount));
         unitDirections.addAll(repeatFirst(verticalDirections, unitVerticalCount));
-        return new Movement(unitDirections);
+        return new Move(unitDirections);
     }
 
     private List<Direction> getHorizontalDirections() {
@@ -143,9 +143,9 @@ public class Movement {
             return false;
         }
 
-        Movement movement = (Movement) o;
+        Move move = (Move) o;
 
-        return Objects.equals(directions, movement.directions);
+        return Objects.equals(directions, move.directions);
     }
 
     @Override
