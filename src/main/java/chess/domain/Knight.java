@@ -5,33 +5,20 @@ import java.util.List;
 
 public class Knight implements Movable {
 
+    private static final List<Direction> directions;
+
+    static {
+        directions = List.of(Direction.EAST_DOWN, Direction.EAST_UP, Direction.SOUTH_LEFT, Direction.SOUTH_RIGHT,
+                Direction.WEST_DOWN, Direction.WEST_UP, Direction.NORTH_LEFT, Direction.NORTH_RIGHT);
+    }
+
     @Override
-    public List<Path> findMovablePaths(final Position position) {
-        int sourceX = position.getX();
-        int sourceY = position.getY();
-
-        List<Position> movablePositions = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                if (isMovableDestination(sourceX, sourceY, i, j)) {
-                    movablePositions.add(new Position(i, j));
-                }
-            }
+    public List<Path> findMovablePaths(final Position current) {
+        List<Path> paths = new ArrayList<>();
+        for (Direction direction : directions) {
+            paths.add(Path.ofSinglePath(current, direction));
         }
-        return null;
+        return paths;
     }
 
-    private boolean isMovableDestination(final int sourceX, final int sourceY, final int destX, final int destY) {
-        return isDestinationInRange(sourceX, sourceY, destX, destY) && isNotSource(sourceX, sourceY, destX, destY);
-    }
-
-    private boolean isDestinationInRange(final int sourceX, final int sourceY, final int destX, final int destY) {
-        int diffX = Math.abs(sourceX - destX);
-        int diffY = Math.abs(sourceY - destY);
-        return (diffX == 1 && diffY == 2) || (diffX == 2 && diffY == 1);
-    }
-
-    private boolean isNotSource(final int sourceX, final int sourceY, final int destX, final int destY) {
-        return sourceX != destX || sourceY != destY;
-    }
 }
