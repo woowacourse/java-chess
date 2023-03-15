@@ -42,7 +42,9 @@ public final class Pawn extends Piece {
     }
 
     private boolean isUnderTwoStepUpward(Movement movement) {
-        return movement.isUnderTwoSteps() && movement.isUpward();
+        return movement.isUnderTwoSteps() &&
+                movement.isPerpendicular() &&
+                movement.isUpward();
     }
 
     private boolean isFirstMovement(Position sourcePosition) {
@@ -51,7 +53,10 @@ public final class Pawn extends Piece {
     }
 
     private static boolean isOneStepUpward(Movement movement) {
-        return movement.isOneStep() && movement.isUpward();
+
+        return movement.isOneStep() &&
+                movement.isPerpendicular() &&
+                movement.isUpward();
     }
 
     private boolean isMovableForBlack(Movement movement, Position sourcePosition) {
@@ -62,11 +67,15 @@ public final class Pawn extends Piece {
     }
 
     private boolean isOneStepDownward(Movement movement) {
-        return movement.isOneStep() && movement.isDownward();
+        return movement.isOneStep() &&
+                movement.isPerpendicular() &&
+                movement.isDownward();
     }
 
     private boolean isUnderTwoStepDownward(Movement movement) {
-        return movement.isUnderTwoSteps() && movement.isDownward();
+        return movement.isUnderTwoSteps() &&
+                movement.isPerpendicular() &&
+                movement.isDownward();
     }
 
 
