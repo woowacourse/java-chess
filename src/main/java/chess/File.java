@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.List;
-
 public enum File {
     A(1),
     B(2),
@@ -14,11 +12,11 @@ public enum File {
 
     private final int value;
 
-    File(int value){
+    File(int value) {
         this.value = value;
     }
 
-    public int calculateDistance(File otherFile){
+    public int calculateDistance(File otherFile) {
         return Math.abs(this.value - otherFile.value);
     }
 }

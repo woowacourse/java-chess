@@ -8,8 +8,7 @@ public enum Rank {
     FOUR(4),
     THREE(3),
     TWO(2),
-    ONE(1)
-    ;
+    ONE(1);
 
     private final int value;
 
@@ -17,7 +16,11 @@ public enum Rank {
         this.value = value;
     }
 
-    public int calculateDistance(Rank rank){
+    public int calculateDistance(Rank rank) {
         return Math.abs(this.value - rank.value);
+    }
+
+    public int calculateDifference(Rank rank) {
+        return rank.value - this.value;
     }
 }

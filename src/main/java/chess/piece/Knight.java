@@ -18,13 +18,13 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Square source, Square target) {
-        if(source.calculateRankDistance(target) == MOVABLE_STRAIGHT_DISTANCE
-                && source.calculateFileDistance(target) == MOBABLE_SIDE_DISTANCE){
+        if (source.calculateRankDistance(target) == MOVABLE_STRAIGHT_DISTANCE
+                && source.calculateFileDistance(target) == MOBABLE_SIDE_DISTANCE) {
             return true;
         }
 
-        if(source.calculateRankDistance(target) == MOBABLE_SIDE_DISTANCE
-                && source.calculateFileDistance(target) == MOVABLE_STRAIGHT_DISTANCE){
+        if (source.calculateRankDistance(target) == MOBABLE_SIDE_DISTANCE
+                && source.calculateFileDistance(target) == MOVABLE_STRAIGHT_DISTANCE) {
             return true;
         }
         return false;

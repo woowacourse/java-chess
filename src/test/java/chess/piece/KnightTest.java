@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 class KnightTest {
     private static final Piece knight = PieceType.KNIGHT.createPiece(Camp.WHITE);
     private static final Square source = new Square(File.E, Rank.FOUR);
+
     @DisplayName("나이트 이동조건이 아닌 경우, 이동할 수 없다")
     @Test
     void cantMoveOverMovableDistance() {

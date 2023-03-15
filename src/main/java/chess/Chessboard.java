@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: 2023/03/15 source, target이 같은지 검증 필요
 public class Chessboard {
     private final Map<Square, Piece> board;
 
