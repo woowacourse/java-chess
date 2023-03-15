@@ -30,7 +30,7 @@ public class Piece {
     }
 
     public void move(int x, int y, Piece piece) {
-        moveState = moveState.move(x, y, piece.isSameColor(color));
+        moveState = moveState.move(x, color.colorDirection(y), piece.isSameColor(color));
     }
 
     private ColorCompareResult isSameColor(Color color) {
