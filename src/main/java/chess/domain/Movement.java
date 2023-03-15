@@ -76,7 +76,7 @@ public class Movement {
     private Movement flip(Function<Direction, Direction> directionFlipper) {
         List<Direction> directions = this.directions.stream()
                 .map(directionFlipper)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toUnmodifiableList()); // 왜 unmodifiableList?
         return new Movement(directions);
     }
 
@@ -91,32 +91,13 @@ public class Movement {
     public Movement getUnitMovement() {
         List<Direction> horizontalDirections = getHorizontalDirections();
         List<Direction> verticalDirections = getVerticalDirections();
-        if (horizontalDirections.size() == 0 && verticalDirections.size() == 0) {
-            return new Movement();
-        }
-        if (horizontalDirections.size() == 0) {
-            return new Movement(List.of(verticalDirections.get(0)));
-        }
-        if (verticalDirections.size() == 0) {
-            return new Movement(List.of(horizontalDirections.get(0)));
-        }
-        long horizontalCount = horizontalDirections.size();
-        long verticalCount = verticalDirections.size();
-        long gcd = getGCD(horizontalCount, verticalCount);
-        horizontalCount /= gcd;
-        verticalCount /= gcd;
+        long gcd = getGCD(horizontalDirections.size(), verticalDirections.size());
+        long unitHorizontalCount = horizontalDirections.size() / gcd;
+        long unitVerticalCount = verticalDirections.size() / gcd;
         List<Direction> unitDirections = new ArrayList<>();
-        unitDirections.addAll(repeat(horizontalDirections.get(0), horizontalCount));
-        unitDirections.addAll(repeat(verticalDirections.get(0), verticalCount));
+        unitDirections.addAll(repeatFirst(horizontalDirections, unitHorizontalCount));
+        unitDirections.addAll(repeatFirst(verticalDirections, unitVerticalCount));
         return new Movement(unitDirections);
-    }
-
-    private List<Direction> repeat(Direction direction, long count) {
-        List<Direction> directions = new ArrayList<>();
-        for (long i = 0; i < count; i++) {
-            directions.add(direction);
-        }
-        return directions;
     }
 
     private List<Direction> getHorizontalDirections() {
@@ -132,6 +113,9 @@ public class Movement {
     }
 
     private long getGCD(long num1, long num2) {
+        if (num1 == 0 || num2 == 0) {
+            return Math.max(num1, num2);
+        }
         if (num1 < num2) {
             return getGCD(num2, num1);
         }
@@ -139,5 +123,17 @@ public class Movement {
             return num2;
         }
         return getGCD(num2, num1 % num2);
+    }
+
+    private List<Direction> repeatFirst(List<Direction> directions, long count) {
+        if (directions.size() == 0) {
+            return Collections.emptyList();
+        }
+        Direction direction = directions.get(0);
+        List<Direction> result = new ArrayList<>();
+        for (long i = 0; i < count; i++) {
+            result.add(direction);
+        }
+        return result;
     }
 }
