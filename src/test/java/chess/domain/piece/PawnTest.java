@@ -48,7 +48,7 @@ class PawnTest {
         Piece pawn = new Pawn(Team.BLACK);
         Position source = new Position(6, 4);
         Position target = new Position(4, 4);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target)).isFalse();
     }
 
     @Test
