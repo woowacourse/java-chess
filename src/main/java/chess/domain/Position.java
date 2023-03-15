@@ -1,0 +1,38 @@
+package chess.domain;
+
+public class Position {
+
+	private static final int MIN_COORDINATE = 0;
+	private static final int MAX_COORDINATE = 7;
+
+	private final int column;
+	private final int row;
+
+	public Position(final int column, final int row) {
+		validate(column, row);
+		this.column = column;
+		this.row = row;
+	}
+
+	private void validate(final int column, final int row){
+		if(isInvalidColum(column) || isInvalidRow(row)){
+			throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+		}
+	}
+
+	private static boolean isInvalidColum(final int column) {
+		return MIN_COORDINATE > column || MAX_COORDINATE < column;
+	}
+
+	private static boolean isInvalidRow(final int row) {
+		return MIN_COORDINATE > row || MAX_COORDINATE < row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public int getRow() {
+		return row;
+	}
+}
