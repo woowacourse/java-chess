@@ -48,4 +48,12 @@ class MovementTest {
         assertThat(movement.isPerpendicular()).isEqualTo(result);
     }
 
+    @DisplayName("대각선 방향의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1,1,true", "-1,1,true", "-1,-1,true", "1,-1,true", "1,0,false", "-1,3,false"})
+    void shouldReturnTrueWhenMovementDirectionIsDiagonalOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        assertThat(movement.isDiagonal()).isEqualTo(result);
+    }
+
 }
