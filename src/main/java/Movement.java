@@ -21,6 +21,10 @@ public class Movement {
         return this.rankIncrement > 0 && this.fileIncrement == NON_INCREMENT;
     }
 
+    public boolean isPerpendicular() {
+        return this.rankIncrement == NON_INCREMENT || this.fileIncrement == NON_INCREMENT;
+    }
+
     public boolean isDownward() {
         return this.rankIncrement < 0 && this.fileIncrement == NON_INCREMENT;
     }
