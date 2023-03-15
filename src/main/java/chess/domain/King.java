@@ -20,4 +20,9 @@ public class King extends Piece {
         }
         return whiteKing;
     }
+
+    @Override
+    boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return false;
+    }
 }

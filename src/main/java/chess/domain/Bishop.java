@@ -29,4 +29,9 @@ public class Bishop extends Piece {
         }
         return List.copyOf(whiteBishops);
     }
+
+    @Override
+    boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return from.inDiagonal(to) && isDifferentTeam(piece);
+    }
 }

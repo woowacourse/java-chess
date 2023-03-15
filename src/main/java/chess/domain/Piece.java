@@ -14,4 +14,6 @@ public abstract class Piece {
     public String getTeam() {
         return team.toString();
     }
+
+    abstract boolean isMovable(Square from, Square to, Piece piece);
 }

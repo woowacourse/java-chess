@@ -11,7 +11,6 @@ public class Queen extends Piece {
     }
 
 
-
     private Queen(final Team team) {
         super(team);
     }
@@ -21,5 +20,10 @@ public class Queen extends Piece {
             return blackQueen;
         }
         return whiteQueen;
+    }
+
+    @Override
+    boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return false;
     }
 }

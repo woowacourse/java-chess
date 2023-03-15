@@ -30,4 +30,9 @@ public final class Pawn extends Piece {
         }
         return List.copyOf(whitePawns);
     }
+
+    @Override
+    boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return false;
+    }
 }

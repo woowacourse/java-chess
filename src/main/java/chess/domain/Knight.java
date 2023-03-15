@@ -30,4 +30,9 @@ public class Knight extends Piece {
         }
         return List.copyOf(whiteKnights);
     }
+
+    @Override
+    boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return false;
+    }
 }

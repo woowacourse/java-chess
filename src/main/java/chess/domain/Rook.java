@@ -31,6 +31,7 @@ public class Rook extends Piece {
         return List.copyOf(whiteRooks);
     }
 
+    @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return isDifferentTeam(piece) && from.inLine(to);
     }
