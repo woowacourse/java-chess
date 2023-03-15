@@ -14,6 +14,15 @@ public class ChessController {
     }
 
     private void play() {
+        try {
+            playEachTurn();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e);
+            play();
+        }
+    }
+
+    private void playEachTurn() {
         while (true) {
             String commandRequest = InputView.requestCommand();
             String[] inputs = commandRequest.split(" ");
