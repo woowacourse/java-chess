@@ -3,16 +3,16 @@ package chess.domain.piece;
 import java.util.Objects;
 
 public final class Position {
-    private final int column;
-    private final int row;
+    private final int rank;
+    private final int file;
 
-    public Position(final int column, final int row) {
-        this.column = column;
-        this.row = row;
+    public Position(final int rank, final int file) {
+        this.rank = rank;
+        this.file = file;
     }
 
-    public Position calculate(final int columnMove, final int rowMove) {
-        return new Position(this.column + columnMove, this.row + rowMove);
+    public Position calculate(final int rankMove, final int fileMove) {
+        return new Position(this.rank + rankMove, this.file + fileMove);
     }
 
     @Override
@@ -20,19 +20,19 @@ public final class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Position position = (Position) o;
-        return column == position.column && row == position.row;
+        return rank == position.rank && file == position.file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(rank, file);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "column=" + column +
-                ", row=" + row +
+                "rank=" + rank +
+                ", file=" + file +
                 '}';
     }
 }
