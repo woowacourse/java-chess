@@ -33,6 +33,10 @@ public class Movement {
         return Math.abs(fileIncrement) <= 1 && Math.abs(rankIncrement) <= 1;
     }
 
+    public boolean isUnderTwoSteps() {
+        return Math.abs(fileIncrement) <= 2 && Math.abs(rankIncrement) <= 2;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
