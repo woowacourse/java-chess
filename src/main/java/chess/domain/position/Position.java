@@ -40,15 +40,22 @@ public class Position {
         return this.file.distance(other.file) == this.rank.distance(other.rank);
     }
 
+    public boolean isNear(Position other){
+        if(getMaxDistance(other) <= 1){
+            return true;
+        }
+        return false;
+    }
+
     public List<Position> getRoute(Position other) {
         Direction rankDirection = rank.getDirection(other.rank);
         Direction fileDirection = file.getDirection(other.file);
-        int distance = getDistance(other);
+        int distance = getMaxDistance(other);
         List<Position> route = getRouteToDirection(rankDirection, fileDirection, distance);
         return route;
     }
 
-    private int getDistance(Position other) {
+    private int getMaxDistance(Position other) {
         int fileDistance = file.distance(other.file);
         int rankDistance = rank.distance(other.rank);
         return Math.max(fileDistance, rankDistance);
