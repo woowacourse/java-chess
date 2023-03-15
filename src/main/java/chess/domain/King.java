@@ -23,6 +23,6 @@ public class King extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return false;
+        return this.isNotSameSide(piece) && from.inKingsRange(to);
     }
 }

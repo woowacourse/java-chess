@@ -248,4 +248,50 @@ public class SquareTest {
             }
         }
     }
+
+    @Nested
+    @DisplayName("inKingsRange 메서드는")
+    class inKingsRange {
+        @Nested
+        @DisplayName("현재 Square와 다른 Square가 인접한 위치라면")
+        class given_near_square {
+            Square from = Square.of(Rank.FOUR, File.D);
+            Square movableSquare1 = Square.of(Rank.FIVE, File.D);
+            Square movableSquare2 = Square.of(Rank.FIVE, File.E);
+            Square movableSquare3 = Square.of(Rank.FOUR, File.C);
+            Square movableSquare4 = Square.of(Rank.THREE, File.D);
+            Square movableSquare5 = Square.of(Rank.THREE, File.E);
+
+            @Test
+            @DisplayName("true를 반환한다")
+            void it_returns_true() {
+                assertAll(
+                        () -> assertThat(from.inKingsRange(movableSquare1)).isTrue(),
+                        () -> assertThat(from.inKingsRange(movableSquare2)).isTrue(),
+                        () -> assertThat(from.inKingsRange(movableSquare3)).isTrue(),
+                        () -> assertThat(from.inKingsRange(movableSquare4)).isTrue(),
+                        () -> assertThat(from.inKingsRange(movableSquare5)).isTrue()
+                );
+            }
+        }
+
+        @Nested
+        @DisplayName("현재 Square와 다른 Square가 인접하지 않는다면")
+        class given_far_square {
+            Square from = Square.of(Rank.FOUR, File.D);
+            Square unMovableSquare1 = Square.of(Rank.SIX, File.D);
+            Square unMovableSquare2 = Square.of(Rank.FIVE, File.A);
+            Square unMovableSquare3 = Square.of(Rank.THREE, File.B);
+
+            @Test
+            @DisplayName("false를 반환한다")
+            void it_returns_false() {
+                assertAll(
+                        () -> assertThat(from.inKingsRange(unMovableSquare1)).isFalse(),
+                        () -> assertThat(from.inKingsRange(unMovableSquare2)).isFalse(),
+                        () -> assertThat(from.inKingsRange(unMovableSquare3)).isFalse()
+                );
+            }
+        }
+    }
 }

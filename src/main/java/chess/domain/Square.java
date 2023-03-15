@@ -78,6 +78,14 @@ public class Square {
         return this.rank.isBiggerThan(to.rank);
     }
 
+    public boolean inKingsRange(final Square to) {
+        checkSameSquare(to);
+        final int verticalDistance = rank.distanceTo(to.rank);
+        final int horizontalDistance = file.distanceTo(to.file);
+        return (verticalDistance == 1 || verticalDistance == 0) &&
+                (horizontalDistance == 1 || horizontalDistance == 0);
+    }
+
     private void checkSameSquare(final Square to) {
         if (this == to) {
             throw new IllegalArgumentException("같은 지점이 들어왔습니다");

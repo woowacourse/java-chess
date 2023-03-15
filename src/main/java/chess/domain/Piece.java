@@ -8,9 +8,12 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public boolean isNotSameSide(final Piece piece) {
+        return this.side != piece.side;
+    }
+
     public boolean isOppositeSide(final Piece piece) {
-        return this.side != piece.side &&
-                !piece.isEmpty();
+        return this.side != piece.side && !piece.isEmpty();
     }
 
     public boolean isEmpty() {

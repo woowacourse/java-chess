@@ -32,6 +32,6 @@ public class Bishop extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return from.inDiagonal(to) && isOppositeSide(piece);
+        return from.inDiagonal(to) && isNotSameSide(piece);
     }
 }

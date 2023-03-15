@@ -41,11 +41,12 @@ public class BishopTest {
             Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
-            @DisplayName("갈 수 있고 해당 위치의 기물이 상대 진영인 경우 true를 반환한다")
+            @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
             void it_returns_movable() {
                 assertAll(
                         () -> assertThat(whiteBishop.isMovable(from, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteBishop.isMovable(from, movableSquare2, blackQueen)).isTrue()
+                        () -> assertThat(whiteBishop.isMovable(from, movableSquare2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteBishop.isMovable(from, movableSquare1, new EmptyPiece())).isTrue()
                 );
             }
 

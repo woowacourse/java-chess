@@ -32,6 +32,6 @@ public class Knight extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isOppositeSide(piece) && from.inLShape(to);
+        return isNotSameSide(piece) && from.inLShape(to);
     }
 }
