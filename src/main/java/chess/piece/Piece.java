@@ -2,7 +2,6 @@ package chess.piece;
 
 import chess.piece.coordinate.Coordinate;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -19,11 +18,11 @@ public abstract class Piece {
         this.coordinate = coordinate;
     }
     
+    public abstract char symbol();
+    
     public boolean isWhiteTeam() {
         return team.isWhiteTeam();
     }
-    
-    public abstract char symbol();
     
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);

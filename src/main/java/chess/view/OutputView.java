@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private OutputView() {
+        throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
+    }
     
     public static void noticeGameStart(){
         System.out.println("체스 게임을 시작합니다.");

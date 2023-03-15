@@ -7,6 +7,10 @@ public enum InitialSymbols {
     SEVEN_AND_TWO(List.of('p', 'p', 'p', 'p', 'p', 'p', 'p', 'p')),
     SIX_TO_THREE(List.of('e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'));
     
+    private static final int FIRST_INITIAL_ROW_OF_PIECES_EXCLUDING_PAWN = 1;
+    private static final int SECOND_INITIAL_ROW_OF_PIECES_EXCLUDING_PAWN = 8;
+    private static final int FIRST_INITIAL_ROW_OF_PAWN = 2;
+    private static final int SECOND_INITIAL_ROW_OF_PAWN = 7;
     private final List<Character> symbols;
     
     InitialSymbols(List<Character> symbols) {
@@ -14,15 +18,23 @@ public enum InitialSymbols {
     }
     
     public static InitialSymbols from(int rowNum) {
-        if (rowNum == 8 || rowNum == 1) {
+        if (isOneOrEightRow(rowNum)) {
             return EIGHT_AND_ONE;
         }
     
-        if (rowNum == 7 || rowNum == 2) {
+        if (isTwoOrSevenRow(rowNum)) {
             return SEVEN_AND_TWO;
         }
         
         return SIX_TO_THREE;
+    }
+    
+    private static boolean isTwoOrSevenRow(int rowNum) {
+        return rowNum == FIRST_INITIAL_ROW_OF_PAWN || rowNum == SECOND_INITIAL_ROW_OF_PAWN;
+    }
+    
+    private static boolean isOneOrEightRow(int rowNum) {
+        return rowNum == FIRST_INITIAL_ROW_OF_PIECES_EXCLUDING_PAWN || rowNum == SECOND_INITIAL_ROW_OF_PIECES_EXCLUDING_PAWN;
     }
     
     public Character findSymbolByColumnIndex(int columnIndex) {

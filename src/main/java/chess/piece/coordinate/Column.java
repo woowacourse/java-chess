@@ -3,6 +3,9 @@ package chess.piece.coordinate;
 import java.util.Objects;
 
 public class Column {
+    private static final char MIN_COLUMN_CHAR = 'a';
+    private static final char MAX_COLUMN_CHAR = 'h';
+    
     private final char column;
     
     public Column(char column) {
@@ -11,7 +14,7 @@ public class Column {
     }
     
     private void validateOutOfRange(char column) {
-        if (column < 'a' || column > 'h') {
+        if (column < MIN_COLUMN_CHAR || column > MAX_COLUMN_CHAR) {
             throw new IllegalArgumentException("column는 a~h까지의 문자만 가능합니다.");
         }
     }

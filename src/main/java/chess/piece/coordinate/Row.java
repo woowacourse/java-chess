@@ -14,9 +14,13 @@ public class Row {
     }
     
     private void validateOutOfRange(int row) {
-        if (row < MIN_ROW || row > MAX_ROW) {
+        if (isOutOfRange(row)) {
             throw new IllegalArgumentException("row는 1~8까지의 숫자만 가능합니다.");
         }
+    }
+    
+    private boolean isOutOfRange(int row) {
+        return row < MIN_ROW || row > MAX_ROW;
     }
     
     public int compareTo(Row otherRow) {

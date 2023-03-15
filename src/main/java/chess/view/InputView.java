@@ -8,6 +8,10 @@ import java.util.function.Supplier;
 public class InputView {
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     
+    private InputView() {
+        throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
+    }
+    
     public static ProcessCommand inputProcessCommand() {
         try {
             return ProcessCommand.from(bufferedReader.readLine());

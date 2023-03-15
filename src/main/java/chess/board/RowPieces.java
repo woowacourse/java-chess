@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 public class RowPieces implements Comparable<RowPieces> {
     private static final int MIN_COLUMN_INDEX = 0;
     private static final int MAX_COLUMN_INDEX = 7;
+    private static final char MIN_COLUMN_CHAR = 'a';
     
     private final List<Piece> pieces;
     
@@ -47,7 +48,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
     
     private static char parseColumn(int columnIndex) {
-        return (char) (columnIndex + 'a');
+        return (char) (columnIndex + MIN_COLUMN_CHAR);
     }
     
     public List<Piece> pieces() {
