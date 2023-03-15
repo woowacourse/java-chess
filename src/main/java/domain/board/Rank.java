@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.piecetype.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,11 @@ public class Rank {
         for (int col = 0; col < totalColCount; col++) {
             this.pieces.add(BoardInitialImage.getPieceByCoordinate(row, col));
         }
+    }
+
+    public boolean isMovableAt(int col, Coordinate startCoordinate, Coordinate endCoordinate) {
+        Piece targetPiece = pieces.get(col);
+        return targetPiece.isMovable(startCoordinate, endCoordinate);
     }
 
     public List<Piece> getPieces() {

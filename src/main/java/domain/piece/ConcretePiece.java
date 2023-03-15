@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piecetype.Coordinate;
 import domain.piecetype.PieceType;
 
 public class ConcretePiece implements Piece {
@@ -10,6 +11,11 @@ public class ConcretePiece implements Piece {
     public ConcretePiece(PieceType pieceType, Camp camp) {
         this.pieceType = pieceType;
         this.camp = camp;
+    }
+
+    @Override
+    public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        return pieceType.isReachableByRule(startCoordinate, endCoordinate);
     }
 
     @Override
