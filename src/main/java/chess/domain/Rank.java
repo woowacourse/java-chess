@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Rank {
     EIGHT("8", 0),
     SEVEN("7", 1),
@@ -16,5 +18,16 @@ public enum Rank {
     Rank(final String rank, final int index) {
         this.rank = rank;
         this.index = index;
+    }
+
+    public static int calculate(String src, String dst) {
+        return findRankBy(src).index - findRankBy(dst).index;
+    }
+
+    private static Rank findRankBy(final String rankInput) {
+        return Arrays.stream(Rank.values())
+                .filter(value -> value.rank.equals(rankInput))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank을 입력했습니다."));
     }
 }
