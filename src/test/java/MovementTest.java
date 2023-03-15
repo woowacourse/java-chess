@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MovementTest {
-    
+
     @DisplayName("file, rank움직임이 0,0인지 확인한다.")
     @Test
     void shouldReturnTrueWhenMovementIsStop() {
@@ -28,6 +28,14 @@ class MovementTest {
     void shouldReturnTrueWhenMovementDirectionIsDownwardOrFalse(int fileIncrement, int rankIncrement, boolean result) {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         assertThat(movement.isDownward()).isEqualTo(result);
+    }
+
+    @DisplayName("오른쪽 방향의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1,0,true", "1,1,false", "-1,0,false", "2,-1,true"})
+    void shouldReturnTrueWhenMovementDirectionIsRightOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        assertThat(movement.isRight()).isEqualTo(result);
     }
 
     @DisplayName("2칸 이내의 움직임이면 true, 아니면 false를 반환한다.")
