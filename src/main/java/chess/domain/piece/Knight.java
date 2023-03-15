@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -27,7 +28,10 @@ public class Knight extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        return null;
+        if (!canMove(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        return Collections.emptyList();
     }
 
     @Override

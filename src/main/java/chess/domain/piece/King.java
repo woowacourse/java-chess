@@ -32,6 +32,9 @@ public class King extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
+        if (!canMove(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
         return Collections.emptyList();
     }
 
