@@ -11,8 +11,11 @@
   - [ ] 검색하는 칸에 어떤 말이 있는지 알려준다. 
   - [ ] Piece가 존재하는 지 알려준다.
 
-- Square: 한칸
-  - Rank와 File의 조합
+- Square: 한칸 (Rank와 File의 조합)
+  - [x] 같은 File인지 확인한다.
+  - [x] 같은 Rank인지 확인한다.
+  - [ ] Rank 차이가 올바른지 확인한다.
+  - [ ] File 차이가 올바른지 확인한다.
 
 - Rank, File: 행, 렬에 관한 Enum
 
