@@ -1,11 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 
-public abstract class Piece implements Cloneable{
+public abstract class Piece implements Cloneable {
 
-    private final Color color;
-    private PiecePosition piecePosition;
+    protected final Color color;
+    protected PiecePosition piecePosition;
 
     public Piece(final Color color, final PiecePosition piecePosition) {
         this.color = color;
@@ -16,13 +18,11 @@ public abstract class Piece implements Cloneable{
         return this.piecePosition.equals(piecePosition);
     }
 
-    public Color color() {
-        return color;
+    public WayPointsWithCondition wayPointsWithCondition(final PiecePosition destination) {
+        return wayPointsWithCondition(Path.of(piecePosition, destination));
     }
 
-    public PiecePosition piecePosition() {
-        return piecePosition;
-    }
+    protected abstract WayPointsWithCondition wayPointsWithCondition(final Path path);
 
     @Override
     public Piece clone() {
@@ -31,5 +31,13 @@ public abstract class Piece implements Cloneable{
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public Color color() {
+        return color;
+    }
+
+    public PiecePosition piecePosition() {
+        return piecePosition;
     }
 }
