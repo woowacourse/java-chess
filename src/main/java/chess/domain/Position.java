@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
@@ -24,6 +25,23 @@ public class Position {
     
     public static List<String> parsing(final String position) {
         return Arrays.stream(position.split("")).collect(Collectors.toList());
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+    
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return file == position.file && rank == position.rank;
     }
     
     public File getFile() {

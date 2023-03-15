@@ -10,7 +10,7 @@ public enum File {
     E("e", 4),
     F("f", 5),
     G("g", 6),
-    K("k", 7);
+    H("h", 7);
     private final String label;
     
     private final int index;
@@ -25,5 +25,13 @@ public enum File {
                 .filter(value -> value.label.equals(label))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+    }
+    
+    public String getLabel() {
+        return label;
+    }
+    
+    public int getIndex() {
+        return index;
     }
 }
