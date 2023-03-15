@@ -1,5 +1,7 @@
 package chess.domain.chessboard.state;
 
+import chess.domain.chessboard.state.piece.Piece;
+
 public final class Empty implements PieceState {
 
     @Override
@@ -10,5 +12,10 @@ public final class Empty implements PieceState {
     @Override
     public Team getTeam() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isSameTeam(final Piece piece){
+        return false;
     }
 }
