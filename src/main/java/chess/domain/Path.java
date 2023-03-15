@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Path {
 
+    public static final int PAWN_START_PATH_COUNT = 2;
     private final List<Position> positions;
 
     public Path(final List<Position> positions) {
@@ -16,6 +17,15 @@ public class Path {
         Position next = current.findNextPosition(direction);
         if (next != null) {
             positions.add(next);
+        }
+        return new Path(positions);
+    }
+
+    public static Path ofPawnStartPath(Position current, Direction direction) {
+        List<Position> positions = new ArrayList<>();
+        while (positions.size() < PAWN_START_PATH_COUNT) {
+            current = current.findNextPosition(direction);
+            positions.add(current);
         }
         return new Path(positions);
     }
