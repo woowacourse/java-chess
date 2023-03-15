@@ -4,29 +4,18 @@ import chess.model.Color;
 import chess.model.Type;
 import chess.model.piece.Piece;
 
-public class PieceSquare implements Square {
+public class PieceSquare extends AbstractSquare {
 
-    private final Position position;
     private final Piece piece;
 
     public PieceSquare(final Position position, final Piece piece) {
-        this.position = position;
+        super(position);
         this.piece = piece;
-    }
-
-    @Override
-    public Square receivePiece(final Piece piece) {
-        return new PieceSquare(this.position, piece);
     }
 
     @Override
     public Square movePiece(final Position position) {
         return new PieceSquare(position, this.piece);
-    }
-
-    @Override
-    public Square removePiece() {
-        return new EmptySquare(this.position);
     }
 
     @Override
