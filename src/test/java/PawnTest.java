@@ -39,4 +39,13 @@ public class PawnTest {
         boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
+
+    @DisplayName("Black 진영인 경우 - 처음 움직일 때 target position이 source position의 rank보다 2낮으면 true를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"7, 5, true", "7,6,true", "7,4,false", "6,5,true", "6,4,false"})
+    void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsBlackSideAndFirstMoving(String sourceRank, String targetRank, boolean result) {
+        Pawn blackPawn = Pawn.createOfBlack();
+        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
+        assertThat(movable).isEqualTo(result);
+    }
 }
