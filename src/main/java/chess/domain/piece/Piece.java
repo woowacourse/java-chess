@@ -1,4 +1,8 @@
-package chess;
+package chess.domain.piece;
+
+import chess.domain.position.Position;
+import chess.domain.piece.info.Team;
+import chess.domain.piece.info.Trace;
 
 abstract class Piece {
     protected Team team;

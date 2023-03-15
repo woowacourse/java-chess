@@ -1,21 +1,22 @@
-package chess;
+package chess.domain.position;
 
+import chess.domain.piece.info.Team;
 import java.util.Objects;
 
 public class Position {
     private final Rank rank;
     private final File file;
 
-    Position(Rank rank, File file) {
+    public Position(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    int calculateFileDistance(final Position startPosition) {
+    public int calculateFileDistance(final Position startPosition) {
         return file.calculateDistance(startPosition.file);
     }
 
-    int calculateRankDistance(final Position startPosition) {
+    public int calculateRankDistance(final Position startPosition) {
         return rank.calculateDistance(startPosition.rank);
     }
 

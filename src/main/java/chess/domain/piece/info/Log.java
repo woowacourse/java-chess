@@ -1,4 +1,6 @@
-package chess;
+package chess.domain.piece.info;
+
+import chess.domain.position.Position;
 
 public class Log {
 

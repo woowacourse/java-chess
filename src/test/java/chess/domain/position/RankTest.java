@@ -1,8 +1,9 @@
-package chess;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.position.Rank;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

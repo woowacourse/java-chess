@@ -1,7 +1,11 @@
-package chess;
+package chess.domain.piece;
 
-public class Bishop extends Piece {
-    public Bishop(Team team) {
+import chess.domain.position.Position;
+import chess.domain.piece.info.Team;
+
+public class Knight extends Piece {
+
+    public Knight(Team team) {
         super(team);
     }
 
@@ -13,7 +17,7 @@ public class Bishop extends Piece {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
-        return (Math.abs(diffFile) == Math.abs(diffRank));
+        return Math.abs(diffFile * diffRank) == 2;
     }
 
     @Override

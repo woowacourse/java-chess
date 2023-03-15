@@ -1,5 +1,6 @@
-package chess;
+package chess.domain.piece.info;
 
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 

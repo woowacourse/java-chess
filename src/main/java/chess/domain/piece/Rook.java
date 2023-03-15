@@ -1,8 +1,11 @@
-package chess;
+package chess.domain.piece;
 
-public class Queen extends Piece {
+import chess.domain.position.Position;
+import chess.domain.piece.info.Team;
 
-    public Queen(final Team team) {
+public class Rook extends Piece {
+
+    public Rook(final Team team) {
         super(team);
     }
 
@@ -14,7 +17,7 @@ public class Queen extends Piece {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
-        return (Math.abs(diffFile) == Math.abs(diffRank)) || (diffFile * diffRank == 0);
+        return (diffFile * diffRank == 0);
     }
 
     @Override

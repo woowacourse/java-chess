@@ -1,13 +1,12 @@
-package chess;
+package chess.domain.piece;
 
-public class King extends Piece {
+import chess.domain.position.Position;
+import chess.domain.piece.info.Team;
 
-    private static final int UPPER_BOUND_OF_MOVABLE_DISTANCE = 1;
-
-    public King(Team team) {
+public class Bishop extends Piece {
+    public Bishop(Team team) {
         super(team);
     }
-
 
     @Override
     public boolean canMove(final Position startPosition, final Position endPosition) {
@@ -17,8 +16,7 @@ public class King extends Piece {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
-        return Math.abs(diffFile) <= UPPER_BOUND_OF_MOVABLE_DISTANCE
-                && Math.abs(diffRank) <= UPPER_BOUND_OF_MOVABLE_DISTANCE;
+        return (Math.abs(diffFile) == Math.abs(diffRank));
     }
 
     @Override
