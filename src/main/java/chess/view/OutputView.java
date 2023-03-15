@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.Bishop;
-import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.King;
 import chess.domain.Knight;
@@ -18,6 +17,7 @@ import java.util.Map;
 public class OutputView {
 
     private static final String EMPTY_SQUARE = ".";
+    private static final String NEW_LINE = System.lineSeparator();
     private static final Map<Class<? extends Piece>, String> UPPER_SIGN_BY_PIECE = Map.of(
             Rook.class, "R",
             Knight.class, "N",
@@ -26,7 +26,7 @@ public class OutputView {
             King.class, "K",
             Pawn.class, "P"
     );
-    private static final Map<File, Integer> X_COORDINATE_BY_FILE = Map.of(
+    private static final Map<File, Integer> COLUMN_BY_FILE = Map.of(
             File.A, 0,
             File.B, 1,
             File.C, 2,
@@ -36,7 +36,7 @@ public class OutputView {
             File.G, 6,
             File.H, 7
     );
-    private static final Map<Rank, Integer> Y_COORDINATE_BY_RANK = Map.of(
+    private static final Map<Rank, Integer> ROW_BY_RANK = Map.of(
             Rank.ONE, 7,
             Rank.TWO, 6,
             Rank.THREE, 5,
@@ -53,31 +53,45 @@ public class OutputView {
     }
 
     public void printBoard(final List<Piece> pieces) {
-        final StringBuilder mapBuilder = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
-            mapBuilder.append(EMPTY_SQUARE.repeat(8));
-            mapBuilder.append(System.lineSeparator());
-        }
-
-        for (Piece piece : pieces) {
-            final int positionIndex = calculateIndex(piece.getPosition());
-            mapBuilder.replace(positionIndex, positionIndex + 1, getPieceAccordingToSing(piece));
-        }
-
-        final String boardMessage = mapBuilder.toString();
+        final String boardMessage = generateBoardMessage(pieces);
 
         System.out.println(boardMessage);
     }
 
-    private static String getPieceAccordingToSing(final Piece piece) {
-        final String upperPieceMessage = UPPER_SIGN_BY_PIECE.get(piece.getClass());
-        if (piece.isSameColor(Color.BLACK)) {
-            return upperPieceMessage;
+    private String generateBoardMessage(final List<Piece> pieces) {
+        final StringBuilder mapBuilder = generateEmptyBoardBuilder();
+
+        for (Piece piece : pieces) {
+            setUpPieceInBoard(mapBuilder, piece);
         }
-        return upperPieceMessage.toLowerCase();
+
+        return mapBuilder.toString();
+    }
+
+    private static StringBuilder generateEmptyBoardBuilder() {
+        final StringBuilder mapBuilder = new StringBuilder();
+        for (int index = 0; index < ROW_BY_RANK.size(); index++) {
+            mapBuilder.append(EMPTY_SQUARE.repeat(COLUMN_BY_FILE.size()))
+                    .append(NEW_LINE);
+        }
+        return mapBuilder;
+    }
+
+    private void setUpPieceInBoard(final StringBuilder mapBuilder, final Piece piece) {
+        final int positionIndex = calculateIndex(piece.getPosition());
+        mapBuilder.replace(positionIndex, positionIndex + 1, getPieceAccordingToSign(piece));
     }
 
     private int calculateIndex(final Position position) {
-        return 9 * Y_COORDINATE_BY_RANK.get(position.getRank()) + X_COORDINATE_BY_FILE.get(position.getFile());
+        final int oneLineLength = COLUMN_BY_FILE.size() + NEW_LINE.length();
+        return oneLineLength * ROW_BY_RANK.get(position.getRank()) + COLUMN_BY_FILE.get(position.getFile());
+    }
+
+    private static String getPieceAccordingToSign(final Piece piece) {
+        final String upperPieceMessage = UPPER_SIGN_BY_PIECE.get(piece.getClass());
+        if (piece.isBlack()) {
+            return upperPieceMessage;
+        }
+        return upperPieceMessage.toLowerCase();
     }
 }
