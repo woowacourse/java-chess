@@ -1,30 +1,31 @@
 package chess.view;
 
+import chess.domain.piece.PieceSymbol;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum ViewPieceSymbol {
 
-    PAWN("PAWN", "p"),
-    BISHOP("BISHOP", "b"),
-    KING("KING", "k"),
-    KNIGHT("KNIGHT", "n"),
-    QUEEN("QUEEN", "q"),
-    ROOK("ROOK", "r"),
-    EMPTY("EMPTY", "."),
+    PAWN(PieceSymbol.PAWN, "p"),
+    BISHOP(PieceSymbol.BISHOP, "b"),
+    KING(PieceSymbol.KING, "k"),
+    KNIGHT(PieceSymbol.KNIGHT, "n"),
+    QUEEN(PieceSymbol.QUEEN, "q"),
+    ROOK(PieceSymbol.ROOK, "r"),
+    EMPTY(PieceSymbol.EMPTY, "."),
     ;
 
-    private final String pieceSymbol;
+    private final PieceSymbol pieceSymbol;
     private final String viewSymbol;
 
-    ViewPieceSymbol(String pieceSymbol, String viewSymbol) {
+    ViewPieceSymbol(PieceSymbol pieceSymbol, String viewSymbol) {
         this.pieceSymbol = pieceSymbol;
         this.viewSymbol = viewSymbol;
     }
 
-    public static String getViewSymbolBy(String pieceSymbol, boolean upperFlag) {
+    public static String getViewSymbolBy(PieceSymbol pieceSymbol, boolean upperFlag) {
         String viewSymbol = Arrays.stream(ViewPieceSymbol.values())
-                .filter(it -> it.pieceSymbol.equals(pieceSymbol))
+                .filter(it -> it.pieceSymbol == pieceSymbol)
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
                 .viewSymbol;

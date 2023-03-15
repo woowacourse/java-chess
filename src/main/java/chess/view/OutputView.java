@@ -14,7 +14,7 @@ public class OutputView {
         StringBuilder chessBoardView = new StringBuilder();
         for (Position position : piecePoint.keySet()) {
             Piece piece = piecePoint.get(position);
-            String viewSymbolBy = ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbolName(), piece.isBlack());
+            String viewSymbolBy = ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbol(), piece.isBlack());
 
             checkLineBreak(chessBoardView);
             chessBoardView.append(viewSymbolBy);

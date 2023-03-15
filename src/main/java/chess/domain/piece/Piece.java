@@ -33,7 +33,7 @@ public abstract class Piece {
         return Objects.hash(camp);
     }
 
-    public String getPieceSymbolName() {
-        return pieceSymbol.name();
+    public PieceSymbol getPieceSymbol() {
+        return pieceSymbol;
     }
 }
