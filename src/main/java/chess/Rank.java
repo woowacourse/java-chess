@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Rank {
     EIGHT(8),
     SEVEN(7),
@@ -16,11 +20,21 @@ public enum Rank {
         this.value = value;
     }
 
-    public int calculateDistance(Rank rank) {
-        return Math.abs(this.value - rank.value);
+    public int calculateDistance(Rank otherRank) {
+        return Math.abs(otherRank.value - value);
     }
 
-    public int calculateDifference(Rank rank) {
-        return rank.value - this.value;
+    public int calculateDifference(Rank otherRank) {
+        return otherRank.value - value;
     }
+
+    public List<Rank> getRanksInRange(Rank otherRank) {
+        int max = Math.max(value, otherRank.value);
+        int min = Math.min(value, otherRank.value);
+
+        return Arrays.stream(values())
+                .filter(file -> file.value > min && file.value < max)
+                .collect(Collectors.toList());
+    }
+
 }

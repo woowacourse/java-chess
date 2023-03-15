@@ -3,6 +3,7 @@ package chess;
 import chess.piece.Camp;
 import chess.piece.Empty;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,7 +34,34 @@ public class Chessboard {
         }
     }
 
-    public Piece getPieceAt(File file, Rank rank) {
-        return board.get(new Square(file, rank));
+    public Piece getPieceAt(Square square) {
+        return board.get(square);
     }
+
+    public void swapPiece(Square source, Square target) {
+        board.put(target, board.get(source));
+        board.put(source, PieceType.EMPTY.createPiece(Camp.NONE));
+    }
+
+    public boolean isEmptyInRoute(Square source, Square target) {
+        return getMovableRoute(source, target)
+                .stream()
+                .filter(square -> board.get(square).getPieceType() != PieceType.EMPTY)
+                .findAny()
+                .isEmpty();
+    }
+
+    private List<Square> getMovableRoute(Square source, Square target) {
+        if (source.isSameFile(target)) {
+            return source.getSquaresInSameFile(target);
+        }
+
+        if (source.isSameRank(target)) {
+            return source.getSquaresInSameRank(target);
+        }
+
+        return source.getDiagonalSquares(target);
+    }
+
+
 }

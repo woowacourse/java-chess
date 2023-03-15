@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum File {
     A(1),
     B(2),
@@ -17,6 +21,15 @@ public enum File {
     }
 
     public int calculateDistance(File otherFile) {
-        return Math.abs(this.value - otherFile.value);
+        return Math.abs(otherFile.value - value);
+    }
+
+    public List<File> getFilesInRange(File otherFile) {
+        int max = Math.max(value, otherFile.value);
+        int min = Math.min(value, otherFile.value);
+
+        return Arrays.stream(values())
+                .filter(file -> file.value > min && file.value < max)
+                .collect(Collectors.toList());
     }
 }

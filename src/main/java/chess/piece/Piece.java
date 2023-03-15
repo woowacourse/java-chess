@@ -16,4 +16,8 @@ public abstract class Piece {
     public boolean isWhite() {
         return this.camp == Camp.WHITE;
     }
+
+    public boolean isNotSameCamp(Piece otherPiece) {
+        return camp != otherPiece.camp;
+    }
 }

@@ -1,6 +1,9 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Square {
     private final File file;
@@ -29,6 +32,31 @@ public class Square {
 
     public int calculateRankDifference(Square targetSquare) {
         return this.rank.calculateDifference(targetSquare.rank);
+    }
+
+    public List<Square> getSquaresInSameRank(Square square) {
+        return file.getFilesInRange(square.file)
+                .stream()
+                .map(file -> new Square(file, rank))
+                .collect(Collectors.toList());
+    }
+
+    public List<Square> getSquaresInSameFile(Square square) {
+        return rank.getRanksInRange(square.rank)
+                .stream()
+                .map(rank -> new Square(file, rank))
+                .collect(Collectors.toList());
+    }
+
+    public List<Square> getDiagonalSquares(Square square) {
+        List<Square> squares = new ArrayList<>();
+        List<File> files = file.getFilesInRange(square.file);
+        List<Rank> ranks = rank.getRanksInRange(square.rank);
+
+        for (int i = 0, end = files.size(); i < end; i++) {
+            squares.add(new Square(files.get(i), ranks.get(i)));
+        }
+        return squares;
     }
 
     @Override
