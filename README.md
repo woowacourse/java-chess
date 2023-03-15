@@ -41,6 +41,24 @@
     - 위 아래로 이동 할 수 있다
         - 범위를 벗어난 이동은 예외를 던진다
 
+### 기물 클래스 다이어그램
+
+```mermaid
+classDiagram
+Piece <-- FinitePiece
+Piece <-- InfinitePiece
+Piece <-- Pawn
+FinitePiece <-- Knight
+FinitePiece <-- King
+InfinitePiece <-- Queen
+InfinitePiece <-- Bishop
+InfinitePiece <-- Rook
+
+<<abstract>> Piece
+<<abstract>> FinitePiece
+<<abstract>> InfinitePiece
+```
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
