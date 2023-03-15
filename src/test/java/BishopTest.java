@@ -22,4 +22,22 @@ class BishopTest {
 
         assertThat(movable).isFalse();
     }
+
+    @DisplayName("source position이 target position까지 대각선 방향이고, target position에 같은 진영 말이 있으면 false를 반환한다.")
+    @Test
+    void shouldReturnFalseWhenBishopDirectionIsDiagonalButTargetPieceIsSameSide() {
+        Bishop blackBishop = Bishop.createOfBlack();
+        boolean movable = blackBishop.isMovable(Pawn.createOfBlack(), Position.of("c", "2"), Position.of("e", "4"));
+
+        assertThat(movable).isFalse();
+    }
+
+    @DisplayName("source position이 target position까지 대각선 방향이고, target position에 상대 진영 말이 있으면 true를 반환한다.")
+    @Test
+    void shouldReturnTrueWhenBishopDirectionIsDiagonalAndTargetPieceIsOpponentSide() {
+        Bishop whiteBishop = Bishop.createOfWhite();
+        boolean movable = whiteBishop.isMovable(Pawn.createOfBlack(), Position.of("c", "2"), Position.of("e", "4"));
+
+        assertThat(movable).isTrue();
+    }
 }
