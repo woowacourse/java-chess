@@ -13,7 +13,9 @@ import java.util.stream.IntStream;
 
 public class ChessBoard {
 
+    private static final int FIRST_INDEX = 1;
     private static final int RANK_SIZE = 8;
+    private static final int FILE_SIZE = 8;
 
     private final Map<Position, Piece> piecesByPosition = new HashMap<>();
 
@@ -35,7 +37,7 @@ public class ChessBoard {
         piecesByPosition.put(new Position(color.startingRank(), 6), new Bishop(color));
         piecesByPosition.put(new Position(color.startingRank(), 7), new Knight(color));
         piecesByPosition.put(new Position(color.startingRank(), 8), new Rook(color));
-        IntStream.range(1, RANK_SIZE + 1)
+        IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
                 .forEach(file -> piecesByPosition.put(new Position(color.startingPawnRank(), file),
                         new Pawn(color)));
     }
@@ -43,4 +45,5 @@ public class ChessBoard {
     public Map<Position, Piece> piecesByPosition() {
         return new HashMap<>(piecesByPosition);
     }
+
 }
