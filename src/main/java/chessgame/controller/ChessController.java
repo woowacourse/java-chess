@@ -15,6 +15,9 @@ public class ChessController {
     }
 
     public void run() {
+        outputView.printStartMessage();
+        String input = inputView.readCommand();
+
         Board board = new Board(ChessBoardFactory.create());
         outputView.printChessBoard(board);
     }
