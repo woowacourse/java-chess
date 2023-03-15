@@ -1,0 +1,68 @@
+package chess.domain;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
+
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+class BoardTest {
+
+    @Test
+    void 체스보드는_기물의_위치를_가지고_있다() {
+
+        assertAll(
+                () -> assertThat(Board.findPieceOf(new Square(File.A, Rank.ONE))).isInstanceOf(Rook.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.A, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.A, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.A, Rank.EIGHT))).isInstanceOf(Rook.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.B, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.B, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.B, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.B, Rank.EIGHT))).isInstanceOf(Knight.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.C, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.C, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.C, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.C, Rank.EIGHT))).isInstanceOf(Bishop.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.D, Rank.ONE))).isInstanceOf(Queen.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.D, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.D, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.D, Rank.EIGHT))).isInstanceOf(Queen.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.E, Rank.ONE))).isInstanceOf(King.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.E, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.E, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.E, Rank.EIGHT))).isInstanceOf(King.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.F, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.F, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.F, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.F, Rank.EIGHT))).isInstanceOf(Bishop.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.G, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.G, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.G, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.G, Rank.EIGHT))).isInstanceOf(Knight.class),
+
+                () -> assertThat(Board.findPieceOf(new Square(File.H, Rank.ONE))).isInstanceOf(Rook.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.H, Rank.TWO))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.H, Rank.SEVEN))).isInstanceOf(Pawn.class),
+                () -> assertThat(Board.findPieceOf(new Square(File.H, Rank.EIGHT))).isInstanceOf(Rook.class)
+        );
+    }
+}
