@@ -32,4 +32,11 @@ public enum Rank {
     public int calculateIncrement(Rank targetRank) {
         return targetRank.order - this.order;
     }
+
+    public Rank getNext() {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.order == this.order + 1)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("인덱스를 벗어난 움직임입니다."));
+    }
 }
