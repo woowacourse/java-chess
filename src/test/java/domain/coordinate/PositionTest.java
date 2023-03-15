@@ -14,4 +14,26 @@ public class PositionTest {
 
         assertThat(position == Position.of(0, 0)).isTrue();
     }
+    
+    @Test
+    @DisplayName("두 개의 Position y 값 차이를 반환한다.")
+    void givenTwoPosition_thenReturnDiffY() {
+        //given
+        Position startPoint = Position.of(0, 0);
+        Position endPoint = Position.of(0, 2);
+        
+        //when&then
+        assertThat(endPoint.diffY(startPoint)).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("두 개의 Position x 값 차이를 반환한다.")
+    void givenTwoPosition_thenReturnDiffX() {
+        //given
+        Position startPoint = Position.of(0, 0);
+        Position endPoint = Position.of(2, 0);
+
+        //when&then
+        assertThat(endPoint.diffX(startPoint)).isEqualTo(2);
+    }
 }

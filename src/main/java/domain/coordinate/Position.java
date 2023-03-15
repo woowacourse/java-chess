@@ -39,6 +39,13 @@ public class Position {
             CACHE.get(y).add(new Position(x, y));
         }
     }
+    public int diffY(Position otherPosition) {
+        return this.y - otherPosition.y;
+    }
+
+    public int diffX(Position otherPosition) {
+        return this.x - otherPosition.x;
+    }
 
     @Override
     public boolean equals(final Object o) {
