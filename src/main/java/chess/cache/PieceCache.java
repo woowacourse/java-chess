@@ -19,24 +19,24 @@ public class PieceCache {
         addRook(0, Color.BLACK);
         addKnight(0, Color.BLACK);
         addBishop(0, Color.BLACK);
-        addQueen(0, 3, Color.BLACK);
-        addKing(0, 4, Color.BLACK);
+        addQueen(0, Color.BLACK);
+        addKing(0, Color.BLACK);
 
         addPawn(6, Color.WHITE);
         addRook(7, Color.WHITE);
         addKnight(7, Color.WHITE);
         addBishop(7, Color.WHITE);
-        addQueen(7, 4, Color.WHITE);
-        addKing(7, 3, Color.WHITE);
+        addQueen(7, Color.WHITE);
+        addKing(7, Color.WHITE);
     }
 
-    private static void addKing(final int column, final int row, final Color color) {
-        board.put(new Position(column, row), new Piece(PieceType.KING, color));
+    private static void addKing(final int column, final Color color) {
+        board.put(new Position(column, 4), new Piece(PieceType.KING, color));
 
     }
 
-    private static void addQueen(final int column, final int row, final Color color) {
-        board.put(new Position(column, row), new Piece(PieceType.QUEEN, color));
+    private static void addQueen(final int column, final Color color) {
+        board.put(new Position(column, 3), new Piece(PieceType.QUEEN, color));
     }
 
     private static void addBishop(final int column, final Color color) {
