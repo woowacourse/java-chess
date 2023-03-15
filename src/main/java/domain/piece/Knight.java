@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.position.Position;
+
 public final class Knight extends Piece {
 
     private static final String NAME = "N";
@@ -9,7 +11,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMoveable() {
+    public boolean isMovable(final Position source, final Position destination) {
         return false;
     }
 }

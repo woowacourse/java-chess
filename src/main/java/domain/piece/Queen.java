@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.position.Position;
+
 public final class Queen extends Piece {
 
     private static final String NAME = "Q";
@@ -9,7 +11,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean isMoveable() {
-        return false;
+    public boolean isMovable(final Position source, final Position destination) {
+        return source.isStraight(destination) || source.isDiagonal(destination);
     }
 }

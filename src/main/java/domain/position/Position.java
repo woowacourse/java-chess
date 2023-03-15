@@ -12,8 +12,51 @@ public final class Position {
         this.rank = rank;
     }
 
+    public boolean isDiagonal(Position other) {
+        if (this.equals(other)) {
+            return false;
+        }
+
+        final int otherFile = other.getFile();
+        final int otherRank = other.getRank();
+        final int thisFile = this.getFile();
+        final int thisRank = this.getRank();
+
+        return Math.abs(thisFile - otherFile) == Math.abs(thisRank - otherRank);
+    }
+
+    public boolean isStraight(Position other) {
+        if (this.equals(other) || isDiagonal(other)) {
+            return false;
+        }
+
+        final int otherFile = other.getFile();
+        final int otherRank = other.getRank();
+        final int thisFile = this.getFile();
+        final int thisRank = this.getRank();
+
+        return otherRank == thisRank || otherFile == thisFile;
+    }
+
+    public int getDistance(Position other) {
+        final int otherFile = other.getFile();
+        final int otherRank = other.getRank();
+        final int thisFile = this.getFile();
+        final int thisRank = this.getRank();
+
+        return Math.abs(thisFile - otherFile) + Math.abs(thisRank - otherRank);
+    }
+
     public String getName() {
         return file.getName() + rank.getName();
+    }
+
+    private int getFile() {
+        return this.getName().charAt(0);
+    }
+
+    private int getRank() {
+        return this.getName().charAt(1);
     }
 
     @Override

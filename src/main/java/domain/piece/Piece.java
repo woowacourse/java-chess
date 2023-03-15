@@ -2,7 +2,7 @@ package domain.piece;
 
 import java.util.Objects;
 
-public abstract class Piece implements Moveable {
+public abstract class Piece implements Movable {
     private final String name;
     private final Team team;
 
