@@ -1,41 +1,43 @@
 package techcourse.fp.chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static techcourse.fp.chess.domain.PositionFixtures.A1;
-import static techcourse.fp.chess.domain.PositionFixtures.A8;
-import static techcourse.fp.chess.domain.PositionFixtures.B3;
-import static techcourse.fp.chess.domain.PositionFixtures.H1;
+import static techcourse.fp.chess.domain.PositionFixtures.A2;
+import static techcourse.fp.chess.domain.PositionFixtures.A3;
+import static techcourse.fp.chess.domain.PositionFixtures.A4;
+import static techcourse.fp.chess.domain.PositionFixtures.A5;
+import static techcourse.fp.chess.domain.PositionFixtures.H8;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
 
-    @DisplayName("시작점과 도착점이 같은 File에 있으면 룩은 이동이 가능하다.")
+    private final Rook rook = new Rook(Color.BLACK);
+
+    @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다.")
     @Test
-    void is_movable_in_same_file() {
-        final Rook rook = new Rook(Side.BLACK);
-        assertThat(rook.isMovable(A1, A8)).isTrue();
+    void success() {
+        final List<Position> path = rook.findPath(A1, A5, Color.WHITE);
+
+        assertThat(path).containsExactly(A2, A3, A4,A5);
     }
 
-    @DisplayName("시작점과 도착점이 같은 Rank에 있으면 룩은 이동이 가능하다.")
+    @DisplayName("목적 지점이 행마법상 이동 불가능한 지역이면 예외가 발생한다.")
     @Test
-    void is_movable_in_same_rank() {
-        final Rook rook = new Rook(Side.BLACK);
-        assertThat(rook.isMovable(A1, H1)).isTrue();
+    void fail_by_move_rule() {
+        assertThatThrownBy(() -> rook.findPath(A1, H8, Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("행마법상 이동 불가능한 지역입니다.");
     }
 
-    @DisplayName("시작점과 도착점이 같다면 이동이 불가능하다.")
+    @DisplayName("목적 지점에 아군의 기물이 있으면 예외가 발생한다.")
     @Test
-    void is_not_movable_in_same_position() {
-        final Rook rook = new Rook(Side.BLACK);
-        assertThat(rook.isMovable(A1, A1)).isFalse();
-    }
-
-    @DisplayName("시작점과 도착점이 FIle과 Rank가 모두 다르다면 이동이 불가능하다.")
-    @Test
-    void is_not_movable() {
-        final Rook rook = new Rook(Side.BLACK);
-        assertThat(rook.isMovable(A1, B3)).isFalse();
+    void fail_by_same_color_piece() {
+        assertThatThrownBy(() -> rook.findPath(A1, A5, Color.BLACK))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
     }
 }
