@@ -7,7 +7,7 @@ public class Bishop implements Movable {
 
 
     @Override
-    public List<Position> findMovablePositions(final Position position) {
+    public List<Path> findMovablePaths(final Position position) {
         int sourceX = position.getX();
         int sourceY = position.getY();
 
@@ -19,7 +19,7 @@ public class Bishop implements Movable {
                 }
             }
         }
-        return movablePositions;
+        return null;
     }
 
     private boolean isMovableDestination(final int sourceX, final int sourceY, final int destX, final int destY) {

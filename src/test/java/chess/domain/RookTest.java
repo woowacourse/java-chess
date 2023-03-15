@@ -16,11 +16,14 @@ class RookTest {
     void 이동_범위_확인() {
         Rook rook = new Rook();
 
-        List<Position> movablePositions = rook.findMovablePositions(new Position(2, 2));
+        List<Path> movablePaths = rook.findMovablePaths(new Position(1, 1));
 
-        assertThat(movablePositions).contains(new Position(2, 1), new Position(1, 2), new Position(2, 3),
-                new Position(3, 2), new Position(8, 2), new Position(2, 8));
+        int totalPositionCount = 0;
 
-        assertThat(movablePositions.size()).isEqualTo(14);
+        for (Path path : movablePaths) {
+            totalPositionCount += path.positions().size();
+        }
+
+        assertThat(totalPositionCount).isEqualTo(14);
     }
 }

@@ -8,14 +8,16 @@ public class Pawn implements Movable {
     private static final int FIRST_RANK = 2;
 
     @Override
-    public List<Position> findMovablePositions(final Position position) {
+    public List<Path> findMovablePaths(final Position position) {
         int sourceX = position.getX();
         int sourceY = position.getY();
+//
+//        if (isFirstMove(sourceX)) {
+//            return findFirstMoveDestination(sourceX, sourceY);
+//        }
+//        return findMovePosition(sourceX, sourceY);
 
-        if (isFirstMove(sourceX)) {
-            return findFirstMoveDestination(sourceX, sourceY);
-        }
-        return findMovePosition(sourceX, sourceY);
+        return null;
     }
 
     private boolean isFirstMove(int sourceX) {
