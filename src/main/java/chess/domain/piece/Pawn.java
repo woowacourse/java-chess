@@ -32,7 +32,6 @@ public final class Pawn extends Piece {
             targetPath.add(source.getDownStraight());
             targetPath.add(source.getDownStraight().getDownStraight());
         }
-        System.out.println(targetPath);
         targetPath.add(target);
         return targetPath;
     }
