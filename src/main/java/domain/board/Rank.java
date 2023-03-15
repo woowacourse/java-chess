@@ -21,6 +21,10 @@ public class Rank {
         return pieces.get(col);
     }
 
+    public void replacePiece(int col, Piece newPiece) {
+        pieces.set(col, newPiece);
+    }
+
     public boolean isMovableAt(int col, Coordinate startCoordinate, Coordinate endCoordinate) {
         Piece targetPiece = pieces.get(col);
         return targetPiece.isMovable(startCoordinate, endCoordinate);
