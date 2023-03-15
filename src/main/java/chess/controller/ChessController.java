@@ -20,9 +20,7 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard();
 
         outputView.printStartMessage();
-        Command command = inputView.requestGameCommand();
-
-        if (command == Command.START) {
+        while (inputView.requestGameCommand() != Command.END) {
             outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
         }
 
