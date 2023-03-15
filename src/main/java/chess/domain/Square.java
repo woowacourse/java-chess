@@ -42,28 +42,6 @@ public class Square {
         return squares;
     }
 
-    public boolean isStraight(final Square target) {
-        int rankGap = calculateRankDifference(target);
-        int fileGap = calculateFileDifference(target);
-        return fileGap == 0 || rankGap == 0;
-    }
-
-    public boolean isDiagonal(final Square target) {
-        int rankGap = calculateRankDifference(target);
-        int fileGap = calculateFileDifference(target);
-        return Math.abs(rankGap) == Math.abs(fileGap);
-    }
-
-    public boolean isKnightMovable(final Square target) {
-        int rankGap = calculateRankDifference(target);
-        int fileGap = calculateFileDifference(target);
-        return Math.abs(rankGap * fileGap) == 2 ;
-    }
-
-    public boolean isSameFile(final Square target) {
-        return this.file == target.file;
-    }
-
     private int calculateRankDifference(final Square target) {
         return rank.calculateDifference(target.rank);
     }
