@@ -1,8 +1,6 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
 
 public class Pawn extends Piece {
 
@@ -26,14 +24,8 @@ public class Pawn extends Piece {
     }
 
     private boolean validatePosition(final String position) {
-        char arrivalRow = position.charAt(1);
-        char arrivalCol = position.charAt(0);
-
-        Row myRow = this.position.row;
-        Col myCol = this.position.col;
-
-        int substitutionOfRow = myRow.calculateSubstitutionFromArrivalPosition(arrivalRow);
-        int substitutionOfCol = myCol.calculateSubstitutionFromArrivalPosition(arrivalCol);
+        int substitutionOfRow = this.position.subRowFromArriveRow(position);
+        int substitutionOfCol = this.position.subColFromArriveCol(position);
 
         if (this.isFirstMove) {
             this.isFirstMove = false;

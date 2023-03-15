@@ -1,8 +1,6 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Col;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -23,15 +21,14 @@ public class Knight extends Piece {
         }
     }
 
-    private boolean validatePosition(final String arrivalPosition) {
+    private boolean validatePosition(final String position) {
         List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
-        char arrivalCol = arrivalPosition.charAt(0);
-        char arrivalRow = arrivalPosition.charAt(1);
-        Row myRow = this.position.row;
-        Col myCol = this.position.col;
 
-        int absOfRow = Math.abs(myRow.calculateSubstitutionFromArrivalPosition(arrivalRow));
-        int absOfCol = Math.abs(myCol.calculateSubstitutionFromArrivalPosition(arrivalCol));
+        int substitutionOfRow = this.position.subRowFromArriveRow(position);
+        int substitutionOfCol = this.position.subColFromArriveCol(position);
+
+        int absOfRow = Math.abs(substitutionOfRow);
+        int absOfCol = Math.abs(substitutionOfCol);
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         return possibleSubPosition.contains(newPosition);

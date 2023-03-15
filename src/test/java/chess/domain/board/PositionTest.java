@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -28,5 +29,33 @@ public class PositionTest {
         assertThatThrownBy(
                 () -> new Position(input)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("이동하고자 하는 위치와 현재 위치의 Row 차이를 반환한다.")
+    void returns_sub_row_from_arrive_row() {
+        // given
+        Position nowPosition = new Position("c3");
+        String arrivePosition = "c4";
+
+        // when
+        int result = nowPosition.subRowFromArriveRow(arrivePosition);
+
+        // then
+        assertThat(result).isEqualTo(1);
+     }
+
+    @Test
+    @DisplayName("이동하고자 하는 위치와 현재 위치의 Row 차이를 반환한다.")
+    void returns_sub_col_from_arrive_col() {
+        // given
+        Position nowPosition = new Position("c3");
+        String arrivePosition = "d3";
+
+        // when
+        int result = nowPosition.subColFromArriveCol(arrivePosition);
+
+        // then
+        assertThat(result).isEqualTo(1);
     }
 }
