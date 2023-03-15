@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-
 public class Bishop extends Piece {
     
     private Bishop(final Color color) {

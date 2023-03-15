@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-
 public class Rook extends Piece {
     
     private Rook(final Color color) {

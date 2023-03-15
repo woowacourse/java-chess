@@ -1,9 +1,11 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
