@@ -37,5 +37,9 @@ public final class Square {
     public Piece getPiece() {
         return piece;
     }
+
+    public boolean equalsColor(final Square targetSquare) {
+        return piece.equalsColor(targetSquare.piece);
+    }
 }
 

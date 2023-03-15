@@ -26,16 +26,27 @@ public final class Board {
     public void move(Position source, Position target) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
+        validateLegalTargetColor(sourceSquare, targetSquare);
         Set<Position> movablePath = sourceSquare.computePath(source, target);
 
-        Map<Position, Boolean> isEmptySquare = movablePath.stream()
-                .collect(Collectors.toMap(
-                        position -> position,
-                        position -> getSquare(position).isEmpty()));
+        Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
 
         if (sourceSquare.canMovePiece(isEmptySquare, source, target)) {
             targetSquare.changePiece(sourceSquare);
             sourceSquare.makeEmpty();
+        }
+    }
+
+    private Map<Position, Boolean> generateIsEmptySquare(final Set<Position> movablePath) {
+        return movablePath.stream()
+                .collect(Collectors.toMap(
+                        position -> position,
+                        position -> getSquare(position).isEmpty()));
+    }
+
+    private void validateLegalTargetColor(final Square sourceSquare, final Square targetSquare) {
+        if (sourceSquare.equalsColor(targetSquare)) {
+            throw new UnsupportedOperationException();
         }
     }
 

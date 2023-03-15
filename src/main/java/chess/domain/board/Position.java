@@ -136,10 +136,10 @@ public final class Position {
     }
 
     public int getRank() {
-        return rank.getValue();
+        return rank.getValue() - 1;
     }
 
     public int getFile() {
-        return file.getValue();
+        return file.getValue() - 1;
     }
 }

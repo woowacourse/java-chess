@@ -33,4 +33,8 @@ public abstract class Piece {
     public boolean isEmpty() {
         return false;
     }
+
+    public boolean equalsColor(final Piece targetSquare) {
+        return color == targetSquare.color;
+    }
 }
