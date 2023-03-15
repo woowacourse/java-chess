@@ -9,17 +9,23 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final int MOVABLE_MANHATTAN_DISTANCE = 3;
+    private static final List<Position> PASSING_POSITIONS_WITH_LEAPING = List.of();
+
     public Knight(final File file, final Rank rank, final Color color) {
         super(file, rank, color);
     }
 
     @Override
     protected boolean canMove(final Position targetPosition) {
-        return false;
+        return !position.isInCrossPosition(targetPosition)
+                && position.calculateManhattanDistance(targetPosition) == MOVABLE_MANHATTAN_DISTANCE;
     }
 
     @Override
-    public List<Position> getPassingPath(final Position targetPosition) {
-        return null;
+    public List<Position> getPassingPositions(final Position targetPosition) {
+        validateSamePosition(targetPosition);
+        validateDestination(targetPosition);
+        return PASSING_POSITIONS_WITH_LEAPING;
     }
 }
