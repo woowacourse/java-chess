@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
