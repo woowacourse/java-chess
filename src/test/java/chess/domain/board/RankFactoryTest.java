@@ -1,8 +1,10 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.FileCoordinate.A;
+import static chess.domain.board.FileCoordinate.A;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;

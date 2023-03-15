@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.RankType.of;
+import static chess.domain.board.RankType.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayNameGeneration;

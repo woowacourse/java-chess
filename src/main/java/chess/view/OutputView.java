@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.domain.Board;
-import chess.domain.Piece;
-import chess.domain.PieceType;
-import chess.domain.Rank;
-import chess.domain.Square;
+import chess.domain.board.Board;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class OutputView {
 
