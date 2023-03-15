@@ -3,6 +3,8 @@ package chess.domain;
 import java.util.Objects;
 
 public class Piece {
+    public static final Piece EMPTY_PIECE = new Piece(Role.EMPTY, Team.EMPTY);
+
     private final Role role;
     private final Team team;
 
