@@ -77,6 +77,10 @@ public class ChessBoard {
         }
     }
 
+    public ChessPiece getChessPieceByPosition(List<Integer> position) {
+        return chessBoard.get(position);
+    }
+
     public Map<List<Integer>, ChessPiece> getChessBoard() {
         return chessBoard;
     }
