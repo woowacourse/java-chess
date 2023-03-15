@@ -12,7 +12,11 @@ public enum Direction {
     UP_LEFT(-1, 1),
     UP_RIGHT(1, 1),
     DOWN_LEFT(-1, -1),
-    DOWN_RIGHT(1, -1);
+    DOWN_RIGHT(1, -1),
+    UP_TWO_LEFT(-1, 2),
+    UP_TWO_RIGHT(1, 2),
+    DOWN_TWO_LEFT(-1, -2),
+    DOWN_TWO_RIGHT(1, -2);
 
     private final int fileMove;
     private final int rankMove;
@@ -33,8 +37,12 @@ public enum Direction {
     public static List<Direction> getDiagonalDirections() {
         return List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
     }
-    
+
+    public static List<Direction> getLShapeDirections() {
+        return List.of(UP_TWO_LEFT, UP_TWO_RIGHT, DOWN_TWO_LEFT, DOWN_TWO_RIGHT);
+    }
+
     public Position calculate(final Position before) {
-        return before.calculate(this.fileMove, this.rankMove);
+        return before.calculate(this.rankMove, this.fileMove);
     }
 }

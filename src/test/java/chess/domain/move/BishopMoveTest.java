@@ -11,8 +11,6 @@ class BishopMoveTest {
     @ParameterizedTest(name = "source에서 target으로 비숍이 이동할 수 있으면 true를 반환한다.")
     @CsvSource(value = {"1:1", "7:7", "1:3", "3:1", "3:3"}, delimiter = ':')
     void canMoveSuccess(final int targetRank, final int targetFile) {
-        System.out.println(targetRank + " " + targetFile);
-
         // given
         final BishopMove bishopMove = new BishopMove();
         final int sourceRank = 2, sourceFile = 2;
