@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +42,7 @@ public class RankTest {
         Rank rank = Rank.EIGHT;
 
         assertThatThrownBy(() -> rank.move(Direction.UP))
-            .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("가장 아래에서 아래로 더 이동할 수 없다")
@@ -50,6 +51,6 @@ public class RankTest {
         Rank rank = Rank.ONE;
 
         assertThatThrownBy(() -> rank.move(Direction.DOWN))
-            .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

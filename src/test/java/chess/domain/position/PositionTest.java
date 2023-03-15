@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,6 +16,6 @@ public class PositionTest {
         Position position = new Position(File.B, Rank.TWO);
 
         assertThat(position.move(direction))
-            .isEqualTo(new Position(file, rank));
+                .isEqualTo(new Position(file, rank));
     }
 }

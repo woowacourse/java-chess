@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import static chess.domain.Direction.DOWN;
-import static chess.domain.Direction.LEFT;
-import static chess.domain.Direction.RIGHT;
-import static chess.domain.Direction.UP;
+import static chess.domain.move.Direction.DOWN;
+import static chess.domain.move.Direction.LEFT;
+import static chess.domain.move.Direction.RIGHT;
+import static chess.domain.move.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.AbstractTestFixture;
-import chess.domain.Move;
+import chess.domain.move.Move;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

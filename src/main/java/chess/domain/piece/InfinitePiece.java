@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Move;
+import chess.domain.move.Move;
 import java.util.Set;
 
 public abstract class InfinitePiece extends QuadrantPiece {

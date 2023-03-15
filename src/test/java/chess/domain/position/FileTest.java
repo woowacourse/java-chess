@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +42,7 @@ public class FileTest {
         File file = File.A;
 
         assertThatThrownBy(() -> file.move(Direction.LEFT))
-            .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("가장 오른쪽에서 오른쪽으로 더 이동할 수 없다")
@@ -50,6 +51,6 @@ public class FileTest {
         File file = File.H;
 
         assertThatThrownBy(() -> file.move(Direction.RIGHT))
-            .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

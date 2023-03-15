@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.move;
 
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

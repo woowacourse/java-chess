@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.move.Direction;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -21,18 +22,18 @@ public enum File {
 
     private File left() {
         return indexOf(this.index - 1)
-            .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     private File right() {
         return indexOf(this.index + 1)
-            .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     private static Optional<File> indexOf(int index) {
         return Arrays.stream(values())
-            .filter(file -> file.index == index)
-            .findFirst();
+                .filter(file -> file.index == index)
+                .findFirst();
     }
 
     public File move(Direction direction) {

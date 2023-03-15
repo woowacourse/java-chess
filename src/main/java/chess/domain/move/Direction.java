@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.move;
 
 import java.util.List;
 
