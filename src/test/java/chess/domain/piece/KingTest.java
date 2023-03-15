@@ -9,6 +9,7 @@ import chess.domain.Rank;
 import chess.domain.Square;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -59,12 +60,23 @@ class KingTest {
         );
     }
 
-    @DisplayName("사방과 대각선으로 한 칸씩 움직일 수 있다.")
+    @DisplayName("팔방으로 한 칸씩 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("kingTestProvider")
     void Should_Success_When_KingMove(final Square source, final Square target, final Move move) {
         final King king = new King(Camp.WHITE);
 
         assertThat(king.isMovable(source, target, move)).isTrue();
+    }
+
+    @DisplayName("사방과 대각선으로 한 칸 초과해서 움직일 수 없다.")
+    @Test()
+    void Should_Fail_When_KingMove() {
+        final King king = new King(Camp.WHITE);
+        final Square source = new Square(File.A, Rank.ONE);
+        final Square target = new Square(File.A, Rank.THREE);
+        final Move move = Move.UP;
+
+        assertThat(king.isMovable(source, target, move)).isFalse();
     }
 }

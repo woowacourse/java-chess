@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
-    private static final List<Move> possibleMove = makePossibleMove();
+    private static final List<Move> possibleMoves = makePossibleMove();
 
     public King(final Camp camp) {
         super(camp);
@@ -19,6 +19,9 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(final Square source, final Square target, final Move move) {
-        return possibleMove.contains(move);
+        if (possibleMoves.contains(move)) {
+            return source.isAble(target, move.getFile(), move.getRank());
+        }
+        return false;
     }
 }
