@@ -2,7 +2,6 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Color;
 import domain.Location;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ class KnightTest {
     @DisplayName("나이트가 이동 가능한 경로일 때 True를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsMovable() {
-        final Knight knight = new Knight(Color.BLACK);
+        final Knight knight = Knight.makeBlack();
         return Stream.of(
             DynamicTest.dynamicTest("위로 2칸 오른쪽 1칸으로는 움직일 수 있다.", () -> {
                 final Location start = Location.of(2, 2);
@@ -62,7 +61,7 @@ class KnightTest {
     @DisplayName("나이트가 이동가능하지 않은 경로일 때 False를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsNotMovable() {
-        final Knight knight = new Knight(Color.BLACK);
+        final Knight knight = Knight.makeBlack();
         return Stream.of(
             DynamicTest.dynamicTest("위로 움직일 수 없다.", () -> {
                 final Location start = Location.of(1, 1);

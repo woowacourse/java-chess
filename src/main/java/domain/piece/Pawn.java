@@ -5,8 +5,16 @@ import domain.Location;
 
 public class Pawn extends Piece {
 
-    public Pawn(final Color color) {
+    private Pawn(final Color color) {
         super(color);
+    }
+
+    public static Pawn makeBlack() {
+        return new Pawn(Color.BLACK);
+    }
+
+    public static Pawn makeWhite() {
+        return new Pawn(Color.WHITE);
     }
 
     @Override

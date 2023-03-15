@@ -5,8 +5,16 @@ import domain.Location;
 
 public class Bishop extends Piece {
 
-    public Bishop(final Color color) {
+    private Bishop(final Color color) {
         super(color);
+    }
+
+    public static Bishop makeBlack() {
+        return new Bishop(Color.BLACK);
+    }
+
+    public static Bishop makeWhite() {
+        return new Bishop(Color.WHITE);
     }
 
     @Override

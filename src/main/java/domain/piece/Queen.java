@@ -5,8 +5,16 @@ import domain.Location;
 
 public class Queen extends Piece {
 
-    public Queen(final Color color) {
+    private Queen(final Color color) {
         super(color);
+    }
+
+    public static Queen makeBlack() {
+        return new Queen(Color.BLACK);
+    }
+
+    public static Queen makeWhite() {
+        return new Queen(Color.WHITE);
     }
 
     @Override

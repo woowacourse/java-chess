@@ -2,22 +2,39 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Queen;
+import domain.piece.Rook;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class LineTest {
 
-    private static final Square BLACK_ROOK = new Square(ChessPiece.makeBlack(Piece.ROOK));
-    private static final Square BLACK_KNIGHT = new Square(ChessPiece.makeBlack(Piece.KNIGHT));
-    private static final Square BLACK_BISHOP = new Square(ChessPiece.makeBlack(Piece.BISHOP));
-    private static final Square BLACK_QUEEN = new Square(ChessPiece.makeBlack(Piece.QUEEN));
-    private static final Square BLACK_KING = new Square(ChessPiece.makeBlack(Piece.KING));
-    private static final Square WHITE_ROOK = new Square(ChessPiece.makeWhite(Piece.ROOK));
-    private static final Square WHITE_KNIGHT = new Square(ChessPiece.makeWhite(Piece.KNIGHT));
-    private static final Square WHITE_BISHOP = new Square(ChessPiece.makeWhite(Piece.BISHOP));
-    private static final Square WHITE_QUEEN = new Square(ChessPiece.makeWhite(Piece.QUEEN));
-    private static final Square WHITE_KING = new Square(ChessPiece.makeWhite(Piece.KING));
+    private static final List<Square> BLACK_BACK_SQUARE = List.of(
+        new Square(Rook.makeBlack()),
+        new Square(Knight.makeBlack()),
+        new Square(Bishop.makeBlack()),
+        new Square(Queen.makeBlack()),
+        new Square(King.makeBlack()),
+        new Square(Bishop.makeBlack()),
+        new Square(Knight.makeBlack()),
+        new Square(Rook.makeBlack())
+    );
+    private static final List<Square> WHITE_BACK_SQUARE = List.of(
+        new Square(Rook.makeWhite()),
+        new Square(Knight.makeWhite()),
+        new Square(Bishop.makeWhite()),
+        new Square(Queen.makeWhite()),
+        new Square(King.makeWhite()),
+        new Square(Bishop.makeWhite()),
+        new Square(Knight.makeWhite()),
+        new Square(Rook.makeWhite())
+    );
 
     @Test
     @DisplayName("검은색 진영의 앞줄을 생성한다(폰 8개)")
@@ -30,7 +47,7 @@ class LineTest {
         assertThat(line).extracting("squares")
             .asList()
             .hasSize(8)
-            .containsOnly(new Square(ChessPiece.makeBlack(Piece.PAWN)));
+            .containsOnly(new Square(Pawn.makeBlack()));
     }
 
     @Test
@@ -44,7 +61,7 @@ class LineTest {
         assertThat(line).extracting("squares")
             .asList()
             .hasSize(8)
-            .containsOnly(new Square(ChessPiece.makeWhite(Piece.PAWN)));
+            .containsOnly(new Square(Pawn.makeWhite()));
     }
 
     @Test
@@ -57,16 +74,7 @@ class LineTest {
         //then
         assertThat(line).extracting("squares")
             .asList()
-            .containsExactly(
-                BLACK_ROOK,
-                BLACK_KNIGHT,
-                BLACK_BISHOP,
-                BLACK_QUEEN,
-                BLACK_KING,
-                BLACK_BISHOP,
-                BLACK_KNIGHT,
-                BLACK_ROOK
-            );
+            .containsExactlyElementsOf(BLACK_BACK_SQUARE);
     }
 
     @Test
@@ -79,16 +87,7 @@ class LineTest {
         //then
         assertThat(line).extracting("squares")
             .asList()
-            .containsExactly(
-                WHITE_ROOK,
-                WHITE_KNIGHT,
-                WHITE_BISHOP,
-                WHITE_QUEEN,
-                WHITE_KING,
-                WHITE_BISHOP,
-                WHITE_KNIGHT,
-                WHITE_ROOK
-            );
+            .containsExactlyElementsOf(WHITE_BACK_SQUARE);
     }
 
     @Test

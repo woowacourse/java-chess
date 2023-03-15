@@ -1,13 +1,14 @@
 package domain;
 
+import domain.piece.Piece;
 import java.util.Objects;
 
 public class Square {
 
-    private final ChessPiece chessPiece;
+    private final Piece piece;
 
-    public Square(final ChessPiece chessPiece) {
-        this.chessPiece = chessPiece;
+    public Square(final Piece piece) {
+        this.piece = piece;
     }
 
     public static Square empty() {
@@ -23,11 +24,11 @@ public class Square {
             return false;
         }
         final Square square = (Square) o;
-        return Objects.equals(chessPiece, square.chessPiece);
+        return Objects.equals(piece, square.piece);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(chessPiece);
+        return Objects.hash(piece);
     }
 }

@@ -15,6 +15,6 @@ class SquareTest {
         final Square square = Square.empty();
 
         //then
-        assertThat(square).extracting("chessPiece").isEqualTo(null);
+        assertThat(square).extracting("piece").isEqualTo(null);
     }
 }

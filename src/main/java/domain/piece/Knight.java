@@ -5,8 +5,16 @@ import domain.Location;
 
 public class Knight extends Piece {
 
-    public Knight(final Color color) {
+    private Knight(final Color color) {
         super(color);
+    }
+
+    public static Knight makeBlack() {
+        return new Knight(Color.BLACK);
+    }
+
+    public static Knight makeWhite() {
+        return new Knight(Color.WHITE);
     }
 
     @Override

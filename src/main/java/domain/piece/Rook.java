@@ -5,8 +5,16 @@ import domain.Location;
 
 public class Rook extends Piece {
 
-    public Rook(final Color color) {
+    private Rook(final Color color) {
         super(color);
+    }
+
+    public static Rook makeBlack() {
+        return new Rook(Color.BLACK);
+    }
+
+    public static Rook makeWhite() {
+        return new Rook(Color.WHITE);
     }
 
     @Override

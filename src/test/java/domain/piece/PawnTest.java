@@ -2,7 +2,6 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Color;
 import domain.Location;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ class PawnTest {
     @DisplayName("검은색 폰이 이동 가능한 경로일 때 true를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsBlackMovable() {
-        final Pawn pawn = new Pawn(Color.BLACK);
+        final Pawn pawn = Pawn.makeBlack();
         return Stream.of(
             DynamicTest.dynamicTest("검은색이고 초기 위치에 있을 때, 아래로 2칸 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 7);
@@ -42,7 +41,7 @@ class PawnTest {
     @DisplayName("흰색 폰이 이동 가능한 경로일 때 true를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsWhiteMovable() {
-        final Pawn pawn = new Pawn(Color.WHITE);
+        final Pawn pawn = Pawn.makeWhite();
         return Stream.of(
             DynamicTest.dynamicTest("흰색이고 초기 위치에 있을 때, 위로 2칸 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 2);
@@ -70,7 +69,7 @@ class PawnTest {
     @DisplayName("검은색 폰이 이동 불가능한 경로일 때 false를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsBlackNotMovable() {
-        final Pawn pawn = new Pawn(Color.BLACK);
+        final Pawn pawn = Pawn.makeBlack();
         return Stream.of(
             DynamicTest.dynamicTest("검은색이고 초기 위치에 있을 때, 아래로 3칸 움직일 수 없다.", () -> {
                 final Location start = Location.of(1, 7);
@@ -108,7 +107,7 @@ class PawnTest {
     @DisplayName("흰색 폰이 이동 불가능한 경로일 때 false를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsWhiteNotMovable() {
-        final Pawn pawn = new Pawn(Color.WHITE);
+        final Pawn pawn = Pawn.makeWhite();
         return Stream.of(
             DynamicTest.dynamicTest("흰색이고 초기 위치에 있을 때, 위로 3칸 움직일 수 없다.", () -> {
                 final Location start = Location.of(1, 2);

@@ -5,8 +5,16 @@ import domain.Location;
 
 public class King extends Piece {
 
-    public King(final Color color) {
+    private King(final Color color) {
         super(color);
+    }
+
+    public static King makeBlack() {
+        return new King(Color.BLACK);
+    }
+
+    public static King makeWhite() {
+        return new King(Color.WHITE);
     }
 
     @Override
