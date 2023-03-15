@@ -13,6 +13,11 @@ public class Board {
         this.board = board;
     }
 
+    public Side findSideByPosition(final Position position) {
+        final Piece piece = board.get(position);
+        return piece.getSide();
+    }
+
     public Piece getPiece(final File file, final Rank rank) {
         return board.get(Position.of(file, rank));
     }
