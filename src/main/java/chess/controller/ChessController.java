@@ -16,7 +16,18 @@ public class ChessController {
     }
 
     public void run() {
-        Board board = BoardFactory.createBoard();
-        outputView.printBoard(board);
+        if (isStart()) {
+            Board board = BoardFactory.createBoard();
+            outputView.printBoard(board);
+        }
+    }
+
+    private boolean isStart() {
+        try {
+            return inputView.readStartCommend();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR]: " + e.getMessage());
+            return isStart();
+        }
     }
 }
