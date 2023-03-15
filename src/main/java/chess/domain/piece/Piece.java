@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.Move;
 import chess.domain.Square;
 
 public abstract class Piece {
@@ -10,5 +11,5 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    abstract public boolean isMovable(final Square source, final Square target);
+    abstract public boolean isMovable(final Square source, final Square target, Move move);
 }
