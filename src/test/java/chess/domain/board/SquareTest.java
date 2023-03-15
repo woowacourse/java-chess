@@ -1,4 +1,4 @@
-package chess.domain.square;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

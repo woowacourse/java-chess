@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -8,9 +8,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.square.File;
-import chess.domain.square.Rank;
-import chess.domain.square.Square;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

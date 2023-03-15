@@ -3,7 +3,7 @@ package chess.controller;
 import static chess.controller.ChessExecuteCommand.START;
 
 import chess.controller.dto.ChessBoardDto;
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 

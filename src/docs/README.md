@@ -4,13 +4,27 @@
 graph TD
     ChessController --> InputView
     ChessController --> OutputView
+
     ChessController --> ChessGame
     ChessGame --> Board
-    Board --> Square
-    Board --> Piece
+
     Square --> File
     Square --> Rank
-    Piece --> Color
+
+    Board --> Square
+    Board --> PIECE
+
+    PIECE --> Color
+
+    subgraph PIECE
+        direction BT
+        Pawn -.-> Piece
+        Rook -.-> Piece
+        Bishop -.-> Piece
+        Knight -.-> Piece
+        Queen -.-> Piece
+        King -.-> Piece
+    end
 ```
 
 ## 구현 기능 목록
