@@ -1,45 +1,50 @@
 package chess.domain.board;
 
-import chess.domain.board.position.PiecePosition;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Staunton;
+import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.King;
+import chess.domain.piece.type.Knight;
+import chess.domain.piece.type.Pawn;
+import chess.domain.piece.type.Queen;
+import chess.domain.piece.type.Rook;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessBoardFactory {
 
-    private static final Map<PiecePosition, Piece> whitePieces = new HashMap<>();
-    private static final Map<PiecePosition, Piece> blackPieces = new HashMap<>();
+    private static final List<Piece> pieces = new ArrayList<>();
 
     static {
-        createExcludePawn(whitePieces, 1, Color.WHITE);
-        createExcludePawn(blackPieces, 8, Color.BLACK);
-        createPawns(whitePieces, 2, Color.WHITE);
-        createPawns(blackPieces, 7, Color.BLACK);
+        createExcludePawn(1, Color.WHITE);
+        createExcludePawn(8, Color.BLACK);
+        createPawns(2, Color.WHITE);
+        createPawns(7, Color.BLACK);
     }
 
-    private static void createPawns(final Map<PiecePosition, Piece> pieces, final int rank, final Color color) {
+    private static void createPawns(final int rank, final Color color) {
         for (char file = 'a'; file <= 'h'; file++) {
-            pieces.put(PiecePosition.of(rank, file), new Piece(Staunton.PAWN, color));
+            pieces.add(new Pawn(color, PiecePosition.of(rank, file)));
         }
     }
 
-    private static void createExcludePawn(final Map<PiecePosition, Piece> pieces, final int rank, final Color color) {
-        pieces.put(PiecePosition.of(rank, 'a'), new Piece(Staunton.ROOK, color));
-        pieces.put(PiecePosition.of(rank, 'b'), new Piece(Staunton.KNIGHT, color));
-        pieces.put(PiecePosition.of(rank, 'c'), new Piece(Staunton.BISHOP, color));
-        pieces.put(PiecePosition.of(rank, 'd'), new Piece(Staunton.QUEEN, color));
-        pieces.put(PiecePosition.of(rank, 'e'), new Piece(Staunton.KING, color));
-        pieces.put(PiecePosition.of(rank, 'f'), new Piece(Staunton.BISHOP, color));
-        pieces.put(PiecePosition.of(rank, 'g'), new Piece(Staunton.KNIGHT, color));
-        pieces.put(PiecePosition.of(rank, 'h'), new Piece(Staunton.ROOK, color));
+    private static void createExcludePawn(final int rank, final Color color) {
+        pieces.add(new Rook(color, PiecePosition.of(rank, 'a')));
+        pieces.add(new Knight(color, PiecePosition.of(rank, 'b')));
+        pieces.add(new Bishop(color, PiecePosition.of(rank, 'c')));
+        pieces.add(new Queen(color, PiecePosition.of(rank, 'd')));
+        pieces.add(new King(color, PiecePosition.of(rank, 'e')));
+        pieces.add(new Bishop(color, PiecePosition.of(rank, 'f')));
+        pieces.add(new Knight(color, PiecePosition.of(rank, 'g')));
+        pieces.add(new Rook(color, PiecePosition.of(rank, 'h')));
     }
 
-    public static Map<PiecePosition, Piece> create() {
-        final HashMap<PiecePosition, Piece> piecePositionStauntonHashMap = new HashMap<>(whitePieces);
-        piecePositionStauntonHashMap.putAll(new HashMap<>(blackPieces));
-        return piecePositionStauntonHashMap;
+    public static List<Piece> create() {
+        return pieces.stream()
+                .map(Piece::clone)
+                .collect(Collectors.toList());
     }
 }

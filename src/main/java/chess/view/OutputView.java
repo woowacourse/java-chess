@@ -1,32 +1,41 @@
 package chess.view;
 
-import chess.domain.board.position.PiecePosition;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Staunton;
+import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.King;
+import chess.domain.piece.type.Knight;
+import chess.domain.piece.type.Pawn;
+import chess.domain.piece.type.Queen;
+import chess.domain.piece.type.Rook;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final Map<Staunton, String> stauntonFormat = new HashMap<>();
+    private static final Map<Class<?>, String> stauntonFormat = new HashMap<>();
 
     static {
-        stauntonFormat.put(Staunton.ROOK, "r");
-        stauntonFormat.put(Staunton.PAWN, "p");
-        stauntonFormat.put(Staunton.BISHOP, "b");
-        stauntonFormat.put(Staunton.KING, "k");
-        stauntonFormat.put(Staunton.KNIGHT, "n");
-        stauntonFormat.put(Staunton.QUEEN, "q");
+        stauntonFormat.put(Rook.class, "r");
+        stauntonFormat.put(Pawn.class, "p");
+        stauntonFormat.put(Bishop.class, "b");
+        stauntonFormat.put(King.class, "k");
+        stauntonFormat.put(Knight.class, "n");
+        stauntonFormat.put(Queen.class, "q");
     }
 
-    public static void showBoard(Map<PiecePosition, Piece> chessBoard) {
+    public static void showBoard(final List<Piece> chessBoard) {
+        final Map<PiecePosition, Piece> pieceMap = chessBoard.stream()
+                .collect(Collectors.toMap(Piece::piecePosition, Function.identity()));
         for (int rank = 8; rank >= 1; rank--) {
-            System.out.println(makeLineFormat(chessBoard, rank));
+            System.out.println(makeLineFormat(pieceMap, rank));
         }
     }
 
@@ -43,7 +52,7 @@ public class OutputView {
     }
 
     private static String convertCaseAccordingToColor(final Piece piece) {
-        String format = stauntonFormat.get(piece.staunton());
+        String format = stauntonFormat.get(piece.getClass());
         if (piece.color() == Color.BLACK) {
             format = format.toUpperCase();
         }

@@ -1,20 +1,35 @@
 package chess.domain.piece;
 
-public class Piece {
+import chess.domain.piece.position.PiecePosition;
 
-    private final Staunton staunton;
+public abstract class Piece implements Cloneable{
+
     private final Color color;
+    private PiecePosition piecePosition;
 
-    public Piece(final Staunton staunton, final Color color) {
-        this.staunton = staunton;
+    public Piece(final Color color, final PiecePosition piecePosition) {
         this.color = color;
+        this.piecePosition = piecePosition;
     }
 
-    public Staunton staunton() {
-        return staunton;
+    public boolean existIn(final PiecePosition piecePosition) {
+        return this.piecePosition.equals(piecePosition);
     }
 
     public Color color() {
         return color;
+    }
+
+    public PiecePosition piecePosition() {
+        return piecePosition;
+    }
+
+    @Override
+    public Piece clone() {
+        try {
+            return (Piece) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

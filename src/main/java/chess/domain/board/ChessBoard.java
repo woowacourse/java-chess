@@ -1,15 +1,15 @@
 package chess.domain.board;
 
-import chess.domain.board.position.PiecePosition;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.PiecePosition;
 
-import java.util.Map;
+import java.util.List;
 
 public class ChessBoard {
 
-    private final Map<PiecePosition, Piece> pieces;
+    private final List<Piece> pieces;
 
-    private ChessBoard(final Map<PiecePosition, Piece> pieces) {
+    private ChessBoard(final List<Piece> pieces) {
         this.pieces = pieces;
     }
 
@@ -18,14 +18,13 @@ public class ChessBoard {
     }
 
     public Piece get(final PiecePosition piecePosition) {
-        return pieces.keySet().stream()
-                .filter(piecePosition::equals)
-                .map(pieces::get)
+        return pieces.stream()
+                .filter(piece -> piece.existIn(piecePosition))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 존재하는 피스가 없습니다."));
     }
 
-    public Map<PiecePosition, Piece> pieces() {
+    public List<Piece> pieces() {
         return pieces;
     }
 }
