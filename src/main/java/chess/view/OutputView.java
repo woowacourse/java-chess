@@ -19,6 +19,7 @@ public class OutputView {
             final String rowNames = String.join("", names);
             System.out.println(rowNames);
         }
+        System.out.println();
     }
 
     private static void printMessage(String message) {
