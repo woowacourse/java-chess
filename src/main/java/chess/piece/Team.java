@@ -41,4 +41,8 @@ public enum Team {
     public boolean isWhiteTeam() {
         return this == WHITE;
     }
+    
+    public boolean isBlackTeam() {
+        return this == BLACK;
+    }
 }

@@ -40,10 +40,10 @@ public class OutputView {
             return symbol.toUpperCase();
         }
         
-        if ("e".equals(symbol)) {
-            return ".";
+        if (piece.isBlackTeam()) {
+            return symbol;
         }
         
-        return symbol;
+        return ".";
     }
 }

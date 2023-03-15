@@ -24,6 +24,10 @@ public abstract class Piece {
         return team.isWhiteTeam();
     }
     
+    public boolean isBlackTeam() {
+        return team.isBlackTeam();
+    }
+    
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
     }
