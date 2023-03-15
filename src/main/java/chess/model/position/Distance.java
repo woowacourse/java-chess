@@ -1,6 +1,7 @@
 package chess.model.position;
 
 import chess.model.piece.Direction;
+import java.security.PublicKey;
 
 public class Distance {
 
@@ -12,6 +13,10 @@ public class Distance {
     public Distance(final int rank, final int file) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public Direction findDirection() {
+        return Direction.findDirection(rank, file);
     }
 
     public int convertToIndex() {
