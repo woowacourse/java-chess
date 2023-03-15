@@ -37,7 +37,7 @@ public class InitPieces {
 
     public static Map<Square, Piece> initPieces() {
         InitPieces initPieces = new InitPieces();
-        return Collections.unmodifiableMap(initPieces.pieces);
+        return Map.copyOf(initPieces.pieces);
     }
 
     private void init() {

@@ -1,7 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.File;
+import chess.domain.Rank;
+import chess.domain.Square;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PiecesFactory {
     public static Pieces create(Color color) {
@@ -27,5 +33,13 @@ public class PiecesFactory {
             pieces.add(piece);
         }
         return pieces;
+    }
+
+    public static List<Piece> createPosition() {
+        final Map<Square, Piece> position = new LinkedHashMap<>();
+
+        position.put(Square.of(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+
+        return new ArrayList<>(position.values());
     }
 }
