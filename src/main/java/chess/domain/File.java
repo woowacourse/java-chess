@@ -23,6 +23,10 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 File입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
+    }
+
+    public char getValue() {
+        return value;
     }
 }

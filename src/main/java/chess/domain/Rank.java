@@ -23,6 +23,10 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
+    }
+
+    public char getValue() {
+        return value;
     }
 }
