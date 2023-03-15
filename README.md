@@ -31,7 +31,7 @@
     - [X] Square의 일급 컬렉션
 - [X] Board
     - [X] Squares의 일급 컬렉션
-    - [ ] source와 target이 같은 색이면 예외 발생
+    - [X] source와 target이 같은 색이면 예외 발생
 
 ## 출력
 
