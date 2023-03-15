@@ -51,4 +51,12 @@ public final class Position {
     public Position changePosition(int rank) {
         return new Position(rank, this.file);
     }
+
+    public int getRank() {
+        return this.rank;
+    }
+
+    public char getFile() {
+        return this.file;
+    }
 }

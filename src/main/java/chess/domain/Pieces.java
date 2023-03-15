@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 
 public final class Pieces {
 
-    private static final char FIRST_RANK = 'a';
-    private static final char LAST_RANK = 'h';
+    public static final char FIRST_RANK = 'a';
+    public static final char LAST_RANK = 'h';
     private static final char MIDDLE_RANK = 'd';
-    private static final int FIRST_FILE_OF_WHITE = 0;
+    public static final int FIRST_FILE_OF_WHITE = 0;
     private static final int LAST_FILE_OF_WHITE = 1;
-    private static final int FIRST_FILE_OF_BLACK = 7;
+    public static final int FIRST_FILE_OF_BLACK = 7;
     private static final int LAST_FILE_OF_BLACK = 6;
     private static final char QUEEN_DEFAULT_RANK_POSITION = 'd';
     private static final char KING_DEFAULT_RANK_POSITION = 'e';
@@ -61,7 +61,7 @@ public final class Pieces {
         Deque<Character> deque = new ArrayDeque<>(List.of('r', 'n', 'b'));
         makeRookAndBishopAndKnight(deque, pieceList);
         makePawns(pieceList, LAST_FILE_OF_WHITE);
-        makeQueenAndKing(pieceList, FIRST_FILE_OF_WHITE);
+        makeQueenAndKing(pieceList);
     }
 
     private static void makePawns(final List<Piece> pieceList, final int rank) {
@@ -85,9 +85,9 @@ public final class Pieces {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) backPosition, shape));
     }
 
-    private static void makeQueenAndKing(final List<Piece> pieceList, final int rank) {
-        pieceList.add(Piece.from(rank, QUEEN_DEFAULT_RANK_POSITION, Shape.QUEEN));
-        pieceList.add(Piece.from(rank, KING_DEFAULT_RANK_POSITION, Shape.KING));
+    private static void makeQueenAndKing(final List<Piece> pieceList) {
+        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, QUEEN_DEFAULT_RANK_POSITION, Shape.QUEEN));
+        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, KING_DEFAULT_RANK_POSITION, Shape.KING));
     }
 
     public long getShapeCount(final Shape shape) {
@@ -101,5 +101,9 @@ public final class Pieces {
         return "Pieces{" +
                 "pieces=" + pieces +
                 '}';
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }

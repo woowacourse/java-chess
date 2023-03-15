@@ -28,4 +28,16 @@ public class Piece {
     public Piece getNewPiece(int file) {
         return new Piece(position.changePosition(file), this.shape);
     }
+
+    public int getRank() {
+        return position.getRank();
+    }
+
+    public char getFile() {
+        return position.getFile();
+    }
+
+    public char getName(String color) {
+        return this.shape.findNameByColor(color);
+    }
 }

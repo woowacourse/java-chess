@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Player {
 
     private final String color;
@@ -24,5 +27,13 @@ public class Player {
                 "color='" + color + '\'' +
                 ", pieces=" + pieces +
                 '}';
+    }
+
+    public List<Piece> getPieces() {
+        return pieces.getPieces();
+    }
+
+    public String getColor() {
+        return color;
     }
 }

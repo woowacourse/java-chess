@@ -26,4 +26,10 @@ public enum Shape {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
 
+    public char findNameByColor(String color) {
+        if (color.equals("white")) {
+            return this.whiteName;
+        }
+        return this.blackName;
+    }
 }
