@@ -15,6 +15,8 @@ graph TD
     ChessController --> ChessGame
     
     ChessGame --> Board
+    
+    BoardFactory --> Board
 
     Board --> Piece
     Board --> Position
@@ -37,7 +39,7 @@ graph TD
 
 ### 체스판
 
-- [ ] 기물의 위치 상태를 가진다.
+- [x] 기물의 위치 상태를 가진다.
 
 ### 위치
 
