@@ -53,15 +53,15 @@ public class Position {
         return hash(file, rank);
     }
 
-    public List<Position> getDiagonalRoute(Position other) {
+    public List<Position> getRoute(Position other) {
         Direction rankDirection = rank.getDirection(other.rank);
         Direction fileDirection = file.getDirection(other.file);
         int distance = file.distance(other.file);
-        List<Position> route = getRoutePositions(rankDirection, fileDirection, distance);
+        List<Position> route = getRouteToDirection(rankDirection, fileDirection, distance);
         return route;
     }
 
-    private List<Position> getRoutePositions(Direction rankDirection, Direction fileDirection, int distance) {
+    private List<Position> getRouteToDirection(Direction rankDirection, Direction fileDirection, int distance) {
         List<Position> route = new ArrayList<>();
         Rank currentRank = rank;
         File currentFile = file;
