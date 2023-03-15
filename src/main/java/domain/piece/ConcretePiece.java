@@ -14,6 +14,11 @@ public class ConcretePiece implements Piece {
     }
 
     @Override
+    public Boolean isExist() {
+        return true;
+    }
+
+    @Override
     public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return pieceType.isReachableByRule(startCoordinate, endCoordinate);
     }

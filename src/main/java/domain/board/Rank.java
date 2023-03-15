@@ -21,6 +21,10 @@ public class Rank {
         return pieces.get(col);
     }
 
+    public boolean isExistPiece(int col) {
+        return pieces.get(col).isExist();
+    }
+
     public void replacePiece(int col, Piece newPiece) {
         pieces.set(col, newPiece);
     }

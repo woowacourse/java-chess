@@ -11,6 +11,11 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
+    public Boolean isExist() {
+        return false;
+    }
+
+    @Override
     public PieceType getPieceType() {
         return null;
     }
