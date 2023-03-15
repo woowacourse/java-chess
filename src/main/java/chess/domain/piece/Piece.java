@@ -18,4 +18,12 @@ public final class Piece {
                 ", campType=" + campType +
                 '}';
     }
+
+    public boolean isWhiteCamp() {
+        return campType == CampType.WHITE;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 }
