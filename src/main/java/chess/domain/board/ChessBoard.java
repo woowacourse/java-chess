@@ -17,6 +17,7 @@ import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoard {
     private static final int AREA_RANK_SIZE = 2;
+    private static final int FILE_SIZE = 8;
     private static final int BLANK_AREA_RANK_SIZE = 4;
     private static final PieceType[][] pieceRanks = {
             {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK},
@@ -49,7 +50,7 @@ public final class ChessBoard {
     }
 
     private void makeChessRank(final int rank, final PieceType[] ranks, final CampType campType) {
-        for (int file = 0; file < 8; file++) {
+        for (int file = 0; file < FILE_SIZE; file++) {
             final Position position = new Position(rank, file);
             final Piece piece = new Piece(ranks[file], campType);
             board.put(position, piece);
