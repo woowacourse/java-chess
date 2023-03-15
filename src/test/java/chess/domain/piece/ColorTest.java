@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class ColorTest {
 
     @ParameterizedTest(name = "입력한 Color와 다른 값인지 확인한다. 대상: BLACK 입력: {0}, 결과: {1}")
-    @CsvSource({"WHITE, true", "BLACK, false"})
+    @CsvSource({"WHITE, true", "BLACK, false", "EMPTY, false"})
     void 입력한_Color가_아닌지_확인한다(final Color color, final boolean result) {
         // expect
         assertThat(BLACK.isOpponent(color)).isEqualTo(result);
