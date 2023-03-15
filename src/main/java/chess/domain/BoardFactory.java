@@ -24,8 +24,8 @@ public class BoardFactory {
     }
 
     private static void initEmpty(final Map<Position, Piece> board) {
-        for (int rank = 1; rank <= 8; rank++) {
-            for (int file = 1; file <= 8; file++) {
+        for (int rank = Board.LOWER_BOUNDARY; rank <= Board.UPPER_BOUNDARY; rank++) {
+            for (int file = Board.LOWER_BOUNDARY; file <= Board.UPPER_BOUNDARY; file++) {
                 board.put(Position.of(rank, file), new Empty(Type.EMPTY, Side.NEUTRALITY));
             }
         }

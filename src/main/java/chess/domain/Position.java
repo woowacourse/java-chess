@@ -6,13 +6,11 @@ import java.util.Map;
 public class Position {
 
     private static final Map<Integer, Position> CACHE;
-    private static final int LOWER_BOUNDARY = 1;
-    private static final int UPPER_BOUNDARY = 8;
 
     static {
         final Map<Integer, Position> positions = new HashMap<>();
-        for (int x = LOWER_BOUNDARY; x <= UPPER_BOUNDARY; x++) {
-            for (int y = LOWER_BOUNDARY; y <= UPPER_BOUNDARY; y++) {
+        for (int x = Board.LOWER_BOUNDARY; x <= Board.UPPER_BOUNDARY; x++) {
+            for (int y = Board.LOWER_BOUNDARY; y <= Board.UPPER_BOUNDARY; y++) {
                 positions.put(getKey(x, y), new Position(x, y));
             }
         }
@@ -20,7 +18,7 @@ public class Position {
     }
 
     private static int getKey(final int x, final int y) {
-        return (x - LOWER_BOUNDARY) * UPPER_BOUNDARY + y;
+        return (x - Board.LOWER_BOUNDARY) * Board.UPPER_BOUNDARY + y;
     }
 
     private final int x;
@@ -38,11 +36,11 @@ public class Position {
 
     private static void validate(final int x, final int y) {
         if (!isRangeValid(x) || !isRangeValid(y)) {
-            throw new IllegalArgumentException("좌표의 값은 " + LOWER_BOUNDARY +  " ~ " +  UPPER_BOUNDARY + " 사이여야 합니다.");
+            throw new IllegalArgumentException("좌표의 값은 " + Board.LOWER_BOUNDARY +  " ~ " +  Board.UPPER_BOUNDARY + " 사이여야 합니다.");
         }
     }
 
     private static boolean isRangeValid(final int value) {
-        return value >= LOWER_BOUNDARY && value <= UPPER_BOUNDARY;
+        return value >= Board.LOWER_BOUNDARY && value <= Board.UPPER_BOUNDARY;
     }
 }
