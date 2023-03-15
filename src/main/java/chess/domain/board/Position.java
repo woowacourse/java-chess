@@ -134,4 +134,12 @@ public final class Position {
                 ", file=" + rank +
                 '}';
     }
+
+    public int getRank() {
+        return rank.getValue();
+    }
+
+    public int getFile() {
+        return file.getValue();
+    }
 }

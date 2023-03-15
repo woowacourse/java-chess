@@ -42,4 +42,8 @@ public enum Rank {
     public int sub(final Rank rank) {
         return this.value - rank.value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
