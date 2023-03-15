@@ -1,6 +1,6 @@
 package chess.piece;
 
-public enum Team {
+public enum Color {
 
     BLACK,
     WHITE;

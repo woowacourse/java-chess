@@ -1,5 +1,0 @@
-package chess;
-
-class ChessBoardTest {
-
-}
