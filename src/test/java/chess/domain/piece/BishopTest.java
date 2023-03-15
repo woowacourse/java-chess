@@ -1,0 +1,50 @@
+package chess.domain.piece;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import chess.domain.Camp;
+import chess.domain.File;
+import chess.domain.Move;
+import chess.domain.Rank;
+import chess.domain.Square;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+class BishopTest {
+    private static Stream<Arguments> possibleBishopTestProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new Square(File.B, Rank.TWO),
+                        new Square(File.H, Rank.SEVEN),
+                        Move.RIGHT_UP
+                ),
+                Arguments.of(
+                        new Square(File.B, Rank.TWO),
+                        new Square(File.C, Rank.ONE),
+                        Move.RIGHT_DOWN
+                ),
+                Arguments.of(
+                        new Square(File.B, Rank.TWO),
+                        new Square(File.A, Rank.ONE),
+                        Move.LEFT_DOWN
+                ),
+                Arguments.of(
+                        new Square(File.B, Rank.TWO),
+                        new Square(File.A, Rank.THREE),
+                        Move.LEFT_UP
+                )
+        );
+    }
+
+    @DisplayName("대각선으로 거리 제한 없이 움직일 수 있다.")
+    @ParameterizedTest(name = "{displayName} [{index}]")
+    @MethodSource("possibleBishopTestProvider")
+    void Should_Success_When_BishopMove(final Square source, final Square target, final Move move) {
+        final Bishop bishop = new Bishop(Camp.WHITE);
+
+        assertThat(bishop.isMovable(source, target, move)).isTrue();
+    }
+}
