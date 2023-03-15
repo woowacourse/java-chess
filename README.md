@@ -17,7 +17,7 @@
   - UUL, UUR, DDL, DDR, LLU, LLD, RRU, RRD
   - UU, DD
 
-- chess piece(체스 말): king, queen, rook, knight, bishop, pawn 
+- chess pieceType(체스 말): king, queen, rook, knight, bishop, pawn 
   - black(대문자), white(소문자)
   - 각 말이 움직일 수 있는 방향 / 연속여부 
   - king: L, R, U, D, LU, RU, LD, RD / F
@@ -78,4 +78,3 @@
   
   - [ ] 보드 
     - [ ] 명령에 따라 체스 말의 칸을 변경한다.
-    
