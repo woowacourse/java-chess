@@ -29,7 +29,11 @@ public class RowPieces implements Comparable<RowPieces> {
     
     @Override
     public int compareTo(RowPieces otherRowPieces) {
-        return pieces.get(0).compareTo(otherRowPieces.pieces.get(0));
+        return firstPiece(this).compareTo(firstPiece(otherRowPieces));
+    }
+    
+    private Piece firstPiece(RowPieces rowPieces) {
+        return rowPieces.pieces.get(0);
     }
     
     private static List<Piece> initRowPieces(int rowNum) {

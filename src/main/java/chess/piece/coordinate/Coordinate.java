@@ -1,7 +1,5 @@
 package chess.piece.coordinate;
 
-import chess.piece.Piece;
-
 import java.util.Objects;
 
 public class Coordinate {
