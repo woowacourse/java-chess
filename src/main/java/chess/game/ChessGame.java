@@ -6,12 +6,8 @@ public class ChessGame {
 
     private ChessBoard chessBoard;
 
-    public ChessGame(final ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public ChessGame() {
+        this.chessBoard = ChessBoard.createBoard();
     }
 
     public ChessBoard receiveCommand(final Command command) {
@@ -20,5 +16,9 @@ public class ChessGame {
         }
 
         return null;
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }

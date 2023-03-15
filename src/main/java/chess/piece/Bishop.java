@@ -10,4 +10,9 @@ public class Bishop extends Piece {
     public void move() {
 
     }
+
+    @Override
+    public boolean isBishop() {
+        return true;
+    }
 }

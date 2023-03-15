@@ -10,4 +10,9 @@ public class Rook extends Piece {
     public void move() {
 
     }
+
+    @Override
+    public boolean isRook() {
+        return true;
+    }
 }

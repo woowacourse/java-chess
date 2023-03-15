@@ -10,7 +10,7 @@ class ChessGameTest {
     @Test
     void 체스게임은_게임을_시작한다() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoard.createBoard());
+        ChessGame chessGame = new ChessGame();
 
         //when
         ChessBoard chessBoard = chessGame.receiveCommand(Command.START);
@@ -22,7 +22,7 @@ class ChessGameTest {
     @Test
     void 체스게임은_게임을_종료한다() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoard.createBoard());
+        ChessGame chessGame = new ChessGame();
 
         //when
         ChessBoard chessBoard = chessGame.receiveCommand(Command.END);

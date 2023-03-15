@@ -10,4 +10,9 @@ public class Pawn extends Piece {
     public void move() {
 
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

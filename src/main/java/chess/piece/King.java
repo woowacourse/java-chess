@@ -10,4 +10,9 @@ public class King extends Piece {
     public void move() {
 
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

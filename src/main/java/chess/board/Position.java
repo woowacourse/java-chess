@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Position {
 
     private final File file;
-    private final String rank;
+    private final Rank rank;
 
-    public Position(final File file, final String rank) {
+    public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -17,7 +17,7 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Position position = (Position) o;
-        return file == position.file && Objects.equals(rank, position.rank);
+        return file == position.file && rank == position.rank;
     }
 
     @Override
