@@ -30,17 +30,23 @@ public enum File {
     }
 
     public Direction getDirection(File other) {
-        if (other.number - this.number > 0) {
+        if (other.number > this.number) {
             return Direction.PLUS;
         }
-        return Direction.MINUS;
+        if (other.number < this.number) {
+            return Direction.MINUS;
+        }
+        return Direction.ZERO;
     }
 
     public File moveToDirection(Direction direction) {
         if (direction.equals(Direction.PLUS)) {
             return next();
         }
-        return prev();
+        if (direction.equals(Direction.MINUS)) {
+            return prev();
+        }
+        return this;
     }
 
     public File next() {

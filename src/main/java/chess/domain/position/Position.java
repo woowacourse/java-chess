@@ -36,29 +36,22 @@ public class Position {
         return this.file == other.file || this.rank == other.rank;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
     public boolean isDiagonalEqual(Position other) {
         return this.file.distance(other.file) == this.rank.distance(other.rank);
-    }
-
-    @Override
-    public int hashCode() {
-        return hash(file, rank);
     }
 
     public List<Position> getRoute(Position other) {
         Direction rankDirection = rank.getDirection(other.rank);
         Direction fileDirection = file.getDirection(other.file);
-        int distance = file.distance(other.file);
+        int distance = getDistance(other);
         List<Position> route = getRouteToDirection(rankDirection, fileDirection, distance);
         return route;
+    }
+
+    private int getDistance(Position other) {
+        int fileDistance = file.distance(other.file);
+        int rankDistance = rank.distance(other.rank);
+        return Math.max(fileDistance, rankDistance);
     }
 
     private List<Position> getRouteToDirection(Direction rankDirection, Direction fileDirection, int distance) {
@@ -73,5 +66,18 @@ public class Position {
             currentFile = newFile;
         }
         return route;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(file, rank);
     }
 }
