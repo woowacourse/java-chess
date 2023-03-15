@@ -17,7 +17,7 @@ public abstract class Piece {
     public abstract Set<Position> computePath(Position source, Position target);
 
     protected void validateSamePosition(Position source, Position target) {
-        if (source == target) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException();
         }
     }

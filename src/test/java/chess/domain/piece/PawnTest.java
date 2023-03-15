@@ -43,7 +43,7 @@ class PawnTest {
     void computePath_WhiteTwo() {
         final var pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.computePath(B2, B4)).containsExactly(B4);
+        assertThat(pawn.computePath(B2, B4)).containsExactlyInAnyOrder(B3, B4);
     }
 
     @Test
@@ -58,7 +58,7 @@ class PawnTest {
     void computePath_BlackTwo() {
         final var pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.computePath(B7, B5)).containsExactly(B5);
+        assertThat(pawn.computePath(B7, B5)).containsExactlyInAnyOrder(B6, B5);
     }
 
     @Test

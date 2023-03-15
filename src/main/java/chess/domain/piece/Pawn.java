@@ -28,17 +28,18 @@ public final class Pawn extends Piece {
 
     private Set<Position> generateTargetPathForBlack(final Position source, final Position target) {
         Set<Position> targetPath = new HashSet<>();
-        if (target == source.getDownStraight().getDownStraight()) {
+        if (target.equals(source.getDownStraight().getDownStraight())) {
             targetPath.add(source.getDownStraight());
             targetPath.add(source.getDownStraight().getDownStraight());
         }
+        System.out.println(targetPath);
         targetPath.add(target);
         return targetPath;
     }
 
     private Set<Position> generateTargetPathForWhite(final Position source, final Position target) {
         Set<Position> targetPath = new HashSet<>();
-        if (target == source.getUpStraight().getUpStraight()) {
+        if (target.equals(source.getUpStraight().getUpStraight())) {
             targetPath.add(source.getUpStraight());
             targetPath.add(source.getUpStraight().getUpStraight());
         }
