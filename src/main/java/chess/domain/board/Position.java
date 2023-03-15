@@ -107,6 +107,13 @@ public final class Position {
         return Math.abs(file.sub(target.file)) <= 1 && Math.abs(rank.sub(target.rank)) <= 1;
     }
 
+    public boolean canKnightJump(final Position target) {
+        final var fileSub = Math.abs(this.file.sub(target.file));
+        final var rankSub = Math.abs(this.rank.sub(target.rank));
+
+        return (fileSub == 2 && rankSub == 1) || (fileSub == 1 && rankSub == 2);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
