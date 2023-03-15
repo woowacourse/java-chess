@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Objects;
+
 public class Position {
 
     private final Row row;
@@ -32,12 +34,20 @@ public class Position {
         return this.row.getIndexOfRow() == '7';
     }
 
-    public boolean isLowerOtherPositionAtFirst() {
-        return this.row.getIndexOfRow() == '1';
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position)) {
+            return false;
+        }
+        Position position = (Position) o;
+        return row == position.row && col == position.col;
     }
 
-    public boolean isUpperOtherPositionAtFirst() {
-        return this.row.getIndexOfRow() == '8';
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
     }
-
 }
