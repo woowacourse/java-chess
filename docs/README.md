@@ -49,6 +49,7 @@
         - [ ] 상대팀 기물이 없으면 갈 수 없다
 - [x] 맵 (ChessBoard -> List<RowPieces>)
   - [x] 체스판을 초기화할 때 말들이 생성된다.
+  - [ ] Src 좌표와 Det 좌표가 들어왔을 때, 해당 기물이 이동한다.
 - [x] 한 행의 기물들 (RowPieces)
   - [x] 해당 행에 위치할 기물들을 초기화한다.
 - [x] 각 기물 객체 Matcher (PieceMatcher)
