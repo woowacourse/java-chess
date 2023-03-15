@@ -1,19 +1,18 @@
 package domain;
 
+import java.util.List;
+
 public class Queen implements NewPieceType {
+
+    private static final List<Double> availableInclinations = List.of(
+            1.0, -1.0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
+    );
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        return isMovable(startCoordinate, endCoordinate);
-    }
-
-    private static boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return startCoordinate.hasInclinationOfOne(endCoordinate) ||
-                startCoordinate.hasInclinationOfMinusOne(endCoordinate) ||
-                startCoordinate.isSameRow(endCoordinate) ||
-                startCoordinate.isSameCol(endCoordinate);
+        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
 }

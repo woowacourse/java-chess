@@ -1,13 +1,18 @@
 package domain;
 
+import java.util.List;
+
 public class Rook implements NewPieceType {
+
+    private static final List<Double> availableInclinations = List.of(
+            Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
+    );
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        return startCoordinate.isSameRow(endCoordinate) ||
-                startCoordinate.isSameCol(endCoordinate);
+        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
 }
