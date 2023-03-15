@@ -17,14 +17,28 @@ public class Position {
     }
 
     private void validate(int x, int y) {
-        validatePositionValue(x);
-        validatePositionValue(y);
-    }
-
-    private void validatePositionValue(int positionValue) {
-        if (positionValue < MINIMUM || positionValue > MAXIMUM) {
+        if (isNotInRange(x, y)) {
             throw new IllegalArgumentException(EXCEPTION_MESSAGE_OUT_OF_BOUNDS);
         }
+    }
+
+    private boolean isNotInRange(final int rank, final int file) {
+        return isValueNotInRange(rank) || isValueNotInRange(file);
+    }
+
+    private boolean isValueNotInRange(final int positionValue) {
+        return positionValue < MINIMUM || positionValue > MAXIMUM;
+    }
+
+    public Position findNextPosition(final Direction direction) {
+        int nextRank = x + direction.getRankChange();
+        int nextFile = y + direction.getFileChange();
+
+        if (isNotInRange(nextRank, nextFile)) {
+            return null;
+        }
+
+        return new Position(nextRank, nextFile);
     }
 
     public int getX() {
