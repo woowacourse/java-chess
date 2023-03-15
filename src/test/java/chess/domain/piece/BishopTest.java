@@ -38,6 +38,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("findPathProvider")
+    @DisplayName("타켓 위치로 갈 수 있는 모든 경로를 리스트에 담아서 반환한다.")
     void findPath(Position source, Position target, List<Position> expectedPath) {
         Piece bishop = new Bishop();
         assertThat(bishop.findPath(source, target)).containsAll(expectedPath);
