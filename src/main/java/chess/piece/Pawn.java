@@ -14,14 +14,6 @@ public class Pawn extends Piece {
         position.move(fileMovingCount, rankMovingCount);
     }
 
-    public File getFile() {
-        return position.getFile();
-    }
-
-    public Rank getRank() {
-        return position.getRank();
-    }
-
     // TODO: 2023/03/14 시작 위치 체크
 
     // TODO: 2023/03/14 타겟위치로 이동 가능한지 체크

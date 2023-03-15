@@ -11,4 +11,16 @@ public abstract class Piece {
         this.position = position;
         this.side = side;
     }
+
+    public int getFile() {
+        return position.getFile();
+    }
+
+    public int getRank() {
+        return position.getRank();
+    }
+
+    public Side getSide() {
+        return side;
+    }
 }

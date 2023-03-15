@@ -36,4 +36,8 @@ public enum File {
     public static int length() {
         return values().length;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

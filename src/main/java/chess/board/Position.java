@@ -15,11 +15,11 @@ public class Position {
         this.rank = rank.getAddedRank(rankMovingCount);
     }
 
-    public File getFile() {
-        return file;
+    public int getFile() {
+        return file.getValue();
     }
 
-    public Rank getRank() {
-        return rank;
+    public int getRank() {
+        return rank.getValue();
     }
 }
