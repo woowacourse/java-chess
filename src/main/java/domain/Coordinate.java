@@ -17,23 +17,29 @@ public class Coordinate {
     }
 
     public boolean isSameRow(Coordinate otherCoordinate) {
-        return inclination(otherCoordinate) == 0;
+        return getInclination(otherCoordinate) == 0;
     }
 
     public boolean isSameCol(Coordinate otherCoordinate) {
-        return Double.isInfinite(inclination(otherCoordinate));
+        return Double.isInfinite(getInclination(otherCoordinate));
     }
 
     public boolean hasInclinationOfOne(Coordinate otherCoordinate) {
-        return inclination(otherCoordinate) == 1;
+        return getInclination(otherCoordinate) == 1;
     }
 
     public boolean hasInclinationOfMinusOne(Coordinate otherCoordinate) {
-        return inclination(otherCoordinate) == -1;
+        return getInclination(otherCoordinate) == -1;
     }
 
-    private double inclination(Coordinate otherCoordinate) {
+    private double getInclination(Coordinate otherCoordinate) {
         return (this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+    }
+
+    public boolean hasDistanceOfOne(Coordinate otherCoordinate) {
+        double x = otherCoordinate.col - this.col;
+        double y = otherCoordinate.row - this.row;
+        return x <= 1.0 && y <= 1.0;
     }
 
     @Override

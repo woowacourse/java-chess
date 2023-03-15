@@ -2,5 +2,5 @@ package domain;
 
 public interface NewPieceType {
 
-    boolean isReachableByRule(Position startPosition, Position endPosition);
+    boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate);
 }

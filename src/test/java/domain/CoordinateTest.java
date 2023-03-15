@@ -42,4 +42,13 @@ class CoordinateTest {
 
         assertThat(startCoordinate.hasInclinationOfMinusOne(endCoordinate)).isTrue();
     }
+
+    @Test
+    @DisplayName("거리가 1인 경우 참을 반환한다")
+    void hasDistanceOfOne() {
+        Coordinate startCoordinate = new Coordinate(0, 0);
+        Coordinate endCoordinate = new Coordinate(1, 1);
+
+        assertThat(startCoordinate.hasDistanceOfOne(endCoordinate)).isTrue();
+    }
 }
