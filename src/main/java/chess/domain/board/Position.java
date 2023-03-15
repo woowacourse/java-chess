@@ -103,6 +103,10 @@ public final class Position {
         return fileSub / (double) rankSub;
     }
 
+    public boolean isNear(final Position target) {
+        return Math.abs(file.sub(target.file)) <= 1 && Math.abs(rank.sub(target.rank)) <= 1;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
