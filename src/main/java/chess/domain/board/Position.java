@@ -142,4 +142,18 @@ public final class Position {
     public int getFile() {
         return file.getValue() - 1;
     }
+
+    public boolean canWhitePawnMove(final Position target) {
+        int fileSub = target.file.sub(file);
+        int rankSub = target.rank.sub(rank);
+        return (Math.abs(fileSub) <= 1 && rankSub == 1) ||
+                (fileSub == 0 && rankSub == 2);
+    }
+
+    public boolean canBlackPawnMove(final Position target) {
+        int fileSub = file.sub(target.file);
+        int rankSub = rank.sub(target.rank);
+        return (Math.abs(fileSub) <= 1 && rankSub == 1) ||
+                (fileSub == 0 && rankSub == 2);
+    }
 }

@@ -14,13 +14,12 @@ public final class Pawn extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        Set<Position> movablePath = new HashSet<>();
         if (color.isBlack()) {
-            validateIsMovableForBlack(source, target, movablePath);
+            validateIsMovableForBlack(source, target);
             return generateTargetPathForBlack(source, target);
         }
         if (color.isWhite()) {
-            validateIsMovableForWhite(source, target, movablePath);
+            validateIsMovableForWhite(source, target);
             return generateTargetPathForWhite(source, target);
         }
         throw new IllegalArgumentException();
@@ -29,6 +28,7 @@ public final class Pawn extends Piece {
     private Set<Position> generateTargetPathForBlack(final Position source, final Position target) {
         Set<Position> targetPath = new HashSet<>();
         if (target.equals(source.getDownStraight().getDownStraight())) {
+            validateInitBlack(source);
             targetPath.add(source.getDownStraight());
             targetPath.add(source.getDownStraight().getDownStraight());
         }
@@ -39,6 +39,7 @@ public final class Pawn extends Piece {
     private Set<Position> generateTargetPathForWhite(final Position source, final Position target) {
         Set<Position> targetPath = new HashSet<>();
         if (target.equals(source.getUpStraight().getUpStraight())) {
+            validateInitWhite(source);
             targetPath.add(source.getUpStraight());
             targetPath.add(source.getUpStraight().getUpStraight());
         }
@@ -46,26 +47,26 @@ public final class Pawn extends Piece {
         return targetPath;
     }
 
-    private void validateIsMovableForWhite(final Position source, final Position target, final Set<Position> movablePath) {
-        movablePath.add(source.getUpStraight());
-        movablePath.add(source.getLeftUpDiagonal());
-        movablePath.add(source.getRightUpDiagonal());
-        if (source.isWhitePawnInitRank()) {
-            movablePath.add(source.getUpStraight().getUpStraight());
-        }
-        if (!movablePath.contains(target)) {
+    private void validateInitWhite(final Position source) {
+        if (!source.isWhitePawnInitRank()) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void validateIsMovableForBlack(final Position source, final Position target, final Set<Position> movablePath) {
-        movablePath.add(source.getDownStraight());
-        movablePath.add(source.getLeftDownDiagonal());
-        movablePath.add(source.getRightDownDiagonal());
-        if (source.isBlackPawnInitRank()) {
-            movablePath.add(source.getDownStraight().getDownStraight());
+    private void validateInitBlack(final Position source) {
+        if (!source.isBlackPawnInitRank()) {
+            throw new IllegalArgumentException();
         }
-        if (!movablePath.contains(target)) {
+    }
+
+    private void validateIsMovableForWhite(final Position source, final Position target) {
+        if (!source.canWhitePawnMove(target)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateIsMovableForBlack(final Position source, final Position target) {
+        if (!source.canBlackPawnMove(target)) {
             throw new IllegalArgumentException();
         }
     }
