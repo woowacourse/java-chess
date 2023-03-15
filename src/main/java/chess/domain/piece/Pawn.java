@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean canMove(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
         if (startPosition.equals(endPosition) || diffRank != 0) {
@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean canAttack(final Position startPosition, final Position endPosition) {
+    public boolean canAttack(final Position startPosition, final Position endPosition) {
         int diffFile = endPosition.calculateFileDistance(startPosition);
         int diffRank = endPosition.calculateRankDistance(startPosition);
 

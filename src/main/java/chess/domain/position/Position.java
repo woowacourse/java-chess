@@ -1,15 +1,32 @@
 package chess.domain.position;
 
-import chess.domain.piece.info.Team;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
     private final Rank rank;
     private final File file;
 
-    public Position(Rank rank, File file) {
+    private static final Map<String, Position> positions;
+
+    static { // TODO: 2023/03/15 streamForeach 제거
+        positions = new HashMap<>();
+        for (File file : File.values()) {
+            Arrays.stream(Rank.values())
+                    .forEach(rank -> positions.put(rank.name() + file.name()
+                            , new Position(rank, file)));
+        }
+    }
+
+    private Position(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public static Position of(Rank rank, File file) {
+        return positions.get(rank.name() + file.name());
     }
 
     public int calculateFileDistance(final Position startPosition) {
@@ -37,8 +54,7 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    boolean isInitialPawnPosition(final Team team) {
-        return file == File.TWO && team == Team.WHITE
-                || file == File.SEVEN && team == Team.BLACK;
+    public Position move(final int rankDirection, final int fileDirection) {
+        return Position.of(rank.plus(rankDirection),file.plus(fileDirection));
     }
 }

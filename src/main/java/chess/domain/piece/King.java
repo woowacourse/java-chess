@@ -25,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean canAttack(final Position startPosition, final Position endPosition) {
+    public boolean canAttack(final Position startPosition, final Position endPosition) {
         return canMove(startPosition, endPosition);
     }
 }

@@ -27,7 +27,17 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("File은 1에서 8사이의 값 이어야 합니다."));
     }
 
+    static public File from(final int index) {
+        return Arrays.stream(File.values()).filter(file -> file.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("File은 1에서 8사이의 값 이어야 합니다."));
+    }
+
     int calculateDistance(final File file) {
         return this.index - file.index;
+    }
+
+    public File plus(final int fileDirection) {
+        return File.from(index + fileDirection);
     }
 }

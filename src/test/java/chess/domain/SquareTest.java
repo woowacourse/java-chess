@@ -16,7 +16,7 @@ class SquareTest {
     @Test
     void should_기물을_변경한다_when_changePiece메서드를_호출하면() {
         //given
-        Position position = new Position(Rank.C, File.THREE);
+        Position position = Position.of(Rank.C, File.THREE);
         Piece origin = new Pawn(Team.WHITE);
         Piece changed = new Queen(Team.BLACK);
         Square square = new Square(position, origin);

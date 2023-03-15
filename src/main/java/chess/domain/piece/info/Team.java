@@ -13,4 +13,14 @@ public enum Team {
         }
         return WHITE;
     }
+
+    public Team enemy() {
+        if (this == EMPTY) {
+            throw new UnsupportedOperationException("기물이 비어있습니다.");
+        }
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

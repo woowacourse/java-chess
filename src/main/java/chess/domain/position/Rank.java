@@ -27,9 +27,18 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("Rank는 a에서 h사이의 값 이어야 합니다."));
     }
 
+    static public Rank from(final int index) {
+        return Arrays.stream(Rank.values()).filter(rank -> rank.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Rank는 a에서 h사이의 값 이어야 합니다."));
+    }
+
     int calculateDistance(final Rank rank) {
         return this.index - rank.index;
     }
 
+    public Rank plus(final int rankDirection) {
+        return Rank.from(index + rankDirection);
+    }
 }
 

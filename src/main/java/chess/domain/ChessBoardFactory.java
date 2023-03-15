@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.ChessBoard;
-import chess.domain.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -26,7 +24,7 @@ public class ChessBoardFactory {
 
         for (File file : File.values()) {
             squares.addAll(Arrays.stream(Rank.values())
-                    .map(rank -> new Square(new Position(rank, file), createPiece(rank, file)))
+                    .map(rank -> new Square(Position.of(rank, file), createPiece(rank, file)))
                     .collect(Collectors.toUnmodifiableList()));
         }
 
