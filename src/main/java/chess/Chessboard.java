@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Camp;
 import chess.piece.Empty;
 import chess.piece.Piece;
 
@@ -20,7 +21,7 @@ public class Chessboard {
 
     private void putFile(File file) {
         for (Rank rank : Rank.values()) {
-            board.put(new Square(file, rank), new Empty());
+            board.put(new Square(file, rank), new Empty(Camp.NONE));
         }
     }
 
@@ -31,7 +32,7 @@ public class Chessboard {
         }
     }
 
-    public Piece getPieceAt(Square square){
-        return board.get(square);
+    public Piece getPieceAt(File file, Rank rank) {
+        return board.get(new Square(file, rank));
     }
 }
