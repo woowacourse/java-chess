@@ -13,7 +13,7 @@ public class Coordinate {
     }
 
     public Coordinate add(Coordinate otherCoordinate) {
-        return new Coordinate(this.row + otherCoordinate.row, this.col + col);
+        return new Coordinate(this.row + otherCoordinate.row, this.col + otherCoordinate.col);
     }
 
     public Coordinate minus(Coordinate otherCoordinate) {
