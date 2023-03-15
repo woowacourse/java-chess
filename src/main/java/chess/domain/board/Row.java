@@ -33,4 +33,8 @@ public enum Row {
         int newRowPosition = endRow.row - startRow.row;
         return newRowPosition;
     }
+
+    public char getIndexOfRow() {
+        return this.row;
+    }
 }

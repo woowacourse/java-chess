@@ -15,4 +15,29 @@ public class Position {
         Col col = Col.fromByInput(input.charAt(0));
         return new Position(row, col);
     }
+
+    public static Position of(final Row row, final Col col) {
+        return new Position(row, col);
+    }
+
+    public boolean isPlacePositionAtFirst() {
+        return this.row.getIndexOfRow() >= '3' && this.row.getIndexOfRow() <= '6';
+    }
+
+    public boolean isLowerPawnPositionAtFirst() {
+        return this.row.getIndexOfRow() == '2';
+    }
+
+    public boolean isUpperPawnPositionAtFirst() {
+        return this.row.getIndexOfRow() == '7';
+    }
+
+    public boolean isLowerOtherPositionAtFirst() {
+        return this.row.getIndexOfRow() == '1';
+    }
+
+    public boolean isUpperOtherPositionAtFirst() {
+        return this.row.getIndexOfRow() == '8';
+    }
+
 }

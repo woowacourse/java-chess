@@ -9,4 +9,8 @@ public abstract class Piece {
     }
 
     public abstract void canMove(final String start, final String end);
+
+    public String getName() {
+        return name.getName();
+    }
 }
