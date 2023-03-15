@@ -11,10 +11,6 @@ public class Movement {
         this.rankIncrement = rankIncrement;
     }
 
-    public boolean canMovedByPawn() {
-        return this.rankIncrement == 1 && this.fileIncrement == 0;
-    }
-
     private void validate(int fileIncrement, int rankIncrement) {
         if (fileIncrement == NON_INCREMENT && rankIncrement == NON_INCREMENT) {
             throw new IllegalArgumentException("잘못된 움직임입니다.");
