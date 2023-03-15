@@ -4,8 +4,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MovementTest {
+
+    @DisplayName("한 칸도 움직이지 않으면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenNonMoving() {
+        assertThatThrownBy(() -> new Movement(0, 0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("최소 한 칸은 움직여야 합니다.");
+    }
 
     @DisplayName("file, rank움직임이 0,0인지 확인한다.")
     @Test
