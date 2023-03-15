@@ -64,4 +64,8 @@ public class Path {
         wayPoints.remove(destination);
         return wayPoints;
     }
+
+    public PiecePosition destination() {
+        return destination;
+    }
 }
