@@ -6,10 +6,10 @@ public enum Color {
     EMPTY;
 
     public static Color of(RankCoordinate rankCoordinate) {
-        if (rankCoordinate == RankCoordinate.ONE || rankCoordinate == RankCoordinate.TWO) {
+        if (rankCoordinate.isWhiteRank()) {
             return Color.WHITE;
         }
-        if (rankCoordinate == RankCoordinate.EIGHT || rankCoordinate == RankCoordinate.SEVEN) {
+        if (rankCoordinate.isBlackRank()) {
             return Color.BLACK;
         }
         return Color.EMPTY;
