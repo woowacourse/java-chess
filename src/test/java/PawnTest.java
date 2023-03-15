@@ -48,4 +48,22 @@ public class PawnTest {
         boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
+
+    @DisplayName("targetPiece와 동일한 팀이라면 true를 반환한다.")
+    @Test
+    void shouldReturnIfSameSideWhenTargetIsWhiteSideAndSourceSideIsWhite() {
+        Pawn sourcePawn = Pawn.createOfWhite();
+        Pawn targetPawn = Pawn.createOfWhite();
+
+        assertThat(sourcePawn.isSameSide(targetPawn)).isEqualTo(true);
+    }
+
+    @DisplayName("targetPiece와 다른 팀이라면 false를 반환한다.")
+    @Test
+    void shouldReturnIfDifferentSideWhenTargetIsWhiteSideAndSourceSideIsBlack() {
+        Pawn sourcePawn = Pawn.createOfWhite();
+        Pawn targetPawn = Pawn.createOfBlack();
+
+        assertThat(sourcePawn.isSameSide(targetPawn)).isEqualTo(false);
+    }
 }
