@@ -9,14 +9,14 @@ class PieceTest {
 
     @DisplayName("기물들은 이름을 가진다")
     @Test
-    void kingName() {
+    void pieceHasName() {
         //given
-        final Piece king = new King();
-        final Piece queen = new Queen();
-        final Piece knight = new Knight();
-        final Piece bishop = new Bishop();
-        final Piece rook = new Rook();
-        final Piece pawn = new Pawn();
+        final Piece king = new King(Team.BLACK);
+        final Piece queen = new Queen(Team.BLACK);
+        final Piece knight = new Knight(Team.BLACK);
+        final Piece bishop = new Bishop(Team.BLACK);
+        final Piece rook = new Rook(Team.BLACK);
+        final Piece pawn = new Pawn(Team.BLACK);
 
         //when
 
@@ -27,5 +27,19 @@ class PieceTest {
         assertThat(bishop.getName()).isEqualTo("B");
         assertThat(rook.getName()).isEqualTo("R");
         assertThat(pawn.getName()).isEqualTo("P");
+    }
+
+    @DisplayName("기물들은 팀을 가진다")
+    @Test
+    void pieceHasTeam() {
+        //given
+        final Piece black = new King(Team.BLACK);
+        final Piece white = new King(Team.WHITE);
+
+        //when
+
+        //then
+        assertThat(black.isBlack()).isTrue();
+        assertThat(white.isBlack()).isFalse();
     }
 }

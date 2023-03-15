@@ -7,13 +7,13 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public final class Board {
     private static final String ALL_FILES = "ABCDEFGH";
@@ -40,41 +40,45 @@ public final class Board {
     }
 
     private static void addInitialRooks(final HashMap<Position, Piece> board) {
-        final List<Position> rooksPosition = Positions.of("A1", "A8", "H1", "H8");
+        final List<Position> black = Positions.of("A8", "H8");
+        final List<Position> white = Positions.of("A1", "H1");
 
-        rooksPosition.forEach(position -> board.put(position, new Rook()));
+        black.forEach(position -> board.put(position, new Rook(Team.BLACK)));
+        white.forEach(position -> board.put(position, new Rook(Team.WHITE)));
     }
 
     private static void addInitialKnights(final HashMap<Position, Piece> board) {
-        final List<Position> knightsPosition = Positions.of("B1", "B8", "G1", "G8");
+        final List<Position> black = Positions.of("B8", "G8");
+        final List<Position> white = Positions.of("B1", "G1");
 
-        knightsPosition.forEach(position -> board.put(position, new Knight()));
+        black.forEach(position -> board.put(position, new Knight(Team.BLACK)));
+        white.forEach(position -> board.put(position, new Knight(Team.WHITE)));
     }
 
     private static void addInitialBishops(final HashMap<Position, Piece> board) {
-        final List<Position> bishopsPosition = Positions.of("C1", "C8", "F1", "F8");
+        final List<Position> black = Positions.of("C8", "F8");
+        final List<Position> white = Positions.of("C1", "F1");
 
-        bishopsPosition.forEach(position -> board.put(position, new Bishop()));
+        black.forEach(position -> board.put(position, new Bishop(Team.BLACK)));
+        white.forEach(position -> board.put(position, new Bishop(Team.WHITE)));
     }
 
     private static void addInitialQueens(final HashMap<Position, Piece> board) {
-        final List<Position> queensPosition = Positions.of("D1", "D8");
-
-        queensPosition.forEach(position -> board.put(position, new Queen()));
+        board.put(Positions.from("D8"), new Queen(Team.BLACK));
+        board.put(Positions.from("D1"), new Queen(Team.WHITE));
     }
 
     private static void addInitialPawns(Map<Position, Piece> board) {
-        ALL_FILES.chars()
-                .mapToObj(file -> String.valueOf((char) file))
-                .flatMap(file -> Stream.of(file + WHITE_PAWNS_RANK, file + BLACK_PAWNS_RANK))
-                .map(Positions::from)
-                .forEach(position -> board.put(position, new Pawn()));
+        final List<Position> black = Positions.of("A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7");
+        final List<Position> white = Positions.of("A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2");
+
+        black.forEach(position -> board.put(position, new Pawn(Team.BLACK)));
+        white.forEach(position -> board.put(position, new Pawn(Team.WHITE)));
     }
 
     private static void addInitialKings(Map<Position, Piece> board) {
-        final List<Position> kingsPosition = Positions.of("E1", "E8");
-
-        kingsPosition.forEach(position -> board.put(position, new King()));
+        board.put(Positions.from("E8"), new King(Team.BLACK));
+        board.put(Positions.from("E1"), new King(Team.WHITE));
     }
 
     public Map<Position, Piece> getPieces() {

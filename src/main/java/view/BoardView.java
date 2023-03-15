@@ -29,9 +29,17 @@ public final class BoardView {
 
     private String makePieceView(final Map<Position, Piece> board, final Position position) {
         if (board.containsKey(position)) {
-            return board.get(position).getName();
+            return convertCaseByTeam(board.get(position));
         }
 
         return EMPTY_SPACE;
+    }
+
+    private String convertCaseByTeam(Piece piece) {
+        if (piece.isBlack()) {
+            return piece.getName();
+        }
+
+        return piece.getName().toLowerCase();
     }
 }

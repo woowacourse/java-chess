@@ -4,8 +4,8 @@ public final class Pawn extends Piece {
 
     private static final String NAME = "P";
 
-    public Pawn() {
-        super(NAME);
+    public Pawn(Team team) {
+        super(NAME, team);
     }
 
     @Override

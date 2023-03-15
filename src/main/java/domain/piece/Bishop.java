@@ -4,8 +4,8 @@ public final class Bishop extends Piece {
 
     private static final String NAME = "B";
 
-    public Bishop() {
-        super(NAME);
+    public Bishop(Team team) {
+        super(NAME, team);
     }
 
     @Override

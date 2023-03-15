@@ -4,8 +4,8 @@ public final class King extends Piece {
 
     private static final String NAME = "K";
 
-    public King() {
-        super(NAME);
+    public King(Team team) {
+        super(NAME, team);
     }
 
     @Override
