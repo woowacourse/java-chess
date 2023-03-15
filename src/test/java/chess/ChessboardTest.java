@@ -16,4 +16,44 @@ class ChessboardTest {
                 .asInstanceOf(InstanceOfAssertFactories.map(Square.class, Piece.class))
                 .hasSize(64);
     }
+
+    @DisplayName("경로 사이에 기물이 있을 경우, false를 반환한다.")
+    @Test
+    void isExistPieceInRouteTest() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+
+        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.A, Rank.EIGHT)))
+                .isFalse();
+    }
+
+    @DisplayName("경로 사이가 비어있는 경우, false를 반환한다.")
+    @Test
+    void isEmptyInRouteTest() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+
+        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.A, Rank.SEVEN)))
+                .isTrue();
+    }
+
+    @DisplayName("대각선 경로 사이에 기물이 있을 경우, false를 반환한다.")
+    @Test
+    void isExistPieceInDiagonalRouteTest() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+
+        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.G, Rank.EIGHT)))
+                .isFalse();
+    }
+
+    @DisplayName("대각선 경로 사이가 비어있는 경우, true를 반환한다.")
+    @Test
+    void isEmptyInDiagonalRouteTest() {
+        Chessboard chessboard = new Chessboard();
+        BoardInitializer.initializeBoard(chessboard);
+
+        Assertions.assertThat(chessboard.isEmptyInRoute(new Square(File.A, Rank.TWO), new Square(File.F, Rank.SEVEN)))
+                .isTrue();
+    }
 }
