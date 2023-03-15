@@ -24,6 +24,6 @@ public class Queen extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return false;
+        return isDifferentTeam(piece) && (from.inLine(to) || from.inDiagonal(to));
     }
 }
