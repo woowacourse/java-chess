@@ -96,16 +96,8 @@ public class ChessBoard {
     }
 
     public Square toSquare(int fileCoordinate, int rankCoordinate) {
-        File targetFile = Arrays.stream(File.values())
-                .filter(file -> file.ordinal() == fileCoordinate)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("adfa"));
-
-        Rank targetRank = Arrays.stream(Rank.values())
-                .filter(rank -> rank.ordinal() == rankCoordinate)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("adfa"));
-
+        File targetFile = File.findFile(fileCoordinate);
+        Rank targetRank = Rank.findRank(rankCoordinate);
         return new Square(targetFile, targetRank);
     }
 
