@@ -10,6 +10,6 @@ class ChessGameTest {
     @Test
     @DisplayName("체스 게임을 올바르게 생성한다.")
     void shouldSuccessGenerateChessGame() {
-        assertDoesNotThrow(() -> new ChessGame());
+        assertDoesNotThrow(() -> new ChessGame(ChessBoard.generateChessBoard()));
     }
 }
