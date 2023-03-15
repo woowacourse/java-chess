@@ -27,7 +27,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
     }
     
-    static Rank findByIndex(int index) {
+    public static Rank findByIndex(int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findAny()

@@ -7,9 +7,11 @@ import java.util.Objects;
 public abstract class Piece {
     
     private final Color color;
+    private final PieceType type;
     
-    public Piece(Color color) {
+    public Piece(final Color color, final PieceType type) {
         this.color = color;
+        this.type = type;
     }
     
     List<Position> calculateMovablePositions(Position position) {
@@ -35,5 +37,9 @@ public abstract class Piece {
     
     public boolean isWhite() {
         return this.color == Color.WHITE;
+    }
+    
+    public PieceType getType() {
+        return type;
     }
 }
