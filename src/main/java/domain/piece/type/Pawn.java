@@ -31,21 +31,22 @@ public class Pawn extends Piece {
         return true;
     }
 
-    // TODO: 2023/03/14 마지막에 null 리턴 아니고 에러 던져야 됨
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         checkMoveDirection(currentSquare, targetSquare);
         ArrayList<Square> movableCoordinate = getSquares(currentSquare);
-
-        if (isGoingForward && isFirstMove) {
-            movableCoordinate.add(fetchTwoStepForwardSquare(currentSquare));
-        }
-
+        moveForward(currentSquare, movableCoordinate);
         if (movableCoordinate.contains(targetSquare)) {
             isFirstMove = false;
             return movableCoordinate;
         }
-        return null;
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    }
+
+    private void moveForward(Square currentSquare, ArrayList<Square> movableCoordinate) {
+        if (isGoingForward && isFirstMove) {
+            movableCoordinate.add(fetchTwoStepForwardSquare(currentSquare));
+        }
     }
 
     private ArrayList<Square> getSquares(Square currentSquare) {
@@ -55,7 +56,13 @@ public class Pawn extends Piece {
 
         List<Direction> targetDirection = fetchMovableDirections();
 
-        ArrayList<Square> movableCoordinate = new ArrayList<>();
+        ArrayList<Square> movableSquares = new ArrayList<>();
+        addMovableSquares(directionUnit, currentFileCoordinate, currentRankCoordinate, targetDirection, movableSquares);
+        return movableSquares;
+    }
+
+    private void addMovableSquares(int directionUnit, int currentFileCoordinate, int currentRankCoordinate,
+                                   List<Direction> targetDirection, ArrayList<Square> movableCoordinate) {
         for (Direction direction : targetDirection) {
             int fileCoordinate = currentFileCoordinate + directionUnit * direction.getFile();
             int rankCoordinate = currentRankCoordinate + directionUnit * direction.getRank();
@@ -64,7 +71,6 @@ public class Pawn extends Piece {
             }
             movableCoordinate.add(new Square(fileCoordinate, rankCoordinate));
         }
-        return movableCoordinate;
     }
 
     private Square fetchTwoStepForwardSquare(Square currentSquare) {

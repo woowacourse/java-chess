@@ -11,6 +11,7 @@ import domain.piece.Piece;
 public class Rook extends Piece {
     private static final List<Direction> movableDirection = List.of(Direction.EAST, Direction.WEST,
             Direction.SOUTH, Direction.NORTH);
+
     public Rook(Camp camp) {
         super(camp);
     }
@@ -26,8 +27,6 @@ public class Rook extends Piece {
         Integer file = currentCoordinate.get(FILE);
         Integer rank = currentCoordinate.get(RANK);
 
-        List<Square> movableSquares = new ArrayList<>();
-
         for (Direction direction : movableDirection) {
             ArrayList<Square> squares = new ArrayList<>();
             for (int i = 1; i < 8; i++) {
@@ -39,9 +38,9 @@ public class Rook extends Piece {
                 squares.add(new Square(fileCoordinate, rankCoordinate));
             }
             if (squares.contains(targetSquare)) {
-                movableSquares = squares;
+                return squares;
             }
         }
-        return movableSquares;
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 }

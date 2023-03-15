@@ -35,6 +35,6 @@ public class Knight extends Piece {
         if (movableDirection.contains(coordinateGap)) {
             return List.of(targetSquare);
         }
-        return null;
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 }

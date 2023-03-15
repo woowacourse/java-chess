@@ -27,8 +27,6 @@ public class King extends Piece {
         Integer file = currentCoordinate.get(FILE);
         Integer rank = currentCoordinate.get(RANK);
 
-        List<Square> movableSquares = new ArrayList<>();
-
         for (Direction direction : movableDirection) {
             ArrayList<Square> squares = new ArrayList<>();
             int fileCoordinate = file + direction.getFile();
@@ -38,9 +36,9 @@ public class King extends Piece {
             }
             squares.add(new Square(fileCoordinate, rankCoordinate));
             if (squares.contains(targetSquare)) {
-                movableSquares = squares;
+                return squares;
             }
         }
-        return movableSquares;
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 }
