@@ -1,37 +1,37 @@
 package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class KingTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"b2", "c2", "d2", "b3", "d3", "b4", "c4", "d4"})
+    @CsvSource(value = {"c3:b2", "c3:c2", "c3:d2", "c3:b3", "c3:d3", "c3:b4", "c3:c4", "c3:d4"}, delimiter = ':')
     @DisplayName("king이 올바른 위치로 움직인다.")
-    void move_success(final String input) {
+    void move_success(final String start, final String end) {
         // given
-        King king = new King(new Position("c3"));
+        King king = new King(new Name("k"));
 
         // when & then
-        assertDoesNotThrow(() -> king.move(input));
+        assertDoesNotThrow(() -> king.canMove(start, end));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"b1", "c1", "d1", "b5"})
+    @CsvSource(value = {"c3:b1", "c3:c1", "c3:d1", "c3:b5"}, delimiter = ':')
     @DisplayName("King이 올바른 위치로 움직이지 못하면 예외를 발생시킨다.")
-    void throws_exception_when_move_invalid(final String input) {
+    void throws_exception_when_move_invalid(final String start, final String end) {
         // given
-        King king = new King(new Position("c3"));
+        King king = new King(new Name("k"));
 
         // when & then
         assertThatThrownBy(
-                () -> king.move(input)
+                () -> king.canMove(start, end)
         ).isInstanceOf(IllegalArgumentException.class);
-     }
+    }
 }

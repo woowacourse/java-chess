@@ -26,8 +26,11 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Row입니다."));
     }
 
-    public int subPositionFromArrivePosition(final int arrivePosition) {
-        int newRowPosition = arrivePosition - this.row;
+    public static int subPositionFromArrivePosition(final char start, final char end) {
+        Row startRow = fromByInput(start);
+        Row endRow = fromByInput(end);
+
+        int newRowPosition = endRow.row - startRow.row;
         return newRowPosition;
     }
 }

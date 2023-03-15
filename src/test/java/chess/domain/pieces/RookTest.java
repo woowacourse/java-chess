@@ -3,37 +3,36 @@ package chess.domain.pieces;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"c1", "c2", "c4", "c5", "c6", "c7", "c8",
-            "a3", "b3", "d3", "e3", "f3", "g3", "h3"})
+    @CsvSource(value = {"c3,c1", "c3,c2", "c3,c4", "c3,c5", "c3,c6", "c3,c7", "c3,c8",
+            "c3,a3", "c3,b3", "c3,d3", "c3,e3", "c3,f3", "c3,g3", "c3,h3"})
     @DisplayName("Rook이 올바른 위치로 이동한다.")
-    void move_success(final String givenPosition) {
+    void move_success(final String start, final String end) {
         // given
-        Rook rook = new Rook(new Position("c3"));
+        Rook rook = new Rook(new Name("r"));
 
         // when & then
         assertDoesNotThrow(
-                () -> rook.move(givenPosition)
+                () -> rook.canMove(start, end)
         );
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"b1", "b2", "f5", "f7"})
+    @CsvSource(value = {"c3,b1", "c3,b2", "c3,f5", "c3,f7"})
     @DisplayName("Rook이 정상적인 위치로 움직이지 않는 경우 예외를 발생시킨다.")
-    void throws_exception_when_move_position_invalid(final String givenPosition) {
+    void throws_exception_when_move_position_invalid(final String start, final String end) {
         // given
-        Rook rook = new Rook(new Position("c3"));
+        Rook rook = new Rook(new Name("r"));
 
         // when & then
         assertThatThrownBy(
-                () -> rook.move(givenPosition)
+                () -> rook.canMove(start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

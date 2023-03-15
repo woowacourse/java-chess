@@ -1,25 +1,23 @@
 package chess.domain.pieces;
 
+import chess.domain.board.Col;
 import chess.domain.board.Position;
+import chess.domain.board.Row;
 import java.util.List;
 
 public class King extends Piece{
 
-    public King(final Position position) {
-        super(position);
+    public King(final Name name) {
+        super(name);
     }
 
     @Override
-    public void move(final String position) {
-        validateMove(position);
-        this.position = new Position(position);
-    }
-
-    private void validateMove(final String position) {
+    public void canMove(final String start, final String end) {
         List<List<Integer>> possiblePosition = List.of(List.of(1,0), List.of(0,1), List.of(1,1));
 
-        int absSubRow = Math.abs(this.position.subRowFromArriveRow(position));
-        int absSubCol = Math.abs(this.position.subColFromArriveCol(position));
+        int absSubRow = Math.abs(Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1)));
+        int absSubCol = Math.abs(Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0)));
+
         List<Integer> subPosition = List.of(absSubRow, absSubCol);
 
         if (!possiblePosition.contains(subPosition)) {

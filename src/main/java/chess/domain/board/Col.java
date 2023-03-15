@@ -18,15 +18,18 @@ public enum Col {
         this.column = column;
     }
 
-    public static Col from(final char column) {
+    public static Col fromByInput(final char column) {
         return Arrays.stream(Col.values())
                 .filter(col -> col.column == column)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
     }
 
-    public int calculateSubstitutionFromArrivalPosition(final int arrivePosition) {
-        int newColPosition = arrivePosition - this.column;
-        return newColPosition;
+    public static int subPositionFromArrivePosition(final char start, final char end) {
+        Col startCol = fromByInput(start);
+        Col endCol = fromByInput(end);
+
+        int newRowPosition = endCol.column - startCol.column;
+        return newRowPosition;
     }
 }

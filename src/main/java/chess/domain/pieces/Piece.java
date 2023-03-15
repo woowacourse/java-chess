@@ -1,14 +1,12 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Position;
-
 public abstract class Piece {
 
-    protected Position position;
+    private final Name name;
 
-    public Piece(final Position position) {
-        this.position = position;
+    public Piece(final Name name) {
+        this.name = name;
     }
 
-    public abstract void move(final String position);
+    public abstract void canMove(final String start, final String end);
 }

@@ -1,36 +1,29 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Position;
+import chess.domain.board.Col;
+import chess.domain.board.Row;
 import java.util.List;
 
 public class Knight extends Piece {
 
-    public Knight(final Position position) {
-        super(position);
+    public Knight(final Name name) {
+        super(name);
     }
 
     @Override
-    public void move(final String position) {
-        validate(position);
-        this.position = new Position(position);
+    public void canMove(final String start, final String end) {
+        validateMove(start, end);
     }
 
-    private void validate(final String position) {
-        if (!validatePosition(position)) {
-            throw new IllegalArgumentException("Knight의 이동 범위가 올바르지 않습니다.");
-        }
-    }
-
-    private boolean validatePosition(final String position) {
+    private void validateMove(final String start, final String end) {
         List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
 
-        int substitutionOfRow = this.position.subRowFromArriveRow(position);
-        int substitutionOfCol = this.position.subColFromArriveCol(position);
-
-        int absOfRow = Math.abs(substitutionOfRow);
-        int absOfCol = Math.abs(substitutionOfCol);
+        int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1)));
+        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0)));
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
-        return possibleSubPosition.contains(newPosition);
+        if (!possibleSubPosition.contains(newPosition)) {
+            throw new IllegalArgumentException("Knight의 이동 범위가 올바르지 않습니다.");
+        }
     }
 }

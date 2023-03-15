@@ -1,15 +1,13 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Position;
+public class Place extends Piece {
 
-public class Place extends Piece{
-
-    public Place(final Position position) {
-        super(position);
+    public Place(final Name name) {
+        super(name);
     }
 
     @Override
-    public void move(final String position) {
+    public void canMove(final String start, final String end) {
         throw new IllegalArgumentException("움직일 수 없는 말입니다.");
     }
 }

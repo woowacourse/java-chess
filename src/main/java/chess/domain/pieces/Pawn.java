@@ -1,36 +1,33 @@
 package chess.domain.pieces;
 
-import chess.domain.board.Position;
+import chess.domain.board.Col;
+import chess.domain.board.Row;
 
 public class Pawn extends Piece {
 
     private boolean isFirstMove;
 
-    public Pawn(final Position position) {
-        super(position);
+    public Pawn(final Name name) {
+        super(name);
         this.isFirstMove = true;
     }
 
     @Override
-    public void move(final String position) {
-        validate(position);
-        this.position = new Position(position);
-    }
-
-    private void validate(final String position) {
-        if (!validatePosition(position)) {
+    public void canMove(final String start, final String end) {
+        if (!validatePosition(start, end)) {
             throw new IllegalArgumentException("Pawn의 움직임 범위가 올바르지 않습니다.");
         }
     }
 
-    private boolean validatePosition(final String position) {
-        int substitutionOfRow = this.position.subRowFromArriveRow(position);
-        int substitutionOfCol = this.position.subColFromArriveCol(position);
+    private boolean validatePosition(final String start, final String end) {
+        int substitutionOfRow = Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1));
+        int substitutionOfCol = Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0));
 
         if (this.isFirstMove) {
             this.isFirstMove = false;
             return canMoveAtFirst(substitutionOfRow, substitutionOfCol);
         }
+
         return substitutionOfCol == 0 && substitutionOfRow == 1;
     }
 
