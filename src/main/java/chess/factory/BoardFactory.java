@@ -46,7 +46,7 @@ public class BoardFactory {
 
     private static void fillChessBoard(final Map<Position, Piece> chessBoard, final Position position) {
         if (position.isPlacePositionAtFirst()) {
-            chessBoard.put(position, new Place(new Name(".")));
+            chessBoard.put(position, new Place());
         }
         if (position.isLowerPawnPositionAtFirst()) {
             chessBoard.put(position, new Pawn(new Name("p")));
