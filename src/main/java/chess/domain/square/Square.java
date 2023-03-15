@@ -56,6 +56,10 @@ public final class Square {
         return Square.of(newFile, newRank);
     }
 
+    public boolean isSame(final Square other) {
+        return this.equals(other);
+    }
+
     public boolean isRankTwo() {
         return false;
     }
