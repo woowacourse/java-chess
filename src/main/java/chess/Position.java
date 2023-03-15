@@ -6,9 +6,9 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    Position(String rawRank, String rawFile) {// TODO: 2023/03/15 rank와 file이 합쳐져있는 문자열을 입력으로 받기
-        this.file = File.from(rawFile);
-        this.rank = Rank.from(rawRank);
+    Position(Rank rank, File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
     int calculateFileDistance(final Position startPosition) {

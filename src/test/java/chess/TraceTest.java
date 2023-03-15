@@ -16,7 +16,7 @@ public class TraceTest {
             Trace trace = new Trace();
 
             //when
-            trace.add(1, new Position("a", "2"));
+            trace.add(1, new Position(Rank.A, File.TWO));
 
             //then
             assertThat(trace).extracting("logs", InstanceOfAssertFactories.collection(Position.class))
@@ -31,7 +31,7 @@ public class TraceTest {
         void should_true반환_when_움직인기록이있다면() {
             //given
             Trace trace = new Trace();
-            trace.add(1, new Position("a", "2"));
+            trace.add(1, new Position(Rank.A, File.TWO));
 
             //when
             boolean actual = trace.hasLog();

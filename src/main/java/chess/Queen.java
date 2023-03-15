@@ -7,7 +7,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         if (startPosition.equals(endPosition)) {
             return false;
         }
@@ -15,5 +15,10 @@ public class Queen extends Piece {
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
         return (Math.abs(diffFile) == Math.abs(diffRank)) || (diffFile * diffRank == 0);
+    }
+
+    @Override
+    boolean canAttack(final Position startPosition, final Position endPosition) {
+        return canMove(startPosition, endPosition);
     }
 }

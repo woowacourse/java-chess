@@ -10,7 +10,7 @@ public class King extends Piece {
 
 
     @Override
-    public boolean isMovable(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         if (startPosition.equals(endPosition)) {
             return false;
         }
@@ -21,4 +21,8 @@ public class King extends Piece {
                 && Math.abs(diffRank) <= UPPER_BOUND_OF_MOVABLE_DISTANCE;
     }
 
+    @Override
+    boolean canAttack(final Position startPosition, final Position endPosition) {
+        return canMove(startPosition, endPosition);
+    }
 }

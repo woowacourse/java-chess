@@ -6,7 +6,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         if (startPosition.equals(endPosition)) {
             return false;
         }
@@ -14,5 +14,10 @@ public class Bishop extends Piece {
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
         return (Math.abs(diffFile) == Math.abs(diffRank));
+    }
+
+    @Override
+    boolean canAttack(final Position startPosition, final Position endPosition) {
+        return canMove(startPosition, endPosition);
     }
 }

@@ -9,7 +9,9 @@ abstract class Piece {
         this.trace = new Trace();
     }
 
-    abstract boolean isMovable(Position startPosition, Position endPosition);
+    abstract boolean canMove(Position startPosition, Position endPosition);
+
+    abstract boolean canAttack(Position startPosition, Position endPosition);
 
     public void addTrace(final int turn, final Position lastPosition) {
         trace.add(turn, lastPosition);

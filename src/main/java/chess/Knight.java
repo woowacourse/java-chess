@@ -7,7 +7,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         if (startPosition.equals(endPosition)) {
             return false;
         }
@@ -15,5 +15,10 @@ public class Knight extends Piece {
         int diffRank = endPosition.calculateRankDistance(startPosition);
 
         return Math.abs(diffFile * diffRank) == 2;
+    }
+
+    @Override
+    boolean canAttack(final Position startPosition, final Position endPosition) {
+        return canMove(startPosition, endPosition);
     }
 }
