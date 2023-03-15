@@ -1,12 +1,16 @@
 package chess.domain;
 
+import chess.domain.state.MoveState;
+
 public class Piece {
     private final PieceType type;
     private final Color color;
+    private MoveState moveState;
 
     public Piece(PieceType pieceType, Color color) {
         type = pieceType;
         this.color = color;
+        moveState = pieceType.getState();
     }
 
     public Piece(String type, Color color) {
@@ -23,5 +27,13 @@ public class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public void move(int x, int y, Piece piece) {
+        moveState = moveState.move(x, y, piece.isSameColor(color));
+    }
+
+    private ColorCompareResult isSameColor(Color color) {
+        return ColorCompareResult.of(this.color, color);
     }
 }
