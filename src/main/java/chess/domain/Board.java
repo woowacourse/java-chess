@@ -44,6 +44,16 @@ public class Board {
     }
 
     public void movePiece(Position origin, Position destination) {
+        validateMoveRequest(origin, destination);
+        Piece targetPiece = piecePosition.get(origin);
+        int rankDifference = origin.getRankDifference(destination);
+        int fileDifference = origin.getFileDifference(destination);
+        targetPiece.move(fileDifference, rankDifference, piecePosition.getOrDefault(destination, new Piece()));
+        piecePosition.put(destination, targetPiece);
+        piecePosition.remove(origin);
+    }
+
+    private void validateMoveRequest(Position origin, Position destination) {
         if (piecePosition.get(origin) == null) {
             throw new IllegalPieceMoveException();
         }
@@ -51,11 +61,15 @@ public class Board {
         if (!piecePosition.get(origin).canJump()) {
             checkPath(origin, destination);
         }
-
     }
 
     private void checkPath(Position origin, Position destination) {
-
+        List<Position> straightPath = origin.createStraightPath(destination);
+        for (Position position : straightPath) {
+            if (piecePosition.get(position) != null) {
+                throw new IllegalPieceMoveException();
+            }
+        }
     }
 
     public List<List<PieceResponse>> getPiecePosition() {

@@ -1,18 +1,17 @@
 package chess.domain;
 
-import chess.domain.state.InitialPawnState;
-import chess.domain.state.MoveState;
+import chess.domain.state.*;
 
 import java.util.Arrays;
 
 public enum PieceType {
-    ROOK("r", new InitialPawnState()),
-    KNIGHT("n", new InitialPawnState()),
-    BISHOP("b", new InitialPawnState()),
-    QUEEN("q", new InitialPawnState()),
-    KING("k", new InitialPawnState()),
+    ROOK("r", new RookState()),
+    KNIGHT("n", new KnightState()),
+    BISHOP("b", new BishopState()),
+    QUEEN("q", new QueenState()),
+    KING("k", new KingState()),
     PAWN("p", new InitialPawnState()),
-    EMPTY(".", new InitialPawnState());
+    EMPTY(".", new EmptyState());
     private final String type;
     private final MoveState state;
 

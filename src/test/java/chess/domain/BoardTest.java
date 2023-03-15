@@ -1,13 +1,16 @@
 package chess.domain;
 
 import chess.domain.dto.PieceResponse;
+import chess.domain.exception.IllegalPieceMoveException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
 
+import static chess.domain.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -41,5 +44,24 @@ public class BoardTest {
         assertThat(check)
                 .containsOnly("p")
                 .hasSize(8);
+    }
+
+    @Test
+    void 같은편_말이_있는_곳으로_이동할_수_없다() {
+        //given
+        Board board = new Board();
+
+        //expect
+        assertThatThrownBy(() -> board.movePiece(C1, A3))
+                .isInstanceOf(IllegalPieceMoveException.class);
+    }
+
+    @Test
+    void 같은편_말이_없는_곳으로_이동할_수_있다() {
+        //given
+        Board board = new Board();
+        board.movePiece(B2, B4);
+        board.movePiece(A7, A5);
+        board.movePiece(C1, A3);
     }
 }
