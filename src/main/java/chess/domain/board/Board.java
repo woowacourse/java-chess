@@ -23,9 +23,10 @@ public final class Board {
         board.add(Squares.initPieces(Color.BLACK));
     }
 
-    public void move(Position source, Position target) {
+    public void move(Position source, Position target, Color color) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
+        validateLegalSourceColor(sourceSquare, color);
         validateLegalTargetColor(sourceSquare, targetSquare);
         Set<Position> movablePath = sourceSquare.computePath(source, target);
 
@@ -34,6 +35,12 @@ public final class Board {
         if (sourceSquare.canMovePiece(isEmptySquare, source, target)) {
             targetSquare.changePiece(sourceSquare);
             sourceSquare.makeEmpty();
+        }
+    }
+
+    private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
+        if (!sourceSquare.equalsColor(color)) {
+            throw new IllegalArgumentException();
         }
     }
 
