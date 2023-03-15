@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
-import static chess.domain.Color.BLACK;
+import static chess.domain.piece.Color.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
