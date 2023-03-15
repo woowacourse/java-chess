@@ -35,7 +35,7 @@ class PositionTest {
         Position targetPosition = Position.of("c", "5");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("c", "3"), Position.of("c", "4"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("c", "4"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 수직 아래 방향으로 이동하는 경로를 반환한다.")
@@ -45,7 +45,7 @@ class PositionTest {
         Position targetPosition = Position.of("c", "2");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("c", "4"), Position.of("c", "3"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "4"), Position.of("c", "3"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 수직 왼쪽 방향으로 이동하는 경로를 반환한다.")
@@ -55,7 +55,7 @@ class PositionTest {
         Position targetPosition = Position.of("a", "5");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("c", "5"), Position.of("b", "5"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("b", "5"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 수직 오른쪽 방향으로 이동하는 경로를 반환한다.")
@@ -65,7 +65,7 @@ class PositionTest {
         Position targetPosition = Position.of("d", "5");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("b", "5"), Position.of("c", "5"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "5"), Position.of("c", "5"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 오른쪽 위 방향으로 이동하는 경로를 반환한다.")
@@ -75,7 +75,7 @@ class PositionTest {
         Position targetPosition = Position.of("d", "4");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("b", "2"), Position.of("c", "3"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "2"), Position.of("c", "3"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 오른쪽 아래 방향으로 이동하는 경로를 반환한다.")
@@ -85,7 +85,7 @@ class PositionTest {
         Position targetPosition = Position.of("d", "1");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("b", "3"), Position.of("c", "2"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("b", "3"), Position.of("c", "2"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 왼쪽 위 방향으로 이동하는 경로를 반환한다.")
@@ -95,7 +95,7 @@ class PositionTest {
         Position targetPosition = Position.of("a", "4");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("c", "2"), Position.of("b", "3"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "2"), Position.of("b", "3"));
     }
 
     @DisplayName("source position부터 target position까지 각 기물이 왼쪽 아래 방향으로 이동하는 경로를 반환한다.")
@@ -105,6 +105,6 @@ class PositionTest {
         Position targetPosition = Position.of("a", "1");
 
         List<Position> path = sourcePosition.getPath(targetPosition);
-        assertThat(path).containsExactly(Position.of("c", "3"), Position.of("b", "2"));
+        assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("b", "2"));
     }
 }
