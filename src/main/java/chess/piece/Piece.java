@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.Square;
+
 public abstract class Piece {
     private final Camp camp;
 
@@ -8,6 +10,8 @@ public abstract class Piece {
     }
 
     abstract public PieceType getPieceType();
+
+    abstract public boolean canMove(Square source, Square target);
 
     public boolean isWhite() {
         return this.camp == Camp.WHITE;
