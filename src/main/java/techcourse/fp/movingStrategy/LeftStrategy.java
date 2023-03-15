@@ -12,8 +12,8 @@ public class LeftStrategy implements MovingStrategy {
 
     @Override
     public Position move(final Position currentPosition) {
-        final int fileOrder = currentPosition.getFileOrder() - 1;
-        return Position.of(File.of(fileOrder), currentPosition.getRank());
+        final int file = currentPosition.getFileOrder() - 1;
+        return Position.of(File.of(file), currentPosition.getRank());
     }
 }
 
