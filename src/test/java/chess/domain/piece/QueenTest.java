@@ -13,7 +13,7 @@ public class QueenTest {
     @Test
     void 퀸이_정상적으로_생성된다() {
         // given
-        final Queen queen = new Queen(Color.WHITE);
+        final Queen queen = Queen.from(Color.WHITE);
 
         // expect
         assertThat(queen.type()).isEqualTo(PieceType.QUEEN);

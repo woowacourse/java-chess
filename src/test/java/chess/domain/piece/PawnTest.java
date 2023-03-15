@@ -13,7 +13,7 @@ public class PawnTest {
     @Test
     void 폰이_정상적으로_생성된다() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE);
+        final Pawn pawn = Pawn.from(Color.WHITE);
 
         // expect
         assertThat(pawn.type()).isEqualTo(PieceType.PAWN);

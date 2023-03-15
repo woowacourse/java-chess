@@ -4,7 +4,17 @@ import static chess.domain.piece.PieceType.QUEEN;
 
 public class Queen extends Piece {
 
-    public Queen(final Color color) {
+    private static final Queen WHITE = new Queen(Color.WHITE);
+    private static final Queen BLACK = new Queen(Color.BLACK);
+
+    private Queen(final Color color) {
         super(color, QUEEN);
+    }
+
+    public static Queen from(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE;
+        }
+        return BLACK;
     }
 }

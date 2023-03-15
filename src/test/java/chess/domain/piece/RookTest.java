@@ -13,7 +13,7 @@ public class RookTest {
     @Test
     void 룩이_정상적으로_생성된다() {
         // given
-        final Rook rook = new Rook(Color.WHITE);
+        final Rook rook = Rook.from(Color.WHITE);
 
         // expect
         assertThat(rook.type()).isEqualTo(PieceType.ROOK);

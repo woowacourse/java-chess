@@ -13,7 +13,7 @@ public class KingTest {
     @Test
     void 킹이_정상적으로_생성된다() {
         // given
-        final King king = new King(Color.WHITE);
+        final King king = King.from(Color.WHITE);
 
         // expect
         assertThat(king.type()).isEqualTo(PieceType.KING);

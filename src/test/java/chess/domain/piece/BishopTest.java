@@ -13,9 +13,9 @@ public class BishopTest {
     @Test
     void 비숍이_정상적으로_생성된다() {
         // given
-        final Bishop bishop = new Bishop(Color.WHITE);
+        final Bishop bishop = Bishop.from(Color.WHITE);
 
         // expect
-        assertThat(bishop.type()).isEqualTo(PieceType.PAWN);
+        assertThat(bishop.type()).isEqualTo(PieceType.BISHOP);
     }
 }

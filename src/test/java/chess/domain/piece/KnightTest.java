@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,9 @@ public class KnightTest {
     @Test
     void 나이트가_정상적으로_생성된다() {
         // given
-        final Knight knight = new Knight(Color.WHITE);
+        final Knight knight = Knight.from(Color.WHITE);
 
         // expect
-        Assertions.assertThat(knight.type()).isEqualTo(PieceType.PAWN);
+        assertThat(knight.type()).isEqualTo(PieceType.KNIGHT);
     }
 }
