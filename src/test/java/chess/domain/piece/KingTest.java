@@ -17,14 +17,14 @@ public class KingTest extends AbstractTestFixture {
     void canMove_HorizontalVerticalDiagonal_Once() {
         King king = King.from(true);
 
-        assertThat(king.canMove(createMove(LEFT))).isTrue();
-        assertThat(king.canMove(createMove(RIGHT))).isTrue();
-        assertThat(king.canMove(createMove(UP))).isTrue();
-        assertThat(king.canMove(createMove(DOWN))).isTrue();
-        assertThat(king.canMove(createMove(UP, RIGHT))).isTrue();
-        assertThat(king.canMove(createMove(UP, LEFT))).isTrue();
-        assertThat(king.canMove(createMove(DOWN, RIGHT))).isTrue();
-        assertThat(king.canMove(createMove(DOWN, LEFT))).isTrue();
+        assertThat(king.hasMove(createMove(LEFT))).isTrue();
+        assertThat(king.hasMove(createMove(RIGHT))).isTrue();
+        assertThat(king.hasMove(createMove(UP))).isTrue();
+        assertThat(king.hasMove(createMove(DOWN))).isTrue();
+        assertThat(king.hasMove(createMove(UP, RIGHT))).isTrue();
+        assertThat(king.hasMove(createMove(UP, LEFT))).isTrue();
+        assertThat(king.hasMove(createMove(DOWN, RIGHT))).isTrue();
+        assertThat(king.hasMove(createMove(DOWN, LEFT))).isTrue();
     }
 
     @DisplayName("가로/세로/대각선 여러 칸 움직일 수 없다.")
@@ -32,8 +32,8 @@ public class KingTest extends AbstractTestFixture {
     void canNotMove_HorizontalVerticalDiagonal_Twice() {
         King king = King.from(true);
 
-        assertThat(king.canMove(createMove(LEFT, LEFT))).isFalse();
-        assertThat(king.canMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
+        assertThat(king.hasMove(createMove(LEFT, LEFT))).isFalse();
+        assertThat(king.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -41,6 +41,6 @@ public class KingTest extends AbstractTestFixture {
     void canNotMove() {
         King king = King.from(true);
 
-        assertThat(king.canMove(createMove(LEFT, LEFT, UP))).isFalse();
+        assertThat(king.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
 }

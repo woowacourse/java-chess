@@ -17,14 +17,14 @@ public class QueenTest extends AbstractTestFixture {
     void canMove_HorizontalVerticalDiagonal_Infinite() {
         Queen queen = Queen.from(true);
 
-        assertThat(queen.canMove(createMove(LEFT, LEFT, LEFT))).isTrue();
-        assertThat(queen.canMove(createMove(RIGHT, RIGHT))).isTrue();
-        assertThat(queen.canMove(createMove(UP, UP))).isTrue();
-        assertThat(queen.canMove(createMove(DOWN))).isTrue();
-        assertThat(queen.canMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isTrue();
-        assertThat(queen.canMove(createMove(UP, LEFT))).isTrue();
-        assertThat(queen.canMove(createMove(DOWN, RIGHT))).isTrue();
-        assertThat(queen.canMove(createMove(DOWN, LEFT))).isTrue();
+        assertThat(queen.hasMove(createMove(LEFT, LEFT, LEFT))).isTrue();
+        assertThat(queen.hasMove(createMove(RIGHT, RIGHT))).isTrue();
+        assertThat(queen.hasMove(createMove(UP, UP))).isTrue();
+        assertThat(queen.hasMove(createMove(DOWN))).isTrue();
+        assertThat(queen.hasMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isTrue();
+        assertThat(queen.hasMove(createMove(UP, LEFT))).isTrue();
+        assertThat(queen.hasMove(createMove(DOWN, RIGHT))).isTrue();
+        assertThat(queen.hasMove(createMove(DOWN, LEFT))).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -32,6 +32,6 @@ public class QueenTest extends AbstractTestFixture {
     void canNotMove() {
         Queen queen = Queen.from(true);
 
-        assertThat(queen.canMove(createMove(LEFT, LEFT, UP))).isFalse();
+        assertThat(queen.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
 }

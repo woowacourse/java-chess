@@ -18,14 +18,14 @@ public class KnightTest extends AbstractTestFixture {
     void canMove() {
         Knight knight = Knight.from(true);
 
-        assertThat(knight.canMove(createMove(LEFT, LEFT, UP))).isTrue();
-        assertThat(knight.canMove(createMove(LEFT, UP, UP))).isTrue();
-        assertThat(knight.canMove(createMove(RIGHT, RIGHT, UP))).isTrue();
-        assertThat(knight.canMove(createMove(RIGHT, UP, UP))).isTrue();
-        assertThat(knight.canMove(createMove(RIGHT, RIGHT, DOWN))).isTrue();
-        assertThat(knight.canMove(createMove(RIGHT, DOWN, DOWN))).isTrue();
-        assertThat(knight.canMove(createMove(LEFT, LEFT, DOWN))).isTrue();
-        assertThat(knight.canMove(createMove(LEFT, DOWN, DOWN))).isTrue();
+        assertThat(knight.hasMove(createMove(LEFT, LEFT, UP))).isTrue();
+        assertThat(knight.hasMove(createMove(LEFT, UP, UP))).isTrue();
+        assertThat(knight.hasMove(createMove(RIGHT, RIGHT, UP))).isTrue();
+        assertThat(knight.hasMove(createMove(RIGHT, UP, UP))).isTrue();
+        assertThat(knight.hasMove(createMove(RIGHT, RIGHT, DOWN))).isTrue();
+        assertThat(knight.hasMove(createMove(RIGHT, DOWN, DOWN))).isTrue();
+        assertThat(knight.hasMove(createMove(LEFT, LEFT, DOWN))).isTrue();
+        assertThat(knight.hasMove(createMove(LEFT, DOWN, DOWN))).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -33,14 +33,14 @@ public class KnightTest extends AbstractTestFixture {
     void canNotMove() {
         Knight knight = Knight.from(true);
 
-        assertThat(knight.canMove(createMove(LEFT, LEFT, LEFT))).isFalse();
-        assertThat(knight.canMove(createMove(RIGHT, RIGHT))).isFalse();
-        assertThat(knight.canMove(createMove(UP, UP))).isFalse();
-        assertThat(knight.canMove(createMove(DOWN))).isFalse();
-        assertThat(knight.canMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isFalse();
-        assertThat(knight.canMove(createMove(UP, LEFT))).isFalse();
-        assertThat(knight.canMove(createMove(DOWN, RIGHT))).isFalse();
-        assertThat(knight.canMove(createMove(DOWN, LEFT))).isFalse();
+        assertThat(knight.hasMove(createMove(LEFT, LEFT, LEFT))).isFalse();
+        assertThat(knight.hasMove(createMove(RIGHT, RIGHT))).isFalse();
+        assertThat(knight.hasMove(createMove(UP, UP))).isFalse();
+        assertThat(knight.hasMove(createMove(DOWN))).isFalse();
+        assertThat(knight.hasMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isFalse();
+        assertThat(knight.hasMove(createMove(UP, LEFT))).isFalse();
+        assertThat(knight.hasMove(createMove(DOWN, RIGHT))).isFalse();
+        assertThat(knight.hasMove(createMove(DOWN, LEFT))).isFalse();
     }
 
     @DisplayName("한 단위 이상 움직일 수 없다")
@@ -48,6 +48,6 @@ public class KnightTest extends AbstractTestFixture {
     void canNotMove_MoreThanOneUnit() {
         Knight knight = Knight.from(true);
 
-        assertThat(knight.canMove(createMove(LEFT, LEFT, LEFT, LEFT, UP, UP))).isFalse();
+        assertThat(knight.hasMove(createMove(LEFT, LEFT, LEFT, LEFT, UP, UP))).isFalse();
     }
 }

@@ -29,32 +29,32 @@ public class PieceTest extends AbstractTestFixture {
         assertThat(piece.hasSameColor(otherPiece)).isFalse();
     }
 
-    @DisplayName("가능한 수인지 판단한다(유한)")
+    @DisplayName("이동 가능한 수인지 판단한다(유한)")
     @Test
     void isValidMoveFinite() {
         Move move = createMove(UP, UP, RIGHT);
         Move move2 = createMove(RIGHT, RIGHT, UP);
 
         Piece piece = createPiece(true, move, move2);
-        assertThat(piece.canMove(move)).isTrue();
+        assertThat(piece.hasMove(move)).isTrue();
     }
 
-    @DisplayName("가능하지 않은 수인지 판단한다(기물:유한, 수:무한)")
+    @DisplayName("이동 가능하지 않은 수인지 판단한다(기물:유한, 수:무한)")
     @Test
     void isInvalidMoveFinite() {
         Move move = createMove(UP, RIGHT);
 
         Piece piece = createPiece(true, move);
-        assertThat(piece.canMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
+        assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isFalse();
     }
 
-    @DisplayName("가능하지 않은 수인지 판단한다")
+    @DisplayName("이동 가능하지 않은 수인지 판단한다")
     @Test
     void isInvalidMove() {
         Move move = createMove(UP, RIGHT);
 
         Piece piece = createPiece(true, move);
-        assertThat(piece.canMove(createMove(LEFT))).isFalse();
+        assertThat(piece.hasMove(createMove(LEFT))).isFalse();
     }
 
     @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")

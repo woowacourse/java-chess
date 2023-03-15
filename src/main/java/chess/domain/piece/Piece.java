@@ -17,7 +17,7 @@ public abstract class Piece {
         return isWhite == otherPiece.isWhite;
     }
 
-    public boolean canMove(Move move) {
+    public boolean hasMove(Move move) {
         boolean hasMove = false;
         for (Move pieceMove : moves) {
             hasMove = hasMove || compareMove(pieceMove, move);

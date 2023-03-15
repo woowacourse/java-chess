@@ -17,10 +17,10 @@ public class RookTest extends AbstractTestFixture {
     void canMove_HorizontalVertical_Infinite() {
         Rook rook = Rook.from(true);
 
-        assertThat(rook.canMove(createMove(LEFT, LEFT, LEFT))).isTrue();
-        assertThat(rook.canMove(createMove(RIGHT, RIGHT))).isTrue();
-        assertThat(rook.canMove(createMove(UP, UP))).isTrue();
-        assertThat(rook.canMove(createMove(DOWN))).isTrue();
+        assertThat(rook.hasMove(createMove(LEFT, LEFT, LEFT))).isTrue();
+        assertThat(rook.hasMove(createMove(RIGHT, RIGHT))).isTrue();
+        assertThat(rook.hasMove(createMove(UP, UP))).isTrue();
+        assertThat(rook.hasMove(createMove(DOWN))).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -28,8 +28,8 @@ public class RookTest extends AbstractTestFixture {
     void canNotMove() {
         Rook rook = Rook.from(true);
 
-        assertThat(rook.canMove(createMove(LEFT, LEFT, UP))).isFalse();
-        assertThat(rook.canMove(createMove(LEFT, UP))).isFalse();
-        assertThat(rook.canMove(createMove(RIGHT, RIGHT, DOWN, DOWN))).isFalse();
+        assertThat(rook.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
+        assertThat(rook.hasMove(createMove(LEFT, UP))).isFalse();
+        assertThat(rook.hasMove(createMove(RIGHT, RIGHT, DOWN, DOWN))).isFalse();
     }
 }

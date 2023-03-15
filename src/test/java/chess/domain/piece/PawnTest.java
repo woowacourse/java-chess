@@ -15,8 +15,8 @@ public class PawnTest extends AbstractTestFixture {
     void whiteMoveUp_onceOrTwice_onFirstMove() {
         Piece pawn = Pawn.from(true);
 
-        assertThat(pawn.canMove(createMove(UP, UP))).isTrue();
-        assertThat(pawn.canMove(createMove(UP))).isTrue();
+        assertThat(pawn.hasMove(createMove(UP, UP))).isTrue();
+        assertThat(pawn.hasMove(createMove(UP))).isTrue();
     }
 
     @DisplayName("흑은 처음에 1칸 혹은 2칸 아래로 움직일 수 있다.")
@@ -24,8 +24,8 @@ public class PawnTest extends AbstractTestFixture {
     void blackMoveDown_onceOrTwice_onFirstMove() {
         Piece pawn = Pawn.from(false);
 
-        assertThat(pawn.canMove(createMove(DOWN, DOWN))).isTrue();
-        assertThat(pawn.canMove(createMove(DOWN))).isTrue();
+        assertThat(pawn.hasMove(createMove(DOWN, DOWN))).isTrue();
+        assertThat(pawn.hasMove(createMove(DOWN))).isTrue();
     }
 
     @DisplayName("백은 아래로 움직일 수 없다")
@@ -33,8 +33,8 @@ public class PawnTest extends AbstractTestFixture {
     void whiteCannotMoveDown() {
         Piece pawn = Pawn.from(true);
 
-        assertThat(pawn.canMove(createMove(DOWN, DOWN))).isFalse();
-        assertThat(pawn.canMove(createMove(DOWN))).isFalse();
+        assertThat(pawn.hasMove(createMove(DOWN, DOWN))).isFalse();
+        assertThat(pawn.hasMove(createMove(DOWN))).isFalse();
     }
 
     @DisplayName("흑은 위로 움직일 수 없다")
@@ -42,8 +42,8 @@ public class PawnTest extends AbstractTestFixture {
     void blackCannotMoveUp() {
         Piece pawn = Pawn.from(false);
 
-        assertThat(pawn.canMove(createMove(UP, UP))).isFalse();
-        assertThat(pawn.canMove(createMove(UP))).isFalse();
+        assertThat(pawn.hasMove(createMove(UP, UP))).isFalse();
+        assertThat(pawn.hasMove(createMove(UP))).isFalse();
     }
 
     @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
@@ -51,7 +51,7 @@ public class PawnTest extends AbstractTestFixture {
     void moveOnceAfterTouch() {
         Piece touchedPawn = Pawn.from(true).touch();
 
-        assertThat(touchedPawn.canMove(createMove(UP))).isTrue();
-        assertThat(touchedPawn.canMove(createMove(UP, UP))).isFalse();
+        assertThat(touchedPawn.hasMove(createMove(UP))).isTrue();
+        assertThat(touchedPawn.hasMove(createMove(UP, UP))).isFalse();
     }
 }

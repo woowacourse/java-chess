@@ -25,7 +25,7 @@ public class InfinitePieceTest extends AbstractTestFixture {
         Move move = createMove(UP, RIGHT);
 
         Piece piece = createPiece(move);
-        assertThat(piece.canMove(createMove(UP, RIGHT, UP, RIGHT))).isTrue();
+        assertThat(piece.hasMove(createMove(UP, RIGHT, UP, RIGHT))).isTrue();
     }
 
     private Piece createPiece(Move... moves) {

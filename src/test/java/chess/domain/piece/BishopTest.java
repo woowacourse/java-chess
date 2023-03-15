@@ -18,10 +18,10 @@ public class BishopTest extends AbstractTestFixture {
     void canMove_Diagonal_Infinite() {
         Bishop bishop = Bishop.from(true);
 
-        assertThat(bishop.canMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isTrue();
-        assertThat(bishop.canMove(createMove(UP, LEFT))).isTrue();
-        assertThat(bishop.canMove(createMove(DOWN, RIGHT))).isTrue();
-        assertThat(bishop.canMove(createMove(DOWN, LEFT))).isTrue();
+        assertThat(bishop.hasMove(createMove(UP, RIGHT, UP, RIGHT, UP, RIGHT))).isTrue();
+        assertThat(bishop.hasMove(createMove(UP, LEFT))).isTrue();
+        assertThat(bishop.hasMove(createMove(DOWN, RIGHT))).isTrue();
+        assertThat(bishop.hasMove(createMove(DOWN, LEFT))).isTrue();
     }
 
     @DisplayName("자신의 수가 아닌 움직임을 할 수 없다.")
@@ -29,10 +29,10 @@ public class BishopTest extends AbstractTestFixture {
     void canNotMove() {
         Bishop bishop = Bishop.from(true);
 
-        assertThat(bishop.canMove(createMove(LEFT, LEFT, LEFT))).isFalse();
-        assertThat(bishop.canMove(createMove(RIGHT, RIGHT))).isFalse();
-        assertThat(bishop.canMove(createMove(UP, UP))).isFalse();
-        assertThat(bishop.canMove(createMove(DOWN))).isFalse();
-        assertThat(bishop.canMove(createMove(LEFT, LEFT, UP))).isFalse();
+        assertThat(bishop.hasMove(createMove(LEFT, LEFT, LEFT))).isFalse();
+        assertThat(bishop.hasMove(createMove(RIGHT, RIGHT))).isFalse();
+        assertThat(bishop.hasMove(createMove(UP, UP))).isFalse();
+        assertThat(bishop.hasMove(createMove(DOWN))).isFalse();
+        assertThat(bishop.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
 }
