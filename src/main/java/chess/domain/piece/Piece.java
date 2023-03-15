@@ -4,7 +4,8 @@ import chess.domain.position.Position;
 import chess.domain.piece.info.Team;
 import chess.domain.piece.info.Trace;
 
-abstract class Piece {
+public abstract class Piece {
+
     protected Team team;
     protected Trace trace;
 
