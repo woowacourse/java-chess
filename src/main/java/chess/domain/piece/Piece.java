@@ -37,4 +37,8 @@ public abstract class Piece {
     public boolean equalsColor(final Piece targetSquare) {
         return color == targetSquare.color;
     }
+
+    public boolean equalsColor(final Color color) {
+        return this.color == color;
+    }
 }

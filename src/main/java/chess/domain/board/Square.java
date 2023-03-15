@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
@@ -40,6 +41,10 @@ public final class Square {
 
     public boolean equalsColor(final Square targetSquare) {
         return piece.equalsColor(targetSquare.piece);
+    }
+
+    public boolean equalsColor(final Color color) {
+        return piece.equalsColor(color);
     }
 }
 
