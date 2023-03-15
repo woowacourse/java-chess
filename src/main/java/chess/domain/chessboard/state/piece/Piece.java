@@ -20,4 +20,9 @@ public abstract class Piece implements PieceState {
     public Team getTeam() {
         return team;
     }
+
+    @Override
+    public boolean isSameTeam(final Piece piece) {
+        return this.team.equals(piece.team);
+    }
 }
