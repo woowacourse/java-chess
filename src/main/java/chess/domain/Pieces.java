@@ -64,9 +64,9 @@ public final class Pieces {
         makeQueenAndKing(pieceList, FIRST_FILE_OF_WHITE);
     }
 
-    private static void makePawns(final List<Piece> pieceList, final int file) {
-        for (int rank = FIRST_RANK; rank <= LAST_RANK; rank++) {
-            pieceList.add(Piece.from((char) rank, file, Shape.PAWN));
+    private static void makePawns(final List<Piece> pieceList, final int rank) {
+        for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
+            pieceList.add(Piece.from(rank, (char) file, Shape.PAWN));
         }
     }
 
@@ -79,15 +79,15 @@ public final class Pieces {
     }
 
     private static void addPiecePairs(List<Piece> pieceList, int frontPosition, Shape shape) {
-        pieceList.add(Piece.from((char) frontPosition, FIRST_FILE_OF_WHITE, shape));
+        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) frontPosition,shape));
 
         int backPosition = FIRST_RANK + LAST_RANK - frontPosition;
-        pieceList.add(Piece.from((char) backPosition, FIRST_FILE_OF_WHITE, shape));
+        pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) backPosition, shape));
     }
 
-    private static void makeQueenAndKing(final List<Piece> pieceList, final int file) {
-        pieceList.add(Piece.from(QUEEN_DEFAULT_RANK_POSITION, file, Shape.QUEEN));
-        pieceList.add(Piece.from(KING_DEFAULT_RANK_POSITION, file, Shape.KING));
+    private static void makeQueenAndKing(final List<Piece> pieceList, final int rank) {
+        pieceList.add(Piece.from(rank, QUEEN_DEFAULT_RANK_POSITION, Shape.QUEEN));
+        pieceList.add(Piece.from(rank, KING_DEFAULT_RANK_POSITION, Shape.KING));
     }
 
     public long getShapeCount(final Shape shape) {
