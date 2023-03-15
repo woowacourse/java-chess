@@ -21,7 +21,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> currentCoordinate = currentSquare.toCoordinate();
         Integer file = currentCoordinate.get(FILE);
         Integer rank = currentCoordinate.get(RANK);
