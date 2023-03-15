@@ -32,8 +32,8 @@ public class ChessController {
 
     private void executeCommand(final ChessGame chessGame) {
         try {
-            final Command firstCommand = Command.findByString(inputView.readCommand());
-            firstCommand.execute(chessGame);
+            final Command command = Command.findByString(inputView.readCommand());
+            command.execute(chessGame);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             executeCommand(chessGame);
