@@ -1,20 +1,25 @@
 package chess.domain;
 
+import chess.domain.piece.*;
+
+import java.util.function.Function;
+
 public enum Role {
-    PAWN(8),
-    ROOK(2),
-    KNIGHT(2),
-    BISHOP(2),
-    QUEEN(1),
-    KING(1);
+    EMPTY(Empty::new),
+    PAWN(Pawn::new),
+    ROOK(Rook::new),
+    KNIGHT(Knight::new),
+    BISHOP(Bishop::new),
+    QUEEN(Queen::new),
+    KING(King::new);
 
-    private final int count;
+    private final Function<Side, Piece> createPiece;
 
-    Role(final int count) {
-        this.count = count;
+    Role(final Function<Side, Piece> createPiece) {
+        this.createPiece = createPiece;
     }
 
-    public int getCount() {
-        return count;
+    public Piece create(Side side) {
+        return createPiece.apply(side);
     }
 }
