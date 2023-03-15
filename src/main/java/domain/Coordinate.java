@@ -25,7 +25,7 @@ public class Coordinate {
     }
 
     private double inclination(Coordinate otherCoordinate) {
-        return Math.abs(this.row - otherCoordinate.row) / Math.abs(this.col - otherCoordinate.col);
+        return (this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
 
     @Override
