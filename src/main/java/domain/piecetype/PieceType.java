@@ -1,6 +1,6 @@
-package domain;
+package domain.piecetype;
 
-public interface NewPieceType {
+public interface PieceType {
 
     boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate);
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.piecetype.Coordinate;
+import domain.piecetype.Knight;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

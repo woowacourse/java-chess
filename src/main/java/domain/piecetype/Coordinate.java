@@ -1,4 +1,4 @@
-package domain;
+package domain.piecetype;
 
 import java.util.Objects;
 

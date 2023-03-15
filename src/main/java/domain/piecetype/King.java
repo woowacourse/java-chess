@@ -1,8 +1,8 @@
-package domain;
+package domain.piecetype;
 
 import java.util.List;
 
-public class Queen implements NewPieceType {
+public class King implements PieceType {
 
     private static final List<Double> availableInclinations = List.of(
             1.0, -1.0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
@@ -13,6 +13,11 @@ public class Queen implements NewPieceType {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
+        return isMovable(startCoordinate, endCoordinate) && startCoordinate.hasDistanceOfOne(endCoordinate);
+    }
+
+    private static boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        System.out.println(startCoordinate.getInclination(endCoordinate));
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
 }

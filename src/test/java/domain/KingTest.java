@@ -1,5 +1,7 @@
 package domain;
 
+import domain.piecetype.Coordinate;
+import domain.piecetype.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

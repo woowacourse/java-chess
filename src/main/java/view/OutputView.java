@@ -1,8 +1,8 @@
 package view;
 
-import domain.Board;
-import domain.Piece;
-import domain.Rank;
+import domain.board.Board;
+import domain.piece.Piece;
+import domain.board.Rank;
 
 public class OutputView {
 

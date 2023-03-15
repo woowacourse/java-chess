@@ -1,4 +1,17 @@
-package domain;
+package domain.board;
+
+import domain.piece.Camp;
+import domain.piece.ConcretePiece;
+import domain.piece.EmptyPiece;
+import domain.piece.Piece;
+import domain.piecetype.Bishop;
+import domain.piecetype.BlackPawn;
+import domain.piecetype.King;
+import domain.piecetype.Knight;
+import domain.piecetype.PieceType;
+import domain.piecetype.Queen;
+import domain.piecetype.Rook;
+import domain.piecetype.WhitePawn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +29,9 @@ public class BoardInitialImage {
     private static List<List<Piece>> makeBoardImage() {
         List<List<Piece>> boardImage = new ArrayList<>();
         boardImage.add(makeFrontRank(Camp.WHITE));
-        boardImage.add(makeBackRank(Camp.WHITE));
+        boardImage.add(makeWhiteBackRank());
         boardImage.addAll(makeEmptyRanks());
-        boardImage.add(makeBackRank(Camp.BLACK));
+        boardImage.add(makeBlackBackRank());
         boardImage.add(makeFrontRank(Camp.BLACK));
         return boardImage;
     }
@@ -31,9 +44,9 @@ public class BoardInitialImage {
 
     private static List<Piece> makeFrontRank(Camp camp) {
         List<PieceType> frontPieceTypes = List.of(
-                PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP,
-                PieceType.QUEEN, PieceType.KING, PieceType.BISHOP,
-                PieceType.KNIGHT, PieceType.ROOK
+                new Rook(), new Knight(), new Bishop(),
+                new Queen(), new King(), new Bishop(),
+                new Knight(), new Rook()
         );
 
         return frontPieceTypes.stream()
@@ -47,9 +60,15 @@ public class BoardInitialImage {
                 .collect(Collectors.toList());
     }
 
-    private static List<Piece> makeBackRank(Camp camp) {
+    private static List<Piece> makeWhiteBackRank() {
         return IntStream.range(0, 8)
-                .mapToObj(i -> new ConcretePiece(PieceType.PAWN, camp))
+                .mapToObj(i -> new ConcretePiece(new WhitePawn(), Camp.WHITE))
+                .collect(Collectors.toList());
+    }
+
+    private static List<Piece> makeBlackBackRank() {
+        return IntStream.range(0, 8)
+                .mapToObj(i -> new ConcretePiece(new BlackPawn(), Camp.BLACK))
                 .collect(Collectors.toList());
     }
 

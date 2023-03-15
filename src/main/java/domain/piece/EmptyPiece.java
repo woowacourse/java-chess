@@ -1,4 +1,6 @@
-package domain;
+package domain.piece;
+
+import domain.piecetype.PieceType;
 
 public class EmptyPiece implements Piece {
 
