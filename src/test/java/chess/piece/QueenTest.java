@@ -1,8 +1,6 @@
 package chess.piece;
 
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Team;
+import chess.piece.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QueenTest {
     @Test
     void Queen은_자신의_심볼을_반환한다() {
-        Piece queen = new Queen(Team.WHITE, 1, 'a');
+        Piece queen = new Queen(Team.WHITE, new Coordinate(1, 'a'));
         assertThat(queen.symbol()).isEqualTo('q');
     }
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class ChessBoardTest {
+class ChessBoardTest {
     @Test
     void 체스보드를_생성하면_8개의_행이_생성된다() {
         ChessBoard chessBoard = ChessBoard.create();

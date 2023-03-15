@@ -1,8 +1,6 @@
 package chess.piece;
 
-import chess.piece.Knight;
-import chess.piece.Piece;
-import chess.piece.Team;
+import chess.piece.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class KnightTest {
     @Test
     void Knight은_자신의_심볼을_반환한다() {
-        Piece knight = new Knight(Team.WHITE, 1, 'a');
+        Piece knight = new Knight(Team.WHITE, new Coordinate(1, 'a'));
         assertThat(knight.symbol()).isEqualTo('n');
     }
 }
