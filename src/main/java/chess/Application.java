@@ -1,5 +1,6 @@
 package chess;
 
+import chess.board.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.ProcessCommand;
@@ -15,8 +16,9 @@ public class Application {
         if (processCommand.isEnd()) {
             return;
         }
-        
-        //출력
+    
+        ChessBoard chessBoard = ChessBoard.create();
+        OutputView.printChessBoard(chessBoard.chessBoard());
         run();
     }
 }

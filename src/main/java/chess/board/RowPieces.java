@@ -7,10 +7,11 @@ import chess.piece.coordinate.Coordinate;
 import chess.piece.InitialSymbols;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RowPieces {
+public class RowPieces implements Comparable<RowPieces> {
     private static final int MIN_COLUMN_INDEX = 0;
     private static final int MAX_COLUMN_INDEX = 7;
     
@@ -23,6 +24,11 @@ public class RowPieces {
     
     private RowPieces(List<Piece> pieces) {
         this.pieces = pieces;
+    }
+    
+    @Override
+    public int compareTo(RowPieces otherRowPieces) {
+        return pieces.get(0).compareTo(otherRowPieces.pieces.get(0));
     }
     
     private static List<Piece> initRowPieces(int rowNum) {
@@ -46,5 +52,18 @@ public class RowPieces {
     
     public List<Piece> pieces() {
         return pieces;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RowPieces rowPieces = (RowPieces) o;
+        return Objects.equals(pieces, rowPieces.pieces);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

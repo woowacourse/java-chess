@@ -1,5 +1,7 @@
 package chess.piece.coordinate;
 
+import chess.piece.Piece;
+
 import java.util.Objects;
 
 public class Coordinate {
@@ -13,6 +15,10 @@ public class Coordinate {
     private Coordinate(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+    
+    public int compareToPieceByRowNum(Coordinate otherCoordinate) {
+        return this.row.compareTo(otherCoordinate.row);
     }
     
     @Override

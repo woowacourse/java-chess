@@ -19,6 +19,10 @@ public class Row {
         }
     }
     
+    public int compareTo(Row otherRow) {
+        return this.row - otherRow.row;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
