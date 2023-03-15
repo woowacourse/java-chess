@@ -9,16 +9,13 @@ import java.util.Map;
 
 public final class BoardFactory {
 
-    private final Map<Position, Piece> board;
-
-    private BoardFactory(final Map<Position, Piece> board) {
-        this.board = board;
+    private BoardFactory() {
     }
 
-    public static BoardFactory create(final Map<Position, Piece> board) {
+    public static Map<Position, Piece> create(final Map<Position, Piece> board) {
         fillEmpty(board);
         fillPieces(board);
-        return new BoardFactory(board);
+        return board;
     }
 
     private static void fillPieces(final Map<Position, Piece> board) {
@@ -36,9 +33,5 @@ public final class BoardFactory {
         for (final File file : File.values()) {
             board.put(Position.of(file.value(), rank.value()), new Empty("."));
         }
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
     }
 }
