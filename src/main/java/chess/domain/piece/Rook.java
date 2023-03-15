@@ -18,7 +18,9 @@ public class Rook extends Piece {
 
     @Override
     boolean canMove(Position sourcePosition, Position targetPosition) {
-        return false;
+        boolean isSameFileCoordinate = sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
+        boolean isSameRankCoordinate = sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate();
+        return (isSameFileCoordinate || isSameRankCoordinate) && !sourcePosition.equals(targetPosition);
     }
 
     @Override
