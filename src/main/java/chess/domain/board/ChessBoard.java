@@ -34,6 +34,13 @@ public final class ChessBoard {
     public boolean contains(final Position possiblePosition) {
         return board.containsKey(possiblePosition);
     }
+
+    public Piece checkPiece(final Position source) {
+        if (contains(source)) {
+            return board.get(source);
+        }
+        throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
+    }
     
     private void init() {
         int whiteAreaRank = initWhiteArea();
