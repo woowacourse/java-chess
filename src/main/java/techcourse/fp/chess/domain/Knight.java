@@ -1,16 +1,16 @@
 package techcourse.fp.chess.domain;
 
 import java.util.List;
-import techcourse.fp.movingStrategy.DownTwoLeft;
-import techcourse.fp.movingStrategy.DownTwoRight;
-import techcourse.fp.movingStrategy.LeftTwoDownStrategy;
-import techcourse.fp.movingStrategy.LeftTwoUpStrategy;
-import techcourse.fp.movingStrategy.MovingStrategies;
-import techcourse.fp.movingStrategy.MovingStrategy;
-import techcourse.fp.movingStrategy.RightTwoDownStrategy;
-import techcourse.fp.movingStrategy.RightTwoUpStrategy;
-import techcourse.fp.movingStrategy.UpTwoLeftStrategy;
-import techcourse.fp.movingStrategy.UpTwoRightStrategy;
+import techcourse.fp.chess.movingStrategy.DownTwoLeft;
+import techcourse.fp.chess.movingStrategy.DownTwoRight;
+import techcourse.fp.chess.movingStrategy.LeftTwoDownStrategy;
+import techcourse.fp.chess.movingStrategy.LeftTwoUpStrategy;
+import techcourse.fp.chess.movingStrategy.MovingStrategies;
+import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.movingStrategy.RightTwoDownStrategy;
+import techcourse.fp.chess.movingStrategy.RightTwoUpStrategy;
+import techcourse.fp.chess.movingStrategy.UpTwoLeftStrategy;
+import techcourse.fp.chess.movingStrategy.UpTwoRightStrategy;
 
 public class Knight extends Piece {
 

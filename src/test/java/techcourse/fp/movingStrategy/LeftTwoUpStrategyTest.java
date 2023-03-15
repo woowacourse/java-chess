@@ -16,6 +16,8 @@ import static techcourse.fp.chess.domain.PositionFixtures.D3;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.chess.movingStrategy.LeftTwoUpStrategy;
+import techcourse.fp.chess.movingStrategy.MovingStrategy;
 
 class LeftTwoUpStrategyTest {
 

@@ -2,12 +2,12 @@ package techcourse.fp.chess.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import techcourse.fp.movingStrategy.LeftDownStrategy;
-import techcourse.fp.movingStrategy.LeftUpStrategy;
-import techcourse.fp.movingStrategy.MovingStrategies;
-import techcourse.fp.movingStrategy.MovingStrategy;
-import techcourse.fp.movingStrategy.RightDownStrategy;
-import techcourse.fp.movingStrategy.RightUpStrategy;
+import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
+import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
+import techcourse.fp.chess.movingStrategy.MovingStrategies;
+import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.movingStrategy.RightDownStrategy;
+import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 
 public class Bishop extends Piece {
 

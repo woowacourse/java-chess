@@ -2,12 +2,12 @@ package techcourse.fp.chess.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import techcourse.fp.movingStrategy.DownStrategy;
-import techcourse.fp.movingStrategy.LeftStrategy;
-import techcourse.fp.movingStrategy.MovingStrategies;
-import techcourse.fp.movingStrategy.MovingStrategy;
-import techcourse.fp.movingStrategy.RightStrategy;
-import techcourse.fp.movingStrategy.UpStrategy;
+import techcourse.fp.chess.movingStrategy.DownStrategy;
+import techcourse.fp.chess.movingStrategy.LeftStrategy;
+import techcourse.fp.chess.movingStrategy.MovingStrategies;
+import techcourse.fp.chess.movingStrategy.MovingStrategy;
+import techcourse.fp.chess.movingStrategy.RightStrategy;
+import techcourse.fp.chess.movingStrategy.UpStrategy;
 
 public class Rook extends Piece {
 

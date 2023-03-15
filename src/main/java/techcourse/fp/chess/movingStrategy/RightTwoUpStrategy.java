@@ -1,4 +1,4 @@
-package techcourse.fp.movingStrategy;
+package techcourse.fp.chess.movingStrategy;
 
 public class RightTwoUpStrategy extends KnightMovingStrategy {
 

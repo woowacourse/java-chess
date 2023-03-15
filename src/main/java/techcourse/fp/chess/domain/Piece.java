@@ -1,7 +1,7 @@
 package techcourse.fp.chess.domain;
 
 import java.util.List;
-import techcourse.fp.movingStrategy.MovingStrategies;
+import techcourse.fp.chess.movingStrategy.MovingStrategies;
 
 public abstract class Piece {
 

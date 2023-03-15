@@ -1,4 +1,4 @@
-package techcourse.fp.movingStrategy;
+package techcourse.fp.chess.movingStrategy;
 
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
