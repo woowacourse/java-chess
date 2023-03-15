@@ -16,7 +16,7 @@ public class Bishop extends Piece {
         int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
 
         return Math.abs(sourceColumnNumber - targetColumnNumber) == Math.abs(sourceRankNumber - targetRankNumber)
-                && !sourcePosition.equals(targetPosition);
+                && isNotMyPosition(sourcePosition, targetPosition);
     }
 
     @Override

@@ -24,7 +24,8 @@ public class King extends Piece {
         int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
 
         return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
-                && Math.abs(sourceRankNumber - targetRankNumber) <= 1 && !sourcePosition.equals(targetPosition);
+                && Math.abs(sourceRankNumber - targetRankNumber) <= 1
+                && isNotMyPosition(sourcePosition, targetPosition);
     }
 
     @Override
