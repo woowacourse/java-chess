@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Position;
 import java.util.List;
 
 public class King extends Piece {
