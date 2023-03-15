@@ -1,6 +1,7 @@
 package domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,5 +17,14 @@ class KingTest {
         assertThat(king.fetchMovePath(new Square(0, 3), new Square(1,4))).contains(
                 new Square(1,4)
         );
+    }
+
+    @Test
+    @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
+    void bishopMoveFailTest() {
+        King king = new King(Camp.WHITE);
+        assertThatThrownBy(() -> king.fetchMovePath(new Square(1, 3), new Square(2, 5)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("움직일 수 없는 경로입니다.");
     }
 }

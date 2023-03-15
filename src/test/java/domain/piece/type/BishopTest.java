@@ -1,6 +1,7 @@
 package domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ class BishopTest {
 
     @Test
     @DisplayName("bishop이 이동할 수 있는 칸의 좌표를 반환한다.")
-    void kingMoveTest() {
+    void bishopMoveTest() {
         Bishop bishop = new Bishop(Camp.WHITE);
         assertThat(bishop.fetchMovePath(new Square(1,3), new Square(5,7))).contains(
                 new Square(2,4),
@@ -23,6 +24,15 @@ class BishopTest {
                 new Square(4,6),
                 new Square(5,7)
         );
+    }
+
+    @Test
+    @DisplayName("bishop이 이동할 수 있는 칸의 좌표를 반환한다.")
+    void bishopMoveFailTest() {
+        Bishop bishop = new Bishop(Camp.WHITE);
+        assertThatThrownBy(() -> bishop.fetchMovePath(new Square(1, 3), new Square(1, 4)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("움직일 수 없는 경로입니다.");
     }
 
     @Test

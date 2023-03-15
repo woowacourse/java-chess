@@ -1,6 +1,7 @@
 package domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,15 @@ class PawnTest {
         List<Square> squares = pawn.fetchMovePath(currentSquare, targetSquare);
 
         assertThat(squares).contains(new Square(1,3), new Square(3,3));
+    }
+
+    @Test
+    @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
+    void bishopMoveFailTest() {
+        Pawn pawn = new Pawn(Camp.WHITE);
+        assertThatThrownBy(() -> pawn.fetchMovePath(new Square(1, 3), new Square(2, 5)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("움직일 수 없는 경로입니다.");
     }
 
     @Test

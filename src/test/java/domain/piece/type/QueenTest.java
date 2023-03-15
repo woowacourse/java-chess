@@ -1,6 +1,7 @@
 package domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -32,5 +33,14 @@ class QueenTest {
                 new Square(3,3),
                 new Square(4,3)
         );
+    }
+
+    @Test
+    @DisplayName("targetSquare가 갈수없는 경로이면 예외를 던진다.")
+    void bishopMoveFailTest() {
+        Queen queen = new Queen(Camp.WHITE);
+        assertThatThrownBy(() -> queen.fetchMovePath(new Square(1, 3), new Square(2, 5)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("움직일 수 없는 경로입니다.");
     }
 }
