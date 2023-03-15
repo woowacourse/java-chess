@@ -6,15 +6,8 @@ public class Movement {
     private final int rankIncrement;
 
     public Movement(int fileIncrement, int rankIncrement) {
-        validate(fileIncrement, rankIncrement);
         this.fileIncrement = fileIncrement;
         this.rankIncrement = rankIncrement;
-    }
-
-    private void validate(int fileIncrement, int rankIncrement) {
-        if (fileIncrement == NON_INCREMENT && rankIncrement == NON_INCREMENT) {
-            throw new IllegalArgumentException("잘못된 움직임입니다.");
-        }
     }
 
     public boolean isUpward() {
@@ -39,6 +32,10 @@ public class Movement {
 
     public boolean isUnderTwoSteps() {
         return Math.abs(fileIncrement) <= 2 && Math.abs(rankIncrement) <= 2;
+    }
+
+    public boolean isStop() {
+        return this.fileIncrement == 0 && this.rankIncrement == 0;
     }
 
     @Override
