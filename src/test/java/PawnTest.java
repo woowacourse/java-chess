@@ -66,4 +66,19 @@ public class PawnTest {
 
         assertThat(sourcePawn.isSameSide(targetPawn)).isEqualTo(false);
     }
+
+    @DisplayName("White 진영인 경우 - 위쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"c,2,b,3,true", "c,2,d,3,true", "c,2,c,3,false"})
+    void shouldReturnTrueWhenMoveToOpponentPiece(
+            String sourceFile, String sourceRank,
+            String targetFile, String targetRank,
+            boolean result) {
+        Pawn whitePawn = Pawn.createOfWhite();
+        boolean movable = whitePawn.isMovable(
+                Pawn.createOfBlack(),
+                Position.of(sourceFile, sourceRank),
+                Position.of(targetFile, targetRank));
+        assertThat(movable).isEqualTo(result);
+    }
 }
