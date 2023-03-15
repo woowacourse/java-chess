@@ -20,4 +20,8 @@ public enum File {
     public int differ(final File other) {
         return this.value - other.value;
     }
+
+    public int value() {
+        return value;
+    }
 }

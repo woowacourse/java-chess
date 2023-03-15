@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceFixture.*;
+import static chess.model.piece.PieceFixture.WHITE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.position.Distance;

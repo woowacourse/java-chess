@@ -1,11 +1,8 @@
 package chess.model.position;
 
 import chess.model.piece.Direction;
-import java.security.PublicKey;
 
-public class Distance {
-
-    private static final int FILE_MAX_SIZE = 8;
+public class Distance implements IndexConvertable {
 
     private final int rank;
     private final int file;
@@ -19,8 +16,9 @@ public class Distance {
         return Direction.findDirection(rank, file);
     }
 
+    @Override
     public int convertToIndex() {
-        return (file * FILE_MAX_SIZE) + rank;
+        return Math.abs((file * FILE_MAX_SIZE) + rank);
     }
 
     public int rank() {

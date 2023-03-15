@@ -2,7 +2,7 @@ package chess.model.position;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements IndexConvertable {
 
     private final Rank rank;
     private final File file;
@@ -17,6 +17,11 @@ public class Position {
         final int differFile = this.file.differ(other.file);
 
         return new Distance(differRank, differFile);
+    }
+
+    @Override
+    public int convertToIndex() {
+        return ((rank.value() - 1) * FILE_MAX_SIZE) + (file.value() - 1);
     }
 
     @Override

@@ -3,7 +3,7 @@ package chess.model.board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 
-public abstract class AbstractSquare implements Square{
+public abstract class AbstractSquare implements Square {
 
     private final Position position;
 

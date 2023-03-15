@@ -22,5 +22,9 @@ public abstract class Piece {
         return color;
     }
 
+    public boolean isSameTeam(final Color color) {
+        return this.color.equals(color);
+    }
+
     abstract boolean movable(final Distance distance);
 }

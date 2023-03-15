@@ -1,8 +1,8 @@
 package chess.model.board;
 
-import static chess.model.piece.PieceFixture.WHITE_PAWN;
 import static chess.model.board.PositionFixture.A1;
 import static chess.model.board.PositionFixture.B2;
+import static chess.model.piece.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

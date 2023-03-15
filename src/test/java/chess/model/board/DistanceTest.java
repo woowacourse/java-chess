@@ -21,7 +21,7 @@ class DistanceTest {
     }
 
     @ParameterizedTest(name = "converToIndex()는 호출하면 거리를 인덱스로 변환한다.")
-    @CsvSource({"1,1,9", "3,5,43", "-2,-1,-10"})
+    @CsvSource({"1,1,9", "3,5,43", "-2,-1,10"})
     void convertToIndex_whenCall_thenReturnIndex(final int rank, final int file, final int result) {
         final Distance distance = new Distance(rank, file);
 

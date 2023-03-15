@@ -20,4 +20,8 @@ public enum Rank {
     public int differ(final Rank other) {
         return this.value - other.value;
     }
+
+    public int value() {
+        return value;
+    }
 }
