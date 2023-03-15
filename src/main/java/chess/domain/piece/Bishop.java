@@ -40,13 +40,6 @@ public class Bishop extends Piece {
         return paths;
     }
 
-    private int getStep(int nowFileCoordinate, int targetFileCoordinate) {
-        if (nowFileCoordinate - targetFileCoordinate > 0) {
-            return -1;
-        }
-        return 1;
-    }
-
     @Override
     boolean isKing() {
         return false;

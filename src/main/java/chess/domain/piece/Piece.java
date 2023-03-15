@@ -45,6 +45,13 @@ public abstract class Piece {
                 || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
     }
 
+    protected int getStep(int nowFileCoordinate, int targetFileCoordinate) {
+        if (nowFileCoordinate - targetFileCoordinate > 0) {
+            return -1;
+        }
+        return 1;
+    }
+
     public Color getColor() {
         return color;
     }
