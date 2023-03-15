@@ -4,16 +4,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MovementTest {
-
-    @DisplayName("file, rank움직임이 0,0이 되면 예외가 발생한다.")
+    
+    @DisplayName("file, rank움직임이 0,0인지 확인한다.")
     @Test
-    void shouldThrowExceptionWhenMovingIsAllZero() {
-        assertThatThrownBy(() -> new Movement(0, 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 움직임입니다.");
+    void shouldReturnTrueWhenMovementIsStop() {
+        Movement movement = new Movement(0, 0);
+        assertThat(movement.isStop()).isTrue();
     }
 
     @DisplayName("위 방향의 움직임이면 true, 아니면 false를 반환한다.")
