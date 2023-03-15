@@ -1,9 +1,8 @@
 package chess.domain;
 
-public class EmptyPiece implements Piece {
+public class EmptyPiece extends Piece {
 
-    @Override
-    public String getTeam() {
-        return null;
+    public EmptyPiece() {
+        super(Team.NO_TEAM);
     }
 }

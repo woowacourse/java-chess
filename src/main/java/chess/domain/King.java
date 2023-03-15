@@ -1,6 +1,6 @@
 package chess.domain;
 
-public class King implements Piece {
+public class King extends Piece {
 
     private static final King blackKing;
     private static final King whiteKing;
@@ -10,10 +10,8 @@ public class King implements Piece {
         whiteKing = new King(Team.WHITE);
     }
 
-    private final Team team;
-
     private King(final Team team) {
-        this.team = team;
+        super(team);
     }
 
     public static King of(final Team team) {
@@ -21,10 +19,5 @@ public class King implements Piece {
             return blackKing;
         }
         return whiteKing;
-    }
-
-    @Override
-    public String getTeam() {
-        return team.toString();
     }
 }

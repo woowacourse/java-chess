@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop implements Piece {
+public class Bishop extends Piece {
 
     private static final List<Bishop> blackBishops = new ArrayList<>();
     private static final List<Bishop> whiteBishops = new ArrayList<>();
@@ -13,10 +13,8 @@ public class Bishop implements Piece {
         addBishops(whiteBishops, Team.WHITE);
     }
 
-    private final Team team;
-
     private Bishop(final Team team) {
-        this.team = team;
+        super(team);
     }
 
     private static void addBishops(final List<Bishop> bishops, final Team team) {
@@ -30,10 +28,5 @@ public class Bishop implements Piece {
             return List.copyOf(blackBishops);
         }
         return List.copyOf(whiteBishops);
-    }
-
-    @Override
-    public String getTeam() {
-        return team.toString();
     }
 }

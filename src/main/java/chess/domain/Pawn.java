@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Pawn implements Piece {
+public final class Pawn extends Piece {
     private static final List<Pawn> blackPawns = new ArrayList<>();
     private static final List<Pawn> whitePawns = new ArrayList<>();
 
@@ -12,10 +12,10 @@ public final class Pawn implements Piece {
         addPawns(whitePawns, Team.WHITE);
     }
 
-    private final Team team;
+
 
     private Pawn(Team team) {
-        this.team = team;
+        super(team);
     }
 
     private static void addPawns(final List<Pawn> pawns, final Team team) {
@@ -29,10 +29,5 @@ public final class Pawn implements Piece {
             return List.copyOf(blackPawns);
         }
         return List.copyOf(whitePawns);
-    }
-
-    @Override
-    public String getTeam() {
-        return team.toString();
     }
 }

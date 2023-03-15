@@ -1,6 +1,6 @@
 package chess.domain;
 
-public class Queen implements Piece {
+public class Queen extends Piece {
 
     private static final Queen blackQueen;
     private static final Queen whiteQueen;
@@ -10,10 +10,10 @@ public class Queen implements Piece {
         whiteQueen = new Queen(Team.WHITE);
     }
 
-    private final Team team;
+
 
     private Queen(final Team team) {
-        this.team = team;
+        super(team);
     }
 
     public static Queen of(final Team team) {
@@ -21,10 +21,5 @@ public class Queen implements Piece {
             return blackQueen;
         }
         return whiteQueen;
-    }
-
-    @Override
-    public String getTeam() {
-        return team.toString();
     }
 }

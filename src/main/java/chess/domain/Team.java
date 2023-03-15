@@ -2,5 +2,6 @@ package chess.domain;
 
 public enum Team {
     WHITE,
-    BLACK
+    BLACK,
+    NO_TEAM
 }

@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook implements Piece {
+public class Rook extends Piece {
     private static final List<Rook> blackRooks = new ArrayList<>();
     private static final List<Rook> whiteRooks = new ArrayList<>();
 
@@ -12,10 +12,10 @@ public class Rook implements Piece {
         addRooks(whiteRooks, Team.WHITE);
     }
 
-    private final Team team;
+
 
     private Rook(final Team team) {
-        this.team = team;
+        super(team);
     }
 
     private static void addRooks(final List<Rook> rooks, final Team team) {
@@ -31,8 +31,7 @@ public class Rook implements Piece {
         return List.copyOf(whiteRooks);
     }
 
-    @Override
-    public String getTeam() {
-        return team.toString();
+    public boolean isMovable(final Square from, final Square to, final Piece piece) {
+        return isDifferentTeam(piece) && from.inLine(to);
     }
 }
