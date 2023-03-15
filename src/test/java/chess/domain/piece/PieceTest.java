@@ -57,6 +57,15 @@ public class PieceTest extends AbstractTestFixture {
         assertThat(piece.hasMove(createMove(LEFT))).isFalse();
     }
 
+    @DisplayName("기본적으로 이동 가능한 수면, 공격 가능한 수이다")
+    @Test
+    void hasMove_then_hasAttackMove() {
+        Move move = createMove(UP, RIGHT);
+
+        Piece piece = createPiece(true, move);
+        assertThat(piece.hasAttackMove(move)).isTrue();
+    }
+
     @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")
     @Test
     void touch_nothingHappens() {

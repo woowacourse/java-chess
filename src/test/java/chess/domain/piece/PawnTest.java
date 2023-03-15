@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import static chess.domain.Direction.DOWN;
+import static chess.domain.Direction.LEFT;
+import static chess.domain.Direction.RIGHT;
 import static chess.domain.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,5 +55,23 @@ public class PawnTest extends AbstractTestFixture {
 
         assertThat(touchedPawn.hasMove(createMove(UP))).isTrue();
         assertThat(touchedPawn.hasMove(createMove(UP, UP))).isFalse();
+    }
+
+    @DisplayName("백은 윗 대각선으로 공격할 수 있다")
+    @Test
+    void white_hasAttackMove_UpDiagonal() {
+        Piece piece = Pawn.from(true);
+
+        assertThat(piece.hasAttackMove(createMove(RIGHT, UP))).isTrue();
+        assertThat(piece.hasAttackMove(createMove(LEFT, UP))).isTrue();
+    }
+
+    @DisplayName("흑은 아래 대각선으로 공격할 수 있다")
+    @Test
+    void black_hasAttackMove_DownDiagonal() {
+        Piece piece = Pawn.from(false);
+
+        assertThat(piece.hasAttackMove(createMove(RIGHT, DOWN))).isTrue();
+        assertThat(piece.hasAttackMove(createMove(LEFT, DOWN))).isTrue();
     }
 }

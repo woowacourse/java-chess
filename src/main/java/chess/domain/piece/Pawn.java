@@ -49,4 +49,23 @@ public class Pawn extends Piece {
     private boolean isUntouched() {
         return moves.size() == UNTOUCHED_MOVE_SIZE;
     }
+
+    @Override
+    public boolean hasAttackMove(Move attackMove) {
+        boolean hasAttackMove = false;
+        for (Move pieceMove : getAttackMoves()) {
+            hasAttackMove = hasAttackMove || compareMove(pieceMove, attackMove);
+        }
+        return hasAttackMove;
+    }
+
+    private Set<Move> getAttackMoves() {
+        Set<Move> whiteAttackMoves = Set.of(
+                new Move(List.of(Direction.UP, Direction.RIGHT)),
+                new Move(List.of(Direction.UP, Direction.LEFT)));
+        if (isWhite) {
+            return whiteAttackMoves;
+        }
+        return convertColor(whiteAttackMoves);
+    }
 }

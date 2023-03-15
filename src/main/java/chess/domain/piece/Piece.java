@@ -29,6 +29,10 @@ public abstract class Piece {
         return pieceMove.equals(move);
     }
 
+    public boolean hasAttackMove(Move attackMove) {
+        return hasMove(attackMove);
+    }
+
     public Piece touch() {
         return this;
     }
