@@ -11,6 +11,7 @@ import static chess.model.piece.PieceType.ROOK;
 
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
+import chess.model.piece.PieceFactory;
 import chess.model.piece.PieceType;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -19,7 +20,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Board {
-
 
     private static final List<PieceType> INITIAL_BACK_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP,
             KNIGHT, ROOK);
@@ -71,7 +71,7 @@ public class Board {
     private static void initializeBackPieces(final List<Square> squares, final PieceColor pieceColor, int position) {
         for (PieceType pieceType : INITIAL_BACK_PIECES) {
             final Square square = squares.get(position);
-            final Piece piece = new Piece(pieceColor, pieceType);
+            final Piece piece = PieceFactory.create(pieceColor, pieceType);
 
             squares.remove(position);
             squares.add(position++, square.receivePiece(piece));
@@ -81,7 +81,7 @@ public class Board {
     private static void initializeFrontPieces(final List<Square> squares, final PieceColor pieceColor, int position) {
         for (PieceType pieceType : INITIAL_FRONT_PIECES) {
             final Square square = squares.get(position);
-            final Piece piece = new Piece(pieceColor, pieceType);
+            final Piece piece = PieceFactory.create(pieceColor, pieceType);
 
             squares.remove(position);
             squares.add(position++, square.receivePiece(piece));
