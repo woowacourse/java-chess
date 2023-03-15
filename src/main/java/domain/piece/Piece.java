@@ -31,9 +31,16 @@ public abstract class Piece {
     public boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare) {
         Camp targetCamp = pathInfo.get(targetSquare);
         pathInfo.remove(targetSquare);
-        boolean existPieceOnPath = pathInfo.values().stream()
+        return isDifferentCampOrEmptyOnTarget(targetCamp) && !isExistPieceOnPath(pathInfo);
+    }
+
+    private boolean isDifferentCampOrEmptyOnTarget(Camp targetCamp) {
+        return isDifferentCamp(targetCamp) || targetCamp.equals(Camp.NONE);
+    }
+
+    private boolean isExistPieceOnPath(Map<Square, Camp> pathInfo) {
+        return pathInfo.values().stream()
                 .anyMatch(camp -> camp != Camp.NONE);
-        return (isDifferentCamp(targetCamp) || targetCamp.equals(Camp.NONE)) && !existPieceOnPath;
     }
 
     protected boolean isInCoordinateRange(int fileCoordinate, int rankCoordinate) {
