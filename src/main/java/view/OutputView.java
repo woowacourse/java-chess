@@ -5,6 +5,7 @@ import domain.Line;
 import domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -12,7 +13,8 @@ public class OutputView {
     public void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder();
         final List<Line> lines = board.getLines();
-        lines.forEach(line -> stringBuilder.append(makeLine(line)).append("\n"));
+        IntStream.iterate(lines.size() - 1, order -> order >= 0, order -> order - 1)
+            .forEach(order -> stringBuilder.append(makeLine(lines.get(order))).append("\n"));
         System.out.println(stringBuilder);
     }
 
