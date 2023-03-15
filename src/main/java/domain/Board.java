@@ -18,13 +18,13 @@ public class Board {
 
     private List<Line> initialize() {
         final List<Line> lines = new ArrayList<>();
-        lines.add(Line.blackBack());
-        lines.add(Line.blackFront());
+        lines.add(Line.whiteBack());
+        lines.add(Line.whiteFront());
         IntStream.range(0, 4)
             .mapToObj(count -> Line.empty())
             .forEach(lines::add);
-        lines.add(Line.whiteFront());
-        lines.add(Line.whiteBack());
+        lines.add(Line.blackFront());
+        lines.add(Line.blackBack());
         return lines;
     }
 
