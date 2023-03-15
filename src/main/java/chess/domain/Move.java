@@ -152,4 +152,12 @@ public class Move {
     public int hashCode() {
         return directions != null ? directions.hashCode() : 0;
     }
+
+    public Move repeat(int times) {
+        List<Direction> timedDirections = new ArrayList<>();
+        for (int i = 0; i < times; i++) {
+            timedDirections.addAll(directions);
+        }
+        return new Move(timedDirections);
+    }
 }

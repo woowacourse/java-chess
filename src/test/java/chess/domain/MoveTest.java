@@ -48,6 +48,7 @@ public class MoveTest extends AbstractTestFixture {
         assertThat(move.isSameAngle(move2)).isFalse();
     }
 
+    @SuppressWarnings("Convert2MethodRef")
     @DisplayName("빈 수 생성시 예외를 던진다")
     @Test
     void emptyMove_throws() {
@@ -98,5 +99,12 @@ public class MoveTest extends AbstractTestFixture {
         Move unitMove = move.getUnitMove();
 
         assertThat(createMove(RIGHT, UP)).isEqualTo(unitMove);
+    }
+
+    @DisplayName("n번 반복할 수 있다")
+    @Test
+    void repeat_nTimes() {
+        Move expectedMove = createMove(RIGHT, RIGHT, UP, RIGHT, RIGHT, UP, RIGHT, RIGHT, UP);
+        assertThat(createMove(RIGHT, RIGHT, UP).repeat(3)).isEqualTo(expectedMove);
     }
 }
