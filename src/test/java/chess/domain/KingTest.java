@@ -18,8 +18,8 @@ public class KingTest {
             @Test
             @DisplayName("해당 진영의 King을 1개 생성한다")
             void it_returns_king() {
-                assertThat(King.of(Team.BLACK)).extracting("team")
-                                               .isEqualTo(Team.BLACK);
+                King king = King.of(Team.BLACK);
+                assertThat(king.getTeam()).isEqualTo("BLACK");
             }
         }
     }

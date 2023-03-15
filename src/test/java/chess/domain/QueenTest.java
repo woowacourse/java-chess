@@ -18,8 +18,8 @@ public class QueenTest {
             @Test
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
-                assertThat(Queen.of(Team.BLACK)).extracting("team")
-                                                .isEqualTo(Team.BLACK);
+                Queen queen = Queen.of(Team.BLACK);
+                assertThat(queen.getTeam()).isEqualTo("BLACK");
             }
         }
     }

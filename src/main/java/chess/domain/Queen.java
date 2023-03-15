@@ -22,4 +22,9 @@ public class Queen implements Piece {
         }
         return whiteQueen;
     }
+
+    @Override
+    public String getTeam() {
+        return team.toString();
+    }
 }

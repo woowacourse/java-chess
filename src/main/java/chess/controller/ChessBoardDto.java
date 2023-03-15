@@ -10,24 +10,39 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessBoardDto {
-    private List<List<String>> chessBoard;
+    private final List<List<PieceDto>> pieceDtos;
+
+    private ChessBoardDto(List<List<PieceDto>> pieceDtos) {
+        this.pieceDtos = pieceDtos;
+    }
 
     public static ChessBoardDto of(Map<Square, Piece> pieces) {
-        final List<List<String>> chessBoard = initChessBoard();
+        final List<List<PieceDto>> chessBoard = initChessBoard();
+
         for (Square square : pieces.keySet()) {
             final File file = square.getFile();
-            final int row = 8 - square.getRank();
-            final int column = file.getPosition() - 1;
+            final int row = getRowIndex(square);
+            final int column = getColumnIndex(file);
             chessBoard.get(row)
                       .set(column, PieceDto.from(pieces.get(square)));
         }
+        return new ChessBoardDto(chessBoard);
     }
 
-    private static List<List<String>> initChessBoard() {
-        List<List<String>> chessBoard = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            chessBoard.add(new ArrayList<>(Collections.nCopies(8, ".")));
-        }
-        return chessBoard;
+    private static ArrayList<List<PieceDto>> initChessBoard() {
+        final List<PieceDto> emptyRank = Collections.nCopies(8, null);
+        return new ArrayList<>(Collections.nCopies(8, emptyRank));
+    }
+
+    private static int getRowIndex(final Square square) {
+        return 8 - square.getRank();
+    }
+
+    private static int getColumnIndex(final File file) {
+        return file.getPosition() - 1;
+    }
+
+    public List<List<PieceDto>> getPieceDtos() {
+        return pieceDtos;
     }
 }

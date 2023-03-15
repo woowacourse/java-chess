@@ -30,4 +30,9 @@ public final class Pawn implements Piece {
         }
         return List.copyOf(whitePawns);
     }
+
+    @Override
+    public String getTeam() {
+        return team.toString();
+    }
 }
