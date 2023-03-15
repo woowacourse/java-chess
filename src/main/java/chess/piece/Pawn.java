@@ -50,7 +50,10 @@ public class Pawn extends Piece {
             }
             
             if (isWhitePawnDiagonalDirection(subtractedRow, subtractedColumn)) {
-                return false;
+                if (targetPiece.isSameTeam(Team.BLACK)) {
+                    return false;
+                }
+                return true;
             }
             return true;
         }
@@ -71,7 +74,10 @@ public class Pawn extends Piece {
             }
             
             if (isBlackPawnDiagonalDirection(subtractedRow, subtractedColumn)) {
-                return false;
+                if (targetPiece.isSameTeam(Team.WHITE)) {
+                    return false;
+                }
+                return true;
             }
             return true;
         }

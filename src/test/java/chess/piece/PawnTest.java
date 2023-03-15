@@ -76,4 +76,20 @@ class PawnTest {
         Piece targetPiece = new Queen(Team.BLACK, new Coordinate(targetRow, 'a'));
         assertThat(pawn.isMovable(targetPiece)).isFalse();
     }
+    
+    @ParameterizedTest(name = "team : {0}, otherTeam : {1}, row : {2}, targetRow : {3}, targetColumn : {4}")
+    @CsvSource(value = {"WHITE,BLACK,2,1,a", "WHITE,BLACK,2,1,c", "BLACK,WHITE,3,4,a", "BLACK,WHITE,3,4,c"})
+    void 대각선_한_칸_앞으로_이동할_때_상대팀이면_이동_가능하다(Team team, Team otherTeam, int row, int targetRow, char targetColumn) {
+        Piece pawn = new Pawn(team, new Coordinate(row, 'b'));
+        Piece targetPiece = new Queen(otherTeam, new Coordinate(targetRow, targetColumn));
+        assertThat(pawn.isMovable(targetPiece)).isTrue();
+    }
+    
+    @ParameterizedTest(name = "team : {0}, otherTeam : {1}, row : {2}, targetRow : {3}, targetColumn : {4}")
+    @CsvSource(value = {"WHITE,WHITE,2,1,a", "WHITE,EMPTY,2,1,a", "WHITE,WHITE,2,1,c", "WHITE,EMPTY,2,1,c", "BLACK,BLACK,3,4,a", "BLACK,EMPTY,3,4,a", "BLACK,BLACK,3,4,c", "BLACK,EMPTY,3,4,c"})
+    void 대각선_한_칸_앞으로_이동할_때_상대팀이_없으면_이동_불가능하다(Team team, Team otherTeam, int row, int targetRow, char targetColumn) {
+        Piece pawn = new Pawn(team, new Coordinate(row, 'b'));
+        Piece targetPiece = new Queen(otherTeam, new Coordinate(targetRow, targetColumn));
+        assertThat(pawn.isMovable(targetPiece)).isFalse();
+    }
 }
