@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Pieces {
 
@@ -19,8 +21,34 @@ public final class Pieces {
 
     private final List<Piece> pieces;
 
-    public Pieces(final List<Piece> pieces) {
+    private Pieces(final List<Piece> pieces) {
         this.pieces = pieces;
+    }
+
+    public static Pieces createBlackPieces(Pieces whitePieces) {
+        List<Piece> pawns = getBlackPawns(whitePieces);
+        List<Piece> piecesWithoutPawns = getPiecesWithoutPawn(whitePieces);
+        return getBlackPieces(pawns, piecesWithoutPawns);
+    }
+
+    private static List<Piece> getBlackPawns(Pieces whitePieces) {
+        return whitePieces.pieces.stream()
+                .filter(piece -> piece.isSameShape(Shape.PAWN))
+                .map(piece -> piece.getNewPiece(LAST_FILE_OF_BLACK))
+                .collect(Collectors.toList());
+    }
+
+    private static List<Piece> getPiecesWithoutPawn(Pieces whitePieces) {
+        return whitePieces.pieces.stream()
+                .filter(piece -> !piece.isSameShape(Shape.PAWN))
+                .map(piece -> piece.getNewPiece(FIRST_FILE_OF_BLACK))
+                .collect(Collectors.toList());
+    }
+
+    private static Pieces getBlackPieces(List<Piece> pawns, List<Piece> piecesWithoutPawns) {
+        List<Piece> pieceList = Stream.concat(pawns.stream(), piecesWithoutPawns.stream())
+                .collect(Collectors.toList());
+        return new Pieces(pieceList);
     }
 
     public static Pieces createWhitePieces() {
@@ -38,7 +66,7 @@ public final class Pieces {
 
     private static void makePawns(final List<Piece> pieceList, final int file) {
         for (int rank = FIRST_RANK; rank <= LAST_RANK; rank++) {
-            pieceList.add(Piece.of((char) rank, file, Shape.PAWN));
+            pieceList.add(Piece.from((char) rank, file, Shape.PAWN));
         }
     }
 
@@ -51,20 +79,27 @@ public final class Pieces {
     }
 
     private static void addPiecePairs(List<Piece> pieceList, int frontPosition, Shape shape) {
-        pieceList.add(Piece.of((char) frontPosition, FIRST_FILE_OF_WHITE, shape));
+        pieceList.add(Piece.from((char) frontPosition, FIRST_FILE_OF_WHITE, shape));
 
         int backPosition = FIRST_RANK + LAST_RANK - frontPosition;
-        pieceList.add(Piece.of((char) backPosition, FIRST_FILE_OF_WHITE, shape));
+        pieceList.add(Piece.from((char) backPosition, FIRST_FILE_OF_WHITE, shape));
     }
 
     private static void makeQueenAndKing(final List<Piece> pieceList, final int file) {
-        pieceList.add(Piece.of(QUEEN_DEFAULT_RANK_POSITION, file, Shape.QUEEN));
-        pieceList.add(Piece.of(KING_DEFAULT_RANK_POSITION, file, Shape.KING));
+        pieceList.add(Piece.from(QUEEN_DEFAULT_RANK_POSITION, file, Shape.QUEEN));
+        pieceList.add(Piece.from(KING_DEFAULT_RANK_POSITION, file, Shape.KING));
     }
 
     public long getShapeCount(final Shape shape) {
         return pieces.stream()
                 .filter(piece -> piece.isSameShape(shape))
                 .count();
+    }
+
+    @Override
+    public String toString() {
+        return "Pieces{" +
+                "pieces=" + pieces +
+                '}';
     }
 }

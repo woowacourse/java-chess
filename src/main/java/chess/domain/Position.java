@@ -47,4 +47,8 @@ public final class Position {
                 ", file=" + file +
                 '}';
     }
+
+    public Position changePosition(int file) {
+        return new Position(this.rank, file);
+    }
 }

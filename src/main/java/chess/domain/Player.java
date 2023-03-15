@@ -10,8 +10,19 @@ public class Player {
         this.pieces = pieces;
     }
 
-    public static Player from(final String color, final Pieces pieces) {
-        return new Player(color, pieces);
+    public static Player fromWhitePlayer(final Pieces pieces) {
+        return new Player("white", pieces);
     }
 
+    public static Player fromBlackPlayer(final Pieces pieces) {
+        return new Player("black", pieces);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "color='" + color + '\'' +
+                ", pieces=" + pieces +
+                '}';
+    }
 }

@@ -25,4 +25,5 @@ public enum Shape {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
+
 }

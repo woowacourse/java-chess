@@ -9,7 +9,7 @@ public class Piece {
         this.position = position;
         this.shape = shape;
     }
-    public static Piece of(final char rank, final int file, final Shape shape) {
+    public static Piece from(final char rank, final int file, final Shape shape) {
          return new Piece(Position.from(rank, file), shape);
     }
 
@@ -25,4 +25,7 @@ public class Piece {
                 '}';
     }
 
+    public Piece getNewPiece(int file) {
+        return new Piece(position.changePosition(file), this.shape);
+    }
 }

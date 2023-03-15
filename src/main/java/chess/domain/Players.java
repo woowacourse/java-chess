@@ -10,9 +10,14 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final Pieces blackPieces, final Pieces whitePieces) {
-        Player black = Player.from("black", blackPieces);
-        Player white = Player.from("white", whitePieces);
-        return new Players(List.of(black, white));
+    public static Players from(final Player whitePlayer, final Player blackPlayer) {
+        return new Players(List.of(whitePlayer, blackPlayer));
+    }
+
+    @Override
+    public String toString() {
+        return "Players{" +
+                "players=" + players +
+                '}';
     }
 }

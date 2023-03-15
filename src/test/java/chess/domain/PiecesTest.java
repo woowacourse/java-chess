@@ -1,10 +1,11 @@
 package chess.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.Shape.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PiecesTest {
 
@@ -15,34 +16,34 @@ class PiecesTest {
         Pieces pieces = Pieces.createWhitePieces();
 
         // then
-        Assertions.assertAll(
+        assertAll(
                 () -> {
                     long count = pieces.getShapeCount(Shape.PAWN);
                     assertThat(count).isEqualTo(8);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(Shape.BISHOP);
+                    long count = pieces.getShapeCount(BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(Shape.ROOK);
+                    long count = pieces.getShapeCount(ROOK);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(Shape.BISHOP);
+                    long count = pieces.getShapeCount(BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(Shape.KING);
+                    long count = pieces.getShapeCount(KING);
                     assertThat(count).isEqualTo(1);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(Shape.QUEEN);
+                    long count = pieces.getShapeCount(QUEEN);
                     assertThat(count).isEqualTo(1);
                 }
         );
