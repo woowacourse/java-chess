@@ -17,7 +17,7 @@ public class Pieces {
         this.pieces = new ArrayList<>(generateInitialPieces());
     }
 
-    public List<Piece> generateInitialPieces() {
+    private List<Piece> generateInitialPieces() {
         List<Piece> pieces = new ArrayList<>();
         generateRankOnePieces(pieces);
         generateRankTwoPieces(pieces);
@@ -58,5 +58,9 @@ public class Pieces {
         pieces.add(new Bishop(new Position(File.F, Rank.EIGHT), Side.BLACK));
         pieces.add(new Knight(new Position(File.G, Rank.EIGHT), Side.BLACK));
         pieces.add(new Rook(new Position(File.H, Rank.EIGHT), Side.BLACK));
+    }
+
+    public List<Piece> getPieces() {
+        return List.copyOf(pieces);
     }
 }
