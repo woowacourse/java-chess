@@ -27,12 +27,21 @@ public class Pawn extends Piece {
             this.isFirstMove = false;
             return canMoveAtFirst(substitutionOfRow, substitutionOfCol);
         }
-
-        return substitutionOfCol == 0 && substitutionOfRow == 1;
+        return canMoveAfterFirst(substitutionOfRow, substitutionOfCol);
     }
 
     private boolean canMoveAtFirst(final int substitutionOfRow, final int substitutionOfCol) {
-        return substitutionOfCol == 0 && (substitutionOfRow == 1 || substitutionOfRow == 2);
+        if (isNameLowerCase()) {
+            return substitutionOfCol == 0 && (substitutionOfRow == 1 || substitutionOfRow == 2);
+        }
+        return substitutionOfCol == 0 && (substitutionOfRow == -1 || substitutionOfRow == -2);
+    }
+
+    private boolean canMoveAfterFirst(final int substitutionOfRow, final int substitutionOfCol) {
+        if (isNameLowerCase()) {
+            return substitutionOfCol == 0 && substitutionOfRow == 1;
+        }
+        return substitutionOfCol == 0 && substitutionOfRow == -1;
     }
 
 

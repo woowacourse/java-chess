@@ -10,7 +10,7 @@ class PlaceTest {
     @DisplayName("빈공간은 움직이면 에러를 발생시킨다.")
     void throws_exceptions_when_place_move() {
         // given
-        Place place = new Place(new Name("."));
+        Place place = new Place();
 
         // when & then
         Assertions.assertThatThrownBy(

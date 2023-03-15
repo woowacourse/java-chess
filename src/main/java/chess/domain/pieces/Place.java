@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 public class Place extends Piece {
 
-    public Place(final Name name) {
-        super(name);
+    public Place() {
+        super(new Name("."));
     }
 
     @Override

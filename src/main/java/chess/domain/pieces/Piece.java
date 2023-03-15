@@ -13,4 +13,8 @@ public abstract class Piece {
     public String getName() {
         return name.getName();
     }
+
+    public boolean isNameLowerCase() {
+        return this.name.isLowerCase();
+    }
 }

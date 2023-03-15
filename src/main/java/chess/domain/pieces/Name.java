@@ -14,6 +14,10 @@ public class Name {
         return name;
     }
 
+    public boolean isLowerCase() {
+        return Character.isLowerCase(this.name.charAt(0));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
