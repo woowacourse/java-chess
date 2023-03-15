@@ -47,6 +47,16 @@ public class Position {
         return false;
     }
 
+    public boolean isKnightPosition(Position other){
+        if (file.distance(other.file) == 2 && rank.distance(other.rank) == 1) {
+            return true;
+        }
+        if (rank.distance(other.rank) == 2 && file.distance(other.file) == 1) {
+            return true;
+        }
+        return false;
+    }
+
     public List<Position> getRoute(Position other) {
         Direction rankDirection = rank.getDirection(other.rank);
         Direction fileDirection = file.getDirection(other.file);
