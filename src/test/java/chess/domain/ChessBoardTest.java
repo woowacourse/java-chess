@@ -12,7 +12,7 @@ class ChessBoardTest {
         //given
 
         //when
-        ChessBoard chessBoard = ChessBoard.create();
+        ChessBoard chessBoard = ChessBoardFactory.create();
 
         //then
         assertThat(chessBoard).extracting("squares", InstanceOfAssertFactories.collection(Square.class))

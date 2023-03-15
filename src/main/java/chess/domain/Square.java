@@ -17,4 +17,7 @@ public class Square {
         this.piece = piece;
     }
 
+    public Piece getPiece() {
+        return piece;
+    }
 }

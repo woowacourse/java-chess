@@ -21,4 +21,8 @@ public abstract class Piece {
     public void addTrace(final int turn, final Position lastPosition) {
         trace.add(turn, lastPosition);
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }
