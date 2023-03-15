@@ -14,16 +14,16 @@ public class Empty implements Piece {
 
 	@Override
 	public boolean isBlack() {
-		throw new IllegalStateException("제공하지 않는 기능입니다.");
+		return false;
 	}
 
 	@Override
 	public boolean isWhite() {
-		throw new IllegalStateException("제공하지 않는 기능입니다.");
+		return false;
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return true;
+	public PieceType getType() {
+		return PieceType.EMPTY;
 	}
 }

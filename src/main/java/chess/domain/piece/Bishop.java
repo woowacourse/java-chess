@@ -30,7 +30,7 @@ public class Bishop implements Piece {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return false;
+	public PieceType getType() {
+		return PieceType.BISHOP;
 	}
 }

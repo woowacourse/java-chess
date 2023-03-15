@@ -7,5 +7,5 @@ public interface Piece {
 	boolean isMobile(RelativePosition relativePosition);
 	boolean isBlack();
 	boolean isWhite();
-	boolean isEmpty();
+	PieceType getType();
 }

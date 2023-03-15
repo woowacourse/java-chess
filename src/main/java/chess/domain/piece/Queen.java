@@ -30,7 +30,7 @@ public class Queen implements Piece {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return false;
+	public PieceType getType() {
+		return PieceType.QUEEN;
 	}
 }

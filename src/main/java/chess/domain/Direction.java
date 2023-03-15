@@ -44,7 +44,7 @@ public enum Direction {
 			SOUTH_WEST_WEST, NORTH_WEST_WEST, NORTH_NORTH_WEST);
 	}
 	public static List<Direction> getNorthern() {
-		return List.of(NORTH);
+		return List.of(NORTH, NORTH_EAST, NORTH_WEST);
 	}
 
 	public boolean matches(RelativePosition relativePosition) {

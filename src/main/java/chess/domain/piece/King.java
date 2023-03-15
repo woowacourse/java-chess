@@ -30,7 +30,7 @@ public class King implements Piece {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return false;
+	public PieceType getType() {
+		return PieceType.KING;
 	}
 }
