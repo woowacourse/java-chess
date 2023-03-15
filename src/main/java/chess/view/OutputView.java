@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.Square;
 import chess.domain.Squares;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -20,10 +21,15 @@ public class OutputView {
             if (count % 8 == 0) {
                 System.out.println();
             }
-
             count++;
             if (pieces.containsKey(square)) {
-                System.out.print(pieces.get(square).getPieceTypeName());
+                Piece piece = pieces.get(square);
+
+                String name = piece.getPieceTypeName();
+                if (piece.getColor() == Color.BLACK) {
+                    name = name.toUpperCase();
+                }
+                System.out.print(name);
                 continue;
             }
             System.out.print(".");
