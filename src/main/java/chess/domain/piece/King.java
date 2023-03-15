@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 
 public class King extends Piece {
 
@@ -26,6 +27,11 @@ public class King extends Piece {
         return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
                 && Math.abs(sourceRankNumber - targetRankNumber) <= 1
                 && isNotMyPosition(sourcePosition, targetPosition);
+    }
+
+    @Override
+    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+        return null;
     }
 
     @Override

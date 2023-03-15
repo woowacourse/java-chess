@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -27,6 +28,11 @@ public class Pawn extends Piece {
             return isSameFileCoordinate && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber;
         }
         return isSameFileCoordinate && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber;
+    }
+
+    @Override
+    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+        return null;
     }
 
     @Override

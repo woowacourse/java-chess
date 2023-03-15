@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -13,6 +14,8 @@ public abstract class Piece {
     }
 
     abstract boolean canMove(Position sourcePosition, Position targetPosition);
+
+    abstract List<Position> findPath(Position sourcePosition, Position targetPosition);
 
     abstract boolean isKing();
 
@@ -32,8 +35,9 @@ public abstract class Piece {
 
         RankCoordinate sourceRankCoordinate = sourcePosition.getRankCoordinate();
         RankCoordinate targetRankCoordinate = targetPosition.getRankCoordinate();
-        return Math.abs(sourceFileCoordinate.getColumnNumber() - targetFileCoordinate.getColumnNumber()) == Math.abs(
-                sourceRankCoordinate.getRowNumber() - targetRankCoordinate.getRowNumber());
+        int columnAbs = Math.abs(sourceFileCoordinate.getColumnNumber() - targetFileCoordinate.getColumnNumber());
+        int rowAbs = Math.abs(sourceRankCoordinate.getRowNumber() - targetRankCoordinate.getRowNumber());
+        return columnAbs == rowAbs;
     }
 
     protected boolean isStraight(Position sourcePosition, Position targetPosition) {

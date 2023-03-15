@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+
 public enum RankCoordinate {
     EIGHT(8),
     SEVEN(7),
@@ -15,6 +17,13 @@ public enum RankCoordinate {
 
     RankCoordinate(int rowNumber) {
         this.rowNumber = rowNumber;
+    }
+
+    public static RankCoordinate findBy(int rowNumber) {
+        return Arrays.stream(values())
+                .filter(it -> it.getRowNumber() == rowNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
     }
 
     public int getRowNumber() {

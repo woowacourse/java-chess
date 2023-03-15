@@ -20,6 +20,14 @@ public class Position {
         return rankCoordinate;
     }
 
+    public int getColumn() {
+        return fileCoordinate.getColumnNumber();
+    }
+
+    public int getRow() {
+        return rankCoordinate.getRowNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

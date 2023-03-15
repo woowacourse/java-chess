@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 
 public class Empty extends Piece {
 
@@ -11,6 +12,11 @@ public class Empty extends Piece {
     @Override
     boolean canMove(Position sourcePosition, Position targetPosition) {
         return false;
+    }
+
+    @Override
+    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+        return null;
     }
 
     @Override

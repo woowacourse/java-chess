@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 
 public class Rook extends Piece {
 
@@ -19,6 +20,11 @@ public class Rook extends Piece {
     @Override
     boolean canMove(Position sourcePosition, Position targetPosition) {
         return isStraight(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition);
+    }
+
+    @Override
+    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+        return null;
     }
 
     @Override
