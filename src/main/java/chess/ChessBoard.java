@@ -3,19 +3,18 @@ package chess;
 import chess.piece.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    Map<List<Integer>, ChessPiece> chessBoard;
+    Map<Position, ChessPiece> chessBoard;
 
-    private ChessBoard(Map<List<Integer>, ChessPiece> chessBoard) {
+    private ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
     public static ChessBoard generateChessBoard() {
-        Map<List<Integer>, ChessPiece> chessBoard = new HashMap<>();
+        Map<Position, ChessPiece> chessBoard = new HashMap<>();
         generateRook(chessBoard);
         generateKnight(chessBoard);
         generateBishop(chessBoard);
@@ -26,62 +25,62 @@ public class ChessBoard {
         return new ChessBoard(chessBoard);
     }
 
-    private static void generateRook(Map<List<Integer>, ChessPiece> chessBoard) {
-        chessBoard.put(List.of(1, 1), new Rook(Side.WHITE));
-        chessBoard.put(List.of(8, 1), new Rook(Side.WHITE));
-        chessBoard.put(List.of(1, 8), new Rook(Side.BLACK));
-        chessBoard.put(List.of(8, 8), new Rook(Side.BLACK));
+    private static void generateRook(Map<Position, ChessPiece> chessBoard) {
+        chessBoard.put(Position.initPosition(1, 1), new Rook(Side.WHITE));
+        chessBoard.put(Position.initPosition(8, 1), new Rook(Side.WHITE));
+        chessBoard.put(Position.initPosition(1, 8), new Rook(Side.BLACK));
+        chessBoard.put(Position.initPosition(8, 8), new Rook(Side.BLACK));
     }
 
-    private static void generateKing(Map<List<Integer>, ChessPiece> chessBoard) {
-        chessBoard.put(List.of(5, 1), new King(Side.WHITE));
-        chessBoard.put(List.of(5, 8), new King(Side.BLACK));
+    private static void generateKing(Map<Position, ChessPiece> chessBoard) {
+        chessBoard.put(Position.initPosition(5, 1), new King(Side.WHITE));
+        chessBoard.put(Position.initPosition(5, 8), new King(Side.BLACK));
     }
 
-    private static void generateKnight(Map<List<Integer>, ChessPiece> chessBoard) {
-        chessBoard.put(List.of(2, 1), new Knight(Side.WHITE));
-        chessBoard.put(List.of(7, 1), new Knight(Side.WHITE));
-        chessBoard.put(List.of(2, 8), new Knight(Side.BLACK));
-        chessBoard.put(List.of(7, 8), new Knight(Side.BLACK));
+    private static void generateKnight(Map<Position, ChessPiece> chessBoard) {
+        chessBoard.put(Position.initPosition(2, 1), new Knight(Side.WHITE));
+        chessBoard.put(Position.initPosition(7, 1), new Knight(Side.WHITE));
+        chessBoard.put(Position.initPosition(2, 8), new Knight(Side.BLACK));
+        chessBoard.put(Position.initPosition(7, 8), new Knight(Side.BLACK));
     }
 
-    private static void generateBishop(Map<List<Integer>, ChessPiece> chessBoard) {
-        chessBoard.put(List.of(3, 1), new Bishop(Side.WHITE));
-        chessBoard.put(List.of(6, 1), new Bishop(Side.WHITE));
+    private static void generateBishop(Map<Position, ChessPiece> chessBoard) {
+        chessBoard.put(Position.initPosition(3, 1), new Bishop(Side.WHITE));
+        chessBoard.put(Position.initPosition(6, 1), new Bishop(Side.WHITE));
 
-        chessBoard.put(List.of(3, 8), new Bishop(Side.BLACK));
-        chessBoard.put(List.of(6, 8), new Bishop(Side.BLACK));
+        chessBoard.put(Position.initPosition(3, 8), new Bishop(Side.BLACK));
+        chessBoard.put(Position.initPosition(6, 8), new Bishop(Side.BLACK));
     }
 
-    private static void generateQueen(Map<List<Integer>, ChessPiece> chessBoard) {
-        chessBoard.put(List.of(4, 1), new Queen(Side.WHITE));
-        chessBoard.put(List.of(4, 8), new Queen(Side.BLACK));
+    private static void generateQueen(Map<Position, ChessPiece> chessBoard) {
+        chessBoard.put(Position.initPosition(4, 1), new Queen(Side.WHITE));
+        chessBoard.put(Position.initPosition(4, 8), new Queen(Side.BLACK));
     }
 
-    private static void generatePawn(Map<List<Integer>, ChessPiece> chessBoard) {
+    private static void generatePawn(Map<Position, ChessPiece> chessBoard) {
         for (int horizontal = 1; horizontal <= 8; horizontal++) {
-            chessBoard.put(List.of(horizontal, 2), new Pawn(Side.WHITE));
-            chessBoard.put(List.of(horizontal, 7), new Pawn(Side.BLACK));
+            chessBoard.put(Position.initPosition(horizontal, 2), new Pawn(Side.WHITE));
+            chessBoard.put(Position.initPosition(horizontal, 7), new Pawn(Side.BLACK));
         }
     }
 
-    private static void initEmptySpace(Map<List<Integer>, ChessPiece> chessBoard) {
+    private static void initEmptySpace(Map<Position, ChessPiece> chessBoard) {
         for (int horizontal = 3; horizontal <= 8; horizontal++) {
             circuitVertical(chessBoard, horizontal);
         }
     }
 
-    private static void circuitVertical(Map<List<Integer>, ChessPiece> chessBoard, int i) {
+    private static void circuitVertical(Map<Position, ChessPiece> chessBoard, int i) {
         for (int vertical = 3; vertical <= 6; vertical++) {
-            chessBoard.put(List.of(i, vertical), new Empty(Side.BLANK));
+            chessBoard.put(Position.initPosition(i, vertical), new Empty(Side.BLANK));
         }
     }
 
-    public ChessPiece getChessPieceByPosition(List<Integer> position) {
+    public ChessPiece getChessPieceByPosition(Position position) {
         return chessBoard.get(position);
     }
 
-    public Map<List<Integer>, ChessPiece> getChessBoard() {
+    public Map<Position, ChessPiece> getChessBoard() {
         return chessBoard;
     }
 }

@@ -5,8 +5,6 @@ import chess.piece.Knight;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -23,7 +21,7 @@ class ChessGameTest {
     void shouldSuccessFindChessPiece() {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        List<Integer> sourcePosition = List.of(2, 1);
+        Position sourcePosition = Position.initPosition(2, 1);
 
         assertThat(chessGame.findChessPiece(sourcePosition)).isInstanceOf(Knight.class);
     }
@@ -33,7 +31,7 @@ class ChessGameTest {
     void shouldSuccessChangeEmpty() {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        List<Integer> sourcePosition = List.of(2, 1);
+        Position sourcePosition = Position.initPosition(2, 1);
 
         chessGame.removeChessPiece(sourcePosition);
 
@@ -47,7 +45,7 @@ class ChessGameTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
         Knight knight = new Knight(Side.WHITE);
-        List<Integer> targetPosition = List.of(1, 3);
+        Position targetPosition = Position.initPosition(1, 3);
 
         chessGame.copyChessPiece(knight, targetPosition);
 
