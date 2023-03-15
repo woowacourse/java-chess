@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.board.Position;
+
 public abstract class Piece {
 
     private final Team team;
@@ -8,43 +10,31 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract void move();
+    public abstract boolean isMovable(final Position from, final Position to);
 
     public boolean isPawn() {
         return false;
     }
 
-    ;
-
     public boolean isKing() {
         return false;
     }
-
-    ;
 
     public boolean isQueen() {
         return false;
     }
 
-    ;
-
     public boolean isRook() {
         return false;
     }
-
-    ;
 
     public boolean isKnight() {
         return false;
     }
 
-    ;
-
     public boolean isBishop() {
         return false;
     }
-
-    ;
 
     public boolean isEmpty() {
         return false;

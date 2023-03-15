@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.board.Position;
+
 public class EmptyPiece extends Piece {
 
     public EmptyPiece() {
@@ -7,7 +9,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public void move() {
+    public boolean isMovable(final Position from, final Position to) {
         throw new IllegalArgumentException("빈 말은 움직일 수 없습니다.");
     }
 

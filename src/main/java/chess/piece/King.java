@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.board.Position;
+
 public class King extends Piece {
 
     public King(final Team team) {
@@ -7,8 +9,8 @@ public class King extends Piece {
     }
 
     @Override
-    public void move() {
-
+    public boolean isMovable(final Position from, final Position to) {
+        return false;
     }
 
     @Override

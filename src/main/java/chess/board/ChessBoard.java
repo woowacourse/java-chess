@@ -33,6 +33,10 @@ public class ChessBoard {
         return new ChessBoard(piecePosition);
     }
 
+    static ChessBoard createBoardByRule(Map<Position, Piece> piecePosition) {
+        return new ChessBoard(piecePosition);
+    }
+
     private static void initPosition(final Map<Position, Piece> piecePosition) {
         for (final File file : File.values()) {
             for (final Rank rank : Rank.values()) {
@@ -41,10 +45,60 @@ public class ChessBoard {
         }
     }
 
+    public void movePiece(Position from, Position to) {
+        Piece piece = piecePosition.get(from);
+
+        if (piece.isRook() && piece.isMovable(from, to)) {
+            if (from.getRank() == to.getRank()) {
+                validateRookByFile(from, to);
+            }
+            if (from.getFile() == to.getFile()) {
+                validateRookByRank(from, to);
+            }
+
+            move(from, to);
+        }
+    }
+
+    private void move(final Position from, final Position to) {
+        Piece piece = piecePosition.get(from);
+        piecePosition.put(from, new EmptyPiece());
+        piecePosition.put(to, piece);
+    }
+
+    private void validateRookByFile(final Position from, final Position to) {
+        File fromFile = from.getFile();
+        File toFile = to.getFile();
+        int min = Math.min(fromFile.getIndex(), toFile.getIndex());
+        int max = Math.max(fromFile.getIndex(), toFile.getIndex());
+
+        for (int i = min; i < max; i++) {
+            Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
+            if (!validationPiece.isEmpty()) {
+                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
+            }
+        }
+    }
+
+    private void validateRookByRank(final Position from, final Position to) {
+        Rank fromRank = from.getRank();
+        Rank toRank = to.getRank();
+        int min = Math.min(fromRank.getIndex(), toRank.getIndex());
+        int max = Math.max(fromRank.getIndex(), toRank.getIndex());
+
+        for (int i = min; i < max; i++) {
+            Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
+            if (!validationPiece.isEmpty()) {
+                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
+            }
+        }
+    }
+
     private ChessBoard(final Map<Position, Piece> piecePosition) {
         this.piecePosition = piecePosition;
     }
 
+    // === createBoard ===
     private static void createPawn(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
             for (File file : File.values()) {
