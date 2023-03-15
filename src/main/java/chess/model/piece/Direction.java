@@ -71,7 +71,7 @@ public enum Direction {
     }
 
     public boolean match(final int rank, final int file) {
-        int gcd = gcd(rank, file);
+        int gcd = gcd(Math.abs(rank), Math.abs(file));
 
         return this.rank == (rank / gcd) && this.file == (file / gcd);
     }
