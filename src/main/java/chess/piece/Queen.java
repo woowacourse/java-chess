@@ -10,7 +10,22 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-        return false;
+        if (from.equals(to)) {
+            return false;
+        }
+        if (from.getRank() == to.getRank()) {
+            return true;
+        }
+        if (from.getFile() == to.getFile()) {
+            return true;
+        }
+        int fileInterval = Math.abs(from.getFile().getIndex() - to.getFile().getIndex());
+        int rankInterval = Math.abs(from.getRank().getIndex() - to.getRank().getIndex());
+
+        if (fileInterval == rankInterval) {
+            return true;
+        }
+        throw new IllegalArgumentException("Queen이 이동할 수 없는 경로입니다.");
     }
 
     @Override
