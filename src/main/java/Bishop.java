@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.List;
+
 public class Bishop extends Piece {
     protected Bishop(Side side) {
         super(side);
@@ -18,5 +21,13 @@ public class Bishop extends Piece {
             return false;
         }
         return movement.isDiagonal();
+    }
+
+    public List<Position> getPath(Position sourcePosition, Position targetPosition) {
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+        if (movement.isOneStep()) {
+            return Collections.emptyList();
+        }
+        return sourcePosition.getPath(targetPosition);
     }
 }

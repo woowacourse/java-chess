@@ -32,14 +32,12 @@ public final class Position {
         Movement movement = this.calculateMovement(targetPosition);
 
         List<Position> path = new ArrayList<>();
-//         movement가 어느 방향으로 가는지 확인하는 로직
         while (!movement.isOneStep()) {
             movingPosition = movingPosition.moveOneStepBy(movement);
             movement = movingPosition.calculateMovement(targetPosition);
             path.add(movingPosition);
         }
         return path;
-//        return Collections.emptyList();
     }
 
     private Position moveOneStepBy(Movement direction) {
