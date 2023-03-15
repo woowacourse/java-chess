@@ -9,6 +9,10 @@ public class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
+    public void printErrorMessage(final Exception e) {
+        System.out.println(e.getMessage());
+    }
+
     public void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
     }
