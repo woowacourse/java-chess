@@ -39,7 +39,7 @@ public class Pawn extends Piece {
     }
 
     private static boolean isFirstBlackMove(final Location start, final Location end) {
-        if (start.getRow() == 7) {
+        if (start.getRow() == 6) {
             return start.getRow() - end.getRow() == 2
                 || start.getRow() - end.getRow() == 1;
         }
@@ -57,7 +57,7 @@ public class Pawn extends Piece {
     }
 
     private static boolean isFirstWhiteMove(final Location start, final Location end) {
-        if (start.getRow() == 2) {
+        if (start.getRow() == 1) {
             return start.getRow() - end.getRow() == -2
                 || start.getRow() - end.getRow() == -1;
         }
