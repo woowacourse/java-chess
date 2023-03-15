@@ -2,7 +2,6 @@ package chess.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +15,7 @@ public class Board {
     }
 
     private static List<Square> generateSquares() {
-        final List<Rank> ranks = Arrays.asList(Rank.values());
-        Collections.reverse(ranks);
-
-        return ranks.stream()
+        return Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(File.values())
                         .map(file -> new Square(file, rank)))
                 .collect(Collectors.toList());

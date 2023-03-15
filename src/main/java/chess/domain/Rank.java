@@ -1,12 +1,12 @@
 package chess.domain;
 
 public enum Rank {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
+    EIGHT,
     SEVEN,
-    EIGHT
+    SIX,
+    FIVE,
+    FOUR,
+    THREE,
+    TWO,
+    ONE
 }
