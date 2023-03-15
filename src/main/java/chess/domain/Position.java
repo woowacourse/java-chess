@@ -11,6 +11,14 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean isInCrossPosition(final Position otherPosition) {
+        return this.file == otherPosition.file || this.rank == otherPosition.rank;
+    }
+
+    public boolean isInDiagonalPosition(final Position otherPosition) {
+        return this.file.calculateDistance(otherPosition.file) == this.rank.calculateDistance(otherPosition.rank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
