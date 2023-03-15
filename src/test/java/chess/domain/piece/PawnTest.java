@@ -45,4 +45,13 @@ public class PawnTest extends AbstractTestFixture {
         assertThat(pawn.canMove(createMove(UP, UP))).isFalse();
         assertThat(pawn.canMove(createMove(UP))).isFalse();
     }
+
+    @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
+    @Test
+    void moveOnceAfterTouch() {
+        Piece touchedPawn = Pawn.from(true).touch();
+
+        assertThat(touchedPawn.canMove(createMove(UP))).isTrue();
+        assertThat(touchedPawn.canMove(createMove(UP, UP))).isFalse();
+    }
 }

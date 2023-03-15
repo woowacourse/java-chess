@@ -57,6 +57,13 @@ public class PieceTest extends AbstractTestFixture {
         assertThat(piece.canMove(createMove(LEFT))).isFalse();
     }
 
+    @DisplayName("기본적으로 Touch 시 상태가 변하지 않는다")
+    @Test
+    void touch_nothingHappens() {
+        Piece piece = createPiece(true);
+
+        assertThat(piece.touch()).isSameAs(piece);
+    }
 
     private Piece createPiece(boolean isWhite, Move... moves) {
         return new PieceTest.PieceImplement(isWhite, Set.of(moves));

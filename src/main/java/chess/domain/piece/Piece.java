@@ -5,7 +5,7 @@ import java.util.Set;
 
 public abstract class Piece {
 
-    private final boolean isWhite;
+    protected final boolean isWhite;
     protected final Set<Move> moves;
 
     public Piece(boolean isWhite, Set<Move> moves) {
@@ -27,5 +27,9 @@ public abstract class Piece {
 
     protected boolean compareMove(Move pieceMove, Move move) {
         return pieceMove.equals(move);
+    }
+
+    public Piece touch() {
+        return this;
     }
 }
