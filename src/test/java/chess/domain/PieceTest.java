@@ -1,11 +1,12 @@
 package chess.domain;
 
+import static chess.domain.Direction.DOWN;
+import static chess.domain.Direction.LEFT;
 import static chess.domain.Direction.RIGHT;
 import static chess.domain.Direction.UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 public class PieceTest extends AbstractTestFixture {
 
     static class PieceImplement extends Piece {
+
         public PieceImplement(boolean isWhite, boolean isFinite, List<Movement> movements) {
             super(isWhite, isFinite, movements);
         }
@@ -59,5 +61,17 @@ public class PieceTest extends AbstractTestFixture {
 
         Piece piece = createPiece(true, true, movement);
         assertThat(piece.hasMovement(createMovement(UP, RIGHT, UP, RIGHT))).isFalse();
+    }
+
+    @DisplayName("1사분면의 움직임으로 모든 사분면의 움직임을 만든다")
+    @Test
+    void flipMovements() {
+        Movement movement = createMovement(UP, RIGHT);
+
+        Piece piece = createPiece(true, true, movement);
+        assertThat(piece.hasMovement(createMovement(UP, RIGHT))).isTrue();
+        assertThat(piece.hasMovement(createMovement(UP, LEFT))).isTrue();
+        assertThat(piece.hasMovement(createMovement(DOWN, LEFT))).isTrue();
+        assertThat(piece.hasMovement(createMovement(DOWN, RIGHT))).isTrue();
     }
 }

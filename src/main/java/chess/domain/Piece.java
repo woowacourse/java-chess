@@ -1,17 +1,31 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Piece {
 
     private final boolean isWhite;
     private final boolean isFinite;
-    private final List<Movement> movements;
+    private final Set<Movement> movements;
 
     public Piece(boolean isWhite, boolean isFinite, List<Movement> movements) {
         this.isWhite = isWhite;
         this.isFinite = isFinite;
-        this.movements = movements;
+        this.movements = movements.stream()
+                .flatMap(this::flipMovement)
+                .collect(Collectors.toSet());
+    }
+
+    private Stream<Movement> flipMovement(Movement movement) {
+        return Stream.of(
+                movement,
+                movement.flipHorizontal(),
+                movement.flipVertical(),
+                movement.flipHorizontal().flipVertical()
+        );
     }
 
     public boolean hasSameColor(Piece otherPiece) {
