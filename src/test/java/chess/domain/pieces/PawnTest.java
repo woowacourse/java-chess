@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -56,4 +57,18 @@ class PawnTest {
                 () -> pawn.canMove(start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("폰이 처음에만 두 번 움직일 수 있다.")
+    void throws_exception_when_pawn_move_double_after_first() {
+        // given
+        Pawn pawn = new Pawn(new Name("p"));
+
+        // when
+        pawn.canMove("a2", "a3");
+
+        // then
+        assertThatThrownBy(() -> pawn.canMove("a3", "a5"))
+                .isInstanceOf(IllegalArgumentException.class);
+     }
 }
