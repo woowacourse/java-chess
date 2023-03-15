@@ -15,11 +15,13 @@ public class Queen extends Piece {
 
     @Override
     protected boolean canMove(final Position targetPosition) {
-        return false;
+        return position.isInCrossPosition(targetPosition) || position.isInDiagonalPosition(targetPosition);
     }
 
     @Override
-    public List<Position> getPassingPath(final Position targetPosition) {
-        return null;
+    public List<Position> getPassingPositions(final Position targetPosition) {
+        validateSamePosition(targetPosition);
+        validateDestination(targetPosition);
+        return position.findPassingPositions(targetPosition);
     }
 }
