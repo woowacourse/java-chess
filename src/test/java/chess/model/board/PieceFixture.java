@@ -1,7 +1,7 @@
 package chess.model.board;
 
-import chess.model.piece.PieceColor;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
 
 public class PieceFixture {

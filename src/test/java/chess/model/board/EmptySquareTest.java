@@ -5,7 +5,6 @@ import static chess.model.board.PieceFixture.B2;
 import static chess.model.board.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.model.piece.PieceType;
 import org.assertj.core.api.InstanceOfAssertFactories;

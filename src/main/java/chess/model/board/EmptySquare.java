@@ -2,7 +2,6 @@ package chess.model.board;
 
 import chess.model.Color;
 import chess.model.Type;
-import chess.model.piece.Piece;
 
 public class EmptySquare extends AbstractSquare {
 
