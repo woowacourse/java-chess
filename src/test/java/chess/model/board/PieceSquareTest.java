@@ -1,9 +1,9 @@
 package chess.model.board;
 
-import static chess.model.board.PieceFixture.A1;
-import static chess.model.board.PieceFixture.B2;
-import static chess.model.board.PieceFixture.BLACK_KNIGHT;
-import static chess.model.board.PieceFixture.WHITE_BISHOP;
+import static chess.model.piece.PieceFixture.BLACK_KNIGHT;
+import static chess.model.piece.PieceFixture.WHITE_BISHOP;
+import static chess.model.board.PositionFixture.A1;
+import static chess.model.board.PositionFixture.B2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

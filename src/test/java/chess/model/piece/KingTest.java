@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.position.Distance;
@@ -16,11 +17,10 @@ class KingTest {
             final boolean result
     ) {
         // given
-        final King king = new King(PieceColor.WHITE);
         final Distance distance = new Distance(rank, file);
 
         // when
-        final boolean movable = king.movable(distance);
+        final boolean movable = WHITE_KING.movable(distance);
 
         // then
         assertThat(movable).isEqualTo(result);

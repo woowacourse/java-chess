@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceFixture.BLACK_ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.position.Distance;
@@ -16,11 +17,10 @@ class RookTest {
             final boolean result
     ) {
         // given
-        final Rook rook = new Rook(PieceColor.BLACK);
         final Distance distance = new Distance(rank, file);
 
         // when
-        final boolean movable = rook.movable(distance);
+        final boolean movable = BLACK_ROOK.movable(distance);
 
         // then
         assertThat(movable).isEqualTo(result);

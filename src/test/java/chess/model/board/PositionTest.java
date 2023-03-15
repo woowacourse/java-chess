@@ -1,7 +1,7 @@
 package chess.model.board;
 
-import static chess.model.board.PieceFixture.A1;
-import static chess.model.board.PieceFixture.B2;
+import static chess.model.board.PositionFixture.A1;
+import static chess.model.board.PositionFixture.B2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 

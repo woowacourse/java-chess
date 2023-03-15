@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceFixture.WHITE_BISHOP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.position.Distance;
@@ -16,11 +17,10 @@ class BishopTest {
             final boolean result
     ) {
         // given
-        final Bishop bishop = new Bishop(PieceColor.WHITE);
         final Distance distance = new Distance(rank, file);
 
         // when
-        final boolean movable = bishop.movable(distance);
+        final boolean movable = WHITE_BISHOP.movable(distance);
 
         // then
         assertThat(movable).isEqualTo(result);
