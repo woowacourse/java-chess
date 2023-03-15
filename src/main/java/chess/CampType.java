@@ -1,13 +1,13 @@
 package chess;
 
 public enum CampType {
-    UPPER,
-    LOWER;
+    BLACK,
+    WHITE;
 
     public static CampType divide(final char columnPosition) {
         if (Character.isLowerCase(columnPosition)) {
-            return LOWER;
+            return WHITE;
         }
-        return UPPER;
+        return BLACK;
     }
 }
