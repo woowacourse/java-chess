@@ -1,9 +1,12 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.File.A;
@@ -16,6 +19,16 @@ class PieceTest {
     private final class TestPiece extends Piece {
         public TestPiece(final File file, final Rank rank, final Color color) {
             super(file, rank, color);
+        }
+
+        @Override
+        protected boolean canMove(final Position targetPosition) {
+            return false;
+        }
+
+        @Override
+        public List<Position> getPassingPath(final Position targetPosition) {
+            return null;
         }
 
     }

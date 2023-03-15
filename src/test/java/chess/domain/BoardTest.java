@@ -1,5 +1,12 @@
 package chess.domain;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
