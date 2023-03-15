@@ -1,4 +1,6 @@
-package chess;
+package chess.piece;
+
+import chess.Side;
 
 public abstract class ChessPiece {
 
