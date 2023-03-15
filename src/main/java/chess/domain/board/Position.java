@@ -24,6 +24,10 @@ public class Position {
         return rank.calculateGap(target.rank);
     }
 
+    public boolean isSameRank(final Rank rank) {
+        return this.rank == rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

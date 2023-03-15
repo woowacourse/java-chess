@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -41,5 +43,15 @@ public class PositionTest {
 
         // then
         assertThat(result).isEqualTo(-1);
+    }
+
+    @ParameterizedTest(name = "입력받은 파일과 같은 파일인지 확인한다. 대상: ONE, 입력: {0}, 결과: {1}")
+    @CsvSource({"ONE, true", "TWO, false"})
+    void 입력받은_파일과_같은_랭크인지_확인한다(final Rank rank, final boolean result) {
+        // given
+        final Position source = Position.of(File.A, Rank.ONE);
+
+        // expect
+        assertThat(source.isSameRank(rank)).isEqualTo(result);
     }
 }

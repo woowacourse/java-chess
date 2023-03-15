@@ -20,11 +20,11 @@ public abstract class Piece {
 
     protected abstract boolean isValidTarget(final Piece target);
 
-    public Color color() {
-        return color;
-    }
-
     public PieceType type() {
         return type;
+    }
+
+    public Color color() {
+        return color;
     }
 }
