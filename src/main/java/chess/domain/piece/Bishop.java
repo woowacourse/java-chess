@@ -14,6 +14,8 @@ public final class Bishop extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
+        validateSamePosition(source, target);
+
         final var inclination = source.computeInclination(target);
         if (inclination == 1.0d) {
             Set<Position> positions = new HashSet<>();

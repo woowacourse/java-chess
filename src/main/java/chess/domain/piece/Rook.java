@@ -14,6 +14,8 @@ public final class Rook extends Piece {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
+        validateSamePosition(source, target);
+
         if (source.isFileEquals(target)) {
             return getFilePath(source, target);
         }

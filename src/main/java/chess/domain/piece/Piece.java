@@ -15,6 +15,12 @@ public abstract class Piece {
 
     public abstract Set<Position> computePath(Position source, Position target);
 
+    protected void validateSamePosition(Position source, Position target) {
+        if (source == target) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public abstract boolean canMove(Map<Position, Boolean> isExists, Position source, Position target);
 
     public boolean isEmpty() {
