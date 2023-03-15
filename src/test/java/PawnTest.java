@@ -109,7 +109,7 @@ public class PawnTest {
             boolean result) {
         Pawn sourcePawn = Pawn.createOfBlack();
         boolean movable = sourcePawn.isMovable(
-                Pawn.createOfBlack(),
+                Pawn.createOfWhite(),
                 Position.of(sourceFile, sourceRank),
                 Position.of(targetFile, targetRank));
         assertThat(movable).isEqualTo(result);
