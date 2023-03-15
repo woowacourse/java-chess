@@ -25,22 +25,48 @@ public final class Pawn extends Piece {
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateIncrement(targetPosition);
         if (isWhite()) {
-            return isMovableForWhite(movement);
+            return isMovableForWhite(movement, sourcePosition);
         }
-        return isMovableForBlack(movement);
+        return isMovableForBlack(movement, sourcePosition);
     }
 
     private boolean isWhite() {
         return super.side.equals(Side.WHITE);
     }
 
-    private boolean isMovableForWhite(Movement movement) {
-        return movement.isOneStep() && movement.isUpward();
-
+    private boolean isMovableForWhite(Movement movement, Position sourcePosition) {
+        if (isFirstMovement(sourcePosition)) {
+            return isUnderTwoStepUpward(movement);
+        }
+        return isOneStepUpward(movement);
     }
 
-    private boolean isMovableForBlack(Movement movement) {
+    private boolean isUnderTwoStepUpward(Movement movement) {
+        return movement.isUnderTwoSteps() && movement.isUpward();
+    }
+
+    private boolean isFirstMovement(Position sourcePosition) {
+        return (this.side.equals(Side.WHITE) && sourcePosition.hasRankOf(Rank.TWO))
+                || (this.side.equals(Side.BLACK) && sourcePosition.hasRankOf(Rank.SEVEN));
+    }
+
+    private static boolean isOneStepUpward(Movement movement) {
+        return movement.isOneStep() && movement.isUpward();
+    }
+
+    private boolean isMovableForBlack(Movement movement, Position sourcePosition) {
+        if (isFirstMovement(sourcePosition)) {
+            return isUnderTwoStepDownward(movement);
+        }
+        return isOneStepDownward(movement);
+    }
+
+    private boolean isOneStepDownward(Movement movement) {
         return movement.isOneStep() && movement.isDownward();
+    }
+
+    private boolean isUnderTwoStepDownward(Movement movement) {
+        return movement.isUnderTwoSteps() && movement.isDownward();
     }
 
 
