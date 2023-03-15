@@ -17,6 +17,10 @@ public class Rank {
         }
     }
 
+    public Piece findPiece(int col) {
+        return pieces.get(col);
+    }
+
     public boolean isMovableAt(int col, Coordinate startCoordinate, Coordinate endCoordinate) {
         Piece targetPiece = pieces.get(col);
         return targetPiece.isMovable(startCoordinate, endCoordinate);
