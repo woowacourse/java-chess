@@ -18,4 +18,8 @@ public final class Position {
         int rankIncrement = this.rank.calculateIncrement(targetPosition.rank);
         return new Movement(fileIncrement, rankIncrement);
     }
+
+    public boolean hasRankOf(Rank defaultRank) {
+        return rank == defaultRank;
+    }
 }
