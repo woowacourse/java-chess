@@ -6,8 +6,15 @@ public class Movement {
     private final int rankIncrement;
 
     public Movement(int fileIncrement, int rankIncrement) {
+        validate(fileIncrement, rankIncrement);
         this.fileIncrement = fileIncrement;
         this.rankIncrement = rankIncrement;
+    }
+
+    private void validate(int fileIncrement, int rankIncrement) {
+        if (fileIncrement == NON_INCREMENT && rankIncrement == NON_INCREMENT) {
+            throw new IllegalArgumentException("최소 한 칸은 움직여야 합니다.");
+        }
     }
 
     public boolean isUpward() {
