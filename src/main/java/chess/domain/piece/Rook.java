@@ -6,6 +6,7 @@ public class Rook extends Piece {
 
     private static final Rook WHITE = new Rook(Color.WHITE);
     private static final Rook BLACK = new Rook(Color.BLACK);
+    private static final int VALID_GAP = 0;
 
     private Rook(final Color color) {
         super(color, PieceType.ROOK);
@@ -20,11 +21,14 @@ public class Rook extends Piece {
 
     @Override
     protected boolean isValidMove(final Position start, final Position end) {
-        return false;
+        final int fileGap = start.calculateFileGap(end);
+        final int rankGap = start.calculateRankGap(end);
+
+        return fileGap == VALID_GAP || rankGap == VALID_GAP;
     }
 
     @Override
     protected boolean isValidTarget(final Piece target) {
-        return false;
+        return color() != target.color();
     }
 }
