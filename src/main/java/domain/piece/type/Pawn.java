@@ -31,23 +31,31 @@ public class Pawn extends Piece {
         return true;
     }
 
-    // TODO: 2023/03/14 갈 수 있는 칸 범위 검사해줘야됨 
-    // TODO: 2023/03/14 위에 거를 메서드로 구현해야됨 
     // TODO: 2023/03/14 마지막에 null 리턴 아니고 에러 던져야 됨
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        List<Direction> targetDirection = movableDirectionDiagonal;
-        isGoingForward = currentSquare.toCoordinate().get(FILE).equals(targetSquare.toCoordinate().get(FILE));
-        if (isGoingForward) {
-            targetDirection = movableDirectionForward;
+        checkMoveDirection(currentSquare, targetSquare);
+        ArrayList<Square> movableCoordinate = getSquares(currentSquare);
+
+        if (isGoingForward && isFirstMove) {
+            movableCoordinate.add(fetchTwoStepForwardSquare(currentSquare));
         }
 
-        ArrayList<Square> movableCoordinate = new ArrayList<>();
-        int directionUnit = fetchDirectionUnit();
+        if (movableCoordinate.contains(targetSquare)) {
+            isFirstMove = false;
+            return movableCoordinate;
+        }
+        return null;
+    }
 
+    private ArrayList<Square> getSquares(Square currentSquare) {
+        int directionUnit = fetchDirectionUnit();
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK);
 
+        List<Direction> targetDirection = fetchMovableDirections();
+
+        ArrayList<Square> movableCoordinate = new ArrayList<>();
         for (Direction direction : targetDirection) {
             int fileCoordinate = currentFileCoordinate + directionUnit * direction.getFile();
             int rankCoordinate = currentRankCoordinate + directionUnit * direction.getRank();
@@ -56,18 +64,27 @@ public class Pawn extends Piece {
             }
             movableCoordinate.add(new Square(fileCoordinate, rankCoordinate));
         }
+        return movableCoordinate;
+    }
 
-        if (targetDirection.equals(movableDirectionForward)) {
-            if (isFirstMove) {
-                movableCoordinate.add(new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * 2)));
-            }
-        }
+    private Square fetchTwoStepForwardSquare(Square currentSquare) {
+        int directionUnit = fetchDirectionUnit();
+        int currentFileCoordinate = currentSquare.toCoordinate().get(FILE);
+        int currentRankCoordinate = currentSquare.toCoordinate().get(RANK);
+        return new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * 2));
+    }
 
-        if (movableCoordinate.contains(targetSquare)) {
-            isFirstMove = false;
-            return movableCoordinate;
+
+    private List<Direction> fetchMovableDirections() {
+        if (isGoingForward) {
+            return movableDirectionForward;
         }
-        return null;
+        return movableDirectionDiagonal;
+    }
+
+    private void checkMoveDirection(Square currentSquare, Square targetSquare) {
+        int currentFileCoordinate = currentSquare.toCoordinate().get(FILE);
+        isGoingForward = currentFileCoordinate == targetSquare.toCoordinate().get(FILE);
     }
 
     public boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare) {
