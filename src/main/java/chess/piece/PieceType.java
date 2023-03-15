@@ -8,7 +8,8 @@ public enum PieceType {
     KNIGHT(Knight::new),
     BISHOP(Bishop::new),
     QUEEN(Queen::new),
-    KING(King::new)
+    KING(King::new),
+    EMPTY(Empty::new)
     ;
 
     private final Function<Camp, Piece> expression;

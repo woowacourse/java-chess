@@ -25,7 +25,7 @@ public class PieceTest {
                 Arguments.arguments(new Rook(Camp.WHITE)),
                 Arguments.arguments(new Queen(Camp.WHITE)),
                 Arguments.arguments(new King(Camp.WHITE)),
-                Arguments.arguments(new Empty())
+                Arguments.arguments(new Empty(Camp.NONE))
         );
     }
 }

@@ -2,8 +2,12 @@ package chess.piece;
 
 public class Empty extends Piece {
 
-    public Empty() {
-        super(Camp.NONE);
+    public Empty(Camp camp) {
+        super(camp);
     }
 
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.EMPTY;
+    }
 }

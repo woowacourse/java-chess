@@ -4,4 +4,9 @@ public class Bishop extends Piece {
     public Bishop(Camp camp) {
         super(camp);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.BISHOP;
+    }
 }
