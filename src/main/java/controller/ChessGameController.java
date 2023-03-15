@@ -1,6 +1,6 @@
 package controller;
 
-import domain.ChessBoardFactory;
+import domain.chessboard.ChessBoardFactory;
 import view.OutputView;
 
 public class ChessGameController {

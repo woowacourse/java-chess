@@ -1,10 +1,11 @@
 package domain;
 
+import domain.chessboard.ChessBoardFactory;
+import domain.chessboard.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

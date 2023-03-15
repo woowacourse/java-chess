@@ -1,9 +1,9 @@
 package view;
 
-import domain.ChessBoard;
-import domain.Color;
-import domain.Piece;
-import domain.Rank;
+import domain.chessboard.ChessBoard;
+import domain.piece.Color;
+import domain.chessboard.Square;
+import domain.chessboard.Rank;
 
 import java.util.List;
 
@@ -25,19 +25,20 @@ public class OutputView {
     }
 
     private void printRank(final Rank rank) {
-        for (Piece piece : rank.getRank()) {
-            System.out.print(convertPieceToElement(piece));
+        for (Square square : rank.getRank()) {
+            System.out.print(convertPieceToElement(square));
         }
         System.out.println();
     }
 
-    private String convertPieceToElement(final Piece piece) {
-        final String elementName = ChessBoardElement.from(piece.getType()).getElementName();
-
-        if (piece.getColor() == Color.BLACK) {
-            return elementName.toUpperCase();
-        }
-        return elementName;
+    private String convertPieceToElement(final Square square) {
+//        final String elementName = ChessBoardElement.from(square.getType()).getElementName();
+//
+//        if (square.getColor() == Color.BLACK) {
+//            return elementName.toUpperCase();
+//        }
+//        return elementName;
+        return null;
     }
 
 }

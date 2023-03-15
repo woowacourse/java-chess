@@ -1,4 +1,4 @@
-package domain;
+package domain.chessboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,13 @@ public class ChessBoardFactory {
 
     static {
         chessBoard = new ArrayList<>();
-
-        chessBoard.add(Rank.initRankToRank(InitRank.OTHERS, Color.BLACK));
-        chessBoard.add(Rank.initRankToRank(InitRank.PAWNS, Color.BLACK));
+        chessBoard.add(Rank.initRankToRank(InitRank.OTHERS_BLACK));
+        chessBoard.add(Rank.initRankToRank(InitRank.PAWN_BLACK));
         for (int i = 0; i < NUMBER_OF_NONE_LINES; i++) {
-            chessBoard.add(Rank.initRankToRank(InitRank.NONES, Color.BLACK));
+            chessBoard.add(Rank.initRankToRank(InitRank.EMPTY));
         }
-        chessBoard.add(Rank.initRankToRank(InitRank.PAWNS, Color.WHITE));
-        chessBoard.add(Rank.initRankToRank(InitRank.OTHERS, Color.WHITE));
+        chessBoard.add(Rank.initRankToRank(InitRank.PAWN_WHITE));
+        chessBoard.add(Rank.initRankToRank(InitRank.OTHERS_WHITE));
     }
 
     public static ChessBoard generate() {
