@@ -22,13 +22,13 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.ordinal() == rankCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("adfa"));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     public static Rank findRank(char value) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("adfa"));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 }

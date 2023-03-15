@@ -22,7 +22,7 @@ public class Empty extends Piece {
 
     @Override
     public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
-        return null;
+        throw new IllegalArgumentException("기물이 없습니다.");
     }
 
     @Override
