@@ -51,4 +51,10 @@ public enum File {
         return File.of(this.number - 1);
     }
 
+    @Override
+    public String toString() {
+        return "File{" +
+                "number=" + number +
+                '}';
+    }
 }

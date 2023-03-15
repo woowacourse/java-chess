@@ -20,7 +20,7 @@ public enum Rank {
         this.number = number;
     }
 
-    public static Rank of(int number){
+    public static Rank of(int number) {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == number).findFirst().get();
     }
@@ -29,25 +29,38 @@ public enum Rank {
         return Math.abs(this.number - other.number);
     }
 
-    public Direction getDirection(Rank other){
-        if(other.number - this.number > 0){
+    public Direction getDirection(Rank other) {
+        if (other.number > this.number) {
             return Direction.PLUS;
         }
-        return Direction.MINUS;
+        if (other.number < this.number) {
+            return Direction.MINUS;
+        }
+        return Direction.ZERO;
     }
 
-    public Rank moveToDirection(Direction direction){
-        if(direction.equals(Direction.PLUS)){
+    public Rank moveToDirection(Direction direction) {
+        if (direction.equals(Direction.PLUS)) {
             return next();
         }
-        return prev();
+        if (direction.equals(Direction.MINUS)) {
+            return prev();
+        }
+        return this;
     }
 
     public Rank next() {
         return Rank.of(this.number + 1);
     }
 
-    public Rank prev(){
+    public Rank prev() {
         return Rank.of(this.number - 1);
+    }
+
+    @Override
+    public String toString() {
+        return "Rank{" +
+                "number=" + number +
+                '}';
     }
 }
