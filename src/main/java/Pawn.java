@@ -25,7 +25,7 @@ public final class Pawn extends Piece {
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateIncrement(targetPosition);
         if (isWhite()) {
-            return isMovableForWhite(movement, sourcePosition);
+            return isMovableForWhite(targetPiece, movement, sourcePosition);
         }
         return isMovableForBlack(movement, sourcePosition);
     }
@@ -34,11 +34,25 @@ public final class Pawn extends Piece {
         return super.side.equals(Side.WHITE);
     }
 
-    private boolean isMovableForWhite(Movement movement, Position sourcePosition) {
+    private boolean isMovableForWhite(Piece targetPiece, Movement movement, Position sourcePosition) {
+        if (targetPiece.side != Side.NEUTRAL) {
+            return isPossibleToAttack(targetPiece, movement);
+        }
         if (isFirstMovement(sourcePosition)) {
             return isUnderTwoStepUpward(movement);
         }
         return isOneStepUpward(movement);
+    }
+
+    private boolean isPossibleToAttack(Piece targetPiece, Movement movement) {
+        if (this.isSameSide(targetPiece)) {
+            return false;
+        }
+        return isOneStepUpwardDiagonal(movement);
+    }
+
+    private boolean isOneStepUpwardDiagonal(Movement movement) {
+        return movement.isOneStep() && movement.isDiagonal() && movement.isUpward();
     }
 
     private boolean isUnderTwoStepUpward(Movement movement) {
