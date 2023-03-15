@@ -12,11 +12,15 @@ public class Rank {
         this.squares = squares;
     }
 
-    public Square getSquareByCoordinate(FileCoordinate coordinate) {
+    public Square findSquareBy(FileCoordinate coordinate) {
         return squares.stream()
                 .filter(square -> square.isSameWith(coordinate))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 열 위치를 입력했습니다."));
+    }
+
+    public boolean isSameWith(RankCoordinate rankCoordinate) {
+        return this.rankCoordinate == rankCoordinate;
     }
 
     public List<Square> getSquares() {

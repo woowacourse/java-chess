@@ -17,7 +17,7 @@ class RankFactoryTest {
     void Side_랭크의_체스_말을_생성한다() {
         Rank rank = RankFactory.createRank(RankType.SIDE_RANK, RankCoordinate.ONE, Color.BLACK);
 
-        Square square = rank.getSquareByCoordinate(A);
+        Square square = rank.findSquareBy(A);
         assertThat(square.getPiece().getPieceType()).isEqualTo(PieceType.ROOK);
     }
 
@@ -25,7 +25,7 @@ class RankFactoryTest {
     void Pawn_랭크의_체스_말을_생성한다() {
         Rank rank = RankFactory.createRank(RankType.PAWN_RANK, RankCoordinate.TWO, Color.BLACK);
 
-        Square square = rank.getSquareByCoordinate(A);
+        Square square = rank.findSquareBy(A);
         assertThat(square.getPiece().getPieceType()).isEqualTo(PieceType.PAWN);
     }
 
@@ -33,7 +33,7 @@ class RankFactoryTest {
     void EMPTY_랭크의_체스_말을_생성한다() {
         Rank rank = RankFactory.createRank(RankType.EMPTY_RANK, RankCoordinate.THREE, Color.BLACK);
 
-        Square square = rank.getSquareByCoordinate(A);
+        Square square = rank.findSquareBy(A);
         assertThat(square.getPiece().getPieceType()).isEqualTo(PieceType.EMPTY);
     }
 }

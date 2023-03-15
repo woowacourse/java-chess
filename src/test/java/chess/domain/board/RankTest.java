@@ -19,7 +19,7 @@ class RankTest {
         Rank rank = new Rank(RankCoordinate.ONE,
                 List.of(new Square(FileCoordinate.C, new Piece(PieceType.BISHOP, Color.BLACK))));
 
-        Square square = rank.getSquareByCoordinate(FileCoordinate.C);
+        Square square = rank.findSquareBy(FileCoordinate.C);
         Piece piece = square.getPiece();
         assertThat(piece.getPieceType()).isEqualTo(PieceType.BISHOP);
     }
