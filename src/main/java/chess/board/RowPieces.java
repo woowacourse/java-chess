@@ -20,7 +20,6 @@ public class RowPieces implements Comparable<RowPieces> {
     
     public RowPieces(int rowNum) {
         this(initRowPieces(rowNum));
-        
     }
     
     private RowPieces(List<Piece> pieces) {

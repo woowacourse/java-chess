@@ -15,4 +15,5 @@ class KingTest {
         Piece king = new King(Team.WHITE, new Coordinate(1, 'a'));
         assertThat(king.symbol()).isEqualTo('k');
     }
+    
 }
