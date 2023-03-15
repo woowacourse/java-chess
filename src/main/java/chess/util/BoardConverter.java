@@ -1,6 +1,6 @@
 package chess.util;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
