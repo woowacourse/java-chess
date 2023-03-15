@@ -8,8 +8,8 @@ public class Knight extends Piece {
 
     private static final Knight WHITE = new Knight(Color.WHITE);
     private static final Knight BLACK = new Knight(Color.BLACK);
-    private static final int FIRST_GAP = 1;
-    private static final int SECOND_GAP = 2;
+    private static final int GAP_LOWER_BOUND = 1;
+    private static final int GAP_UPPER_BOUND = 2;
 
     private Knight(final Color color) {
         super(color, KNIGHT);
@@ -31,7 +31,7 @@ public class Knight extends Piece {
     }
 
     private static boolean isMovable(final int firstGap, final int secondGap) {
-        return firstGap == FIRST_GAP && secondGap == SECOND_GAP;
+        return firstGap == GAP_LOWER_BOUND && secondGap == GAP_UPPER_BOUND;
     }
 
     @Override
