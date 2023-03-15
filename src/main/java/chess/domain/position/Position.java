@@ -1,12 +1,12 @@
-package chess.domain.point;
+package chess.domain.position;
 
 import java.util.Objects;
 
-public final class Point {
+public final class Position {
     private final File file;
     private final Rank rank;
 
-    public Point(File file, Rank rank) {
+    public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -19,8 +19,8 @@ public final class Point {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Point point = (Point) o;
-        return file == point.file && rank == point.rank;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
     }
 
     @Override

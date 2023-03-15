@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.PiecePoints;
+import chess.domain.PiecesPosition;
 import chess.view.OutputView;
 
 public class ChessController {
@@ -12,8 +12,8 @@ public class ChessController {
     }
 
     public void printBoard() {
-        PiecePoints piecePoints = new PiecePoints();
+        PiecesPosition piecesPosition = new PiecesPosition();
 
-        outputView.printChessState(piecePoints.getPiecePoint());
+        outputView.printChessState(piecesPosition.getPiecesPosition());
     }
 }

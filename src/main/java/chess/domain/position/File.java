@@ -1,4 +1,4 @@
-package chess.domain.point;
+package chess.domain.position;
 
 public enum File {
     A,

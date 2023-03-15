@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.point.Point;
+import chess.domain.position.Position;
 import java.util.Map;
 
 public class OutputView {
@@ -10,10 +10,10 @@ public class OutputView {
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final int LINE_BREAK_INDEX = 1;
 
-    public void printChessState(Map<Point, Piece> piecePoint) {
+    public void printChessState(Map<Position, Piece> piecePoint) {
         StringBuilder chessBoardView = new StringBuilder();
-        for (Point point : piecePoint.keySet()) {
-            Piece piece = piecePoint.get(point);
+        for (Position position : piecePoint.keySet()) {
+            Piece piece = piecePoint.get(position);
             String viewSymbolBy = ViewPieceSymbol.getViewSymbolBy(piece.getPieceSymbolName(), piece.isBlack());
 
             checkLineBreak(chessBoardView);
