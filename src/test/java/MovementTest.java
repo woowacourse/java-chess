@@ -38,6 +38,14 @@ class MovementTest {
         assertThat(movement.isRight()).isEqualTo(result);
     }
 
+    @DisplayName("왼쪽 방향의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"-1,0,true", "-1,1,true", "1,0,false", "-2,-1,true"})
+    void shouldReturnTrueWhenMovementDirectionIsLeftOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        assertThat(movement.isLeft()).isEqualTo(result);
+    }
+
     @DisplayName("2칸 이내의 움직임이면 true, 아니면 false를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"2,0,true", "0,1,true", "2,2,true", "-2,2,true", "-3,1,false"})
