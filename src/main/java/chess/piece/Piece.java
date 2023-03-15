@@ -16,6 +16,8 @@ public abstract class Piece {
     
     public abstract char symbol();
     
+    public abstract boolean isMoveable(Piece targetPiece);
+    
     public boolean isWhiteTeam() {
         return team.isWhiteTeam();
     }
@@ -26,6 +28,10 @@ public abstract class Piece {
     
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
+    }
+    
+    protected Coordinate coordinate(){
+        return coordinate;
     }
     
     @Override

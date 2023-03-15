@@ -11,4 +11,9 @@ public class Rook extends Piece {
     public char symbol() {
         return 'r';
     }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
+    }
 }

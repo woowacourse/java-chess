@@ -11,4 +11,9 @@ public class Pawn extends Piece {
     public char symbol() {
         return 'p';
     }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
+    }
 }

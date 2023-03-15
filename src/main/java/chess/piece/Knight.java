@@ -11,4 +11,9 @@ public class Knight extends Piece {
     public char symbol() {
         return 'n';
     }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
+    }
 }

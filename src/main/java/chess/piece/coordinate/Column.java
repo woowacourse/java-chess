@@ -19,6 +19,10 @@ public class Column {
         }
     }
     
+    public int subtract(Column targetColumn) {
+        return Math.abs(this.column - targetColumn.column);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

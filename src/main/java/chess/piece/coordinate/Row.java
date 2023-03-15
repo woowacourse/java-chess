@@ -27,6 +27,10 @@ public class Row {
         return this.row - otherRow.row;
     }
     
+    public int subtract(Row targetRow) {
+        return Math.abs(this.row - targetRow.row);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

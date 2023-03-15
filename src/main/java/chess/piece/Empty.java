@@ -11,4 +11,9 @@ public class Empty extends Piece {
     public char symbol() {
         return 'e';
     }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
+    }
 }

@@ -11,4 +11,9 @@ public class Queen extends Piece {
     public char symbol() {
         return 'q';
     }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
+    }
 }

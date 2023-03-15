@@ -7,8 +7,14 @@ public class Bishop extends Piece {
         super(team, coordinate);
     }
     
+    
     @Override
     public char symbol() {
         return 'b';
+    }
+    
+    @Override
+    public boolean isMoveable(Piece targetPiece) {
+        return false;
     }
 }
