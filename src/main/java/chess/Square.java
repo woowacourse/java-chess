@@ -11,6 +11,22 @@ public class Square {
         this.rank = rank;
     }
 
+    public boolean isSameRank(Square targetSquare){
+        return this.rank == targetSquare.rank;
+    }
+
+    public boolean isSameFile(Square targetSquare){
+        return this.file == targetSquare.file;
+    }
+
+    public int calculateRankDistance(Square targetSquare){
+        return this.rank.calculateDistance(targetSquare.rank);
+    }
+
+    public int calculateFileDistance(Square targetSquare){
+        return this.file.calculateDistance(targetSquare.file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
