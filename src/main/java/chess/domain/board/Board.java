@@ -39,14 +39,15 @@ public class Board {
     }
 
     private static Map<Position, Piece> initializePiece(final Color color, final File file) {
-        final List<Piece> pieces = List.of(Rook.from(color), Knight.from(color), Bishop.from(color), Queen.from(color),
-                King.from(color), Bishop.from(color), Knight.from(color), Rook.from(color));
+        final List<Piece> pieces = List.of(
+                Rook.from(color), Knight.from(color), Bishop.from(color), Queen.from(color),
+                King.from(color), Bishop.from(color), Knight.from(color), Rook.from(color)
+        );
         final List<Rank> ranks = Arrays.stream(Rank.values()).collect(toList());
 
         return IntStream.range(0, pieces.size())
                 .boxed()
                 .collect(toMap(index -> Position.of(ranks.get(index), file), pieces::get));
-
     }
 
     private static Map<Position, Piece> initializePawn(final Color color, final File file) {
