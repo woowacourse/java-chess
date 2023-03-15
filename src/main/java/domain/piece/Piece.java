@@ -1,5 +1,9 @@
 package domain.piece;
 
+import domain.position.Position;
+
+import java.util.List;
+
 public abstract class Piece {
 
     private final PieceName name;
@@ -24,4 +28,10 @@ public abstract class Piece {
     public boolean isWhite() {
         return color.equals(Color.WHITE);
     }
+
+    public abstract boolean isMovablePath(Position start, List<Position> path);
+
+    protected abstract boolean isMovableDirection(Position start, Position nextPosition);
+
+    protected abstract boolean isMovableDistance(int distance);
 }
