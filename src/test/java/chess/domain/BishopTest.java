@@ -11,7 +11,7 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop 은 대각선으로 원하는 만큼 이동 가능하다.")
     void 이동_범위_확인() {
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(TeamColor.WHITE);
 
         List<Path> movablePaths = bishop.findMovablePaths(new Position(2, 2));
 

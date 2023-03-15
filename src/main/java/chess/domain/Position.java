@@ -45,9 +45,6 @@ public class Position {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
 
     @Override
     public boolean equals(final Object o) {

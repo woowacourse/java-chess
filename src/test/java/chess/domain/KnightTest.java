@@ -14,7 +14,7 @@ class KnightTest {
     @Test
     @DisplayName("Knight 은 앞뒤양옆 1칸 이동 후 대각선으로 1칸 이동 가능하다.")
     void 이동_범위_확인() {
-        Knight knight = new Knight();
+        Knight knight = new Knight(TeamColor.WHITE);
 
         List<Path> movablePaths = knight.findMovablePaths(new Position(2, 2));
 

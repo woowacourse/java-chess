@@ -11,7 +11,7 @@ public class QueenTest {
     @Test
     @DisplayName("Queen은 앞뒤양옆, 대각선으로 원하는 만큼 이동 가능하다.")
     void 이동_범위_확인() {
-        Queen queen = new Queen();
+        Queen queen = new Queen(TeamColor.WHITE);
 
         List<Path> movablePaths = queen.findMovablePaths(new Position(2, 2));
 

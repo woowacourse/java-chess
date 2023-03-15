@@ -3,12 +3,16 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook implements Movable {
+public class Rook extends Piece {
 
     private static final List<Direction> directions;
 
     static {
         directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+    }
+
+    public Rook(final TeamColor color) {
+        super(color);
     }
 
     @Override
