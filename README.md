@@ -44,6 +44,7 @@ G[outputView]
 
 - [x] white player와 black player를 가진다.
 - [x] white 플레이어와 black 플레이어의 모든 position 반환한다.
+- [x] 입력받은 위치의 포지션에 기물이 존재하는지 확인한다.
 
 ### Player
 

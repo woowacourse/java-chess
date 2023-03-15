@@ -29,6 +29,10 @@ public class Piece {
         return new Piece(position.changePosition(file), this.shape);
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     public int getRank() {
         return position.getRank();
     }

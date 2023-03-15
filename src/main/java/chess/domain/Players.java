@@ -47,4 +47,9 @@ public class Players {
         return Stream.concat(whitePositions.stream(), blackPositions.stream())
                 .collect(toList());
     }
+
+    public boolean isPieceExistsInputPosition(char file, int rank) {
+        return getAllPosition().stream()
+                .anyMatch(position -> position.isSame(file, rank));
+    }
 }

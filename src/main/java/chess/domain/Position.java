@@ -67,4 +67,8 @@ public final class Position {
     public char getFile() {
         return this.file;
     }
+
+    public boolean isSame(char file, int rank) {
+        return this.file == file && this.rank == rank;
+    }
 }
