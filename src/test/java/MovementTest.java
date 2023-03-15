@@ -18,7 +18,7 @@ class MovementTest {
 
     @DisplayName("위 방향의 움직임이면 true, 아니면 false를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"0,1,true", "0,-1,false"})
+    @CsvSource(value = {"0,1,true", "0,-1,false", "1,1,true", "-1,1,true"})
     void shouldReturnTrueWhenMovementDirectionIsUpwardOrFalse(int fileIncrement, int rankIncrement, boolean result) {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         assertThat(movement.isUpward()).isEqualTo(result);
@@ -26,7 +26,7 @@ class MovementTest {
 
     @DisplayName("아래 방향의 움직임이면 true, 아니면 false를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"0,-1,true", "0,1,false"})
+    @CsvSource(value = {"0,-1,true", "0,1,false", "1,-1,true", "-1,-1,true"})
     void shouldReturnTrueWhenMovementDirectionIsDownwardOrFalse(int fileIncrement, int rankIncrement, boolean result) {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         assertThat(movement.isDownward()).isEqualTo(result);
@@ -55,5 +55,6 @@ class MovementTest {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         assertThat(movement.isDiagonal()).isEqualTo(result);
     }
+
 
 }
