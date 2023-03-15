@@ -16,6 +16,14 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     public int getFileOrder() {
         return file.getOrder();
     }
