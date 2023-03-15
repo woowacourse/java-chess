@@ -28,7 +28,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Integer> coordinateGap = List.of(
                 currentSquare.toCoordinate().get(FILE) - targetSquare.toCoordinate().get(FILE),
                 currentSquare.toCoordinate().get(RANK) - targetSquare.toCoordinate().get(RANK));
