@@ -3,9 +3,10 @@ package chess;
 public enum Side {
 
     BLACK("black"),
-    WHITE("white");
+    WHITE("white"),
+    BLANK("blank");
 
-    String side;
+    private final String side;
 
     Side(String side) {
         this.side = side;

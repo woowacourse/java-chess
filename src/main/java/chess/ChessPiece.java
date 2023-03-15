@@ -1,13 +1,10 @@
 package chess;
 
-public class ChessPiece {
+public abstract class ChessPiece {
 
-    private final Shape shape;
     private final Side side;
 
-
-    public ChessPiece(Shape shape, Side side) {
-        this.shape = shape;
+    public ChessPiece(Side side) {
         this.side = side;
     }
 }

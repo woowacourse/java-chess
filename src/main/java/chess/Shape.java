@@ -9,8 +9,8 @@ public enum Shape {
     QUEEN("Q", "q"),
     KING("K", "k");
 
-    String black;
-    String white;
+    private final String black;
+    private final String white;
 
     Shape(String black, String white) {
         this.black = black;
