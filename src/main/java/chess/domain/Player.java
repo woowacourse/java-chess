@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Player {
@@ -35,5 +34,11 @@ public class Player {
 
     public String getColor() {
         return color;
+    }
+
+    public void move(boolean position) {
+        if (color.equals("white")) {
+
+        }
     }
 }

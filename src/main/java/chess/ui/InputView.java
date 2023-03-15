@@ -1,6 +1,10 @@
 package chess.ui;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+
+import static java.util.stream.Collectors.toList;
 
 public final class InputView {
 
@@ -37,4 +41,8 @@ public final class InputView {
         return inputCommand.equals("end");
     }
 
+    public static List<String> getMovePieceCommand() {
+        return Arrays.stream(SCANNER.nextLine().split(" "))
+                .collect(toList());
+    }
 }
