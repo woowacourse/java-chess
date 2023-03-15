@@ -56,14 +56,14 @@ public final class Pawn extends Piece {
     }
 
     private boolean isPossibleToAttackForWhite(Piece targetPiece, Movement movement) {
-        if (this.isSameSide(targetPiece)) {
+        if (this.isSameSideWith(targetPiece)) {
             return false;
         }
         return isOneStepUpwardDiagonal(movement);
     }
 
     private boolean isPossibleToAttackForBlack(Piece targetPiece, Movement movement) {
-        if (this.isSameSide(targetPiece)) {
+        if (this.isSameSideWith(targetPiece)) {
             return false;
         }
         return isOneStepDownwardDiagonal(movement);

@@ -49,7 +49,7 @@ public class PawnTest {
         Pawn sourcePawn = Pawn.createOfWhite();
         Pawn targetPawn = Pawn.createOfWhite();
 
-        assertThat(sourcePawn.isSameSide(targetPawn)).isEqualTo(true);
+        assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(true);
     }
 
     @DisplayName("targetPiece와 다른 팀이라면 false를 반환한다.")
@@ -58,7 +58,7 @@ public class PawnTest {
         Pawn sourcePawn = Pawn.createOfWhite();
         Pawn targetPawn = Pawn.createOfBlack();
 
-        assertThat(sourcePawn.isSameSide(targetPawn)).isEqualTo(false);
+        assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(false);
     }
 
     @DisplayName("targetPiece의 상대 팀이라면 true를 반환한다.")
@@ -67,7 +67,7 @@ public class PawnTest {
         Pawn sourcePawn = Pawn.createOfWhite();
         Pawn targetPawn = Pawn.createOfBlack();
 
-        assertThat(sourcePawn.isOpponentSide(targetPawn)).isEqualTo(true);
+        assertThat(sourcePawn.isOpponentSideWith(targetPawn)).isEqualTo(true);
     }
 
     @DisplayName("targetPiece의 같은 팀이라면 false를 반환한다.")
@@ -76,7 +76,7 @@ public class PawnTest {
         Pawn sourcePawn = Pawn.createOfWhite();
         Pawn targetPawn = Pawn.createOfWhite();
 
-        assertThat(sourcePawn.isOpponentSide(targetPawn)).isEqualTo(false);
+        assertThat(sourcePawn.isOpponentSideWith(targetPawn)).isEqualTo(false);
     }
 
     @DisplayName("White 진영인 경우 - 위쪽 대각선에 상대편 말이 있는 경우 true를 반환한다.")
