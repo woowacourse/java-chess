@@ -31,8 +31,8 @@ public abstract class Piece {
         return this.coordinate.calculteCoordinateDistance(targetPiece.coordinate);
     }
     
-    protected boolean isSameTeam(Piece piece) {
-        return this.team == piece.team;
+    protected boolean isDifferentTeam(Piece otherPiece) {
+        return this.team != otherPiece.team;
     }
     
     public int compareTo(Piece piece) {

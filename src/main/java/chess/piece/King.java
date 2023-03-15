@@ -21,14 +21,14 @@ public class King extends Piece {
     }
     
     private boolean isKingMovable(Piece targetPiece, int rowDistance, int columnDistance) {
-        if (isOverMovementRadius(rowDistance, columnDistance)) {
+        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
             return false;
         }
     
-        return !isSameTeam(targetPiece);
+        return isDifferentTeam(targetPiece);
     }
     
-    private boolean isOverMovementRadius(int rowDistance, int columnDistance) {
+    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
         return rowDistance > MAX_DIFFERENCE_OF_KING || columnDistance > MAX_DIFFERENCE_OF_KING;
     }
     

@@ -20,31 +20,31 @@ public class Queen extends Piece {
         int rowDistance = coordinateDistance.get(0);
         int columnDistance = coordinateDistance.get(1);
     
-        return isQueenMovable(rowDistance, columnDistance);
+        return isQueenMovable(targetPiece, rowDistance, columnDistance);
     }
     
-    private boolean isQueenMovable(int rowDistance, int columnDistance) {
-        if (isCorrectMovementRadius(rowDistance, columnDistance)) {
-            return true;
+    private boolean isQueenMovable(Piece targetPiece, int rowDistance, int columnDistance) {
+        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
+            return false;
         }
-        
-        return false;
+    
+        return isDifferentTeam(targetPiece);
     }
     
-    private boolean isCorrectMovementRadius(int rowDistance, int columnDistance) {
-        return isDiffrentCoordinate(rowDistance, columnDistance) &&
-                (isStraight(rowDistance, columnDistance) || isDiagonal(rowDistance, columnDistance));
+    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
+        return isBothZero(rowDistance, columnDistance) ||
+                (isDifferentRowColumn(rowDistance, columnDistance) && (isZeroNotExist(rowDistance, columnDistance)));
     }
     
-    private boolean isDiagonal(int rowDistance, int columnDistance) {
-        return rowDistance == columnDistance;
+    private boolean isBothZero(int rowDistance, int columnDistance) {
+        return rowDistance == 0 && columnDistance == 0;
     }
     
-    private boolean isStraight(int rowDistance, int columnDistance) {
-        return rowDistance == 0 || columnDistance == 0;
+    private boolean isDifferentRowColumn(int rowDistance, int columnDistance) {
+        return rowDistance != columnDistance;
     }
     
-    private boolean isDiffrentCoordinate(int rowDistance, int columnDistance) {
-        return !(rowDistance == 0 && columnDistance == 0);
+    private boolean isZeroNotExist(int rowDistance, int columnDistance) {
+        return rowDistance != 0 && columnDistance != 0;
     }
 }
