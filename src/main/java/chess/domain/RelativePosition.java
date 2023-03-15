@@ -15,10 +15,10 @@ public class RelativePosition {
 			return new RelativePosition(0, 0);
 		}
 		if (x == 0) {
-			return new RelativePosition(0, 1);
+			return new RelativePosition(0, y / Math.abs(y));
 		}
 		if (y == 0) {
-			return new RelativePosition(1, 0);
+			return new RelativePosition(x / Math.abs(x), 0);
 		}
 		return toUnitNoneZeroPosition();
 	}
@@ -32,6 +32,14 @@ public class RelativePosition {
 			return new RelativePosition(x / quotient, y / quotient);
 		}
 		return new RelativePosition(x, y);
+	}
+
+	public boolean isZeroAbsTwo() {
+		return x == 0 && Math.abs(y) == 2;
+	}
+
+	public RelativePosition inverseByXAxis() {
+		return new RelativePosition(x, -1 * y);
 	}
 
 	public int getX() {
