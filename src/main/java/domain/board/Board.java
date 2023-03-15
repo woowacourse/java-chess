@@ -7,6 +7,8 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.position.Position;
+import domain.position.Positions;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,25 +40,25 @@ public final class Board {
     }
 
     private static void addInitialRooks(final HashMap<Position, Piece> board) {
-        final List<Position> rooksPosition = Position.of("A1", "A8", "H1", "H8");
+        final List<Position> rooksPosition = Positions.of("A1", "A8", "H1", "H8");
 
         rooksPosition.forEach(position -> board.put(position, new Rook()));
     }
 
     private static void addInitialKnights(final HashMap<Position, Piece> board) {
-        final List<Position> knightsPosition = Position.of("B1", "B8", "G1", "G8");
+        final List<Position> knightsPosition = Positions.of("B1", "B8", "G1", "G8");
 
         knightsPosition.forEach(position -> board.put(position, new Knight()));
     }
 
     private static void addInitialBishops(final HashMap<Position, Piece> board) {
-        final List<Position> bishopsPosition = Position.of("C1", "C8", "F1", "F8");
+        final List<Position> bishopsPosition = Positions.of("C1", "C8", "F1", "F8");
 
         bishopsPosition.forEach(position -> board.put(position, new Bishop()));
     }
 
     private static void addInitialQueens(final HashMap<Position, Piece> board) {
-        final List<Position> queensPosition = Position.of("D1", "D8");
+        final List<Position> queensPosition = Positions.of("D1", "D8");
 
         queensPosition.forEach(position -> board.put(position, new Queen()));
     }
@@ -65,12 +67,12 @@ public final class Board {
         ALL_FILES.chars()
                 .mapToObj(file -> String.valueOf((char) file))
                 .flatMap(file -> Stream.of(file + WHITE_PAWNS_RANK, file + BLACK_PAWNS_RANK))
-                .map(Position::from)
+                .map(Positions::from)
                 .forEach(position -> board.put(position, new Pawn()));
     }
 
     private static void addInitialKings(Map<Position, Piece> board) {
-        final List<Position> kingsPosition = Position.of("E1", "E8");
+        final List<Position> kingsPosition = Positions.of("E1", "E8");
 
         kingsPosition.forEach(position -> board.put(position, new King()));
     }

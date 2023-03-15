@@ -1,8 +1,8 @@
 package controller;
 
 import domain.board.Board;
-import domain.board.Position;
 import domain.piece.Piece;
+import domain.position.Position;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;

@@ -1,7 +1,7 @@
 package view;
 
-import domain.board.Position;
 import domain.piece.Piece;
+import domain.position.Position;
 import java.util.Map;
 
 public final class OutputView {

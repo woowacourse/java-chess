@@ -1,9 +1,10 @@
 package view;
 
-import domain.board.File;
-import domain.board.Position;
-import domain.board.Rank;
 import domain.piece.Piece;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Positions;
+import domain.position.Rank;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public final class BoardView {
     private String makeAnRankView(final Map<Position, Piece> board, final Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> file.getName() + rank.getName())
-                .map(position -> makePieceView(board, Position.from(position)))
+                .map(position -> makePieceView(board, Positions.from(position)))
                 .collect(Collectors.joining());
     }
 
