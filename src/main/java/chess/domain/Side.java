@@ -1,7 +1,7 @@
 package chess.domain;
 
-public enum Team {
+public enum Side {
     WHITE,
     BLACK,
-    NO_TEAM
+    NO_SIDE
 }

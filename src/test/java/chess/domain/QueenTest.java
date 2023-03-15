@@ -19,8 +19,8 @@ public class QueenTest {
             @Test
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
-                Queen queen = Queen.of(Team.BLACK);
-                assertThat(queen.getTeam()).isEqualTo("BLACK");
+                Queen queen = Queen.of(Side.BLACK);
+                assertThat(queen.getSide()).isEqualTo("BLACK");
             }
         }
     }
@@ -31,14 +31,14 @@ public class QueenTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Queen whiteQueen = Queen.of(Team.WHITE);
+            Queen whiteQueen = Queen.of(Side.WHITE);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.ONE, File.G);
             Square movableSquare2 = Square.of(Rank.FOUR, File.H);
             Square unable = Square.of(Rank.THREE, File.B);
-            Bishop whiteBishop = Bishop.of(Team.WHITE)
+            Bishop whiteBishop = Bishop.of(Side.WHITE)
                                        .get(0);
-            Queen blackQueen = Queen.of(Team.BLACK);
+            Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 상대 진영인 경우 true를 반환한다")

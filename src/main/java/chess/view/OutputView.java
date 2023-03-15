@@ -17,7 +17,7 @@ public class OutputView {
     private void printRank(final List<PieceDto> rank) {
         for (PieceDto piece : rank) {
             final String type = piece.getType();
-            final String team = piece.getTeam();
+            final String team = piece.getSide();
             printPiece(type, team);
         }
         System.out.println();

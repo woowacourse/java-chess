@@ -47,6 +47,37 @@ public class Square {
         return verticalDistance + horizontalDistance == 3;
     }
 
+    public boolean inPawnsInitialMovableRange(final Square to, final Side side) {
+        checkSameSquare(to);
+        final int verticalDistance = rank.distanceTo(to.rank);
+        return isBackOf(to, side) &&
+                (verticalDistance == 1 || verticalDistance == 2) &&
+                file.distanceTo(to.file) == 0;
+    }
+
+    public boolean inPawnsMovableRange(final Square to, final Side side) {
+        checkSameSquare(to);
+        final int verticalDistance = rank.distanceTo(to.rank);
+        return isBackOf(to, side) &&
+                verticalDistance == 1 &&
+                file.distanceTo(to.file) == 0;
+    }
+
+    public boolean inPawnsCatchableRange(final Square to, final Side side) {
+        checkSameSquare(to);
+        final int verticalDistance = rank.distanceTo(to.rank);
+        return isBackOf(to, side) &&
+                verticalDistance == 1 &&
+                file.distanceTo(to.file) == 1;
+    }
+
+    private boolean isBackOf(final Square to, final Side side) {
+        if (side == Side.WHITE) {
+            return to.rank.isBiggerThan(this.rank);
+        }
+        return this.rank.isBiggerThan(to.rank);
+    }
+
     private void checkSameSquare(final Square to) {
         if (this == to) {
             throw new IllegalArgumentException("같은 지점이 들어왔습니다");

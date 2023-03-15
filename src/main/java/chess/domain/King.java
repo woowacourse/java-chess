@@ -6,16 +6,16 @@ public class King extends Piece {
     private static final King whiteKing;
 
     static {
-        blackKing = new King(Team.BLACK);
-        whiteKing = new King(Team.WHITE);
+        blackKing = new King(Side.BLACK);
+        whiteKing = new King(Side.WHITE);
     }
 
-    private King(final Team team) {
-        super(team);
+    private King(final Side side) {
+        super(side);
     }
 
-    public static King of(final Team team) {
-        if (team == Team.BLACK) {
+    public static King of(final Side side) {
+        if (side == Side.BLACK) {
             return blackKing;
         }
         return whiteKing;

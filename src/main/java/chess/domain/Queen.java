@@ -6,17 +6,17 @@ public class Queen extends Piece {
     private static final Queen whiteQueen;
 
     static {
-        blackQueen = new Queen(Team.BLACK);
-        whiteQueen = new Queen(Team.WHITE);
+        blackQueen = new Queen(Side.BLACK);
+        whiteQueen = new Queen(Side.WHITE);
     }
 
 
-    private Queen(final Team team) {
-        super(team);
+    private Queen(final Side side) {
+        super(side);
     }
 
-    public static Queen of(final Team team) {
-        if (team == Team.BLACK) {
+    public static Queen of(final Side side) {
+        if (side == Side.BLACK) {
             return blackQueen;
         }
         return whiteQueen;
@@ -24,6 +24,6 @@ public class Queen extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isDifferentTeam(piece) && (from.inLine(to) || from.inDiagonal(to));
+        return isOppositeSide(piece) && (from.inLine(to) || from.inDiagonal(to));
     }
 }

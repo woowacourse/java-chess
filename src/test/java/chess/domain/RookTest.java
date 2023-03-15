@@ -19,7 +19,7 @@ class RookTest {
             @Test
             @DisplayName("해당 진영의 Rook을 2개 생성한다")
             void it_returns_rooks() {
-                assertThat(Rook.of(Team.BLACK)).hasSize(2);
+                assertThat(Rook.of(Side.BLACK)).hasSize(2);
             }
         }
     }
@@ -30,15 +30,15 @@ class RookTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Rook whiteRook = Rook.of(Team.WHITE)
+            Rook whiteRook = Rook.of(Side.WHITE)
                                  .get(0);
             Square from = Square.of(Rank.ONE, File.A);
             Square movableSquare1 = Square.of(Rank.ONE, File.C);
             Square movableSquare2 = Square.of(Rank.THREE, File.A);
             Square unable = Square.of(Rank.TWO, File.B);
-            Rook whiteRook2 = Rook.of(Team.WHITE)
+            Rook whiteRook2 = Rook.of(Side.WHITE)
                                   .get(1);
-            Queen blackQueen = Queen.of(Team.BLACK);
+            Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 상대 진영인 경우 true를 반환한다")

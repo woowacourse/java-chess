@@ -19,7 +19,7 @@ public class KnightTest {
             @Test
             @DisplayName("해당 진영의 Knight를 8개 생성한다")
             void it_returns_knights() {
-                assertThat(Knight.of(Team.BLACK)).hasSize(2);
+                assertThat(Knight.of(Side.BLACK)).hasSize(2);
             }
         }
     }
@@ -30,15 +30,15 @@ public class KnightTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Knight whiteKnight = Knight.of(Team.WHITE)
+            Knight whiteKnight = Knight.of(Side.WHITE)
                                        .get(0);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.TWO, File.C);
             Square movableSquare2 = Square.of(Rank.FIVE, File.F);
             Square unable = Square.of(Rank.TWO, File.B);
-            Knight whiteKnight2 = Knight.of(Team.WHITE)
+            Knight whiteKnight2 = Knight.of(Side.WHITE)
                                         .get(1);
-            Queen blackQueen = Queen.of(Team.BLACK);
+            Queen blackQueen = Queen.of(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 상대 진영인 경우 true를 반환한다")

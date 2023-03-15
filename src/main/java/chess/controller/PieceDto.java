@@ -31,10 +31,10 @@ public class PieceDto {
         if (piece instanceof King) {
             type = "KING";
         }
-        return new PieceDto(piece.getTeam(), type);
+        return new PieceDto(piece.getSide(), type);
     }
 
-    public String getTeam() {
+    public String getSide() {
         return team;
     }
 

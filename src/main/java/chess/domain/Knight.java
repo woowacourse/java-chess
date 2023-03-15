@@ -8,24 +8,23 @@ public class Knight extends Piece {
     private static final List<Knight> whiteKnights = new ArrayList<>();
 
     static {
-        addKnights(blackKnights, Team.BLACK);
-        addKnights(whiteKnights, Team.WHITE);
+        addKnights(blackKnights, Side.BLACK);
+        addKnights(whiteKnights, Side.WHITE);
     }
 
 
-
-    private Knight(final Team team) {
-        super(team);
+    private Knight(final Side side) {
+        super(side);
     }
 
-    private static void addKnights(final List<Knight> Knights, final Team team) {
+    private static void addKnights(final List<Knight> Knights, final Side side) {
         for (int i = 0; i < 2; i++) {
-            Knights.add(new Knight(team));
+            Knights.add(new Knight(side));
         }
     }
 
-    public static List<Knight> of(final Team team) {
-        if (team == Team.BLACK) {
+    public static List<Knight> of(final Side side) {
+        if (side == Side.BLACK) {
             return List.copyOf(blackKnights);
         }
         return List.copyOf(whiteKnights);
@@ -33,6 +32,6 @@ public class Knight extends Piece {
 
     @Override
     boolean isMovable(final Square from, final Square to, final Piece piece) {
-        return isDifferentTeam(piece) && from.inLShape(to);
+        return isOppositeSide(piece) && from.inLShape(to);
     }
 }
