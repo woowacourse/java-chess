@@ -12,7 +12,7 @@ public class DownStrategy implements MovingStrategy {
 
     @Override
     public Position move(final Position currentPosition) {
-        final int rank = currentPosition.getRankOrder() - 1;
-        return Position.of(currentPosition.getFile(), Rank.of(rank));
+        final int rankOrder = currentPosition.getRankOrder() - 1;
+        return Position.of(currentPosition.getFile(), Rank.of(rankOrder));
     }
 }
