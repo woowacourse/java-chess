@@ -25,4 +25,12 @@ public final class Square {
         cache.put(cardKey, square);
         return square;
     }
+
+    public boolean isSameFile(Square other) {
+        return file == other.file;
+    }
+
+    public boolean isSameRank(Square other) {
+        return rank == other.rank;
+    }
 }
