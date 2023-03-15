@@ -17,6 +17,7 @@
     - 가능한 수인지 판단한다
     - 1사분면의 수으로 모든 사분면의 수을 만든다
     - 색을 구분한다
+    - 기본적으로 한 수 단위로 움직인다.
 - 기물별 특성
     - 폰
         - [ ] 처음에는 1칸 혹은 2칸 앞으로 움직일 수 있다.
@@ -64,18 +65,16 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
-    FinitePiece <-- Knight
-    FinitePiece <-- King
+    QuadrantPiece <-- Knight
+    QuadrantPiece <-- King
     InfinitePiece <-- Queen
     InfinitePiece <-- Bishop
     InfinitePiece <-- Rook
-    QuadrantPiece <-- FinitePiece
     QuadrantPiece <-- InfinitePiece
     Piece <-- QuadrantPiece
 
     <<abstract>> Piece
     <<abstract>> QuadrantPiece
-    <<abstract>> FinitePiece
     <<abstract>> InfinitePiece
 ```
 

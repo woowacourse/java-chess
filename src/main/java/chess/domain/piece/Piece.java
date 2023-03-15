@@ -25,5 +25,7 @@ public abstract class Piece {
         return hasMove;
     }
 
-    protected abstract boolean compareMove(Move pieceMove, Move move);
+    protected boolean compareMove(Move pieceMove, Move move) {
+        return pieceMove.equals(move);
+    }
 }

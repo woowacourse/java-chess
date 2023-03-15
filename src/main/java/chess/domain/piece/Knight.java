@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Knight extends FinitePiece {
+public class Knight extends QuadrantPiece {
 
     private Knight(boolean isWhite, Set<Move> moves) {
         super(isWhite, moves);
