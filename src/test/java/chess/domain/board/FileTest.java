@@ -28,4 +28,11 @@ public class FileTest {
         // expect
         assertThat(File.from(command)).isEqualTo(file);
     }
+
+    @ParameterizedTest(name = "입력받은 파일와의 차이를 반환한다. 시작: {0}, 도착: {1}, 결과: {2}")
+    @CsvSource({"ONE, SEVEN, -6", "TWO, TWO, 0", "SEVEN, FOUR, 3"})
+    void 입력받은_파일과_차이를_반환한다(final File source, final File target, final int result) {
+        // expect
+        assertThat(source.calculateGap(target)).isEqualTo(result);
+    }
 }

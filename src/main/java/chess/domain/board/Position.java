@@ -20,6 +20,10 @@ public class Position {
         return this.rank.calculateGap(target.rank);
     }
 
+    public int calculateFileGap(final Position target) {
+        return this.file.calculateGap(target.file);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

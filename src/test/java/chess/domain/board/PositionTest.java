@@ -29,4 +29,17 @@ public class PositionTest {
         // then
         assertThat(result).isEqualTo(-6);
     }
+
+    @Test
+    void 입력받는_포지션과의_파일_차이를_반환한다() {
+        // given
+        final Position source = Position.of(Rank.A, File.FOUR);
+        final Position target = Position.of(Rank.G, File.FIVE);
+
+        // when
+        final int result = source.calculateFileGap(target);
+
+        // then
+        assertThat(result).isEqualTo(-1);
+    }
 }
