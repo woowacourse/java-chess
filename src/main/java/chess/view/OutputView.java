@@ -1,15 +1,15 @@
 package chess.view;
 
-import chess.domain.Bishop;
 import chess.domain.File;
-import chess.domain.King;
-import chess.domain.Knight;
-import chess.domain.Pawn;
-import chess.domain.Piece;
 import chess.domain.Position;
-import chess.domain.Queen;
 import chess.domain.Rank;
-import chess.domain.Rook;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 import java.util.List;
 import java.util.Map;
