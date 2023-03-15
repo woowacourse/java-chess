@@ -24,4 +24,22 @@ class CoordinateTest {
 
         assertThat(startCoordinate.isSameCol(endCoordinate)).isTrue();
     }
+
+    @Test
+    @DisplayName("상대 좌표와의 기울기가 1인 경우 참을 반환한다")
+    void hasInclinationOfOne() {
+        Coordinate startCoordinate = new Coordinate(0, 0);
+        Coordinate endCoordinate = new Coordinate(1, 1);
+
+        assertThat(startCoordinate.hasInclinationOfOne(endCoordinate)).isTrue();
+    }
+
+    @Test
+    @DisplayName("상대 좌표와의 기울기가 -1인 경우 참을 반환한다")
+    void hasInclinationOfMinusOne() {
+        Coordinate startCoordinate = new Coordinate(0, 1);
+        Coordinate endCoordinate = new Coordinate(1, 0);
+
+        assertThat(startCoordinate.hasInclinationOfMinusOne(endCoordinate)).isTrue();
+    }
 }

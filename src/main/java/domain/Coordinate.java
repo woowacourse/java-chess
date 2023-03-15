@@ -24,6 +24,14 @@ public class Coordinate {
         return Double.isInfinite(inclination(otherCoordinate));
     }
 
+    public boolean hasInclinationOfOne(Coordinate otherCoordinate) {
+        return inclination(otherCoordinate) == 1;
+    }
+
+    public boolean hasInclinationOfMinusOne(Coordinate otherCoordinate) {
+        return inclination(otherCoordinate) == -1;
+    }
+
     private double inclination(Coordinate otherCoordinate) {
         return (this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
