@@ -3,12 +3,28 @@ package chess.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import static chess.domain.File.A;
+import static chess.domain.File.B;
+import static chess.domain.File.C;
+import static chess.domain.File.D;
 import static chess.domain.File.E;
+import static chess.domain.File.F;
+import static chess.domain.File.G;
+import static chess.domain.File.H;
+import static chess.domain.Rank.FIVE;
 import static chess.domain.Rank.FOUR;
 import static chess.domain.Rank.ONE;
+import static chess.domain.Rank.SEVEN;
+import static chess.domain.Rank.SIX;
+import static chess.domain.Rank.THREE;
+import static chess.domain.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -53,5 +69,24 @@ class PositionTest {
         final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
 
         assertThat(actualDistance).isEqualTo(expectedDistance);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideOtherPositionAndExpectedPassingPositions")
+    @DisplayName("입력 받은 위치로 가는 경로에 있는 위치들을 반환한다")
+    void findPassingPositionsTest(final Position otherPosition, final List<Position> expectedPassingPositions) {
+        final List<Position> actualPassingPositions = E_FOUR.findPassingPositions(otherPosition);
+
+        assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
+    }
+
+    private static Stream<Arguments> provideOtherPositionAndExpectedPassingPositions() {
+        return Stream.of(
+                Arguments.of(new Position(B, FOUR), List.of(new Position(D, FOUR), new Position(C, FOUR))),
+                Arguments.of(new Position(E, TWO), List.of(new Position(E, THREE))),
+                Arguments.of(new Position(F, FIVE), List.of()),
+                Arguments.of(new Position(H, ONE), List.of(new Position(F, THREE), new Position(G, TWO))),
+                Arguments.of(new Position(B, SEVEN), List.of(new Position(D, FIVE), new Position(C, SIX)))
+        );
     }
 }
