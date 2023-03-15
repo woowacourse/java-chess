@@ -16,7 +16,7 @@ public enum Command {
         this.consumer = consumer;
     }
 
-    public Command findByString(final String name) {
+    public static Command findByString(final String name) {
         return Arrays.stream(values())
                 .filter(command -> command.name.equals(name))
                 .findFirst()
