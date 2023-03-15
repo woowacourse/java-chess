@@ -15,8 +15,8 @@ public class BoardInitializerTest {
         Chessboard chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
 
-        Assertions.assertThat(chessboard.getPieceAt(file, rank))
-                .isInstanceOf(piece.getClass());
+        Assertions.assertThat(chessboard.getPieceAt(new Square(file, rank)).getPieceType())
+                .isEqualTo(piece.getPieceType());
     }
 
     static Stream<Arguments> squareProvider() {
