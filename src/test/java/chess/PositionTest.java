@@ -2,6 +2,7 @@ package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -34,4 +35,29 @@ class PositionTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    void should_true를_반환_when_입렵받은_위치가_폰의_초기_위치라면() {
+        //given
+        Position position = new Position("c", "2");
+        final Team team = Team.WHITE;
+
+        //when
+        boolean actual = position.isInitialPawnPosition(team);
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    void should_false를_반환_when_입렵받은_위치가_폰의_초기_위치가_아니라면() {
+        //given
+        Position position = new Position("c", "3");
+        final Team team = Team.WHITE;
+
+        //when
+        boolean actual = position.isInitialPawnPosition(team);
+
+        //then
+        assertThat(actual).isFalse();
+    }
 }

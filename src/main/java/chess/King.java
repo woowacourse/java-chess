@@ -1,8 +1,13 @@
 package chess;
 
-public class King implements PieceType {
+public class King extends Piece {
 
     private static final int UPPER_BOUND_OF_MOVABLE_DISTANCE = 1;
+
+    public King(Team team) {
+        super(team);
+    }
+
 
     @Override
     public boolean isMovable(final Position startPosition, final Position endPosition) {

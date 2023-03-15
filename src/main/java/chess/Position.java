@@ -6,7 +6,7 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    Position(String rawRank, String rawFile) {
+    Position(String rawRank, String rawFile) {// TODO: 2023/03/15 rank와 file이 합쳐져있는 문자열을 입력으로 받기
         this.file = File.from(rawFile);
         this.rank = Rank.from(rawRank);
     }
@@ -34,5 +34,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    boolean isInitialPawnPosition(final Team team) {
+        return file == File.TWO && team == Team.WHITE
+                || file == File.SEVEN && team == Team.BLACK;
     }
 }

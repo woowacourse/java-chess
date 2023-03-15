@@ -1,7 +1,6 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +14,7 @@ class BishopTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Team.WHITE);
 
         //when
         boolean actual = bishop.isMovable(startPosition, endPosition);
@@ -30,7 +29,7 @@ class BishopTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Team.WHITE);
 
         //when
         boolean actual = bishop.isMovable(startPosition, endPosition);

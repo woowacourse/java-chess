@@ -1,7 +1,6 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +14,7 @@ class RookTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Rook rook = new Rook();
+        Rook rook = new Rook(Team.WHITE);
 
         //when
         boolean actual = rook.isMovable(startPosition, endPosition);
@@ -30,7 +29,7 @@ class RookTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Rook rook = new Rook();
+        Rook rook = new Rook(Team.WHITE);
 
         //when
         boolean actual = rook.isMovable(startPosition, endPosition);

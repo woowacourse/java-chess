@@ -13,7 +13,7 @@ class QueenTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Queen queen = new Queen();
+        Queen queen = new Queen(Team.WHITE);
 
         //when
         boolean actual = queen.isMovable(startPosition, endPosition);
@@ -28,7 +28,7 @@ class QueenTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        Queen queen = new Queen();
+        Queen queen = new Queen(Team.WHITE);
 
         //when
         boolean actual = queen.isMovable(startPosition, endPosition);

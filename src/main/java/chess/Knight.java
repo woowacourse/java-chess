@@ -1,6 +1,11 @@
 package chess;
 
-public class Knight implements PieceType {
+public class Knight extends Piece {
+
+    public Knight(Team team) {
+        super(team);
+    }
+
     @Override
     public boolean isMovable(final Position startPosition, final Position endPosition) {
         if (startPosition.equals(endPosition)) {

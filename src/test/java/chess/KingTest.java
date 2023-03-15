@@ -13,7 +13,7 @@ class KingTest {
         //given
         Position startPosition = new Position("c", "3");
         Position endPosition = new Position(rank, file);
-        King king = new King();
+        King king = new King(Team.WHITE);
 
         //when
         boolean actual = king.isMovable(startPosition, endPosition);
@@ -28,7 +28,7 @@ class KingTest {
         //given
         Position startPosition = new Position(rank, file);
         Position endPosition = new Position("c", "3");
-        King king = new King();
+        King king = new King(Team.WHITE);
 
         //when
         boolean actual = king.isMovable(startPosition, endPosition);

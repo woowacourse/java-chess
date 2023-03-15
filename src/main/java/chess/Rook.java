@@ -1,6 +1,10 @@
 package chess;
 
-public class Rook implements PieceType {
+public class Rook extends Piece {
+
+    public Rook(final Team team) {
+        super(team);
+    }
 
     @Override
     public boolean isMovable(final Position startPosition, final Position endPosition) {
