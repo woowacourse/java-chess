@@ -23,6 +23,10 @@ public class Column {
         return this.column - targetColumn.column;
     }
     
+    public boolean isSame(char otherColumn) {
+        return this.column == otherColumn;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

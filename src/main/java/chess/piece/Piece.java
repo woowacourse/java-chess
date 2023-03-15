@@ -53,6 +53,10 @@ public abstract class Piece {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
     }
     
+    public boolean isSameColumn(char otherColumn) {
+        return this.coordinate.isSameColumn(otherColumn);
+    }
+    
     protected Coordinate coordinate() {
         return coordinate;
     }

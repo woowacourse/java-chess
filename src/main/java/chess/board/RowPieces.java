@@ -1,10 +1,10 @@
 package chess.board;
 
+import chess.piece.InitialSymbols;
 import chess.piece.Piece;
 import chess.piece.PieceMatcher;
 import chess.piece.Team;
 import chess.piece.coordinate.Coordinate;
-import chess.piece.InitialSymbols;
 
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +52,19 @@ public class RowPieces implements Comparable<RowPieces> {
     
     private static char parseColumn(int columnIndex) {
         return (char) (columnIndex + MIN_COLUMN_CHAR);
+    }
+    
+    public boolean isMovable(RowPieces targetRowPieces, char sourceColumn, char destinationColumn) {
+        Piece sourcePiece = findPieceByColumn(this,sourceColumn);
+        Piece destinationPiece = findPieceByColumn(targetRowPieces,destinationColumn);
+        return sourcePiece.isMovable(destinationPiece);
+    }
+    
+    private Piece findPieceByColumn(RowPieces rowPieces,char column) {
+        return rowPieces.pieces.stream()
+                .filter(piece -> piece.isSameColumn(column))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
     }
     
     public List<Piece> pieces() {

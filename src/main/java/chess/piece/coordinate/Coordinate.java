@@ -30,6 +30,10 @@ public class Coordinate {
         return row.isPawnStartRow(startRow);
     }
     
+    public boolean isSameColumn(char otherColumn) {
+        return this.column.isSame(otherColumn);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
