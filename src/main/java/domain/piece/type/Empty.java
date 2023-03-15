@@ -7,13 +7,26 @@ import domain.piece.Camp;
 import domain.piece.Piece;
 
 public class Empty extends Piece {
+    private static class singleEmptyInstanceHolder {
+        public static final Empty INSTANCE = new Empty();
+    }
 
-    public Empty() {
+    private Empty() {
         super(Camp.NONE);
     }
 
+    public static Empty getInstance() {
+        return singleEmptyInstanceHolder.INSTANCE;
+    }
+
+
     @Override
-    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         return null;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 }
