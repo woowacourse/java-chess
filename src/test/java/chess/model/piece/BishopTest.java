@@ -17,7 +17,7 @@ class BishopTest {
             final boolean result
     ) {
         // given
-        final Distance distance = new Distance(rank, file);
+        final Distance distance = new Distance(file, rank);
 
         // when
         final boolean movable = WHITE_BISHOP.movable(distance);

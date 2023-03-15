@@ -17,12 +17,12 @@ class PawnTest {
     })
     void movable_givenDistance_thenReturnIfMovable(
             final PieceColor pieceColor,
-            final int rank,
             final int file,
+            final int rank,
             final boolean result
     ) {
         final Pawn pawn = new Pawn(pieceColor);
-        final Distance distance = new Distance(rank, file);
+        final Distance distance = new Distance(file, rank);
 
         final boolean movable = pawn.movable(distance);
 

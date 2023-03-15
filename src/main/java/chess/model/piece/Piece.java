@@ -26,5 +26,9 @@ public abstract class Piece {
         return this.color.equals(color);
     }
 
-    abstract boolean movable(final Distance distance);
+    public abstract boolean movable(final Distance distance);
+
+    public boolean isPawn() {
+        return type.isPawn();
+    }
 }

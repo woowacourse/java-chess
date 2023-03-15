@@ -2,8 +2,10 @@ package chess.model.board;
 
 import chess.model.Color;
 import chess.model.Type;
+import chess.model.piece.Direction;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
+import chess.model.position.Distance;
 import chess.model.position.Position;
 
 public class PieceSquare extends AbstractSquare {
@@ -38,5 +40,49 @@ public class PieceSquare extends AbstractSquare {
     @Override
     public Color getColor() {
         return piece.getColor();
+    }
+
+    @Override
+    public Piece piece() {
+        return piece;
+    }
+
+    @Override
+    public boolean hasPawn() {
+        return piece.isPawn();
+    }
+
+    @Override
+    public void validateMovable(final Distance distance) {
+        if (cannotMove(distance)) {
+            throw new IllegalArgumentException("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
+        }
+    }
+
+    private boolean cannotMove(final Distance distance) {
+        return !piece.movable(distance);
+    }
+
+    @Override
+    public void validateExistence(final PieceColor pieceColor) {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+
+        if (!isSameTeam(pieceColor)) {
+            throw new IllegalArgumentException("자신의 기물이 아닙니다.");
+        }
+    }
+
+    @Override
+    public void validateEnemyPiece(final PieceColor pieceColor) {
+        if (isSameTeam(pieceColor)) {
+            throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
+        }
+    }
+
+    @Override
+    public void validatePassable() {
+        throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
     }
 }

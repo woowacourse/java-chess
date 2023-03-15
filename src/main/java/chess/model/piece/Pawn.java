@@ -16,7 +16,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean movable(final Distance distance) {
+    public boolean movable(final Distance distance) {
         if (isUnAvailableDistance(distance)) {
             return false;
         }
@@ -28,13 +28,13 @@ public class Pawn extends Piece {
     }
 
     private boolean isUnAvailableDistance(final Distance distance) {
-        final int file = Math.abs(distance.file());
+        final int rank = Math.abs(distance.rank());
 
-        return file < MINIMUM_DISTANCE  || MAXIMUM_DISTANCE < file;
+        return rank < MINIMUM_DISTANCE  || MAXIMUM_DISTANCE < rank;
     }
 
     private boolean isMovableByColor(final List<Direction> target, final Distance distance) {
         return target.stream()
-                .anyMatch(direction -> direction.match(distance.rank(), distance.file()));
+                .anyMatch(direction -> direction.match(distance.file(), distance.rank()));
     }
 }

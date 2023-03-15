@@ -4,12 +4,12 @@ import chess.model.piece.Direction;
 
 public class Distance implements IndexConvertable {
 
-    private final int rank;
     private final int file;
+    private final int rank;
 
-    public Distance(final int rank, final int file) {
-        this.rank = rank;
+    public Distance(final int file, final int rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public Direction findDirection() {
@@ -18,7 +18,7 @@ public class Distance implements IndexConvertable {
 
     @Override
     public int convertToIndex() {
-        return Math.abs((file * FILE_MAX_SIZE) + rank);
+        return Math.abs((rank * FILE_MAX_SIZE) + file);
     }
 
     public int rank() {

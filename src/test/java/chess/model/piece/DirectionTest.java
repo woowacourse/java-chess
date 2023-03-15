@@ -39,7 +39,7 @@ class DirectionTest {
     })
     void findDirection_givenRankAndFile_thenReturnDirection(final int rank, final int file,
             final Direction result) {
-        final Direction direction = Direction.findDirection(rank, file);
+        final Direction direction = Direction.findDirection(file, rank);
 
         assertThat(direction).isEqualTo(result);
     }

@@ -16,7 +16,7 @@ public class Position implements IndexConvertable {
         final int differRank = this.rank.differ(other.rank);
         final int differFile = this.file.differ(other.file);
 
-        return new Distance(differRank, differFile);
+        return new Distance(differFile, differRank);
     }
 
     @Override
@@ -39,5 +39,10 @@ public class Position implements IndexConvertable {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    @Override
+    public String toString() {
+        return file.name() + rank.value();
     }
 }

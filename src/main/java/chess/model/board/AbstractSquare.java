@@ -20,4 +20,9 @@ public abstract class AbstractSquare implements Square {
     public Square removePiece() {
         return new EmptySquare(position);
     }
+
+    @Override
+    public boolean hasPawn() {
+        return false;
+    }
 }

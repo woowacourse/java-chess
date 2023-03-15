@@ -25,15 +25,14 @@ import java.util.List;
 public class Board {
 
     private static final List<PieceType> INITIAL_BACK_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN,
-            KING, BISHOP,
-            KNIGHT, ROOK);
+            KING, BISHOP, KNIGHT, ROOK);
     private static final List<PieceType> INITIAL_FRONT_PIECES = List.of(PAWN, PAWN, PAWN, PAWN,
-            PAWN, PAWN, PAWN,
-            PAWN);
+            PAWN, PAWN, PAWN, PAWN);
     private static final int WHITE_BACK_START_POSITION = 0;
     private static final int WHITE_FRONT_START_POSITION = 8;
     private static final int BLACK_FRONT_START_POSITION = 48;
     private static final int BLACK_BACK_START_POSITION = 56;
+    private static final int MINIMUM_TRY = 1;
 
     private final List<Square> squares;
 
@@ -62,6 +61,7 @@ public class Board {
     private static void createSquare(final List<Square> squares, final File file) {
         for (Rank rank : Rank.values()) {
             final Position position = new Position(file, rank);
+
             squares.add(new EmptySquare(position));
         }
     }
@@ -98,22 +98,69 @@ public class Board {
     public void move(final Position source, final Position target, final PieceColor pieceColor) {
         validateSource(source, pieceColor);
         validatePath(source, target, pieceColor);
+
+        movePiece(source, target, pieceColor);
+
+        final int sourceIndex = source.convertToIndex();
+        final int targetIndex = target.convertToIndex();
+
+        updateBoard(sourceIndex, targetIndex);
+    }
+
+    private void movePiece(final Position source, final Position target,
+            final PieceColor pieceColor) {
+        final Square sourceSquare = squares.get(source.convertToIndex());
+
+        final Distance distance = target.differ(source);
+        sourceSquare.validateMovable(distance);
+
+        final int targetIndex = target.convertToIndex();
+        if (sourceSquare.hasPawn()) {
+            validatePawn(pieceColor, squares.get(targetIndex), distance.findDirection());
+        }
+    }
+
+    private void updateBoard(final int sourceIndex, final int targetIndex) {
+        final Square sourceSquare = squares.get(sourceIndex);
+
+        final Square emptySquare = sourceSquare.removePiece();
+        updateSquare(sourceIndex, emptySquare);
+
+        final Square targetSquare = squares.get(targetIndex);
+        final Square resultSquare = targetSquare.receivePiece(sourceSquare.piece());
+        updateSquare(targetIndex, resultSquare);
+    }
+
+    private void validatePawn(final PieceColor pieceColor, final Square targetSquare,
+            final Direction direction) {
+        if (Direction.isDiagonal(direction)) {
+            validatePawnAttack(pieceColor, targetSquare);
+            return;
+        }
+
+        targetSquare.validatePassable();
+    }
+
+    private void validatePawnAttack(final PieceColor pieceColor, final Square targetSquare) {
+        if (targetSquare.isEmpty() || targetSquare.isSameTeam(pieceColor)) {
+            throw new IllegalArgumentException("해당 기물은 지정한 방향으로 움직일 수 없습니다.");
+        }
+    }
+
+    private void updateSquare(final int index, final Square square) {
+        squares.remove(index);
+        squares.add(index, square);
     }
 
     private void validateSource(final Position source, final PieceColor pieceColor) {
         final int sourceIndex = source.convertToIndex();
         final Square sourceSquare = squares.get(sourceIndex);
 
-        if (sourceSquare.isEmpty()) {
-            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
-        }
-
-        if (!sourceSquare.isSameTeam(pieceColor)) {
-            throw new IllegalArgumentException("자신의 기물이 아닙니다.");
-        }
+        sourceSquare.validateExistence(pieceColor);
     }
 
-    private void validatePath(final Position source, final Position target, final PieceColor pieceColor) {
+    private void validatePath(final Position source, final Position target,
+            final PieceColor pieceColor) {
         final Distance distance = target.differ(source);
         final Direction direction = distance.findDirection();
         final int totalDistance = distance.convertToIndex();
@@ -122,22 +169,22 @@ public class Board {
         validateTarget(target, pieceColor);
     }
 
-    private void validatePathSquare(final Position source, final Direction direction, final int totalDistance) {
+    private void validatePathSquare(final Position source, final Direction direction,
+            final int totalDistance) {
         int count = IndexConverter.findCount(direction, totalDistance);
 
         final int sourceIndex = source.convertToIndex();
+
         checkPathSquare(direction, count, sourceIndex);
     }
 
     private void checkPathSquare(final Direction direction, int count, final int sourceIndex) {
         int nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
-        while (count-- > 1) {
+
+        while (count-- > MINIMUM_TRY) {
             final Square square = squares.get(nowIndex);
 
-            if (!square.isEmpty()) {
-                throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
-            }
-
+            square.validatePassable();
             nowIndex = IndexConverter.findNextIndex(direction, sourceIndex);
         }
     }
@@ -145,9 +192,8 @@ public class Board {
     private void validateTarget(final Position target, final PieceColor pieceColor) {
         final int targetIndex = target.convertToIndex();
         final Square targetSquare = squares.get(targetIndex);
-        if (!targetSquare.isEmpty() && targetSquare.isSameTeam(pieceColor)) {
-            throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
-        }
+
+        targetSquare.validateEnemyPiece(pieceColor);
     }
 
     public List<Square> getSquares() {

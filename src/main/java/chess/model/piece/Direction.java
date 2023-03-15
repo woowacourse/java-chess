@@ -32,12 +32,12 @@ public enum Direction {
     );
     private static final List<Direction> ORTHOGONAL = List.of(NORTH, WEST, SOUTH, EAST);
     
-    private final int rank;
     private final int file;
+    private final int rank;
 
-    Direction(final int rank, final int file) {
-        this.rank = rank;
+    Direction(final int file, final int rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public static List<Direction> knight() {
@@ -48,11 +48,11 @@ public enum Direction {
     }
 
     public static List<Direction> whitePawn() {
-        return List.of(NORTH);
+        return List.of(NORTH, NORTH_EAST, NORTH_WEST);
     }
 
     public static List<Direction> blackPawn() {
-        return List.of(SOUTH);
+        return List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     }
 
     public static List<Direction> king() {
@@ -73,9 +73,13 @@ public enum Direction {
 
     public static Direction findDirection(final int rank, final int file) {
         return Arrays.stream(values())
-                .filter(direction -> direction.match(rank, file))
+                .filter(direction -> direction.match(file, rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Direction을 찾을 수 없습니다."));
+    }
+
+    public static boolean isDiagonal(final Direction direction) {
+        return DIAGONAL.contains(direction);
     }
 
     private int gcd(final int a, final int b) {
@@ -86,7 +90,7 @@ public enum Direction {
         return gcd(b, a % b);
     }
 
-    public boolean match(final int rank, final int file) {
+    public boolean match(final int file, final int rank) {
         int gcd = gcd(Math.abs(rank), Math.abs(file));
 
         return this.rank == (rank / gcd) && this.file == (file / gcd);

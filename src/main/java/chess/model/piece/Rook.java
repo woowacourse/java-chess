@@ -13,7 +13,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    boolean movable(final Distance distance) {
+    public boolean movable(final Distance distance) {
         return directions.stream()
                 .anyMatch(direction -> direction.match(distance.rank(), distance.file()));
     }

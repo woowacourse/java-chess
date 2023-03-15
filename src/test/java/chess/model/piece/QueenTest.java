@@ -18,7 +18,7 @@ class QueenTest {
             final boolean result
     ) {
         // given
-        final Distance distance = new Distance(rank, file);
+        final Distance distance = new Distance(file, rank);
 
         // when
         final boolean movable = BLACK_QUEEN.movable(distance);

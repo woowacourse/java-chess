@@ -22,21 +22,25 @@ public enum IndexConverter {
     }
 
     public static int findNextIndex(final Direction direction, final int index) {
-        final IndexConverter indexConverter = findConverterByDirection(direction);
+        final int offset = findOffsetByDirection(direction);
 
-        return indexConverter.offset + index;
+        return index + offset;
     }
 
     public static int findCount(final Direction direction, final int totalDistance) {
-        final IndexConverter indexConverter = findConverterByDirection(direction);
+        final int offset = findOffsetByDirection(direction);
 
-        return totalDistance / indexConverter.offset;
+        if (offset == 0) {
+            return offset;
+        }
+        return totalDistance / offset;
     }
 
-    private static IndexConverter findConverterByDirection(final Direction direction) {
+    private static int findOffsetByDirection(final Direction direction) {
         return Arrays.stream(values())
                 .filter(it -> it.direction.equals(direction))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("방향을 찾을 수 없습니다."));
+                .map(it -> it.offset)
+                .orElse(0);
     }
 }
