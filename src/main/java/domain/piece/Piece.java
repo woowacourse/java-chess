@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.Color;
 import domain.Location;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -12,7 +13,11 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract boolean movable(Location start, Location end);
+    abstract public List<Location> explore(Location start, Location end);
+
+    public boolean isSameColor(Piece piece) {
+        return this.color.equals(piece.color);
+    }
 
     @Override
     public boolean equals(final Object o) {
