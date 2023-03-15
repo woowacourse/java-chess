@@ -4,7 +4,9 @@ import chess.domain.piece.position.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,5 +42,32 @@ class FileTest {
 
         // when & then
         assertThat(file1).isEqualTo(file2);
+    }
+
+    @ParameterizedTest(name = "File 사이의 간격을 구할 수 있다. 현재[{0}]인 경우 목적지인 [{1}] 과의 차이는 [{2}] 이다.")
+    @CsvSource({
+            "b,a,-1",
+            "c,a,-2",
+            "a,c,2",
+            "a,b,1",
+            "a,a,0",
+            "c,c,0",
+    })
+    void File_사이의_간격을_구할_수_있다(final char currentFile, final char destination, final int distance) {
+        // given
+        final File from = File.from(currentFile);
+        final File dest = File.from(destination);
+
+        // when & then
+        assertThat(from.interval(dest)).isEqualTo(distance);
+    }
+
+    @Test
+    void 특정_거리를_더할_수_있다() {
+        // given
+        final File from = File.from('c');
+
+        // when & then
+        assertThat(from.plus(-2)).isEqualTo(File.from('a'));
     }
 }

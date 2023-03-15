@@ -23,6 +23,14 @@ public class File {
         return new File(file);
     }
 
+    public int interval(final File file) {
+        return file.file - this.file;
+    }
+
+    public File plus(final int amount) {
+        return File.from((char) (file + amount));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

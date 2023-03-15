@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,5 +49,32 @@ class RankTest {
 
         // when & then
         assertThat(rank1).isEqualTo(rank2);
+    }
+
+    @ParameterizedTest(name = "Rank 사이의 간격을 구할 수 있다. 현재[{0}]인 경우 목적지인 [{1}] 과의 차이는 [{2}] 이다.")
+    @CsvSource({
+            "2,1,-1",
+            "3,1,-2",
+            "1,3,2",
+            "1,2,1",
+            "1,1,0",
+            "3,3,0",
+    })
+    void Rank_사이의_간격을_구할_수_있다(final int currentRank, final int destination, final int distance) {
+        // given
+        final Rank from = Rank.from(currentRank);
+        final Rank dest = Rank.from(destination);
+
+        // when & then
+        assertThat(from.interval(dest)).isEqualTo(distance);
+    }
+
+    @Test
+    void 특정_거리를_더할_수_있다() {
+        // given
+        final Rank from = Rank.from(3);
+
+        // when & then
+        assertThat(from.plus(-2)).isEqualTo(Rank.from(1));
     }
 }

@@ -23,6 +23,14 @@ public class Rank {
         return new Rank(rank);
     }
 
+    public int interval(final Rank rank) {
+        return rank.rank - this.rank;
+    }
+
+    public Rank plus(final int amount) {
+        return Rank.from(rank + amount);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

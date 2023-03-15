@@ -16,6 +16,26 @@ public class PiecePosition {
         return new PiecePosition(Rank.from(rank), File.from(file));
     }
 
+    public static PiecePosition of(final Rank rank, final File file) {
+        return new PiecePosition(rank, file);
+    }
+
+    public int fileDistance(final PiecePosition piecePosition) {
+        return file.interval(piecePosition.file);
+    }
+
+    public int rankDistance(final PiecePosition piecePosition) {
+        return rank.interval(piecePosition.rank);
+    }
+
+    public PiecePosition move(final Direction direction) {
+        return PiecePosition.of(rank.plus(direction.rankUnit()), file.plus(direction.fileUnit()));
+    }
+
+    public Direction direction(final PiecePosition destination) {
+        return Direction.byDisplacement(rankDistance(destination), fileDistance(destination));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
