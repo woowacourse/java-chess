@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.WayPointsWithCondition;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.WayPointsWithCondition;
 
 public abstract class Piece implements Cloneable {
 
@@ -39,5 +39,13 @@ public abstract class Piece implements Cloneable {
 
     public PiecePosition piecePosition() {
         return piecePosition;
+    }
+
+    public boolean isEnemy(final Piece enemy) {
+        return color != enemy.color;
+    }
+
+    public void move(final PiecePosition destination) {
+        this.piecePosition = destination;
     }
 }

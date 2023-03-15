@@ -2,11 +2,11 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.WayPointsWithCondition;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.WayPointsWithCondition;
 
-import java.util.Collections;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -49,7 +49,7 @@ public class Pawn extends Piece {
         if (path.isDiagonal()) {
             return WayPointsWithCondition.onlyEnemy();
         }
-        return WayPointsWithCondition.possible(Collections.emptyList());
+        return WayPointsWithCondition.possible(List.of(path.destination()));
     }
 
     public void move(final PiecePosition piecePosition) {
