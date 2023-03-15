@@ -18,7 +18,7 @@ public class Movement {
     }
 
     public boolean isUpward() {
-        return this.rankIncrement > 0 && this.fileIncrement == NON_INCREMENT;
+        return this.rankIncrement > 0;
     }
 
     public boolean isPerpendicular() {
@@ -30,7 +30,7 @@ public class Movement {
     }
 
     public boolean isDownward() {
-        return this.rankIncrement < 0 && this.fileIncrement == NON_INCREMENT;
+        return this.rankIncrement < 0;
     }
 
     public boolean isOneStep() {
