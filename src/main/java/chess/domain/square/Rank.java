@@ -34,6 +34,10 @@ public enum Rank {
         return value < rank.value;
     }
 
+    public boolean isDifferenceOne(final Rank rank) {
+        return Math.abs(value - rank.value) == 1;
+    }
+
     public char getValue() {
         return value;
     }

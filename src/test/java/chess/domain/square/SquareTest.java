@@ -62,30 +62,46 @@ class SquareTest {
     }
 
     @Nested
-    @DisplayName("File, Rank 차이 테스트")
+    @DisplayName("진행방향 테스트")
+    class DirectionTest {
+
+        private final Square square = Square.of(File.A, Rank.TWO);
+
+        @Test
+        @DisplayName("검사하려는 칸이 더 큰 Rank인 경우")
+        void bigger_rank() {
+            final Square target = Square.of(File.A, Rank.THREE);
+            assertThat(square.isRankBiggerThan(target)).isFalse();
+            assertThat(square.isRankLowerThan(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("검사하려는 칸이 더 작은 Rank인 경우")
+        void lower_rank() {
+            final Square target = Square.of(File.A, Rank.ONE);
+            assertThat(square.isRankBiggerThan(target)).isTrue();
+            assertThat(square.isRankLowerThan(target)).isFalse();
+        }
+    }
+
+    @Nested
+    @DisplayName("Rank 차이 테스트")
     class DifferenceTest {
 
-        @Nested
-        @DisplayName("진행방향 테스트")
-        class DirectionTest {
+        private final Square square = Square.of(File.A, Rank.FIVE);
 
-            private final Square square = Square.of(File.A, Rank.TWO);
+        @Test
+        @DisplayName("차이가 1이면 true를 반환한다.")
+        void name1() {
+            final Square target = Square.of(File.A, Rank.SIX);
+            assertThat(square.isRankDifferenceOne(target)).isTrue();
+        }
 
-            @Test
-            @DisplayName("검사하려는 칸이 더 큰 Rank인 경우")
-            void bigger_rank() {
-                final Square target = Square.of(File.A, Rank.THREE);
-                assertThat(square.isRankBiggerThan(target)).isFalse();
-                assertThat(square.isRankLowerThan(target)).isTrue();
-            }
-
-            @Test
-            @DisplayName("검사하려는 칸이 더 작은 Rank인 경우")
-            void lower_rank() {
-                final Square target = Square.of(File.A, Rank.ONE);
-                assertThat(square.isRankBiggerThan(target)).isTrue();
-                assertThat(square.isRankLowerThan(target)).isFalse();
-            }
+        @Test
+        @DisplayName("차이가 1이 아니면 false를 반환한다.")
+        void name2() {
+            final Square target = Square.of(File.A, Rank.SEVEN);
+            assertThat(square.isRankDifferenceOne(target)).isFalse();
         }
     }
 }

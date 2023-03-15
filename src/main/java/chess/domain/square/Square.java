@@ -43,4 +43,8 @@ public final class Square {
     public boolean isRankLowerThan(final Square other) {
         return rank.isLowerThan(other.rank);
     }
+
+    public boolean isRankDifferenceOne(final Square other) {
+        return rank.isDifferenceOne(other.rank);
+    }
 }
