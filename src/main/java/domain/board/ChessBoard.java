@@ -124,7 +124,7 @@ public class ChessBoard {
         List<Square> path = currentPiece.fetchMovePath(currentSquare, targetSquare);
         Map<Square, Camp> pathInfo = path.stream()
                 .collect(Collectors.toMap(Function.identity(), square -> board.get(square).getCamp()));
-        if (currentPiece.canMove(pathInfo,targetSquare)) {
+        if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
             return;
@@ -138,5 +138,9 @@ public class ChessBoard {
 
     public Square findSquare(String file, String rank) {
         return new Square(File.findFile(file.charAt(0)), Rank.findRank(rank.charAt(0)));
+    }
+
+    public boolean isCorrectCamp(Camp currentCamp, Square currentSquare) {
+        return currentCamp.equals(board.get(currentSquare).getCamp());
     }
 }

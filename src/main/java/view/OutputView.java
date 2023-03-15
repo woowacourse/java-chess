@@ -1,6 +1,5 @@
 package view;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,16 +15,19 @@ public class OutputView {
         List<String> messages = new ArrayList<>();
         for (Rank value : Rank.values()) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (File file : File.values()) {
-                stringBuilder.append(pieceToString(board.get(new Square(file, value))));
-            }
+            addPieceName(board, value, stringBuilder);
             messages.add(stringBuilder.toString());
         }
-
         Collections.reverse(messages);
 
         for (String message : messages) {
             System.out.println(message);
+        }
+    }
+
+    private static void addPieceName(Map<Square, Piece> board, Rank value, StringBuilder stringBuilder) {
+        for (File file : File.values()) {
+            stringBuilder.append(pieceToString(board.get(new Square(file, value))));
         }
     }
 

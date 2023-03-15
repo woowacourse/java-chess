@@ -1,10 +1,7 @@
-import domain.board.ChessBoard;
-import view.OutputView;
+import controller.ChessController;
 
 public class Application {
     public static void main(String[] args) {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialize();
-        OutputView.printFuckingShit(chessBoard.getBoard());
+        new ChessController().run();
     }
 }
