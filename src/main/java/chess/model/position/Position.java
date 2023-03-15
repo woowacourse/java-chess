@@ -12,6 +12,13 @@ public class Position {
         this.file = file;
     }
 
+    public Distance differ(final Position other) {
+        final int differRank = this.rank.differ(other.rank);
+        final int differFile = this.file.differ(other.file);
+
+        return new Distance(differRank, differFile);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
