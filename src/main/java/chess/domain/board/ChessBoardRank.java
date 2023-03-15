@@ -1,4 +1,7 @@
-package chess;
+package chess.domain.board;
+
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 
 import java.util.Collections;
 import java.util.Map;

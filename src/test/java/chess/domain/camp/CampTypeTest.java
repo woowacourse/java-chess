@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.camp;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

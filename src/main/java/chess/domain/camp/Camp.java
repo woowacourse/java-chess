@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.camp;
 
 import java.util.Objects;
 

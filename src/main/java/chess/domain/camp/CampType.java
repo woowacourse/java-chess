@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.camp;
 
 public enum CampType {
     BLACK,

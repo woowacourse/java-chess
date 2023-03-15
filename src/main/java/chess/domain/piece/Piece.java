@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public final class Piece {
     private final PieceType pieceType;

@@ -1,17 +1,21 @@
-package chess;
+package chess.domain.board;
+
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Position;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static chess.PieceType.BISHOP;
-import static chess.PieceType.BLANK;
-import static chess.PieceType.KING;
-import static chess.PieceType.KNIGHT;
-import static chess.PieceType.PAWN;
-import static chess.PieceType.QUEEN;
-import static chess.PieceType.ROOK;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.BLANK;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoard {
     private static final int AREA_RANK_SIZE = 2;
