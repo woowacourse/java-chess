@@ -2,7 +2,6 @@ package chess.board.dto;
 
 import chess.board.Board;
 import chess.piece.Piece;
-import chess.piece.dto.NameDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class BoardDto {
         }
     }
 
-    public BoardDto(final List<List<String>> nameBoard) {
-        this.nameBoard = List.copyOf(nameBoard);
+    public List<List<String>> getNameBoard() {
+        return List.copyOf(nameBoard);
     }
 }
