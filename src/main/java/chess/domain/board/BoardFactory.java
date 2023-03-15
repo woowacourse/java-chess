@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.*;
 import chess.domain.piece.Piece;
+import chess.domain.piece.VacantPiece;
 
 import java.util.*;
 
@@ -41,14 +42,17 @@ public class BoardFactory {
     }
 
     public static Board create() {
-        List<Square> squares = Square.getAllSquares();
-        for (Square square : squares) {
-            board.put(square, Role.EMPTY.create(Side.from(Color.BLACK)));
-        }
+        generateVacantBoard();
         setup(Side.from(Color.BLACK));
         setup(Side.from(Color.WHITE));
 
         return new Board(board);
+    }
+
+    private static void generateVacantBoard() {
+        Square.getAllSquares().forEach(
+                square -> board.put(square, new VacantPiece())
+        );
     }
 
     private static void setup(final Side side) {

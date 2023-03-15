@@ -5,7 +5,6 @@ import chess.domain.piece.*;
 import java.util.function.Function;
 
 public enum Role {
-    EMPTY(Empty::new),
     PAWN(Pawn::new),
     ROOK(Rook::new),
     KNIGHT(Knight::new),

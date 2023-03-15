@@ -26,7 +26,6 @@ class PieceTest {
 
     static Stream<Arguments> pieceDummy() {
         return Stream.of(
-                Arguments.arguments(Role.EMPTY, Empty.class),
                 Arguments.arguments(Role.PAWN, Pawn.class),
                 Arguments.arguments(Role.ROOK, Rook.class),
                 Arguments.arguments(Role.KNIGHT, Knight.class),
