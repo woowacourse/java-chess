@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.Square;
+
 public class Empty extends Piece {
 
     public Empty(Camp camp) {
@@ -9,5 +11,10 @@ public class Empty extends Piece {
     @Override
     public PieceType getPieceType() {
         return PieceType.EMPTY;
+    }
+
+    @Override
+    public boolean canMove(Square source, Square target) {
+        return false;
     }
 }
