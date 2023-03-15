@@ -1,16 +1,14 @@
 package chess.domain.board;
 
+import chess.domain.camp.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.piece.PieceType.BISHOP;
-import static chess.domain.piece.PieceType.BLANK;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
@@ -24,55 +22,41 @@ public final class ChessBoard {
             {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK},
             {PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN}
     };
-    private static final PieceType[] blankRank = {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK};
 
-    private final List<ChessBoardRank> files;
+    private final Map<Position, Piece> board;
 
     public ChessBoard() {
-        this.files = new ArrayList<>();
+        this.board = new HashMap<>();
         init();
     }
 
     private void init() {
         int whiteAreaRank = initWhiteArea();
-        int blankAreaRank = initBlankArea(whiteAreaRank);
-        initBlackArea(blankAreaRank);
+        initBlackArea(whiteAreaRank + BLANK_AREA_RANK_SIZE);
     }
 
     private int initWhiteArea() {
         for (int rank = 0; rank < AREA_RANK_SIZE; rank++) {
-            final ChessBoardRank chessBoardRank = new ChessBoardRank(makeChessRank(rank, pieceRanks[rank]));
-            files.add(chessBoardRank);
+            makeChessRank(rank, pieceRanks[rank], CampType.WHITE);
         }
         return AREA_RANK_SIZE;
     }
 
-    private int initBlankArea(final int startRank) {
-        for (int rank = 0; rank < BLANK_AREA_RANK_SIZE; rank++) {
-            final ChessBoardRank chessBoardRank = new ChessBoardRank(makeChessRank(rank + startRank, blankRank));
-            files.add(chessBoardRank);
-        }
-        return startRank + BLANK_AREA_RANK_SIZE;
-    }
-
     private void initBlackArea(int startRank) {
         for (int rank = AREA_RANK_SIZE - 1; rank >= 0; rank--) {
-            final ChessBoardRank chessBoardRank = new ChessBoardRank(makeChessRank(startRank++, pieceRanks[rank]));
-            files.add(chessBoardRank);
+            makeChessRank(startRank++, pieceRanks[rank], CampType.BLACK);
         }
     }
 
-    private Map<Position, Piece> makeChessRank(final int rank, final PieceType[] ranks) {
-        final Map<Position, Piece> rankArea = new LinkedHashMap<>();
+    private void makeChessRank(final int rank, final PieceType[] ranks, final CampType campType) {
         for (int file = 0; file < 8; file++) {
             final Position position = new Position(rank, file);
-            final Piece piece = new Piece(ranks[file]);
-            rankArea.put(position, piece);
+            final Piece piece = new Piece(ranks[file], campType);
+            board.put(position, piece);
         }
-        return rankArea;
     }
 
-    public List<ChessBoardRank> getFiles() {
-        return List.copyOf(files);
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }
