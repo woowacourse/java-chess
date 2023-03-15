@@ -1,10 +1,10 @@
 package chess.domain.chessboard;
 
 import chess.domain.chessboard.state.Empty;
-import chess.domain.chessboard.state.Piece;
 import chess.domain.chessboard.state.PieceState;
+import chess.domain.chessboard.state.piece.Piece;
 
-public class Square {
+public final class Square {
     private final PieceState pieceState;
 
     public Square() {
@@ -19,4 +19,7 @@ public class Square {
         return pieceState.isEmpty();
     }
 
+    public PieceState getPieceState() {
+        return pieceState;
+    }
 }
