@@ -36,6 +36,24 @@ public final class Position {
         return new ArrayList<>(cache.values());
     }
 
+    public List<Position> getPathTo(Position end) {
+        int rowGap = end.row - this.row;
+        int columnGap = end.column - this.column;
+
+        return calculatePath(rowGap, columnGap);
+    }
+
+    private List<Position> calculatePath(int rowGap, int columnGap) {
+        List<Position> path = new ArrayList<>();
+        int unit = Math.max(Math.abs(rowGap), Math.abs(columnGap));
+        int rowCoefficient = rowGap / unit;
+        int columnCoefficient = columnGap / unit;
+        for (int i = 1; i <= unit; i++) {
+            path.add(Position.of(row + rowCoefficient * i, column + columnCoefficient * i));
+        }
+        return path;
+    }
+
     public Position moveUp() {
         return Position.of(row + 1, column);
     }
@@ -78,6 +96,14 @@ public final class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
     }
 }

@@ -5,8 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @DisplayName("Position은 ")
 class PositionTest {
@@ -145,5 +150,25 @@ class PositionTest {
 
         // then
         assertThat(newPosition).isSameAs(Position.of(3, 5));
+    }
+
+    @ParameterizedTest
+    @MethodSource("getPathToTestCase")
+    @DisplayName("목적지 Position까지의 경로를 반환할 수 있다.")
+    void getPathToTest(Position start, Position end, List<Position> path) {
+        assertThat(start.getPathTo(end)).containsAll(path);
+    }
+
+    static Stream<Arguments> getPathToTestCase() {
+        return Stream.of(
+                Arguments.arguments(Position.of(3,3), Position.of(5, 3), List.of(Position.of(4, 3), Position.of(5, 3))),
+                Arguments.arguments(Position.of(3,3), Position.of(5, 5), List.of(Position.of(4, 4), Position.of(5, 5))),
+                Arguments.arguments(Position.of(3,3), Position.of(3, 5), List.of(Position.of(3, 4), Position.of(3, 5))),
+                Arguments.arguments(Position.of(3,3), Position.of(1, 5), List.of(Position.of(2, 4), Position.of(1, 5))),
+                Arguments.arguments(Position.of(3,3), Position.of(1, 3), List.of(Position.of(2, 3), Position.of(1, 3))),
+                Arguments.arguments(Position.of(3,3), Position.of(1, 1), List.of(Position.of(2, 2), Position.of(1, 1))),
+                Arguments.arguments(Position.of(3,3), Position.of(3, 1), List.of(Position.of(3, 2), Position.of(3, 1))),
+                Arguments.arguments(Position.of(3,3), Position.of(5, 1), List.of(Position.of(4, 2), Position.of(5, 1)))
+        );
     }
 }
