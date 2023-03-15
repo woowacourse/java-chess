@@ -25,4 +25,16 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크 인덱스입니다."));
     }
+
+    public int calculateDistance(final Rank rank) {
+        return this.index - rank.index;
+    }
+
+    public Rank next() {
+        return Rank.from(index + 1);
+    }
+
+    public Rank prev() {
+        return Rank.from(index - 1);
+    }
 }

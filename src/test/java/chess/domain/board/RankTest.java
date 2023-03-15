@@ -43,4 +43,44 @@ class RankTest {
                 .isThrownBy(() -> Rank.from(input))
                 .withMessage("존재하지 않는 랭크 인덱스입니다.");
     }
+
+    @Test
+    void 랭크인덱스_차이를_계산한다() {
+        final Rank one = Rank.ONE;
+        final Rank two = Rank.TWO;
+
+        assertThat(two.calculateDistance(one)).isEqualTo(1);
+    }
+
+    @Test
+    void 다음_랭크를_확인한다() {
+        final Rank four = Rank.FOUR;
+
+        assertThat(four.next()).isEqualTo(Rank.FIVE);
+    }
+
+    @Test
+    void 다음_랭크_인덱스_범위를_벗어나면_예외를_던진다() {
+        final Rank eight = Rank.EIGHT;
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> eight.next())
+                .withMessage("존재하지 않는 랭크 인덱스입니다.");
+    }
+
+    @Test
+    void 이전_랭크를_확인한다() {
+        final Rank four = Rank.FOUR;
+
+        assertThat(four.prev()).isEqualTo(Rank.THREE);
+    }
+
+    @Test
+    void 이전_랭크_인덱스_범위를_벗어나면_예외를_던진다() {
+        final Rank one = Rank.ONE;
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> one.prev())
+                .withMessage("존재하지 않는 랭크 인덱스입니다.");
+    }
 }
