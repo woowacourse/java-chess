@@ -48,10 +48,10 @@ public class Pawn extends Piece {
         if (isWhitePawnMoveForwardTwoSpace(subtractedRow, subtractedColumn)){
             return isPawnImmovableForwardTwoSpace(targetPiece, WHITE_PAWN_START_ROW);
         }
-        if (isWhitePawnOneDiagonalDirection(subtractedRow, subtractedColumn)) {
+        if (isWhitePawnMoveDiagonalOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableDiagonalOneSpace(targetPiece, Team.BLACK);
         }
-        if (isWhitePawnOneStraightDirection(subtractedRow, subtractedColumn)) {
+        if (isWhitePawnMoveForwardOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableForwardOneSpace(targetPiece);
         }
         return true;
@@ -61,11 +61,11 @@ public class Pawn extends Piece {
         return subtractedRow == 2 && subtractedColumn == 0;
     }
     
-    private boolean isWhitePawnOneDiagonalDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isWhitePawnMoveDiagonalOneSpace(int subtractedRow, int subtractedColumn) {
         return subtractedRow == 1 && Math.abs(subtractedColumn) == 1;
     }
     
-    private boolean isWhitePawnOneStraightDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isWhitePawnMoveForwardOneSpace(int subtractedRow, int subtractedColumn) {
         return subtractedRow == 1 && subtractedColumn == 0;
     }
     
@@ -85,10 +85,10 @@ public class Pawn extends Piece {
         if (isBlackPawnMoveForwardTwoSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableForwardTwoSpace(targetPiece, BLACK_PAWN_START_ROW);
         }
-        if (isBlackPawnDiagonalDirection(subtractedRow, subtractedColumn)) {
+        if (isBlackPawnMoveDiagonalOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableDiagonalOneSpace(targetPiece, Team.WHITE);
         }
-        if (isBlackPawnOneStraightDirection(subtractedRow, subtractedColumn)) {
+        if (isBlackPawnMoveForwardOneSpace(subtractedRow, subtractedColumn)) {
             return isPawnImmovableForwardOneSpace(targetPiece);
         }
         return true;
@@ -98,11 +98,11 @@ public class Pawn extends Piece {
         return subtractedRow == -2 && subtractedColumn == 0;
     }
     
-    private boolean isBlackPawnDiagonalDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isBlackPawnMoveDiagonalOneSpace(int subtractedRow, int subtractedColumn) {
         return subtractedRow == -1 && Math.abs(subtractedColumn) == 1;
     }
     
-    private boolean isBlackPawnOneStraightDirection(int subtractedRow, int subtractedColumn) {
+    private boolean isBlackPawnMoveForwardOneSpace(int subtractedRow, int subtractedColumn) {
         return subtractedRow == -1 && subtractedColumn == 0;
     }
 }
