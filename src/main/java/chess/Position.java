@@ -2,7 +2,7 @@ package chess;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
     private final int column;
     private final int row;
 
@@ -26,5 +26,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }
