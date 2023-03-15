@@ -52,6 +52,7 @@ classDiagram
 - [ ] Source position에서 Target position으로 가는 경로를 반환한다.
     - [ ] Target position이 해당 말이 이동할 수 없는 위치일 경우 예외가 발생한다.
 - [x] source piece와 target piece가 같은 팀인지 확인한다.
+- [x] source piece와 target piece가 다른 팀인지 확인한다.
 
 ### Pawn
 
