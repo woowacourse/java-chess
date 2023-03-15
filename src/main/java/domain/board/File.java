@@ -33,4 +33,11 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("adfa"));
     }
+
+    public static File findFile(char value) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("adfa"));
+    }
 }
