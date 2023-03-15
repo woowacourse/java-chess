@@ -20,7 +20,7 @@ public class Coordinate {
         return this.row.compareTo(otherCoordinate.row);
     }
     
-    public List<Integer> calculteCoordinateDistance(Coordinate targetCoordinate) {
+    public List<Integer> calculateCoordinateDistance(Coordinate targetCoordinate) {
         int rowDistance = this.row.subtract(targetCoordinate.row);
         int columnDistance = this.column.subtract(targetCoordinate.column);
         return List.of(rowDistance, columnDistance);

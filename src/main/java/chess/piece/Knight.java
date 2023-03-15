@@ -20,14 +20,14 @@ public class Knight extends Piece {
     }
     
     private boolean isKnightMovable(Piece targetPiece, int rowDistance, int columnDistance) {
-        if (isOutOfMovementRadious(rowDistance, columnDistance)) {
+        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
             return false;
         }
         
         return isDifferentTeam(targetPiece);
     }
     
-    private boolean isOutOfMovementRadious(int rowDistance, int columnDistance) {
+    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
         return isBothZero(rowDistance, columnDistance) || isNotContainsOneAndTwo(rowDistance, columnDistance);
     }
     

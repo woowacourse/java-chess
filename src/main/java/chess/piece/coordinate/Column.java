@@ -20,7 +20,7 @@ public class Column {
     }
     
     public int subtract(Column targetColumn) {
-        return Math.abs(this.column - targetColumn.column);
+        return this.column - targetColumn.column;
     }
     
     @Override

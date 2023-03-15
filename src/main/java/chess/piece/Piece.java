@@ -4,6 +4,7 @@ import chess.piece.coordinate.Coordinate;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
     protected static final int ROW_INDEX = 0;
@@ -30,11 +31,18 @@ public abstract class Piece {
     }
     
     protected int calculateRowOrColumnDistance(Piece targetPiece, int rowOrColumnIndex) {
-        return calculateCoordinateDistance(targetPiece).get(rowOrColumnIndex);
+        return convertAbsoluteValue(targetPiece).get(rowOrColumnIndex);
     }
     
-    private List<Integer> calculateCoordinateDistance(Piece targetPiece) {
-        return this.coordinate.calculteCoordinateDistance(targetPiece.coordinate);
+    private List<Integer> convertAbsoluteValue(Piece targetPiece) {
+        return subtractCoordinate(targetPiece)
+                .stream()
+                .map(Math::abs)
+                .collect(Collectors.toUnmodifiableList());
+    }
+    
+    protected List<Integer> subtractCoordinate(Piece targetPiece) {
+        return this.coordinate.calculateCoordinateDistance(targetPiece.coordinate);
     }
     
     protected boolean isDifferentTeam(Piece otherPiece) {
@@ -47,6 +55,10 @@ public abstract class Piece {
     
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
+    }
+    
+    protected Coordinate coordinate() {
+        return coordinate;
     }
     
     @Override

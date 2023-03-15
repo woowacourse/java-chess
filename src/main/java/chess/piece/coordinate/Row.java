@@ -28,7 +28,7 @@ public class Row {
     }
     
     public int subtract(Row targetRow) {
-        return Math.abs(this.row - targetRow.row);
+        return this.row - targetRow.row;
     }
     
     @Override
