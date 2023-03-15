@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -35,4 +36,17 @@ class PieceTest {
         );
     }
 
+    @Test
+    @DisplayName("타겟 기물이 같은 편인지 확인한다.")
+    void isSameSide() {
+        Side sourceSide = Side.from(Color.WHITE);
+        Side sameSide = Side.from(Color.WHITE);
+        Side opponenetSide = Side.from(Color.BLACK);
+        MovablePiece sourcePiece = new Pawn(sourceSide);
+        MovablePiece targetPiece = new King(sameSide);
+        MovablePiece opponentPiece = new Queen(opponenetSide);
+
+        assertThat(sourcePiece.isSameSide(targetPiece)).isTrue();
+        assertThat(sourcePiece.isSameSide(opponentPiece)).isFalse();
+    }
 }
