@@ -7,5 +7,7 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition);
 
-//    public
+    public boolean isSameSide(Piece targetPiece) {
+        return this.side == targetPiece.side;
+    }
 }
