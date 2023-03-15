@@ -18,7 +18,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCallGetPath() {
         assertThatThrownBy(() ->
-                new EmptyPiece().getPath(Position.of("a", "5"), Position.of("c", "7")))
+                new EmptyPiece().collectPath(Position.of("a", "5"), Position.of("c", "7")))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("지원하지 않는 메서드 입니다.");
     }

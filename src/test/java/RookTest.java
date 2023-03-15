@@ -47,7 +47,7 @@ class RookTest {
     @Test
     void shouldReturnPathWhenRookMoveUpward() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.getPath(Position.of("c", "1"), Position.of("c", "4"));
+        List<Position> path = whiteRook.collectPath(Position.of("c", "1"), Position.of("c", "4"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "2"), Position.of("c", "3"));
     }
@@ -56,7 +56,7 @@ class RookTest {
     @Test
     void shouldReturnPathWhenRookMoveDownward() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.getPath(Position.of("c", "4"), Position.of("c", "1"));
+        List<Position> path = whiteRook.collectPath(Position.of("c", "4"), Position.of("c", "1"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "3"), Position.of("c", "2"));
     }
@@ -65,7 +65,7 @@ class RookTest {
     @Test
     void shouldReturnPathWhenRookMoveLeft() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.getPath(Position.of("e", "3"), Position.of("b", "3"));
+        List<Position> path = whiteRook.collectPath(Position.of("e", "3"), Position.of("b", "3"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("c", "3"));
     }
@@ -74,7 +74,7 @@ class RookTest {
     @Test
     void shouldReturnPathWhenRookMoveRight() {
         Rook whiteRook = Rook.createOfWhite();
-        List<Position> path = whiteRook.getPath(Position.of("c", "3"), Position.of("f", "3"));
+        List<Position> path = whiteRook.collectPath(Position.of("c", "3"), Position.of("f", "3"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "3"));
     }

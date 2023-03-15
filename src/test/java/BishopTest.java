@@ -47,7 +47,7 @@ class BishopTest {
     @Test
     void shouldReturnPathWhenBishopMoveRightUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.getPath(Position.of("c", "2"), Position.of("g", "6"));
+        List<Position> path = whiteBishop.collectPath(Position.of("c", "2"), Position.of("g", "6"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "4"), Position.of("f", "5"));
     }
@@ -56,7 +56,7 @@ class BishopTest {
     @Test
     void shouldReturnPathWhenBishopMoveRightDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.getPath(Position.of("c", "6"), Position.of("g", "2"));
+        List<Position> path = whiteBishop.collectPath(Position.of("c", "6"), Position.of("g", "2"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "5"), Position.of("e", "4"), Position.of("f", "3"));
     }
@@ -65,7 +65,7 @@ class BishopTest {
     @Test
     void shouldReturnPathWhenBishopMoveLeftDownward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.getPath(Position.of("g", "6"), Position.of("c", "2"));
+        List<Position> path = whiteBishop.collectPath(Position.of("g", "6"), Position.of("c", "2"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("f", "5"), Position.of("e", "4"), Position.of("d", "3"));
     }
@@ -74,7 +74,7 @@ class BishopTest {
     @Test
     void shouldReturnPathWhenBishopMoveLeftUpward() {
         Bishop whiteBishop = Bishop.createOfWhite();
-        List<Position> path = whiteBishop.getPath(Position.of("g", "2"), Position.of("c", "6"));
+        List<Position> path = whiteBishop.collectPath(Position.of("g", "2"), Position.of("c", "6"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("f", "3"), Position.of("e", "4"), Position.of("d", "5"));
     }

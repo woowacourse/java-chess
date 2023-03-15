@@ -11,7 +11,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public List<Position> getPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         throw new UnsupportedOperationException("지원하지 않는 메서드 입니다.");
     }
 }

@@ -113,7 +113,7 @@ public class PawnTest {
     @Test
     void shouldHasNoPositionWhenGetPathWhitePawn() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("b", "3"));
+        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "3"));
         assertThat(path).hasSize(0);
     }
 
@@ -121,7 +121,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenWhitePawnMoveTwoSteps() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("b", "4"));
+        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "4"));
         assertThat(path).containsExactlyInAnyOrder(Position.of("b", "3"));
     }
 
@@ -129,7 +129,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenWhitePawnMoveRightUpward() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("c", "3"));
+        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "3"));
         assertThat(path).hasSize(0);
     }
 
@@ -137,7 +137,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenWhitePawnMoveLeftUpward() {
         Pawn pawn = Pawn.createOfWhite();
-        List<Position> path = pawn.getPath(Position.of("b", "2"), Position.of("c", "1"));
+        List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "1"));
         assertThat(path).hasSize(0);
     }
 
@@ -145,7 +145,7 @@ public class PawnTest {
     @Test
     void shouldHasNoPositionWhenGetPathBlackPawn() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("b", "6"));
+        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "6"));
         assertThat(path).hasSize(0);
     }
 
@@ -153,7 +153,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenBlackPawnMoveTwoSteps() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("b", "5"));
+        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "5"));
         assertThat(path).containsExactlyInAnyOrder(Position.of("b", "6"));
     }
 
@@ -161,7 +161,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenBLackPawnMoveRightDownward() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("c", "6"));
+        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("c", "6"));
         assertThat(path).hasSize(0);
     }
 
@@ -169,7 +169,7 @@ public class PawnTest {
     @Test
     void shouldReturnPathWhenBlackPawnMoveLeftDownward() {
         Pawn pawn = Pawn.createOfBlack();
-        List<Position> path = pawn.getPath(Position.of("b", "7"), Position.of("a", "6"));
+        List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("a", "6"));
         assertThat(path).hasSize(0);
     }
 }
