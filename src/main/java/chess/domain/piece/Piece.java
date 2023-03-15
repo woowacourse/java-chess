@@ -9,6 +9,8 @@ import java.util.List;
 
 public abstract class Piece {
 
+    protected static final String INVALID_DESTINATION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
+
     protected final Position position;
     protected final Color color;
 
@@ -31,9 +33,15 @@ public abstract class Piece {
         }
     }
 
+    protected final void validateDestination(final Position targetPosition) {
+        if (!canMove(targetPosition)) {
+            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+        }
+    }
+
     protected abstract boolean canMove(final Position targetPosition);
 
-    public abstract List<Position> getPassingPath(final Position targetPosition);
+    public abstract List<Position> getPassingPositions(final Position targetPosition);
 
     public final Color getColor() {
         return color;

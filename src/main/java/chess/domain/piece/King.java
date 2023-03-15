@@ -5,7 +5,6 @@ import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 
-import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -21,11 +20,9 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Position> getPassingPath(final Position targetPosition) {
+    public List<Position> getPassingPositions(final Position targetPosition) {
         validateSamePosition(targetPosition);
-        if (!canMove(targetPosition)) {
-            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-        }
-        return Collections.emptyList();
+        validateDestination(targetPosition);
+        return position.findPassingPositions(targetPosition);
     }
 }

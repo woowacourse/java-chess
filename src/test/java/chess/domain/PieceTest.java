@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class PieceTest {
 
-    private final class TestPiece extends Piece {
+    private static final class TestPiece extends Piece {
         public TestPiece(final File file, final Rank rank, final Color color) {
             super(file, rank, color);
         }
@@ -27,7 +27,7 @@ class PieceTest {
         }
 
         @Override
-        public List<Position> getPassingPath(final Position targetPosition) {
+        public List<Position> getPassingPositions(final Position targetPosition) {
             return null;
         }
 
