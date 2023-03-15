@@ -12,7 +12,7 @@ import domain.board.Square;
 import domain.piece.Piece;
 
 public class OutputView {
-    public static void printFuckingShit(Map<Square, Piece> board) {
+    public static void printChessBoard(Map<Square, Piece> board) {
         List<String> messages = new ArrayList<>();
         for (Rank value : Rank.values()) {
             StringBuilder stringBuilder = new StringBuilder();
