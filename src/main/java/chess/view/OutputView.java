@@ -37,6 +37,7 @@ public class OutputView {
         for (int rank = 8; rank >= 1; rank--) {
             System.out.println(makeLineFormat(pieceMap, rank));
         }
+        System.out.println();
     }
 
     private static String makeLineFormat(final Map<PiecePosition, Piece> chessBoard, final int rank) {
@@ -57,5 +58,10 @@ public class OutputView {
             format = format.toUpperCase();
         }
         return format;
+    }
+
+    public static void printStartMessage() {
+        System.out.println("체스 게임을 시작합니다.");
+        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 }
