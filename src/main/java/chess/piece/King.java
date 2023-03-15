@@ -14,9 +14,9 @@ public class King extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        List<Integer> coordinateDistance = this.coordinate().calculteCoordinateDistance(targetPiece.coordinate());
+        List<Integer> coordinateDistance = calculateCoordinateDistance(targetPiece);
         int rowDistance = coordinateDistance.get(0);
-        int columnDistance = coordinateDistance.get(MAX_DIFFERENCE_OF_KING);
+        int columnDistance = coordinateDistance.get(1);
         return isKingMovable(targetPiece, rowDistance, columnDistance);
     }
     

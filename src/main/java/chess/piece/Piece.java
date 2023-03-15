@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.piece.coordinate.Coordinate;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -26,16 +27,16 @@ public abstract class Piece {
         return team.isBlackTeam();
     }
     
+    protected List<Integer> calculateCoordinateDistance(Piece targetPiece) {
+        return this.coordinate.calculteCoordinateDistance(targetPiece.coordinate);
+    }
+    
     protected boolean isSameTeam(Piece piece) {
         return this.team == piece.team;
     }
     
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
-    }
-    
-    protected Coordinate coordinate(){
-        return coordinate;
     }
     
     @Override
