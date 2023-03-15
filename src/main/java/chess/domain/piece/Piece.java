@@ -8,4 +8,12 @@ public abstract class Piece {
         this.color = color;
         this.pieceType = pieceType;
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public String getPieceTypeName() {
+        return pieceType.getName();
+    }
 }
