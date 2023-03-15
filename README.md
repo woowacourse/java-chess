@@ -68,7 +68,7 @@ classDiagram
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 대각선으로만 움직일 수 있다.
-- [ ] 입력 받은 Target position으로 가는 경로를 반환한다.
+- [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
 ### Game
 
