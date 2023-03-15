@@ -1,45 +1,54 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Board {
+
+    private final PathValidator pathValidator;
     private final List<Line> lines;
 
-    public Board() {
+    public Board(PathValidator pathValidator) {
         this.lines = initialize();
+        this.pathValidator = pathValidator;
     }
 
-    private List<Line> initialize(){
+    private List<Line> initialize() {
         final List<Line> lines = new ArrayList<>();
-        lines.add(generateBlackBack());
-        lines.add(generateBlackFront());
+        lines.add(Line.blackBack());
+        lines.add(Line.blackFront());
         IntStream.range(0, 4)
-            .mapToObj(i -> generateEmpty())
+            .mapToObj(count -> Line.empty())
             .forEach(lines::add);
-        lines.add(generateWhiteFront());
-        lines.add(generateWhiteBack());
+        lines.add(Line.whiteFront());
+        lines.add(Line.whiteBack());
         return lines;
     }
 
-    private Line generateBlackFront(){
-        return Line.blackFront();
+    public void move(final Location start, final Location end) {
+        validatePath(start, end);
+        findSquare(start).moveTo(findSquare(end));
     }
 
-    private Line generateBlackBack(){
-        return Line.blackBack();
+    private void validatePath(Location start, Location end) {
+        List<Square> squares = getSquaresInPath(start, end);
+        pathValidator.validate(findSquare(start), squares);
     }
 
-    private Line generateWhiteFront(){
-        return Line.whiteFront();
+    private List<Square> getSquaresInPath(Location start, Location end) {
+        Square square = findSquare(start);
+        List<Location> paths = square.searchPath(start, end);
+        return paths.stream().map(this::findSquare).collect(Collectors.toList());
     }
 
-    private Line generateWhiteBack(){
-        return Line.whiteBack();
+    public Square findSquare(Location location) {
+        return lines.get(location.getRow()).getByCol(location.getCol());
     }
 
-    private Line generateEmpty(){
-        return Line.empty();
+    public List<Line> getLines() {
+        return Collections.unmodifiableList(lines);
     }
 }

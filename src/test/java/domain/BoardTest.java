@@ -12,7 +12,7 @@ class BoardTest {
     public void testCreate() {
         //given
         //when
-        final Board board = new Board();
+        final Board board = new Board(new PathValidator());
 
         //then
         assertThat(board).extracting("lines")

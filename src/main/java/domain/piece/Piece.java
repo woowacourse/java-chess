@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    //TODO : 부정형 수정
     protected final Color color;
 
     public Piece(final Color color) {
@@ -20,6 +21,10 @@ public abstract class Piece {
             return false;
         }
         return this.color.equals(piece.color);
+    }
+
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
     }
 
     @Override

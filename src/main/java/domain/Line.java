@@ -7,6 +7,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -60,10 +61,6 @@ public class Line {
         return new Line(squares);
     }
 
-    public Square getByCol(final int col) {
-        return squares.get(col);
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -79,5 +76,13 @@ public class Line {
     @Override
     public int hashCode() {
         return Objects.hash(squares);
+    }
+
+    public Square getByCol(final int col) {
+        return squares.get(col);
+    }
+
+    public List<Square> getSquares() {
+        return Collections.unmodifiableList(squares);
     }
 }

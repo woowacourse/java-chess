@@ -6,8 +6,6 @@ import java.util.Objects;
 
 public class Square {
 
-    //TODO : Location을 가져도 되나?
-
     private Piece piece;
 
     public Square(final Piece piece) {
@@ -49,5 +47,9 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(piece);
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }
