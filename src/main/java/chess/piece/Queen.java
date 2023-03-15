@@ -2,8 +2,6 @@ package chess.piece;
 
 import chess.piece.coordinate.Coordinate;
 
-import java.util.List;
-
 public class Queen extends Piece {
     public Queen(Team team, Coordinate coordinate) {
         super(team, coordinate);
@@ -16,9 +14,8 @@ public class Queen extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        List<Integer> coordinateDistance = calculateCoordinateDistance(targetPiece);
-        int rowDistance = coordinateDistance.get(0);
-        int columnDistance = coordinateDistance.get(1);
+        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
+        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
     
         return isQueenMovable(targetPiece, rowDistance, columnDistance);
     }

@@ -2,10 +2,7 @@ package chess.piece;
 
 import chess.piece.coordinate.Coordinate;
 
-import java.util.List;
-
 public class King extends Piece {
-    
     private static final int MAX_DIFFERENCE_OF_KING = 1;
     
     public King(Team team, Coordinate coordinate) {
@@ -14,9 +11,8 @@ public class King extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        List<Integer> coordinateDistance = calculateCoordinateDistance(targetPiece);
-        int rowDistance = coordinateDistance.get(0);
-        int columnDistance = coordinateDistance.get(1);
+        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
+        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
         return isKingMovable(targetPiece, rowDistance, columnDistance);
     }
     

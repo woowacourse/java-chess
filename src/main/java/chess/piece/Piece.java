@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+    protected static final int ROW_INDEX = 0;
+    protected static final int COLUMN_INDEX = 1;
     
     private final Team team;
     private final Coordinate coordinate;
@@ -27,7 +29,11 @@ public abstract class Piece {
         return team.isBlackTeam();
     }
     
-    protected List<Integer> calculateCoordinateDistance(Piece targetPiece) {
+    protected int calculateRowOrColumnDistance(Piece targetPiece, int rowOrColumnIndex) {
+        return calculateCoordinateDistance(targetPiece).get(rowOrColumnIndex);
+    }
+    
+    private List<Integer> calculateCoordinateDistance(Piece targetPiece) {
         return this.coordinate.calculteCoordinateDistance(targetPiece.coordinate);
     }
     

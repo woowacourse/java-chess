@@ -15,6 +15,16 @@ public class Bishop extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        return false;
+        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
+        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
+        return isBishopMovable(targetPiece, rowDistance, columnDistance);
+    }
+    
+    private boolean isBishopMovable(Piece targetPiece, int rowDistance, int columnDistance) {
+        if (rowDistance == 0 && columnDistance == 0 || rowDistance != columnDistance) {
+            return false;
+        }
+        
+        return isDifferentTeam(targetPiece);
     }
 }

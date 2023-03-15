@@ -22,16 +22,16 @@
     - [ ] 기물은 이동하려는 도착지에 태생적으로 갈 수 있는지 판단한다.
       - [x] King
       - [x] Queen
-      - [ ] Bishop
-      - [ ] Knight
+      - [x] Bishop
       - [ ] Rook
+      - [ ] Knight
       - [ ] Pawn
     - [ ] 이동하려는 도착지에 같은 팀 기물이 있으면 갈 수 없다
       - [x] King
       - [x] Queen
-      - [ ] Bishop
-      - [ ] Knight
+      - [x] Bishop
       - [ ] Rook
+      - [ ] Knight
       - [ ] Pawn
     - [ ] 이동하려는 도착지 경로에 기물이 있으면 갈 수 없다
       - [ ] 나이트는 예외이다
