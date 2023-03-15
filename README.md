@@ -62,18 +62,20 @@
 
 ```mermaid
 classDiagram
-Piece <-- FinitePiece
-Piece <-- InfinitePiece
-Piece <-- Pawn
-FinitePiece <-- Knight
-FinitePiece <-- King
-InfinitePiece <-- Queen
-InfinitePiece <-- Bishop
-InfinitePiece <-- Rook
+    Piece <-- Pawn
+    FinitePiece <-- Knight
+    FinitePiece <-- King
+    InfinitePiece <-- Queen
+    InfinitePiece <-- Bishop
+    InfinitePiece <-- Rook
+    QuadrantPiece <-- FinitePiece
+    QuadrantPiece <-- InfinitePiece
+    Piece <-- QuadrantPiece
 
-<<abstract>> Piece
-<<abstract>> FinitePiece
-<<abstract>> InfinitePiece
+    <<abstract>> Piece
+    <<abstract>> QuadrantPiece
+    <<abstract>> FinitePiece
+    <<abstract>> InfinitePiece
 ```
 
 ## 우아한테크코스 코드리뷰
