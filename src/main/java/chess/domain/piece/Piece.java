@@ -1,17 +1,23 @@
 package chess.domain.piece;
 
-public class Piece {
+import chess.domain.board.Position;
 
-    private final PieceType pieceType;
+public abstract class Piece {
+
     private final Color color;
 
-    public Piece(PieceType pieceType, Color color) {
-        this.pieceType = pieceType;
+    protected Piece(Color color) {
         this.color = color;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+    abstract boolean canMove(Position sourcePosition, Position targetPosition);
+
+    abstract boolean isKing();
+
+    abstract Piece move();
+
+    public boolean isSameTeam(Color color) {
+        return this.color == color;
     }
 
     public Color getColor() {

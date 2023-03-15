@@ -1,32 +1,38 @@
 package chess.view;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Arrays;
 
 public enum PieceTypeView {
-    BISHOP(PieceType.BISHOP, "b", "B"),
-    KING(PieceType.KING, "k", "K"),
-    KNIGHT(PieceType.KNIGHT, "n", "N"),
-    PAWN(PieceType.PAWN, "p", "P"),
-    QUEEN(PieceType.QUEEN, "q", "Q"),
-    ROOK(PieceType.ROOK, "r", "R"),
-    EMPTY(PieceType.EMPTY, ".", "."),
+    BISHOP(Bishop.class, "b", "B"),
+    KING(King.class, "k", "K"),
+    KNIGHT(Knight.class, "n", "N"),
+    PAWN(Pawn.class, "p", "P"),
+    QUEEN(Queen.class, "q", "Q"),
+    ROOK(Rook.class, "r", "R"),
+    EMPTY(Empty.class, ".", "."),
     ;
 
-    private final PieceType pieceType;
+    private final Class piece;
     private final String whiteTeamView;
     private final String blackTeamView;
 
-    PieceTypeView(PieceType pieceType, String whiteTeamView, String blackTeamView) {
-        this.pieceType = pieceType;
+    PieceTypeView(Class piece, String whiteTeamView, String blackTeamView) {
+        this.piece = piece;
         this.whiteTeamView = whiteTeamView;
         this.blackTeamView = blackTeamView;
     }
 
-    public static PieceTypeView of(PieceType pieceType) {
+    public static PieceTypeView of(Class piece) {
         return Arrays.stream(values())
-                .filter(x -> x.getPieceType() == pieceType)
+                .filter(it -> it.piece.equals(piece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException());
     }
@@ -36,9 +42,5 @@ public enum PieceTypeView {
             return this.blackTeamView;
         }
         return this.whiteTeamView;
-    }
-
-    private PieceType getPieceType() {
-        return pieceType;
     }
 }

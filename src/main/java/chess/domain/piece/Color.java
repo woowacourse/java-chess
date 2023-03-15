@@ -16,4 +16,11 @@ public enum Color {
         }
         return Color.EMPTY;
     }
+
+    public int getDirection() {
+        if (this == BLACK) {
+            return -1;
+        }
+        return 1;
+    }
 }

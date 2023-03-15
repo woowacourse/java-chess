@@ -6,6 +6,25 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+```mermaid
+graph TD
+    ChessController --> OutputView
+    ChessController --> InputView
+    ChessController --> Board
+
+    Board --> Piece
+    Board --> Position
+
+    Piece --> Color
+
+    Piece --> Rook
+    Piece --> King
+    Piece --> Queen
+    Piece --> Bishop
+    Piece --> Knight
+    Piece --> Pawn
+```
+
 ## 기능 구현 목록
 
 ### 도메인

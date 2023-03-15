@@ -1,26 +1,24 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
+import chess.domain.board.FileCoordinate;
+import chess.domain.board.Position;
+import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import java.util.Map;
 
 public class OutputView {
 
     public void printBoard(Board board) {
-        for (Rank rank : board.getRanks()) {
-            printRank(rank);
+        Map<Position, Piece> boards = board.getBoards();
+        for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
+            for (FileCoordinate fileCoordinate : FileCoordinate.values()) {
+                Position position = new Position(fileCoordinate, rankCoordinate);
+                Piece piece = boards.get(position);
+                String message = PieceTypeView.of(piece.getClass()).getMessage(piece.getColor());
+                System.out.print(message);
+            }
             System.out.println();
-        }
-    }
-
-    private void printRank(Rank rank) {
-        for (Square square : rank.getSquares()) {
-            Piece piece = square.getPiece();
-            PieceType pieceType = piece.getPieceType();
-            PieceTypeView pieceTypeView = PieceTypeView.of(pieceType);
-            System.out.print(pieceTypeView.getMessage(piece.getColor()));
         }
     }
 }
