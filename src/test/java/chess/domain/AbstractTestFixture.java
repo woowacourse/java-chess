@@ -14,4 +14,8 @@ public abstract class AbstractTestFixture {
         Rank rank = Rank.valueOf(split[1]);
         return new Position(file, rank);
     }
+
+    public static Piece createPiece(boolean isWhite, boolean isFinite, Movement... movements) {
+        return new PieceTest.PieceImplement(isWhite, isFinite, List.of(movements));
+    }
 }
