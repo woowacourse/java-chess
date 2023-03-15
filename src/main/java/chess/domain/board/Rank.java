@@ -38,4 +38,8 @@ public enum Rank {
     public boolean isOver(final Rank rank) {
         return value > rank.value;
     }
+
+    public int sub(final Rank rank) {
+        return this.value - rank.value;
+    }
 }

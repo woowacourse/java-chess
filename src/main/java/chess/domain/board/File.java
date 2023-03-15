@@ -37,4 +37,8 @@ public enum File {
     public boolean isOver(final File file) {
         return value > file.value;
     }
+
+    public int sub(final File file) {
+        return this.value - file.value;
+    }
 }

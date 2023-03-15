@@ -52,27 +52,6 @@ public final class Position {
         return new Position(file.minus(), rank);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "rank=" + file +
-                ", file=" + rank +
-                '}';
-    }
-
     public boolean isFileEquals(final Position target) {
         return file.equals(target.file);
     }
@@ -115,5 +94,33 @@ public final class Position {
             return target;
         }
         return source;
+    }
+
+    public double computeInclination(final Position target) {
+        final var fileSub = target.file.sub(this.file);
+        final var rankSub = target.rank.sub(this.rank);
+
+        return fileSub / (double) rankSub;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + file +
+                ", file=" + rank +
+                '}';
     }
 }

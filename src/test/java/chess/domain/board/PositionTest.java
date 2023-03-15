@@ -37,4 +37,24 @@ class PositionTest {
 
         assertThat(source.isRankEquals(target)).isFalse();
     }
+
+    @Test
+    void computeInclination_result1() {
+        var source = new Position(File.C, Rank.FIVE);
+        var target = new Position(File.E, Rank.SEVEN);
+
+        double v = source.computeInclination(target);
+
+        assertThat(v).isEqualTo(1.0d);
+    }
+
+    @Test
+    void computeInclination_resultNegative1() {
+        var source = new Position(File.C, Rank.FIVE);
+        var target = new Position(File.A, Rank.SEVEN);
+
+        double v = source.computeInclination(target);
+
+        assertThat(v).isEqualTo(-1.0d);
+    }
 }
