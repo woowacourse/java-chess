@@ -24,4 +24,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
 }

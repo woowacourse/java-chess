@@ -26,4 +26,8 @@ public enum File {
                      .findAny()
                      .orElseThrow(NoSuchElementException::new);
     }
+
+    public int value() {
+        return value;
+    }
 }
