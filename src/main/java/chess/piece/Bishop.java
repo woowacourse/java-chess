@@ -21,10 +21,22 @@ public class Bishop extends Piece {
     }
     
     private boolean isBishopMovable(Piece targetPiece, int rowDistance, int columnDistance) {
-        if (rowDistance == 0 && columnDistance == 0 || rowDistance != columnDistance) {
+        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
             return false;
         }
         
         return isDifferentTeam(targetPiece);
+    }
+    
+    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
+        return isBothZero(rowDistance, columnDistance) || isBothDifferent(rowDistance, columnDistance);
+    }
+    
+    private boolean isBothDifferent(int rowDistance, int columnDistance) {
+        return rowDistance != columnDistance;
+    }
+    
+    private boolean isBothZero(int rowDistance, int columnDistance) {
+        return rowDistance == 0 && columnDistance == 0;
     }
 }
