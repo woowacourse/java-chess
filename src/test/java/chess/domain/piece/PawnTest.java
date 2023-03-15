@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PawnTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false"}, delimiter = ':')
+    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:true"}, delimiter = ':')
     void 폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
         Position sourcePosition = new Position(B, ONE);

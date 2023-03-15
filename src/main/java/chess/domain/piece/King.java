@@ -20,10 +20,10 @@ public class King extends Piece {
 
     @Override
     boolean canMove(Position sourcePosition, Position targetPosition) {
-        int sourceColumnNumber = sourcePosition.getFileCoordinate().getColumnNumber();
-        int targetColumnNumber = targetPosition.getFileCoordinate().getColumnNumber();
-        int sourceRankNumber = sourcePosition.getRankCoordinate().getRowNumber();
-        int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
+        int sourceColumnNumber = sourcePosition.getColumn();
+        int targetColumnNumber = targetPosition.getColumn();
+        int sourceRankNumber = sourcePosition.getRow();
+        int targetRankNumber = targetPosition.getRow();
 
         return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
                 && Math.abs(sourceRankNumber - targetRankNumber) <= 1

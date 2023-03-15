@@ -33,8 +33,8 @@ class KnightTest {
 
     @Test
     void 나이트가_움직일_수_있는_경로를_알_수_있다() {
-        King king = new King(Color.WHITE);
-        List<Position> path = king.findPath(C_4, D_6);
+        Knight knight = new Knight(Color.WHITE);
+        List<Position> path = knight.findPath(C_4, D_6);
 
         assertThat(path).isEmpty();
     }
