@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Position {
+    //TODO : 캐싱?
     
     private final File file;
     private final Rank rank;

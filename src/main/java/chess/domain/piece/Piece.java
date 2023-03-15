@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Color;
+import chess.domain.Position;
 import java.util.List;
 
 public abstract class Piece {
@@ -14,7 +16,8 @@ public abstract class Piece {
         return List.of();
     }
     
-    boolean isWhite() {
+    public boolean isWhite() {
         return this.color == Color.WHITE;
     }
+    
 }
