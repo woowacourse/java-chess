@@ -8,4 +8,12 @@ public class Piece {
         this.type = type;
         this.color = color;
     }
+
+    public PieceType getType() {
+        return type;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
 }
