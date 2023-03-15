@@ -86,6 +86,14 @@ public final class Position {
         return Position.of(row - 1, column + 1);
     }
 
+    public boolean isBlackPawnInitialRow() {
+        return this.row == 7;
+    }
+
+    public boolean isWhitePawnInitialRow() {
+        return this.row == 2;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

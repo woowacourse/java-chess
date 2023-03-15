@@ -3,8 +3,15 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @DisplayName("Pawn은 ")
 class PawnTest {
@@ -35,4 +42,51 @@ class PawnTest {
         assertThat(name).isEqualTo("p");
     }
 
+    @ParameterizedTest
+    @MethodSource("isMovableInitialRowBlackPawnTestCase")
+    @DisplayName("검은색일 때 초기 위치일 경우 아래, 오른쪽 아래 대각선, 왼쪽 아래 대각선으로 한 칸, 아래로 두 칸 이동 할 수 있다.")
+    void isMovableInitialRowBlackPawnTest(List<Position> path) {
+        // given
+        Pawn pawn = new Pawn(Color.BLACK);
+        Position start = Position.of(7,5);
+
+        // when
+        boolean result = pawn.isMovablePath(start, path);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMovableInitialRowWhitePawnTestCase")
+    @DisplayName("흰색일 때 초기 위치일 경우 위, 오른쪽 위 대각선, 왼쪽 위 대각선으로 한 칸, 위로 두 칸 이동 할 수 있다.")
+    void isMovableInitialRowWhitePawnTest(List<Position> path) {
+        // given
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position start = Position.of(2,5);
+
+        // when
+        boolean result = pawn.isMovablePath(start, path);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    static Stream<Arguments> isMovableInitialRowBlackPawnTestCase() {
+        return Stream.of(
+                Arguments.of(List.of(Position.of(6,5))),
+                Arguments.of(List.of(Position.of(6,4))),
+                Arguments.of(List.of(Position.of(6,6))),
+                Arguments.of(List.of(Position.of(6, 5), Position.of(5,5)))
+        );
+    }
+
+    static Stream<Arguments> isMovableInitialRowWhitePawnTestCase() {
+        return Stream.of(
+                Arguments.of(List.of(Position.of(3,5))),
+                Arguments.of(List.of(Position.of(3,4))),
+                Arguments.of(List.of(Position.of(3,6))),
+                Arguments.of(List.of(Position.of(3, 5), Position.of(4,5)))
+        );
+    }
 }

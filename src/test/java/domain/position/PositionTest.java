@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -17,7 +16,7 @@ import java.util.stream.Stream;
 class PositionTest {
 
     @Test
-    @DisplayName("Position은 캐싱된다.")
+    @DisplayName("캐싱된다.")
     void getCachedPositionTest() {
         // given
         Position position1 = Position.of(2, 2);
@@ -157,6 +156,58 @@ class PositionTest {
     @DisplayName("목적지 Position까지의 경로를 반환할 수 있다.")
     void getPathToTest(Position start, Position end, List<Position> path) {
         assertThat(start.getPathTo(end)).containsAll(path);
+    }
+
+    @Test
+    @DisplayName("black pawn의 초기 위치이면 true를 반환한다.")
+    void isBlackPawnInitialRowTest_True() {
+        // given
+        Position start = Position.of(7,5);
+
+        // when
+        boolean result = start.isBlackPawnInitialRow();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("black pawn의 초기 위치가 아니면 false를 반환한다.")
+    void isBlackPawnInitialRowTest_False() {
+        // given
+        Position start = Position.of(3,5);
+
+        // when
+        boolean result = start.isBlackPawnInitialRow();
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("white pawn의 초기 위치이면 true를 반환한다.")
+    void isWhitePawnInitialRowTest_True() {
+        // given
+        Position start = Position.of(2,5);
+
+        // when
+        boolean result = start.isWhitePawnInitialRow();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("white pawn의 초기 위치가 아니면 false를 반환한다.")
+    void isWhitePawnInitialRowTest_False() {
+        // given
+        Position start = Position.of(3,5);
+
+        // when
+        boolean result = start.isWhitePawnInitialRow();
+
+        // then
+        assertThat(result).isFalse();
     }
 
     static Stream<Arguments> getPathToTestCase() {
