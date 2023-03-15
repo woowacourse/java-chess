@@ -23,14 +23,11 @@ public class Board {
 
     public boolean isTherePieceFromSourceToTarget(final Square source, final Square target) {
         final Move move = Move.calculateDirection(source, target);
+        if (move.equals(Move.EMPTY)) {
+            //TODO: 나이트일 경우 true 리턴
+            return false;
+        }
         return isTherePiece(source, target, move) && isOtherCamp(source, target);
-    }
-
-    private boolean isOtherCamp(final Square source, final Square target) {
-        final Camp sourceCamp = board.get(source).getCamp();
-        final Camp targetCamp = board.get(target).getCamp();
-
-        return !sourceCamp.equals(targetCamp) || sourceCamp.equals(Camp.EMPTY);
     }
 
     private boolean isTherePiece(final Square source, final Square target, final Move move) {
@@ -44,6 +41,13 @@ public class Board {
             return isTherePiece(nextSquare, target, move);
         }
         return false;
+    }
+
+    private boolean isOtherCamp(final Square source, final Square target) {
+        final Camp sourceCamp = board.get(source).getCamp();
+        final Camp targetCamp = board.get(target).getCamp();
+
+        return !sourceCamp.equals(targetCamp) || sourceCamp.equals(Camp.EMPTY);
     }
 
     private LinkedHashMap<Square, Piece> initializeBoard() {

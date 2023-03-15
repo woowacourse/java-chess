@@ -10,7 +10,8 @@ public enum Move {
     RIGHT_UP(1, 1),
     RIGHT_DOWN(1, -1),
     LEFT_UP(-1, 1),
-    LEFT_DOWN(-1, -1);
+    LEFT_DOWN(-1, -1),
+    EMPTY(0, 0);
 
     private final int file;
     private final int rank;
@@ -27,7 +28,7 @@ public enum Move {
         return Arrays.stream(Move.values())
                 .filter(move -> move.file == directionFile && move.rank == directionRank)
                 .findFirst()
-                .orElseThrow();
+                .orElse(EMPTY);
     }
 
     public int getFile() {
