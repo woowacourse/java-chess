@@ -20,6 +20,7 @@ public class OutputView {
             final String team = piece.getTeam();
             printPiece(type, team);
         }
+        System.out.println();
     }
 
     private void printPiece(final String type, final String team) {

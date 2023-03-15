@@ -29,9 +29,12 @@ public class ChessBoardDto {
         return new ChessBoardDto(chessBoard);
     }
 
-    private static ArrayList<List<PieceDto>> initChessBoard() {
-        final List<PieceDto> emptyRank = Collections.nCopies(8, null);
-        return new ArrayList<>(Collections.nCopies(8, emptyRank));
+    private static List<List<PieceDto>> initChessBoard() {
+        List<List<PieceDto>> chessBoard = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            chessBoard.add(new ArrayList<>(Collections.nCopies(8, null)));
+        }
+        return chessBoard;
     }
 
     private static int getRowIndex(final Square square) {
