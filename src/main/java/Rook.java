@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.List;
+
 public class Rook extends Piece {
     protected Rook(Side side) {
         super(side);
@@ -18,5 +21,13 @@ public class Rook extends Piece {
             return false;
         }
         return movement.isPerpendicular();
+    }
+
+    public List<Position> getPath(Position sourcePosition, Position targetPosition) {
+        Movement movement = sourcePosition.calculateMovement(targetPosition);
+        if (movement.isOneStep()) {
+            return Collections.emptyList();
+        }
+        return sourcePosition.getPath(targetPosition);
     }
 }
