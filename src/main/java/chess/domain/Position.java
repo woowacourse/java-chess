@@ -27,6 +27,12 @@ public class Position {
         return Arrays.stream(position.split("")).collect(Collectors.toList());
     }
     
+    
+    public boolean isRank(final int index) {
+        Rank rank = Rank.findByIndex(index);
+        return this.rank == rank;
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);

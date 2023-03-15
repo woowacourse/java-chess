@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,4 +25,31 @@ public class Board {
         }
         return new Board(board);
     }
+    
+    public void initialize() {
+        for (Position position : board.keySet()) {
+            if (position.isRank(0)) {
+                for (Piece general : PieceFactory.createWhiteGenerals()) {
+                    board.put(position, general);
+                }
+            }
+            if (position.isRank(1)) {
+                for (Piece general : PieceFactory.createWhitePawns()) {
+                    board.put(position, general);
+                }
+            }
+            if (position.isRank(6)) {
+                for (Piece general : PieceFactory.createBlackPawns()) {
+                    board.put(position, general);
+                }
+            }
+            if (position.isRank(7)) {
+                for (Piece general : PieceFactory.createBlackGenerals()) {
+                    board.put(position, general);
+                }
+            }
+        }
+        
+    }
+    
 }
