@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import domain.piece.type.Empty;
 import domain.piece.Piece;
 import domain.piece.type.Bishop;
+import domain.piece.type.Empty;
 import domain.piece.type.King;
 import domain.piece.type.Knight;
 import domain.piece.type.Pawn;

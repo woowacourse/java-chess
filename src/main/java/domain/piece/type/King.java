@@ -2,9 +2,7 @@ package domain.piece.type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -35,7 +33,7 @@ public class King extends Piece {
             ArrayList<Square> squares = new ArrayList<>();
             int fileCoordinate = file + direction.getFile();
             int rankCoordinate = rank + direction.getRank();
-            if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
+            if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
                 continue;
             }
             squares.add(new Square(fileCoordinate, rankCoordinate));

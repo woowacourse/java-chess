@@ -1,11 +1,12 @@
 package domain.piece;
 
 import java.util.List;
-import java.util.Set;
 
 import domain.board.Square;
 
 public abstract class Piece {
+    private static final int MIN_RANGE = 0;
+    private static final int MAX_RANGE = 7;
     private final Camp camp;
 
     public Piece(Camp camp) {
@@ -20,6 +21,10 @@ public abstract class Piece {
     }
 
     abstract public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare);
+
+    protected boolean isInCoordinateRange(int fileCoordinate, int rankCoordinate) {
+        return fileCoordinate < MIN_RANGE || fileCoordinate > MAX_RANGE || rankCoordinate < MIN_RANGE || rankCoordinate > MAX_RANGE;
+    }
 
     public boolean isPawn() {
         return false;

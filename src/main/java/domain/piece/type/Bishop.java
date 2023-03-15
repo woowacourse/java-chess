@@ -34,7 +34,7 @@ public class Bishop extends Piece {
             for (int i = 1; i < 8; i++) {
                 int fileCoordinate = file + (i * direction.getFile());
                 int rankCoordinate = rank + (i * direction.getRank());
-                if (fileCoordinate < 0 || fileCoordinate > 7 || rankCoordinate < 0 || rankCoordinate > 7) {
+                if (isInCoordinateRange(fileCoordinate, rankCoordinate)) {
                     continue;
                 }
                 squares.add(new Square(fileCoordinate, rankCoordinate));

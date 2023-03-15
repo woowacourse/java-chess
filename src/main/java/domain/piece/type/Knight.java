@@ -1,7 +1,6 @@
 package domain.piece.type;
 
 import java.util.List;
-import java.util.Set;
 
 import domain.board.Square;
 import domain.piece.Camp;
