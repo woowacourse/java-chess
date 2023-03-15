@@ -13,5 +13,10 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public Piece(final Color color, final MovingStrategies strategies) {
+        this.color = color;
+        this.strategies = strategies;
+    }
+
     public abstract List<Position> findPath(final Position sourcePosition, final Position targetPosition, final Color targetColor);
 }

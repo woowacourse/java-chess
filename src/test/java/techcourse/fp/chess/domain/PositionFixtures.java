@@ -28,6 +28,7 @@ public class PositionFixtures {
     public static final Position C6 = Position.of(File.C, Rank.SIX);
     public static final Position C7 = Position.of(File.C, Rank.SEVEN);
     public static final Position C8 = Position.of(File.C, Rank.EIGHT);
+
     public static final Position D1 = Position.of(File.D, Rank.ONE);
     public static final Position D2 = Position.of(File.D, Rank.TWO);
     public static final Position D3 = Position.of(File.D, Rank.THREE);

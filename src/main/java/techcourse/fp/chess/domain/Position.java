@@ -12,7 +12,7 @@ public final class Position {
         this.rank = rank;
     }
 
-    public static Position of(final File file,final Rank rank) {
+    public static Position of(final File file, final Rank rank) {
         return new Position(file, rank);
     }
 
@@ -30,6 +30,21 @@ public final class Position {
 
     public int getRankOrder() {
         return rank.getOrder();
+    }
+
+    public boolean isOnDiagonal(final Position target) {
+        return Math.abs(getFileOrder() - target.getFileOrder()) == 1
+                && Math.abs(getRankOrder() - target.getRankOrder()) == 1;
+    }
+
+    public boolean isUpDown(final Position target) {
+        return getFileOrder() == target.getFileOrder() &&
+                Math.abs(getRankOrder() - target.getRankOrder()) == 1;
+    }
+
+    public boolean isUpDownTwo(final Position target) {
+        return getFileOrder() == target.getFileOrder() &&
+                Math.abs(getRankOrder() - target.getRankOrder()) == 2;
     }
 
     @Override
