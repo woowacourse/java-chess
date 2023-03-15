@@ -15,4 +15,9 @@ public class Queen implements PieceType {
         }
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
+
+    @Override
+    public boolean canReap() {
+        return false;
+    }
 }

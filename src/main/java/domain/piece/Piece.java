@@ -9,4 +9,5 @@ public interface Piece {
     Camp getCamp();
     Boolean isMovable(Coordinate startCoordinate, Coordinate endCoordinate);
     Boolean isExist();
+    Boolean canReap();
 }

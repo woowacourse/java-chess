@@ -6,6 +6,11 @@ import domain.piecetype.PieceType;
 public class EmptyPiece implements Piece {
 
     @Override
+    public Boolean canReap() {
+        return false;
+    }
+
+    @Override
     public Boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return false;
     }

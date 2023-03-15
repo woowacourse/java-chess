@@ -9,4 +9,9 @@ public class WhitePawn implements Pawn {
         }
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.NEGATIVE_INFINITY) == 0;
     }
+
+    @Override
+    public boolean canReap() {
+        return false;
+    }
 }

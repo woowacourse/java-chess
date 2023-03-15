@@ -52,10 +52,20 @@ public class Board {
     }
 
     private boolean isNotBlocked(Coordinate startCoordinate, Coordinate endCoordinate) {
-        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
-        Coordinate indexCoordinate = startCoordinate;
+        Piece piece = ranks.get(startCoordinate.getRow()).findPiece(startCoordinate.getCol());
 
-        while (!ranks.get(indexCoordinate.getRow()).isExistPiece(indexCoordinate.getCol())) {
+        if (piece.canReap()) {
+            return true;
+        }
+        return isNotBlockedWhenNotReap(startCoordinate, endCoordinate);
+    }
+
+    private boolean isNotBlockedWhenNotReap(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        Coordinate directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
+        Coordinate indexCoordinate = startCoordinate.add(directionVector);
+
+        while (!ranks.get(indexCoordinate.getRow()).isExistPiece(indexCoordinate.getCol()) &&
+        !indexCoordinate.equals(endCoordinate)) {
             indexCoordinate = indexCoordinate.add(directionVector);
         }
         return indexCoordinate.equals(endCoordinate);

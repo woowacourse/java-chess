@@ -9,4 +9,9 @@ public class BlackPawn implements Pawn {
         }
         return Double.compare(startCoordinate.getInclination(endCoordinate), Double.POSITIVE_INFINITY) == 0;
     }
+
+    @Override
+    public boolean canReap() {
+        return false;
+    }
 }

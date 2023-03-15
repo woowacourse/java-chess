@@ -20,4 +20,9 @@ public class Knight implements PieceType {
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate)) &&
                 availableCoordinateDifferences.contains(startCoordinate.minusWithAbsoluteValue(endCoordinate));
     }
+
+    @Override
+    public boolean canReap() {
+        return true;
+    }
 }

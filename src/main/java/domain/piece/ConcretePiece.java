@@ -14,6 +14,11 @@ public class ConcretePiece implements Piece {
     }
 
     @Override
+    public Boolean canReap() {
+        return pieceType.canReap();
+    }
+
+    @Override
     public Boolean isExist() {
         return true;
     }

@@ -20,4 +20,9 @@ public class King implements PieceType {
         System.out.println(startCoordinate.getInclination(endCoordinate));
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
     }
+
+    @Override
+    public boolean canReap() {
+        return false;
+    }
 }
