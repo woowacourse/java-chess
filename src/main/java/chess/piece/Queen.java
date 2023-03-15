@@ -33,10 +33,6 @@ public class Queen extends Piece {
                 (isDifferentRowColumn(rowDistance, columnDistance) && (isZeroNotExist(rowDistance, columnDistance)));
     }
     
-    private boolean isBothZero(int rowDistance, int columnDistance) {
-        return rowDistance == 0 && columnDistance == 0;
-    }
-    
     private boolean isDifferentRowColumn(int rowDistance, int columnDistance) {
         return rowDistance != columnDistance;
     }

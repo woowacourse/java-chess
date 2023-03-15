@@ -19,7 +19,7 @@ class KingTest {
     }
     
     @ParameterizedTest(name = "targetRow : {0}, targetColumn : {1}, expectedResult : {2}")
-    @CsvSource(value = {"2,b,true","3,b,false"})
+    @CsvSource(value = {"2,b,true", "2,a,true", "1,b,true", "1,a,false", "3,b,false"})
     void 도착지를_제시하고_태생적으로_이동할_수_있는지_판단한다(int targetRow, char targetColumn, boolean expectedResult) {
         Piece king = new King(Team.WHITE, new Coordinate(1, 'a'));
         Piece targetPiece = new Empty(Team.EMPTY, new Coordinate(targetRow,targetColumn));

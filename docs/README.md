@@ -23,14 +23,14 @@
       - [x] King
       - [x] Queen
       - [x] Bishop
-      - [ ] Rook
+      - [x] Rook
       - [ ] Knight
       - [ ] Pawn
     - [ ] 이동하려는 도착지에 같은 팀 기물이 있으면 갈 수 없다
       - [x] King
       - [x] Queen
       - [x] Bishop
-      - [ ] Rook
+      - [x] Rook
       - [ ] Knight
       - [ ] Pawn
     - [ ] 이동하려는 도착지 경로에 기물이 있으면 갈 수 없다

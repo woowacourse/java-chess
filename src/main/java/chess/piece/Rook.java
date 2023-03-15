@@ -14,6 +14,24 @@ public class Rook extends Piece {
     
     @Override
     public boolean isMovable(Piece targetPiece) {
-        return false;
+        int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
+        int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);
+        return isRookMovable(targetPiece, rowDistance, columnDistance);
+    }
+    
+    private boolean isRookMovable(Piece targetPiece, int rowDistance, int columnDistance) {
+        if (isOutOfMovementRadius(rowDistance, columnDistance)) {
+            return false;
+        }
+        
+        return isDifferentTeam(targetPiece);
+    }
+    
+    private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
+        return isBothZero(rowDistance, columnDistance) || isBothNotZero(rowDistance, columnDistance);
+    }
+    
+    private boolean isBothNotZero(int rowDistance, int columnDistance) {
+        return rowDistance != 0 && columnDistance != 0;
     }
 }

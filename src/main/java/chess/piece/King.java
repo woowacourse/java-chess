@@ -25,6 +25,10 @@ public class King extends Piece {
     }
     
     private boolean isOutOfMovementRadius(int rowDistance, int columnDistance) {
+        return isBothZero(rowDistance, columnDistance) || isAnyoneOverOne(rowDistance, columnDistance);
+    }
+    
+    private boolean isAnyoneOverOne(int rowDistance, int columnDistance) {
         return rowDistance > MAX_DIFFERENCE_OF_KING || columnDistance > MAX_DIFFERENCE_OF_KING;
     }
     

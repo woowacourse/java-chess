@@ -41,6 +41,10 @@ public abstract class Piece {
         return this.team != otherPiece.team;
     }
     
+    protected boolean isBothZero(int rowDistance, int columnDistance) {
+        return rowDistance == 0 && columnDistance == 0;
+    }
+    
     public int compareTo(Piece piece) {
         return coordinate.compareToPieceByRowNum(piece.coordinate);
     }

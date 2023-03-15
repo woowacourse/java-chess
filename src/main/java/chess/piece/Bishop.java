@@ -35,8 +35,4 @@ public class Bishop extends Piece {
     private boolean isBothDifferent(int rowDistance, int columnDistance) {
         return rowDistance != columnDistance;
     }
-    
-    private boolean isBothZero(int rowDistance, int columnDistance) {
-        return rowDistance == 0 && columnDistance == 0;
-    }
 }
