@@ -16,15 +16,22 @@ public class Movement {
         this.directions = new ArrayList<>(directions);
     }
 
-    public Movement() {
-        this(Collections.emptyList());
+    private void validate(List<Direction> directions) {
+        validateNotEmpty(directions);
+        validateNotBidirectional(directions);
     }
 
-    private void validate(List<Direction> directions) {
+    private void validateNotBidirectional(List<Direction> directions) {
         long horizontalSize = getSize(directions, Direction::isHorizontal);
         long verticalSize = getSize(directions, Direction::isVertical);
         if (horizontalSize == 2 || verticalSize == 2) {
             throw new IllegalArgumentException("양방향이 존재하면 안됩니다");
+        }
+    }
+
+    private void validateNotEmpty(List<Direction> directions) {
+        if (directions.isEmpty()) {
+            throw new IllegalArgumentException("방향이 존재해야합니다.");
         }
     }
 

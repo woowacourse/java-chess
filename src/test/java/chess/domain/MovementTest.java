@@ -48,13 +48,12 @@ public class MovementTest extends AbstractTestFixture {
         assertThat(movement.isSameAngle(movement2)).isFalse();
     }
 
-    @DisplayName("빈 움직임끼리는 기울기가 같다")
+    @DisplayName("빈 움직임 생성시 예외를 던진다")
     @Test
-    void isSameAngle_noDirections() {
-        Movement movement = createMovement();
-        Movement movement2 = createMovement();
-
-        assertThat(movement.isSameAngle(movement2)).isTrue();
+    void emptyMovement_throws() {
+        assertThatThrownBy(() -> createMovement())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("방향이 존재해야합니다.");
     }
 
     @DisplayName("양방향이 존재하면 예외를 던진다")
