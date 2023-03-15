@@ -32,4 +32,11 @@ class MovementTest {
         Assertions.assertThat(movement.isUpward()).isEqualTo(result);
     }
 
+    @DisplayName("아래 방향의 움직임이면 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"0,-1,true", "0,1,false"})
+    void shouldReturnTrueWhenMovementDirectionIsDownwardOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        Assertions.assertThat(movement.isDownward()).isEqualTo(result);
+    }
 }
