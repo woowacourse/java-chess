@@ -1,5 +1,7 @@
 package chess.initial;
 
+import chess.File;
+import chess.Rank;
 import chess.domain.Position;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;

@@ -1,4 +1,4 @@
-package chess.initial;
+package chess;
 
 public enum File {
 
