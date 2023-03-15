@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -30,16 +29,10 @@ public class RankTest {
         assertThat(Rank.from(command)).isEqualTo(rank);
     }
 
-    @Test
-    void 입력받은_랭크와_차이를_반환한다() {
-        // given
-        final Rank source = Rank.A;
-        final Rank target = Rank.G;
-
-        // when
-        final int result = source.calculateGap(target);
-
-        // then
-        assertThat(result).isEqualTo(-6);
+    @ParameterizedTest(name = "입력받은 랭크와의 차이를 반환한다. 시작: {0}, 도착: {1}, 결과: {2}")
+    @CsvSource({"A, D, -3", "B, B, 0", "H, G, 1"})
+    void 입력받은_랭크와_차이를_반환한다(final Rank source, final Rank target, final int result) {
+        // expect
+        assertThat(source.calculateGap(target)).isEqualTo(result);
     }
 }
