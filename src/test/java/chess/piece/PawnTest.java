@@ -27,7 +27,7 @@ class PawnTest {
     }
     
     @ParameterizedTest(name = "targetTeam : {0}, expectedResult : {1}")
-    @CsvSource(value = {"WHITE,false", "EMPTY,true", "BLACK,true"})
+    @CsvSource(value = {"WHITE,false", "EMPTY,true", "BLACK,false"})
     void 첫_시작이_아닌_경우_도착지에_같은_팀이_있으면_이동할_수_없다(Team targetTeam, boolean expectedResult) {
         Piece pawn = new Pawn(Team.WHITE, new Coordinate(3, 'a'));
         Piece targetPiece = new Queen(targetTeam, new Coordinate(2, 'a'));
@@ -52,12 +52,28 @@ class PawnTest {
         assertThat(pawn.isMovable(targetPiece)).isEqualTo(expectedResult);
     }
     
-    @ParameterizedTest(name = "team : {0}, row : {1}, targetRow : {2}, targetColumn : {3}, expectedResult : {4}")
+    @ParameterizedTest(name = "team : {0}, row : {1}, targetRow : {2}")
     @CsvSource(value = {"WHITE,7,5", "BLACK,2,4"})
     void 폰은_첫_이동일_때_도착지에_기물이_있으면_못간다(Team team, int row, int targetRow) {
         Piece pawn = new Pawn(team, new Coordinate(row, 'a'));
         Piece targetPiece = new Queen(Team.BLACK, new Coordinate(targetRow, 'a'));
         
+        assertThat(pawn.isMovable(targetPiece)).isFalse();
+    }
+    
+    @ParameterizedTest(name = "team : {0}, row : {1}, targetRow : {2}")
+    @CsvSource(value = {"WHITE,2,1", "BLACK,3,4"})
+    void 한_칸_앞으로_이동할_때_기물이_없으면_이동_가능하다(Team team, int row, int targetRow) {
+        Piece pawn = new Pawn(team, new Coordinate(row, 'a'));
+        Piece targetPiece = new Empty(Team.EMPTY, new Coordinate(targetRow, 'a'));
+        assertThat(pawn.isMovable(targetPiece)).isTrue();
+    }
+    
+    @ParameterizedTest(name = "team : {0}, row : {1}, targetRow : {2}")
+    @CsvSource(value = {"WHITE,2,1", "BLACK,3,4"})
+    void 한_칸_앞으로_이동할_때_기물이_있으면_이동_불가능하다(Team team, int row, int targetRow) {
+        Piece pawn = new Pawn(team, new Coordinate(row, 'a'));
+        Piece targetPiece = new Queen(Team.BLACK, new Coordinate(targetRow, 'a'));
         assertThat(pawn.isMovable(targetPiece)).isFalse();
     }
 }
