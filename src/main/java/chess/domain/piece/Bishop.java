@@ -28,4 +28,9 @@ public class Bishop implements Piece {
 	public boolean isWhite() {
 		return team.isWhite();
 	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
 }

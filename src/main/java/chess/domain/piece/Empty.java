@@ -21,4 +21,9 @@ public class Empty implements Piece {
 	public boolean isWhite() {
 		throw new IllegalStateException("제공하지 않는 기능입니다.");
 	}
+
+	@Override
+	public boolean isEmpty() {
+		return true;
+	}
 }
