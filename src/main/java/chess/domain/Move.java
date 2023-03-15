@@ -22,11 +22,16 @@ public enum Move {
     }
 
     public static Move calculateDirection(final Square source, final Square target) {
-        final int directionFile = Integer.signum(target.getFile() - source.getFile());
-        final int directionRank = Integer.signum(target.getRank() - source.getRank());
+        final int directionFile = target.getFile() - source.getFile();
+        final int directionRank = target.getRank() - source.getRank();
+
+        if (directionFile != 0 && directionRank != 0 && Math.abs(directionFile / directionRank) != 1) {
+            return EMPTY;
+        }
 
         return Arrays.stream(Move.values())
-                .filter(move -> move.file == directionFile && move.rank == directionRank)
+                .filter(move -> move.file == Integer.signum(directionFile) && move.rank == Integer.signum(
+                        directionRank))
                 .findFirst()
                 .orElse(EMPTY);
     }
