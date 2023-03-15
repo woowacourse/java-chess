@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
@@ -30,8 +31,8 @@ class BoardTest {
     void initialize() {
         Board board = Board.create();
         board.initialize();
-        List<String> positions = List.of("a1", "b2", "g7", "h8");
-        List<Piece> pieces = List.of(Rook.create(Color.WHITE), Pawn.create(Color.WHITE), Pawn.create(Color.BLACK),
+        List<String> positions = List.of("a1", "b1", "g7", "h8");
+        List<Piece> pieces = List.of(Rook.create(Color.WHITE), Knight.create(Color.WHITE), Pawn.create(Color.BLACK),
                 Rook.create(Color.BLACK));
         for (int i = 0; i < 4; i++) {
             Assertions.assertThat(board).extracting("board").asInstanceOf(InstanceOfAssertFactories.MAP)

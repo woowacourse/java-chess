@@ -30,26 +30,22 @@ public class Board {
     }
     
     public void initialize() {
+        List<Piece> whiteGenerals = PieceFactory.createWhiteGenerals();
+        List<Piece> whitePawns = PieceFactory.createWhitePawns();
+        List<Piece> blackPawns = PieceFactory.createBlackPawns();
+        List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
         for (Position position : board.keySet()) {
             if (position.isRank(0)) {
-                for (Piece general : PieceFactory.createWhiteGenerals()) {
-                    board.put(position, general);
-                }
+                board.put(position, whiteGenerals.get(position.getFile().getIndex()));
             }
             if (position.isRank(1)) {
-                for (Piece general : PieceFactory.createWhitePawns()) {
-                    board.put(position, general);
-                }
+                board.put(position, whitePawns.get(position.getFile().getIndex()));
             }
             if (position.isRank(6)) {
-                for (Piece general : PieceFactory.createBlackPawns()) {
-                    board.put(position, general);
-                }
+                board.put(position, blackPawns.get(position.getFile().getIndex()));
             }
             if (position.isRank(7)) {
-                for (Piece general : PieceFactory.createBlackGenerals()) {
-                    board.put(position, general);
-                }
+                board.put(position, blackGenerals.get(position.getFile().getIndex()));
             }
         }
         
