@@ -24,6 +24,7 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, true", "E, ONE, true", "C, SIX, false", "G, TWO, false"})
+    @DisplayName("상하좌우 위치에 있는지 확인한다")
     void isInCrossPositionTest(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
@@ -34,10 +35,33 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, false", "E, ONE, false", "C, SIX, true", "G, TWO, true"})
+    @DisplayName("대각선 위치에 있는지 확인한다")
     void isInDiagonalPositionTest(final File file, final Rank rank, final boolean expected) {
         final Position otherPosition = new Position(file, rank);
 
         final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"D, FOUR, true", "E, FIVE, true", "D, THREE, false", "F, FIVE, false"})
+    @DisplayName("상하좌우로 한 칸 거리인지 확인한다")
+    void isCrossNeighborPositionTest(final File file, final Rank rank, final boolean expected) {
+        final Position otherPosition = new Position(file, rank);
+
+        final boolean actual = E_FOUR.isCrossNeighborPosition(otherPosition);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"D, FOUR, false", "E, FIVE, false", "D, THREE, true", "F, FIVE, true"})
+    @DisplayName("대각선로 한 칸 거리인지 확인한다")
+    void isDiagonalNeighborPositionTest(final File file, final Rank rank, final boolean expected) {
+        final Position otherPosition = new Position(file, rank);
+
+        final boolean actual = E_FOUR.isDiagonalNeighborPosition(otherPosition);
 
         assertThat(actual).isEqualTo(expected);
     }

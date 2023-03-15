@@ -12,11 +12,30 @@ public class Position {
     }
 
     public boolean isInCrossPosition(final Position otherPosition) {
-        return this.file == otherPosition.file || this.rank == otherPosition.rank;
+        return (this.file == otherPosition.file || this.rank == otherPosition.rank) && !this.equals(otherPosition);
     }
 
     public boolean isInDiagonalPosition(final Position otherPosition) {
-        return this.file.calculateDistance(otherPosition.file) == this.rank.calculateDistance(otherPosition.rank);
+        return (calculateFileDistance(otherPosition) == calculateRankDistance(otherPosition)) && !this.equals(otherPosition);
+    }
+
+    public boolean isCrossNeighborPosition(final Position otherPosition) {
+        if (isInCrossPosition(otherPosition)) {
+            return calculateFileDistance(otherPosition) == 1 || calculateRankDistance(otherPosition) == 1;
+        }
+        return false;
+    }
+
+    public boolean isDiagonalNeighborPosition(final Position otherPosition) {
+        return calculateFileDistance(otherPosition) == 1 && calculateRankDistance(otherPosition) == 1;
+    }
+
+    private int calculateFileDistance(final Position otherPosition) {
+        return this.file.calculateDistance(otherPosition.file);
+    }
+
+    private int calculateRankDistance(final Position otherPosition) {
+        return this.rank.calculateDistance(otherPosition.rank);
     }
 
     @Override
