@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -31,7 +32,7 @@ public class King extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
