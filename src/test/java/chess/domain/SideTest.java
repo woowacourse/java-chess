@@ -13,7 +13,7 @@ public class SideTest {
         Color color = Color.BLACK;
 
         // when
-        Side side = new Side(color);
+        Side side = Side.from(color);
 
         // expected
         assertThat(side).isNotNull();

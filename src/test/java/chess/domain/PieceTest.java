@@ -17,7 +17,7 @@ class PieceTest {
     @DisplayName("역할에 따른 기물이 생성된다.")
     void create(Role role, Class<Piece> expectedPieceType) {
         //given
-        Side side = new Side(Color.BLACK);
+        Side side = Side.from(Color.BLACK);
         //when
         Piece piece = role.create(side);
         //expected

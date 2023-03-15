@@ -1,12 +1,26 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Side {
+    private static final Map<Color, Side> CACHE;
+
     private final Color color;
 
-    public Side(final Color color) {
+    static {
+        CACHE = new HashMap<>();
+        CACHE.put(Color.BLACK, new Side(Color.BLACK));
+        CACHE.put(Color.WHITE, new Side(Color.WHITE));
+    }
+
+    private Side(final Color color) {
         this.color = color;
+    }
+
+    public static Side from(final Color color) {
+        return CACHE.get(color);
     }
 
     @Override
