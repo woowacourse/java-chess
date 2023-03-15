@@ -1,5 +1,9 @@
 package chess.controller;
 
+import static chess.controller.ChessExecuteCommand.START;
+
+import chess.controller.dto.ChessBoardDto;
+import chess.domain.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -10,6 +14,10 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
+        final Board board = Board.generate();
         final ChessExecuteCommand chessExecuteCommand = ChessExecuteCommand.from(inputView.readChessExecuteCommand());
+        if (chessExecuteCommand == START) {
+            outputView.printChessBoard(ChessBoardDto.from(board));
+        }
     }
 }
