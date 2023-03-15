@@ -10,6 +10,10 @@ public class MovablePiece extends Piece {
         this.side = side;
     }
 
+    public boolean isSameSide(final MovablePiece targetPiece) {
+        return side.equals(targetPiece.side);
+    }
+
     public Color getColor() {
         return side.getColor();
     }
