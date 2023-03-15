@@ -2,7 +2,6 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +11,12 @@ class PieceTest {
     @Test
     void kingName() {
         //given
-        final Piece king = King.create(Position.from("a1"));
-        final Piece queen = Queen.create(Position.from("a1"));
-        final Piece knight = Knight.create(Position.from("a1"));
-        final Piece bishop = Bishop.create(Position.from("a1"));
-        final Piece rook = Rook.create(Position.from("a1"));
-        final Piece pawn = Pawn.create(Position.from("a1"));
+        final Piece king = new King();
+        final Piece queen = new Queen();
+        final Piece knight = new Knight();
+        final Piece bishop = new Bishop();
+        final Piece rook = new Rook();
+        final Piece pawn = new Pawn();
 
         //when
 

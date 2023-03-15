@@ -40,25 +40,25 @@ public final class Board {
     private static void addInitialRooks(final HashMap<Position, Piece> board) {
         final List<Position> rooksPosition = Position.of("A1", "A8", "H1", "H8");
 
-        rooksPosition.forEach(position -> board.put(position, Rook.create(position)));
+        rooksPosition.forEach(position -> board.put(position, new Rook()));
     }
 
     private static void addInitialKnights(final HashMap<Position, Piece> board) {
         final List<Position> knightsPosition = Position.of("B1", "B8", "G1", "G8");
 
-        knightsPosition.forEach(position -> board.put(position, Knight.create(position)));
+        knightsPosition.forEach(position -> board.put(position, new Knight()));
     }
 
     private static void addInitialBishops(final HashMap<Position, Piece> board) {
         final List<Position> bishopsPosition = Position.of("C1", "C8", "F1", "F8");
 
-        bishopsPosition.forEach(position -> board.put(position, Bishop.create(position)));
+        bishopsPosition.forEach(position -> board.put(position, new Bishop()));
     }
 
     private static void addInitialQueens(final HashMap<Position, Piece> board) {
         final List<Position> queensPosition = Position.of("D1", "D8");
 
-        queensPosition.forEach(position -> board.put(position, Queen.create(position)));
+        queensPosition.forEach(position -> board.put(position, new Queen()));
     }
 
     private static void addInitialPawns(Map<Position, Piece> board) {
@@ -66,13 +66,13 @@ public final class Board {
                 .mapToObj(file -> String.valueOf((char) file))
                 .flatMap(file -> Stream.of(file + WHITE_PAWNS_RANK, file + BLACK_PAWNS_RANK))
                 .map(Position::from)
-                .forEach(position -> board.put(position, Pawn.create(position)));
+                .forEach(position -> board.put(position, new Pawn()));
     }
 
     private static void addInitialKings(Map<Position, Piece> board) {
         final List<Position> kingsPosition = Position.of("E1", "E8");
 
-        kingsPosition.forEach(position -> board.put(position, King.create(position)));
+        kingsPosition.forEach(position -> board.put(position, new King()));
     }
 
     public Map<Position, Piece> getPieces() {

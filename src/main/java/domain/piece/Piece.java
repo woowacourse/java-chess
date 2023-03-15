@@ -1,16 +1,12 @@
 package domain.piece;
 
-import domain.board.Position;
 import java.util.Objects;
 
 public abstract class Piece implements Moveable {
     private final String name;
 
-    private final Position position;
-
-    Piece(final String name, final Position position) {
+    Piece(final String name) {
         this.name = name;
-        this.position = position;
     }
 
     public String getName() {
@@ -26,11 +22,11 @@ public abstract class Piece implements Moveable {
             return false;
         }
         final Piece piece = (Piece) o;
-        return Objects.equals(name, piece.name) && Objects.equals(position, piece.position);
+        return Objects.equals(name, piece.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, position);
+        return Objects.hash(name);
     }
 }
