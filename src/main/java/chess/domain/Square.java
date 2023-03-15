@@ -17,4 +17,8 @@ public class Square {
     public FileCoordinate getFileCoordinate() {
         return fileCoordinate;
     }
+
+    public boolean isSameWith(FileCoordinate coordinate) {
+        return this.fileCoordinate == coordinate;
+    }
 }
