@@ -1,8 +1,10 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.File;
 import chess.domain.Piece;
 import chess.domain.Position;
+import chess.domain.Rank;
 import java.util.Map;
 
 public class OutputView {
@@ -21,9 +23,9 @@ public class OutputView {
         final StringBuilder stringBuilder = new StringBuilder();
         final Map<Position, Piece> boardMap = board.getBoard();
 
-        for (int rank = Board.LOWER_BOUNDARY; rank <= Board.UPPER_BOUNDARY; rank++) {
-            for (int file = Board.LOWER_BOUNDARY; file <= Board.UPPER_BOUNDARY; file++) {
-                final Piece piece = boardMap.get(Position.of(rank, file));
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                final Piece piece = boardMap.get(Position.of(file, rank));
                 stringBuilder.append(piece.getName());
             }
             stringBuilder.append(LINE_SEPARATOR);

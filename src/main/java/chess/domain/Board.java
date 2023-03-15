@@ -13,8 +13,8 @@ public class Board {
         this.board = board;
     }
 
-    public Piece getPiece(final int x, final int y) {
-        return board.get(Position.of(x, y));
+    public Piece getPiece(final File file, final Rank rank) {
+        return board.get(Position.of(file, rank));
     }
 
     public Map<Position, Piece> getBoard() {

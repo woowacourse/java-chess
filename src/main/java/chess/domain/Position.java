@@ -9,38 +9,29 @@ public class Position {
 
     static {
         final Map<Integer, Position> positions = new HashMap<>();
-        for (int x = Board.LOWER_BOUNDARY; x <= Board.UPPER_BOUNDARY; x++) {
-            for (int y = Board.LOWER_BOUNDARY; y <= Board.UPPER_BOUNDARY; y++) {
-                positions.put(getKey(x, y), new Position(x, y));
+
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                positions.put(getKey(rank, file), new Position(file, rank));
             }
         }
+
         CACHE = positions;
     }
 
-    private static int getKey(final int x, final int y) {
-        return (x - Board.LOWER_BOUNDARY) * Board.UPPER_BOUNDARY + y;
+    private static int getKey(final Rank rank, final File file) {
+        return (rank.index() - Board.LOWER_BOUNDARY) * Board.UPPER_BOUNDARY + file.index();
     }
 
-    private final int x;
-    private final int y;
+    private final File file;
+    private final Rank rank;
 
-    private Position(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    private Position(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(final int x, final int y) {
-        validate(x, y);
-        return CACHE.get(getKey(x, y));
-    }
-
-    private static void validate(final int x, final int y) {
-        if (!isRangeValid(x) || !isRangeValid(y)) {
-            throw new IllegalArgumentException("좌표의 값은 " + Board.LOWER_BOUNDARY +  " ~ " +  Board.UPPER_BOUNDARY + " 사이여야 합니다.");
-        }
-    }
-
-    private static boolean isRangeValid(final int value) {
-        return value >= Board.LOWER_BOUNDARY && value <= Board.UPPER_BOUNDARY;
+    public static Position of(final File file, final Rank rank) {
+        return CACHE.get(getKey(rank, file));
     }
 }
