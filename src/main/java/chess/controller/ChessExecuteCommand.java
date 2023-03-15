@@ -1,0 +1,29 @@
+package chess.controller;
+
+import static java.lang.String.format;
+
+import java.util.Arrays;
+
+public enum ChessExecuteCommand {
+
+    START("start"),
+    END("end");
+
+    private final String input;
+
+    ChessExecuteCommand(final String input) {
+        this.input = input;
+    }
+
+    @Override
+    public String toString() {
+        return input;
+    }
+
+    public static ChessExecuteCommand from(final String input) {
+        return Arrays.stream(ChessExecuteCommand.values())
+                .filter(chessExecuteCommand -> chessExecuteCommand.input.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(format("%s나 %s 중 입력하세요.", START, END)));
+    }
+}
