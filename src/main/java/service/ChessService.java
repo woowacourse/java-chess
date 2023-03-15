@@ -41,6 +41,7 @@ public class ChessService {
             validateCurrentCamp(currentSquare);
 
             chessBoard.move(currentSquare, targetSquare);
+            currentCamp = currentCamp.fetchOppositeCamp();
             return true;
         }
         return false;
@@ -60,7 +61,6 @@ public class ChessService {
         if (!chessBoard.isCorrectCamp(currentCamp, currentSquare)) {
             throw new IllegalStateException("같은 진영의 말만 움직일 수 있습니다.");
         }
-        ;
     }
 
     private boolean commandIsEnd(String[] inputs) {
