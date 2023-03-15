@@ -35,4 +35,12 @@ public class Position {
         Map<Rank, Position> rankToPosition = cache.get(file);
         return rankToPosition.get(rank);
     }
+
+    public int getRankDifference(Position other) {
+        return rank.getDifference(other.rank);
+    }
+
+    public int getFileDifference(Position other) {
+        return file.getDifference(other.file);
+    }
 }

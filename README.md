@@ -39,7 +39,9 @@
 
 #### Position
 
-- [x] File과 Rank를 갖는다.
+- [x] File 과 Rank 를 갖는다.
+- [x] 다른 포지션과의 Rank 순서 차이를 구할 수 있다.
+- [x] 다른 포지션과의 File 순서 차이를 구할 수 있다.
 
 #### Board
 
