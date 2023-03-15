@@ -16,9 +16,10 @@
 ### 기능 목록 구현
 - [x] 위치
     - [x] file(열)과 rank(행)를 갖는다
-- [ ] 체스말
-    - [ ] 이름을 갖는다
-    - [ ] 체스말은 Rook, Knight, Bishop, King, Queen, Pawn을 갖는다
+- [x] 체스말
+    - [x] 이름을 갖는다
+    - [x] 체스말은 Rook, Knight, Bishop, King, Queen, Pawn을 갖는다
+    - [x] 체스말이 없는 곳은 Empty를 갖는다.
 - [ ] 체스판
     - [ ] 위치와 체스말을 갖는다
 - [ ] 체스판 청사진
