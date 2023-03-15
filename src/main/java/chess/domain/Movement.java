@@ -67,4 +67,12 @@ public class Movement {
             .collect(Collectors.toUnmodifiableList());
         return new Movement(directions);
     }
+
+    public Position findDestination(Position position) {
+        Position destination = position;
+        for (Direction direction : directions) {
+            destination = destination.move(direction);
+        }
+        return destination;
+    }
 }

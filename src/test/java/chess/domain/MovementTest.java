@@ -61,8 +61,8 @@ public class MovementTest extends AbstractTestFixture {
     @Test
     void bidirectional_throws() {
         assertThatThrownBy(() -> createMovement(RIGHT, LEFT))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("양방향이 존재하면 안됩니다");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("양방향이 존재하면 안됩니다");
     }
 
     @DisplayName("같은 움직임인지 확인한다")
@@ -81,5 +81,14 @@ public class MovementTest extends AbstractTestFixture {
         Movement movement2 = createMovement(RIGHT, RIGHT, UP, UP);
 
         assertThat(movement1.isSameWith(movement2)).isFalse();
+    }
+
+    @DisplayName("목적지를 찾을 수 있다")
+    @Test
+    void findDestination() {
+        Movement movement = createMovement(RIGHT, RIGHT, UP, UP, UP);
+        Position destination = movement.findDestination(createPosition("A,ONE"));
+
+        assertThat(destination).isEqualTo(createPosition("C,FOUR"));
     }
 }
