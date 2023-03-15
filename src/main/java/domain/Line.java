@@ -60,6 +60,10 @@ public class Line {
         return new Line(squares);
     }
 
+    public Square getByCol(final int col) {
+        return squares.get(col);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

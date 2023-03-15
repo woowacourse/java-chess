@@ -1,11 +1,14 @@
 package domain;
 
 import domain.piece.Piece;
+import java.util.List;
 import java.util.Objects;
 
 public class Square {
 
-    private final Piece piece;
+    //TODO : Location을 가져도 되나?
+
+    private Piece piece;
 
     public Square(final Piece piece) {
         this.piece = piece;
@@ -15,7 +18,23 @@ public class Square {
         return new Square(null);
     }
 
-    @Override
+    public List<Location> searchPath(Location start, Location end) {
+        return piece.searchPath(start, end);
+    }
+
+    public boolean isNotNull() {
+        return piece != null;
+    }
+
+    public boolean haveSameColor(final Square startSquare) {
+        return piece.isSameColor(startSquare.piece);
+    }
+
+    public void moveTo(final Square square) {
+        square.piece = this.piece;
+        this.piece = null;
+    }
+
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
