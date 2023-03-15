@@ -27,23 +27,20 @@ public final class Pawn extends Piece {
         if (isWhite()) {
             return isMovableForWhite(movement);
         }
-        return false;
+        return isMovableForBlack(movement);
     }
 
     private boolean isWhite() {
         return super.side.equals(Side.WHITE);
     }
 
-    private boolean isOneStepUpward(Movement movement) {
+    private boolean isMovableForWhite(Movement movement) {
         return movement.isOneStep() && movement.isUpward();
+
     }
 
-    private boolean isMovableForWhite(Movement movement) {
-        return isOneStepUpward(movement);
-
-//        if (isMovable(movement) || isAttackMoving(movement, targetPiece)) {
-//            return true;
-//        }
+    private boolean isMovableForBlack(Movement movement) {
+        return movement.isOneStep() && movement.isDownward();
     }
 
 
