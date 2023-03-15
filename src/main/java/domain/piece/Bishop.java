@@ -12,16 +12,23 @@ public final class Bishop extends Piece {
 
     @Override
     public boolean isMovablePath(Position start, List<Position> path) {
-        return false;
+        return isMovableDirection(start, path.get(0)) &&
+                isMovableDistance(path.size());
     }
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
+        if (start.moveUpRight().equals(nextPosition) ||
+                start.moveUpLeft().equals(nextPosition) ||
+                start.moveDownRight().equals(nextPosition) ||
+                start.moveDownLeft().equals(nextPosition)) {
+            return true;
+        }
         return false;
     }
 
     @Override
     protected boolean isMovableDistance(int distance) {
-        return false;
+        return true;
     }
 }
