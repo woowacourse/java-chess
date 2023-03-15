@@ -10,7 +10,13 @@ public class Bishop extends Piece {
 
     @Override
     boolean canMove(Position sourcePosition, Position targetPosition) {
-        return false;
+        int sourceColumnNumber = sourcePosition.getFileCoordinate().getColumnNumber();
+        int targetColumnNumber = targetPosition.getFileCoordinate().getColumnNumber();
+        int sourceRankNumber = sourcePosition.getRankCoordinate().getRowNumber();
+        int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
+
+        return Math.abs(sourceColumnNumber - targetColumnNumber) == Math.abs(sourceRankNumber - targetRankNumber)
+                && !sourcePosition.equals(targetPosition);
     }
 
     @Override
