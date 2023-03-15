@@ -1,10 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
+
+    public Rook(Team team) {
+        super(team);
+    }
 
     @Override
     boolean isMovable(Position source, Position target) {

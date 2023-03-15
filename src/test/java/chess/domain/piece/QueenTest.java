@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
+import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -17,17 +18,17 @@ class QueenTest {
     @CsvSource(value = {"4:3", "5:4", "3:5"}, delimiter = ':')
     @DisplayName("퀸은 상하좌우, 대각선으로 움직일 수 있다.")
     void isMovable(int rank, int file) {
-        Piece queen = new Queen();
+        Piece queen = new Queen(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
         assertThat(queen.isMovable(source, target)).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"2:3", "7:5", "3:0"}, delimiter = ':')
+    @CsvSource(value = {"2:3", "7:5", "3:1"}, delimiter = ':')
     @DisplayName("퀸은 상하좌우, 대각선을 제외한 곳으로 움직일 수 없다.")
     void isUnmovable(int rank, int file) {
-        Piece queen = new Queen();
+        Piece queen = new Queen(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
         assertThat(queen.isMovable(source, target)).isFalse();
@@ -37,7 +38,7 @@ class QueenTest {
     @MethodSource("findPathProvider")
     @DisplayName("타켓 위치로 갈 수 있는 모든 경로를 리스트에 담아서 반환한다.")
     void findPath(Position source, Position target, List<Position> expectedPath) {
-        Piece queen = new Queen();
+        Piece queen = new Queen(Team.WHITE);
         assertThat(queen.findPath(source, target)).containsAll(expectedPath);
     }
 

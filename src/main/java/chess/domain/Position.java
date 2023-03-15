@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public final class Position {
 
-    private static final int MIN_POSITION = 0;
-    private static final int MAX_POSITION = 7;
+    private static final int MIN_POSITION = 1;
+    private static final int MAX_POSITION = 8;
 
     private final int rank;
     private final int file;
@@ -33,6 +33,10 @@ public final class Position {
 
     public int rankDiff(Position target) {
         return target.rank - this.rank;
+    }
+
+    public boolean isSameRank(int rank) {
+        return this.rank == rank;
     }
 
     @Override

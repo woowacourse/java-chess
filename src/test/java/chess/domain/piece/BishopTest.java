@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Position;
+import chess.domain.Team;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +21,7 @@ class BishopTest {
     @CsvSource(value = {"3:3", "5:5", "3:5"}, delimiter = ':')
     @DisplayName("비숍은 대각선으로 움직일 수 있다.")
     void isMovable(int rank, int file) {
-        Piece bishop = new Bishop();
+        Piece bishop = new Bishop(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
         assertThat(bishop.isMovable(source, target)).isTrue();
@@ -30,7 +31,7 @@ class BishopTest {
     @CsvSource(value = {"2:3", "4:5", "3:6"}, delimiter = ':')
     @DisplayName("비숍은 대각선을 제외한 곳으로 움직일 수 없다.")
     void isUnmovable(int rank, int file) {
-        Piece bishop = new Bishop();
+        Piece bishop = new Bishop(Team.WHITE);
         Position source = new Position(4, 4);
         Position target = new Position(rank, file);
         assertThat(bishop.isMovable(source, target)).isFalse();
@@ -40,7 +41,7 @@ class BishopTest {
     @MethodSource("findPathProvider")
     @DisplayName("타켓 위치로 갈 수 있는 모든 경로를 리스트에 담아서 반환한다.")
     void findPath(Position source, Position target, List<Position> expectedPath) {
-        Piece bishop = new Bishop();
+        Piece bishop = new Bishop(Team.WHITE);
         assertThat(bishop.findPath(source, target)).containsAll(expectedPath);
     }
 
