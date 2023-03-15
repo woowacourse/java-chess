@@ -10,15 +10,11 @@ public class Rook extends Piece {
 
     @Override
     public void move(final String position) {
-        validate(position);
+        validateMove(position);
         this.position = new Position(position);
     }
 
-    private void validate(final String position) {
-        validateMovePosition(position);
-    }
-
-    private void validateMovePosition(final String position) {
+    private void validateMove(final String position) {
         int substitutionOfRow = this.position.subRowFromArriveRow(position);
         int substitutionOfCol = this.position.subColFromArriveCol(position);
 
