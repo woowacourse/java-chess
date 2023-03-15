@@ -17,7 +17,7 @@ import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoard {
     private static final int AREA_RANK_SIZE = 2;
-    private static final int FILE_SIZE = 8;
+    public static final int FILE_SIZE = 8;
     private static final int BLANK_AREA_RANK_SIZE = 4;
     private static final PieceType[][] pieceRanks = {
             {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK},
@@ -31,6 +31,10 @@ public final class ChessBoard {
         init();
     }
 
+    public boolean contains(final Position possiblePosition) {
+        return board.containsKey(possiblePosition);
+    }
+    
     private void init() {
         int whiteAreaRank = initWhiteArea();
         initBlackArea(whiteAreaRank + BLANK_AREA_RANK_SIZE);
