@@ -5,9 +5,11 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Camp camp;
+    private final PieceSymbol pieceSymbol;
 
-    Piece(Camp camp) {
+    Piece(Camp camp, PieceSymbol pieceSymbol) {
         this.camp = camp;
+        this.pieceSymbol = pieceSymbol;
     }
 
     @Override
