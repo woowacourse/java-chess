@@ -26,12 +26,8 @@ public class Coordinate {
         return List.of(rowDistance, columnDistance);
     }
     
-    public boolean isBlackPawnStartRow() {
-        return row.isBlackPawnStartRow();
-    }
-    
-    public boolean isWhitePawnStartRow() {
-        return row.isWhitePawnStartRow();
+    public boolean isPawnStartRow(int startRow) {
+        return row.isPawnStartRow(startRow);
     }
     
     @Override
