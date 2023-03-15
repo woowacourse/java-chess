@@ -22,11 +22,14 @@ public class Bishop extends Piece {
 
     @Override
     protected boolean isValidMove(final Position start, final Position end) {
-        return false;
+        final int fileGap = Math.abs(start.calculateFileGap(end));
+        final int rankGap = Math.abs(start.calculateRankGap(end));
+
+        return fileGap == rankGap;
     }
 
     @Override
     protected boolean isValidTarget(final Piece target) {
-        return false;
+        return color() != target.color();
     }
 }
