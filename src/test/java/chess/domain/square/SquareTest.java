@@ -153,14 +153,14 @@ class SquareTest {
         @DisplayName("같은 칸이면 true를 반환한다.")
         void same_square() {
             final Square targetSquare = Square.of(File.A, Rank.SIX);
-            assertThat(square.isSame(targetSquare)).isTrue();
+            assertThat(square.equals(targetSquare)).isTrue();
         }
 
         @Test
         @DisplayName("같은 칸이 아니라면 false를 반환한다.")
         void not_same_square() {
             final Square targetSquare = Square.of(File.A, Rank.SEVEN);
-            assertThat(square.isSame(targetSquare)).isFalse();
+            assertThat(square.equals(targetSquare)).isFalse();
         }
     }
 }
