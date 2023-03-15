@@ -40,4 +40,8 @@ public class Side {
     public String toString() {
         return color.name();
     }
+
+    public Color getColor() {
+        return this.color;
+    }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Side;
 
 public class MovablePiece extends Piece {
@@ -7,5 +8,9 @@ public class MovablePiece extends Piece {
 
     public MovablePiece(final Side side) {
         this.side = side;
+    }
+
+    public Color getColor() {
+        return side.getColor();
     }
 }
