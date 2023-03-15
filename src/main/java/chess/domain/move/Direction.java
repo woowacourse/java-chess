@@ -30,6 +30,10 @@ public enum Direction {
         return List.of(UP, DOWN, LEFT, RIGHT);
     }
 
+    public static List<Direction> getDiagonalDirections() {
+        return List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
+    }
+    
     public Position calculate(final Position before) {
         return before.calculate(this.fileMove, this.rankMove);
     }
