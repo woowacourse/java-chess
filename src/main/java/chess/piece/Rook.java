@@ -13,7 +13,7 @@ public class Rook extends Piece {
     }
     
     @Override
-    public boolean isMoveable(Piece targetPiece) {
+    public boolean isMovable(Piece targetPiece) {
         return false;
     }
 }

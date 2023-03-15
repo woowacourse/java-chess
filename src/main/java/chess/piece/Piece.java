@@ -16,7 +16,7 @@ public abstract class Piece {
     
     public abstract char symbol();
     
-    public abstract boolean isMoveable(Piece targetPiece);
+    public abstract boolean isMovable(Piece targetPiece);
     
     public boolean isWhiteTeam() {
         return team.isWhiteTeam();
@@ -24,6 +24,10 @@ public abstract class Piece {
     
     public boolean isBlackTeam() {
         return team.isBlackTeam();
+    }
+    
+    protected boolean isSameTeam(Piece piece) {
+        return this.team == piece.team;
     }
     
     public int compareTo(Piece piece) {
