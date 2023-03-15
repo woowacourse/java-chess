@@ -15,7 +15,8 @@ public final class Pawn extends Piece {
         return new Pawn(Side.WHITE);
     }
 
-    public List<Position> getPath(Position sourcePosition, Position targetPosition) {
+    @Override
+    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);
         if (movement.isOneStep()) {
             return Collections.emptyList();
@@ -23,6 +24,7 @@ public final class Pawn extends Piece {
         return sourcePosition.getPath(targetPosition);
     }
 
+    @Override
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);
         if (isWhite()) {

@@ -23,7 +23,8 @@ public class Bishop extends Piece {
         return movement.isDiagonal();
     }
 
-    public List<Position> getPath(Position sourcePosition, Position targetPosition) {
+    @Override
+    public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);
         if (movement.isOneStep()) {
             return Collections.emptyList();

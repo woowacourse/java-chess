@@ -1,3 +1,5 @@
+import java.util.List;
+
 public abstract class Piece {
     protected final Side side;
 
@@ -6,6 +8,8 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition);
+
+    public abstract List<Position> collectPath(Position sourcePosition, Position targetPosition);
 
     public boolean isSameSideWith(Piece targetPiece) {
         return this.side == targetPiece.side;
