@@ -19,14 +19,14 @@ class QueenTest {
             DynamicTest.dynamicTest("오른쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(2, 2);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(2, 2)
                 );
             }),
             DynamicTest.dynamicTest("오른쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 8);
                 final Location end = Location.of(3, 6);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(2, 7),
                     Location.of(3, 6)
                 );
@@ -34,7 +34,7 @@ class QueenTest {
             DynamicTest.dynamicTest("왼쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(7, 5);
                 final Location end = Location.of(4, 8);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(6, 6),
                     Location.of(5, 7),
                     Location.of(4, 8)
@@ -43,7 +43,7 @@ class QueenTest {
             DynamicTest.dynamicTest("왼쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(3, 3);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(6, 6),
                     Location.of(5, 5),
                     Location.of(4, 4),
@@ -53,12 +53,12 @@ class QueenTest {
             DynamicTest.dynamicTest("위로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(1, 2);
-                assertThat(queen.explore(start, end)).containsExactly(end);
+                assertThat(queen.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("아래로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 8);
                 final Location end = Location.of(1, 6);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(1, 7),
                     Location.of(1, 6)
                 );
@@ -66,7 +66,7 @@ class QueenTest {
             DynamicTest.dynamicTest("왼쪽으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(4, 7);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(6, 7),
                     Location.of(5, 7),
                     Location.of(4, 7)
@@ -75,7 +75,7 @@ class QueenTest {
             DynamicTest.dynamicTest("오른쪽으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(3, 7);
                 final Location end = Location.of(7, 7);
-                assertThat(queen.explore(start, end)).containsExactly(
+                assertThat(queen.searchPath(start, end)).containsExactly(
                     Location.of(4, 7),
                     Location.of(5, 7),
                     Location.of(6, 7),
@@ -94,13 +94,13 @@ class QueenTest {
             DynamicTest.dynamicTest("위로 2칸 오른쪽 1칸으로는 움직일 때 오류를 던진다.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(2, 3);
-                assertThatThrownBy(() -> queen.explore(start, end))
+                assertThatThrownBy(() -> queen.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("아래 2칸 왼쪽 1칸으로는 움직일 때 오류를 던진다.", () -> {
                 final Location start = Location.of(2, 3);
                 final Location end = Location.of(1, 1);
-                assertThatThrownBy(() -> queen.explore(start, end))
+                assertThatThrownBy(() -> queen.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             })
         );

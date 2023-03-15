@@ -13,9 +13,12 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract public List<Location> explore(Location start, Location end);
+    abstract public List<Location> searchPath(Location start, Location end);
 
-    public boolean isSameColor(Piece piece) {
+    public boolean isSameColor(final Piece piece) {
+        if (piece == null) {
+            return false;
+        }
         return this.color.equals(piece.color);
     }
 

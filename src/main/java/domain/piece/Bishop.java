@@ -26,7 +26,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Location> explore(final Location start, final Location end) {
+    public List<Location> searchPath(final Location start, final Location end) {
         if (isNotMovable(start, end)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
