@@ -27,6 +27,14 @@ public final class Position {
         return new Position(rank + diffRank, file + diffFile);
     }
 
+    public int fileDiff(Position target) {
+        return target.file - this.file;
+    }
+
+    public int rankDiff(Position target) {
+        return target.rank - this.rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

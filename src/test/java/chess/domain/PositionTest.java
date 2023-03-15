@@ -30,4 +30,22 @@ class PositionTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 잘못된 위치입니다.");
     }
+
+    @Test
+    @DisplayName("file 사이의 거리를 반환한다.")
+    void fileDiff() {
+        Position source = new Position(0, 0);
+        Position target = new Position(0, 3);
+
+        assertThat(source.fileDiff(target)).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("rank 사이의 거리를 반환한다.")
+    void rankDiff() {
+        Position source = new Position(0, 0);
+        Position target = new Position(3, 0);
+
+        assertThat(source.rankDiff(target)).isEqualTo(3);
+    }
 }
