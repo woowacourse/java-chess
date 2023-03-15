@@ -12,6 +12,10 @@ public abstract class Piece {
         this.team = team;
     }
 
-    abstract boolean isMovable(Position source, Position target);
-    abstract List<Position> findPath(Position source, Position target);
+    public abstract boolean isMovable(Position source, Position target);
+    public abstract List<Position> findPath(Position source, Position target);
+
+    public boolean isSameTeam(Piece otherPiece) {
+        return team.isSameTeam(otherPiece.team);
+    }
 }

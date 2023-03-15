@@ -11,7 +11,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position source, Position target) {
         int fileDiff = source.fileDiff(target);
         int rankDiff = source.rankDiff(target);
 
@@ -19,7 +19,7 @@ public class King extends Piece {
     }
 
     @Override
-    List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(Position source, Position target) {
         return List.of(target);
     }
 }

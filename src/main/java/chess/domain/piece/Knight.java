@@ -11,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position source, Position target) {
         int fileDiff = Math.abs(source.fileDiff(target));
         int rankDiff = Math.abs(source.rankDiff(target));
 
@@ -19,7 +19,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(Position source, Position target) {
         return List.of(target);
     }
 }

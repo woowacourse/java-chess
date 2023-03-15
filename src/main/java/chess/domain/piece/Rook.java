@@ -12,7 +12,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position source, Position target) {
         int fileDiff = source.fileDiff(target);
         int rankDiff = source.rankDiff(target);
 
@@ -20,7 +20,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(Position source, Position target) {
         int rankDiff = source.rankDiff(target);
         int fileDiff = source.fileDiff(target);
 

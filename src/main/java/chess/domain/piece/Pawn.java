@@ -15,7 +15,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position source, Position target) {
         if (team == Team.BLACK) {
             return isBlackMovable(source, target);
         }
@@ -45,7 +45,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(Position source, Position target) {
         int rankDiff = source.rankDiff(target);
         int fileDiff = source.fileDiff(target);
 

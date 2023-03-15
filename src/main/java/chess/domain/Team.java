@@ -4,7 +4,7 @@ public enum Team {
     BLACK,
     WHITE;
 
-    boolean isSameTeam(Team team) {
+    public boolean isSameTeam(Team team) {
         return this == team;
     }
 }
