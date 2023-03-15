@@ -12,6 +12,7 @@
 graph TD
     ChessController --> InputView
     ChessController --> OutputView
+    ChessController --> Command
     ChessController --> ChessGame
     
     ChessGame --> Board
@@ -20,6 +21,9 @@ graph TD
 
     Board --> Piece
     Board --> Position
+    
+    Position --> File
+    Position --> Rank
     
     Piece --> Pawn
     Piece --> Rook
