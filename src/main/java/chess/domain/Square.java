@@ -27,4 +27,27 @@ public class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public int getFile() {
+        return file.getX();
+    }
+
+    public int getRank() {
+        return rank.getY();
+    }
+
+    public boolean isAble(final Square target, final int fileWeight, final int rankWeight) {
+        final int targetFile = target.getFile();
+        final int targetRank = target.getRank();
+
+        return isAbleFile(targetFile, fileWeight) && isAbleRank(targetRank, rankWeight);
+    }
+
+    private boolean isAbleFile(final int targetFile, final int fileWeight) {
+        return getFile() + fileWeight == targetFile;
+    }
+
+    private boolean isAbleRank(final int targetRank, final int rankWeight) {
+        return getRank() + rankWeight == targetRank;
+    }
 }

@@ -1,5 +1,17 @@
 package chess.domain;
 
+import java.util.function.Function;
+
 public enum Camp {
-    WHITE, BLACK, EMPTY
+    WHITE(weight -> weight), BLACK(weight -> -weight), EMPTY(weight -> 0);
+
+    private final Function<Integer, Integer> expression;
+
+    Camp(final Function<Integer, Integer> expression) {
+        this.expression = expression;
+    }
+
+    public int calculateDirection(final int weight) {
+        return expression.apply(weight);
+    }
 }
