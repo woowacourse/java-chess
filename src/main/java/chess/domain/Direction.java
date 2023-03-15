@@ -4,29 +4,27 @@ import java.util.List;
 
 public enum Direction {
 
-	NORTH(0, 1),
-	NORTH_NORTH_EAST(1, 2),
-	NORTH_EAST(1, 1),
-	NORTH_EAST_EAST(2, 1),
-	EAST(1, 0),
-	SOUTH_EAST_EAST(2, -1),
-	SOUTH_EAST(1, -1),
-	SOUTH_SOUTH_EAST(1, -2),
-	SOUTH(0, -1),
-	SOUTH_SOUTH_WEST(-1, -2),
-	SOUTH_WEST(-1, -1),
-	SOUTH_WEST_WEST(-2, -1),
-	WEST(-1, 0),
-	NORTH_WEST_WEST(-2, 1),
-	NORTH_WEST(-1, 1),
-	NORTH_NORTH_WEST(-1, 2);
+	NORTH(new RelativePosition(0, 1)),
+	NORTH_NORTH_EAST(new RelativePosition(1, 2)),
+	NORTH_EAST(new RelativePosition(1, 1)),
+	NORTH_EAST_EAST(new RelativePosition(2, 1)),
+	EAST(new RelativePosition(1, 0)),
+	SOUTH_EAST_EAST(new RelativePosition(2, -1)),
+	SOUTH_EAST(new RelativePosition(1, -1)),
+	SOUTH_SOUTH_EAST(new RelativePosition(1, -2)),
+	SOUTH(new RelativePosition(0, -1)),
+	SOUTH_SOUTH_WEST(new RelativePosition(-1, -2)),
+	SOUTH_WEST(new RelativePosition(-1, -1)),
+	SOUTH_WEST_WEST(new RelativePosition(-2, -1)),
+	WEST(new RelativePosition(-1, 0)),
+	NORTH_WEST_WEST(new RelativePosition(-2, 1)),
+	NORTH_WEST(new RelativePosition(-1, 1)),
+	NORTH_NORTH_WEST(new RelativePosition(-1, 2));
 
-	private final int x;
-	private final int y;
+	private final RelativePosition unitRelativePosition;
 
-	Direction(final int x, final int y) {
-		this.x = x;
-		this.y = y;
+	Direction(final RelativePosition unitRelativePosition) {
+		this.unitRelativePosition = unitRelativePosition;
 	}
 
 	public static List<Direction> getAll() {
@@ -49,11 +47,7 @@ public enum Direction {
 		return List.of(NORTH);
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
+	public boolean matches(RelativePosition relativePosition) {
+		return unitRelativePosition.equals(relativePosition);
 	}
 }
