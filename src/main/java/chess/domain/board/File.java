@@ -18,6 +18,13 @@ public enum File {
         this.value = value;
     }
 
+    public static File from(final int value) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException());
+    }
+
     public File plus() {
         int filePlused = this.value + 1;
         return Arrays.stream(File.values())
