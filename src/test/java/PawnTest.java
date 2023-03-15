@@ -13,11 +13,19 @@ public class PawnTest {
 //        assertThat(path).hasSize(0);
 //    }
 
-    @DisplayName("target position이 source position보다 rank가 1높고, target position이 비어있으면 true를 반환한다.")
+    @DisplayName("White 진영인 경우 - target position이 source position보다 rank가 1높고, target position이 비어있으면 true를 반환한다.")
     @Test
-    void shouldReturnIfIsMovableToTargetPositionWhenRequest() {
+    void shouldReturnIfIsMovableToTargetPositionWhenPawnIsWhiteSide() {
         Pawn whitePawn = Pawn.createOfWhite();
         boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", "2"), Position.of("a", "3"));
+        assertThat(movable).isTrue();
+    }
+
+    @DisplayName("Black 진영인 경우 - target position이 source position보다 rank가 1낮고, target position이 비어있으면 true를 반환한다.")
+    @Test
+    void shouldReturnIfIsMovableToTargetPositionWhenPawnIsBlackSide() {
+        Pawn blackPawn = Pawn.createOfBlack();
+        boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", "7"), Position.of("a", "6"));
         assertThat(movable).isTrue();
     }
 }
