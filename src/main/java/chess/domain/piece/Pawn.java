@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public final class Pawn extends Piece {
 
@@ -13,8 +13,8 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> computePath(final Position source, final Position target) {
-        List<Position> path = new ArrayList<>();
+    public Set<Position> computePath(final Position source, final Position target) {
+        Set<Position> path = new HashSet<>();
         if (color.isBlack()) {
             path.add(source.getDownStraight());
             path.add(source.getLeftDownDiagonal());
@@ -25,7 +25,7 @@ public final class Pawn extends Piece {
             if (!path.contains(target)) {
                 throw new IllegalArgumentException();
             }
-            path = List.of(target);
+            path = Set.of(target);
         }
         if (color.isWhite()) {
             path.add(source.getUpStraight());
@@ -37,7 +37,7 @@ public final class Pawn extends Piece {
             if (!path.contains(target)) {
                 throw new IllegalArgumentException();
             }
-            path = List.of(target);
+            path = Set.of(target);
         }
         return path;
     }

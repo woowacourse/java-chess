@@ -6,7 +6,7 @@ import chess.domain.board.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static chess.domain.piece.PawnTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,18 +23,18 @@ class RookTest {
     @Test
     void computePath_sameFile() {
         Rook rook = new Rook(Color.BLACK);
-        List<Position> positions = rook.computePath(B1, B5);
+        Set<Position> positions = rook.computePath(B5, B1);
 
-        assertThat(positions).containsExactly(B5, B4, B3, B2);
+        assertThat(positions).containsExactlyInAnyOrder(B4, B3, B2, B1);
     }
 
     @DisplayName("같은 Rank일 때 이동 가능한 경로를 계산한다")
     @Test
     void computePath_sameRank() {
         Rook rook = new Rook(Color.BLACK);
-        List<Position> positions = rook.computePath(A4, E4);
+        Set<Position> positions = rook.computePath(A4, E4);
 
-        assertThat(positions).containsExactly(E4, D4, C4, B4);
+        assertThat(positions).containsExactlyInAnyOrder(E4, D4, C4, B4);
     }
 
     @DisplayName("source와 target의 File이 같지않고 Rank가 같지 않으면 예외를 발생한다")

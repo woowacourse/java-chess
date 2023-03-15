@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class Piece {
 
@@ -13,7 +13,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract List<Position> computePath(Position source, Position target);
+    public abstract Set<Position> computePath(Position source, Position target);
 
     public abstract boolean canMove(Map<Position, Boolean> isExists, Position source, Position target);
 

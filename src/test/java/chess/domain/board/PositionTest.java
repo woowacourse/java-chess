@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
 
+    public static final Position B4 = new Position(File.B, Rank.FOUR);
+    public static final Position E7 = new Position(File.E, Rank.SEVEN);
+
     @Test
     void isFileEquals_true() {
         var source = new Position(File.D, Rank.FIVE);
@@ -40,8 +43,8 @@ class PositionTest {
 
     @Test
     void computeInclination_result1() {
-        var source = new Position(File.C, Rank.FIVE);
-        var target = new Position(File.E, Rank.SEVEN);
+        var source = B4;
+        var target = E7;
 
         double v = source.computeInclination(target);
 

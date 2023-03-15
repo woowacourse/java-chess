@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public final class Rook extends Piece {
 
@@ -13,7 +13,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public List<Position> computePath(final Position source, final Position target) {
+    public Set<Position> computePath(final Position source, final Position target) {
         if (source.isFileEquals(target)) {
             return getFilePath(source, target);
         }
@@ -23,8 +23,8 @@ public final class Rook extends Piece {
         throw new IllegalArgumentException();
     }
 
-    private List<Position> getRankPath(final Position source, final Position target) {
-        List<Position> path = new ArrayList<>();
+    private Set<Position> getRankPath(final Position source, final Position target) {
+        Set<Position> path = new HashSet<>();
         var max = Position.maxFile(source, target);
         var min = Position.minFile(source, target);
 
@@ -32,12 +32,13 @@ public final class Rook extends Piece {
             path.add(max);
             max = max.getLeftStraight();
         }
+        path.add(target);
         path.remove(source);
         return path;
     }
 
-    private List<Position> getFilePath(final Position source, final Position target) {
-        List<Position> path = new ArrayList<>();
+    private Set<Position> getFilePath(final Position source, final Position target) {
+        Set<Position> path = new HashSet<>();
         var max = Position.maxRank(source, target);
         var min = Position.minRank(source, target);
 
@@ -45,6 +46,7 @@ public final class Rook extends Piece {
             path.add(max);
             max = max.getDownStraight();
         }
+        path.add(target);
         path.remove(source);
         return path;
     }

@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static chess.domain.board.File.FIVE;
-import static chess.domain.board.File.TWO;
-import static chess.domain.board.Rank.A;
-import static chess.domain.board.Rank.B;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EmptyTest {
