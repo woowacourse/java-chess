@@ -1,7 +1,6 @@
 package chess.domain.pieces;
 
 import chess.domain.board.Col;
-import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 public class Bishop extends Piece {
