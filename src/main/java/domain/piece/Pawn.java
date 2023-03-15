@@ -22,17 +22,17 @@ public class Pawn extends Piece {
             return isFirstBlackMove(start, end);
         }
         if (start.isDiagonal(end)) {
-            return start.getRow() - end.getRow() == -1;
+            return start.getRow() - end.getRow() == 1;
         }
         return false;
     }
 
     private static boolean isFirstBlackMove(final Location start, final Location end) {
         if (start.getRow() == 7) {
-            return start.getRow() - end.getRow() == -2
-                || start.getRow() - end.getRow() == -1;
+            return start.getRow() - end.getRow() == 2
+                || start.getRow() - end.getRow() == 1;
         }
-        return start.getRow() - end.getRow() == -1;
+        return start.getRow() - end.getRow() == 1;
     }
 
     private boolean isPossibleWhite(final Location start, final Location end) {
@@ -40,16 +40,16 @@ public class Pawn extends Piece {
             return isFirstWhiteMove(start, end);
         }
         if (start.isDiagonal(end)) {
-            return start.getRow() - end.getRow() == 1;
+            return start.getRow() - end.getRow() == -1;
         }
         return false;
     }
 
     private static boolean isFirstWhiteMove(final Location start, final Location end) {
         if (start.getRow() == 2) {
-            return start.getRow() - end.getRow() == 2
-                || start.getRow() - end.getRow() == 1;
+            return start.getRow() - end.getRow() == -2
+                || start.getRow() - end.getRow() == -1;
         }
-        return start.getRow() - end.getRow() == 1;
+        return start.getRow() - end.getRow() == -1;
     }
 }
