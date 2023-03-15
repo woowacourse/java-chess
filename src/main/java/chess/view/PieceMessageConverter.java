@@ -26,16 +26,19 @@ public enum PieceMessageConverter {
     }
 
     public static String convert(final Type type, final Color pieceColor) {
-        final String message = Arrays.stream(values())
-            .filter(converter -> converter.type.equals(type))
-            .map(converter -> converter.message)
-            .findFirst()
-            .orElse(PieceMessageConverter.EMPTY.message);
+        final String message = convertPieceMessage(type);
 
         if (PieceColor.WHITE.equals(pieceColor)) {
             return message.toLowerCase();
         }
-
         return message.toUpperCase();
+    }
+
+    private static String convertPieceMessage(final Type type) {
+        return Arrays.stream(values())
+                .filter(converter -> converter.type.equals(type))
+                .map(converter -> converter.message)
+                .findFirst()
+                .orElse(PieceMessageConverter.EMPTY.message);
     }
 }

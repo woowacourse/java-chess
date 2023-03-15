@@ -13,11 +13,18 @@ public class OutputView {
         final List<String> squareResponses = boardResponse.getSquares();
 
         for (int rankIndex = MAX_RANK_INDEX; rankIndex >= 0; rankIndex--) {
-            for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
-                final int squareIndex = rankIndex * RANK_SIZE + fileIndex;
-                System.out.print(squareResponses.get(squareIndex));
-            }
-            System.out.println();
+            System.out.println(convertChessBoardMessage(squareResponses, rankIndex));
         }
+    }
+
+    private String convertChessBoardMessage(final List<String> squareResponses, final int rankIndex) {
+        final StringBuilder chessBoardMessageBuilder = new StringBuilder();
+
+        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
+            final int squareIndex = rankIndex * RANK_SIZE + fileIndex;
+
+            chessBoardMessageBuilder.append(squareResponses.get(squareIndex));
+        }
+        return chessBoardMessageBuilder.toString();
     }
 }

@@ -9,8 +9,8 @@ import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.QUEEN;
 import static chess.model.piece.PieceType.ROOK;
 
-import chess.model.piece.PieceColor;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
 import java.util.LinkedList;
 import java.util.List;
