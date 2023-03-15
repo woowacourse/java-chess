@@ -12,6 +12,10 @@ public abstract class Piece {
         this.pieceSymbol = pieceSymbol;
     }
 
+    public boolean isBlack() {
+        return camp == Camp.BLACK;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -27,5 +31,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(camp);
+    }
+
+    public String getPieceSymbolName() {
+        return pieceSymbol.name();
     }
 }
