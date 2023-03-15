@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Coordinate {
 
-    private final double row;
-    private final double col;
+    private final int row;
+    private final int col;
 
-    public Coordinate(final double row, final double col) {
+    public Coordinate(final int row, final int col) {
         this.row = row;
         this.col = col;
     }
 
-    public Coordinate add(double row, double col) {
-        return new Coordinate(this.row + row, this.col + col);
+    public Coordinate add(Coordinate otherCoordinate) {
+        return new Coordinate(this.row + otherCoordinate.row, this.col + col);
     }
 
     public Coordinate minus(Coordinate otherCoordinate) {
@@ -59,13 +59,21 @@ public class Coordinate {
     }
 
     public double getInclination(Coordinate otherCoordinate) {
-        return (this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
+        return ((double)this.row - otherCoordinate.row) / (this.col - otherCoordinate.col);
     }
 
     public boolean hasDistanceOfOne(Coordinate otherCoordinate) {
         double x = otherCoordinate.col - this.col;
         double y = otherCoordinate.row - this.row;
         return x <= 1.0 && y <= 1.0;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
     @Override
