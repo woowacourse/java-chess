@@ -4,7 +4,7 @@ import chess.board.Position;
 
 public abstract class Piece {
 
-    private final Team team;
+    protected final Team team;
 
     protected Piece(final Team team) {
         this.team = team;
