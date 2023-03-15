@@ -45,24 +45,13 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"D, FOUR, true", "E, FIVE, true", "D, THREE, false", "F, FIVE, false"})
-    @DisplayName("상하좌우로 한 칸 거리인지 확인한다")
-    void isCrossNeighborPositionTest(final File file, final Rank rank, final boolean expected) {
+    @CsvSource({"D, FOUR, 1", "F, FIVE, 2", "G, FIVE, 3"})
+    @DisplayName("맨허튼 거리를 계산한다")
+    void calculateManhattanDistanceTest(final File file, final Rank rank, final int expectedDistance) {
         final Position otherPosition = new Position(file, rank);
 
-        final boolean actual = E_FOUR.isCrossNeighborPosition(otherPosition);
+        final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
 
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"D, FOUR, false", "E, FIVE, false", "D, THREE, true", "F, FIVE, true"})
-    @DisplayName("대각선로 한 칸 거리인지 확인한다")
-    void isDiagonalNeighborPositionTest(final File file, final Rank rank, final boolean expected) {
-        final Position otherPosition = new Position(file, rank);
-
-        final boolean actual = E_FOUR.isDiagonalNeighborPosition(otherPosition);
-
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actualDistance).isEqualTo(expectedDistance);
     }
 }

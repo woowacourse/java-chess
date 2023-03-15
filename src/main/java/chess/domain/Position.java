@@ -19,23 +19,16 @@ public class Position {
         return (calculateFileDistance(otherPosition) == calculateRankDistance(otherPosition)) && !this.equals(otherPosition);
     }
 
-    public boolean isCrossNeighborPosition(final Position otherPosition) {
-        if (isInCrossPosition(otherPosition)) {
-            return calculateFileDistance(otherPosition) == 1 || calculateRankDistance(otherPosition) == 1;
-        }
-        return false;
-    }
-
-    public boolean isDiagonalNeighborPosition(final Position otherPosition) {
-        return calculateFileDistance(otherPosition) == 1 && calculateRankDistance(otherPosition) == 1;
-    }
-
     private int calculateFileDistance(final Position otherPosition) {
         return this.file.calculateDistance(otherPosition.file);
     }
 
     private int calculateRankDistance(final Position otherPosition) {
         return this.rank.calculateDistance(otherPosition.rank);
+    }
+
+    public int calculateManhattanDistance(final Position otherPosition) {
+        return calculateFileDistance(otherPosition) + calculateRankDistance(otherPosition);
     }
 
     @Override
