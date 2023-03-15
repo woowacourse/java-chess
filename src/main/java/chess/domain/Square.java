@@ -24,6 +24,35 @@ public class Square {
         return Objects.hash(rank, file);
     }
 
+
+    public boolean inLine(final Square to) {
+        checkSameSquare(to);
+        return this.rank == to.rank || this.file == to.file;
+    }
+
+    public boolean inDiagonal(final Square to) {
+        checkSameSquare(to);
+        final int verticalDistance = this.rank.distanceTo(to.rank);
+        final int horizontalDistance = this.file.distanceTo(to.file);
+        return verticalDistance == horizontalDistance;
+    }
+
+    public boolean inLShape(final Square to) {
+        checkSameSquare(to);
+        final int verticalDistance = this.rank.distanceTo(to.rank);
+        final int horizontalDistance = this.file.distanceTo(to.file);
+        if (verticalDistance == 0 || horizontalDistance == 0) {
+            return false;
+        }
+        return verticalDistance + horizontalDistance == 3;
+    }
+
+    private void checkSameSquare(final Square to) {
+        if (this == to) {
+            throw new IllegalArgumentException("같은 지점이 들어왔습니다");
+        }
+    }
+
     public int getRank() {
         return rank.getPosition();
     }
