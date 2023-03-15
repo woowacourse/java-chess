@@ -3,6 +3,7 @@ package chess.model.board;
 import chess.model.Color;
 import chess.model.Type;
 import chess.model.piece.Piece;
+import chess.model.position.Position;
 
 public class PieceSquare extends AbstractSquare {
 

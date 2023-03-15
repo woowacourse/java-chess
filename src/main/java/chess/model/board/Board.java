@@ -12,6 +12,9 @@ import static chess.model.piece.PieceType.ROOK;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
+import chess.model.position.File;
+import chess.model.position.Position;
+import chess.model.position.Rank;
 import java.util.LinkedList;
 import java.util.List;
 

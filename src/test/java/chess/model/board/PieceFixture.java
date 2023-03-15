@@ -3,6 +3,9 @@ package chess.model.board;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
+import chess.model.position.File;
+import chess.model.position.Position;
+import chess.model.position.Rank;
 
 public class PieceFixture {
 
