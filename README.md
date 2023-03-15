@@ -47,12 +47,13 @@ graph TD
     ChessController --> ChessGame
     ChessGame --> Board
 
-    Square --> Rank
-    Square --> File
+    Position --> Rank
+    Position --> File
 
-    Board --> Square
+    Board --> Position
     Board --> PIECE
     PIECE --> Color
+    PIECE --> PieceType
 
     subgraph PIECE
         direction BT
