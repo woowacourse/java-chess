@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.square;
 
+import chess.domain.square.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
