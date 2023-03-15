@@ -1,6 +1,7 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.Location;
 import java.util.stream.Stream;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.TestFactory;
 
 class BishopTest {
 
-    @DisplayName("비숍이 이동가능한 경로일 때 True를 반환한다.")
+    @DisplayName("비숍이 이동가능한 경로를 반환한다.")
     @TestFactory
     Stream<DynamicTest> testIsMovable() {
         final Bishop bishop = Bishop.makeBlack();
@@ -18,22 +19,36 @@ class BishopTest {
             DynamicTest.dynamicTest("오른쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(2, 2);
-                assertThat(bishop.movable(start, end)).isTrue();
+                assertThat(bishop.explore(start, end)).containsExactly(
+                    Location.of(2, 2)
+                );
             }),
             DynamicTest.dynamicTest("오른쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(1, 8);
-                final Location end = Location.of(8, 1);
-                assertThat(bishop.movable(start, end)).isTrue();
+                final Location end = Location.of(3, 6);
+                assertThat(bishop.explore(start, end)).containsExactly(
+                    Location.of(2, 7),
+                    Location.of(3, 6)
+                );
             }),
             DynamicTest.dynamicTest("왼쪽 위 대각선 방향으로 움직일 수 있다.", () -> {
-                final Location start = Location.of(7, 7);
-                final Location end = Location.of(6, 8);
-                assertThat(bishop.movable(start, end)).isTrue();
+                final Location start = Location.of(7, 5);
+                final Location end = Location.of(4, 8);
+                assertThat(bishop.explore(start, end)).containsExactly(
+                    Location.of(6, 6),
+                    Location.of(5, 7),
+                    Location.of(4, 8)
+                );
             }),
             DynamicTest.dynamicTest("왼쪽 아래 대각선 방향으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(7, 7);
-                final Location end = Location.of(8, 6);
-                assertThat(bishop.movable(start, end)).isTrue();
+                final Location end = Location.of(3, 3);
+                assertThat(bishop.explore(start, end)).containsExactly(
+                    Location.of(6, 6),
+                    Location.of(5, 5),
+                    Location.of(4, 4),
+                    Location.of(3, 3)
+                );
             })
         );
     }
@@ -46,22 +61,26 @@ class BishopTest {
             DynamicTest.dynamicTest("위로 움직일 수 없다.", () -> {
                 final Location start = Location.of(1, 1);
                 final Location end = Location.of(1, 2);
-                assertThat(bishop.movable(start, end)).isFalse();
+                assertThatThrownBy(() -> bishop.explore(start, end))
+                    .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("아래로 움직일 수 없다.", () -> {
                 final Location start = Location.of(1, 8);
                 final Location end = Location.of(1, 1);
-                assertThat(bishop.movable(start, end)).isFalse();
+                assertThatThrownBy(() -> bishop.explore(start, end))
+                    .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("왼쪽으로 움직일 수 없다.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(6, 7);
-                assertThat(bishop.movable(start, end)).isFalse();
+                assertThatThrownBy(() -> bishop.explore(start, end))
+                    .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽으로 움직일 수 없다.", () -> {
                 final Location start = Location.of(7, 7);
                 final Location end = Location.of(8, 7);
-                assertThat(bishop.movable(start, end)).isFalse();
+                assertThatThrownBy(() -> bishop.explore(start, end))
+                    .isInstanceOf(IllegalArgumentException.class);
             })
         );
     }
