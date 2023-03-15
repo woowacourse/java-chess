@@ -38,7 +38,7 @@ public abstract class Piece {
         return isDifferentCamp(targetCamp) || targetCamp.equals(Camp.NONE);
     }
 
-    private boolean isExistPieceOnPath(Map<Square, Camp> pathInfo) {
+    protected boolean isExistPieceOnPath(Map<Square, Camp> pathInfo) {
         return pathInfo.values().stream()
                 .anyMatch(camp -> camp != Camp.NONE);
     }

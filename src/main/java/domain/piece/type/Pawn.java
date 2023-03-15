@@ -2,6 +2,7 @@ package domain.piece.type;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import domain.board.Square;
 import domain.piece.Camp;
@@ -9,12 +10,8 @@ import domain.piece.Direction;
 import domain.piece.Piece;
 
 public class Pawn extends Piece {
+    private boolean isGoingForward;
     private boolean isFirstMove = true;
-    private static final List<List<Integer>> movableDirection = List.of(
-            List.of(0, 1),
-            List.of(-1, 1),
-            List.of(1, 1)
-    );
 
     private static final List<Direction> movableDirectionForward = List.of(
             Direction.NORTH
@@ -38,9 +35,10 @@ public class Pawn extends Piece {
     // TODO: 2023/03/14 위에 거를 메서드로 구현해야됨 
     // TODO: 2023/03/14 마지막에 null 리턴 아니고 에러 던져야 됨
     @Override
-    public List<Square> fetchMovableCoordinate(Square currentSquare, Square targetSquare) {
+    public List<Square> fetchMovePath(Square currentSquare, Square targetSquare) {
         List<Direction> targetDirection = movableDirectionDiagonal;
-        if (currentSquare.toCoordinate().get(FILE).equals(targetSquare.toCoordinate().get(FILE))) {
+        isGoingForward = currentSquare.toCoordinate().get(FILE).equals(targetSquare.toCoordinate().get(FILE));
+        if (isGoingForward) {
             targetDirection = movableDirectionForward;
         }
 
@@ -72,6 +70,15 @@ public class Pawn extends Piece {
         return null;
     }
 
+    public boolean canMove(Map<Square, Camp> pathInfo, Square targetSquare) {
+        Camp targetCamp = pathInfo.get(targetSquare);
+        pathInfo.remove(targetSquare);
+        boolean existPieceOnPath = isExistPieceOnPath(pathInfo);
+        if (isGoingForward) {
+            return targetCamp.equals(Camp.NONE) && !existPieceOnPath;
+        }
+        return isDifferentCamp(targetCamp);
+    }
 
     private int fetchDirectionUnit() {
         if (isWhite()) {
