@@ -3,15 +3,23 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn implements Movable {
+public class Pawn extends Piece {
 
-    private static final List<Integer> FIRST_RANKS = List.of(2, 7);
-    private static final List<Direction> directions;
+    private static final int WHITE_START_RANK = 2;
+    private static final int BLACK_START_RANK = 7;
 
-    static {
-        // SOUTH or NORTH
-        // SOUTH_EAST, SOUTH_WEST or NORTH_EAST, NOUTH_WEST
-        directions = List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
+    private final List<Direction> directions;
+
+    public Pawn(TeamColor color) {
+        super(color);
+        this.directions = getDirectionsByColor();
+    }
+
+    private List<Direction> getDirectionsByColor() {
+        if (color == TeamColor.BLACK) {
+            return List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        }
+        return List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
     }
 
     @Override
@@ -20,9 +28,24 @@ public class Pawn implements Movable {
         for (Direction direction : directions) {
             paths.add(Path.ofSinglePath(current, direction));
         }
-        if (FIRST_RANKS.contains(current.getX())) {
-            paths.add(Path.ofPawnStartPath(current, Direction.NORTH));
+
+        if (isStartRank(current)) {
+            paths.add(Path.ofPawnStartPath(current, getForwardDirectionByColor()));
         }
         return paths;
+    }
+
+    private boolean isStartRank(final Position current) {
+        if (color == TeamColor.WHITE) {
+            return current.getX() == WHITE_START_RANK;
+        }
+        return current.getX() == BLACK_START_RANK;
+    }
+
+    private Direction getForwardDirectionByColor() {
+        if (color == TeamColor.WHITE) {
+            return Direction.NORTH;
+        }
+        return Direction.SOUTH;
     }
 }

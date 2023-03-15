@@ -27,4 +27,13 @@ class PathTest {
                 new Position(2, 1), new Position(3, 1), new Position(4, 1), new Position(5, 1), new Position(6, 1),
                 new Position(7, 1), new Position(8, 1));
     }
+
+    @DisplayName("폰의 경우, 첫 이동 시 2칸을 이동하는 이동 경로를 만들 수 있다.")
+    @Test
+    void 폰_시작_이동경로_생성() {
+        Path path = Path.ofPawnStartPath(new Position(2, 1), Direction.NORTH);
+
+        assertThat(path.positions()).containsExactly(new Position(3, 1), new Position(4, 1));
+    }
+
 }
