@@ -1,3 +1,5 @@
+package chess;
+
 import chess.ChessBoard;
 
 public class ChessGame {

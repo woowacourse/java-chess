@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ChessBoardTest {
 
     ChessBoard chessBoard = ChessBoard.generateChessBoard();
-    
+
     @Test
     @DisplayName("체스판 생성 후 룩은 올바른 위치에 만들어진다.")
     void shouldSuccessGenerateRook() {

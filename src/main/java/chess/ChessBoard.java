@@ -59,17 +59,21 @@ public class ChessBoard {
     }
 
     private static void generatePawn(Map<List<Integer>, ChessPiece> chessBoard) {
-        for (int i = 1; i <= 8; i++) {
-            chessBoard.put(List.of(i, 2), new Pawn(Side.WHITE));
-            chessBoard.put(List.of(i, 7), new Pawn(Side.BLACK));
+        for (int horizontal = 1; horizontal <= 8; horizontal++) {
+            chessBoard.put(List.of(horizontal, 2), new Pawn(Side.WHITE));
+            chessBoard.put(List.of(horizontal, 7), new Pawn(Side.BLACK));
         }
     }
 
     private static void initEmptySpace(Map<List<Integer>, ChessPiece> chessBoard) {
-        for (int i = 3; i <= 8; i++) {
-            for (int j = 3; j <= 6; j++) {
-                chessBoard.put(List.of(i, j), new Empty(Side.BLANK));
-            }
+        for (int horizontal = 3; horizontal <= 8; horizontal++) {
+            circuitVertical(chessBoard, horizontal);
+        }
+    }
+
+    private static void circuitVertical(Map<List<Integer>, ChessPiece> chessBoard, int i) {
+        for (int vertical = 3; vertical <= 6; vertical++) {
+            chessBoard.put(List.of(i, vertical), new Empty(Side.BLANK));
         }
     }
 

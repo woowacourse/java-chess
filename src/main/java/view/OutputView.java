@@ -1,6 +1,5 @@
 package view;
 
-import chess.ChessBoard;
 import chess.Shape;
 import chess.piece.ChessPiece;
 
@@ -9,12 +8,19 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final int MIN_CHESS_BOARD_NUM = 1;
+    private static final int MAX_CHESS_BOARD_NUM = 8;
+
     public static void printChessBoard(Map<List<Integer>, ChessPiece> chessBoard) {
-        for (int j = 8; j >= 1; j--) {
-            for (int i = 1; i <= 8; i++) {
-                System.out.print(Shape.getNameByClass(chessBoard.get(List.of(i, j))));
-            }
+        for (int vertical = MAX_CHESS_BOARD_NUM; vertical >= MIN_CHESS_BOARD_NUM; vertical--) {
+            circuitHorizontal(chessBoard, vertical);
             System.out.println();
+        }
+    }
+
+    private static void circuitHorizontal(Map<List<Integer>, ChessPiece> chessBoard, int vertical) {
+        for (int horizontal = MIN_CHESS_BOARD_NUM; horizontal <= MAX_CHESS_BOARD_NUM; horizontal++) {
+            System.out.print(Shape.getNameByClass(chessBoard.get(List.of(horizontal, vertical))));
         }
     }
 

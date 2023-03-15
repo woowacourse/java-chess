@@ -2,6 +2,8 @@ package chess;
 
 import chess.piece.*;
 
+import java.util.Arrays;
+
 public enum Shape {
 
     WHITE_PAWN(new Pawn(Side.WHITE), "p"),
@@ -18,20 +20,23 @@ public enum Shape {
     BLACK_KING(new King(Side.BLACK), "K"),
     BLANK(new Empty(Side.BLANK), ".");
 
-    private final ChessPiece chessPiece;
+    private final ChessPiece chessType;
     private final String name;
 
     Shape(ChessPiece chessPiece, String name) {
-        this.chessPiece = chessPiece;
+        this.chessType = chessPiece;
         this.name = name;
     }
 
     public static String getNameByClass(ChessPiece chessPiece) {
-        for (Shape shape : Shape.values()) {
-            if (shape.chessPiece.equals(chessPiece)) {
-                return shape.name;
-            }
-        }
-        return BLANK.name;
+        return Arrays.stream(Shape.values())
+                .filter(shape -> shape.chessType.equals(chessPiece))
+                .findFirst()
+                .map(Shape::getName)
+                .orElse(BLANK.name);
+    }
+
+    private String getName() {
+        return name;
     }
 }

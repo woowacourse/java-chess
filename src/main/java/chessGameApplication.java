@@ -1,11 +1,11 @@
 import chess.ChessBoard;
+import chess.ChessGame;
 import view.InputView;
 import view.OutputView;
 
 public class chessGameApplication {
 
     public static void main(String[] args) {
-
         startPhase();
     }
 
