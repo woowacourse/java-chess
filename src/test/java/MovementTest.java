@@ -32,7 +32,7 @@ class MovementTest {
 
     @DisplayName("오른쪽 방향의 움직임이면 true, 아니면 false를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"1,0,true", "1,1,false", "-1,0,false", "2,-1,true"})
+    @CsvSource(value = {"1,0,true", "1,1,true", "-1,0,false", "2,-1,true"})
     void shouldReturnTrueWhenMovementDirectionIsRightOrFalse(int fileIncrement, int rankIncrement, boolean result) {
         Movement movement = new Movement(fileIncrement, rankIncrement);
         assertThat(movement.isRight()).isEqualTo(result);

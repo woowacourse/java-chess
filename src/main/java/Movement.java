@@ -14,16 +14,20 @@ public class Movement {
         return this.rankIncrement > 0;
     }
 
+    public boolean isDownward() {
+        return this.rankIncrement < 0;
+    }
+
+    public boolean isRight() {
+        return this.fileIncrement > 0;
+    }
+
     public boolean isPerpendicular() {
         return this.rankIncrement == NON_INCREMENT || this.fileIncrement == NON_INCREMENT;
     }
 
     public boolean isDiagonal() {
         return Math.abs(this.rankIncrement) == Math.abs(this.fileIncrement);
-    }
-
-    public boolean isDownward() {
-        return this.rankIncrement < 0;
     }
 
     public boolean isOneStep() {
