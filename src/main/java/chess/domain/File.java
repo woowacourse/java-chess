@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum File {
     A(0),
     B(1),
@@ -18,5 +20,12 @@ public enum File {
 
     public int getX() {
         return x;
+    }
+
+    public File findFile(final int targetFile) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.getX() == targetFile)
+                .findFirst()
+                .orElseThrow();
     }
 }

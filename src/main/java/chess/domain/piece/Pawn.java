@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.Square;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -51,5 +52,19 @@ public class Pawn extends Piece {
             return source.isAble(target, camp.calculateDirection(-1), camp.calculateDirection(1));
         }
         return false;
+    }
+
+    @Override
+    public List<Square> tracePath(final Square source, final Square target, final List<Square> path) {
+        final Square square = source.nextSquare(
+                target,
+                camp.calculateDirection(FILE_WEIGHT_ZERO),
+                camp.calculateDirection(RANK_WEIGHT_ONE)
+        );
+        path.add(square);
+        if (!square.equals(target)) {
+            tracePath(square, target, path);
+        }
+        return path;
     }
 }
