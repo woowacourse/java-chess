@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -70,10 +71,11 @@ public enum Direction {
         return DIAGONAL;
     }
 
-    public boolean match(final int rank, final int file) {
-        int gcd = gcd(Math.abs(rank), Math.abs(file));
-
-        return this.rank == (rank / gcd) && this.file == (file / gcd);
+    public static Direction findDirection(final int rank, final int file) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.match(rank, file))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Direction을 찾을 수 없습니다."));
     }
 
     private int gcd(final int a, final int b) {
@@ -82,5 +84,11 @@ public enum Direction {
         }
 
         return gcd(b, a % b);
+    }
+
+    public boolean match(final int rank, final int file) {
+        int gcd = gcd(Math.abs(rank), Math.abs(file));
+
+        return this.rank == (rank / gcd) && this.file == (file / gcd);
     }
 }
