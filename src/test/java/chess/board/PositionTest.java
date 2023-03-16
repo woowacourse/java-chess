@@ -148,10 +148,10 @@ public class PositionTest {
         // given
         final Position sourcePosition = new Position(File.D, Rank.FOUR);
         final Position targetPosition = new Position(File.D, Rank.TWO);
-        final Direction rightDirection = Direction.DOWN;
+        final Direction downDirection = Direction.DOWN;
 
         // when
-        int moveCount = sourcePosition.getMoveCount(targetPosition, rightDirection);
+        int moveCount = sourcePosition.getMoveCount(targetPosition, downDirection);
 
         // then
         assertThat(moveCount).isEqualTo(2);
@@ -163,12 +163,58 @@ public class PositionTest {
         // given
         final Position sourcePosition = new Position(File.D, Rank.FOUR);
         final Position targetPosition = new Position(File.F, Rank.SIX);
-        final Direction rightDirection = Direction.UP_RIGHT;
+        final Direction upRightDirection = Direction.UP_RIGHT;
 
         // when
-        int moveCount = sourcePosition.getMoveCount(targetPosition, rightDirection);
+        int moveCount = sourcePosition.getMoveCount(targetPosition, upRightDirection);
 
         // then
         assertThat(moveCount).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("입력받은 방향에 따라 다음 Position을 반환한다. - 수평")
+    void getNextPosition_Horizontal() {
+        // given
+        final Position position = new Position(File.D, Rank.FOUR);
+        final Direction rightDirection = Direction.RIGHT;
+        final Position expectedPosition = new Position(File.E, Rank.FOUR);
+
+        // when
+        final Position nextPosition = position.getNextPosition(rightDirection);
+
+        // then
+        assertThat(nextPosition).isEqualTo(expectedPosition);
+    }
+
+    @Test
+    @DisplayName("입력받은 방향에 따라 다음 Position을 반환한다. - 수직")
+    void getNextPosition_Vertical() {
+        // given
+        final Position position = new Position(File.D, Rank.FOUR);
+        final Direction downDirection = Direction.DOWN;
+        final Position expectedPosition = new Position(File.D, Rank.THREE);
+
+        // when
+        final Position nextPosition = position.getNextPosition(downDirection);
+
+        // then
+        assertThat(nextPosition).isEqualTo(expectedPosition);
+    }
+
+    @Test
+    @DisplayName("입력받은 방향에 따라 다음 Position을 반환한다. - 대각")
+    void getNextPosition() {
+        // given
+        final Position position = new Position(File.D, Rank.FOUR);
+        final Direction upRightDirection = Direction.UP_RIGHT;
+        final Position expectedPosition = new Position(File.E, Rank.FIVE);
+
+        // when
+        final Position nextPosition = position.getNextPosition(upRightDirection);
+
+        // then
+        assertThat(nextPosition).isEqualTo(expectedPosition);
+    }
 }
+
