@@ -13,22 +13,16 @@ public class RookState implements MoveState {
         return instance;
     }
 
-    private boolean validMoveRequest(int x, int y) {
+    @Override
+    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
+        return isValidMove(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+    }
+
+    private boolean isValidMove(int x, int y) {
         if (x != 0 && y == 0) {
             return true;
         }
-        if (x == 0 && y != 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        if (validMoveRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR) {
-            return true;
-        }
-        return false;
+        return x == 0 && y != 0;
     }
 
     @Override

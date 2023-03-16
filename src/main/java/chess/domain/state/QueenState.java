@@ -12,36 +12,23 @@ public class QueenState implements MoveState {
         return instance;
     }
 
-    private boolean validMoveRequest(int x, int y) {
-        if (x == 0 || y == 0) {
-            return straightMove(x, y);
-        }
-
-        if (Math.abs(x) == Math.abs(y)) {
-            return true;
-        }
-
-        return false;
+    @Override
+    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
+        return isValidRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
     }
 
-    private boolean straightMove(int x, int y) {
+    private boolean isValidRequest(int x, int y) {
+        if (x == 0 || y == 0) {
+            return isValidStraightRequest(x, y);
+        }
+        return Math.abs(x) == Math.abs(y);
+    }
+
+    private boolean isValidStraightRequest(int x, int y) {
         if (x == 0 && y != 0) {
             return true;
         }
-
-        if (x != 0 && y == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        if (validMoveRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR) {
-            return true;
-        }
-        return false;
+        return x != 0 && y == 0;
     }
 
     @Override

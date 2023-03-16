@@ -17,15 +17,16 @@ public class Board {
         makeWhitePiece();
     }
 
+    private void makeBlackPiece() {
+        makePiecesExceptPawns(Color.BLACK, Rank.EIGHT);
+        makePawns(Color.BLACK, Rank.SEVEN);
+    }
+
     private void makeWhitePiece() {
         makePiecesExceptPawns(Color.WHITE, Rank.ONE);
         makePawns(Color.WHITE, Rank.TWO);
     }
 
-    private void makeBlackPiece() {
-        makePiecesExceptPawns(Color.BLACK, Rank.EIGHT);
-        makePawns(Color.BLACK, Rank.SEVEN);
-    }
 
     private void makePiecesExceptPawns(Color color, Rank rank) {
         List<PieceType> highPieceOrder = List.of(
@@ -57,7 +58,6 @@ public class Board {
         if (piecePosition.get(origin) == null) {
             throw new IllegalPieceMoveException();
         }
-
         if (!piecePosition.get(origin).canJump()) {
             checkPath(origin, destination);
         }
