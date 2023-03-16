@@ -3,7 +3,6 @@ package domain.piece;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import domain.Square;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -57,9 +56,10 @@ class BishopTest {
     @MethodSource("parametersProvider2")
     void move_fail(Square src, Square dest) {
         Bishop bishop = new Bishop(TeamColor.WHITE);
-        List<Square> actual = bishop.findRoutes(src, dest);
 
-        Assertions.assertThat(actual).isEqualTo(Collections.emptyList());
+        Assertions.assertThatThrownBy(() -> bishop.findRoutes(src, dest))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("해당 방향으로 갈 수 없습니다.");
     }
 
     static Stream<Arguments> parametersProvider2() {

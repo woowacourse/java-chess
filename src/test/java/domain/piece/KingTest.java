@@ -3,7 +3,6 @@ package domain.piece;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import domain.Square;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -41,23 +40,23 @@ class KingTest {
     @DisplayName("한칸 이상 움직일 수 없다.")
     @ParameterizedTest(name = "{index} : {0} !=> {1}")
     @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest) {
+    void move_fail(Square src, Square dest, String expectedMessage) {
         King king = new King(TeamColor.WHITE);
-        List<Square> actual = king.findRoutes(src, dest);
-
-        Assertions.assertThat(actual).isEqualTo(Collections.emptyList());
+        Assertions.assertThatThrownBy(() -> king.findRoutes(src, dest))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(expectedMessage);
     }
 
     static Stream<Arguments> parametersProvider2() {
         return Stream.of(
-            arguments(Square.of(3, 3), Square.of(3, 5)),
-            arguments(Square.of(3, 3), Square.of(5, 5)),
-            arguments(Square.of(3, 3), Square.of(5, 3)),
-            arguments(Square.of(3, 3), Square.of(4, 1)),
-            arguments(Square.of(3, 3), Square.of(3, 3)),
-            arguments(Square.of(3, 3), Square.of(1, 2)),
-            arguments(Square.of(3, 3), Square.of(1, 3)),
-            arguments(Square.of(3, 3), Square.of(2, 5))
+            arguments(Square.of(3, 3), Square.of(3, 5), "움직일 수 있는 범위를 초과합니다."),
+            arguments(Square.of(3, 3), Square.of(5, 5), "움직일 수 있는 범위를 초과합니다."),
+            arguments(Square.of(3, 3), Square.of(5, 3), "움직일 수 있는 범위를 초과합니다."),
+            arguments(Square.of(3, 3), Square.of(3, 3), "움직일 수 있는 범위를 초과합니다."),
+            arguments(Square.of(3, 3), Square.of(1, 3), "움직일 수 있는 범위를 초과합니다."),
+            arguments(Square.of(3, 3), Square.of(4, 1), "해당 방향으로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(1, 2), "해당 방향으로 갈 수 없습니다."),
+            arguments(Square.of(3, 3), Square.of(2, 5), "해당 방향으로 갈 수 없습니다.")
         );
     }
 }
