@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.PieceType;
 import chess.domain.Position;
 
 import java.util.ArrayList;
@@ -9,22 +10,30 @@ import java.util.List;
 public class Bishop extends Piece {
     private static final int MAX_DISTANCE = 8;
 
-    Bishop(final Color color) {
-        super(color);
+    private Bishop(final PieceType pieceType, final Color color) {
+        super(pieceType, color);
+    }
+
+    public static Bishop from(final Color color) {
+        return new Bishop(PieceType.BISHOP, color);
     }
 
     @Override
     public List<Position> findPositions(final Position source, final Position target) {
-        final int rowDistance = Integer.compare(target.getRow(), source.getRow());
-        final int columnDistance = Integer.compare(target.getColumn(), source.getColumn());
-        final List<Position> positions = new ArrayList<>();
+        final int rowDirection = Integer.compare(target.getRow(), source.getRow());
+        final int columnDirection = Integer.compare(target.getColumn(), source.getColumn());
 
+        return createMovablePositions(source, rowDirection, columnDirection);
+    }
+
+    private List<Position> createMovablePositions(final Position source, final int rowDirection, final int columnDirection) {
+        final List<Position> positions = new ArrayList<>();
         int sourceRow = source.getRow();
         int sourceColumn = source.getColumn();
-        for (int i = 0; i < MAX_DISTANCE; i++) {
-            sourceRow += rowDistance;
-            sourceColumn += columnDistance;
-            positions.add(new Position(sourceRow, sourceColumn));
+        for (int distance = 0; distance < MAX_DISTANCE; distance++) {
+            sourceRow += rowDirection;
+            sourceColumn += columnDirection;
+            positions.add(Position.of(sourceRow, sourceColumn));
         }
 
         return positions;
