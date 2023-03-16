@@ -54,6 +54,12 @@ public enum Rank {
     }
 
     public Rank move(int distance) {
+        if (this.number + distance < 0) {
+            return Rank.of(0);
+        }
+        if (this.number + distance > 7) {
+            return Rank.of(7);
+        }
         return Rank.of(this.number + distance);
     }
 
