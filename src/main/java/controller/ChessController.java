@@ -17,10 +17,7 @@ public class ChessController {
     public void run() {
         Game game = Game.create();
         this.outputView.printGameGuideMessage();
-        String startCommand = this.inputView.requestUserInput();
-        if (!GameCommand.from(startCommand).equals(GameCommand.START)) {
-            throw new IllegalArgumentException("게임 시작하려면 먼저 start를 입력하세요.");
-        }
+        repeat(this::getStartCommand);
 
         Side side = Side.WHITE;
         this.outputView.printChessBoard(game.getChessBoard());
@@ -31,7 +28,7 @@ public class ChessController {
 
             Position sourcePosition = convertUserInputToSourcePosition(userInput);
             Position targetPosition = convertUserInputToTargetPosition(userInput);
-            game.move(sourcePosition, targetPosition);
+            game.move(side, sourcePosition, targetPosition);
 
             this.outputView.printChessBoard(game.getChessBoard());
             side = changeSide(side);
@@ -39,6 +36,17 @@ public class ChessController {
             userInput = this.inputView.requestUserInput();
             gameCommand = convertUserInputToGameCommandAfterStart(userInput);
         }
+    }
+
+    private void getStartCommand() {
+        String startCommand = this.inputView.requestUserInput();
+        if (!GameCommand.from(startCommand).equals(GameCommand.START)) {
+            throw new IllegalArgumentException("게임 시작하려면 먼저 start를 입력하세요.");
+        }
+    }
+
+    private static void validateStartUserInput(String startCommand) {
+
     }
 
     private Position convertUserInputToSourcePosition(String userInput) {
@@ -83,5 +91,15 @@ public class ChessController {
 
         }
         return Side.WHITE;
+    }
+
+    private Runnable repeat(Runnable runnable) {
+        try {
+            runnable.run();
+            return runnable;
+        } catch (RuntimeException e) {
+            this.outputView.printErrorMessage(e.getMessage());
+            return repeat(runnable);
+        }
     }
 }
