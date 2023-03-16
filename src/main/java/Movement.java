@@ -49,8 +49,8 @@ public class Movement {
         return Math.abs(fileIncrement) <= 2 && Math.abs(rankIncrement) <= 2;
     }
 
-    public boolean isStop() {
-        return this.fileIncrement == 0 && this.rankIncrement == 0;
+    public boolean isCorrectForKnight() {
+        return Math.abs(this.fileIncrement * this.rankIncrement) == 2;
     }
 
     @Override
