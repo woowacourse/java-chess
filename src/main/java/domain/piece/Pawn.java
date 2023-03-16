@@ -17,7 +17,7 @@ public class Pawn extends Piece {
     public static final Vectorr BOTTOM_RIGHT = Vectorr.of(1, -1);
     public static final Vectorr BOTTOM_LEFT = Vectorr.of(-1, -1);
 
-    private static List<Vectorr> directions;
+    private List<Vectorr> directions;
 
     private State state;
 
@@ -70,5 +70,11 @@ public class Pawn extends Piece {
             return;
         }
         directions = List.of(TOP, TOP_RIGHT, TOP_LEFT);
+    }
+
+    public boolean isDiagonal(Square src, Square dest) {
+        Vectorr vector = src.calculateVector(dest);
+        List<Vectorr> diagonalDirections = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
+        return diagonalDirections.contains(vector);
     }
 }
