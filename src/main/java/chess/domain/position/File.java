@@ -20,16 +20,6 @@ public enum File {
         this.index = index;
     }
 
-    private File left() {
-        return indexOf(this.index - 1)
-                .orElseThrow(UnsupportedOperationException::new);
-    }
-
-    private File right() {
-        return indexOf(this.index + 1)
-                .orElseThrow(UnsupportedOperationException::new);
-    }
-
     private static Optional<File> indexOf(int index) {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
@@ -44,6 +34,16 @@ public enum File {
             return right();
         }
         return this;
+    }
+
+    private File left() {
+        return indexOf(this.index - 1)
+                .orElseThrow(UnsupportedOperationException::new);
+    }
+
+    private File right() {
+        return indexOf(this.index + 1)
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     public int getIndex() {

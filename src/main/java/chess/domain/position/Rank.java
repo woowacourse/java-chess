@@ -21,16 +21,6 @@ public enum Rank {
         this.index = index;
     }
 
-    public Rank up() { //TODO: private
-        return indexOf(this.index + 1)
-                .orElseThrow(UnsupportedOperationException::new);
-    }
-
-    public Rank down() {
-        return indexOf(this.index - 1)
-                .orElseThrow(UnsupportedOperationException::new);
-    }
-
     private static Optional<Rank> indexOf(int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
@@ -45,6 +35,16 @@ public enum Rank {
             return down();
         }
         return this;
+    }
+
+    private Rank up() {
+        return indexOf(this.index + 1)
+                .orElseThrow(UnsupportedOperationException::new);
+    }
+
+    private Rank down() {
+        return indexOf(this.index - 1)
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     public int getIndex() {

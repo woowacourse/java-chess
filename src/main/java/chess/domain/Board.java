@@ -106,10 +106,10 @@ public class Board {
 
     private void checkNotCrossOtherPiece(Position source, Position target, Move move) {
         Move unitMove = move.getUnitMove();
-        Position currentPosition = unitMove.findDestination(source);
-        while (!currentPosition.equals(target)) {
-            checkEmpty(currentPosition);
-            currentPosition = unitMove.findDestination(source);
+        Position current = moveFrom(source, unitMove);
+        while (!current.equals(target)) {
+            checkEmpty(current);
+            current = moveFrom(current, unitMove);
         }
     }
 
@@ -117,6 +117,10 @@ public class Board {
         if (isNotEmpty(position)) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
+    }
+
+    private Position moveFrom(Position position, Move move) {
+        return move.findDestinationFrom(position);
     }
 
     private boolean isEmpty(Position position) {

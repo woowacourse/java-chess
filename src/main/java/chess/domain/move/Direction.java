@@ -4,41 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Direction {
-    RIGHT(1, 0) {
+    RIGHT {
         @Override
         public Direction flipVertical() {
             return LEFT;
         }
     },
-    UP(0, 1) {
+    UP {
         @Override
         public Direction flipHorizontal() {
             return DOWN;
         }
     },
-    LEFT(-1, 0) {
+    LEFT {
         @Override
         public Direction flipVertical() {
             return RIGHT;
         }
     },
-    DOWN(0, -1) {
+    DOWN {
         @Override
         public Direction flipHorizontal() {
             return UP;
         }
     };
 
-    private final int dx;
-    private final int dy;
-
-    Direction(int dx, int dy) {
-        this.dx = dx;
-        this.dy = dy;
-    }
-
     public static List<Direction> from(int deltaFile, int deltaRank) {
         List<Direction> directions = new ArrayList<>();
+        addHorizontalDirections(deltaFile, directions);
+        addVerticalDirections(deltaRank, directions);
+        return directions;
+    }
+
+    private static void addHorizontalDirections(int deltaFile, List<Direction> directions) {
         while (deltaFile > 0) {
             directions.add(RIGHT);
             deltaFile--;
@@ -47,6 +45,9 @@ public enum Direction {
             directions.add(LEFT);
             deltaFile++;
         }
+    }
+
+    private static void addVerticalDirections(int deltaRank, List<Direction> directions) {
         while (deltaRank > 0) {
             directions.add(UP);
             deltaRank--;
@@ -55,15 +56,6 @@ public enum Direction {
             directions.add(DOWN);
             deltaRank++;
         }
-        return directions;
-    }
-
-    public int getDx() {
-        return dx;
-    }
-
-    public int getDy() {
-        return dy;
     }
 
     public boolean isHorizontal() {

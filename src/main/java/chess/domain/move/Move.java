@@ -40,12 +40,6 @@ public class Move {
         }
     }
 
-    private void validateNotEmpty(List<Direction> directions) {
-        if (directions.isEmpty()) {
-            throw new IllegalArgumentException("방향이 존재해야합니다.");
-        }
-    }
-
     private long getSize(List<Direction> directions, Predicate<Direction> directionPredicate) {
         return directions.stream()
                 .filter(directionPredicate)
@@ -53,20 +47,10 @@ public class Move {
                 .count();
     }
 
-    public boolean isSameAngle(Move move) {
-        int dx1 = 0;
-        int dy1 = 0;
-        for (Direction direction : directions) {
-            dx1 += direction.getDx();
-            dy1 += direction.getDy();
+    private void validateNotEmpty(List<Direction> directions) {
+        if (directions.isEmpty()) {
+            throw new IllegalArgumentException("방향이 존재해야합니다.");
         }
-        int dx2 = 0;
-        int dy2 = 0;
-        for (Direction direction : move.directions) {
-            dx2 += direction.getDx();
-            dy2 += direction.getDy();
-        }
-        return dx1 * dy2 == dx2 * dy1;
     }
 
     public Move flipHorizontal() {
@@ -84,7 +68,7 @@ public class Move {
         return new Move(directions);
     }
 
-    public Position findDestination(Position position) {
+    public Position findDestinationFrom(Position position) {
         Position destination = position;
         for (Direction direction : directions) {
             destination = destination.move(direction);
@@ -141,6 +125,14 @@ public class Move {
         return result;
     }
 
+    public Move repeat(int times) {
+        List<Direction> timedDirections = new ArrayList<>();
+        for (int i = 0; i < times; i++) {
+            timedDirections.addAll(directions);
+        }
+        return new Move(timedDirections);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -158,13 +150,5 @@ public class Move {
     @Override
     public int hashCode() {
         return directions != null ? directions.hashCode() : 0;
-    }
-
-    public Move repeat(int times) {
-        List<Direction> timedDirections = new ArrayList<>();
-        for (int i = 0; i < times; i++) {
-            timedDirections.addAll(directions);
-        }
-        return new Move(timedDirections);
     }
 }

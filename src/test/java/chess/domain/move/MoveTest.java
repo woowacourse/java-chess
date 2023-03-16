@@ -32,24 +32,6 @@ public class MoveTest extends AbstractTestFixture {
         assertThat(move.flipVertical()).isEqualTo(move2);
     }
 
-    @DisplayName("기울기가 같은지 알 수 있다")
-    @Test
-    void isSameAngle() {
-        Move move = createMove(RIGHT, UP);
-        Move move2 = createMove(RIGHT, RIGHT, UP, UP);
-
-        assertThat(move.isSameAngle(move2)).isTrue();
-    }
-
-    @DisplayName("기울기가 다른지 알 수 있다")
-    @Test
-    void isNotSameAngle() {
-        Move move = createMove(RIGHT, UP);
-        Move move2 = createMove(RIGHT, RIGHT, UP);
-
-        assertThat(move.isSameAngle(move2)).isFalse();
-    }
-
     @SuppressWarnings("Convert2MethodRef")
     @DisplayName("빈 수 생성시 예외를 던진다")
     @Test
@@ -89,7 +71,7 @@ public class MoveTest extends AbstractTestFixture {
     @Test
     void findDestination() {
         Move move = createMove(RIGHT, RIGHT, UP, UP, UP);
-        Position destination = move.findDestination(createPosition("A,ONE"));
+        Position destination = move.findDestinationFrom(createPosition("A,ONE"));
 
         assertThat(destination).isEqualTo(createPosition("C,FOUR"));
     }
