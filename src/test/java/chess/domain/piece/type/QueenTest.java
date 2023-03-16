@@ -6,9 +6,17 @@ import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static chess.domain.piece.position.PiecePositionFixture.piecePositions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,18 +25,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Queen 은")
 class QueenTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "직선 혹은 대각선 방향이 아니면 움직일 수 없다. 예를 들어 [e4] 에서 [{0}] 로는 움직일 수 없다.")
     @CsvSource({
-            // 기준 e, 4
-            "g,5",
-            "c,5",
-            "h,6",
-            "a,2",
+            "g5",
+            "c5",
+            "h6",
+            "a2",
     })
-    void 직선_혹은_대각선_방향이_아니면_움직일_수_없다(final char file, final int rank) {
+    void 직선_혹은_대각선_방향이_아니면_움직일_수_없다(final PiecePosition destination) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
@@ -36,83 +42,61 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "f,5",  // 북동
-            "f,3",  // 남동
-            "d,5",  // 북서
-            "d,3"   // 남서
-    })
-    void 대각선_방향으로_한칸은_무조건_이동_가능하다(final char file, final int rank) {
+    @ParameterizedTest(name = "대각선 방향으로 이동할 수 있다. 예를 들어 [e4] 에서 [{0}] 으로 움직이는 경우 경우지는 [{1}]")
+    @MethodSource("queenDiagonalDestinations")
+    void 대각선_방향으로_이동할_수_있다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints condition = queen.waypoints(destination);
-        assertThat(condition.wayPoints()).isEmpty();
+        final Waypoints waypoints = queen.waypoints(destination);
+        assertThat(waypoints.wayPoints())
+                .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "g,6",  // 북동
-            "g,2",  // 남동
-            "c,6",  // 북서
-            "c,2"   // 남서
-    })
-    void 대각선_방향으로_두칸_이상은_경로에_피스가_없어야한다(final char file, final int rank) {
-        // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final Queen queen = new Queen(Color.WHITE, currentPosition);
+    static Stream<Arguments> queenDiagonalDestinations() {
+        return Stream.of(
+                Arguments.of("f5", Named.of("없다", Collections.emptyList())),
+                Arguments.of("f3", Named.of("없다", Collections.emptyList())),
+                Arguments.of("d5", Named.of("없다", Collections.emptyList())),
+                Arguments.of("d3", Named.of("없다", Collections.emptyList())),
 
-        // when & then
-        final Waypoints condition = queen.waypoints(destination);
-        assertThat(condition.wayPoints()).isNotEmpty();
+                Arguments.of("g6", Named.of("f5", piecePositions("f5"))),
+                Arguments.of("g2", Named.of("f3", piecePositions("f3"))),
+                Arguments.of("c6", Named.of("d5", piecePositions("d5"))),
+                Arguments.of("c2", Named.of("d3", piecePositions("d3")))
+        );
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "f,4",  // 동
-            "d,4",  // 서
-            "e,5",  // 북
-            "e,3",  // 남
-    })
-    void 동서남북_방향으로_한칸은_무조건_이동_가능하다(final char file, final int rank) {
+    @ParameterizedTest(name = "동서남북 방향으로 이동할 수 있다. 예를 들어 [e4] 에서 [{0}] 으로 움직이는 경우 경우지는 [{1}]")
+    @MethodSource("queenStraightDestinations")
+    void 동서남북_방향으로_이동할_수_있다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final Waypoints condition = queen.waypoints(destination);
-        assertThat(condition.wayPoints()).isEmpty();
+        final Waypoints waypoints = queen.waypoints(destination);
+        assertThat(waypoints.wayPoints())
+                .containsExactlyInAnyOrderElementsOf(expectedWaypoints);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "g,4",  // 동
-            "c,4",  // 서
-            "e,6",  // 북
-            "e,2",  // 남
-            "h,4",  // 동
-            "a,4",  // 서
-            "e,8",  // 북
-            "e,1",  // 남
-    })
-    void 동서남북_방향으로_두칸_이상_움직이려면_경로에_피스가_없어야한다(final char file, final int rank) {
-        // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final Queen queen = new Queen(Color.WHITE, currentPosition);
+    static Stream<Arguments> queenStraightDestinations() {
+        return Stream.of(
+                Arguments.of("f4", Named.of("없다", Collections.emptyList())),
+                Arguments.of("d4", Named.of("없다", Collections.emptyList())),
+                Arguments.of("e5", Named.of("없다", Collections.emptyList())),
+                Arguments.of("e3", Named.of("없다", Collections.emptyList())),
 
-        // when & then
-        final Waypoints condition = queen.waypoints(destination);
-        assertThat(condition.wayPoints()).isNotEmpty();
+                Arguments.of("g4", Named.of("f4", piecePositions("f4"))),
+                Arguments.of("c4", Named.of("d4", piecePositions("d4"))),
+                Arguments.of("e6", Named.of("e5", piecePositions("e5"))),
+                Arguments.of("e2", Named.of("e3", piecePositions("e3"))),
+                Arguments.of("h4", Named.of("f4, g4", piecePositions("f4", "g4"))),
+                Arguments.of("a4", Named.of("d4, c4, b4", piecePositions("d4", "c4", "b4"))),
+                Arguments.of("e8", Named.of("e5, e6, e7", piecePositions("e5", "e6", "e7"))),
+                Arguments.of("e1", Named.of("e2, e3", piecePositions("e2", "e3")))
+        );
     }
 }

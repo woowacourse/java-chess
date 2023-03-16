@@ -1,14 +1,22 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Waypoints;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static chess.domain.piece.position.PiecePositionFixture.piecePositions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,22 +25,20 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Bishop 은")
 class BishopTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "직선 방향으로 움직일 수 없다. 예를 들어 [e4] 에서 [{0}] 으로 움직일 수 없다.")
     @CsvSource({
-            // 기준 e, 4
-            "g,4",  // 동
-            "c,4",  // 서
-            "e,6",  // 북
-            "e,2",  // 남
-            "h,4",  // 동
-            "a,4",  // 서
-            "e,8",  // 북
-            "e,1",  // 남
+            "g4",
+            "c4",
+            "e6",
+            "e2",
+            "h4",
+            "a4",
+            "e8",
+            "e1",
     })
-    void 동서남북_방향으로_움직일_수_없다(final char file, final int rank) {
+    void 동서남북_방향으로_움직일_수_없다(final PiecePosition destination) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
@@ -40,41 +46,29 @@ class BishopTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "f,5",  // 북동
-            "f,3",  // 남동
-            "d,5",  // 북서
-            "d,3"   // 남서
-    })
-    void 대각선_방향으로_한칸은_무조건_이동_가능하다(final char file, final int rank) {
+    @ParameterizedTest(name = "대각선 방향으로 움직일 수 있다. 예를 들어 [e4] 에서 [{0}] 으로 움직일 수 있으며, 경유지는 [{1}] 이다.")
+    @MethodSource("bishopDestinations")
+    void 대각선_방향으로_두칸_이상은_경로에_피스가_없어야한다(final PiecePosition destination, final List<PiecePosition> expectedWaypoints) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
         final Waypoints condition = bishop.waypoints(destination);
-        assertThat(condition.wayPoints()).isEmpty();
+        assertThat(condition.wayPoints()).containsExactlyInAnyOrderElementsOf(expectedWaypoints);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            // 기준 e, 4
-            "g,6",  // 북동
-            "g,2",  // 남동
-            "c,6",  // 북서
-            "c,2"   // 남서
-    })
-    void 대각선_방향으로_두칸_이상은_경로에_피스가_없어야한다(final char file, final int rank) {
-        // given
-        final PiecePosition currentPosition = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(rank, file);
-        final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
+    static Stream<Arguments> bishopDestinations() {
+        return Stream.of(
+                Arguments.of("f5", Named.of("없다", Collections.emptyList())),
+                Arguments.of("f3", Named.of("없다", Collections.emptyList())),
+                Arguments.of("d5", Named.of("없다", Collections.emptyList())),
+                Arguments.of("d3", Named.of("없다", Collections.emptyList())),
 
-        // when & then
-        final Waypoints condition = bishop.waypoints(destination);
-        assertThat(condition.wayPoints()).isNotEmpty();
+                Arguments.of("g6", Named.of("f5", piecePositions("f5"))),
+                Arguments.of("g2", Named.of("f3", piecePositions("f3"))),
+                Arguments.of("c6", Named.of("d5", piecePositions("d5"))),
+                Arguments.of("c2", Named.of("d3", piecePositions("d3")))
+        );
     }
 }
