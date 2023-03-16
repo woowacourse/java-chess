@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.Path;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Position;
 import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,11 @@ public class Queen extends Piece {
             paths.add(Path.ofMultiPath(current, direction));
         }
         return paths;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
 }

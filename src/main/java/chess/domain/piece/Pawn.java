@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.Path;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Position;
 import chess.view.PieceName;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,15 @@ public class Pawn extends Piece {
             paths.add(Path.ofPawnStartPath(current, getForwardDirectionByColor()));
         }
         return paths;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    public boolean isAttack(Position source, Position dest) {
+        return source.isOneStepForwardDiagonal(dest);
     }
 
     private boolean isStartRank(final Position current) {
