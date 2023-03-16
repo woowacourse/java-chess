@@ -1,6 +1,8 @@
 package chess.piece;
 
+import chess.board.File;
 import chess.board.Position;
+import chess.board.Rank;
 
 public class Queen extends Piece {
 
@@ -19,8 +21,8 @@ public class Queen extends Piece {
         if (from.getFile() == to.getFile()) {
             return true;
         }
-        int fileInterval = Math.abs(from.getFile().getIndex() - to.getFile().getIndex());
-        int rankInterval = Math.abs(from.getRank().getIndex() - to.getRank().getIndex());
+        int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+        int rankInterval = Rank.calculateInterval(from.getRank(), to.getRank());
 
         if (fileInterval == rankInterval) {
             return true;

@@ -1,6 +1,8 @@
 package chess.piece;
 
+import chess.board.File;
 import chess.board.Position;
+import chess.board.Rank;
 
 public class King extends Piece {
 
@@ -17,8 +19,8 @@ public class King extends Piece {
             throw new IllegalArgumentException("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
 
-        boolean isFileIntervalOne = Math.abs(from.getFile().getIndex() - to.getFile().getIndex()) <= 1;
-        boolean isRankIntervalOne = Math.abs(from.getRank().getIndex() - to.getRank().getIndex()) <= 1;
+        boolean isFileIntervalOne = File.calculateInterval(from.getFile(), to.getFile()) <= 1;
+        boolean isRankIntervalOne = Rank.calculateInterval(from.getRank(), to.getRank()) <= 1;
 
         if (isFileIntervalOne && isRankIntervalOne) {
             return true;

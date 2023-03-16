@@ -62,7 +62,7 @@ public class ChessBoard {
         Piece toPiece = piecePosition.get(to);
 
         if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
-            validateRook(from, to, fromPiece);
+            validateRook(from, to);
             move(from, to);
         }
 
@@ -72,13 +72,13 @@ public class ChessBoard {
         }
 
         if (fromPiece.isQueen() && fromPiece.isMovable(from, to, toPiece)) {
-            validateRook(from, to, fromPiece);
+            validateRook(from, to);
             validateBishop(from, to);
             move(from, to);
         }
 
         if (fromPiece.isPawn() && fromPiece.isMovable(from, to, toPiece)) {
-            validateSameRank(from, to, fromPiece);
+            validateRookByRank(from, to);
             move(from, to);
         }
 
@@ -90,26 +90,30 @@ public class ChessBoard {
         }
     }
 
-    private void validateRook(final Position from, final Position to, final Piece fromPiece) {
-        validateSameRank(from, to, fromPiece);
-        validateSameFile(from, to, fromPiece);
+    private void validateRook(final Position from, final Position to) {
+        validateSameRank(from, to);
+        validateSameFile(from, to);
     }
 
-    private void validateSameFile(final Position from, final Position to, final Piece fromPiece) {
+    private void validateSameFile(final Position from, final Position to) {
         if (from.getFile() == to.getFile()) {
-            validateRookByRank(from, to, fromPiece);
+            validateRookByRank(from, to);
         }
     }
 
-    private void validateSameRank(final Position from, final Position to, final Piece fromPiece) {
+    private void validateSameRank(final Position from, final Position to) {
         if (from.getRank() == to.getRank()) {
-            validateRookByFile(from, to, fromPiece);
+            validateRookByFile(from, to);
         }
     }
 
     private void validateBishop(Position from, Position to) {
         List<File> files = File.getBetween(from.getFile(), to.getFile());
         List<Rank> ranks = Rank.getBetween(from.getRank(), to.getRank());
+
+        if (files.size() != ranks.size()) {
+            return;
+        }
 
         List<Rank> cutRanks = IntStream.range(1, ranks.size() - 1)
                 .mapToObj(ranks::get)
@@ -144,13 +148,13 @@ public class ChessBoard {
         piecePosition.put(to, piece);
     }
 
-    private void validateRookByFile(final Position from, final Position to, final Piece fromPiece) {
+    private void validateRookByFile(final Position from, final Position to) {
         File fromFile = from.getFile();
         File toFile = to.getFile();
         int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
         int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
-        for (int i = min; i < max; i++) {
+        for (int i = min; i <= max; i++) {
             Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
             if (!validationPiece.isEmpty()) {
                 throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
@@ -158,13 +162,13 @@ public class ChessBoard {
         }
     }
 
-    private void validateRookByRank(final Position from, final Position to, final Piece piece) {
+    private void validateRookByRank(final Position from, final Position to) {
         Rank fromRank = from.getRank();
         Rank toRank = to.getRank();
         int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
         int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
-        for (int i = min; i < max; i++) {
+        for (int i = min; i <= max; i++) {
             Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.of(i)));
 
             if (!validationPiece.isEmpty()) {
@@ -179,7 +183,8 @@ public class ChessBoard {
             for (File file : File.values()) {
                 piecePosition.put(new Position(file, Rank.TWO), new Pawn(team));
             }
-        } else {
+        }
+        if (team == Team.BLACK) {
             for (File file : File.values()) {
                 piecePosition.put(new Position(file, Rank.SEVEN), new Pawn(team));
             }
@@ -190,7 +195,8 @@ public class ChessBoard {
         if (team == Team.WHITE) {
             piecePosition.put(new Position(File.A, Rank.ONE), new Rook(team));
             piecePosition.put(new Position(File.H, Rank.ONE), new Rook(team));
-        } else {
+        }
+        if (team == Team.BLACK) {
             piecePosition.put(new Position(File.A, Rank.EIGHT), new Rook(team));
             piecePosition.put(new Position(File.H, Rank.EIGHT), new Rook(team));
         }
@@ -201,7 +207,8 @@ public class ChessBoard {
         if (team == Team.WHITE) {
             piecePosition.put(new Position(File.B, Rank.ONE), new Knight(team));
             piecePosition.put(new Position(File.G, Rank.ONE), new Knight(team));
-        } else {
+        }
+        if (team == Team.BLACK) {
             piecePosition.put(new Position(File.B, Rank.EIGHT), new Knight(team));
             piecePosition.put(new Position(File.G, Rank.EIGHT), new Knight(team));
         }
@@ -212,7 +219,8 @@ public class ChessBoard {
         if (team == Team.WHITE) {
             piecePosition.put(new Position(File.C, Rank.ONE), new Bishop(team));
             piecePosition.put(new Position(File.F, Rank.ONE), new Bishop(team));
-        } else {
+        }
+        if (team == Team.BLACK) {
             piecePosition.put(new Position(File.C, Rank.EIGHT), new Bishop(team));
             piecePosition.put(new Position(File.F, Rank.EIGHT), new Bishop(team));
         }
@@ -221,7 +229,8 @@ public class ChessBoard {
     private static void createQueen(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
             piecePosition.put(new Position(File.D, Rank.ONE), new Queen(team));
-        } else {
+        }
+        if (team == Team.BLACK) {
             piecePosition.put(new Position(File.D, Rank.EIGHT), new Queen(team));
         }
     }
@@ -229,14 +238,10 @@ public class ChessBoard {
     private static void createKing(final Map<Position, Piece> piecePosition, final Team team) {
         if (team == Team.WHITE) {
             piecePosition.put(new Position(File.E, Rank.ONE), new King(team));
-        } else {
+        }
+        if (team == Team.BLACK) {
             piecePosition.put(new Position(File.E, Rank.EIGHT), new King(team));
         }
-    }
-
-    private boolean isSameTeam(final Piece originPiece, final Piece validatePiece) {
-        return (originPiece.isBlack() && validatePiece.isBlack()) ||
-                (originPiece.isWhite() && validatePiece.isWhite());
     }
 
     public Map<Position, Piece> getPiecePosition() {

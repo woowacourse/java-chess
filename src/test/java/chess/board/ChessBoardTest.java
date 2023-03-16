@@ -141,14 +141,14 @@ class ChessBoardTest {
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
             Position A_ONE = new Position(File.A, Rank.ONE);
-            Position F_ONE = new Position(File.F, Rank.ONE);
+            Position F_SIX = new Position(File.F, Rank.SIX);
 
-            piecePosition.put(A_ONE, new Rook(Team.WHITE));
-            piecePosition.put(F_ONE, new Rook(Team.BLACK));
+            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(F_SIX, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_ONE));
+            assertDoesNotThrow(() -> chessBoard.movePiece(A_ONE, F_SIX));
         }
     }
 
@@ -161,7 +161,7 @@ class ChessBoardTest {
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position H_EIGHT = new Position(File.H, Rank.EIGHT);
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(A_ONE, new Queen(Team.WHITE));
             piecePosition.put(new Position(File.D, Rank.FOUR), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -177,7 +177,7 @@ class ChessBoardTest {
             Position H_ONE = new Position(File.H, Rank.ONE);
             Position A_EIGHT = new Position(File.A, Rank.EIGHT);
 
-            piecePosition.put(H_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(H_ONE, new Queen(Team.WHITE));
             piecePosition.put(new Position(File.E, Rank.FOUR), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -193,7 +193,7 @@ class ChessBoardTest {
             Position D_FIVE = new Position(File.D, Rank.FIVE);
             Position A_TWO = new Position(File.A, Rank.TWO);
 
-            piecePosition.put(D_FIVE, new Bishop(Team.WHITE));
+            piecePosition.put(D_FIVE, new Queen(Team.WHITE));
             piecePosition.put(new Position(File.B, Rank.THREE), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -209,7 +209,7 @@ class ChessBoardTest {
             Position D_FIVE = new Position(File.D, Rank.FIVE);
             Position H_ONE = new Position(File.H, Rank.ONE);
 
-            piecePosition.put(D_FIVE, new Bishop(Team.WHITE));
+            piecePosition.put(D_FIVE, new Queen(Team.WHITE));
             piecePosition.put(new Position(File.F, Rank.THREE), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -225,7 +225,7 @@ class ChessBoardTest {
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position F_ONE = new Position(File.F, Rank.ONE);
 
-            piecePosition.put(A_ONE, new Rook(Team.WHITE));
+            piecePosition.put(A_ONE, new Queen(Team.WHITE));
             piecePosition.put(new Position(File.D, Rank.ONE), new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -241,7 +241,7 @@ class ChessBoardTest {
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position F_ONE = new Position(File.F, Rank.ONE);
 
-            piecePosition.put(A_ONE, new Rook(Team.WHITE));
+            piecePosition.put(A_ONE, new Queen(Team.WHITE));
             piecePosition.put(F_ONE, new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -251,22 +251,22 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 킹은_이동경로에 {
+    class 킹은_ {
 
         @Test
-        void 같은_팀의_말이_있으면_예외() {
+        void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position A_TWO = new Position(File.A, Rank.TWO);
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(A_ONE, new King(Team.WHITE));
             piecePosition.put(new Position(File.A, Rank.TWO), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, A_TWO))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
 
         @Test
@@ -275,7 +275,7 @@ class ChessBoardTest {
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position A_TWO = new Position(File.A, Rank.TWO);
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(A_ONE, new King(Team.WHITE));
             piecePosition.put(new Position(File.A, Rank.TWO), new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -285,22 +285,22 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 나이트는_이동경로에 {
+    class 나이트는_ {
 
         @Test
-        void 같은_팀의_말이_있으면_예외() {
+        void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position C_TWO = new Position(File.C, Rank.TWO);
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(A_ONE, new Knight(Team.WHITE));
             piecePosition.put(new Position(File.C, Rank.TWO), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(A_ONE, C_TWO))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("말이 이동경로에 존재하여 이동할 수 없습니다.");
+                    .hasMessage("목적지에 같은 색의 말이 존재하여 이동할 수 없습니다.");
         }
 
         @Test
@@ -309,7 +309,7 @@ class ChessBoardTest {
             Position A_ONE = new Position(File.A, Rank.ONE);
             Position C_TWO = new Position(File.C, Rank.TWO);
 
-            piecePosition.put(A_ONE, new Bishop(Team.WHITE));
+            piecePosition.put(A_ONE, new Knight(Team.WHITE));
             piecePosition.put(new Position(File.C, Rank.TWO), new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -327,7 +327,7 @@ class ChessBoardTest {
             Position B_TWO = new Position(File.B, Rank.TWO);
             Position B_FOUR = new Position(File.B, Rank.FOUR);
 
-            piecePosition.put(B_TWO, new Bishop(Team.WHITE));
+            piecePosition.put(B_TWO, new Pawn(Team.WHITE));
             piecePosition.put(new Position(File.B, Rank.THREE), new Rook(Team.WHITE));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
@@ -343,7 +343,7 @@ class ChessBoardTest {
             Position D_FOUR = new Position(File.D, Rank.FOUR);
             Position E_FIVE = new Position(File.E, Rank.FIVE);
 
-            piecePosition.put(D_FOUR, new Bishop(Team.WHITE));
+            piecePosition.put(D_FOUR, new Pawn(Team.WHITE));
             piecePosition.put(new Position(File.E, Rank.FIVE), new Rook(Team.BLACK));
             ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 

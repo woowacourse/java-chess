@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
@@ -15,7 +16,7 @@ public class Pawn extends Piece {
             throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
         }
 
-        int fileInterval = Math.abs(from.getFile().getIndex() - to.getFile().getIndex());
+        int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
 
         if (team == Team.BLACK) {
 
@@ -31,7 +32,7 @@ public class Pawn extends Piece {
                 throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
             }
 
-            if (from.getRank().getIndex() - to.getRank().getIndex() == 1 && !toPiece.isEmpty()) {
+            if (from.getRank().getIndex() - to.getRank().getIndex() == 1 && toPiece.isEmpty()) {
                 return true;
             }
         }
@@ -51,7 +52,7 @@ public class Pawn extends Piece {
                 throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
             }
 
-            if (to.getRank().getIndex() - from.getRank().getIndex() == 1 && !toPiece.isEmpty()) {
+            if (to.getRank().getIndex() - from.getRank().getIndex() == 1 && toPiece.isEmpty()) {
                 return true;
             }
         }

@@ -40,7 +40,7 @@ class PawnTest {
         }
 
         @Test
-        void 위_대각선으로_한칸_이동할_수_있다() {
+        void 상대_말이_있을_때만_위_대각선으로_한칸_이동할_수_있다() {
             //given
             Pawn pawn = new Pawn(Team.WHITE);
 
@@ -49,7 +49,7 @@ class PawnTest {
             Position from = new Position(File.B, Rank.TWO);
 
             //then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to, new Pawn(Team.BLACK))).isTrue();
         }
 
         @Test
@@ -97,7 +97,7 @@ class PawnTest {
         }
 
         @Test
-        void 아래_대각선으로_한칸_이동할_수_있다() {
+        void 상대_말이_있을_때만_아래_대각선으로_한칸_이동할_수_있다() {
             //given
             Pawn pawn = new Pawn(Team.BLACK);
 
@@ -106,7 +106,7 @@ class PawnTest {
             Position from = new Position(File.C, Rank.SEVEN);
 
             //then
-            assertThat(pawn.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertThat(pawn.isMovable(from, to, new Pawn(Team.WHITE))).isTrue();
         }
 
         @Test
