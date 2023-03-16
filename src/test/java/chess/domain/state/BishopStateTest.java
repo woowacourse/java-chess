@@ -1,14 +1,13 @@
 package chess.domain.state;
 
-import chess.domain.exception.IllegalPieceMoveException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static chess.domain.ColorCompareResult.DIFFERENT_COLOR;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -20,7 +19,7 @@ class BishopStateTest {
         BishopState bishopState = new BishopState();
 
         //expect
-        assertDoesNotThrow(() -> bishopState.move(xChange, yChange, DIFFERENT_COLOR));
+        assertTrue(() -> bishopState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 
     @ParameterizedTest
@@ -30,7 +29,6 @@ class BishopStateTest {
         BishopState bishopState = new BishopState();
 
         //expect
-        assertThatThrownBy(() -> bishopState.move(xChange, yChange, DIFFERENT_COLOR))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        assertFalse(() -> bishopState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 }

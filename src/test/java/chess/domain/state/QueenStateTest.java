@@ -1,14 +1,13 @@
 package chess.domain.state;
 
-import chess.domain.exception.IllegalPieceMoveException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static chess.domain.ColorCompareResult.DIFFERENT_COLOR;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -21,7 +20,7 @@ public class QueenStateTest {
         QueenState QueenState = new QueenState();
 
         //expect
-        assertDoesNotThrow(() -> QueenState.move(xChange, yChange, DIFFERENT_COLOR));
+        assertTrue(() -> QueenState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 
     @ParameterizedTest
@@ -31,7 +30,6 @@ public class QueenStateTest {
         QueenState QueenState = new QueenState();
 
         //expect
-        assertThatThrownBy(() -> QueenState.move(xChange, yChange, DIFFERENT_COLOR))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        assertFalse(() -> QueenState.canMove(xChange, yChange, DIFFERENT_COLOR));
     }
 }

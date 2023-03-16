@@ -1,7 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.ColorCompareResult;
-import chess.domain.exception.IllegalPieceMoveException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -9,8 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -22,7 +21,7 @@ public class PawnStateTest {
         InitialPawnState initialPawnState = new InitialPawnState();
 
         //when, then
-        assertDoesNotThrow(() -> initialPawnState.move(0, 2, ColorCompareResult.EMPTY));
+        assertTrue(() -> initialPawnState.canMove(0, 2, ColorCompareResult.EMPTY));
     }
 
     @Test
@@ -31,12 +30,14 @@ public class PawnStateTest {
         MoveState pawnState = new InitialPawnState();
 
         //when
-        pawnState = pawnState.move(0, 2, ColorCompareResult.EMPTY);
+        boolean movable = pawnState.canMove(0, 2, ColorCompareResult.EMPTY);
+        if (movable) {
+            pawnState = pawnState.getNextState();
+        }
 
         // then
-        MoveState finalPawnState = pawnState;
-        assertThatThrownBy(() -> finalPawnState.move(0, 2, ColorCompareResult.EMPTY))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        MoveState finalState = pawnState;
+        assertFalse(() -> finalState.canMove(0, 2, ColorCompareResult.EMPTY));
     }
 
     @Test
@@ -45,7 +46,7 @@ public class PawnStateTest {
         MoveState pawnState = new InitialPawnState();
 
         //when, then
-        assertDoesNotThrow(() -> pawnState.move(1, 1, ColorCompareResult.DIFFERENT_COLOR));
+        assertTrue(() -> pawnState.canMove(1, 1, ColorCompareResult.DIFFERENT_COLOR));
     }
 
     @ParameterizedTest
@@ -55,8 +56,7 @@ public class PawnStateTest {
         MoveState pawnState = new InitialPawnState();
 
         //when, then
-        assertThatThrownBy(() -> pawnState.move(1, 1, colorCompareResult))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        assertFalse(() -> pawnState.canMove(1, 1, colorCompareResult));
     }
 
     @ParameterizedTest
@@ -66,7 +66,6 @@ public class PawnStateTest {
         MoveState pawnState = new InitialPawnState();
 
         //when, then
-        assertThatThrownBy(() -> pawnState.move(xChange, yChange, ColorCompareResult.DIFFERENT_COLOR))
-                .isInstanceOf(IllegalPieceMoveException.class);
+        assertFalse(() -> pawnState.canMove(xChange, yChange, ColorCompareResult.DIFFERENT_COLOR));
     }
 }

@@ -1,15 +1,19 @@
 package chess.domain.state;
 
 import chess.domain.ColorCompareResult;
-import chess.domain.exception.IllegalPieceMoveException;
 
 public class BishopState implements MoveState {
     @Override
-    public MoveState move(int x, int y, ColorCompareResult colorCompareResult) {
+    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
         if (Math.abs(x) == Math.abs(y) && colorCompareResult != ColorCompareResult.SAME_COLOR) {
-            return this;
+            return true;
         }
-        throw new IllegalPieceMoveException();
+        return false;
+    }
+
+    @Override
+    public MoveState getNextState() {
+        return this;
     }
 
     @Override

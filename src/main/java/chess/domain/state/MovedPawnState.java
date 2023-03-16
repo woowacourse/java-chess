@@ -4,30 +4,36 @@ import chess.domain.ColorCompareResult;
 import chess.domain.exception.IllegalPieceMoveException;
 
 public class MovedPawnState implements MoveState {
-    @Override
-    public MoveState move(int x, int y, ColorCompareResult colorCompareResult) {
-        if (x == 0) {
-            straightMove(y, colorCompareResult);
-            return this;
-        }
-        if (Math.abs(x) == 1 && y == 1) {
-            diagonalMove(colorCompareResult);
-            return this;
-        }
-        throw new IllegalPieceMoveException();
-    }
-
-    private void diagonalMove(ColorCompareResult colorCompareResult) {
-        if (colorCompareResult != ColorCompareResult.DIFFERENT_COLOR) {
-            throw new IllegalPieceMoveException();
-        }
-    }
 
     private void straightMove(int y, ColorCompareResult colorCompareResult) {
         if ((y == 1) && colorCompareResult == ColorCompareResult.EMPTY) {
             return;
         }
         throw new IllegalPieceMoveException();
+    }
+
+    @Override
+    public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
+        if (isOneStraightMove(x, y)) {
+            return colorCompareResult == ColorCompareResult.EMPTY;
+        }
+        if (isOneDiagonalMove(x, y)) {
+            return colorCompareResult == ColorCompareResult.DIFFERENT_COLOR;
+        }
+        return false;
+    }
+
+    private boolean isOneStraightMove(int x, int y) {
+        return x == 0 && y == 1;
+    }
+
+    private boolean isOneDiagonalMove(int x, int y) {
+        return Math.abs(x) == 1 && y == 1;
+    }
+
+    @Override
+    public MoveState getNextState() {
+        return this;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.state.MoveState;
 
 public class Piece {
@@ -22,7 +23,10 @@ public class Piece {
     }
 
     public void move(int x, int y, Piece piece) {
-        moveState = moveState.move(x, color.colorDirection(y), piece.isSameColor(color));
+        if (!moveState.canMove(x, color.colorDirection(y), piece.isSameColor(color))) {
+            throw new IllegalPieceMoveException();
+        }
+        moveState = moveState.getNextState();
     }
 
     private ColorCompareResult isSameColor(Color color) {
