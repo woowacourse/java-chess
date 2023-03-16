@@ -3,7 +3,6 @@ package chess;
 import chess.piece.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -48,7 +47,6 @@ public class ChessBoard {
     private static void generateBishop(Map<Position, ChessPiece> chessBoard) {
         chessBoard.put(Position.initPosition(3, 1), new Bishop(Side.WHITE));
         chessBoard.put(Position.initPosition(6, 1), new Bishop(Side.WHITE));
-
         chessBoard.put(Position.initPosition(3, 8), new Bishop(Side.BLACK));
         chessBoard.put(Position.initPosition(6, 8), new Bishop(Side.BLACK));
     }
@@ -79,10 +77,6 @@ public class ChessBoard {
 
     public ChessPiece getChessPieceByPosition(Position position) {
         return chessBoard.get(position);
-    }
-
-    public ChessPiece getChessPieceByLocate(int x, int y) {
-        return chessBoard.get(List.of(x, y));
     }
 
     public Map<Position, ChessPiece> getChessBoard() {

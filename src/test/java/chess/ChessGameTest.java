@@ -66,6 +66,6 @@ class ChessGameTest {
 
         Assertions.assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로는 이동할 수 없습니다.");
+                .hasMessage("[ERROR] 해당 위치로 움직일 수 없습니다.");
     }
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ChessGame {
 
+    private static final String OUT_OF_CHESS_BOUND_ERROR = "[ERROR] 해당 위치로 움직일 수 없습니다.";
+
     private final ChessBoard chessBoard;
 
     public ChessGame(ChessBoard chessBoard) {
@@ -36,6 +38,6 @@ public class ChessGame {
                 .anyMatch(position -> position.equals(targetPosition))) {
             return true;
         }
-        throw new IllegalArgumentException("[ERROR] 해당 위치로 움직일 수 없습니다.");
+        throw new IllegalArgumentException(OUT_OF_CHESS_BOUND_ERROR);
     }
 }

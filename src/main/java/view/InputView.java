@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    public static final String END_COMMAND = "end";
     private static final Scanner SCANNER = new Scanner(System.in);
+
+    private static final String END_COMMAND = "end";
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.\n> 게임 시작 : start\n> 게임 종료 : end\n> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String START = "start";
     private static final String INIT_INPUT_ERROR_MESSAGE = "[ERROR] 게임을 시작하려면 start를 입력해 주세요";
@@ -16,6 +17,7 @@ public class InputView {
     private static final String MOVE_COMMAND = "move";
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int END_COMMAND_SIZE = 1;
+    private static final int COMMAND_INDEX = 0;
 
     public static void printGameStartMessage() {
         printMessage(GAME_START_MESSAGE);
@@ -47,7 +49,7 @@ public class InputView {
 
     private static List<String> checkEndOrMove(String input) {
         List<String> splitInput = Arrays.asList(input.split(BLANK));
-        String command = splitInput.get(0);
+        String command = splitInput.get(COMMAND_INDEX);
         if (isEnd(splitInput, command) || isMove(splitInput, command)) {
             return splitInput;
         }
@@ -61,7 +63,6 @@ public class InputView {
     private static boolean isEnd(List<String> splitInput, String command) {
         return command.equals(END_COMMAND) && splitInput.size() == END_COMMAND_SIZE;
     }
-
 
     public static void printMessage(String message) {
         System.out.println(message);
