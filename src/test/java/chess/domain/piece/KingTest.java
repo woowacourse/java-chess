@@ -22,7 +22,7 @@ class KingTest {
             final List<Position> expectedResult
     ) {
         // given
-        final Piece king = new King(Color.WHITE);
+        final Piece king = King.from(Color.WHITE);
         // when
         List<Position> result = king.findPositions(source, target);
         // then
@@ -32,14 +32,14 @@ class KingTest {
     static Stream<Arguments> kingMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        new Position(1, 1),
-                        new Position(2, 2),
-                        List.of(new Position(2, 2))
+                        Position.of(1, 1),
+                        Position.of(2, 2),
+                        List.of(Position.of(2, 2))
                 ),
                 Arguments.arguments(
-                        new Position(4, 4),
-                        new Position(0, 0),
-                        List.of(new Position(3, 3))
+                        Position.of(4, 4),
+                        Position.of(0, 0),
+                        List.of(Position.of(3, 3))
                 )
         );
     }
