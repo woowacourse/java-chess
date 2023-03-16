@@ -5,14 +5,14 @@ import java.util.function.Function;
 
 public enum PositionFactory {
 
-    ZERO('a', '1', 0),
-    ONE('b', '2', 1),
-    TWO('c', '3', 2),
-    THREE('d', '4', 3),
-    FOUR('e', '5', 4),
-    FIVE('f', '6', 5),
-    SIX('g', '7', 6),
-    SEVEN('h', '8', 7);
+    ZERO('a', '8', 0),
+    ONE('b', '7', 1),
+    TWO('c', '6', 2),
+    THREE('d', '5', 3),
+    FOUR('e', '4', 4),
+    FIVE('f', '3', 5),
+    SIX('g', '2', 6),
+    SEVEN('h', '1', 7);
 
     private static final int INDEX_X = 0;
     private static final int INDEX_Y = 1;

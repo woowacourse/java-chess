@@ -27,13 +27,13 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK);
 
             //when & then
-            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c3"), PositionFactory.createPosition("c2")))
+            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c2"), PositionFactory.createPosition("c3")))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"e4:d5", "e4:e5", "e4:f5"}, delimiter = ':')
+        @CsvSource(value = {"e4:d3", "e4:e3", "e4:f3"}, delimiter = ':')
         @DisplayName("이동 경로를 반환한다.")
         void givenPossiblePosition_thenReturnEmptyList(String sourceCommand, String targetCommand) {
             //given
@@ -56,13 +56,13 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE);
 
             //when & then
-            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c3"), PositionFactory.createPosition("c4")))
+            assertThatThrownBy(() -> pawn.findRoute(PositionFactory.createPosition("c4"), PositionFactory.createPosition("c3")))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessageContaining("잘못된 도착 지점입니다.");
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"e4:d3", "e4:e3", "e4:f3"}, delimiter = ':')
+        @CsvSource(value = {"e4:d5", "e4:e5", "e4:f5"}, delimiter = ':')
         @DisplayName("이동 경로를 반환한다.")
         void givenPossiblePosition_thenReturnEmptyList(String sourceCommand, String targetCommand) {
             //given

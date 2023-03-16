@@ -17,7 +17,7 @@ class PositionFactoryTest {
 
         Position position = PositionFactory.createPosition(coordinate);
 
-        assertThat(position).isEqualTo(Position.of(1, 4));
+        assertThat(position).isEqualTo(Position.of(1, 3));
     }
 
     @ParameterizedTest
