@@ -12,6 +12,7 @@ public final class Board {
 
     private static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "유효한 움직임이 아닙니다.";
     private static final String NOT_YOUR_TURN_EXCEPTION_MESSAGE = "의 턴이 아닙니다.";
+    private static final String CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE = "자신의 기물이 있는 곳으로 이동할 수 없습니다.";
 
     private final List<Squares> board = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public final class Board {
 
     private void validateLegalTargetColor(final Square sourceSquare, final Square targetSquare) {
         if (sourceSquare.equalsColor(targetSquare)) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException(CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE);
         }
     }
 
