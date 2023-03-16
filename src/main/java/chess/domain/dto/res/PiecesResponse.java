@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.domain.dto.res;
 
 import chess.domain.Player;
 

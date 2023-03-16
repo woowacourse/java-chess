@@ -1,7 +1,6 @@
 package chess.ui;
 
-import chess.domain.Pieces;
-import chess.domain.dto.PiecesResponse;
+import chess.domain.dto.res.PiecesResponse;
 
 import static chess.domain.Pieces.FIRST_FILE_OF_BLACK;
 import static chess.domain.Pieces.FIRST_FILE_OF_WHITE;
@@ -27,11 +26,11 @@ public final class OutputView {
         for (int rank = FIRST_FILE_OF_BLACK; rank >= FIRST_FILE_OF_WHITE; rank--) {
             printChessBoardByRankAndFile(piecesResponse, rank);
         }
-        System.out.println(System.lineSeparator() + "end");
+        System.out.println(System.lineSeparator());
     }
 
     private static void printChessBoardByRankAndFile(PiecesResponse piecesResponse, int rank) {
-        for (int file = LAST_RANK; file >= FIRST_RANK; file--) {
+        for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
             printChessBoard(piecesResponse, rank, file);
         }
         System.out.println();
@@ -43,5 +42,9 @@ public final class OutputView {
             return;
         }
         System.out.print(EMPTY_POSITION);
+    }
+
+    public static void printChessBoardStatus(PiecesResponse piecesResponse) {
+        printInitializedChessBoard(piecesResponse);
     }
 }

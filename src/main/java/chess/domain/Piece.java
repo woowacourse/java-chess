@@ -1,5 +1,10 @@
 package chess.domain;
 
+import chess.domain.dto.PositionDto;
+import chess.domain.dto.req.MoveRequest;
+
+import java.util.List;
+
 public class Piece {
 
     private Position position;
@@ -15,6 +20,25 @@ public class Piece {
 
     public boolean isSameShape(Shape shape) {
         return this.shape == shape;
+    }
+
+    public Position move(
+            final List<Position> positions,
+            final String inputTargetPosition,
+            final String movablePieceColor
+    ) {
+        char file = inputTargetPosition.charAt(0);
+        int rank = Integer.parseInt(String.valueOf(inputTargetPosition.charAt(1)));
+
+        Position changedPosition = shape.move(MoveRequest.from(
+                positions, // 모든 기물들의 위치
+                movablePieceColor, // 이동할 기물 진영
+                new PositionDto(position), // 이동할 기물의 위치
+                new PositionDto(Position.from(rank, file)) // 이동할 위치
+        ));
+
+        this.position = changedPosition;
+        return changedPosition;
     }
 
     @Override
@@ -43,5 +67,9 @@ public class Piece {
 
     public char getName(String color) {
         return this.shape.findNameByColor(color);
+    }
+
+    public boolean isSamePosition(Position findPosition) {
+        return position.isSamePosition(findPosition);
     }
 }

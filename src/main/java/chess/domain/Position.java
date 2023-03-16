@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public final class Position {
 
     private int rank;
@@ -46,14 +48,6 @@ public final class Position {
 
     private boolean isPieceRankOutOfRange(int rank) {
         return rank < 97 || 104 < rank;
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "rank=" + rank +
-                ", file=" + file +
-                '}';
     }
 
     public Position changePosition(int rank) {
