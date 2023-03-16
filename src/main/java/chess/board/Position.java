@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.piece.Direction;
+
 public class Position {
 
     private File file;
@@ -10,9 +12,10 @@ public class Position {
         this.rank = rank;
     }
 
-    public void move(final int fileMovingCount, final int rankMovingCount) {
-        this.file = file.getAddedFile(fileMovingCount);
-        this.rank = rank.getAddedRank(rankMovingCount);
+    public Direction getDirectionTo(Position targetPosition) {
+        final int fileValuePoint = file.getValuePoint(targetPosition.file);
+        final int rankValuePoint = rank.getValuePoint(targetPosition.rank);
+        return Direction.from(fileValuePoint, rankValuePoint);
     }
 
     public int getFile() {
