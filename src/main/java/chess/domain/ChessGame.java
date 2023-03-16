@@ -36,8 +36,6 @@ public class ChessGame {
     }
 
     private boolean canMove(Square source, Square target) {
-        Piece sourcePiece = chessboard.getPieceAt(source);
-        Piece targetPiece = chessboard.getPieceAt(target);
 
         if (source.equals(target)) {
             return false;
