@@ -17,13 +17,17 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        if (!board.containsKey(from)) {
-            throw new IllegalArgumentException("출발점에 말이 없습니다.");
-        }
+        validateIsFromEmtpy(from);
         Path path = board.get(from)
                 .searchPathTo(from, to, Optional.ofNullable(board.get(to)));
         path.validateObstacle(board.keySet());
         Piece piece = board.remove(from);
         board.put(to, piece);
+    }
+
+    private void validateIsFromEmtpy(final Position from) {
+        if (!board.containsKey(from)) {
+            throw new IllegalArgumentException("출발점에 말이 없습니다.");
+        }
     }
 }

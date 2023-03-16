@@ -12,4 +12,8 @@ public enum Color {
     public boolean isBlack() {
         return this == BLACK;
     }
+
+    public boolean isDifferentColor(Color color) {
+        return this != color;
+    }
 }

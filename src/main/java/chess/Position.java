@@ -12,18 +12,6 @@ public class Position {
         this.rank = Rank.from(rank);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
     public Movement convertMovement(Position from) {
         int rankGap = rank.value() - from.rank.value();
         int fileGap = file.value() - from.file.value();
@@ -42,6 +30,29 @@ public class Position {
         }
     }
 
+    public Position moveBy(Movement movement) {
+        return movement.nextPosition(file, rank);
+    }
+
+    public int rankDifference(final Position from) {
+        return this.rank.value() - from.rank.value();
+    }
+
+    public int fileDifference(final Position from) {
+        return this.file.value() - from.file.value();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
 
     @Override
     public int hashCode() {

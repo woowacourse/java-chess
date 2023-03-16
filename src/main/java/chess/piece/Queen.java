@@ -5,6 +5,7 @@ import chess.Position;
 import java.util.Optional;
 
 public class Queen extends Piece {
+
     public Queen(final Color color) {
         super(color);
     }
