@@ -20,8 +20,8 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(Piece targetPiece) {
         List<Integer> subtractCoordinate = subtractCoordinate(targetPiece);
-        int subtractedRow = subtractCoordinate.get(ROW_INDEX);
         int subtractedColumn = subtractCoordinate.get(COLUMN_INDEX);
+        int subtractedRow = subtractCoordinate.get(ROW_INDEX);
         return isPawnMovable(targetPiece, subtractedRow, subtractedColumn);
     }
     

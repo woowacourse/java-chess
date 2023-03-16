@@ -21,9 +21,9 @@ public class Coordinate {
     }
     
     public List<Integer> calculateCoordinateDistance(Coordinate targetCoordinate) {
-        int rowDistance = this.row.subtract(targetCoordinate.row);
         int columnDistance = this.column.subtract(targetCoordinate.column);
-        return List.of(rowDistance, columnDistance);
+        int rowDistance = this.row.subtract(targetCoordinate.row);
+        return List.of(columnDistance, rowDistance);
     }
     
     public boolean isPawnStartRow(int startRow) {
@@ -32,6 +32,10 @@ public class Coordinate {
     
     public boolean isSameColumn(char otherColumn) {
         return this.column.isSame(otherColumn);
+    }
+    
+    public boolean isSameRow(int otherRow) {
+        return this.row.isSame(otherRow);
     }
     
     @Override

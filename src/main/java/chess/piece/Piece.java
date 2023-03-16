@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Piece {
-    protected static final int ROW_INDEX = 0;
-    protected static final int COLUMN_INDEX = 1;
+    protected static final int ROW_INDEX = 1;
+    protected static final int COLUMN_INDEX = 0;
     
     private final Team team;
     private final Coordinate coordinate;
@@ -59,6 +59,26 @@ public abstract class Piece {
     
     protected Coordinate coordinate() {
         return coordinate;
+    }
+    
+    public boolean isSameRow(int otherRow) {
+        return coordinate.isSameRow(otherRow);
+    }
+    
+    public Piece movedSourcePiece(List<Integer> parsedDestinationCoordinate) {
+        return PieceMatcher.of(symbol(), team, createCoordinate(parsedDestinationCoordinate));
+    }
+    
+    private Coordinate createCoordinate(List<Integer> coordinate) {
+        return new Coordinate(findRow(coordinate), parseColumn(coordinate));
+    }
+    
+    private int findRow(List<Integer> splitedSourceCoordinate) {
+        return splitedSourceCoordinate.get(ROW_INDEX);
+    }
+    
+    private char parseColumn(List<Integer> splitedSourceCoordinate) {
+        return (char)(int) splitedSourceCoordinate.get(COLUMN_INDEX);
     }
     
     @Override

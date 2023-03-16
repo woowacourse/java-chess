@@ -35,6 +35,10 @@ public class Row {
         return row == startRow;
     }
     
+    public boolean isSame(int otherRow) {
+        return this.row == otherRow;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

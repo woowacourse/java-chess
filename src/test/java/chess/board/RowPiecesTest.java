@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RowPiecesTest {
@@ -29,10 +31,10 @@ class RowPiecesTest {
     }
     
     @ParameterizedTest
-    @CsvSource(value = {"a,a,true","c,c,false","d,d,true"})
-    void 출발_객체가_도착지_좌표로_이동할_수_있는지_판단(char sourceColumn,char destinationColumn, boolean expectedResult) {
+    @CsvSource(value = {"a,a,true", "c,c,false", "d,d,true"})
+    void 출발_객체가_도착지_좌표로_이동할_수_있는지_판단(char sourceColumn, char destinationColumn, boolean expectedResult) {
         RowPieces targetRowPieces = new RowPieces(1);
-        boolean isMovable = rowPieces.isMovable(targetRowPieces,sourceColumn,destinationColumn);
+        boolean isMovable = rowPieces.isMovable(targetRowPieces, List.of((int) sourceColumn, 0), List.of((int) destinationColumn, 0));
         Assertions.assertThat(isMovable).isEqualTo(expectedResult);
     }
 }
