@@ -13,10 +13,6 @@ public class WayPointsWithCondition {
         this.condition = condition;
     }
 
-    public static WayPointsWithCondition impossible() {
-        return new WayPointsWithCondition(Collections.emptyList(), Condition.IMPOSSIBLE);
-    }
-
     public static WayPointsWithCondition possible(final List<PiecePosition> wayPoints) {
         return new WayPointsWithCondition(wayPoints, Condition.POSSIBLE);
     }

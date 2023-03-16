@@ -13,10 +13,14 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
-        if (path.isDiagonal()) {
-            return WayPointsWithCondition.possible(path.wayPoints());
+    protected void validateMovable(final Path path) {
+        if (!path.isDiagonal()) {
+            throw new IllegalArgumentException();
         }
-        return WayPointsWithCondition.impossible();
+    }
+
+    @Override
+    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        return WayPointsWithCondition.possible(path.wayPoints());
     }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -50,7 +51,6 @@ class PawnTest {
         @CsvSource({
                 // 기준 b, 4
                 "b,5,POSSIBLE",
-                "b,6,IMPOSSIBLE",
                 "a,5,ONLY_DESTINATION_ENEMY",
                 "c,5,ONLY_DESTINATION_ENEMY",
         })
@@ -80,7 +80,8 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(Condition.IMPOSSIBLE);
+            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest
@@ -99,7 +100,8 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(Condition.IMPOSSIBLE);
+            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 
@@ -128,7 +130,6 @@ class PawnTest {
         @CsvSource({
                 // 기준 b, 5
                 "b,4,POSSIBLE",
-                "b,3,IMPOSSIBLE",
                 "a,4,ONLY_DESTINATION_ENEMY",
                 "c,4,ONLY_DESTINATION_ENEMY",
         })
@@ -159,7 +160,8 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(Condition.IMPOSSIBLE);
+            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest
@@ -178,7 +180,8 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(Condition.IMPOSSIBLE);
+            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

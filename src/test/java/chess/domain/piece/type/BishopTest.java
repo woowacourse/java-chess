@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -36,9 +37,8 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = bishop.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.IMPOSSIBLE);
-        assertThat(condition.wayPoints()).isEmpty();
+        assertThatThrownBy(() -> bishop.wayPointsWithCondition(destination))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest

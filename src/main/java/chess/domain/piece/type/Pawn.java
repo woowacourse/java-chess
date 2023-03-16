@@ -18,14 +18,16 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+    protected void validateMovable(final Path path) {
         if (!matchDestinationByColor(path)) {
-            return WayPointsWithCondition.impossible();
+            throw new IllegalArgumentException();
         }
         if (!isMoved && isPawnSpecialDestination(path)) {
-            return WayPointsWithCondition.possible(path.wayPoints());
+            return;
         }
-        return defaultMove(path);
+        if (!path.isUnitDistance()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private boolean matchDestinationByColor(final Path path) {
@@ -42,16 +44,24 @@ public class Pawn extends Piece {
         return Math.abs(path.fileDistance()) == 0;
     }
 
-    private WayPointsWithCondition defaultMove(final Path path) {
-        if (!path.isUnitDistance()) {
-            return WayPointsWithCondition.impossible();
+    @Override
+    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        if (!isMoved && isPawnSpecialDestination(path)) {
+            final List<PiecePosition> wayPoints = path.wayPoints();
+            wayPoints.add(path.destination());
+            return WayPointsWithCondition.possible(wayPoints);
         }
+        return defaultMove(path);
+    }
+
+    private WayPointsWithCondition defaultMove(final Path path) {
         if (path.isDiagonal()) {
             return WayPointsWithCondition.onlyEnemy();
         }
         return WayPointsWithCondition.possible(List.of(path.destination()));
     }
 
+    @Override
     public void move(final PiecePosition piecePosition) {
         this.piecePosition = piecePosition;
         this.isMoved = true;

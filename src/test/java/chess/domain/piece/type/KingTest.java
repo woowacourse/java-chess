@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -92,8 +93,7 @@ class KingTest {
         final King king = new King(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = king.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.IMPOSSIBLE);
-        assertThat(condition.wayPoints()).isEmpty();
+        assertThatThrownBy(() -> king.wayPointsWithCondition(destination))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

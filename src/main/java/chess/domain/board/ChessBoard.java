@@ -29,10 +29,6 @@ public class ChessBoard {
 
         final WayPointsWithCondition wayPointsWithCondition = piece.wayPointsWithCondition(destination);
 
-        if (wayPointsWithCondition.condition() == Condition.IMPOSSIBLE) {
-            throw new IllegalArgumentException("움직일 수 없는 위치입니다");
-        }
-
         if (wayPointsWithCondition.condition() == Condition.ONLY_DESTINATION_ENEMY) {
             final Piece enemy = get(destination);
             if (!piece.isEnemy(enemy)) {

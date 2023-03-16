@@ -13,10 +13,14 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
-        if (path.isStraight() || path.isDiagonal()) {
-            return WayPointsWithCondition.possible(path.wayPoints());
+    protected void validateMovable(final Path path) {
+        if (!path.isStraight() && !path.isDiagonal()) {
+            throw new IllegalArgumentException();
         }
-        return WayPointsWithCondition.impossible();
+    }
+
+    @Override
+    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        return WayPointsWithCondition.possible(path.wayPoints());
     }
 }

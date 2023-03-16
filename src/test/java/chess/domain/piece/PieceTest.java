@@ -24,6 +24,11 @@ class PieceTest {
         assertDoesNotThrow(() -> new Piece(Color.WHITE, of(1, 'a')) {
 
             @Override
+            protected void validateMovable(final Path path) {
+
+            }
+
+            @Override
             protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
                 return null;
             }
@@ -45,6 +50,11 @@ class PieceTest {
     static class MyPiece extends Piece {
         public MyPiece(final Color color, final PiecePosition piecePosition) {
             super(color, piecePosition);
+        }
+
+        @Override
+        protected void validateMovable(final Path path) {
+
         }
 
         @Override

@@ -15,10 +15,14 @@ public class King extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
-        if (path.isUnitDistance()) {
-            return WayPointsWithCondition.possible(Collections.emptyList());
+    protected void validateMovable(final Path path) {
+        if (!path.isUnitDistance()) {
+            throw new IllegalArgumentException();
         }
-        return WayPointsWithCondition.impossible();
+    }
+
+    @Override
+    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        return WayPointsWithCondition.possible(Collections.emptyList());
     }
 }

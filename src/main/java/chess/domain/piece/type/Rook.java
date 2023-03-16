@@ -13,11 +13,14 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
-        if (path.isStraight()) {
-            return WayPointsWithCondition.possible(path.wayPoints());
+    protected void validateMovable(final Path path) {
+        if (!path.isStraight()) {
+            throw new IllegalArgumentException();
         }
-        return WayPointsWithCondition.impossible();
+    }
 
+    @Override
+    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        return WayPointsWithCondition.possible(path.wayPoints());
     }
 }

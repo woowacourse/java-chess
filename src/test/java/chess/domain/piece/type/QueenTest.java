@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -32,9 +33,8 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = queen.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.IMPOSSIBLE);
-        assertThat(condition.wayPoints()).isEmpty();
+        assertThatThrownBy(() -> queen.wayPointsWithCondition(destination))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest

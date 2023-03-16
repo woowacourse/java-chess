@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -73,7 +74,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = knight.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.IMPOSSIBLE);
+        assertThatThrownBy(() -> knight.wayPointsWithCondition(destination))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
