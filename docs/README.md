@@ -4,19 +4,20 @@
 
 # 📚 도메인 모델 네이밍 사전
 
-| 한글명   | 영문명        | 설명                              | 분류     |
-|-------|------------|---------------------------------|--------|
-| 팀     | Team       | Black, White로 구별되는 팀 정보         |        |
-| 로그    | Log        | 기물이 이동 명령을 받았을 떄의 위치와 게임 턴 수를 저장 |        |
-| 기록    | Trace      | 로그의 목록                          |        |
-| 기물    | Piece      | 체스판의 말                          |        |
-| 행     | File       | 체스판의 세로 위치 정보 (1 ~ 8)           |        |
-| 열     | Rank       | 체스판의 가로 위치 정보 (a ~ h)           |        |
-| 좌표    | Position   | 행과 열로 이루어진 체스판의 위치정보            |        |
-| 칸     | Square     | 좌표와 기물 정보를 가지고 있는 체스판의 구성요소     |        |
-| 체스 판  | ChessBoard | 칸을 가지고 있는 일급컬렉션                 |        |
-| 턴     | Turn       | 체스 게임의 턴                        |        |
-| 체스 게임 | ChessGame  | 체스 게임 진행을 관리                    |        |
+| 한글명   | 영문명       | 설명                               | 분류               |
+|-------|-----------|----------------------------------|------------------|
+| 팀     | Team      | Black, White로 구별되는 팀 정보          | enum             |
+| 로그    | Log       | 기물이 이동 명령을 받았을 떄의 위치와 게임 턴 수를 저장 | class            |
+| 기록    | Trace     | 로그의 목록                           | class            |
+| 기물    | Piece     | 체스판의 말                           | (abstract) class |
+| 행     | File      | 체스판의 세로 위치 정보 (1 ~ 8)            | enum             |
+| 열     | Rank      | 체스판의 가로 위치 정보 (a ~ h)            | enum             |
+| 좌표    | Position  | 행과 열로 이루어진 체스판의 위치정보             | class            |
+| 칸     | Square    | 좌표와 기물 정보를 가지고 있는 체스판의 구성요소      | class            |
+| 체스 판  | ChessBoard | 칸을 가지고 있는 일급컬렉션                  | class            |
+| 턴     | Turn      | 체스 게임의 턴                         | class            |
+| 게임 상태 | GameState | 체스 게임의 상태                        | enum             |
+| 체스 게임 | ChessGame | 체스 게임 진행을 관리                     | class            |
 
 # 게임 용어 사전
 
@@ -41,10 +42,116 @@
 
 ```mermaid
 flowchart
-A[명령어 소개] --> B[시작 명령어 입력] --> H(시작 명령어 유효성 검사) --> G(체스판 초기화) --> C[체스판 출력] --> D[이동 유저 명령 입력] --> I(이동 명령어 유효성 검사) --> E(말 이동 로직 수행)
+A[명령어 소개 출력] --> B[시작 명령어 입력] --> H(시작 명령어 유효성 검사) --> G(체스판 초기화) --> C[체스판 출력] --> D[이동 유저 명령 입력] --> I(이동 명령어 유효성 검사) --> E(말 이동 로직 수행)
 E--> D
-D--> |end 입력시| J[게임종료]
+D--> |end 입력 or 킹 사망| J[게임종료]
 ```
+
+# 클래스 다이어그램
+```mermaid
+classDiagram
+
+class ChessGame {
+-ChessBoard chessBoard
+-GameState state
+}
+class ChessBoard{
+-List<Sqaure> sqaures
+-Turn turn
+}
+class Square{
+-Piece piece
+-Position position
+}
+
+class Turn {
+-int turn
+}
+class Piece{
+  <<abstract>>
+  #Team team
+  #Trace trace
+}
+class King 
+class Queen
+class Rook
+class Bishop
+class Knight
+class Pawn
+class NoPiece
+class Position
+class Rank{
+<<enumeration>>
+A
+B
+C
+D
+E
+F
+G
+H
+}
+
+class File{
+<<enumeration>>
+ONE
+TWO
+THREE
+FOUR
+FIVE
+SIX
+SEVEN
+EIGHT
+}
+class Command{
+<<enumeration>>
+START
+MOVE
+END
+}
+class Team{
+<<enumeration>>
+BLACK
+WHITE
+EMPTY
+}
+
+class GameState{
+<<enumeration>>
+RUNNING
+FINISHED
+}
+class Trace{
+-List<Log> logs
+}
+class Log {
+-Turn turn
+-Position position
+}
+
+Piece<|--King
+Piece<|--Queen
+Piece<|--Rook
+Piece<|--Bishop
+Piece<|--Knight
+Piece<|--Pawn
+Piece<|--NoPiece
+
+ChessGame --> ChessBoard
+ChessGame --> GameState
+ChessGame ..> Command
+ChessBoard "1"-->"1..*" Square
+ChessBoard --> Turn
+Square --> Piece
+Square --> Position
+Position --> Rank
+Position --> File
+Piece --> Team
+Piece --> Trace
+Trace"1"-->"1..*"Log
+
+```
+
 # 👨‍🍳 기능 목록
 
 
