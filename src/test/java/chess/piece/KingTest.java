@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,4 +46,18 @@ class KingTest {
         assertThat(king.isMovable(diagonalPosition)).isFalse();
     }
 
+    @Test
+    @DisplayName("킹은 한 번에 두 칸 이상 이동할 수 없기 때문에 중간 경로가 존재하지 않는다.")
+    void getPaths() {
+        // given
+        final King king = new King(new Position(File.A, Rank.THREE), Side.WHITE);
+        final Position targetPosition = new Position(File.B, Rank.FOUR);
+        List<Position> expectedPaths = Collections.emptyList();
+
+        // when
+        List<Position> paths = king.getPaths(targetPosition);
+
+        // then
+        assertThat(paths).isEqualTo(expectedPaths);
+    }
 }
