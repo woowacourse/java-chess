@@ -30,10 +30,16 @@ public final class ChessController {
     public void play() {
         outputView.startMessage();
         repeatReadStart();
-        try {
-            playGameUntilEnd(List.of(""));
-        } catch (RuntimeException e) {
+        repeatPlay();
+    }
 
+    private void repeatPlay() {
+        try {
+            playGameUntilEnd();
+        } catch (RuntimeException e) {
+            outputView.printErrorMesage(e);
+            outputView.printGuideMessage();
+            repeatPlay();
         }
     }
 
@@ -47,7 +53,7 @@ public final class ChessController {
     }
 
     private void startByCommand() {
-        List<String> command = inputView.inputStartCommand();
+        List<String> command = inputView.inputCommand();
         if (Command.from(command.get(COMMAND_INDEX)) != Command.START) {
             throw new IllegalArgumentException("먼저 게임을 시작해야 합니다.");
         }
@@ -66,7 +72,8 @@ public final class ChessController {
         collect.forEach(outputView::printRank);
     }
 
-    private void playGameUntilEnd(List<String> command) {
+    private void playGameUntilEnd() {
+        List<String> command = inputView.inputCommand();
         while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
             command = playGame(command);
         }
@@ -78,7 +85,7 @@ public final class ChessController {
             List<Squares> board = chessGame.getBoard();
             printBoard(board);
         }
-        command = inputView.inputStartCommand();
+        command = inputView.inputCommand();
         return command;
     }
 }

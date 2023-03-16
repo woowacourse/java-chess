@@ -13,7 +13,7 @@ public final class InputView {
         this.scanner = scanner;
     }
 
-    public List<String> inputStartCommand() {
+    public List<String> inputCommand() {
         String input = scanner.nextLine();
         List<String> split = Arrays.stream(input.split(" "))
                 .map(String::strip)

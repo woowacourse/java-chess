@@ -25,4 +25,7 @@ public final class OutputView {
     }
 
 
+    public void printGuideMessage() {
+        System.out.println("명령어를 다시 입력하세요");
+    }
 }
