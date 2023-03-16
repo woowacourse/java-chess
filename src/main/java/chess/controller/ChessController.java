@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ChessController {
 
-    public void start() {
+    public void run() {
         OutputView.printStartMessage();
         final ChessBoard chessBoard = ChessBoardFactory.create();
         final ChessState state = new Initialize(chessBoard);
@@ -31,8 +31,8 @@ public class ChessController {
             final List<String> command = InputView.readCommand();
             state = state.command(Command.parse(new ArrayList<>(command)));
             OutputView.showBoard(chessBoard.pieces());
-        } catch (Exception e) {
-            System.out.println("[ERROR] " + e.getMessage());
+        } catch (final Exception e) {
+            Logger.error(e);
         }
         return state;
     }
