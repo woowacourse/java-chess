@@ -27,7 +27,7 @@ public class ChessController {
         outputView.printStartMessage();
         return inputView.getInputWithRetry(() -> {
             List<String> commands = inputView.getCommand();
-            return Command.of(commands.get(0));
+            return Command.findCommand(commands.get(0));
         });
     }
 }
