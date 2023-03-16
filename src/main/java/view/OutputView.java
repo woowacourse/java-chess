@@ -1,8 +1,16 @@
 package view;
 
+<<<<<<< HEAD
 import domain.game.Position;
 import domain.game.Rank;
 import domain.game.Side;
+=======
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.piece.Rank;
+import domain.piece.Side;
+
+>>>>>>> a58948a (refactor: 게임 로직 구현)
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -37,11 +45,16 @@ public class OutputView {
         System.out.println();
     }
 
+<<<<<<< HEAD
     public void printSideOfTurn(Side side) {
         System.out.println(side + " 진영의 말을 움직이세요");
     }
 
     public void printServerErrorMessage() {
         System.out.println("서버 내부 오류가 발생했습니다. 개발자에게 문의하세요.");
+=======
+    public void printSide(Side side) {
+        System.out.println("현재 차례: " + side + " 진영");
+>>>>>>> a58948a (refactor: 게임 로직 구현)
     }
 }
