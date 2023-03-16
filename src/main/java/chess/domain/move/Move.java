@@ -15,7 +15,7 @@ public abstract class Move {
             Position possiblePosition = source;
             for (int i = 0; i < moveCount; i++) {
                 possiblePosition = move(possiblePosition, direction);
-                if (!possiblePosition.isOverBoard(BOARD_SIZE)) {
+                if (!possiblePosition.isOver(BOARD_SIZE)) {
                     positions.add(possiblePosition);
                 }
             }
