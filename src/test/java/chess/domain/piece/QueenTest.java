@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.File.A;
 import static chess.domain.File.B;
 import static chess.domain.File.C;
@@ -25,7 +26,7 @@ class QueenTest {
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
     void getPassingPathTest() {
-        final Piece queen = new Queen(D, EIGHT, Color.BLACK);
+        final Piece queen = new Queen(D, EIGHT, BLACK);
 
         final List<Position> path = queen.getPassingPositions(new Position(A, FIVE));
 
@@ -35,10 +36,31 @@ class QueenTest {
     @Test
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
     void getPassingPathFailTest() {
-        final Piece queen = new Queen(D, EIGHT, Color.BLACK);
+        final Piece queen = new Queen(D, EIGHT, BLACK);
 
         assertThatThrownBy(() -> queen.getPassingPositions(new Position(E, FOUR)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("말을 이동시킨다.")
+    void moveTest() {
+        final Piece originalQueen = new Queen(D, EIGHT, BLACK);
+
+        final Piece movedQueen = originalQueen.move(new Position(D, SIX), Optional.empty());
+
+        assertThat(movedQueen.getPosition()).isEqualTo(new Position(D, SIX));
+    }
+
+    @Test
+    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
+    void throws_exception_if_there_is_same_color_piece_in_target_position() {
+        final Piece originalQueen = new Queen(D, EIGHT, BLACK);
+        final Optional<Piece> sameColorPieceOptional = Optional.of(new Pawn(D, SIX, BLACK));
+
+        assertThatThrownBy(() -> originalQueen.move(new Position(D, SIX), sameColorPieceOptional))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 색 말은 잡을 수 없습니다.");
     }
 }

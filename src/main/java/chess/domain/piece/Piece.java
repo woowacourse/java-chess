@@ -6,10 +6,12 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Piece {
 
     protected static final String INVALID_DESTINATION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
+    protected static final String INVALID_MOVING_CAUSE_OF_CATCHING = "같은 색 말은 잡을 수 없습니다.";
 
     protected final Position position;
     protected final Color color;
@@ -40,6 +42,14 @@ public abstract class Piece {
     }
 
     protected abstract boolean canMove(final Position targetPosition);
+
+    public abstract Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition);
+
+    protected final void validateCachingSameColor(final Piece pieceInTargetPosition) {
+        if (pieceInTargetPosition.isSameColor(color)) {
+            throw new IllegalArgumentException(INVALID_MOVING_CAUSE_OF_CATCHING);
+        }
+    }
 
     public abstract List<Position> getPassingPositions(final Position targetPosition);
 

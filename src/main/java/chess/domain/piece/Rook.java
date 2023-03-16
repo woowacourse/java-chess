@@ -6,6 +6,7 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Rook extends Piece {
 
@@ -16,6 +17,11 @@ public class Rook extends Piece {
     @Override
     protected boolean canMove(final Position targetPosition) {
         return position.isInCrossPosition(targetPosition);
+    }
+
+    @Override
+    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+        return null;
     }
 
     @Override

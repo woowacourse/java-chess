@@ -6,6 +6,7 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
+import java.util.Optional;
 
 public class King extends Piece {
 
@@ -17,6 +18,11 @@ public class King extends Piece {
     protected boolean canMove(final Position targetPosition) {
         final int manhattanDistance = position.calculateManhattanDistance(targetPosition);
         return manhattanDistance == 1 || (manhattanDistance == 2 && !position.isInCrossPosition(targetPosition));
+    }
+
+    @Override
+    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+        return null;
     }
 
     @Override

@@ -7,6 +7,7 @@ import chess.domain.Rank;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -25,6 +26,11 @@ public class Pawn extends Piece {
             return position.calculateManhattanDistance(targetPosition) <= 2 && isOppositeColorSide(targetPosition);
         }
         return isNeighborDistance(targetPosition) && isOppositeColorSide(targetPosition);
+    }
+
+    @Override
+    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+        return null;
     }
 
     private boolean isNeighborDistance(final Position targetPosition) {

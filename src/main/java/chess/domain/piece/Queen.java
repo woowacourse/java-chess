@@ -6,6 +6,7 @@ import chess.domain.Position;
 import chess.domain.Rank;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Queen extends Piece {
 
@@ -16,6 +17,12 @@ public class Queen extends Piece {
     @Override
     protected boolean canMove(final Position targetPosition) {
         return position.isInCrossPosition(targetPosition) || position.isInDiagonalPosition(targetPosition);
+    }
+
+    @Override
+    public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
+        pieceContainerOfTargetPosition.ifPresent(this::validateCachingSameColor);
+        return new Queen(targetPosition.getFile(), targetPosition.getRank(), color);
     }
 
     @Override
