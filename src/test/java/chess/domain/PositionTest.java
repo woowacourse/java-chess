@@ -11,13 +11,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class PositionTest {
 
+    private static final String OUT_OF_BOUNDS_ERROR_MESSAGE = "말의 위치 범위를 벗어났습니다.";
+
     @ParameterizedTest
     @CsvSource(value = {"0:1", "1:0", "9:1", "1:9"}, delimiter = ':')
     @DisplayName("Position 은 각각 1 ~ 8을 넘길 수 없다.")
     void 위치_생성_실패(int x, int y) {
         assertThatThrownBy(() -> Position.of(x, y))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Position.EXCEPTION_MESSAGE_OUT_OF_BOUNDS);
+                .hasMessageContaining(OUT_OF_BOUNDS_ERROR_MESSAGE);
     }
 
     @DisplayName("Position 이 1 ~ 8 이내이면 생성이 이루어진다. 두 좌표값을 받으면 첫 번째를 파일로, 두 번째를 랭크로 생성한다.")
