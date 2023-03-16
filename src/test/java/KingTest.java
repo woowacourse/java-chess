@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
@@ -43,5 +45,15 @@ class KingTest {
         boolean movable = whiteKing.isMovable(Pawn.createOfBlack(), Position.of("c", "4"), Position.of("c", "5"));
 
         assertThat(movable).isTrue();
+    }
+
+    @DisplayName("king은 모든 방향으로의 움직임에 있어서 거쳐가는 경로의 길이가 0이다.")
+    @ParameterizedTest
+    @CsvSource(value = {"c,5", "c,3", "d,4", "b,4", "b,5", "d,5", "d,3", "b,3"})
+    void shouldReturnEmptyPathWhenMovementIsOneStep(String targetFile, String targetRank) {
+        King whiteKing = King.createOfWhite();
+        List<Position> path = whiteKing.collectPath(Position.of("c", "4"), Position.of(targetFile, targetRank));
+
+        assertThat(path).isEmpty();
     }
 }
