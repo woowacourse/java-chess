@@ -33,4 +33,19 @@ class PieceTest {
         assertThat(piece.isSameSide(sameSidePiece)).isTrue();
         assertThat(piece.isSameSide(differentSidePiece)).isFalse();
     }
+
+    @Test
+    @DisplayName("받은 위치로 이동한다.")
+    void move() {
+        // given
+        final Piece piece = new Rook(new Position(File.A, Rank.ONE), Side.WHITE);
+        final Position positionToMove = new Position(File.F, Rank.ONE);
+
+        // when
+        final Piece movedPiece = piece.move(positionToMove);
+
+        // then
+        assertThat(movedPiece).isInstanceOf(Rook.class);
+        assertThat(movedPiece.isSamePosition(positionToMove)).isTrue();
+    }
 }
