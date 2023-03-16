@@ -17,7 +17,7 @@ public class Game {
     }
 
     public void move(final Square source, final Square target) {
-        if (!board.move(source, target)) {
+        if (board.isEmptyPiece(source) || !board.move(source, target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

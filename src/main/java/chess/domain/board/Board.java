@@ -165,4 +165,8 @@ public class Board {
     public List<Piece> getPieces() {
         return new ArrayList<>(board.values());
     }
+
+    public boolean isEmptyPiece(final Square source) {
+        return board.get(source).equals(new Empty());
+    }
 }
