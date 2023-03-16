@@ -34,7 +34,7 @@ public final class ChessBoard {
 
         char file = 'a';
         for (Square square : squares) {
-            this.squares.put(Coordinate.of(""+(file)+rank), square);
+            this.squares.put(Coordinate.of("" + (file) + rank), square);
             file++;
         }
     }
@@ -53,7 +53,7 @@ public final class ChessBoard {
 
     private void createPawnRankByTeam(final char rank, final Team team) {
         for (char file = 'a'; file <= 'h'; file++) {
-            squares.put(Coordinate.of(""+file+rank), createPawnSquareByTeam(team));
+            squares.put(Coordinate.of("" + file + rank), createPawnSquareByTeam(team));
         }
     }
 
@@ -62,15 +62,28 @@ public final class ChessBoard {
     }
 
     private void createBlankRanks() {
-        for (char file = 'a'; file <= 'h'; file++) {
-            createBlankRank(file);
+        for (char rank = '3'; rank <= '6'; rank++) {
+            createBlankRank(rank);
         }
     }
 
-    private void createBlankRank(final char file) {
-        for(char rank = '3'; rank<='6'; rank++){
-            squares.put(Coordinate.of(""+file +rank), new Square());
+    private void createBlankRank(final char rank) {
+        for (char file = 'a'; file <= 'h'; file++) {
+            squares.put(Coordinate.of("" + file + rank), new Square());
         }
+    }
+
+    public void move(final Coordinate from, final Coordinate to) {
+        final Square departure = squares.get(from);
+        final Square arrival = squares.get(to);
+        final List<Coordinate> route = departure.findRoute(from, to);
+        final List<Square> routeSquares = route.stream()
+                .map(squares::get)
+                .collect(Collectors.toUnmodifiableList());
+
+        departure.canMove(routeSquares);
+        arrival.switchPieceState(departure);
+        departure.switchPieceState(new Square());
     }
 
     public List<Square> getSquares() {
