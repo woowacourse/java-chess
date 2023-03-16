@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -42,10 +41,5 @@ public final class Rook extends Piece {
             position = position.move(moveX, moveY);
         }
         return positions;
-    }
-
-    @Override
-    public Type getType() {
-        return pieceType;
     }
 }

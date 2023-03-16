@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -51,8 +50,4 @@ public final class Bishop extends Piece {
         return 1;
     }
 
-    @Override
-    public Type getType() {
-        return pieceType;
-    }
 }

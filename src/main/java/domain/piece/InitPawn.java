@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -48,11 +47,6 @@ public class InitPawn extends Piece {
         }
 
         return 1;
-    }
-
-    @Override
-    public Type getType() {
-        return pieceType;
     }
 
 }

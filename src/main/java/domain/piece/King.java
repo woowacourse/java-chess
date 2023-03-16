@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -24,10 +23,5 @@ public final class King extends Piece {
         int diffX = Math.abs(target.diffX(source));
 
         return (diffY != 0 || diffX != 0) && (diffX < 2 && diffY < 2);
-    }
-
-    @Override
-    public Type getType() {
-        return pieceType;
     }
 }

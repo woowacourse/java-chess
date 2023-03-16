@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.chessboard.SquareStatus;
+import domain.chessboard.Type;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 
@@ -15,21 +16,24 @@ public abstract class Piece implements SquareStatus {
         this.pieceType = pieceType;
     }
 
+    @Override
     public abstract Route findRoute(final Position source, final Position target);
+
+    @Override
+    public final Type getType() {
+        return pieceType;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
 
     protected void validateMovable(final Position source, final Position target) {
         if (isMovable(source, target)) {
             return;
         }
         throw new IllegalStateException("잘못된 도착 지점입니다.");
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     protected abstract boolean isMovable(final Position source, final Position target);

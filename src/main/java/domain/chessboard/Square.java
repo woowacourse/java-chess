@@ -24,7 +24,6 @@ public class Square {
     }
 
     public Route findRoute(final Position source, final Position target) {
-        validate();
         final Piece piece = (Piece) squareStatus;
         return piece.findRoute(source, target);
     }
@@ -33,14 +32,7 @@ public class Square {
         return squareStatus;
     }
 
-    private void validate() {
-        if (squareStatus.getClass() == Empty.class) {
-            throw new IllegalArgumentException("빈 칸은 선택할 수 없습니다.");
-        }
-    }
-
     public Color getColor() {
-        validate();
         final Piece piece = (Piece) squareStatus;
 
         return piece.getColor();
