@@ -33,30 +33,10 @@ class SquareTest {
         final Square square = new Square(new Empty(EmptyType.EMPTY));
 
         //when
-        square.bePiece(new King(Color.WHITE));
+        square.bePiece(new Square(new King(Color.WHITE)));
 
         //then
         assertThat(square.getSquareStatus().getClass())
                 .isEqualTo(King.class);
     }
-
-//    @Test
-//    @DisplayName("기물을 캐싱한다.")
-//    void createPiece_thenReturnCache() {
-//        //given
-//        Square square = Square.of(Type.KING, Color.BLACK);
-//
-//        //when
-//
-//        //then
-//        assertThat(square == Square.of(Type.KING, Color.BLACK)).isTrue();
-//    }
-//    @Test
-//    @DisplayName("타입과 색깔을 넣어주면 기물이 생성된다.")
-//    void givenColorAndType_thenCreate() {
-//        //then
-//        assertThat(Square.of(Type.KING, Color.BLACK))
-//                .extracting("type", "color")
-//                .containsExactly(Type.KING, Color.BLACK);
-//    }
 }

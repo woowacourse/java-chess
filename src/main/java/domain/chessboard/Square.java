@@ -3,7 +3,8 @@ package domain.chessboard;
 import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
-import domain.piece.Piece;
+import domain.piece.Pawn;
+import domain.piece.PieceType;
 
 public class Square {
 
@@ -19,20 +20,24 @@ public class Square {
         squareStatus = EMPTY_STATUS;
     }
 
-    public void bePiece(final Piece piece) {
-        squareStatus = piece;
+    public void bePiece(final Square square) {
+        if (square.getType() == PieceType.PAWN) {
+            squareStatus = new Pawn(square.squareStatus.getColor());
+            return;
+        }
+        squareStatus = square.squareStatus;
     }
 
     public Route findRoute(final Position source, final Position target) {
         return squareStatus.findRoute(source, target);
     }
 
-    public SquareStatus getSquareStatus() {
-        return squareStatus;
+    public boolean isSameColor(final Color color) {
+        return squareStatus.getColor() == color;
     }
 
-    public Color getColor() {
-        return squareStatus.getColor();
+    public SquareStatus getSquareStatus() {
+        return squareStatus;
     }
 
     public Type getType() {
