@@ -38,5 +38,4 @@ public class InputView {
             throw new IllegalArgumentException("올바른 움직임을 입력해주세요. 예) move b2 b4");
         }
     }
-
 }
