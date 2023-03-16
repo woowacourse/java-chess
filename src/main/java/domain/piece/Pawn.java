@@ -1,5 +1,7 @@
 package domain.piece;
 
+import view.PieceCategory;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -115,4 +117,13 @@ public final class Pawn extends Piece {
                 movement.isPerpendicular() &&
                 movement.isDownward();
     }
+
+    @Override
+    public PieceCategory getCategory() {
+        if (side == Side.WHITE) {
+            return PieceCategory.WHITE_PAWN;
+        }
+        return PieceCategory.BLACK_PAWN;
+    }
+
 }

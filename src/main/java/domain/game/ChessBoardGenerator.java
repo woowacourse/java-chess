@@ -3,13 +3,13 @@ package domain.game;
 import domain.piece.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoardGenerator {
 
     public Map<Position, Piece> generate() {
-        Map<Position, Piece> chessBoard = new HashMap<>();
+        Map<Position, Piece> chessBoard = new LinkedHashMap<>();
         Arrays.stream(File.values())
                 .forEach(file -> generateEmptyPieceByEachRank(chessBoard, file));
 

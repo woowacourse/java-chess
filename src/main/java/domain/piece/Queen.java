@@ -1,5 +1,7 @@
 package domain.piece;
 
+import view.PieceCategory;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -37,5 +39,13 @@ public class Queen extends Piece {
     @Override
     public boolean isEmptyPiece() {
         return false;
+    }
+
+    @Override
+    public PieceCategory getCategory() {
+        if (side == Side.WHITE) {
+            return PieceCategory.WHITE_QUEEN;
+        }
+        return PieceCategory.BLACK_QUEEN;
     }
 }

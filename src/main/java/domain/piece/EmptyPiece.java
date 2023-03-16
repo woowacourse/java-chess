@@ -1,5 +1,7 @@
 package domain.piece;
 
+import view.PieceCategory;
+
 import java.util.List;
 
 public class EmptyPiece extends Piece {
@@ -20,5 +22,10 @@ public class EmptyPiece extends Piece {
     @Override
     public boolean isEmptyPiece() {
         return true;
+    }
+
+    @Override
+    public PieceCategory getCategory() {
+        return PieceCategory.EMPTY_PIECE;
     }
 }

@@ -1,5 +1,7 @@
 package domain.piece;
 
+import view.PieceCategory;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -39,4 +41,11 @@ public class Bishop extends Piece {
         return false;
     }
 
+    @Override
+    public PieceCategory getCategory() {
+        if (side == Side.WHITE) {
+            return PieceCategory.WHITE_BISHOP;
+        }
+        return PieceCategory.BLACK_BISHOP;
+    }
 }

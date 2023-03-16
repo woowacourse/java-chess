@@ -3,14 +3,14 @@ package domain.piece;
 import java.util.Arrays;
 
 public enum Rank {
-    ONE("1", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
+    EIGHT("8", 8),
     SEVEN("7", 7),
-    EIGHT("8", 8);
+    SIX("6", 6),
+    FIVE("5", 5),
+    FOUR("4", 4),
+    THREE("3", 3),
+    TWO("2", 2),
+    ONE("1", 1);
 
     private final String text;
     private final int order;
