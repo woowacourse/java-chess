@@ -1,9 +1,8 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Condition;
-import chess.domain.piece.position.WayPointsWithCondition;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.WayPoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -33,8 +32,7 @@ class RookTest {
         final Rook rook = new Rook(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = rook.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        final WayPoints condition = rook.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isEmpty();
     }
 
@@ -57,8 +55,7 @@ class RookTest {
         final Rook rook = new Rook(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = rook.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        final WayPoints condition = rook.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
     }
 

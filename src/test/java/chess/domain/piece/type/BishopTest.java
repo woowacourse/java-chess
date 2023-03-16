@@ -1,8 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Condition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -56,8 +55,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = bishop.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        final WayPoints condition = bishop.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isEmpty();
     }
 
@@ -76,8 +74,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = bishop.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        final WayPoints condition = bishop.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
     }
 }

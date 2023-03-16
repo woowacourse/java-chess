@@ -1,9 +1,8 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Condition;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,14 +25,13 @@ class KingTest {
 
     @ParameterizedTest(name = "모든 방향으로 한 칸 이동 가능하며, 경우지는 없다. [{0}으로 한 칸 이동이 가능하다]")
     @MethodSource("unitDestinations")
-    void 모든_방향으로_한_칸_이동_가능하다(final PiecePosition destination, final WayPointsWithCondition expected) {
+    void 모든_방향으로_한_칸_이동_가능하다(final PiecePosition destination, final WayPoints expected) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
         final King king = new King(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = king.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        final WayPoints condition = king.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).containsExactlyInAnyOrderElementsOf(expected.wayPoints());
     }
 
@@ -41,35 +39,35 @@ class KingTest {
         return Stream.of(
                 Arguments.of(
                         Named.of("동쪽", PiecePosition.of(4, 'f')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("서쪽", PiecePosition.of(4, 'd')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북쪽", PiecePosition.of(5, 'e')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남쪽", PiecePosition.of(3, 'e')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북동쪽", PiecePosition.of(5, 'f')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남동쪽", PiecePosition.of(3, 'f')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북서쪽", PiecePosition.of(5, 'd')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남서쪽", PiecePosition.of(3, 'd')),
-                        WayPointsWithCondition.possible(Collections.emptyList())
+                        WayPoints.from(Collections.emptyList())
                 )
         );
     }

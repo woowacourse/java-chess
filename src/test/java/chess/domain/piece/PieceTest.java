@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -29,7 +29,7 @@ class PieceTest {
             }
 
             @Override
-            protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+            protected WayPoints wayPointsWithCondition(final Path path) {
                 return null;
             }
         });
@@ -58,7 +58,7 @@ class PieceTest {
         }
 
         @Override
-        protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+        protected WayPoints wayPointsWithCondition(final Path path) {
             return null;
         }
     }

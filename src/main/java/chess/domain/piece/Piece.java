@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 
 public abstract class Piece implements Cloneable {
 
@@ -18,14 +18,14 @@ public abstract class Piece implements Cloneable {
         return this.piecePosition.equals(piecePosition);
     }
 
-    public WayPointsWithCondition wayPointsWithCondition(final PiecePosition destination) {
+    public WayPoints wayPointsWithCondition(final PiecePosition destination) {
         validateMovable(Path.of(piecePosition, destination));
         return wayPointsWithCondition(Path.of(piecePosition, destination));
     }
 
     protected abstract void validateMovable(final Path path);
 
-    protected abstract WayPointsWithCondition wayPointsWithCondition(final Path path);
+    protected abstract WayPoints wayPointsWithCondition(final Path path);
 
     @Override
     public Piece clone() {
@@ -50,5 +50,16 @@ public abstract class Piece implements Cloneable {
 
     public void move(final PiecePosition destination) {
         this.piecePosition = destination;
+    }
+
+    public void moveAndKill(final Piece enemy) {
+        validateKill(enemy);
+        this.piecePosition = enemy.piecePosition;
+    }
+
+    private void validateKill(final Piece enemy) {
+        if (!isEnemy(enemy)) {
+            throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
+        }
     }
 }

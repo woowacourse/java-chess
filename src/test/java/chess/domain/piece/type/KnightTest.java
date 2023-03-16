@@ -1,17 +1,15 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Condition;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -33,8 +31,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = knight.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        assertDoesNotThrow(() -> knight.wayPointsWithCondition(destination));
     }
 
     @ParameterizedTest
@@ -52,8 +49,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPointsWithCondition condition = knight.wayPointsWithCondition(destination);
-        assertThat(condition.condition()).isEqualTo(Condition.POSSIBLE);
+        assertDoesNotThrow(() -> knight.wayPointsWithCondition(destination));
     }
 
     @ParameterizedTest

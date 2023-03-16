@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.position.Condition;
 import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -32,29 +31,29 @@ class PawnTest {
         @ParameterizedTest
         @CsvSource({
                 // 기준 b, 2
-                "b,3,POSSIBLE",
-                "b,4,POSSIBLE",
-                "a,3,ONLY_DESTINATION_ENEMY",
-                "c,3,ONLY_DESTINATION_ENEMY",
+                "b,3",
+                "b,4",
+                "a,3",
+                "c,3",
         })
-        void 움직이지_않은_경우_북쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank, final Condition condition) {
+        void 움직이지_않은_경우_북쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
             final PiecePosition destination = PiecePosition.of(rank, file);
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(condition);
+            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
         }
 
         @ParameterizedTest
         @CsvSource({
                 // 기준 b, 4
-                "b,5,POSSIBLE",
-                "a,5,ONLY_DESTINATION_ENEMY",
-                "c,5,ONLY_DESTINATION_ENEMY",
+                "b,5",
+                "a,5",
+                "c,5",
         })
-        void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank, final Condition condition) {
+        void 움직인_경우_북쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(2, 'b');
             final PiecePosition destination = PiecePosition.of(rank, file);
@@ -62,7 +61,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(4, 'b'));
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(condition);
+            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
         }
 
         @ParameterizedTest
@@ -111,29 +110,29 @@ class PawnTest {
         @ParameterizedTest
         @CsvSource({
                 // 기준 b, 7
-                "b,6,POSSIBLE",
-                "b,5,POSSIBLE",
-                "a,6,ONLY_DESTINATION_ENEMY",
-                "c,6,ONLY_DESTINATION_ENEMY",
+                "b,6",
+                "b,5",
+                "a,6",
+                "c,6",
         })
-        void 움직이지_않은_경우_남쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank, final Condition condition) {
+        void 움직이지_않은_경우_남쪽으로_한칸_두칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
             final PiecePosition destination = PiecePosition.of(rank, file);
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(condition);
+            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
         }
 
         @ParameterizedTest
         @CsvSource({
                 // 기준 b, 5
-                "b,4,POSSIBLE",
-                "a,4,ONLY_DESTINATION_ENEMY",
-                "c,4,ONLY_DESTINATION_ENEMY",
+                "b,4",
+                "a,4",
+                "c,4",
         })
-        void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank, final Condition condition) {
+        void 움직인_경우_남쪽으로_한칸_대각선한칸_이동_가능하다(final char file, final int rank) {
             // given
             final PiecePosition currentPosition = PiecePosition.of(7, 'b');
             final PiecePosition destination = PiecePosition.of(rank, file);
@@ -141,7 +140,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(5, 'b'));
 
             // when & then
-            assertThat(pawn.wayPointsWithCondition(destination).condition()).isEqualTo(condition);
+            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
         }
 
         @ParameterizedTest

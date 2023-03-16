@@ -1,9 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.Condition;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,32 +26,18 @@ public class ChessBoard {
             throw new IllegalArgumentException("상대 말 선택");
         }
 
-        final WayPointsWithCondition wayPointsWithCondition = piece.wayPointsWithCondition(destination);
+        final WayPoints wayPoints = piece.wayPointsWithCondition(destination);
 
-        if (wayPointsWithCondition.condition() == Condition.ONLY_DESTINATION_ENEMY) {
-            final Piece enemy = get(destination);
-            if (!piece.isEnemy(enemy)) {
-                throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
-            }
-            piece.move(destination);
-            pieces.remove(enemy);
+        if (wayPoints.wayPoints().stream().anyMatch(it -> optGet(it).isPresent())) {
+            throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
         }
-
-        if (wayPointsWithCondition.condition() == Condition.POSSIBLE) {
-            if (wayPointsWithCondition.wayPoints().stream().anyMatch(it -> optGet(it).isPresent())) {
-                throw new IllegalArgumentException("경로 상에 말이 있어서 이동할 수 없습니다.");
-            }
-            final Optional<Piece> piece1 = optGet(destination);
-            if (piece1.isPresent()) {
-                final Piece piece2 = piece1.get();
-                if (!piece.isEnemy(piece2)) {
-                    throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
-                }
-                piece.move(destination);
-                pieces.remove(piece2);
-            } else {
-                piece.move(destination);
-            }
+        final Optional<Piece> to = optGet(destination);
+        if (to.isPresent()) {
+            final Piece piece2 = to.get();
+            piece.moveAndKill(piece2);
+            pieces.remove(piece2);
+        } else {
+            piece.move(destination);
         }
 
         turn.change();

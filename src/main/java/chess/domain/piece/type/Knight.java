@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 
@@ -26,7 +26,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
-        return WayPointsWithCondition.possible(Collections.emptyList());
+    protected WayPoints wayPointsWithCondition(final Path path) {
+        return WayPoints.from(Collections.emptyList());
     }
 }

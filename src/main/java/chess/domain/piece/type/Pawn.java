@@ -4,8 +4,9 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPointsWithCondition;
+import chess.domain.piece.position.WayPoints;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -45,25 +46,37 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected WayPointsWithCondition wayPointsWithCondition(final Path path) {
+    protected WayPoints wayPointsWithCondition(final Path path) {
         if (!isMoved && isPawnSpecialDestination(path)) {
             final List<PiecePosition> wayPoints = path.wayPoints();
             wayPoints.add(path.destination());
-            return WayPointsWithCondition.possible(wayPoints);
+            return WayPoints.from(wayPoints);
         }
         return defaultMove(path);
     }
 
-    private WayPointsWithCondition defaultMove(final Path path) {
+    private WayPoints defaultMove(final Path path) {
         if (path.isDiagonal()) {
-            return WayPointsWithCondition.onlyEnemy();
+            return WayPoints.from(Collections.emptyList());
         }
-        return WayPointsWithCondition.possible(List.of(path.destination()));
+        return WayPoints.from(List.of(path.destination()));
     }
 
     @Override
     public void move(final PiecePosition piecePosition) {
+        if (!Path.of(this.piecePosition, piecePosition).isStraight()) {
+            throw new IllegalArgumentException("폰은 적이 없는 경우 직선으로만 이동할 수 있습니다.");
+        }
         this.piecePosition = piecePosition;
+        this.isMoved = true;
+    }
+
+    @Override
+    public void moveAndKill(final Piece enemy) {
+        if (!Path.of(piecePosition, enemy.piecePosition()).isDiagonal()) {
+            throw new IllegalArgumentException("폰은 대각선 위치에 있는 적만 죽일 수 있습니다.");
+        }
+        this.piecePosition = enemy.piecePosition();
         this.isMoved = true;
     }
 }
