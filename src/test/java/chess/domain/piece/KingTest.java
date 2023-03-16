@@ -2,11 +2,10 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.Camp;
-import chess.domain.File;
-import chess.domain.Move;
-import chess.domain.Rank;
-import chess.domain.Square;
+import chess.domain.board.File;
+import chess.domain.board.Move;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

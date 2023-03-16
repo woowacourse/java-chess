@@ -1,6 +1,5 @@
-package chess.domain.piece;
+package chess.domain.board;
 
-import chess.domain.Square;
 import java.util.Arrays;
 
 public enum KnightMove {

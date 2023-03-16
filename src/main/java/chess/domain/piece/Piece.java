@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
-import chess.domain.Move;
-import chess.domain.Role;
-import chess.domain.Square;
+import chess.domain.board.KnightMove;
+import chess.domain.board.Move;
+import chess.domain.board.Square;
 import java.util.Objects;
 
 public abstract class Piece {

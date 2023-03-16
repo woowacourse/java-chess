@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
-import chess.domain.Role;
-import chess.domain.Square;
+import chess.domain.board.KnightMove;
+import chess.domain.board.Square;
 import java.util.ArrayList;
 import java.util.List;
 

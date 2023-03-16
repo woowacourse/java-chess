@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Camp;
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import java.util.List;
 

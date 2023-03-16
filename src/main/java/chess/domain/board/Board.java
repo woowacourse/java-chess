@@ -1,13 +1,14 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.KnightMove;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.piece.Role;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.Arrays;

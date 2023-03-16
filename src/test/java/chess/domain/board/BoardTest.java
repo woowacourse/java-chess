@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
