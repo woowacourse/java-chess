@@ -22,7 +22,7 @@ class RookTest {
             final List<Position> expectedResult
     ) {
         // given
-        final Piece rook = new Rook(Color.WHITE);
+        final Piece rook = Rook.from(Color.WHITE);
         // when
         List<Position> result = rook.findPositions(source, target);
         // then
@@ -32,31 +32,31 @@ class RookTest {
     static Stream<Arguments> rookMovableSuccessTestDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        new Position(1, 1),
-                        new Position(1, 4),
+                        Position.of(1, 1),
+                        Position.of(1, 4),
                         List.of(
-                                new Position(1, 2),
-                                new Position(1, 3),
-                                new Position(1, 4),
-                                new Position(1, 5),
-                                new Position(1, 6),
-                                new Position(1, 7),
-                                new Position(1, 8),
-                                new Position(1, 9)
+                                Position.of(1, 2),
+                                Position.of(1, 3),
+                                Position.of(1, 4),
+                                Position.of(1, 5),
+                                Position.of(1, 6),
+                                Position.of(1, 7),
+                                Position.of(1, 8),
+                                Position.of(1, 9)
                         )
                 ),
                 Arguments.arguments(
-                        new Position(4, 4),
-                        new Position(0, 4),
+                        Position.of(4, 4),
+                        Position.of(0, 4),
                         List.of(
-                                new Position(3, 4),
-                                new Position(2, 4),
-                                new Position(1, 4),
-                                new Position(0, 4),
-                                new Position(-1, 4),
-                                new Position(-2, 4),
-                                new Position(-3, 4),
-                                new Position(-4, 4)
+                                Position.of(3, 4),
+                                Position.of(2, 4),
+                                Position.of(1, 4),
+                                Position.of(0, 4),
+                                Position.of(-1, 4),
+                                Position.of(-2, 4),
+                                Position.of(-3, 4),
+                                Position.of(-4, 4)
                         )
                 )
         );
