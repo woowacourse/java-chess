@@ -49,7 +49,7 @@ class SquareTest {
     @Test
     @DisplayName("piece가 존재하면 false를 반환한다.")
     void isEmptyPiece_false() {
-        Square replacedSquare = square.replacePiece(new Rook(Team.BLACK));
+        var replacedSquare = square.replacePiece(new Rook(Team.BLACK));
         assertThat(replacedSquare.isEmptyPiece()).isFalse();
     }
 }
