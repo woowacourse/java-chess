@@ -17,12 +17,20 @@ public class ChessGame {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
+        validateMove(sourcePosition, targetPosition);
+        move(sourcePosition, targetPosition);
+    }
+
+    private void validateMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
         validateColor(color, sourcePiece);
         validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
         List<Position> path = sourcePosition.findPath(targetPosition);
         validatePath(path);
+    }
+
+    private void move(Position sourcePosition, Position targetPosition) {
         board.movePiece(sourcePosition, targetPosition);
         this.color = color.getReverseColor();
     }

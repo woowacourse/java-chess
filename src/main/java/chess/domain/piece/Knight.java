@@ -16,16 +16,11 @@ public class Knight extends Piece {
         int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
 
         if (Math.abs(sourceColumnNumber - targetColumnNumber) == 2) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 1 && getColor() != color;
+            return Math.abs(sourceRankNumber - targetRankNumber) == 1 && isNotSameColor(color);
         }
         if (Math.abs(sourceColumnNumber - targetColumnNumber) == 1) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 2 && getColor() != color;
+            return Math.abs(sourceRankNumber - targetRankNumber) == 2 && isNotSameColor(color);
         }
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
         return false;
     }
 

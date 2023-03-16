@@ -4,16 +4,8 @@ import chess.domain.board.Position;
 
 public class King extends Piece {
 
-    private final boolean isMove;
-
-    public King(Color color, boolean isMove) {
-        super(color);
-        this.isMove = isMove;
-    }
-
     public King(Color color) {
         super(color);
-        this.isMove = false;
     }
 
     @Override
@@ -26,12 +18,7 @@ public class King extends Piece {
         return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
                 && Math.abs(sourceRankNumber - targetRankNumber) <= 1
                 && isNotMyPosition(sourcePosition, targetPosition)
-                && getColor() != color;
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
+                && isNotSameColor(color);
     }
 
     @Override
@@ -41,6 +28,6 @@ public class King extends Piece {
 
     @Override
     public Piece move() {
-        return new King(getColor(), true);
+        return new King(getColor());
     }
 }

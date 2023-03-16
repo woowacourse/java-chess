@@ -8,7 +8,6 @@ public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);
-        moveCount = 0;
     }
 
     public Pawn(Color color, int moveCount) {
@@ -52,12 +51,7 @@ public class Pawn extends Piece {
         int targetFileNumber = targetPosition.getColumn();
 
         return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber
-                && getColor() != color;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+                && isNotSameColor(color);
     }
 
     @Override

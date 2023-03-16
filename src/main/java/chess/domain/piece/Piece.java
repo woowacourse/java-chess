@@ -12,8 +12,6 @@ public abstract class Piece {
 
     public abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
 
-    public abstract boolean isKing();
-
     public abstract boolean isEmpty();
 
     public abstract Piece move();
@@ -35,6 +33,10 @@ public abstract class Piece {
     protected boolean isStraight(Position sourcePosition, Position targetPosition) {
         return (sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate()
                 || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
+    }
+
+    protected boolean isNotSameColor(Color color) {
+        return this.color != color;
     }
 
     public Color getColor() {

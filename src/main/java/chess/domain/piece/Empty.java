@@ -20,11 +20,6 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public boolean isEmpty() {
         return true;
     }
