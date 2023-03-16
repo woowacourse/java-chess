@@ -19,13 +19,6 @@ public class KingState implements MoveState {
         return Math.abs(x) <= 1 && Math.abs(y) <= 1;
     }
 
-    private boolean straightMove(int x, int y) {
-        if (x == 0 && y != 0) {
-            return true;
-        }
-        return x != 0 && y == 0;
-    }
-
     @Override
     public boolean canJump() {
         return false;

@@ -43,13 +43,6 @@ public enum Rank {
         return other.rankOrder - rankOrder;
     }
 
-    private boolean isBetween(Rank current, Rank other) {
-        if (rankOrder < current.rankOrder && current.rankOrder < other.rankOrder) {
-            return true;
-        }
-        return rankOrder > current.rankOrder && current.rankOrder > other.rankOrder;
-    }
-
     public List<Rank> createPath(Rank other) {
         List<Rank> ranks = IntStream.range(Math.min(rankOrder, other.rankOrder), Math.max(rankOrder, other.rankOrder))
                 .skip(SKIP_FIRST)
