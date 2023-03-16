@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Board {
 
@@ -51,8 +52,8 @@ public class Board {
         }
     }
 
-    public Piece findPieceOf(final Square square) {
-        return board.get(square);
+    public Optional<Piece> findPieceOf(final Square square) {
+        return Optional.ofNullable(board.get(square));
     }
 
     public Map<Square, Piece> getBoard() {
