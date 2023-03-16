@@ -22,7 +22,7 @@ public enum Rank {
         return y;
     }
 
-    public Rank findRank(final int targetRank) {
+    public static Rank findRank(final int targetRank) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getY() == targetRank)
                 .findFirst()

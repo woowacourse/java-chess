@@ -22,7 +22,7 @@ public enum File {
         return x;
     }
 
-    public File findFile(final int targetFile) {
+    public static File findFile(final int targetFile) {
         return Arrays.stream(File.values())
                 .filter(file -> file.getX() == targetFile)
                 .findFirst()
