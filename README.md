@@ -12,6 +12,9 @@ classDiagram
     Rank <-- Position
     File <-- Position
 
+
+    Position --> Movement
+    Piece --> Movement
     <<enumeration>> Rank
     <<enumeration>> File
 
@@ -23,6 +26,8 @@ classDiagram
     class Game {
         Map(Position, Piece) chessBoard
     }
+
+
 ```
 
 ### 체스 말들의 상속 관계
@@ -151,6 +156,7 @@ classDiagram
 
 - [x] 게임 가이드 메시지를 출력한다.
 - [x] 체스판 현황을 출력한다.
+- [x] 현재 움직일 진영을 출력한다.
 
 ### GameCommand
 
