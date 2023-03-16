@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.move.Move;
 import chess.domain.piece.Bishop;
