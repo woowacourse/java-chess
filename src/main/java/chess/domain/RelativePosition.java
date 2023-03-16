@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.math.BigInteger;
+
 public class RelativePosition {
 
 	private final int x;
@@ -8,6 +10,12 @@ public class RelativePosition {
 	public RelativePosition(final int x, final int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public static RelativePosition of(final Position source, final Position target) {
+		int x = target.getColumn() - source.getColumn();
+		int y = target.getRow() - source.getRow();
+		return new RelativePosition(x, y);
 	}
 
 	public RelativePosition toUnit() {
@@ -24,14 +32,14 @@ public class RelativePosition {
 	}
 
 	private RelativePosition toUnitNoneZeroPosition() {
-		int absMin = Math.min(Math.abs(x), Math.abs(y));
-		int absMax = Math.max(Math.abs(x), Math.abs(y));
-		int quotient = absMax / absMin;
-		int remainder = absMax % absMin;
-		if (remainder == 0) {
-			return new RelativePosition(x / quotient, y / quotient);
-		}
-		return new RelativePosition(x, y);
+		int gcd = getGreatestCommonDivisor(Math.abs(x), Math.abs(y));
+		return new RelativePosition(x / gcd, y / gcd);
+	}
+
+	private int getGreatestCommonDivisor(int x, int y) {
+		BigInteger bigX = BigInteger.valueOf(x);
+		BigInteger bigY = BigInteger.valueOf(y);
+		return bigX.gcd(bigY).intValue();
 	}
 
 	public boolean isZeroAbsTwo() {
@@ -40,6 +48,10 @@ public class RelativePosition {
 
 	public RelativePosition inverseByXAxis() {
 		return new RelativePosition(x, -1 * y);
+	}
+
+	public boolean isDiagonal() {
+		return Math.abs(x) == Math.abs(y);
 	}
 
 	public int getX() {

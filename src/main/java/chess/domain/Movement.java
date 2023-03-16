@@ -9,7 +9,8 @@ public enum Movement {
 	ROOK(Mobility.INFINITE, Direction.getCross()),
 	BISHOP(Mobility.INFINITE, Direction.getDiagonal()),
 	KNIGHT(Mobility.ONCE, Direction.getLShaped()),
-	PAWN(Mobility.ONCE, Direction.getNorthern());
+	PAWN(Mobility.ONCE, Direction.getNorthern()),
+	EMPTY(Mobility.EMPTY, Direction.getEmpty());
 
 	private final Mobility mobility;
 	private final List<Direction> directions;

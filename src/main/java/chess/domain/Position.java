@@ -28,11 +28,39 @@ public class Position {
 		return MIN_COORDINATE > row || MAX_COORDINATE < row;
 	}
 
+
+	public Position move(final RelativePosition relativePosition) {
+		int column = this.column + relativePosition.getX();
+		int row = this.row + relativePosition.getY();
+		return new Position(column, row);
+	}
+
 	public int getColumn() {
 		return column;
 	}
 
 	public int getRow() {
 		return row;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Position position = (Position)o;
+
+		if (column != position.column)
+			return false;
+		return row == position.row;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = column;
+		result = 31 * result + row;
+		return result;
 	}
 }

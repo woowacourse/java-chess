@@ -1,25 +1,23 @@
 package chess.domain.piece;
 
+import chess.domain.Movement;
 import chess.domain.RelativePosition;
+import chess.domain.Team;
 
-public class Empty implements Piece {
+public class Empty extends Piece {
 
 	public Empty() {
+		super(Team.EMPTY, Movement.EMPTY);
 	}
 
 	@Override
-	public boolean isMobile(final RelativePosition relativePosition) {
-		throw new IllegalStateException("제공하지 않는 기능입니다.");
+	public boolean isMobile(RelativePosition relativePosition) {
+		throw new IllegalStateException("이동이 불가능한 기물입니다.");
 	}
 
 	@Override
-	public boolean isBlack() {
-		return false;
-	}
-
-	@Override
-	public boolean isWhite() {
-		return false;
+	public boolean isEmpty() {
+		return true;
 	}
 
 	@Override

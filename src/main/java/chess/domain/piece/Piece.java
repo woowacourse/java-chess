@@ -1,11 +1,42 @@
 package chess.domain.piece;
 
+import chess.domain.Movement;
 import chess.domain.RelativePosition;
+import chess.domain.Team;
 
-public interface Piece {
+public abstract class Piece {
 
-	boolean isMobile(RelativePosition relativePosition);
-	boolean isBlack();
-	boolean isWhite();
-	PieceType getType();
+	protected final Team team;
+	protected final Movement movement;
+
+	public Piece(Team team, Movement movement) {
+		this.team = team;
+		this.movement = movement;
+	}
+
+	public boolean isMobile(RelativePosition relativePosition) {
+		return movement.isMobile(relativePosition);
+	}
+
+	public boolean isBlack() {
+		return team.isBlack();
+	}
+
+	public boolean isWhite() {
+		return team.isWhite();
+	}
+
+	public boolean isEmpty() {
+		return false;
+	}
+
+	public boolean isKnight() {
+		return false;
+	}
+
+	public boolean isPawn() {
+		return false;
+	}
+
+	public abstract PieceType getType();
 }

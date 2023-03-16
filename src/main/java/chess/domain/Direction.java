@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public enum Direction {
@@ -45,6 +46,10 @@ public enum Direction {
 	}
 	public static List<Direction> getNorthern() {
 		return List.of(NORTH, NORTH_EAST, NORTH_WEST);
+	}
+
+	public static List<Direction> getEmpty() {
+		return Collections.EMPTY_LIST;
 	}
 
 	public boolean matches(RelativePosition relativePosition) {

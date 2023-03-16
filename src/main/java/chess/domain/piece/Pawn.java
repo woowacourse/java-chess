@@ -4,15 +4,12 @@ import chess.domain.Movement;
 import chess.domain.RelativePosition;
 import chess.domain.Team;
 
-public class Pawn implements Piece {
+public class Pawn extends Piece {
 
-	private final Team team;
-	private final Movement movement;
 	private boolean hasMoved;
 
 	public Pawn(final Team team) {
-		this.team = team;
-		this.movement = Movement.PAWN;
+		super(team, Movement.PAWN);
 		this.hasMoved = false;
 	}
 
@@ -21,11 +18,11 @@ public class Pawn implements Piece {
 		if (!hasMoved && relativePosition.isZeroAbsTwo()) {
 			relativePosition = relativePosition.toUnit();
 		}
-		boolean isMobile = isMovementMobile(relativePosition);
-		if(isMobile){
+		if (isMovementMobile(relativePosition)) {
 			hasMoved = true;
+			return true;
 		}
-		return isMobile;
+		return false;
 	}
 
 	private boolean isMovementMobile(RelativePosition relativePosition) {
@@ -36,13 +33,8 @@ public class Pawn implements Piece {
 	}
 
 	@Override
-	public boolean isBlack() {
-		return team.isBlack();
-	}
-
-	@Override
-	public boolean isWhite() {
-		return team.isWhite();
+	public boolean isPawn() {
+		return true;
 	}
 
 	@Override
