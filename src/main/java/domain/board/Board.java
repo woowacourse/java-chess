@@ -12,13 +12,19 @@ public class Board {
     public static final int RANK_COUNT = 8;
     public static final int FILE_COUNT = 8;
 
+    // TODO: RANKS 일급컬렉션 지정
     private final List<Rank> ranks;
 
     public Board() {
-        ranks = new ArrayList<>();
+        ranks = initialize();
+    }
+
+    public List<Rank> initialize() {
+        List<Rank> ranks = new ArrayList<>();
         for (int row = 0; row < RANK_COUNT; row++) {
             ranks.add(new Rank(row, FILE_COUNT));
         }
+        return ranks;
     }
 
     public void move(Coordinate startCoordinate, Coordinate endCoordinate) {

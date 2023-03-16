@@ -4,6 +4,7 @@ import java.util.List;
 
 public class King implements PieceType {
 
+    // TODO: 매직 넘버 ENUM 지정
     private static final List<Double> availableInclinations = List.of(
             1.0, -1.0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0
     );
