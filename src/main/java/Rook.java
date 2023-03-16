@@ -2,7 +2,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Rook extends Piece {
-    protected Rook(Side side) {
+    private Rook(Side side) {
         super(side);
     }
 
