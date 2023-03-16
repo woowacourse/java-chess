@@ -1,21 +1,24 @@
 package chess.controller;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public enum GameCommand {
-    START("start"),
-    END("end");
+    START(Pattern.compile("^start$")),
+    END(Pattern.compile("^end$")),
+    MOVE(Pattern.compile("^move [a-h][1-8] [a-h][1-8]$"));
 
-    private final String command;
 
-    GameCommand(String command) {
-        this.command = command;
+    private final Pattern commandFormat;
+
+    GameCommand(Pattern commandFormat) {
+        this.commandFormat = commandFormat;
     }
 
     public static GameCommand from(String command) {
         return Arrays.stream(GameCommand.values())
-                .filter(it -> it.command.equalsIgnoreCase(command))
+                .filter(it -> it.commandFormat.matcher(command).matches())
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력은 Start 와 End 만 가능합니다"));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 커맨드 양식 입니다."));
     }
 }
