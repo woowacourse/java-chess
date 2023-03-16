@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.domain.ChessBoard;
 import chess.domain.TeamColor;
+import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
-import chess.util.BoardConverter;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -38,7 +38,7 @@ public class ChessController {
         if (commandRequest.getCommand() == Command.MOVE) {
             progressMove(chessBoard, commandRequest);
         }
-        outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+        outputView.printBoard(ChessBoardDto.from(chessBoard));
         return true;
     }
 
