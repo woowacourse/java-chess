@@ -29,9 +29,7 @@ public enum Row {
     public static int subPositionFromArrivePosition(final char start, final char end) {
         Row startRow = fromByInput(start);
         Row endRow = fromByInput(end);
-
-        int newRowPosition = endRow.row - startRow.row;
-        return newRowPosition;
+        return endRow.row - startRow.row;
     }
 
     public char getIndexOfRow() {

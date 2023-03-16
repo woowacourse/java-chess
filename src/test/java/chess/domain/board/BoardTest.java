@@ -19,7 +19,7 @@ class BoardTest {
         Board board = BoardFactory.createBoard();
 
         // then
-        assertThat(board.getChessBoard().size()).isEqualTo(64);
+        assertThat(board.getBoard().size()).isEqualTo(64);
     }
 
     @ParameterizedTest

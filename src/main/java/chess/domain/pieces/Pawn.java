@@ -12,6 +12,8 @@ public class Pawn extends Piece {
     private static final int MOVE_RIGHT = 1;
     private static final int MOVE_LEFT = -1;
     private static final int SAME_POSITION = 0;
+    private static final int ROW = 1;
+    private static final int COLUMN = 0;
 
     private boolean isFirstMove;
 
@@ -28,8 +30,8 @@ public class Pawn extends Piece {
     }
 
     private boolean validatePosition(final String start, final String end) {
-        int subRow = Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1));
-        int subCol = Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0));
+        int subRow = Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW));
+        int subCol = Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN));
 
         if (this.isFirstMove) {
             this.isFirstMove = false;

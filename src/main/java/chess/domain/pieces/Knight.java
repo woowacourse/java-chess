@@ -6,20 +6,19 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final int ROW = 1;
+    private static final int COLUMN = 0;
+
     public Knight(final Name name) {
         super(name);
     }
 
     @Override
     public void canMove(final String start, final String end) {
-        validateMove(start, end);
-    }
-
-    private void validateMove(final String start, final String end) {
         List<List<Integer>> possibleSubPosition = List.of(List.of(1, 2), List.of(2, 1));
 
-        int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1)));
-        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0)));
+        int absOfRow = Math.abs(Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW)));
+        int absOfCol = Math.abs(Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN)));
         List<Integer> newPosition = List.of(absOfCol, absOfRow);
 
         if (!possibleSubPosition.contains(newPosition)) {

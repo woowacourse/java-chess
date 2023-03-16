@@ -18,9 +18,9 @@ public enum Col {
         this.column = column;
     }
 
-    public static Col fromByInput(final char column) {
+    public static Col fromByInput(final char input) {
         return Arrays.stream(Col.values())
-                .filter(col -> col.column == column)
+                .filter(col -> col.column == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 column입니다."));
     }
@@ -28,8 +28,6 @@ public enum Col {
     public static int subPositionFromArrivePosition(final char start, final char end) {
         Col startCol = fromByInput(start);
         Col endCol = fromByInput(end);
-
-        int newRowPosition = endCol.column - startCol.column;
-        return newRowPosition;
+        return endCol.column - startCol.column;
     }
 }

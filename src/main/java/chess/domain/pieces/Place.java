@@ -2,8 +2,10 @@ package chess.domain.pieces;
 
 public class Place extends Piece {
 
+    private static final String PLACE = ".";
+
     public Place() {
-        super(new Name("."));
+        super(new Name(PLACE));
     }
 
     @Override

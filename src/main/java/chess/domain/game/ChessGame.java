@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
+import java.util.Collections;
 import java.util.Map;
 
 public class ChessGame {
@@ -28,6 +29,6 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board.getChessBoard();
+        return Collections.unmodifiableMap(board.getBoard());
     }
 }

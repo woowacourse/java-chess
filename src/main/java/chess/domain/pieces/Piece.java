@@ -14,7 +14,15 @@ public abstract class Piece {
         return name.getName();
     }
 
+    public boolean isPlace() {
+        return name.isPlace();
+    }
+
     public boolean isNameLowerCase() {
         return this.name.isLowerCase();
+    }
+
+    public boolean isNameUpperCase() {
+        return this.name.isUpperCase();
     }
 }

@@ -5,6 +5,9 @@ import chess.domain.board.Row;
 
 public class Rook extends Piece {
 
+    private static final int ROW = 1;
+    private static final int COLUMN = 0;
+
     public Rook(final Name name) {
         super(name);
     }
@@ -15,12 +18,11 @@ public class Rook extends Piece {
     }
 
     private void validateMove(final String start, final String end) {
-        int subRow = Row.subPositionFromArrivePosition(start.charAt(1), end.charAt(1));
-        int subCol = Col.subPositionFromArrivePosition(start.charAt(0), end.charAt(0));
+        int subRow = Row.subPositionFromArrivePosition(start.charAt(ROW), end.charAt(ROW));
+        int subCol = Col.subPositionFromArrivePosition(start.charAt(COLUMN), end.charAt(COLUMN));
 
         if (subRow != 0 && subCol != 0) {
             throw new IllegalArgumentException("올바르지 않은 위치로 이동할 수 없습니다.");
         }
     }
-
 }

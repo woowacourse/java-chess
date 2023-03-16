@@ -15,6 +15,9 @@ public enum Direction {
     SOUTH_WEST(-1, -1),
     SOUTH_EAST(1, -1);
 
+    private static final int ROW = 1;
+    private static final int COLUMN = 0;
+
     final int col;
     final int row;
 
@@ -37,10 +40,10 @@ public enum Direction {
         Direction direction = findDirection(start, end);
         List<String> route = new ArrayList<>();
 
-        char row = (char) (start.charAt(1) + direction.row);
-        char col = (char) (start.charAt(0) + direction.col);
+        char row = (char) (start.charAt(ROW) + direction.row);
+        char col = (char) (start.charAt(COLUMN) + direction.col);
 
-        while (row != end.charAt(1) || col != end.charAt(0)) {
+        while (row != end.charAt(ROW) || col != end.charAt(COLUMN)) {
             route.add(col + String.valueOf(row));
             row = (char) (row + direction.row);
             col = (char) (col + direction.col);
@@ -56,14 +59,17 @@ public enum Direction {
     }
 
     private boolean isSameDirection(final String start, final String end) {
-        int subRow = end.charAt(1) - start.charAt(1);
-        int subCol = end.charAt(0) - start.charAt(0);
+        int subRow = end.charAt(ROW) - start.charAt(ROW);
+        int subCol = end.charAt(COLUMN) - start.charAt(COLUMN);
+
         if (subRow != 0) {
             subRow = subRow / Math.abs(subRow);
         }
+
         if (subCol != 0) {
             subCol = subCol / Math.abs(subCol);
         }
+
         return this.row == subRow && this.col == subCol;
     }
 }

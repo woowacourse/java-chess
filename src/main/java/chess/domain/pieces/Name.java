@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Name {
 
+    private static final int ROW = 0;
+    private static final String PLACE = ".";
     private final String name;
 
     public Name(final String name) {
@@ -15,7 +17,15 @@ public class Name {
     }
 
     public boolean isLowerCase() {
-        return Character.isLowerCase(this.name.charAt(0));
+        return Character.isLowerCase(this.name.charAt(ROW));
+    }
+
+    public boolean isUpperCase() {
+        return Character.isUpperCase(this.name.charAt(ROW));
+    }
+
+    public boolean isPlace() {
+        return name.equals(PLACE);
     }
 
     @Override
