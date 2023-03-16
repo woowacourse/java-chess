@@ -1,14 +1,16 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Camp;
-import chess.piece.Piece;
-import chess.piece.PieceType;
+import chess.domain.board.Chessboard;
+import chess.domain.board.Rank;
+import chess.domain.piece.Camp;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static chess.piece.PieceType.*;
+import static chess.domain.piece.PieceType.*;
 
 public class BoardInitializer {
 

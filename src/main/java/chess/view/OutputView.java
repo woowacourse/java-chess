@@ -1,11 +1,11 @@
 package chess.view;
 
-import chess.Chessboard;
-import chess.File;
-import chess.Rank;
-import chess.Square;
-import chess.piece.Piece;
-import chess.piece.PieceType;
+import chess.domain.board.Chessboard;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 import java.util.Arrays;
 

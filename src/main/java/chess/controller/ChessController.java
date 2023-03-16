@@ -1,5 +1,7 @@
-package chess;
+package chess.controller;
 
+import chess.domain.BoardInitializer;
+import chess.domain.board.Chessboard;
 import chess.view.InputView;
 import chess.view.OutputView;
 

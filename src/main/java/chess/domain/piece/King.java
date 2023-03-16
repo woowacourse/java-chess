@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Square;
+import chess.domain.board.Square;
 
 public class King extends Piece {
     private static final int MOVABLE_DISTANCE = 1;

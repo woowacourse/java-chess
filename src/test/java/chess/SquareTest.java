@@ -1,5 +1,8 @@
 package chess;
 
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

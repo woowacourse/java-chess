@@ -1,7 +1,9 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Piece;
-import chess.piece.PieceType;
+import chess.domain.board.Chessboard;
+import chess.domain.board.Square;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class ChessGame {
     private final Chessboard chessboard;
@@ -24,7 +26,7 @@ public class ChessGame {
         Piece targetPiece = chessboard.getPieceAt(target);
 
         // 1차 검증 - soruce == target 같은가 ? : 다르다 -> 2차 검증
-        if(source.equals(target)){
+        if (source.equals(target)) {
             return false;
         }
 
@@ -38,11 +40,11 @@ public class ChessGame {
                 return false;
             }
             // 추가 검증 - pawn인 경우
-            if(sourcePiece.getPieceType() == PieceType.PAWN){
+            if (sourcePiece.getPieceType() == PieceType.PAWN) {
                 // pawn이면, 1. target에 다른 piece가 존재하면 이동 불가 (경로는 이미 검증)
                 //          2.
-                if(source.isSameFile(target)){
-                    return chessboard.isEmptyInRoute(source,target)&&
+                if (source.isSameFile(target)) {
+                    return chessboard.isEmptyInRoute(source, target) &&
                             chessboard.getPieceAt(target).getPieceType() == PieceType.EMPTY;
                 }
 

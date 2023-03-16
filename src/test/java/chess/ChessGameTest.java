@@ -1,6 +1,11 @@
 package chess;
 
-import chess.piece.Piece;
+import chess.domain.ChessGame;
+import chess.domain.board.Chessboard;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
+import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Square;
+import chess.domain.board.Square;
 
 public abstract class Piece {
     private final Camp camp;
@@ -21,7 +21,7 @@ public abstract class Piece {
         return camp != otherPiece.camp;
     }
 
-    public boolean isOpposite(Piece otherPiece){
+    public boolean isOpposite(Piece otherPiece) {
         return camp.isOpposite(otherPiece.camp);
     }
 

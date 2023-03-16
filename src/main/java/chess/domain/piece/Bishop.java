@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Square;
+import chess.domain.board.Square;
 
 public class Bishop extends Piece {
     public Bishop(Camp camp) {

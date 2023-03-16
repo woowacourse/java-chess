@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +72,11 @@ public class Square {
         return Objects.hash(file, rank);
     }
 
-    public boolean isRankSeven(){return rank == Rank.SEVEN;}
+    public boolean isRankSeven() {
+        return rank == Rank.SEVEN;
+    }
 
-    public boolean isRankTwo(){
+    public boolean isRankTwo() {
         return rank == Rank.TWO;
     }
 }

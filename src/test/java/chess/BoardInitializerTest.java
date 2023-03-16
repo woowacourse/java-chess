@@ -1,6 +1,11 @@
 package chess;
 
-import chess.piece.*;
+import chess.domain.BoardInitializer;
+import chess.domain.board.Chessboard;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
+import chess.domain.piece.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
