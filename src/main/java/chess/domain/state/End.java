@@ -11,7 +11,7 @@ public class End extends AbstractChessState {
 
     @Override
     public ChessState command(final Command command) {
-        throw new IllegalArgumentException("게임이 종료되었습니다.");
+        throw new IllegalStateException("게임이 종료되었습니다.");
     }
 
     @Override

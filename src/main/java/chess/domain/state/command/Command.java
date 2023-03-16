@@ -1,5 +1,6 @@
 package chess.domain.state.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class Command {
         }
     }
 
-    public static Command parse(final List<String> inputs) {
+    public static Command parse(List<String> inputs) {
+        inputs = new ArrayList<>(inputs);
         final String typeInput = inputs.remove(0);
         final Type type = Arrays.stream(Type.values())
                 .filter(it -> it.name().equalsIgnoreCase(typeInput))
