@@ -50,7 +50,6 @@ public class Pawn extends Piece {
 
             return new Path();
         }
-
         // 상대 말인 경우
         if (destination.isPresent()
                 && destination.get().color.isDifferentColor(color)

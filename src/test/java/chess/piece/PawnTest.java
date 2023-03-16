@@ -62,5 +62,14 @@ class PawnTest {
                     pawn.searchPathTo(INITIAL_POSITION, to, Optional.of(new Pawn(Color.WHITE))))
                     .isInstanceOf(IllegalStateException.class);
         }
+
+        @Test
+        void test_searchPathTo5() {
+            Position from = new Position(2, 5);
+            Position to = new Position(3, 4);
+            Piece piece = new Pawn(Color.BLACK);
+
+            Path path = piece.searchPathTo(from, to, Optional.of(new Pawn(Color.WHITE)));
+        }
     }
 }

@@ -20,4 +20,11 @@ public enum Color {
     public boolean isSameColor(Color color) {
         return this == color;
     }
+
+    public Color opposite() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

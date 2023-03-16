@@ -23,4 +23,8 @@ public abstract class Piece {
             throw new IllegalStateException("같은 색 말의 위치로 이동할 수 없습니다.");
         }
     }
+
+    public boolean isSameColor(Color turn) {
+        return this.color.equals(turn);
+    }
 }

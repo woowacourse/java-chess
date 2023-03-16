@@ -1,8 +1,10 @@
 package chess;
 
+import chess.piece.Color;
 import chess.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 import java.util.Map;
 
 public class ChessController {
@@ -17,10 +19,30 @@ public class ChessController {
 
         String command = InputView.readStartCommand();
 
-        while (command.equals(START_COMMAND)) {
-            OutputView.printBoard(boardMap);
+        if (!command.equals(START_COMMAND)) {
+            return;
+        }
 
-            command = InputView.readStartCommand();
+        Color turn = Color.WHITE;
+        while (true) {
+            OutputView.printBoard(boardMap);
+            List<String> moveCommand = InputView.readMoveCommand();
+
+            String from = moveCommand.get(0);
+            String to = moveCommand.get(1);
+
+            int fromFile = from.charAt(0) - 'a' + 1;
+            int fromRank = from.charAt(1) - '0';
+
+            int toFile = to.charAt(0) - 'a' + 1;
+            int toRank = to.charAt(1) - '0';
+
+            Position fromPosition = new Position(fromFile, fromRank);
+            Position toPosition = new Position(toFile, toRank);
+
+            board.move(fromPosition, toPosition, turn);
+
+            turn = turn.opposite();
         }
     }
 }

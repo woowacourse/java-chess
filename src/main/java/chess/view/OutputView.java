@@ -33,7 +33,7 @@ public class OutputView {
 
 
     public static void printBoard(final Map<Position, Piece> boardMap) {
-        List<List<String>> chessBoard = initalizeBoard();
+        List<List<String>> chessBoard = initializeBoard();
 
         mappingChessBoard(boardMap, chessBoard);
 
@@ -52,11 +52,11 @@ public class OutputView {
             final int row = rank.value();
 
             String pieceDisplay = formatPieceDisplay(piece);
-            chessBoard.get(row - 1).set(column - 1, pieceDisplay);
+            chessBoard.get(8 - row).set(column - 1, pieceDisplay);
         }
     }
 
-    private static List<List<String>> initalizeBoard() {
+    private static List<List<String>> initializeBoard() {
         return IntStream.range(0, 8)
                 .mapToObj(it -> new ArrayList<>(Collections.nCopies(8, ".")))
                 .collect(Collectors.toList());
