@@ -4,6 +4,7 @@ import chess.model.board.Board;
 import chess.model.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -18,21 +19,27 @@ public class ChessController {
     }
 
     public void start() {
-        final Board board = retry(this::createChessBoard);
-        retry(this::move, board);
+        final Optional<Board> chessBoard = retry(this::createChessBoard);
+
+        chessBoard.ifPresent(board -> retry(this::move, board));
     }
 
-    private Board createChessBoard() {
+    private Optional<Board> createChessBoard() {
         final GameCommand gameCommand = inputView.printGameStartMessage();
 
-        Board board = null;
-        if (GameCommand.START.equals(gameCommand)) {
-            board = Board.create();
-            final BoardResponse boardResponse = new BoardResponse(board.getSquares());
-
-            outputView.printChessBoard(boardResponse);
+        if (GameCommand.END.equals(gameCommand)) {
+            return Optional.empty();
         }
-        return board;
+        final Board board = Board.create();
+
+        printChessBoard(board);
+        return Optional.of(board);
+    }
+
+    private void printChessBoard(final Board board) {
+        final BoardResponse boardResponse = new BoardResponse(board.getSquares());
+
+        outputView.printChessBoard(boardResponse);
     }
 
     private <T> T retry(final Supplier<T> supplier){
@@ -84,8 +91,7 @@ public class ChessController {
 
         board.move(source, target, turn.getTurn());
 
-        final BoardResponse boardResponse = new BoardResponse(board.getSquares());
-        outputView.printChessBoard(boardResponse);
+        printChessBoard(board);
     }
 
     private void validatePlayCommand(final MoveRequest moveRequest) {
