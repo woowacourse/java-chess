@@ -15,11 +15,15 @@ public class OutputView {
     private static List<Square> makeSquares() {
         List<Square> squares = new ArrayList<>();
         for (var rank : Rank.values()) {
-            for (var chessColumn : ChessColumn.values()) {
-                squares.add(Square.of(chessColumn, rank));
-            }
+            initChessColumn(squares, rank);
         }
         return squares;
+    }
+
+    private static void initChessColumn(List<Square> squares, Rank rank) {
+        for (var chessColumn : ChessColumn.values()) {
+            squares.add(Square.of(chessColumn, rank));
+        }
     }
 
     public void printChessBoard(ChessBoard chessBoard) {
@@ -28,7 +32,7 @@ public class OutputView {
         for (Square square : squares) {
             stringBuilder.append(PieceConverter.of(chessBoard.find(square)));
         }
-        System.out.print(separateByNewLine(stringBuilder.toString()));
+        System.out.print(separateByNewLine(stringBuilder.toString()) + "\n");
     }
 
     private String separateByNewLine(String input) {
@@ -44,5 +48,9 @@ public class OutputView {
         if (count % CHESS_COLUMN_SIZE == 0) {
             stringBuilder.append("\n");
         }
+    }
+
+    public void printError(String message) {
+        System.out.printf("[ERROR]: %s\n", message);
     }
 }
