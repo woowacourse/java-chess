@@ -8,7 +8,7 @@ public class Board {
     private final Map<Square, Piece> pieces;
 
     public Board() {
-        this.pieces = InitPieces.initPieces();
+        this.pieces = Pieces.init();
     }
 
     public boolean isSameColor(Square src, Color color) {
@@ -25,6 +25,10 @@ public class Board {
 
     private boolean canMove(Square src, Square dst) {
         Piece piece = findPieceBy(src);
+
+        // piece가 폰인데, 화이트일떄는 2이고 블랙일때는 7이다 -> 초기위치다
+        // 초기위치일 때는 2칸 쌉가능
+
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
         boolean result = piece.canMove(fileInterval, rankInterval);
