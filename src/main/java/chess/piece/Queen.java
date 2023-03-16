@@ -18,7 +18,6 @@ import java.util.Optional;
 
 public class Queen extends Piece {
 
-
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(U, D, R, L, UR, UL, DR, DL);
 
     public Queen(final Color color) {
