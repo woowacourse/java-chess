@@ -12,23 +12,27 @@ import java.util.function.Supplier;
 
 public class ChessController {
 
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+    public static final int ORIGIN_INDEX = 1;
+    public static final int DEST_INDEX = 2;
     private final OutputView outputView;
     private final InputView inputView;
-    private final Board board = new Board();
+    private Board board;
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
 
-    public void realInit() {
+    public void run() {
         outputView.printInitialMessage();
         while (true) {
-            CommandData gameCommand = repeat(() -> new CommandData(inputView.inputGameCommand()));
-            if (gameCommand.gameCommand == GameCommand.END) {
+            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
+            if (requestInfo.gameCommand == GameCommand.END) {
                 return;
             }
-            if (gameCommand.gameCommand == GameCommand.START) {
+            if (requestInfo.gameCommand == GameCommand.START) {
                 gameStart();
                 return;
             }
@@ -37,14 +41,15 @@ public class ChessController {
     }
 
     private void gameStart() {
+        board = new Board();
         printBoard();
         while (true) {
-            CommandData gameCommand = repeat(() -> new CommandData(inputView.inputGameCommand()));
-            if (gameCommand.gameCommand == GameCommand.END) {
+            RequestInfo requestInfo = repeat(() -> new RequestInfo(inputView.inputGameCommand()));
+            if (requestInfo.gameCommand == GameCommand.END) {
                 return;
             }
-            if (gameCommand.gameCommand == GameCommand.MOVE) {
-                move(gameCommand.input);
+            if (requestInfo.gameCommand == GameCommand.MOVE) {
+                move(requestInfo.input);
                 continue;
             }
             outputView.printUnsuitableCommand();
@@ -54,11 +59,15 @@ public class ChessController {
     private void move(String input) {
         List<String> command = Arrays.asList(input.split(" "));
         try {
-            board.movePiece(Position.of(command.get(1).substring(0, 1), command.get(1).substring(1, 2)), Position.of(command.get(2).substring(0, 1), command.get(2).substring(1, 2)));
+            board.movePiece(makePosition(command.get(ORIGIN_INDEX)), makePosition(command.get(DEST_INDEX)));
         } catch (IllegalPieceMoveException e) {
             outputView.printError(e);
         }
         printBoard();
+    }
+
+    private Position makePosition(String input) {
+        return Position.of(input.charAt(FILE_INDEX), input.charAt(RANK_INDEX));
     }
 
     private void printBoard() {
@@ -75,11 +84,11 @@ public class ChessController {
         }
     }
 
-    private static class CommandData {
+    private static class RequestInfo {
         private final GameCommand gameCommand;
         private final String input;
 
-        private CommandData(String input) {
+        private RequestInfo(String input) {
             gameCommand = GameCommand.from(input);
             this.input = input;
         }

@@ -32,7 +32,7 @@ public class PositionTest {
     void 같은_File과_같은_Rank일_경우_동일한_객체가_반환된다() {
         //given
         Position position1 = A1;
-        Position position2 = Position.of("a", "1");
+        Position position2 = Position.of(File.A, Rank.ONE);
 
         //when
         boolean result = position2 == position1;

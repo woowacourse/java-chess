@@ -8,21 +8,21 @@ public class OutputView {
 
     public void printBoard(List<List<PieceResponse>> piecePosition) {
         for (int i = piecePosition.size() - 1; i >= 0; i--) {
-            printBoardLine(piecePosition.get(i));
+            printRank(piecePosition.get(i));
         }
         System.out.println();
     }
 
-    private void printBoardLine(List<PieceResponse> pieceResponses) {
-        pieceResponses.stream().forEach(this::printResult);
+    private void printRank(List<PieceResponse> pieceResponses) {
+        pieceResponses.forEach(this::printPiece);
         System.out.println();
     }
 
-    private void printResult(PieceResponse pieceResponse) {
-        System.out.print(getPiecePrint(pieceResponse.getPieceType(), pieceResponse.getPieceColor()));
+    private void printPiece(PieceResponse pieceResponse) {
+        System.out.print(formatByColor(pieceResponse.getPieceType(), pieceResponse.getPieceColor()));
     }
 
-    private String getPiecePrint(String pieceType, String pieceColor) {
+    private String formatByColor(String pieceType, String pieceColor) {
         if ("BLACK".equals(pieceColor)) {
             return pieceType.toUpperCase();
         }
