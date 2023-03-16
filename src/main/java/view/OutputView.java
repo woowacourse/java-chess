@@ -16,6 +16,8 @@ public class OutputView {
             }
             System.out.print(positionPieceEntry.getValue().getCategory().getPieceValue());
         }
+        System.out.println();
+        System.out.println();
     }
 
     public void printGameGuideMessage() {

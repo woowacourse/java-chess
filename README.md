@@ -145,7 +145,7 @@ classDiagram
 
 ### InputView
 
-- [x] 게임 시작 커맨드를 입력받는다.
+- [x] 게임 커맨드를 입력받는다.
 
 ### OutputView
 
