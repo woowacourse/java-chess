@@ -29,6 +29,22 @@ public class FileTest {
         assertThat(File.from(command)).isEqualTo(file);
     }
 
+    @ParameterizedTest(name = "숫자 1 부터 8 사이 값이 아니라면 예외를 던진다. 입력: {0}")
+    @ValueSource(ints = {-1, 0, 9})
+    void 숫자_1_부터_8_사이_값이_아니라면_예외를_던진다(final int position) {
+        // expect
+        assertThatThrownBy(() -> File.from(position))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("위치 값은 1 ~ 8 사이의 값이어야 합니다.");
+    }
+
+    @ParameterizedTest(name = "숫자 1 부터 8 사이 값을 입력받으면 File을 반환한다 입력: {0}, 결과: {1}")
+    @CsvSource({"1, A", "8, H"})
+    void 숫자_1_부터_8_사이_값을_입력받으면_File을_반환한다(final int position, final File file) {
+        // expect
+        assertThat(File.from(position)).isEqualTo(file);
+    }
+
     @ParameterizedTest(name = "입력받은 파일과의 차이를 반환한다. 시작: {0}, 도착: {1}, 결과: {2}")
     @CsvSource({"A, D, -3", "B, B, 0", "H, G, 1"})
     void 입력받은_파일과의_차이를_반환한다(final File source, final File target, final int result) {

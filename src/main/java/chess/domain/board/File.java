@@ -28,6 +28,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("파일은 A ~ H 사이의 값이어야 합니다."));
     }
 
+    public static File from(final int position) {
+        return Arrays.stream(values())
+                .filter(value -> value.position == position)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치 값은 1 ~ 8 사이의 값이어야 합니다."));
+    }
+
     public int calculateGap(final File target) {
         return position - target.position;
     }

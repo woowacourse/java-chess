@@ -28,6 +28,13 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("랭크는 1 ~ 8 사이의 값이어야 합니다."));
     }
 
+    public static Rank from(final int position) {
+        return Arrays.stream(values())
+                .filter(value -> value.position == position)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치 값은 1 ~ 8 사이의 값이어야 합니다."));
+    }
+
     public int calculateGap(final Rank target) {
         return position - target.position;
     }
