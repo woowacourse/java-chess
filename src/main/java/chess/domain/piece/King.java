@@ -15,9 +15,14 @@ public class King extends Piece {
     public List<Square> findRoute(final Square source, final Square destination) {
         final int distanceX = destination.calculateDistanceX(source);
         final int distanceY = destination.calculateDistanceY(source);
-        if (KingVector.isExistMovableVector(distanceX, distanceY)) {
-            return new ArrayList<>(Arrays.asList(destination));
+        if (!KingVector.isExistMovableVector(distanceX, distanceY)) {
+            throw new IllegalArgumentException("해당 기물이 움직일 수 있는 경로가 아닙니다.");
         }
-        throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+        return new ArrayList<>(Arrays.asList(destination));
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

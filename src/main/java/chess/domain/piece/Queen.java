@@ -35,7 +35,7 @@ public class Queen extends Piece {
         return directions.stream()
                 .filter(directions -> directions.isOnMyWay(distanceX, distanceY))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 이동할 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 움직일 수 있는 경로가 아닙니다."));
     }
 
     private List<Square> generateRoute(final DirectionVector direction, final Square source, final Square destination) {
@@ -46,5 +46,10 @@ public class Queen extends Piece {
             route.add(currentSquare);
         }
         return route;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

@@ -16,4 +16,6 @@ public abstract class Piece {
     }
 
     public abstract List<Square> findRoute(final Square source, final Square destination);
+
+    public abstract boolean isPawn();
 }

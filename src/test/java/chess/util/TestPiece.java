@@ -14,4 +14,9 @@ public class TestPiece extends Piece {
     public List<Square> findRoute(final Square source, final Square destination) {
         return null;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
