@@ -152,6 +152,10 @@ classDiagram
 - [x] 게임 가이드 메시지를 출력한다.
 - [x] 체스판 현황을 출력한다.
 
+### GameCommand
+
+- [x] 사용자 입력에 대치되는 커맨드를 반환한다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
