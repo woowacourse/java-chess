@@ -8,6 +8,11 @@ import java.util.Objects;
 
 public class ChessGame {
 
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int DEST_POSITION_INDEX = 2;
+    private static final int FILE_RANK_DIVIDING_INDEX = 1;
+
     private final ChessBoard chessBoard;
     private GameState state;
 
@@ -33,35 +38,43 @@ public class ChessGame {
         return state == GameState.RUNNING;
     }
 
-    public void executeCommands(final List<String> commands) {
-        Command command = Command.from(commands.get(0));
-        if (command == Command.END && command.isAppropriateSize(commands.size())) {
-            //게임 종료 로직
+    public void executeCommand(final List<String> commandAndParameters) {
+        Command command = Command.from(commandAndParameters.get(COMMAND_INDEX));
+        validateCommandSize(command, commandAndParameters.size());
+        if (command == Command.END) {
             state = GameState.FINISHED;
             return;
         }
-        if (command == Command.MOVE && command.isAppropriateSize(commands.size())) {
-            executeMove(commands);
+        if (command == Command.MOVE) {
+            executeMove(commandAndParameters);
             checkGameNotFinished();
-            return;
         }
-        throw new IllegalArgumentException("입력된 명령어가 올바르지 않습니다.");
+    }
+
+    private void validateCommandSize(final Command command, final int size) {
+        if (!command.isAppropriateSize(size)) {
+            throw new IllegalArgumentException("입력된 명령어가 올바르지 않습니다.");
+        }
+    }
+
+    private void executeMove(final List<String> commandAndParameters) {
+        String startRank = commandAndParameters.get(SOURCE_POSITION_INDEX)
+                .substring(0, FILE_RANK_DIVIDING_INDEX);
+        String startFile = commandAndParameters.get(SOURCE_POSITION_INDEX)
+                .substring(FILE_RANK_DIVIDING_INDEX);
+        String endRank = commandAndParameters.get(DEST_POSITION_INDEX)
+                .substring(0, FILE_RANK_DIVIDING_INDEX);
+        String endFile = commandAndParameters.get(DEST_POSITION_INDEX)
+                .substring(FILE_RANK_DIVIDING_INDEX);
+        Position startPosition = Position.of(Rank.from(startRank), File.from(startFile));
+        Position endPosition = Position.of(Rank.from(endRank), File.from(endFile));
+        chessBoard.move(startPosition, endPosition);
     }
 
     private void checkGameNotFinished() {
         if (chessBoard.isKingDead()) {
             state = GameState.FINISHED;
         }
-    }
-
-    private void executeMove(final List<String> commands) {
-        String startRank = commands.get(1).substring(0, 1);
-        String startFile = commands.get(1).substring(1);
-        String endRank = commands.get(2).substring(0, 1);
-        String endFile = commands.get(2).substring(1);
-        Position startPosition = Position.of(Rank.from(startRank), File.from(startFile));
-        Position endPosition = Position.of(Rank.from(endRank), File.from(endFile));
-        chessBoard.move(startPosition, endPosition);
     }
 
     public ChessBoard getChessBoard() {

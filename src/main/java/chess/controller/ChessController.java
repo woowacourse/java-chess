@@ -37,7 +37,7 @@ public class ChessController {
     private void executeTurn(final ChessGame chessGame) {
         try {
             List<String> commands = inputView.readCommands();
-            chessGame.executeCommands(commands);
+            chessGame.executeCommand(commands);
             outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
         }
         catch (IllegalArgumentException e) {

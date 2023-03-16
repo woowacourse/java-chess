@@ -40,5 +40,10 @@ public enum Rank {
     public Rank plus(final int rankDirection) {
         return Rank.from(index + rankDirection);
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
 

@@ -68,7 +68,7 @@ class ChessGameTest {
             List<String> commands = Arrays.stream(input.split(" "))
                     .collect(Collectors.toUnmodifiableList());
             //when
-            final ThrowingCallable throwingCallable = () -> chessGame.executeCommands(commands);
+            final ThrowingCallable throwingCallable = () -> chessGame.executeCommand(commands);
 
             //then
             assertThatThrownBy(throwingCallable)

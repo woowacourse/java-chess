@@ -16,19 +16,11 @@ public class Square {
         this.piece = piece;
     }
 
-    public void changePiece(Piece piece) {
-        this.piece = piece;
-    }
-
-    public Piece getPiece() {
-        return piece;
-    }
-
-    boolean isSamePosition(final Position position) {
+    public boolean isSamePosition(final Position position) {
         return this.position.equals(position);
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return piece.getClass() == NoPiece.class;
     }
 
@@ -36,11 +28,15 @@ public class Square {
         return piece.isSameTeam(team);
     }
 
-    boolean canAttack(final Position endPosition) {
+    public boolean isKing() {
+        return piece.getClass() == King.class;
+    }
+
+    public boolean canAttack(final Position endPosition) {
         return piece.canAttack(position, endPosition);
     }
 
-    boolean canMove(final Position startPosition, final Position endPosition) {
+    public boolean canMove(final Position startPosition, final Position endPosition) {
         return piece.canMove(startPosition, endPosition);
     }
 
@@ -50,7 +46,11 @@ public class Square {
         changePiece(NoPiece.getInstance());
     }
 
-    public boolean isKing() {
-        return piece.getClass() == King.class;
+    private void changePiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }

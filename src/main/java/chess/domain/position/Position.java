@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,14 +8,18 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    private static final Map<String, Position> positions;
+    private static final Map<String, Position> CACHE;
 
-    static { // TODO: 2023/03/15 streamForeach 제거
-        positions = new HashMap<>();
+    static {
+        CACHE = new HashMap<>();
         for (File file : File.values()) {
-            Arrays.stream(Rank.values())
-                    .forEach(rank -> positions.put(rank.name() + file.name()
-                            , new Position(rank, file)));
+            cacheEachFile(file);
+        }
+    }
+
+    private static void cacheEachFile(final File file) {
+        for (Rank rank : Rank.values()) {
+            CACHE.put(rank.name() + file.name(), new Position(rank, file));
         }
     }
 
@@ -26,7 +29,7 @@ public class Position {
     }
 
     public static Position of(Rank rank, File file) {
-        return positions.get(rank.name() + file.name());
+        return CACHE.get(rank.name() + file.name());
     }
 
     public int calculateFileDistance(final Position startPosition) {
@@ -35,6 +38,10 @@ public class Position {
 
     public int calculateRankDistance(final Position startPosition) {
         return rank.calculateDistance(startPosition.rank);
+    }
+
+    public Position move(final int rankDirection, final int fileDirection) {
+        return Position.of(rank.plus(rankDirection), file.plus(fileDirection));
     }
 
     @Override
@@ -52,9 +59,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    public Position move(final int rankDirection, final int fileDirection) {
-        return Position.of(rank.plus(rankDirection),file.plus(fileDirection));
     }
 }

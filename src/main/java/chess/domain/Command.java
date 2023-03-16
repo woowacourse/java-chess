@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Command {
+
     START("start", 1),
     MOVE("move", 3),
     END("end", 1);
@@ -24,8 +25,5 @@ public enum Command {
 
     public boolean isAppropriateSize(final int size) {
         return size == requiredSize;
-
     }
-
-
 }

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.info.Team;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ class TurnTest {
         Team expected = Team.WHITE;
 
         //when
-        Team actual = turn.whoseTurn();
+        Team actual = turn.findCurrentTeam();
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -29,7 +28,7 @@ class TurnTest {
         turn = turn.next();
 
         //when
-        Team actual = turn.whoseTurn();
+        Team actual = turn.findCurrentTeam();
 
         //then
         assertThat(actual).isEqualTo(expected);

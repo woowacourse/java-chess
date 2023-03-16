@@ -42,12 +42,14 @@ class ChessBoardTest {
 
         //when
         chessBoard.move(startPosition, endPosition);
-        //boolean actual = chessBoard.isSamePiece(endPosition, Pawn.class);
-        boolean isEmpty = chessBoard.isEmptyAt(startPosition);
+        boolean isEmpty = chessBoard.getSquares().stream()
+                .filter(square -> square.isSamePosition(startPosition))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+                .isEmpty();
 
         //then
         assertAll(
-                //() -> assertThat(actual).isTrue(),
                 () -> assertThat(isEmpty).isTrue()
         );
     }

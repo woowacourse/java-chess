@@ -19,11 +19,18 @@ public class Turn {
         return new Turn(turn + 1);
     }
 
-    public Team whoseTurn() {
+    public Team findCurrentTeam() {
         if (turn % 2 == 0) {
             return Team.WHITE;
         }
         return Team.BLACK;
+    }
+
+    public Team findCurrentEnemyTeam() {
+        if (turn % 2 == 0) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
     }
 
     @Override
