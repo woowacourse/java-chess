@@ -23,6 +23,10 @@ public final class Position {
         return rank < 0 || rank >= limit || file < 0 || file >= limit;
     }
 
+    public boolean isRankGreaterThan(final int rank) {
+        return this.rank > rank;
+    }
+
     public Position computeUnitPosition(final Position target) {
         int fileGap = target.file - this.file;
         int rankGap = target.rank - this.rank;

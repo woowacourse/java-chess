@@ -49,6 +49,17 @@ class PositionTest {
                 .isSameAs(expected);
     }
 
+    @ParameterizedTest(name = "현재 위치의 rank가 입력받은 rank보다 큰지 판단한다.")
+    @CsvSource(value = {"0:true", "1:false", "2:false"}, delimiter = ':')
+    void isRankGreaterThan(final int rank, final boolean expected) {
+        // given
+        final Position position = new Position(1, 1);
+
+        // when, then
+        assertThat(position.isRankGreaterThan(rank))
+                .isSameAs(expected);
+    }
+
     @ParameterizedTest(name = "목표 위치로 이동하기 위한 단위 벡터를 계산한다.")
     @CsvSource(value = {"4:8:0:1", "0:4:-1:0", "4:0:0:-1", "8:4:1:0", "8:8:1:1", "0:0:-1:-1", "8:0:1:-1", "0:8:-1:1"}, delimiter = ':')
     void computeUnitPosition(final int targetRank, final int targetFile, final int unitRank, final int unitFile) {
