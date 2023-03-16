@@ -4,6 +4,7 @@ import domain.piece.Piece;
 import domain.position.Position;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ChessBoard {
@@ -12,6 +13,52 @@ public final class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
         this.chessBoard = new HashMap<>(chessBoard);
+    }
+
+    public void movePiece(Position startPosition, Position endPosition) {
+        validateExistPieceInStartPosition(startPosition);
+
+        if (isPieceMovable(startPosition, endPosition)) {
+            chessBoard.put(endPosition, chessBoard.get(startPosition));
+            chessBoard.remove(startPosition);
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
+    }
+
+    private void validateExistPieceInStartPosition(Position startPosition) {
+        if (!chessBoard.containsKey(startPosition)) {
+            throw new IllegalArgumentException("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
+        }
+    }
+
+    private boolean isPieceMovable(Position startPosition, Position endPosition) {
+        List<Position> path = startPosition.getPathTo(endPosition);
+        Piece startPiece = chessBoard.get(startPosition);
+
+        return startPiece.isMovablePath(startPosition, path) &&
+                isPassablePath(path) &&
+                isMovableEndPosition(endPosition, startPiece);
+    }
+
+    private boolean isPassablePath(List<Position> path) {
+        for (Position position : path.subList(0, path.size() - 1)) {
+            if (chessBoard.containsKey(position)) {
+                throw new IllegalArgumentException("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
+            }
+        }
+        return true;
+    }
+
+    private boolean isMovableEndPosition(Position endPosition, Piece startPiece) {
+        if (chessBoard.containsKey(endPosition)) {
+            Piece endPiece = chessBoard.get(endPosition);
+            if (endPiece.isBlack() == startPiece.isBlack()) {
+                return false;
+            }
+            return true;
+        }
+        return true;
     }
 
     public Map<Position, Piece> getChessBoard() {
