@@ -23,4 +23,8 @@ public abstract class Piece {
     public boolean isEmpty() {
         return color.isEmpty();
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -39,4 +39,8 @@ public final class Board {
                 .limit(path.size() - 1)
                 .allMatch(position -> board.get(position).isEmpty());
     }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
+    }
 }
