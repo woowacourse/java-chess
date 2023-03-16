@@ -143,6 +143,15 @@ classDiagram
 - [x] 다음 순서의 값을 반환한다.
 - [x] 이전 순서의 값을 반환한다.
 
+### InputView
+
+- [x] 게임 시작 커맨드를 입력받는다.
+
+### OutputView
+
+- [x] 게임 가이드 메시지를 출력한다.
+- [x] 체스판 현황을 출력한다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
