@@ -12,15 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Piece> piecePosition;
+    private final Map<Position, Piece> board;
 
     public Board() {
-        piecePosition = new HashMap<>();
+        board = new HashMap<>();
         initializeEndLine(Rank.RANK1, Color.WHITE);
         initializeEndLine(Rank.RANK8, Color.BLACK);
 
         initializePawnLine(Rank.RANK2, Color.WHITE);
         initializePawnLine(Rank.RANK7, Color.BLACK);
+    }
+
+    public Map<Position, String> move(Position currentPosition, Position nextPosition) {
+        Piece piece = board.get(currentPosition);
+        piece.move(currentPosition, nextPosition, this.board);
+        return convertToPieceName();
     }
 
     public Map<Position, String> start() {
@@ -29,25 +35,25 @@ public class Board {
 
     private void initializePawnLine(Rank rank, Color color) {
         for (File file : File.values()) {
-            piecePosition.put(Position.of(file, rank), new Piece(PawnMoveRule.of(color), color));
+            board.put(Position.of(file, rank), new Piece(PawnMoveRule.of(color), color));
         }
     }
 
     private void initializeEndLine(Rank rank, Color color) {
-        piecePosition.put(Position.of(File.FILE_A, rank), new Piece(RookMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_B, rank), new Piece(KnightMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_C, rank), new Piece(BishopMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_D, rank), new Piece(QueenMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_E, rank), new Piece(KingMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_F, rank), new Piece(BishopMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_G, rank), new Piece(KnightMoveRule.getInstance(), color));
-        piecePosition.put(Position.of(File.FILE_H, rank), new Piece(RookMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_A, rank), new Piece(RookMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_B, rank), new Piece(KnightMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_C, rank), new Piece(BishopMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_D, rank), new Piece(QueenMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_E, rank), new Piece(KingMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_F, rank), new Piece(BishopMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_G, rank), new Piece(KnightMoveRule.getInstance(), color));
+        board.put(Position.of(File.FILE_H, rank), new Piece(RookMoveRule.getInstance(), color));
     }
 
-    private Map<Position, String> convertToPieceName() {
+    public Map<Position, String> convertToPieceName() {
         Map<Position, String> pieceNames = new HashMap<>();
-        for (Position position : piecePosition.keySet()) {
-            Piece piece = piecePosition.get(position);
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
             pieceNames.put(position, piece.formatName());
         }
         return pieceNames;

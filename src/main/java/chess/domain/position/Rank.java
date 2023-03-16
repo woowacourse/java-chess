@@ -5,35 +5,42 @@ import chess.domain.Direction;
 import java.util.Arrays;
 
 public enum Rank {
-    RANK1(0),
-    RANK2(1),
-    RANK3(2),
-    RANK4(3),
-    RANK5(4),
-    RANK6(5),
-    RANK7(6),
-    RANK8(7);
+    RANK1(0,'1'),
+    RANK2(1,'2'),
+    RANK3(2,'3'),
+    RANK4(3,'4'),
+    RANK5(4,'5'),
+    RANK6(5,'6'),
+    RANK7(6,'7'),
+    RANK8(7,'8');
 
-    private final int number;
+    private final int index;
+    private final char symbol;
 
-    Rank(final int number) {
-        this.number = number;
+    Rank(final int index, char symbol) {
+        this.index = index;
+        this.symbol = symbol;
     }
 
     public static Rank of(int number) {
         return Arrays.stream(values())
-                .filter(rank -> rank.number == number).findFirst().get();
+                .filter(rank -> rank.index == number).findFirst().get();
+    }
+
+    public static Rank of(char symbol) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.symbol == symbol).findFirst().get();
     }
 
     public int distance(Rank other) {
-        return Math.abs(this.number - other.number);
+        return Math.abs(this.index - other.index);
     }
 
     public Direction getDirection(Rank other) {
-        if (other.number > this.number) {
+        if (other.index > this.index) {
             return Direction.PLUS;
         }
-        if (other.number < this.number) {
+        if (other.index < this.index) {
             return Direction.MINUS;
         }
         return Direction.ZERO;
@@ -50,21 +57,21 @@ public enum Rank {
     }
 
     public Rank next() {
-        return Rank.of(this.number + 1);
+        return Rank.of(this.index + 1);
     }
 
     public Rank move(int distance) {
-        if (this.number + distance < 0) {
+        if (this.index + distance < 0) {
             return Rank.of(0);
         }
-        if (this.number + distance > 7) {
+        if (this.index + distance > 7) {
             return Rank.of(7);
         }
-        return Rank.of(this.number + distance);
+        return Rank.of(this.index + distance);
     }
 
     public Rank prev() {
-        return Rank.of(this.number - 1);
+        return Rank.of(this.index - 1);
     }
 
 //    public Rank moveForward(Direction direction){
@@ -72,13 +79,13 @@ public enum Rank {
 //    }
 
     public int getRankIndex(){
-        return 7- number;
+        return 7- index;
     }
 
     @Override
     public String toString() {
         return "Rank{" +
-                "number=" + number +
-                '}';
+                "number=" + index +
+                "}";
     }
 }

@@ -1,16 +1,22 @@
 package chess.domain.piece;
 
 import chess.domain.piece.moveRule.MoveRule;
+import chess.domain.position.Position;
 
+import java.util.Map;
 import java.util.Objects;
 
 public final class Piece {
-    private final PieceState pieceState; //이동 규칙, color를 넘기면 출력할 이름 변환
+    private final PieceState pieceState;
     private final Color color;
 
     public Piece(MoveRule moveRule, Color color) {
         this.pieceState = new PieceState(moveRule);
         this.color = color;
+    }
+
+    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+        pieceState.move(currentPosition, nextPosition, board);
     }
 
     public boolean isOpponent(Piece other) {

@@ -5,39 +5,46 @@ import chess.domain.Direction;
 import java.util.Arrays;
 
 public enum File {
-    FILE_A(0),
-    FILE_B(1),
-    FILE_C(2),
-    FILE_D(3),
-    FILE_E(4),
-    FILE_F(5),
-    FILE_G(6),
-    FILE_H(7);
+    FILE_A(0, 'a'),
+    FILE_B(1, 'b'),
+    FILE_C(2, 'c'),
+    FILE_D(3, 'd'),
+    FILE_E(4, 'e'),
+    FILE_F(5, 'f'),
+    FILE_G(6, 'g'),
+    FILE_H(7, 'h');
 
-    private final int number;
+    private final int index;
+    private final char symbol;
 
-    File(int number) {
-        this.number = number;
+    File(int index, char symbol) {
+        this.index = index;
+        this.symbol = symbol;
     }
 
     public static File of(int number) {
         return Arrays.stream(values())
-                .filter(file -> file.number == number).findFirst().get();
+                .filter(file -> file.index == number).findFirst().get();
+    }
+
+    public static File of(char symbol) {
+        return Arrays.stream(values())
+                .filter(file -> file.symbol == symbol).findFirst().get();
     }
 
     public int distance(File other) {
-        return Math.abs(this.number - other.number);
+        return Math.abs(this.index - other.index);
     }
 
     public File move(int distance) {
-        return File.of(this.number + distance);
+        return File.of(this.index + distance);
     }
 
     public Direction getDirection(File other) {
-        if (other.number > this.number) {
+        if (other.index > this.index) {
             return Direction.PLUS;
         }
-        if (other.number < this.number) {
+        if (other.index < this.index) {
             return Direction.MINUS;
         }
         return Direction.ZERO;
@@ -54,21 +61,21 @@ public enum File {
     }
 
     public File next() {
-        return File.of(this.number + 1);
+        return File.of(this.index + 1);
     }
 
     public File prev() {
-        return File.of(this.number - 1);
+        return File.of(this.index - 1);
     }
 
     public int getFileIndex(){
-        return number;
+        return index;
     }
 
     @Override
     public String toString() {
         return "File{" +
-                "number=" + number +
-                '}';
+                "number=" + index +
+                "}";
     }
 }

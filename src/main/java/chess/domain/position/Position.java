@@ -32,6 +32,12 @@ public class Position {
         return cache.get(hash);
     }
 
+    public static Position of(String positionCommand) {
+        char fileCommand = positionCommand.charAt(0);
+        char rankCommand = positionCommand.charAt(1);
+        return of(File.of(fileCommand), Rank.of(rankCommand));
+    }
+
     public boolean isStraightEqual(Position other) {
         return this.file == other.file || this.rank == other.rank;
     }
@@ -40,14 +46,14 @@ public class Position {
         return this.file.distance(other.file) == this.rank.distance(other.rank);
     }
 
-    public boolean isNear(Position other){
-        if(getMaxDistance(other) <= 1){
+    public boolean isNear(Position other) {
+        if (getMaxDistance(other) <= 1) {
             return true;
         }
         return false;
     }
 
-    public boolean isKnightPosition(Position other){
+    public boolean isKnightPosition(Position other) {
         if (file.distance(other.file) == 2 && rank.distance(other.rank) == 1) {
             return true;
         }
@@ -85,15 +91,15 @@ public class Position {
         return route;
     }
 
-    public Position moveRank(Direction direction){
+    public Position moveRank(Direction direction) {
         return Position.of(file, direction.move(this.rank, 1));
     }
 
-    public Position moveRank(Direction direction, int distance){
+    public Position moveRank(Direction direction, int distance) {
         return Position.of(file, direction.move(this.rank, distance));
     }
 
-    public Position move(Direction fileDirection, Direction rankDirection){
+    public Position move(Direction fileDirection, Direction rankDirection) {
         return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
     }
 

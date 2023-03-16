@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.piece.moveRule.MoveRule;
+import chess.domain.position.Position;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class PieceState {
@@ -11,6 +13,10 @@ public class PieceState {
     public PieceState(MoveRule moveRule) {
         this.moveRule = moveRule;
         this.pieceType = moveRule.pieceType();
+    }
+
+    public void move(Position currentPosition, Position nextPosition, Map<Position, Piece> board) {
+        moveRule.move(currentPosition, nextPosition, board);
     }
 
     public String formatName(Color color) {

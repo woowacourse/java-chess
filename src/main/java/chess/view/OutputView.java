@@ -16,8 +16,8 @@ public class OutputView {
             oneLine.set(coordinate.get(1), pieceNames.get(position));
         }
 
-        for(int i =0; i<8; i++){
-            for(String name : board.get(i)){
+        for (int i = 0; i < 8; i++) {
+            for (String name : board.get(i)) {
                 System.out.print(name);
             }
             System.out.println();
