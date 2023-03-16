@@ -35,4 +35,13 @@ class KingTest {
 
         assertThat(movable).isFalse();
     }
+
+    @DisplayName("source position이 target position까지 1칸이고, target piece가 상대 진영의 말인 경우 true를 반환한다.")
+    @Test
+    void shouldReturnTrueWhenMovementIsOneStepAndTargetPieceIsOpponentSide() {
+        King whiteKing = King.createOfWhite();
+        boolean movable = whiteKing.isMovable(Pawn.createOfBlack(), Position.of("c", "4"), Position.of("c", "5"));
+
+        assertThat(movable).isTrue();
+    }
 }
