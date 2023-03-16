@@ -3,38 +3,33 @@ package chess;
 import chess.board.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.ProcessCommand;
 
 public class Application {
     public static void main(String[] args) {
         OutputView.noticeGameStart();
-        run();
+        run(ChessBoard.create());
     }
     
-    private static void run() {
-        ProcessCommand processCommand = InputView.repeat(InputView::inputProcessCommand);
-        if (processCommand.isEnd()) {
+    private static void run(ChessBoard chessBoard) {
+        String command = InputView.repeat(InputView::inputCommand);
+        String[] splitedCommand = command.split(" ");
+    
+        if ("move".equals(splitedCommand[0])){
+            String sourceCoordinate = splitedCommand[1];
+            String destinationCoordinate = splitedCommand[2];
+            chessBoard.move(sourceCoordinate,destinationCoordinate);
+            OutputView.printChessBoard(chessBoard.chessBoard());
+            run(chessBoard);
+        }
+        
+        if ("end".equals(splitedCommand[0])) {
             return;
         }
-    
-        ChessBoard chessBoard = ChessBoard.create();
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("b1", "c3");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("a1", "a3");
-        OutputView.printChessBoard(chessBoard.chessBoard());
         
-        chessBoard.move("a2", "a4");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("a1", "a3");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("a3", "b3");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("b3", "c3");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        chessBoard.move("b3", "b7");
-        OutputView.printChessBoard(chessBoard.chessBoard());
-        
-        run();
+        if ("start".equals(splitedCommand[0])){
+            ChessBoard newChessBoard = ChessBoard.create();
+            OutputView.printChessBoard(newChessBoard.chessBoard());
+            run(newChessBoard);
+        }
     }
 }
