@@ -1,7 +1,11 @@
 package chess.domain.board;
 
 import static chess.domain.PositionFixture.B_1;
+import static chess.domain.PositionFixture.B_2;
+import static chess.domain.PositionFixture.B_3;
 import static chess.domain.PositionFixture.C_4;
+import static chess.domain.PositionFixture.C_5;
+import static chess.domain.PositionFixture.D_4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -9,6 +13,7 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -36,4 +41,19 @@ class BoardTest {
                 .hasMessage("잘못된 위치를 입력했습니다");
     }
 
+    @Test
+    void 경로를_입력했을_때_갈_수_있는_경로라면_true를_반환한다() {
+        Board board = BoardFactory.createBoard();
+
+        List<Position> paths = List.of(B_3, D_4, C_5);
+        assertThat(board.isEmptyPosition(paths)).isTrue();
+    }
+
+    @Test
+    void 경로를_입력했을_때_갈_수_없는_경로라면_false를_반환한다() {
+        Board board = BoardFactory.createBoard();
+
+        List<Position> paths = List.of(B_2, B_3, D_4, C_5);
+        assertThat(board.isEmptyPosition(paths)).isFalse();
+    }
 }

@@ -19,6 +19,8 @@ public abstract class Piece {
 
     abstract boolean isKing();
 
+    public abstract boolean isEmpty();
+
     abstract Piece move();
 
     public boolean isSameTeam(Color color) {

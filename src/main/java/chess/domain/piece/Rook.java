@@ -63,6 +63,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     Piece move() {
         return null;
     }
