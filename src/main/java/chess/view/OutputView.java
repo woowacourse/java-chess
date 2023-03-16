@@ -27,4 +27,8 @@ public class OutputView {
         }
         return chessBoardMessageBuilder.toString();
     }
+
+    public void printErrorMessage(final String message) {
+        System.out.printf("%n[ERROR] %s%n", message);
+    }
 }

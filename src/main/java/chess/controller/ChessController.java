@@ -4,6 +4,8 @@ import chess.model.board.Board;
 import chess.model.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ChessController {
 
@@ -16,8 +18,8 @@ public class ChessController {
     }
 
     public void start() {
-        final Board board = createChessBoard();
-        move(board);
+        final Board board = retry(this::createChessBoard);
+        retry(this::move, board);
     }
 
     private Board createChessBoard() {
@@ -33,6 +35,16 @@ public class ChessController {
         return board;
     }
 
+    private <T> T retry(final Supplier<T> supplier){
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
     private void move(final Board board) {
         GameCommand gameCommand = GameCommand.MOVE;
 
@@ -40,6 +52,17 @@ public class ChessController {
 
         while (!GameCommand.END.equals(gameCommand)) {
             gameCommand = processMove(board, turn);
+        }
+    }
+
+    private <T> void retry(final Consumer<T> consumer, T input) {
+        while (true) {
+            try {
+                consumer.accept(input);
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 
