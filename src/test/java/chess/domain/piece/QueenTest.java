@@ -31,7 +31,7 @@ class QueenTest {
             "C:SIX:true"}, delimiter = ':')
     void 비숍이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Queen queen = new Queen(Color.WHITE);
-        assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate))).isEqualTo(expect);
+        assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @Test

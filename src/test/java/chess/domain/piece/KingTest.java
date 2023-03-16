@@ -23,7 +23,7 @@ class KingTest {
     void 킹은_상하좌우_대각선으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         King king = new King(Color.WHITE);
 
-        assertThat(king.canMove(C_4, new Position(fileCoordinate, rankCoordinate))).isEqualTo(expect);
+        assertThat(king.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @Test

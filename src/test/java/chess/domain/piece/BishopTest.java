@@ -24,7 +24,7 @@ class BishopTest {
     @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false"}, delimiter = ':')
     void 비숍이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Bishop bishop = new Bishop(Color.WHITE);
-        assertThat(bishop.canMove(C_4, new Position(fileCoordinate, rankCoordinate))).isEqualTo(expect);
+        assertThat(bishop.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @Test

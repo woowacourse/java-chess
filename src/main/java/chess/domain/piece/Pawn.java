@@ -18,14 +18,14 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
+    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         boolean isSameFileCoordinate = sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         int direction = this.getColor().getDirection();
         int nextRankNumber = sourceRankNumber + direction;
 
-        boolean diagonalPath = isDiagonalPath(sourcePosition, targetPosition);
+        boolean diagonalPath = isDiagonalPath(sourcePosition, targetPosition, color);
         if (isFirstMove()) {
             nextRankNumber = sourceRankNumber + (2 * direction);
         }
@@ -33,7 +33,10 @@ public class Pawn extends Piece {
                 || diagonalPath;
     }
 
-    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition) {
+    private boolean isDiagonalPath(Position sourcePosition, Position targetPosition, Color color) {
+        if (!this.getColor().isOpposite(color)) {
+            return false;
+        }
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         int direction = this.getColor().getDirection();
@@ -46,9 +49,6 @@ public class Pawn extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        if (!canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         if (Math.abs(sourceRankNumber - targetRankNumber) == 2) {

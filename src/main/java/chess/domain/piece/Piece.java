@@ -13,7 +13,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract boolean canMove(Position sourcePosition, Position targetPosition);
+    abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
 
     abstract List<Position> findPath(Position sourcePosition, Position targetPosition);
 

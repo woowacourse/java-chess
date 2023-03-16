@@ -28,7 +28,7 @@ class RookTest {
     void 룩은_상하좌우로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.canMove(C_4, new Position(fileCoordinate, rankCoordinate))).isEqualTo(expect);
+        assertThat(rook.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @Test

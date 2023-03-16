@@ -19,7 +19,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition) {
+    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         int sourceColumnNumber = sourcePosition.getColumn();
         int targetColumnNumber = targetPosition.getColumn();
         int sourceRankNumber = sourcePosition.getRow();
@@ -32,9 +32,6 @@ public class King extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        if (!canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
         return Collections.emptyList();
     }
 

@@ -13,7 +13,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition) {
+    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
 
         return (isStraight(sourcePosition, targetPosition) || isDiagonal(sourcePosition, targetPosition))
                 && isNotMyPosition(sourcePosition, targetPosition);
@@ -21,9 +21,6 @@ public class Queen extends Piece {
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        if (!canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
         int nowFileCoordinate = sourcePosition.getColumn();
         int nowRankCoordinate = sourcePosition.getRow();
         int targetFileCoordinate = targetPosition.getColumn();

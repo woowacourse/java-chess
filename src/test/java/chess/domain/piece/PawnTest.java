@@ -21,12 +21,27 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PawnTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:true", "B:ONE:false", "C:THREE:false",
-            "C:TWO:true"}, delimiter = ':')
+    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
+            "C:TWO:false"}, delimiter = ':')
     void 폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate))).isEqualTo(expect);
+        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"A:TWO:true", "C:TWO:true"}, delimiter = ':')
+    void 폰은_대각선에_적이_있으면_그_방향으로_이동할_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.BLACK)).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"A:TWO:false", "C:TWO:false"}, delimiter = ':')
+    void 폰은_대각선에_적이_없다면_그_방향으로_이동할_수_없다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.WHITE)).isEqualTo(expect);
+    }
+
 
     @Test
     void 폰이_움직일_수_있는_경로를_알_수_있다() {

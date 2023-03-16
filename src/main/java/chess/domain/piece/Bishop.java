@@ -13,15 +13,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition) {
+    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition);
     }
 
     @Override
     List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        if (!canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
         List<Position> paths = new ArrayList<>();
         int nowFileCoordinate = sourcePosition.getColumn();
         int nowRankCoordinate = sourcePosition.getRow();

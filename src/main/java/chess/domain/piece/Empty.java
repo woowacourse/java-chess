@@ -10,7 +10,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition) {
+    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         return false;
     }
 
