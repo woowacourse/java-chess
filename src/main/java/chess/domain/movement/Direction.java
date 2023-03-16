@@ -18,6 +18,7 @@ public enum Direction {
         if (Math.pow(fileInterval, 2) + Math.pow(rankInterval, 2) == 5) {
             return L_SHAPE;
         }
+
         return OTHER;
     }
 }

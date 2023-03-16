@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum Color {
+public enum Color { // TODO: 이름바꾸기
     BLACK,
     WHITE;
 

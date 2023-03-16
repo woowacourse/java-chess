@@ -11,9 +11,11 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public boolean canMove(int fileInterval, int rankInterval) {
-        Movement movement = Movement.from(fileInterval, rankInterval);
-        return pieceType.getMovements().contains(movement);
+    public void validateMovement(int fileInterval, int rankInterval) {
+        Movement movement = Movement.of(fileInterval, rankInterval);
+        if (!pieceType.getMovements().contains(movement)) {
+            throw new IllegalArgumentException("말이 이동할 수 없는 규칙입니다.");
+        }
     }
 
     public Color getColor() {
@@ -22,5 +24,9 @@ public abstract class Piece {
 
     public String getPieceTypeName() {
         return pieceType.getName();
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

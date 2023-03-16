@@ -1,18 +1,25 @@
 package chess.domain.piece;
 
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
-    @ParameterizedTest
-    @CsvSource({"2,1,true", "1,1,false"})
-    void canMove(int fileInterval, int rankInterval, boolean canMove) {
-        Knight knight = new Knight(Color.BLACK);
-        assertThat(knight.canMove(fileInterval, rankInterval)).isEqualTo(canMove);
-    }
+    Knight knight = new Knight(Color.BLACK);
 
+    @ParameterizedTest
+    @CsvSource({"1,1"})
+    void canMove_fail(int fileInterval, int rankInterval) {
+        assertThrows(IllegalArgumentException.class,
+                () -> knight.validateMovement(fileInterval, rankInterval));    }
+
+    @ParameterizedTest
+    @CsvSource({"2,1"})
+    void canMove_success(int fileInterval, int rankInterval) {
+        assertDoesNotThrow(() -> knight.validateMovement(fileInterval, rankInterval));
+    }
 }

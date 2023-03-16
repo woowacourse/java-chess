@@ -13,6 +13,6 @@ class MovementTest {
             "2,1,CONTINUOUS_L_SHAPE",
             "2,0,CONTINUOUS_STRAIGHT"})
     void move(int fileInterval, int rankInterval, Movement movement) {
-        assertThat(Movement.from(fileInterval, rankInterval)).isEqualTo(movement);
+        assertThat(Movement.of(fileInterval, rankInterval)).isEqualTo(movement);
     }
 }

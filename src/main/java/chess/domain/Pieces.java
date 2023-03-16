@@ -17,9 +17,9 @@ import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.InitialPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -46,7 +46,7 @@ public class Pieces {
         initPawn(TWO, WHITE);
     }
 
-    private void initPieceExceptPawn(final Rank rank, final Color color) {
+    private void initPieceExceptPawn(final Rank rank, final Color color) { // TODO: 캐시된 square 가져오기
         pieces.put(Square.of(E, rank), new King(color));
         pieces.put(Square.of(D, rank), new Queen(color));
         pieces.put(Square.of(A, rank), new Rook(color));
@@ -59,6 +59,6 @@ public class Pieces {
 
     private void initPawn(final Rank rank, final Color color) {
         Arrays.stream(File.values())
-                .forEach(file -> pieces.put(Square.of(file, rank), new Pawn(color)));
+                .forEach(file -> pieces.put(Square.of(file, rank), new InitialPawn(color)));
     }
 }

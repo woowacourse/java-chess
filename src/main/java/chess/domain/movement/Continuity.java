@@ -4,7 +4,7 @@ public enum Continuity {
     CONTINUOUS,
     DISCONTINUOUS;
 
-    public static Continuity from(final int fileInterval, final int rankInterval) {
+    public static Continuity of(final int fileInterval, final int rankInterval) {
         if (Math.abs(fileInterval) > 1 || Math.abs(rankInterval) > 1) {
             return CONTINUOUS;
         }

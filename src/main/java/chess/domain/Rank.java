@@ -35,7 +35,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank을 입력했습니다."));
     }
 
-    private Rank findRankBy(final int rankInput) {
+    private Rank findRankBy(final int rankInput) { // TODO: 메서드명 변경
         return Arrays.stream(Rank.values())
                 .filter(value -> value.index == rankInput)
                 .findFirst()

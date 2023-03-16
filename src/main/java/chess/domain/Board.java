@@ -1,6 +1,9 @@
 package chess.domain;
 
+import static chess.domain.piece.PieceType.INITIAL_PAWN;
+
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -17,23 +20,26 @@ public class Board {
     }
 
     public void move(Square src, Square dst) {
-        if (canMove(src, dst)) {
-            pieces.put(dst, findPieceBy(src));
-            pieces.remove(src);
+        if (!canMove(src, dst)) {
+            throw new IllegalArgumentException("이동할 수 없는 칸입니다.");
         }
+
+        Piece piece = findPieceBy(src);
+        if (piece.getPieceType() == INITIAL_PAWN) {
+            piece = new Pawn(piece.getColor());
+        }
+        pieces.put(dst, piece);
+        pieces.remove(src);
     }
 
     private boolean canMove(Square src, Square dst) {
         Piece piece = findPieceBy(src);
 
-        // piece가 폰인데, 화이트일떄는 2이고 블랙일때는 7이다 -> 초기위치다
-        // 초기위치일 때는 2칸 쌉가능
-
         int fileInterval = File.calculate(src.getFile(), dst.getFile());
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
-        boolean result = piece.canMove(fileInterval, rankInterval);
+        piece.validateMovement(fileInterval, rankInterval);
 
-        return result && canMoveNextSquare(src, fileInterval, rankInterval);
+        return canMoveNextSquare(src, fileInterval, rankInterval);
     }
 
     private Piece findPieceBy(Square square) {

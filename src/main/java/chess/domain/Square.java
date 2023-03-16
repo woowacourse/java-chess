@@ -15,7 +15,7 @@ public class Square {
         return new Square(file, rank);
     }
 
-    public Square next(int fileDirection, int rankDirection) {
+    public Square next(int fileDirection, int rankDirection) {  // TODO: 캐시된 square 가져오기
         File newFile = file.next(fileDirection);
         Rank newRank = rank.next(rankDirection);
         return new Square(newFile, newRank);

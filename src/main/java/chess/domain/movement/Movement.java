@@ -24,14 +24,13 @@ public enum Movement {
         this.direction = direction;
     }
 
-    public static Movement from(int fileInterval, int rankInterval) {
-        Continuity continuity = Continuity.from(fileInterval, rankInterval);
+    public static Movement of(int fileInterval, int rankInterval) {
+        Continuity continuity = Continuity.of(fileInterval, rankInterval);
         Direction direction =  Direction.from(fileInterval, rankInterval);
         return Arrays.stream(Movement.values())
                 .filter(movement -> movement.continuity == continuity)
                 .filter(movement -> movement.direction == direction)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("못가유"));
+                .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 움직임입니다."));
     }
-
 }

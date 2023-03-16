@@ -6,7 +6,6 @@ import static chess.domain.Rank.TWO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,10 +29,9 @@ class BoardTest {
         Square src = Square.of(A, TWO);
         Square dst = Square.of(A, THREE);
 
-        Piece expectedPiece = board.getPieces().get(src);
         board.move(src, dst);
 
-        assertThat(board.getPieces().get(dst)).isEqualTo(expectedPiece);
+        assertThat(board.getPieces().keySet()).contains(dst);
     }
 
 }

@@ -14,7 +14,7 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(Map<Square, Piece> pieces) {
+    public void printChessBoard(Map<Square, Piece> pieces) { // TODO: dto or 리팩토링
         int count = 0;
         for (Square square : Squares.getSquares()) {
             if (count % 8 == 0) {

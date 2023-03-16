@@ -13,6 +13,6 @@ class ContinuityTest {
             "2,1,CONTINUOUS",
             "2,0,CONTINUOUS"})
     void checkContinuity(int fileInterval, int rankInterval, Continuity continuity) {
-        assertThat(Continuity.from(fileInterval, rankInterval)).isEqualTo(continuity);
+        assertThat(Continuity.of(fileInterval, rankInterval)).isEqualTo(continuity);
     }
 }
