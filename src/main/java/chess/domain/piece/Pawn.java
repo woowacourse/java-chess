@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     // TODO: 적이 있는 경우에만 대각 이동 가능하게 하기
     // TODO: 더블폰푸시 길막인 상태에서 불가하게 하기
     @Override
-    public void move(Square current, Square destination) {
-        moveStrategy.move(current, destination);
+    public boolean canMove(Square current, Square destination) {
+        return moveStrategy.canMove(current, destination);
     }
 }

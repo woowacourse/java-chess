@@ -2,18 +2,14 @@ package chess.domain.piece.strategy;
 
 import chess.domain.square.Square;
 
+import java.util.Arrays;
+
 public class KnightMoveStrategy implements MoveStrategy {
 
     @Override
-    public void move(final Square current, final Square destination) {
-        for (KnightDirection value : KnightDirection.values()) {
-            try {
-                Square next = current.move(value.getFileDifference(), value.getRankDifference());
-                if (destination.equals(next)) {
-                    return;
-                }
-            } catch (IllegalArgumentException ignored) {}
-        }
-        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+    public boolean canMove(final Square current, final Square destination) {
+        int fileDifference = destination.getFileDifference(current);
+        int rankDifference = destination.getRankDifference(current);
+        return KnightDirection.isExist(fileDifference, rankDifference);
     }
 }

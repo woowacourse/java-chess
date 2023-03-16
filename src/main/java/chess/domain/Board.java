@@ -22,10 +22,17 @@ public class Board {
         if (isEmptySquare(current)) {
             throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
         }
+        if (canNotMove(current, destination)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
         Piece piece = board.get(current);
-        piece.move(current, destination);
+        piece.canMove(current, destination);
         board.remove(current);
         board.put(destination, piece);
+    }
+
+    private boolean canNotMove(Square current, Square destination) {
+        return !board.get(current).canMove(current, destination);
     }
 
     private boolean isEmptySquare(Square square) {

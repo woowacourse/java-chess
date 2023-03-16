@@ -21,15 +21,7 @@ public enum KnightDirection {
         this.rankDifference = rankDifference;
     }
 
-    public int getFileDifference() {
-        return fileDifference;
-    }
-
-    public int getRankDifference() {
-        return rankDifference;
-    }
-
-    public boolean isExist(final int fileDifference, final int rankDifference) {
+    public static boolean isExist(final int fileDifference, final int rankDifference) {
         return Arrays.stream(values())
                 .anyMatch(direction ->
                         direction.fileDifference == fileDifference && direction.rankDifference == rankDifference);

@@ -19,7 +19,7 @@ abstract public class Piece {
         return piece.color != color;
     }
 
-    public abstract void move(Square current, Square destination);
+    public abstract boolean canMove(Square current, Square destination);
 
     @Override
     public boolean equals(final Object o) {

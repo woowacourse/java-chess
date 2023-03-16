@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(Square current, Square destination) {
-
+    public boolean canMove(Square current, Square destination) {
+        return moveStrategy.canMove(current, destination);
     }
 }

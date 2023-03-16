@@ -23,6 +23,12 @@ public enum PawnDirection {
         return LOWER;
     }
 
+    public boolean isExist(int fileDifference, int rankDifference) {
+        return movableDirections.stream()
+                .anyMatch(direction ->
+                        direction.getFileDifference() == fileDifference && direction.getRankDifference() == rankDifference);
+    }
+
     public List<Direction> getMovableDirections() {
         return movableDirections;
     }

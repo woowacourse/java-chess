@@ -9,7 +9,8 @@ public class StraightMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public void move(final Square current, final Square destination) {
+    public boolean canMove(final Square current, final Square destination) {
 
+        return false;
     }
 }

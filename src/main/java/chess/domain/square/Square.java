@@ -79,8 +79,11 @@ public final class Square {
                 '}';
     }
 
-    public void isDiagonal(final Square other) {
-        file.getDiffrence(other.file);
-        rank.getDifference(other.rank);
+    public int getFileDifference(final Square other) {
+        return file.getDifference(other.file);
+    }
+
+    public int getRankDifference(final Square other) {
+        return rank.getDifference(other.rank);
     }
 }

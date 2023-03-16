@@ -26,6 +26,14 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
     }
 
+    public boolean canMoveDown() {
+        return !this.equals(Rank.ONE);
+    }
+
+    public boolean canMoveUp() {
+        return !this.equals(Rank.EIGHT);
+    }
+
     public boolean isBiggerThan(final Rank rank) {
         return value > rank.value;
     }
@@ -39,10 +47,18 @@ public enum Rank {
     }
 
     public Rank move(int difference) {
-        return Rank.from((char) (value + difference));
+        try {
+            return Rank.from((char) (value + difference));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Rank의 범위를 벗어났습니다");
+        }
     }
 
     public char getValue() {
         return value;
+    }
+
+    public int getDifference(final Rank other) {
+        return other.value - value;
     }
 }

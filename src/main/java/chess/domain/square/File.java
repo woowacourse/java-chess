@@ -26,11 +26,27 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
     }
 
+    public boolean canMoveRight() {
+        return !this.equals(File.H);
+    }
+
+    public boolean canMoveLeft() {
+        return !this.equals(File.A);
+    }
+
     public File move(int difference) {
-        return File.from((char) (value + difference));
+        try {
+            return File.from((char) (value + difference));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("File의 범위를 벗어났습니다.");
+        }
     }
 
     public char getValue() {
         return value;
+    }
+
+    public int getDifference(final File other) {
+        return other.value - value;
     }
 }

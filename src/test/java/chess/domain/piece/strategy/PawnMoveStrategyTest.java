@@ -16,8 +16,8 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.UPPER);
         Square current = Square.of(File.A, Rank.TWO);
         Square destination = Square.of(File.A, Rank.THREE);
-        assertThatCode(() -> pawnMoveStrategy.move(current, destination))
-                .doesNotThrowAnyException();
+        assertThat(pawnMoveStrategy.canMove(current, destination))
+                .isTrue();
     }
 
     @Test
@@ -26,8 +26,8 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.UPPER);
         Square current = Square.of(File.A, Rank.TWO);
         Square destination = Square.of(File.B, Rank.THREE);
-        assertThatCode(() -> pawnMoveStrategy.move(current, destination))
-                .doesNotThrowAnyException();
+        assertThat(pawnMoveStrategy.canMove(current, destination))
+                .isTrue();
     }
 
     @Test
@@ -36,8 +36,8 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.UPPER);
         Square current = Square.of(File.A, Rank.TWO);
         Square destination = Square.of(File.A, Rank.FOUR);
-        assertThatCode(() -> pawnMoveStrategy.move(current, destination))
-                .doesNotThrowAnyException();
+        assertThat(pawnMoveStrategy.canMove(current, destination))
+                .isTrue();
     }
 
     @Test
@@ -46,9 +46,7 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.UPPER);
         Square current = Square.of(File.A, Rank.TWO);
         Square destination = Square.of(File.A, Rank.FIVE);
-        assertThatThrownBy(() -> pawnMoveStrategy.move(current, destination))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동할 수 없는 위치입니다.");
+        assertThat(pawnMoveStrategy.canMove(current, destination)).isFalse();
     }
 
     @Test
@@ -57,9 +55,7 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.UPPER);
         Square current = Square.of(File.A, Rank.THREE);
         Square destination = Square.of(File.A, Rank.FIVE);
-        assertThatThrownBy(() -> pawnMoveStrategy.move(current, destination))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동할 수 없는 위치입니다.");
+        assertThat(pawnMoveStrategy.canMove(current, destination)).isFalse();
     }
 
     @Test
@@ -68,8 +64,6 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(PawnDirection.LOWER);
         Square current = Square.of(File.A, Rank.THREE);
         Square destination = Square.of(File.A, Rank.FOUR);
-        assertThatThrownBy(() -> pawnMoveStrategy.move(current, destination))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동할 수 없는 위치입니다.");
+        assertThat(pawnMoveStrategy.canMove(current, destination)).isFalse();
     }
 }
