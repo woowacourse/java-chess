@@ -47,4 +47,18 @@ class FileTest {
         // then
         assertThat(valueDiff).isEqualTo(4);
     }
+
+    @Test
+    @DisplayName("대상 File과의 값 차이에 따른 수평 좌표 값을 반환한다.")
+    void getValuePoint() {
+        // given
+        File file = File.A;
+        File targetFile = File.E;
+
+        // when
+        final int valuePoint = file.getValuePoint(targetFile);
+
+        // then
+        assertThat(valuePoint).isEqualTo(1);
+    }
 }
