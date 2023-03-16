@@ -60,9 +60,9 @@ public final class ChessController {
     }
 
     private Position parseToPosition(final String command) {
-
         final int fileOrder = command.charAt(0) - 96;
         final int rankOrder = command.charAt(1) - '0';
+
         return Position.of(File.of(fileOrder), Rank.of(rankOrder));
     }
 }

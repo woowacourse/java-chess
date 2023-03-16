@@ -1,26 +1,27 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import techcourse.fp.chess.movingStrategy.DownStrategy;
-import techcourse.fp.chess.movingStrategy.LeftStrategy;
+import techcourse.fp.chess.domain.Color;
+import techcourse.fp.chess.domain.Position;
+import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
+import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
-import techcourse.fp.chess.movingStrategy.RightStrategy;
-import techcourse.fp.chess.movingStrategy.UpStrategy;
+import techcourse.fp.chess.movingStrategy.RightDownStrategy;
+import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 
-public final class Rook extends Piece {
+public final class Bishop extends MovablePiece {
 
     {
-        final List<MovingStrategy> rawStrategies = List.of(new UpStrategy(), new DownStrategy(),
-                new LeftStrategy(), new RightStrategy());
+        final List<MovingStrategy> rawStrategies = List.of(new RightUpStrategy(), new RightDownStrategy(),
+                new LeftDownStrategy(), new LeftUpStrategy());
         strategies = new MovingStrategies(rawStrategies);
     }
 
-    public Rook(final Color color) {
+    public Bishop(final Color color) {
         super(color);
     }
-
 
     @Override
     public List<Position> findPath(final Position source, final Position target,
@@ -46,4 +47,5 @@ public final class Rook extends Piece {
 
         return path;
     }
+
 }

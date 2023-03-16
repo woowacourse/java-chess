@@ -1,10 +1,12 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 import java.util.List;
+import techcourse.fp.chess.domain.Color;
+import techcourse.fp.chess.domain.Position;
 
-public final class Empty extends Piece {
+public final class UnMovablePiece extends Piece {
 
-    public Empty() {
+    public UnMovablePiece() {
         super(Color.EMPTY);
     }
 

@@ -19,6 +19,7 @@ import static techcourse.fp.chess.domain.PositionFixtures.H8;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.chess.domain.piece.Knight;
 
 class KnightTest {
 

@@ -1,14 +1,14 @@
 package techcourse.fp.chess.view;
 
-import techcourse.fp.chess.domain.Bishop;
 import techcourse.fp.chess.domain.Color;
-import techcourse.fp.chess.domain.Empty;
-import techcourse.fp.chess.domain.King;
-import techcourse.fp.chess.domain.Knight;
-import techcourse.fp.chess.domain.Pawn;
-import techcourse.fp.chess.domain.Piece;
-import techcourse.fp.chess.domain.Queen;
-import techcourse.fp.chess.domain.Rook;
+import techcourse.fp.chess.domain.piece.Bishop;
+import techcourse.fp.chess.domain.piece.King;
+import techcourse.fp.chess.domain.piece.Knight;
+import techcourse.fp.chess.domain.piece.Pawn;
+import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Queen;
+import techcourse.fp.chess.domain.piece.Rook;
+import techcourse.fp.chess.domain.piece.UnMovablePiece;
 
 public final class PieceRender {
 
@@ -41,7 +41,7 @@ public final class PieceRender {
             return renderByColor(piece.getColor(), "k");
         }
 
-        if (piece.getClass() == Empty.class) {
+        if (piece.getClass() == UnMovablePiece.class) {
             return ".";
         }
 

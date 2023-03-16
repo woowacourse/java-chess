@@ -1,23 +1,32 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import techcourse.fp.chess.domain.Color;
+import techcourse.fp.chess.domain.Position;
+import techcourse.fp.chess.movingStrategy.DownStrategy;
 import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
+import techcourse.fp.chess.movingStrategy.LeftStrategy;
 import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 import techcourse.fp.chess.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.movingStrategy.RightDownStrategy;
+import techcourse.fp.chess.movingStrategy.RightStrategy;
 import techcourse.fp.chess.movingStrategy.RightUpStrategy;
+import techcourse.fp.chess.movingStrategy.UpStrategy;
 
-public final class Bishop extends Piece {
+public final class Queen extends MovablePiece {
 
     {
-        final List<MovingStrategy> rawStrategies = List.of(new RightUpStrategy(), new RightDownStrategy(),
-                new LeftDownStrategy(), new LeftUpStrategy());
+        final List<MovingStrategy> rawStrategies = List.of(
+                new RightUpStrategy(), new RightDownStrategy(),
+                new LeftDownStrategy(), new LeftUpStrategy(),
+                new UpStrategy(), new DownStrategy(),
+                new LeftStrategy(), new RightStrategy());
         strategies = new MovingStrategies(rawStrategies);
     }
 
-    public Bishop(final Color color) {
+    public Queen(final Color color) {
         super(color);
     }
 
@@ -45,5 +54,4 @@ public final class Bishop extends Piece {
 
         return path;
     }
-
 }

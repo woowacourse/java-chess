@@ -1,7 +1,9 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 import java.util.Collections;
 import java.util.List;
+import techcourse.fp.chess.domain.Color;
+import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.movingStrategy.DownStrategy;
 import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
 import techcourse.fp.chess.movingStrategy.LeftUpStrategy;
@@ -11,7 +13,7 @@ import techcourse.fp.chess.movingStrategy.RightDownStrategy;
 import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 import techcourse.fp.chess.movingStrategy.UpStrategy;
 
-public final class Pawn extends Piece {
+public final class Pawn extends MovablePiece {
 
     public static final int INITIAL_WHITE_RANK = 2;
     public static final int INITIAL_BLACK_RANK = 7;

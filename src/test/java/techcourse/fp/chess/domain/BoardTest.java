@@ -15,6 +15,10 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.chess.domain.piece.Pawn;
+import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Rook;
+import techcourse.fp.chess.domain.piece.UnMovablePiece;
 
 class BoardTest {
 
@@ -160,7 +164,7 @@ class BoardTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), new Empty());
+                board.put(Position.of(file, rank), new UnMovablePiece());
             }
         }
 

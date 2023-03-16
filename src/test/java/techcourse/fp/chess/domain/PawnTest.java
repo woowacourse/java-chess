@@ -14,6 +14,7 @@ import static techcourse.fp.chess.domain.PositionFixtures.H2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import techcourse.fp.chess.domain.piece.Pawn;
 
 class PawnTest {
 

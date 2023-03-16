@@ -1,12 +1,16 @@
-package techcourse.fp.chess.domain;
+package techcourse.fp.chess.domain.piece;
 
 import java.util.List;
+import techcourse.fp.chess.domain.Color;
+import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.movingStrategy.MovingStrategies;
 
+/**
+ * piece -> movablePiece -> Emoty
+ */
 public abstract class Piece {
 
     protected final Color color;
-
     protected MovingStrategies strategies;
 
     public Piece(final Color color) {

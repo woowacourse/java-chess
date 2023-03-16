@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import techcourse.fp.chess.domain.File;
-import techcourse.fp.chess.domain.Piece;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.Rank;
+import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.view.PieceRender;
 
 public final class PieceDto {
