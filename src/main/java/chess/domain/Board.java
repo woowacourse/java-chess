@@ -105,4 +105,9 @@ public class Board {
             throw new IllegalArgumentException(SAME_COLOR_PIECE_IN_DESTINATION_ERROR_MESSAGE);
         }
     }
+    
+    public void replace(final Position source, final Position destination) {
+        board.put(destination, board.get(source));
+        board.put(source, Empty.create());
+    }
 }
