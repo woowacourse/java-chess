@@ -6,6 +6,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Arrays;
@@ -20,17 +21,17 @@ public enum PieceTypeView {
     EMPTY(Empty.class, ".", "."),
     ;
 
-    private final Class piece;
+    private final Class<? extends Piece> piece;
     private final String whiteTeamView;
     private final String blackTeamView;
 
-    PieceTypeView(Class piece, String whiteTeamView, String blackTeamView) {
+    PieceTypeView(Class<? extends Piece> piece, String whiteTeamView, String blackTeamView) {
         this.piece = piece;
         this.whiteTeamView = whiteTeamView;
         this.blackTeamView = blackTeamView;
     }
 
-    public static PieceTypeView of(Class piece) {
+    public static PieceTypeView of(Class<? extends Piece> piece) {
         return Arrays.stream(values())
                 .filter(it -> it.piece.equals(piece))
                 .findFirst()
