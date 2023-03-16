@@ -30,10 +30,10 @@ class CoordinateTest {
         //then
         assertThat(coordinate)
                 .extracting("fileIndex")
-                .isEqualTo(0);
+                .isEqualTo('a');
         assertThat(coordinate)
                 .extracting("rankIndex")
-                .isEqualTo(2);
+                .isEqualTo('3');
     }
 
     @Test
@@ -64,11 +64,31 @@ class CoordinateTest {
     }
 
     @Test
-    void 좌표는_입력받은_숫자만큼_기울기가_음수인_대각선으로_움직일_수_있다2() {
+    void 좌표는_입력받은_숫자만큼_기울기가_음수인_대각선으로_움직일_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("b1");
+        final Coordinate b1 = Coordinate.of("b1");
 
         //when & then
-        assertThat(a1.negativeDiagonalMove(1)).isEqualTo(Coordinate.of("a2"));
+        assertThat(b1.negativeDiagonalMove(1)).isEqualTo(Coordinate.of("a2"));
+    }
+
+    @Test
+    void 좌표는_다른_좌표와_같은_랭크인지_검사할_수_있다() {
+        //given
+        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate b1 = Coordinate.of("b1");
+
+        //when & then
+        assertThat(a1.isSameRank(b1)).isTrue();
+    }
+
+    @Test
+    void 좌표는_다른_좌표와_같은_파일인지_검사할_수_있다() {
+        //given
+        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate a2 = Coordinate.of("a2");
+
+        //when & then
+        assertThat(a1.isSameFile(a2)).isTrue();
     }
 }
