@@ -19,21 +19,46 @@ public class Game {
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = chessBoard.get(sourcePosition);
-        Piece targetPiece = chessBoard.get(targetPosition);
-        if (sourcePiece.isEmptyPiece()) {
-            throw new IllegalArgumentException("source위치에 말이 없습니다.");
+        Piece sourcePiece = this.chessBoard.get(sourcePosition);
+        validateMoving(sourcePosition, targetPosition, sourcePiece);
+        movePiece(sourcePosition, targetPosition, sourcePiece);
+    }
+
+    private void validateMoving(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        validateExistPieceOnSourcePosition(sourcePiece);
+        validateIsMovable(sourcePosition, targetPosition);
+        validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece);
+    }
+
+    private void validatePathIncludeAnyPiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        List<Position> path = sourcePiece.collectPath(sourcePosition, targetPosition);
+        for (Position position : path) {
+            checkIsExistAnyPieceOn(position);
         }
+    }
+
+    private void checkIsExistAnyPieceOn(Position position) {
+        if (!this.chessBoard.get(position).isEmptyPiece()) {
+            throw new IllegalArgumentException("경로에 다른 말이 있습니다.");
+        }
+    }
+
+    private void validateIsMovable(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = this.chessBoard.get(sourcePosition);
+        Piece targetPiece = this.chessBoard.get(targetPosition);
         if (!sourcePiece.isMovable(targetPiece, sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("올바른 움직임이 아닙니다.");
         }
-        List<Position> path = sourcePiece.collectPath(sourcePosition, targetPosition);
-        for (Position position : path) {
-            if (!chessBoard.get(position).isEmptyPiece()) {
-                throw new IllegalArgumentException("경로에 다른 말이 있습니다.");
-            }
+    }
+
+    private static void validateExistPieceOnSourcePosition(Piece sourcePiece) {
+        if (sourcePiece.isEmptyPiece()) {
+            throw new IllegalArgumentException("source위치에 말이 없습니다.");
         }
-        chessBoard.put(sourcePosition, new EmptyPiece());
-        chessBoard.put(targetPosition, sourcePiece);
+    }
+
+    private void movePiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        this.chessBoard.put(sourcePosition, new EmptyPiece());
+        this.chessBoard.put(targetPosition, sourcePiece);
     }
 }
