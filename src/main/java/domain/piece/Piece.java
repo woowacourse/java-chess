@@ -23,6 +23,10 @@ public abstract class Piece {
         return this.color.equals(piece.color);
     }
 
+    public boolean isWhite() {
+        return color.equals(Color.WHITE);
+    }
+
     public boolean isBlack() {
         return color.equals(Color.BLACK);
     }

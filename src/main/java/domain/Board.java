@@ -28,7 +28,23 @@ public class Board {
         return lines;
     }
 
-    public void move(final Location start, final Location end) {
+    public void moveWhite(final Location start, final Location end) {
+        final Square square = findSquare(start);
+        if (square.isBlack()) {
+            throw new IllegalArgumentException("흰 진영 차례입니다.");
+        }
+        move(start, end);
+    }
+
+    public void moveBlack(final Location start, final Location end) {
+        final Square square = findSquare(start);
+        if (square.isWhite()) {
+            throw new IllegalArgumentException("검은 진영 차례입니다.");
+        }
+        move(start, end);
+    }
+
+    private void move(final Location start, final Location end) {
         validatePath(start, end);
         findSquare(start).moveTo(findSquare(end));
     }

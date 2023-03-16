@@ -33,6 +33,15 @@ public class Square {
         this.piece = null;
     }
 
+    public boolean isWhite() {
+        return piece.isWhite();
+    }
+
+    public boolean isBlack() {
+        return piece.isBlack();
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;

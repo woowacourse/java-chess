@@ -1,11 +1,19 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
+
+    private static final Location WHITE_PAWN_START = Location.of(1, 1);
+    private static final Location WHITE_PAWN_END = Location.of(1, 2);
+    private static final Location BLACK_PAWN_START = Location.of(1, 6);
+    private static final Location BLACK_PAWN_END = Location.of(1, 5);
 
     @Test
     @DisplayName("체스판을 생성한다")
@@ -18,14 +26,73 @@ class BoardTest {
         assertThat(board).extracting("lines")
             .asList()
             .containsExactly(
-                Line.blackBack(),
-                Line.blackFront(),
-                Line.empty(),
-                Line.empty(),
-                Line.empty(),
-                Line.empty(),
+                Line.whiteBack(),
                 Line.whiteFront(),
-                Line.whiteBack()
+                Line.empty(),
+                Line.empty(),
+                Line.empty(),
+                Line.empty(),
+                Line.blackFront(),
+                Line.blackBack()
             );
     }
+
+    @Nested
+    @DisplayName("잘못된 진영의 돌을 움직인다.")
+    class TestMoveInvalidLocation {
+
+        @DisplayName("검은 진영 오류")
+        @Test
+        public void testMoveFailBlack() {
+            final Board board = new Board(new PathValidator());
+
+            assertThatThrownBy(
+                () -> board.moveWhite(BLACK_PAWN_START, BLACK_PAWN_END)
+            ).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @DisplayName("흰 진영 오류")
+        @Test
+        public void testMoveFailWhite() {
+            final Board board = new Board(new PathValidator());
+
+            assertThatThrownBy(
+                () -> board.moveBlack(WHITE_PAWN_START, WHITE_PAWN_END)
+            ).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("올바른 진영의 돌을 움직인다.")
+    class TestMoveValidateLocation {
+
+        @Test
+        @DisplayName("흰색 진영의 돌을 움직인다.")
+        public void testMoveWhite() {
+            //given
+            final Board board = new Board(new PathValidator());
+
+            //when
+            board.moveWhite(WHITE_PAWN_START, WHITE_PAWN_END);
+
+            //then
+            assertThat(board.findSquare(WHITE_PAWN_START).isNotNull()).isFalse();
+            assertThat(board.findSquare(WHITE_PAWN_END).getPiece()).isEqualTo(Pawn.makeWhite());
+        }
+
+        @Test
+        @DisplayName("검은색 진영의 돌을 움직인다.")
+        public void testMoveBlack() {
+            //given
+            final Board board = new Board(new PathValidator());
+
+            //when
+            board.moveBlack(BLACK_PAWN_START, BLACK_PAWN_END);
+
+            //then
+            assertThat(board.findSquare(BLACK_PAWN_START).isNotNull()).isFalse();
+            assertThat(board.findSquare(BLACK_PAWN_END).getPiece()).isEqualTo(Pawn.makeBlack());
+        }
+    }
+
 }
