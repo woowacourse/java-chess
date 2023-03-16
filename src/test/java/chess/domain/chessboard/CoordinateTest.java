@@ -111,4 +111,30 @@ class CoordinateTest {
         //when & then
         assertThat(a1.calculateFileDistance(e1)).isEqualTo(4);
     }
+
+    @Test
+    void 좌표는_다른_좌표가_우상향_대각선에_있는지_검사할_수_있다() {
+        //given
+        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate b2 = Coordinate.of("b2");
+        final Coordinate h8 = Coordinate.of("h8");
+
+
+        //when & then
+        assertThat(a1.isPositiveDiagonal(b2)).isTrue();
+        assertThat(h8.isPositiveDiagonal(b2)).isTrue();
+    }
+
+    @Test
+    void 좌표는_다른_좌표와_좌상향_대각선에_있는지_검사할_수_있다() {
+        //given
+        final Coordinate b6 = Coordinate.of("b6");
+        final Coordinate c5 = Coordinate.of("c5");
+        final Coordinate e3 = Coordinate.of("e3");
+
+        //when & then
+        assertThat(b6.isNegativeDiagonal(c5)).isTrue();
+        assertThat(b6.isNegativeDiagonal(e3)).isTrue();
+    }
+
 }
