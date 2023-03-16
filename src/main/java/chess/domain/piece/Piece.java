@@ -10,8 +10,8 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private final Type type;
-    private final Side side;
+    protected final Type type;
+    protected final Side side;
 
     public Piece(final Type type, final Side side) {
         validate(type, side);
