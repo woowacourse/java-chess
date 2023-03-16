@@ -1,6 +1,7 @@
 package chess.domain.chess;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.camp.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
@@ -10,7 +11,7 @@ public final class ChessGame {
     private final ChessBoard chessBoard;
 
     public ChessGame() {
-        this.chessBoard = new ChessBoard();
+        this.chessBoard = ChessBoard.getInstance(this);
     }
 
     public void playFirstTurn(final Position source, final Position target) {
@@ -24,7 +25,7 @@ public final class ChessGame {
     }
 
     private void validateMovablePiece(final Piece piece) {
-        if (piece.isBlackCamp() || !piece.isPawn() && !piece.isKnight()) {
+        if (piece.isSameCamp(CampType.BLACK) || !piece.isPawn() && !piece.isKnight()) {
             throw new IllegalArgumentException("처음은 백진영의 폰과 나이트만 움직일 수 있습니다.");
         }
     }
