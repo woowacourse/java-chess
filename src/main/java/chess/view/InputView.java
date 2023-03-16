@@ -3,7 +3,6 @@ package chess.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 public class InputView {
     private static final String DELIMITER = " ";
@@ -13,15 +12,6 @@ public class InputView {
 
     public InputView(final Scanner scanner) {
         this.scanner = scanner;
-    }
-
-    public <T> T getInputWithRetry(Supplier<T> inputReader) {
-        try {
-            return inputReader.get();
-        } catch (IllegalArgumentException e) {
-            OutputView.print(e.getMessage());
-            return getInputWithRetry(inputReader);
-        }
     }
 
     public List<String> getCommand() {
