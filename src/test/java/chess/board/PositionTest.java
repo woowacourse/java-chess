@@ -2,13 +2,10 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.stream.Stream;
+import chess.piece.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class PositionTest {
 
@@ -19,40 +16,92 @@ public class PositionTest {
         Assertions.assertDoesNotThrow(() -> new Position(File.A, Rank.ONE));
     }
 
+    //TODO : MethodSource로 구현
     @Test
-    @DisplayName("받은 File과 Rank로 이동한다.")
-    void move() {
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - UP")
+    void getDirectionTo_Up() {
         // given
         final Position position = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.A, Rank.FIVE);
 
-        // when
-        position.move(5, 7);
-
-        // then
-        assertThat(position.getFile()).isEqualTo(File.F);
-        assertThat(position.getRank()).isEqualTo(Rank.EIGHT);
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.UP);
     }
 
-    @ParameterizedTest
-    @MethodSource("generatePoint")
-    @DisplayName("입력받은 칸만큼 이동한다.")
-    void move2(int x, int y, File expectedFile, Rank expectedRank) {
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - UP_RIGHT")
+    void getDirectionTo_Up_Right() {
         // given
         final Position position = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.B, Rank.TWO);
 
-        // when
-        position.move(x, y);
-
-        // then
-        assertThat(position.getFile()).isEqualTo(expectedFile);
-        assertThat(position.getRank()).isEqualTo(expectedRank);
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.UP_RIGHT);
     }
 
-    static Stream<Arguments> generatePoint() {
-        return Stream.of(
-                Arguments.of(1, 0, File.B, Rank.ONE),
-                Arguments.of(0, 2, File.A, Rank.THREE),
-                Arguments.of(1, 1, File.B, Rank.TWO)
-        );
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - RIGHT")
+    void getDirectionTo_Right() {
+        // given
+        final Position position = new Position(File.A, Rank.ONE);
+        final Position targetPosition = new Position(File.B, Rank.ONE);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.RIGHT);
+    }
+
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - DOWN_RIGHT")
+    void getDirectionTo_Down_Right() {
+        // given
+        final Position position = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.C, Rank.ONE);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.DOWN_RIGHT);
+    }
+
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - DOWN")
+    void getDirectionTo_Down() {
+        // given
+        final Position position = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.B, Rank.ONE);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.DOWN);
+    }
+
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - DOWN_LEFT")
+    void getDirectionTo_Down_Left() {
+        // given
+        final Position position = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.A, Rank.ONE);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.DOWN_LEFT);
+    }
+
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - LEFT")
+    void getDirectionTo_Left() {
+        // given
+        final Position position = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.A, Rank.TWO);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.LEFT);
+    }
+
+    @Test
+    @DisplayName("대상 Position을 받아서 대상 Position으로 향하는 방향을 반환한다. - UP_LEFT")
+    void getDirectionTo_Up_Left() {
+        // given
+        final Position position = new Position(File.B, Rank.TWO);
+        final Position targetPosition = new Position(File.A, Rank.THREE);
+
+        // when, then
+        assertThat(position.getDirectionTo(targetPosition)).isSameAs(Direction.UP_LEFT);
     }
 }
