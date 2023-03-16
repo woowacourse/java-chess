@@ -36,7 +36,7 @@ public class InitPieces {
 
     public static Map<Square, Piece> initPieces() {
         InitPieces initPieces = new InitPieces();
-        return Map.copyOf(initPieces.pieces);
+        return new HashMap<>(initPieces.pieces);
     }
 
     private void init() {
