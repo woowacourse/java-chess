@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
@@ -19,7 +22,6 @@ import static chess.domain.File.E;
 import static chess.domain.File.F;
 import static chess.domain.Rank.EIGHT;
 import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
 import static chess.domain.Rank.SEVEN;
 import static chess.domain.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,12 +39,14 @@ class BishopTest {
         assertThat(path).containsExactly(new Position(D, SEVEN), new Position(E, SIX));
     }
 
-    @Test
+
+    @ParameterizedTest
+    @CsvSource({"E, FOUR", "C, EIGHT"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest() {
+    void getPassingPathFailTest(final File file, final Rank rank) {
         final Piece bishop = new Bishop(C, EIGHT, Color.BLACK);
 
-        assertThatThrownBy(() -> bishop.getPassingPositions(new Position(E, FOUR)))
+        assertThatThrownBy(() -> bishop.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

@@ -30,7 +30,7 @@ public abstract class Piece {
 
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
-            throw new IllegalArgumentException("현재 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
         }
     }
 

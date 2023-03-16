@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
@@ -14,10 +17,8 @@ import java.util.stream.Stream;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static chess.domain.File.A;
-import static chess.domain.File.E;
 import static chess.domain.Rank.EIGHT;
 import static chess.domain.Rank.FIVE;
-import static chess.domain.Rank.FOUR;
 import static chess.domain.Rank.SEVEN;
 import static chess.domain.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,12 +36,14 @@ class RookTest {
         assertThat(path).containsExactly(new Position(A, SEVEN), new Position(A, SIX));
     }
 
-    @Test
+
+    @ParameterizedTest
+    @CsvSource({"A, EIGHT", "E, FOUR"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest() {
+    void getPassingPathFailTest(final File file, final Rank rank) {
         final Piece rook = new Rook(A, EIGHT, Color.BLACK);
 
-        assertThatThrownBy(() -> rook.getPassingPositions(new Position(E, FOUR)))
+        assertThatThrownBy(() -> rook.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

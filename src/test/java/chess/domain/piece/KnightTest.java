@@ -19,7 +19,6 @@ import static chess.domain.Color.WHITE;
 import static chess.domain.File.B;
 import static chess.domain.File.C;
 import static chess.domain.Rank.EIGHT;
-import static chess.domain.Rank.FIVE;
 import static chess.domain.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -37,12 +36,14 @@ class KnightTest {
         assertThat(path).isEmpty();
     }
 
-    @Test
+
+    @ParameterizedTest
+    @CsvSource({"C, EIGHT", "B, FIVE"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest() {
+    void getPassingPathFailTest(final File file, final Rank rank) {
         final Piece knight = new Knight(C, EIGHT, Color.BLACK);
 
-        assertThatThrownBy(() -> knight.getPassingPositions(new Position(B, FIVE)))
+        assertThatThrownBy(() -> knight.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
+import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
@@ -17,7 +18,6 @@ import static chess.domain.Color.WHITE;
 import static chess.domain.File.E;
 import static chess.domain.Rank.EIGHT;
 import static chess.domain.Rank.SEVEN;
-import static chess.domain.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -26,19 +26,20 @@ class KingTest {
     @Test
     @DisplayName("지나갈 경로를 얻는다.")
     void getPassingPathTest() {
-        final Piece king = new King(E, Rank.EIGHT, Color.BLACK);
+        final Piece king = new King(E, EIGHT, BLACK);
 
-        final List<Position> path = king.getPassingPositions(new Position(E, Rank.SEVEN));
+        final List<Position> path = king.getPassingPositions(new Position(E, SEVEN));
 
         assertThat(path).isEmpty();
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource({"E, SIX", "E, EIGHT"})
     @DisplayName("이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-    void getPassingPathFailTest() {
-        final Piece king = new King(E, Rank.EIGHT, Color.BLACK);
+    void getPassingPathFailTest(final File file, final Rank rank) {
+        final Piece king = new King(E, EIGHT, BLACK);
 
-        assertThatThrownBy(() -> king.getPassingPositions(new Position(E, SIX)))
+        assertThatThrownBy(() -> king.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
