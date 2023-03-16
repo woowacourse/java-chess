@@ -4,11 +4,11 @@ import domain.Square;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class Bishop extends Piece {
 
-    private static final List<DirectionVector> directions = List.of(DirectionVector.TOP_RIGHT, DirectionVector.BOTTOM_RIGHT, DirectionVector.BOTTOM_LEFT, DirectionVector.TOP_LEFT);
+    private static final List<DirectionVector> directions = List.of(DirectionVector.TOP_RIGHT,
+        DirectionVector.BOTTOM_RIGHT, DirectionVector.BOTTOM_LEFT, DirectionVector.TOP_LEFT);
 
     public Bishop(TeamColor teamColor) {
         super(teamColor);
@@ -17,18 +17,16 @@ public class Bishop extends Piece {
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
         Vectorr vector = dest.calculateVector(src);
-        Optional<DirectionVector> direction = findDirection(vector);
+        DirectionVector direction = findDirection(vector);
 
-        if (direction.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return getSquaresToDestination(src, vector, direction.get());
+        return getSquaresToDestination(src, vector, direction);
     }
 
-    private Optional<DirectionVector> findDirection(Vectorr vector) {
+    private DirectionVector findDirection(Vectorr vector) {
         return directions.stream()
             .filter(direction -> direction.isSameDirection(vector))
-            .findAny();
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("해당 방향으로 갈 수 없습니다."));
     }
 
     private List<Square> getSquaresToDestination(Square src, Vectorr vector,

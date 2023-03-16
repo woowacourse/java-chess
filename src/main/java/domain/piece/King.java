@@ -1,9 +1,7 @@
 package domain.piece;
 
 import domain.Square;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class King extends Piece {
 
@@ -17,17 +15,21 @@ public class King extends Piece {
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
         Vectorr vector = dest.calculateVector(src);
-        Optional<DirectionVector> direction = findDirection(vector);
-
-        if (direction.isEmpty() || vector.getMaxLength() != STEP_SIZE) {
-            return Collections.emptyList();
-        }
+        validateDirection(vector);
+        validateStepSize(vector);
         return List.of(dest);
     }
 
-    private Optional<DirectionVector> findDirection(Vectorr vector) {
-        return directions.stream()
+    private void validateDirection(Vectorr vector) {
+        directions.stream()
             .filter(direction -> direction.isSameDirection(vector))
-            .findAny();
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("해당 방향으로 갈 수 없습니다."));
+    }
+
+    private void validateStepSize(Vectorr vector) {
+        if (vector.getMaxLength() != STEP_SIZE) {
+            throw new IllegalArgumentException("움직일 수  있는 범위를 초과합니다.");
+        }
     }
 }

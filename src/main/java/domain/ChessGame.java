@@ -20,16 +20,9 @@ public class ChessGame {
         Piece piece = chessBoard.find(src);
 
         List<Square> routes = piece.findRoutes(src, dest);
-        validateNoRoutes(routes);
 
         checkPawn(src, dest, piece);
         go(src, dest, piece, routes);
-    }
-
-    private void validateNoRoutes(List<Square> routes) {
-        if (routes.isEmpty()) {
-            throw new IllegalArgumentException("갈 수 없습니다!");
-        }
     }
 
     private void checkPawn(Square src, Square dest, Piece piece) {
@@ -53,6 +46,10 @@ public class ChessGame {
         return route == dest && hasPiece(route) && piece.isDifferentTeam(chessBoard.find(dest));
     }
 
+    private boolean hasPiece(Square route) {
+        return chessBoard.containsKey(route);
+    }
+
     private void go(Square src, Square dest, Piece piece, List<Square> routes) {
         for (Square route : routes) {
             validateBlock(dest, piece, route);
@@ -64,9 +61,5 @@ public class ChessGame {
         if (hasPiece(route) && !canKill(dest, piece, route)) {
             throw new IllegalArgumentException("갈 수 없습니다!");
         }
-    }
-
-    private boolean hasPiece(Square route) {
-        return chessBoard.containsKey(route);
     }
 }

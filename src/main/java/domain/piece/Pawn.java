@@ -1,9 +1,7 @@
 package domain.piece;
 
 import domain.Square;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -38,19 +36,16 @@ public class Pawn extends Piece {
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
         Vectorr vector = dest.calculateVector(src);
-        Optional<Vectorr> direction = findDirection(vector);
-
-        if (direction.isEmpty()) {
-            return Collections.emptyList();
-        }
+        validateDirection(vector);
 
         return getSquares(src, dest, vector);
     }
 
-    private Optional<Vectorr> findDirection(Vectorr vector) {
-        return directions.stream()
+    private void validateDirection(Vectorr vector) {
+        directions.stream()
             .filter(direction -> direction.equals(vector))
-            .findAny();
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("해당 방향으로 갈 수 없습니다."));
     }
 
     private List<Square> getSquares(Square src, Square dest, Vectorr vector) {
