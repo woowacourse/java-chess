@@ -1,6 +1,7 @@
 package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.Path;
 import chess.Position;
@@ -53,5 +54,19 @@ class QueenTest {
                         new Position(5, 4),
                         new Position(5, 3),
                         new Position(5, 2));
+    }
+
+    @Test
+    void test_searchPathTo4() {
+
+        Queen queen = new Queen(Color.WHITE);
+
+        Position initialPosition = new Position(5, 5);
+
+        assertThatThrownBy(
+                () -> queen.searchPathTo(initialPosition,
+                        new Position(5, 1),
+                        Optional.of(new Queen(Color.WHITE))))
+                .isInstanceOf(IllegalStateException.class);
     }
 }
