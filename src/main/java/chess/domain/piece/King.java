@@ -9,10 +9,14 @@ public class King extends MovablePiece {
         super(side);
     }
 
+
     @Override
-    public boolean isMovable(final int fileDifference, final int rankDifference) {
-        int moveDistance = Math.max(Math.abs(fileDifference), Math.abs(rankDifference));
-        return moveDistance == MAX_MOVE_DISTANCE &&
-                (isDiagonal(fileDifference, rankDifference) || isStraight(fileDifference, rankDifference));
+    public boolean canMove(final Direction direction, final int distance) {
+        return (isDiagonal(direction) || isStraight(direction)) && distance == MAX_MOVE_DISTANCE;
+    }
+
+    @Override
+    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+        return canMove(direction, distance) && isOpponentSide(target);
     }
 }

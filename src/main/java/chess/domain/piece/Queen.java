@@ -8,7 +8,12 @@ public class Queen extends MovablePiece {
     }
 
     @Override
-    public boolean isMovable(final int rankGap, final int fileGap) {
-        return isDiagonal(rankGap, fileGap) || isStraight(rankGap, fileGap);
+    public boolean canMove(final Direction direction, final int distance) {
+        return isDiagonal(direction) || isStraight(direction);
+    }
+
+    @Override
+    public boolean canAttack(final Direction direction, final int distance, final MovablePiece target) {
+        return canMove(direction, distance) && isOpponentSide(target);
     }
 }
