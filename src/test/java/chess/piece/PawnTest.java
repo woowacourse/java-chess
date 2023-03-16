@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -82,5 +84,35 @@ public class PawnTest {
 
         // when, then
         assertThat(pawn.isMovable(falsePosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("시작 위치에서 두 칸 이동했을 경우 이동 경로를 반환한다.")
+    void getPaths() {
+        // given
+        final King king = new King(new Position(File.A, Rank.TWO), Side.WHITE);
+        final Position targetPosition = new Position(File.A, Rank.FOUR);
+        List<Position> expectedPaths = List.of(new Position(File.A, Rank.THREE));
+
+        // when
+        List<Position> paths = king.getPaths(targetPosition);
+
+        // then
+        assertThat(paths).isEqualTo(expectedPaths);
+    }
+
+    @Test
+    @DisplayName("한 칸만 이동했을 경우 빈 경로를 반환한다.")
+    void getPaths_empty() {
+        // given
+        final King king = new King(new Position(File.A, Rank.TWO), Side.WHITE);
+        final Position targetPosition = new Position(File.A, Rank.THREE);
+        List<Position> expectedPaths = Collections.emptyList();
+
+        // when
+        List<Position> paths = king.getPaths(targetPosition);
+
+        // then
+        assertThat(paths).isEqualTo(expectedPaths);
     }
 }
