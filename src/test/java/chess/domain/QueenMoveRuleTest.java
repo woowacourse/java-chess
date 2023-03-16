@@ -1,13 +1,18 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.moveRule.MoveRule;
 import chess.domain.piece.moveRule.QueenMoveRule;
+import chess.domain.piece.moveRule.RookMoveRule;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,24 +21,36 @@ public class QueenMoveRuleTest {
 
     @Test
     void 퀸_움직임_실패() {
-        MoveRule moveRule = new QueenMoveRule();
-        Position currentPosition = Position.of(File.FILE_A, Rank.RANK1);
-        Position nextPosition = Position.of(File.FILE_D, Rank.RANK2);
+        MoveRule moveRule = QueenMoveRule.getInstance();
+        Map<Position, Piece> board = new HashMap<>();
 
-        assertThatThrownBy(() -> moveRule.possibleRoute(currentPosition, nextPosition))
+        Position currentPosition = Position.of(File.FILE_A, Rank.RANK1);
+        Piece startPiece = new Piece(moveRule, Color.BLACK);
+        board.put(currentPosition, startPiece);
+
+        Position nextPosition = Position.of(File.FILE_B, Rank.RANK3);
+        Piece endPiece = new Piece(moveRule, Color.WHITE);
+        board.put(nextPosition, endPiece);
+
+        assertThatThrownBy(() -> moveRule.move(currentPosition, nextPosition, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 대각선 또는 직선 상으로만 움직일 수 있습니다.");
     }
 
     @Test
-    void 퀸의_중간경로를_반환한다() {
-        MoveRule moveRule = new QueenMoveRule();
+    void 퀸_움직임_실패_중간경로에_기물_존재() {
+        MoveRule moveRule = RookMoveRule.getInstance();
+        Map<Position, Piece> board = new HashMap<>();
+
         Position currentPosition = Position.of(File.FILE_A, Rank.RANK1);
-        Position nextPosition = Position.of(File.FILE_A, Rank.RANK4);
+        Position nextPosition = Position.of(File.FILE_D, Rank.RANK1);
 
-        List<Position> routePositions = moveRule.possibleRoute(currentPosition, nextPosition);
-        List<Position> expected = List.of(Position.of(File.FILE_A, Rank.RANK2), Position.of(File.FILE_A, Rank.RANK3));
-        assertThat(routePositions.containsAll(expected)).isTrue();
+        board.put(Position.of(File.FILE_B, Rank.RANK1), new Piece(moveRule, Color.WHITE));
+        board.put(currentPosition, new Piece(moveRule, Color.WHITE));
+        board.put(nextPosition, new Piece(moveRule, Color.BLACK));
+
+        assertThatThrownBy(() -> moveRule.move(currentPosition, nextPosition, board))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로상에 다른 기물이 있어 움직일 수 없습니다.");
     }
-
 }
