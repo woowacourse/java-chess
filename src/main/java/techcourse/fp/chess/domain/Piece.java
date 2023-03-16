@@ -19,4 +19,8 @@ public abstract class Piece {
     }
 
     public abstract List<Position> findPath(final Position sourcePosition, final Position targetPosition, final Color targetColor);
+
+    public boolean isEmpty() {
+        return color.isEmpty();
+    }
 }
