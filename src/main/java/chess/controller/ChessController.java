@@ -2,10 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Squares;
-import chess.view.Command;
-import chess.view.InputView;
-import chess.view.KindMapper;
-import chess.view.OutputView;
+import chess.view.*;
 
 import java.util.Collections;
 import java.util.List;
