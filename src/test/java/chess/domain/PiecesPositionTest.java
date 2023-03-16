@@ -87,7 +87,7 @@ class PiecesPositionTest {
     }
 
 
-    @ParameterizedTest(name = "폰 기물이 기본 위치에 배치된다. ")
+    @ParameterizedTest(name = "폰 기물이 기본 위치에 배치된다.")
     @CsvSource(value = {"TWO, WHITE", "SEVEN, BLACK"})
     void judgePiecesTest4(Rank rank, Camp camp) {
         PiecesPosition piecesPosition = new PiecesPosition();
@@ -109,5 +109,19 @@ class PiecesPositionTest {
             assertThat(piecesPosition.getPiecesPosition().get(position))
                     .isEqualTo(new Empty());
         }
+    }
+
+    @Test
+    @DisplayName("위치로 기물을 이동할 수 있다.")
+    void movePieceOn() {
+        Position whitePawnPosition = new Position(File.A, Rank.TWO);
+        Position emptyPosition = new Position(File.A, Rank.FOUR);
+
+        PiecesPosition piecesPosition = new PiecesPosition();
+
+        piecesPosition.movePieceOn(whitePawnPosition, emptyPosition);
+
+        assertThat(piecesPosition.choicePiece(whitePawnPosition)).isInstanceOf(Empty.class);
+        assertThat(piecesPosition.choicePiece(emptyPosition)).isInstanceOf(Pawn.class);
     }
 }
