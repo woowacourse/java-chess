@@ -8,12 +8,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
+import static chess.domain.File.A;
 import static chess.domain.File.B;
 import static chess.domain.File.C;
+import static chess.domain.Rank.FIVE;
 import static chess.domain.Rank.FOUR;
 import static chess.domain.Rank.SEVEN;
 import static chess.domain.Rank.SIX;
@@ -57,7 +64,6 @@ class PawnTest {
 
             assertThat(path).isEmpty();
         }
-
 
         @ParameterizedTest
         @CsvSource({"E, SIX", "C, SEVEN", "B, EIGHT"})
@@ -137,5 +143,53 @@ class PawnTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치로 이동할 수 없습니다.");
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieceInTargetPosition")
+    @DisplayName("말을 이동시킨다.")
+    void moveTest(final Piece pieceInTargetPosition) {
+        final Piece originalPawn = new Pawn(A, SIX, BLACK);
+
+        final Piece movedRook = originalPawn.move(pieceInTargetPosition);
+
+        assertThat(movedRook.getPosition()).isEqualTo(pieceInTargetPosition.getPosition());
+    }
+
+    private static Stream<Arguments> providePieceInTargetPosition() {
+        return Stream.of(
+                Arguments.of(new BlankPiece(A, FIVE)),
+                Arguments.of(new Pawn(B, FIVE, WHITE))
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource("WHITE, BLACK")
+    @DisplayName("목표 위치에 같은 색 말이 있다면, 예외가 발생한다")
+    void throws_exception_if_there_is_other_piece_in_front(final Color color) {
+        final Piece originalPawn = new Pawn(A, SIX, BLACK);
+        final Piece sameColorPiece = new Pawn(A, FIVE, color);
+
+        assertThatThrownBy(() -> originalPawn.move(sameColorPiece))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDiagonalPieceInTargetPosition")
+    @DisplayName("대각선 위치에 같은색 말이 있거나 아무 말도 없으면, 예외를 발생한다")
+    void throws_exception_if_there_is_(final Piece pieceInTargetPosition) {
+        final Piece originalPawn = new Pawn(A, SIX, BLACK);
+
+        assertThatThrownBy(() -> originalPawn.move(pieceInTargetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    private static Stream<Arguments> provideDiagonalPieceInTargetPosition() {
+        return Stream.of(
+                Arguments.of(new BlankPiece(B, FIVE)),
+                Arguments.of(new Pawn(B, FIVE, BLACK))
+        );
     }
 }

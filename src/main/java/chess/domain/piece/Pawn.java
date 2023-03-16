@@ -29,7 +29,25 @@ public class Pawn extends Piece {
 
     @Override
     public Piece move(final Piece pieceInTargetPosition) {
-        return null;
+        final Position targetPosition = pieceInTargetPosition.getPosition();
+        validateDestination(targetPosition);
+        validateDiagonalColor(pieceInTargetPosition, targetPosition);
+        validateHorizontalColor(pieceInTargetPosition, targetPosition);
+
+        return new Pawn(targetPosition.getFile(), targetPosition.getRank(), color);
+    }
+
+    private void validateDiagonalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
+        if (position.isInDiagonalPosition(targetPosition)
+                && !pieceInTargetPosition.isSameColor(color.getOppositeColor())) {
+            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+        }
+    }
+
+    private void validateHorizontalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
+        if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.BLANK)) {
+            throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
+        }
     }
 
     private boolean isNeighborDistance(final Position targetPosition) {
