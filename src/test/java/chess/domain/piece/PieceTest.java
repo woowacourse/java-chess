@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,5 +27,15 @@ final class TestPiece extends Piece {
 
     public TestPiece(final String name) {
         super(name);
+    }
+
+    @Override
+    public boolean movable(final Direction direction) {
+        return false;
+    }
+
+    @Override
+    public boolean movableByCount(final int count) {
+        return false;
     }
 }
