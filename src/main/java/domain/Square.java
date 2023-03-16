@@ -24,8 +24,8 @@ public class Square {
         return piece != null;
     }
 
-    public boolean haveSameColor(final Square startSquare) {
-        return piece.isSameColor(startSquare.piece);
+    public boolean haveDifferentColor(final Square square) {
+        return piece.isDifferentColor(square.piece);
     }
 
     public void moveTo(final Square square) {

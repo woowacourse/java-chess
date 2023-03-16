@@ -5,14 +5,16 @@ import java.util.stream.IntStream;
 
 public class PathValidator {
 
-    public void validate(final Square start, final List<Square> paths) {
+    public boolean validateNormal(final Square start, final List<Square> paths) {
         if (isBlocked(paths)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            return false;
         }
         final Square end = paths.get(paths.size() - 1);
-        if (start.haveSameColor(end)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
+        return start.haveDifferentColor(end);
+    }
+
+    public boolean validateSpecial(final SpecialValidateDto start, final SpecialValidateDto end) {
+        return SpecialRule.containRuleBy(start, end);
     }
 
     private boolean isBlocked(final List<Square> paths) {

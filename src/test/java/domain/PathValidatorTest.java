@@ -1,6 +1,6 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.piece.Rook;
@@ -21,7 +21,7 @@ class PathValidatorTest {
 
         //when
         //then
-        assertDoesNotThrow(() -> pathValidator.validate(start, paths));
+        assertDoesNotThrow(() -> pathValidator.validateNormal(start, paths));
     }
 
     @Test
@@ -33,7 +33,7 @@ class PathValidatorTest {
 
         //when
         //then
-        assertDoesNotThrow(() -> pathValidator.validate(start, paths));
+        assertDoesNotThrow(() -> pathValidator.validateNormal(start, paths));
     }
 
     @Test
@@ -44,8 +44,10 @@ class PathValidatorTest {
         final Square start = new Square(Rook.makeWhite());
 
         //when
+        boolean result = pathValidator.validateNormal(start, paths);
+
         //then
-        assertThatThrownBy(() -> pathValidator.validate(start, paths)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(result).isFalse();
     }
 
     @Test
@@ -56,7 +58,9 @@ class PathValidatorTest {
         final Square start = new Square(Rook.makeBlack());
 
         //when
+        boolean result = pathValidator.validateNormal(start, paths);
+
         //then
-        assertThatThrownBy(() -> pathValidator.validate(start, paths)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(result).isFalse();
     }
 }
