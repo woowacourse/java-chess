@@ -53,8 +53,11 @@ public class BoardTest extends AbstractTestFixture {
     @Test
     void canNotCrossOtherPiece_throws() {
         var board = new Board();
-        var source = createPosition("C,ONE");
-        var target = createPosition("E,THREE");
+        var source = createPosition("D,ONE");
+        var target = createPosition("A,FOUR");
+
+        board.move(createPosition("C,TWO"), createPosition("C,THREE"));
+        board.move(createPosition("B,TWO"), createPosition("B,THREE"));
 
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
