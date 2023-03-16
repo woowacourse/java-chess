@@ -21,7 +21,7 @@ public enum RankCoordinate {
 
     public static RankCoordinate findBy(int rowNumber) {
         return Arrays.stream(values())
-                .filter(it -> it.getRowNumber() == rowNumber)
+                .filter(it -> it.rowNumber == rowNumber)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
     }

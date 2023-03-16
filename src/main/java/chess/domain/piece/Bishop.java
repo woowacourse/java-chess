@@ -1,10 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Bishop extends Piece {
 
@@ -16,26 +12,6 @@ public class Bishop extends Piece {
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         return isDiagonal(sourcePosition, targetPosition) && isNotMyPosition(sourcePosition, targetPosition)
                 && getColor() != color;
-    }
-
-    @Override
-    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        List<Position> paths = new ArrayList<>();
-        int nowFileCoordinate = sourcePosition.getColumn();
-        int nowRankCoordinate = sourcePosition.getRow();
-        int targetFileCoordinate = targetPosition.getColumn();
-        int targetRankCoordinate = targetPosition.getRow();
-        int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-
-        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
-            nowFileCoordinate += columnStep;
-            nowRankCoordinate += rowStep;
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    RankCoordinate.findBy(nowRankCoordinate));
-            paths.add(position);
-        }
-        return paths;
     }
 
     @Override

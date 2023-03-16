@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import java.util.List;
 
 public class Empty extends Piece {
+
+    private static final String INVALID_PIECE_MESSAGE = "움직일 수 없습니다.";
 
     private Empty(Color color) {
         super(color);
@@ -15,12 +16,7 @@ public class Empty extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
-        return false;
-    }
-
-    @Override
-    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        return null;
+        throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
     }
 
     @Override
@@ -35,6 +31,6 @@ public class Empty extends Piece {
 
     @Override
     public Piece move() {
-        return null;
+        throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
     }
 }

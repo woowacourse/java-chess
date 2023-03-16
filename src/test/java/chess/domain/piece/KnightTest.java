@@ -1,16 +1,13 @@
 package chess.domain.piece;
 
 import static chess.domain.PositionFixture.C_4;
-import static chess.domain.PositionFixture.D_6;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -24,13 +21,5 @@ class KnightTest {
         Knight knight = new Knight(Color.WHITE);
 
         assertThat(knight.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
-    }
-
-    @Test
-    void 나이트가_움직일_수_있는_경로를_알_수_있다() {
-        Knight knight = new Knight(Color.WHITE);
-        List<Position> path = knight.findPath(C_4, D_6);
-
-        assertThat(path).isEmpty();
     }
 }

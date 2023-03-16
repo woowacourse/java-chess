@@ -21,7 +21,7 @@ public enum FileCoordinate {
 
     public static FileCoordinate findBy(int columnNumber) {
         return Arrays.stream(values())
-                .filter(it -> it.getColumnNumber() == columnNumber)
+                .filter(it -> it.columnNumber == columnNumber)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
     }

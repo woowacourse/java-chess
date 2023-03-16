@@ -21,7 +21,7 @@ public class ChessGame {
         Piece targetPiece = board.findPiece(targetPosition);
         validateColor(color, sourcePiece);
         validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
-        List<Position> path = sourcePiece.findPath(sourcePosition, targetPosition);
+        List<Position> path = sourcePosition.findPath(targetPosition);
         validatePath(path);
         board.movePiece(sourcePosition, targetPosition);
         this.color = color.getReverseColor();

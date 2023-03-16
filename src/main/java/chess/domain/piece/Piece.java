@@ -1,9 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
-import java.util.List;
 
 public abstract class Piece {
 
@@ -14,8 +11,6 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
-
-    public abstract List<Position> findPath(Position sourcePosition, Position targetPosition);
 
     public abstract boolean isKing();
 
@@ -32,26 +27,14 @@ public abstract class Piece {
     }
 
     protected boolean isDiagonal(Position sourcePosition, Position targetPosition) {
-        FileCoordinate sourceFileCoordinate = sourcePosition.getFileCoordinate();
-        FileCoordinate targetFileCoordinate = targetPosition.getFileCoordinate();
-
-        RankCoordinate sourceRankCoordinate = sourcePosition.getRankCoordinate();
-        RankCoordinate targetRankCoordinate = targetPosition.getRankCoordinate();
-        int columnAbs = Math.abs(sourceFileCoordinate.getColumnNumber() - targetFileCoordinate.getColumnNumber());
-        int rowAbs = Math.abs(sourceRankCoordinate.getRowNumber() - targetRankCoordinate.getRowNumber());
+        int columnAbs = Math.abs(sourcePosition.getColumn() - targetPosition.getColumn());
+        int rowAbs = Math.abs(sourcePosition.getRow() - targetPosition.getRow());
         return columnAbs == rowAbs;
     }
 
     protected boolean isStraight(Position sourcePosition, Position targetPosition) {
         return (sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate()
                 || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
-    }
-
-    protected int getStep(int nowCoordinate, int targetCoordinate) {
-        if (nowCoordinate - targetCoordinate > 0) {
-            return -1;
-        }
-        return 1;
     }
 
     public Color getColor() {

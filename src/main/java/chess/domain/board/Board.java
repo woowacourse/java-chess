@@ -25,9 +25,6 @@ public class Board {
     }
 
     public boolean isEmptyPosition(List<Position> paths) {
-        for (Position path : paths) {
-            System.out.println(path);
-        }
         return paths.stream()
                 .map(boards::get)
                 .allMatch(Piece::isEmpty) || paths.isEmpty();

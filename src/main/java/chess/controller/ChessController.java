@@ -74,14 +74,4 @@ public class ChessController {
             return readInput();
         }
     }
-
-    private GameCommand getGameCommand() {
-        try {
-            List<String> input = inputView.readGameCommand();
-            return GameCommand.of(input.get(0));
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return getGameCommand();
-        }
-    }
 }

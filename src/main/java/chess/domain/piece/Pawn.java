@@ -1,9 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
-import java.util.Collections;
-import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -56,18 +53,6 @@ public class Pawn extends Piece {
 
         return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber
                 && getColor() != color;
-    }
-
-    @Override
-    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        int sourceRankNumber = sourcePosition.getRow();
-        int targetRankNumber = targetPosition.getRow();
-        if (Math.abs(sourceRankNumber - targetRankNumber) == 2) {
-            int direction = this.getColor().getDirection();
-            return List.of(new Position(sourcePosition.getFileCoordinate(),
-                    RankCoordinate.findBy(sourceRankNumber + direction)));
-        }
-        return Collections.emptyList();
     }
 
     @Override

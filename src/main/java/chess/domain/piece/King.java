@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import java.util.Collections;
-import java.util.List;
 
 public class King extends Piece {
 
@@ -29,11 +27,6 @@ public class King extends Piece {
                 && Math.abs(sourceRankNumber - targetRankNumber) <= 1
                 && isNotMyPosition(sourcePosition, targetPosition)
                 && getColor() != color;
-    }
-
-    @Override
-    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        return Collections.emptyList();
     }
 
     @Override

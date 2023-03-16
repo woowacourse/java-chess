@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import java.util.Collections;
-import java.util.List;
 
 public class Knight extends Piece {
 
@@ -24,11 +22,6 @@ public class Knight extends Piece {
             return Math.abs(sourceRankNumber - targetRankNumber) == 2 && getColor() != color;
         }
         return false;
-    }
-
-    @Override
-    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
-        return Collections.emptyList();
     }
 
     @Override
