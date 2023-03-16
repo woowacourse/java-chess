@@ -45,7 +45,7 @@ public class ChessGame {
             checkGameNotFinished();
             return;
         }
-        throw new IllegalArgumentException("명령어가 올바르지 않습니다.");
+        throw new IllegalArgumentException("입력된 명령어가 올바르지 않습니다.");
     }
 
     private void checkGameNotFinished() {

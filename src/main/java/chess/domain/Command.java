@@ -19,7 +19,7 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(command -> command.value.equals(rawCommand))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("입력된 명령어가 올바르지 않습니다."));
     }
 
     public boolean isAppropriateSize(final int size) {

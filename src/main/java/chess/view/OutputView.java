@@ -12,9 +12,13 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(ChessBoardDto chessBoardDto){
+    public void printChessBoard(ChessBoardDto chessBoardDto) {
         for (String oneFile : chessBoardDto.getBoard()) {
             System.out.println(oneFile);
         }
+    }
+
+    public void printError(final String message) {
+        System.out.println("[ERROR] " + message);
     }
 }
