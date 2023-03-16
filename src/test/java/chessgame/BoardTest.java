@@ -23,7 +23,7 @@ class BoardTest {
     void Should_True_When_SourcePointHasPiece() {
         Board board = new Board(ChessBoardFactory.create());
 
-        assertDoesNotThrow(()->board.checkSource(A1, Team.WHITE));
+        assertDoesNotThrow(() -> board.checkSource(A1, Team.WHITE));
     }
 
     @Test
@@ -31,7 +31,7 @@ class BoardTest {
     void Should_True_When_TargetPointHasPiece() {
         Board board = new Board(ChessBoardFactory.create());
 
-        assertThat(board.checkTarget(F7,Team.WHITE)).isTrue();
+        assertThat(board.checkTarget(F7, Team.WHITE)).isTrue();
     }
 
     @Test
@@ -41,5 +41,4 @@ class BoardTest {
 
         assertThat(board.checkRoute(A1, A8)).isFalse();
     }
-
 }

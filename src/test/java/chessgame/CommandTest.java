@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import chessgame.domain.Command;
 import chessgame.domain.point.Point;
 
 public class CommandTest {
