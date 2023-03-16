@@ -36,7 +36,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(it -> it.order == order)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 rank 입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 입니다"));
     }
 
     public int getDifference(File other) {
