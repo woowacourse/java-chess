@@ -1,10 +1,12 @@
 package chess.domain;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.IntStream;
 
 public class Position {
     private static final Map<Integer, Position> CACHE = new ConcurrentHashMap<>(64);
@@ -36,27 +38,39 @@ public class Position {
         return Math.max(xDistance, yDistance);
     }
 
-    public boolean isSameX(Position other) {
+    public boolean isSameXTo(Position other) {
         return this.x == other.x;
     }
 
-    public boolean isSameY(Position other) {
+    public boolean isSameYTo(Position other) {
         return this.y == other.y;
+    }
+
+    public boolean isSameY(int y) {
+        return this.y == y;
+    }
+
+    public int getXDistanceTo(Position other) {
+        return Math.abs(this.x - other.x);
+    }
+
+    public int getYDistanceTo(Position other) {
+        return Math.abs(this.y - other.y);
+    }
+
+    public boolean isOverThanYTo(Position other) {
+        return this.y > other.y;
     }
 
     public List<Position> getBetweenPositions(Position target) {
         int xDistance = target.x - this.x;
         int yDistance = target.y - this.y;
-        int distance = this.getDistanceTo(target);
-        int xUnit = xDistance / distance;
-        int yUnit = yDistance / distance;
-        List<Position> routes = new ArrayList<>();
-        Position currentPosition = Position.of(this.x + xUnit, this.y + yUnit);
-        while (currentPosition != target) {
-            routes.add(currentPosition);
-            currentPosition = Position.of(currentPosition.getX() + xUnit, currentPosition.getY() + yUnit);
-        }
-        return routes;
+        int distance = getDistanceTo(target);
+        int xFactor = xDistance / distance;
+        int yFactor = yDistance / distance;
+        return IntStream.range(1, distance)
+                .mapToObj(value -> Position.of((this.x + xFactor * value), (this.y + yFactor * value)))
+                .collect(toList());
     }
 
     public int getX() {
