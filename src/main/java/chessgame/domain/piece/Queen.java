@@ -6,14 +6,14 @@ import chessgame.domain.point.Point;
 public class Queen implements Piece {
     private static final String ORIGINAL_NAME = "q";
 
-    private final String name;
+    private final Team team;
 
-    private Queen(String name) {
-        this.name = name;
+    private Queen(Team team) {
+        this.team = team;
     }
 
     public static Queen from(Team team) {
-        return new Queen(team.calculate(ORIGINAL_NAME));
+        return new Queen(team);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class Queen implements Piece {
 
     @Override
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 }

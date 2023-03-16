@@ -46,15 +46,15 @@ class PawnTest {
     @DisplayName("흑팀 Pawn은 공격시 대각선 밑으로 1칸 움직일 수 있다.")
     void Should_MoveDiagonalOneDistance_When_BlackPawnAttack() {
         Pawn pawn = Pawn.from(Team.BLACK);
-        boolean result = pawn.isMovable(A4, B3);
+        boolean result = pawn.isAttack(A4, B3);
         Assertions.assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("백팀 Pawn은 시작 시 위로 2칸 움직일 수 있다.")
+    @DisplayName("백팀 Pawn은 공격 시 대각선 위로 1칸 움직일 수 있다.")
     void Should_MoveDiagonalOneDistance_When_WhitePawnAttack() {
         Pawn pawn = Pawn.from(Team.WHITE);
-        boolean result = pawn.isMovable(F7, H8);
+        boolean result = pawn.isAttack(A2,B3);
         Assertions.assertThat(result).isTrue();
     }
 }

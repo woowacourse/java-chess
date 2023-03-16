@@ -6,19 +6,19 @@ import chessgame.domain.point.Point;
 public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
 
-    private final String name;
+    private final Team team;
 
-    private Bishop(String name) {
-        this.name = name;
+    private Bishop(Team team) {
+        this.team = team;
     }
 
     public static Bishop from(Team team) {
-        return new Bishop(team.calculate(ORIGINAL_NAME));
+        return new Bishop(team);
     }
 
     @Override
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 
     @Override

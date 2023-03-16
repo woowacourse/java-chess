@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chessgame.domain.Team;
+
 public class Point {
     private static final Map<String, Point> cache = new HashMap<>(64);
 
@@ -59,8 +61,8 @@ public class Point {
         return fileDistance == 1 && rankDistance == 2;
     }
 
-    public boolean isPawnMove(Point target, char name) {
-        if(Character.isUpperCase(name) && file.distance(target.file) == 0){
+    public boolean isPawnMove(Point target, Team team) {
+        if(team == Team.BLACK && file.distance(target.file) == 0){
             if(rank.distance(Rank.SEVEN)==0 && (rank.distance(target.rank) == 1 || rank.distance(target.rank) == 2)){
                 return true;
             }
@@ -68,7 +70,7 @@ public class Point {
                 return true;
             }
         }
-        if(Character.isLowerCase(name) && file.distance(target.file) == 0){
+        if(team == Team.WHITE && file.distance(target.file) == 0){
             if(rank.distance(Rank.TWO)==0 && (rank.distance(target.rank) == -1 || rank.distance(target.rank) == -2)){
                 return true;
             }
@@ -79,8 +81,8 @@ public class Point {
         return false;
     }
 
-    public boolean isPawnAttack(Point target, char name) {
-        if (Character.isUpperCase(name)) {
+    public boolean isPawnAttack(Point target, Team team) {
+        if (team == Team.BLACK) {
             if (rank.distance(target.rank) == 1 && file.distance(target.file) == 1) {
                 return true;
             }
@@ -88,7 +90,7 @@ public class Point {
                 return true;
             }
         }
-        if (Character.isLowerCase(name)) {
+        if (team == Team.WHITE) {
             if (rank.distance(target.rank) == -1 && file.distance(target.file) == -1) {
                 return true;
             }

@@ -6,18 +6,18 @@ import chessgame.domain.point.Point;
 public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
 
-    private final String name;
+    private final Team team;
 
-    private Rook(String name) {
-        this.name = name;
+    private Rook(Team team) {
+        this.team = team;
     }
 
     public static Rook from(Team team) {
-        return new Rook(team.calculate(ORIGINAL_NAME));
+        return new Rook(team);
     }
 
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 
     @Override

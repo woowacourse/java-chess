@@ -6,19 +6,19 @@ import chessgame.domain.point.Point;
 public class Knight implements Piece {
     private static final String ORIGINAL_NAME = "n";
 
-    private final String name;
+    private final Team team;
 
-    private Knight(String name) {
-        this.name = name;
+    private Knight(Team team) {
+        this.team = team;
     }
 
     public static Knight from(Team team) {
-        return new Knight(team.calculate(ORIGINAL_NAME));
+        return new Knight(team);
     }
 
     @Override
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 
     @Override

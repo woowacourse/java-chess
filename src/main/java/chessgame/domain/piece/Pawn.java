@@ -6,27 +6,27 @@ import chessgame.domain.point.Point;
 public class Pawn implements Piece {
     private static final String ORIGINAL_NAME = "p";
 
-    private final String name;
+    private final Team team;
 
-    private Pawn(String name) {
-        this.name = name;
+    private Pawn(Team team) {
+        this.team = team;
     }
 
     public static Pawn from(Team team) {
-        return new Pawn(team.calculate(ORIGINAL_NAME));
+        return new Pawn(team);
     }
 
     public boolean isAttack(Point source, Point target){
-        return source.isPawnAttack(target, name.charAt(0));
+        return source.isPawnAttack(target, team);
     }
 
     @Override
     public boolean isMovable(Point source, Point target) {
-        return source.isPawnMove(target, name.charAt(0));
+        return source.isPawnMove(target, team);
     }
 
     @Override
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 }

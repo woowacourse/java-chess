@@ -6,19 +6,19 @@ import chessgame.domain.point.Point;
 public class King implements Piece {
     private static final String ORIGINAL_NAME = "k";
 
-    private final String name;
+    private final Team team;
 
-    private King(String name) {
-        this.name = name;
+    private King(Team team) {
+        this.team = team;
     }
 
     public static King from(Team team) {
-        return new King(team.calculate(ORIGINAL_NAME));
+        return new King(team);
     }
 
     @Override
     public String toString() {
-        return name;
+        return team.calculate(ORIGINAL_NAME);
     }
 
     @Override
