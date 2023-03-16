@@ -17,4 +17,13 @@ public class MovingStrategies {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("행마법상 이동 불가능한 지역입니다."));
     }
+
+//    public boolean containMovableStrategy(final Position source, final Position target) {
+//        final boolean result = strategies.stream()
+//                .findAny(strategy -> strategy.movable(source, target));
+//        if (!result) {
+//            throw new IllegalArgumentException("행마법상 이동 불가능한 지역입니다.");
+//        }
+//        return result;
+//    }
 }

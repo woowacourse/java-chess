@@ -22,7 +22,7 @@ class KingTest {
     void success_rightUp() {
         final List<Position> path = king.findPath(A1, B2, Color.WHITE);
 
-        assertThat(path).containsExactly(B2);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우로 이동하는 경우")
@@ -30,7 +30,7 @@ class KingTest {
     void success_right() {
         final List<Position> path = king.findPath(A1, A2, Color.WHITE);
 
-        assertThat(path).containsExactly(A2);
+        assertThat(path).isEmpty();
     }
 
     @DisplayName("킹은 목적 지점과 방향이 같더라도, 두 칸 이상 떨어져 있다면 예외가 발생한다.")

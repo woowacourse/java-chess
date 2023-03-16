@@ -34,16 +34,15 @@ public class Rook extends Piece {
         return createPath(source, target, movingStrategy);
     }
 
-
-    private List<Position> createPath(final Position sourcePosition, final Position targetPosition,
-                                             final MovingStrategy movingStrategy) {
+    private List<Position> createPath(final Position source, final Position target,
+                                      final MovingStrategy movingStrategy) {
         List<Position> path = new ArrayList<>();
-        Position currentPosition = sourcePosition;
+        Position currentPosition = source;
 
         do {
             currentPosition = movingStrategy.move(currentPosition);
             path.add(currentPosition);
-        } while (!currentPosition.equals(targetPosition));
+        } while (!currentPosition.isUpDown(target) && !currentPosition.isOnDiagonal(target));
 
         return path;
     }

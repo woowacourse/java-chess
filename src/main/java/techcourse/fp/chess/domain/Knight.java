@@ -1,5 +1,6 @@
 package techcourse.fp.chess.domain;
 
+import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.movingStrategy.DownTwoLeft;
 import techcourse.fp.chess.movingStrategy.DownTwoRight;
@@ -30,12 +31,12 @@ public class Knight extends Piece {
     @Override
     public List<Position> findPath(final Position source, final Position target,
                                    final Color targetColor) {
-        final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
+        strategies.findStrategy(source, target);
 
         if (targetColor.isSameColor(this.color)) {
             throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
 
-        return List.of(movingStrategy.move(source));
+        return Collections.emptyList();
     }
 }

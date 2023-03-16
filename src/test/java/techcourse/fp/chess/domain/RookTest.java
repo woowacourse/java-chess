@@ -22,7 +22,7 @@ class RookTest {
     void success() {
         final List<Position> path = rook.findPath(A1, A5, Color.WHITE);
 
-        assertThat(path).containsExactly(A2, A3, A4,A5);
+        assertThat(path).containsExactly(A2, A3, A4);
     }
 
     @DisplayName("목적 지점이 행마법상 이동 불가능한 지역이면 예외가 발생한다.")

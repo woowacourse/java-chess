@@ -32,7 +32,7 @@ class QueenTest {
     void success_rightUp() {
         final List<Position> path = queen.findPath(A1, H8, Color.WHITE);
 
-        assertThat(path).containsExactly(B2, C3, D4, E5, F6, G7, H8);
+        assertThat(path).containsExactly(B2, C3, D4, E5, F6, G7);
     }
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다. - 우로 이동하는 경우")
@@ -40,7 +40,7 @@ class QueenTest {
     void success_right() {
         final List<Position> path = queen.findPath(A1, A8, Color.WHITE);
 
-        assertThat(path).containsExactly(A2, A3, A4, A5, A6, A7, A8);
+        assertThat(path).containsExactly(A2, A3, A4, A5, A6, A7);
     }
 
     @DisplayName("목적 지점이 행마법상 이동 불가능한 지역이면 예외가 발생한다.")

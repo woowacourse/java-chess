@@ -1,6 +1,6 @@
 package techcourse.fp.chess.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.movingStrategy.DownStrategy;
 import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
@@ -50,11 +50,11 @@ public class Pawn extends Piece {
         final MovingStrategy movingStrategy = strategies.findStrategy(source, target);
 
         if (isAttack(source, target, targetColor)) {
-            return List.of(movingStrategy.move(source));
+            return Collections.emptyList();
         }
 
         if (isOneStepMove(source, target, targetColor)) {
-            return List.of(movingStrategy.move(source));
+            return Collections.emptyList();
         }
 
         if (isTwoStepMove(source, target, targetColor)) {
@@ -77,15 +77,7 @@ public class Pawn extends Piece {
     }
 
     private List<Position> getTwoStepPath(final Position source, final MovingStrategy movingStrategy) {
-        List<Position> path = new ArrayList<>();
-        Position currentPosition = source;
-
-        for (int i = 0; i < 2; i++) {
-            currentPosition = movingStrategy.move(currentPosition);
-            path.add(currentPosition);
-        }
-
-        return path;
+        return List.of(movingStrategy.move(source));
     }
 
     private boolean isMovableTwoStep(final Position source) {

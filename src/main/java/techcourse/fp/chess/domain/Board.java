@@ -33,10 +33,8 @@ public final class Board {
         board.put(source, new Empty());
     }
 
-    //TODO: target 빼고 path를 받도록 수정
     private boolean cannotMoveToTheTarget(final List<Position> path) {
         return !path.stream()
-                .limit(path.size() - 1)
                 .allMatch(position -> board.get(position).isEmpty());
     }
 

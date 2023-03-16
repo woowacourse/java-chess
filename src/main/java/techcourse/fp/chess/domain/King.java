@@ -1,5 +1,6 @@
 package techcourse.fp.chess.domain;
 
+import java.util.Collections;
 import java.util.List;
 import techcourse.fp.chess.movingStrategy.DownStrategy;
 import techcourse.fp.chess.movingStrategy.LeftDownStrategy;
@@ -39,14 +40,14 @@ public class King extends Piece {
         return createPath(source, target, movingStrategy);
     }
 
-    private List<Position> createPath(final Position sourcePosition, final Position targetPosition,
+    private List<Position> createPath(final Position source, final Position target,
                                       final MovingStrategy movingStrategy) {
-        final Position moveResult = movingStrategy.move(sourcePosition);
+        final Position moveResult = movingStrategy.move(source);
 
-        if (!moveResult.equals(targetPosition)) {
+        if (!moveResult.equals(target)) {
             throw new IllegalArgumentException("킹은 한 칸만 이동 가능합니다.");
         }
 
-        return List.of(moveResult);
+        return Collections.emptyList();
     }
 }
