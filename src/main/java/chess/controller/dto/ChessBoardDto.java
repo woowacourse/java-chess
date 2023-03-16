@@ -1,5 +1,6 @@
 package chess.controller.dto;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -36,10 +37,10 @@ public class ChessBoardDto {
         this.lines = lines;
     }
 
-    public static ChessBoardDto from(final Board board) {
+    public static ChessBoardDto from(final ChessGame chessGame) {
         final List<String> lines = new ArrayList<>();
         for (final Rank rank : Rank.values()) {
-            lines.add(generateLine(board, rank));
+            lines.add(generateLine(chessGame.getBoard(), rank));
         }
         Collections.reverse(lines);
         return new ChessBoardDto(lines);

@@ -1,17 +1,20 @@
 package chess.view;
 
-import static chess.controller.ChessExecuteCommand.END;
-import static chess.controller.ChessExecuteCommand.START;
-import static java.lang.String.format;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
     public String readChessExecuteCommand() {
-        System.out.println(format("게임 시작은 %s, 종료는 %s 명령을 입력하세요.", START, END));
         return scanner.nextLine();
+    }
+
+    public List<String> readChessGameCommand() {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .collect(Collectors.toList());
     }
 }

@@ -13,6 +13,19 @@ public class Square {
         this.rank = rank;
     }
 
+    public static Square from(final String value) {
+        validate(value);
+        final File file = File.from(value.charAt(0));
+        final Rank rank = Rank.from(value.charAt(1));
+        return new Square(file, rank);
+    }
+
+    private static void validate(final String value) {
+        if (value.length() != 2) {
+            throw new IllegalArgumentException("체스 칸으로 변환할 수 없습니다.");
+        }
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

@@ -56,10 +56,6 @@ public class Board {
         return Optional.ofNullable(board.get(square));
     }
 
-    public Map<Square, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
-
     public boolean canMove(final Square source, final List<Square> routes) {
         final boolean isExistHurdle = isExistHurdle(routes.subList(0, routes.size() - 1));
         final Square lastSquare = routes.get(routes.size() - 1);
@@ -101,5 +97,9 @@ public class Board {
 
     public void move(final Square source, final Square destination) {
         board.put(destination, board.remove(source));
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

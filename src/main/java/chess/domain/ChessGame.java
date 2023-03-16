@@ -32,4 +32,8 @@ public class ChessGame {
         }
         return board.canMove(source, route);
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }
