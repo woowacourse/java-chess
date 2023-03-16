@@ -11,4 +11,24 @@ public abstract class Piece implements Movable {
         this.pieceType = pieceType;
         this.color = color;
     }
+
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
+    }
+
+    public boolean isNotSameColor(final Color color) {
+        return this.color != color;
+    }
+
+    public boolean isSamePieceType(final PieceType type) {
+        return this.pieceType == type;
+    }
+
+    public boolean isNotSamePieceType(final PieceType type) {
+        return this.pieceType != type;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 }
