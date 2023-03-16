@@ -21,20 +21,20 @@ public enum Direction {
     SOUTH_RIGHT(1, -2),
     SOUTH_LEFT(-1, -2);
 
-    private final int fileChange;
-    private final int rankChange;
+    private final int fileDisplacement;
+    private final int rankDisplacement;
 
-    Direction(final int fileChange, final int rankChange) {
-        this.fileChange = fileChange;
-        this.rankChange = rankChange;
+    Direction(final int fileDisplacement, final int rankDisplacement) {
+        this.fileDisplacement = fileDisplacement;
+        this.rankDisplacement = rankDisplacement;
     }
 
-    public int getRankChange() {
-        return rankChange;
+    public int nextFile(int currentFile) {
+        return currentFile + fileDisplacement;
     }
 
-    public int getFileChange() {
-        return fileChange;
+    public int nextRank(int currentRank) {
+        return currentRank + rankDisplacement;
     }
 
 }

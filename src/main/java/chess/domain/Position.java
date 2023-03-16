@@ -10,32 +10,32 @@ public class Position {
     private static final int MAXIMUM = 8;
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
-    private final int x;
-    private final int y;
+    private final int file;
+    private final int rank;
 
-    private Position(final int x, final int y) {
-        validate(x, y);
-        this.x = x;
-        this.y = y;
+    private Position(final int file, final int rank) {
+        validate(file, rank);
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(final int x, final int y) {
-        return new Position(x, y);
+    public static Position of(final int file, final int rank) {
+        return new Position(file, rank);
     }
 
-    public static Position from(List<Integer> rankFile) {
-        return new Position(rankFile.get(POSITION_FILE_INDEX),
-                rankFile.get(POSITION_RANK_INDEX));
+    public static Position from(List<Integer> fileRank) {
+        return new Position(fileRank.get(POSITION_FILE_INDEX),
+                fileRank.get(POSITION_RANK_INDEX));
     }
 
-    private void validate(int x, int y) {
-        if (isNotInRange(x, y)) {
+    private void validate(int file, int rank) {
+        if (isNotInRange(file, rank)) {
             throw new IllegalArgumentException(OUT_OF_BOUNDS_ERROR_MESSAGE);
         }
     }
 
-    private boolean isNotInRange(final int rank, final int file) {
-        return isValueNotInRange(rank) || isValueNotInRange(file);
+    private boolean isNotInRange(final int file, final int rank) {
+        return isValueNotInRange(file) || isValueNotInRange(rank);
     }
 
     private boolean isValueNotInRange(final int positionValue) {
@@ -43,22 +43,20 @@ public class Position {
     }
 
     public Position findNextPosition(final Direction direction) {
-        int nextFile = x + direction.getFileChange();
-        int nextRank = y + direction.getRankChange();
-
-        if (isNotInRange(nextFile, nextRank)) {
+        int nextFile = direction.nextFile(file);
+        int nextRank = direction.nextRank(rank);
+        if (isNotInRange(nextRank, nextFile)) {
             return null;
         }
-
         return Position.of(nextFile, nextRank);
     }
 
     public boolean isOneStepForwardDiagonal(Position other) {
-        return other.x - x == 1 && Math.abs(other.y - y) == 1;
+        return (other.file - file == 1) && (Math.abs(other.rank - rank) == 1);
     }
 
     public boolean isInExpectedRank(int rank) {
-        return y == rank;
+        return this.rank == rank;
     }
 
     @Override
@@ -70,20 +68,12 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return x == position.x && y == position.y;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return Objects.hash(file, rank);
     }
 
 }
