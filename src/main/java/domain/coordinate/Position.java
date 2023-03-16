@@ -47,6 +47,10 @@ public class Position {
         return this.x - otherPosition.x;
     }
 
+    public Position move(int moveX, int moveY) {
+        return Position.of(x + moveX, y + moveY);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -60,4 +64,11 @@ public class Position {
         return Objects.hash(x, y);
     }
 
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
