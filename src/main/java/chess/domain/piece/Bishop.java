@@ -21,7 +21,8 @@ public class Bishop extends Piece {
 
     @Override
     public Piece move(final Position targetPosition, final Optional<Piece> pieceContainerOfTargetPosition) {
-        return null;
+        pieceContainerOfTargetPosition.ifPresent(this::validateCachingSameColor);
+        return new Bishop(targetPosition.getFile(), targetPosition.getRank(), color);
     }
 
     @Override
