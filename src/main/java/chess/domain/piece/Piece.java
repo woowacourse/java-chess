@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 
 public abstract class Piece implements Cloneable {
 
@@ -18,31 +18,14 @@ public abstract class Piece implements Cloneable {
         return this.piecePosition.equals(piecePosition);
     }
 
-    public WayPoints wayPointsWithCondition(final PiecePosition destination) {
+    public Waypoints waypoints(final PiecePosition destination) {
         validateMovable(Path.of(piecePosition, destination));
-        return wayPointsWithCondition(Path.of(piecePosition, destination));
+        return waypointsPerType(Path.of(piecePosition, destination));
     }
 
     protected abstract void validateMovable(final Path path);
 
-    protected abstract WayPoints wayPointsWithCondition(final Path path);
-
-    @Override
-    public Piece clone() {
-        try {
-            return (Piece) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
-    public Color color() {
-        return color;
-    }
-
-    public PiecePosition piecePosition() {
-        return piecePosition;
-    }
+    protected abstract Waypoints waypointsPerType(final Path path);
 
     public boolean isEnemy(final Piece enemy) {
         return color != enemy.color;
@@ -61,5 +44,22 @@ public abstract class Piece implements Cloneable {
         if (!isEnemy(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public Piece clone() {
+        try {
+            return (Piece) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    public Color color() {
+        return color;
+    }
+
+    public PiecePosition piecePosition() {
+        return piecePosition;
     }
 }

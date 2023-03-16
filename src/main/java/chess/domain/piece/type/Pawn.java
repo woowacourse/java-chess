@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,20 +46,20 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected WayPoints wayPointsWithCondition(final Path path) {
+    protected Waypoints waypointsPerType(final Path path) {
         if (!isMoved && isPawnSpecialDestination(path)) {
             final List<PiecePosition> wayPoints = path.wayPoints();
             wayPoints.add(path.destination());
-            return WayPoints.from(wayPoints);
+            return Waypoints.from(wayPoints);
         }
         return defaultMove(path);
     }
 
-    private WayPoints defaultMove(final Path path) {
+    private Waypoints defaultMove(final Path path) {
         if (path.isDiagonal()) {
-            return WayPoints.from(Collections.emptyList());
+            return Waypoints.from(Collections.emptyList());
         }
-        return WayPoints.from(List.of(path.destination()));
+        return Waypoints.from(List.of(path.destination()));
     }
 
     @Override

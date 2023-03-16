@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,13 +25,13 @@ class KingTest {
 
     @ParameterizedTest(name = "모든 방향으로 한 칸 이동 가능하며, 경우지는 없다. [{0}으로 한 칸 이동이 가능하다]")
     @MethodSource("unitDestinations")
-    void 모든_방향으로_한_칸_이동_가능하다(final PiecePosition destination, final WayPoints expected) {
+    void 모든_방향으로_한_칸_이동_가능하다(final PiecePosition destination, final Waypoints expected) {
         // given
         final PiecePosition currentPosition = PiecePosition.of(4, 'e');
         final King king = new King(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = king.wayPointsWithCondition(destination);
+        final Waypoints condition = king.waypoints(destination);
         assertThat(condition.wayPoints()).containsExactlyInAnyOrderElementsOf(expected.wayPoints());
     }
 
@@ -39,35 +39,35 @@ class KingTest {
         return Stream.of(
                 Arguments.of(
                         Named.of("동쪽", PiecePosition.of(4, 'f')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("서쪽", PiecePosition.of(4, 'd')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북쪽", PiecePosition.of(5, 'e')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남쪽", PiecePosition.of(3, 'e')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북동쪽", PiecePosition.of(5, 'f')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남동쪽", PiecePosition.of(3, 'f')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("북서쪽", PiecePosition.of(5, 'd')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 ),
                 Arguments.of(
                         Named.of("남서쪽", PiecePosition.of(3, 'd')),
-                        WayPoints.from(Collections.emptyList())
+                        Waypoints.from(Collections.emptyList())
                 )
         );
     }
@@ -91,7 +91,7 @@ class KingTest {
         final King king = new King(Color.WHITE, currentPosition);
 
         // when & then
-        assertThatThrownBy(() -> king.wayPointsWithCondition(destination))
+        assertThatThrownBy(() -> king.waypoints(destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

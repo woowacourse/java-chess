@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 
 import java.util.Collections;
 
@@ -26,7 +26,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected WayPoints wayPointsWithCondition(final Path path) {
-        return WayPoints.from(Collections.emptyList());
+    protected Waypoints waypointsPerType(final Path path) {
+        return Waypoints.from(Collections.emptyList());
     }
 }

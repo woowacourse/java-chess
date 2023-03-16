@@ -43,7 +43,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
+            assertDoesNotThrow(() -> pawn.waypoints(destination));
         }
 
         @ParameterizedTest
@@ -61,7 +61,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(4, 'b'));
 
             // when & then
-            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
+            assertDoesNotThrow(() -> pawn.waypoints(destination));
         }
 
         @ParameterizedTest
@@ -79,7 +79,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+            assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -99,7 +99,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.WHITE, currentPosition);
 
             // when & then
-            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+            assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -122,7 +122,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
+            assertDoesNotThrow(() -> pawn.waypoints(destination));
         }
 
         @ParameterizedTest
@@ -140,7 +140,7 @@ class PawnTest {
             pawn.move(PiecePosition.of(5, 'b'));
 
             // when & then
-            assertDoesNotThrow(() -> pawn.wayPointsWithCondition(destination));
+            assertDoesNotThrow(() -> pawn.waypoints(destination));
         }
 
         @ParameterizedTest
@@ -159,7 +159,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+            assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -179,7 +179,7 @@ class PawnTest {
             final Pawn pawn = new Pawn(Color.BLACK, currentPosition);
 
             // when & then
-            assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
+            assertThatThrownBy(() -> pawn.waypoints(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

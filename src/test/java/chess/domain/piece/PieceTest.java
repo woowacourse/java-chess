@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -29,7 +29,7 @@ class PieceTest {
             }
 
             @Override
-            protected WayPoints wayPointsWithCondition(final Path path) {
+            protected Waypoints waypointsPerType(final Path path) {
                 return null;
             }
         });
@@ -58,7 +58,7 @@ class PieceTest {
         }
 
         @Override
-        protected WayPoints wayPointsWithCondition(final Path path) {
+        protected Waypoints waypointsPerType(final Path path) {
             return null;
         }
     }
@@ -68,7 +68,7 @@ class PieceTest {
         // given
         Piece myPiece = new MyPiece(Color.BLACK, of(1, 'a'));
         // when & then
-        assertThatThrownBy(() -> myPiece.wayPointsWithCondition(of(1, 'a')))
+        assertThatThrownBy(() -> myPiece.waypoints(of(1, 'a')))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

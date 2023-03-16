@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -32,7 +32,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        assertThatThrownBy(() -> queen.wayPointsWithCondition(destination))
+        assertThatThrownBy(() -> queen.waypoints(destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -51,7 +51,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = queen.wayPointsWithCondition(destination);
+        final Waypoints condition = queen.waypoints(destination);
         assertThat(condition.wayPoints()).isEmpty();
     }
 
@@ -70,7 +70,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = queen.wayPointsWithCondition(destination);
+        final Waypoints condition = queen.waypoints(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
     }
 
@@ -89,7 +89,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = queen.wayPointsWithCondition(destination);
+        final Waypoints condition = queen.waypoints(destination);
         assertThat(condition.wayPoints()).isEmpty();
     }
 
@@ -112,7 +112,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = queen.wayPointsWithCondition(destination);
+        final Waypoints condition = queen.waypoints(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
     }
 }

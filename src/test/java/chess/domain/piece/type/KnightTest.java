@@ -31,7 +31,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        assertDoesNotThrow(() -> knight.wayPointsWithCondition(destination));
+        assertDoesNotThrow(() -> knight.waypoints(destination));
     }
 
     @ParameterizedTest
@@ -49,7 +49,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        assertDoesNotThrow(() -> knight.wayPointsWithCondition(destination));
+        assertDoesNotThrow(() -> knight.waypoints(destination));
     }
 
     @ParameterizedTest
@@ -70,7 +70,7 @@ class KnightTest {
         final Knight knight = new Knight(Color.WHITE, currentPosition);
 
         // when & then
-        assertThatThrownBy(() -> knight.wayPointsWithCondition(destination))
+        assertThatThrownBy(() -> knight.waypoints(destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

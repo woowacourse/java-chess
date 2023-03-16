@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -32,7 +32,7 @@ class RookTest {
         final Rook rook = new Rook(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = rook.wayPointsWithCondition(destination);
+        final Waypoints condition = rook.waypoints(destination);
         assertThat(condition.wayPoints()).isEmpty();
     }
 
@@ -55,7 +55,7 @@ class RookTest {
         final Rook rook = new Rook(Color.WHITE, currentPosition);
 
         // when & then
-        final WayPoints condition = rook.wayPointsWithCondition(destination);
+        final Waypoints condition = rook.waypoints(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
     }
 
@@ -74,7 +74,7 @@ class RookTest {
         final Rook rook = new Rook(Color.WHITE, currentPosition);
 
         // when & then
-        assertThatThrownBy(() -> rook.wayPointsWithCondition(destination))
+        assertThatThrownBy(() -> rook.waypoints(destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.WayPoints;
+import chess.domain.piece.position.Waypoints;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 
@@ -20,7 +20,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected WayPoints wayPointsWithCondition(final Path path) {
-        return WayPoints.from(path.wayPoints());
+    protected Waypoints waypointsPerType(final Path path) {
+        return Waypoints.from(path.wayPoints());
     }
 }
