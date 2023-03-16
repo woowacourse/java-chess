@@ -7,7 +7,7 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
     private static final int MAX_DISTANCE = 8;
 
     private Queen(final PieceType pieceType, final Color color) {

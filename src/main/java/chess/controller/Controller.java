@@ -8,7 +8,7 @@ import chess.view.GameState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class Controller {
+public final class Controller {
     public void run() {
         OutputView.printStartMessage();
 

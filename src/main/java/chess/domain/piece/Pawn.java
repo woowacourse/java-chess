@@ -7,7 +7,7 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     private static final int DIRECTION_DOWN = 1;
     private static final int DIRECTION_UP = -1;
     private static final int DIRECTION_RIGHT = 1;

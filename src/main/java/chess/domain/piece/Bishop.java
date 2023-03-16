@@ -7,7 +7,7 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
     private static final int MAX_DISTANCE = 8;
 
     private Bishop(final PieceType pieceType, final Color color) {

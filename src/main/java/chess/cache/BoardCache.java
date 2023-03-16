@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardCache {
+public final class BoardCache {
     private static final Map<Position, Piece> board = new HashMap<>();
 
     private BoardCache() {

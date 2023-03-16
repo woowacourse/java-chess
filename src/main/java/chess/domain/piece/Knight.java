@@ -7,7 +7,7 @@ import chess.domain.Position;
 import java.util.Collections;
 import java.util.List;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
     private static final List<Integer> moveY = List.of(2, 1, -1, -2, -2, -1, 1, 2);
     private static final List<Integer> moveX = List.of(1, 2, 2, 1, -1, -2, -2, -1);
 

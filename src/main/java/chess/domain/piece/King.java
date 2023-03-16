@@ -6,7 +6,7 @@ import chess.domain.Position;
 
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
     private King(final PieceType pieceType, final Color color) {
         super(pieceType, color);
     }

@@ -7,7 +7,7 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
     private static final int MAX_DISTANCE = 8;
 
     private Rook(final PieceType pieceType, final Color color) {
