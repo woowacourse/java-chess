@@ -1,5 +1,6 @@
 package chess.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -12,7 +13,7 @@ public class InputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public String requestCommend() {
-        return scanner.nextLine();
+    public List<String> requestCommend() {
+        return List.of(scanner.nextLine().split(" "));
     }
 }
