@@ -6,22 +6,23 @@
 
 ```mermaid
 classDiagram
-  Game --> Piece
-  Game --> Position
-  Rank <-- Position
-  File <-- Position
+    Game --> Piece
+    Game --> Position
 
-  <<enumeration>> Rank
-  <<enumeration>> File
+    Rank <-- Position
+    File <-- Position
 
-  class Position{
-    Rank rank
-    File file
-  }
+    <<enumeration>> Rank
+    <<enumeration>> File
 
-  class Game {
-    Map(Position, Piece) chessBoard
-  }
+    class Position {
+        Rank rank
+        File file
+    }
+
+    class Game {
+        Map(Position, Piece) chessBoard
+    }
 ```
 
 ### 체스 말들의 상속 관계
@@ -129,11 +130,9 @@ classDiagram
 
 ### Score
 - [x] 더한 점수를 반환한다.
-
+- 
 ### ChessBoardGenerator
 - [x] 체스 판과 규칙에 맞는 초기 말들을 생성한다.
-
-### Movement
 - [x] 어느 방향으로도 움직이지 않으면 예외가 발생한다.
 - [x] 1칸 이내 움직임인지 확인한다.
 - [x] 2칸 이내 움직임인지 확인한다.
