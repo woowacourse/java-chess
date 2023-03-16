@@ -23,13 +23,17 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Point point = Point.of(file, rank);
-                if (chessBoard.containsKey(point)) {
-                    System.out.print(chessBoard.get(point));
-                } else {
-                    System.out.print(".");
-                }
+                printPoint(chessBoard, point);
             }
             System.out.println();
+        }
+    }
+
+    private void printPoint(Map<Point, Piece> chessBoard, Point point) {
+        if (chessBoard.containsKey(point)) {
+            System.out.print(chessBoard.get(point));
+        } else {
+            System.out.print(".");
         }
     }
 

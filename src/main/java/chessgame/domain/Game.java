@@ -1,9 +1,7 @@
-package chessgame;
+package chessgame.domain;
 
 import java.util.List;
 
-import chessgame.domain.Board;
-import chessgame.domain.Team;
 import chessgame.domain.point.Point;
 import chessgame.domain.state.Button;
 
@@ -26,7 +24,7 @@ public class Game {
 
     public void movePiece(List<Point> points) {
         if (button.isStart()) {
-            board.move(points.get(0), points.get(1),turn);
+            board.move(points.get(0), points.get(1), turn);
         }
         turn = turn.changeTurn();
     }

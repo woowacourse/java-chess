@@ -1,6 +1,6 @@
 package chessgame.domain.state;
 
-import chessgame.Command;
+import chessgame.domain.Command;
 
 public class Start implements State {
     @Override

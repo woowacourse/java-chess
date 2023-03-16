@@ -1,4 +1,4 @@
-package chessgame;
+package chessgame.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Command {
     private static Command validateMove(String command) {
         String[] moveCommand = command.split(" ");
         if (moveCommand.length == 3 && MOVE.equals(moveCommand[0])) {
-            checkPoint(moveCommand[1], moveCommand[2]);
+            validatePoint(moveCommand[1], moveCommand[2]);
             return new Command(command);
         }
         if (MOVE.equals(moveCommand[0])) {
@@ -44,7 +44,7 @@ public class Command {
         throw new IllegalArgumentException("start, move, end만 입력 가능합니다.");
     }
 
-    private static void checkPoint(String source, String target) {
+    private static void validatePoint(String source, String target) {
         String pattern = "[a-h]{1}[1-8]{1}";
         if (!(source.matches(pattern) && target.matches(pattern))) {
             throw new IllegalArgumentException("이동 좌표는 a-h 1-8 로 입력하여야합니다.");

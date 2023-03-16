@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chessgame.domain.Team;
-
 public class Point {
     private static final Map<String, Point> cache = new HashMap<>(64);
 
@@ -25,6 +23,10 @@ public class Point {
         return file.name() + rank.name();
     }
 
+    public Point move(int fileMove, int rankMove) {
+        return Point.of(file.move(fileMove).get(), rank.move(rankMove).get());
+    }
+
     public boolean isHorizontal(Point target) {
         return file.distance(target.file) != 0 && rank.distance(target.rank) == 0;
     }
@@ -40,77 +42,16 @@ public class Point {
         return Math.abs(file.distance(target.file)) == Math.abs(rank.distance(target.rank));
     }
 
-    public boolean isAllDirectionOneDistance(Point target) {
-        if (isHorizontal(target) && Math.abs(file.distance(target.file)) == 1) {
-            return true;
-        }
-        if (isVertical(target) && Math.abs(rank.distance(target.rank)) == 1) {
-            return true;
-        }
-        return isDiagonal(target) && Math.abs(file.distance(target.file)) == 1
-            && Math.abs(rank.distance(target.rank)) == 1;
+    public int fileDistance(Point point) {
+        return this.file.distance(point.file);
     }
 
-    public boolean isKnightMove(Point target) {
-        int fileDistance = Math.abs(file.distance(target.file));
-        int rankDistance = Math.abs(rank.distance(target.rank));
-
-        if (fileDistance == 2 && rankDistance == 1) {
-            return true;
-        }
-        return fileDistance == 1 && rankDistance == 2;
+    public int rankDistance(Point point) {
+        return this.rank.distance(point.rank);
     }
 
-    public boolean isPawnMove(Point target, Team team) {
-        if(team == Team.BLACK && file.distance(target.file) == 0){
-            if(rank.distance(Rank.SEVEN)==0 && (rank.distance(target.rank) == 1 || rank.distance(target.rank) == 2)){
-                return true;
-            }
-            if(rank.distance(target.rank) == 1){
-                return true;
-            }
-        }
-        if(team == Team.WHITE && file.distance(target.file) == 0){
-            if(rank.distance(Rank.TWO)==0 && (rank.distance(target.rank) == -1 || rank.distance(target.rank) == -2)){
-                return true;
-            }
-            if(rank.distance(target.rank) == -1){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isPawnAttack(Point target, Team team) {
-        if (team == Team.BLACK) {
-            if (rank.distance(target.rank) == 1 && file.distance(target.file) == 1) {
-                return true;
-            }
-            if (rank.distance(target.rank) == 1 && file.distance(target.file) == -1) {
-                return true;
-            }
-        }
-        if (team == Team.WHITE) {
-            if (rank.distance(target.rank) == -1 && file.distance(target.file) == -1) {
-                return true;
-            }
-            if (rank.distance(target.rank) == -1 && file.distance(target.file) == 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Point move(int fileMove, int rankMove) {
-        return Point.of(file.move(fileMove).get(), rank.move(rankMove).get());
-    }
-
-    public int makeFileDifference(Point target) {
-        return this.file.distance(target.file);
-    }
-
-    public int makeRankDifference(Point target) {
-        return this.rank.distance(target.rank);
+    public boolean isInitialPoint(Rank initialRank) {
+        return rank.distance(initialRank) == 0;
     }
 
     @Override

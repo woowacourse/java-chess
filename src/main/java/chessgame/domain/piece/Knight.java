@@ -5,6 +5,8 @@ import chessgame.domain.point.Point;
 
 public class Knight implements Piece {
     private static final String ORIGINAL_NAME = "n";
+    private static final int STRAIGHT = 2;
+    private static final int DIAGONAL = 1;
 
     private final Team team;
 
@@ -23,7 +25,17 @@ public class Knight implements Piece {
 
     @Override
     public boolean isMovable(Point source, Point target) {
-        return source.isKnightMove(target);
+        return isKnightMove(source, target);
+    }
+
+    public boolean isKnightMove(Point source, Point target) {
+        int fileDistance = Math.abs(source.fileDistance(target));
+        int rankDistance = Math.abs(source.rankDistance(target));
+
+        if (fileDistance == STRAIGHT && rankDistance == DIAGONAL) {
+            return true;
+        }
+        return fileDistance == DIAGONAL && rankDistance == STRAIGHT;
     }
 
     @Override

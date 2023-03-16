@@ -1,8 +1,8 @@
 package chessgame.controller;
 
-import chessgame.Command;
-import chessgame.Game;
 import chessgame.domain.Board;
+import chessgame.domain.Command;
+import chessgame.domain.Game;
 import chessgame.util.ChessBoardFactory;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -17,19 +17,19 @@ public class ChessController {
     }
 
     public void run() {
-        outputView.printStartMessage();
         Game game = new Game(new Board(ChessBoardFactory.create()));
         playGame(game);
     }
 
     private void playGame(Game game) {
+        outputView.printStartMessage();
         do {
-            oneTurn(game);
+            eachTurn(game);
             outputView.printChessBoard(game.board());
         } while (game.isStart());
     }
 
-    private void oneTurn(Game game) {
+    private void eachTurn(Game game) {
         Command command = readCommand();
         command = setButton(game, command);
         if (command.isMove()) {
@@ -40,9 +40,9 @@ public class ChessController {
     private void movePiece(Game game, Command command) {
         try {
             game.movePiece(command.makePoints());
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
-            oneTurn(game);
+            eachTurn(game);
         }
     }
 

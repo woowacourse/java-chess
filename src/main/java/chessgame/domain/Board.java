@@ -20,32 +20,17 @@ public class Board {
     }
 
     public void move(Point source, Point target, Team turn) {
-        checkSamePoint(source, target);
         Piece piece = board.get(source);
+        checkSamePoint(source, target);
         checkSource(source, turn);
         boolean hasTarget = checkTarget(target, turn);
+
         if (piece.isMovable(source, target)) {
-            if (piece instanceof Pawn && hasTarget) {
-                throw new IllegalArgumentException("폰은 직진으로 적을 잡을수 없습니다.");
-            }
-            if (!(piece instanceof Knight) && checkRoute(source, target)) {
-                board.put(target, piece);
-                board.remove(source);
-                return;
-            }
-            if (piece instanceof Knight) {
-                board.put(target, piece);
-                board.remove(source);
-                return;
-            }
-        } else if (piece instanceof Pawn && hasTarget) {
-            if (((Pawn)piece).isAttack(source, target)) {
-                board.put(target, piece);
-                board.remove(source);
-                return;
-            }
+            checkPawnMove(piece, hasTarget);
+            followPieceRoute(source, target, piece);
+        } else if (piece instanceof Pawn) {
+            checkPawnAttack(source, target, piece, hasTarget);
         }
-        throw new IllegalArgumentException("불가능한 움직임 입니다.");
     }
 
     private void checkSamePoint(Point source, Point target) {
@@ -55,14 +40,12 @@ public class Board {
     }
 
     public void checkSource(Point source, Team turn) {
-        if (!board.containsKey(source) && turn != board.get(source).team()) {
+        if (board.containsKey(source) && turn != board.get(source).team()) {
             throw new IllegalArgumentException(turn.color() + "팀 기물만 움직일 수 있습니다.");
         }
-
         if (!board.containsKey(source)) {
             throw new IllegalArgumentException("해당 좌표에 기물이 존재하지 않습니다.");
         }
-
     }
 
     public boolean checkTarget(Point target, Team turn) {
@@ -72,16 +55,39 @@ public class Board {
         return board.containsKey(target);
     }
 
+    private void checkPawnMove(Piece piece, boolean hasTarget) {
+        if (piece instanceof Pawn && hasTarget) {
+            throw new IllegalArgumentException("폰은 직진으로 적을 잡을수 없습니다.");
+        }
+    }
+
+    private void followPieceRoute(Point source, Point target, Piece piece) {
+        if (piece instanceof Knight) {
+            movePiece(source, target, piece);
+            return;
+        }
+        if (checkRoute(source, target)) {
+            movePiece(source, target, piece);
+            return;
+        }
+        throw new IllegalArgumentException("불가능한 움직임 입니다.");
+    }
+
+    private void movePiece(Point source, Point target, Piece piece) {
+        board.put(target, piece);
+        board.remove(source);
+    }
+
     public boolean checkRoute(Point source, Point target) {
-        Point point = source;
-        int fileDifference = target.makeFileDifference(source);
-        int rankDifference = target.makeRankDifference(source);
+        int fileDifference = target.fileDistance(source);
+        int rankDifference = target.rankDistance(source);
 
         int distance = Math.max(Math.abs(fileDifference), Math.abs(rankDifference));
 
         int fileMove = fileDifference / distance;
         int rankMove = rankDifference / distance;
 
+        Point point = source;
         for (int i = 0; i < distance - 1; i++) {
             point = point.move(fileMove, rankMove);
             if (board.containsKey(point)) {
@@ -89,6 +95,14 @@ public class Board {
             }
         }
         return true;
+    }
+
+    private void checkPawnAttack(Point source, Point target, Piece piece, Boolean hasTarget) {
+        if (((Pawn)piece).isAttack(source, target) && hasTarget) {
+            movePiece(source, target, piece);
+            return;
+        }
+        throw new IllegalArgumentException("불가능한 움직임 입니다.");
     }
 
     @Override
