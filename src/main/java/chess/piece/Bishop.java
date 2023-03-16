@@ -10,6 +10,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to, final Piece toPiece) {
+
         if (from.equals(to)) {
             throw new IllegalArgumentException("제자리로는 움직일 수 없습니다.");
         }

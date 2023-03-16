@@ -62,12 +62,7 @@ public class ChessBoard {
         Piece toPiece = piecePosition.get(to);
 
         if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
-            if (from.getRank() == to.getRank()) {
-                validateRookByFile(from, to, fromPiece);
-            }
-            if (from.getFile() == to.getFile()) {
-                validateRookByRank(from, to, fromPiece);
-            }
+            validateRook(from, to, fromPiece);
             move(from, to);
         }
 
@@ -77,7 +72,13 @@ public class ChessBoard {
         }
 
         if (fromPiece.isQueen() && fromPiece.isMovable(from, to, toPiece)) {
-            
+            validateRook(from, to, fromPiece);
+            validateBishop(from, to);
+            move(from, to);
+        }
+
+        if (fromPiece.isPawn() && fromPiece.isMovable(from, to, toPiece)) {
+            validateSameRank(from, to, fromPiece);
             move(from, to);
         }
 
@@ -86,6 +87,23 @@ public class ChessBoard {
         }
         if (fromPiece.isKnight() && fromPiece.isMovable(from, to, toPiece)) {
             move(from, to);
+        }
+    }
+
+    private void validateRook(final Position from, final Position to, final Piece fromPiece) {
+        validateSameRank(from, to, fromPiece);
+        validateSameFile(from, to, fromPiece);
+    }
+
+    private void validateSameFile(final Position from, final Position to, final Piece fromPiece) {
+        if (from.getFile() == to.getFile()) {
+            validateRookByRank(from, to, fromPiece);
+        }
+    }
+
+    private void validateSameRank(final Position from, final Position to, final Piece fromPiece) {
+        if (from.getRank() == to.getRank()) {
+            validateRookByFile(from, to, fromPiece);
         }
     }
 
