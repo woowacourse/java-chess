@@ -1,8 +1,7 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Square {
 
@@ -90,6 +89,45 @@ public class Square {
         if (this == to) {
             throw new IllegalArgumentException("같은 지점이 들어왔습니다");
         }
+    }
+
+    public List<Square> squaresOfPath(Square to) {
+        if (inLine(to)) {
+            return squaresOfLine(to);
+        }
+        if (inDiagonal(to)) {
+            return squaresOfDiagonal(to);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    private List<Square> squaresOfLine(final Square to) {
+        if (!inLine(to)) {
+            throw new IllegalArgumentException("직선이 아닙니다");
+        }
+        if (to.rank == this.rank) {
+            return File.filesBetween(this.file, to.file)
+                       .stream()
+                       .map(foundFile -> Square.of(rank, foundFile))
+                       .collect(Collectors.toUnmodifiableList());
+        }
+        return Rank.ranksBetween(this.rank, to.rank)
+                   .stream()
+                   .map(foundRank -> Square.of(foundRank, file))
+                   .collect(Collectors.toUnmodifiableList());
+    }
+
+    private List<Square> squaresOfDiagonal(final Square to) {
+        if (!inDiagonal(to)) {
+            throw new IllegalArgumentException("대각선이 아닙니다");
+        }
+        List<Rank> ranks = Rank.ranksBetween(this.rank, to.rank);
+        List<File> files = File.filesBetween(this.file, to.file);
+        List<Square> squares = new ArrayList<>();
+        for (int i = 0; i < ranks.size(); i++) {
+            squares.add(Square.of(ranks.get(i), files.get(i)));
+        }
+        return squares;
     }
 
     public int getRank() {

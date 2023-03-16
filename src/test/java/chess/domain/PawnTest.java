@@ -43,8 +43,8 @@ class PawnTest {
                 Square movableSquare2 = Square.of(Rank.THREE, File.A);
 
                 assertAll(
-                        () -> assertThat(initializedWhitePawn.isMovable(initialFrom, movableSquare1, new EmptyPiece())).isTrue(),
-                        () -> assertThat(initializedWhitePawn.isMovable(initialFrom, movableSquare2, new EmptyPiece())).isTrue()
+                        () -> assertThat(initializedWhitePawn.isMovable(initialFrom, movableSquare1, EmptyPiece.getInstance())).isTrue(),
+                        () -> assertThat(initializedWhitePawn.isMovable(initialFrom, movableSquare2, EmptyPiece.getInstance())).isTrue()
                 );
             }
 
@@ -82,7 +82,7 @@ class PawnTest {
                 Square diagonalSquare = Square.of(Rank.THREE, File.B);
 
                 assertThat(initializedWhitePawn.isMovable(initialFrom, diagonalSquare, whiteQueen)).isFalse();
-                assertThat(initializedWhitePawn.isMovable(initialFrom, diagonalSquare, new EmptyPiece())).isFalse();
+                assertThat(initializedWhitePawn.isMovable(initialFrom, diagonalSquare, EmptyPiece.getInstance())).isFalse();
             }
         }
     }
@@ -101,7 +101,7 @@ class PawnTest {
         void it_returns_movable1() {
             Square movableSquare = Square.of(Rank.FOUR, File.B);
 
-            assertThat(movedWhitePawn.isMovable(movedFrom, movableSquare, new EmptyPiece())).isTrue();
+            assertThat(movedWhitePawn.isMovable(movedFrom, movableSquare, EmptyPiece.getInstance())).isTrue();
         }
 
         @Test
@@ -140,7 +140,7 @@ class PawnTest {
             Square movableSquare = Square.of(Rank.FOUR, File.C);
 
             assertThat(movedWhitePawn.isMovable(movedFrom, movableSquare, whiteQueen)).isFalse();
-            assertThat(movedWhitePawn.isMovable(movedFrom, movableSquare, new EmptyPiece())).isFalse();
+            assertThat(movedWhitePawn.isMovable(movedFrom, movableSquare, EmptyPiece.getInstance())).isFalse();
         }
     }
 }

@@ -46,9 +46,9 @@ public class KingTest {
             void it_returns_movable() {
                 assertAll(
                         () -> assertThat(whiteKing.isMovable(from, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare2, new EmptyPiece())).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(from, movableSquare2, EmptyPiece.getInstance())).isTrue(),
                         () -> assertThat(whiteKing.isMovable(from, movableSquare3, blackQueen)).isTrue(),
-                        () -> assertThat(whiteKing.isMovable(from, movableSquare4, new EmptyPiece())).isTrue(),
+                        () -> assertThat(whiteKing.isMovable(from, movableSquare4, EmptyPiece.getInstance())).isTrue(),
                         () -> assertThat(whiteKing.isMovable(from, movableSquare5, blackQueen)).isTrue()
                 );
             }
@@ -65,7 +65,7 @@ public class KingTest {
                 Square unableSquare1 = Square.of(Rank.FOUR, File.F);
                 Square unableSquare2 = Square.of(Rank.ONE, File.D);
                 assertThat(whiteKing.isMovable(from, unableSquare1, blackQueen)).isFalse();
-                assertThat(whiteKing.isMovable(from, unableSquare2, new EmptyPiece())).isFalse();
+                assertThat(whiteKing.isMovable(from, unableSquare2, EmptyPiece.getInstance())).isFalse();
             }
         }
     }

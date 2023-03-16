@@ -1,5 +1,10 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Rank {
 
     ONE(1, "1"),
@@ -17,6 +22,19 @@ public enum Rank {
     Rank(final int position, final String symbol) {
         this.position = position;
         this.symbol = symbol;
+    }
+
+    public static List<Rank> ranksBetween(final Rank from, final Rank to) {
+        final int min = Math.min(from.position, to.position);
+        final int max = Math.max(from.position, to.position);
+        List<Rank> ranks = Arrays.stream(values())
+                                 .filter(rank -> rank.position > min && rank.position < max)
+                                 .collect(Collectors.toList());
+
+        if (from.position == max) {
+            Collections.reverse(ranks);
+        }
+        return ranks;
     }
 
     public int distanceTo(final Rank other) {

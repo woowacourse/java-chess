@@ -46,7 +46,7 @@ public class KnightTest {
                 assertAll(
                         () -> assertThat(whiteKnight.isMovable(from, movableSquare1, blackQueen)).isTrue(),
                         () -> assertThat(whiteKnight.isMovable(from, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteKnight.isMovable(from, movableSquare1, new EmptyPiece())).isTrue()
+                        () -> assertThat(whiteKnight.isMovable(from, movableSquare1, EmptyPiece.getInstance())).isTrue()
                 );
             }
 

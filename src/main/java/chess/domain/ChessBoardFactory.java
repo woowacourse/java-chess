@@ -70,10 +70,10 @@ public class ChessBoardFactory {
 
     private void addEmptyPieces(final HashMap<Square, Piece> pieces) {
         for (File file : File.values()) {
-            pieces.put(Square.of(Rank.THREE, file), new EmptyPiece());
-            pieces.put(Square.of(Rank.FOUR, file), new EmptyPiece());
-            pieces.put(Square.of(Rank.FIVE, file), new EmptyPiece());
-            pieces.put(Square.of(Rank.SIX, file), new EmptyPiece());
+            pieces.put(Square.of(Rank.THREE, file), EmptyPiece.getInstance());
+            pieces.put(Square.of(Rank.FOUR, file), EmptyPiece.getInstance());
+            pieces.put(Square.of(Rank.FIVE, file), EmptyPiece.getInstance());
+            pieces.put(Square.of(Rank.SIX, file), EmptyPiece.getInstance());
         }
     }
 }

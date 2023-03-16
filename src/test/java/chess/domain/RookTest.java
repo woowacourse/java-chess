@@ -46,7 +46,7 @@ class RookTest {
                 assertAll(
                         () -> assertThat(whiteRook.isMovable(from, movableSquare1, blackQueen)).isTrue(),
                         () -> assertThat(whiteRook.isMovable(from, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteRook.isMovable(from, movableSquare1, new EmptyPiece())).isTrue()
+                        () -> assertThat(whiteRook.isMovable(from, movableSquare1, EmptyPiece.getInstance())).isTrue()
                 );
             }
 

@@ -1,5 +1,10 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum File {
     A(1, "a"),
     B(2, "b"),
@@ -16,6 +21,19 @@ public enum File {
     File(final int position, final String symbol) {
         this.position = position;
         this.symbol = symbol;
+    }
+
+    public static List<File> filesBetween(final File from, final File to) {
+        final int min = Math.min(from.position, to.position);
+        final int max = Math.max(from.position, to.position);
+        List<File> files = Arrays.stream(values())
+                                 .filter(file -> file.position > min && file.position < max)
+                                 .collect(Collectors.toList());
+
+        if (from.position == max) {
+            Collections.reverse(files);
+        }
+        return files;
     }
 
     public int distanceTo(final File other) {

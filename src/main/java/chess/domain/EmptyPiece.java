@@ -1,9 +1,17 @@
 package chess.domain;
 
 public class EmptyPiece extends Piece {
+    private static EmptyPiece emptyPiece;
 
-    public EmptyPiece() {
+    private EmptyPiece() {
         super(Side.NO_SIDE);
+    }
+
+    public static EmptyPiece getInstance() {
+        if (emptyPiece == null) {
+            emptyPiece = new EmptyPiece();
+        }
+        return emptyPiece;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class QueenTest {
                 assertAll(
                         () -> assertThat(whiteQueen.isMovable(from, movableSquare1, blackQueen)).isTrue(),
                         () -> assertThat(whiteQueen.isMovable(from, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(from, movableSquare1, new EmptyPiece())).isTrue()
+                        () -> assertThat(whiteQueen.isMovable(from, movableSquare1, EmptyPiece.getInstance())).isTrue()
                 );
             }
 
