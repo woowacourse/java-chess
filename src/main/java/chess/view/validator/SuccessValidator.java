@@ -1,6 +1,6 @@
 package chess.view.validator;
 
-public class SuccessValidator implements InputValidator{
+public class SuccessValidator implements InputValidator {
     @Override
     public void validate(InputRequest inputRequest) {
     }

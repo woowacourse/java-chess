@@ -3,7 +3,6 @@ package chess.renderer;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.view.OutputView;
 
 import java.util.Arrays;
 

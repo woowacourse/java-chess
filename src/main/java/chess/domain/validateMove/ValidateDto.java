@@ -26,10 +26,12 @@ public class ValidateDto {
     public Chessboard getChessboard() {
         return chessboard;
     }
-    public Piece getSourcePiece(){
+
+    public Piece getSourcePiece() {
         return chessboard.getPieceAt(source);
     }
-    public Piece getTargetPiece(){
+
+    public Piece getTargetPiece() {
         return chessboard.getPieceAt(target);
     }
 }

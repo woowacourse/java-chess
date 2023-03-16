@@ -40,7 +40,7 @@ public class ChessGame {
         if (source.equals(target)) {
             return false;
         }
-        return new SourceMove().validate(new ValidateDto(source,target,chessboard));
+        return new SourceMove().validate(new ValidateDto(source, target, chessboard));
     }
 
     public Chessboard getChessboard() {
