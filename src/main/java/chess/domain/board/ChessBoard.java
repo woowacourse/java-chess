@@ -45,7 +45,11 @@ public final class ChessBoard {
     public void removePiece(final Position position) {
         board.remove(position);
     }
-    
+
+    public void putPiece(final Position position, final Piece piece) {
+        board.put(position, piece);
+    }
+
     private void init() {
         int whiteAreaRank = initWhiteArea();
         initBlackArea(whiteAreaRank + BLANK_AREA_RANK_SIZE);

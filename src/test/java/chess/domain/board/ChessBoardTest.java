@@ -78,4 +78,20 @@ class ChessBoardTest {
         assertThat(chessBoard.contains(removePosition))
                 .isFalse();
     }
+
+    @Test
+    @DisplayName("입력받은 위치에 체스말을 둔다.")
+    void putPiece() {
+        // given
+        final ChessBoard chessBoard = new ChessBoard();
+        final Position putPosition = new Position(2, 0);
+        final Piece piece = new Piece(PieceType.PAWN, CampType.WHITE);
+
+        // when
+        chessBoard.putPiece(putPosition, piece);
+
+        // then
+        assertThat(chessBoard.contains(putPosition))
+                .isTrue();
+    }
 }
