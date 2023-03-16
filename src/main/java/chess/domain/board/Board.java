@@ -10,6 +10,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -56,5 +57,20 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public boolean canMove(final Square source, final List<Square> routes) {
+        final boolean isExistHurdle = isExistHurdle(routes.subList(0, routes.size() - 1));
+        final Square lastSquare = routes.get(routes.size() - 1);
+        return !isExistHurdle && !isSameColor(source, lastSquare);
+    }
+
+    private boolean isExistHurdle(final List<Square> squares) {
+        return squares.stream()
+                .anyMatch(square -> board.containsKey(square));
+    }
+
+    private boolean isSameColor(final Square source, final Square lastSquare) {
+        return board.containsKey(lastSquare) && !(board.get(source).isBlack() ^ board.get(lastSquare).isBlack());
     }
 }
