@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static chess.domain.piece.position.PiecePosition.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -19,7 +20,7 @@ class PiecePositionTest {
     @Test
     void Rank_와_File_을_받아_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> PiecePosition.of(1, 'a'));
+        assertDoesNotThrow(() -> of(1, 'a'));
     }
 
     @ParameterizedTest
@@ -31,8 +32,8 @@ class PiecePositionTest {
     })
     void 값이_같으면_동등하다(final int rank, final char file) {
         // given
-        final PiecePosition position1 = PiecePosition.of(rank, file);
-        final PiecePosition position2 = PiecePosition.of(rank, file);
+        final PiecePosition position1 = of(rank, file);
+        final PiecePosition position2 = of(rank, file);
 
         // when & then
         assertThat(position1).isEqualTo(position2);
@@ -56,8 +57,8 @@ class PiecePositionTest {
     })
     void File_사이의_간격을_구할_수_있다(final char currentFile, final char destination, final int distance) {
         // given
-        final PiecePosition from = PiecePosition.of(1, currentFile);
-        final PiecePosition dest = PiecePosition.of(2, destination);
+        final PiecePosition from = of(1, currentFile);
+        final PiecePosition dest = of(2, destination);
 
         // when & then
         assertThat(from.fileDistance(dest)).isEqualTo(distance);
@@ -66,19 +67,19 @@ class PiecePositionTest {
     @Test
     void 방위를_받아_해당_방향으로_이동한다() {
         // given
-        final PiecePosition a = PiecePosition.of(1, 'a');
+        final PiecePosition a = of(1, 'a');
 
         // when
         final PiecePosition move = a.move(Direction.NORTHEAST);
 
         // then
-        assertThat(move).isEqualTo(PiecePosition.of(2, 'b'));
+        assertThat(move).isEqualTo(of(2, 'b'));
     }
 
     @Test
     void 이동_시_범위를_벗어나면_오류가_발생한다() {
         // given
-        final PiecePosition position = PiecePosition.of(1, 'a');
+        final PiecePosition position = of(1, 'a');
 
         // when & then
         assertThatThrownBy(() -> position.move(Direction.SOUTHWEST))
@@ -88,10 +89,31 @@ class PiecePositionTest {
     @Test
     void 목적지가_주어졌을때_방위를_확인할_수_있다() {
         // given
-        final PiecePosition position = PiecePosition.of(4, 'e');
-        final PiecePosition destination = PiecePosition.of(7, 'a');
+        final PiecePosition position = of(4, 'e');
+        final PiecePosition destination = of(7, 'a');
 
         // when & then
         assertThat(position.direction(destination)).isEqualTo(Direction.NORTHWEST);
+    }
+
+    @Test
+    void 문자열을_통해_생성될_수_있다() {
+        // given
+        final PiecePosition a4 = of("a4");
+
+        // when & then
+        assertThat(a4).isEqualTo(of(4, 'a'));
+    }
+
+    @Test
+    void 문자열로_생성_시_rank_가_먼저_들어온다면_예외() {
+        // when & then
+        assertThatThrownBy(() -> of("4a")).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 문자열로_생성_시_2글자가_아니면_예외() {
+        // when & then
+        assertThatThrownBy(() -> of("a4d")).isInstanceOf(IllegalArgumentException.class);
     }
 }

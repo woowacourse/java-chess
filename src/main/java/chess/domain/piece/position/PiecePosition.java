@@ -23,10 +23,17 @@ public class PiecePosition {
     }
 
     public static PiecePosition of(final String rankAndFile) {
+        validateLength(rankAndFile);
         final String[] split = rankAndFile.split("");
         final int rank = Integer.parseInt(split[RANK_INDEX]);
         final char file = rankAndFile.charAt(FILE_INDEX);
         return PiecePosition.of(rank, file);
+    }
+
+    private static void validateLength(final String rankAndFile) {
+        if (rankAndFile.length() != RANK_INDEX + 1) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public int fileDistance(final PiecePosition piecePosition) {
