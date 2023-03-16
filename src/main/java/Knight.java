@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -24,6 +25,6 @@ public class Knight extends Piece {
 
     @Override
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
-        return null;
+        return Collections.emptyList();
     }
 }
