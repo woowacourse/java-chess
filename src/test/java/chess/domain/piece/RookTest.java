@@ -30,6 +30,6 @@ class RookTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> rook.findRoute(new Square(File.F, Rank.THREE), new Square(File.E, Rank.FOUR)))
-                .withMessage("해당 위치로 이동할 수 없습니다.");
+                .withMessage("해당 기물이 움직일 수 있는 경로가 아닙니다.");
     }
 }
