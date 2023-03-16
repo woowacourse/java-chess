@@ -8,6 +8,7 @@ public final class Bishop extends Piece {
         super(camp, PieceSymbol.BISHOP);
     }
 
+    @Override
     public boolean isMovable(Position from, Position to) {
         int rankGap = from.calculateFileGap(to);
         int fileGap = from.calculateRankGap(to);
