@@ -42,11 +42,11 @@ public final class Coordinate {
         return alphanumeric.charAt(RANK_PARSE_INDEX);
     }
 
-    public boolean isSameRank(final Coordinate other){
+    public boolean isSameRank(final Coordinate other) {
         return this.rankIndex == other.rankIndex;
     }
 
-    public boolean isSameFile(final Coordinate other){
+    public boolean isSameFile(final Coordinate other) {
         return this.fileIndex == other.fileIndex;
     }
 
@@ -75,11 +75,33 @@ public final class Coordinate {
         return Character.toString(index - step);
     }
 
-    public int calculateRankDistance(final Coordinate other){
+    public int calculateRankDistance(final Coordinate other) {
         return other.rankIndex - this.rankIndex;
     }
 
-    public int calculateFileDistance(final Coordinate other){
+    public int calculateFileDistance(final Coordinate other) {
         return other.fileIndex - this.fileIndex;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "fileIndex=" + fileIndex +
+                ", rankIndex=" + rankIndex +
+                '}';
+    }
+
+    public boolean isPositiveDiagonal(final Coordinate other) {
+        final int rankDistance = other.rankIndex - this.rankIndex;
+        final int fileDistance = other.fileIndex - this.fileIndex;
+
+        return rankDistance == fileDistance;
+    }
+
+    public boolean isNegativeDiagonal(final Coordinate other) {
+        final int rankDistance = other.rankIndex - this.rankIndex;
+        final int fileDistance = other.fileIndex - this.fileIndex;
+
+        return rankDistance == (-1 * fileDistance);
     }
 }
