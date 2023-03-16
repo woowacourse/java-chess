@@ -1,4 +1,4 @@
-package chess.model.board;
+package chess.model.move;
 
 import static chess.model.board.PositionFixture.A2;
 import static chess.model.board.PositionFixture.A3;
@@ -18,6 +18,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.model.board.Board;
+import chess.model.board.PawnBoard;
+import chess.model.board.Square;
 import chess.model.piece.PieceColor;
 import chess.model.piece.PieceType;
 import chess.model.position.Position;

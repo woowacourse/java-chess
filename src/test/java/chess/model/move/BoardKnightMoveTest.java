@@ -1,4 +1,4 @@
-package chess.model.board;
+package chess.model.move;
 
 import static chess.model.board.PositionFixture.B1;
 import static chess.model.board.PositionFixture.C3;
@@ -11,6 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.model.board.Board;
+import chess.model.board.Square;
 import chess.model.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
