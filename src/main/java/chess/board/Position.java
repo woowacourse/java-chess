@@ -25,6 +25,17 @@ public class Position {
         // TODO: 2023/03/15 분모가 0이 되는 상황 예외처리
     }
 
+    public int getMoveCount(final Position targetPosition, final Direction direction) {
+        int moveCount = 0;
+        if (direction.isHorizontalMovable()) {
+            moveCount = file.getValueDiff(targetPosition.file);
+        }
+        if (direction.isVerticalMovable()) {
+            moveCount = rank.getValueDiff(targetPosition.rank);
+        }
+        return moveCount;
+    }
+
     public int getFile() {
         return file.getValue();
     }
