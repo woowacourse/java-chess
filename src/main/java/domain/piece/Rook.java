@@ -1,8 +1,16 @@
 package domain.piece;
 
-public class Rook extends Piece{
+import domain.Square;
+import java.util.List;
+
+public class Rook extends Piece {
 
     public Rook(TeamColor teamColor) {
         super(teamColor);
+    }
+
+    @Override
+    public List<Square> findRoutes(Square src, Square dest) {
+        return null;
     }
 }
