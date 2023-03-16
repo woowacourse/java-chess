@@ -11,6 +11,12 @@ public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);
+        moveCount = 0;
+    }
+
+    public Pawn(Color color, int moveCount) {
+        super(color);
+        this.moveCount = moveCount;
     }
 
     private boolean isFirstMove() {
@@ -18,7 +24,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         boolean isSameFileCoordinate = sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate();
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
@@ -44,11 +50,12 @@ public class Pawn extends Piece {
         int sourceFileNumber = sourcePosition.getColumn();
         int targetFileNumber = targetPosition.getColumn();
 
-        return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber;
+        return Math.abs(sourceFileNumber - targetFileNumber) == 1 && diagonalRankNumber == targetRankNumber
+                && getColor() != color;
     }
 
     @Override
-    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         if (Math.abs(sourceRankNumber - targetRankNumber) == 2) {
@@ -60,7 +67,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 
@@ -70,7 +77,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    Piece move() {
-        return null;
+    public Piece move() {
+        return new Pawn(this.getColor(), moveCount + 1);
     }
 }

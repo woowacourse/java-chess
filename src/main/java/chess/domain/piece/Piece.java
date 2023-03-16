@@ -13,15 +13,15 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
+    public abstract boolean canMove(Position sourcePosition, Position targetPosition, Color color);
 
-    abstract List<Position> findPath(Position sourcePosition, Position targetPosition);
+    public abstract List<Position> findPath(Position sourcePosition, Position targetPosition);
 
-    abstract boolean isKing();
+    public abstract boolean isKing();
 
     public abstract boolean isEmpty();
 
-    abstract Piece move();
+    public abstract Piece move();
 
     public boolean isSameTeam(Color color) {
         return this.color == color;

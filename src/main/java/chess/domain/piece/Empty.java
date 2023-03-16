@@ -5,22 +5,26 @@ import java.util.List;
 
 public class Empty extends Piece {
 
-    public Empty(Color color) {
+    private Empty(Color color) {
         super(color);
     }
 
+    public static Piece create() {
+        return new Empty(Color.EMPTY);
+    }
+
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         return false;
     }
 
     @Override
-    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
         return null;
     }
 
     @Override
-    boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 
@@ -30,7 +34,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    Piece move() {
+    public Piece move() {
         return null;
     }
 }

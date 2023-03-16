@@ -13,14 +13,14 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
 
         return (isStraight(sourcePosition, targetPosition) || isDiagonal(sourcePosition, targetPosition))
-                && isNotMyPosition(sourcePosition, targetPosition);
+                && isNotMyPosition(sourcePosition, targetPosition) && getColor() != color;
     }
 
     @Override
-    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
         int nowFileCoordinate = sourcePosition.getColumn();
         int nowRankCoordinate = sourcePosition.getRow();
         int targetFileCoordinate = targetPosition.getColumn();
@@ -81,7 +81,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 
@@ -91,7 +91,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    Piece move() {
-        return null;
+    public Piece move() {
+        return new Queen(getColor());
     }
 }

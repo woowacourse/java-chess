@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
@@ -27,5 +28,12 @@ public class Board {
         return paths.stream()
                 .map(boards::get)
                 .allMatch(Piece::isEmpty);
+    }
+
+    public void movePiece(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = boards.get(sourcePosition);
+        Piece movedPiece = sourcePiece.move();
+        boards.put(targetPosition, movedPiece);
+        boards.put(sourcePosition, Empty.create());
     }
 }

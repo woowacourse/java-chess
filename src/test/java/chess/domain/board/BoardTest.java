@@ -3,6 +3,7 @@ package chess.domain.board;
 import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.B_2;
 import static chess.domain.PositionFixture.B_3;
+import static chess.domain.PositionFixture.C_2;
 import static chess.domain.PositionFixture.C_4;
 import static chess.domain.PositionFixture.C_5;
 import static chess.domain.PositionFixture.D_4;
@@ -11,7 +12,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
@@ -55,5 +58,14 @@ class BoardTest {
 
         List<Position> paths = List.of(B_2, B_3, D_4, C_5);
         assertThat(board.isEmptyPosition(paths)).isFalse();
+    }
+
+    @Test
+    void 말을_움직인다() {
+        Board board = BoardFactory.createBoard();
+        board.movePiece(C_2, C_4);
+
+        assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
+        assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
     }
 }

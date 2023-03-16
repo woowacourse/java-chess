@@ -11,28 +11,28 @@ public class Knight extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         int sourceColumnNumber = sourcePosition.getFileCoordinate().getColumnNumber();
         int targetColumnNumber = targetPosition.getFileCoordinate().getColumnNumber();
         int sourceRankNumber = sourcePosition.getRankCoordinate().getRowNumber();
         int targetRankNumber = targetPosition.getRankCoordinate().getRowNumber();
 
         if (Math.abs(sourceColumnNumber - targetColumnNumber) == 2) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 1;
+            return Math.abs(sourceRankNumber - targetRankNumber) == 1 && getColor() != color;
         }
         if (Math.abs(sourceColumnNumber - targetColumnNumber) == 1) {
-            return Math.abs(sourceRankNumber - targetRankNumber) == 2;
+            return Math.abs(sourceRankNumber - targetRankNumber) == 2 && getColor() != color;
         }
         return false;
     }
 
     @Override
-    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
         return Collections.emptyList();
     }
 
     @Override
-    boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 
@@ -42,7 +42,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    Piece move() {
-        return null;
+    public Piece move() {
+        return new Knight(getColor());
     }
 }

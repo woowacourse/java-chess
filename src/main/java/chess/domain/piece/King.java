@@ -19,7 +19,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
+    public boolean canMove(Position sourcePosition, Position targetPosition, Color color) {
         int sourceColumnNumber = sourcePosition.getColumn();
         int targetColumnNumber = targetPosition.getColumn();
         int sourceRankNumber = sourcePosition.getRow();
@@ -27,16 +27,17 @@ public class King extends Piece {
 
         return Math.abs(sourceColumnNumber - targetColumnNumber) <= 1
                 && Math.abs(sourceRankNumber - targetRankNumber) <= 1
-                && isNotMyPosition(sourcePosition, targetPosition);
+                && isNotMyPosition(sourcePosition, targetPosition)
+                && getColor() != color;
     }
 
     @Override
-    List<Position> findPath(Position sourcePosition, Position targetPosition) {
+    public List<Position> findPath(Position sourcePosition, Position targetPosition) {
         return Collections.emptyList();
     }
 
     @Override
-    boolean isKing() {
+    public boolean isKing() {
         return true;
     }
 
@@ -46,7 +47,7 @@ public class King extends Piece {
     }
 
     @Override
-    Piece move() {
-        return null;
+    public Piece move() {
+        return new King(getColor(), true);
     }
 }

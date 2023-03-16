@@ -47,14 +47,14 @@ public class BoardFactory {
                 boards.put(new Position(G, rankCoordinate), new Pawn(color));
                 boards.put(new Position(H, rankCoordinate), new Pawn(color));
             } else {
-                boards.put(new Position(A, rankCoordinate), new Empty(color));
-                boards.put(new Position(B, rankCoordinate), new Empty(color));
-                boards.put(new Position(C, rankCoordinate), new Empty(color));
-                boards.put(new Position(D, rankCoordinate), new Empty(color));
-                boards.put(new Position(E, rankCoordinate), new Empty(color));
-                boards.put(new Position(F, rankCoordinate), new Empty(color));
-                boards.put(new Position(G, rankCoordinate), new Empty(color));
-                boards.put(new Position(H, rankCoordinate), new Empty(color));
+                boards.put(new Position(A, rankCoordinate), Empty.create());
+                boards.put(new Position(B, rankCoordinate), Empty.create());
+                boards.put(new Position(C, rankCoordinate), Empty.create());
+                boards.put(new Position(D, rankCoordinate), Empty.create());
+                boards.put(new Position(E, rankCoordinate), Empty.create());
+                boards.put(new Position(F, rankCoordinate), Empty.create());
+                boards.put(new Position(G, rankCoordinate), Empty.create());
+                boards.put(new Position(H, rankCoordinate), Empty.create());
             }
         }
         return new Board(boards);
