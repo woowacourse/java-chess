@@ -91,4 +91,24 @@ class CoordinateTest {
         //when & then
         assertThat(a1.isSameFile(a2)).isTrue();
     }
+
+    @Test
+    void 좌표는_다른_좌표와의_랭크_차를_계산할_수_있다(){
+        //given
+        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate a5 = Coordinate.of("a5");
+
+        //when & then
+        assertThat(a1.calculateRankDistance(a5)).isEqualTo(4);
+    }
+
+    @Test
+    void 좌표는_다른_좌표와의_파일_차를_계산할_수_있다(){
+        //given
+        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate e1 = Coordinate.of("e1");
+
+        //when & then
+        assertThat(a1.calculateFileDistance(e1)).isEqualTo(4);
+    }
 }
