@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Position;
 import chess.domain.pieces.Piece;
+import java.util.Objects;
 
 public class Square {
 
@@ -13,11 +14,28 @@ public class Square {
         this.piece = piece;
     }
 
+    public Square replacePiece(final Piece piece) {
+        return new Square(this.position, piece);
+    }
+
     public Position getPosition() {
         return position;
     }
 
     public Piece getPiece() {
         return piece;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return Objects.equals(position, square.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, piece);
     }
 }
