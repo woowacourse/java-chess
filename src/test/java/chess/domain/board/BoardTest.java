@@ -53,9 +53,8 @@ class BoardTest {
         final Board board = new Board();
         final Square source = new Square(File.A, Rank.TWO);
         final Square target = new Square(File.A, Rank.THREE);
-        final Move move = Move.UP;
 
-        final boolean isMovable = board.isPathBlocked(source, target, move);
+        final boolean isMovable = board.move(source, target);
 
         assertThat(isMovable).isTrue();
     }
@@ -66,9 +65,8 @@ class BoardTest {
         final Board board = new Board();
         final Square source = new Square(File.A, Rank.ONE);
         final Square target = new Square(File.A, Rank.TWO);
-        final Move move = Move.UP;
 
-        final boolean isMovable = board.isPathBlocked(source, target, move);
+        final boolean isMovable = board.move(source, target);
 
         assertThat(isMovable).isFalse();
     }
@@ -77,11 +75,11 @@ class BoardTest {
     @Test
     void Should_Move_When_OtherCampPieceOnTarget() {
         final Board board = new Board();
-        final Square source = new Square(File.A, Rank.TWO);
-        final Square target = new Square(File.A, Rank.SEVEN);
-        final Move move = Move.DOWN;
 
-        final boolean isMovable = board.isPathBlocked(source, target, move);
+        board.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
+        board.move(new Square(File.B, Rank.FOUR), new Square(File.B, Rank.FIVE));
+
+        final boolean isMovable = board.move(new Square(File.B, Rank.FIVE), new Square(File.A, Rank.SIX));
 
         assertThat(isMovable).isTrue();
     }

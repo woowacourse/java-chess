@@ -95,6 +95,9 @@ public class Board {
 
     public boolean move(final Square source, final Square target) {
         if (isMovable(source, target)) {
+            if (board.get(source).isSameRole(Role.PAWN)) {
+                board.put(source, new Pawn(board.get(source).camp(), true));
+            }
             board.put(target, board.get(source));
             board.put(source, new Empty());
             return true;
@@ -127,7 +130,7 @@ public class Board {
         return piece.isMovable(source, target, move);
     }
 
-    public boolean isPathBlocked(final Square source, final Square target, final Move move) {
+    private boolean isPathBlocked(final Square source, final Square target, final Move move) {
         if (move.equals(Move.EMPTY)) {
             final Piece piece = board.get(source);
             return piece.isSameRole(Role.KNIGHT);
