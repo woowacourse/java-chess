@@ -40,22 +40,21 @@ public class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void setUpBackLine(int row, Color color) {
-        chessBoard.put(Position.of(1, row), new Rook(color));
-        chessBoard.put(Position.of(2, row), new Knight(color));
-        chessBoard.put(Position.of(3, row), new Bishop(color));
-        chessBoard.put(Position.of(4, row), new Queen(color));
-        chessBoard.put(Position.of(5, row), new King(color));
-        chessBoard.put(Position.of(6, row), new Bishop(color));
-        chessBoard.put(Position.of(7, row), new Knight(color));
-        chessBoard.put(Position.of(8, row), new Rook(color));
+        chessBoard.put(Position.of(row, 1), new Rook(color));
+        chessBoard.put(Position.of(row, 2), new Knight(color));
+        chessBoard.put(Position.of(row, 3), new Bishop(color));
+        chessBoard.put(Position.of(row, 4), new Queen(color));
+        chessBoard.put(Position.of(row, 5), new King(color));
+        chessBoard.put(Position.of(row, 6), new Bishop(color));
+        chessBoard.put(Position.of(row, 7), new Knight(color));
+        chessBoard.put(Position.of(row, 8), new Rook(color));
     }
 
     private void setUpFrontLine(int row, Color color) {
         List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
         columns.stream()
-                .map(column -> Position.of(column, row))
+                .map(column -> Position.of(row, column))
                 .forEach(position -> chessBoard.put(position, new Pawn(color)));
-
     }
 }
