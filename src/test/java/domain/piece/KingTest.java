@@ -12,8 +12,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("킹은 ")
+@DisplayName("킹은")
 class KingTest {
+
+    @DisplayName("8방향으로 한칸 갈 수있다")
+    @ParameterizedTest(name = "{index} : {0} => {1}")
+    @MethodSource("parametersProvider1")
+    void move_success(Square src, Square dest) {
+        King king = new King(TeamColor.WHITE);
+        List<Square> actual = king.findRoutes(src, dest);
+
+        Assertions.assertThat(actual).isEqualTo(List.of(dest));
+    }
 
     static Stream<Arguments> parametersProvider1() {
         return Stream.of(
@@ -28,6 +38,16 @@ class KingTest {
         );
     }
 
+    @DisplayName("한칸 이상 움직일 수 없다.")
+    @ParameterizedTest(name = "{index} : {0} !=> {1}")
+    @MethodSource("parametersProvider2")
+    void move_fail(Square src, Square dest) {
+        King king = new King(TeamColor.WHITE);
+        List<Square> actual = king.findRoutes(src, dest);
+
+        Assertions.assertThat(actual).isEqualTo(Collections.emptyList());
+    }
+
     static Stream<Arguments> parametersProvider2() {
         return Stream.of(
             arguments(Square.of(3, 3), Square.of(3, 5)),
@@ -39,25 +59,5 @@ class KingTest {
             arguments(Square.of(3, 3), Square.of(1, 3)),
             arguments(Square.of(3, 3), Square.of(2, 5))
         );
-    }
-
-    @DisplayName("8방향으로 한칸 갈 수있다")
-    @ParameterizedTest(name = "{index} : {0} => {1}")
-    @MethodSource("parametersProvider1")
-    void move_success(Square src, Square dest) {
-        King king = new King(TeamColor.WHITE);
-        List<Square> actual = king.findRoutes(src, dest);
-
-        Assertions.assertThat(actual).isEqualTo(List.of(dest));
-    }
-
-    @DisplayName("한칸 이상 움직일 수 없다.")
-    @ParameterizedTest(name = "{index} : {0} !=> {1}")
-    @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest) {
-        King king = new King(TeamColor.WHITE);
-        List<Square> actual = king.findRoutes(src, dest);
-
-        Assertions.assertThat(actual).isEqualTo(Collections.emptyList());
     }
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("룩은 ")
+@DisplayName("룩은")
 class RookTest {
 
     @DisplayName("상, 하, 좌, 우 어디든 갈 수있다")
