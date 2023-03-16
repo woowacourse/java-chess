@@ -16,6 +16,7 @@ public class ChessGame {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece fromPiece = piecesPosition.choicePiece(fromPosition);
+        validateEmpty(fromPiece);
         Piece toPiece = piecesPosition.choicePiece(toPosition);
 
         PieceMove pieceMove = fromPiece.getMovement(fromPosition, toPosition);
@@ -27,6 +28,12 @@ public class ChessGame {
         validateSameCamp(fromPiece, toPiece);
 
         piecesPosition.movePieceOn(fromPosition, toPosition);
+    }
+
+    private void validateEmpty(Piece fromPiece) {
+        if (fromPiece.isEmpty()) {
+            throw new IllegalArgumentException("빈 칸은 선택할 수 없습니다.");
+        }
     }
 
     private void validateMovable(PieceMove pieceMove, Position position) {

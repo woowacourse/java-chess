@@ -35,4 +35,17 @@ class ChessGameTest {
 
         assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition));
     }
+
+    @Test
+    @DisplayName("빈칸을 이동 시킬 수 없다")
+    void moveEmptyExceptionTest() {
+        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessGame chessGame = new ChessGame(piecesPosition);
+
+        Position emptyPosition = new Position(File.A, Rank.THREE);
+        Position toPosition = new Position(File.A, Rank.FOUR);
+
+        assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
