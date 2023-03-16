@@ -5,9 +5,9 @@ import chess.domain.piece.Position;
 
 import java.util.Map;
 
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.START;
+import static chess.controller.status.CommandType.END;
+import static chess.controller.status.CommandType.MOVE;
+import static chess.controller.status.CommandType.START;
 
 public final class OutputView {
     private static final int BOARD_SIZE = 8;
@@ -21,30 +21,33 @@ public final class OutputView {
         System.out.println(message);
     }
 
-    public void printStartMessage() {
+    public static void printStartMessage() {
         print(String.format(START_MESSAGE, START.name().toLowerCase(),
                 END.name().toLowerCase(), MOVE.name().toLowerCase()));
     }
 
-    public void printBoard(final Map<Position, Piece> board) {
+    public static void printBoard(final Map<Position, Piece> board) {
         final StringBuilder boardMessage = new StringBuilder();
         for (int rank = BOARD_SIZE - 1; rank >= 0; rank--) {
-            boardMessage.append(makeFileMessage(board, rank));
-            boardMessage.append(System.lineSeparator());
+            boardMessage.append(makeFileMessage(board, rank))
+                    .append(System.lineSeparator());
         }
         print(boardMessage.toString());
     }
 
-    private String makeFileMessage(final Map<Position, Piece> board, final int rank) {
+    private static String makeFileMessage(final Map<Position, Piece> board, final int rank) {
         final StringBuilder fileMessage = new StringBuilder();
         for (int file = 0; file < BOARD_SIZE; file++) {
-            final Position position = new Position(rank, file);
-            if (board.containsKey(position)) {
-                fileMessage.append(PieceName.findMessage(board.get(position)));
-                continue;
-            }
-            fileMessage.append(BLANK);
+            fileMessage.append(getPieceName(board, rank, file));
         }
         return fileMessage.toString();
+    }
+
+    private static char getPieceName(final Map<Position, Piece> board, final int rank, final int file) {
+        final Position position = new Position(rank, file);
+        if (board.containsKey(position)) {
+            return PieceName.findMessage(board.get(position));
+        }
+        return BLANK;
     }
 }

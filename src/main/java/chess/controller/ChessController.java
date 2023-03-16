@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.controller.status.Start;
+import chess.controller.status.Status;
 import chess.domain.chess.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -7,25 +9,21 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
 
     public void run() {
+        OutputView.printStartMessage();
         final ChessGame chessGame = new ChessGame();
-        final Command command = getCommand();
-        if (command == Command.START) {
-            outputView.printBoard(chessGame.getChessBoard());
-        }
+        start(chessGame);
     }
 
-    private Command getCommand() {
-        outputView.printStartMessage();
-        List<String> commands = inputView.getCommand();
-        return Command.findCommand(commands.get(0));
+    private void start(final ChessGame chessGame) {
+        Status gameStatus = new Start(chessGame);
+        while (gameStatus.isRun()) {
+            List<String> commands = InputView.getCommand();
+            final Command command = Command.findCommand(commands);
+            gameStatus = gameStatus.checkCommand(command);
+            OutputView.printBoard(chessGame.getChessBoard());
+        }
     }
 }
+
