@@ -23,7 +23,7 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Point point = Point.of(file, rank);
-                if(chessBoard.containsKey(point)){
+                if (chessBoard.containsKey(point)) {
                     System.out.print(chessBoard.get(point));
                 } else {
                     System.out.print(".");
@@ -31,5 +31,9 @@ public class OutputView {
             }
             System.out.println();
         }
+    }
+
+    public void printErrorMsg(String msg) {
+        System.out.println("[ERROR] " + msg);
     }
 }
