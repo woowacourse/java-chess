@@ -20,4 +20,8 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return board;
     }
+
+    public void move(final Position source, final Position target) {
+
+    }
 }

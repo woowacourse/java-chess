@@ -16,6 +16,12 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public static Position from(final String value) {
+        final char file = value.charAt(0);
+        final int rank = value.charAt(1) - '0';
+        return new Position(file, rank);
+    }
+
     public char file() {
         return file;
     }
