@@ -1,7 +1,7 @@
 package chess.cache;
 
-import chess.domain.Piece;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

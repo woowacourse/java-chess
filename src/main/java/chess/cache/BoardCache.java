@@ -1,9 +1,8 @@
 package chess.cache;
 
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class BoardCache {
 
     private static void addRow(final int column) {
         for (int row = 0; row < 8; row++) {
-            board.put(new Position(column, row), new Piece(PieceType.EMPTY, Color.EMPTY));
+            board.put(Position.of(column, row), Empty.create());
         }
     }
 

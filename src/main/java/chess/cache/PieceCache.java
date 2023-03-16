@@ -1,9 +1,8 @@
 package chess.cache;
 
 import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.PieceType;
 import chess.domain.Position;
+import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,32 +30,32 @@ public class PieceCache {
     }
 
     private static void addKing(final int column, final Color color) {
-        board.put(new Position(column, 4), new Piece(PieceType.KING, color));
+        board.put(Position.of(4, column), Knight.from(color));
 
     }
 
     private static void addQueen(final int column, final Color color) {
-        board.put(new Position(column, 3), new Piece(PieceType.QUEEN, color));
+        board.put(Position.of(3, column), Queen.from(color));
     }
 
     private static void addBishop(final int column, final Color color) {
-        board.put(new Position(column, 2), new Piece(PieceType.BISHOP, color));
-        board.put(new Position(column, 5), new Piece(PieceType.BISHOP, color));
+        board.put(Position.of(2, column), Bishop.from(color));
+        board.put(Position.of(5, column), Bishop.from(color));
     }
 
     private static void addKnight(final int column, final Color color) {
-        board.put(new Position(column, 1), new Piece(PieceType.KNIGHT, color));
-        board.put(new Position(column, 6), new Piece(PieceType.KNIGHT, color));
+        board.put(Position.of(1, column), Knight.from(color));
+        board.put(Position.of(6, column), Knight.from(color));
     }
 
     private static void addRook(final int column, final Color color) {
-        board.put(new Position(column, 0), new Piece(PieceType.ROOKS, color));
-        board.put(new Position(column, 7), new Piece(PieceType.ROOKS, color));
+        board.put(Position.of(0, column), Rook.from(color));
+        board.put(Position.of(7, column), Rook.from(color));
     }
 
     private static void addPawn(final int column, final Color color) {
         for (int row = 0; row < 8; row++) {
-            board.put(new Position(column, row), new Piece(PieceType.PAWN, color));
+            board.put(Position.of(row, column), Pawn.from(color));
         }
     }
 
