@@ -8,6 +8,5 @@ public class Application {
     public static void main(String[] args) {
         final ChessController controller = new ChessController(new ChessGame(), new InputView(), new OutputView());
         controller.play();
-
     }
 }

@@ -1,10 +1,10 @@
 package view;
 
 import common.ExecuteContext;
-import domain.Location;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -25,18 +25,10 @@ public class InputView {
         return order.equals(END);
     }
 
-    public List<Location> getMoveLocations() {
+    public List<String> getCommand() {
         final String[] inputs = scanner.nextLine().split(" ");
-        checkExpectedInput(inputs[0], "move");
-        final Location start = makeLocation(inputs[1]);
-        final Location end = makeLocation(inputs[2]);
-        return List.of(start, end);
-    }
-
-    private Location makeLocation(final String input) {
-        final int column = ColumnView.findColumn(input.charAt(0));
-        final int row = Integer.parseInt(String.valueOf(input.charAt(1))) - 1;
-        return Location.of(column, row);
+        checkExpectedInput(inputs[0], "move", "start", "end");
+        return Arrays.stream(inputs).collect(Collectors.toList());
     }
 
     private void checkExpectedInput(final String input, final String... expectedInputs) {
