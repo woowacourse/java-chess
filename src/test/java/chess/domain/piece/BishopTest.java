@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -23,7 +24,8 @@ class BishopTest {
     public static final Position F8 = new Position(File.F, Rank.EIGHT);
 
     @Test
-    void d() {
+    @DisplayName("비숍이 갈 수 있는 경로를 계산한다.")
+    void computePath_legal_set() {
         var bishop = new Bishop(Color.BLACK);
         final var source = B4;
         final var target = F8;
@@ -34,7 +36,8 @@ class BishopTest {
     }
 
     @Test
-    void e() {
+    @DisplayName("비숍이 갈 수 있는 경로를 계산한다.")
+    void computePath_legal_set2() {
         var bishop = new Bishop(Color.BLACK);
         final var source = C5;
         final var target = G1;

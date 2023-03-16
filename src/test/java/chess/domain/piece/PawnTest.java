@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ class PawnTest {
     public static final Position D5 = new Position(File.D, Rank.FIVE);
 
     @Test
+    @DisplayName("흑색 폰의 대각선 경로를 계산한다.")
     void computePath_Black() {
         final var pawn = new Pawn(Color.BLACK);
 
@@ -33,6 +35,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("백색 폰의 한칸 전진 경로를 계산한다.")
     void computePath_White() {
         final var pawn = new Pawn(Color.WHITE);
 
@@ -40,6 +43,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("백색 폰의 두칸 전진 경로를 계산한다.")
     void computePath_WhiteTwo() {
         final var pawn = new Pawn(Color.WHITE);
 
@@ -47,6 +51,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("폰이 시작위치가 아니면 두칸 전진할 수 없다.")
     void computePath_WhiteTwoException() {
         final var pawn = new Pawn(Color.WHITE);
 
@@ -55,6 +60,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("흑색 폰의 두칸 전진 경로를 계산한다.")
     void computePath_BlackTwo() {
         final var pawn = new Pawn(Color.BLACK);
 
@@ -62,6 +68,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("폰이 초기위치가 아니면 두칸 전진할 수 없다.")
     void computePath_BlackTwoException() {
         final var pawn = new Pawn(Color.BLACK);
 
@@ -70,6 +77,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("유효하지 않은 위치를 받으면 예외가 발생한다.")
     void computePath_BlackIllegalTarget_Exception() {
         final var pawn = new Pawn(Color.BLACK);
 
@@ -78,6 +86,7 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("유효하지 않은 위치를 받으면 예외가 발생한다.")
     void computePath_WhiteIllegalTarget_Exception() {
         final var pawn = new Pawn(Color.WHITE);
 
@@ -86,7 +95,8 @@ class PawnTest {
     }
 
     @Test
-    void canMove() {
+    @DisplayName("폰은 대각선 위치에 기물이 있으면 이동할 수 있다.")
+    void canMove_diagonalExist_true() {
         final var pawn = new Pawn(Color.WHITE);
 
         final var source = C4;
@@ -96,7 +106,8 @@ class PawnTest {
     }
 
     @Test
-    void canMove3() {
+    @DisplayName("폰은 전진할 경로에 기물이 없으면 이동할 수 있다.")
+    void canMove_forwardEmpty_true() {
         final var pawn = new Pawn(Color.WHITE);
 
         final var source = C4;
@@ -106,7 +117,8 @@ class PawnTest {
     }
 
     @Test
-    void canMove2() {
+    @DisplayName("폰은 대각선위치에 기물이 없으면 이동할 수 없다.")
+    void canMove_diagonalEmpty_false() {
         final var pawn = new Pawn(Color.WHITE);
 
         final var source = C4;
@@ -116,7 +128,8 @@ class PawnTest {
     }
 
     @Test
-    void canMove4() {
+    @DisplayName("폰은 대각선위치에 기물이 있으면 이동할 수 있다.")
+    void canMove_diagonalExist_true2() {
         final var pawn = new Pawn(Color.WHITE);
 
         final var source = C4;
@@ -126,7 +139,8 @@ class PawnTest {
     }
 
     @Test
-    void canMove5() {
+    @DisplayName("폰은 두칸 전진 경로에 기물이 있으면 이동할 수 없다.")
+    void canMove_forwardTwoExist_false() {
         final var pawn = new Pawn(Color.WHITE);
 
         final var source = C4;

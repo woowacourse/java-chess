@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SquareTest {
 
-    @DisplayName("피스가 바뀐다")
     @Test
+    @DisplayName("피스가 바뀐다")
     void changePiece() {
         final var sourceSquare = new Square(new King(Color.WHITE));
         final var targetSquare = new Square(new Pawn(Color.BLACK));

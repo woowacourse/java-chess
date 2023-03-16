@@ -24,7 +24,7 @@ class KingTest {
         var source = B5;
         var target = C6;
 
-        assertThat(king.computePath(B5, C6)).containsExactlyInAnyOrder(C6);
+        assertThat(king.computePath(source, target)).containsExactlyInAnyOrder(C6);
     }
 
     @DisplayName("Rank가 같을 때 경로에 타겟이 포함된다")
@@ -35,7 +35,7 @@ class KingTest {
         var source = B5;
         var target = B6;
 
-        assertThat(king.computePath(B5, B6)).containsExactlyInAnyOrder(B6);
+        assertThat(king.computePath(source, target)).containsExactlyInAnyOrder(B6);
     }
 
     @DisplayName("인접한 위치가 아니면 예외가 발생한다.")
@@ -46,7 +46,7 @@ class KingTest {
         var source = B5;
         var target = D7;
 
-        assertThatThrownBy(() -> king.computePath(B5, D7))
+        assertThatThrownBy(() -> king.computePath(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
