@@ -72,5 +72,11 @@ class MovementTest {
         assertThat(movement.isDiagonal()).isEqualTo(result);
     }
 
-
+    @DisplayName("올바른 Knight의 움직임일 경우 true, 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1,2,true", "2,1,true", "-1,-2,true", "-2,1,true", "1,0,false", "-1,3,false", "2,2,false"})
+    void shouldReturnTrueWhenMovementIsCorrectForKnightOrFalse(int fileIncrement, int rankIncrement, boolean result) {
+        Movement movement = new Movement(fileIncrement, rankIncrement);
+        assertThat(movement.isCorrectForKnight()).isEqualTo(result);
+    }
 }
