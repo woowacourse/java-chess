@@ -16,13 +16,6 @@ class MovementTest {
                 .hasMessage("최소 한 칸은 움직여야 합니다.");
     }
 
-    @DisplayName("file, rank움직임이 0,0인지 확인한다.")
-    @Test
-    void shouldReturnTrueWhenMovementIsStop() {
-        Movement movement = new Movement(0, 0);
-        assertThat(movement.isStop()).isTrue();
-    }
-
     @DisplayName("위 방향의 움직임이면 true, 아니면 false를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"0,1,true", "0,-1,false", "1,1,true", "-1,1,true"})
