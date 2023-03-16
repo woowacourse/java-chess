@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.Board;
 import chess.domain.File;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Position;
 import chess.domain.Rank;
 import java.util.Map;
