@@ -24,7 +24,7 @@ public class GameCommand {
             return;
         }
         if (!(command.equals("start") || command.equals("end"))) {
-            throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
+            throw new IllegalArgumentException("게임 명령어가 올바르지 않습니다.");
         }
     }
 
