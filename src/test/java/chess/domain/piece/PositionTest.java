@@ -34,4 +34,19 @@ class PositionTest {
         assertThat(position.isOver(limit))
                 .isSameAs(expected);
     }
+
+    @ParameterizedTest(name = "목표 위치로 이동하기 위한 단위 벡터를 계산한다.")
+    @CsvSource(value = {"4:8:0:1", "0:4:-1:0", "4:0:0:-1", "8:4:1:0", "8:8:1:1", "0:0:-1:-1", "8:0:1:-1", "0:8:-1:1"}, delimiter = ':')
+    void computeUnitPosition(final int targetRank, final int targetFile, final int unitRank, final int unitFile) {
+        // given
+        final Position source = new Position(4, 4);
+        final Position target = new Position(targetRank, targetFile);
+
+        // when
+        final Position unitPosition = source.computeUnitPosition(target);
+
+        // then
+        assertThat(unitPosition)
+                .isEqualTo(new Position(unitRank, unitFile));
+    }
 }

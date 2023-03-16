@@ -18,7 +18,27 @@ public final class Position {
     public boolean isOver(final int limit) {
         return rank < 0 || rank >= limit || file < 0 || file >= limit;
     }
-    
+
+    public Position computeUnitPosition(final Position target) {
+        int fileGap = target.file - this.file;
+        int rankGap = target.rank - this.rank;
+        int gcdGap = getGcdGap(Math.abs(fileGap), Math.abs(rankGap));
+        return new Position(rankGap / gcdGap, fileGap / gcdGap);
+    }
+
+    private int getGcdGap(final int fileGap, final int rankGap) {
+        if (fileGap < rankGap) {
+            return computeGcd(fileGap, rankGap);
+        }
+        return computeGcd(rankGap, fileGap);
+    }
+
+    private int computeGcd(int smallPosition, int bigPosition) {
+        if (bigPosition == 0)
+            return smallPosition;
+        return computeGcd(bigPosition, smallPosition % bigPosition);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
