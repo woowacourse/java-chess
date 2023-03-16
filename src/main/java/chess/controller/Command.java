@@ -3,9 +3,9 @@ package chess.controller;
 import java.util.Arrays;
 
 public enum Command {
-    END("end"),
-    PLAY("move"),
     START("start"),
+    MOVE("move"),
+    END("end"),
     EMPTY(""),
     ;
 
@@ -20,17 +20,18 @@ public enum Command {
         this.value = value;
     }
 
-    public static Command from(String targetCommand) {
-        return Arrays.stream(chess.controller.Command.values())
-                .filter(command -> command != EMPTY)
-                .filter(command -> command.value.equals(targetCommand))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 커맨드를 입력해주세요."));
+    public static Command createStart(String inputCommand) {
+        if (START.value.equalsIgnoreCase(inputCommand)) {
+            return START;
+        }
+        throw new IllegalArgumentException("START를 입력해주세요.");
     }
 
-    public void validateStartCommand() {
-        if (this != START) {
-            throw new IllegalArgumentException("START를 입력해주세요.");
-        }
+    public static Command createPlayOrEnd(String inputCommand) {
+        return Arrays.stream(values())
+                .filter(command -> command == MOVE || command == END)
+                .filter(command -> command.value.equalsIgnoreCase(inputCommand))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("MOVE 또는 END를 입력해주세요."));
     }
 }

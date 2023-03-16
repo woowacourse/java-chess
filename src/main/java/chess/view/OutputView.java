@@ -34,21 +34,31 @@ public class OutputView {
         Collections.reverse(RANKS);
     }
 
-    public void printBoard(final Map<Position, Piece> board) {
+    private OutputView() {
+    }
+
+    public static void printGameStart() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    public static void printBoard(final Map<Position, Piece> board) {
         final String result = RANKS.stream()
                 .map(rank -> generatePieceSymbols(board, rank))
                 .collect(Collectors.joining(NEXT_LINE));
         System.out.println(result);
     }
 
-    private String generatePieceSymbols(final Map<Position, Piece> board, final Rank rank) {
+    private static String generatePieceSymbols(final Map<Position, Piece> board, final Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
                 .map(position -> generatePieceSymbol(board.get(position)))
                 .collect(Collectors.joining());
     }
 
-    private String generatePieceSymbol(final Piece piece) {
+    private static String generatePieceSymbol(final Piece piece) {
         final String result = SYMBOLS.get(piece.type());
         if (piece.color() == Color.WHITE) {
             return result.toLowerCase();
@@ -56,7 +66,7 @@ public class OutputView {
         return result;
     }
 
-    public void printException(final String message) {
+    public static void printException(final String message) {
         System.out.println("[ERROR] " + message);
     }
 }

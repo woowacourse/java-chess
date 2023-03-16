@@ -1,6 +1,6 @@
 package chess.controller;
 
-import static chess.controller.Command.END;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -12,16 +12,36 @@ import org.junit.jupiter.api.Test;
 public class CommandTest {
 
     @Test
-    void 올바른_커맨드를_입력하지_않으면_예외를_던진다() {
-        assertThatThrownBy(() -> Command.from("InvalidCommand"))
+    void 입력_값이_START가_아니라면_예외를_던진다() {
+        // expect
+        assertThatThrownBy(() -> Command.createStart("end"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 커맨드를 입력해주세요.");
+                .hasMessage("START를 입력해주세요.");
     }
 
     @Test
-    void 커맨드가_START가_아니라면_예외를_던진다() {
-        assertThatThrownBy(END::validateStartCommand)
+    void 입력_값이_START_라면_정상_반환한다() {
+        // given
+        final Command command = Command.createStart("start");
+
+        // expect
+        assertThat(command).isEqualTo(Command.START);
+    }
+
+    @Test
+    void 입력_값이_MOVE_또는_END가_아니라면_예외를_던진다() {
+        // expect
+        assertThatThrownBy(() -> Command.createPlayOrEnd("start"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("START를 입력해주세요.");
+                .hasMessage("MOVE 또는 END를 입력해주세요.");
+    }
+
+    @Test
+    void 입력_값이_MOVE_또는_END_라면_정상_반환한다() {
+        // given
+        final Command command = Command.createPlayOrEnd("move");
+
+        // expect
+        assertThat(command).isEqualTo(Command.MOVE);
     }
 }
