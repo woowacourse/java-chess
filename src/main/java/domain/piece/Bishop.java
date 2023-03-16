@@ -25,4 +25,9 @@ public final class Bishop extends Piece {
     protected boolean isMovableDistance(int distance) {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

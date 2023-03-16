@@ -35,10 +35,40 @@ public final class ChessBoard {
     private boolean isPieceMovable(Position startPosition, Position endPosition) {
         List<Position> path = startPosition.getPathTo(endPosition);
         Piece startPiece = chessBoard.get(startPosition);
-
+        if (startPiece.isPawn()) {
+            considerPawnCase(startPosition, endPosition);
+        }
         return startPiece.isMovablePath(startPosition, path) &&
                 isPassablePath(path) &&
                 isMovableEndPosition(endPosition, startPiece);
+    }
+
+    private void considerPawnCase(Position startPosition, Position endPosition) {
+        List<Position> path = startPosition.getPathTo(endPosition);
+        Piece startPiece = chessBoard.get(startPosition);
+
+        if (startPiece.isMovablePath(startPosition, path)) {
+            checkPassablePathToForward(startPosition, path);
+            checkMovableToDiagonal(startPosition, endPosition);
+        }
+    }
+
+    private void checkMovableToDiagonal(Position startPosition, Position endPosition) {
+        Piece startPiece = chessBoard.get(startPosition);
+        if (startPosition.isDiagonalDirection(endPosition) &&
+                (!chessBoard.containsKey(endPosition) || isSameColorPiece(startPiece, chessBoard.get(endPosition)))) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
+        }
+    }
+
+    private void checkPassablePathToForward(Position startPosition, List<Position> path) {
+        if (path.contains(startPosition.moveUp()) || path.contains(startPosition.moveDown())) {
+            path.stream()
+                    .filter(chessBoard::containsKey)
+                    .forEach(position -> {
+                throw new IllegalArgumentException("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+            });
+        }
     }
 
     private boolean isPassablePath(List<Position> path) {
@@ -51,14 +81,15 @@ public final class ChessBoard {
     }
 
     private boolean isMovableEndPosition(Position endPosition, Piece startPiece) {
+        // 목표지점에 색이 같은 말이 있으면 false 반환 + 말이 없으면 true
         if (chessBoard.containsKey(endPosition)) {
-            Piece endPiece = chessBoard.get(endPosition);
-            if (endPiece.isBlack() == startPiece.isBlack()) {
-                return false;
-            }
-            return true;
+            return !isSameColorPiece(startPiece, chessBoard.get(endPosition));
         }
         return true;
+    }
+
+    private boolean isSameColorPiece(Piece startPiece, Piece endPiece) {
+        return startPiece.isBlack() == endPiece.isBlack();
     }
 
     public Map<Position, Piece> getChessBoard() {

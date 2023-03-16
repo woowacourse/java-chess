@@ -37,19 +37,15 @@ public final class Pawn extends Piece {
         return start.moveUp().equals(nextPosition) ||
                 start.moveUpRight().equals(nextPosition) ||
                 start.moveUpLeft().equals(nextPosition);
-        /*
-        black일때
-        초기 위치가 아닐 때 전진 가능한 방향 : moveDown, moveDownLeft, moveDownRight
-        초기 위치일 때 전진 가능한 방향 : moveDown, moveDownLeft, moveDownRight, moveDown*2
-
-        white일때
-        초기 위치가 아닐 때 전진 가능한 방향 : moveUp, moveUpLeft, moveUpRight
-        초기 위치일 때 전진 가능한 방향 : moveUp, moveUpLeft, moveUpRight, moveUp*2
-         */
     }
 
     @Override
     protected boolean isMovableDistance(int distance) {
         return distance == 1;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

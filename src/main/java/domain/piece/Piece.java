@@ -34,4 +34,6 @@ public abstract class Piece {
     protected abstract boolean isMovableDirection(Position start, Position nextPosition);
 
     protected abstract boolean isMovableDistance(int distance);
+
+    public abstract boolean isPawn();
 }

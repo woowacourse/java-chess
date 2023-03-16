@@ -25,4 +25,9 @@ public final class Queen extends Piece {
     protected boolean isMovableDistance(int distance) {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

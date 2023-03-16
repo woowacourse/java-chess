@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.Bishop;
 import domain.piece.Color;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Map;
 
@@ -127,5 +129,75 @@ class ChessBoardTest {
         }
     }
 
+    @Nested
+    @DisplayName("아래와 같은 pawn의 이동 케이스를 판단한다.")
+    class movePawnTest {
 
+        Map<Position, Piece> setupBoard = Map.of(
+                Position.of(2, 4), new Pawn(Color.WHITE),
+                Position.of(3, 5), new Rook(Color.BLACK),
+                Position.of(4, 4), new Rook(Color.BLACK));
+
+        @Test
+        @DisplayName("전진할 때 이동 경로에 말이 없으면 이동할 수 있다.")
+        void pawnForwardTest_Success() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            Position start = Position.of(2, 4);
+            Position end = Position.of(3, 4);
+
+            // when
+            chessBoard.movePiece(start, end);
+            Map<Position, Piece> resultBoard = chessBoard.getChessBoard();
+            Piece movedPiece = resultBoard.get(end);
+
+            // then
+            assertThat(movedPiece).isInstanceOf(Pawn.class);
+        }
+
+        @Test
+        @DisplayName("전진할 때 목적 좌표에 상대 말이 존재해도 예외가 발생한다.")
+        void pawnForwardTest_Fail() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            Position start = Position.of(2, 4);
+            Position end = Position.of(4, 4);
+
+            // then
+            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("[ERROR] 폰은 직선 상 이동 경로에 말이 있으면 이동이 불가능합니다.");
+        }
+
+        @Test
+        @DisplayName("대각선으로 이동할 때 이동 경로에 상대의 말이 존재하면 잡고 이동할 수 있다.")
+        void pawnDiagonalTest_Success() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            Position start = Position.of(2, 4);
+            Position end = Position.of(3, 5);
+
+            // when
+            chessBoard.movePiece(start, end);
+            Map<Position, Piece> resultBoard = chessBoard.getChessBoard();
+            Piece movedPiece = resultBoard.get(end);
+
+            // then
+            assertThat(movedPiece).isInstanceOf(Pawn.class);
+        }
+
+        @Test
+        @DisplayName("대각선으로 이동할 때 이동 경로에 상대의 말이 존재하지 않으면 예외가 발생한다.")
+        void pawnDiagonalTest_Fail() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            Position start = Position.of(2, 4);
+            Position end = Position.of(3, 3);
+
+            // then
+            assertThatThrownBy(() -> chessBoard.movePiece(start, end))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("[ERROR] 폰은 대각선 이동 경로에 말이 없거나, 같은 색 말이 있으면 이동이 불가능합니다.");
+        }
+    }
 }
