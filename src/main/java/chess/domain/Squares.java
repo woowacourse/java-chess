@@ -25,4 +25,11 @@ public class Squares {
     public static List<Square> getSquares() {
         return Collections.unmodifiableList(squares);
     }
+
+    public static Square getSquare(final File file, final Rank rank) {
+        return squares.stream().filter(square -> square.getFile() == file)
+                .filter(square -> square.getRank() == rank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 위치가 아닙니다."));
+    }
 }

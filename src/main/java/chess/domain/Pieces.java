@@ -46,19 +46,19 @@ public class Pieces {
         initPawn(TWO, WHITE);
     }
 
-    private void initPieceExceptPawn(final Rank rank, final Color color) { // TODO: 캐시된 square 가져오기
-        pieces.put(Square.of(E, rank), new King(color));
-        pieces.put(Square.of(D, rank), new Queen(color));
-        pieces.put(Square.of(A, rank), new Rook(color));
-        pieces.put(Square.of(H, rank), new Rook(color));
-        pieces.put(Square.of(B, rank), new Knight(color));
-        pieces.put(Square.of(G, rank), new Knight(color));
-        pieces.put(Square.of(C, rank), new Bishop(color));
-        pieces.put(Square.of(F, rank), new Bishop(color));
+    private void initPieceExceptPawn(final Rank rank, final Color color) {
+        pieces.put(Squares.getSquare(E, rank), new King(color));
+        pieces.put(Squares.getSquare(D, rank), new Queen(color));
+        pieces.put(Squares.getSquare(A, rank), new Rook(color));
+        pieces.put(Squares.getSquare(H, rank), new Rook(color));
+        pieces.put(Squares.getSquare(B, rank), new Knight(color));
+        pieces.put(Squares.getSquare(G, rank), new Knight(color));
+        pieces.put(Squares.getSquare(C, rank), new Bishop(color));
+        pieces.put(Squares.getSquare(F, rank), new Bishop(color));
     }
 
     private void initPawn(final Rank rank, final Color color) {
         Arrays.stream(File.values())
-                .forEach(file -> pieces.put(Square.of(file, rank), new InitialPawn(color)));
+                .forEach(file -> pieces.put(Squares.getSquare(file, rank), new InitialPawn(color)));
     }
 }

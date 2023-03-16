@@ -15,10 +15,10 @@ public class Square {
         return new Square(file, rank);
     }
 
-    public Square next(int fileDirection, int rankDirection) {  // TODO: 캐시된 square 가져오기
+    public Square next(int fileDirection, int rankDirection) {
         File newFile = file.next(fileDirection);
         Rank newRank = rank.next(rankDirection);
-        return new Square(newFile, newRank);
+        return Squares.getSquare(newFile, newRank);
     }
 
     @Override

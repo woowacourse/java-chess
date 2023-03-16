@@ -35,9 +35,9 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File을 입력했습니다."));
     }
 
-    private File findFileBy(final int fileInput) { // TODO: 메서드명 변경
+    private File findFileBy(final int fileIndex) {
         return Arrays.stream(File.values())
-                .filter(value -> value.index == fileInput)
+                .filter(value -> value.index == fileIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File index를 입력했습니다."));
     }
