@@ -17,7 +17,7 @@ public enum File {
     }
 
     public int calculateDifference(final File target) {
-        return this.position - target.position;
+        return target.position - this.position;
     }
 
 }

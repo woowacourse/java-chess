@@ -17,7 +17,7 @@ public enum Rank {
     }
 
     public int calculateDifference(final Rank target) {
-        return this.position - target.position;
+        return target.position - this.position;
     }
 
 }
