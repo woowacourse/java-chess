@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.piecetype.Coordinate;
+import domain.piece.Coordinate;
 
 import java.util.Arrays;
 

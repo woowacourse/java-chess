@@ -1,9 +1,9 @@
-package domain.piece;
+package domain.square;
 
-import domain.piecetype.Coordinate;
-import domain.piecetype.PieceType;
+import domain.piece.Coordinate;
+import domain.piece.Piece;
 
-public class EmptyPiece implements Piece {
+public class EmptySquare implements Square {
 
     @Override
     public Boolean canReap() {
@@ -21,7 +21,7 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
+    public Piece getPieceType() {
         return null;
     }
 

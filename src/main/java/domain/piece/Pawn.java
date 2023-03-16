@@ -1,6 +1,6 @@
-package domain.piecetype;
+package domain.piece;
 
-public interface Pawn extends PieceType {
+public interface Pawn extends Piece {
 
     boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate);
 }

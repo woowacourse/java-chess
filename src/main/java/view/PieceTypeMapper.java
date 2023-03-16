@@ -1,14 +1,14 @@
 package view;
 
-import domain.piece.Camp;
+import domain.square.Camp;
+import domain.square.Square;
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piecetype.Bishop;
-import domain.piecetype.King;
-import domain.piecetype.Knight;
-import domain.piecetype.Pawn;
-import domain.piecetype.PieceType;
-import domain.piecetype.Queen;
-import domain.piecetype.Rook;
+import domain.piece.Queen;
+import domain.piece.Rook;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class PieceTypeMapper {
 
-    private static final Map<Class<? extends PieceType>, String> mapper = new HashMap<>();
+    private static final Map<Class<? extends Piece>, String> mapper = new HashMap<>();
 
     static {
         mapper.put(Rook.class, "r");
@@ -27,17 +27,17 @@ public class PieceTypeMapper {
         mapper.put(Pawn.class, "p");
     }
 
-    public static String getTarget(Piece piece) {
+    public static String getTarget(Square square) {
         String message = mapper.keySet().stream()
-                .filter(pieceType -> pieceType.isInstance(piece.getPieceType()))
+                .filter(pieceType -> pieceType.isInstance(square.getPieceType()))
                 .map(mapper::get)
                 .findAny()
                 .orElseGet(() -> ".");
-        return makeUpperCaseIfCampIsBlack(piece, message);
+        return makeUpperCaseIfCampIsBlack(square, message);
     }
 
-    private static String makeUpperCaseIfCampIsBlack(Piece piece, String message) {
-        if (piece.getCamp() != null && piece.getCamp().equals(Camp.BLACK)) {
+    private static String makeUpperCaseIfCampIsBlack(Square square, String message) {
+        if (square.getCamp() != null && square.getCamp().equals(Camp.BLACK)) {
             return message.toUpperCase();
         }
         return message;

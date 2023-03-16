@@ -1,7 +1,7 @@
 package domain;
 
-import domain.piecetype.Coordinate;
-import domain.piecetype.Queen;
+import domain.piece.Coordinate;
+import domain.piece.Queen;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

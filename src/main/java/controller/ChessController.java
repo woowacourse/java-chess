@@ -1,7 +1,7 @@
 package controller;
 
 import domain.board.Board;
-import domain.piecetype.Coordinate;
+import domain.piece.Coordinate;
 import view.InputView;
 import view.OutputView;
 

@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.square;
 
 public enum Camp {
 

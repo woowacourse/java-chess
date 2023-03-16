@@ -1,14 +1,12 @@
 package domain;
 
 import domain.board.BoardInitialImage;
-import domain.piecetype.Bishop;
-import domain.piecetype.BlackPawn;
-import domain.piecetype.King;
-import domain.piecetype.Knight;
-import domain.piecetype.Pawn;
-import domain.piecetype.PieceType;
-import domain.piecetype.Queen;
-import domain.piecetype.Rook;
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Queen;
+import domain.piece.Rook;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

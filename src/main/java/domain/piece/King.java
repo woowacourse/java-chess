@@ -1,8 +1,8 @@
-package domain.piecetype;
+package domain.piece;
 
 import java.util.List;
 
-public class King implements PieceType {
+public class King implements Piece {
 
     // TODO: 매직 넘버 ENUM 지정
     private static final List<Double> availableInclinations = List.of(

@@ -1,8 +1,8 @@
 package domain.board;
 
-import domain.piece.EmptyPiece;
-import domain.piece.Piece;
-import domain.piecetype.Coordinate;
+import domain.square.EmptySquare;
+import domain.square.Square;
+import domain.piece.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,9 @@ public class Board {
             int endRow = endCoordinate.getRow();
             int endCol = endCoordinate.getCol();
 
-            Piece findPiece = ranks.get(startRow).findPiece(startCol);
-            ranks.get(startRow).replacePiece(startCol, new EmptyPiece());
-            ranks.get(endRow).replacePiece(endCol, findPiece);
+            Square findSquare = ranks.get(startRow).findPiece(startCol);
+            ranks.get(startRow).replacePiece(startCol, new EmptySquare());
+            ranks.get(endRow).replacePiece(endCol, findSquare);
         }
     }
 
@@ -58,9 +58,9 @@ public class Board {
     }
 
     private boolean isNotBlocked(Coordinate startCoordinate, Coordinate endCoordinate) {
-        Piece piece = ranks.get(startCoordinate.getRow()).findPiece(startCoordinate.getCol());
+        Square square = ranks.get(startCoordinate.getRow()).findPiece(startCoordinate.getCol());
 
-        if (piece.canReap()) {
+        if (square.canReap()) {
             return true;
         }
         return isNotBlockedWhenNotReap(startCoordinate, endCoordinate);

@@ -1,8 +1,8 @@
-package domain.piecetype;
+package domain.piece;
 
 import java.util.List;
 
-public class Rook implements PieceType {
+public class Rook implements Piece {
 
     private static final List<Double> availableInclinations = List.of(
             Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0, -0.0

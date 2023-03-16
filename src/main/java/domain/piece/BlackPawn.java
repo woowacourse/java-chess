@@ -1,4 +1,4 @@
-package domain.piecetype;
+package domain.piece;
 
 public class BlackPawn implements Pawn {
 

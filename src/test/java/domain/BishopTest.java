@@ -1,7 +1,7 @@
 package domain;
 
-import domain.piecetype.Bishop;
-import domain.piecetype.Coordinate;
+import domain.piece.Bishop;
+import domain.piece.Coordinate;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

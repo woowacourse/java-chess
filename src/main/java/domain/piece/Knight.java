@@ -1,8 +1,8 @@
-package domain.piecetype;
+package domain.piece;
 
 import java.util.List;
 
-public class Knight implements PieceType {
+public class Knight implements Piece {
 
     private static final List<Double> availableInclinations = List.of(
             0.5, -0.5, 2.0, -2.0
