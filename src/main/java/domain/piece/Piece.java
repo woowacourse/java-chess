@@ -7,10 +7,11 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    protected static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
     protected final Color color;
     protected final PieceType pieceType;
 
-    public Piece(final Color color, final PieceType pieceType) {
+    protected Piece(final Color color, final PieceType pieceType) {
         this.color = color;
         this.pieceType = pieceType;
     }
@@ -21,10 +22,15 @@ public abstract class Piece {
         return this.pieceType.equals(pieceType);
     }
 
+    public boolean isDifferentType(final PieceType pieceType) {
+        return !this.pieceType.equals(pieceType);
+    }
+
+    public boolean isEnemy(final Piece piece) {
+        return piece.isDifferentType(PieceType.EMPTY) && isDifferentColor(piece);
+    }
+
     public boolean isDifferentColor(final Piece piece) {
-        if (piece == null) {
-            return true;
-        }
         return !this.color.equals(piece.color);
     }
 

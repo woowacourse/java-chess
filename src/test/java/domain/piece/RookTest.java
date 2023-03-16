@@ -22,11 +22,11 @@ class RookTest {
                 assertThat(rook.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("아래로 움직이는 경로를 반환한다", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(1, 6);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(1, 5);
                 assertThat(rook.searchPath(start, end)).containsExactly(
-                    Location.of(1, 7),
-                    Location.of(1, 6)
+                    Location.of(1, 6),
+                    Location.of(1, 5)
                 );
             }),
             DynamicTest.dynamicTest("왼쪽으로 움직이는 경로를 반환한다", () -> {
@@ -63,20 +63,20 @@ class RookTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽 아래로 움직일 때 오류를 던진다.", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(8, 1);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(7, 1);
                 assertThatThrownBy(() -> rook.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("왼쪽 위로 움직일 때 오류를 던진다.", () -> {
-                final Location start = Location.of(7, 7);
-                final Location end = Location.of(6, 8);
+                final Location start = Location.of(7, 6);
+                final Location end = Location.of(6, 7);
                 assertThatThrownBy(() -> rook.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("왼쪽 아래로 움직일 때 오류를 던진다.", () -> {
                 final Location start = Location.of(7, 7);
-                final Location end = Location.of(8, 6);
+                final Location end = Location.of(6, 6);
                 assertThatThrownBy(() -> rook.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             })

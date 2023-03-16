@@ -3,6 +3,7 @@ package domain.piece;
 import domain.Location;
 import domain.type.Color;
 import java.util.List;
+import view.PieceView;
 
 public class Knight extends Piece {
 
@@ -31,7 +32,7 @@ public class Knight extends Piece {
     @Override
     public List<Location> searchPath(final Location start, final Location end) {
         if (isNotMovable(start, end)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(PieceView.findSign(this) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
         }
         return List.of(end);
     }

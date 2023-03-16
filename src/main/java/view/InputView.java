@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String INVALID_INPUT_ERROR_MESSAGE = "입력이 잘못 되었습니다. 다시 입력해 주세요.";
     private static final Scanner scanner = new Scanner(System.in);
     private static final String START = "start";
     private static final String END = "end";
@@ -36,12 +37,12 @@ public class InputView {
         if (Arrays.asList(expectedInputs).contains(input)) {
             return;
         }
-        throw new IllegalArgumentException("잘못된 입력입니다.");
+        throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
     }
 
     private void checkBlank(final String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("빈 값은 허용되지 않습니다.");
+            throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
     }
 }

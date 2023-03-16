@@ -30,7 +30,7 @@ class ChessGameTest {
                         () -> chessGame.move(WHITE_PAWN_START, WHITE_PAWN_END)
                     );
                     final Board board = chessGame.getBoard();
-                    assertThat(board.findSquare(WHITE_PAWN_START).isNotNull()).isFalse();
+                    assertThat(board.findSquare(WHITE_PAWN_START).isNotEmpty()).isFalse();
                     assertThat(board.findSquare(WHITE_PAWN_END).getPiece()).isEqualTo(Pawn.makeWhite());
                 }
             ),
@@ -39,7 +39,7 @@ class ChessGameTest {
                         () -> chessGame.move(BLACK_PAWN_START, BLACK_PAWN_END)
                     );
                     final Board board = chessGame.getBoard();
-                    assertThat(board.findSquare(BLACK_PAWN_START).isNotNull()).isFalse();
+                    assertThat(board.findSquare(BLACK_PAWN_START).isNotEmpty()).isFalse();
                     assertThat(board.findSquare(BLACK_PAWN_END).getPiece()).isEqualTo(Pawn.makeBlack());
                 }
             )

@@ -100,6 +100,6 @@ class LineTest {
         Assertions.assertThat(empty).extracting("squares")
             .asList()
             .hasSize(8)
-            .containsOnly(new Square(null));
+            .containsOnly(Square.empty());
     }
 }

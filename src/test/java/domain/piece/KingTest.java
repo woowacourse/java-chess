@@ -32,8 +32,8 @@ class KingTest {
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("오른쪽으로 한칸 움직이는 경로 반환.", () -> {
-                final Location start = Location.of(7, 7);
-                final Location end = Location.of(8, 7);
+                final Location start = Location.of(6, 7);
+                final Location end = Location.of(7, 7);
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("오른쪽 위로 한칸 움직이는 경로 반환.", () -> {
@@ -42,18 +42,18 @@ class KingTest {
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("오른쪽 아래로 한칸 움직이는 경로 반환.", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(2, 7);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(2, 6);
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("왼쪽 위로 한칸 움직이는 경로 반환.", () -> {
-                final Location start = Location.of(7, 7);
-                final Location end = Location.of(6, 8);
+                final Location start = Location.of(7, 6);
+                final Location end = Location.of(6, 7);
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             }),
             DynamicTest.dynamicTest("왼쪽 아래로 한칸 움직이는 경로 반환..", () -> {
                 final Location start = Location.of(7, 7);
-                final Location end = Location.of(8, 6);
+                final Location end = Location.of(6, 6);
                 assertThat(king.searchPath(start, end)).containsExactly(end);
             })
         );
@@ -83,8 +83,8 @@ class KingTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽으로 두칸 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(6, 7);
-                final Location end = Location.of(8, 7);
+                final Location start = Location.of(5, 7);
+                final Location end = Location.of(7, 7);
                 assertThatThrownBy(() -> king.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
@@ -95,14 +95,14 @@ class KingTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽 아래로 두칸 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(3, 6);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(3, 5);
                 assertThatThrownBy(() -> king.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("왼쪽 위로 두칸 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(6, 6);
-                final Location end = Location.of(4, 8);
+                final Location start = Location.of(6, 5);
+                final Location end = Location.of(4, 7);
                 assertThatThrownBy(() -> king.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),

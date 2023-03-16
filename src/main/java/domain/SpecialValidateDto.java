@@ -1,7 +1,6 @@
 package domain;
 
 import domain.piece.Piece;
-import domain.piece.PieceType;
 
 public class SpecialValidateDto {
 
@@ -13,12 +12,8 @@ public class SpecialValidateDto {
         this.piece = piece;
     }
 
-    public static SpecialValidateDto of(final Location location, final Piece piece) {
-        return new SpecialValidateDto(location, piece);
-    }
-
-    public boolean isSameType(final PieceType pieceType) {
-        return piece.isSameType(pieceType);
+    public static SpecialValidateDto of(final Location location, final Square square) {
+        return new SpecialValidateDto(location, square.getPiece());
     }
 
     public Location getLocation() {

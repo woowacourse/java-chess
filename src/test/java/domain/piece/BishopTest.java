@@ -24,20 +24,19 @@ class BishopTest {
                 );
             }),
             DynamicTest.dynamicTest("오른쪽 아래 대각선 방향 경로 반환.", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(3, 6);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(3, 5);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
-                    Location.of(2, 7),
-                    Location.of(3, 6)
+                    Location.of(2, 6),
+                    Location.of(3, 5)
                 );
             }),
             DynamicTest.dynamicTest("왼쪽 위 대각선 방향 경로 반환.", () -> {
                 final Location start = Location.of(7, 5);
-                final Location end = Location.of(4, 8);
+                final Location end = Location.of(5, 7);
                 assertThat(bishop.searchPath(start, end)).containsExactly(
                     Location.of(6, 6),
-                    Location.of(5, 7),
-                    Location.of(4, 8)
+                    Location.of(5, 7)
                 );
             }),
             DynamicTest.dynamicTest("왼쪽 아래 대각선 방향 경로 반환.", () -> {
@@ -65,8 +64,8 @@ class BishopTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("아래로 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(1, 8);
-                final Location end = Location.of(1, 1);
+                final Location start = Location.of(1, 7);
+                final Location end = Location.of(1, 0);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
@@ -77,8 +76,8 @@ class BishopTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽으로 움직일 경우 오류를 반환.", () -> {
-                final Location start = Location.of(7, 7);
-                final Location end = Location.of(8, 7);
+                final Location start = Location.of(6, 7);
+                final Location end = Location.of(7, 7);
                 assertThatThrownBy(() -> bishop.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             })

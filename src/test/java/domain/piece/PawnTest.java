@@ -66,8 +66,8 @@ class PawnTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("위로 1칸 움직이면 오류를 던진다.", () -> {
-                final Location start = Location.of(1, 7);
-                final Location end = Location.of(1, 8);
+                final Location start = Location.of(1, 6);
+                final Location end = Location.of(1, 7);
                 assertThatThrownBy(() -> pawn.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
@@ -84,14 +84,14 @@ class PawnTest {
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("왼쪽 위로 1칸 움직이면 오류를 던진다.", () -> {
-                final Location start = Location.of(3, 7);
-                final Location end = Location.of(2, 8);
+                final Location start = Location.of(3, 6);
+                final Location end = Location.of(2, 7);
                 assertThatThrownBy(() -> pawn.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             }),
             DynamicTest.dynamicTest("오른쪽 위로 1칸 움직이면 오류를 던진다.", () -> {
-                final Location start = Location.of(3, 7);
-                final Location end = Location.of(4, 8);
+                final Location start = Location.of(3, 6);
+                final Location end = Location.of(4, 7);
                 assertThatThrownBy(() -> pawn.searchPath(start, end))
                     .isInstanceOf(IllegalArgumentException.class);
             })

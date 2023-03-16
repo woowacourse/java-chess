@@ -1,6 +1,7 @@
 package domain.type;
 
 import domain.SpecialValidateDto;
+import domain.piece.Piece;
 import domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -16,10 +17,11 @@ public enum SpecialRule {
     }
 
     private static boolean isPawnAttack(final SpecialValidateDto start, final SpecialValidateDto end) {
-        return start.isSameType(PieceType.PAWN)
-            && start.getLocation().isDiagonal(end.getLocation())
-            && end.getPiece() != null
-            && start.getPiece().isDifferentColor(end.getPiece());
+        Piece startPiece = start.getPiece();
+        Piece endPiece = end.getPiece();
+        return startPiece.isSameType(PieceType.PAWN)
+            && startPiece.isEnemy(endPiece)
+            && start.getLocation().isDiagonal(end.getLocation());
     }
 
     public static boolean containRuleBy(final SpecialValidateDto start, final SpecialValidateDto end) {

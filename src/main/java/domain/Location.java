@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Location {
 
-    private static final int MAX_COL = 8;
+    private static final int MAX_COL = 7;
     private static final int MIN_COL = 0;
-    private static final int MAX_ROW = 8;
+    private static final int MAX_ROW = 7;
     private static final int MIN_ROW = 0;
     private static final String INVALID_LOCATION_ERROR_MESSAGE = "해당 위치는 존재하지 않습니다.";
     private final int col;

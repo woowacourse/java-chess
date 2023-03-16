@@ -56,7 +56,7 @@ public class Line {
 
     public static Line empty() {
         final List<Square> squares = IntStream.range(0, LINE_MAX_COUNT)
-            .mapToObj(i -> Square.empty())
+            .mapToObj(count -> Square.empty())
             .collect(Collectors.toList());
         return new Line(squares);
     }

@@ -2,6 +2,7 @@ package view;
 
 import domain.Board;
 import domain.Line;
+import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class OutputView {
     }
 
     private static String makePieceSign(final Piece piece) {
-        if (piece == null) {
+        if (piece.equals(EmptyPiece.make())) {
             return ".";
         }
         return PieceView.findSign(piece);

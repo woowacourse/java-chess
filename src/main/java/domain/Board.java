@@ -5,10 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import view.PieceView;
 
 public class Board {
 
-    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
+    private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "가 이동할 수 없는 위치입니다.";
+    private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
+    private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final PathValidator pathValidator;
     private List<Line> lines;
 
@@ -29,7 +32,7 @@ public class Board {
     public void moveWhite(final Location start, final Location end) {
         final Square square = findSquare(start);
         if (square.isBlack()) {
-            throw new IllegalArgumentException("흰 진영 차례입니다.");
+            throw new IllegalArgumentException(WHITE_TURN_ERROR_MESSAGE);
         }
         move(start, end);
     }
@@ -37,7 +40,7 @@ public class Board {
     public void moveBlack(final Location start, final Location end) {
         final Square square = findSquare(start);
         if (square.isWhite()) {
-            throw new IllegalArgumentException("검은 진영 차례입니다.");
+            throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
         move(start, end);
     }
@@ -50,13 +53,17 @@ public class Board {
     private void validatePath(final Location startLocation, final Location endLocation) {
         final Square startSquare = findSquare(startLocation);
         final Square endSquare = findSquare(endLocation);
-        final SpecialValidateDto start = SpecialValidateDto.of(startLocation, startSquare.getPiece());
-        final SpecialValidateDto end = SpecialValidateDto.of(endLocation, endSquare.getPiece());
+        final SpecialValidateDto start = SpecialValidateDto.of(startLocation, startSquare);
+        final SpecialValidateDto end = SpecialValidateDto.of(endLocation, endSquare);
         final List<Square> squares = getSquaresInPath(startLocation, endLocation);
-        if (isSpecialPath(start, end) || isNormalPath(startSquare, squares)) {
+        if (isSpecialPath(start, end)) {
             return;
         }
-        throw new IllegalArgumentException(IMPOSSIBLE_MOVE_ERROR_MESSAGE);
+        //폰일때 아무도 없는 곳으로 대각선을 가는 경우에 대한 처리가 필요 ( 방향을 알아야 함 )
+        if (isNormalPath(startSquare, squares)) {
+            return;
+        }
+        throw new IllegalArgumentException(PieceView.findSign(start.getPiece()) + IMPOSSIBLE_MOVE_ERROR_MESSAGE);
     }
 
     private boolean isNormalPath(final Square startSquare, final List<Square> squares) {

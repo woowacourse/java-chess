@@ -25,7 +25,7 @@ public enum ColumnConverter {
         final ColumnConverter columnConverter = Arrays.stream(ColumnConverter.values())
             .filter(view -> view.sign.equals(sign))
             .findAny()
-            .orElseThrow(IllegalAccessError::new);
+            .orElseThrow(IllegalArgumentException::new);
         return columnConverter.column;
     }
 }

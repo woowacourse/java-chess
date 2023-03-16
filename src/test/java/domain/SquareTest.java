@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.piece.EmptyPiece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,6 @@ class SquareTest {
         final Square square = Square.empty();
 
         //then
-        assertThat(square).extracting("piece").isEqualTo(null);
+        assertThat(square).extracting("piece").isEqualTo(EmptyPiece.make());
     }
 }

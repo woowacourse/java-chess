@@ -1,11 +1,14 @@
 package domain;
 
+import domain.piece.EmptyPiece;
 import domain.piece.Piece;
+import domain.piece.PieceType;
 import java.util.List;
 import java.util.Objects;
 
 public class Square {
 
+    private static final String PAWN_ONLY_ATTACK_DIAGONAL_ERROR_MESSAGE = "폰은 대각선으로만 공격할 수 있습니다.";
     private Piece piece;
 
     public Square(final Piece piece) {
@@ -13,15 +16,15 @@ public class Square {
     }
 
     public static Square empty() {
-        return new Square(null);
+        return new Square(EmptyPiece.make());
     }
 
     public List<Location> searchPath(Location start, Location end) {
         return piece.searchPath(start, end);
     }
 
-    public boolean isNotNull() {
-        return piece != null;
+    public boolean isNotEmpty() {
+        return !piece.equals(EmptyPiece.make());
     }
 
     public boolean haveDifferentColor(final Square square) {
@@ -29,8 +32,11 @@ public class Square {
     }
 
     public void moveTo(final Square square) {
+        if (piece.isSameType(PieceType.PAWN) && piece.isEnemy(square.piece)) {
+            throw new IllegalArgumentException(PAWN_ONLY_ATTACK_DIAGONAL_ERROR_MESSAGE);
+        }
         square.piece = this.piece;
-        this.piece = null;
+        this.piece = EmptyPiece.make();
     }
 
     public boolean isWhite() {
