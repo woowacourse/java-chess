@@ -29,6 +29,10 @@ public final class Piece {
         return campType == diffType;
     }
 
+    public boolean canMove(final Position source, final Position target) {
+        return pieceType.canMove(source, target);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

@@ -4,7 +4,11 @@ import chess.domain.camp.CampType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,5 +61,29 @@ class PieceTest {
         // when, then
         assertThat(piece.isSameCamp(campType))
                 .isSameAs(expected);
+    }
+
+    @ParameterizedTest(name = "특정 체스말이 시작 위치에서 타겟 위치로 이동 가능한지 판단한다.")
+    @MethodSource(value = "makePosition")
+    void canMove(final Position source, final Position target) {
+        // given
+        final Piece piece = new Piece(PieceType.QUEEN, CampType.WHITE);
+
+        // when
+        piece.canMove(source, target);
+
+        // then
+        assertThat(piece.canMove(source, target))
+                .isTrue();
+    }
+
+    private static Stream<Arguments> makePosition() {
+        return Stream.of(
+                Arguments.of(new Position(1, 1), new Position(7, 7))
+                , Arguments.of(new Position(1, 1), new Position(7, 1))
+                , Arguments.of(new Position(1, 1), new Position(2, 1))
+                , Arguments.of(new Position(1, 1), new Position(0, 0))
+                , Arguments.of(new Position(1, 1), new Position(1, 0))
+        );
     }
 }
