@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.TeamColor;
 
 public enum PieceName {
+    // TODO: 2023/03/15 PieceType 추가? (view에 의존적)
     ROOK("R"),
     KNIGHT("N"),
     BISHOP("B"),

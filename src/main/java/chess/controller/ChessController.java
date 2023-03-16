@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.dto.CommandRequest;
 import chess.util.BoardConverter;
 import chess.view.Command;
 import chess.view.InputView;
@@ -20,9 +21,23 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard();
 
         outputView.printStartMessage();
-        while (inputView.requestGameCommand() != Command.END) {
-            outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+        CommandRequest commandRequest;
+        boolean isContinue = true;
+        while (isContinue) {
+            isContinue = play(chessBoard);
         }
+    }
 
+    private boolean play(final ChessBoard chessBoard) {
+        CommandRequest commandRequest;
+        commandRequest = inputView.requestGameCommand();
+        if (commandRequest.getCommand() == Command.END) {
+            return false;
+        }
+        if (commandRequest.getCommand() == Command.MOVE) {
+            // TODO move
+        }
+        outputView.printBoard(BoardConverter.convertToBoard(chessBoard.piecesByPosition()));
+        return true;
     }
 }

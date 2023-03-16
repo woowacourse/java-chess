@@ -5,8 +5,9 @@ import java.util.List;
 public class OutputView {
 
     private static final String GAME_START = "체스 게임을 시작합니다.";
-    private static final String GAME_COMMAND_REQUEST = String.format("게임 시작은 %s, 종료는 %s 명령을 입력하세요.",
-            Command.START.getAnswer(), Command.END.getAnswer());
+    private static final String GAME_COMMAND_MOVE_DESCRIPTION = "move source위치 target위치 - 예. move b2 b3";
+    private static final String GAME_COMMAND_REQUEST = String.format("게임 시작: %s\n게임 종료: %s\n게임 이동 :%s\n",
+            Command.START.getAnswer(), Command.END.getAnswer(), GAME_COMMAND_MOVE_DESCRIPTION);
 
     public void printStartMessage() {
         System.out.println(GAME_START);
