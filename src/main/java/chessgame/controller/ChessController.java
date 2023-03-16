@@ -1,9 +1,8 @@
 package chessgame.controller;
 
+import chessgame.Command;
+import chessgame.Game;
 import chessgame.domain.Board;
-import chessgame.domain.point.File;
-import chessgame.domain.point.Point;
-import chessgame.domain.point.Rank;
 import chessgame.util.ChessBoardFactory;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -19,17 +18,32 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        Board board = new Board(ChessBoardFactory.create());
-        outputView.printChessBoard(board);
-        while (true) {
-            String[] input = inputView.readCommand().split(" ");
-            if (input[0].equals("move")) {
-                board.move(Point.of(File.findFile(input[1].charAt(0)).get(),
-                        Rank.findRank(Integer.parseInt(input[1].substring(1, 2))).get()),
-                    Point.of(File.findFile(input[2].charAt(0)).get(),
-                        Rank.findRank(Integer.parseInt(input[2].substring(1, 2))).get()));
+        Game game = new Game(new Board(ChessBoardFactory.create()));
+        do {
+            Command command = readCommand();
+            setButton(game, command);
+            if (command.isMove()) {
+                game.movePiece(command.makePoints());
             }
-            outputView.printChessBoard(board);
+            outputView.printChessBoard(game.board());
+        } while (game.isStart());
+    }
+
+    private void setButton(Game game, Command command) {
+        try {
+            game.setButton(command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            setButton(game, readCommand());
+        }
+    }
+
+    private Command readCommand() {
+        try {
+            return Command.of(inputView.readCommand());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readCommand();
         }
     }
 }
