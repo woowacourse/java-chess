@@ -42,6 +42,14 @@ public final class Coordinate {
         return alphanumeric.charAt(RANK_PARSE_INDEX);
     }
 
+    public boolean isSameRank(final Coordinate other){
+        return this.rankIndex == other.rankIndex;
+    }
+
+    public boolean isSameFile(final Coordinate other){
+        return this.fileIndex == other.fileIndex;
+    }
+
     public Coordinate verticalMove(final int step) {
         return Coordinate.of(fileIndex + addIndex(rankIndex, step));
     }
