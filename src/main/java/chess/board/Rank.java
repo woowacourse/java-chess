@@ -26,6 +26,10 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 더한 랭크 값이 존재하지 않습니다."));
     }
 
+    public int getValueDiff(Rank targetRank) {
+        return targetRank.value - this.value;
+    }
+
     public int getValue() {
         return value;
     }
