@@ -23,6 +23,13 @@ public class Side {
         return CACHE.get(color);
     }
 
+    public Side findOpponent() {
+        if (this.color == Color.WHITE) {
+            return from(Color.BLACK);
+        }
+        return from(Color.WHITE);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

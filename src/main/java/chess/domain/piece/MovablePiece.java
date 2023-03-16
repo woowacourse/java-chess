@@ -41,6 +41,10 @@ public abstract class MovablePiece extends Piece {
         return side;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public Color getColor() {
         return side.getColor();
     }

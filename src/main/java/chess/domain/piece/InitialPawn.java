@@ -28,6 +28,6 @@ public class InitialPawn extends Pawn{
     }
 
     public Pawn changeState() {
-        return new Pawn(side, role);
+        return (Pawn) Role.PAWN.create(side);
     }
 }

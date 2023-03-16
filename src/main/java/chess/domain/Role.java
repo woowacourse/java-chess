@@ -17,7 +17,7 @@ public enum Role {
         this.createPiece = createPiece;
     }
 
-    public MovablePiece create(Side side) {
+    public MovablePiece create(final Side side) {
         return createPiece.construct(side, this);
     }
 
