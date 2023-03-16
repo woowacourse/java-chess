@@ -21,14 +21,14 @@ public enum UnitVector {
         this.col = col;
     }
 
-    public static UnitVector of(Position current, Position target) {
+    public static UnitVector of(final Position current, final Position target) {
         int rowUnit = unit(target.getRow() - current.getRow());
         int colUnit = unit(target.getCol() - current.getCol());
 
         return Arrays.stream(UnitVector.values())
-                .filter(unitVector -> unitVector.row == rowUnit && unitVector.col == colUnit)
+                .filter(unitVector -> unitVector.isSame(rowUnit, colUnit))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향벡터 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 방향 벡터 입니다."));
     }
 
     private static int unit(int input) {
@@ -36,6 +36,10 @@ public enum UnitVector {
             return 0;
         }
         return input / Math.abs(input);
+    }
+
+    private boolean isSame(final int row, final int col) {
+        return this.row == row && this.col == col;
     }
 
     public int getRow() {
