@@ -35,6 +35,10 @@ public class Pawn extends Piece {
         if (isFirstMove()) {
             nextRankNumber = sourceRankNumber + (2 * direction);
         }
+        if (this.getColor() == Color.BLACK) {
+            return (isSameFileCoordinate && nextRankNumber <= targetRankNumber && targetRankNumber < sourceRankNumber)
+                    || diagonalPath;
+        }
         return (isSameFileCoordinate && sourceRankNumber < targetRankNumber && targetRankNumber <= nextRankNumber)
                 || diagonalPath;
     }

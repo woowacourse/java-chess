@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.PositionFixture.B_1;
 import static chess.domain.PositionFixture.B_2;
 import static chess.domain.PositionFixture.B_3;
+import static chess.domain.PositionFixture.B_7;
 import static chess.domain.PositionFixture.C_2;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,9 +24,17 @@ class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
             "C:TWO:false"}, delimiter = ':')
-    void 폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
+    void 하얀_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Pawn pawn = new Pawn(Color.WHITE);
         assertThat(pawn.canMove(B_1, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:FIVE:true", "B:SIX:true", "B:FOUR:false", "C:FIVE:false", "A:SIX:false",
+            "C:TWO:false"}, delimiter = ':')
+    void 검은_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
+        Pawn pawn = new Pawn(Color.BLACK);
+        assertThat(pawn.canMove(B_7, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @ParameterizedTest
