@@ -63,4 +63,19 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스말이 존재하는 위치를 입력해 주세요.");
     }
+
+    @Test
+    @DisplayName("입력받은 위치에 존재하는 체스말을 제거한다.")
+    void removePiece() {
+        // given
+        final ChessBoard chessBoard = new ChessBoard();
+        final Position removePosition = new Position(1, 0);
+
+        // when
+        chessBoard.removePiece(removePosition);
+
+        // then
+        assertThat(chessBoard.contains(removePosition))
+                .isFalse();
+    }
 }

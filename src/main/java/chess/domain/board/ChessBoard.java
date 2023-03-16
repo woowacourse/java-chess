@@ -17,7 +17,7 @@ import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoard {
     private static final int AREA_RANK_SIZE = 2;
-    public static final int FILE_SIZE = 8;
+    private static final int FILE_SIZE = 8;
     private static final int BLANK_AREA_RANK_SIZE = 4;
     private static final PieceType[][] pieceRanks = {
             {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK},
@@ -40,6 +40,10 @@ public final class ChessBoard {
             return board.get(source);
         }
         throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
+    }
+
+    public void removePiece(final Position position) {
+        board.remove(position);
     }
     
     private void init() {
