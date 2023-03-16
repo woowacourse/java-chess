@@ -21,6 +21,10 @@ public class Move {
                 .collect(Collectors.toList());
     }
 
+    public Move(Direction... directions) {
+        this(List.of(directions));
+    }
+
     public static Move of(Position source, Position target) {
         int deltaFile = target.getFileIndex() - source.getFileIndex();
         int deltaRank = target.getRankIndex() - source.getRankIndex();

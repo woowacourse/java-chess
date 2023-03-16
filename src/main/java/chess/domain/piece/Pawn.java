@@ -61,8 +61,8 @@ public class Pawn extends Piece {
 
     private Set<Move> getAttackMoves() {
         Set<Move> whiteAttackMoves = Set.of(
-                new Move(List.of(Direction.UP, Direction.RIGHT)),
-                new Move(List.of(Direction.UP, Direction.LEFT)));
+                new Move(Direction.UP, Direction.RIGHT),
+                new Move(Direction.UP, Direction.LEFT));
         if (isWhite) {
             return whiteAttackMoves;
         }
