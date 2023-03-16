@@ -1,8 +1,9 @@
 package domain.piece;
 
+import domain.position.Position;
 import java.util.Objects;
 
-public abstract class Piece implements Movable {
+public abstract class Piece {
     private final String name;
     private final Team team;
 
@@ -10,6 +11,8 @@ public abstract class Piece implements Movable {
         this.name = name;
         this.team = team;
     }
+
+    public abstract boolean isMovable(Position source, Position destination);
 
     public boolean isBlack() {
         return team.equals(Team.BLACK);
