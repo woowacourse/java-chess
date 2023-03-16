@@ -15,7 +15,9 @@ public class Rank {
 
     private void validateRange(final int rank) {
         if (rank < LOWER_BOUNDARY_EXCLUDE || rank > UPPER_BOUNDARY_EXCLUDE) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                    String.format("Rank 의 범위는 %s 부터 %s 까지입니다.", LOWER_BOUNDARY_EXCLUDE, UPPER_BOUNDARY_EXCLUDE)
+            );
         }
     }
 

@@ -2,9 +2,9 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.position.WayPoints;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
+import chess.domain.piece.position.WayPoints;
 
 import java.util.Collections;
 
@@ -22,7 +22,7 @@ public class Knight extends Piece {
         if (Math.abs(path.fileDistance()) == 2 && Math.abs(path.rankDistance()) == 1) {
             return;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("나이트는 그렇게 움직일 수 없습니다.");
     }
 
     @Override

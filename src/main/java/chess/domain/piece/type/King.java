@@ -17,7 +17,7 @@ public class King extends Piece {
     @Override
     protected void validateMovable(final Path path) {
         if (!path.isUnitDistance()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("킹은 한칸만 이동할 수 있습니다.");
         }
     }
 

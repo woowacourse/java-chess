@@ -21,13 +21,13 @@ public class Pawn extends Piece {
     @Override
     protected void validateMovable(final Path path) {
         if (!matchDestinationByColor(path)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("흰색 폰은 북쪽으로만, 검정색 폰은 남쪽으로만 이동할 수 있습니다.");
         }
         if (!isMoved && isPawnSpecialDestination(path)) {
             return;
         }
         if (!path.isUnitDistance()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("폰은 첫 이동이 아닌 이상 1칸 씩만 이동할 수 있습니다.");
         }
     }
 

@@ -15,7 +15,7 @@ public class Rook extends Piece {
     @Override
     protected void validateMovable(final Path path) {
         if (!path.isStraight()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("록은 직선으로만 이동할 수 있습니다.");
         }
     }
 

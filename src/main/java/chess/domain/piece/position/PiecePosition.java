@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class PiecePosition {
 
+    private static final int RANK_INDEX = 1;
+    private static final int FILE_INDEX = 0;
     private final Rank rank;
     private final File file;
 
@@ -18,6 +20,13 @@ public class PiecePosition {
 
     public static PiecePosition of(final Rank rank, final File file) {
         return new PiecePosition(rank, file);
+    }
+
+    public static PiecePosition of(final String rankAndFile) {
+        final String[] split = rankAndFile.split("");
+        final int rank = Integer.parseInt(split[RANK_INDEX]);
+        final char file = rankAndFile.charAt(FILE_INDEX);
+        return PiecePosition.of(rank, file);
     }
 
     public int fileDistance(final PiecePosition piecePosition) {

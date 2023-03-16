@@ -15,7 +15,7 @@ public class Bishop extends Piece {
     @Override
     protected void validateMovable(final Path path) {
         if (!path.isDiagonal()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("비숍은 대각선으로만 이동할 수 있습니다.");
         }
     }
 

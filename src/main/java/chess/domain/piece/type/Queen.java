@@ -15,7 +15,7 @@ public class Queen extends Piece {
     @Override
     protected void validateMovable(final Path path) {
         if (!path.isStraight() && !path.isDiagonal()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("퀸은 직선 혹은 대각선으로만 이동할 수 있습니다.");
         }
     }
 
