@@ -78,6 +78,20 @@ public final class Position {
         return rowGap == 0 || columnGap == 0 || Math.abs(rowGap) == Math.abs(columnGap);
     }
 
+    public boolean isCrossDirection (Position other) {
+        return moveDown().equals(other) ||
+                moveUp().equals(other) ||
+                moveRight().equals(other) ||
+                moveLeft().equals(other);
+    }
+
+    public boolean isDiagonalDirection (Position other) {
+        return moveUpRight().equals(other) ||
+                moveUpLeft().equals(other) ||
+                moveDownRight().equals(other) ||
+                moveDownLeft().equals(other);
+    }
+
     public Position moveUp() {
         return Position.of(row + 1, column);
     }

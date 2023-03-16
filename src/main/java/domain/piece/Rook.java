@@ -18,13 +18,7 @@ public final class Rook extends Piece {
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
-        if (start.moveDown().equals(nextPosition) ||
-                start.moveUp().equals(nextPosition) ||
-                start.moveRight().equals(nextPosition) ||
-                start.moveLeft().equals(nextPosition)) {
-            return true;
-        }
-        return false;
+        return start.isCrossDirection(nextPosition);
     }
 
     @Override

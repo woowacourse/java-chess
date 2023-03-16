@@ -18,13 +18,7 @@ public final class Bishop extends Piece {
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
-        if (start.moveUpRight().equals(nextPosition) ||
-                start.moveUpLeft().equals(nextPosition) ||
-                start.moveDownRight().equals(nextPosition) ||
-                start.moveDownLeft().equals(nextPosition)) {
-            return true;
-        }
-        return false;
+        return start.isDiagonalDirection(nextPosition);
     }
 
     @Override

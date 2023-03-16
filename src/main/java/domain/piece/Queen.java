@@ -18,27 +18,7 @@ public final class Queen extends Piece {
 
     @Override
     protected boolean isMovableDirection(Position start, Position nextPosition) {
-        return isMovableCrossDirection(start, nextPosition) || isMovableDiagonalDirection(start, nextPosition);
-    }
-
-    private boolean isMovableCrossDirection(Position start, Position nextPosition) {
-        if (start.moveDown().equals(nextPosition) ||
-                start.moveUp().equals(nextPosition) ||
-                start.moveRight().equals(nextPosition) ||
-                start.moveLeft().equals(nextPosition)) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isMovableDiagonalDirection(Position start, Position nextPosition) {
-        if (start.moveUpRight().equals(nextPosition) ||
-                start.moveUpLeft().equals(nextPosition) ||
-                start.moveDownRight().equals(nextPosition) ||
-                start.moveDownLeft().equals(nextPosition)) {
-            return true;
-        }
-        return false;
+        return start.isCrossDirection(nextPosition) || start.isDiagonalDirection(nextPosition);
     }
 
     @Override
