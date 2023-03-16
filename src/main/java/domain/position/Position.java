@@ -50,21 +50,19 @@ public final class Position {
         return Math.abs(thisFile - otherFile) + Math.abs(thisRank - otherRank);
     }
 
-    public Position moveDown(Position source, int distance) {
-        final char movedRank = (char) (source.getRank() - distance);
-        return Positions.from(String.valueOf((char) source.getFile()) + movedRank);
+    public Position moveDown(int distance) {
+        return move(-distance, 0);
     }
 
-    public Position moveUp(Position source, int distance) {
-        final char movedRank = (char) (source.getRank() + distance);
-        return Positions.from(String.valueOf((char) source.getFile()) + movedRank);
+    public Position moveUp(int distance) {
+        return move(distance, 0);
     }
 
     public Position move(int rankDifference, int fileDifference) {
         final int rank = this.getRank() + rankDifference;
         final int file = this.getFile() + fileDifference;
 
-        return Positions.from(String.valueOf((char) file) + rank);
+        return Positions.from(String.valueOf((char) file) + (char) rank);
     }
 
     public String getName() {

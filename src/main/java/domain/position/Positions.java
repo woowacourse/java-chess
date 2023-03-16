@@ -1,12 +1,12 @@
 package domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class Positions {
     private static final String INVALID_POSITION = "존재하지 않는 위치입니다.";
@@ -45,14 +45,11 @@ public final class Positions {
             return Collections.emptyList();
         }
 
-        int rankDifference = source.getRank() - destination.getRank();
-        int fileDifference = source.getFile() - destination.getFile();
+        int rankDifference = destination.getRank() - source.getRank();
+        int fileDifference = destination.getFile() - source.getFile();
         final int count = getMaxDifference(rankDifference, fileDifference);
 
-        return IntStream.range(STAY, count - 1)
-                .mapToObj(ignore -> source.move(getStepOfMovement(rankDifference),
-                        getStepOfMovement(fileDifference)))
-                .collect(Collectors.toList());
+        return makeBetweenPositions(source, rankDifference, fileDifference, count);
     }
 
     private static boolean notEightDirections(final Position source, final Position destination) {
@@ -72,5 +69,17 @@ public final class Positions {
         }
 
         return BACKWARD;
+    }
+
+    private static List<Position> makeBetweenPositions(final Position source, final int rankDifference,
+                                                       final int fileDifference, final int count) {
+        final List<Position> result = new ArrayList<>();
+        Position next = source;
+        for (int i = 0; i < count - 1; i++) {
+            next = next.move(getStepOfMovement(rankDifference), getStepOfMovement(fileDifference));
+            result.add(next);
+        }
+
+        return result;
     }
 }
