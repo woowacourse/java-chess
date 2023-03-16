@@ -47,8 +47,8 @@ public abstract class Piece {
                 || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
     }
 
-    protected int getStep(int nowFileCoordinate, int targetFileCoordinate) {
-        if (nowFileCoordinate - targetFileCoordinate > 0) {
+    protected int getStep(int nowCoordinate, int targetCoordinate) {
+        if (nowCoordinate - targetCoordinate > 0) {
             return -1;
         }
         return 1;

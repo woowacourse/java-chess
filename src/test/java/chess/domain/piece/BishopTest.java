@@ -33,7 +33,7 @@ class BishopTest {
         List<Position> path = bishop.findPath(C_4, F_7);
         List<Position> reversePath = bishop.findPath(F_7, C_4);
 
-        assertThat(path).contains(D_5, E_6);
-        assertThat(reversePath).contains(D_5, E_6);
+        assertThat(path).containsOnly(D_5, E_6);
+        assertThat(reversePath).containsOnly(D_5, E_6);
     }
 }

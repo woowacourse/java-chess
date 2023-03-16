@@ -37,8 +37,8 @@ class RookTest {
         List<Position> path = rook.findPath(C_4, F_4);
         List<Position> reversePath = rook.findPath(F_4, C_4);
 
-        assertThat(path).contains(D_4, E_4);
-        assertThat(reversePath).contains(D_4, E_4);
+        assertThat(path).containsOnly(D_4, E_4);
+        assertThat(reversePath).containsOnly(D_4, E_4);
     }
 
     @Test
@@ -47,7 +47,7 @@ class RookTest {
         List<Position> path = rook.findPath(C_4, C_7);
         List<Position> reversePath = rook.findPath(C_7, C_4);
 
-        assertThat(path).contains(C_5, C_6);
-        assertThat(reversePath).contains(C_5, C_6);
+        assertThat(path).containsOnly(C_5, C_6);
+        assertThat(reversePath).containsOnly(C_5, C_6);
     }
 }

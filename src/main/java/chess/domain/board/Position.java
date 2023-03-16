@@ -3,6 +3,13 @@ package chess.domain.board;
 import java.util.Objects;
 
 public class Position {
+    @Override
+    public String toString() {
+        return "Position{" +
+                "fileCoordinate=" + fileCoordinate +
+                ", rankCoordinate=" + rankCoordinate +
+                '}';
+    }
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;

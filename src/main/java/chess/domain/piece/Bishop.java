@@ -28,11 +28,11 @@ public class Bishop extends Piece {
         int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
         int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
 
-        while (nowFileCoordinate != targetFileCoordinate) {
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    RankCoordinate.findBy(nowRankCoordinate));
+        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
             nowFileCoordinate += columnStep;
             nowRankCoordinate += rowStep;
+            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
+                    RankCoordinate.findBy(nowRankCoordinate));
             paths.add(position);
         }
         return paths;

@@ -36,20 +36,21 @@ public class Rook extends Piece {
         if (nowFileCoordinate - targetFileCoordinate == 0) {
             int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
 
-            while (nowRankCoordinate != targetRankCoordinate) {
+            while (nowRankCoordinate + rowStep != targetRankCoordinate) {
+                nowRankCoordinate += rowStep;
                 Position position = new Position(sourcePosition.getFileCoordinate(),
                         RankCoordinate.findBy(nowRankCoordinate));
-                nowRankCoordinate += rowStep;
                 paths.add(position);
             }
             return paths;
         }
         int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
 
-        while (nowFileCoordinate != targetFileCoordinate) {
+        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
+            nowFileCoordinate += columnStep;
+
             Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
                     sourcePosition.getRankCoordinate());
-            nowFileCoordinate += columnStep;
             paths.add(position);
         }
         return paths;

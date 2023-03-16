@@ -29,38 +29,38 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false", "B:SIX:false", "A:FOUR:true",
             "C:SIX:true"}, delimiter = ':')
-    void 비숍이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
+    void 퀸이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
         Queen queen = new Queen(Color.WHITE);
         assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Color.EMPTY)).isEqualTo(expect);
     }
 
     @Test
-    void 룩이_랭크로_움직일_수_있는_경로를_알_수_있다() {
+    void 퀸이_랭크로_움직일_수_있는_경로를_알_수_있다() {
         Queen queen = new Queen(Color.WHITE);
         List<Position> path = queen.findPath(C_4, F_4);
         List<Position> reversePath = queen.findPath(F_4, C_4);
 
-        assertThat(path).contains(D_4, E_4);
-        assertThat(reversePath).contains(D_4, E_4);
+        assertThat(path).containsOnly(D_4, E_4);
+        assertThat(reversePath).containsOnly(D_4, E_4);
     }
 
     @Test
-    void 룩이_파일로_움직일_수_있는_경로를_알_수_있다() {
+    void 퀸이_파일로_움직일_수_있는_경로를_알_수_있다() {
         Queen queen = new Queen(Color.WHITE);
         List<Position> path = queen.findPath(C_4, C_7);
         List<Position> reversePath = queen.findPath(C_7, C_4);
 
-        assertThat(path).contains(C_5, C_6);
-        assertThat(reversePath).contains(C_5, C_6);
+        assertThat(path).containsOnly(C_5, C_6);
+        assertThat(reversePath).containsOnly(C_5, C_6);
     }
 
     @Test
-    void 비숍이_움직일_수_있는_경로를_알_수_있다() {
+    void 퀸이_움직일_수_있는_경로를_알_수_있다() {
         Queen queen = new Queen(Color.WHITE);
         List<Position> path = queen.findPath(C_4, F_7);
         List<Position> reversePath = queen.findPath(F_7, C_4);
 
-        assertThat(path).contains(D_5, E_6);
-        assertThat(reversePath).contains(D_5, E_6);
+        assertThat(path).containsOnly(D_5, E_6);
+        assertThat(reversePath).containsOnly(D_5, E_6);
     }
 }

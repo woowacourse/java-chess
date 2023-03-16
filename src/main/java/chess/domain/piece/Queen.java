@@ -44,11 +44,11 @@ public class Queen extends Piece {
         int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
         int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
 
-        while (nowFileCoordinate != targetFileCoordinate) {
-            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
-                    RankCoordinate.findBy(nowRankCoordinate));
+        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
             nowFileCoordinate += columnStep;
             nowRankCoordinate += rowStep;
+            Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
+                    RankCoordinate.findBy(nowRankCoordinate));
             paths.add(position);
         }
         return paths;
@@ -58,10 +58,10 @@ public class Queen extends Piece {
         List<Position> paths = new ArrayList<>();
         int nowFileCoordinate = sourcePosition.getColumn();
         int columnStep = getStep(nowFileCoordinate, targetFileCoordinate);
-        while (nowFileCoordinate != targetFileCoordinate) {
+        while (nowFileCoordinate + columnStep != targetFileCoordinate) {
+            nowFileCoordinate += columnStep;
             Position position = new Position(FileCoordinate.findBy(nowFileCoordinate),
                     sourcePosition.getRankCoordinate());
-            nowFileCoordinate += columnStep;
             paths.add(position);
         }
         return paths;
@@ -71,10 +71,10 @@ public class Queen extends Piece {
         List<Position> paths = new ArrayList<>();
         int nowRankCoordinate = sourcePosition.getRow();
         int rowStep = getStep(nowRankCoordinate, targetRankCoordinate);
-        while (nowRankCoordinate != targetRankCoordinate) {
+        while (nowRankCoordinate + rowStep != targetRankCoordinate) {
+            nowRankCoordinate += rowStep;
             Position position = new Position(sourcePosition.getFileCoordinate(),
                     RankCoordinate.findBy(nowRankCoordinate));
-            nowRankCoordinate += rowStep;
             paths.add(position);
         }
         return paths;
