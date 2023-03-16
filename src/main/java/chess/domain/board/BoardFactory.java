@@ -1,7 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.*;
 import chess.domain.piece.MovablePiece;
+import chess.domain.piece.Role;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 
 import java.util.*;
 

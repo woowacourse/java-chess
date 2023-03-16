@@ -1,9 +1,11 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.*;
 import chess.domain.piece.MovablePiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

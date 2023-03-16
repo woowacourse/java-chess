@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.File;
-import chess.domain.Rank;
-import chess.domain.Square;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

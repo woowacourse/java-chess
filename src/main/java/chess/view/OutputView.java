@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Color;
+import chess.domain.side.Color;
 import chess.domain.piece.*;
 
 import java.util.Collections;

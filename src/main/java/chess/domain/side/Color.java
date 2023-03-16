@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.side;
 
 public enum Color {
     WHITE,

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.side.Side;
 
 public class King extends MovablePiece {
     private static final int MAX_MOVE_DISTANCE = 1;

@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 
 public class InitialPawn extends Pawn {
     private static final int MOVE_DISTANCE = 2;

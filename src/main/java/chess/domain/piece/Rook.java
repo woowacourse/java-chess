@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.side.Side;
 
 public class Rook extends MovablePiece {
     public Rook(final Side side, final Role role) {

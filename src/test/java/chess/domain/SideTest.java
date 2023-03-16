@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

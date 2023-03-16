@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.side.Side;
 
 import java.util.List;
 

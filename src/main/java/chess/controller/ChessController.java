@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.File;
-import chess.domain.Rank;
-import chess.domain.Square;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;

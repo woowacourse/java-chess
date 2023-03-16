@@ -1,7 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.*;
 import chess.domain.piece.*;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;

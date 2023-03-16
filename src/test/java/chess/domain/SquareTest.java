@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.File.*;
-import static chess.domain.Rank.*;
+import static chess.domain.board.File.*;
+import static chess.domain.board.Rank.*;
 import static chess.domain.piece.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

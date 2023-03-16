@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Role;
-import chess.domain.Side;
+import chess.domain.side.Color;
+import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.side.Color.BLACK;
+import static chess.domain.side.Color.WHITE;
 import static chess.domain.piece.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
