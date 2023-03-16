@@ -35,8 +35,8 @@ public class ChessBoard {
     }
 
     private void insertPiecesByColor(TeamColor color) {
-        piecesByPosition.put(Position.of(2, color.startingRank()), new Knight(color));
         piecesByPosition.put(Position.of(1, color.startingRank()), new Rook(color));
+        piecesByPosition.put(Position.of(2, color.startingRank()), new Knight(color));
         piecesByPosition.put(Position.of(3, color.startingRank()), new Bishop(color));
         piecesByPosition.put(Position.of(4, color.startingRank()), new King(color));
         piecesByPosition.put(Position.of(5, color.startingRank()), new Queen(color));
@@ -44,7 +44,7 @@ public class ChessBoard {
         piecesByPosition.put(Position.of(7, color.startingRank()), new Knight(color));
         piecesByPosition.put(Position.of(8, color.startingRank()), new Rook(color));
         IntStream.range(FIRST_INDEX, RANK_SIZE + 1)
-                .forEach(file -> piecesByPosition.put(Position.of(file, color.startingPawnRank()),
+                .forEach(file -> piecesByPosition.put(Position.of(file, color.findPawnStartRank()),
                         new Pawn(color)));
     }
 

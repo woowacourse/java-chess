@@ -16,7 +16,7 @@ public enum TeamColor {
         return startingRank;
     }
 
-    public int startingPawnRank() {
+    public int findPawnStartRank() {
         if (this == BLACK) {
             return startingRank - 1;
         }
