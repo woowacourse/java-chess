@@ -16,6 +16,11 @@ public class Position implements Comparable<Position> {
         this.rank = rank;
     }
     
+    private Position(final int file, final int rank) {
+        this.file = File.findByIndex(file);
+        this.rank = Rank.findByIndex(rank);
+    }
+    
     public static Position from(String position) {
         List<String> parsedPosition = parsing(position);
         File file = File.findByLabel(parsedPosition.get(0));
@@ -74,6 +79,13 @@ public class Position implements Comparable<Position> {
     
     public Rank getRank() {
         return rank;
+    }
+    
+    public Position addDirection(Direction direction) {
+        int fileIndex = this.file.getIndex();
+        int rankIndex = this.rank.getIndex();
+        
+        return new Position(fileIndex + direction.getX(), rankIndex + direction.getY());
     }
     
     @Override

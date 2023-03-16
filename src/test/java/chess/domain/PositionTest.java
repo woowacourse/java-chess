@@ -49,4 +49,14 @@ class PositionTest {
         Assertions.assertThat(ceneter.calculateDirection(w)).isEqualTo(Direction.W);
         Assertions.assertThat(ceneter.calculateDirection(nw)).isEqualTo(Direction.NW);
     }
+    
+    @Test
+    @DisplayName("방향 계산")
+    void add_direction() {
+        Position d4 = Position.from("d4");
+        Direction n = Direction.N;
+        Assertions.assertThat(d4.addDirection(n)).isEqualTo(Position.from("d5"));
+        Direction sw = Direction.SW;
+        Assertions.assertThat(d4.addDirection(sw)).isEqualTo(Position.from("c3"));
+    }
 }
