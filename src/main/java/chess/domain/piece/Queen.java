@@ -12,8 +12,8 @@ public class Queen extends Piece {
     private static final List<Direction> DIRECTIONS;
 
     static {
-        DIRECTIONS = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.NORTH_EAST,
-                Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        DIRECTIONS = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
+            Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     }
 
     public Queen(final TeamColor color) {

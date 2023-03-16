@@ -12,8 +12,9 @@ public class Knight extends Piece {
     private static final List<Direction> DIRECTIONS;
 
     static {
-        DIRECTIONS = List.of(Direction.EAST_DOWN, Direction.EAST_UP, Direction.SOUTH_LEFT, Direction.SOUTH_RIGHT,
-                Direction.WEST_DOWN, Direction.WEST_UP, Direction.NORTH_LEFT, Direction.NORTH_RIGHT);
+        DIRECTIONS = List.of(Direction.EAST_DOWN, Direction.EAST_UP, Direction.SOUTH_LEFT,
+            Direction.SOUTH_RIGHT, Direction.WEST_DOWN, Direction.WEST_UP, Direction.NORTH_LEFT,
+            Direction.NORTH_RIGHT);
     }
 
     public Knight(final TeamColor color) {

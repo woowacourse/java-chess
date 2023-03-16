@@ -14,7 +14,6 @@ public class BoardConverter {
     private static final int FILE_SIZE = 8;
     private static final String EMPTY_SQUARE = ".";
 
-
     private BoardConverter() {
     }
 

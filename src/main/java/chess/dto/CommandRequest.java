@@ -10,14 +10,15 @@ public class CommandRequest {
     private final List<Integer> source;
     private final List<Integer> destination;
 
-    private CommandRequest(final Command command, final List<Integer> source, final List<Integer> destination) {
+    private CommandRequest(final Command command, final List<Integer> source,
+        final List<Integer> destination) {
         this.command = command;
         this.source = source;
         this.destination = destination;
     }
 
     public static CommandRequest fromMoveCommand(final List<Integer> source,
-                                                 final List<Integer> destination) {
+        final List<Integer> destination) {
         return new CommandRequest(Command.MOVE, source, destination);
     }
 

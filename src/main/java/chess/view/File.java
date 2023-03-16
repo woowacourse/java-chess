@@ -25,9 +25,9 @@ public enum File {
 
     public static int findByIndex(String index) {
         File foundFile = Arrays.stream(values())
-                .filter(file -> file.index.equalsIgnoreCase(index))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_ERROR_MESSAGE));
+            .filter(file -> file.index.equalsIgnoreCase(index))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_ERROR_MESSAGE));
         return foundFile.address;
     }
 

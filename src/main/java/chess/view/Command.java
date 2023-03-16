@@ -18,10 +18,10 @@ public enum Command {
 
     public static Command findByAnswer(String input) {
         return Arrays.stream(values())
-                .filter(command -> command != MOVE)
-                .filter(command -> command.answer.equalsIgnoreCase(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_ERROR_MESSAGE));
+            .filter(command -> command != MOVE)
+            .filter(command -> command.answer.equalsIgnoreCase(input))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_ERROR_MESSAGE));
     }
 
     public String getAnswer() {

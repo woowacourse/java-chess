@@ -39,15 +39,6 @@ public class Pawn extends Piece {
         return paths;
     }
 
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    public boolean isAttack(Position source, Position dest) {
-        return source.isOneStepForwardDiagonal(dest);
-    }
-
     private boolean isStartRank(final Position current) {
         if (color == TeamColor.WHITE) {
             return current.isInExpectedRank(WHITE_START_RANK);
@@ -60,6 +51,15 @@ public class Pawn extends Piece {
             return Direction.NORTH;
         }
         return Direction.SOUTH;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    public boolean isAttack(Position source, Position dest) {
+        return source.isOneStepForwardDiagonal(dest);
     }
 
 }
