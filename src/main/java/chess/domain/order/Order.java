@@ -13,7 +13,10 @@ public final class Order {
     private static final int SOURCE_POSITION_INDEX = 0;
     private static final int TARGET_POSITION_INDEX = 1;
     private static final int POSITION_SIZE = 2;
-    private static final String ERROR_MOVE = "게임 이동은 move source target 형식으로 입력해야 합니다.";
+    private static final int COMMAND_INDEX = 0;
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int START_POSITION_INDEX = 1;
+    private static final int END_POSITION_INDEX = 2;
 
     private final OrderCase orderCase;
     private final List<Position> moves;
@@ -37,7 +40,7 @@ public final class Order {
 
     public static Order ofMoveOrEnd(final String input) {
         List<String> inputs = Arrays.asList(input.split(DELIMITER));
-        OrderCase value = OrderCase.from(inputs.get(0));
+        OrderCase value = OrderCase.from(inputs.get(COMMAND_INDEX));
 
         if (value.equals(END)) {
             return ofEnd(input);
@@ -45,10 +48,10 @@ public final class Order {
         if (value.equals(MOVE)) {
             return ofMove(value, inputs);
         }
-        throw new IllegalArgumentException("잘못된 입력값입니다.");
+        throw new IllegalArgumentException("게임 진행중에는 end와 move 커맨드 입력만 가능합니다");
     }
 
-    public static Order ofEnd(final String input) {
+    private static Order ofEnd(final String input) {
         OrderCase value = OrderCase.from(input);
 
         if (!value.equals(END)) {
@@ -65,27 +68,27 @@ public final class Order {
     }
 
     private static void validateInputSize(final List<String> values) {
-        if (!(values.size() == 2)) {
-            throw new IllegalArgumentException(ERROR_MOVE);
+        if (!(values.size() == MOVE_COMMAND_SIZE)) {
+            throw new IllegalArgumentException("게임 이동은 move source target 형식으로 입력해야 합니다.");
         }
     }
 
     private static void validateEachPosition(final List<String> values) {
-        for (int i = 1; i <= 2; i++) {
+        for (int i = START_POSITION_INDEX; i <= END_POSITION_INDEX; i++) {
             validateInputPositionSize(values.get(i));
         }
     }
 
     private static void validateInputPositionSize(final String value) {
         if (value.length() != POSITION_SIZE) {
-            throw new IllegalArgumentException(ERROR_MOVE);
+            throw new IllegalArgumentException("게임 이동은 move source target 형식으로 입력해야 합니다.");
         }
     }
 
     private static List<Position> generatePositions(final List<String> value) {
         List<Position> positions = new ArrayList<>();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = START_POSITION_INDEX; i <= END_POSITION_INDEX; i++) {
             positions.add(Position.from(value.get(i)));
         }
         return positions;
