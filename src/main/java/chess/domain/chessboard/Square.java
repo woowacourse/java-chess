@@ -36,7 +36,7 @@ public final class Square {
         return pieceState;
     }
 
-    public void switchPieceState(final Square other){
+    public void switchPieceState(final Square other) {
         this.pieceState = other.pieceState;
     }
 }

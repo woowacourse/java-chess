@@ -57,7 +57,7 @@ class RookTest {
         final List<Square> route = List.of(new Square(), new Square(), new Square(new Pawn(team)));
 
         //when & then
-        Assertions.assertThatThrownBy(()-> rook.canMove(route))
+        Assertions.assertThatThrownBy(() -> rook.canMove(route))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -69,7 +69,7 @@ class RookTest {
         final List<Square> route = List.of(new Square(), new Square(new Pawn(team)), new Square());
 
         //when & then
-        Assertions.assertThatThrownBy(()-> rook.canMove(route))
+        Assertions.assertThatThrownBy(() -> rook.canMove(route))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -81,7 +81,7 @@ class RookTest {
         final List<Square> route = List.of(new Square(), new Square(), new Square());
 
         //when & then
-        assertDoesNotThrow(()->rook.canMove(route));
+        assertDoesNotThrow(() -> rook.canMove(route));
     }
 
     @Test
@@ -91,6 +91,6 @@ class RookTest {
         final List<Square> route = List.of(new Square(), new Square(), new Square(new Pawn(Team.WHITE)));
 
         //when & then
-        assertDoesNotThrow(()->rook.canMove(route));
+        assertDoesNotThrow(() -> rook.canMove(route));
     }
 }

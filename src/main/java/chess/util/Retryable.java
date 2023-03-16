@@ -19,7 +19,7 @@ public interface Retryable {
     private static <T> T checkIllegalArgumentException(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             return null;
         }

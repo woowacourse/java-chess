@@ -11,7 +11,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public List<Coordinate> findRoute (final Coordinate from, final Coordinate to){
+    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
         validatePossibleDestination(from, to);
 
         if (from.isPositiveDiagonal(to)) {
@@ -32,7 +32,7 @@ public final class King extends Piece {
         final int fileDistance = from.calculateFileDistance(to);
         final int rankDistance = from.calculateRankDistance(to);
 
-        if (fileDistance >1 || rankDistance > 1) {
+        if (fileDistance > 1 || rankDistance > 1) {
             throwCanNotMoveException();
         }
     }

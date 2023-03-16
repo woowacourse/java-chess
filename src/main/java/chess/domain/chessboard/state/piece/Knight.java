@@ -12,7 +12,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public List<Coordinate> findRoute (final Coordinate from, final Coordinate to){
+    public List<Coordinate> findRoute(final Coordinate from, final Coordinate to) {
         validatePossibleDestination(from, to);
         return List.of(to);
 

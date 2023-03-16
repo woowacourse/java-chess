@@ -24,7 +24,6 @@ class KingTest {
         final Coordinate a2 = Coordinate.of("a2");
         final Coordinate c2 = Coordinate.of("c2");
 
-
         //when & then
         Assertions.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
         Assertions.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
@@ -41,7 +40,6 @@ class KingTest {
         final Coordinate a3 = Coordinate.of("a3");
         final Coordinate c1 = Coordinate.of("c1");
         final Coordinate c3 = Coordinate.of("c3");
-
 
         //when & then
         Assertions.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.of("a1"));

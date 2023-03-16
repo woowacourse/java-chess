@@ -1,6 +1,6 @@
 package chess.domain.chessboard.state.piece;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.chessboard.Square;
@@ -51,7 +51,7 @@ class KnightTest {
         final List<Square> route = List.of(new Square(new Pawn(team)));
 
         //when & then
-        Assertions.assertThatThrownBy(()-> knight.canMove(route))
+        Assertions.assertThatThrownBy(() -> knight.canMove(route))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,7 +63,7 @@ class KnightTest {
         final List<Square> route = List.of(new Square());
 
         //when & then
-        assertDoesNotThrow(()->knight.canMove(route));
+        assertDoesNotThrow(() -> knight.canMove(route));
     }
 
     @Test
@@ -73,7 +73,6 @@ class KnightTest {
         final List<Square> route = List.of(new Square(new Pawn(Team.WHITE)));
 
         //when & then
-        assertDoesNotThrow(()->knight.canMove(route));
+        assertDoesNotThrow(() -> knight.canMove(route));
     }
-
 }

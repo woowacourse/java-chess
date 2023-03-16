@@ -93,7 +93,7 @@ class CoordinateTest {
     }
 
     @Test
-    void 좌표는_다른_좌표와의_랭크_차를_계산할_수_있다(){
+    void 좌표는_다른_좌표와의_랭크_차를_계산할_수_있다() {
         //given
         final Coordinate a1 = Coordinate.of("a1");
         final Coordinate a5 = Coordinate.of("a5");
@@ -103,7 +103,7 @@ class CoordinateTest {
     }
 
     @Test
-    void 좌표는_다른_좌표와의_파일_차를_계산할_수_있다(){
+    void 좌표는_다른_좌표와의_파일_차를_계산할_수_있다() {
         //given
         final Coordinate a1 = Coordinate.of("a1");
         final Coordinate e1 = Coordinate.of("e1");
@@ -119,7 +119,6 @@ class CoordinateTest {
         final Coordinate b2 = Coordinate.of("b2");
         final Coordinate h8 = Coordinate.of("h8");
 
-
         //when & then
         assertThat(a1.isPositiveDiagonal(b2)).isTrue();
         assertThat(h8.isPositiveDiagonal(b2)).isTrue();
@@ -132,9 +131,12 @@ class CoordinateTest {
         final Coordinate c5 = Coordinate.of("c5");
         final Coordinate e3 = Coordinate.of("e3");
 
+        final Coordinate c1 = Coordinate.of("c1");
+        final Coordinate a3 = Coordinate.of("a3");
         //when & then
         assertThat(b6.isNegativeDiagonal(c5)).isTrue();
         assertThat(b6.isNegativeDiagonal(e3)).isTrue();
+        assertThat(c1.isNegativeDiagonal(a3)).isTrue();
     }
 
 }
