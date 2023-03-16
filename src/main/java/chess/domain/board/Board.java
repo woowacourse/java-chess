@@ -68,14 +68,14 @@ public class Board {
         final Position sourcePosition = Position.from(source);
         final Position targetPosition = Position.from(target);
         final Piece piece = board.get(sourcePosition);
-        if (turn != piece.color()) {
+        if (turn.isOpponent(piece.color())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
         if (piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
             move(sourcePosition, targetPosition, piece);
             return;
         }
-        throw new IllegalArgumentException("해당 기물을 움직일 수 없습니다.");
+        throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다. 시작: " + source + " 도착: " + target);
     }
 
     private void move(final Position sourcePosition, final Position targetPosition, final Piece piece) {
