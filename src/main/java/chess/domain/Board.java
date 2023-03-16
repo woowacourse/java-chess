@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
+import static chess.domain.piece.PieceType.KNIGHT;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
@@ -39,6 +40,9 @@ public class Board {
         int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
         piece.validateMovement(fileInterval, rankInterval);
 
+        if (piece.getPieceType() == KNIGHT) {
+            return !pieces.containsKey(dst);
+        }
         return canMoveNextSquare(src, fileInterval, rankInterval);
     }
 

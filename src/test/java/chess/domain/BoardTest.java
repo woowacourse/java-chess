@@ -1,10 +1,13 @@
 package chess.domain;
 
 import static chess.domain.File.A;
+import static chess.domain.File.B;
+import static chess.domain.Rank.ONE;
 import static chess.domain.Rank.THREE;
 import static chess.domain.Rank.TWO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +27,7 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("말은 규칙에 따라 움직인다.")
     void move() {
         Board board = new Board();
         Square src = Square.of(A, TWO);
@@ -32,6 +36,32 @@ class BoardTest {
         board.move(src, dst);
 
         assertThat(board.getPieces().keySet()).contains(dst);
+    }
+
+    @Test
+    @DisplayName("knight는 가는 길목에 말이 있어도 움직일 수 있다.")
+    void knight_can_move() {
+        Board board = new Board();
+        Square src = Square.of(B, ONE);
+        Square dst = Square.of(A, THREE);
+
+        board.move(src, dst);
+
+        assertThat(board.getPieces().keySet()).contains(dst);
+    }
+
+    @Test
+    @DisplayName("knight는 이동할 칸에 말이 있으면 이동할 수 없다.")
+    void knight_cannot_move() {
+        Board board = new Board();
+        Square src = Square.of(A, TWO);
+        Square dst = Square.of(A, THREE);
+        board.move(src, dst);
+
+        Square src1 = Square.of(B, ONE);
+        Square dst1 = Square.of(A, THREE);
+
+        assertThrows(IllegalArgumentException.class, () -> board.move(src1, dst1));
     }
 
 }
