@@ -97,4 +97,8 @@ public class Board {
         final int distanceY = destination.calculateDistanceY(source);
         return Math.abs(distanceX) == Math.abs(distanceY) && Math.abs(distanceX) == 1;
     }
+
+    public void move(final Square source, final Square destination) {
+        board.put(destination, board.remove(source));
+    }
 }

@@ -179,4 +179,18 @@ class BoardTest {
             assertThat(board.canMovePawn(source, routes)).isFalse();
         }
     }
+
+    @Test
+    void 기물을_움직인다() {
+        final Board board = Board.generate();
+        final Square source = new Square(File.E, Rank.TWO);
+        final Square destination = new Square(File.E, Rank.FOUR);
+
+        board.move(source, destination);
+
+        assertAll(
+                () -> assertThat(board.findPieceOf(destination)).isInstanceOf(Pawn.class),
+                () -> assertThat(board.findPieceOf(source)).isNull()
+        );
+    }
 }
