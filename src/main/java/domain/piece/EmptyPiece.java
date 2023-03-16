@@ -45,4 +45,9 @@ public class EmptyPiece extends Piece {
         throw new UnsupportedOperationException("지원하지 않는 메서드 입니다.");
 >>>>>>> 3ad1dbf (refactor: 패키지 분리)
     }
+
+    @Override
+    public boolean isEmptyPiece() {
+        return true;
+    }
 }

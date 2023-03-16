@@ -34,6 +34,8 @@ public abstract class Piece {
     public abstract List<Position> collectPath(Position sourcePosition, Position targetPosition);
 >>>>>>> 3ad1dbf (refactor: 패키지 분리)
 
+    public abstract boolean isEmptyPiece();
+
     public boolean isSameSideWith(Piece targetPiece) {
         return this.side == targetPiece.side;
     }

@@ -62,4 +62,10 @@ public class Bishop extends Piece {
         return sourcePosition.getPath(targetPosition);
 >>>>>>> 3ad1dbf (refactor: 패키지 분리)
     }
+
+    @Override
+    public boolean isEmptyPiece() {
+        return false;
+    }
+
 }

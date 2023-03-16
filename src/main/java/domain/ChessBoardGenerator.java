@@ -56,14 +56,14 @@ public class ChessBoardGenerator {
     }
 
     private void generateBlackPawns(Map<Position, Piece> chessBoard) {
-        chessBoard.put(Position.of("a", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("b", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("c", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("d", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("e", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("f", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("g", "7"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("h", "7"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("a", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("b", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("c", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("d", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("e", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("f", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("g", "7"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("h", "7"), Pawn.createOfBlack());
     }
 
     private void generateEmptyPieceByEachRank(Map<Position, Piece> chessBoard, File file) {
