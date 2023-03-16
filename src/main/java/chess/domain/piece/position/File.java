@@ -1,11 +1,12 @@
 package chess.domain.piece.position;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class File {
 
-    private static final Pattern pattern = Pattern.compile("^[a-h]$");
+    public static final char MIN = 'a';
+    public static final char MAX = 'h';
+
     private final char file;
 
     private File(final char file) {
@@ -14,8 +15,10 @@ public class File {
     }
 
     private void validate(final char file) {
-        if (!pattern.matcher(String.valueOf(file)).matches()) {
-            throw new IllegalArgumentException("a 에서 h 사이의 문자만 들어올 수 있습니다.");
+        if (file < MIN || file > MAX) {
+            throw new IllegalArgumentException(
+                    String.format("%c 에서 %c 사이의 문자만 들어올 수 있습니다.", MAX, MAX)
+            );
         }
     }
 
