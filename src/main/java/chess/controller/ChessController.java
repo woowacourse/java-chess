@@ -13,6 +13,8 @@ import java.util.function.Supplier;
 public class ChessController {
 
     private static final int COMMAND_INDEX = 0;
+    private static final int FROM_POSITION_INDEX = 1;
+    private static final int TO_POSITION_INDEX = 2;
 
     private final OutputView outputView;
     private final InputView inputView;
@@ -23,6 +25,7 @@ public class ChessController {
     }
 
     public void run() {
+        outputView.printStartPrefix();
         ChessCommand chessCommand = retryOnInvalidUserInput(() -> {
             List<String> strings = inputView.readCommand();
             return ChessCommand.getStart(strings.get(COMMAND_INDEX));
@@ -39,35 +42,34 @@ public class ChessController {
         return new ChessGame(piecesPosition);
     }
 
-    private void play(ChessGame chessGame, ChessCommand chessCommand) {
+    private void play(ChessGame chessGame, ChessCommand command) {
+        do {
+            command = retryOnInvalidUserInput(() -> playTurn(chessGame));
+        } while (!command.isEnd());
+    }
 
-        while (!chessCommand.isEnd()) {
-            List<String> commands = retryOnInvalidUserInput(() -> {
-                List<String> strings = inputView.readCommand();
-                ChessCommand.from(strings.get(COMMAND_INDEX));
-                return strings;
-            });
-
-            chessCommand = ChessCommand.from(commands.get(COMMAND_INDEX));
-            if (chessCommand.isEnd()) {
-                break;
-            }
-
-            move(chessGame, commands.get(1), commands.get(2));
+    private ChessCommand playTurn(ChessGame chessGame) {
+        List<String> commands = inputView.readCommand();
+        ChessCommand chessCommand = ChessCommand.getPlayingCommand(commands.get(COMMAND_INDEX));
+        if (chessCommand.isEnd()) {
+            return chessCommand;
         }
+
+        move(chessGame, commands);
+        printBoard(chessGame.getPiecesPosition());
+        return chessCommand;
     }
 
-    private void move(ChessGame chessGame, String from, String to) {
-        Position fromPosition = getPosition(from);
-        Position toPosition = getPosition(to);
-        System.out.println(fromPosition);
-        System.out.println(toPosition);
-//        chessGame.move(fromPosition, toPosition);
+    private void move(ChessGame chessGame, List<String> commands) {
+        String fromInput = commands.get(FROM_POSITION_INDEX);
+        String toInput = commands.get(TO_POSITION_INDEX);
+
+        chessGame.move(toPosition(fromInput), toPosition(toInput));
     }
 
-    private Position getPosition(String positionInput) {
+    private Position toPosition(String positionInput) {
         String fileInput = String.valueOf(positionInput.charAt(0));
-        String rankInput = String.valueOf(positionInput.charAt(1));
+        String rankInput = String.valueOf(positionInput.charAt(FROM_POSITION_INDEX));
 
         return new Position(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
