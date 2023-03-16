@@ -105,14 +105,6 @@ public final class Position {
         return (fileSub == TWO_SQUARES && rankSub == NEAR_SQUARES) || (fileSub == NEAR_SQUARES && rankSub == TWO_SQUARES);
     }
 
-    public int getRank() {
-        return rank.getValue() - NEAR_SQUARES;
-    }
-
-    public int getFile() {
-        return file.getValue() - NEAR_SQUARES;
-    }
-
     public boolean canWhitePawnMove(final Position target) {
         int fileSub = target.file.sub(file);
         int rankSub = target.rank.sub(rank);
@@ -125,6 +117,14 @@ public final class Position {
         int rankSub = rank.sub(target.rank);
         return (Math.abs(fileSub) <= NEAR_SQUARES && rankSub == NEAR_SQUARES) ||
                 (fileSub == EQUAL_FILE && rankSub == TWO_SQUARES);
+    }
+
+    public int getRank() {
+        return rank.getValue() - NEAR_SQUARES;
+    }
+
+    public int getFile() {
+        return file.getValue() - NEAR_SQUARES;
     }
 
     @Override
