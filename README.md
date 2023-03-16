@@ -6,41 +6,41 @@
 
 ```mermaid
 classDiagram
-    domain.Game --> domain.piece.Piece
-domain.Game --> domain.piece.Position
+    Game --> Piece
+    Game --> Position
 
-domain.piece.Rank <-- domain.piece.Position
-domain.piece.File <-- domain.piece.Position
+    Rank <-- Position
+    File <-- Position
 
-<<enumeration>> domain.piece.Rank
-<<enumeration>> domain.piece.File
+    <<enumeration>> Rank
+    <<enumeration>> File
 
-class domain.piece.Position {
-domain.piece.Rank rank
-domain.piece.File file
-}
+    class Position {
+        Rank rank
+        File file
+    }
 
-class domain.Game {
-Map(domain.piece.Position, domain.piece.Piece) chessBoard
-}
+    class Game {
+        Map(Position, Piece) chessBoard
+    }
 ```
 
 ### 체스 말들의 상속 관계
 
 ```mermaid
 classDiagram
-    domain.piece.Piece <|-- domain.piece.Pawn
-domain.piece.Piece <|-- domain.piece.King
-domain.piece.Piece <|-- domain.piece.Queen
-domain.piece.Piece <|-- domain.piece.Rook
-domain.piece.Piece <|-- domain.piece.Bishop
-domain.piece.Piece <|-- domain.piece.Knight
-domain.piece.Piece <|-- domain.piece.EmptyPiece
+    Piece <|-- Pawn
+    Piece <|-- King
+    Piece <|-- Queen
+    Piece <|-- Rook
+    Piece <|-- Bishop
+    Piece <|-- Knight
+    Piece <|-- EmptyPiece
 ```
 
 # 기능 요구 사항
 
-### domain.piece.Position
+### Position
 
 - [x] domain.piece.File, Rank로 위치 정보를 생성한다.
     - [x] col정보는 File인스턴스로 나타낸다.
@@ -49,14 +49,14 @@ domain.piece.Piece <|-- domain.piece.EmptyPiece
 - [x] Target position까지의 이동 경로를 반환한다.
     - [x] 요청받은 movement를 기준으로 해당 방향으로 한 칸 움직인다.
 
-### domain.piece.Piece
+### Piece
 
 - [ ] Source position에서 Target position으로 가는 경로를 반환한다.
     - [ ] Target position이 해당 말이 이동할 수 없는 위치일 경우 예외가 발생한다.
 - [x] source piece와 target piece가 같은 팀인지 확인한다.
 - [x] source piece와 target piece가 다른 팀인지 확인한다.
 
-### domain.piece.Pawn
+### Pawn
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] White 진영은 위로, Black 진영은 아래로 움직인다.
@@ -64,35 +64,35 @@ domain.piece.Piece <|-- domain.piece.EmptyPiece
     - [x] 상대편 말을 잡을 때는 대각선으로만 움직일 수 있다.
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
-### domain.piece.Bishop
+### Bishop
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 대각선으로만 움직일 수 있다.
     - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
-### domain.piece.King
+### King
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 한 칸이면, 모든 방향으로 움직일 수 있다.
     - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
-### domain.piece.Queen
+### Queen
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 대각선, 수직, 수평으로 움직일 수 있다.
     - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
-### domain.piece.Rook
+### Rook
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 수직 방향으로만 움직일 수 있다.
     - [x] Target에 같은 진영 말이 있으면 움직일 수 없다.
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
 
-### domain.piece.Knight
+### Knight
 
 - [x] 이동할 수 있는지 확인한다.
     - [x] 수직 2칸 + 수평 1칸 또는 수직 1칸 + 수평 2칸으로 움직일 수 있다.
@@ -100,7 +100,7 @@ domain.piece.Piece <|-- domain.piece.EmptyPiece
 - [x] 입력 받은 Target position으로 가는 경로를 반환한다.
     - [x] Knight는 아군 말을 뛰어 넘을 수 있기 때문에 빈 경로를 반환한다.
 
-### domain.Game
+### Game
 
 - [ ] 각각의 Rank와 File을 표현하도록 체스판을 초기화한다.
     - [ ] domain.piece.Rank(가로 위치)는 왼쪽부터 a ~ h이다.
@@ -117,7 +117,11 @@ domain.piece.Piece <|-- domain.piece.EmptyPiece
     - [ ] 상대방의 말 위치로 이동한 경우, 상대방 말은 죽고 이동한 말이 그 위치를 대체한다.
         - [ ] 해당 위치의 Piece는 EmptyPiece로 대체한다.
 
-### domain.piece.Movement
+### ChessBoardGenerator
+
+- [x] 체스 판과 규칙에 맞는 초기 말들을 생성한다.
+
+### Movement
 
 - [x] 어느 방향으로도 움직이지 않으면 예외가 발생한다.
 - [x] 1칸 이내 움직임인지 확인한다.
@@ -130,13 +134,13 @@ domain.piece.Piece <|-- domain.piece.EmptyPiece
 - [x] 왼쪽(2,3사분면) 방향성의 움직임인지 확인한다.
 - [x] Knight의 움직임인지 확인한다.
 
-### domain.piece.File (enum)
+### File (enum)
 
 - [x] Source file과 Target file간 거리 차이를 반환한다.
 - [x] 다음 순서의 값을 반환한다.
 - [x] 이전 순서의 값을 반환한다.
 
-### domain.piece.Rank (enum)
+### Rank (enum)
 
 - [x] Source rank와 Target rank간 거리 차이를 반환한다.
 - [x] 다음 순서의 값을 반환한다.
