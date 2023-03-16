@@ -43,4 +43,12 @@ public enum Direction {
     public int getNextYPoint(int yPoint) {
         return this.y + yPoint;
     }
+
+    public boolean isHorizontalMovable() {
+        return x != 0;
+    }
+
+    public boolean isVerticalMovable() {
+        return y != 0;
+    }
 }
