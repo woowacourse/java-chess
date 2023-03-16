@@ -8,6 +8,7 @@
 classDiagram
     Game --> Piece
     Game --> Position
+    Position --> Movement
 
     Rank <-- Position
     File <-- Position
@@ -36,6 +37,12 @@ classDiagram
     Piece <|-- Bishop
     Piece <|-- Knight
     Piece <|-- EmptyPiece
+    Pawn --> Movement
+    King --> Movement
+    Queen --> Movement
+    Rook --> Movement
+    Bishop --> Movement
+    EmptyPiece --> Movement
 ```
 
 # 기능 요구 사항
@@ -51,8 +58,8 @@ classDiagram
 
 ### Piece
 
-- [ ] Source position에서 Target position으로 가는 경로를 반환한다.
-    - [ ] Target position이 해당 말이 이동할 수 없는 위치일 경우 예외가 발생한다.
+- [x] Source position에서 Target position으로 가는 경로를 반환한다.
+    - [x] Target position이 해당 말이 이동할 수 없는 위치일 경우 예외가 발생한다.
 - [x] source piece와 target piece가 같은 팀인지 확인한다.
 - [x] source piece와 target piece가 다른 팀인지 확인한다.
 
@@ -151,6 +158,7 @@ classDiagram
 
 - [x] 게임 가이드 메시지를 출력한다.
 - [x] 체스판 현황을 출력한다.
+- [x] 현재 턴을 가지고 있는 진영을 출력한다.
 
 ### GameCommand
 
