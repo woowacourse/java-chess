@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 
 public class Board {
     
+    public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
+    public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
     private final Map<Position, Piece> board;
     
     private Board(final Map<Position, Piece> board) {
@@ -71,4 +74,15 @@ public class Board {
                 .collect(Collectors.toList());
     }
     
+    public Piece getPiece(final Position source, final Color color) {
+        Piece piece = this.board.get(source);
+        if (piece.isEmpty()) {
+            throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE);
+        }
+        if (!piece.isSameColor(color)) {
+            throw new IllegalArgumentException(OTHER_COLOR_PIECE_ERROR_MESSAGE);
+        }
+        
+        return piece;
+    }
 }

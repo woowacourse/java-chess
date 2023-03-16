@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -13,10 +11,8 @@ public abstract class Piece {
         this.color = color;
         this.type = type;
     }
-    
-    List<Position> calculateMovablePositions(Position position) {
-        return List.of();
-    }
+
+//    abstract boolean canMove(Position start, Position end);
     
     @Override
     public int hashCode() {
@@ -35,11 +31,19 @@ public abstract class Piece {
         return color == piece.color;
     }
     
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+    
     public boolean isWhite() {
         return this.color == Color.WHITE;
     }
     
     public PieceType getType() {
-        return type;
+        return this.type;
+    }
+    
+    public boolean isEmpty() {
+        return this.type == PieceType.EMPTY;
     }
 }
