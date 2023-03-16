@@ -18,12 +18,11 @@ public enum Rank {
         this.value = value;
     }
 
-    public Rank getAddedRank(int valueToAdd) {
-        final int addedRankValue = this.value + valueToAdd;
+    public static Rank findByValue(int value) {
         return Arrays.stream(values())
-                .filter(rank -> rank.value == addedRankValue)
+                .filter(rank -> rank.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 더한 랭크 값이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 랭크 값이 존재하지 않습니다."));
     }
 
     public int getValuePoint(Rank targetRank) {

@@ -18,14 +18,6 @@ public enum File {
         this.value = value;
     }
 
-    public File getAddedFile(int valueToAdd) {
-        final int addedFileValue = this.value + valueToAdd;
-        return Arrays.stream(values())
-                .filter(file -> file.value == addedFileValue)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 더한 파일 값이 존재하지 않습니다."));
-    }
-
     public static File findByValue(int value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
