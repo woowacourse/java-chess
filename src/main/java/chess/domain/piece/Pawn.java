@@ -19,7 +19,7 @@ public class Pawn extends Piece {
         if (source.isSameYTo(target)) {
             return false;
         }
-        if (isWhitePawnReverseDirection(source, target) && isBlackPawnReverseDirection(source, target)) {
+        if (isWhitePawnReverseDirection(source, target) || isBlackPawnReverseDirection(source, target)) {
             return false;
         }
         int distance = source.getDistanceTo(target);
