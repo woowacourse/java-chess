@@ -94,4 +94,24 @@ class ChessBoardTest {
         assertThat(chessBoard.contains(putPosition))
                 .isTrue();
     }
+
+    @ParameterizedTest(name = "특정 말의 종류에 따라서 시작 위치에서 종료 위치로 이동 가능한지 판단한다.")
+    @CsvSource(value = {"1:3:false", "3:6:true"}, delimiter = ':')
+    void isPossibleRoute(final int rank, final int file, final boolean expected) {
+        // given
+        final ChessBoard chessBoard = new ChessBoard();
+        final Position source = new Position(0, 3);
+        final Piece piece = chessBoard.checkPiece(source);
+        final Position target = new Position(rank, file);
+
+        final Position obstacle = new Position(1, 4);
+        chessBoard.removePiece(obstacle);
+
+        // when
+        boolean actual = chessBoard.isPossibleRoute(source, target, piece);
+
+        // then
+        assertThat(actual)
+                .isSameAs(expected);
+    }
 }

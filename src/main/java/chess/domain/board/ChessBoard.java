@@ -50,6 +50,30 @@ public final class ChessBoard {
         board.put(position, piece);
     }
 
+    public boolean isPossibleRoute(final Position source, final Position target, final Piece piece) {
+        final Position unitPosition = source.computeUnitPosition(target);
+        Position currentPosition = Position.copy(source);
+
+        if (isObstructed(target, unitPosition, currentPosition)) {
+            return false;
+        }
+
+        final Piece targetPiece = board.get(target);
+        return targetPiece == null || !targetPiece.isSameCamp(piece);
+    }
+
+    private boolean isObstructed(final Position target, final Position unitPosition, Position currentPosition) {
+        if (currentPosition.equals(target)) {
+            return false;
+        }
+        currentPosition = currentPosition.calculate(unitPosition.getRank(), unitPosition.getFile());
+        if (board.containsKey(currentPosition)) {
+            return true;
+        }
+        return isObstructed(target, unitPosition, currentPosition);
+    }
+
+
     private void init() {
         int whiteAreaRank = initWhiteArea();
         initBlackArea(whiteAreaRank + BLANK_AREA_RANK_SIZE);
