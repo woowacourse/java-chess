@@ -17,7 +17,9 @@ class ChessBoardTest {
     @DisplayName("초기화 시 32개의 체스말이 세팅된다.")
     void getChessBoardTest() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoardGenerator generator = new ChessBoardGenerator();
+        Map<Position, Piece> setupBoard = generator.generate();
+        ChessBoard chessBoard = new ChessBoard(setupBoard);
 
         // when
         Map<Position, Piece> setResult = chessBoard.getChessBoard();
@@ -25,4 +27,6 @@ class ChessBoardTest {
         // then
         assertThat(setResult).hasSize(32);
     }
+
+
 }
