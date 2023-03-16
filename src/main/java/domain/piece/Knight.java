@@ -5,7 +5,7 @@ import domain.coordinate.Route;
 
 import java.util.Collections;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     public Knight(final Color color) {
         super(color);

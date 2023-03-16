@@ -6,7 +6,7 @@ import domain.coordinate.Route;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     public Queen(final Color color) {
         super(color);
