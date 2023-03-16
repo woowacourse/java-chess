@@ -14,7 +14,8 @@ public class Path {
 
     public void validateObstacle(final Set<Position> keySet) {
         final List<Position> positions = new ArrayList<>(this.positions);
-        if (positions.retainAll(keySet)) {
+        positions.retainAll(keySet);
+        if (positions.size() != 0) {
             throw new IllegalStateException("중간에 다른 기물이 존재합니다.");
         }
     }
