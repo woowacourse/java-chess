@@ -27,7 +27,7 @@ class StartingPiecesGeneratorTest {
         final List<Piece> pieces = new StartingPiecesGenerator().generate();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
-                .contains(
+                .containsExactlyInAnyOrder(
                         tuple(new Position(File.A, Rank.EIGHT), Color.BLACK, Rook.class),
                         tuple(new Position(File.B, Rank.EIGHT), Color.BLACK, Knight.class),
                         tuple(new Position(File.C, Rank.EIGHT), Color.BLACK, Bishop.class),

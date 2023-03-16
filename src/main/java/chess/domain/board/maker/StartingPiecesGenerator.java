@@ -40,9 +40,8 @@ public class StartingPiecesGenerator implements PiecesGenerator {
     @Override
     public List<Piece> generate() {
         final List<Piece> startingPieces = new ArrayList<>();
-        for (Color color : Color.values()) {
-            startingPieces.addAll(makeStartingPieces(color));
-        }
+        startingPieces.addAll(makeStartingPieces(BLACK));
+        startingPieces.addAll(makeStartingPieces(WHITE));
         return startingPieces;
     }
 
