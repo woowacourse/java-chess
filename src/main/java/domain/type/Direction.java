@@ -1,5 +1,6 @@
-package domain;
+package domain.type;
 
+import domain.Location;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.type;
 
 public enum Color {
     WHITE, BLACK

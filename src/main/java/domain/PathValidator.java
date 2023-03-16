@@ -1,5 +1,6 @@
 package domain;
 
+import domain.type.SpecialRule;
 import java.util.List;
 import java.util.stream.IntStream;
 

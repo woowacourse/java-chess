@@ -1,13 +1,12 @@
 package domain.piece;
 
-import domain.Color;
 import domain.Location;
+import domain.type.Color;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
 
-    //TODO : 부정형 수정
     protected final Color color;
     protected final PieceType pieceType;
 
@@ -20,13 +19,6 @@ public abstract class Piece {
 
     public boolean isSameType(final PieceType pieceType) {
         return this.pieceType.equals(pieceType);
-    }
-
-    public boolean isSameColor(final Piece piece) {
-        if (piece == null) {
-            return false;
-        }
-        return this.color.equals(piece.color);
     }
 
     public boolean isDifferentColor(final Piece piece) {

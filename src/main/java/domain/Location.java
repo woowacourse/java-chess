@@ -53,22 +53,6 @@ public class Location {
         return colDifference == rowDifference;
     }
 
-    public boolean isRightHigh(final Location location) {
-        return isRightThan(location) && isHigherThan(location);
-    }
-
-    public boolean isLeftHigh(final Location location) {
-        return !isRightThan(location) && isHigherThan(location);
-    }
-
-    public boolean isRightLow(final Location location) {
-        return isRightThan(location) && !isHigherThan(location);
-    }
-
-    public boolean isLeftLow(final Location location) {
-        return !isRightThan(location) && !isHigherThan(location);
-    }
-
     public boolean isHigherThan(Location location) {
         return this.row > location.getRow();
     }

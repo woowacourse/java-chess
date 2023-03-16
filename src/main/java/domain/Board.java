@@ -10,21 +10,20 @@ public class Board {
 
     private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private final PathValidator pathValidator;
-    private final List<Line> lines;
+    private List<Line> lines;
 
     public Board(PathValidator pathValidator) {
-        this.lines = initialize();
         this.pathValidator = pathValidator;
     }
 
-    private List<Line> initialize() {
+    public void initialize() {
         final List<Line> lines = new ArrayList<>();
         lines.add(Line.whiteBack());
         lines.add(Line.whiteFront());
         IntStream.range(0, 4).mapToObj(count -> Line.empty()).forEach(lines::add);
         lines.add(Line.blackFront());
         lines.add(Line.blackBack());
-        return lines;
+        this.lines = lines;
     }
 
     public void moveWhite(final Location start, final Location end) {

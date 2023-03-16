@@ -1,8 +1,8 @@
 package domain.piece;
 
-import domain.Color;
-import domain.Direction;
 import domain.Location;
+import domain.type.Color;
+import domain.type.Direction;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

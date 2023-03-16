@@ -1,5 +1,6 @@
-package domain;
+package domain.type;
 
+import domain.SpecialValidateDto;
 import domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.function.BiPredicate;

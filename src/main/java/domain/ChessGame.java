@@ -2,12 +2,16 @@ package domain;
 
 public class ChessGame {
 
-    private final Board board;
+    private Board board;
     private boolean isWhite;
 
     public ChessGame() {
-        this.board = new Board(new PathValidator());
         this.isWhite = true;
+    }
+
+    public void initialize() {
+        this.board = new Board(new PathValidator());
+        board.initialize();
     }
 
     public void move(final Location start, final Location end) {

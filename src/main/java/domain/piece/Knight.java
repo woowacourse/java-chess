@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.Color;
 import domain.Location;
+import domain.type.Color;
 import java.util.List;
 
 public class Knight extends Piece {
