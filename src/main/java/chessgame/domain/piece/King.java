@@ -25,4 +25,9 @@ public class King implements Piece {
     public boolean isMovable(Point source, Point target) {
         return source.isAllDirectionOneDistance(target);
     }
+
+    @Override
+    public Team team() {
+        return team;
+    }
 }

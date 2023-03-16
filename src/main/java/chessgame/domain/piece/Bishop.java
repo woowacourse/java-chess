@@ -25,4 +25,9 @@ public class Bishop implements Piece {
     public boolean isMovable(Point source, Point target) {
         return source.isDiagonal(target);
     }
+
+    @Override
+    public Team team() {
+        return team;
+    }
 }

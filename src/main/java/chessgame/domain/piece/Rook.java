@@ -16,6 +16,11 @@ public class Rook implements Piece {
         return new Rook(team);
     }
 
+    @Override
+    public Team team() {
+        return team;
+    }
+
     public String toString() {
         return team.calculate(ORIGINAL_NAME);
     }

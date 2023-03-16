@@ -25,4 +25,9 @@ public class Knight implements Piece {
     public boolean isMovable(Point source, Point target) {
         return source.isKnightMove(target);
     }
+
+    @Override
+    public Team team() {
+        return team;
+    }
 }

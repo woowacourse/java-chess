@@ -20,13 +20,26 @@ public class ChessController {
         outputView.printStartMessage();
         Game game = new Game(new Board(ChessBoardFactory.create()));
         do {
-            Command command = readCommand();
-            setButton(game, command);
-            if (command.isMove()) {
-                game.movePiece(command.makePoints());
-            }
-            outputView.printChessBoard(game.board());
+            oneTurn(game);
         } while (game.isStart());
+    }
+
+    private void oneTurn(Game game) {
+        Command command = readCommand();
+        setButton(game, command);
+        if (command.isMove()) {
+            movePiece(game, command);
+        }
+        outputView.printChessBoard(game.board());
+    }
+
+    private void movePiece(Game game, Command command) {
+        try {
+            game.movePiece(command.makePoints());
+        } catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            oneTurn(game);
+        }
     }
 
     private void setButton(Game game, Command command) {

@@ -26,6 +26,11 @@ public class Pawn implements Piece {
     }
 
     @Override
+    public Team team() {
+        return team;
+    }
+
+    @Override
     public String toString() {
         return team.calculate(ORIGINAL_NAME);
     }

@@ -17,6 +17,11 @@ public class Queen implements Piece {
     }
 
     @Override
+    public Team team() {
+        return team;
+    }
+
+    @Override
     public boolean isMovable(Point source, Point target) {
         return source.isHorizontal(target) || source.isVertical(target) || source.isDiagonal(target);
     }

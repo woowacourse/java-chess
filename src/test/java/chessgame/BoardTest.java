@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chessgame.domain.Board;
+import chessgame.domain.Team;
 import chessgame.util.ChessBoardFactory;
 
 class BoardTest {
@@ -22,7 +23,7 @@ class BoardTest {
     void Should_True_When_SourcePointHasPiece() {
         Board board = new Board(ChessBoardFactory.create());
 
-        assertThat(board.checkSource(A1)).isTrue();
+        assertDoesNotThrow(()->board.checkSource(A1, Team.WHITE));
     }
 
     @Test
@@ -30,7 +31,7 @@ class BoardTest {
     void Should_True_When_TargetPointHasPiece() {
         Board board = new Board(ChessBoardFactory.create());
 
-        assertThat(board.checkTarget(F7)).isTrue();
+        assertThat(board.checkTarget(F7,Team.WHITE)).isTrue();
     }
 
     @Test
