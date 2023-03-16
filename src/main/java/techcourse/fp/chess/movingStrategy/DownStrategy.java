@@ -3,7 +3,7 @@ package techcourse.fp.chess.movingStrategy;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.Rank;
 
-public class DownStrategy implements MovingStrategy {
+public final class DownStrategy implements MovingStrategy {
 
     @Override
     public boolean movable(final Position source, final Position target) {

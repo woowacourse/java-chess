@@ -3,9 +3,9 @@ package techcourse.fp.chess.view;
 import java.util.List;
 import techcourse.fp.chess.dto.PieceDto;
 
-public class OutputView {
+public final class OutputView {
 
-    public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");

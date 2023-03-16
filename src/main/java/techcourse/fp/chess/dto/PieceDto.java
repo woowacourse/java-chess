@@ -9,7 +9,7 @@ import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.Rank;
 import techcourse.fp.chess.view.PieceRender;
 
-public class PieceDto {
+public final class PieceDto {
 
     private final String name;
 

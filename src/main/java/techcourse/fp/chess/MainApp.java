@@ -5,7 +5,7 @@ import techcourse.fp.chess.controller.ChessController;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
-public class MainApp {
+public final class MainApp {
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {

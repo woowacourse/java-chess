@@ -4,7 +4,7 @@ import techcourse.fp.chess.domain.File;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.Rank;
 
-public class LeftUpStrategy implements MovingStrategy {
+public final class LeftUpStrategy implements MovingStrategy {
 
     @Override
     public boolean movable(final Position source, final Position target) {

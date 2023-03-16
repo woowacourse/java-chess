@@ -11,7 +11,7 @@ import techcourse.fp.chess.movingStrategy.RightDownStrategy;
 import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 import techcourse.fp.chess.movingStrategy.UpStrategy;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     public static final int INITIAL_WHITE_RANK = 2;
     public static final int INITIAL_BLACK_RANK = 7;

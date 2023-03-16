@@ -9,7 +9,7 @@ import techcourse.fp.chess.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.movingStrategy.RightDownStrategy;
 import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     {
         final List<MovingStrategy> rawStrategies = List.of(new RightUpStrategy(), new RightDownStrategy(),

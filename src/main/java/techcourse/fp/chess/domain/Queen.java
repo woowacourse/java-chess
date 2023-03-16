@@ -13,7 +13,7 @@ import techcourse.fp.chess.movingStrategy.RightStrategy;
 import techcourse.fp.chess.movingStrategy.RightUpStrategy;
 import techcourse.fp.chess.movingStrategy.UpStrategy;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     {
         final List<MovingStrategy> rawStrategies = List.of(

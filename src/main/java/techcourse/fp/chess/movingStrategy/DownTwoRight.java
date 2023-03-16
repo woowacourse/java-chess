@@ -1,6 +1,6 @@
 package techcourse.fp.chess.movingStrategy;
 
-public class DownTwoRight extends KnightMovingStrategy {
+public final class DownTwoRight extends KnightMovingStrategy {
 
     private DownTwoRight(final int horizontalMovement, final int verticalMovement) {
         super(horizontalMovement, verticalMovement);

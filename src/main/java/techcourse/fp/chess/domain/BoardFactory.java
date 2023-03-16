@@ -3,7 +3,7 @@ package techcourse.fp.chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardFactory {
+public final class BoardFactory {
 
     private BoardFactory() {
         throw new AssertionError("생성할 수 없는 클래스입니다.");

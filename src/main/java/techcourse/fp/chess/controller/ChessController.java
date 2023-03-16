@@ -9,7 +9,7 @@ import techcourse.fp.chess.dto.PieceDto;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
-public class ChessController {
+public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;

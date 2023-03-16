@@ -9,7 +9,7 @@ import techcourse.fp.chess.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.movingStrategy.RightStrategy;
 import techcourse.fp.chess.movingStrategy.UpStrategy;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     {
         final List<MovingStrategy> rawStrategies = List.of(new UpStrategy(), new DownStrategy(),
