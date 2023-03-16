@@ -17,22 +17,21 @@ public abstract class Piece {
     public abstract boolean canMove(Position source, Position target);
 
     protected boolean canMoveDiagonal(Position source, Position target) {
-        int xDistance = source.getX() - target.getX();
-        int yDistance = source.getY() - target.getY();
-        if (xDistance == 0 || yDistance == 0) {
-            return false;
-        }
-        return Math.abs(yDistance / xDistance) == 1;
+        int xDistance = source.getXDistanceTo(target);
+        int yDistance = source.getYDistanceTo(target);
+        return yDistance == xDistance;
     }
 
     protected boolean canMoveCross(Position source, Position target) {
-        if (source.isSameX(target) && !source.isSameY(target)) {
-            return true;
-        }
-        if (!source.isSameX(target) && source.isSameY(target)) {
-            return true;
-        }
-        return false;
+        return source.isSameXTo(target) || source.isSameYTo(target);
+    }
+
+    public boolean isSameTeamWith(Piece other) {
+        return this.team == other.team;
+    }
+
+    public boolean isRoleOf(Role role) {
+        return this.role == role;
     }
 
     public Role getRole() {
