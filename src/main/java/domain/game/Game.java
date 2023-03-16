@@ -3,6 +3,7 @@ package domain.game;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import domain.piece.Position;
+import domain.piece.Side;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,12 @@ public class Game {
         return new Game(new ChessBoardGenerator().generate());
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
+    public void move(Side side, Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
+        //TODO 디미터의 법칙 지키기
+        if (!sourcePiece.getSide().equals(side)) {
+            throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
+        }
         validateMoving(sourcePosition, targetPosition, sourcePiece);
         movePiece(sourcePosition, targetPosition, sourcePiece);
     }
