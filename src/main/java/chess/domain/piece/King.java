@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Direction;
 import chess.domain.Path;
 import chess.domain.TeamColor;
-import chess.domain.position.Position;
+import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 

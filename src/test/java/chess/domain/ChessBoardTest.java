@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
