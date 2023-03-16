@@ -1,6 +1,9 @@
 package chess.board;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum File {
     A(1),
@@ -24,6 +27,19 @@ public enum File {
                 .filter(file -> file.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("File의 index는 1~8이여야합니다."));
+    }
+
+    public static List<File> getBetween(final File from, final File to) {
+        int min = Math.min(from.index, to.index);
+        int max = Math.max(from.index, to.index);
+
+        return IntStream.rangeClosed(min, max)
+                .mapToObj(File::of)
+                .collect(Collectors.toList());
+    }
+
+    public static int calculateInterval(final File from, final File to) {
+        return Math.abs(from.index - to.index);
     }
 
     public int getIndex() {

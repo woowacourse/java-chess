@@ -1,6 +1,9 @@
 package chess.board;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum Rank {
     EIGHT(8),
@@ -24,6 +27,19 @@ public enum Rank {
                 .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
+    }
+
+    public static List<Rank> getBetween(final Rank from, final Rank to) {
+        int min = Math.min(from.index, to.index);
+        int max = Math.max(from.index, to.index);
+
+        return IntStream.rangeClosed(min, max)
+                .mapToObj(Rank::of)
+                .collect(Collectors.toList());
+    }
+
+    public static int calculateInterval(final Rank from, final Rank to) {
+        return Math.abs(from.index - to.index);
     }
 
     public int getIndex() {

@@ -10,8 +10,12 @@ import chess.piece.Queen;
 import chess.piece.Rook;
 import chess.piece.Team;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 // TODO : 킹, 룩 이동 못하는거 검증 구현 완료 했으니..
 // TODO : 나머지 말들이 이동 못하는거 검증 구현하고 테스트 만들기.
@@ -73,14 +77,39 @@ public class ChessBoard {
         }
 
         if (fromPiece.isBishop() && fromPiece.isMovable(from, to, toPiece)) {
-            if (from.getRank() == to.getRank()) {
-                validateRookByFile(from, to, fromPiece);
-            }
-            if (from.getFile() == to.getFile()) {
-                validateRookByRank(from, to, fromPiece);
-            }
-
+            validateBishop(from, to);
             move(from, to);
+        }
+    }
+
+    private void validateBishop(Position from, Position to) {
+        List<File> files = File.getBetween(from.getFile(), to.getFile());
+        List<Rank> ranks = Rank.getBetween(from.getRank(), to.getRank());
+
+        List<Rank> cutRanks = IntStream.range(1, ranks.size() - 1)
+                .mapToObj(ranks::get)
+                .collect(Collectors.toList());
+
+        List<File> cutFiles = IntStream.range(1, files.size() - 1)
+                .mapToObj(files::get)
+                .collect(Collectors.toList());
+
+        if (from.getFile().getIndex() > to.getFile().getIndex()) {
+            Collections.reverse(cutFiles);
+        }
+
+        if (from.getRank().getIndex() > to.getRank().getIndex()) {
+            Collections.reverse(cutRanks);
+        }
+
+        List<Position> collect = IntStream.range(0, cutFiles.size())
+                .mapToObj(index -> new Position(cutFiles.get(index), cutRanks.get(index)))
+                .collect(Collectors.toList());
+
+        for (final Position position : collect) {
+            if (!piecePosition.get(position).isEmpty()) {
+                throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
+            }
         }
     }
 
@@ -98,7 +127,6 @@ public class ChessBoard {
 
         for (int i = min; i < max; i++) {
             Piece validationPiece = piecePosition.get(new Position(File.of(i), from.getRank()));
-
             if (!validationPiece.isEmpty()) {
                 throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
             }
