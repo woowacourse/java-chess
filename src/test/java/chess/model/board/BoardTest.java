@@ -1,12 +1,6 @@
 package chess.model.board;
 
-import static chess.model.board.PositionFixture.A4;
-import static chess.model.board.PositionFixture.A5;
-import static chess.model.board.PositionFixture.B4;
-import static chess.model.board.PositionFixture.B5;
-import static chess.model.board.PositionFixture.C4;
-import static chess.model.board.PositionFixture.C5;
-import static chess.model.piece.PieceColor.*;
+import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
 import static chess.model.piece.PieceType.KING;
 import static chess.model.piece.PieceType.KNIGHT;
@@ -14,27 +8,19 @@ import static chess.model.piece.PieceType.PAWN;
 import static chess.model.piece.PieceType.QUEEN;
 import static chess.model.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Type;
-import chess.model.piece.PieceColor;
-import chess.model.piece.PieceType;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
 

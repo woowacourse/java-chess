@@ -7,7 +7,7 @@ public abstract class AbstractSquare implements Square {
 
     private final Position position;
 
-    public AbstractSquare(final Position position) {
+    AbstractSquare(final Position position) {
         this.position = position;
     }
 

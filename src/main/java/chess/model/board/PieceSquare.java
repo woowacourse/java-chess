@@ -11,44 +11,9 @@ public class PieceSquare extends AbstractSquare {
 
     private final Piece piece;
 
-    public PieceSquare(final Position position, final Piece piece) {
+    PieceSquare(final Position position, final Piece piece) {
         super(position);
         this.piece = piece;
-    }
-
-    @Override
-    public Square movePiece(final Position position) {
-        return new PieceSquare(position, this.piece);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean isSameTeam(final PieceColor pieceColor) {
-        return piece.isSameTeam(pieceColor);
-    }
-
-    @Override
-    public Type getType() {
-        return piece.getType();
-    }
-
-    @Override
-    public Color getColor() {
-        return piece.getColor();
-    }
-
-    @Override
-    public Piece pick() {
-        return piece.pick();
-    }
-
-    @Override
-    public boolean hasPawn() {
-        return piece.isPawn();
     }
 
     @Override
@@ -83,5 +48,40 @@ public class PieceSquare extends AbstractSquare {
     @Override
     public void validatePassable() {
         throw new IllegalArgumentException("해당 경로로 이동할 수 없습니다");
+    }
+
+    @Override
+    public Piece pick() {
+        return piece.pick();
+    }
+
+    @Override
+    public Square movePiece(final Position position) {
+        return new PieceSquare(position, this.piece);
+    }
+
+    @Override
+    public boolean hasPawn() {
+        return piece.isPawn();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isSameTeam(final PieceColor pieceColor) {
+        return piece.isSameTeam(pieceColor);
+    }
+
+    @Override
+    public Type getType() {
+        return piece.getType();
+    }
+
+    @Override
+    public Color getColor() {
+        return piece.getColor();
     }
 }
