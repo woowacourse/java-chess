@@ -1,6 +1,13 @@
 package chess.domain.board;
 
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public enum File {
     A("A", 1),
@@ -12,6 +19,8 @@ public enum File {
     G("G", 7),
     H("H", 8),
     ;
+
+    private static final int START_EXCLUSIVE = 1;
 
     private final String command;
     private final int position;
@@ -28,11 +37,22 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("파일은 A ~ H 사이의 값이어야 합니다."));
     }
 
-    public static File from(final int position) {
+    private static File from(final int position) {
         return Arrays.stream(values())
                 .filter(value -> value.position == position)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("위치 값은 1 ~ 8 사이의 값이어야 합니다."));
+    }
+
+    public List<File> between(final File file) {
+        final List<File> result = IntStream.range(min(position, file.position), max(position, file.position))
+                .skip(START_EXCLUSIVE)
+                .mapToObj(File::from)
+                .collect(toList());
+        if (position > file.position) {
+            Collections.reverse(result);
+        }
+        return result;
     }
 
     public int calculateGap(final File target) {
