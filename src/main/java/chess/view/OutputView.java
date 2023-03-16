@@ -44,25 +44,25 @@ public class OutputView {
 
     private void printPiece(final String type, final String team) {
         if (Objects.equals(type, "EMPTY_PIECE")) {
-            System.out.print(".");
+            System.out.print(" . ");
         }
         if (Objects.equals(type, "PAWN")) {
-            printLetter("p", team);
+            printLetter(" p ", team);
         }
         if (Objects.equals(type, "ROOK")) {
-            printLetter("r", team);
+            printLetter(" r ", team);
         }
         if (Objects.equals(type, "KNIGHT")) {
-            printLetter("n", team);
+            printLetter(" n ", team);
         }
         if (Objects.equals(type, "BISHOP")) {
-            printLetter("b", team);
+            printLetter(" b ", team);
         }
         if (Objects.equals(type, "QUEEN")) {
-            printLetter("q", team);
+            printLetter(" q ", team);
         }
         if (Objects.equals(type, "KING")) {
-            printLetter("k", team);
+            printLetter(" k ", team);
         }
     }
 
