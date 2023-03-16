@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Position;
+import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
 import java.util.Objects;
 
@@ -16,6 +17,10 @@ public class Square {
 
     public Square replacePiece(final Piece piece) {
         return new Square(this.position, piece);
+    }
+
+    public boolean isEmptyPiece() {
+        return piece instanceof EmptyPiece;
     }
 
     public Position getPosition() {

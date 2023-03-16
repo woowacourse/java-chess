@@ -39,4 +39,17 @@ class SquareTest {
 
         assertThat(replacedSquare.getPiece()).isInstanceOf(Rook.class);
     }
+
+    @Test
+    @DisplayName("piece가 존재하지 않으면 true를 반환한다.")
+    void isEmptyPiece_true() {
+        assertThat(square.isEmptyPiece()).isTrue();
+    }
+
+    @Test
+    @DisplayName("piece가 존재하면 false를 반환한다.")
+    void isEmptyPiece_false() {
+        Square replacedSquare = square.replacePiece(new Rook(Team.BLACK));
+        assertThat(replacedSquare.isEmptyPiece()).isFalse();
+    }
 }
