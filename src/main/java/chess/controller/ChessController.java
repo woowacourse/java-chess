@@ -24,7 +24,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
 
-        inputView.printStartChess();
+        inputView.printStartMessage();
 
         if (isStartCommand()) {
             extracted(chessGame);

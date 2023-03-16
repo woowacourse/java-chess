@@ -11,7 +11,7 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public void printStartChess() {
+    public void printStartMessage() {
         System.out.println(START_MESSAGE);
         System.out.println(COMMAND_MESSAGE);
     }
