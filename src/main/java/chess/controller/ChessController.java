@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
@@ -27,16 +26,8 @@ public class ChessController {
         inputView.printStartMessage();
 
         if (isStartCommand()) {
-            extracted(chessGame);
+            play(chessGame);
         }
-    }
-
-    private void extracted(ChessGame chessGame) {
-        Command command;
-        do {
-            printChessBoard(chessGame.getChessboard());
-            command = retryOnInvalidUserInput(() -> play(chessGame));
-        } while (command != Command.END);
     }
 
     private boolean isStartCommand() {
@@ -45,7 +36,17 @@ public class ChessController {
         return userCommand == Command.START;
     }
 
-    private Command play(ChessGame chessGame) {
+    private List<String> requestCommand() {
+        return retryOnInvalidUserInput(inputView::requestCommand);
+    }
+
+    private void play(ChessGame chessGame) {
+        do {
+            outputView.printChessBoard(chessGame.getChessboard());
+        } while (retryOnInvalidUserInput(() -> handleCommand(chessGame)) != Command.END);
+    }
+
+    private Command handleCommand(ChessGame chessGame) {
         List<String> command = requestCommand();
 
         if (Command.renderToCommand(command.get(0)) == Command.END) {
@@ -64,12 +65,11 @@ public class ChessController {
         chessGame.move(source, target);
     }
 
-    private void printChessBoard(Chessboard chessboard) {
-        outputView.printChessBoard(chessboard);
-    }
+    private Square makeSquare(String command) {
+        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(0)));
+        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(1)));
 
-    private List<String> requestCommand() {
-        return retryOnInvalidUserInput(inputView::requestCommand);
+        return new Square(file, rank);
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
@@ -79,13 +79,6 @@ public class ChessController {
             outputView.printError(e.getMessage());
             return retryOnInvalidUserInput(request);
         }
-    }
-
-    private Square makeSquare(String command) {
-        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(0)));
-        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(1)));
-
-        return new Square(file, rank);
     }
 
     private enum Command {
