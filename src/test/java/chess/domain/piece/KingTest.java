@@ -8,28 +8,31 @@ import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BishopTest {
+class KingTest {
 
     @Test
-    @DisplayName("비숍은 대각선으로 움직일 수 있다.")
+    @DisplayName("킹은 모든 방향으로 움직일 수 있다.")
     void movableTest() {
-        Bishop bishop = new Bishop(Camp.WHITE);
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.C, Rank.THREE);
+        Piece king = new King(Camp.WHITE);
 
-        boolean result = bishop.isMovable(from, to);
+        Position from = new Position(File.A, Rank.ONE);
+        Position to = new Position(File.A, Rank.TWO);
+
+        boolean result = king.isMovable(from, to);
 
         assertThat(result).isTrue();
     }
 
-    @Test
-    @DisplayName("비숍은 직선으로 움직일 수 없다.")
-    void movableFailStraightTest() {
-        Bishop bishop = new Bishop(Camp.WHITE);
-        Position from = new Position(File.A, Rank.ONE);
-        Position to = new Position(File.A, Rank.THREE);
 
-        boolean result = bishop.isMovable(from, to);
+    @Test
+    @DisplayName("킹은 한 칸만 움직일 수 있다.")
+    void movableSizeTest() {
+        Piece king = new King(Camp.WHITE);
+
+        Position from = new Position(File.A, Rank.ONE);
+        Position to = new Position(File.C, Rank.THREE);
+
+        boolean result = king.isMovable(from, to);
 
         assertThat(result).isFalse();
     }
