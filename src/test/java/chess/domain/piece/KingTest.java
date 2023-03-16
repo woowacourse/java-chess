@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.board.FileCoordinate.C;
-import static chess.domain.board.RankCoordinate.FIVE;
-import static chess.domain.board.RankCoordinate.FOUR;
+import static chess.domain.PositionFixture.C_4;
+import static chess.domain.PositionFixture.C_5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.FileCoordinate;
@@ -18,9 +17,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class KingTest {
-
-    private static final Position C_4 = new Position(C, FOUR);
-    private static final Position C_5 = new Position(C, FIVE);
 
     @ParameterizedTest
     @CsvSource(value = {"B:FIVE:true", "D:THREE:true", "E:SIX:false", "C:FOUR:false"}, delimiter = ':')

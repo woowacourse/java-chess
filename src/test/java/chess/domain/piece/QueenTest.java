@@ -1,13 +1,15 @@
 package chess.domain.piece;
 
-import static chess.domain.board.FileCoordinate.C;
-import static chess.domain.board.FileCoordinate.D;
-import static chess.domain.board.FileCoordinate.E;
-import static chess.domain.board.FileCoordinate.F;
-import static chess.domain.board.RankCoordinate.FIVE;
-import static chess.domain.board.RankCoordinate.FOUR;
-import static chess.domain.board.RankCoordinate.SEVEN;
-import static chess.domain.board.RankCoordinate.SIX;
+import static chess.domain.PositionFixture.C_4;
+import static chess.domain.PositionFixture.C_5;
+import static chess.domain.PositionFixture.C_6;
+import static chess.domain.PositionFixture.C_7;
+import static chess.domain.PositionFixture.D_4;
+import static chess.domain.PositionFixture.D_5;
+import static chess.domain.PositionFixture.E_4;
+import static chess.domain.PositionFixture.E_6;
+import static chess.domain.PositionFixture.F_4;
+import static chess.domain.PositionFixture.F_7;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.FileCoordinate;
@@ -23,18 +25,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class QueenTest {
-
-    private static final Position C_4 = new Position(C, FOUR);
-    private static final Position D_4 = new Position(D, FOUR);
-    private static final Position E_4 = new Position(E, FOUR);
-    private static final Position F_4 = new Position(F, FOUR);
-    private static final Position C_5 = new Position(C, FIVE);
-    private static final Position C_6 = new Position(C, SIX);
-    private static final Position C_7 = new Position(C, SEVEN);
-    private static final Position D_5 = new Position(D, FIVE);
-    private static final Position E_6 = new Position(E, SIX);
-    private static final Position F_7 = new Position(F, SEVEN);
-
 
     @ParameterizedTest
     @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false", "B:SIX:false", "A:FOUR:true",

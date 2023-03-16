@@ -37,7 +37,7 @@ public class Pawn extends Piece {
         int sourceRankNumber = sourcePosition.getRow();
         int targetRankNumber = targetPosition.getRow();
         int direction = this.getColor().getDirection();
-        int diagonalRankNumber = sourceRankNumber + (2 * direction);
+        int diagonalRankNumber = sourceRankNumber + direction;
         int sourceFileNumber = sourcePosition.getColumn();
         int targetFileNumber = targetPosition.getColumn();
 
