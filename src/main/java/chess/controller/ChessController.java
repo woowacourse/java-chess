@@ -30,21 +30,12 @@ public final class ChessController {
         repeatPlay();
     }
 
-    private void repeatPlay() {
-        try {
-            playGameUntilEnd();
-        } catch (RuntimeException e) {
-            outputView.printErrorMesage(e);
-            outputView.printGuideMessage();
-            repeatPlay();
-        }
-    }
-
     private void repeatReadStart() {
         try {
             startByCommand();
         } catch (RuntimeException e) {
             outputView.printErrorMesage(e);
+            outputView.printGuideMessage();
             repeatReadStart();
         }
     }
@@ -56,6 +47,16 @@ public final class ChessController {
         }
         List<Squares> board = chessGame.getBoard();
         printBoard(board);
+    }
+
+    private void repeatPlay() {
+        try {
+            playGameUntilEnd();
+        } catch (RuntimeException e) {
+            outputView.printErrorMesage(e);
+            outputView.printGuideMessage();
+            repeatPlay();
+        }
     }
 
     private void printBoard(final List<Squares> board) {
@@ -71,6 +72,9 @@ public final class ChessController {
 
     private void playGameUntilEnd() {
         List<String> command = inputView.inputCommand();
+        if (Command.from(command.get(COMMAND_INDEX)) == Command.START) {
+            throw new IllegalArgumentException("게임을 시작한 후 시작 명령어를 입력할 수 없습니다.");
+        }
         while (Command.from(command.get(COMMAND_INDEX)) != Command.END) {
             command = playGame(command);
         }
