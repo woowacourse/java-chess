@@ -18,37 +18,63 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private ChessGame chessGame;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        chessGame = ChessGame.createWithUninitializedBoard();
     }
 
     public void run() {
         outputView.printGameStartGuideMessage();
 
-        GameCommand command;
-        ChessGame chessGame = null;
-        do {
+        while (true) {
             final List<String> commandInputs = inputView.readGameCommand();
-            command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
 
+            processStartCommand(commandInputs);
 
-            if (command == GameCommand.START) {
-                chessGame = new ChessGame(new StartingPiecesGenerator());
-                outputView.printBoard(chessGame.getExistingPieces());
+            processMoveCommand(commandInputs);
+
+            if (GameCommand.findBy(commandInputs.get(COMMAND_INDEX)) == GameCommand.END) {
+                break;
             }
-            if ((command == GameCommand.MOVE) && (chessGame != null)) {
-                final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
-                final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
+        }
 
-                chessGame.move(currentPosition, targetPosition);
+    }
 
-                outputView.printBoard(chessGame.getExistingPieces());
-            }
+    private void processStartCommand(final List<String> commandInputs) {
+        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
+        if (command == GameCommand.START) {
+            validateWithStartCommand();
+            chessGame = ChessGame.createWith(new StartingPiecesGenerator());
+            outputView.printBoard(chessGame.getExistingPieces());
+        }
+    }
 
-        } while (command != GameCommand.END);
+    private void validateWithStartCommand() {
+        if (chessGame.isInitialized()) {
+            throw new IllegalArgumentException("게임이 이미 진행중입니다.");
+        }
+    }
 
+    private void processMoveCommand(final List<String> commandInputs) {
+        final GameCommand command = GameCommand.findBy(commandInputs.get(COMMAND_INDEX));
+        if ((command == GameCommand.MOVE)) {
+            validateWithMoveCommand();
+            final Position currentPosition = generatePositionBy(commandInputs.get(MOVE_CURRENT_POSITION_INDEX));
+            final Position targetPosition = generatePositionBy(commandInputs.get(MOVE_TARGET_POSITION_INDEX));
+
+            chessGame.move(currentPosition, targetPosition);
+
+            outputView.printBoard(chessGame.getExistingPieces());
+        }
+    }
+
+    private void validateWithMoveCommand() {
+        if (!chessGame.isInitialized()) {
+            throw new IllegalArgumentException("아직 게임이 생성되지 않았습니다.");
+        }
     }
 
     private Position generatePositionBy(String fileRankInput) {

@@ -22,7 +22,7 @@ class ChessGameTest {
     @Test
     @DisplayName("턴이 바뀌었는지 확인한다")
     void change_turn_test() {
-        final ChessGame chessGame = new ChessGame(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new Pawn(A, TWO, WHITE)
         )));
 
@@ -35,7 +35,7 @@ class ChessGameTest {
     @Test
     @DisplayName("입력 받은 현재 위치 말 색상이 이동할 차례가 아니면, 예외를 던진다.")
     void throws_exception_if_current_turn_color_is_different_with_piece_color_in_current_position() {
-        final ChessGame chessGame = new ChessGame(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new Pawn(A, TWO, WHITE),
                 new Pawn(A, SEVEN, BLACK)
         )));
