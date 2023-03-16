@@ -21,6 +21,7 @@ class BoardTest {
         //given
         //when
         final Board board = new Board(new PathValidator());
+        board.initialize();
 
         //then
         assertThat(board).extracting("lines")
@@ -45,6 +46,7 @@ class BoardTest {
         @Test
         public void testMoveFailBlack() {
             final Board board = new Board(new PathValidator());
+            board.initialize();
 
             assertThatThrownBy(
                 () -> board.moveWhite(BLACK_PAWN_START, BLACK_PAWN_END)
@@ -55,6 +57,7 @@ class BoardTest {
         @Test
         public void testMoveFailWhite() {
             final Board board = new Board(new PathValidator());
+            board.initialize();
 
             assertThatThrownBy(
                 () -> board.moveBlack(WHITE_PAWN_START, WHITE_PAWN_END)
@@ -71,6 +74,7 @@ class BoardTest {
         public void testMoveWhite() {
             //given
             final Board board = new Board(new PathValidator());
+            board.initialize();
 
             //when
             board.moveWhite(WHITE_PAWN_START, WHITE_PAWN_END);
@@ -85,6 +89,7 @@ class BoardTest {
         public void testMoveBlack() {
             //given
             final Board board = new Board(new PathValidator());
+            board.initialize();
 
             //when
             board.moveBlack(BLACK_PAWN_START, BLACK_PAWN_END);

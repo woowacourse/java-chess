@@ -23,6 +23,7 @@ class ChessGameTest {
     @TestFactory
     public Stream<DynamicTest> testMoveSuccess() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.initialize();
         return Stream.of(
             DynamicTest.dynamicTest("첫 순서에 흰색 진영의 폰을 한칸 전진한다.", () -> {
                     assertDoesNotThrow(
@@ -53,6 +54,7 @@ class ChessGameTest {
         @Test
         public void testMoveFailBlack() {
             final ChessGame chessGame = new ChessGame();
+            chessGame.initialize();
 
             assertThatThrownBy(
                 () -> chessGame.move(BLACK_PAWN_START, BLACK_PAWN_END)
@@ -63,6 +65,7 @@ class ChessGameTest {
         @Test
         public void testMoveFailWhite() {
             final ChessGame chessGame = new ChessGame();
+            chessGame.initialize();
             chessGame.move(WHITE_PAWN_START, WHITE_PAWN_END);
 
             assertThatThrownBy(
