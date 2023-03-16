@@ -14,10 +14,10 @@ public class KingState implements MoveState {
 
     @Override
     public boolean canMove(int x, int y, ColorCompareResult colorCompareResult) {
-        return validMoveRequest(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
+        return isValidVariance(x, y) && colorCompareResult != ColorCompareResult.SAME_COLOR;
     }
 
-    private boolean validMoveRequest(int x, int y) {
+    private boolean isValidVariance(int x, int y) {
         if (x == 0 && y == 0) {
             return false;
         }
