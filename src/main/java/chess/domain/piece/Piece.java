@@ -8,6 +8,8 @@ import java.util.Set;
 
 public abstract class Piece {
 
+    protected static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "갈 수 없는 위치입니다.";
+
     protected final Color color;
 
     public Piece(final Color color) {
@@ -18,7 +20,7 @@ public abstract class Piece {
 
     protected void validateSamePosition(Position source, Position target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
 

@@ -14,6 +14,8 @@ public enum Rank {
     EIGHT(8);
 
     private static final int NEAR_INDEX = 1;
+    private static final String ILLEGAL_RANK_EXCEPTION_MESSAGE = "존재하지 않는 위치입니다";
+
     private final int value;
 
     Rank(final int value) {
@@ -24,7 +26,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RANK_EXCEPTION_MESSAGE));
     }
 
     public Rank plus() {
@@ -32,7 +34,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == rankPlused)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RANK_EXCEPTION_MESSAGE));
     }
 
     public Rank minus() {
@@ -40,7 +42,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == rankMinused)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RANK_EXCEPTION_MESSAGE));
     }
 
     public boolean isOver(final Rank rank) {

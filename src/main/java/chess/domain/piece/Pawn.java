@@ -22,7 +22,7 @@ public final class Pawn extends Piece {
             validateIsMovableForWhite(source, target);
             return generateTargetPathForWhite(source, target);
         }
-        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
+        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     private Set<Position> generateTargetPathForBlack(final Position source, final Position target) {
@@ -49,13 +49,13 @@ public final class Pawn extends Piece {
 
     private void validateInitWhite(final Position source) {
         if (!source.isWhitePawnInitRank()) {
-            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateInitBlack(final Position source) {
         if (!source.isBlackPawnInitRank()) {
-            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
 

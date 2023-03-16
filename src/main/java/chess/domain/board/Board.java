@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public final class Board {
 
+    private static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "유효한 움직임이 아닙니다.";
+    private static final String NOT_YOUR_TURN_EXCEPTION_MESSAGE = "의 턴이 아닙니다.";
+
     private final List<Squares> board = new ArrayList<>();
 
     public Board() {
@@ -43,13 +46,13 @@ public final class Board {
 
     private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
         if (!sourceSquare.canMovePiece(isEmptySquare, source, target)) {
-            throw new IllegalArgumentException("유효한 움직임이 아닙니다.");
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateLegalSourceColor(final Square sourceSquare, final Color color) {
         if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException(color.name() + "의 턴이 아닙니다.");
+            throw new IllegalArgumentException(color.name() + NOT_YOUR_TURN_EXCEPTION_MESSAGE);
         }
     }
 

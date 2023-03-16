@@ -13,6 +13,8 @@ public enum File {
     H(8);
 
     private static final int NEAR_INDEX = 1;
+    private static final String ILLEGAL_FILE_EXCEPTION_MESSAGE = "존재하지 않는 위치입니다";
+
     private final int value;
 
     File(final int value) {
@@ -23,7 +25,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_FILE_EXCEPTION_MESSAGE));
     }
 
     public File plus() {
@@ -31,7 +33,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == filePlused)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_FILE_EXCEPTION_MESSAGE));
     }
 
     public File minus() {
@@ -39,7 +41,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.value == fileMinused)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_FILE_EXCEPTION_MESSAGE));
     }
 
     public boolean isOver(final File file) {

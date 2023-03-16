@@ -27,7 +27,7 @@ public final class Bishop extends Piece {
             return computePathInclinationNegativeOne(source, target);
         }
 
-        throw new IllegalArgumentException("갈 수 없는 위치입니다.");
+        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
     }
 
     private Set<Position> computePathInclinationNegativeOne(final Position source, final Position target) {
