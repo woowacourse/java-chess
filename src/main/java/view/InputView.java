@@ -2,13 +2,16 @@ package view;
 
 import domain.GameCommand;
 
+import java.util.List;
 import java.util.Scanner;
 
 public final class InputView {
 
+    public static final String DELIMITER = " ";
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static GameCommand readGameCommand() {
-        return GameCommand.of(scanner.nextLine());
+    public static List<String> readUserInput() {
+        String input = scanner.nextLine();
+        return List.of(input.split(DELIMITER));
     }
 }

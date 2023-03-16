@@ -40,4 +40,8 @@ public final class OutputView {
         }
         System.out.print(".");
     }
+
+    public static void printNotStartedGameMessage() {
+        System.out.println("아직 게임이 시작되지 않았습니다.");
+    }
 }
