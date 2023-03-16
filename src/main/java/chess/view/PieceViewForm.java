@@ -1,14 +1,14 @@
 package chess.view;
 
 import chess.domain.Color;
-import chess.domain.Piece;
 import chess.domain.PieceType;
+import chess.domain.piece.Piece;
 
 import java.util.Arrays;
 
 public enum PieceViewForm {
     PAWN(PieceType.PAWN, 'P'),
-    ROOKS(PieceType.ROOKS, 'R'),
+    ROOKS(PieceType.ROOK, 'R'),
     KNIGHT(PieceType.KNIGHT, 'N'),
     BISHOP(PieceType.BISHOP, 'B'),
     QUEEN(PieceType.QUEEN, 'Q'),
@@ -25,10 +25,10 @@ public enum PieceViewForm {
 
     public static String parseToName(final Piece piece) {
         final PieceViewForm findPieceForm = Arrays.stream(PieceViewForm.values())
-                .filter(pieceForm -> pieceForm.type == piece.getType())
+                .filter(pieceForm -> pieceForm.type == piece.getPieceType())
                 .findFirst()
                 .orElseThrow();
-        if (piece.getColor() == Color.BLACK) {
+        if (piece.isSameColor(Color.BLACK)) {
             return String.valueOf(findPieceForm.name);
         }
         return String.valueOf(Character.toLowerCase(findPieceForm.name));
