@@ -61,4 +61,8 @@ public class Game {
         this.chessBoard.put(sourcePosition, new EmptyPiece());
         this.chessBoard.put(targetPosition, sourcePiece);
     }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard;
+    }
 }

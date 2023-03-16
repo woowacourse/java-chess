@@ -10,8 +10,8 @@ public class ChessBoardGenerator {
 
     public Map<Position, Piece> generate() {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-        Arrays.stream(File.values())
-                .forEach(file -> generateEmptyPieceByEachRank(chessBoard, file));
+        Arrays.stream(Rank.values())
+                .forEach(rank -> generateEmptyPieceByEachRank(chessBoard, rank));
 
         generateWhitePiecesExcludePawn(chessBoard);
         generateWhitePawns(chessBoard);
@@ -66,8 +66,8 @@ public class ChessBoardGenerator {
         chessBoard.put(Position.of("h", "7"), Pawn.createOfBlack());
     }
 
-    private void generateEmptyPieceByEachRank(Map<Position, Piece> chessBoard, File file) {
-        Arrays.stream(Rank.values())
-                .forEach(rank -> chessBoard.put(Position.of(file.getText(), rank.getText()), new EmptyPiece()));
+    private void generateEmptyPieceByEachRank(Map<Position, Piece> chessBoard, Rank rank) {
+        Arrays.stream(File.values())
+                .forEach(file -> chessBoard.put(Position.of(file.getText(), rank.getText()), new EmptyPiece()));
     }
 }

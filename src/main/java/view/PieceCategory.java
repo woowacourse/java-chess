@@ -7,7 +7,7 @@ public enum PieceCategory {
     WHITE_BISHOP("b"),
     WHITE_QUEEN("q"),
     WHITE_KING("k"),
-    BLACK_PAWN("Q"),
+    BLACK_PAWN("P"),
     BLACK_ROOK("R"),
     BLACK_KNIGHT("N"),
     BLACK_BISHOP("B"),
