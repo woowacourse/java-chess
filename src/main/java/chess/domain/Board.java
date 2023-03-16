@@ -4,6 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -17,6 +18,7 @@ public class Board {
     
     public static final String OTHER_COLOR_PIECE_ERROR_MESSAGE = "상대편 피스입니다.";
     public static final String NO_PIECE_ERROR_MESSAGE = "피스가 존재하지 않습니다.";
+    public static final String OTHER_PIECE_IN_ROUTE = "경로에 다른 피스가 존재합니다. 이동할 수 없습니다.";
     private final Map<Position, Piece> board;
     
     private Board(final Map<Position, Piece> board) {
@@ -84,5 +86,16 @@ public class Board {
         }
         
         return piece;
+    }
+    
+    public void checkRoute(final Position source, final Position destination) {
+        Direction direction = source.calculateDirection(destination);
+        Position move = source;
+        while (!destination.equals(move)) {
+            move = move.addDirection(direction);
+            if (!board.get(move).isEmpty()) {
+                throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE);
+            }
+        }
     }
 }

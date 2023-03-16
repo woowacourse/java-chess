@@ -27,6 +27,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
     }
     
+    public static File findByIndex(final int index) {
+        return Arrays.stream(values())
+                .filter(value -> value.index == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
+    }
+    
     public String getLabel() {
         return label;
     }
