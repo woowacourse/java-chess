@@ -3,6 +3,8 @@ package domain.piece;
 import domain.Square;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Knight extends Piece {
 
@@ -18,14 +20,19 @@ public class Knight extends Piece {
 
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
-
         Vectorr vector = dest.calculateVector(src);
+        Optional<Vectorr> direction = findDirection(vector);
 
-        for (Vectorr direction : directions) {
-            if (direction.equals(vector)) {
-                return List.of(dest);
-            }
+        if (direction.isEmpty()) {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+
+        return List.of(dest);
+    }
+
+    private Optional<Vectorr> findDirection(Vectorr vector) {
+        return directions.stream()
+            .filter(direction -> direction.equals(vector))
+            .findAny();
     }
 }

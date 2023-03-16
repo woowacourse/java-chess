@@ -3,6 +3,7 @@ package domain.piece;
 import domain.Square;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class King extends Piece {
 
@@ -15,14 +16,18 @@ public class King extends Piece {
 
     @Override
     public List<Square> findRoutes(Square src, Square dest) {
-
         Vectorr vector = dest.calculateVector(src);
+        Optional<DirectionVector> direction = findDirection(vector);
 
-        for (DirectionVector direction : directions) {
-            if (direction.isSameDirection(vector) && vector.getMaxLength() == STEP_SIZE) {
-                return List.of(dest);
-            }
+        if (direction.isEmpty() || vector.getMaxLength() != STEP_SIZE) {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+        return List.of(dest);
+    }
+
+    private Optional<DirectionVector> findDirection(Vectorr vector) {
+        return directions.stream()
+            .filter(direction -> direction.isSameDirection(vector))
+            .findAny();
     }
 }
