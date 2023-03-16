@@ -70,7 +70,6 @@ class BoardTest {
         // given
         Map<Position, Piece> squares = getEmptySquares();
         squares.put(Position.of(3, 3), new Pawn(Team.WHITE));
-        squares.put(Position.of(x, 4), Empty.INSTANCE);
         Board board = new Board(squares);
         
         Position source = Position.of(3, 3);
@@ -109,7 +108,6 @@ class BoardTest {
     void move_EmptySquare() {
         // given
         Map<Position, Piece> squares = getEmptySquares();
-        squares.put(Position.of(3, 3), Empty.INSTANCE);
         Board board = new Board(squares);
 
         Position source = Position.of(3, 3);
@@ -161,5 +159,21 @@ class BoardTest {
         assertThat(squares)
                 .containsEntry(source, Empty.INSTANCE)
                 .containsEntry(target, knight);
+    }
+
+    @Test
+    @DisplayName("같은 위치로 움직이면 예외가 발생한다.")
+    void move_Duplicate_Position() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Board board = new Board(squares);
+
+        Position source = Position.of(2, 2);
+        Position target = Position.of(2, 2);
+
+        // expect
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 같은 위치로 움직일 수 없습니다.");
     }
 }

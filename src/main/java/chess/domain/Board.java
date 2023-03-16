@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
     private final Map<Position, Piece> squares;
@@ -24,12 +25,19 @@ public class Board {
     }
 
     private void validate(Position source, Position target) {
+        validateDuplicate(source, target);
         Piece sourcePiece = squares.get(source);
         Piece targetPiece = squares.get(target);
         validateEmptySquare(sourcePiece);
         validateSameTeam(sourcePiece, targetPiece);
         validateMovement(source, target);
         validatePieceRole(source, target);
+    }
+
+    private void validateDuplicate(Position source, Position target) {
+        if (Objects.equals(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 같은 위치로 움직일 수 없습니다.");
+        }
     }
 
     private void validateEmptySquare(Piece sourcePiece) {
