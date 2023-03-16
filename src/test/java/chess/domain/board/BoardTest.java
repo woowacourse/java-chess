@@ -17,7 +17,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("출발 위치에 말이 존재하지 않으면 예외를 던진다")
     @Test
     void invalidSourcePosition_throws() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("C,THREE");
         var target = createPosition("D,TWO");
 
@@ -29,7 +29,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("목표 위치에 같은 색상의 말이 있으면 예외를 던진다")
     @Test
     void reachSameColor_throws() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("C,ONE");
         var target = createPosition("D,TWO");
 
@@ -41,7 +41,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("기물의 이동 수가 아니면 예외를 던진다")
     @Test
     void pieceNotHasMove_throws() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("C,TWO");
         var target = createPosition("B,THREE");
 
@@ -53,7 +53,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("목표에 도달하는중 다른 기물이 있으면 예외를 던진다")
     @Test
     void canNotCrossOtherPiece_throws() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("D,ONE");
         var target = createPosition("A,FOUR");
 
@@ -68,7 +68,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("이동이면, 해당 기물을 위치시킨다")
     @Test
     void putPiece_onMove() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("D,TWO");
         var target = createPosition("D,THREE");
 
@@ -85,7 +85,7 @@ public class BoardTest extends AbstractTestFixture {
     @DisplayName("공격이면, 기존 기물을 대체한다")
     @Test
     void replacePiece_onAttack() {
-        var board = new Board();
+        var board = BoardFactory.createBoard();
         var source = createPosition("G,ONE");
         var target = createPosition("F,THREE");
         var target2 = createPosition("G,FIVE");
