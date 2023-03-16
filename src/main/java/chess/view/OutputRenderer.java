@@ -9,7 +9,7 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-public class BoardRenderer {
+public class OutputRenderer {
 
 	private static final int BOARD_SIZE = 8;
 	private static final Map<PieceType, String> PIECE_TO_STRING = new EnumMap<>(PieceType.class);
