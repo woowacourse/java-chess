@@ -15,6 +15,12 @@ public class Square {
         return new Square(file, rank);
     }
 
+    public Square next(int fileDirection, int rankDirection) {
+        File newFile = file.next(fileDirection);
+        Rank newRank = rank.next(rankDirection);
+        return new Square(newFile, newRank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -30,5 +36,13 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }
