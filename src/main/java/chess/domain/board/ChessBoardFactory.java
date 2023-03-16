@@ -2,12 +2,6 @@ package chess.domain.board;
 
 import chess.domain.camp.CampType;
 import chess.domain.chess.ChessGame;
-import chess.domain.move.BishopMove;
-import chess.domain.move.KingMove;
-import chess.domain.move.KnightMove;
-import chess.domain.move.PawnMove;
-import chess.domain.move.QueenMove;
-import chess.domain.move.RookMove;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -62,19 +56,19 @@ public final class ChessBoardFactory {
     }
 
     private void createPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
-        board.put(new Position(rank, 0), new Rook(ROOK, campType, new RookMove()));
-        board.put(new Position(rank, 1), new Knight(KNIGHT, campType, new KnightMove()));
-        board.put(new Position(rank, 2), new Bishop(BISHOP, campType, new BishopMove()));
-        board.put(new Position(rank, 3), new Queen(QUEEN, campType, new QueenMove()));
-        board.put(new Position(rank, 4), new King(KING, campType, new KingMove()));
-        board.put(new Position(rank, 5), new Bishop(BISHOP, campType, new BishopMove()));
-        board.put(new Position(rank, 6), new Knight(KNIGHT, campType, new KnightMove()));
-        board.put(new Position(rank, 7), new Rook(ROOK, campType, new RookMove()));
+        board.put(new Position(rank, 0), new Rook(ROOK, campType));
+        board.put(new Position(rank, 1), new Knight(KNIGHT, campType));
+        board.put(new Position(rank, 2), new Bishop(BISHOP, campType));
+        board.put(new Position(rank, 3), new Queen(QUEEN, campType));
+        board.put(new Position(rank, 4), new King(KING, campType));
+        board.put(new Position(rank, 5), new Bishop(BISHOP, campType));
+        board.put(new Position(rank, 6), new Knight(KNIGHT, campType));
+        board.put(new Position(rank, 7), new Rook(ROOK, campType));
     }
 
     private void createPawnPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
         for (int file = 0; file < 8; file++) {
-            board.put(new Position(rank, file), new Pawn(PAWN, campType, new PawnMove()));
+            board.put(new Position(rank, file), new Pawn(PAWN, campType));
         }
     }
 }

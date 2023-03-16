@@ -5,11 +5,10 @@ import chess.domain.move.KingMove;
 
 public class King extends Piece {
 
-    private final KingMove kingMove;
+    private static final KingMove kingMove = new KingMove();
 
-    public King(final PieceType pieceType, final CampType campType, final KingMove kingMove) {
+    public King(final PieceType pieceType, final CampType campType) {
         super(pieceType, campType);
-        this.kingMove = kingMove;
     }
 
     @Override

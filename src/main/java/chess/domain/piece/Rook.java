@@ -5,11 +5,10 @@ import chess.domain.move.RookMove;
 
 public class Rook extends Piece {
 
-    private final RookMove rookMove;
+    private final RookMove rookMove = new RookMove();
 
-    public Rook(final PieceType pieceType, final CampType campType, final RookMove pawnMove) {
+    public Rook(final PieceType pieceType, final CampType campType) {
         super(pieceType, campType);
-        this.rookMove = pawnMove;
     }
 
     @Override

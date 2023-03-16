@@ -5,11 +5,10 @@ import chess.domain.move.BishopMove;
 
 public class Bishop extends Piece {
 
-    private final BishopMove bishopMove;
+    private final BishopMove bishopMove = new BishopMove();
 
-    public Bishop(final PieceType pieceType, final CampType campType, final BishopMove bishopMove) {
+    public Bishop(final PieceType pieceType, final CampType campType) {
         super(pieceType, campType);
-        this.bishopMove = bishopMove;
     }
 
     @Override

@@ -5,11 +5,10 @@ import chess.domain.move.QueenMove;
 
 public class Queen extends Piece {
 
-    private final QueenMove queenMove;
+    private final QueenMove queenMove = new QueenMove();
 
-    public Queen(final PieceType pieceType, final CampType campType, final QueenMove queenMove) {
+    public Queen(final PieceType pieceType, final CampType campType) {
         super(pieceType, campType);
-        this.queenMove = queenMove;
     }
 
     @Override

@@ -5,11 +5,10 @@ import chess.domain.move.PawnMove;
 
 public class Pawn extends Piece {
 
-    private final PawnMove pawnMove;
+    private final PawnMove pawnMove = new PawnMove();
 
-    public Pawn(final PieceType pieceType, final CampType campType, final PawnMove pawnMove) {
+    public Pawn(final PieceType pieceType, final CampType campType) {
         super(pieceType, campType);
-        this.pawnMove = pawnMove;
     }
 
     @Override

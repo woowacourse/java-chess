@@ -2,8 +2,6 @@ package chess.domain.board;
 
 import chess.domain.camp.CampType;
 import chess.domain.chess.ChessGame;
-import chess.domain.move.PawnMove;
-import chess.domain.move.RookMove;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -54,7 +52,7 @@ class ChessBoardTest {
 
         // when, then
         assertThat(chessBoard.checkPiece(new Position(0, 0)))
-                .isEqualTo(new Rook(PieceType.ROOK, CampType.WHITE, new RookMove()));
+                .isEqualTo(new Rook(PieceType.ROOK, CampType.WHITE));
     }
 
     @Test
@@ -90,7 +88,7 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.getInstance(new ChessGame());
         final Position putPosition = new Position(2, 0);
-        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE, new PawnMove());
+        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE);
 
         // when
         chessBoard.putPiece(putPosition, piece);

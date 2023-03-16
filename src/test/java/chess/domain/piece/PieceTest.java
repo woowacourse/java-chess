@@ -1,10 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.camp.CampType;
-import chess.domain.move.KingMove;
-import chess.domain.move.KnightMove;
-import chess.domain.move.PawnMove;
-import chess.domain.move.QueenMove;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,9 +18,9 @@ class PieceTest {
     @DisplayName("두 개의 체스말이 동일한 진영에 속하는지 판단한다.")
     void compareCamp() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE, new PawnMove());
-        final Piece other = new Queen(PieceType.QUEEN, CampType.WHITE, new QueenMove());
-        final Piece otherCamp = new King(PieceType.KING, CampType.BLACK, new KingMove());
+        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE);
+        final Piece other = new Queen(PieceType.QUEEN, CampType.WHITE);
+        final Piece otherCamp = new King(PieceType.KING, CampType.BLACK);
 
         // when, then
         assertThat(piece.compareCamp(other))
@@ -38,7 +34,7 @@ class PieceTest {
     @DisplayName("체스말이 폰이면 true를 반환한다.")
     void isPawn() {
         // given
-        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE, new PawnMove());
+        final Piece piece = new Pawn(PieceType.PAWN, CampType.WHITE);
 
         // when, then
         assertThat(piece.isPawn())
@@ -49,7 +45,7 @@ class PieceTest {
     @DisplayName("체스말이 나이트면 true를 반환한다.")
     void isKnight() {
         // given
-        final Piece piece = new Knight(PieceType.KNIGHT, CampType.WHITE, new KnightMove());
+        final Piece piece = new Knight(PieceType.KNIGHT, CampType.WHITE);
 
         // when, then
         assertThat(piece.isKnight())
@@ -60,7 +56,7 @@ class PieceTest {
     @CsvSource(value = {"WHITE:true", "BLACK:false"}, delimiter = ':')
     void isSameCamp(final CampType campType, final boolean expected) {
         // given
-        final Piece piece = new Knight(PieceType.KNIGHT, CampType.WHITE, new KnightMove());
+        final Piece piece = new Knight(PieceType.KNIGHT, CampType.WHITE);
 
         // when, then
         assertThat(piece.isSameCamp(campType))
@@ -71,7 +67,7 @@ class PieceTest {
     @MethodSource(value = "makePosition")
     void canMove(final Position source, final Position target) {
         // given
-        final Piece piece = new Queen(PieceType.QUEEN, CampType.WHITE, new QueenMove());
+        final Piece piece = new Queen(PieceType.QUEEN, CampType.WHITE);
 
         // when
         piece.canMove(source, target);
