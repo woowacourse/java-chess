@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.square.Direction;
 
 import java.util.List;
 

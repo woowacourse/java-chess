@@ -4,7 +4,6 @@ import chess.domain.square.Square;
 
 public class StraightMoveStrategy implements MoveStrategy {
 
-    @Override
     public boolean movable(final Square current, final Square destination) {
         return false;
     }

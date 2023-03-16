@@ -1,7 +1,5 @@
 package chess.domain.square;
 
-import chess.domain.piece.Direction;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +49,26 @@ public final class Square {
     }
 
     public Square move(final Direction direction) {
-        File newFile = file.move(direction.getFileDifference());
-        Rank newRank = rank.move(direction.getRankDifference());
-        return Square.of(newFile, newRank);
+        return move(direction.getFileDifference(), direction.getRankDifference());
+    }
+
+    public Square move(final int fileDifference, final int rankDifference) {
+        try {
+            File newFile = file.move(fileDifference);
+            Rank newRank = rank.move(rankDifference);
+            return Square.of(newFile, newRank);
+        } catch (IllegalStateException e) {
+            // TODO: 리팩터링 필요
+            throw new IllegalArgumentException("잘못된 좌표값입니다.");
+        }
     }
 
     public boolean isRankTwo() {
-        return false;
+        return rank.equals(Rank.TWO);
     }
 
     public boolean isRankSeven() {
-        return false;
+        return rank.equals(Rank.SEVEN);
     }
 
     @Override
@@ -70,5 +77,10 @@ public final class Square {
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public void isDiagonal(final Square other) {
+        file.getDiffrence(other.file);
+        rank.getDifference(other.rank);
     }
 }

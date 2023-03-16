@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.piece.Direction;
+import chess.domain.square.Direction;
 import chess.domain.square.Square;
 
 public class PawnMoveStrategy implements MoveStrategy {
@@ -12,37 +12,38 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public boolean movable(Square current, Square destination) {
-        if (isMoveForwardTwoSquares(current, destination)) {
-            return true;
+    public void move(Square current, Square destination) {
+        if (isDoublePawnPush(current, destination)) {
+            return;
         }
-        return moveDirection.getMovableDirections()
-                .stream()
-                .map(current::move)
-                .anyMatch(destination::equals);
+        // TODO: 리팩터링 필요
+        for (Direction movableDirection : moveDirection.getMovableDirections()) {
+            try {
+                Square next = current.move(movableDirection);
+                if (destination.equals(next)) {
+                    return;
+                }
+            } catch (IllegalArgumentException ignored) {}
+        }
+        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
     }
 
-    public boolean isMoveForwardTwoSquares(Square current, Square destination) {
+    private boolean isDoublePawnPush(Square current, Square destination) {
         if (moveDirection.equals(PawnDirection.UPPER)) {
-            return isMoveForwardTwoSquaresWhenUpper(current, destination);
+            return isDoublePawnPushWhenUpper(current, destination);
         }
-        return isMoveForwardTwoSquaresWhenLower(current, destination);
+        return isDoublePawnPushWhenLower(current, destination);
     }
 
-    private boolean isMoveForwardTwoSquaresWhenUpper(final Square current, final Square destination) {
+    private boolean isDoublePawnPushWhenUpper(final Square current, final Square destination) {
         Square movedOnce = current.move(Direction.UP);
         Square movedTwice = movedOnce.move(Direction.UP);
         return current.isRankTwo() && movedTwice.equals(destination);
     }
 
-    private boolean isMoveForwardTwoSquaresWhenLower(final Square current, final Square destination) {
+    private boolean isDoublePawnPushWhenLower(final Square current, final Square destination) {
         Square movedOnce = current.move(Direction.DOWN);
         Square movedTwice = movedOnce.move(Direction.DOWN);
         return current.isRankSeven() && movedTwice.equals(destination);
-    }
-
-    @Override
-    public void move(Square current, Square destination) {
-
     }
 }

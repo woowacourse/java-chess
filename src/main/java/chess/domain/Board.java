@@ -17,4 +17,18 @@ public class Board {
         BoardMaker boardMaker = new BoardMaker();
         return new Board(boardMaker.make());
     }
+
+    public void move(Square current, Square destination) {
+        if (isEmptySquare(current)) {
+            throw new IllegalArgumentException("해당 칸에 말이 존재하지 않습니다.");
+        }
+        Piece piece = board.get(current);
+        piece.move(current, destination);
+        board.remove(current);
+        board.put(destination, piece);
+    }
+
+    private boolean isEmptySquare(Square square) {
+        return !board.containsKey(square);
+    }
 }

@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.square.Square;
 
 import java.util.Objects;
 
 abstract public class Piece {
 
     private Color color;
-    private MoveStrategy moveStrategy;
+    protected MoveStrategy moveStrategy;
 
     protected Piece(final Color color, final MoveStrategy moveStrategy) {
         this.color = color;
@@ -17,6 +18,8 @@ abstract public class Piece {
     public boolean isEnemy(final Piece piece) {
         return piece.color != color;
     }
+
+    public abstract void move(Square current, Square destination);
 
     @Override
     public boolean equals(final Object o) {
