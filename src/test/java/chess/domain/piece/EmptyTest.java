@@ -5,6 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.move.InvalidMove;
+import chess.domain.position.move.PieceMove;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +19,8 @@ class EmptyTest {
         Position from = new Position(File.A, Rank.ONE);
         Position to = new Position(File.A, Rank.THREE);
 
-        boolean result = empty.isMovable(from, to);
+        PieceMove result = empty.getMovement(from, to);
 
-        assertThat(result).isFalse();
+        assertThat(result).isInstanceOf(InvalidMove.class);
     }
 }

@@ -5,6 +5,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.move.BlockingMove;
+import chess.domain.position.move.InvalidMove;
+import chess.domain.position.move.PieceMove;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +21,9 @@ class KingTest {
         Position from = new Position(File.A, Rank.ONE);
         Position to = new Position(File.A, Rank.TWO);
 
-        boolean result = king.isMovable(from, to);
+        PieceMove result = king.getMovement(from, to);
 
-        assertThat(result).isTrue();
+        assertThat(result).isInstanceOf(BlockingMove.class);
     }
 
 
@@ -32,8 +35,8 @@ class KingTest {
         Position from = new Position(File.A, Rank.ONE);
         Position to = new Position(File.C, Rank.THREE);
 
-        boolean result = king.isMovable(from, to);
+        PieceMove result = king.getMovement(from, to);
 
-        assertThat(result).isFalse();
+        assertThat(result).isInstanceOf(InvalidMove.class);
     }
 }

@@ -5,6 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.move.PassingMove;
+import chess.domain.position.move.PieceMove;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +20,8 @@ class KnightTest {
         Position from = new Position(File.A, Rank.ONE);
         Position to = new Position(File.C, Rank.TWO);
 
-        boolean result = knight.isMovable(from, to);
+        PieceMove result = knight.getMovement(from, to);
 
-        assertThat(result).isTrue();
+        assertThat(result).isInstanceOf(PassingMove.class);
     }
 }

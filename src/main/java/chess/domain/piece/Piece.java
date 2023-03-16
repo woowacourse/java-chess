@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.move.PieceMove;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,8 +17,13 @@ public abstract class Piece {
     public boolean isBlack() {
         return camp == Camp.BLACK;
     }
+    public boolean isEmpty() {
+        return false;
+    }
 
-    public abstract boolean isMovable(Position from, Position to);
+    public abstract PieceMove getMovement(Position from, Position to);
+
+    abstract boolean isPeaceRule(Position from, Position to);
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.move.InvalidMove;
+import chess.domain.position.move.PassingMove;
+import chess.domain.position.move.PieceMove;
 
 public final class Knight extends Piece {
 
@@ -9,7 +12,17 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public PieceMove getMovement(Position from, Position to) {
+
+        if (isPeaceRule(from, to)) {
+            return new PassingMove();
+        }
+
+        return new InvalidMove();
+    }
+
+    @Override
+    boolean isPeaceRule(Position from, Position to) {
         int rankGap = from.calculateFileGap(to);
         int fileGap = from.calculateRankGap(to);
 
