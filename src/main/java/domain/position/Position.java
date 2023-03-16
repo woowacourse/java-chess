@@ -1,18 +1,20 @@
 package domain.position;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Position {
 
-    private static final Map<Integer, Position> cache = new LinkedHashMap<>();
+    private static final Map<Integer, Position> cache = new HashMap<>();
 
     static {
-        List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
-        List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+        List<Integer> rows = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        List<Integer> columns = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         rows.stream()
                 .flatMap(row -> columns.stream()
@@ -34,7 +36,13 @@ public final class Position {
     }
 
     public static List<Position> getAllPosition() {
-        return new ArrayList<>(cache.values());
+        List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
+        List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+
+        return rows.stream()
+                .flatMap(row -> columns.stream()
+                        .map(column -> Position.of(row, column)))
+                .collect(Collectors.toList());
     }
 
     public List<Position> getPathTo(Position end) {
