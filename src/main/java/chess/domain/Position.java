@@ -46,11 +46,11 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
-    public int getFile() {
+    public int getFileIndex() {
         return file.index();
     }
 
-    public int getRank() {
+    public int getRankIndex() {
         return rank.index();
     }
 }

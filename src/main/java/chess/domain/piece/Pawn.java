@@ -71,7 +71,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isDiagonal(Position source, Position nextPosition) {
-        return Math.abs((source.getRank() - nextPosition.getRank())) == Math.abs((source.getFile() - nextPosition.getFile()));
+        return Math.abs((source.getRankIndex() - nextPosition.getRankIndex())) == Math.abs((source.getFileIndex() - nextPosition.getFileIndex()));
     }
 
     private void checkFrontSide(final List<Position> movablePositions, final Position nextPosition,
@@ -89,8 +89,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isRangeValid(final Position position, final MovePattern movePattern) {
-        final int nextRank = position.getRank() + movePattern.getRankVector();
-        final int nextFile = position.getFile() + movePattern.getFileVector();
+        final int nextRank = position.getRankIndex() + movePattern.getRankVector();
+        final int nextFile = position.getFileIndex() + movePattern.getFileVector();
         return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 

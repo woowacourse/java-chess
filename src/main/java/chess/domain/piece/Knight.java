@@ -4,7 +4,6 @@ import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.Side;
 import chess.domain.Type;
-import chess.domain.movepattern.KingMovePattern;
 import chess.domain.movepattern.KnightMovePattern;
 import chess.domain.movepattern.MovePattern;
 import java.util.ArrayList;
@@ -48,8 +47,8 @@ public class Knight extends Piece {
     }
 
     private boolean isRangeValid(final Position position, final MovePattern movePattern) {
-        final int nextRank = position.getRank() + movePattern.getRankVector();
-        final int nextFile = position.getFile() + movePattern.getFileVector();
+        final int nextRank = position.getRankIndex() + movePattern.getRankVector();
+        final int nextFile = position.getFileIndex() + movePattern.getFileVector();
         return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
     }
 
