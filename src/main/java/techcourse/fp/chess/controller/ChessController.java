@@ -5,7 +5,7 @@ import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.File;
 import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.Rank;
-import techcourse.fp.chess.dto.PieceDto;
+import techcourse.fp.chess.dto.BoardDto;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
@@ -26,7 +26,7 @@ public final class ChessController {
         final Command initCommand = getInitCommand();
 
         if (initCommand.isStart()) {
-            outputView.printBoard(PieceDto.create(board.getBoard()));
+            outputView.printBoard(BoardDto.create(board.getBoard()));
             move(board);
         }
 
@@ -50,7 +50,7 @@ public final class ChessController {
 
             while (!Command.createMoveOrEndMessage(commands[0]).isEnd()) {
                 board.move(parseToPosition(commands[1]), parseToPosition(commands[2]));
-                outputView.printBoard(PieceDto.create(board.getBoard()));
+                outputView.printBoard(BoardDto.create(board.getBoard()));
                 commands = inputView.readCommand();
             }
         } catch (IllegalArgumentException | IllegalStateException exception) {

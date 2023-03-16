@@ -9,30 +9,30 @@ import techcourse.fp.chess.domain.Rank;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.view.PieceRender;
 
-public final class PieceDto {
+public final class BoardDto {
 
-    private final String name;
+    private final List<String> names;
 
-    public PieceDto(final String name) {
-        this.name = name;
+    private BoardDto(final List<String> names) {
+        this.names = names;
     }
 
-    public static List<PieceDto> create(Map<Position, Piece> board) {
-        List<PieceDto> pieceDtos = new ArrayList<>();
+    public static BoardDto create(Map<Position, Piece> board) {
+        List<String> names = new ArrayList<>();
 
         for (int rankOrder = 8; rankOrder >= 1; rankOrder--) {
             for (int fileOrder = 1; fileOrder <= 8; fileOrder++) {
                 final Position position = Position.of(File.of(fileOrder), Rank.of(rankOrder));
                 final Piece piece = board.get(position);
-                pieceDtos.add(new PieceDto(PieceRender.renderName(piece)));
-            }
 
+                names.add(PieceRender.renderName(piece));
+            }
         }
 
-        return pieceDtos;
+        return new BoardDto(names);
     }
 
-    public String getName() {
-        return name;
+    public List<String> getNames() {
+        return names;
     }
 }

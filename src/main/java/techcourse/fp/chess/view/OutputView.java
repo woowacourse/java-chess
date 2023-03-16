@@ -1,7 +1,6 @@
 package techcourse.fp.chess.view;
 
-import java.util.List;
-import techcourse.fp.chess.dto.PieceDto;
+import techcourse.fp.chess.dto.BoardDto;
 
 public final class OutputView {
 
@@ -14,10 +13,11 @@ public final class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(final List<PieceDto> pieceDtos) {
+    public void printBoard(final BoardDto boardDto) {
         int count = 0;
-        for (PieceDto pieceDto : pieceDtos) {
-            System.out.print(pieceDto.getName());
+
+        for (String name : boardDto.getNames()) {
+            System.out.print(name);
             count++;
             if (count % 8 == 0) {
                 System.out.println();
