@@ -25,8 +25,8 @@ public class BoardFactory {
         Map<Position, Piece> chessBoard = new HashMap<>();
         List<Position> positions = makePosition();
         makeChessBoard(chessBoard, positions);
-            fillLowerOtherPositionPieces(chessBoard);
-            fillUpperOtherPositionPieces(chessBoard);
+        fillLowerOtherPositionPieces(chessBoard);
+        fillUpperOtherPositionPieces(chessBoard);
         return new Board(chessBoard);
     }
 

@@ -15,12 +15,22 @@ public enum Direction {
     SOUTH_WEST(-1, -1),
     SOUTH_EAST(1, -1);
 
-    final int row;
     final int col;
+    final int row;
 
-    Direction(int row, int col) {
-        this.row = row;
+    Direction(int col, int row) {
         this.col = col;
+        this.row = row;
+    }
+
+    public static boolean isLowerPawnDiagonal(final String start, final String end) {
+        Direction direction = findDirection(start, end);
+        return direction.equals(NORTH_WEST) || direction.equals(NORTH_EAST);
+    }
+
+    public static boolean isUpperPawnDiagonal(final String start, final String end) {
+        Direction direction = findDirection(start, end);
+        return direction.equals(SOUTH_WEST) || direction.equals(SOUTH_EAST);
     }
 
     public static List<String> getRoute(final String start, final String end) {
