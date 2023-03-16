@@ -34,8 +34,6 @@ class RookTest {
         final Position target = PositionFactory.createPosition(targetCommand);
         final Rook rook = new Rook(Color.WHITE);
 
-        System.out.println(rook.findRoute(source, target).getRoute());
-
         //when&then
         assertThat(rook.findRoute(source, target).getRoute()).hasSize(2);
     }
