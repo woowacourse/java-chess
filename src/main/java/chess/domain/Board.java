@@ -26,20 +26,18 @@ public class Board {
         return new Board(board);
     }
 
-    public Board move(final Position source, final Position target, final Color currentPlayer) {
-        final Map<Position, Piece> newBoard = new HashMap<>(board);
+    public void move(final Position source, final Position target, final Color currentPlayer) {
         validateRange(source, target);
-        final Piece sourcePiece = newBoard.get(source);
-        final Piece targetPiece = newBoard.get(target);
+        final Piece sourcePiece = board.get(source);
+        final Piece targetPiece = board.get(target);
 
         validateInvalidColor(currentPlayer, sourcePiece, targetPiece);
         validateInvalidPosition(source, target, sourcePiece);
         validateBlockedPosition(source, target, sourcePiece);
         validateIfPawnUnmovable(source, target, sourcePiece);
 
-        newBoard.put(target, sourcePiece);
-        newBoard.put(source, Empty.create());
-        return new Board(newBoard);
+        board.put(target, sourcePiece);
+        board.put(source, Empty.create());
     }
 
     private void validateInvalidPosition(final Position source, final Position target, final Piece sourcePiece) {

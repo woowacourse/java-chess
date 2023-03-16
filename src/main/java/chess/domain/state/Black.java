@@ -16,8 +16,8 @@ public class Black extends State {
 
     @Override
     public State move(final Position source, final Position target) {
-        final Board newBoard = board.move(source, target, Color.BLACK);
-        return new White(newBoard);
+        board.move(source, target, Color.BLACK);
+        return new White(board);
     }
 
     @Override
