@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardFactory;
 import chess.domain.state.ChessState;
 import chess.domain.state.Initialize;
 import chess.domain.state.command.Command;
@@ -14,7 +15,7 @@ public class ChessController {
 
     public void start() {
         OutputView.printStartMessage();
-        final ChessBoard chessBoard = ChessBoard.create();
+        final ChessBoard chessBoard = ChessBoardFactory.create();
         final ChessState state = new Initialize(chessBoard);
         run(chessBoard, state);
     }

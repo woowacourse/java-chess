@@ -15,8 +15,8 @@ public class ChessBoard {
         this.pieces = pieces;
     }
 
-    public static ChessBoard create() {
-        return new ChessBoard(ChessBoardFactory.create());
+    static ChessBoard from(final List<Piece> pieces) {
+        return new ChessBoard(pieces);
     }
 
     public void movePiece(final Turn turn, final PiecePosition source, final PiecePosition destination) {

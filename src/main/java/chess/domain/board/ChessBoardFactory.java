@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.type.King;
@@ -26,7 +27,7 @@ public class ChessBoardFactory {
     }
 
     private static void createPawns(final int rank, final Color color) {
-        for (char file = 'a'; file <= 'h'; file++) {
+        for (char file = File.MIN; file <= File.MAX; file++) {
             pieces.add(new Pawn(color, PiecePosition.of(rank, file)));
         }
     }
@@ -42,9 +43,9 @@ public class ChessBoardFactory {
         pieces.add(new Rook(color, PiecePosition.of(rank, 'h')));
     }
 
-    public static List<Piece> create() {
-        return pieces.stream()
+    public static ChessBoard create() {
+        return ChessBoard.from(pieces.stream()
                 .map(Piece::clone)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 }
