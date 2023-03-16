@@ -27,36 +27,38 @@ public class BoardFactory {
         Map<Position, Piece> boards = new HashMap<>();
         for (RankCoordinate rankCoordinate : RankCoordinate.values()) {
             Color color = Color.of(rankCoordinate);
-            RankType rankType = RankType.of(rankCoordinate);
-            if (rankType.isSideRank()) {
-                boards.put(new Position(A, rankCoordinate), new Rook(color));
-                boards.put(new Position(B, rankCoordinate), new Knight(color));
-                boards.put(new Position(C, rankCoordinate), new Bishop(color));
-                boards.put(new Position(D, rankCoordinate), new Queen(color));
-                boards.put(new Position(E, rankCoordinate), new King(color));
-                boards.put(new Position(F, rankCoordinate), new Bishop(color));
-                boards.put(new Position(G, rankCoordinate), new Knight(color));
-                boards.put(new Position(H, rankCoordinate), new Rook(color));
-            } else if (rankType.isPawnRank()) {
-                boards.put(new Position(A, rankCoordinate), new Pawn(color));
-                boards.put(new Position(B, rankCoordinate), new Pawn(color));
-                boards.put(new Position(C, rankCoordinate), new Pawn(color));
-                boards.put(new Position(D, rankCoordinate), new Pawn(color));
-                boards.put(new Position(E, rankCoordinate), new Pawn(color));
-                boards.put(new Position(F, rankCoordinate), new Pawn(color));
-                boards.put(new Position(G, rankCoordinate), new Pawn(color));
-                boards.put(new Position(H, rankCoordinate), new Pawn(color));
-            } else {
-                boards.put(new Position(A, rankCoordinate), Empty.create());
-                boards.put(new Position(B, rankCoordinate), Empty.create());
-                boards.put(new Position(C, rankCoordinate), Empty.create());
-                boards.put(new Position(D, rankCoordinate), Empty.create());
-                boards.put(new Position(E, rankCoordinate), Empty.create());
-                boards.put(new Position(F, rankCoordinate), Empty.create());
-                boards.put(new Position(G, rankCoordinate), Empty.create());
-                boards.put(new Position(H, rankCoordinate), Empty.create());
-            }
+            createRank(boards, rankCoordinate, color);
         }
         return new Board(boards);
+    }
+
+    private static void createRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
+        RankType rankType = RankType.of(rankCoordinate);
+        if (rankType.isSideRank()) {
+            putSideRank(boards, rankCoordinate, color);
+        }
+        if (rankType.isPawnRank()) {
+            put(boards, rankCoordinate, new Pawn(color));
+        }
+        if (rankType.isEmptyRank()) {
+            put(boards, rankCoordinate, Empty.create());
+        }
+    }
+
+    private static void putSideRank(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Color color) {
+        boards.put(new Position(A, rankCoordinate), new Rook(color));
+        boards.put(new Position(B, rankCoordinate), new Knight(color));
+        boards.put(new Position(C, rankCoordinate), new Bishop(color));
+        boards.put(new Position(D, rankCoordinate), new Queen(color));
+        boards.put(new Position(E, rankCoordinate), new King(color));
+        boards.put(new Position(F, rankCoordinate), new Bishop(color));
+        boards.put(new Position(G, rankCoordinate), new Knight(color));
+        boards.put(new Position(H, rankCoordinate), new Rook(color));
+    }
+
+    private static void put(Map<Position, Piece> boards, RankCoordinate rankCoordinate, Piece piece) {
+        for (FileCoordinate value : FileCoordinate.values()) {
+            boards.put(new Position(value, rankCoordinate), piece);
+        }
     }
 }

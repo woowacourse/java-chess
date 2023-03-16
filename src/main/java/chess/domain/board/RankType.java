@@ -23,4 +23,8 @@ public enum RankType {
     public boolean isPawnRank() {
         return this == PAWN_RANK;
     }
+
+    public boolean isEmptyRank() {
+        return this == EMPTY_RANK;
+    }
 }
