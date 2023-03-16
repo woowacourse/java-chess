@@ -17,7 +17,7 @@ public abstract class Piece implements Cloneable {
     public Waypoints waypoints(final PiecePosition destination) {
         final Path path = Path.of(piecePosition, destination);
         validateMovable(path);
-        return Waypoints.from(path.wayPoints());
+        return Waypoints.from(path.waypoints());
     }
 
     protected abstract void validateMovable(final Path path);

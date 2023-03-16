@@ -54,15 +54,15 @@ public class Path {
                 && Math.abs(source.fileDisplacement(destination)) <= 1;
     }
 
-    // 이곳에서 WayPoint 반환 VS 반환받은데서 WayPoint.from(반환) ??
-    public List<PiecePosition> wayPoints() {
-        final List<PiecePosition> wayPoints = new ArrayList<>();
+    // 이곳에서 Waypoint 반환 VS 반환받은데서 Waypoint.from(반환) ??
+    public List<PiecePosition> waypoints() {
+        final List<PiecePosition> waypoints = new ArrayList<>();
         PiecePosition current = source;
         while (!current.equals(destination)) {
             current = current.move(current.direction(destination));
-            wayPoints.add(current);
+            waypoints.add(current);
         }
-        wayPoints.remove(destination);
-        return wayPoints;
+        waypoints.remove(destination);
+        return waypoints;
     }
 }

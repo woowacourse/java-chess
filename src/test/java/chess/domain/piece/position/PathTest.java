@@ -214,7 +214,7 @@ class PathTest {
         final Path path = Path.of(source, destination);
 
         // when & then
-        assertThat(path.wayPoints())
+        assertThat(path.waypoints())
                 .containsExactlyInAnyOrder(
                         PiecePosition.of(5, 'e'),
                         PiecePosition.of(6, 'e')
@@ -229,7 +229,7 @@ class PathTest {
         final Path path = Path.of(source, destination);
 
         // when & then
-        assertThat(path.wayPoints())
+        assertThat(path.waypoints())
                 .containsExactlyInAnyOrder(
                         PiecePosition.of(5, 'f'),
                         PiecePosition.of(6, 'g')
@@ -244,6 +244,6 @@ class PathTest {
         final Path path = Path.of(source, destination);
 
         // when & then
-        assertThat(path.wayPoints()).isEmpty();
+        assertThat(path.waypoints()).isEmpty();
     }
 }
