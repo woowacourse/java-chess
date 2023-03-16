@@ -37,14 +37,6 @@ public class Position {
         return moveCount;
     }
 
-    public int getFile() {
-        return file.getValue();
-    }
-
-    public int getRank() {
-        return rank.getValue();
-    }
-
     public Position getNextPosition(final Direction direction) {
         final int nextXPoint = direction.getNextXPoint(file.getValue());
         final int nextYPoint = direction.getNextYPoint(rank.getValue());
@@ -53,6 +45,14 @@ public class Position {
         final Rank nextRank = Rank.findByValue(nextYPoint);
 
         return new Position(nextFile, nextRank);
+    }
+
+    public int getFile() {
+        return file.getValue();
+    }
+
+    public int getRank() {
+        return rank.getValue();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class Rook extends Piece {
         return directions.contains(direction);
     }
 
-
+    @Override
     public List<Position> getPaths(Position targetPosition) {
         List<Position> paths = new ArrayList<>();
         final Direction direction = position.getDirectionTo(targetPosition);

@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.board.Position;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -11,6 +12,10 @@ public abstract class Piece {
         this.position = position;
         this.side = side;
     }
+
+    public abstract boolean isMovable(Position targetPosition);
+
+    public abstract List<Position> getPaths(Position targetPosition);
 
     public int getFile() {
         return position.getFile();
