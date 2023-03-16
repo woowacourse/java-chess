@@ -40,8 +40,8 @@ public class BoardFactory {
 
     private static Map<Position, Piece> generateRow(IntFunction<Piece> function, int y) {
         Map<Position, Piece> squares = new HashMap<>();
-        for (int i = 0; i < BOARD_ROW_SIZE; i++) {
-            squares.put(Position.of(i, y), function.apply(i));
+        for (int x = 0; x < BOARD_ROW_SIZE; x++) {
+            squares.put(Position.of(x, y), function.apply(x));
         }
         return squares;
     }

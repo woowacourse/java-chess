@@ -23,7 +23,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        while (gameLoop() != GameStatus.EXIT) {
+        while (true) {
+            if (gameLoop() == GameStatus.EXIT) {
+                break;
+            }
         }
     }
 
@@ -42,9 +45,26 @@ public class ChessController {
         return GameStatus.CONTINUE;
     }
 
+    public <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return repeat(supplier);
+        }
+    }
+
     private void createBoard() {
         chessGame.create();
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    public void execute(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private void move(List<String> command) {
@@ -58,23 +78,6 @@ public class ChessController {
     private void validateMoveCommand(List<String> command) {
         if (command.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("[ERROR] move (source) (target) 형식으로 입력해주세요.");
-        }
-    }
-
-    public <T> T repeat(Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return repeat(supplier);
-        }
-    }
-
-    public void execute(Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
         }
     }
 }

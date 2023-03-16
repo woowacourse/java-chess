@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class InputView {
     private static final List<String> ALLOW_COMMANDS = List.of("start", "end", "move");
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String DELIMITER = " ";
+    private static final int COMMAND_INDEX = 0;
 
     private InputView() {
     }
@@ -13,9 +15,9 @@ public class InputView {
     public static List<String> readCommand() {
         String input = scanner.nextLine();
         try {
-            List<String> commands = List.of(input.split(" "));
+            List<String> commands = List.of(input.split(DELIMITER));
             validateBlank(commands);
-            validateAllowCommand(commands.get(0));
+            validateAllowCommand(commands.get(COMMAND_INDEX));
             return commands;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

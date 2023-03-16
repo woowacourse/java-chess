@@ -32,12 +32,6 @@ public class Position {
         return range < MIN_RANGE || range > MAX_RANGE;
     }
 
-    public int getDistanceTo(Position other) {
-        int xDistance = Math.abs(this.x - other.x);
-        int yDistance = Math.abs(this.y - other.y);
-        return Math.max(xDistance, yDistance);
-    }
-
     public boolean isSameXTo(Position other) {
         return this.x == other.x;
     }
@@ -71,6 +65,12 @@ public class Position {
         return IntStream.range(1, distance)
                 .mapToObj(value -> Position.of((this.x + xFactor * value), (this.y + yFactor * value)))
                 .collect(toList());
+    }
+
+    public int getDistanceTo(Position other) {
+        int xDistance = Math.abs(this.x - other.x);
+        int yDistance = Math.abs(this.y - other.y);
+        return Math.max(xDistance, yDistance);
     }
 
     public int getX() {
