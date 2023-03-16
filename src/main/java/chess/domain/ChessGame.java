@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -13,13 +14,20 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void movePiece(Position sourcePosition, Position targetPosition) {
+    public void movePiece(Position sourcePosition, Position targetPosition, Color color) {
         Piece sourcePiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
+        validateColor(color, sourcePiece);
         validateCanMove(sourcePosition, targetPosition, sourcePiece, targetPiece);
         List<Position> path = sourcePiece.findPath(sourcePosition, targetPosition);
         validatePath(path);
         board.movePiece(sourcePosition, targetPosition);
+    }
+
+    private void validateColor(Color color, Piece sourcePiece) {
+        if (!sourcePiece.isSameTeam(color)) {
+            throw new IllegalArgumentException("상대 팀의 말을 옮길 수 없습니다.");
+        }
     }
 
     private void validatePath(List<Position> path) {
