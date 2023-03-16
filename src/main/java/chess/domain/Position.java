@@ -84,6 +84,10 @@ public class Position {
         return this.rank.isUpperThan(otherPosition.rank);
     }
 
+    public boolean isLowerRankThan(final Position otherPosition) {
+        return this.rank.isLowerThan(otherPosition.rank);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

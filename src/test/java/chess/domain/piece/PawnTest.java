@@ -1,18 +1,19 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
 import static chess.domain.File.B;
 import static chess.domain.File.C;
-import static chess.domain.File.E;
-import static chess.domain.Rank.FIVE;
 import static chess.domain.Rank.FOUR;
 import static chess.domain.Rank.SEVEN;
 import static chess.domain.Rank.SIX;
@@ -58,22 +59,24 @@ class PawnTest {
         }
 
 
-        @Test
+        @ParameterizedTest
+        @CsvSource({"E, SIX", "C, SEVEN", "B, EIGHT"})
         @DisplayName("초기 위치에서 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_initial() {
+        void getPassingPathFailTest_initial(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, SEVEN, Color.BLACK);
 
-            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(E, SIX)))
+            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치로 이동할 수 없습니다.");
         }
 
-        @Test
+        @ParameterizedTest
+        @CsvSource({"B, FOUR", "C, SIX", "B, SEVEN"})
         @DisplayName("초기 위치가 아닐 때 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_nonInitial() {
+        void getPassingPathFailTest_nonInitial(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, SIX, Color.BLACK);
 
-            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(B, FOUR)))
+            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치로 이동할 수 없습니다.");
         }
@@ -113,22 +116,24 @@ class PawnTest {
             assertThat(path).isEmpty();
         }
 
-        @Test
+        @ParameterizedTest
+        @CsvSource({"E, SIX", "C, TWO", "B, ONE"})
         @DisplayName("초기 위치에서 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_initial() {
+        void getPassingPathFailTest_initial(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, TWO, Color.WHITE);
 
-            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(E, SIX)))
+            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치로 이동할 수 없습니다.");
         }
 
-        @Test
+        @ParameterizedTest
+        @CsvSource({"B, FIVE", "C, THREE", "B, TWO"})
         @DisplayName("초기 위치가 아닐 때 이동할 수 없는 위치가 입력되면, 예외가 발생한다.")
-        void getPassingPathFailTest_nonInitial() {
+        void getPassingPathFailTest_nonInitial(final File file, final Rank rank) {
             final Piece pawn = new Pawn(B, THREE, Color.WHITE);
 
-            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(B, FIVE)))
+            assertThatThrownBy(() -> pawn.getPassingPositions(new Position(file, rank)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치로 이동할 수 없습니다.");
         }

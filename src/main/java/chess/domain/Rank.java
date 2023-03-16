@@ -67,4 +67,8 @@ public enum Rank {
     public boolean isUpperThan(final Rank otherRank) {
         return this.index > otherRank.index;
     }
+
+    public boolean isLowerThan(final Rank otherRank) {
+        return this.index < otherRank.index;
+    }
 }

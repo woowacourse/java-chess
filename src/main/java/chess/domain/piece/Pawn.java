@@ -36,7 +36,7 @@ public class Pawn extends Piece {
         if (color.isBlack()) {
             return position.isUpperRankThan(targetPosition);
         }
-        return !position.isUpperRankThan(targetPosition);
+        return position.isLowerRankThan(targetPosition);
     }
 
     private boolean isInitialPosition() {

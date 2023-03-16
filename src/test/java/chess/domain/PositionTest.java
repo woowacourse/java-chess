@@ -92,12 +92,24 @@ class PositionTest {
 
     @ParameterizedTest
     @CsvSource({"FOUR, true", "SIX, false"})
-    @DisplayName("Rank가 앞인지 확인한다.")
-    void isUpperRankTest(final Rank otherRank, final boolean expected) {
+    @DisplayName("Rank가 높은지 확인한다.")
+    void isUpperRankThanTest(final Rank otherRank, final boolean expected) {
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 
         final boolean actual = position.isUpperRankThan(otherPosition);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"FOUR, false", "SIX, true"})
+    @DisplayName("Rank가 낮은지 확인한다.")
+    void isLowerRankThanTest(final Rank otherRank, final boolean expected) {
+        final Position position = new Position(D, FIVE);
+        final Position otherPosition = new Position(D, otherRank);
+
+        final boolean actual = position.isLowerRankThan(otherPosition);
 
         assertThat(actual).isEqualTo(expected);
     }
